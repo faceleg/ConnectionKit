@@ -16,9 +16,6 @@
 #import "NSCharacterSet+Karelia.h"
 #import "NSObject+Karelia.h"
 
-#import "KTPageDetailsBoxView.h"
-#import <iMediaBrowser/RBSplitView.h>
-
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
 static NSString *sTitleTextObservationContext = @"-titleText observation context";
@@ -350,82 +347,6 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	{
 		[self metaDescriptionDidChangeToValue:newValue];
 	}
-}
-
-#pragma mark -
-#pragma mark RBSplitView delegate methods
-
-- (void)didAdjustSubviews:(RBSplitView*)sender;
-{
-	[oBoxView rebindSubviewPlaceholdersAccordingToSize];
-}
-
-- (BOOL)splitView:(RBSplitView*)sender shouldHandleEvent:(NSEvent*)theEvent inDivider:(unsigned int)divider betweenView:(RBSplitSubview*)leading andView:(RBSplitSubview*)trailing;
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
-	return YES;
-}
-
-- (void)willAdjustSubviews:(RBSplitView*)sender;
-{
-	[RBSplitView setCursor:RBSVDragCursor toCursor:[NSCursor resizeUpDownCursor]];
-}
-
-// Keep the details view at the same size or shrink slightly?
-
-- (void)splitView:(RBSplitView*)sender wasResizedFrom:(float)oldDimension to:(float)newDimension
-{
-	RBSplitSubview *detailsSplit = [sender subviewAtPosition:1];
-	
-	// Try to resize details 1/3 the speed of the main
-	//[detailsSplit changeDimensionBy:((newDimension-oldDimension) / 3) mayCollapse:NO move:NO];
-
-	// Or keep details the same size
-	[sender adjustSubviewsExcepting:detailsSplit];
-}
-
-
-#define DIM(x) (((float*)&(x))[ishor])
-#define WIDEN (5)
-
-
- 
- - (unsigned int)splitView:(RBSplitView*)sender dividerForPoint:(NSPoint)point inSubview:(RBSplitSubview*)subview
-{
-	NSRect lead = [subview frame];
-	NSRect trail = lead;
-	unsigned pos = [subview position];
-	BOOL ishor = [sender isHorizontal];
-	float dim = DIM(trail.size);
-	DIM(trail.origin) += dim-WIDEN;
-	DIM(trail.size) = WIDEN;
-	DIM(lead.size) = WIDEN;
-	if ([sender mouse:point inRect:lead]&&(pos>0)) {
-		return pos-1;
-	} else if ([sender mouse:point inRect:trail]&&(pos<[sender numberOfSubviews]-1)) {
-		return pos;
-	}
-	return NSNotFound;
- }
- 
-
-// Cursor rectangle for slop
-
-- (NSRect)splitView:(RBSplitView*)sender cursorRect:(NSRect)rect forDivider:(unsigned int)divider
-{
-	RBSplitSubview *sidebarSplit = [sender subviewAtPosition:0];
-	NSRect bounds = [sidebarSplit bounds];
-	bounds.origin.y += bounds.size.height;
-	bounds.size.height = 1;	// fake width, since we are really zero width
-	
-	// Widen the main split
-	BOOL ishor = [sender isHorizontal];	// used in the macros below
-	DIM(bounds.origin) -= WIDEN;
-	DIM(bounds.size) += WIDEN*2;
-	
-	[sender addCursorRect:bounds cursor:[RBSplitView cursor:RBSVHorizontalCursor]];
-	
-	return rect;
 }
 
 

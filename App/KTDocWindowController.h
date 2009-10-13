@@ -32,8 +32,6 @@
 @class KTInlineImageElement;
 @class KSTextField, KSPopUpButton;
 @class RoundedBox;
-@class RBSplitView;
-@class RBSplitSubview;
 @class NTBoxView;
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
@@ -50,7 +48,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 @interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain, SVWebContentAreaControllerDelegate>
 {
-    IBOutlet RBSplitView		*oSidebarSplitView;
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
 	SVSiteOutlineViewController *_siteOutlineViewController;
 		
@@ -153,10 +150,6 @@ extern NSString *gInfoWindowAutoSaveName;
 // Plugin Inspector Views
 - (KTPluginInspectorViewsManager *)pluginInspectorViewsManager;
 
-@end
-
-@interface KTDocWindowController ( SplitViews )
-- (RBSplitView *)siteOutlineSplitView;
 @end
 
 @interface KTDocWindowController ( Pasteboard )

@@ -48,8 +48,8 @@
 
 // NSTextView-like properties for controlling editing behaviour. Some are stored as part of the DOM, others as ivars. Note that some can only really take effect if properly hooked up to another controller that forwards on proper editing delegation methods from the WebView.
 @property(nonatomic, getter=isEditable) BOOL editable;
-@property(nonatomic, setter=setRichText) BOOL isRichText;
-@property(nonatomic, setter=setFieldEditor) BOOL isFieldEditor;
+@property(nonatomic, setter=setRichText:) BOOL isRichText;
+@property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
 
 
 #pragma mark Editing

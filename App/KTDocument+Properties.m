@@ -19,9 +19,6 @@
 #import "NSIndexSet+Karelia.h"
 #import "NSObject+Karelia.h"
 
-#import <iMediaBrowser/RBSplitView.h>
-
-
 @interface KTDocument (PropertiesPrivate)
 - (void)updateDefaultDocumentProperty:(NSString *)key;
 @end
@@ -195,7 +192,7 @@
 	
 	
 	// Source Outline width
-	float width = [[[[self mainWindowController] siteOutlineSplitView] subviewAtPosition:0] dimension];
+	float width = 99;	// TODO: Get the split view position
 	[[self site] setInteger:width forKey:@"sourceOutlineSize"];
 	
 	

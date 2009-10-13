@@ -122,9 +122,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
-    // disconnect UI delegates
-	[oSidebarSplitView setDelegate:nil];
-
     // release ivars
 	[self setContextElementInformation:nil];
     [self setAddCollectionPopUpButton:nil];
@@ -185,11 +182,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Split View
 	// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
 	short sourceOutlineSize = [[[self document] site] integerForKey:@"sourceOutlineSize"];
-	if ( sourceOutlineSize > 0)
-	{
-		[[[self siteOutlineSplitView] subviewAtPosition:0] setDimension:sourceOutlineSize];
-		[oSidebarSplitView adjustSubviews];
-	}
+// TODO: set split view position
     
     
     // Tie the web content area to the source list's selection
@@ -417,10 +410,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Public Functions
 
-- (BOOL)sidebarIsCollapsed
-{
-	return [[oSidebarSplitView subviewAtPosition:0] isCollapsed];
-}
 
 - (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
 {
@@ -528,32 +517,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self showInfo:newValue];
 }
 
-- (IBAction)toggleSiteOutlineShown:(id)sender
-{
-	RBSplitSubview *sidebarSplit = [oSidebarSplitView subviewAtPosition:0];
-    BOOL newValue = [sidebarSplit isCollapsed];	// opposite of current actual state
-	
-	NSWindow *window = [self window];
-	NSRect frame = [window frame];
-	
-	if (newValue)		//  FIXME: This needs new versions of RBSplitView from RB ... to deal with programatic/dragged collapses
-	{
-		[sidebarSplit expand];
-		frame.size.width += [sidebarSplit dimension];
-	}
-	else
-	{
-		[sidebarSplit collapse];
-		frame.size.width -= [sidebarSplit dimension];
-		if (frame.size.width < [window minSize].width)
-		{
-			frame.size.width = [window minSize].width;
-		}
-	}
-	[window setFrame:frame display:NO];
-	
-	[oSidebarSplitView adjustSubviews];
-}
 
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
@@ -1059,8 +1022,7 @@ from representedObject */
 	{
 		[menuItem setState:
 			([[self document] displaySmallPageIcons] ? NSOnState : NSOffState)];
-		RBSplitSubview *sidebarSplit = [oSidebarSplitView subviewAtPosition:0];
-		return ![sidebarSplit isCollapsed];	// enabled if we can see the site outline
+		return YES;	// enabled if we can see the site outline
 	}
 	
 	// Site menu items
@@ -1330,30 +1292,6 @@ from representedObject */
 	{
 		// LOG((@"windowWillClose --> %@", [aNotification object]));
 	}
-}
-
-- (NSSize)windowWillResize:(NSWindow *)sender toSize:(NSSize)proposedFrameSize
-{
-	NSSize result = proposedFrameSize;
-	RBSplitSubview *leftView = [oSidebarSplitView subviewAtPosition:0];
-	
-	if (![leftView isCollapsed])	// not collapsed -- see if we can do this
-	{
-		float currentWidth = [sender frame].size.width;
-		if (proposedFrameSize.width < currentWidth)	// we're shrinking
-		{
-			RBSplitSubview *rightView = [oSidebarSplitView subviewAtPosition:1];
-			float minimumWidths = [rightView minDimension] + [leftView minDimension];
-			
-			// Only allow shrinking if we're N pixels moved over, making it kind of hard to shrink.
-			if (proposedFrameSize.width < minimumWidths ) // && proposedFrameSize.width > minimumWidths - 100)
-			{
-				result = NSMakeSize(minimumWidths, proposedFrameSize.height);
-				// Slightly smaller than minimum, don't let it shrink to that size.
-			}
-		}
-	}
-	return result;
 }
 
 #pragma mark -

@@ -26,7 +26,7 @@ IMEDIA_REVISION = 797
 // GCC 4.2
 //GCC_VERSION = 4.2
 
-// Clang LLVM 1.0 (has many, many problems building Sandvox)
+// Clang LLVM 1.0 (Waiting for one update to Clang to accept Class<...>)
 // GCC_VERSION = com.apple.compilers.llvm.clang.1_0
 
 // LLVM GCC 4.2

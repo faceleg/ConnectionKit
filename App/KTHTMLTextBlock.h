@@ -52,8 +52,8 @@
 
 
 @property(nonatomic, getter=isEditable) BOOL editable;
-@property(nonatomic, setter=setRichText) BOOL isRichText;
-@property(nonatomic, setter=setFieldEditor) BOOL isFieldEditor;
+@property(nonatomic, setter=setRichText:) BOOL isRichText;
+@property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
 
 - (BOOL)importsGraphics;
 - (void)setImportsGraphics:(BOOL)flag;

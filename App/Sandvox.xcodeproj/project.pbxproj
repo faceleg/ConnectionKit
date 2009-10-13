@@ -490,7 +490,6 @@
 		3C3F54910D625952004885E7 /* iMediaBrowser.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54900D625952004885E7 /* iMediaBrowser.framework */; };
 		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
-		3C4328E107F7DC9800DD0D92 /* KTDocWindowController+SplitViews.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */; };
 		3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */; };
 		3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */; };
 		3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */; };
@@ -1941,7 +1940,6 @@
 		3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPrefsController.m; sourceTree = "<group>"; };
 		3C202D3307DFC0F000DE4994 /* KTDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocument.h; sourceTree = "<group>"; };
 		3C202D3407DFC0F000DE4994 /* KTDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocument.m; sourceTree = "<group>"; };
-		3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+SplitViews.m"; sourceTree = "<group>"; };
 		3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Toolbar.m"; sourceTree = "<group>"; };
 		3C202D7807DFC30800DE4994 /* KTHostArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHostArrayController.h; sourceTree = "<group>"; };
 		3C202D7907DFC30800DE4994 /* KTHostArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHostArrayController.m; sourceTree = "<group>"; };
@@ -3189,7 +3187,6 @@
 				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
 				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
-				3C202D3B07DFC0F000DE4994 /* KTDocWindowController+SplitViews.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
 				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
 				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
@@ -6110,7 +6107,6 @@
 				3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */,
 				3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */,
 				3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */,
-				3C4328E107F7DC9800DD0D92 /* KTDocWindowController+SplitViews.m in Sources */,
 				3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */,
 				3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */,
 				CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */,
