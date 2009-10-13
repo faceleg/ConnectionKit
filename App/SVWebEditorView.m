@@ -789,6 +789,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return YES;
 }
 
+- (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
+{
+    [self willEditTextInDOMRange:range];
+    return YES;
+}
+
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     BOOL result = [self canEdit];
