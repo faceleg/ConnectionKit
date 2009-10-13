@@ -529,15 +529,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[defaults setObject:feedType forKey:@"KSFeedType"];
 	}
 	
-	id coinFlip = [defaults objectForKey:@"coinFlip"];		// this is constant for the lifetime of these preferences!
-	if (nil == coinFlip)
-	{
-		sranddev();	// seed random.  We are looking for a number either 1 or 2 (zero meaning not set)
-		int value = 1+ (rand() % 2);
-		OBASSERT(value == 1 || value == 2);
-		[defaults setInteger:value forKey:@"coinFlip"];
-	}
-	
 	[defaults synchronize];
 }	
 

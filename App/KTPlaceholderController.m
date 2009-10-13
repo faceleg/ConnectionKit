@@ -170,15 +170,9 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
 	[oLowLink setAttributedTitle:attrString];
 	
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	if ([defaults integerForKey:@"coinFlip"] == 2)		// serve up half the users with a rounded colorful button.
-	{
-		[oDemoNotification setStringValue:NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
-	}
-	else
-	{
-		[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
-	}
+	// NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
+	[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
+
 	myAnimation1 = [[KTColorTextFieldAnimation alloc] initWithStartColor:[NSColor blackColor] endColor:[NSColor redColor] textField:oDemoNotification];
 	myAnimation2 = [[KTColorTextFieldAnimation alloc] initWithStartColor:[NSColor redColor] endColor:[NSColor blackColor] textField:oDemoNotification];
 	
