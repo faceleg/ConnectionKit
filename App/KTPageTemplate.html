@@ -150,7 +150,11 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif3]]
 									<div class="pagelet-body">
                                         <div class="RichTextElement">
-                                            [[textblock property:aPagelet.body.archiveHTMLString flags:"block imageable"]]
+[[if parser.isPublishing]]
+                                            [[=aPagelet.body.HTMLString]]
+[[else3]]
+                                            [[textblock property:aPagelet.body.editingHTMLString flags:"block imageable"]]
+[[endif3]]
                                         </div>
 									</div>
 								</div>
