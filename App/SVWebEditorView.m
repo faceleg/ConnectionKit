@@ -279,9 +279,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (void)willEditDOMRange:(DOMRange *)range
+- (void)willEditTextInDOMRange:(DOMRange *)range
 {
+    // Record the range ready for a -didChange notification
+    OBASSERT(!_DOMRangeOfNextEdit);
+    _DOMRangeOfNextEdit = [range retain];
+}
 
+- (void)didChangeTextInDOMRange:(DOMRange *)range notification:(NSNotification *)notification;
+{
+    OBPRECONDITION(range);
+    
+    // Alert the corresponding Text object that it did change
+    id <SVWebEditorText> text = [[self dataSource] webEditorView:self
+                                            textBlockForDOMRange:range];
+    [text webEditorTextDidChange:notification];
 }
 
 #pragma mark Undo Support
@@ -799,7 +811,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         
         if (result)
         {
-            [self willEditDOMRange:range];
+            [self willEditTextInDOMRange:range];
         }
     }
     
@@ -828,20 +840,34 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         
         if (result)
         {
-            [self willEditDOMRange:range];
+            [self willEditTextInDOMRange:range];
         }
     }
     
     return result;
 }
 
-/*  The WebView sends this message whenever its content changes. Unfortunately, there is no way to know what part of the DOM changed, so we are left guessing who to send this message to.
+/*  The WebView sends this message whenever its content changes. Unfortunately, there is no way to know what part of the DOM changed, so we are left guessing who to send this message to. The best workaround I can think of is to trap what part of the DOM will be edited and use that.
  */
 - (void)webViewDidChange:(NSNotification *)notification
 {
-    OBASSERT([[self webView] isFirstResponder]);
-    
-    [[self focusedText] webEditorTextDidChange:notification];
+    // During undo operations, there's no indication that a change is about to be made, only a -didChange message. I'm going to ingore such messages as I'm not sure clients are interested
+    if (_DOMRangeOfNextEdit)
+    {
+        DOMRange *range = _DOMRangeOfNextEdit;
+        _DOMRangeOfNextEdit = nil;  // I'm trying to force this back to nil asap as it's a bit of a hack
+        
+        [self didChangeTextInDOMRange:range notification:notification];
+        [range release];
+    }
+    else
+    {
+        NSUndoManager *undoManager = [[self webView] undoManager];
+        if (![undoManager isUndoing] && ![undoManager isRedoing])
+        {
+            OBASSERT_NOT_REACHED("No DOMRange recorded for edit");
+        }
+    }
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification

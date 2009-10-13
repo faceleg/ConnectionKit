@@ -41,7 +41,8 @@ typedef enum {
     SVWebEditingMode        _mode;
     
     // Editing
-    BOOL    _mouseUpMayBeginEditing;
+    DOMRange        *_DOMRangeOfNextEdit;
+    BOOL            _mouseUpMayBeginEditing;
     NSUndoManager   *_undoManager;
     
     // Drag & Drop
@@ -88,7 +89,8 @@ typedef enum {
 // We don't want to allow any sort of change unless the WebView is First Responder
 - (BOOL)canEdit;
 // WebKit doesn't supply any sort of -willFoo editing notifications, but we're in control now and can provide a pretty decent approximation.
-- (void)willEditDOMRange:(DOMRange *)range;
+- (void)willEditTextInDOMRange:(DOMRange *)range;
+- (void)didChangeTextInDOMRange:(DOMRange *)range notification:(NSNotification *)notification;
 
 
 #pragma mark Undo Support
