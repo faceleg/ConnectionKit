@@ -1542,42 +1542,42 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090 /* iMediaTester.app */;
+			remoteGlobalIDString = 8D1107320486CEB800E47090;
 			remoteInfo = iMediaTester;
 		};
 		CEC0F94B10852CEE002CE02E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A /* iMediaTesterSingle.app */;
+			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A;
 			remoteInfo = iMediaTesterSingle;
 		};
 		CEC0F94D10852CEE002CE02E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 791679FE0975255000D9EF74 /* iMediaBrowser.framework */;
+			remoteGlobalIDString = 791679FE0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
 		CEC0F94F10852CEE002CE02E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = FD8EE5BC0C697C6C00E425BB /* MetadataTool */;
+			remoteGlobalIDString = FD8EE5BC0C697C6C00E425BB;
 			remoteInfo = MetadataTool;
 		};
 		CEC0F95110852CEE002CE02E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD /* movietool */;
+			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD;
 			remoteInfo = movietool;
 		};
 		CEC0F95510852D06002CE02E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 791679FD0975255000D9EF74 /* iMediaBrowser */;
+			remoteGlobalIDString = 791679FD0975255000D9EF74;
 			remoteInfo = iMediaBrowser;
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
