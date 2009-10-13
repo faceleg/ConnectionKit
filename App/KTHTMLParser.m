@@ -171,8 +171,10 @@
 
 /*!	Return a code that indicates what license is used.  To help with blacklists or detecting piracy.
  *	Returns a nonsense value.
+ 
+ FIXME: Is this even used anywhere?
  */
-- (NSString *)hash
+- (NSString *)rhash
 {
 	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
 }

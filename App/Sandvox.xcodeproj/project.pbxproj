@@ -346,7 +346,6 @@
 		279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */; };
 		279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */; };
 		279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
-		279E7DB50F485DC800BAB391 /* LeopardStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = 27E630310EC306940044ED36 /* LeopardStuff.bundle */; };
 		279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C59B05908A9B8E70076C6DC /* 13x13_empty.png */; };
 		279FF2BE0EF27699009F6A16 /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */; };
 		279FF2BF0EF27699009F6A16 /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */; };
@@ -977,7 +976,6 @@
 		CE7231220D85D96F00E9C592 /* favicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE7231210D85D96F00E9C592 /* favicon.icns */; };
 		CE7779E60AE499C3002E6844 /* KTPlaceholderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
-		CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */ = {isa = PBXBuildFile; fileRef = CE82F0390E777491003A0110 /* TigerStuff.bundle */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
 		CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */; };
@@ -1057,13 +1055,6 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
-		279E7D070F485AE200BAB391 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = LeopardStuff;
-		};
 		27E4D4500EC30CEE000E85DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
@@ -1077,13 +1068,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
 			remoteInfo = AmazonSupport;
-		};
-		27E630300EC306940044ED36 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = LeopardStuff;
 		};
 		3C095BE00D5D27F100DE6F62 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1512,19 +1496,12 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
-		CE7637EF1083F61500EEA9CF /* PBXContainerItemProxy */ = {
+		CE559B611085296D008870B5 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = 3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
-			remoteInfo = iMedia;
-		};
-		CE7637F11083F61500EEA9CF /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = D09933551011B26E00C527B7;
-			remoteInfo = "iMedia2 Tester";
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD;
+			remoteInfo = Framework;
 		};
 		CE7638091083F70600EEA9CF /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1560,6 +1537,48 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
+		};
+		CEC0F94910852CEE002CE02E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D1107320486CEB800E47090 /* iMediaTester.app */;
+			remoteInfo = iMediaTester;
+		};
+		CEC0F94B10852CEE002CE02E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A /* iMediaTesterSingle.app */;
+			remoteInfo = iMediaTesterSingle;
+		};
+		CEC0F94D10852CEE002CE02E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 791679FE0975255000D9EF74 /* iMediaBrowser.framework */;
+			remoteInfo = iMediaBrowser;
+		};
+		CEC0F94F10852CEE002CE02E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = FD8EE5BC0C697C6C00E425BB /* MetadataTool */;
+			remoteInfo = MetadataTool;
+		};
+		CEC0F95110852CEE002CE02E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD /* movietool */;
+			remoteInfo = movietool;
+		};
+		CEC0F95510852D06002CE02E /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 791679FD0975255000D9EF74 /* iMediaBrowser */;
+			remoteInfo = iMediaBrowser;
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2125,7 +2144,6 @@
 		3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLocalPublishingEngine.m; sourceTree = "<group>"; };
 		3CBFD395093C45930057668A /* KTSiteOutlineView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTSiteOutlineView.h; sourceTree = "<group>"; };
 		3CBFD396093C45930057668A /* KTSiteOutlineView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTSiteOutlineView.m; sourceTree = "<group>"; };
-		3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../../../imedia/iMedia.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDesign+ScaledImages.m"; sourceTree = "<group>"; };
 		3CD6B0EE0BFA380600B9287E /* ThirdParty.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ThirdParty.h; sourceTree = "<group>"; };
 		3CE686D30B531F9B0097451B /* movie.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = movie.png; sourceTree = "<group>"; };
@@ -2539,7 +2557,6 @@
 		CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		CE82F0390E777491003A0110 /* TigerStuff.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = TigerStuff.bundle; path = ../../Shared/Code/TigerLeopardStuff/TigerStuff/TigerStuff.bundle; sourceTree = SOURCE_ROOT; };
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
 		CE8E834A0917EFE2001DC88D /* designCoverLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeft.png; sourceTree = "<group>"; };
@@ -2596,13 +2613,13 @@
 		CEBCFEF90DB909E4001BF0DF /* arrow_black.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_black.pdf; sourceTree = "<group>"; };
 		CEBCFEFA0DB909E4001BF0DF /* arrow_grey_down.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_down.pdf; sourceTree = "<group>"; };
 		CEBCFEFB0DB909E4001BF0DF /* arrow_grey_up.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_up.pdf; sourceTree = "<group>"; };
+		CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../../imedia1/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
-		CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LeopardStuff.xcodeproj; path = ../../Shared/Code/TigerLeopardStuff/LeopardStuff/LeopardStuff.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
 		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
@@ -3201,14 +3218,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		27E6302D0EC306940044ED36 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				27E630310EC306940044ED36 /* LeopardStuff.bundle */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
@@ -3476,7 +3485,6 @@
 				3CA9FD410D63A0B400815310 /* Frameworks */,
 				3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */,
 				CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */,
-				CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */,
 			);
 			name = "Product Dependencies";
 			sourceTree = "<group>";
@@ -3503,7 +3511,6 @@
 		3C202E9807E00F8500DE4994 /* Executables */ = {
 			isa = PBXGroup;
 			children = (
-				CE82F0390E777491003A0110 /* TigerStuff.bundle */,
 				3C202E9607E00F8000DE4994 /* png2ico */,
 			);
 			name = Executables;
@@ -4199,7 +4206,7 @@
 			children = (
 				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
 				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
-				3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */,
+				CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4604,15 +4611,6 @@
 			path = DesignPicker;
 			sourceTree = "<group>";
 		};
-		CE7637EB1083F61500EEA9CF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CE7637F01083F61500EEA9CF /* iMedia.framework */,
-				CE7637F21083F61500EEA9CF /* iMedia2.app */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CE7638021083F70600EEA9CF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4702,6 +4700,18 @@
 				CEBCFD090DB905FF001BF0DF /* follow.tiff */,
 			);
 			name = "NSImageNamed Replacements";
+			sourceTree = "<group>";
+		};
+		CEC0F93E10852CEE002CE02E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CEC0F94A10852CEE002CE02E /* iMediaTester.app */,
+				CEC0F94C10852CEE002CE02E /* iMediaTesterSingle.app */,
+				CEC0F94E10852CEE002CE02E /* iMediaBrowser.framework */,
+				CEC0F95010852CEE002CE02E /* MetadataTool */,
+				CEC0F95210852CEE002CE02E /* movietool */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
@@ -5053,7 +5063,8 @@
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
-				279E7D080F485AE200BAB391 /* PBXTargetDependency */,
+				CE559B621085296D008870B5 /* PBXTargetDependency */,
+				CEC0F95610852D06002CE02E /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5183,8 +5194,8 @@
 					ProjectRef = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CE7637EB1083F61500EEA9CF /* Products */;
-					ProjectRef = 3CC59B3709AD4D87006202C0 /* iMedia.xcodeproj */;
+					ProductGroup = CEC0F93E10852CEE002CE02E /* Products */;
+					ProjectRef = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C42E4840D64FCE3004F35FD /* Products */;
@@ -5193,10 +5204,6 @@
 				{
 					ProductGroup = 3C42E40A0D64F93E004F35FD /* Products */;
 					ProjectRef = 3C42E4090D64F93E004F35FD /* IndexElement.xcodeproj */;
-				},
-				{
-					ProductGroup = 27E6302D0EC306940044ED36 /* Products */;
-					ProjectRef = CECFC00E0E54F8380080FB3D /* LeopardStuff.xcodeproj */;
 				},
 				{
 					ProductGroup = 3CA901A30D63D45B00815310 /* Products */;
@@ -5282,13 +5289,6 @@
 			fileType = wrapper.framework;
 			path = AmazonSupport.framework;
 			remoteRef = 27E62FF80EC3060A0044ED36 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		27E630310EC306940044ED36 /* LeopardStuff.bundle */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = LeopardStuff.bundle;
-			remoteRef = 27E630300EC306940044ED36 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C095BE10D5D27F100DE6F62 /* Download.svxIndex */ = {
@@ -5466,20 +5466,6 @@
 			remoteRef = CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CE7637F01083F61500EEA9CF /* iMedia.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = iMedia.framework;
-			remoteRef = CE7637EF1083F61500EEA9CF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CE7637F21083F61500EEA9CF /* iMedia2.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = iMedia2.app;
-			remoteRef = CE7637F11083F61500EEA9CF /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		CE76380A1083F70600EEA9CF /* Connection.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
@@ -5515,6 +5501,41 @@
 			remoteRef = CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
+		CEC0F94A10852CEE002CE02E /* iMediaTester.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iMediaTester.app;
+			remoteRef = CEC0F94910852CEE002CE02E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEC0F94C10852CEE002CE02E /* iMediaTesterSingle.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = iMediaTesterSingle.app;
+			remoteRef = CEC0F94B10852CEE002CE02E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEC0F94E10852CEE002CE02E /* iMediaBrowser.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = iMediaBrowser.framework;
+			remoteRef = CEC0F94D10852CEE002CE02E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEC0F95010852CEE002CE02E /* MetadataTool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = MetadataTool;
+			remoteRef = CEC0F94F10852CEE002CE02E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CEC0F95210852CEE002CE02E /* movietool */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = movietool;
+			remoteRef = CEC0F95110852CEE002CE02E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5529,7 +5550,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				279E7DB50F485DC800BAB391 /* LeopardStuff.bundle in Resources */,
 				3C202E9507E00F5700DE4994 /* document.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
@@ -5670,7 +5690,6 @@
 				CEBCFEFE0DB909E4001BF0DF /* arrow_grey_up.pdf in Resources */,
 				279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
-				CE82F03A0E777491003A0110 /* TigerStuff.bundle in Resources */,
 				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
 				CE01A82B0EAFD65E00BDF264 /* help.mini.png in Resources */,
 				CE01A82C0EAFD65E00BDF264 /* help.small.png in Resources */,
@@ -6437,11 +6456,6 @@
 			name = MetaSandvox;
 			targetProxy = 274E827F0D627180004F89C2 /* PBXContainerItemProxy */;
 		};
-		279E7D080F485AE200BAB391 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = LeopardStuff;
-			targetProxy = 279E7D070F485AE200BAB391 /* PBXContainerItemProxy */;
-		};
 		27E4D4510EC30CEE000E85DD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = AmazonSupport;
@@ -6626,6 +6640,16 @@
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
 			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
+		};
+		CE559B621085296D008870B5 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = CE559B611085296D008870B5 /* PBXContainerItemProxy */;
+		};
+		CEC0F95610852D06002CE02E /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = iMediaBrowser;
+			targetProxy = CEC0F95510852D06002CE02E /* PBXContainerItemProxy */;
 		};
 		CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
