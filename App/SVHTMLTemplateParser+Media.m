@@ -1,5 +1,5 @@
 //
-//  KTHTMLParser+Media.m
+//  SVHTMLTemplateParser+Media.m
 //  Marvel
 //
 //  Created by Mike on 08/01/2009.

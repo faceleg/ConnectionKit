@@ -1,5 +1,5 @@
 //
-//  KTHTMLParser.m
+//  SVHTMLTemplateParser.m
 //  KTComponents
 //
 //  Copyright 2004-2009 Karelia Software. All rights reserved.

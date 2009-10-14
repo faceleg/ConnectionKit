@@ -1,5 +1,5 @@
 //
-//  KTHTMLParser+Text.m
+//  SVHTMLTemplateParser+Text.m
 //  Marvel
 //
 //  Created by Mike on 05/03/2008.

@@ -1,5 +1,5 @@
 //
-//  KTHTMLParser+Summaries.m
+//  SVHTMLTemplateParser+Summaries.m
 //  Marvel
 //
 //  Created by Mike on 08/02/2008.

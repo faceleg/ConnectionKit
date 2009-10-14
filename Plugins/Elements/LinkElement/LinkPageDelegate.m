@@ -225,7 +225,7 @@
 
 - (NSString *)summary   // Only called for page-within-page
 {
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:[self iFrameTemplateHTML]
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[self iFrameTemplateHTML]
 														component:[self delegateOwner]];
 	
 	[parser setHTMLGenerationPurpose:kGeneratingRemote];

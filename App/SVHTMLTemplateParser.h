@@ -1,5 +1,5 @@
 //
-//  KTHTMLParser.h
+//  SVHTMLTemplateParser.h
 //  Sandvox
 //
 //  Copyright 2005-2009 Karelia Software. All rights reserved.

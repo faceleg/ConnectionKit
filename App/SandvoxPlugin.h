@@ -45,7 +45,7 @@
 
 // Template parsing
 #import "KTTemplateParser.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 
 //  Media
 #import "KTMediaFile.h"

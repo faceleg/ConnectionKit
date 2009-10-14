@@ -1,5 +1,5 @@
 //
-//  KTHTMLParser+Private.h
+//  SVHTMLTemplateParser+Private.h
 //  Marvel
 //
 //  Created by Mike on 19/02/2008.
