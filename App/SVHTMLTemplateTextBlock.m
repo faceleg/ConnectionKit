@@ -244,7 +244,8 @@
 
 - (NSString *)innerHTML
 {
-	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	id source = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+    NSString *result = ([source isKindOfClass:[SVPageletBody class]] ? [source editingHTMLString] : source);
 	if (!result) result = @"";
 
 	result = [self processHTML:result];

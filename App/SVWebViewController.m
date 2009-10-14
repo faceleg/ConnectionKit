@@ -175,19 +175,21 @@
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
         OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
         
-        Class textBlockClass = [SVWebTextArea class];
-        SVWebTextArea *aController = [[textBlockClass alloc] initWithDOMElement:element];
-        [aController setRichText:[aTextBlock isRichText]];
-        [aController setFieldEditor:[aTextBlock isFieldEditor]];
+        SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithDOMElement:element];
+        [textArea setRichText:[aTextBlock isRichText]];
+        [textArea setFieldEditor:[aTextBlock isFieldEditor]];
         
-        [controllers addObject:aController];
-        [aController release];
+        [controllers addObject:textArea];
+        [textArea release];
         
         // Binding
-        [aController bind:NSValueBinding
-                 toObject:[aTextBlock HTMLSourceObject]
-              withKeyPath:[aTextBlock HTMLSourceKeyPath]
-                  options:nil];
+        if (![aTextBlock importsGraphics])
+        {
+            [textArea bind:NSValueBinding
+                     toObject:[aTextBlock HTMLSourceObject]
+                  withKeyPath:[aTextBlock HTMLSourceKeyPath]
+                      options:nil];
+        }
     }
     
     [self setTextBlocks:controllers];
