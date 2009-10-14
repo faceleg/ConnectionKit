@@ -2519,8 +2519,8 @@
 		CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerBackground.h; sourceTree = "<group>"; };
 		CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPickerBackground.m; sourceTree = "<group>"; };
 		CE4F81000891B55600556D47 /* designSelectedClickGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designSelectedClickGloss.png; sourceTree = "<group>"; };
-		CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSShadowedRectView.h; path = ../../../Shared/AppKit/KSShadowedRectView.h; sourceTree = SOURCE_ROOT; };
-		CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSShadowedRectView.m; path = ../../../Shared/AppKit/KSShadowedRectView.m; sourceTree = SOURCE_ROOT; };
+		CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSShadowedRectView.h; sourceTree = "<group>"; };
+		CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSShadowedRectView.m; sourceTree = "<group>"; };
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
 		CE510FCC090EA74C00547CFF /* KTTranscriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTranscriptController.m; sourceTree = "<group>"; };
 		CE55B0E30AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_CN; path = zh_CN.lproj/Credits.html; sourceTree = "<group>"; };
