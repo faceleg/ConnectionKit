@@ -14,8 +14,8 @@
 			<integer value="1649"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
-			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string>com.brandonwalkin.BWToolkit</string>
+			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
 		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="600664544">
@@ -38,7 +38,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSWindowContentMinSize">{800, 280}</string>
 				<object class="NSView" key="NSWindowView" id="810270195">
 					<reference key="NSNextResponder"/>
@@ -121,7 +121,7 @@
 																			<string key="NSColorName">controlBackgroundColor</string>
 																			<object class="NSColor" key="NSColor" id="47196996">
 																				<int key="NSColorSpace">3</int>
-																				<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+																				<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
 																			</object>
 																		</object>
 																		<object class="NSColor" key="NSTextColor" id="801130899">
@@ -500,7 +500,7 @@
 														<reference key="NSBackgroundColor" ref="97692237"/>
 														<object class="NSColor" key="NSTextColor">
 															<int key="NSColorSpace">3</int>
-															<bytes key="NSWhite">MC40OTU5Njc3NDE5AA</bytes>
+															<bytes key="NSWhite">MC40OTU5Njc3NDU4AA</bytes>
 														</object>
 													</object>
 												</object>
@@ -582,7 +582,7 @@
 										<object class="NSTabView" id="92364140">
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">274</int>
-											<string key="NSFrame">{{0, 98}, {659, 509}}</string>
+											<string key="NSFrame">{{0, 98}, {659, 455}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<array class="NSMutableArray" key="NSTabViewItems"/>
 											<reference key="NSFont" ref="502413197"/>
@@ -644,7 +644,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{800, 302}</string>
-				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSFrameAutosaveName">KTDocument</string>
 			</object>
 			<object class="NSViewController" id="363902086"/>
@@ -669,7 +669,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSWindowContentMinSize">{213, 14}</string>
 				<object class="NSView" key="NSWindowView" id="834058994">
 					<nil key="NSNextResponder"/>
@@ -857,7 +857,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 36}</string>
-				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
