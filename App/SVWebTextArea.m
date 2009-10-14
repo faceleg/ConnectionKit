@@ -40,14 +40,12 @@
     [super init];
     
     _element = [element retain];
-    [self setWebView:[[[element ownerDocument] webFrame] webView]];
     
     return self;
 }
 
 - (void)dealloc
 {
-    [self setWebView:nil];
     [_element release];
     
     [super dealloc];
@@ -56,8 +54,6 @@
 #pragma mark WebView
 
 @synthesize DOMElement = _element;
-
-@synthesize webView = _webView;
 
 #pragma mark Contents
 
@@ -223,7 +219,7 @@
 	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
 	{
 		// When the user hits option-return insert a line break.
-        [[[[self webView] window] firstResponder] insertLineBreak:self];
+        [[[self DOMElement] documentView] insertLineBreak:self];
 		result = YES;
 	}
 	
@@ -305,10 +301,43 @@
     return YES;
 }
 
-#pragma mark Sub-content
+#pragma mark Delegate
 
-// Our subclasses implement this properly
-- (NSArray *)contentItems { return nil; }
+@synthesize delegate = _delegate;
+- (void)setDelegate:(id <SVWebTextAreaDelegate>)delegate
+{
+    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
+    
+    // Dump old delegate
+    if ([_delegate respondsToSelector:@selector(textDidChange:)])
+    {
+        [center removeObserver:_delegate name:NSTextDidChangeNotification object:self];
+    }
+    if ([_delegate respondsToSelector:@selector(textDidBeginEditing:)])
+    {
+        [center removeObserver:_delegate name:NSTextDidBeginEditingNotification object:self];
+    }
+    if ([_delegate respondsToSelector:@selector(textDidEndEditing:)])
+    {
+        [center removeObserver:_delegate name:NSTextDidEndEditingNotification object:self];
+    }
+    
+    // Store new delegate
+    _delegate = delegate;
+    
+    if ([_delegate respondsToSelector:@selector(textDidChange:)])
+    {
+        [center addObserver:_delegate selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
+    }
+    if ([_delegate respondsToSelector:@selector(textDidBeginEditing:)])
+    {
+        [center addObserver:_delegate selector:@selector(textDidBeginEditing:) name:NSTextDidBeginEditingNotification object:self];
+    }
+    if ([_delegate respondsToSelector:@selector(textDidEndEditing:)])
+    {
+        [center addObserver:_delegate selector:@selector(textDidEndEditing:) name:NSTextDidEndEditingNotification object:self];
+    }
+}
 
 @end
 

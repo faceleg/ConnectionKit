@@ -15,12 +15,11 @@
 #import "KSKeyValueBinding.h"
 
 
+@protocol SVWebTextAreaDelegate;
 @interface SVWebTextArea : NSObject <SVWebEditorText, KSEditor>
 {
   @private
     DOMHTMLElement      *_element;
-    //SVWebViewController *_controller;   // weak ref
-    WebView             *_webView;
     
     BOOL    _isRichText;
     BOOL    _isFieldEditor;
@@ -28,6 +27,9 @@
     // Editing
     BOOL            _isEditing;
     NSString        *_uneditedValue;
+    
+    // Delegate
+    id <SVWebTextAreaDelegate>  _delegate;
     
     // Bindings
     id <KSEditorRegistration>   _controller;  // weak ref
@@ -38,8 +40,7 @@
 
 
 @property(nonatomic, retain, readonly) DOMHTMLElement *DOMElement;
-//@property(nonatomic, assign, readonly) SVWebViewController *webViewController;
-@property(nonatomic, retain) WebView *webView;  // only ever need to change if -DOMElement moves to a new webview
+
 
 // Returns whatever is entered into the text box right now. This is what gets used for the "value" binding. You want to use this rather than querying the DOM Element for its -innerHTML directly as it takes into account the presence of any inner tags like a <span class="in">
 @property(nonatomic, copy) NSString *HTMLString;
@@ -65,8 +66,18 @@
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
 
 
-#pragma mark Sub content
-@property(nonatomic, readonly) NSArray *contentItems;
+#pragma mark Delegate
+@property(nonatomic, assign) id <SVWebTextAreaDelegate> delegate;
 
+@end
+
+
+#pragma mark -
+
+#if !defined MAC_OS_X_VERSION_10_6 || MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
+@protocol NSTextDelegate <NSObject> @end
+#endif
+
+@protocol SVWebTextAreaDelegate <NSTextDelegate>
 @end
 
