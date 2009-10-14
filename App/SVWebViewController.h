@@ -20,9 +20,8 @@
     KTPage  *_page;
     BOOL    _isLoading;
     
-    NSMutableArray  *_HTMLTextBlocks;
-    NSArray         *_textBlocks;
-    SVWebTextArea     *_selectedTextBlock;
+    NSMutableArray  *_parsedTextBlocks;
+    NSArray         *_textAreas;
     
     SVWebEditorView     *_webEditorView;
     DOMHTMLDivElement   *_sidebarDiv;
@@ -49,6 +48,7 @@
 
 @property(nonatomic, retain) SVWebEditorView *webEditorView;
 @property(nonatomic, copy, readonly) NSArray *contentItems;
+
 
 #pragma mark Delegate
 @property(nonatomic, assign) id <SVWebEditorViewControllerDelegate> delegate;

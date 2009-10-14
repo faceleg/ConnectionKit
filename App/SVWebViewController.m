@@ -48,8 +48,8 @@
     [self setWebEditorView:nil];   // needed to tear down data source
     
     [_page release];
-    OBASSERT(!_HTMLTextBlocks); [_HTMLTextBlocks release];
-    [_textBlocks release];
+    OBASSERT(!_parsedTextBlocks); [_parsedTextBlocks release];
+    [_textAreas release];
     
     [super dealloc];
 }
@@ -134,8 +134,8 @@
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
 	
-    OBASSERT(!_HTMLTextBlocks);
-    _HTMLTextBlocks = [[NSMutableArray alloc] init];
+    OBASSERT(!_parsedTextBlocks);
+    _parsedTextBlocks = [[NSMutableArray alloc] init];
     
 	NSString *pageHTML = [parser parseTemplate];
 	[parser release];
@@ -157,7 +157,7 @@
 
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 {
-    if ([textBlock isEditable]) [_HTMLTextBlocks addObject:textBlock];
+    if ([textBlock isEditable]) [_parsedTextBlocks addObject:textBlock];
 }
 
 @synthesize loading = _isLoading;
@@ -165,10 +165,10 @@
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
     // Prepare controllers for each text block
-    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];
+    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_parsedTextBlocks count]];
     DOMDocument *domDoc = [[self webEditorView] DOMDocument];
     
-    for (SVHTMLTemplateTextBlock *aTextBlock in _HTMLTextBlocks)
+    for (SVHTMLTemplateTextBlock *aTextBlock in _parsedTextBlocks)
     {
         // Basic text area
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
@@ -197,7 +197,7 @@
     }
     
     [self setTextAreas:controllers];
-    [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
+    [_parsedTextBlocks release], _parsedTextBlocks = nil;
     
     
     
@@ -239,7 +239,7 @@
 
 #pragma mark Text Blocks
 
-@synthesize textAreas = _textBlocks;
+@synthesize textAreas = _textAreas;
 
 - (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
 {
