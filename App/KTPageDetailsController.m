@@ -99,7 +99,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
 	/// this still leaves the setting of keywords for the page undo'able, it's
 	/// just now that typing inside the field is now not undoable
-	[[oKeywordsField cell] setAllowsUndo:NO];
+	//[[oKeywordsField cell] setAllowsUndo:NO];
 	
 	
 	// Limit entry in file name fields
