@@ -10,13 +10,7 @@
 #import "SVHTMLTemplateTextBlock.h"
 #import "SVHTMLTemplateParser+Private.h"
 
-
-#import "DOM+KTWebViewController.h"
-#import "DOMNode+KTExtensions.h"
-
 #import "KTDesign.h"
-#import "KTDocWindowController.h"
-#import "KTDocWebViewController.h"
 #import "KTMaster+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
@@ -34,6 +28,7 @@
 
 #import "Debug.h"
 #import "Macros.h"
+
 
 @implementation SVHTMLTemplateTextBlock
 
