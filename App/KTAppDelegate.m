@@ -827,7 +827,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[KTLogger configure:self];
 }
 
-- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
+- (void)applicationcheckLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
 
@@ -1246,7 +1246,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		//[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
 		
 		[self setMenuItemPro:oEditRawHTMLMenuItem];
-		[self setMenuItemPro:oFindSubmenu];
+
+		
+		// FIXME: MISSING. [self setMenuItemPro:oFindSubmenu];
 		[self setMenuItemPro:oCodeInjectionMenuItem];
 		[self setMenuItemPro:oCodeInjectionLevelMenuItem];
 	}

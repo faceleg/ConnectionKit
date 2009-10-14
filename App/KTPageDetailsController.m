@@ -239,7 +239,9 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])
 	{
 		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-		[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
+		
+		// FIXME: BREAKING HERE
+		// [newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
 		
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
