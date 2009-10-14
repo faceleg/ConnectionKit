@@ -19,12 +19,9 @@
 
 	IBOutlet NSTextField			*oPageFileNameField;
 	IBOutlet NSTextField			*oCollectionFileNameField;
-	IBOutlet NSTokenField			*oKeywordsField;
 	IBOutlet KSPopUpButton			*oFileExtensionPopup;
 	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
-	
-	IBOutlet KTPageDetailsBoxView	*oBoxView;
-	
+		
 	IBOutlet NSObjectController		*oPagesController;
 	
 @private
