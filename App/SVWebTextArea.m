@@ -146,6 +146,9 @@
     OBPRECONDITION(_isEditing == NO);
     _isEditing = YES;
     
+    // Notify delegate/others
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification
+                                                        object:self];
     
     // Tell controller we're starting editing
     [_controller objectDidBeginEditing:self];
@@ -159,12 +162,21 @@
         [self didBeginEditing];
     }
     
+    // Notify delegate/others
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
+                                                        object:self];
+    
     
     /* Can now do other stuff in response to change */
 }
 
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
 {
+    // Notify delegate/others
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification
+                                                        object:self];
+    
+    
     // Handle any bindings
     if ([self isEditing])
     {
