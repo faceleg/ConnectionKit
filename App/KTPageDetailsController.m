@@ -60,19 +60,12 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	[super setView:aView];
 }
 
-- (NTBoxView *)pageDetailsPanel
-{
-	return (NTBoxView *)[self view];
-}
-
 #pragma mark -
 #pragma mark Appearance
 
 - (void)awakeFromNib
 {
 	// Detail panel needs the right appearance
-	[[self pageDetailsPanel] setDrawsFrame:YES];
-	[[self pageDetailsPanel] setBorderMask:(NTBoxRight | NTBoxBottom)];
 	
 	
 	// Observe changes to the meta description and fake an initial observation

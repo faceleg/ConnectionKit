@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "KTDocViewController.h"
+#import <Cocoa/Cocoa.h>
 
 
 @class NTBoxView, KSPopUpButton, KTPageDetailsBoxView;
 
 
-@interface KTPageDetailsController : KTDocViewController
+@interface KTPageDetailsController : NSViewController
 {
 	IBOutlet NSTextField			*oWindowTitleField;
 	IBOutlet NSTextField			*oMetaDescriptionField;
