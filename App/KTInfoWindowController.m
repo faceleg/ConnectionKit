@@ -12,7 +12,6 @@
 #import "Debug.h"
 #import "KSEmailAddressComboBox.h"
 #import "KSPathInfoField.h"
-#import "KSSmallDatePicker.h"
 #import "KT.h"
 #import "KTAppDelegate.h"
 #import "KTApplication.h"

@@ -68,7 +68,6 @@
 #import "KSLabel.h"
 #import "KSPathInfoField.h"
 #import "KSPlaceholderTableView.h"
-#import "KSSmallDatePicker.h"
 #import "KSTrimFirstLineFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
 #import "KSWebLocation.h"

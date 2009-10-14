@@ -47,9 +47,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 #pragma mark View
 
 - (void)setView:(NSView *)aView
-{
-	if (aView) OBPRECONDITION([aView isKindOfClass:[NTBoxView class]]);
-	
+{	
 	// Remove observers
 	if (!aView)
 	{
@@ -244,7 +242,9 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 		// [newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
 		
 		[oWindowTitleField unbind:NSValueBinding];
-		[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+
+		// FIXME: BREAKING HERE
+		// [oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
 	}
 }
 
