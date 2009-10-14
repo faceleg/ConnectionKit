@@ -35,16 +35,8 @@
 #import "Debug.h"
 #import "Macros.h"
 
-@interface SVHTMLTemplateTextBlock ()
-
-+ (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)element;
-
-@end
-
-
 @implementation SVHTMLTemplateTextBlock
 
-#pragma mark -
 #pragma mark Init & Dealloc
 
 - (id)init
@@ -71,9 +63,6 @@
 
 - (void)dealloc
 {
-	OBASSERT(!myIsEditing);
-	
-	[myDOMNode release];
 	[myHTMLTag release];
 	[myGraphicalTextCode release];
 	[myHyperlinkString release];
@@ -85,14 +74,7 @@
 	[super dealloc];
 }
 
-#pragma mark -
 #pragma mark Accessors
-
-- (SVHTMLTemplateParser *)parser { return myParser; }
-
-- (KTWebViewComponent *)webViewComponent { return myWebViewComponent; }
-
-- (void)setWebViewComponent:(KTWebViewComponent *)component { myWebViewComponent = component; }	// Weak ref
 
 - (NSString *)DOMNodeID
 {
@@ -104,14 +86,7 @@
 	return result;
 }
 
-- (DOMHTMLElement *)DOMNode { return myDOMNode; }
-
-- (void)setDOMNode:(DOMHTMLElement *)node
-{
-	[node retain];
-	[myDOMNode release];
-	myDOMNode = node;
-}
+- (SVHTMLTemplateParser *)parser { return myParser; }
 
 /*	Many bits of editable text contain a tag like so:
  *		<span class="in">.....</span>
@@ -192,7 +167,6 @@
 - (void)setImportsGraphics:(BOOL)flag { myImportsGraphics = flag; }
 
 
-#pragma mark -
 #pragma mark Graphical Text
 
 /*	When the code is a non-nil value, if the design specifies it, we swap the text for special Quartz Composer
@@ -271,7 +245,6 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark HTML
 
 - (NSString *)innerHTML
@@ -493,314 +466,5 @@
     
     return result;
 }
-
-
-/*	This method could probably do with a better name. It returns the HTML presently inside the DOM node.
- */
-- (NSString *)liveInnerHTML
-{
-	NSString *result = [[self DOMNode] cleanedInnerHTML];
-	// OK, the problem is when all we have left is <p><br />\n</p> .... this should really be empty.
-	if (![[self DOMNode] hasVisibleContents])
-	{
-		result = @"";
-	}
-	
-	return result;
-}
-
-#pragma mark -
-#pragma mark Editing
-
-- (BOOL)becomeFirstResponder
-{
-	OBASSERTSTRING(!myIsEditing, @"Can't become first responder, already editing");
-	
-	// <span class="in"> tags need to become blocks when beginning editing
-	if ([self isFieldEditor] && ![self hasSpanIn])
-	{
-		[[self DOMNode] setAttribute:@"style" value:@"display:block;"];
-	}
-	
-	
-	// Graphical text needs to be turned off
-	if ([self graphicalTextCode] && [self isFieldEditor] && ![self hasSpanIn])
-	{
-		DOMElement *node = (DOMElement *)[[self DOMNode] parentNode];
-		[node removeAttribute:@"style"];
-	}
-    
-    
-    // If needed, reload inner HTML from disk. BUGSID:30635
-    // TODO: Maintain the selection and merge in with our Summaries subclass
-    NSString *expectedHTML = [self innerHTML];
-    NSString *currentHTML = [[self DOMNode] innerHTML];
-    if (!KSISEQUAL(expectedHTML, currentHTML) &&
-        ![currentHTML isEqualToString:@"<p>Lorem ipsum dolor sit amet.</p>"])   // Hack for editing markers
-    {
-        [[self DOMNode] setInnerHTML:expectedHTML];
-    }
-    
-	
-	myIsEditing = YES;
-	return YES;
-}
-
-- (void)removeDOMJunkAllowingEmptyParagraphs:(BOOL)allowEmptyParagraphs
-{
-	[[self DOMNode] removeJunkRecursiveRestrictive:NO allowEmptyParagraphs:allowEmptyParagraphs];
-	
-	
-	// If this is a single line object, and it does not contain a single span, then insert a single span
-	if ([self isFieldEditor])
-	{
-		// Let's try this .. we seem to get just a <br /> inside a node when the text is removed.  Let me try just removing that.
-		
-		// Here is really where we might want to remove any <p> paragraphs and separate multiple paragraphs by <br /> .... this would be to 'repair' old sites where we had paragraphs in the footer
-		
-		DOMNodeList *list = [[self DOMNode] childNodes];
-		if ([list length] == 1)
-		{
-			DOMNode *firstChild = [list item:0];
-			if ([[firstChild nodeName] isEqualToString:@"BR"])
-			{
-				[[self DOMNode] removeChild:firstChild];
-			}
-		}
-		
-	}
-	else
-	{
-		//   <p><br />  [newline] </p>		... BUT DON'T EMPTY OUT IF A SCRIPT
-		if (![[self DOMNode] hasVisibleContents])
-		{
-			DOMNodeList *list = [[self DOMNode] childNodes];
-			int i, len = [list length];
-			for ( i = 0 ; i < len ; i++ )
-			{
-				[[self DOMNode] removeChild:[list item:0]];
-			}
-		}
-	}
-}
-
-/*	Another NSTextView clone method
- *	Performs appropriate actions at the end of editing.
- */
-- (BOOL)resignFirstResponder
-{
-	OBASSERTSTRING(myIsEditing, @"Can't resign first responder, not currently editing");
-	
-	// Tidy up HTML
-	[self removeDOMJunkAllowingEmptyParagraphs:YES];
-	
-	
-	// Save the HTML to our source object
-	BOOL result = [self commitEditing];
-	
-	
-	if (result)
-	{
-		// Put the span class="in" back into the HTML
-		if ([self hasSpanIn])
-		{
-			NSString *newInnerHTML =
-				[NSString stringWithFormat:@"<span class=\"in\">%@</span>", [[self DOMNode] cleanedInnerHTML]];
-			[[self DOMNode] setInnerHTML:newInnerHTML];
-		}
-	
-	
-		// <span class="in"> tags need to become blocks when beginning editing
-		if ([self isFieldEditor] && ![self hasSpanIn])
-		{
-			[[self DOMNode] removeAttribute:@"style"];
-		}
-
-		
-		// Graphical text needs to be turned back on
-		if ([self graphicalTextCode] && [self isFieldEditor] && ![self hasSpanIn])
-		{
-			DOMElement *node = (DOMElement *)[[self DOMNode] parentNode];
-			[node setAttribute:@"style" value:[self graphicalTextPreviewStyle]];
-		}
-		
-		
-		myIsEditing = NO;
-	}
-	
-	
-	return result;
-}
-
-- (BOOL)commitEditing
-{
-	// Fetch the HTML to save. Reduce to nil when appropriate
-	NSString *innerHTML = [self liveInnerHTML];
-	[self commitHTML:innerHTML];
-	
-	
-	return YES;
-}
-
-
-- (void)commitHTML:(NSString *)innerHTML
-{
-	if ([self isFieldEditor])
-	{
-		NSString *flattenedHTML = [innerHTML stringByConvertingHTMLToPlainText];
-		if ([flattenedHTML isEmptyString]) innerHTML = nil;
-	}
-	
-	
-	// Save back to model
-	KTDocWebViewController *webViewController = [[self webViewComponent] webViewController];
-	[webViewController suspendWebViewLoading];
-	
-	id sourceObject = [self HTMLSourceObject];
-	NSString *sourceKeyPath = [self HTMLSourceKeyPath];
-    OBASSERT(sourceKeyPath);
-	if (![[sourceObject valueForKeyPath:sourceKeyPath] isEqualToString:innerHTML])
-	{
-		[sourceObject setValue:innerHTML forKeyPath:sourceKeyPath];
-	}
-	
-	[webViewController resumeWebViewLoading];
-}
-
-#pragma mark -
-#pragma mark Drag and Drop
-
-/*!	We validate any DOMNode insertions, passing them to the edited object if appropriate.
- *	The insertion can be pasted, dropped or typed, but the last case doesn't seem to happen normally.
- */
-// TODO: improve on this by looking at UTI and creating OBJECT elements for .mov files, etc.
-- (BOOL)webView:(WebView *)aWebView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
-// node is DOMDocumentFragment
-{
-	BOOL result = YES;    
-    
-    // Work out the right plugin to use
-    KTAbstractElement *plugin = [self HTMLSourceObject];
-    if (![plugin isKindOfClass:[KTAbstractElement class]])
-    {
-        plugin = [[self parser] currentPage];
-    }
-    
-    
-    // Figure out the maximum image size we'll allow
-	NSString *settings;
-	if ([plugin isKindOfClass:[KTPagelet class]])
-	{
-		settings = @"sidebarImage";
-	}
-	else if ([plugin isKindOfClass:[KTPage class]])
-	{
-		// TODO: could we vary the size based on whether the page is showing a sidebar?
-		settings = @"inTextMediumImage";
-	}
-	else
-	{
-		return NO;
-	}
-	
-	
-	// Import graphics into the media system
-    if ([self importsGraphics])
-    {
-        if ([node isFileList])
-        {
-            DOMNodeList *divs = [node childNodes];
-            unsigned i;
-            for (i=0; i<[divs length]; i++)
-            {
-                [[self class] convertFileListElement:(DOMHTMLDivElement *)[divs item:i]
-                            toImageWithSettingsNamed:settings
-                                           forPlugin:plugin];
-            }
-        }	
-        else
-        {
-            [node convertImageSourcesToUseSettingsNamed:settings forPlugin:plugin];
-        }
-    }
-    
-    
-    if (result)
-	{
-		// Tidy up the node to match the insertion destination
-		if ([self isRichText] && [self isFieldEditor])
-		{
-			[node makeSingleLine];
-		}
-		else if (![self isRichText])
-		{
-			[node makePlainTextWithSingleLine:[self isFieldEditor]];	// Could perhaps use -innerText method instead
-		}
-		
-		
-		// Ban inserts of <img> elements into non-importsGraphics text.
-		if (![self importsGraphics])
-		{
-			DOMNodeIterator *it = [[node ownerDocument] createNodeIterator:node whatToShow:DOM_SHOW_ELEMENT filter:nil expandEntityReferences:NO];
-			DOMNode *aNode = [it nextNode];
-			while (nil != aNode)
-			{
-				if ([[aNode nodeName] isEqualToString:@"IMG"])
-				{
-					result = NO;
-					break;
-				}
-				aNode = [it nextNode];
-			}
-		}
-	}
-	
-	
-	return result;
-}
-
-+ (void)convertFileListElement:(DOMHTMLDivElement *)div
-      toImageWithSettingsNamed:(NSString *)settingsName
-                     forPlugin:(KTAbstractElement *)element
-{
-	// TODO: what happens when the default design size changes?
-	DOMNode *node = [div parentNode];
-    
-	// Create a media container for the file
-    NSString *URLString = [(DOMText *)[div firstChild] data];
-    NSURL *URL = [NSURL URLWithUnescapedString:URLString];   // MUST encode legally to handle accented characters
-	NSString *path = [URL path];
-	KTMediaContainer *mediaContainer = [[element mediaManager] mediaContainerWithPath:path];
-	
-	
-	if ([NSString UTI:[NSString UTIForFileAtPath:path] conformsToUTI:(NSString *)kUTTypeImage])
-	{
-		// Convert image files to a simple <img> tag
-		mediaContainer = [mediaContainer imageWithScalingSettingsNamed:settingsName forPlugin:element];
-		
-		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
-		[imageElement setSrc:[[mediaContainer URIRepresentation] absoluteString]];
-		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
-		
-		[node replaceChild:imageElement oldChild:div];
-	}
-	else
-	{
-		// Other files are converted to their thumbnail and made a download link
-		KTMediaContainer *icon =
-        [mediaContainer imageWithScalingSettingsNamed:@"thumbnailImage" forPlugin:element];
-		
-		DOMHTMLImageElement *imageElement = (DOMHTMLImageElement *)[[node ownerDocument] createElement:@"IMG"];
-		[imageElement setSrc:[[icon URIRepresentation] absoluteString]];
-		[imageElement setAlt:[[path lastPathComponent] stringByDeletingPathExtension]];
-		
-		DOMHTMLAnchorElement *anchor = (DOMHTMLAnchorElement *)[[node ownerDocument] createElement:@"a"];
-		[anchor setHref:[[mediaContainer URIRepresentation] absoluteString]];
-		[anchor appendChild:imageElement];
-		
-		[node replaceChild:anchor oldChild:div];	
-	}
-}
-
 
 @end

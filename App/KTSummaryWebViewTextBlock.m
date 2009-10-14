@@ -84,7 +84,6 @@
 		}
 	}
 	
-	myIsEditing = YES;
 	return YES;
 }
 

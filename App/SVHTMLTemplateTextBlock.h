@@ -17,10 +17,7 @@
 @interface SVHTMLTemplateTextBlock : NSObject
 {
 //@private
-	SVHTMLTemplateParser		*myParser;
-	KTWebViewComponent	*myWebViewComponent;	// Weak ref
-    
-	DOMHTMLElement	*myDOMNode;
+	SVHTMLTemplateParser		*myParser;    
 	
 	BOOL			myIsEditable;
 	BOOL			myIsFieldEditor;
@@ -34,22 +31,14 @@
 	
 	id			myHTMLSourceObject;
 	NSString	*myHTMLSourceKeyPath;
-		
-	BOOL	myIsEditing;
 }
 
 #pragma mark Accessors
 
 - (id)initWithParser:(SVHTMLTemplateParser *)parser;
-//@property(nonatomic, retain, readonly) KTHTMLParser *parser;
+@property(nonatomic, retain, readonly) SVHTMLTemplateParser *parser;
 
-- (KTWebViewComponent *)webViewComponent;
-- (void)setWebViewComponent:(KTWebViewComponent *)component;
-
-- (NSString *)DOMNodeID;
-- (DOMHTMLElement *)DOMNode;
-- (void)setDOMNode:(DOMHTMLElement *)node;
-
+@property(nonatomic, readonly) NSString *DOMNodeID;
 
 @property(nonatomic, getter=isEditable) BOOL editable;
 @property(nonatomic, setter=setRichText:) BOOL isRichText;
@@ -84,15 +73,5 @@
 - (NSString *)outerHTML;
 
 - (NSString *)processHTML:(NSString *)originalHTML;
-
-- (NSString *)liveInnerHTML;
-
-#pragma mark Editing
-
-- (BOOL)becomeFirstResponder;
-- (BOOL)resignFirstResponder;
-
-- (BOOL)commitEditing;
-- (void)commitHTML:(NSString *)commitHTML;
 
 @end
