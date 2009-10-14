@@ -15,7 +15,7 @@
 #import "KSKeyValueBinding.h"
 
 
-@interface SVWebTextField : NSObject <SVWebEditorText, KSEditor>
+@interface SVWebTextArea : NSObject <SVWebEditorText, KSEditor>
 {
   @private
     DOMHTMLElement      *_element;

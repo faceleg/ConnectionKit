@@ -6,19 +6,19 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebTextField.h"
+#import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
 
 
-@interface SVWebTextField ()
+@interface SVWebTextArea ()
 @end
 
 
 #pragma mark -
 
 
-@implementation SVWebTextField
+@implementation SVWebTextArea
 
 #pragma mark Init & Dealloc
 

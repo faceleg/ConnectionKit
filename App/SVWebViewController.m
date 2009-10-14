@@ -13,10 +13,9 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "KTSite.h"
-#import "SVPageletText.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
-#import "SVWebTextField.h"
+#import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -31,7 +30,7 @@
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
 @property(nonatomic, copy, readwrite) NSArray *textBlocks;
-@property(nonatomic, retain, readwrite) SVWebTextField *selectedTextBlock;
+@property(nonatomic, retain, readwrite) SVWebTextArea *selectedTextBlock;
 
 @property(nonatomic, copy, readwrite) NSArray *contentItems;
 
@@ -176,8 +175,8 @@
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
         OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
         
-        Class textBlockClass = ([aTextBlock importsGraphics] ? [SVPageletText class] : [SVWebTextField class]);
-        SVWebTextField *aController = [[textBlockClass alloc] initWithDOMElement:element];
+        Class textBlockClass = [SVWebTextArea class];
+        SVWebTextArea *aController = [[textBlockClass alloc] initWithDOMElement:element];
         [aController setRichText:[aTextBlock isRichText]];
         [aController setFieldEditor:[aTextBlock isFieldEditor]];
         
@@ -236,9 +235,9 @@
 
 @synthesize textBlocks = _textBlocks;
 
-- (SVWebTextField *)textBlockForDOMNode:(DOMNode *)node;
+- (SVWebTextArea *)textBlockForDOMNode:(DOMNode *)node;
 {
-    SVWebTextField *result = nil;
+    SVWebTextArea *result = nil;
     DOMHTMLElement *editableElement = [node containingContentEditableElement];
     
     if (editableElement)
@@ -263,7 +262,7 @@
     return result;
 }
 
-- (SVWebTextField *)textBlockForDOMRange:(DOMRange *)range;
+- (SVWebTextArea *)textBlockForDOMRange:(DOMRange *)range;
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textBlockForDOMNode:[range startContainer]];
@@ -301,7 +300,7 @@
         result = [self itemForNode:node inItems:[self contentItems]];
         if (!result)
         {
-            for (SVWebTextField *aTextBlock in [self textBlocks])
+            for (SVWebTextArea *aTextBlock in [self textBlocks])
             {
                 result = [self itemForNode:node inItems:[aTextBlock contentItems]];
                 if (result) break;

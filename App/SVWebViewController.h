@@ -11,7 +11,7 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVWebTextField;
+@class KTPage, SVWebTextArea;
 @protocol SVWebEditorViewControllerDelegate;
 
 
@@ -22,7 +22,7 @@
     
     NSMutableArray  *_HTMLTextBlocks;
     NSArray         *_textBlocks;
-    SVWebTextField     *_selectedTextBlock;
+    SVWebTextArea     *_selectedTextBlock;
     
     SVWebEditorView     *_webEditorView;
     DOMHTMLDivElement   *_sidebarDiv;
@@ -41,11 +41,11 @@
 // An array of SVTextBlock objects, one per text block created when setting up the page
 @property(nonatomic, copy, readonly) NSArray *textBlocks;
 // A series of methods for retrieving the Text Block to go with a bit of the webview
-- (SVWebTextField *)textBlockForDOMNode:(DOMNode *)node;
-- (SVWebTextField *)textBlockForDOMRange:(DOMRange *)range;
+- (SVWebTextArea *)textBlockForDOMNode:(DOMNode *)node;
+- (SVWebTextArea *)textBlockForDOMRange:(DOMRange *)range;
 
 // Tracks what is selected in the webview in a KVO-compliant manner
-@property(nonatomic, retain, readonly) SVWebTextField *selectedTextBlock;
+@property(nonatomic, retain, readonly) SVWebTextArea *selectedTextBlock;
 
 
 #pragma mark Selectable Objects
