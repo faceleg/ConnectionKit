@@ -6,7 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateParser+Private.h"
 #import "KTHTMLParserMasterCache.h"
 
 #import "KTMediaContainer.h"
@@ -17,7 +17,7 @@
 #import "NSString+Karelia.h"
 
 
-@implementation KTHTMLParser (Text)
+@implementation SVHTMLTemplateParser (Text)
 
 #pragma mark -
 #pragma mark Standard Text Block
@@ -68,7 +68,7 @@
 		
 		
 		// Build the text block
-		KTHTMLTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
+		SVHTMLTemplateTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
 													     ofObject:object
 														    flags:flags
 													      HTMLTag:tag
@@ -87,14 +87,14 @@
 	return result;
 }
 
-- (KTHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+- (SVHTMLTemplateTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
 	// Build the text block
-	KTHTMLTextBlock *result = [[[KTHTMLTextBlock alloc] initWithParser:self] autorelease];
+	SVHTMLTemplateTextBlock *result = [[[SVHTMLTemplateTextBlock alloc] initWithParser:self] autorelease];
 	
 	BOOL fieldEditor = [flags containsObject:@"line"];
 	BOOL richText = [flags containsObject:@"block"];

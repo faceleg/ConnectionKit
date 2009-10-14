@@ -8,7 +8,7 @@
 
 #import "KTAbstractIndex.h"
 #import "KTPage+Internal.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTAbstractHTMLPlugin.h"
 
 #import "KTWebViewComponentProtocol.h"

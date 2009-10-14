@@ -9,8 +9,8 @@
 #import "KTWebViewComponent.h"
 #import "KTDocWebViewController.h"
 
-#import "KTHTMLParser.h"
-#import "KTHTMLTextBlock.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVHTMLTemplateTextBlock.h"
 #import "DOM+KTWebViewController.h"
 
 
@@ -19,7 +19,7 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithParser:(KTHTMLParser *)parser
+- (id)initWithParser:(SVHTMLTemplateParser *)parser
 {
 	OBPRECONDITION(parser);
 	
@@ -56,7 +56,7 @@
 	return result;
 }
 
-- (KTHTMLParser *)parser { return myParser; }
+- (SVHTMLTemplateParser *)parser { return myParser; }
 
 - (NSString *)outerHTML
 {
@@ -99,7 +99,7 @@
 
 - (NSSet *)textBlocks { return [NSSet setWithSet:myTextBlocks]; }
 
-- (void)addTextBlock:(KTHTMLTextBlock *)textBlock
+- (void)addTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
 	[[self _textBlocks] addObject:textBlock];
 	[textBlock setWebViewComponent:self];
@@ -113,11 +113,11 @@
 
 /*	Search our text blocks for a match. If not found, do the same for subcomponents.
  */
-- (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
+- (SVHTMLTemplateTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 {
 	OBPRECONDITION(node);
 	
-	KTHTMLTextBlock *result = nil;
+	SVHTMLTemplateTextBlock *result = nil;
 	
 	// Find the overall element encapsualting the editing block
 	DOMHTMLElement *textBlockDOMElement = [node firstSelectableParentNode];
@@ -127,7 +127,7 @@
 
 		// Search for an existing TextBlock object with that ID
 		NSEnumerator *textBlocksEnumerator = [[self textBlocks] objectEnumerator];
-		KTHTMLTextBlock *aTextBlock;
+		SVHTMLTemplateTextBlock *aTextBlock;
 		while (aTextBlock = [textBlocksEnumerator nextObject])
 		{
 			if ([[aTextBlock DOMNodeID] isEqualToString:textBlockDOMID])
@@ -288,7 +288,7 @@
 #pragma mark -
 #pragma mark Parser
 
-- (void)parserDidStartTemplate:(KTHTMLParser *)parser;
+- (void)parserDidStartTemplate:(SVHTMLTemplateParser *)parser;
 {
 	if ([[parser parentParser] delegate] == self)
 	{
@@ -300,7 +300,7 @@
 	}
 }
 
-- (NSString *)parser:(KTHTMLParser *)parser didEndTemplate:(NSString *)HTML;
+- (NSString *)parser:(SVHTMLTemplateParser *)parser didEndTemplate:(NSString *)HTML;
 {
 	// Store the HTML
 	myInnerHTML = [HTML copy];
@@ -332,7 +332,7 @@
 /*	We want to record the text block.
  *	This includes making sure the webview refreshes upon a graphical text size change.
  */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
 	[self addTextBlock:textBlock];
 }

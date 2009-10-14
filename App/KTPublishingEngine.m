@@ -12,7 +12,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"
-#import "KTHTMLTextBlock.h"
+#import "SVHTMLTemplateTextBlock.h"
 #import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
 #import "KTTranscriptController.h"
@@ -696,7 +696,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 				
 /*  Upload the media if needed
  */
-- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
 {
     // It used to be possible for the connection to be cancelled mid-parse. If so, just ignore the media
     if (upload) // && [self status] <= KTPublishingEngineStatusUploading)
@@ -798,7 +798,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 }
 
-- (void)addGraphicalTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)addGraphicalTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 {
     KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
 	if (media)
@@ -857,7 +857,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
     
     NSEnumerator *graphicalTextBlocksEnumerator = [graphicalTextBlocks objectEnumerator];
-    KTHTMLTextBlock *aTextBlock;
+    SVHTMLTemplateTextBlock *aTextBlock;
     while (aTextBlock = [graphicalTextBlocksEnumerator nextObject])
     {
         KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
@@ -921,7 +921,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return YES;
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
 	[self addGraphicalTextBlock:textBlock];
 }
@@ -944,7 +944,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSURL *)resourceURL
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didEncounterResourceFile:(NSURL *)resourceURL
 {
 	OBPRECONDITION(resourceURL);
     [self addResourceFile:resourceURL];

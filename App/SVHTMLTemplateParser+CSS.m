@@ -6,8 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTHTMLParser.h"
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateParser+Private.h"
 
 #import "KTAbstractPluginDelegate.h"
 #import "KTMaster+Internal.h"
@@ -24,7 +23,7 @@
 #import "assertions.h"
 
 
-@interface KTHTMLParser (CSSPrivate)
+@interface SVHTMLTemplateParser (CSSPrivate)
 - (NSString *)pathToDesignFile:(NSString *)filename;
 - (KTDesign *)design;
 
@@ -32,7 +31,7 @@
 @end
 
 
-@implementation KTHTMLParser (CSS)
+@implementation SVHTMLTemplateParser (CSS)
 
 - (NSString *)stylesheetWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {

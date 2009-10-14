@@ -13,7 +13,7 @@
 #import "KTDocWindowController.h"
 #import "KTPage.h"
 #import "KTPagelet.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 
 #import "NSManagedObject+KTExtensions.h"
 

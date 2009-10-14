@@ -7,7 +7,7 @@
 //
 
 
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateParser+Private.h"
 
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
@@ -19,14 +19,14 @@
 #import "NSURL+Karelia.h"
 
 
-@implementation KTHTMLParser (Media)
+@implementation SVHTMLTemplateParser (Media)
 
 - (NSString *)mediainfoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)scanner
 {
 	NSString *result = @"";
 	
 	// Build the parameters dictionary
-	NSDictionary *parameters = [KTHTMLParser parametersDictionaryWithString:inRestOfTag];
+	NSDictionary *parameters = [SVHTMLTemplateParser parametersDictionaryWithString:inRestOfTag];
 	
 	// Which MediaContainer is requested?
 	NSString *mediaKeyPath = [parameters objectForKey:@"media"];

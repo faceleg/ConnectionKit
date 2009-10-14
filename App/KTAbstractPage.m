@@ -11,7 +11,7 @@
 
 #import "KTSite.h"
 #import "KTHostProperties.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
 
 #import "NSAttributedString+Karelia.h"
@@ -191,7 +191,7 @@
 	
 	
 	// Build the HTML
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:self];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
 	[parser setDelegate:parserDelegate];
 	
 	if (isPreview) {

@@ -7,9 +7,8 @@
 //
 
 
-#import "KTHTMLTextBlock.h"
-#import "KTHTMLParser.h"
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTemplateParser+Private.h"
 
 
 #import "DOM+KTWebViewController.h"
@@ -36,14 +35,14 @@
 #import "Debug.h"
 #import "Macros.h"
 
-@interface KTHTMLTextBlock ()
+@interface SVHTMLTemplateTextBlock ()
 
 + (void)convertFileListElement:(DOMHTMLDivElement *)div toImageWithSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)element;
 
 @end
 
 
-@implementation KTHTMLTextBlock
+@implementation SVHTMLTemplateTextBlock
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -53,7 +52,7 @@
     return [self initWithParser:nil];
 }
 
-- (id)initWithParser:(KTHTMLParser *)parser;
+- (id)initWithParser:(SVHTMLTemplateParser *)parser;
 {
 	OBPRECONDITION(parser);
     
@@ -89,7 +88,7 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTHTMLParser *)parser { return myParser; }
+- (SVHTMLTemplateParser *)parser { return myParser; }
 
 - (KTWebViewComponent *)webViewComponent { return myWebViewComponent; }
 

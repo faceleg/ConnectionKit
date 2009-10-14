@@ -11,7 +11,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTAbstractIndex.h"
 #import "KTArchivePage.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTIndexPlugin.h"
 
 #import "NSArray+Karelia.h"
@@ -285,7 +285,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	OBASSERT(template);
 	
 	
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithTemplate:template component:self];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
 	[parser setDelegate:parserDelegate];
 	[parser setHTMLGenerationPurpose:kGeneratingRemote];
 	

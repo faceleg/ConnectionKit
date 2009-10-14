@@ -32,7 +32,7 @@ KTCollectionPathStyle;
 
 
 @class KTSite, KTMaster, SVSidebar;
-@class KTHTMLParser;
+@class SVHTMLTemplateParser;
 
 
 @interface KTAbstractPage : KTAbstractElement

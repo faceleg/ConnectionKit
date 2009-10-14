@@ -7,7 +7,7 @@
 //
 
 #import "KSWebViewController.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVWebEditorView.h"
 
 

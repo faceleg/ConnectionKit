@@ -19,11 +19,11 @@
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "KTDocWindowController.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTWebViewComponent.h"
 #import "KTAsyncOffscreenWebViewController.h"
-#import "KTHTMLTextBlock.h"
+#import "SVHTMLTemplateTextBlock.h"
 #import "WebViewEditingHelperClasses.h"
 
 #import "NSDictionary+Karelia.h"
@@ -355,7 +355,7 @@
 	
 	
 	// Generate a fresh component tree
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[self page]];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[self page]];
 	
 	KTWebViewComponent *webViewComponent = [[KTWebViewComponent alloc] initWithParser:parser];
 	[parser setDelegate:webViewComponent];
@@ -383,7 +383,7 @@
 - (void)loadPageIntoWebView:(KTPage *)page
 {
 	// Build the HTML
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:page];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
 	
 	KTWebViewComponent *webViewComponent = [[KTWebViewComponent alloc] initWithParser:parser];
 	[self setMainWebViewComponent:webViewComponent];

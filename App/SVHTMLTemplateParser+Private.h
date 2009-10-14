@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 
 
-@interface KTHTMLParser ()
+@interface SVHTMLTemplateParser ()
 
 + (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
 
@@ -20,7 +20,7 @@
 
 // Delegate
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
-- (void)didParseTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 - (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
 - (void)didEncounterResourceFile:(NSURL *)resourceURL;
 

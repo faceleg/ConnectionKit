@@ -14,7 +14,7 @@
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTElementPlugin.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
 #import "SVPageletBody.h"

@@ -8,8 +8,8 @@
 
 #import "SVWebViewController.h"
 
-#import "KTHTMLParser.h"
-#import "KTHTMLTextBlock.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVHTMLTemplateTextBlock.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "KTSite.h"
@@ -125,7 +125,7 @@
     
     
 	// Build the HTML
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:page];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
 	
 	/*KTWebViewComponent *webViewComponent = [[KTWebViewComponent alloc] initWithParser:parser];
 	[self setMainWebViewComponent:webViewComponent];*/
@@ -156,7 +156,7 @@
     [[self webEditorView] loadHTMLString:pageHTML baseURL:pageURL];
 }
 
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 {
     if ([textBlock isEditable]) [_HTMLTextBlocks addObject:textBlock];
 }
@@ -169,7 +169,7 @@
     NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_HTMLTextBlocks count]];
     DOMDocument *domDoc = [[self webEditorView] DOMDocument];
     
-    for (KTHTMLTextBlock *aTextBlock in _HTMLTextBlocks)
+    for (SVHTMLTemplateTextBlock *aTextBlock in _HTMLTextBlocks)
     {
         // Basic controller
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];

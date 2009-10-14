@@ -13,7 +13,7 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTMaster+Internal.h"
 
 #import "NSBundle+KTExtensions.h"

@@ -6,7 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateParser+Private.h"
 
 #import "KTAbstractElement+Internal.h"
 #import "KTPage.h"
@@ -18,7 +18,7 @@
 #import "Debug.h"
 
 
-@interface KTHTMLParser (IndexPrivate)
+@interface SVHTMLTemplateParser (IndexPrivate)
 - (NSString *)summaryForPage:(KTPage *)page truncation:(unsigned)truncation;
 - (NSString *)summaryForCollection:(KTPage *)page truncation:(unsigned)truncation;
 - (NSString *)summaryForContentOfPage:(KTPage *)page truncation:(unsigned)truncation;
@@ -28,7 +28,7 @@
 #pragma mark -
 
 
-@implementation KTHTMLParser (Index)
+@implementation SVHTMLTemplateParser (Index)
 
 #pragma mark -
 #pragma mark Index
@@ -45,7 +45,7 @@
         
         if (indexTemplate)
         {
-            KTHTMLParser *parser = [self newChildParserWithTemplate:indexTemplate component:index];
+            SVHTMLTemplateParser *parser = [self newChildParserWithTemplate:indexTemplate component:index];
             
             NSArray *indexPages = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
             [parser overrideKey:@"pages" withValue:indexPages];

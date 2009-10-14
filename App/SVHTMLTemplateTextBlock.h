@@ -11,13 +11,13 @@
 #import "KTDocument.h"
 
 
-@class KTDocWebViewController, KTWebViewComponent, KTMediaContainer, KTAbstractPage, KTHTMLParser;
+@class KTDocWebViewController, KTWebViewComponent, KTMediaContainer, KTAbstractPage, SVHTMLTemplateParser;
 
 
-@interface KTHTMLTextBlock : NSObject
+@interface SVHTMLTemplateTextBlock : NSObject
 {
 //@private
-	KTHTMLParser		*myParser;
+	SVHTMLTemplateParser		*myParser;
 	KTWebViewComponent	*myWebViewComponent;	// Weak ref
     
 	DOMHTMLElement	*myDOMNode;
@@ -40,7 +40,7 @@
 
 #pragma mark Accessors
 
-- (id)initWithParser:(KTHTMLParser *)parser;
+- (id)initWithParser:(SVHTMLTemplateParser *)parser;
 //@property(nonatomic, retain, readonly) KTHTMLParser *parser;
 
 - (KTWebViewComponent *)webViewComponent;

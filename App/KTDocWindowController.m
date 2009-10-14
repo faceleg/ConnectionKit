@@ -38,7 +38,7 @@
 #import "KTPluginInspectorViewsManager.h"
 #import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
-#import "KTHTMLTextBlock.h"
+#import "SVHTMLTemplateTextBlock.h"
 
 #import "SVDesignChooserWindowController.h"
 

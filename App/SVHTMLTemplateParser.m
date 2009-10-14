@@ -5,7 +5,7 @@
 //  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTHTMLParser+Private.h"
+#import "SVHTMLTemplateParser+Private.h"
 #import "KTHTMLParserMasterCache.h"
 
 #import "KTSite.h"
@@ -25,7 +25,7 @@
 #import "Debug.h"
 
 
-@implementation KTHTMLParser
+@implementation SVHTMLTemplateParser
 
 #pragma mark -
 #pragma mark Class Methods
@@ -186,7 +186,7 @@
  */
 - (id)newChildParserWithTemplate:(NSString *)templateHTML component:(id)component
 {
-	KTHTMLParser *result = [super newChildParserWithTemplate:templateHTML component:component];
+	SVHTMLTemplateParser *result = [super newChildParserWithTemplate:templateHTML component:component];
 	
 	[result setCurrentPage:[self currentPage]];
 	[result setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
@@ -216,7 +216,7 @@
 	}
 }
 
-- (void)didParseTextBlock:(KTHTMLTextBlock *)textBlock
+- (void)didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
 	id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseTextBlock:)])

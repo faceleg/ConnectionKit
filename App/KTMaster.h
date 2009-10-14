@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KT.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTManagedObject.h"
 
 

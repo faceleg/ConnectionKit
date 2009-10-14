@@ -10,7 +10,7 @@
 #import <WebKit/WebKit.h>
 
 #import "KTDocumentControllerChain.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVWebContentAreaController.h"
 
 

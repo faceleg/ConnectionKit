@@ -11,7 +11,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 
 #import "KTWebViewComponentProtocol.h"
 
@@ -21,7 +21,7 @@
 
 @interface KTWebViewComponent : NSObject <KTHTMLParserDelegate>
 {
-	KTHTMLParser	*myParser;
+	SVHTMLTemplateParser	*myParser;
 	
 	NSString	*myInnerHTML;
     NSString	*myComponentHTML;
@@ -33,18 +33,18 @@
 	KTDocWebViewController	*myWebViewController;	// Weak ref
 }
 
-- (id)initWithParser:(KTHTMLParser *)parser;
+- (id)initWithParser:(SVHTMLTemplateParser *)parser;
 
-- (KTHTMLParser *)parser;
+- (SVHTMLTemplateParser *)parser;
 - (NSString *)divID;
 
 - (NSString *)outerHTML;
 - (NSString *)componentHTML;
 
 - (NSSet *)textBlocks;
-- (void)addTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)addTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 - (void)removeAllTextBlocks;
-- (KTHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
+- (SVHTMLTemplateTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 
 - (NSArray *)subcomponents;
 - (void)addSubcomponent:(KTWebViewComponent *)component;

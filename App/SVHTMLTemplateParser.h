@@ -31,13 +31,13 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, KTHTMLTextBlock;
+@class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, SVHTMLTemplateTextBlock;
 @class KTAbstractPage;
 @class KTMediaContainer, KTMediaFile;
 @protocol KTHTMLParserDelegate;
 
 
-@interface KTHTMLParser : KTTemplateParser
+@interface SVHTMLTemplateParser : KTTemplateParser
 {
 	KTAbstractPage			*myCurrentPage;
 	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
@@ -74,7 +74,7 @@ typedef enum {
 @end
 
 
-@interface KTHTMLParser (Media)
+@interface SVHTMLTemplateParser (Media)
 
 - (NSString *)info:(NSString *)infoString forMedia:(KTMediaContainer *)media scalingProperties:(NSDictionary *)scalingSettings;
 
@@ -85,8 +85,8 @@ typedef enum {
 @end
 
 
-@interface KTHTMLParser (Text)
-- (KTHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+@interface SVHTMLTemplateParser (Text)
+- (SVHTMLTemplateTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
 						  graphicalTextCode:(NSString *)GTCode
@@ -96,8 +96,8 @@ typedef enum {
 
 @protocol KTHTMLParserDelegate <KTTemplateParserDelegate>
 @optional
-- (void)HTMLParser:(KTHTMLParser *)parser didEncounterResourceFile:(NSURL *)resourcePath;
-- (void)HTMLParser:(KTHTMLParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
-- (void)HTMLParser:(KTHTMLParser *)parser didParseTextBlock:(KTHTMLTextBlock *)textBlock;
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didEncounterResourceFile:(NSURL *)resourcePath;
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 @end
 

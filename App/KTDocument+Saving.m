@@ -16,7 +16,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTSite.h"
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
@@ -813,7 +813,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-	KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self site] root]];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
 	[parser setHTMLGenerationPurpose:kGeneratingPreview];
 	[parser setLiveDataFeeds:NO];
 	NSString *thumbnailHTML = [parser parseTemplate];
@@ -1011,7 +1011,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
-    KTHTMLParser *parser = [[KTHTMLParser alloc] initWithPage:[[self site] root]];
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
     [parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
     NSString *result = [parser parseTemplate];
     [parser release];

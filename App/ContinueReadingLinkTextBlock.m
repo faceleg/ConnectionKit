@@ -8,7 +8,7 @@
 
 #import "ContinueReadingLinkTextBlock.h"
 
-#import "KTHTMLParser.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 
 #import "NSString+Karelia.h"
