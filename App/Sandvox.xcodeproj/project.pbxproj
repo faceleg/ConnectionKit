@@ -734,10 +734,6 @@
 		CE01A7730EAFD63600BDF264 /* KSSilencingConfirmSheet.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A66E0EAFD63600BDF264 /* KSSilencingConfirmSheet.m */; };
 		CE01A7740EAFD63600BDF264 /* KSSingletonWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A66F0EAFD63600BDF264 /* KSSingletonWindowController.h */; };
 		CE01A7750EAFD63600BDF264 /* KSSingletonWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6700EAFD63600BDF264 /* KSSingletonWindowController.m */; };
-		CE01A7760EAFD63600BDF264 /* KSSmallDatePicker.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6710EAFD63600BDF264 /* KSSmallDatePicker.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		CE01A7770EAFD63600BDF264 /* KSSmallDatePicker.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6720EAFD63600BDF264 /* KSSmallDatePicker.m */; };
-		CE01A7780EAFD63600BDF264 /* KSSmallDatePickerCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6730EAFD63600BDF264 /* KSSmallDatePickerCell.h */; };
-		CE01A7790EAFD63600BDF264 /* KSSmallDatePickerCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6740EAFD63600BDF264 /* KSSmallDatePickerCell.m */; };
 		CE01A77A0EAFD63600BDF264 /* KSTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6750EAFD63600BDF264 /* KSTextField.h */; };
 		CE01A77B0EAFD63600BDF264 /* KSTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6760EAFD63600BDF264 /* KSTextField.m */; };
 		CE01A77C0EAFD63600BDF264 /* KSTextFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6770EAFD63600BDF264 /* KSTextFieldCell.h */; };
@@ -2280,10 +2276,6 @@
 		CE01A66E0EAFD63600BDF264 /* KSSilencingConfirmSheet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSilencingConfirmSheet.m; sourceTree = "<group>"; };
 		CE01A66F0EAFD63600BDF264 /* KSSingletonWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSingletonWindowController.h; sourceTree = "<group>"; };
 		CE01A6700EAFD63600BDF264 /* KSSingletonWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSingletonWindowController.m; sourceTree = "<group>"; };
-		CE01A6710EAFD63600BDF264 /* KSSmallDatePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSmallDatePicker.h; sourceTree = "<group>"; };
-		CE01A6720EAFD63600BDF264 /* KSSmallDatePicker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSmallDatePicker.m; sourceTree = "<group>"; };
-		CE01A6730EAFD63600BDF264 /* KSSmallDatePickerCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSmallDatePickerCell.h; sourceTree = "<group>"; };
-		CE01A6740EAFD63600BDF264 /* KSSmallDatePickerCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSmallDatePickerCell.m; sourceTree = "<group>"; };
 		CE01A6750EAFD63600BDF264 /* KSTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSTextField.h; sourceTree = "<group>"; };
 		CE01A6760EAFD63600BDF264 /* KSTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSTextField.m; sourceTree = "<group>"; };
 		CE01A6770EAFD63600BDF264 /* KSTextFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSTextFieldCell.h; sourceTree = "<group>"; };
@@ -4347,10 +4339,6 @@
 				CE01A66E0EAFD63600BDF264 /* KSSilencingConfirmSheet.m */,
 				CE01A66F0EAFD63600BDF264 /* KSSingletonWindowController.h */,
 				CE01A6700EAFD63600BDF264 /* KSSingletonWindowController.m */,
-				CE01A6710EAFD63600BDF264 /* KSSmallDatePicker.h */,
-				CE01A6720EAFD63600BDF264 /* KSSmallDatePicker.m */,
-				CE01A6730EAFD63600BDF264 /* KSSmallDatePickerCell.h */,
-				CE01A6740EAFD63600BDF264 /* KSSmallDatePickerCell.m */,
 				CE01A6750EAFD63600BDF264 /* KSTextField.h */,
 				CE01A6760EAFD63600BDF264 /* KSTextField.m */,
 				CE01A6770EAFD63600BDF264 /* KSTextFieldCell.h */,
@@ -4908,8 +4896,6 @@
 				CE01A7700EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h in Headers */,
 				CE01A7720EAFD63600BDF264 /* KSSilencingConfirmSheet.h in Headers */,
 				CE01A7740EAFD63600BDF264 /* KSSingletonWindowController.h in Headers */,
-				CE01A7760EAFD63600BDF264 /* KSSmallDatePicker.h in Headers */,
-				CE01A7780EAFD63600BDF264 /* KSSmallDatePickerCell.h in Headers */,
 				CE01A77A0EAFD63600BDF264 /* KSTextField.h in Headers */,
 				CE01A77C0EAFD63600BDF264 /* KSTextFieldCell.h in Headers */,
 				CE01A77E0EAFD63600BDF264 /* KSTextViewController.h in Headers */,
@@ -6296,8 +6282,6 @@
 				CE01A7710EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.m in Sources */,
 				CE01A7730EAFD63600BDF264 /* KSSilencingConfirmSheet.m in Sources */,
 				CE01A7750EAFD63600BDF264 /* KSSingletonWindowController.m in Sources */,
-				CE01A7770EAFD63600BDF264 /* KSSmallDatePicker.m in Sources */,
-				CE01A7790EAFD63600BDF264 /* KSSmallDatePickerCell.m in Sources */,
 				CE01A77B0EAFD63600BDF264 /* KSTextField.m in Sources */,
 				CE01A77D0EAFD63600BDF264 /* KSTextFieldCell.m in Sources */,
 				CE01A77F0EAFD63600BDF264 /* KSTextViewController.m in Sources */,
