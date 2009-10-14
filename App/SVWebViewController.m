@@ -29,8 +29,7 @@
 - (void)loadPage:(KTPage *)page;
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
-@property(nonatomic, copy, readwrite) NSArray *textBlocks;
-@property(nonatomic, retain, readwrite) SVWebTextArea *selectedTextBlock;
+@property(nonatomic, copy, readwrite) NSArray *textAreas;
 
 @property(nonatomic, copy, readwrite) NSArray *contentItems;
 
@@ -171,7 +170,7 @@
     
     for (SVHTMLTemplateTextBlock *aTextBlock in _HTMLTextBlocks)
     {
-        // Basic controller
+        // Basic text area
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
         OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
         
@@ -182,6 +181,7 @@
         [controllers addObject:textArea];
         [textArea release];
         
+        
         // Binding
         if (![aTextBlock importsGraphics])
         {
@@ -190,9 +190,13 @@
                   withKeyPath:[aTextBlock HTMLSourceKeyPath]
                       options:nil];
         }
+        else
+        {
+            
+        }
     }
     
-    [self setTextBlocks:controllers];
+    [self setTextAreas:controllers];
     [_HTMLTextBlocks release], _HTMLTextBlocks = nil;
     
     
@@ -235,9 +239,9 @@
 
 #pragma mark Text Blocks
 
-@synthesize textBlocks = _textBlocks;
+@synthesize textAreas = _textBlocks;
 
-- (SVWebTextArea *)textBlockForDOMNode:(DOMNode *)node;
+- (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
 {
     SVWebTextArea *result = nil;
     DOMHTMLElement *editableElement = [node containingContentEditableElement];
@@ -245,7 +249,7 @@
     if (editableElement)
     {
         // Search each text block in turn for a match
-        for (result in [self textBlocks])
+        for (result in [self textAreas])
         {
             if ([result DOMElement] == editableElement)
             {
@@ -257,20 +261,18 @@
         if (!result)
         {
             DOMNode *parent = [editableElement parentNode];
-            if (parent) result = [self textBlockForDOMNode:parent];
+            if (parent) result = [self textAreaForDOMNode:parent];
         }
     }
     
     return result;
 }
 
-- (SVWebTextArea *)textBlockForDOMRange:(DOMRange *)range;
+- (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
-    return [self textBlockForDOMNode:[range startContainer]];
+    return [self textAreaForDOMNode:[range startContainer]];
 }
-
-@synthesize selectedTextBlock = _selectedTextBlock;
 
 #pragma mark Content Items
 
@@ -320,7 +322,7 @@
 - (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender
                  textBlockForDOMRange:(DOMRange *)range;
 {
-    return [self textBlockForDOMRange:range];
+    return [self textAreaForDOMRange:range];
 }
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;

@@ -36,16 +36,13 @@
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
 
-#pragma mark Text Blocks
+#pragma mark Text Areas
 
 // An array of SVTextBlock objects, one per text block created when setting up the page
-@property(nonatomic, copy, readonly) NSArray *textBlocks;
+@property(nonatomic, copy, readonly) NSArray *textAreas;
 // A series of methods for retrieving the Text Block to go with a bit of the webview
-- (SVWebTextArea *)textBlockForDOMNode:(DOMNode *)node;
-- (SVWebTextArea *)textBlockForDOMRange:(DOMRange *)range;
-
-// Tracks what is selected in the webview in a KVO-compliant manner
-@property(nonatomic, retain, readonly) SVWebTextArea *selectedTextBlock;
+- (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
+- (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
 
 
 #pragma mark Selectable Objects
