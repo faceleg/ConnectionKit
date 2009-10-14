@@ -298,14 +298,6 @@
     if (node)
     {
         result = [self itemForNode:node inItems:[self contentItems]];
-        if (!result)
-        {
-            for (SVWebTextArea *aTextBlock in [self textBlocks])
-            {
-                result = [self itemForNode:node inItems:[aTextBlock contentItems]];
-                if (result) break;
-            }
-        }
     }
     
     return result;
