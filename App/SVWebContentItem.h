@@ -9,20 +9,13 @@
 
 #import "SVWebEditorItem.h"
 
-#import "SVDOMNodeBoundsTracker.h"
 
-
-@class SVPagelet;
-
-
-@interface SVWebContentItem : SVWebEditorItem <SVDOMNodeBoundsTrackerDelegate>
+@interface SVWebContentItem : SVWebEditorItem
 {
   @private
-    SVPagelet   *_pagelet;
+    id  _representedObject;
 }
 
-- (id)initWithDOMElement:(DOMElement *)element pagelet:(SVPagelet *)pagelet;
-
-@property(nonatomic, retain, readonly) SVPagelet *pagelet;
+@property(nonatomic, retain) id representedObject;
 
 @end

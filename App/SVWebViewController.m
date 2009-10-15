@@ -178,9 +178,11 @@
         DOMElement *element = [domDoc getElementById:[aPagelet elementID]];
         if (element)
         {
-            SVWebContentItem *object = [[SVWebContentItem alloc] initWithDOMElement:element pagelet:aPagelet];
-            [contentObjects addObject:object];
-            [object release];
+            SVWebContentItem *item = [[SVWebContentItem alloc] initWithDOMElement:element];
+            [item setRepresentedObject:aPagelet];
+            
+            [contentObjects addObject:item];
+            [item release];
         }
         else
         {
@@ -345,7 +347,7 @@
 {
     BOOL result = NO;
     
-    NSArray *pboardReps = [items valueForKeyPath:@"pagelet.elementID"];
+    NSArray *pboardReps = [items valueForKeyPath:@"representedObject.elementID"];
     if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
     {
         result = YES;

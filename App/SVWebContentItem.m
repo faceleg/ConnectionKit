@@ -13,24 +13,15 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithDOMElement:(DOMElement *)element pagelet:(SVPagelet *)pagelet;
-{
-    self = [self initWithDOMElement:element];
-    
-    _pagelet = [pagelet retain];
-    
-    return self;
-}
-
 - (void)dealloc
 {
-    [_pagelet release];
+    [_representedObject release];
     
     [super dealloc];
 }
 
 #pragma mark Accessors
 
-@synthesize pagelet = _pagelet;
+@synthesize representedObject = _representedObject;
 
 @end
