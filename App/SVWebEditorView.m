@@ -242,12 +242,29 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 @synthesize selectionParentItems = _selectionParentItems;
 - (void)setSelectionParentItems:(NSArray *)items
 {
+    NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    
+    // Mark old as needing display
+    [border setEditing:YES];
+    for (id <SVWebEditorItem> anItem in [self selectionParentItems])
+    {
+        NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+        [docView setNeedsDisplayInRect:drawingRect];
+    }
+    
     // Store items
     items = [items copy];
     [_selectionParentItems release]; _selectionParentItems = items;
     
     // Draw new items
+    for (id <SVWebEditorItem> anItem in items)
+    {
+        NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+        [docView setNeedsDisplayInRect:drawingRect];
+    }
     
+    [border release];
 }
 
 #pragma mark Editing
