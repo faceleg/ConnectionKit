@@ -32,6 +32,7 @@
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
+@property(nonatomic, copy, readwrite) NSArray *textAreaControllers;
 
 @property(nonatomic, copy, readwrite) NSArray *contentItems;
 
@@ -196,7 +197,8 @@
     
     
     // Prepare text areas and their controllers
-    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_parsedTextBlocks count]];
+    NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[_parsedTextBlocks count]];
+    NSMutableArray *textAreaControllers = [[NSMutableArray alloc] init];
     
     for (SVHTMLTemplateTextBlock *aTextBlock in _parsedTextBlocks)
     {
@@ -208,7 +210,7 @@
         [textArea setRichText:[aTextBlock isRichText]];
         [textArea setFieldEditor:[aTextBlock isFieldEditor]];
         
-        [controllers addObject:textArea];
+        [textAreas addObject:textArea];
         [textArea release];
         
         
@@ -218,7 +220,7 @@
         {
             SVPageletBodyTextAreaController *controller = [[SVPageletBodyTextAreaController alloc]
                                                            initWithTextArea:textArea content:value];
-            
+            [textAreaControllers addObject:controller];
             [controller release];
         }
         else
@@ -230,7 +232,10 @@
         }
     }
     
-    [self setTextAreas:controllers];
+    [self setTextAreas:textAreas];
+    [textAreas release];
+    [self setTextAreaControllers:textAreaControllers];
+    [textAreaControllers release];
     [_parsedTextBlocks release], _parsedTextBlocks = nil;
     
     
@@ -247,7 +252,7 @@
     
 }
 
-#pragma mark Text Blocks
+#pragma mark Text Areas
 
 @synthesize textAreas = _textAreas;
 
@@ -283,6 +288,8 @@
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];
 }
+
+@synthesize textAreaControllers = _textAreaControllers;
 
 #pragma mark Content Items
 

@@ -22,6 +22,7 @@
     
     NSMutableArray  *_parsedTextBlocks;
     NSArray         *_textAreas;
+    NSArray         *_textAreaControllers;
     
     SVWebEditorView     *_webEditorView;
     DOMHTMLDivElement   *_sidebarDiv;
@@ -30,6 +31,12 @@
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
 }
 
+
+#pragma mark View
+@property(nonatomic, retain) SVWebEditorView *webEditorView;
+
+
+#pragma mark Page
 // These should all be KVO-compliant
 @property(nonatomic, retain) KTPage *page;
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
@@ -43,10 +50,11 @@
 - (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
 - (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
 
+@property(nonatomic, copy, readonly) NSArray *textAreaControllers;
+
 
 #pragma mark Selectable Objects
 
-@property(nonatomic, retain) SVWebEditorView *webEditorView;
 @property(nonatomic, copy, readonly) NSArray *contentItems;
 
 
