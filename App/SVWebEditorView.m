@@ -525,7 +525,12 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     NSView *targetView = [super hitTest:point];
     if ([targetView acceptsFirstResponder])
     {
-        [[self window] makeFirstResponder:targetView];  // NSWindow will do nothing if it's already First Responder
+        [[self window] makeFirstResponder:targetView];  // nothing happens if target's already First Responder
+    }
+    else
+    {
+        OBASSERT([[self webView] acceptsFirstResponder]);
+        [[self window] makeFirstResponder:[self webView]];
     }
     
     
@@ -570,9 +575,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     else
     {
-        // Nothing is selected. Wha-hey
+        // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
         [self setSelectedItems:nil];
-        
         [super mouseDown:event];
     }
 }
