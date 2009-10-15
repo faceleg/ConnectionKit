@@ -10,6 +10,8 @@
 #import "SVWebEditorWebView.h"
 #import "SVSelectionBorder.h"
 
+#import "SVDocWindow.h"
+
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
@@ -75,6 +77,27 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     return self;
+}
+
+- (void)viewDidMoveToWindow
+{
+    if ([self window])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(windowDidChangeFirstResponder:)
+                                                     name:SVDocWindowDidChangeFirstResponderNotification
+                                                   object:[self window]];
+    }
+}
+
+- (void)viewWillMoveToWindow:(NSWindow *)newWindow
+{
+    if ([self window])
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:SVDocWindowDidChangeFirstResponderNotification
+                                                      object:[self window]];
+    }
 }
 
 - (void)dealloc
@@ -184,6 +207,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         [range selectNode:textArea];
         [[self webView] setSelectedDOMRange:range affinity:0];
     }
+    else
+    {
+        [[self webView] setSelectedDOMRange:nil affinity:0];
+    }
     
     
     // Draw new selection
@@ -265,6 +292,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     
     [border release];
+}
+
+- (void)windowDidChangeFirstResponder:(NSNotification *)notification
+{
+    OBPRECONDITION([notification object] == [self window]);
+    
+    //  Whenever focus moves away from the webview, remove selection
+    if ([[self selectedItems] count] > 0 && ![[self webView] maintainsInactiveSelection])
+    {
+        NSResponder *responder = [[self window] firstResponder];
+        if (![responder isKindOfClass:[NSView class]] || ![(NSView *)responder isDescendantOf:[self webView]])
+        {
+            [self setSelectedItems:nil];
+        }
+    }
 }
 
 #pragma mark Editing
