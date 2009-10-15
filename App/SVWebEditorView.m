@@ -388,28 +388,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Event Handling
 
-/*  Normally, we're quite happy to become first responder; that's what governs whether we have a selection. But when in editing mode, the role is reversed, and we don't want to become first responder unless the user clicks another item.
- */
-- (BOOL)acceptsFirstResponder
-{
-    return YES;
-}
-
-/*  There are 2 reasons why you might resign first responder:
- *      1)  The user generally selected some different bit of the UI. If so, the selection is no longer relevant, so throw it away.
- *      2)  A selected border was clicked in a manner suitable to start editing its contents. This means resigning first responder status to let WebKit take over and so we don't want to affect the selection as it will already have been taken care of.
- */
-- (BOOL)resignFirstResponder
-{
-    BOOL result = [super resignFirstResponder];
-    if (result)
-    {
-        [self setSelectedItems:nil];
-    }
-    
-    return result;
-}
-
 /*  AppKit uses hit-testing to drill down into the view hierarchy and figure out just which view it needs to target with a mouse event. We can exploit this to effectively "hide" some portions of the webview from the standard event handling mechanisms; all such events will come straight to us instead. We have 2 different behaviours depending on current mode:
  *
  *      1)  Usually, any portion of the webview designated as "selectable" (e.g. pagelets) overrides hit-testing so that clicking selects them rather than the standard WebKit behaviour.
@@ -500,6 +478,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
+    // In a normal view, you would implement -acceptsFirstResponder to return YES and leave it at that. But in our case, we want to give focus to the WebView, so implement that here in a fashion that mimic's NSWindow's handling of -acceptsFirstResponder.
+    NSView *targetView = [self webView];
+    if ([targetView acceptsFirstResponder])
+    {
+        [[self window] makeFirstResponder:targetView];
+    }
+    
+    
     // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
     OBASSERT(!_mouseDownEvent);
     _mouseDownEvent = [event retain];
