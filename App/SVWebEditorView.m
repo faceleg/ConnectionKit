@@ -174,6 +174,17 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [oldSelection release];
     
     
+    // Update WebView selection to match. This is needed for focus to be placed on any text area surrounding the item
+    id <SVWebEditorItem> firstItem = [[self selectedItems] firstObjectKS];
+    DOMElement *textArea = [[firstItem DOMElement] containingContentEditableElement];
+    if (textArea)
+    {
+        DOMRange *range = [[textArea ownerDocument] createRange];
+        [range selectNode:textArea];
+        [[self webView] setSelectedDOMRange:range affinity:0];
+    }
+    
+    
     // Draw new selection
     for (id <SVWebEditorItem> anItem in items)
     {
