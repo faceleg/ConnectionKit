@@ -269,7 +269,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Editing
 
-- (BOOL)canEdit;
+- (BOOL)canEditText;
 {
     //  Editing is only supported while the WebView is First Responder. Otherwise there is no selection to indicate what is being edited. We can work around the issue a bit by forcing there to be a selection, or refusing the edit if not
     BOOL result = [[self webView] isFirstResponder];
@@ -816,7 +816,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
-    BOOL result = [self canEdit];
+    BOOL result = [self canEditText];
     
     if (result)
     {
@@ -845,7 +845,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldInsertText:(NSString *)string replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
-    BOOL result = [self canEdit];
+    BOOL result = [self canEditText];
     
     if (result)
     {

@@ -79,7 +79,7 @@
 #pragma mark Editing
 
 // We don't want to allow any sort of change unless the WebView is First Responder
-- (BOOL)canEdit;
+- (BOOL)canEditText;
 // WebKit doesn't supply any sort of -willFoo editing notifications, but we're in control now and can provide a pretty decent approximation.
 - (void)willEditTextInDOMRange:(DOMRange *)range;
 - (void)didChangeTextInDOMRange:(DOMRange *)range notification:(NSNotification *)notification;
