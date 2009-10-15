@@ -24,6 +24,7 @@
 
 - (void)dealloc
 {
+    [_textArea setDelegate:nil];
     [_textArea release];
     [_pageletBody release];
     

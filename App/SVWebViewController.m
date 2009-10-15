@@ -12,6 +12,8 @@
 #import "SVHTMLTemplateTextBlock.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
+#import "SVPageletBody.h"
+#import "SVPageletBodyTextAreaController.h"
 #import "KTSite.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
@@ -164,44 +166,7 @@
 
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
-    // Prepare controllers for each text block
-    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_parsedTextBlocks count]];
     DOMDocument *domDoc = [[self webEditorView] DOMDocument];
-    
-    for (SVHTMLTemplateTextBlock *aTextBlock in _parsedTextBlocks)
-    {
-        // Basic text area
-        DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
-        OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
-        
-        SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithDOMElement:element];
-        [textArea setRichText:[aTextBlock isRichText]];
-        [textArea setFieldEditor:[aTextBlock isFieldEditor]];
-        
-        [controllers addObject:textArea];
-        [textArea release];
-        
-        
-        // Binding
-        if (![aTextBlock importsGraphics])
-        {
-            [textArea bind:NSValueBinding
-                     toObject:[aTextBlock HTMLSourceObject]
-                  withKeyPath:[aTextBlock HTMLSourceKeyPath]
-                      options:nil];
-        }
-        else
-        {
-            
-        }
-    }
-    
-    [self setTextAreas:controllers];
-    [_parsedTextBlocks release], _parsedTextBlocks = nil;
-    
-    
-    
-    
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
@@ -225,6 +190,49 @@
     
     [self setContentItems:contentObjects];
     [contentObjects release];
+    
+    
+    
+    // Prepare text areas and their controllers
+    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[_parsedTextBlocks count]];
+    
+    for (SVHTMLTemplateTextBlock *aTextBlock in _parsedTextBlocks)
+    {
+        // Basic text area
+        DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
+        OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
+        
+        SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithDOMElement:element];
+        [textArea setRichText:[aTextBlock isRichText]];
+        [textArea setFieldEditor:[aTextBlock isFieldEditor]];
+        
+        [controllers addObject:textArea];
+        [textArea release];
+        
+        
+        // Binding
+        id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+        if ([value isKindOfClass:[SVPageletBody class]])
+        {
+            SVPageletBodyTextAreaController *controller = [[SVPageletBodyTextAreaController alloc]
+                                                           initWithTextArea:textArea content:value];
+            
+            [controller release];
+        }
+        else
+        {
+            [textArea bind:NSValueBinding
+                     toObject:[aTextBlock HTMLSourceObject]
+                  withKeyPath:[aTextBlock HTMLSourceKeyPath]
+                      options:nil];
+        }
+    }
+    
+    [self setTextAreas:controllers];
+    [_parsedTextBlocks release], _parsedTextBlocks = nil;
+    
+    
+    
     
     
     
