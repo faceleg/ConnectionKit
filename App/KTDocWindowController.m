@@ -230,6 +230,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Check for missing media
 	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
 	
+	// Put a gradient border at the bottom of the window
+	[[self window] setContentBorderThickness:93.0 forEdge:NSMinYEdge];
 	
 	// LAST: clear the undo stack
 	[[self document] performSelector:@selector(processPendingChangesAndClearChangeCount)

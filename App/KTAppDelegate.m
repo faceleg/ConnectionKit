@@ -827,7 +827,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[KTLogger configure:self];
 }
 
-- (void)applicationcheckLaunching:(NSNotification *)aNotification
+- (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
 
