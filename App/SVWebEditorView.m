@@ -541,6 +541,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     if ([[self selectionParentItems] count] > 0)
     {
         [self setSelectionParentItems:nil];
+        [_mouseDownEvent release]; _mouseDownEvent = nil;
         [NSApp sendEvent:event];    // this time round it'll go through to the WebView
         return;
     }
