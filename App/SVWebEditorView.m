@@ -26,7 +26,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 // Selection
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
-@property(nonatomic, readwrite) SVWebEditingMode mode;
 - (void)postSelectionChangedNotification;
 
 // Event handling
@@ -230,44 +229,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Editing
 
-@synthesize mode = _mode;
-- (void)setMode:(SVWebEditingMode)mode
-{
-    _mode = mode;
-    
-    // The whole selection will need redrawing
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-    for (id <SVWebEditorItem> anItem in [self selectedItems])
-    {
-        DOMElement *element = [anItem DOMElement];
-        NSRect drawingRect = [border drawingRectForFrame:[element boundingBox]];
-        [[element documentView] setNeedsDisplayInRect:drawingRect];
-    }
-    
-    [border release];
-}
-
-- (void)selectionDidChangeWhileEditing
-{
-    [[NSRunLoop currentRunLoop] performSelector:@selector(checkIfEditingDidEnd)
-                                         target:self
-                                       argument:nil
-                                          order:0
-                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
-}
-
-- (void)checkIfEditingDidEnd
-{
-    NSResponder *firstResponder = [[self window] firstResponder];
-    if (!firstResponder ||
-        ![firstResponder isKindOfClass:[NSView class]] ||
-        ![(NSView *)firstResponder isDescendantOf:self])
-    {
-        [self setSelectedItems:nil];
-        [self setMode:SVWebEditingModeNormal];
-    }
-}
-
 - (BOOL)canEdit;
 {
     //  Editing is only supported while the WebView is First Responder. Otherwise there is no selection to indicate what is being edited. We can work around the issue a bit by forcing there to be a selection, or refusing the edit if not
@@ -397,13 +358,13 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Nothing to draw during a drag op
-    if ([self mode] != SVWebEditingModeDragging)
+    if (!_isDragging)
     {
         NSArray *selectedItems = [self selectedItems];
         if ([selectedItems count] > 0)
         {
             SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-            [border setEditing:([self mode] == SVWebEditingModeEditing)];
+            [border setEditing:NO];
             
             for (id <SVWebEditorItem> anItem in [self selectedItems])
             {
@@ -431,8 +392,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (BOOL)acceptsFirstResponder
 {
-    BOOL result = ([self mode] != SVWebEditingModeEditing);
-    return result;
+    return YES;
 }
 
 /*  There are 2 reasons why you might resign first responder:
@@ -442,7 +402,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (BOOL)resignFirstResponder
 {
     BOOL result = [super resignFirstResponder];
-    if (result && [self mode] != SVWebEditingModeEditing)
+    if (result)
     {
         [self setSelectedItems:nil];
     }
@@ -464,7 +424,8 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     {
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
-        if ([self mode] == SVWebEditingModeEditing)
+        // Slight hack. If the current selection is nested within one or more other items, then we don't want WebKit to have control of the cursor.
+        if ([_selectionParentItems count] > 0)
         {
             //  2)
             BOOL targetSelf = YES;
@@ -539,16 +500,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
-    // While editing, we enter into a bit of special mode where a click anywhere outside the editing area is targetted to ourself. This is done so we can take control of the cursor. A click outside the editing area will end editing, but also handle the event as per normal. Easiest way to achieve this I reckon is to end editing and then simply refire the event, arriving at its real target. Very re-entrant :)
-    if ([self mode] == SVWebEditingModeEditing)
-    {
-        [self setSelectedItems:nil];
-        [self setMode:SVWebEditingModeNormal];
-        [NSApp sendEvent:event];
-        return;
-    }
-    
-    
     // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
     OBASSERT(!_mouseDownEvent);
     _mouseDownEvent = [event retain];
@@ -610,10 +561,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
             if ([mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
             {
-                // There might be multiple items selected. If so, 
-                // Switch to editing mode; as this changes our hit testing behaviour (and thereby event handling path)
-                [self setMode:SVWebEditingModeEditing];
-                
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
                 // Note that they're posted in reverse order since I'm placing onto the front of the queue
                 [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
@@ -889,12 +836,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (void)webViewDidChangeSelection:(NSNotification *)notification
 {
     OBPRECONDITION([notification object] == [self webView]);
-    
-    // Changing selection while editing is a pretty good indication that the webview will end editing, even including by losing first responder status. However, at this point, the webview is still first responder, so we have to delay our check fractionally
-    if ([self mode] == SVWebEditingModeEditing)
-    {
-        [self selectionDidChangeWhileEditing];
-    }
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification

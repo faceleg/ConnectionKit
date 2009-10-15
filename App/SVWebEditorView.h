@@ -15,13 +15,6 @@
 #import "SVWebEditorTextProtocol.h"
 
 
-typedef enum {
-    SVWebEditingModeNormal,
-    SVWebEditingModeEditing,
-    SVWebEditingModeDragging,
-} SVWebEditingMode;
-
-
 @protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
 @class SVWebEditorWebView;
 
@@ -38,7 +31,7 @@ typedef enum {
     // Selection
     id <SVWebEditorText>    _focusedText;
     NSArray                 *_selectedItems;
-    SVWebEditingMode        _mode;
+    NSArray                 *_selectionParentItems;
     
     // Editing
     DOMRange        *_DOMRangeOfNextEdit;
@@ -46,6 +39,7 @@ typedef enum {
     NSUndoManager   *_undoManager;
     
     // Drag & Drop
+    BOOL    _isDragging;
     DOMNode *_dragHighlightNode;
 	DOMNode *_dragCaretNode1;
     DOMNode *_dragCaretNode2;
@@ -83,8 +77,6 @@ typedef enum {
 
 
 #pragma mark Editing
-
-@property(nonatomic, readonly) SVWebEditingMode mode;
 
 // We don't want to allow any sort of change unless the WebView is First Responder
 - (BOOL)canEdit;

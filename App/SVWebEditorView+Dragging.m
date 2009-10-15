@@ -18,8 +18,6 @@
 
 @interface SVWebEditorView (DraggingPrivate)
 
-@property(nonatomic, readwrite) SVWebEditingMode mode;
-
 // Dragging destination
 - (void)removeDragCaretFromDOMNodes;
 
@@ -127,13 +125,13 @@
 - (void)draggedImage:(NSImage *)anImage beganAt:(NSPoint)aPoint
 {
     // Hide the dragged items so it looks like a proper drag
-    [self setMode:SVWebEditingModeDragging];    // will redraw without selection borders
+    _isDragging = YES;    // will redraw without selection borders
 }
 
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
 {
     // Make the dragged items visible again
-    [self setMode:SVWebEditingModeNormal];
+    _isDragging = NO;
     
     for (id <SVWebEditorItem> anItem in [self selectedItems])
     {
