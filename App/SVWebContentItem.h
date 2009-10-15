@@ -19,8 +19,6 @@
 {
   @private
     SVPagelet   *_pagelet;
-        
-    SVDOMNodeBoundsTracker  *_nodeTracker;
 }
 
 - (id)initWithDOMElement:(DOMElement *)element pagelet:(SVPagelet *)pagelet;

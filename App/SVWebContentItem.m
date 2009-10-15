@@ -24,10 +24,6 @@
 
 - (void)dealloc
 {
-    [_nodeTracker stopTracking];
-    [_nodeTracker setDelegate:nil];
-    [_nodeTracker release];
-    
     [_pagelet release];
     
     [super dealloc];
@@ -36,12 +32,5 @@
 #pragma mark Accessors
 
 @synthesize pagelet = _pagelet;
-
-#pragma mark Editing Overlay Item
-
-- (void)trackerDidDetectDOMNodeBoundsChange:(NSNotification *)notification;
-{
-    
-}
 
 @end
