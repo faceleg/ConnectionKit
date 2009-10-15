@@ -370,7 +370,17 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 {
-    return [[self dataSource] editingOverlay:self itemAtPoint:point];
+    // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
+    NSDictionary *element = [[self webView] elementAtPoint:point];
+    DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
+    
+    id <SVWebEditorItem> result = nil;
+    if (domNode)
+    {
+        result = [[self dataSource] webEditorView:self itemForDOMNode:domNode];
+    }
+    
+    return result;
 }
 
 #pragma mark Drawing

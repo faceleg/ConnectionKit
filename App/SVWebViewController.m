@@ -309,18 +309,10 @@
     return result;
 }
 
-- (SVWebContentItem *)itemAtPoint:(NSPoint)point
+- (SVWebContentItem *)itemForDOMNode:(DOMNode *)node
 {
     // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
-    NSDictionary *elementInfo = [[self webView] elementAtPoint:point];
-    DOMNode *node = [elementInfo objectForKey:WebElementDOMNodeKey];
-    SVWebContentItem *result = nil;
-    
-    if (node)
-    {
-        result = [self itemForNode:node inItems:[self contentItems]];
-    }
-    
+    SVWebContentItem *result = [self itemForNode:node inItems:[self contentItems]];
     return result;
 }
 
@@ -330,9 +322,9 @@
 
 #pragma mark WebEditorViewDataSource
 
-- (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemForDOMNode:(DOMNode *)node;
 {
-    id <SVWebEditorItem> result = [self itemAtPoint:point];
+    id <SVWebEditorItem> result = [self itemForDOMNode:node];
     return result;
 }
 
