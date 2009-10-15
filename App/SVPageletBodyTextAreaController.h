@@ -17,10 +17,16 @@
 {
     SVWebTextArea   *_textArea;
     SVPageletBody   *_pageletBody;
+    
+    NSArray *_editorItems;
 }
 
 - (id)initWithTextArea:(SVWebTextArea *)textArea content:(SVPageletBody *)pageletBody;
 
+@property(nonatomic, retain, readonly) SVWebTextArea *textArea;
+@property(nonatomic, retain, readonly) SVPageletBody *content;
+
 @property(nonatomic, readonly) NSArray *editorItems;
+- (void)updateEditorItems;
 
 @end
