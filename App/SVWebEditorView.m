@@ -27,6 +27,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Selection
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 - (void)postSelectionChangedNotification;
+@property(nonatomic, copy) NSArray *selectionParentItems;
 
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
@@ -238,6 +239,17 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
                                                         object:self];
 }
 
+@synthesize selectionParentItems = _selectionParentItems;
+- (void)setSelectionParentItems:(NSArray *)items
+{
+    // Store items
+    items = [items copy];
+    [_selectionParentItems release]; _selectionParentItems = items;
+    
+    // Draw new items
+    
+}
+
 #pragma mark Editing
 
 - (BOOL)canEdit;
@@ -414,11 +426,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Slight hack. If the current selection is nested within one or more other items, then we don't want WebKit to have control of the cursor.
-        if ([_selectionParentItems count] > 0)
+        if ([[self selectionParentItems] count] > 0)
         {
             //  2)
             BOOL targetSelf = YES;
-            for (id <SVWebEditorItem> anItem in [self selectedItems])
+            for (id <SVWebEditorItem> anItem in [self selectionParentItems])
             {
                 DOMElement *element = [anItem DOMElement];
                 NSView *docView = [element documentView];
@@ -490,8 +502,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)mouseDown:(NSEvent *)event
 {
     // In a normal view, you would implement -acceptsFirstResponder to return YES and leave it at that. But in our case, we want to give focus to the WebView, so implement that here in a fashion that mimic's NSWindow's handling of -acceptsFirstResponder.
-    NSView *targetView = [self webView];
-    if ([targetView acceptsFirstResponder])
+    NSPoint point = [[self superview] convertPointFromBase:[event locationInWindow]];
+    NSView *targetView = [super hitTest:point];
+    if ([targetView acceptsFirstResponder] && [[self window] firstResponder] != targetView)
     {
         [[self window] makeFirstResponder:targetView];
     }
@@ -559,7 +572,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             if ([mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
             {
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
-                // Note that they're posted in reverse order since I'm placing onto the front of the queue
+                // Note that they're posted in reverse order since I'm placing onto the front of the queue.
+                // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
+                [self setSelectionParentItems:[self selectedItems]];    // should only be 1
+                [self setSelectedItems:nil];
+                
                 [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
                 [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
             }
