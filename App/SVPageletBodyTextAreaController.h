@@ -21,4 +21,6 @@
 
 - (id)initWithTextArea:(SVWebTextArea *)textArea content:(SVPageletBody *)pageletBody;
 
+@property(nonatomic, readonly) NSArray *editorItems;
+
 @end

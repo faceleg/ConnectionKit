@@ -13,9 +13,14 @@
 @interface SVWebContentItem : SVWebEditorItem
 {
   @private
-    id  _representedObject;
+    id              _representedObject;
+    NSMutableArray  *_textAreas;
 }
 
 @property(nonatomic, retain) id representedObject;
+
+@property(nonatomic, readonly) NSArray *textAreas;
+- (void)insertObject:(SVWebTextArea *)textArea inTextAreasAtIndex:(NSUInteger)index;
+- (void)removeObjectFromTextAreasAtIndex:(NSUInteger)index;
 
 @end

@@ -13,9 +13,19 @@
 
 #pragma mark Init & Dealloc
 
+- (id)init
+{
+    [super init];
+    
+    _textAreas = [[NSMutableArray alloc] init];
+    
+    return self;
+}
+
 - (void)dealloc
 {
     [_representedObject release];
+    [_textAreas release];
     
     [super dealloc];
 }
@@ -23,5 +33,17 @@
 #pragma mark Accessors
 
 @synthesize representedObject = _representedObject;
+
+- (NSArray *)textAreas { return [[_textAreas copy] autorelease]; }
+
+- (void)insertObject:(SVWebTextArea *)textArea inTextAreasAtIndex:(NSUInteger)index;
+{
+    [_textAreas insertObject:textArea atIndex:index];
+}
+
+- (void)removeObjectFromTextAreasAtIndex:(NSUInteger)index;
+{
+    [_textAreas removeObjectAtIndex:index];
+}
 
 @end

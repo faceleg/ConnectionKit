@@ -31,4 +31,6 @@
     [super dealloc];
 }
 
+- (NSArray *)editorItems { return nil; }
+
 @end
