@@ -330,7 +330,7 @@
 
 #pragma mark WebEditorViewDataSource
 
-- (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemAtPoint:(NSPoint)point;
 {
     id <SVWebEditorItem> result = [self itemAtPoint:point];
     return result;

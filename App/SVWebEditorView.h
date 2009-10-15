@@ -161,12 +161,11 @@ typedef enum {
 
 /*!
  @method editingOverlay:itemAtPoint:
- @param overlay The SVEditingOverlay object sending the message.
+ @param sender The SVWebEditorView object sending the message.
  @param point The point being tested in the overlay's coordinate system.
  @result The frontmost item that covers the point. nil if there is none.
  */
-- (id <SVWebEditorItem>)editingOverlay:(SVWebEditorView *)overlay
-                                itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemAtPoint:(NSPoint)point;
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
