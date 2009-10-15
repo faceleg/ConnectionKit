@@ -335,19 +335,18 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)cut:(id)sender
 {
-    if ([self copy])
+    if ([self copySelectedItemsToGeneralPasteboard])
     {
         [self delete:sender];
     }
 }
 
-#warning - I think that copy is not a clipboard operation, but an object copying operation!!!!
 - (void)copy:(id)sender
 {
-    [self copy];
+    [self copySelectedItemsToGeneralPasteboard];
 }
 
-- (BOOL)copy;
+- (BOOL)copySelectedItemsToGeneralPasteboard;
 {
     // Rely on the datasource to serialize items to the pasteboard
     BOOL result = [[self dataSource] webEditorView:self 

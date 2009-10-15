@@ -102,7 +102,7 @@ typedef enum {
 #pragma mark Cut, Copy & Paste
 - (IBAction)cut:(id)sender;
 - (IBAction)copy:(id)sender;
-- (BOOL)copy;
+- (BOOL)copySelectedItemsToGeneralPasteboard;
 // - (IBAction)paste:(id)sender;
 - (IBAction)delete:(id)sender;
 
