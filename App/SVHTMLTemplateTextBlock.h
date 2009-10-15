@@ -58,10 +58,8 @@
 - (NSString *)targetString;
 - (void)setTargetString:(NSString *)targetString;
 
-- (id)HTMLSourceObject;
-- (void)setHTMLSourceObject:(id)object;
-- (NSString *)HTMLSourceKeyPath;
-- (void)setHTMLSourceKeyPath:(NSString *)keyPath;
+@property(nonatomic, retain) id HTMLSourceObject;
+@property(nonatomic, copy) NSString *HTMLSourceKeyPath;
 
 - (NSString *)graphicalTextCode;
 - (void)setGraphicalTextCode:(NSString *)code;
