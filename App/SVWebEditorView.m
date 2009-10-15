@@ -380,33 +380,52 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     
     
-    // Nothing to draw during a drag op
-    if (!_isDragging)
-    {
-        NSArray *selectedItems = [self selectedItems];
-        if ([selectedItems count] > 0)
-        {
-            SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-            [border setEditing:NO];
-            
-            for (id <SVWebEditorItem> anItem in [self selectedItems])
-            {
-                // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-                NSRect frameRect = [[anItem DOMElement] boundingBox];
-                NSRect drawingRect = [border drawingRectForFrame:frameRect];
-                if (NSIntersectsRect(drawingRect, dirtyRect))
-                {
-                    [border drawWithFrame:frameRect inView:view];
-                }
-            }
-            
-            [border release];
-        }
-    }
-    
+    // Draw selection
+    [self drawSelectionRect:dirtyRect inView:view];
     
     // Draw drag caret
     [self drawDragCaretInView:view];
+}
+
+- (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
+{
+    // Nothing to draw during a drag op
+    if (!_isDragging)
+    {
+        SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+        
+        // Draw selection parent items
+        for (id <SVWebEditorItem> anItem in [self selectionParentItems])
+        {
+            // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+            [border setEditing:YES];
+            NSRect frameRect = [[anItem DOMElement] boundingBox];
+            NSRect drawingRect = [border drawingRectForFrame:frameRect];
+            if (NSIntersectsRect(drawingRect, dirtyRect))
+            {
+                [border drawWithFrame:frameRect inView:view];
+            }
+        }
+        
+        // Draw actual selection
+        [border setEditing:NO];
+        for (id <SVWebEditorItem> anItem in [self selectedItems])
+        {
+            // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+            NSRect frameRect = [[anItem DOMElement] boundingBox];
+            NSRect drawingRect = [border drawingRectForFrame:frameRect];
+            if (NSIntersectsRect(drawingRect, dirtyRect))
+            {
+                [border drawWithFrame:frameRect inView:view];
+            }
+        }
+        
+        // Tidy up
+        [border release];
+    }
+    
+    
+    
 }
 
 #pragma mark Event Handling
@@ -504,9 +523,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // In a normal view, you would implement -acceptsFirstResponder to return YES and leave it at that. But in our case, we want to give focus to the WebView, so implement that here in a fashion that mimic's NSWindow's handling of -acceptsFirstResponder.
     NSPoint point = [[self superview] convertPointFromBase:[event locationInWindow]];
     NSView *targetView = [super hitTest:point];
-    if ([targetView acceptsFirstResponder] && [[self window] firstResponder] != targetView)
+    if ([targetView acceptsFirstResponder])
     {
-        [[self window] makeFirstResponder:targetView];
+        [[self window] makeFirstResponder:targetView];  // NSWindow will do nothing if it's already First Responder
     }
     
     
