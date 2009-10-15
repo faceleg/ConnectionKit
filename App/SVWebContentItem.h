@@ -10,6 +10,9 @@
 #import "SVWebEditorItem.h"
 
 
+@class SVWebTextArea;
+
+
 @interface SVWebContentItem : SVWebEditorItem
 {
   @private
