@@ -154,7 +154,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     
     // Remove old frames
     if (!extendSelection)
@@ -197,7 +197,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     // Redraw
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     NSRect drawingRect = [border drawingRectForFrame:[[item DOMElement] boundingBox]];
     [docView setNeedsDisplayInRect:drawingRect];
 }
@@ -341,6 +341,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
 }
 
+#warning - I think that copy is not a clipboard operation, but an object copying operation!!!!
 - (void)copy:(id)sender
 {
     [self copy];
