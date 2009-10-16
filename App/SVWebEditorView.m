@@ -38,6 +38,10 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 @property(nonatomic, copy) NSArray *selectionParentItems;
 
 
+// Getting Item Information
+- (NSArray *)ancestorsForItem:(id <SVWebEditorItem>)item includeItem:(BOOL)includeItem;
+
+
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
 
@@ -292,7 +296,22 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Update parentItems list
-    //[self setSelectionParentItems:nil];
+    NSArray *parentItems = nil;
+    if (selectedItem)
+    {
+        parentItems = [self ancestorsForItem:selectedItem includeItem:NO];
+    }
+    else
+    {
+        id <SVWebEditorItem> parent = [[self dataSource] webEditorView:self
+                                                        itemForDOMNode:[[self selectedDOMRange] commonAncestorContainer]];
+        if (parent)
+        {
+            parentItems = [self ancestorsForItem:parent includeItem:YES];
+        }
+    }
+    
+    [self setSelectionParentItems:parentItems];
     
     
     
@@ -493,6 +512,32 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // Pretty simple actually; just search up the DOM again
     DOMNode *parentNode = [[item DOMElement] parentNode];
     id <SVWebEditorItem> result = [[self dataSource] webEditorView:self itemForDOMNode:parentNode];
+    return result;
+}
+
+- (NSArray *)ancestorsForItem:(id <SVWebEditorItem>)item includeItem:(BOOL)includeItem;
+{
+    OBPRECONDITION(item);
+    
+    NSArray *result = (includeItem ? [NSArray arrayWithObject:item] : nil);
+    
+    id <SVWebEditorItem> parent = item;
+    while (parent)
+    {
+        parent = [self parentForItem:parent];
+        if (parent)
+        {
+            if (result)
+            {
+                result = [result arrayByAddingObject:parent];
+            }
+            else
+            {
+                result = [NSArray arrayWithObject:parent];
+            }
+        }
+    }
+    
     return result;
 }
 
@@ -712,7 +757,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
                 // Note that they're posted in reverse order since I'm placing onto the front of the queue.
                 // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
                 [self setSelectionParentItems:[self selectedItems]];    // should only be 1
-                [self setSelectedItems:nil];
                 
                 [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
                 [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
