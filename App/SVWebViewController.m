@@ -298,12 +298,18 @@
 - (SVWebContentItem *)itemForNode:(DOMNode *)node inItems:(NSArray *)items
 {
     SVWebContentItem *result = nil;
-    for (result in items)
+    NSArray *itemDOMElements = [items valueForKey:@"DOMElement"];
+    
+    DOMNode *aNode = node;
+    while (aNode)
     {
-        if ([node isDescendantOfNode:[result DOMElement]])
+        NSUInteger index = [itemDOMElements indexOfObjectIdenticalTo:aNode];
+        if (index != NSNotFound)
         {
+            result = [items objectAtIndex:index];
             break;
         }
+        aNode = [aNode parentNode];
     }
     
     return result;
@@ -312,7 +318,14 @@
 - (SVWebContentItem *)itemForDOMNode:(DOMNode *)node
 {
     // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
-    SVWebContentItem *result = [self itemForNode:node inItems:[self contentItems]];
+    NSArray *items = [self contentItems];
+    for (SVPageletBodyTextAreaController *aController in [self textAreaControllers])
+    {
+        items = [items arrayByAddingObjectsFromArray:[aController editorItems]];
+    }
+    SVWebContentItem *result = [self itemForNode:node inItems:items];
+    
+    
     return result;
 }
 
