@@ -30,9 +30,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Selection
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 
-- (void)deselectItems:(NSArray *)itemsToDeselect
-          selectItems:(NSArray *)itemsToSelect
-updateWebViewSelection:(BOOL)updateWebView;
+- (void)updateSelectionByDeselectingAll:(BOOL)deselectAll
+                         orDeselectItem:(id <SVWebEditorItem>)itemToDeselect
+                            selectItems:(NSArray *)itemsToSelect
+                          updateWebView:(BOOL)updateWebView;
+
 @property(nonatomic, copy) NSArray *selectionParentItems;
 
 
@@ -186,17 +188,18 @@ updateWebViewSelection:(BOOL)updateWebView;
 
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
-    [self deselectItems:(extendSelection ? nil : [self selectedItems])
-            selectItems:items
- updateWebViewSelection:YES];
+    [self updateSelectionByDeselectingAll:!extendSelection
+                           orDeselectItem:nil
+                              selectItems:items
+                            updateWebView:YES];
 }
 
 - (void)deselectItem:(id <SVWebEditorItem>)item;
 {
-    // Remove item
-    [self deselectItems:[NSArray arrayWithObject:item]
-            selectItems:nil
- updateWebViewSelection:YES];
+    [self updateSelectionByDeselectingAll:NO
+                           orDeselectItem:item
+                              selectItems:nil
+                            updateWebView:YES];
 }
 
 - (IBAction)deselectAll:(id)sender;
@@ -206,10 +209,14 @@ updateWebViewSelection:(BOOL)updateWebView;
 
 /*  Support method to do the real work of all our selection methods
  */
-- (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect updateWebViewSelection:(BOOL)updateWebView;
+- (void)updateSelectionByDeselectingAll:(BOOL)deselectAll
+                         orDeselectItem:(id <SVWebEditorItem>)itemToDeselect
+                            selectItems:(NSArray *)itemsToSelect
+                          updateWebView:(BOOL)updateWebView;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
+    
     
     
     // Bracket the whole operation so no-one else gets the wrong idea
@@ -217,7 +224,18 @@ updateWebViewSelection:(BOOL)updateWebView;
     _isChangingSelectedItems = YES;
     
     
-    // Remove items, including marking them for display
+    
+    // Remove items, including marking them for display. Could almost certainly be more efficient
+    NSArray *itemsToDeselect = nil;
+    if (deselectAll)
+    {
+        itemsToDeselect = [self selectedItems];
+    }
+    else if (itemToDeselect)
+    {
+        itemsToDeselect = [NSArray arrayWithObject:itemToDeselect];
+    }
+    
     if (itemsToDeselect)
     {
         for (id <SVWebEditorItem> anItem in itemsToDeselect)
@@ -232,6 +250,7 @@ updateWebViewSelection:(BOOL)updateWebView;
     }
     
     
+    
     // Add new items to the selection.
     if (itemsToSelect)
     {
@@ -240,7 +259,6 @@ updateWebViewSelection:(BOOL)updateWebView;
         _selectedItems = (_selectedItems ?
                           [[_selectedItems arrayByAddingObjectsFromArray:itemsToSelect] retain] :
                           [itemsToSelect copy]);
-        
         
         // Draw new selection
         for (id <SVWebEditorItem> anItem in itemsToSelect)
@@ -251,31 +269,36 @@ updateWebViewSelection:(BOOL)updateWebView;
     }
     
     
+    
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
-    if (updateWebView)
+    id <SVWebEditorItem> selectedItem = [self selectedItem];
+    if (updateWebView && selectedItem)
     {
-        id <SVWebEditorItem> selectedItem = [self selectedItem];
-        if (selectedItem)
+        DOMElement *domElement = [selectedItem DOMElement];
+        if ([domElement containingContentEditableElement])
         {
-            DOMElement *domElement = [selectedItem DOMElement];
-            if ([domElement containingContentEditableElement])
-            {
-                [[self window] makeFirstResponder:[domElement documentView]];
-                
-                DOMRange *range = [[domElement ownerDocument] createRange];
-                [range selectNode:domElement];
-                [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
-            }
-            else
-            {
-                [[self window] makeFirstResponder:self];
-            }
+            [[self window] makeFirstResponder:[domElement documentView]];
+            
+            DOMRange *range = [[domElement ownerDocument] createRange];
+            [range selectNode:domElement];
+            [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+        }
+        else
+        {
+            [[self window] makeFirstResponder:self];
         }
     }
     
     
+    
+    // Update parentItems list
+    //[self setSelectionParentItems:nil];
+    
+    
+    
     // Finish bracketing
     _isChangingSelectedItems = NO;
+    
     
     
     // Alert observers
@@ -986,7 +1009,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         {
             items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
         }
-        [self deselectItems:[self selectedItems] selectItems:items updateWebViewSelection:NO];
+        
+        [self updateSelectionByDeselectingAll:YES
+                               orDeselectItem:nil
+                                  selectItems:nil
+                                updateWebView:YES];
     }
 }
 
