@@ -76,6 +76,8 @@
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(id <SVWebEditorItem>)item;
 
+- (IBAction)deselectAll:(id)sender;
+
 
 #pragma mark Editing
 

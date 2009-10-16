@@ -199,6 +199,11 @@ updateWebViewSelection:(BOOL)updateWebView;
  updateWebViewSelection:YES];
 }
 
+- (IBAction)deselectAll:(id)sender;
+{
+    [self setSelectedItems:nil];
+}
+
 /*  Support method to do the real work of all our selection methods
  */
 - (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect updateWebViewSelection:(BOOL)updateWebView;
