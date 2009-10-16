@@ -1496,6 +1496,41 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = SandvoxQuickLook;
 		};
+		CE9699FD10883FB8008E3339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 79CFD12609F702BE00172CDD /* Connection.framework */;
+			remoteInfo = Framework;
+		};
+		CE9699FF10883FB8008E3339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 09D6601D09FD37990000BA00 /* UnitTest.octest */;
+			remoteInfo = UnitTest;
+		};
+		CE969A0110883FB8008E3339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 795FF4F10B0C013200EA9292 /* DropletHelper.app */;
+			remoteInfo = DropletHelper;
+		};
+		CE969A0310883FB8008E3339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 7983E6D20B0C4DF000F5078E /* DropletLauncher */;
+			remoteInfo = DropletLauncher;
+		};
+		CE96A3F210883FE7008E3339 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 79CFD12509F702BE00172CDD /* Framework */;
+			remoteInfo = Framework;
+		};
 		CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
@@ -1870,7 +1905,7 @@
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
 		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
 		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
-		3C3EB90F09F71C3F00881A08 /* connection */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = connection; path = ../../connection; sourceTree = SOURCE_ROOT; };
+		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
 		3C3F547C0D625919004885E7 /* Connection.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Connection.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4137,7 +4172,7 @@
 			isa = PBXGroup;
 			children = (
 				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
-				3C3EB90F09F71C3F00881A08 /* connection */,
+				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
 				3CC59B3709AD4D87006202C0 /* iMediaBrowse.xcodeproj */,
 			);
 			name = Frameworks;
@@ -4547,13 +4582,6 @@
 			path = DesignPicker;
 			sourceTree = "<group>";
 		};
-		CE762D311083F25D00EEA9CF /* Products */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CE8E71900912F5E7001DC88D /* payment */ = {
 			isa = PBXGroup;
 			children = (
@@ -4568,6 +4596,17 @@
 				CEA36D1D091AEF430073219B /* Lock.png */,
 			);
 			path = payment;
+			sourceTree = "<group>";
+		};
+		CE9699F610883FB8008E3339 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				CE9699FE10883FB8008E3339 /* Connection.framework */,
+				CE969A0010883FB8008E3339 /* UnitTest.octest */,
+				CE969A0210883FB8008E3339 /* DropletHelper.app */,
+				CE969A0410883FB8008E3339 /* DropletLauncher */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		CE9983160D614DD700F2DD12 /* Products */ = {
@@ -4958,6 +4997,7 @@
 				27E4D4530EC30D04000E85DD /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */,
+				CE96A3F310883FE7008E3339 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5044,8 +5084,8 @@
 					ProjectRef = 274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */;
 				},
 				{
-					ProductGroup = CE762D311083F25D00EEA9CF /* Products */;
-					ProjectRef = 3C3EB90F09F71C3F00881A08 /* connection */;
+					ProductGroup = CE9699F610883FB8008E3339 /* Products */;
+					ProjectRef = 3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C4C6A6D0D6410F300398BDA /* Products */;
@@ -5408,6 +5448,34 @@
 			fileType = wrapper.cfbundle;
 			path = SandvoxQuickLook.qlgenerator;
 			remoteRef = CE2556D20D3432AF003A5B5E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE9699FE10883FB8008E3339 /* Connection.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = Connection.framework;
+			remoteRef = CE9699FD10883FB8008E3339 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE969A0010883FB8008E3339 /* UnitTest.octest */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = UnitTest.octest;
+			remoteRef = CE9699FF10883FB8008E3339 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE969A0210883FB8008E3339 /* DropletHelper.app */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.application;
+			path = DropletHelper.app;
+			remoteRef = CE969A0110883FB8008E3339 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		CE969A0410883FB8008E3339 /* DropletLauncher */ = {
+			isa = PBXReferenceProxy;
+			fileType = "compiled.mach-o.executable";
+			path = DropletLauncher;
+			remoteRef = CE969A0310883FB8008E3339 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE99831A0D614DD700F2DD12 /* MetaSandvox.mdimporter */ = {
@@ -6535,6 +6603,11 @@
 			isa = PBXTargetDependency;
 			name = SandvoxQuickLook;
 			targetProxy = CE2556D50D3432DA003A5B5E /* PBXContainerItemProxy */;
+		};
+		CE96A3F310883FE7008E3339 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = Framework;
+			targetProxy = CE96A3F210883FE7008E3339 /* PBXContainerItemProxy */;
 		};
 		CEC37A630F2FDCC2004CC936 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
