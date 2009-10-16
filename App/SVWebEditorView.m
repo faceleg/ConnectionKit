@@ -407,16 +407,29 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 #pragma mark Getting Item Information
 
+/*  What item would be selected if you click at that point?
+ */
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 {
-    // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
     NSDictionary *element = [[self webView] elementAtPoint:point];
     DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
+    if (!domNode) return nil;
     
-    id <SVWebEditorItem> result = nil;
-    if (domNode)
+    // Ask the datasource for the deepest item
+    id <SVWebEditorItem> result = [[self dataSource] webEditorView:self itemForDOMNode:domNode];
+    
+    // Then work our way up the tree looking for the highest-level object that isn't in the parents list
+    while (YES)
     {
-        result = [[self dataSource] webEditorView:self itemForDOMNode:domNode];
+        id <SVWebEditorItem> parent = [self parentForItem:result];
+        if (parent && ![[self selectionParentItems] containsObject:parent])
+        {
+            result = parent;
+        }
+        else
+        {
+            break;
+        }
     }
     
     return result;
@@ -599,21 +612,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // What was clicked? We want to know top-level object
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     id <SVWebEditorItem> item = [self itemAtPoint:location];
-    while (YES)
-    {
-        id <SVWebEditorItem> parent = [self parentForItem:item];
-        if (parent)
-        {
-            item = parent;
-        }
-        else
-        {
-            break;
-        }
-    }
-        
-    
-    // Handle clicking the item
+      
     if (item)
     {
         BOOL itemIsSelected = [[self selectedItems] containsObjectIdenticalTo:item];
