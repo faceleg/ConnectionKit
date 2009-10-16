@@ -237,14 +237,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
-    DOMElement *domElement = [[self selectedItem] DOMElement];
-    DOMRange *range = nil;
-    if ([domElement containingContentEditableElement])
+    id <SVWebEditorItem> selectedItem = [self selectedItem];
+    if (selectedItem)
     {
-        range = [[domElement ownerDocument] createRange];
-        [range selectNode:domElement];
+        DOMElement *domElement = [selectedItem DOMElement];
+        if ([domElement containingContentEditableElement])
+        {
+            DOMRange *range = [[domElement ownerDocument] createRange];
+            [range selectNode:domElement];
+            [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+        }
+        else
+        {
+            [[self window] makeFirstResponder:self];
+        }
     }
-    [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
     
     
     // Alert observers
@@ -303,6 +310,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)windowDidChangeFirstResponder:(NSNotification *)notification
 {
     OBPRECONDITION([notification object] == [self window]);
+    return;
     
     //  Whenever focus moves away from the webview, remove selection
     if ([[self selectedItems] count] > 0 && ![[self webView] maintainsInactiveSelection])
@@ -595,12 +603,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
-    // In a normal view, you would implement -acceptsFirstResponder to return YES and leave it at that. But in our case, we want to give focus to the WebView, so implement that here in a fashion that mimic's NSWindow's handling of -acceptsFirstResponder.
-    NSPoint point = [[self superview] convertPointFromBase:[event locationInWindow]];
-    NSView *targetView = [super hitTest:point];
-    [[self window] makeFirstResponder:targetView];  // nothing happens if target's already First Responder
-    
-    
     // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
     OBASSERT(!_mouseDownEvent);
     _mouseDownEvent = [event retain];
@@ -694,6 +696,18 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     // We're not personally interested in scroll events, let content have a crack at them.
     [self forwardMouseEvent:theEvent selector:_cmd];
+}
+
+#pragma mark Changing the First Responder
+
+- (BOOL)resignFirstResponder
+{
+    BOOL result = [super resignFirstResponder];
+    if (result)
+    {
+        [self setSelectedItems:nil];
+    }
+    return result;
 }
 
 #pragma mark Setting the DataSource/Delegate
