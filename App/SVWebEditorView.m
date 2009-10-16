@@ -422,6 +422,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     return result;
 }
 
+- (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
+{
+    // Pretty simple actually; just search up the DOM again
+    DOMNode *parentNode = [[item DOMElement] parentNode];
+    id <SVWebEditorItem> result = [[self dataSource] webEditorView:self itemForDOMNode:parentNode];
+    return result;
+}
+
 #pragma mark Drawing
 
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view

@@ -110,6 +110,7 @@
 
 //  Queries the datasource
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
 
 
 #pragma mark Setting the DataSource/Delegate
