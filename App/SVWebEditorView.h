@@ -32,6 +32,7 @@
     id <SVWebEditorText>    _focusedText;
     NSArray                 *_selectedItems;
     NSArray                 *_selectionParentItems;
+    BOOL                    _isChangingSelectedItems;
     
     // Editing
     DOMRange        *_DOMRangeOfNextEdit;

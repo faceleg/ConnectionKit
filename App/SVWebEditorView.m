@@ -212,6 +212,11 @@ updateWebViewSelection:(BOOL)updateWebView;
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     
     
+    // Bracket the whole operation so no-one else gets the wrong idea
+    OBPRECONDITION(_isChangingSelectedItems == NO);
+    _isChangingSelectedItems = YES;
+    
+    
     // Remove items, including marking them for display
     if (itemsToDeselect)
     {
@@ -265,6 +270,10 @@ updateWebViewSelection:(BOOL)updateWebView;
             }
         }
     }
+    
+    
+    // Finish bracketing
+    _isChangingSelectedItems = NO;
     
     
     // Alert observers
@@ -966,14 +975,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     OBPRECONDITION([notification object] == [self webView]);
     
-    //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears
-    DOMRange *range = [[self webView] selectedDOMRange];
-    NSArray *items = nil;
-    if (range)
+    //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
+    if (!_isChangingSelectedItems)
     {
-        items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
+        DOMRange *range = [[self webView] selectedDOMRange];
+        NSArray *items = nil;
+        if (range)
+        {
+            items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
+        }
+        [self deselectItems:[self selectedItems] selectItems:items updateWebViewSelection:NO];
     }
-    [self deselectItems:[self selectedItems] selectItems:items updateWebViewSelection:NO];
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
