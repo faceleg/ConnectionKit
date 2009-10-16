@@ -13,10 +13,15 @@
 
 - (BOOL)makeFirstResponder:(NSResponder *)responder
 {
-    [super makeFirstResponder:responder];
+    BOOL result = [super makeFirstResponder:responder];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVDocWindowDidChangeFirstResponderNotification
-                                                        object:self];
+    if (result)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SVDocWindowDidChangeFirstResponderNotification
+                                                            object:self];
+    }
+    
+    return result;
 }
 
 @end
