@@ -72,6 +72,7 @@
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;
 
 @property(nonatomic, copy) NSArray *selectedItems;
+@property(nonatomic, retain, readonly) id <SVWebEditorItem> selectedItem;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(id <SVWebEditorItem>)item;
 

@@ -174,6 +174,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [self selectItems:items byExtendingSelection:NO];
 }
 
+- (id <SVWebEditorItem>)selectedItem
+{
+    return [[self selectedItems] lastObject];
+}
+
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
@@ -198,19 +203,11 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [oldSelection release];
     
     
-    // Update WebView selection to match. This is needed for focus to be placed on any text area surrounding the item
-    id <SVWebEditorItem> firstItem = [[self selectedItems] firstObjectKS];
-    DOMElement *textArea = [[firstItem DOMElement] containingContentEditableElement];
-    if (textArea)
-    {
-        DOMRange *range = [[textArea ownerDocument] createRange];
-        [range selectNode:textArea];
-        [[self webView] setSelectedDOMRange:range affinity:0];
-    }
-    else
-    {
-        [[self webView] setSelectedDOMRange:nil affinity:0];
-    }
+    // Update WebView selection to match.
+    DOMElement *domElement = [[self selectedItem] DOMElement];
+    DOMRange *range = [[domElement ownerDocument] createRange];
+    [range selectNode:domElement];
+    [[self webView] setSelectedDOMRange:range affinity:0];
     
     
     // Draw new selection
@@ -592,15 +589,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     // In a normal view, you would implement -acceptsFirstResponder to return YES and leave it at that. But in our case, we want to give focus to the WebView, so implement that here in a fashion that mimic's NSWindow's handling of -acceptsFirstResponder.
     NSPoint point = [[self superview] convertPointFromBase:[event locationInWindow]];
     NSView *targetView = [super hitTest:point];
-    if ([targetView acceptsFirstResponder])
-    {
-        [[self window] makeFirstResponder:targetView];  // nothing happens if target's already First Responder
-    }
-    else
-    {
-        OBASSERT([[self webView] acceptsFirstResponder]);
-        [[self window] makeFirstResponder:[self webView]];
-    }
+    [[self window] makeFirstResponder:targetView];  // nothing happens if target's already First Responder
     
     
     // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
