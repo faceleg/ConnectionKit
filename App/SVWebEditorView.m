@@ -207,7 +207,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     DOMElement *domElement = [[self selectedItem] DOMElement];
     DOMRange *range = [[domElement ownerDocument] createRange];
     [range selectNode:domElement];
-    [[self webView] setSelectedDOMRange:range affinity:0];
+    [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
     
     
     // Draw new selection
@@ -498,38 +498,27 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     NSView *result = [super hitTest:aPoint];
     if ([result isDescendantOf:[[[[self webView] mainFrame] frameView] documentView]])
     {
+        NSView *superHitTest = result;
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
-        // Slight hack. If the current selection is nested within one or more other items, then we don't want WebKit to have control of the cursor.
-        if ([[self selectionParentItems] count] > 0)
+        // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
+        id <SVWebEditorItem> item = [self itemAtPoint:point];
+        if (item)
         {
-            //  2)
-            BOOL targetSelf = YES;
-            for (id <SVWebEditorItem> anItem in [self selectionParentItems])
-            {
-                DOMElement *element = [anItem DOMElement];
-                NSView *docView = [element documentView];
-                NSPoint mousePoint = [self convertPoint:point toView:docView];
-                if ([docView mouse:mousePoint inRect:[element boundingBox]])
-                {
-                    targetSelf = NO;
-                }
-            }
-            if (targetSelf) result = self;
-        }
-        else
-        {
-            //  1)
-            if ([self selectionBorderAtPoint:point] || [self itemAtPoint:point])
+            if (![[self selectionParentItems] containsObject:item])
             {
                 result = self;
             }
+        }
+        else if ([[self selectionParentItems] count] > 0)
+        {
+            result = self;
         }
     }
     
     
     
-        
+    
     
     //NSLog(@"Hit Test: %@", result);
     return result;
