@@ -26,10 +26,13 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 @property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
 
+
 // Selection
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
-- (void)postSelectionChangedNotification;
+
+- (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect;
 @property(nonatomic, copy) NSArray *selectionParentItems;
+
 
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
@@ -181,26 +184,56 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
+    [self deselectItems:(extendSelection ? nil : [self selectedItems])
+            selectItems:items];
+}
+
+- (void)deselectItem:(id <SVWebEditorItem>)item;
+{
+    // Remove item
+    [self deselectItems:[NSArray arrayWithObject:item] selectItems:nil];
+}
+
+/*  Support method to do the real work of all our selection methods
+ */
+- (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect
+{
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     
-    // Remove old frames
-    if (!extendSelection)
+    
+    // Remove items, including marking them for display
+    if (itemsToDeselect)
     {
-        for (id <SVWebEditorItem> anItem in [self selectedItems])
+        for (id <SVWebEditorItem> anItem in itemsToDeselect)
+        {
+            NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+            [docView setNeedsDisplayInRect:drawingRect];
+        }
+        
+        NSMutableArray *selection = [_selectedItems mutableCopy];
+        [selection removeObjectsInArray:itemsToDeselect];
+        [_selectedItems release], _selectedItems = selection;
+    }
+    
+    
+    // Add new items to the selection.
+    if (itemsToSelect)
+    {
+        // Store them. Odd looking logic I know, but should handle edge cases like _selectedItems being nil
+        [_selectedItems autorelease];
+        _selectedItems = (_selectedItems ?
+                          [[_selectedItems arrayByAddingObjectsFromArray:itemsToSelect] retain] :
+                          [itemsToSelect copy]);
+        
+        
+        // Draw new selection
+        for (id <SVWebEditorItem> anItem in itemsToSelect)
         {
             NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
         }
     }
-    
-    
-    // Store new selection. Odd looking logic I know, but should handle edge cases like _selectedItems being nil
-    NSArray *oldSelection = _selectedItems;
-    _selectedItems = ((extendSelection && _selectedItems) ?
-                      [[_selectedItems arrayByAddingObjectsFromArray:items] retain] :
-                      [items copy]);
-    [oldSelection release];
     
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
@@ -214,31 +247,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
     
     
-    // Draw new selection
-    for (id <SVWebEditorItem> anItem in items)
-    {
-        NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
-        [docView setNeedsDisplayInRect:drawingRect];
-    }
-    
-    
     // Alert observers
-    [self postSelectionChangedNotification];
-}
-
-- (void)deselectItem:(id <SVWebEditorItem>)item;
-{
-    // Remove item
-    NSMutableArray *newSelection = [[self selectedItems] mutableCopy];
-    [newSelection removeObjectIdenticalTo:item];
-    [_selectedItems release];   _selectedItems = newSelection;
-    
-    
-    // Redraw
-    NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
-    SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
-    NSRect drawingRect = [border drawingRectForFrame:[[item DOMElement] boundingBox]];
-    [docView setNeedsDisplayInRect:drawingRect];
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewSelectionDidChangeNotification
+                                                        object:self];
 }
 
 - (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
@@ -259,12 +270,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     */
     return result;
-}
-
-- (void)postSelectionChangedNotification
-{
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewSelectionDidChangeNotification
-                                                        object:self];
 }
 
 @synthesize selectionParentItems = _selectionParentItems;
