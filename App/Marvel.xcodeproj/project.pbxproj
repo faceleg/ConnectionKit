@@ -6029,7 +6029,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# see http://is.gd/3Z8mI  for why we can remove these files.  But we don't want to remove them for betas so localizers can do their thing.\n\nif [ $IBC_FLATTEN_NIBS == \"YES\" ]\nthen\n\techo \"not stripping nibs\"\nelse\n\techo \"this is release -- stripping nibs\"\n\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'designable.nib' -delete\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'classes.nib' -delete\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'info.nib' -delete\n\nfi\n\n\n";
+			shellScript = "# see http://is.gd/3Z8mI  for why we can remove these files.  But we don't want to remove them for betas so localizers can do their thing.\n\n# For some reason this isn't carried through... so define it here.\nCONTENTS_FOLDER_PATH=Sandvox.app/Contents\n\nif [ $IBC_FLATTEN_NIBS == \"YES\" ]\nthen\n\techo \"this is release -- stripping nibs\"\n\n\techo \"before: ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\"\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.nib' -type d \n\n\techo \"\"\n\techo \"OK, doing it.... I think we can ignore the 'not a directory' errors\"\n\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.nib' -type d -exec /Developer/usr/bin/ibtool --strip {} {} \\;\n\n\techo \"after: ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH}\"\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name '*.nib' -type d \n\nelse\n\techo \"not stripping nibs\"\nfi\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
