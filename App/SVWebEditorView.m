@@ -323,17 +323,6 @@ updateWebViewSelection:(BOOL)updateWebView;
 - (void)windowDidChangeFirstResponder:(NSNotification *)notification
 {
     OBPRECONDITION([notification object] == [self window]);
-    return;
-    
-    //  Whenever focus moves away from the webview, remove selection
-    if ([[self selectedItems] count] > 0 && ![[self webView] maintainsInactiveSelection])
-    {
-        NSResponder *responder = [[self window] firstResponder];
-        if (![responder isKindOfClass:[NSView class]] || ![(NSView *)responder isDescendantOf:[self webView]])
-        {
-            [self setSelectedItems:nil];
-        }
-    }
 }
 
 #pragma mark Editing
@@ -979,11 +968,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears
     DOMRange *range = [[self webView] selectedDOMRange];
+    NSArray *items = nil;
     if (range)
     {
-        NSArray *items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
-        [self deselectItems:[self selectedItems] selectItems:items updateWebViewSelection:NO];
+        items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
     }
+    [self deselectItems:[self selectedItems] selectItems:items updateWebViewSelection:NO];
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
