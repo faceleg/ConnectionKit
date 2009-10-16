@@ -203,10 +203,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     [oldSelection release];
     
     
-    // Update WebView selection to match.
+    // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
     DOMElement *domElement = [[self selectedItem] DOMElement];
-    DOMRange *range = [[domElement ownerDocument] createRange];
-    [range selectNode:domElement];
+    DOMRange *range = nil;
+    if ([domElement containingContentEditableElement])
+    {
+        range = [[domElement ownerDocument] createRange];
+        [range selectNode:domElement];
+    }
     [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
     
     
@@ -918,7 +922,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  */
 - (void)webViewDidChange:(NSNotification *)notification
 {
-    // During undo operations, there's no indication that a change is about to be made, only a -didChange message. I'm going to ingore such messages as I'm not sure clients are interested
+    // During undo operations, there's no indication that a change is about to be made, only a -didChange message. I'm going to ignore such messages as I'm not sure clients are interested
     if (_DOMRangeOfNextEdit)
     {
         DOMRange *range = _DOMRangeOfNextEdit;
@@ -940,6 +944,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (void)webViewDidChangeSelection:(NSNotification *)notification
 {
     OBPRECONDITION([notification object] == [self webView]);
+    
+    //  Therefore we should update our -selectedItems to match
+    [self setSelectedItems:nil];
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
