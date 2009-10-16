@@ -596,11 +596,24 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     
-    // What was clicked?
+    // What was clicked? We want to know top-level object
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     id <SVWebEditorItem> item = [self itemAtPoint:location];
+    while (YES)
+    {
+        id <SVWebEditorItem> parent = [self parentForItem:item];
+        if (parent)
+        {
+            item = parent;
+        }
+        else
+        {
+            break;
+        }
+    }
         
     
+    // Handle clicking the item
     if (item)
     {
         BOOL itemIsSelected = [[self selectedItems] containsObjectIdenticalTo:item];
