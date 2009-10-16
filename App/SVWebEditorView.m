@@ -586,16 +586,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (void)mouseDown:(NSEvent *)event
 {
-    // If editing inside an item, the click needs to go straight through to the WebView; we were just claiming ownership of that area in order to gain control of the cursor
-    if ([[self selectionParentItems] count] > 0)
-    {
-        [self setSelectionParentItems:nil];
-        [_mouseDownEvent release]; _mouseDownEvent = nil;
-        [NSApp sendEvent:event];    // this time round it'll go through to the WebView
-        return;
-    }
-    
-    
     // In a normal view, you would implement -acceptsFirstResponder to return YES and leave it at that. But in our case, we want to give focus to the WebView, so implement that here in a fashion that mimic's NSWindow's handling of -acceptsFirstResponder.
     NSPoint point = [[self superview] convertPointFromBase:[event locationInWindow]];
     NSView *targetView = [super hitTest:point];
@@ -642,8 +632,19 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     else
     {
-        // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
-        [super mouseDown:event];
+        // If editing inside an item, the click needs to go straight through to the WebView; we were just claiming ownership of that area in order to gain control of the cursor
+        if ([[self selectionParentItems] count] > 0)
+        {
+            [self setSelectionParentItems:nil];
+            [_mouseDownEvent release]; _mouseDownEvent = nil;
+            [NSApp sendEvent:event];    // this time round it'll go through to the WebView
+            return;
+        }
+        else
+        {
+            // Don't really expect to hit this point. Since if there is no item at the location, we should never have hit-tested positively in the first place
+            [super mouseDown:event];
+        }
     }
 }
 
