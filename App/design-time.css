@@ -1,3 +1,5 @@
+img { -webkit-user-select:none; }
+
 div.svx-placeholder
 {
 	width:63%;
