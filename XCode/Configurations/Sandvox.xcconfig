@@ -13,6 +13,7 @@ SANDVOX_VERSION = 1.6.5b4
 // For betas that are to be localized, be sure to set IBC_FLATTEN_NIBS to NO (which, apparently, gets echoed to IBC_STRIP_NIBS)
 PRODUCT_VARIANT = BETA
 IBC_FLATTEN_NIBS = NO
+// NOTE: WE NEED TO MANUALLY SET THIS IN CONNECTION AND IMEDIA PROJECTS
 
 // expiry for beta
 EXPIRY_TIMESTAMP = '@\"2009-11-15 11:59:59 -0800\"'

@@ -6029,7 +6029,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# see http://is.gd/3Z8mI  for why we can remove these files.  But we don't want to remove them for betas so localizers can do their thing.\n\nif [ $PRODUCT_VARIANT == \"BETA\" ]\nthen\n\techo \"this is beta -- not stripping nibs\"\nelse\n\techo \"this is release -- stripping nibs\"\nfi\n\n\necho \"For now, actually stripping all of this, just to make sure this all works.\"\n\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'designable.nib' -delete\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'classes.nib' -delete\nfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'info.nib' -delete\n";
+			shellScript = "# see http://is.gd/3Z8mI  for why we can remove these files.  But we don't want to remove them for betas so localizers can do their thing.\n\nif [ $IBC_FLATTEN_NIBS == \"YES\" ]\nthen\n\techo \"not stripping nibs\"\nelse\n\techo \"this is release -- stripping nibs\"\n\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'designable.nib' -delete\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'classes.nib' -delete\n\tfind ${TARGET_BUILD_DIR}/${CONTENTS_FOLDER_PATH} -name 'info.nib' -delete\n\nfi\n\n\n";
 			showEnvVarsInLog = 0;
 		};
 		CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */ = {
