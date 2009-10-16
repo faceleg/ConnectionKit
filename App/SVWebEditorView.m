@@ -260,6 +260,8 @@ updateWebViewSelection:(BOOL)updateWebView;
             DOMElement *domElement = [selectedItem DOMElement];
             if ([domElement containingContentEditableElement])
             {
+                [[self window] makeFirstResponder:[domElement documentView]];
+                
                 DOMRange *range = [[domElement ownerDocument] createRange];
                 [range selectNode:domElement];
                 [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
@@ -714,7 +716,7 @@ updateWebViewSelection:(BOOL)updateWebView;
 - (BOOL)resignFirstResponder
 {
     BOOL result = [super resignFirstResponder];
-    if (result)
+    if (result && !_isChangingSelectedItems)
     {
         [self setSelectedItems:nil];
     }
