@@ -21,6 +21,11 @@ if [ -e "$2/Contents" ]; then
 
 cd ~/Desktop
 
+CONNECTION=connection1.2
+SHARED=SharedTiger
+IMEDIA=imedia1
+SANDVOX=Sandvox_branch_1
+
 WD=`pwd`;
 VERBOSE='v';        #make it 'v' if verbose; '' if not verbose
 
@@ -38,34 +43,34 @@ pushd "$2" > /dev/null
 
 # frameworks
 
-mkdir -p$VERBOSE $WD/Subversion/imedia
-cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/imedia
+mkdir -p$VERBOSE $WD/Subversion/${IMEDIA}
+cp -R$VERBOSE ./Contents/Frameworks/iMediaBrowser.framework/Versions/A/Resources/$1.lproj $WD/Subversion/${IMEDIA}
 
-mkdir -p$VERBOSE $WD/Subversion/connection/branches/1.2
-cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/connection/branches/1.2
+mkdir -p$VERBOSE $WD/Subversion/${CONNECTION}
+cp -R$VERBOSE ./Contents/Frameworks/Connection.framework/Versions/A/Resources/$1.lproj $WD/Subversion/${CONNECTION}
 
-mkdir -p$VERBOSE $WD/Subversion/Shared/Code/AmazonSupport
-cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/Shared/Code/AmazonSupport
+mkdir -p$VERBOSE $WD/Subversion/${SHARED}/Code/AmazonSupport
+cp -R$VERBOSE ./Contents/Frameworks/AmazonSupport.framework/Versions/A/Resources/$1.lproj $WD/Subversion/${SHARED}/Code/AmazonSupport
 
 # App & Spotlight
 
-mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Code/MetaMarvel
-cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Code/MetaMarvel
+mkdir -p$VERBOSE $WD/Subversion/${SANDVOX}/Code/MetaMarvel
+cp -R$VERBOSE ./Contents/Library/Spotlight/MetaSandvox.mdimporter/Contents/Resources/$1.lproj $WD/Subversion/${SANDVOX}/Code/MetaMarvel
 
 # Put things NOT beginning with KS in the app, and things beginning with KS into Shared.
 
-mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App
-mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj
+mkdir -p$VERBOSE $WD/Subversion/${SANDVOX}/App
+mkdir -p$VERBOSE $WD/Subversion/${SANDVOX}/App/$1.lproj
 
 # silly hack: copy in all the files, then remove the KS* files
-cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/
-rm -rf$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/App/$1.lproj/KS*
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/* $WD/Subversion/${SANDVOX}/App/$1.lproj/
+rm -rf$VERBOSE $WD/Subversion/${SANDVOX}/App/$1.lproj/KS*
 
-mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces
-mkdir -p$VERBOSE $WD/Subversion/Shared/Interfaces/$1.lproj
+mkdir -p$VERBOSE $WD/Subversion/${SHARED}/Interfaces
+mkdir -p$VERBOSE $WD/Subversion/${SHARED}/Interfaces/$1.lproj
 echo ./Contents/Resources/$1.lproj/KS*
-echo $WD/Subversion/Shared/Interfaces/$1.lproj/
-cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/Shared/Interfaces/$1.lproj/
+echo $WD/Subversion/${SHARED}/Interfaces/$1.lproj/
+cp -R$VERBOSE ./Contents/Resources/$1.lproj/KS* $WD/Subversion/${SHARED}/Interfaces/$1.lproj/
 
 
 # plugins with their own project
@@ -76,8 +81,8 @@ do
     BASE=`echo $PLUGIN | sed 's/.svxElement//'`
     if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
         echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Elements/${BASE}Element
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Elements/${BASE}Element
+        mkdir -p$VERBOSE $WD/Subversion/${SANDVOX}/Plugins/Elements/${BASE}Element
+        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/${SANDVOX}/Plugins/Elements/${BASE}Element
     else
         echo "Not copying $PLUGIN - no $1.lproj"
     fi
@@ -87,8 +92,8 @@ do
     BASE=`echo $PLUGIN | sed 's/.svxIndex//'`
     if [ ! -z "$PLUGIN/Contents/Resources/$1.lproj" ]; then
         echo "$BASE:"
-        mkdir -p$VERBOSE $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Indexes/${BASE}Index
-        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/Sandvox$CURRENTBRANCH/Plugins/Indexes/${BASE}Index
+        mkdir -p$VERBOSE $WD/Subversion/${SANDVOX}/Plugins/Indexes/${BASE}Index
+        cp -R$VERBOSE $PLUGIN/Contents/Resources/$1.lproj $WD/Subversion/${SANDVOX}/Plugins/Indexes/${BASE}Index
     else
         echo "Not copying $PLUGIN - no $1.lproj"
     fi
