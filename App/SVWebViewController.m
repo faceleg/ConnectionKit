@@ -20,6 +20,7 @@
 #import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
@@ -338,6 +339,27 @@
 - (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemForDOMNode:(DOMNode *)node;
 {
     id <SVWebEditorItem> result = [self itemForDOMNode:node];
+    return result;
+}
+
+- (NSArray *)webEditorView:(SVWebEditorView *)sender itemsInDOMRange:(DOMRange *)range;
+{
+    NSArray *items = [self contentItems];
+    for (SVPageletBodyTextAreaController *aController in [self textAreaControllers])
+    {
+        items = [items arrayByAddingObjectsFromArray:[aController editorItems]];
+    }
+    
+    // Result
+    NSMutableArray *result = [NSMutableArray array];
+    for (id <SVWebEditorItem> anItem in items)
+    {
+        if ([range containsNode:[anItem DOMElement]])
+        {
+            [result addObject:anItem];
+        }
+    }
+    
     return result;
 }
 

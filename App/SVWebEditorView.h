@@ -162,6 +162,9 @@
  */
 - (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemForDOMNode:(DOMNode *)node;
 
+- (NSArray *)webEditorView:(SVWebEditorView *)sender itemsInDOMRange:(DOMRange *)range;
+
+
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
 - (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender

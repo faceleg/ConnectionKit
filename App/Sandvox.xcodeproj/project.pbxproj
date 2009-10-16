@@ -374,6 +374,8 @@
 		27AE75C90EEEB12D00409D80 /* finished.png in Resources */ = {isa = PBXBuildFile; fileRef = 27AE75C70EEEB12D00409D80 /* finished.png */; };
 		27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AED14B1087CC9C005EDA77 /* SVDocWindow.h */; };
 		27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AED14C1087CC9C005EDA77 /* SVDocWindow.m */; };
+		27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AED2591088C754005EDA77 /* DOMRange+Karelia.h */; };
+		27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */; };
 		27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */; };
 		27B17DAB0CA80A9E00187918 /* KTWebViewComponent.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */; settings = {ATTRIBUTES = (); }; };
@@ -1805,6 +1807,8 @@
 		27AE75C70EEEB12D00409D80 /* finished.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = finished.png; path = ../../connection/finished.png; sourceTree = SOURCE_ROOT; };
 		27AED14B1087CC9C005EDA77 /* SVDocWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocWindow.h; sourceTree = "<group>"; };
 		27AED14C1087CC9C005EDA77 /* SVDocWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocWindow.m; sourceTree = "<group>"; };
+		27AED2591088C754005EDA77 /* DOMRange+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMRange+Karelia.h"; sourceTree = "<group>"; };
+		27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMRange+Karelia.m"; sourceTree = "<group>"; };
 		27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFile.h; sourceTree = "<group>"; };
 		27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFile.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
@@ -4541,6 +4545,8 @@
 				CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */,
 				CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */,
 				CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */,
+				27AED2591088C754005EDA77 /* DOMRange+Karelia.h */,
+				27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */,
 			);
 			path = WebKit;
 			sourceTree = "<group>";
@@ -5034,6 +5040,7 @@
 				2731ECCD10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h in Headers */,
 				2731ECD410861FF300D8AAA5 /* SVWebTextField.h in Headers */,
 				27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */,
+				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6420,6 +6427,7 @@
 				2731ECCE10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m in Sources */,
 				2731ECD510861FF300D8AAA5 /* SVWebTextField.m in Sources */,
 				27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */,
+				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

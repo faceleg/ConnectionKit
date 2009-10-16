@@ -30,7 +30,9 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 // Selection
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 
-- (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect;
+- (void)deselectItems:(NSArray *)itemsToDeselect
+          selectItems:(NSArray *)itemsToSelect
+updateWebViewSelection:(BOOL)updateWebView;
 @property(nonatomic, copy) NSArray *selectionParentItems;
 
 
@@ -185,18 +187,21 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
     [self deselectItems:(extendSelection ? nil : [self selectedItems])
-            selectItems:items];
+            selectItems:items
+ updateWebViewSelection:YES];
 }
 
 - (void)deselectItem:(id <SVWebEditorItem>)item;
 {
     // Remove item
-    [self deselectItems:[NSArray arrayWithObject:item] selectItems:nil];
+    [self deselectItems:[NSArray arrayWithObject:item]
+            selectItems:nil
+ updateWebViewSelection:YES];
 }
 
 /*  Support method to do the real work of all our selection methods
  */
-- (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect
+- (void)deselectItems:(NSArray *)itemsToDeselect selectItems:(NSArray *)itemsToSelect updateWebViewSelection:(BOOL)updateWebView;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
@@ -237,19 +242,22 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
-    id <SVWebEditorItem> selectedItem = [self selectedItem];
-    if (selectedItem)
+    if (updateWebView)
     {
-        DOMElement *domElement = [selectedItem DOMElement];
-        if ([domElement containingContentEditableElement])
+        id <SVWebEditorItem> selectedItem = [self selectedItem];
+        if (selectedItem)
         {
-            DOMRange *range = [[domElement ownerDocument] createRange];
-            [range selectNode:domElement];
-            [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
-        }
-        else
-        {
-            [[self window] makeFirstResponder:self];
+            DOMElement *domElement = [selectedItem DOMElement];
+            if ([domElement containingContentEditableElement])
+            {
+                DOMRange *range = [[domElement ownerDocument] createRange];
+                [range selectNode:domElement];
+                [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+            }
+            else
+            {
+                [[self window] makeFirstResponder:self];
+            }
         }
     }
     
@@ -964,8 +972,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     OBPRECONDITION([notification object] == [self webView]);
     
-    //  Therefore we should update our -selectedItems to match
-    [self setSelectedItems:nil];
+    //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears
+    DOMRange *range = [[self webView] selectedDOMRange];
+    if (range)
+    {
+        NSArray *items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
+        [self deselectItems:[self selectedItems] selectItems:items updateWebViewSelection:NO];
+    }
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
