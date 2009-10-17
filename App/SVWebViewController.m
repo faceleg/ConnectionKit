@@ -20,7 +20,6 @@
 #import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
-#import "DOMRange+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
@@ -296,68 +295,18 @@
 
 @synthesize contentItems = _contentItems;
 
-- (SVWebContentItem *)itemForNode:(DOMNode *)node inItems:(NSArray *)items
-{
-    SVWebContentItem *result = nil;
-    NSArray *itemDOMElements = [items valueForKey:@"DOMElement"];
-    
-    DOMNode *aNode = node;
-    while (aNode)
-    {
-        NSUInteger index = [itemDOMElements indexOfObjectIdenticalTo:aNode];
-        if (index != NSNotFound)
-        {
-            result = [items objectAtIndex:index];
-            break;
-        }
-        aNode = [aNode parentNode];
-    }
-    
-    return result;
-}
-
-- (SVWebContentItem *)itemForDOMNode:(DOMNode *)node
-{
-    // This is the key to the whole operation. We have to decide whether events make it through to the WebView based on whether they would target a selectable object
-    NSArray *items = [self contentItems];
-    for (SVPageletBodyTextAreaController *aController in [self textAreaControllers])
-    {
-        items = [items arrayByAddingObjectsFromArray:[aController editorItems]];
-    }
-    SVWebContentItem *result = [self itemForNode:node inItems:items];
-    
-    
-    return result;
-}
-
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
 
 #pragma mark WebEditorViewDataSource
 
-- (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemForDOMNode:(DOMNode *)node;
+- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id <SVWebEditorItem>)item;
 {
-    id <SVWebEditorItem> result = [self itemForDOMNode:node];
-    return result;
-}
-
-- (NSArray *)webEditorView:(SVWebEditorView *)sender itemsInDOMRange:(DOMRange *)range;
-{
-    NSArray *items = [self contentItems];
+    NSArray *result = [self contentItems];
     for (SVPageletBodyTextAreaController *aController in [self textAreaControllers])
     {
-        items = [items arrayByAddingObjectsFromArray:[aController editorItems]];
-    }
-    
-    // Result
-    NSMutableArray *result = [NSMutableArray array];
-    for (id <SVWebEditorItem> anItem in items)
-    {
-        if ([range containsNode:[anItem DOMElement]])
-        {
-            [result addObject:anItem];
-        }
+        result = [result arrayByAddingObjectsFromArray:[aController editorItems]];
     }
     
     return result;

@@ -13,6 +13,7 @@
 #import "SVDocWindow.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "NSEvent+Karelia.h"
@@ -303,11 +304,14 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     }
     else
     {
-        id <SVWebEditorItem> parent = [[self dataSource] webEditorView:self
-                                                        itemForDOMNode:[[self selectedDOMRange] commonAncestorContainer]];
-        if (parent)
+        DOMNode *selectionNode = [[self selectedDOMRange] commonAncestorContainer];
+        if (selectionNode)
         {
-            parentItems = [self ancestorsForItem:parent includeItem:YES];
+            id <SVWebEditorItem> parent = [self itemForDOMNode:selectionNode];
+            if (parent)
+            {
+                parentItems = [self ancestorsForItem:parent includeItem:YES];
+            }
         }
     }
     
@@ -483,15 +487,29 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
  */
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 {
+    id <SVWebEditorItem> result = nil;
+    
     NSDictionary *element = [[self webView] elementAtPoint:point];
     DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
-    if (!domNode) return nil;
+    if (domNode)
+    {
+        result = [self itemForDOMNode:domNode];
+    }
     
-    // Ask the datasource for the deepest item
-    id <SVWebEditorItem> result = [[self dataSource] webEditorView:self itemForDOMNode:domNode];
+    return result;
+}
+
+- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node;
+{
+    OBPRECONDITION(node);
+    
+    // Figure out deepest item
+    NSArray *items = [[self dataSource] webEditorView:self childrenOfItem:nil];
+    id <SVWebEditorItem> result = [self itemForDOMNode:node inItems:items];
+    
     
     // Then work our way up the tree looking for the highest-level object that isn't in the parents list
-    while (YES)
+    while (result)
     {
         id <SVWebEditorItem> parent = [self parentForItem:result];
         if (parent && ![[self selectionParentItems] containsObject:parent])
@@ -507,11 +525,29 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     return result;
 }
 
+- (NSArray *)itemsInDOMRange:(DOMRange *)range
+{
+    NSMutableArray *result = [NSMutableArray array];
+    NSArray *items = [[self dataSource] webEditorView:self childrenOfItem:nil];
+    
+    for (id <SVWebEditorItem> anItem in items)
+    {
+        if ([range containsNode:[anItem DOMElement]])
+        {
+            [result addObject:anItem];
+        }
+    }
+    
+    return result;
+}
+
 - (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
 {
+    OBPRECONDITION(item);
+    
     // Pretty simple actually; just search up the DOM again
     DOMNode *parentNode = [[item DOMElement] parentNode];
-    id <SVWebEditorItem> result = [[self dataSource] webEditorView:self itemForDOMNode:parentNode];
+    id <SVWebEditorItem> result = [self itemForDOMNode:parentNode];
     return result;
 }
 
@@ -536,6 +572,26 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
                 result = [NSArray arrayWithObject:parent];
             }
         }
+    }
+    
+    return result;
+}
+
+- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
+{
+    id <SVWebEditorItem> result = nil;
+    NSArray *itemDOMElements = [items valueForKey:@"DOMElement"];
+    
+    DOMNode *aNode = node;
+    while (aNode)
+    {
+        NSUInteger index = [itemDOMElements indexOfObjectIdenticalTo:aNode];
+        if (index != NSNotFound)
+        {
+            result = [items objectAtIndex:index];
+            break;
+        }
+        aNode = [aNode parentNode];
     }
     
     return result;
@@ -617,7 +673,6 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     NSView *result = [super hitTest:aPoint];
     if ([result isDescendantOf:[[[[self webView] mainFrame] frameView] documentView]])
     {
-        NSView *superHitTest = result;
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
@@ -1051,7 +1106,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         NSArray *items = nil;
         if (range)
         {
-            items = [[self dataSource] webEditorView:self itemsInDOMRange:range];
+            items = [self itemsInDOMRange:range];
         }
         
         [self updateSelectionByDeselectingAll:YES

@@ -113,7 +113,11 @@
 
 //  Queries the datasource
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
+- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node;
+- (NSArray *)itemsInDOMRange:(DOMRange *)range;
 - (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
+
+- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
 
 
 #pragma mark Setting the DataSource/Delegate
@@ -158,14 +162,12 @@
 @protocol SVWebEditorViewDataSource <NSObject>
 
 /*!
- @method editingOverlay:itemAtPoint:
+ @method webEditorView:childrenOfItem:
  @param sender The SVWebEditorView object sending the message.
- @param node A node in the DOM. You will probably want to search up the tree from it to find an item's DOMElement.
- @result The frontmost item that covers the point. nil if there is none.
+ @param item The item whose children to search for. Nil if after top-level items
+ @result An array of SVWebEditorItem objects.
  */
-- (id <SVWebEditorItem>)webEditorView:(SVWebEditorView *)sender itemForDOMNode:(DOMNode *)node;
-
-- (NSArray *)webEditorView:(SVWebEditorView *)sender itemsInDOMRange:(DOMRange *)range;
+- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id <SVWebEditorItem>)item;
 
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
