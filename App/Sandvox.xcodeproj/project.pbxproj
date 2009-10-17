@@ -125,6 +125,7 @@
 				3CA901A90D63D46A00815310 /* PBXTargetDependency */,
 				3CA900CE0D63CD0B00815310 /* PBXTargetDependency */,
 				3C42E2A00D64D262004F35FD /* PBXTargetDependency */,
+				3C4C68F40D64086A00398BDA /* PBXTargetDependency */,
 				3C42DE1D0D64CCDC004F35FD /* PBXTargetDependency */,
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
 				3C42E6080D650BAF004F35FD /* PBXTargetDependency */,
@@ -1258,6 +1259,20 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = HTMLElement;
 		};
+		3C4C68F10D64086000398BDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
+			remoteInfo = RichTextElement;
+		};
+		3C4C68F30D64086A00398BDA /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
+			remoteInfo = RichTextElement;
+		};
 		3C4C69B40D640D8000398BDA /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
@@ -1998,6 +2013,7 @@
 		3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = VideoElement.xcodeproj; path = ../Plugins/Elements/VideoElement/VideoElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E5F60D650AD1004F35FD /* HTMLElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = HTMLElement.xcodeproj; path = ../Plugins/Elements/HTMLElement/HTMLElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C42E6BB0D6510BE004F35FD /* HTML.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HTML.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RichTextElement.xcodeproj; path = ../Plugins/Elements/RichTextElement/RichTextElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../Plugins/Elements/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggElement.xcodeproj; path = ../Plugins/Elements/DiggElement/DiggElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../Plugins/Elements/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
@@ -3186,13 +3202,13 @@
 			name = "Main Document Window";
 			sourceTree = "<group>";
 		};
-		27E31BC10D4B795C00895DA1 /* Plug-in System */ = {
+		27E31BC10D4B795C00895DA1 /* Plugins */ = {
 			isa = PBXGroup;
 			children = (
 				3C202D9607DFC43300DE4994 /* Designs */,
 				279983310DF01CE2003C84B9 /* Other */,
 			);
-			name = "Plug-in System";
+			name = Plugins;
 			sourceTree = "<group>";
 		};
 		27E62FF50EC3060A0044ED36 /* Products */ = {
@@ -3236,7 +3252,7 @@
 				3C5A736E0BF7B67300776464 /* Core Data */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
 				3C5A73EB0BF7BAB200776464 /* Support */,
-				27E31BC10D4B795C00895DA1 /* Plug-in System */,
+				27E31BC10D4B795C00895DA1 /* Plugins */,
 				3C5A738C0BF7B93900776464 /* UI */,
 				278ECE560D259F400012BA6B /* Pasteboard */,
 				3C5A73EE0BF7BB1400776464 /* Feedback */,
@@ -3744,6 +3760,14 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		3C4C68EB0D64086000398BDA /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3C4C68F20D64086000398BDA /* RichText.svxElement */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		3C4C69B10D640D8000398BDA /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4171,6 +4195,7 @@
 				3CA901A20D63D45B00815310 /* LinkElement.xcodeproj */,
 				3CA900C70D63CCF800815310 /* LinkListElement.xcodeproj */,
 				3C42E2990D64D253004F35FD /* PageCounterElement.xcodeproj */,
+				3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */,
 				3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */,
 				3C42DDA60D64C8B3004F35FD /* SiteMapElement.xcodeproj */,
 				3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */,
@@ -5209,6 +5234,10 @@
 					ProjectRef = 3C095BF40D5D281000DE6F62 /* PhotoGridIndex.xcodeproj */;
 				},
 				{
+					ProductGroup = 3C4C68EB0D64086000398BDA /* Products */;
+					ProjectRef = 3C4C68EA0D64086000398BDA /* RichTextElement.xcodeproj */;
+				},
+				{
 					ProductGroup = 3C42DE170D64CCC7004F35FD /* Products */;
 					ProjectRef = 3C42DE160D64CCC7004F35FD /* RSSBadgeElement.xcodeproj */;
 				},
@@ -5348,6 +5377,13 @@
 			fileType = wrapper.cfbundle;
 			path = HTML.svxElement;
 			remoteRef = 3C42E5FA0D650AD1004F35FD /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3C4C68F20D64086000398BDA /* RichText.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = RichText.svxElement;
+			remoteRef = 3C4C68F10D64086000398BDA /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		3C4C69B50D640D8000398BDA /* Image.svxElement */ = {
@@ -6503,6 +6539,11 @@
 			isa = PBXTargetDependency;
 			name = HTMLElement;
 			targetProxy = 3C42E6090D650BBD004F35FD /* PBXContainerItemProxy */;
+		};
+		3C4C68F40D64086A00398BDA /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = RichTextElement;
+			targetProxy = 3C4C68F30D64086A00398BDA /* PBXContainerItemProxy */;
 		};
 		3C4C69B70D640D9A00398BDA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
