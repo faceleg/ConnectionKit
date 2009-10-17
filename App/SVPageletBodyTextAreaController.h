@@ -26,6 +26,7 @@
 @property(nonatomic, retain, readonly) SVWebTextArea *textArea;
 @property(nonatomic, retain, readonly) SVPageletBody *content;
 
+// There should be one item per content object. Update by observing model
 @property(nonatomic, readonly) NSArray *editorItems;
 - (void)updateEditorItems;
 

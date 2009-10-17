@@ -6,15 +6,16 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "KSExtensibleManagedObject.h"
+
 
 @class SVPageletBody;
 
-@interface SVContentObject :  NSManagedObject  
+@interface SVContentObject :  KSExtensibleManagedObject  
 {
 }
 
-@property (nonatomic, retain) SVPageletBody * container;
+@property (nonatomic, retain) SVPageletBody *container;
 
 @property(nonatomic, retain, readonly) NSString *elementID;
 - (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
