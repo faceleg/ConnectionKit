@@ -344,5 +344,19 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	}
 }
 
+// Not quite -- doesn't get called until first keystroke!
+
+- (void)controlTextDidBeginEditing:(NSNotification *)notification;
+{
+	NSLog(@"%@", [notification object]);
+	
+}
+
+- (void)controlTextDidEndEditing:(NSNotification *)notification;
+{
+	NSLog(@"%@", [notification object]);
+
+	
+}
 
 @end
