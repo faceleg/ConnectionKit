@@ -20,6 +20,8 @@
 @property(nonatomic, retain, readonly) NSString *elementID;
 - (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
 
+@property(nonatomic, copy, readonly) NSString *plugInIdentifier;
+
 
 #pragma mark Editing
 - (NSString *)editingHTMLString;

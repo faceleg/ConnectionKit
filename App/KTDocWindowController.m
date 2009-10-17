@@ -455,6 +455,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark IBActions
 
+- (IBAction)insertElement:(id)sender;
+{
+    [[[[self webContentAreaController] selectedViewController] selectedViewController] insertElement:sender];
+}
+
 - (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING

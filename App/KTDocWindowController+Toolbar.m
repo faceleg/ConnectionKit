@@ -347,7 +347,7 @@ TO DO:
 	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
 						 toMenu:[button menu]
 						 target:self
-						 action:@selector(addPagelet:)
+						 action:@selector(insertElement:)
 					  pullsDown:YES
 					  showIcons:YES smallIcons:NO smallText:YES];
 	
@@ -363,7 +363,7 @@ TO DO:
 	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
 						 toMenu:menu
 						 target:self
-						 action:@selector(addPagelet:)
+						 action:@selector(insertElement:)
 					  pullsDown:NO
 					  showIcons:NO smallIcons:NO
 					  smallText:YES];

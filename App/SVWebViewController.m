@@ -8,6 +8,7 @@
 
 #import "SVWebViewController.h"
 
+#import "SVContentObject.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTemplateTextBlock.h"
 #import "KTPage.h"
@@ -294,6 +295,20 @@
 #pragma mark Content Items
 
 @synthesize contentItems = _contentItems;
+
+#pragma mark Elements
+
+- (IBAction)insertElement:(id)sender;
+{
+    // Create a new element of the requested type and insert into selected text block
+    SVPageletBody *body = [[[self textAreaControllers] firstObjectKS] content];
+    SVContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"ContentObject"    
+                                                             inManagedObjectContext:[body managedObjectContext]];
+    [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
+    [element setContainer:body];
+    
+    [body setArchiveHTMLString:[[body archiveHTMLString] stringByAppendingString:[element archiveHTMLString]]];
+}
 
 #pragma mark Delegate
 

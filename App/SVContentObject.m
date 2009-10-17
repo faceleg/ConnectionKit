@@ -10,9 +10,21 @@
 
 #import "SVPageletBody.h"
 
+#import "NSString+Karelia.h"
+
+
 @implementation SVContentObject 
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    [self setPrimitiveValue:[NSString UUIDString] forKey:@"elementID"];
+    [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
+}
+
 @dynamic elementID;
+@dynamic plugInIdentifier;
 @dynamic container;
 
 - (NSString *)archiveHTMLString;
@@ -24,7 +36,7 @@
 - (NSString *)editingHTMLString;
 {
     // TODO: Return something real
-    return @"<img />";
+    return @"<img src=\"foo://bar\" />";
 }
 
 @end

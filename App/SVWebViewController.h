@@ -58,6 +58,10 @@
 @property(nonatomic, copy, readonly) NSArray *contentItems;
 
 
+#pragma mark Elements
+- (IBAction)insertElement:(id)sender;
+
+
 #pragma mark Delegate
 @property(nonatomic, assign) id <SVWebEditorViewControllerDelegate> delegate;
 

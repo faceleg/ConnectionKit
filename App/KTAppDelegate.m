@@ -899,7 +899,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
 							 toMenu:oAddPageletMenu
 							 target:nil
-							 action:@selector(addPagelet:)
+							 action:@selector(insertElement:)
 						  pullsDown:NO
 						  showIcons:YES smallIcons:NO smallText:NO];
 		
