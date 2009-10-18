@@ -3242,7 +3242,7 @@
 				3C5A73830BF7B8F200776464 /* Index */,
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
 				3C5A738F0BF7B96800776464 /* PseudoElements */,
-				3C5A73950BF7BA6800776464 /* HTML Parsing */,
+				3C5A73950BF7BA6800776464 /* Template Parsing */,
 				CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				27A832830D92D8CC005FF13D /* Code Injection */,
@@ -4045,7 +4045,7 @@
 			name = PseudoElements;
 			sourceTree = "<group>";
 		};
-		3C5A73950BF7BA6800776464 /* HTML Parsing */ = {
+		3C5A73950BF7BA6800776464 /* Template Parsing */ = {
 			isa = PBXGroup;
 			children = (
 				27A50E880D19282B00149038 /* SVHTMLTemplateTextBlock.h */,
@@ -4072,7 +4072,7 @@
 				2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */,
 				2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */,
 			);
-			name = "HTML Parsing";
+			name = "Template Parsing";
 			sourceTree = "<group>";
 		};
 		3C5A73EB0BF7BAB200776464 /* Support */ = {

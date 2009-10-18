@@ -15,7 +15,7 @@
 @protocol SVWebEditorViewControllerDelegate;
 
 
-@interface SVWebViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, KTHTMLParserDelegate>
+@interface SVWebViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
 {
     KTPage  *_page;
     BOOL    _isLoading;

@@ -34,7 +34,7 @@ typedef enum {
 @class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, SVHTMLTemplateTextBlock;
 @class KTAbstractPage;
 @class KTMediaContainer, KTMediaFile;
-@protocol KTHTMLParserDelegate;
+@protocol SVHTMLTemplateParserDelegate;
 
 
 @interface SVHTMLTemplateParser : KTTemplateParser
@@ -60,7 +60,7 @@ typedef enum {
 - (BOOL)liveDataFeeds;
 - (void)setLiveDataFeeds:(BOOL)flag;
 
-@property(nonatomic, assign) id <KTHTMLParserDelegate> delegate;
+@property(nonatomic, assign) id <SVHTMLTemplateParserDelegate> delegate;
 
 // Functions
 - (NSString *)pathToObject:(id)anObject;
@@ -94,7 +94,7 @@ typedef enum {
 @end
 
 
-@protocol KTHTMLParserDelegate <KTTemplateParserDelegate>
+@protocol SVHTMLTemplateParserDelegate <KTTemplateParserDelegate>
 @optional
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didEncounterResourceFile:(NSURL *)resourcePath;
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;

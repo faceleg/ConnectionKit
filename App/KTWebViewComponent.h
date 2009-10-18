@@ -19,7 +19,7 @@
 @class KTDocWebViewController;
 
 
-@interface KTWebViewComponent : NSObject <KTHTMLParserDelegate>
+@interface KTWebViewComponent : NSObject <SVHTMLTemplateParserDelegate>
 {
 	SVHTMLTemplateParser	*myParser;
 	
