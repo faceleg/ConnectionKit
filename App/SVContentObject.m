@@ -11,6 +11,7 @@
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 #import "KTElementPlugin.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVPageletBody.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -189,8 +190,17 @@
 
 - (NSString *)editingHTMLString;
 {
-    // TODO: Return something real
-    return @"<img src=\"foo://bar\" />";
+    // For now, just parse the template
+    NSString *template = [[self plugin] templateHTMLAsString];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
+                                                                        component:self];
+    [parser setHTMLGenerationPurpose:kGeneratingPreview];
+    [parser setCurrentPage:(KTAbstractPage *)[[self delegate] page]];
+    
+    NSString *result = [parser parseTemplate];
+    [parser release];
+    
+    return result;
 }
 
 @end

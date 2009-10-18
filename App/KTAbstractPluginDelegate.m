@@ -79,8 +79,13 @@
 	// Get owner of this delegate
 	id container = [self delegateOwner];
 	
+    if ([container isKindOfClass:NSClassFromString(@"SVContentObject")])
+    {
+        container = [container valueForKeyPath:@"container.pagelet.sidebar.page"];
+    }
+    
 	// Try to get out of pagelet to page
-	if ([container isKindOfClass:[KTPagelet class]])
+	else if ([container isKindOfClass:[KTPagelet class]])
 	{
 		container = [container page];
 	}
