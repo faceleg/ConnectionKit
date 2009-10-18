@@ -9,11 +9,17 @@
 #import "KSExtensibleManagedObject.h"
 
 
-@class SVPageletBody;
+@class SVPageletBody, KTElementPlugin;
+
 
 @interface SVContentObject :  KSExtensibleManagedObject  
 {
+    id  _delegate;
 }
+
+- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
+
+
 
 @property (nonatomic, retain) SVPageletBody *container;
 
@@ -21,6 +27,8 @@
 - (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
 
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
+- (id)delegate;
+- (KTElementPlugin *)plugin;
 
 
 #pragma mark Editing
