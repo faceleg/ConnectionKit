@@ -40,9 +40,9 @@
 
 // TODO: Write validation methods
 
-#pragma mark Editing
+#pragma mark HTML
 
-- (NSString *)editingHTMLString;
+- (NSString *)HTMLString;
 {
     // Take archived HTML and insert editing HTML for content objects into it. We do this now so as to generate as close as possible an approximation to how the page will look when published. (The alternative is to load archived HTML into the DOM, and then replace individual nodes with content objects)
     NSString *result = [self archiveHTMLString];
@@ -70,12 +70,5 @@
     return result;
 }
 
-#pragma mark Publishing
-
-- (NSString *)HTMLString;
-{
-    // FIXME: Generate real content
-    return [self archiveHTMLString];
-}
 
 @end
