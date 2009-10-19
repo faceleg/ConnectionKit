@@ -8,6 +8,8 @@
 
 #import "SVPageletBodyTextAreaController.h"
 
+#import "SVContentObject.h"
+#import "SVPageletBody.h"
 #import "SVWebContentItem.h"
 
 
@@ -47,19 +49,24 @@
 
 - (void)updateEditorItems
 {
-    // Generate an editor item for each -contentItem and for each <img> tag
-    DOMNodeList *elements = [[[self textArea] DOMElement] getElementsByTagName:@"img"];
-    NSMutableArray *editorItems = [[NSMutableArray alloc] initWithCapacity:[elements length]];
+    // Generate an editor item for each -contentItem
+    NSSet *contentObjects = [[self content] contentObjects];
+    NSMutableArray *editorItems = [[NSMutableArray alloc] initWithCapacity:[contentObjects count]];
     
-    for (int i = 0; i < [elements length]; i++)
+    for (SVContentObject *aContentObject in contentObjects)
     {
-        DOMElement *anElement = (DOMElement *)[elements item:i];
-        SVWebContentItem *anItem = [[SVWebContentItem alloc] initWithDOMElement:anElement];
-        [editorItems addObject:anItem];
-        [anItem release];
+        DOMElement *domElement = [[self content] elementForContentObject:aContentObject
+                                                            inDOMElement:[[self textArea] DOMElement]];
+        
+        if (domElement)
+        {
+            SVWebContentItem *anItem = [[SVWebContentItem alloc] initWithDOMElement:domElement];
+            [editorItems addObject:anItem];
+            [anItem release];
+        }
     }
     
-    [_editorItems release]; _editorItems = editorItems;
+    [_editorItems release], _editorItems = editorItems;
 }
 
 #pragma mark KVO

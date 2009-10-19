@@ -11,6 +11,10 @@
 #import "KTPagelet.h"
 #import "SVContentObject.h"
 
+#import "DOMNode+Karelia.h"
+
+#import <WebKit/WebKit.h>
+
 
 @interface SVPageletBody ()
 @property(nonatomic, copy, readwrite) NSSet *contentObjects;
@@ -70,5 +74,14 @@
     return result;
 }
 
+- (DOMElement *)elementForContentObject:(SVContentObject *)contentObject
+                           inDOMElement:(DOMElement *)textAreaDOMElement;
+{
+    OBPRECONDITION([[self contentObjects] containsObject:contentObject]);
+    
+    DOMElement *result = [[textAreaDOMElement ownerDocument] getElementById:[contentObject elementID]];
+    if (![result isDescendantOfNode:textAreaDOMElement]) result = nil;
+    return result;
+}
 
 @end
