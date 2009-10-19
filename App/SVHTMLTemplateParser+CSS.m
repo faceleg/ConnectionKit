@@ -100,7 +100,7 @@
 	
 	// For preview/quicklook mode, the banner CSS
 	
-	NSString *masterCSS = [[page master] bannerCSSForPurpose:[self HTMLGenerationPurpose]];
+	NSString *masterCSS = [[page master] bannerCSSForPurpose:[[SVHTMLGenerationContext currentContext] generationPurpose]];
     if (masterCSS)
     {
         // For Quick Look and previewing the master-specific stylesheet should be inline.
@@ -130,7 +130,7 @@
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{
-		switch ([self HTMLGenerationPurpose])
+		switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
 		{
 			case kGeneratingPreview:
 				result = [[NSURL fileURLWithPath:localPath] absoluteString];

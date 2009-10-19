@@ -51,13 +51,6 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithTemplate:(NSString *)templateString component:(id)parsedComponent
-{
-	[super initWithTemplate:templateString component:parsedComponent];
-	[self setIncludeStyling:YES];
-	return self;
-}
-
 - (id)initWithPage:(KTAbstractPage *)page
 {
 	// Archive pages are specially parsed so that the component is the parent page.
@@ -77,85 +70,12 @@
 	
 	// Create the parser and set up as much of the environment as possible
 	[self initWithTemplate:template component:component];
-	[self setCurrentPage:page];
 	
 	
 	return self;
 }
 
-- (void)dealloc
-{
-	[myCurrentPage release];
-	[myLiveDataFeeds release];
-	
-	[super dealloc];
-}
-
-#pragma mark -
-#pragma mark Accessors
-
-/*	Whenever parsing, it must be within the context of a particular page.
- *	e.g. A single pagelet may be parsed be 50 times, each on a different page.
- *	Use these two methods to specify which the component is being parsed in the context of.
- */
-- (KTAbstractPage *)currentPage { return myCurrentPage; }
-
-- (void)setCurrentPage:(KTAbstractPage *)page
-{
-	[page retain];
-	[myCurrentPage release];
-	myCurrentPage = page;
-}
-
-/*	This accessor pair is a replacement for -[KTDocument publishingmode]
- *	Instead of limiting HTML generating to a single mode at a time, we tell each parser what it is generating the HTML for.
- *	
- */
-- (KTHTMLGenerationPurpose)HTMLGenerationPurpose { return myHTMLGenerationPurpose; }
-
-- (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose { myHTMLGenerationPurpose = purpose; }
-
-- (BOOL)isPublishing
-{
-    BOOL result = ([self HTMLGenerationPurpose] != kGeneratingPreview && [self HTMLGenerationPurpose] != kGeneratingQuickLookPreview);
-    return result;
-}
-
-- (BOOL)includeStyling { return myIncludeStyling; }
-
-- (void)setIncludeStyling:(BOOL)includeStyling { myIncludeStyling = includeStyling; }
-
-/*	Used by templates to know if they're allowed external images etc.
- */
-- (BOOL)liveDataFeeds
-{
-	// Publishing always has live feeds turned on
-	KTHTMLGenerationPurpose mode = [self HTMLGenerationPurpose];
-	if (mode == kGeneratingLocal || mode == kGeneratingRemote || mode == kGeneratingRemoteExport) {
-		return YES;
-	}
-	
-	// If a value has been explicitly set, use it.
-	if (myLiveDataFeeds)
-	{
-		return [myLiveDataFeeds boolValue];
-	}
-	
-	// Use the default for the generation mode
-	BOOL result = NO;
-	if (mode != kGeneratingQuickLookPreview)
-	{
-		result = [[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"];
-	}
-	
-	return result;
-}
-
-- (void)setLiveDataFeeds:(BOOL)flag
-{
-	[myLiveDataFeeds release];
-	myLiveDataFeeds = [[NSNumber alloc] initWithBool:flag];
-}
+#pragma mark Delegate
 
 @dynamic delegate;
 
@@ -180,19 +100,21 @@
 }
 
 #pragma mark -
-#pragma mark Child Parsers
+#pragma mark Parsing
 
-/*	Supplement the default behaviour by copying over HTML-specific properties.
- */
-- (id)newChildParserWithTemplate:(NSString *)templateHTML component:(id)component
+- (NSString *)parseTemplateWithContext:(SVHTMLGenerationContext *)context;
 {
-	SVHTMLTemplateParser *result = [super newChildParserWithTemplate:templateHTML component:component];
-	
-	[result setCurrentPage:[self currentPage]];
-	[result setHTMLGenerationPurpose:[self HTMLGenerationPurpose]];
-	if (myLiveDataFeeds) [result setLiveDataFeeds:[self liveDataFeeds]];
-	
-	return result;
+    if (context)
+    {
+        [SVHTMLGenerationContext pushContext:context];
+        NSString *result = [self parseTemplate];
+        [SVHTMLGenerationContext popContext];
+        return result;
+    }
+    else
+    {
+        return [self parseTemplate];
+    }
 }
 
 #pragma mark -
@@ -250,8 +172,8 @@
 	NSString *result = [super parseTemplate];
 	
     // We only need neat formatting when publishing
-    KTHTMLGenerationPurpose HTMLPurpose = [self HTMLGenerationPurpose];
-    if (HTMLPurpose != kGeneratingPreview && HTMLPurpose != kGeneratingQuickLookPreview)
+    KTHTMLGenerationPurpose purpose = [[SVHTMLGenerationContext currentContext] generationPurpose];
+    if (purpose != kGeneratingPreview && purpose != kGeneratingQuickLookPreview)
     {
         result = [result stringByRemovingMultipleNewlines];
     }
@@ -539,7 +461,7 @@
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTAbstractPage *)page
 {
 	NSString *result;
-	switch ([self HTMLGenerationPurpose])
+	switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
 	{
 		case kGeneratingPreview:
 			result = [resourceURL absoluteString];
@@ -600,7 +522,7 @@
     
     if ([anObject isKindOfClass:[KTAbstractPage class]])
     {
-        switch ([self HTMLGenerationPurpose])
+        switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
         {
             case kGeneratingPreview:
                 result = [(KTAbstractPage *)anObject previewPath];
@@ -615,7 +537,7 @@
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {
-        switch ([self HTMLGenerationPurpose])
+        switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
         {
             case kGeneratingPreview:
             case kGeneratingQuickLookPreview:
@@ -628,6 +550,56 @@
     }
         
 	return [result stringByEscapingHTMLEntities];
+}
+
+#pragma mark Deprecated
+
+/*  These methods are no longer public in 2.0 as we have moved to the SVHTMLGenerationContext concept. But many templates rely on these methods being present in the parser, so they stick around as wrappers around the new functionality
+ */
+
+/*	Whenever parsing, it must be within the context of a particular page.
+ *	e.g. A single pagelet may be parsed be 50 times, each on a different page.
+ *	Use these two methods to specify which the component is being parsed in the context of.
+ */
+- (KTAbstractPage *)currentPage
+{
+    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    OBASSERT(context);
+	return [context currentPage];
+}
+
+/*	This accessor pair is a replacement for -[KTDocument publishingmode]
+ *	Instead of limiting HTML generating to a single mode at a time, we tell each parser what it is generating the HTML for.
+ *	
+ */
+- (KTHTMLGenerationPurpose)HTMLGenerationPurpose
+{
+    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    OBASSERT(context);
+	return [context generationPurpose];
+}
+
+- (BOOL)isPublishing
+{
+    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    OBASSERT(context);
+	return [context isPublishing];
+}
+
+- (BOOL)includeStyling
+{
+    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    OBASSERT(context);
+	return [context includeStyling];
+}
+
+/*	Used by templates to know if they're allowed external images etc.
+ */
+- (BOOL)liveDataFeeds
+{
+    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    OBASSERT(context);
+	return [context liveDataFeeds];
 }
 
 @end

@@ -9,6 +9,7 @@
 #import "KTWebViewComponent.h"
 #import "KTDocWebViewController.h"
 
+#import "SVHTMLGenerationContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTemplateTextBlock.h"
 #import "DOM+KTWebViewController.h"

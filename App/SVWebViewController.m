@@ -135,13 +135,16 @@
 	[parser setDelegate:self];
 	//[webViewComponent release];*/
 	
-	[parser setHTMLGenerationPurpose:kGeneratingPreview];
+    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    [context setCurrentPage:page];
+    [context setGenerationPurpose:kGeneratingPreview];
 	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
 	
     OBASSERT(!_parsedTextBlocks);
     _parsedTextBlocks = [[NSMutableArray alloc] init];
     
-	NSString *pageHTML = [parser parseTemplate];
+	NSString *pageHTML = [parser parseTemplateWithContext:context];
+    [context release];
 	[parser release];
 	
     

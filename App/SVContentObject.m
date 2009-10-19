@@ -194,8 +194,6 @@
     NSString *template = [[self plugin] templateHTMLAsString];
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
                                                                         component:self];
-    [parser setHTMLGenerationPurpose:kGeneratingPreview];
-    [parser setCurrentPage:(KTAbstractPage *)[[self delegate] page]];
     
     NSString *result = [parser parseTemplate];
     [parser release];

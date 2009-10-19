@@ -20,50 +20,30 @@
 
 #import "KTTemplateParser.h"
 
-
-// publishing mode
-typedef enum {
-	kGeneratingPreview = 0,
-	kGeneratingLocal,
-	kGeneratingRemote,
-	kGeneratingRemoteExport,
-	kGeneratingQuickLookPreview = 10,
-} KTHTMLGenerationPurpose;
+#import "SVHTMLGenerationContext.h"
 
 
-@class KTDocument, KTHTMLParserMasterCache, KTMediaFileUpload, SVHTMLTemplateTextBlock;
+@class KTDocument, KTHTMLParserMasterCache, SVHTMLGenerationContext, KTMediaFileUpload, SVHTMLTemplateTextBlock;
 @class KTAbstractPage;
 @class KTMediaContainer, KTMediaFile;
 @protocol SVHTMLTemplateParserDelegate;
 
 
 @interface SVHTMLTemplateParser : KTTemplateParser
-{
-	KTAbstractPage			*myCurrentPage;
-	KTHTMLGenerationPurpose	myHTMLGenerationPurpose;
-	BOOL					myIncludeStyling;
-	NSNumber				*myLiveDataFeeds;
-}
 
 - (id)initWithPage:(KTAbstractPage *)page;	// Convenience method that parses the whole page
 
-// Accessors
-- (KTAbstractPage *)currentPage;
-- (void)setCurrentPage:(KTAbstractPage *)page;
-
-- (KTHTMLGenerationPurpose)HTMLGenerationPurpose;
-- (void)setHTMLGenerationPurpose:(KTHTMLGenerationPurpose)purpose;
-- (BOOL)isPublishing;
-- (BOOL)includeStyling;
-- (void)setIncludeStyling:(BOOL)includeStyling;
-
-- (BOOL)liveDataFeeds;
-- (void)setLiveDataFeeds:(BOOL)flag;
-
 @property(nonatomic, assign) id <SVHTMLTemplateParserDelegate> delegate;
+
+
+#pragma mark Parse
+//  Convenience method to do parsing while pushing and popping a context on the stack
+- (NSString *)parseTemplateWithContext:(SVHTMLGenerationContext *)context;
+
 
 // Functions
 - (NSString *)pathToObject:(id)anObject;
+
 
 // Prebuilt templates
 + (NSString *)calloutContainerTemplateHTML;

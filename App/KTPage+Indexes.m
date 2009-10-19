@@ -11,6 +11,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTAbstractIndex.h"
 #import "KTArchivePage.h"
+#import "SVHTMLGenerationContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTIndexPlugin.h"
 
@@ -287,9 +288,12 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
 	[parser setDelegate:parserDelegate];
-	[parser setHTMLGenerationPurpose:kGeneratingRemote];
 	
-	NSString *result = [parser parseTemplate];
+    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    [context setGenerationPurpose:kGeneratingRemote];
+    
+	NSString *result = [parser parseTemplateWithContext:context];
+    [context release];
 	[parser release];
 		
 	// We won't do any "stringByEscapingCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we

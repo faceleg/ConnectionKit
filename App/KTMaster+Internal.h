@@ -9,6 +9,8 @@
 
 #import "KTMaster.h"
 
+#import "SVHTMLGenerationContext.h"
+
 
 @class KTCodeInjection;
 
