@@ -23,16 +23,16 @@
 
 @property (nonatomic, retain) SVPageletBody *container;
 
-@property(nonatomic, retain, readonly) NSString *elementID;
-- (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
-
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (id)delegate;
 - (KTElementPlugin *)plugin;
 
 
-#pragma mark Editing
-- (NSString *)editingHTMLString;
+#pragma mark HTML
+@property(nonatomic, retain, readonly) NSString *elementID;
+- (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
+- (NSString *)HTMLString;           // for publishing/editing (uses SVHTMLGenerationContext)
+
 
 
 @end

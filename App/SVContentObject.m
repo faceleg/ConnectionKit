@@ -178,17 +178,14 @@
 
 #pragma mark Accessors
 
-@dynamic elementID;
 @dynamic plugInIdentifier;
 @dynamic container;
 
-- (NSString *)archiveHTMLString;
-{
-    NSString *result = [NSString stringWithFormat:@"<object id=\"%@\" />", [self elementID]];
-    return result;
-}
+#pragma mark HTML
 
-- (NSString *)editingHTMLString;
+@dynamic elementID;
+
+- (NSString *)HTMLString;
 {
     // For now, just parse the template
     NSString *template = [[self plugin] templateHTMLAsString];
@@ -198,6 +195,12 @@
     NSString *result = [parser parseTemplate];
     [parser release];
     
+    return result;
+}
+
+- (NSString *)archiveHTMLString;
+{
+    NSString *result = [NSString stringWithFormat:@"<object id=\"%@\" />", [self elementID]];
     return result;
 }
 

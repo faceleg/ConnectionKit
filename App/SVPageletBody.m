@@ -56,7 +56,7 @@
         {
             NSString *target = [aContentObject archiveHTMLString];
             [buffer replaceOccurrencesOfString:target
-                                    withString:[aContentObject editingHTMLString]
+                                    withString:[aContentObject HTMLString]
                                        options:0 
                                          range:NSMakeRange(0, [buffer length])];
         }
