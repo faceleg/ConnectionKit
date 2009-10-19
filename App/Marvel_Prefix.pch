@@ -52,6 +52,7 @@ typedef unsigned long                   URefCon;
 
 #endif  /* !defined(CGFLOAT_DEFINED) */
 
+#define NSMakeCollectable(x) (id)(x)
 
 #import "Debug.h"
 #import "Macros.h"
