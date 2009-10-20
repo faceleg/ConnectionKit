@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1547"/>
+			<integer value="1726"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -492,8 +492,8 @@
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="684036678">
-														<int key="NSCellFlags">605158976</int>
-														<int key="NSCellFlags2">272761856</int>
+														<int key="NSCellFlags">604110400</int>
+														<int key="NSCellFlags2">272762368</int>
 														<string key="NSContents">http://www.karelia.com/sandvox/</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSControlView" ref="209282229"/>

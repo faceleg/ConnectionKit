@@ -26,6 +26,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
+- (void) layoutPageURLComponents;
 @end
 
 
@@ -78,6 +79,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 											 selector:@selector(backgroundFrameChanged:)
 												 name:NSViewFrameDidChangeNotification
 											   object:[self view]];
+	[self layoutPageURLComponents];
 	
 	// Observe changes to the meta description and fake an initial observation
 	[oPagesController addObserver:self
@@ -341,27 +343,63 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	}
 }
 
-- (void) layoutPageURLComponents
+/*
+ Algorithm 
+ Calculate how much each of the variable fields oBaseURLField and oPageFileNameField *want* to be
+ Don't truncate oPageFileNameField - this is limited by character count and we want to see the whole thing
+ So we will truncate oBaseURLField as much as we need.
+ 
+ 
+ */
+
+- (void) layoutPageURLComponents;
 {
-	int newRight = [oBaseURLField frame].origin.x;
-	int extraX [] = {2,5,7,0};	
+	NSLog(@"layoutPageURLComponents");
+	NSArray *itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,nil];
+	int extraX [] = {2,5,7,0};
+	int widths[4] = { -1 };
 	int i = 0;
-	
-	for (NSView *field in [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,nil])
+	// Collect up the widths that these items *want* to be
+	for (NSView *fld in itemsToLayOut)
 	{
 		// Editable File Name
-		NSRect frame = [field frame];
-		frame.origin.x = newRight;
-
-		if ([field isKindOfClass:[NSTextField class]])
+		NSRect frame = [fld frame];
+		
+		if ([fld isKindOfClass:[NSTextField class]])
 		{
-			NSAttributedString *text = [((NSTextField *)field) attributedStringValue];
+			NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
 			int width = extraX[i] + [text size].width;
-			// TODO: truncate if it's going to be too wide!
 			frame.size.width = width;
 		}
-		[field setFrame:frame];
-		newRight = NSMaxX(frame);
+		widths[i++] = frame.size.width;
+	}
+
+	
+	
+	int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+	const int rightMargin = 20;
+	int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
+	
+	// Calculate a new width for base URL
+	int availableForBaseURL = availableForAll -
+		(extraX[0]
+		 + widths[1]
+		 + widths[2]
+		 + widths[3] );
+	if (widths[0] > availableForBaseURL)
+	{
+		widths[0] = availableForBaseURL;	// truncate base URL
+	}
+	// Now set the new frames
+	i = 0;
+	for (NSView *fld2 in itemsToLayOut)
+	{
+		// Editable File Name
+		NSRect frame = [fld2 frame];
+		frame.origin.x = newLeft;
+		frame.size.width = widths[i];
+		[fld2 setFrame:frame];
+		newLeft = NSMaxX(frame);
 		i++;
 	}
 }
@@ -408,6 +446,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	{
 		[self metaDescriptionDidChangeToValue:newValue];
 	}
+	[self layoutPageURLComponents];
 	[self updateWidthForActiveTextField:textField];
 }
 
