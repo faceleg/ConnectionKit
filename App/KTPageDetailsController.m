@@ -341,6 +341,33 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	}
 }
 
+- (void) layoutPageURLComponents
+{
+	int newRight = [oBaseURLField frame].origin.x;
+	int extraX [] = {2,5,7,0};	
+	int i = 0;
+	
+	for (NSView *field in [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,nil])
+	{
+		// Editable File Name
+		NSRect frame = [field frame];
+		frame.origin.x = newRight;
+
+		if ([field isKindOfClass:[NSTextField class]])
+		{
+			NSAttributedString *text = [((NSTextField *)field) attributedStringValue];
+			int width = extraX[i] + [text size].width;
+			// TODO: truncate if it's going to be too wide!
+			frame.size.width = width;
+		}
+		[field setFrame:frame];
+		newRight = NSMaxX(frame);
+		i++;
+	}
+}
+
+
+
 - (void)updateWidthForActiveTextField:(NSTextField *)textField
 {
 	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
@@ -361,6 +388,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
+	[self layoutPageURLComponents];
 	if (self.activeTextField)
 	{
 		[self updateWidthForActiveTextField:self.activeTextField];
