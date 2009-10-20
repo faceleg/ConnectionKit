@@ -46,4 +46,6 @@
     [_textAreas removeObjectAtIndex:index];
 }
 
+@synthesize editable = _editable;
+
 @end

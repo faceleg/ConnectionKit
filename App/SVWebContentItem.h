@@ -18,6 +18,8 @@
   @private
     id              _representedObject;
     NSMutableArray  *_textAreas;
+    
+    BOOL    _editable;
 }
 
 @property(nonatomic, retain) id representedObject;
@@ -25,5 +27,7 @@
 @property(nonatomic, readonly) NSArray *textAreas;
 - (void)insertObject:(SVWebTextArea *)textArea inTextAreasAtIndex:(NSUInteger)index;
 - (void)removeObjectFromTextAreasAtIndex:(NSUInteger)index;
+
+@property(nonatomic, getter=isEditable) BOOL editable;
 
 @end

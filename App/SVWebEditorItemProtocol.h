@@ -12,5 +12,6 @@
 @protocol SVWebEditorItem <NSObject>
 
 - (DOMElement *)DOMElement;
+- (BOOL)isEditable; // return YES if the user is able to start selecting content inside the element
 
 @end

@@ -21,4 +21,6 @@
 - (id)initWithDOMElement:(DOMElement *)element;
 @property(nonatomic, retain, readonly) DOMElement *DOMElement;
 
+- (BOOL)isEditable;
+
 @end

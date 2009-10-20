@@ -185,6 +185,7 @@
         {
             SVWebContentItem *item = [[SVWebContentItem alloc] initWithDOMElement:element];
             [item setRepresentedObject:aPagelet];
+            [item setEditable:YES];
             
             [contentObjects addObject:item];
             [item release];

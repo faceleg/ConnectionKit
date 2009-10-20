@@ -40,4 +40,6 @@
 
 @synthesize DOMElement = _DOMElement;
 
+- (BOOL)isEditable { return NO; }
+
 @end

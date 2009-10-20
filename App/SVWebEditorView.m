@@ -803,7 +803,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         [_mouseDownEvent release],  _mouseDownEvent = nil;
         
         
-        if (_mouseUpMayBeginEditing)
+        if (_mouseUpMayBeginEditing && [[self selectedItem] isEditable])
         {
             // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
             if ([mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
