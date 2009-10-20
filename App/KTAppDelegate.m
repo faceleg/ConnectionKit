@@ -1069,7 +1069,12 @@ IMPLEMENTATION NOTES & CAUTIONS:
         // If there's no docs open, want to see the placeholder window
         if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
         {
+#ifdef DEBUG
+			NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
+			[[NSDocumentController sharedDocumentController] newDocument:nil];
+#else
             [[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
+#endif
         }
 		
         

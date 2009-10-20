@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class NTBoxView, KSPopUpButton, KTPageDetailsBoxView;
+@class NTBoxView, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -31,6 +31,8 @@
 	NSNumber	*_windowTitleCountdown;
 	
 	NSTextField	*_activeTextField;
+	MAAttachedWindow *_attachedWindow;
+	
 }
 
 - (NTBoxView *)pageDetailsPanel;
@@ -40,5 +42,6 @@
 - (NSNumber *)windowTitleCountdown;
 
 @property (retain) NSTextField *activeTextField;
+@property (retain) MAAttachedWindow *attachedWindow;
 
 @end

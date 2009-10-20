@@ -1018,6 +1018,8 @@
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
+		CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */; };
+		CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */; };
 		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
 		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
@@ -2627,6 +2629,8 @@
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
+		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAAttachedWindow.h; path = ../../../Shared/ThirdParty/MAAttachedWindow/MAAttachedWindow.h; sourceTree = SOURCE_ROOT; };
+		CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAAttachedWindow.m; path = ../../../Shared/ThirdParty/MAAttachedWindow/MAAttachedWindow.m; sourceTree = SOURCE_ROOT; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
@@ -3704,6 +3708,7 @@
 				3C2DA6E4104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m */,
 			);
 			name = MGScopeBar;
+			path = Imported;
 			sourceTree = "<group>";
 		};
 		3C42DDA70D64C8B3004F35FD /* Products */ = {
@@ -4515,7 +4520,6 @@
 		CE01A7050EAFD63600BDF264 /* Imported */ = {
 			isa = PBXGroup;
 			children = (
-				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
 				CE01A7060EAFD63600BDF264 /* AMRollOverButton.h */,
 				CE01A7070EAFD63600BDF264 /* AMRollOverButton.m */,
 				CE01A7080EAFD63600BDF264 /* AMRollOverButtonCell.h */,
@@ -4732,6 +4736,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				CEC69B02108E6F91000E6E84 /* ThirdParty */,
 				CE01A6210EAFD63600BDF264 /* AppKit */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
 				CE01A7050EAFD63600BDF264 /* Imported */,
@@ -4739,6 +4744,25 @@
 			);
 			name = Shared;
 			path = ../../Shared;
+			sourceTree = "<group>";
+		};
+		CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */ = {
+			isa = PBXGroup;
+			children = (
+				CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */,
+				CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */,
+			);
+			name = MAAttachedWindow;
+			path = Imported;
+			sourceTree = "<group>";
+		};
+		CEC69B02108E6F91000E6E84 /* ThirdParty */ = {
+			isa = PBXGroup;
+			children = (
+				CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */,
+				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
+			);
+			name = ThirdParty;
 			sourceTree = "<group>";
 		};
 		CEF12E780D908EB400FCAC70 /* Products */ = {
@@ -5055,6 +5079,7 @@
 				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
 				27D9B8DE108CD17500B6F28D /* SVHTMLGenerationContext.h in Headers */,
 				CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */,
+				CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6444,6 +6469,7 @@
 				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
 				27D9B8DF108CD17500B6F28D /* SVHTMLGenerationContext.m in Sources */,
 				CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */,
+				CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

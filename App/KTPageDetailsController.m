@@ -11,6 +11,7 @@
 #import "KSPopUpButton.h"
 #import "KSValidateCharFormatter.h"
 #import "KSFocusingTextField.h"
+#import "MAAttachedWindow.h"
 
 #import "NTBoxView.h"
 
@@ -36,6 +37,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 @implementation KTPageDetailsController
 
 @synthesize activeTextField = _activeTextField;
+@synthesize attachedWindow = _attachedWindow;
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -456,10 +458,53 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 - (void)controlTextDidBecomeFirstResponder:(NSNotification *)notification;
 {
 	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	NSTextField *field = [notification object];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
-	[self updateWidthForActiveTextField:[notification object]];
-	self.activeTextField = [notification object];
+	[self updateWidthForActiveTextField:field];
+	self.activeTextField = field;
 	
+	if (!self.attachedWindow)
+	{
+		NSString *note = @"157 out of 160 characters";
+		NSFont *font = [NSFont boldSystemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
+		NSDictionary *stringAttributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+
+		const int widthExtra = 8;	// for some reason we need a few more pixels....
+		NSAttributedString *noteAttr = [[[NSAttributedString alloc] initWithString:note
+																	   attributes:stringAttributes] autorelease];
+		NSTextField *tipField = [[[NSTextField alloc] initWithFrame:NSMakeRect(0,0,widthExtra+[noteAttr size].width,[noteAttr size].height)] autorelease];
+		[tipField setDrawsBackground:NO];
+		[tipField setEditable:NO];
+		[tipField setBordered:NO];
+		[tipField setBezeled:NO];
+		[tipField setAlignment:NSCenterTextAlignment];
+		[tipField setAttributedStringValue:noteAttr];
+		
+        NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMaxY([field frame]) );
+		arrowTip = [view convertPoint:arrowTip toView:nil];
+		
+
+        self.attachedWindow = [[MAAttachedWindow alloc] initWithView:tipField 
+                                                attachedToPoint:arrowTip 
+                                                       inWindow:[view window] 
+                                                         onSide:MAPositionTopLeft 
+                                                     atDistance:0.0];
+
+        [self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
+        [tipField setTextColor:[NSColor whiteColor]];
+        [self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
+        [self.attachedWindow setViewMargin:5];
+        [self.attachedWindow setCornerRadius:10];	// set after arrow base width?  before?
+        [self.attachedWindow setBorderWidth:0];
+        [self.attachedWindow setHasArrow:YES];
+        [self.attachedWindow setDrawsRoundCornerBesideArrow:YES];
+        [self.attachedWindow setArrowBaseWidth:10];
+        [self.attachedWindow setArrowHeight:6];
+        [self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
+
+        [[view window] addChildWindow:self.attachedWindow ordered:NSWindowAbove];
+	}
+		
 }
 - (void)controlTextDidResignFirstResponder:(NSNotification *)notification;
 {
@@ -467,15 +512,20 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	[view setShadowRect:NSZeroRect];
 	self.activeTextField = nil;
+	
+	if (self.attachedWindow)
+	{
+		[[[self view] window] removeChildWindow:self.attachedWindow];
+		[self.attachedWindow orderOut:self];
+		self.attachedWindow = nil;
+	}
+	
 }
 
 // If you tab out of last text field to something else, we don't lose first responder?
 - (void)controlTextDidEndEditing:(NSNotification *)notification;
 {
-	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
-	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
-	[view setShadowRect:NSZeroRect];
-	self.activeTextField = nil;
+	[self controlTextDidResignFirstResponder:notification];
 }
 
 
