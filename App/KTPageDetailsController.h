@@ -27,6 +27,8 @@
 @private
 	NSNumber	*_metaDescriptionCountdown;
 	NSNumber	*_windowTitleCountdown;
+	
+	NSTextField	*_activeTextField;
 }
 
 - (NTBoxView *)pageDetailsPanel;
@@ -34,5 +36,7 @@
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;
 - (NSNumber *)windowTitleCountdown;
+
+@property (retain) NSTextField *activeTextField;
 
 @end

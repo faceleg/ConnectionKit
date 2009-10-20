@@ -7,9 +7,10 @@
 //
 
 #import "KTPageDetailsController.h"
-
+#import "KSShadowedRectView.h"
 #import "KSPopUpButton.h"
 #import "KSValidateCharFormatter.h"
+#import "KSFocusingTextField.h"
 
 #import "NTBoxView.h"
 
@@ -33,11 +34,18 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 @implementation KTPageDetailsController
 
+@synthesize activeTextField = _activeTextField;
+
 #pragma mark -
 #pragma mark Init & Dealloc
 
 - (void)dealloc
 {
+	[[NSNotificationCenter defaultCenter] removeObserver:self
+													name:NSViewBoundsDidChangeNotification
+												  object:[self view]];
+	
+	self.activeTextField = nil;
 	[_metaDescriptionCountdown release];
 	[_windowTitleCountdown release];
 	[super dealloc];
@@ -65,6 +73,11 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 {
 	// Detail panel needs the right appearance
 	
+	[[self view] setPostsFrameChangedNotifications:YES];
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(backgroundFrameChanged:)
+												 name:NSViewFrameDidChangeNotification
+											   object:[self view]];
 	
 	// Observe changes to the meta description and fake an initial observation
 	[oPagesController addObserver:self
@@ -328,11 +341,36 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	}
 }
 
+- (void)updateWidthForActiveTextField:(NSTextField *)textField
+{
+	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	
+	NSTextView *fieldEditor = (NSTextView *)[textField currentEditor];
+	
+	NSRect textRect = [[fieldEditor layoutManager]
+					   usedRectForTextContainer:[fieldEditor textContainer]];
+	
+	NSRect fieldRect = [textField frame];
+	CGFloat textWidth = textRect.size.width;
+	textWidth = MAX(textWidth, 7.0);
+	if (textWidth < fieldRect.size.width) fieldRect.size.width = textWidth;
+	[view setShadowRect:fieldRect];
+	
+}
+
+- (void) backgroundFrameChanged:(NSNotification *)notification
+{
+	if (self.activeTextField)
+	{
+		[self updateWidthForActiveTextField:self.activeTextField];
+	}
+}
 /*	Sent when the user is typing in the meta description box.
  */
-- (void)controlTextDidChange:(NSNotification *)aNotification
+- (void)controlTextDidChange:(NSNotification *)notification
 {
-	NSTextField *textField = (NSTextField *) [aNotification object];
+	NSTextField *textField = (NSTextField *) [notification object];
 	NSString *newValue = [textField stringValue]; // Do NOT try to modify this string!
 	if (textField == oWindowTitleField)
 	{
@@ -342,21 +380,36 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	{
 		[self metaDescriptionDidChangeToValue:newValue];
 	}
+	[self updateWidthForActiveTextField:textField];
 }
 
-// Not quite -- doesn't get called until first keystroke!
 
-- (void)controlTextDidBeginEditing:(NSNotification *)notification;
+// Special responders to the subclass of the text field
+
+- (void)controlTextDidBecomeFirstResponder:(NSNotification *)notification;
 {
-	NSLog(@"%@", [notification object]);
+	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	[self updateWidthForActiveTextField:[notification object]];
+	self.activeTextField = [notification object];
 	
 }
+- (void)controlTextDidResignFirstResponder:(NSNotification *)notification;
+{
+	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	[view setShadowRect:NSZeroRect];
+	self.activeTextField = nil;
+}
 
+// If you tab out of last text field to something else, we don't lose first responder?
 - (void)controlTextDidEndEditing:(NSNotification *)notification;
 {
-	NSLog(@"%@", [notification object]);
-
-	
+	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
+	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	[view setShadowRect:NSZeroRect];
+	self.activeTextField = nil;
 }
+
 
 @end

@@ -948,6 +948,8 @@
 		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE494D7A0896B5CE005FBD81 /* TinyAdd.png */; };
+		CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */; };
+		CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */; };
 		CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */; };
 		CE4F81010891B55600556D47 /* designSelectedClickGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4F81000891B55600556D47 /* designSelectedClickGloss.png */; };
 		CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */; };
@@ -2522,6 +2524,8 @@
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
 		CE494D7A0896B5CE005FBD81 /* TinyAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TinyAdd.png; sourceTree = "<group>"; };
+		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../../Shared/AppKit/KSFocusingTextField.h; sourceTree = SOURCE_ROOT; };
+		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../../Shared/AppKit/KSFocusingTextField.m; sourceTree = SOURCE_ROOT; };
 		CE4F7D590891A3DB00556D47 /* pagecurltop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pagecurltop.png; sourceTree = "<group>"; };
 		CE4F7D5A0891A3DB00556D47 /* pagecurl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pagecurl.png; sourceTree = "<group>"; };
 		CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerBackground.h; sourceTree = "<group>"; };
@@ -2781,6 +2785,8 @@
 				272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */,
 				270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */,
 				270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */,
+				CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */,
+				CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */,
 			);
 			name = "Page Details";
 			sourceTree = "<group>";
@@ -5048,6 +5054,7 @@
 				27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */,
 				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
 				27D9B8DE108CD17500B6F28D /* SVHTMLGenerationContext.h in Headers */,
+				CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6436,6 +6443,7 @@
 				27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */,
 				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
 				27D9B8DF108CD17500B6F28D /* SVHTMLGenerationContext.m in Sources */,
+				CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
