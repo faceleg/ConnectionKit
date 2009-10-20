@@ -2526,8 +2526,8 @@
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
 		CE494D7A0896B5CE005FBD81 /* TinyAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TinyAdd.png; sourceTree = "<group>"; };
-		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../../Shared/AppKit/KSFocusingTextField.h; sourceTree = SOURCE_ROOT; };
-		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../../Shared/AppKit/KSFocusingTextField.m; sourceTree = SOURCE_ROOT; };
+		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../Shared/AppKit/KSFocusingTextField.h; sourceTree = "<group>"; };
+		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../Shared/AppKit/KSFocusingTextField.m; sourceTree = "<group>"; };
 		CE4F7D590891A3DB00556D47 /* pagecurltop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pagecurltop.png; sourceTree = "<group>"; };
 		CE4F7D5A0891A3DB00556D47 /* pagecurl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pagecurl.png; sourceTree = "<group>"; };
 		CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerBackground.h; sourceTree = "<group>"; };
@@ -2629,8 +2629,8 @@
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
-		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAAttachedWindow.h; path = ../../../Shared/ThirdParty/MAAttachedWindow/MAAttachedWindow.h; sourceTree = SOURCE_ROOT; };
-		CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAAttachedWindow.m; path = ../../../Shared/ThirdParty/MAAttachedWindow/MAAttachedWindow.m; sourceTree = SOURCE_ROOT; };
+		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAAttachedWindow.h; path = ../ThirdParty/MAAttachedWindow/MAAttachedWindow.h; sourceTree = "<group>"; };
+		CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAAttachedWindow.m; path = ../ThirdParty/MAAttachedWindow/MAAttachedWindow.m; sourceTree = "<group>"; };
 		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
 		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
@@ -3116,7 +3116,7 @@
 			name = "Missing Media";
 			sourceTree = "<group>";
 		};
-		279983310DF01CE2003C84B9 /* Other */ = {
+		279983310DF01CE2003C84B9 /* Plug-in System */ = {
 			isa = PBXGroup;
 			children = (
 				CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */,
@@ -3128,7 +3128,7 @@
 				27668FC20D63D3070019686C /* KTIndexPlugin.h */,
 				27668FC30D63D3070019686C /* KTIndexPlugin.m */,
 			);
-			name = Other;
+			name = "Plug-in System";
 			sourceTree = "<group>";
 		};
 		27A832830D92D8CC005FF13D /* Code Injection */ = {
@@ -3220,7 +3220,7 @@
 			isa = PBXGroup;
 			children = (
 				3C202D9607DFC43300DE4994 /* Designs */,
-				279983310DF01CE2003C84B9 /* Other */,
+				279983310DF01CE2003C84B9 /* Plug-in System */,
 			);
 			name = Plugins;
 			sourceTree = "<group>";
