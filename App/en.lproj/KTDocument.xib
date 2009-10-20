@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1726"/>
+			<integer value="1547"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -853,7 +853,7 @@
 							<bool key="NSTransparent">NO</bool>
 						</object>
 					</array>
-					<string key="NSFrame">{{1, 9}, {356, 101}}</string>
+					<string key="NSFrameSize">{356, 101}</string>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 36}</string>
@@ -1110,6 +1110,22 @@
 						<reference key="destination" ref="408607898"/>
 					</object>
 					<int key="connectionID">1790</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oDotSeparator</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="139174513"/>
+					</object>
+					<int key="connectionID">1791</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oBaseURLField</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="209282229"/>
+					</object>
+					<int key="connectionID">1792</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1610,10 +1626,10 @@
 				<string key="1540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1541.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1547.IBEditorWindowLastContentRect">{{595, 105}, {835, 553}}</string>
+				<string key="1547.IBEditorWindowLastContentRect">{{293, 105}, {835, 553}}</string>
 				<string key="1547.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1547.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="1547.IBWindowTemplateEditedContentRect">{{595, 105}, {835, 553}}</string>
+				<string key="1547.IBWindowTemplateEditedContentRect">{{293, 105}, {835, 553}}</string>
 				<boolean value="YES" key="1547.ImportedFromIB2"/>
 				<boolean value="YES" key="1547.windowTemplate.hasMinSize"/>
 				<string key="1547.windowTemplate.minSize">{800, 280}</string>
@@ -1685,7 +1701,9 @@
 				<string key="1774.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1781.CustomClassName">KTPageDetailsController</string>
 				<string key="1781.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="381.IBEditorWindowLastContentRect">{{69, 744}, {356, 101}}</string>
 				<string key="381.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="381.IBWindowTemplateEditedContentRect">{{69, 744}, {356, 101}}</string>
 				<boolean value="YES" key="381.ImportedFromIB2"/>
 				<boolean value="YES" key="381.windowTemplate.hasMinSize"/>
 				<string key="381.windowTemplate.minSize">{213, 14}</string>
@@ -1721,7 +1739,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1790</int>
+			<int key="maxID">1792</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1909,8 +1927,10 @@
 					<string key="className">KTPageDetailsController</string>
 					<string key="superclassName">NSViewController</string>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="oBaseURLField">NSTextField</string>
 						<string key="oCollectionFileNameField">NSTextField</string>
 						<string key="oCollectionIndexExtensionButton">KSPopUpButton</string>
+						<string key="oDotSeparator">NSTextField</string>
 						<string key="oFileExtensionPopup">KSPopUpButton</string>
 						<string key="oMetaDescriptionField">NSTextField</string>
 						<string key="oPageFileNameField">NSTextField</string>

@@ -17,9 +17,11 @@
 	IBOutlet NSTextField			*oWindowTitleField;
 	IBOutlet NSTextField			*oMetaDescriptionField;
 
+	IBOutlet NSTextField			*oBaseURLField;
 	IBOutlet NSTextField			*oPageFileNameField;
-	IBOutlet NSTextField			*oCollectionFileNameField;
+	IBOutlet NSTextField			*oDotSeparator;
 	IBOutlet KSPopUpButton			*oFileExtensionPopup;
+	IBOutlet NSTextField			*oCollectionFileNameField;
 	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
 		
 	IBOutlet NSObjectController		*oPagesController;
