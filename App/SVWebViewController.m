@@ -361,6 +361,11 @@
         [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:pboardReps]
                     forType:kKTPageletsPboardType];
     }
+    else
+    {
+        [pasteboard declareTypes:[NSArray array] owner:self];
+        result = YES;
+    }
     
     
     return result;
