@@ -231,6 +231,8 @@
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
+		272DA58A108E6F42007A99D5 /* SVContentPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVContentPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		272DA58B108E6F42007A99D5 /* SVContentPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 272DA589108E6F42007A99D5 /* SVContentPlugIn.m */; };
 		272EEBB90DDA65190012005E /* KTMediaManager+MediaContainers.m in Sources */ = {isa = PBXBuildFile; fileRef = 272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */; };
 		272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */; };
 		2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1669,6 +1671,8 @@
 		272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Selection.m"; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
+		272DA588108E6F42007A99D5 /* SVContentPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContentPlugIn.h; sourceTree = "<group>"; };
+		272DA589108E6F42007A99D5 /* SVContentPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentPlugIn.m; sourceTree = "<group>"; };
 		272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaContainers.m"; sourceTree = "<group>"; };
 		272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVSiteOutlineViewController+Icons.m"; sourceTree = "<group>"; };
 		2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTemplateParser.h; sourceTree = "<group>"; };
@@ -3127,6 +3131,8 @@
 				27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */,
 				27668FC20D63D3070019686C /* KTIndexPlugin.h */,
 				27668FC30D63D3070019686C /* KTIndexPlugin.m */,
+				272DA588108E6F42007A99D5 /* SVContentPlugIn.h */,
+				272DA589108E6F42007A99D5 /* SVContentPlugIn.m */,
 			);
 			name = "Plug-in System";
 			sourceTree = "<group>";
@@ -5078,6 +5084,7 @@
 				27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */,
 				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
 				27D9B8DE108CD17500B6F28D /* SVHTMLGenerationContext.h in Headers */,
+				272DA58A108E6F42007A99D5 /* SVContentPlugIn.h in Headers */,
 				CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */,
 				CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */,
 			);
@@ -6468,6 +6475,7 @@
 				27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */,
 				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
 				27D9B8DF108CD17500B6F28D /* SVHTMLGenerationContext.m in Sources */,
+				272DA58B108E6F42007A99D5 /* SVContentPlugIn.m in Sources */,
 				CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */,
 				CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */,
 			);

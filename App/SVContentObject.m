@@ -187,6 +187,11 @@
 
 - (NSString *)HTMLString;
 {
+    if ([[self delegate] respondsToSelector:@selector(HTMLString)])
+    {
+        return [[self delegate] HTMLString];
+    }
+    
     // For now, just parse the template
     NSString *template = [[self plugin] templateHTMLAsString];
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template

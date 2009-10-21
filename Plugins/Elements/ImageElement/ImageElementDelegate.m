@@ -74,21 +74,21 @@
 	if (isNewObject)
 	{
 		// set default properties
-		[element setValue:[NSNumber numberWithInt:AutomaticSize] forKey:@"imageSize"];
+		[[self delegateOwner] setValue:[NSNumber numberWithInt:AutomaticSize] forKey:@"imageSize"];
 		
 		BOOL shouldIncludeLinkInitially = [[NSUserDefaults standardUserDefaults] boolForKey:@"shouldIncludeLink"];
-		[element setValue:[NSNumber numberWithBool:shouldIncludeLinkInitially] forKey:@"shouldIncludeLink"];
+		[[self delegateOwner] setValue:[NSNumber numberWithBool:shouldIncludeLinkInitially] forKey:@"shouldIncludeLink"];
         
 		BOOL shouldLinktoOriginalInitially = [[NSUserDefaults standardUserDefaults] boolForKey:@"linkImageToOriginal"];
-		[element setValue:[NSNumber numberWithBool:shouldLinktoOriginalInitially] forKey:@"linkImageToOriginal"];
+		[[self delegateOwner] setValue:[NSNumber numberWithBool:shouldLinktoOriginalInitially] forKey:@"linkImageToOriginal"];
         
 		BOOL shouldUseExternalImage = [[NSUserDefaults standardUserDefaults] boolForKey:@"preferExternalImage"];
-		[element setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
+		[[self delegateOwner] setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
         
         
-        if ([element isKindOfClass:[KTPage class]])
+        if ([[self delegateOwner] isKindOfClass:[KTPage class]])
         {
-            [(KTPage *)element setThumbnail:[[(KTPage *)element master] placeholderImage]];
+            [(KTPage *)[self delegateOwner] setThumbnail:[[(KTPage *)element master] placeholderImage]];
         }
 	}
 }
