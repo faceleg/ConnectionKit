@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1649"/>
+			<integer value="1726"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -379,9 +379,8 @@
 													<object class="NSTextFieldCell" key="NSCell" id="1072290372">
 														<int key="NSCellFlags">-1808662975</int>
 														<int key="NSCellFlags2">272794624</int>
-														<string key="NSContents">123456789012345678901234567890</string>
+														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<string key="NSPlaceholderString">Summary of this page as it will appear in Google listings. 156 characters recommended maximum.</string>
 														<reference key="NSControlView" ref="943593109"/>
 														<reference key="NSBackgroundColor" ref="705998482"/>
 														<object class="NSColor" key="NSTextColor" id="440280181">
@@ -401,9 +400,8 @@
 													<object class="NSTextFieldCell" key="NSCell" id="25421999">
 														<int key="NSCellFlags">-1808662975</int>
 														<int key="NSCellFlags2">272794624</int>
-														<string key="NSContents">123456789012345678901234567890</string>
+														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<string key="NSPlaceholderString">Title of page's window as well as title in Google listings and bookmarks. 65 characters recommended maximum.</string>
 														<reference key="NSControlView" ref="452661693"/>
 														<reference key="NSBackgroundColor" ref="705998482"/>
 														<reference key="NSTextColor" ref="440280181"/>
@@ -418,7 +416,7 @@
 													<object class="NSTextFieldCell" key="NSCell" id="747258577">
 														<int key="NSCellFlags">-1808662975</int>
 														<int key="NSCellFlags2">272794624</int>
-														<string key="NSContents">123456789012345678901234567890</string>
+														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSControlView" ref="486193302"/>
 														<reference key="NSBackgroundColor" ref="705998482"/>
@@ -455,8 +453,9 @@
 													<object class="NSTextFieldCell" key="NSCell" id="684036678">
 														<int key="NSCellFlags">604110400</int>
 														<int key="NSCellFlags2">272762368</int>
-														<string key="NSContents">http://www.karelia.com/sandvox/</string>
+														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
+														<string key="NSPlaceholderString">http://domain.com/</string>
 														<reference key="NSControlView" ref="209282229"/>
 														<reference key="NSBackgroundColor" ref="97692237"/>
 														<object class="NSColor" key="NSTextColor">
@@ -546,7 +545,7 @@
 										<object class="NSTabView" id="92364140">
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">274</int>
-											<string key="NSFrame">{{0, 98}, {659, 455}}</string>
+											<string key="NSFrame">{{0, 84}, {659, 469}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<array class="NSMutableArray" key="NSTabViewItems"/>
 											<reference key="NSFont" ref="502413197"/>
@@ -613,6 +612,12 @@
 			</object>
 			<object class="NSViewController" id="363902086"/>
 			<object class="NSArrayController" id="601368962">
+				<array class="NSMutableArray" key="NSDeclaredKeys">
+					<string>windowTitle</string>
+					<string>metaDescription</string>
+					<string>fileName</string>
+					<string>canEditTitle</string>
+				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -1174,6 +1179,115 @@
 						<reference key="destination" ref="157995896"/>
 					</object>
 					<int key="connectionID">1801</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: selection.canEditTitle</string>
+						<reference key="source" ref="486193302"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="486193302"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">enabled: selection.canEditTitle</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">selection.canEditTitle</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1806</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">content: selection.availableFileExtensions</string>
+						<reference key="source" ref="408006662"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector" id="448839204">
+							<reference key="NSSource" ref="408006662"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">content: selection.availableFileExtensions</string>
+							<string key="NSBinding">content</string>
+							<string key="NSKeyPath">selection.availableFileExtensions</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1812</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedObject: selection.customFileExtension</string>
+						<reference key="source" ref="408006662"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408006662"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">selectedObject: selection.customFileExtension</string>
+							<string key="NSBinding">selectedObject</string>
+							<string key="NSKeyPath">selection.customFileExtension</string>
+							<reference key="NSPreviousConnector" ref="448839204"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1813</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.windowTitle</string>
+						<reference key="source" ref="452661693"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="452661693"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.windowTitle</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.windowTitle</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNullPlaceholder</string>
+								<string key="NS.object.0">Title of page's window as well as title in Google listings and bookmarks. 65 characters recommended maximum.</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1814</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.metaDescription</string>
+						<reference key="source" ref="943593109"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="943593109"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.metaDescription</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.metaDescription</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNullPlaceholder</string>
+								<string key="NS.object.0">Summary of this page as it will appear in Google listings. 156 characters recommended maximum.</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1815</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.fileName</string>
+						<reference key="source" ref="486193302"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="486193302"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.fileName</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.fileName</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSNullPlaceholder</string>
+								<string key="NS.object.0">unknown</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1816</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1798,7 +1912,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1801</int>
+			<int key="maxID">1816</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

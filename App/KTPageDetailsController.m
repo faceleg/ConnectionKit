@@ -21,12 +21,16 @@
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
+static NSString *sFileNameObservationContext = @"-fileName observation context";
 static NSString *sTitleTextObservationContext = @"-titleText observation context";
 
+enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePageDetailsContext, kMetaDescriptionPageDetailsContext
+};
 
 @interface KTPageDetailsController ()
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
+- (void)fileNameDidChangeToValue:(id)value;
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
 - (void) layoutPageURLComponents;
 @end
@@ -52,6 +56,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	self.activeTextField = nil;
 	[_metaDescriptionCountdown release];
 	[_windowTitleCountdown release];
+	[_fileNameCountdown release];
 	[super dealloc];
 }
 
@@ -95,7 +100,12 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 						  options:NSKeyValueObservingOptionNew
 						  context:sWindowTitleObservationContext];
 	[self windowTitleDidChangeToValue:[oPagesController valueForKeyPath:@"selection.windowTitle"]];
-
+	[oPagesController addObserver:self
+					   forKeyPath:@"selection.fileName"
+						  options:NSKeyValueObservingOptionNew
+						  context:sFileNameObservationContext];
+	[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];
+	
 	[oPagesController addObserver:self
 					   forKeyPath:@"selection.titleText"
 						  options:NSKeyValueObservingOptionNew
@@ -178,6 +188,16 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	_windowTitleCountdown = countdown;
 }
 
+- (NSNumber *)fileNameCountdown { return _fileNameCountdown; }
+
+- (void)setFileNameCountdown:(NSNumber *)countdown
+{
+	[countdown retain];
+	[_fileNameCountdown release];
+	_fileNameCountdown = countdown;
+}
+
+
 
 /*	Called in response to a change of selection.metaDescription or the user typing
  *	We update our own countdown property in response
@@ -256,13 +276,11 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	{
 		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
 		
-		// FIXME: BREAKING HERE
-		// [newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
+		[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
 		
 		[oWindowTitleField unbind:NSValueBinding];
 
-		// FIXME: BREAKING HERE
-		// [oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+		[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
 	}
 }
 
@@ -290,6 +308,29 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	
 	[self setWindowTitleCountdown:value];
 }
+
+- (void)fileNameDidChangeToValue:(id)value
+{
+	if (value)
+	{
+		if ([value isSelectionMarker])
+		{
+			value = nil;
+		}
+		else
+		{
+			OBASSERT([value isKindOfClass:[NSString class]]);
+			value = [NSNumber numberWithInt:[value length]];
+		}
+	}
+	else
+	{
+		value = [NSNumber numberWithInt:0];
+	}
+	
+	[self setFileNameCountdown:value];
+}
+
 
 #define MAX_WINDOW_TITLE_LENGTH 65
 #define WINDOW_TITLE_WARNING_ZONE 8
@@ -324,6 +365,10 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
     return [NSSet setWithObject:@"windowTitleCountdown"];
 }
 
++ (NSSet *)keyPathsForValuesAffectingFileNameCharCountColor
+{
+    return [NSSet setWithObject:@"fileNameCountdown"];
+}
 
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
@@ -335,6 +380,10 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	else if (context == sWindowTitleObservationContext)
 	{
 		[self windowTitleDidChangeToValue:[object valueForKeyPath:keyPath]];
+	}
+	else if (context == sFileNameObservationContext)
+	{
+		[self fileNameDidChangeToValue:[object valueForKeyPath:keyPath]];
 	}
 	else if (context == sTitleTextObservationContext)
 	{
@@ -457,7 +506,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 - (IBAction) pageDetailsHelp:(id)sender;
 {
-	NSLog(@"%s",__FUNCTION__);
+	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
 }
 
 // Special responders to the subclass of the text field
@@ -467,11 +516,40 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
 	NSTextField *field = [notification object];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
+	
+	// Can't think of a better way to do this...
+	
+	NSString *bindingName = @"";
+	int tagForHelp = kUnknownPageDetailsContext;
+	if (field == oPageFileNameField)
+	{
+		tagForHelp = kFileNamePageDetailsContext;
+		bindingName = @"fileNameCountdown";
+	}
+	else if (field == oMetaDescriptionField)
+	{	
+		tagForHelp = kMetaDescriptionPageDetailsContext;
+		bindingName = @"metaDescriptionCountdown";
+	}
+	else if (field == oWindowTitleField)
+	{
+		tagForHelp = kWindowTitlePageDetailsContext;
+		bindingName = @"windowTitleCountdown";
+	}
+	[oAttachedWindowHelpButton setTag:tagForHelp];
+		
 	[self updateWidthForActiveTextField:field];
 	self.activeTextField = field;
 	
 	if (!self.attachedWindow)
 	{
+		// We are cheating here .. there is only ONE active text field, help button, etc. ... 
+		// We fade out the window when we leave the field, but we immediately put these fields
+		// into a new attached window.  I think nobody is going to notice that though.
+		[oAttachedWindowTextField unbind:NSValueBinding];
+		NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used"), NSDisplayPatternBindingOption, nil];
+		[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];
+
 		NSString *note = @"fjdsklfjdlskjflkdsajflkdsS";
 
 		[oAttachedWindowTextField setStringValue:note];
@@ -523,6 +601,7 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 		// Set up the animation for this window so we will get delegate methods
 		CAAnimation *anim = [CABasicAnimation animation];
+		// [anim setDuration:3.0];
 		[anim setValue:self.attachedWindow forKey:@"myOwnerWindow"];
 		[anim setDelegate:self];
 		[self.attachedWindow setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];

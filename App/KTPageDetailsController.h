@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class NTBoxView, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
+@class KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -33,6 +33,7 @@
 @private
 	NSNumber	*_metaDescriptionCountdown;
 	NSNumber	*_windowTitleCountdown;
+	NSNumber	*_fileNameCountdown;
 	
 	NSTextField	*_activeTextField;
 	MAAttachedWindow *_attachedWindow;
@@ -41,11 +42,10 @@
 
 - (IBAction) pageDetailsHelp:(id)sender;
 
-- (NTBoxView *)pageDetailsPanel;
-
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;
 - (NSNumber *)windowTitleCountdown;
+- (NSNumber *)fileNameCountdown;
 
 @property (retain) NSTextField *activeTextField;
 @property (retain) MAAttachedWindow *attachedWindow;
