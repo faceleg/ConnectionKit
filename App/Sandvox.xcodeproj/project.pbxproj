@@ -347,7 +347,6 @@
 		279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */; };
 		279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */; };
 		279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
-		279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C59B05908A9B8E70076C6DC /* 13x13_empty.png */; };
 		279FF2BE0EF27699009F6A16 /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */; };
 		279FF2BF0EF27699009F6A16 /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */; };
 		27A093310D1DECDA00F57801 /* WebViewEditingHelperClasses.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A0932F0D1DECDA00F57801 /* WebViewEditingHelperClasses.h */; settings = {ATTRIBUTES = (); }; };
@@ -512,7 +511,6 @@
 		3C5C20E807E7A49000994477 /* KTApplication.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1B07DFC0AA00DE4994 /* KTApplication.m */; };
 		3C5C20EA07E7A4A400994477 /* KTPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */; };
 		3C5C20FD07E7B09200994477 /* KTHostArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7907DFC30800DE4994 /* KTHostArrayController.m */; };
-		3C66E3EA08A9781400EC7716 /* 16x16_empty.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C66E3E908A9781400EC7716 /* 16x16_empty.png */; };
 		3C682B0F0D622EC200B4D485 /* KTComponents.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */; };
 		3C682B120D622F1D00B4D485 /* KTSite.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B110D622F1D00B4D485 /* KTSite.m */; };
 		3C682B140D622F2A00B4D485 /* KTPage+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B130D622F2A00B4D485 /* KTPage+Accessors.m */; };
@@ -2029,7 +2027,6 @@
 		3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggElement.xcodeproj; path = ../Plugins/Elements/DiggElement/DiggElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../Plugins/Elements/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Pasteboard.m"; sourceTree = "<group>"; };
-		3C59B05908A9B8E70076C6DC /* 13x13_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 13x13_empty.png; sourceTree = "<group>"; };
 		3C5A712C0BF7ADE100776464 /* NSEntityDescription+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEntityDescription+KTExtensions.h"; sourceTree = "<group>"; };
 		3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEntityDescription+KTExtensions.m"; sourceTree = "<group>"; };
 		3C5A71300BF7ADE100776464 /* NSFetchRequest+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+KTExtensions.h"; sourceTree = "<group>"; };
@@ -2045,7 +2042,6 @@
 		3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonSupport.xcodeproj; path = ../../Shared/Code/AmazonSupport/AmazonSupport.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C5C0DB10BF820EA003594F8 /* libbz2.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libbz2.dylib; path = /usr/lib/libbz2.dylib; sourceTree = "<absolute>"; };
 		3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
-		3C66E3E908A9781400EC7716 /* 16x16_empty.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = 16x16_empty.png; sourceTree = "<group>"; };
 		3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ImageElement.xcodeproj; path = ../Plugins/Elements/ImageElement/ImageElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxPlugin.h; sourceTree = "<group>"; };
 		3C682B0E0D622EC200B4D485 /* KTComponents.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = KTComponents.xcdatamodel; sourceTree = "<group>"; };
@@ -3613,8 +3609,6 @@
 				79EC3C020973CECD00FE7D50 /* upload_complete.png */,
 				CED86ED909522E20000D78F9 /* karelia.png */,
 				798634F2094E763F003B2653 /* remove.png */,
-				3C59B05908A9B8E70076C6DC /* 13x13_empty.png */,
-				3C66E3E908A9781400EC7716 /* 16x16_empty.png */,
 				CEA2349B086B6E02007A4C2D /* Haloscan.png */,
 				CECB8CD7093D071B009767A8 /* tiny_down.png */,
 				CECB8CD8093D071B009767A8 /* tiny_up.png */,
@@ -5660,7 +5654,6 @@
 				CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */,
 				3C26FAC80898777500FCC13F /* 32favicon.png in Resources */,
 				CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */,
-				3C66E3EA08A9781400EC7716 /* 16x16_empty.png in Resources */,
 				CE26FA1408C4D9C500C9604B /* design-time.css in Resources */,
 				CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */,
 				CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */,
@@ -5737,7 +5730,6 @@
 				CEBCFEFC0DB909E4001BF0DF /* arrow_black.pdf in Resources */,
 				CEBCFEFD0DB909E4001BF0DF /* arrow_grey_down.pdf in Resources */,
 				CEBCFEFE0DB909E4001BF0DF /* arrow_grey_up.pdf in Resources */,
-				279F1DCB0DF4760B00795814 /* 13x13_empty.png in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
 				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
 				CE01A82B0EAFD65E00BDF264 /* help.mini.png in Resources */,

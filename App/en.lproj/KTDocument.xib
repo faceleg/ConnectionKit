@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1726"/>
+			<integer value="1649"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -517,14 +517,14 @@
 													</object>
 												</object>
 											</array>
-											<string key="NSFrame">{{0, 1}, {659, 96}}</string>
+											<string key="NSFrame">{{0, 1}, {659, 82}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<string key="NSClassName">KSShadowedRectView</string>
 										</object>
 										<object class="NSBox" id="508285204">
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">34</int>
-											<string key="NSFrame">{{0, 96}, {659, 5}}</string>
+											<string key="NSFrame">{{0, 82}, {659, 5}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -1481,8 +1481,8 @@
 							<reference ref="680529185"/>
 							<reference ref="943593109"/>
 							<reference ref="452661693"/>
-							<reference ref="486193302"/>
 							<reference ref="408006662"/>
+							<reference ref="486193302"/>
 						</array>
 						<reference key="parent" ref="520114257"/>
 					</object>

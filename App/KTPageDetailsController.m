@@ -5,7 +5,7 @@
 //  Created by Mike on 04/01/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
-
+#import <QuartzCore/QuartzCore.h>
 #import "KTPageDetailsController.h"
 #import "KSShadowedRectView.h"
 #import "KSPopUpButton.h"
@@ -357,9 +357,8 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 
 - (void) layoutPageURLComponents;
 {
-	NSLog(@"layoutPageURLComponents");
 	NSArray *itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,nil];
-	int extraX [] = {2,5,7,0};
+	int extraX [] = {4,4,6,0};
 	int widths[4] = { -1 };
 	int i = 0;
 	// Collect up the widths that these items *want* to be
@@ -371,13 +370,12 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 		if ([fld isKindOfClass:[NSTextField class]])
 		{
 			NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
-			int width = extraX[i] + [text size].width;
+			int width = ceilf([text size].width);
+			width += extraX[i];
 			frame.size.width = width;
 		}
 		widths[i++] = frame.size.width;
 	}
-
-	
 	
 	int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
 	const int rightMargin = 20;
@@ -403,6 +401,10 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 		frame.size.width = widths[i];
 		[fld2 setFrame:frame];
 		newLeft = NSMaxX(frame);
+		if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
+		{							// (which we left wide enough so it wouldn't get clipped)
+			newLeft -= 4;
+		}
 		i++;
 	}
 }
@@ -470,29 +472,31 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	
 	if (!self.attachedWindow)
 	{
-		NSString *note = @"fjdsklfjdlskjflkdsajflkds";
+		NSString *note = @"fjdsklfjdlskjflkdsajflkdsS";
 
 		[oAttachedWindowTextField setStringValue:note];
 		NSAttributedString *noteAttr = [oAttachedWindowTextField attributedStringValue];
 		NSSize noteSize = [noteAttr size];
 		
-		const int widthExtra = 8;	// for some reason we need a few more pixels....
+		const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
 		float rightSide = ceilf(noteSize.width) + widthExtra;
 		int height = noteSize.height;	// also size of question mark
-		[oAttachedWindowTextField setFrame:NSMakeRect(0,0,rightSide, noteSize.height)];
-		rightSide += 8;
-		[oAttachedWindowHelpButton setFrame:NSMakeRect(rightSide,0,height,height)];
-		rightSide += height;
-		[oAttachedWindowView setFrame:NSMakeRect(0,0,rightSide,height)];
-		
-        NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMaxY([field frame]) );
+
+		[oAttachedWindowView setFrame:NSMakeRect(0,0,rightSide+8+height,height)];	// set view first, then subviews		
+		[oAttachedWindowTextField setFrame:NSMakeRect(0,0,rightSide, height)];
+		[oAttachedWindowHelpButton setFrame:NSMakeRect(rightSide+8,0,height,height)];
+	
+        NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMidY([field frame]) );
 		arrowTip = [view convertPoint:arrowTip toView:nil];
 		
         self.attachedWindow = [[MAAttachedWindow alloc] initWithView:oAttachedWindowView 
                                                 attachedToPoint:arrowTip 
                                                        inWindow:[view window] 
-                                                         onSide:MAPositionTopRight 
-                                                     atDistance:0.0];
+                                                         onSide:MAPositionLeft 
+                                                     atDistance:10.0];
+		self.attachedWindow.delegate = self;
+		self.attachedWindow.alphaValue = 0.0;
+		[self.attachedWindow setReleasedWhenClosed:YES];
 
         [self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
         [oAttachedWindowTextField setTextColor:[NSColor whiteColor]];
@@ -506,19 +510,27 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 		[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
 
         [self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
-        [self.attachedWindow setViewMargin:5];
-        [self.attachedWindow setCornerRadius:10];	// set after arrow base width?  before?
+        [self.attachedWindow setViewMargin:6];
+        [self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
         [self.attachedWindow setBorderWidth:0];
         [self.attachedWindow setHasArrow:YES];
-        [self.attachedWindow setDrawsRoundCornerBesideArrow:YES];
-        [self.attachedWindow setArrowBaseWidth:10];
-        [self.attachedWindow setArrowHeight:6];
+        [self.attachedWindow setDrawsRoundCornerBesideArrow:NO];
+        [self.attachedWindow setArrowBaseWidth:15];
+        [self.attachedWindow setArrowHeight:8];
         [self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
 
         [[view window] addChildWindow:self.attachedWindow ordered:NSWindowAbove];
+
+		// Set up the animation for this window so we will get delegate methods
+		CAAnimation *anim = [CABasicAnimation animation];
+		[anim setValue:self.attachedWindow forKey:@"myOwnerWindow"];
+		[anim setDelegate:self];
+		[self.attachedWindow setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
+
+		[self.attachedWindow.animator setAlphaValue:1.0];	// animate open
 	}
-		
 }
+
 - (void)controlTextDidResignFirstResponder:(NSNotification *)notification;
 {
 	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
@@ -528,12 +540,22 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	
 	if (self.attachedWindow)
 	{
+		[self.attachedWindow.animator setAlphaValue:0.0];
 		[[[self view] window] removeChildWindow:self.attachedWindow];
-		[self.attachedWindow orderOut:self];
 		self.attachedWindow = nil;
 	}
-	
 }
+
+- (void)animationDidStop:(CAAnimation *)animation finished:(BOOL)flag 
+{
+	NSWindow *animationWindow = [animation valueForKey:@"myOwnerWindow"];
+	if(animationWindow.alphaValue <= 0.01)
+	{
+		[animationWindow orderOut:nil];
+		[animationWindow close];
+	}
+}
+
 
 // If you tab out of last text field to something else, we don't lose first responder?
 - (void)controlTextDidEndEditing:(NSNotification *)notification;
