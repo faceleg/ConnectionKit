@@ -12,7 +12,7 @@
 @class KTMediaManager, KTPage;
 
 
-@interface SVContentPlugIn : NSObject
+@interface SVElementPlugIn : NSObject
 {
   @private
     NSMutableDictionary *_propertiesStorage;
@@ -20,7 +20,7 @@
     id  _delegateOwner;
 }
 
-+ (SVContentPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
++ (SVElementPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
 - (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
 
 

@@ -34,7 +34,7 @@
 #import "KTManagedObject.h"
 
 // Plugins (abstract superclass of all plugins)
-#import "SVContentPlugIn.h"
+#import "SVElementPlugIn.h"
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 

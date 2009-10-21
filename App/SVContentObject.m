@@ -10,7 +10,7 @@
 
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
-#import "SVContentPlugIn.h"
+#import "SVElementPlugIn.h"
 #import "KTElementPlugin.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVPageletBody.h"
@@ -91,7 +91,7 @@
 
 #pragma mark Plug-in
 
-- (SVContentPlugIn *)plugIn
+- (SVElementPlugIn *)plugIn
 {
 	if (!_plugIn) 
 	{

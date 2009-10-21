@@ -9,7 +9,7 @@
 #import "KSExtensibleManagedObject.h"
 
 
-@class SVPageletBody, KTElementPlugin, SVContentPlugIn;
+@class SVPageletBody, KTElementPlugin, SVElementPlugIn;
 
 
 @interface SVContentObject :  KSExtensibleManagedObject  
@@ -23,7 +23,7 @@
 
 @property (nonatomic, retain) SVPageletBody *container;
 
-@property(nonatomic, retain, readonly) SVContentPlugIn *plugIn;
+@property(nonatomic, retain, readonly) SVElementPlugIn *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (KTElementPlugin *)plugin;
 

@@ -6,18 +6,18 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVContentPlugIn.h"
+#import "SVElementPlugIn.h"
 
 #import "KTAbstractHTMLPlugin.h"
 #import "SVContentObject.h"
 #import "SVHTMLTemplateParser.h"
 
 
-@implementation SVContentPlugIn
+@implementation SVElementPlugIn
 
 #pragma mark Init
 
-+ (SVContentPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
++ (SVElementPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
 {
     return [[[self alloc] initWithPropertiesStorage:propertyStorage] autorelease];
 }
