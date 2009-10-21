@@ -13,6 +13,11 @@
 #import "SVHTMLTemplateParser.h"
 
 
+@interface SVElementPlugIn ()
+@property(nonatomic, retain) id delegateOwner;
+@end
+
+
 @implementation SVElementPlugIn
 
 #pragma mark Init

@@ -40,7 +40,6 @@
 
 // Legacy I'd like to get rid of
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
-@property(nonatomic, retain) id delegateOwner;
 @property(nonatomic, readonly) KTMediaManager *mediaManager;
 @property(nonatomic, readonly) KTPage *page;
 
