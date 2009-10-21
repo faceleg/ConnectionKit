@@ -226,7 +226,6 @@
 		2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */; };
 		2721E0F10E9E0CBD00A458B2 /* KTDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721E0EF0E9E0CBD00A458B2 /* KTDocViewController.m */; };
 		2721E19B0E9E597300A458B2 /* KTDocumentControllerChain.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E19A0E9E597300A458B2 /* KTDocumentControllerChain.h */; settings = {ATTRIBUTES = (); }; };
-		272321A00D48A7690075F31F /* action12.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 2723219F0D48A7690075F31F /* action12.tiff */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
@@ -1665,7 +1664,6 @@
 		2721E1960E9E4D6000A458B2 /* ControllerChain.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = ControllerChain.graffle; sourceTree = "<group>"; };
 		2721E19A0E9E597300A458B2 /* KTDocumentControllerChain.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocumentControllerChain.h; sourceTree = "<group>"; };
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
-		2723219F0D48A7690075F31F /* action12.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = action12.tiff; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
 		272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Selection.m"; sourceTree = "<group>"; };
@@ -4715,7 +4713,6 @@
 				CEBCFEF90DB909E4001BF0DF /* arrow_black.pdf */,
 				CEBCFEFA0DB909E4001BF0DF /* arrow_grey_down.pdf */,
 				CEBCFEFB0DB909E4001BF0DF /* arrow_grey_up.pdf */,
-				2723219F0D48A7690075F31F /* action12.tiff */,
 				CEBCFD060DB905FF001BF0DF /* refresh.tiff */,
 				CEBCFD070DB905FF001BF0DF /* invalid.tiff */,
 				CEBCFD080DB905FF001BF0DF /* follow15.tiff */,
@@ -5702,7 +5699,6 @@
 				CE5CA36A0D15C1DE0021E9B3 /* pagemask.tiff in Resources */,
 				278ECBAF0D247BD60012BA6B /* KTCalloutContainerTemplate.html in Resources */,
 				CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */,
-				272321A00D48A7690075F31F /* action12.tiff in Resources */,
 				CE330CB50D510C4500DE8086 /* designPlaceholder.tiff in Resources */,
 				27ACADB60D589C8C004732D0 /* Z.png in Resources */,
 				271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */,
