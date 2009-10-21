@@ -10,6 +10,7 @@
 
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
+#import "SVContentPlugIn.h"
 #import "KTElementPlugin.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVPageletBody.h"
@@ -100,7 +101,7 @@
             // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
             if (!_plugIn)
             {
-                _plugIn = [[delegateClass alloc] init];
+                _plugIn = [[delegateClass plugInWithPropertiesStorage:nil] retain];
                 OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
                 
                 [_plugIn setDelegateOwner:self];

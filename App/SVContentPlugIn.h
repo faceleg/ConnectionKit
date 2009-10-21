@@ -15,8 +15,14 @@
 @interface SVContentPlugIn : NSObject
 {
   @private
+    NSMutableDictionary *_propertiesStorage;
+    
     id  _delegateOwner;
 }
+
++ (SVContentPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
+- (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
+
 
 // Default implementation generates a <span> or <div> (with an appropriate id) that cotnains the result of -innerHTMLString.
 - (NSString *)HTMLString;
@@ -24,6 +30,9 @@
 
 // Default implementation parses the template specified in Info.plist
 - (NSString *)innerHTMLString;
+
+
+@property(nonatomic, retain, readonly) NSMutableDictionary *propertiesStorage;
 
 // Convenience method to return the bundle this class was loaded from
 @property(nonatomic, readonly) NSBundle *bundle;

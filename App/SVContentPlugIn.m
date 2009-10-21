@@ -15,6 +15,22 @@
 
 @implementation SVContentPlugIn
 
+#pragma mark Init
+
++ (SVContentPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
+{
+    return [[[self alloc] initWithPropertiesStorage:propertyStorage] autorelease];
+}
+
+- (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
+{
+    self = [self init];
+    _propertiesStorage = [storage retain];
+    return self;
+}
+
+#pragma mark Content
+
 - (NSString *)HTMLString;
 {
     NSString *result = [NSString stringWithFormat:
@@ -42,6 +58,8 @@
     
     return result;
 }
+
+@synthesize propertiesStorage = _propertiesStorage;
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
