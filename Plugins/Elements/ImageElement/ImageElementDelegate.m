@@ -287,6 +287,12 @@
 #pragma mark -
 #pragma mark HTML Generation
 
+- (NSString *)HTMLString
+{
+    //  We are generating an enclosing element directly (image/div etc.), and don't want the system to do so for us.
+    return [self innerHTMLString];
+}
+
 /*	This depends on the chosen image and other factors.
  *	Returns nil if linking is disabled.
  */
