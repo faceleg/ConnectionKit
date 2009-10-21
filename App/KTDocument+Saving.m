@@ -813,12 +813,16 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
+    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    [context setGenerationPurpose:kGeneratingPreview];
+    [context setLiveDataFeeds:NO];
+    [context setCurrentPage:[[self site] root]];
+    
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
-	[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	[parser setLiveDataFeeds:NO];
-	NSString *thumbnailHTML = [parser parseTemplate];
+	NSString *thumbnailHTML = [parser parseTemplateWithContext:context];
+    [context release];
 	[parser release];
-	
+    
 	
     // Load into webview
     [self performSelectorOnMainThread:@selector(_startGeneratingQuickLookThumbnailWithHTML:)
@@ -1011,9 +1015,13 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
+    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    [context setGenerationPurpose:kGeneratingQuickLookPreview];
+    [context setCurrentPage:[[self site] root]];
+    
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
-    [parser setHTMLGenerationPurpose:kGeneratingQuickLookPreview];
-    NSString *result = [parser parseTemplate];
+    NSString *result = [parser parseTemplateWithContext:context];
+    [context release];
     [parser release];
     
     return result;
