@@ -34,6 +34,8 @@
 	IBOutlet id oHideWhenLicensed;				// bring window to this box's top when LICENSED
 	IBOutlet id oDisclosureBottom;				// size window to 20 pixels below bottom when DISCLOSED
 	IBOutlet id oDisclosureTop;					// size window to top of this when UNDISCLOSED	
+	
+	IBOutlet NSArrayController *oRecentDocsController;
 }
 
 - (IBAction) doNew:(id)sender;

@@ -517,14 +517,14 @@
 													</object>
 												</object>
 											</array>
-											<string key="NSFrame">{{0, 1}, {659, 82}}</string>
+											<string key="NSFrame">{{0, 1}, {659, 76}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<string key="NSClassName">KSShadowedRectView</string>
 										</object>
 										<object class="NSBox" id="508285204">
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">34</int>
-											<string key="NSFrame">{{0, 82}, {659, 5}}</string>
+											<string key="NSFrame">{{0, 76}, {659, 5}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -546,7 +546,7 @@
 										<object class="NSTabView" id="92364140">
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">274</int>
-											<string key="NSFrame">{{0, 84}, {659, 469}}</string>
+											<string key="NSFrame">{{0, 78}, {659, 475}}</string>
 											<reference key="NSSuperview" ref="520114257"/>
 											<array class="NSMutableArray" key="NSTabViewItems"/>
 											<reference key="NSFont" ref="502413197"/>

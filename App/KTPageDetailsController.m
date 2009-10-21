@@ -583,11 +583,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		// We fade out the window when we leave the field, but we immediately put these fields
 		// into a new attached window.  I think nobody is going to notice that though.
 		[oAttachedWindowTextField unbind:NSValueBinding];
-		NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used"), NSDisplayPatternBindingOption, nil];
+		NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
+		NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
 		[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];
 
-		NSString *note = @"INITIAL STRING, SHOULDN'T SHOW UP";
-		[oAttachedWindowTextField setStringValue:note];
+		[oAttachedWindowTextField setStringValue:placeholder];		// SHOULD NOT SEE.  RESERVES ENOUGH WIDTH THOUGH....
 		[oAttachedWindowExplanation setStringValue:explanation];
 
 		const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width

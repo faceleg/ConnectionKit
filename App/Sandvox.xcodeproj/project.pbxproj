@@ -1006,6 +1006,8 @@
 		CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
+		CEB720FF108FC2AA00511E74 /* WelcomeSandvox.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB720FE108FC2AA00511E74 /* WelcomeSandvox.png */; };
+		CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB721BB108FCEA500511E74 /* QuickLook.framework */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
 		CEB72890095B8E7A00E4E313 /* toolbar_edit_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */; };
 		CEBCFD0A0DB905FF001BF0DF /* refresh.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEBCFD060DB905FF001BF0DF /* refresh.tiff */; };
@@ -2616,6 +2618,8 @@
 		CEB5630A0A7AB6D60081179A /* de */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = de; path = de.lproj/Credits.html; sourceTree = "<group>"; };
 		CEB5630F0A7AB6D60081179A /* de */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEB563150A7AB6D60081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CEB720FE108FC2AA00511E74 /* WelcomeSandvox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WelcomeSandvox.png; sourceTree = "<group>"; };
+		CEB721BB108FCEA500511E74 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 		CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_on.png; sourceTree = "<group>"; };
 		CEB7288E095B8E7A00E4E313 /* toolbar_edit_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_edit_off.png; sourceTree = "<group>"; };
 		CEBCFD060DB905FF001BF0DF /* refresh.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = refresh.tiff; sourceTree = "<group>"; };
@@ -2690,6 +2694,7 @@
 				CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */,
 				CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */,
 				3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */,
+				CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3574,6 +3579,7 @@
 		3C202F0A07E0126400DE4994 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CEB720FE108FC2AA00511E74 /* WelcomeSandvox.png */,
 				CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */,
 				277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */,
 				CEBCFD100DB9067A001BF0DF /* Unused-Experimental */,
@@ -4254,6 +4260,7 @@
 				2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */,
 				2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */,
 				7788DA0506752A1600599AAD /* CoreData.framework */,
+				CEB721BB108FCEA500511E74 /* QuickLook.framework */,
 			);
 			name = "Cocoa Frameworks";
 			sourceTree = "<group>";
@@ -5777,6 +5784,7 @@
 				2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */,
 				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
 				CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */,
+				CEB720FF108FC2AA00511E74 /* WelcomeSandvox.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
