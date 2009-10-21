@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTMediaManager;
+@class KTMediaManager, KTPage;
 
 
 @interface SVContentPlugIn : NSObject
@@ -33,5 +33,6 @@
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 @property(nonatomic, retain) id delegateOwner;
 @property(nonatomic, readonly) KTMediaManager *mediaManager;
+@property(nonatomic, readonly) KTPage *page;
 
 @end

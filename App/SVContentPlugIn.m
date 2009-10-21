@@ -53,4 +53,6 @@
 
 - (KTMediaManager *)mediaManager { return [[self delegateOwner] mediaManager]; }
 
+- (KTPage *)page { return [[self delegateOwner] valueForKeyPath:@"container.pagelet.sidebar.page"]; }
+
 @end

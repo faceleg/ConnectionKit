@@ -3222,13 +3222,13 @@
 			name = "Main Document Window";
 			sourceTree = "<group>";
 		};
-		27E31BC10D4B795C00895DA1 /* Plugins */ = {
+		27E31BC10D4B795C00895DA1 /* Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
 				3C202D9607DFC43300DE4994 /* Designs */,
 				279983310DF01CE2003C84B9 /* Plug-in System */,
 			);
-			name = Plugins;
+			name = "Plug-ins";
 			sourceTree = "<group>";
 		};
 		27E62FF50EC3060A0044ED36 /* Products */ = {
@@ -3263,7 +3263,7 @@
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
 				3C5A738F0BF7B96800776464 /* PseudoElements */,
 				3C5A73950BF7BA6800776464 /* Template Parsing */,
-				CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */,
+				CEF9D0BE0D862C2000BD9895 /* WebKit Plug-ins */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				27A832830D92D8CC005FF13D /* Code Injection */,
 				3C202D5B07DFC13D00DE4994 /* Remote Transfer */,
@@ -3272,7 +3272,7 @@
 				3C5A736E0BF7B67300776464 /* Core Data */,
 				3C5A73890BF7B91E00776464 /* RTFD -> HTML Conversion */,
 				3C5A73EB0BF7BAB200776464 /* Support */,
-				27E31BC10D4B795C00895DA1 /* Plugins */,
+				27E31BC10D4B795C00895DA1 /* Plug-ins */,
 				3C5A738C0BF7B93900776464 /* UI */,
 				278ECE560D259F400012BA6B /* Pasteboard */,
 				3C5A73EE0BF7BB1400776464 /* Feedback */,
@@ -4779,7 +4779,7 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		CEF9D0BE0D862C2000BD9895 /* WebKit Plugins */ = {
+		CEF9D0BE0D862C2000BD9895 /* WebKit Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
 				CEF9D0C10D862C4A00BD9895 /* KTImageWebKitViewFactory.h */,
@@ -4787,7 +4787,7 @@
 				CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */,
 				CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */,
 			);
-			name = "WebKit Plugins";
+			name = "WebKit Plug-ins";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
