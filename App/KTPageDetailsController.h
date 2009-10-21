@@ -26,6 +26,10 @@
 		
 	IBOutlet NSObjectController		*oPagesController;
 	
+	IBOutlet NSView					*oAttachedWindowView;
+	IBOutlet NSTextField			*oAttachedWindowTextField;
+	IBOutlet NSButton				*oAttachedWindowHelpButton;
+	
 @private
 	NSNumber	*_metaDescriptionCountdown;
 	NSNumber	*_windowTitleCountdown;
@@ -34,6 +38,8 @@
 	MAAttachedWindow *_attachedWindow;
 	
 }
+
+- (IBAction) pageDetailsHelp:(id)sender;
 
 - (NTBoxView *)pageDetailsPanel;
 

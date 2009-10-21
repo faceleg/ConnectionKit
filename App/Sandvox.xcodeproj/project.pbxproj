@@ -1004,6 +1004,7 @@
 		CEB32CD60806E6ED00A92187 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = CEB32CD50806E6ED00A92187 /* favicon.ico */; };
 		CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34930082961880073A7A4 /* KTInfoWindowController.m */; };
 		CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */; };
+		CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
 		CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */; };
 		CEB7288F095B8E7A00E4E313 /* toolbar_edit_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CEB7288D095B8E7A00E4E313 /* toolbar_edit_on.png */; };
@@ -2610,6 +2611,7 @@
 		CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindowController.h; sourceTree = "<group>"; };
 		CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindowController.m; sourceTree = "<group>"; };
 		CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+WebView.m"; sourceTree = "<group>"; };
+		CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = QuestionMark.pdf; sourceTree = "<group>"; };
 		CEB53A800899A9AD006B0019 /* KTDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesign.h; sourceTree = "<group>"; };
 		CEB53A810899A9AD006B0019 /* KTDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesign.m; sourceTree = "<group>"; };
 		CEB53A8D0899A9D0006B0019 /* toolbar_choose_design.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_choose_design.png; sourceTree = "<group>"; };
@@ -3572,6 +3574,7 @@
 		3C202F0A07E0126400DE4994 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */,
 				277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */,
 				CEBCFD100DB9067A001BF0DF /* Unused-Experimental */,
 				CE7230E90D85D5BB00E9C592 /* syringe.tiff */,
@@ -5778,6 +5781,7 @@
 				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
 				2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */,
 				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
+				CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

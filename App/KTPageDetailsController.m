@@ -12,6 +12,7 @@
 #import "KSValidateCharFormatter.h"
 #import "KSFocusingTextField.h"
 #import "MAAttachedWindow.h"
+#import "NSImage+Karelia.h"
 
 #import "NTBoxView.h"
 
@@ -452,6 +453,10 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	[self updateWidthForActiveTextField:textField];
 }
 
+- (IBAction) pageDetailsHelp:(id)sender;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
 
 // Special responders to the subclass of the text field
 
@@ -465,33 +470,41 @@ static NSString *sTitleTextObservationContext = @"-titleText observation context
 	
 	if (!self.attachedWindow)
 	{
-		NSString *note = @"157 out of 160 characters";
-		NSFont *font = [NSFont boldSystemFontOfSize:[NSFont systemFontSizeForControlSize:NSSmallControlSize]];
-		NSDictionary *stringAttributes = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
+		NSString *note = @"fjdsklfjdlskjflkdsajflkds";
 
+		[oAttachedWindowTextField setStringValue:note];
+		NSAttributedString *noteAttr = [oAttachedWindowTextField attributedStringValue];
+		NSSize noteSize = [noteAttr size];
+		
 		const int widthExtra = 8;	// for some reason we need a few more pixels....
-		NSAttributedString *noteAttr = [[[NSAttributedString alloc] initWithString:note
-																	   attributes:stringAttributes] autorelease];
-		NSTextField *tipField = [[[NSTextField alloc] initWithFrame:NSMakeRect(0,0,widthExtra+[noteAttr size].width,[noteAttr size].height)] autorelease];
-		[tipField setDrawsBackground:NO];
-		[tipField setEditable:NO];
-		[tipField setBordered:NO];
-		[tipField setBezeled:NO];
-		[tipField setAlignment:NSCenterTextAlignment];
-		[tipField setAttributedStringValue:noteAttr];
+		float rightSide = ceilf(noteSize.width) + widthExtra;
+		int height = noteSize.height;	// also size of question mark
+		[oAttachedWindowTextField setFrame:NSMakeRect(0,0,rightSide, noteSize.height)];
+		rightSide += 8;
+		[oAttachedWindowHelpButton setFrame:NSMakeRect(rightSide,0,height,height)];
+		rightSide += height;
+		[oAttachedWindowView setFrame:NSMakeRect(0,0,rightSide,height)];
 		
         NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMaxY([field frame]) );
 		arrowTip = [view convertPoint:arrowTip toView:nil];
 		
-
-        self.attachedWindow = [[MAAttachedWindow alloc] initWithView:tipField 
+        self.attachedWindow = [[MAAttachedWindow alloc] initWithView:oAttachedWindowView 
                                                 attachedToPoint:arrowTip 
                                                        inWindow:[view window] 
-                                                         onSide:MAPositionTopLeft 
+                                                         onSide:MAPositionTopRight 
                                                      atDistance:0.0];
 
         [self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
-        [tipField setTextColor:[NSColor whiteColor]];
+        [oAttachedWindowTextField setTextColor:[NSColor whiteColor]];
+		[[oAttachedWindowHelpButton image] setTemplate:YES];
+		
+		static NSImage *sTintedHelpButtonImage = nil;
+		if (!sTintedHelpButtonImage)
+		{
+			sTintedHelpButtonImage = [[[oAttachedWindowHelpButton image] tintedImageWithColor:[NSColor lightGrayColor]] retain];
+		}
+		[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
+
         [self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
         [self.attachedWindow setViewMargin:5];
         [self.attachedWindow setCornerRadius:10];	// set after arrow base width?  before?
