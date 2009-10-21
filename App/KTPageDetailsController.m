@@ -33,6 +33,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void)fileNameDidChangeToValue:(id)value;
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
 - (void) layoutPageURLComponents;
+- (NSColor *)metaDescriptionCharCountColor;
 @end
 
 
@@ -70,6 +71,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[oPagesController removeObserver:self forKeyPath:@"selection.metaDescription"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.windowTitle"];
+		[oPagesController removeObserver:self forKeyPath:@"selection.fileName"];
 	}
 	
 	[super setView:aView];
@@ -220,31 +222,31 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		value = [NSNumber numberWithInt:0];
 	}
-	
+
 	[self setMetaDescriptionCountdown:value];
+
+	NSColor *windowColor = [self metaDescriptionCharCountColor];
+	[self.attachedWindow setBackgroundColor:windowColor];
+
 }
 
 #define META_DESCRIPTION_WARNING_ZONE 10
 #define MAX_META_DESCRIPTION_LENGTH 156
 
-- (NSColor *)metaDescriptionCharCountColor
+- (NSColor *)metaDescriptionCharCountColor;
 {
 	int charCount = [[self metaDescriptionCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
 	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
 	
-	if (0 == charCount)
-	{
-		result = [NSColor clearColor];
-	}
-	else if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice light gray
+	if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice HUD color
 	{
 		;
 	}
 	else if (remaining >= 0 )							// get closer to black-red
 	{
 		float howRed = (float) remaining / META_DESCRIPTION_WARNING_ZONE;
-		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default gray
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default black
 	}
 	else		// overflow: pure red.
 	{
@@ -307,6 +309,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	
 	[self setWindowTitleCountdown:value];
+
+	NSColor *windowColor = [self windowTitleCharCountColor];
+	[self.attachedWindow setBackgroundColor:windowColor];
 }
 
 - (void)fileNameDidChangeToValue:(id)value
@@ -329,6 +334,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	
 	[self setFileNameCountdown:value];
+
+	NSColor *windowColor = [self fileNameCharCountColor];
+	[self.attachedWindow setBackgroundColor:windowColor];
 }
 
 
@@ -337,14 +345,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (NSColor *)windowTitleCharCountColor
 {
 	int charCount = [[self windowTitleCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.75 alpha:1.0];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
 	int remaining = MAX_WINDOW_TITLE_LENGTH - charCount;
 	
-	if (0 == charCount)
-	{
-		result = [NSColor clearColor];
-	}
-	else if (remaining > WINDOW_TITLE_WARNING_ZONE )		// out of warning zone: a nice light gray
+	if (remaining > WINDOW_TITLE_WARNING_ZONE )		// out of warning zone: a nice light gray
 	{
 		;
 	}
@@ -359,6 +363,30 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}	
 	return result;
 }
+#define MAX_FILE_NAME_LENGTH 27
+#define FILE_NAME_WARNING_ZONE 5
+- (NSColor *)fileNameCharCountColor
+{
+	int charCount = [[self fileNameCountdown] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
+	int remaining = MAX_FILE_NAME_LENGTH - charCount;
+	
+	if (remaining > FILE_NAME_WARNING_ZONE )		// out of warning zone: a nice light gray
+	{
+		;
+	}
+	else if (remaining >= 0 )							// get closer to black-red
+	{
+		float howRed = (float) remaining / WINDOW_TITLE_WARNING_ZONE;
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default gray
+	}
+	else		// overflow: pure red.  Not actually possible here (theoretically)
+	{
+		result = [NSColor redColor];
+	}	
+	return result;
+}
+
 
 + (NSSet *)keyPathsForValuesAffectingWindowTitleCharCountColor
 {
@@ -500,6 +528,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[self metaDescriptionDidChangeToValue:newValue];
 	}
+	else if (textField == oPageFileNameField)
+	{
+		[self fileNameDidChangeToValue:newValue];
+	}
 	[self layoutPageURLComponents];
 	[self updateWidthForActiveTextField:textField];
 }
@@ -520,21 +552,25 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	// Can't think of a better way to do this...
 	
 	NSString *bindingName = @"";
+	NSString *explanation = @"";
 	int tagForHelp = kUnknownPageDetailsContext;
 	if (field == oPageFileNameField)
 	{
 		tagForHelp = kFileNamePageDetailsContext;
 		bindingName = @"fileNameCountdown";
+		explanation = NSLocalizedString(@"Maximum 27 characters",@"brief indication of maximum length of file name");
 	}
 	else if (field == oMetaDescriptionField)
 	{	
 		tagForHelp = kMetaDescriptionPageDetailsContext;
 		bindingName = @"metaDescriptionCountdown";
+		explanation = NSLocalizedString(@"More than 156 characters will be truncated",@"brief indication of maximum length of text");
 	}
 	else if (field == oWindowTitleField)
 	{
 		tagForHelp = kWindowTitlePageDetailsContext;
 		bindingName = @"windowTitleCountdown";
+		explanation = NSLocalizedString(@"More than 65 characters will be truncated",@"brief indication of maximum length of text");
 	}
 	[oAttachedWindowHelpButton setTag:tagForHelp];
 		
@@ -550,20 +586,24 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used"), NSDisplayPatternBindingOption, nil];
 		[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];
 
-		NSString *note = @"fjdsklfjdlskjflkdsajflkdsS";
-
+		NSString *note = @"INITIAL STRING, SHOULDN'T SHOW UP";
 		[oAttachedWindowTextField setStringValue:note];
-		NSAttributedString *noteAttr = [oAttachedWindowTextField attributedStringValue];
-		NSSize noteSize = [noteAttr size];
-		
-		const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
-		float rightSide = ceilf(noteSize.width) + widthExtra;
-		int height = noteSize.height;	// also size of question mark
+		[oAttachedWindowExplanation setStringValue:explanation];
 
-		[oAttachedWindowView setFrame:NSMakeRect(0,0,rightSide+8+height,height)];	// set view first, then subviews		
-		[oAttachedWindowTextField setFrame:NSMakeRect(0,0,rightSide, height)];
-		[oAttachedWindowHelpButton setFrame:NSMakeRect(rightSide+8,0,height,height)];
-	
+		const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
+		float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
+		
+		int height = [oAttachedWindowView frame].size.height;	// also size of question mark
+		const int buttonSize = 14;
+		const int textHeight = 14;
+		const int secondLineY = 15;
+		int windowWidth = MAX(rightSide+8+height,
+			ceilf([[oAttachedWindowExplanation attributedStringValue] size].width) + widthExtra );
+		
+		[oAttachedWindowView setFrame:NSMakeRect(0,0,windowWidth,height)];	// set view first, then subviews		
+		[oAttachedWindowTextField setFrame:NSMakeRect(0,secondLineY,rightSide, textHeight)];
+		[oAttachedWindowHelpButton setFrame:NSMakeRect(windowWidth-buttonSize,secondLineY,buttonSize,buttonSize)];
+		[oAttachedWindowExplanation setFrame:NSMakeRect(0,0,windowWidth,textHeight)];
         NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMidY([field frame]) );
 		arrowTip = [view convertPoint:arrowTip toView:nil];
 		
@@ -578,6 +618,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
         [self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
         [oAttachedWindowTextField setTextColor:[NSColor whiteColor]];
+        [oAttachedWindowExplanation setTextColor:[NSColor whiteColor]];
 		[[oAttachedWindowHelpButton image] setTemplate:YES];
 		
 		static NSImage *sTintedHelpButtonImage = nil;
@@ -587,7 +628,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 		[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
 
-        [self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.5]];
+        [self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.667]];
         [self.attachedWindow setViewMargin:6];
         [self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
         [self.attachedWindow setBorderWidth:0];

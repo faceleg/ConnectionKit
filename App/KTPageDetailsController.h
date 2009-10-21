@@ -28,6 +28,7 @@
 	
 	IBOutlet NSView					*oAttachedWindowView;
 	IBOutlet NSTextField			*oAttachedWindowTextField;
+	IBOutlet NSTextField			*oAttachedWindowExplanation;
 	IBOutlet NSButton				*oAttachedWindowHelpButton;
 	
 @private

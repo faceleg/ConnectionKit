@@ -11,6 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="1793"/>
 			<integer value="1726"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -776,7 +777,7 @@
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">134217728</int>
 												<string key="NSContents"/>
-												<object class="NSFont" key="NSSupport">
+												<object class="NSFont" key="NSSupport" id="22">
 													<string key="NSName">LucidaGrande</string>
 													<double key="NSSize">9</double>
 													<int key="NSfFlags">3614</int>
@@ -830,13 +831,13 @@
 			</object>
 			<object class="NSViewController" id="408607898"/>
 			<object class="NSCustomView" id="82358768">
-				<nil key="NSNextResponder"/>
+				<reference key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="383955512">
 						<reference key="NSNextResponder" ref="82358768"/>
 						<int key="NSvFlags">273</int>
-						<string key="NSFrame">{{386, 0}, {14, 14}}</string>
+						<string key="NSFrame">{{386, 15}, {14, 14}}</string>
 						<reference key="NSSuperview" ref="82358768"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="317236248">
@@ -857,15 +858,31 @@
 							<int key="NSPeriodicInterval">75</int>
 						</object>
 					</object>
+					<object class="NSTextField" id="1048777276">
+						<reference key="NSNextResponder" ref="82358768"/>
+						<int key="NSvFlags">266</int>
+						<string key="NSFrame">{{2, 0}, {401, 14}}</string>
+						<reference key="NSSuperview" ref="82358768"/>
+						<bool key="NSEnabled">YES</bool>
+						<object class="NSTextFieldCell" key="NSCell" id="645363474">
+							<int key="NSCellFlags">68288064</int>
+							<int key="NSCellFlags2">4457472</int>
+							<string key="NSContents"/>
+							<reference key="NSSupport" ref="22"/>
+							<reference key="NSControlView" ref="1048777276"/>
+							<reference key="NSBackgroundColor" ref="97692237"/>
+							<reference key="NSTextColor" ref="801130899"/>
+						</object>
+					</object>
 					<object class="NSTextField" id="157995896">
 						<reference key="NSNextResponder" ref="82358768"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrameSize">{381, 14}</string>
+						<string key="NSFrame">{{0, 15}, {381, 14}}</string>
 						<reference key="NSSuperview" ref="82358768"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="426996178">
 							<int key="NSCellFlags">68288064</int>
-							<int key="NSCellFlags2">138544128</int>
+							<int key="NSCellFlags2">4326400</int>
 							<string key="NSContents"/>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
@@ -878,7 +895,8 @@
 						</object>
 					</object>
 				</array>
-				<string key="NSFrameSize">{400, 14}</string>
+				<string key="NSFrameSize">{400, 29}</string>
+				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
@@ -1288,6 +1306,14 @@
 						</object>
 					</object>
 					<int key="connectionID">1816</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oAttachedWindowExplanation</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="1048777276"/>
+					</object>
+					<int key="connectionID">1819</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1756,6 +1782,7 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="157995896"/>
 							<reference ref="383955512"/>
+							<reference ref="1048777276"/>
 						</array>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">AttachedWindow</string>
@@ -1785,6 +1812,19 @@
 						<int key="objectID">1797</int>
 						<reference key="object" ref="317236248"/>
 						<reference key="parent" ref="383955512"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1817</int>
+						<reference key="object" ref="1048777276"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="645363474"/>
+						</array>
+						<reference key="parent" ref="82358768"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1818</int>
+						<reference key="object" ref="645363474"/>
+						<reference key="parent" ref="1048777276"/>
 					</object>
 				</array>
 			</object>
@@ -1867,13 +1907,15 @@
 				<string key="1770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1781.CustomClassName">KTPageDetailsController</string>
 				<string key="1781.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1793.IBEditorWindowLastContentRect">{{62, 1120}, {400, 14}}</string>
+				<string key="1793.IBEditorWindowLastContentRect">{{62, 1105}, {400, 29}}</string>
 				<string key="1793.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1793.IBViewEditorWindowController.showingLayoutRectangles"/>
 				<string key="1794.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1795.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1796.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1797.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1817.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1818.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="381.IBEditorWindowLastContentRect">{{69, 744}, {356, 101}}</string>
 				<string key="381.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="381.IBWindowTemplateEditedContentRect">{{69, 744}, {356, 101}}</string>
@@ -1912,7 +1954,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1816</int>
+			<int key="maxID">1819</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2104,6 +2146,7 @@
 						<string key="NS.object.0">id</string>
 					</object>
 					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="oAttachedWindowExplanation">NSTextField</string>
 						<string key="oAttachedWindowHelpButton">NSButton</string>
 						<string key="oAttachedWindowTextField">NSTextField</string>
 						<string key="oAttachedWindowView">NSView</string>
