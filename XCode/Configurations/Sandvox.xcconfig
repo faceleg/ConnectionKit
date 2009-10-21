@@ -6,7 +6,7 @@
 GCC_VERSION = 4.0
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 1.6.5b5
+SANDVOX_VERSION = 1.6.5b6
 
 // the SLA variant to wrap around the .dmg [BETA,RELEASE]
 // Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.

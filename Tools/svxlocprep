@@ -24,7 +24,7 @@ cd ~/Desktop
 CONNECTION=connection1.2
 SHARED=SharedTiger
 IMEDIA=imedia1
-SANDVOX=Sandvox_branch_1
+SANDVOX=Sandvox1
 
 WD=`pwd`;
 VERBOSE='v';        #make it 'v' if verbose; '' if not verbose
