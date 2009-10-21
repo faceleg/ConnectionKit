@@ -156,7 +156,7 @@ static NSArray *sAltStrings = nil;
 - (NSString *)currentBadgeName
 {
 	NSString *result = nil;
-	unsigned int tag = [[[self delegateOwner] valueForKey:@"badgeTypeTag"] intValue];
+	unsigned int tag = [[[self propertiesStorage] valueForKey:@"badgeTypeTag"] intValue];
 	if (tag >= 1 && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
 	{
 		result = [[BadgePageletDelegate sharedBadgeNames] objectAtIndex:tag-1];
@@ -186,7 +186,7 @@ static NSArray *sAltStrings = nil;
 
 - (IBAction)badgeClicked:(id)sender
 {
-	[[self delegateOwner] setInteger:[sender tag] forKey:@"badgeTypeTag"];
+	[[self propertiesStorage] setInteger:[sender tag] forKey:@"badgeTypeTag"];
 }
 
 - (void)dealloc

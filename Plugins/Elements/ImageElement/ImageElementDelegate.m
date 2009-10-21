@@ -70,27 +70,20 @@
 {
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
     
-	KTAbstractElement *element = [self delegateOwner];
 	if (isNewObject)
 	{
 		// set default properties
-		[[self delegateOwner] setValue:[NSNumber numberWithInt:AutomaticSize] forKey:@"imageSize"];
+		[[self propertiesStorage] setValue:[NSNumber numberWithInt:AutomaticSize] forKey:@"imageSize"];
 		
 		BOOL shouldIncludeLinkInitially = [[NSUserDefaults standardUserDefaults] boolForKey:@"shouldIncludeLink"];
-		[[self delegateOwner] setValue:[NSNumber numberWithBool:shouldIncludeLinkInitially] forKey:@"shouldIncludeLink"];
+		[[self propertiesStorage] setValue:[NSNumber numberWithBool:shouldIncludeLinkInitially] forKey:@"shouldIncludeLink"];
         
 		BOOL shouldLinktoOriginalInitially = [[NSUserDefaults standardUserDefaults] boolForKey:@"linkImageToOriginal"];
-		[[self delegateOwner] setValue:[NSNumber numberWithBool:shouldLinktoOriginalInitially] forKey:@"linkImageToOriginal"];
+		[[self propertiesStorage] setValue:[NSNumber numberWithBool:shouldLinktoOriginalInitially] forKey:@"linkImageToOriginal"];
         
 		BOOL shouldUseExternalImage = [[NSUserDefaults standardUserDefaults] boolForKey:@"preferExternalImage"];
-		[[self delegateOwner] setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
-        
-        
-        if ([[self delegateOwner] isKindOfClass:[KTPage class]])
-        {
-            [(KTPage *)[self delegateOwner] setThumbnail:[[(KTPage *)element master] placeholderImage]];
-        }
-	}
+		[[self propertiesStorage] setValue:[NSNumber numberWithBool:shouldUseExternalImage] forKey:@"preferExternalImage"];
+    }
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
@@ -99,9 +92,9 @@
     
     // Add the dragged image into the DB
 	KTMediaContainer *image =
-		[[[self delegateOwner] mediaManager] mediaContainerWithDataSourceDictionary:aDataSourceDictionary];
+		[[self mediaManager] mediaContainerWithDataSourceDictionary:aDataSourceDictionary];
 	
-	[[self delegateOwner] setValue:image forKey:@"image"];
+	[[self propertiesStorage] setValue:image forKey:@"image"];
 	
 	
 	// grab any other properties from aDragSourceDictionary
@@ -113,38 +106,38 @@
 	}
 	if (nil != title)
 	{
-		[[self delegateOwner] setObject:title forKey:@"altText"];
+		[[self propertiesStorage] setObject:title forKey:@"altText"];
 	}
     
 	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceImageURLString])
 	{
-		[[self delegateOwner] setObject:[aDataSourceDictionary objectForKey:kKTDataSourceImageURLString] forKey:@"externalImageURL"];
+		[[self propertiesStorage] setObject:[aDataSourceDictionary objectForKey:kKTDataSourceImageURLString] forKey:@"externalImageURL"];
 	}
     
 	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceURLString])
 	{
-		[[self delegateOwner] setObject:[aDataSourceDictionary objectForKey:kKTDataSourceURLString] forKey:@"externalURL"];
+		[[self propertiesStorage] setObject:[aDataSourceDictionary objectForKey:kKTDataSourceURLString] forKey:@"externalURL"];
 	}
     
 	if (nil != [aDataSourceDictionary objectForKey:kKTDataSourceCaption])
 	{
-		[[self delegateOwner] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] stringByEscapingHTMLEntities] forKey:@"captionHTML"];
+		[[self propertiesStorage] setObject:[[aDataSourceDictionary objectForKey:kKTDataSourceCaption] stringByEscapingHTMLEntities] forKey:@"captionHTML"];
 	}
 	
 	// override defaults if set in aDragSourceDictionary
 	if (nil != [aDataSourceDictionary objectForKey:@"kKTDataSourcePreferExternalImageFlag"])
 	{
-		[[self delegateOwner] setValue:[aDataSourceDictionary objectForKey:@"kKTDataSourcePreferExternalImageFlag"] forKey:@"preferExternalImage"];
+		[[self propertiesStorage] setValue:[aDataSourceDictionary objectForKey:@"kKTDataSourcePreferExternalImageFlag"] forKey:@"preferExternalImage"];
 	}
     
 	if (nil != [aDataSourceDictionary objectForKey:@"kKTDataSourceShouldIncludeLinkFlag"])
 	{
-		[[self delegateOwner] setValue:[aDataSourceDictionary objectForKey:@"kKTDataSourceShouldIncludeLinkFlag"] forKey:@"shouldIncludeLink"];
+		[[self propertiesStorage] setValue:[aDataSourceDictionary objectForKey:@"kKTDataSourceShouldIncludeLinkFlag"] forKey:@"shouldIncludeLink"];
 	}
     
 	if (nil != [aDataSourceDictionary objectForKey:@"kKTDataSourceLinkToOriginalFlag"])
 	{
-		[[self delegateOwner] setValue:[aDataSourceDictionary objectForKey:@"kKTDataSourceLinkToOriginalFlag"] forKey:@"linkImageToOriginal"];
+		[[self propertiesStorage] setValue:[aDataSourceDictionary objectForKey:@"kKTDataSourceLinkToOriginalFlag"] forKey:@"linkImageToOriginal"];
 	}
 }
 
@@ -157,68 +150,13 @@
 }
 
 #pragma mark -
-#pragma mark Plugin
-
-/*	When a user updates one of these settings, update the defaults accordingly
- */
-- (void)setDelegateOwner:(id)plugin
-{
-	NSSet *keyPaths = [NSSet setWithObjects:@"shouldIncludeLink", @"linkImageToOriginal", @"preferExternalImage", nil];
-	
-	[[self delegateOwner] removeObserver:self forKeyPaths:keyPaths];
-	[super setDelegateOwner:plugin];
-	[plugin addObserver:self forKeyPaths:keyPaths options:NSKeyValueObservingOptionNew context:NULL];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if (object == [self delegateOwner])
-	{
-		id newValue = [change objectForKey:NSKeyValueChangeNewKey];
-		if (newValue && newValue != [NSNull null])
-		{
-			if ([keyPath isEqualToString:@"preferExternalImage"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"preferExternalImage"];
-			}
-			
-			if ([keyPath isEqualToString:@"shouldIncludeLink"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"shouldIncludeLink"];
-			}
-			
-			if ([keyPath isEqualToString:@"linkImageToOriginal"]) {
-				[[NSUserDefaults standardUserDefaults] setObject:newValue forKey:@"linkImageToOriginal"];
-			}
-		}
-	}
-}
-
-#pragma mark -
 #pragma mark Media Storage
-
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
-{
-	if ([key isEqualToString:@"image"])
-	{
-		// If being used in a Page plugin, update the page's thumbnail (if appropriate) and Site Outline icon
-		id container = [self delegateOwner];
-		if ([container isKindOfClass:[KTPage class]])
-		{
-			KTMediaContainer *thumbnail = [container thumbnail];
-            if (thumbnail == oldValue || thumbnail == [[container master] placeholderImage])
-            {
-				[container setThumbnail:value];
-			}
-			
-			[container setCustomSiteOutlineIcon:value];
-		}
-	}
-}
 
 - (NSSet *)requiredMediaIdentifiers
 {
 	NSMutableSet *result = [NSMutableSet setWithCapacity:2];
 	
-	KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
+	KTMediaContainer *image = [[self propertiesStorage] valueForKey:@"image"];
 	[result addObjectIgnoringNil:[image identifier]];
 	
 	return result;
@@ -242,9 +180,9 @@
 	}
 	
 	KTMediaContainer *image =
-		[[[self delegateOwner] mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
+		[[self mediaManager] mediaContainerWithPath:[selectedPaths firstObjectKS]];
 	
-	[[self delegateOwner] setValue:image forKey:@"image"];
+	[[self propertiesStorage] setValue:image forKey:@"image"];
 }
 
 - (BOOL)pathInfoField:(KSPathInfoField *)field
@@ -257,10 +195,10 @@
 		fileShouldBeExternal = YES;
 	}
 	
-	KTMediaContainer *image = [[[self delegateOwner] mediaManager] mediaContainerWithDraggingInfo:sender
+	KTMediaContainer *image = [[self mediaManager] mediaContainerWithDraggingInfo:sender
 																				  preferExternalFile:fileShouldBeExternal];
 																				  
-	[[self delegateOwner] setValue:image forKey:@"image"];
+	[[self propertiesStorage] setValue:image forKey:@"image"];
 	
 	return YES;
 }
@@ -300,18 +238,18 @@
 {
 	NSString *result = nil;
 	
-	if ([[[self delegateOwner] valueForKey:@"shouldIncludeLink"] boolValue])
+	if ([[[self propertiesStorage] valueForKey:@"shouldIncludeLink"] boolValue])
 	{
-		if ([[[self delegateOwner] valueForKey:@"linkImageToOriginal"] boolValue])
+		if ([[[self propertiesStorage] valueForKey:@"linkImageToOriginal"] boolValue])
 		{
-			if ([[self delegateOwner] boolForKey:@"preferExternalImage"])
+			if ([[self propertiesStorage] boolForKey:@"preferExternalImage"])
 			{
 				// Just link straight back to the image's source
-				result = [[self delegateOwner] valueForKey:@"externalImageURL"];
+				result = [[self propertiesStorage] valueForKey:@"externalImageURL"];
 			}
 			else
 			{
-				NSString *path = [[self delegateOwner] valueForKeyPath:@"image.file.currentPath"];
+				NSString *path = [[self propertiesStorage] valueForKeyPath:@"image.file.currentPath"];
 				if (path)
 				{
 					result = [[NSURL fileURLWithPath:path] absoluteString];
@@ -321,7 +259,7 @@
 		else
 		{
 			// Link to the user-specified URL
-			result = [[self delegateOwner] valueForKey:@"externalURL"];
+			result = [[self propertiesStorage] valueForKey:@"externalURL"];
 		}
 	}
 	
@@ -373,19 +311,6 @@
 }
 
 #pragma mark -
-#pragma mark Page Thumbnail
-
-/*	Whenever the user tries to "clear" the thumbnail image, we'll instead reset it to match the page content.
- */
-- (BOOL)pageShouldClearThumbnail:(KTPage *)page
-{
-	KTMediaContainer *photo = (KTMediaContainer *)[[self delegateOwner] valueForKey:@"image"];
-	[[self delegateOwner] setThumbnail:photo];
-	
-	return NO;
-}
-
-#pragma mark -
 #pragma mark Summaries
 
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
@@ -399,9 +324,9 @@
 {
 	NSArray *result = nil;
 	
-	if ([[self delegateOwner] boolForKey:@"linkImageToOriginal"])
+	if ([[self propertiesStorage] boolForKey:@"linkImageToOriginal"])
     {
-        KTMediaContainer *image = [[self delegateOwner] valueForKey:@"image"];
+        KTMediaContainer *image = [[self propertiesStorage] valueForKey:@"image"];
         if ([[[image file] currentPath] length] > 0)
         {
             result = [NSArray arrayWithObject:image];
@@ -419,9 +344,9 @@
                          error:(NSError **)error
 {
     KTMediaContainer *image = [[self mediaManager] mediaContainerWithMediaRefNamed:@"ImageElement" element:oldPlugin];
-    [[self delegateOwner] setValue:image forKey:@"image"];
+    [[self propertiesStorage] setValue:image forKey:@"image"];
     
-    [[self delegateOwner] setValuesForKeysWithDictionary:oldPluginProperties];
+    [[self propertiesStorage] setValuesForKeysWithDictionary:oldPluginProperties];
     
     if (error) *error = nil;
     return YES;
