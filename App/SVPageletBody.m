@@ -80,7 +80,7 @@
     OBPRECONDITION([[self contentObjects] containsObject:contentObject]);
     
     DOMElement *result = [[textAreaDOMElement ownerDocument] getElementById:
-                          [[contentObject delegate] elementID]];
+                          [[contentObject plugIn] elementID]];
     
     if (![result isDescendantOfNode:textAreaDOMElement]) result = nil;
     return result;

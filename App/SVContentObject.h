@@ -9,12 +9,12 @@
 #import "KSExtensibleManagedObject.h"
 
 
-@class SVPageletBody, KTElementPlugin;
+@class SVPageletBody, KTElementPlugin, SVContentPlugIn;
 
 
 @interface SVContentObject :  KSExtensibleManagedObject  
 {
-    id  _delegate;
+    id  _plugIn;
 }
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
@@ -23,8 +23,8 @@
 
 @property (nonatomic, retain) SVPageletBody *container;
 
+@property(nonatomic, retain, readonly) SVContentPlugIn *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
-- (id)delegate;
 - (KTElementPlugin *)plugin;
 
 

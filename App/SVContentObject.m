@@ -62,8 +62,8 @@
         }        
 	}
 	
-	// Ensure our delegate is setup
-	[self delegate];
+	// Ensure our plug-in is loaded
+	[self plugIn];
 }
 
 - (void)awakeFromInsert
@@ -84,38 +84,38 @@
  */
 - (void)willTurnIntoFault
 {
-    [_delegate setDelegateOwner:nil];
-	[_delegate release];	_delegate = nil;
+    [_plugIn setDelegateOwner:nil];
+	[_plugIn release];	_plugIn = nil;
 }
 
 #pragma mark Plug-in
 
-- (id)delegate
+- (SVContentPlugIn *)plugIn
 {
-	if (!_delegate) 
+	if (!_plugIn) 
 	{
 		Class delegateClass = [[[self plugin] bundle] principalClass];
         if (delegateClass)
         {                
             // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
-            if (!_delegate)
+            if (!_plugIn)
             {
-                _delegate = [[delegateClass alloc] init];
-                OBASSERTSTRING(_delegate, @"plugin delegate cannot be nil!");
+                _plugIn = [[delegateClass alloc] init];
+                OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
                 
-                [_delegate setDelegateOwner:self];
+                [_plugIn setDelegateOwner:self];
                 
                 
                 // Let the delegate know that it's awoken
-                if ([_delegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
+                if ([_plugIn respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
                 {
-                    [_delegate awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
+                    [_plugIn awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
                 }
             }
         }
     }
     
-	return _delegate;
+	return _plugIn;
 }
 
 - (KTElementPlugin *)plugin
@@ -142,7 +142,7 @@
 	OBPRECONDITION(key);
     
     // Let our delegate know if possible
-	id delegate = [self delegate];
+	id delegate = [self plugIn];
 	if (delegate && [delegate respondsToSelector:@selector(plugin:didSetValue:forPluginKey:oldValue:)])
 	{
 		id oldValue = [self valueForUndefinedKey:key];
@@ -161,7 +161,7 @@
 {
 	BOOL result = YES;
 	
-	id delegate = [self delegate];
+	id delegate = [self plugIn];
 	if (delegate && [delegate respondsToSelector:@selector(validatePluginValue:forKeyPath:error:)])
 	{
 		result = [delegate validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
@@ -187,20 +187,7 @@
 
 - (NSString *)HTMLString;
 {
-    if ([[self delegate] respondsToSelector:@selector(HTMLString)])
-    {
-        return [[self delegate] HTMLString];
-    }
-    
-    // For now, just parse the template
-    NSString *template = [[self plugin] templateHTMLAsString];
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
-                                                                        component:self];
-    
-    NSString *result = [parser parseTemplate];
-    [parser release];
-    
-    return result;
+    return [[self plugIn] HTMLString];
 }
 
 - (NSString *)archiveHTMLString;
@@ -208,5 +195,10 @@
     NSString *result = [NSString stringWithFormat:@"<object id=\"%@\" />", [self elementID]];
     return result;
 }
+
+#pragma mark Deprecated
+
+// Loads of old plug-ins rely on this property
+- (id)delegate { return [self plugIn]; }
 
 @end
