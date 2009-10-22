@@ -2528,8 +2528,8 @@
 		CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLInspectorController.h; sourceTree = "<group>"; };
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
-		CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSYellowStickyWindow.h; path = ../../../Shared/AppKit/KSYellowStickyWindow.h; sourceTree = SOURCE_ROOT; };
-		CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSYellowStickyWindow.m; path = ../../../Shared/AppKit/KSYellowStickyWindow.m; sourceTree = SOURCE_ROOT; };
+		CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYellowStickyWindow.h; sourceTree = "<group>"; };
+		CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSYellowStickyWindow.m; sourceTree = "<group>"; };
 		CE494D7A0896B5CE005FBD81 /* TinyAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TinyAdd.png; sourceTree = "<group>"; };
 		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../Shared/AppKit/KSFocusingTextField.h; sourceTree = "<group>"; };
 		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../Shared/AppKit/KSFocusingTextField.m; sourceTree = "<group>"; };
