@@ -2760,6 +2760,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		27196F5D1090A8590096B612 /* 2.0 Plug-in System */ = {
+			isa = PBXGroup;
+			children = (
+				272DA588108E6F42007A99D5 /* SVElementPlugIn.h */,
+				272DA589108E6F42007A99D5 /* SVElementPlugIn.m */,
+			);
+			name = "2.0 Plug-in System";
+			sourceTree = "<group>";
+		};
 		271B497B105468AA008B698C /* Web Editor (Generic) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3125,7 +3134,7 @@
 			name = "Missing Media";
 			sourceTree = "<group>";
 		};
-		279983310DF01CE2003C84B9 /* Plug-in System */ = {
+		279983310DF01CE2003C84B9 /* 1.5 Plug-in System */ = {
 			isa = PBXGroup;
 			children = (
 				CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */,
@@ -3136,10 +3145,8 @@
 				27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */,
 				27668FC20D63D3070019686C /* KTIndexPlugin.h */,
 				27668FC30D63D3070019686C /* KTIndexPlugin.m */,
-				272DA588108E6F42007A99D5 /* SVElementPlugIn.h */,
-				272DA589108E6F42007A99D5 /* SVElementPlugIn.m */,
 			);
-			name = "Plug-in System";
+			name = "1.5 Plug-in System";
 			sourceTree = "<group>";
 		};
 		27A832830D92D8CC005FF13D /* Code Injection */ = {
@@ -3203,13 +3210,6 @@
 			name = Inspector;
 			sourceTree = "<group>";
 		};
-		27DF88CD0D85780100AEF4B5 /* Document UI */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Document UI";
-			sourceTree = "<group>";
-		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -3230,8 +3230,9 @@
 		27E31BC10D4B795C00895DA1 /* Plug-ins */ = {
 			isa = PBXGroup;
 			children = (
+				27196F5D1090A8590096B612 /* 2.0 Plug-in System */,
 				3C202D9607DFC43300DE4994 /* Designs */,
-				279983310DF01CE2003C84B9 /* Plug-in System */,
+				279983310DF01CE2003C84B9 /* 1.5 Plug-in System */,
 			);
 			name = "Plug-ins";
 			sourceTree = "<group>";
@@ -3260,7 +3261,6 @@
 				3C5188A10D2F4DDC002D7414 /* Site Outline */,
 				272321DB0D48B5A70075F31F /* Page Details */,
 				3C202DA507DFC4BA00DE4994 /* Web Content Area */,
-				27DF88CD0D85780100AEF4B5 /* Document UI */,
 				27DB80770C84658200E29C38 /* Inspector */,
 				278CDCCE0E83DB2000477D3A /* Text Editing */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
