@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 @class WebView;
-@interface BadgePageletDelegate : SVElementPlugIn
+@interface BadgePageletDelegate : SVAbstractElementPlugIn
 {
 	NSString *myBadgeAltString;
 	NSString *myBadgeTitleString;

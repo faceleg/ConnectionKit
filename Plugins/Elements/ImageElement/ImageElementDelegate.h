@@ -46,7 +46,7 @@ typedef enum {
 } ImageSize;
 
 
-@interface ImageElementDelegate : SVElementPlugIn <KTDataSource>
+@interface ImageElementDelegate : SVAbstractElementPlugIn <KTDataSource>
 {
 	KTMediaContainer	*myImage;
 	

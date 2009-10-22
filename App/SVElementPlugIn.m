@@ -13,16 +13,16 @@
 #import "SVHTMLTemplateParser.h"
 
 
-@interface SVElementPlugIn ()
+@interface SVAbstractElementPlugIn ()
 @property(nonatomic, retain) id delegateOwner;
 @end
 
 
-@implementation SVElementPlugIn
+@implementation SVAbstractElementPlugIn
 
 #pragma mark Init
 
-+ (SVElementPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
++ (id <SVElementPlugIn>)elementPlugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
 {
     return [[[self alloc] initWithPropertiesStorage:propertyStorage] autorelease];
 }

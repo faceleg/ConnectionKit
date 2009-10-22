@@ -91,17 +91,17 @@
 
 #pragma mark Plug-in
 
-- (SVElementPlugIn *)plugIn
+- (id <SVElementPlugIn>)plugIn
 {
 	if (!_plugIn) 
 	{
-		Class delegateClass = [[[self plugin] bundle] principalClass];
-        if (delegateClass)
+		Class <SVElementPlugInFactory> plugInFactory = [[[self plugin] bundle] principalClass];
+        if (plugInFactory)
         {                
             // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
             if (!_plugIn)
             {
-                _plugIn = [[delegateClass plugInWithPropertiesStorage:[NSMutableDictionary dictionary]] retain];
+                _plugIn = [[plugInFactory elementPlugInWithPropertiesStorage:[NSMutableDictionary dictionary]] retain];
                 OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
                 
                 [_plugIn setDelegateOwner:self];

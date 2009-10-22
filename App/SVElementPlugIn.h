@@ -9,10 +9,24 @@
 #import <Cocoa/Cocoa.h>
 
 
+@protocol SVElementPlugIn <NSObject>
+
+- (NSString *)HTMLString;
+@property(nonatomic, readonly) NSString *elementID;
+
+@end
+
+
+@protocol SVElementPlugInFactory
++ (id <SVElementPlugIn>)elementPlugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
+@end
+
+
+#pragma mark -
+
+
 @class KTMediaManager, KTPage;
-
-
-@interface SVElementPlugIn : NSObject
+@interface SVAbstractElementPlugIn : NSObject <SVElementPlugIn, SVElementPlugInFactory>
 {
   @private
     NSMutableDictionary *_propertiesStorage;
@@ -20,11 +34,10 @@
     id  _delegateOwner;
 }
 
-+ (SVElementPlugIn *)plugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
 - (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
 
 
-// Default implementation generates a <span> or <div> (with an appropriate id) that cotnains the result of -innerHTMLString.
+// Default implementation generates a <span> or <div> (with an appropriate id) that cotnains the result of -innerHTMLString. There is generally NO NEED to override this, and if you do, you MUST return HTML with an enclosing element of the specified ID.
 - (NSString *)HTMLString;
 @property(nonatomic, readonly) NSString *elementID;
 
