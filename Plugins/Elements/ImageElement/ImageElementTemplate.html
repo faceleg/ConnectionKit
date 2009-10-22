@@ -2,14 +2,14 @@
 	
 	<div class="photo">
 
-[[if preferExternalImage]]
-[[if externalImageURL]]	
+[[if propertiesStorage.preferExternalImage]]
+[[if propertiesStorage.externalImageURL]]	
 [[if parser.liveDataFeeds]]
-		[[if delegate.linkURL]]<a class="imageLink" href="[[=&delegate.linkURL]]">[[endif4]]<img class="imgelement" src="[[=&externalImageURL]]" alt="[[=&altText]]" />[[if delegate.linkURL]]</a>[[endif4]]
+		[[if linkURL]]<a class="imageLink" href="[[=&linkURL]]">[[endif4]]<img class="imgelement" src="[[=&propertiesStorage.externalImageURL]]" alt="[[=&propertiesStorage.altText]]" />[[if linkURL]]</a>[[endif4]]
 [[else3]]
 		<div style="padding:20px; background:rgba(0,0,0,0.25); text-align:center">
 			<p>[['This is a placeholder for the image at:]]</p>
-			<p>[[=&externalImageURL]]</p>
+			<p>[[=&propertiesStorage.externalImageURL]]</p>
 		</div>
 [[endif3]]
 [[else2]]
@@ -17,29 +17,38 @@
 [[endif2]]
 [[else]]
 		
-[[if shouldIncludeLink]]
-[[if linkImageToOriginal]]
-[[if preferExternalImage]]
-		[[if externalImageURL]]<a class="imageLink" href="[[=&externalImageURL]]">[[endif5]]
+[[if propertiesStorage.shouldIncludeLink]]
+[[if propertiesStorage.linkImageToOriginal]]
+[[if propertiesStorage.preferExternalImage]]
+		[[if propertiesStorage.externalImageURL]]<a class="imageLink" href="[[=&propertiesStorage.externalImageURL]]">[[endif5]]
 [[else4]]
-		<a class="imageLink" href="[[mediainfo info:path media:image]]">
+		<a class="imageLink" href="[[mediainfo info:path media:propertiesStorage.image]]">
 [[endif4]]
 [[else3]]
-		[[if externalURL]]<a class="imageLink" href="[[=&externalURL]]">[[endif4]]
+		[[if propertiesStorage.externalURL]]<a class="imageLink" href="[[=&propertiesStorage.externalURL]]">[[endif4]]
 [[endif3]]
 [[endif2]]<img class="imgelement"
-			src="[[if image]][[mediainfo info:path media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:path media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
-			alt="[[=&altText]]"
-			width="[[if image]][[mediainfo info:width media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:width media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
-			height="[[if image]][[mediainfo info:height media:image sizeToFit:delegate.boundingImageBox]][[else2]][[mediainfo info:height media:page.master.placeholderImage sizeToFit:delegate.boundingImageBox]][[endif2]]"
-		/>[[if delegate.linkURL]]</a>[[endif2]]
+			src="[[if propertiesStorage.image]][[mediainfo info:path media:propertiesStorage.image sizeToFit:
+boundingImageBox]][[else2]][[mediainfo info:path media:page.master.placeholderImage sizeToFit:
+boundingImageBox]][[endif2]]"
+			alt="[[=&propertiesStorage.altText]]"
+			width="[[if propertiesStorage.image]][[mediainfo info:width media:propertiesStorage.image sizeToFit:
+boundingImageBox]][[else2]][[mediainfo info:width media:page.master.placeholderImage sizeToFit:
+boundingImageBox]][[endif2]]"
+			height="[[if propertiesStorage.image]][[mediainfo info:height media:propertiesStorage.image sizeToFit:
+boundingImageBox]][[else2]][[mediainfo info:height media:page.master.placeholderImage sizeToFit:
+boundingImageBox]][[endif2]]"
+		/>[[if 
+linkURL]]</a>[[endif2]]
 		
-[[if shouldIncludeLink]][[if linkImageToOriginal]]
+[[if propertiesStorage.shouldIncludeLink]][[if propertiesStorage.linkImageToOriginal]]
 		<div class="image-controls">
-			<a class="imageLink" href="[[mediainfo info:path media:image]]"><img class="imgelement" src="[[resourcepath delegate.magResource]]" alt="[["magnify]]" title="[["View this image full-size]]"  /></a>
+			<a class="imageLink" href="[[mediainfo info:path media:propertiesStorage.image]]"><img class="imgelement" src="[[resourcepath 
+magResource]]" alt="[["magnify]]" title="[["View this image full-size]]"  /></a>
 
 <!--
-			<a class="imageLink" href="_______"><img src="[[resourcepath delegate.dotphotoResource]]"
+			<a class="imageLink" href="_______"><img src="[[resourcepath 
+dotphotoResource]]"
 				alt="[["dotphoto]]"
 				title="[["Order prints of this image from dotphoto.com]]" /></a> -->
 		
