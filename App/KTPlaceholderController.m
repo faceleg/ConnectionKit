@@ -14,7 +14,7 @@
 #import <QTKit/QTKit.h>
 #import "KSLicensedAppDelegate.h"
 #import "KSNetworkNotifier.h"
-
+#import "KSYellowStickyWindow.h"
 #import "Registration.h"
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
@@ -93,6 +93,30 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];
+	
+	KSYellowStickyWindow *sticky = [[KSYellowStickyWindow alloc]
+									 initWithContentRect:NSMakeRect(0,0,210,210)
+									 styleMask:NSBorderlessWindowMask
+									 backing:NSBackingStoreBuffered
+									 defer:YES];
+
+//	[sticky setAlphaValue:0.0];
+	NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(100,100)];
+	[sticky setFrameTopLeftPoint:convertedWindowOrigin];
+	
+	[[self window] addChildWindow:sticky ordered:NSWindowAbove];
+	
+	// Uh, no .... this brings it in front of all apps.  How do you do that "initially visible" flag?
+	[sticky orderFront:nil];
+/*
+	 // Set up the animation for this window so we will get delegate methods
+	 CAAnimation *anim = [CABasicAnimation animation];
+	 [anim setDuration:3.0];
+	 [anim setDelegate:self];
+	 [sticky setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
+	 
+	 [sticky.animator setAlphaValue:1.0];	// animate open
+*/
 }
 
 

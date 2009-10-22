@@ -946,6 +946,8 @@
 		CE3BBAC9097EE82A00BF3E5F /* toolbar_media.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
+		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
+		CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */; };
 		CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE494D7A0896B5CE005FBD81 /* TinyAdd.png */; };
 		CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */; };
 		CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */; };
@@ -2526,6 +2528,8 @@
 		CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLInspectorController.h; sourceTree = "<group>"; };
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
+		CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSYellowStickyWindow.h; path = ../../../Shared/AppKit/KSYellowStickyWindow.h; sourceTree = SOURCE_ROOT; };
+		CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSYellowStickyWindow.m; path = ../../../Shared/AppKit/KSYellowStickyWindow.m; sourceTree = SOURCE_ROOT; };
 		CE494D7A0896B5CE005FBD81 /* TinyAdd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = TinyAdd.png; sourceTree = "<group>"; };
 		CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSFocusingTextField.h; path = ../../Shared/AppKit/KSFocusingTextField.h; sourceTree = "<group>"; };
 		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../Shared/AppKit/KSFocusingTextField.m; sourceTree = "<group>"; };
@@ -4291,6 +4295,8 @@
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */,
+				CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */,
 				CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */,
 				CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */,
 				279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */,
@@ -5088,6 +5094,7 @@
 				272DA58A108E6F42007A99D5 /* SVElementPlugIn.h in Headers */,
 				CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */,
 				CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */,
+				CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6478,6 +6485,7 @@
 				272DA58B108E6F42007A99D5 /* SVElementPlugIn.m in Sources */,
 				CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */,
 				CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */,
+				CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
