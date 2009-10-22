@@ -11,8 +11,8 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="5"/>
 			<integer value="211"/>
+			<integer value="133"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -555,6 +555,8 @@
 					<string>displayName</string>
 					<string>quickLookPreview</string>
 					<string>resourcePreviewImage</string>
+					<string>attributedTitleAndDescription</string>
+					<string>resourceAttributedTitleAndDescription</string>
 				</array>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -799,22 +801,6 @@ cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: arrangedObjects.displayName</string>
-						<reference key="source" ref="92243721"/>
-						<reference key="destination" ref="266288880"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="92243721"/>
-							<reference key="NSDestination" ref="266288880"/>
-							<string key="NSLabel">value: arrangedObjects.displayName</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">arrangedObjects.displayName</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">177</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: canRemove</string>
 						<reference key="source" ref="48000294"/>
 						<reference key="destination" ref="266288880"/>
@@ -884,6 +870,26 @@ cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
 						<reference key="destination" ref="283890133"/>
 					</object>
 					<int key="connectionID">215</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: arrangedObjects.resourceAttributedTitleAndDescription</string>
+						<reference key="source" ref="92243721"/>
+						<reference key="destination" ref="266288880"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="92243721"/>
+							<reference key="NSDestination" ref="266288880"/>
+							<string key="NSLabel">value: arrangedObjects.resourceAttributedTitleAndDescription</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">arrangedObjects.resourceAttributedTitleAndDescription</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSConditionallySetsEditable</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">217</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1290,7 +1296,7 @@ cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">215</int>
+			<int key="maxID">217</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

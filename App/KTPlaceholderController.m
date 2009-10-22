@@ -16,11 +16,98 @@
 #import "KSNetworkNotifier.h"
 #import "KSYellowStickyWindow.h"
 #import "Registration.h"
+#import "NSDate+Karelia.h"
+#import "NSURL+Karelia.h"
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 
+@interface NSURL(PlaceholderTable)
+- (NSAttributedString *)attributedTitleAndDescription;
+- (NSImage *)resourcePreviewImage;
+@end
+@implementation NSURL(PlaceholderTable)
 
+- (NSAttributedString *)resourceAttributedTitleAndDescription
+{
+	NSString *displayName = [self displayName];
+	CFStringRef filePath = (CFStringRef)[self path];
+	MDItemRef mdItem = MDItemCreate(NULL, filePath);
+
+	/*
+	 NSPersistentStoreCoordinator metadataForPersistentStoreOfType:URL:error:
+	 */
+	
+	NSMutableString *desc = [NSMutableString string];	// METADATA -- CAN WE PUT IN TITLE/SUBTITLE?  NOT GETTING SAVED?
+
+	NSDictionary *values = NSMakeCollectable(MDItemCopyAttributeList(mdItem,kMDItemDisplayName,kMDItemKind,
+													kMDItemContentType,kMDItemLastUsedDate,kMDItemContentTypeTree) );
+	[values autorelease];
+	id value = nil;
+	if (value = [values objectForKey:(NSString*)kMDItemTitle])
+	{
+		if (![displayName isEqualToString:value] && ![displayName hasPrefix:value])
+		{
+			[desc appendFormat:@"%@ ", value];	// only append if not equal, or a substring of file title
+		}
+	}
+	
+	if (value = [values objectForKey:(NSString*)kMDItemNumberOfPages])
+	{
+		if (![value intValue] > 1)
+		{
+			[desc appendFormat:@"%@ pgs. ", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
+		}
+	}
+
+	if (value = [values objectForKey:(NSString*)kMDItemLastUsedDate])
+	{
+		NSDate *date = (NSDate *)value;
+		
+		[desc appendFormat:@"Opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
+	}
+	
+	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:[NSFont systemFontSize]], NSFontAttributeName, nil];
+	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:[NSFont labelFontSize]], NSFontAttributeName, 
+						   [NSColor grayColor], NSForegroundColorAttributeName, nil];
+	
+	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
+												  displayName attributes:attr1] autorelease];	
+	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
+	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:desc attributes:attr2] autorelease]];
+	return attrStickyText;
+}
+
+- (NSImage *)resourcePreviewImage;		// Get quicklook thumbnail and give it a bit of an outline
+{
+	NSImage *result = nil;
+	CGSize size = CGSizeMake(128,128);
+	CGImageRef cgimage = QLThumbnailImageCreate(kCFAllocatorDefault,(CFURLRef)self,size,NULL);
+	
+	if (cgimage)
+	{
+		NSSize size = NSZeroSize;
+		size.width = CGImageGetWidth(cgimage);
+		size.height = CGImageGetWidth(cgimage);
+		
+		result = [[[NSImage alloc] initWithSize:size] autorelease];
+		
+		NSBitmapImageRep* rep = [[NSBitmapImageRep alloc] initWithCGImage:cgimage];
+		[result addRepresentation:rep];		
+		[rep release];
+		
+		CGImageRelease(cgimage);
+	}
+	if (!result)
+	{
+		result = [[NSWorkspace sharedWorkspace] iconForFile:[self path]];
+	}
+	
+	return result;
+}
+
+
+@end
 
 @implementation KTPlaceholderController
 
