@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KSSingletonWindowController.h"
 
-@class QTMovieView;
+@class QTMovieView, KSYellowStickyWindow;
 
 
 @interface KTPlaceholderController : KSSingletonWindowController {
@@ -25,7 +25,13 @@
 	IBOutlet NSButton *oStickyButton;
 
 	IBOutlet NSArrayController *oRecentDocsController;
+	
+@private
+	KSYellowStickyWindow *_sticky;
+	
 }
+
+@property (retain) KSYellowStickyWindow *sticky;
 
 - (IBAction) doNew:(id)sender;
 - (IBAction) doOpen:(id)sender;

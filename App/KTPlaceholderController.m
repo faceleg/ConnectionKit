@@ -24,6 +24,8 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 @implementation KTPlaceholderController
 
+@synthesize sticky = _sticky;
+
 - (id)init
 {
     self = [super initWithWindowNibName:@"Placeholder"];
@@ -94,42 +96,47 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];
 	
-	KSYellowStickyWindow *sticky = [[KSYellowStickyWindow alloc]
-									 initWithContentRect:NSMakeRect(0,0,kStickyViewWidth,kStickyViewHeight)
-									 styleMask:NSBorderlessWindowMask
-									 backing:NSBackingStoreBuffered
-									 defer:YES];
-
-	[oStickyRotatedView setFrameCenterRotation:8.0];
-	
-	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:18.0], NSFontAttributeName, nil];
-	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
-
-	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
-											 NSLocalizedString(@"This is a demo of Sandvox", @"title of reminder note") attributes:attr1] autorelease];	
-	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n\n" attributes:attr1] autorelease]];
-	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Sandvox is fully functional except that only the home page can be published.", @"explanation of demo") attributes:attr2] autorelease]];
-																																	[[oStickyTextView textStorage] setAttributedString:attrStickyText];
-	[sticky setContentView:oStickyView];
-//	[sticky setAlphaValue:0.0];
-	NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(100,100)];
-	[sticky setFrameTopLeftPoint:convertedWindowOrigin];
-	
-	[[self window] addChildWindow:sticky ordered:NSWindowAbove];
-	
-	// Uh, no .... this brings it in front of all apps.  How do you do that "initially visible" flag?
-	[sticky orderFront:nil];
-/*
-	 // Set up the animation for this window so we will get delegate methods
-	 CAAnimation *anim = [CABasicAnimation animation];
-	 [anim setDuration:3.0];
-	 [anim setDelegate:self];
-	 [sticky setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
-	 
-	 [sticky.animator setAlphaValue:1.0];	// animate open
-*/
 }
 
+// Attach sticky here becuase it seems we can only really make this child window appear when the window
+// is already appearing, and I don't see a notification for window-did-show.  We don't want to orderFront
+// the sticky window because that's weird if our welcome window is not in front.
+- (void)windowDidBecomeKey:(NSNotification *)notification
+{
+	if (!self.sticky)
+	{
+		_sticky = [[KSYellowStickyWindow alloc]
+				   initWithContentRect:NSMakeRect(0,0,kStickyViewWidth,kStickyViewHeight)
+				   styleMask:NSBorderlessWindowMask
+				   backing:NSBackingStoreBuffered
+				   defer:YES];
+		
+		[oStickyRotatedView setFrameCenterRotation:8.0];
+		
+		NSColor *blueColor = [NSColor colorWithCalibratedRed:0.000 green:0.295 blue:0.528 alpha:1.000];
+		
+		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:20.0], NSFontAttributeName, nil];
+		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
+		
+		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
+													  NSLocalizedString(@"This is a demo of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed") attributes:attr1] autorelease];	
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Sandvox is fully functional except that only the home page can be published.", @"explanation of demo - please make sure this will fit on welcome window when unlicensed") attributes:attr2] autorelease]];
+		[attrStickyText addAttribute:NSForegroundColorAttributeName value:blueColor range:NSMakeRange(0, [attrStickyText length])];
+		[attrStickyText setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [attrStickyText length])];
+		
+		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
+		[_sticky setContentView:oStickyView];
+		[_sticky setAlphaValue:0.0];
+		NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(750,300)];
+		[_sticky setFrameTopLeftPoint:convertedWindowOrigin];
+		
+		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
+		
+		 // Set up the animation for this window so we will get delegate methods
+		 [_sticky.animator setAlphaValue:1.0];	// animate open
+	}		
+}
 
 - (IBAction) doNew:(id)sender
 {

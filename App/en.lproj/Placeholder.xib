@@ -11,8 +11,8 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<integer value="5"/>
 			<integer value="211"/>
-			<integer value="6"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -29,7 +29,7 @@
 				<string key="NSClassName">NSApplication</string>
 			</object>
 			<object class="NSWindowTemplate" id="90877191">
-				<int key="NSWindowStyleMask">3</int>
+				<int key="NSWindowStyleMask">7</int>
 				<int key="NSWindowBacking">2</int>
 				<string key="NSWindowRect">{{0, 0}, {920, 482}}</string>
 				<int key="NSWTFlags">1886912512</int>
@@ -782,14 +782,6 @@ cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
 					<int key="connectionID">55</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">delegate</string>
-						<reference key="source" ref="90877191"/>
-						<reference key="destination" ref="283890133"/>
-					</object>
-					<int key="connectionID">101</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">doOpen:</string>
 						<reference key="source" ref="283890133"/>
@@ -884,6 +876,14 @@ cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
 						<reference key="destination" ref="320763250"/>
 					</object>
 					<int key="connectionID">214</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">delegate</string>
+						<reference key="source" ref="90877191"/>
+						<reference key="destination" ref="283890133"/>
+					</object>
+					<int key="connectionID">215</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1290,7 +1290,7 @@ cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">214</int>
+			<int key="maxID">215</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
