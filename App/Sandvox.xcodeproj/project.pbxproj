@@ -221,6 +221,13 @@
 		27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */; };
 		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; settings = {ATTRIBUTES = (); }; };
 		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
+		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; };
+		27196F641090A9D40096B612 /* SVInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F621090A9D40096B612 /* SVInspector.m */; };
+		27196F801090AEDC0096B612 /* KSDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F7E1090AEDC0096B612 /* KSDocumentController.h */; };
+		27196F811090AEDC0096B612 /* KSDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F7F1090AEDC0096B612 /* KSDocumentController.m */; };
+		27196F871090B1880096B612 /* KSInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F851090B1880096B612 /* KSInspector.h */; };
+		27196F881090B1880096B612 /* KSInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F861090B1880096B612 /* KSInspector.m */; };
+		27196FA41090BBC90096B612 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27196FA31090BBC90096B612 /* Inspector.xib */; };
 		271B48601051C2F4008B698C /* SVWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 271B485E1051C2F4008B698C /* SVWebEditorView.h */; };
 		271B48611051C2F4008B698C /* SVWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B485F1051C2F4008B698C /* SVWebEditorView.m */; };
 		2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */; };
@@ -1003,7 +1010,6 @@
 		CEAE132C08450536007025D4 /* RSSTemplate.xml in Resources */ = {isa = PBXBuildFile; fileRef = CEAE132B08450536007025D4 /* RSSTemplate.xml */; };
 		CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAE1668084530C1007025D4 /* KTHostProperties.m */; };
 		CEB32CD60806E6ED00A92187 /* favicon.ico in Resources */ = {isa = PBXBuildFile; fileRef = CEB32CD50806E6ED00A92187 /* favicon.ico */; };
-		CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34930082961880073A7A4 /* KTInfoWindowController.m */; };
 		CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */; };
 		CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
@@ -1661,6 +1667,13 @@
 		27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaFiles.m"; sourceTree = "<group>"; };
 		2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaArrayController.h; sourceTree = "<group>"; };
 		2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaArrayController.m; sourceTree = "<group>"; };
+		27196F611090A9D40096B612 /* SVInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspector.h; sourceTree = "<group>"; };
+		27196F621090A9D40096B612 /* SVInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspector.m; sourceTree = "<group>"; };
+		27196F7E1090AEDC0096B612 /* KSDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDocumentController.h; sourceTree = "<group>"; };
+		27196F7F1090AEDC0096B612 /* KSDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDocumentController.m; sourceTree = "<group>"; };
+		27196F851090B1880096B612 /* KSInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspector.h; sourceTree = "<group>"; };
+		27196F861090B1880096B612 /* KSInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspector.m; sourceTree = "<group>"; };
+		27196FA31090BBC90096B612 /* Inspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Inspector.xib; sourceTree = "<group>"; };
 		271B485E1051C2F4008B698C /* SVWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorView.h; sourceTree = "<group>"; };
 		271B485F1051C2F4008B698C /* SVWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorView.m; sourceTree = "<group>"; };
 		2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocViewController.h; sourceTree = "<group>"; };
@@ -2769,6 +2782,24 @@
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
 		};
+		27196F5F1090A9710096B612 /* Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				27196F601090A9830096B612 /* 2.0 Inspector */,
+				27DB80770C84658200E29C38 /* 1.x Inspector */,
+			);
+			name = Inspector;
+			sourceTree = "<group>";
+		};
+		27196F601090A9830096B612 /* 2.0 Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				27196F611090A9D40096B612 /* SVInspector.h */,
+				27196F621090A9D40096B612 /* SVInspector.m */,
+			);
+			name = "2.0 Inspector";
+			sourceTree = "<group>";
+		};
 		271B497B105468AA008B698C /* Web Editor (Generic) */ = {
 			isa = PBXGroup;
 			children = (
@@ -3197,7 +3228,7 @@
 			name = "Publishing Engine";
 			sourceTree = "<group>";
 		};
-		27DB80770C84658200E29C38 /* Inspector */ = {
+		27DB80770C84658200E29C38 /* 1.x Inspector */ = {
 			isa = PBXGroup;
 			children = (
 				CEB3492F082961880073A7A4 /* KTInfoWindowController.h */,
@@ -3207,7 +3238,7 @@
 				27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */,
 				27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */,
 			);
-			name = Inspector;
+			name = "1.x Inspector";
 			sourceTree = "<group>";
 		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
@@ -3261,7 +3292,7 @@
 				3C5188A10D2F4DDC002D7414 /* Site Outline */,
 				272321DB0D48B5A70075F31F /* Page Details */,
 				3C202DA507DFC4BA00DE4994 /* Web Content Area */,
-				27DB80770C84658200E29C38 /* Inspector */,
+				27196F5F1090A9710096B612 /* Inspector */,
 				278CDCCE0E83DB2000477D3A /* Text Editing */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
 				3C5A73830BF7B8F200776464 /* Index */,
@@ -3295,6 +3326,7 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
+				27196FA31090BBC90096B612 /* Inspector.xib */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4450,6 +4482,10 @@
 				2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */,
 				278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */,
 				278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */,
+				27196F7E1090AEDC0096B612 /* KSDocumentController.h */,
+				27196F7F1090AEDC0096B612 /* KSDocumentController.m */,
+				27196F851090B1880096B612 /* KSInspector.h */,
+				27196F861090B1880096B612 /* KSInspector.m */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -5095,6 +5131,9 @@
 				CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */,
 				CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */,
 				CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */,
+				27196F631090A9D40096B612 /* SVInspector.h in Headers */,
+				27196F801090AEDC0096B612 /* KSDocumentController.h in Headers */,
+				27196F871090B1880096B612 /* KSInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5792,6 +5831,7 @@
 				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
 				CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */,
 				CEB720FF108FC2AA00511E74 /* WelcomeSandvox.png in Resources */,
+				27196FA41090BBC90096B612 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6169,7 +6209,6 @@
 				3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */,
 				3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */,
 				3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */,
-				CEB34932082961880073A7A4 /* KTInfoWindowController.m in Sources */,
 				CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */,
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */,
@@ -6486,6 +6525,9 @@
 				CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */,
 				CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */,
 				CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */,
+				27196F641090A9D40096B612 /* SVInspector.m in Sources */,
+				27196F811090AEDC0096B612 /* KSDocumentController.m in Sources */,
+				27196F881090B1880096B612 /* KSInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

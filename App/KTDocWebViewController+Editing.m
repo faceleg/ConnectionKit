@@ -11,7 +11,6 @@
 #import "Debug.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
-#import "KTInfoWindowController.h"
 #import "SVHTMLTemplateTextBlock.h"
 #import "KTWebViewUndoManagerProxy.h"
 #import "KTToolbars.h"
@@ -345,28 +344,6 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Selection
 
-
-- (BOOL)webView:(WebView *)webView shouldChangeSelectedDOMRange:(DOMRange *)currentRange toDOMRange:(DOMRange *)proposedRange affinity:(NSSelectionAffinity)selectionAffinity stillSelecting:(BOOL)flag;
-{
-	OFF((@"%@ %@ %@", NSStringFromSelector(_cmd), currentRange, proposedRange ));
-	
-	// if we have a selectedInlineImageElement, check that proposedRange still contains
-	// its DOMRange. if not, clear the inspector.
-	
-	// this might be crazy inefficient
-	if ( nil != [[self windowController] selectedInlineImageElement]
-		 && [[[KTInfoWindowController sharedControllerWithoutLoading] currentSelection] isEqual:[[self windowController] selectedInlineImageElement]] )
-	{
-		if (![[[[self windowController] selectedInlineImageElement] DOMNode] isDescendantOfNode:[proposedRange startContainer]]
-			 && ![[[[self windowController] selectedInlineImageElement] DOMNode] isDescendantOfNode:[proposedRange endContainer]])
-		{
-			[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
-																object:[[[[self windowController] selectedInlineImageElement] container] page]];			
-		}
-	}
-	
-	return YES;
-}
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
 {

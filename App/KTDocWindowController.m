@@ -28,7 +28,6 @@
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
 #import "KTIndexPlugin.h"
-#import "KTInfoWindowController.h"
 #import "KTInlineImageElement.h"
 #import "KTLinkSourceView.h"
 #import "KTMediaManager+Internal.h"
@@ -211,8 +210,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self updateBuyNow:nil];	// update them now
 	
 	
-	
-	[self showInfo:[[NSUserDefaults standardUserDefaults] boolForKey:@"DisplayInfo"]];
 	
 	myLastClickedPoint = NSZeroPoint;
 	
@@ -1278,17 +1275,7 @@ from representedObject */
 - (void)anyWindowWillClose:(NSNotification *)aNotification
 {
 	id obj = [aNotification object];
-	if (obj == [[KTInfoWindowController sharedControllerWithoutLoading] window])
-	{
-		NSRect frame = [obj frame];
-		NSPoint topLeft = NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height);
-		NSString *topLeftAsString = NSStringFromPoint(topLeft);
-		[[NSUserDefaults standardUserDefaults] setObject:topLeftAsString forKey:gInfoWindowAutoSaveName];
-
-		[[NSUserDefaults standardUserDefaults] setBool:NO forKey:@"DisplayInfo"];
-		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
-	}
-	else if (obj == [[iMediaBrowser sharedBrowserWithoutLoading] window])
+	if (obj == [[iMediaBrowser sharedBrowserWithoutLoading] window])
 	{
 		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
 	}
@@ -1512,83 +1499,6 @@ from representedObject */
 - (void)handleEvent:(DOMEvent *)event;
 {
 	LOG((@"event= %@", event));
-}
-
-#pragma mark -
-#pragma mark Inspector
-
-/*!	Show the info, in whatever is the current configuration.  Close other things not showing.
-*/
-- (void)showInfo:(BOOL)inShow
-{
-	if (inShow)	// show separate info
-	{
-		KTInfoWindowController *sharedController = [KTInfoWindowController sharedController];
-		[sharedController setAssociatedDocument:[self document]];
-		if (nil != mySelectedInlineImageElement)
-		{
-			[sharedController setupViewStackFor:mySelectedInlineImageElement selectLevel:NO];
-		}
-		else if (nil != mySelectedPagelet)
-		{
-			[sharedController setupViewStackFor:mySelectedPagelet selectLevel:NO];
-		}
-		else if ([[[[self siteOutlineViewController] pagesController] selectedObjects] count] > 0)
-		{
-			[sharedController setupViewStackFor:[[[[self siteOutlineViewController] pagesController] selectedObjects] firstObjectKS]
-                                    selectLevel:NO];
-		}
-		
-		[sharedController putContentInWindow];
-		
-		if (![[sharedController window] isVisible])
-		{
-			NSString *topLeftAsString = [[NSUserDefaults standardUserDefaults] objectForKey:gInfoWindowAutoSaveName];
-			if ( nil != topLeftAsString )
-			{
-				NSWindow *window = [sharedController window];
-				NSPoint topLeft = NSPointFromString(topLeftAsString);
-				NSRect screenRect = [[window screen] visibleFrame];
-				NSRect frame = [window frame];
-				frame.origin = topLeft;
-				if (!NSContainsRect(screenRect, frame))
-				{
-					if (NSMaxX(frame) > NSMaxX(screenRect))
-					{
-						frame.origin.x -= (NSMaxX(frame) - NSMaxX(screenRect));	// right edge
-					}
-					if (NSMaxY(frame) > NSMaxY(screenRect))
-					{
-						frame.origin.y = NSMaxY(screenRect);	// top edge
-					}
-					if (NSMinX(frame) < NSMinX(screenRect))
-					{
-						frame.origin.x = NSMinX(screenRect);	// left edge
-					}
-					if (NSMinY(frame) < NSMinY(screenRect))
-					{
-						frame.origin.y = NSMinY(screenRect) + frame.size.height;	// bottom edge
-					}
-				}
-				[window setFrameTopLeftPoint:frame.origin];
-			}
-			[sharedController showWindow:nil];
-		}
-	}
-	else	// hide
-	{
-		KTInfoWindowController *sharedControllerMaybe = [KTInfoWindowController sharedControllerWithoutLoading];
- 		if (sharedControllerMaybe)
-		{
-
-			NSRect frame = [[sharedControllerMaybe window] frame];
-			NSPoint topLeft = NSMakePoint(frame.origin.x, frame.origin.y+frame.size.height);
-			NSString *topLeftAsString = NSStringFromPoint(topLeft);
-			[[NSUserDefaults standardUserDefaults] setObject:topLeftAsString forKey:gInfoWindowAutoSaveName];
-
-			[[sharedControllerMaybe window] orderOut:nil];
-		}
-	}
 }
 
 @end

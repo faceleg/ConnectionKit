@@ -18,6 +18,7 @@
 #import "KTSite.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
+#import "SVInspector.h"
 #import "KTMediaManager.h"
 #import "KTMaster.h"
 #import "KTPage+Internal.h"
@@ -381,6 +382,13 @@
 			[super noteNewRecentDocument:aDocument];
 		}
 	}
+}
+
+#pragma mark Inspectors
+
+- (Class)inspectorClass;
+{
+    return [SVInspector class];
 }
 
 @end

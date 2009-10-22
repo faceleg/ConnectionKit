@@ -56,7 +56,7 @@
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
-#import "KTInfoWindowController.h"
+#import "SVInspector.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
@@ -653,15 +653,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
     
-    /// clear Info window before changing selection to try to avoid an odd zombie issue (Case 18771)
-	// tell info window to release inspector views and object controllers
-	if ([[KTInfoWindowController sharedControllerWithoutLoading] associatedDocument] == self)
-	{
-		// close info window
-		[[KTInfoWindowController sharedController] clearAll];
-	}
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
+    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
 
     // is the media browser up?
     if ( nil != [iMediaBrowser sharedBrowserWithoutLoading] )
@@ -1006,7 +998,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	// Attach inspector, if visible
-	KTInfoWindowController *sharedController = [KTInfoWindowController sharedControllerWithoutLoading];
+	NSWindowController *sharedController = [SVInspector sharedControllerWithoutLoading];
 	if ( nil != sharedController )
 	{
 		NSWindow *infoWindow = [sharedController window];

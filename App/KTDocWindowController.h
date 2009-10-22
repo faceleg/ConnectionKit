@@ -145,8 +145,6 @@ extern NSString *gInfoWindowAutoSaveName;
 // clean up at document close
 - (void)selectionDealloc;
 
-- (void)showInfo:(BOOL)inShow;
-
 // Plugin Inspector Views
 - (KTPluginInspectorViewsManager *)pluginInspectorViewsManager;
 

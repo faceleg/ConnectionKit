@@ -29,11 +29,14 @@ TO DO:
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTToolbars.h"
+
+#import "KSDocumentController.h"
 #import "NSImage+KTExtensions.h"
 #import "NSImage+Karelia.h"
 #import "NSToolbar+Karelia.h"
 #import "RYZImagePopUpButton.h"
 #import "RYZImagePopUpButtonCell.h"
+
 
 @interface KTDocWindowController ( PrivateToolbar )
 
@@ -408,6 +411,16 @@ TO DO:
 - (void)toolbarDidRemoveItem:(NSNotification *)notification
 {
     ;
+}
+
+#pragma mark Action Forwarding
+
+/*  Some actions just need to go on to a better place. Do so here
+ */
+
+- (void)toggleInfoShown:(NSToolbarItem *)sender
+{
+    [[KSDocumentController sharedDocumentController] toggleInspectorsShown:sender];
 }
 
 @end

@@ -6,12 +6,13 @@
 //  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "KSDocumentController.h"
+
 
 @class KTDocument;
 
 
-@interface KTDocumentController : NSDocumentController
+@interface KTDocumentController : KSDocumentController
 {
 	// New docs
 	IBOutlet NSView			*oNewDocAccessoryView;
