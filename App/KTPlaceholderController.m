@@ -60,9 +60,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
     [super windowDidLoad];
 
 	[oRecentDocsController addObjects:[[NSDocumentController sharedDocumentController] recentDocumentURLs]];
-	 
-	// Put a gradient border at the bottom of the window
-	[[self window] setContentBorderThickness:50.0 forEdge:NSMinYEdge];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateLicenseStatus:)

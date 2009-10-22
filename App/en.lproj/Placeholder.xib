@@ -540,6 +540,8 @@
 				<string key="NSMinSize">{920, 504}</string>
 				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSFrameAutosaveName"/>
+				<bool key="NSAutorecalculatesContentBorderThicknessMinY">NO</bool>
+				<double key="NSContentBorderThicknessMinY">50</double>
 			</object>
 			<object class="NSUserDefaultsController" id="556529560">
 				<bool key="NSSharedInstance">YES</bool>
@@ -1000,10 +1002,10 @@
 				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="44.ImportedFromIB2"/>
-				<string key="5.IBEditorWindowLastContentRect">{{50, 26}, {920, 482}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{147, 233}, {920, 482}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="5.IBWindowTemplateEditedContentRect">{{50, 26}, {920, 482}}</string>
+				<string key="5.IBWindowTemplateEditedContentRect">{{147, 233}, {920, 482}}</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<boolean value="NO" key="5.windowTemplate.hasMaxSize"/>
 				<boolean value="YES" key="5.windowTemplate.hasMinSize"/>
@@ -1063,9 +1065,6 @@
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oDemoNotification">NSTextField</string>
-						<string key="oDisclosureBottom">id</string>
-						<string key="oDisclosureTop">id</string>
-						<string key="oHideWhenLicensed">id</string>
 						<string key="oHighLink">NSButton</string>
 						<string key="oLowLink">NSButton</string>
 						<string key="oPreviewMovie">QTMovieView</string>
