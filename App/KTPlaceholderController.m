@@ -21,37 +21,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 
 
-@implementation KTColorTextFieldAnimation
-
-- (id) initWithStartColor:(NSColor *)aStartColor endColor:(NSColor *)anEndColor textField:(NSTextField *)aTextField;
-{
-	if ((self = [super initWithDuration:2.0 animationCurve:NSAnimationLinear]) != nil) {
-		[self setAnimationBlockingMode:NSAnimationNonblocking];
-		[self setFrameRate:30];
-		myStartColor = [aStartColor retain];
-		myEndColor = [anEndColor retain];
-		myTextField = [aTextField retain];
-	}
-	return self;
-}
-
-- (void)dealloc
-{
-	[myStartColor release];
-	[myEndColor release];
-	[myTextField release];
-	[super dealloc];
-}
-
-- (void)setCurrentProgress:(NSAnimationProgress)progress
-{
-	NSColor *newColor = [myStartColor blendedColorWithFraction:progress ofColor:myEndColor];
-	// NSLog(@"%@ %.3f %@", self, progress, newColor);
-	[myTextField setTextColor:newColor];
-	[myTextField setNeedsDisplay:YES];
-}
-
-@end
 
 @implementation KTPlaceholderController
 
@@ -63,66 +32,11 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 - (void)dealloc
 {
-	[myAnimation1 release];
-	[myAnimation2 release];
-	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
 
 
-- (void)adjustWindow:(int)windowState animate:(BOOL)anAnimate
-{
-	int newBottom = 0;
-	switch (windowState)
-	{
-		case LICENSED:		newBottom = NSMaxY([oHideWhenLicensed frame]);		break;
-		case UNDISCLOSED:	newBottom = NSMaxY([oDisclosureTop frame]);			break;
-		case DISCLOSED:		newBottom = NSMinY([oDisclosureBottom frame]) - 20;	break;
-		case NO_NETWORK:	newBottom = NSMaxY([oDisclosureBottom frame]);		break;
-	}
-	
-	if (LICENSED == windowState)
-	{
-		[myAnimation1 stopAnimation];
-		[myAnimation2 stopAnimation];
-	}
-	else
-	{
-		[myAnimation1 startAnimation];
-	}
-
-	NSWindow *window = [self window];
-	NSRect windowFrame = [window frame];
-	NSRect contentFrame = [NSWindow contentRectForFrameRect:windowFrame styleMask:[window styleMask]];
-	
-	contentFrame.origin.y += newBottom;
-	contentFrame.size.height -= newBottom;
-	
-	NSRect frameRect = [NSWindow frameRectForContentRect:contentFrame styleMask:[window styleMask]];
-	[window setFrame:frameRect display:YES animate:anAnimate];
-	
-	if (DISCLOSED == windowState)
-	{
-		// fire up the quicktime preview
-		NSString *path = [[NSBundle mainBundle] pathForResource:@"preview" ofType:@"mp4"];
-		NSError *error = nil;
-		OBASSERTSTRING([NSThread isMainThread], @"should not be creating intro movie from a background thread");
-		QTMovie *movie = [QTMovie movieWithFile:path error:&error];
-		if (nil == movie)
-		{
-			NSLog(@"couldn't read movie %@; %@", path, error);
-		}
-		else
-		{
-			NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-								  [NSNumber numberWithBool:YES], QTMovieLoopsAttribute, nil];
-			[movie  setMovieAttributes:attr];
-			[oPreviewMovie setMovie:movie];
-			[oPreviewMovie play:nil];
-		}
-	}
-}
 
 - (void) updateLicenseStatus:(NSNotification *)aNotification
 {
@@ -133,7 +47,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		windowState = [defaults boolForKey:@"hiddenIntro"] ? UNDISCLOSED : ([KSNetworkNotifier isNetworkAvailable] ? DISCLOSED : NO_NETWORK);
 	}
-	[self adjustWindow:windowState animate:(nil != aNotification)];	// animate if it's a real notification
 }
 
 - (IBAction)showWindow:(id)sender;
@@ -178,12 +91,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	// NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
 	[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
 
-	myAnimation1 = [[KTColorTextFieldAnimation alloc] initWithStartColor:[NSColor blackColor] endColor:[NSColor redColor] textField:oDemoNotification];
-	myAnimation2 = [[KTColorTextFieldAnimation alloc] initWithStartColor:[NSColor redColor] endColor:[NSColor blackColor] textField:oDemoNotification];
-	
-	[myAnimation1 setDelegate:self];
-	[myAnimation2 setDelegate:self];
-
 	[self updateLicenseStatus:nil];
 
 	[[self window] center];
@@ -191,19 +98,6 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[self window] setExcludedFromWindowsMenu:YES];
 }
 
-- (void)animationDidEnd:(NSAnimation *)animation
-{
-	if (animation == myAnimation1) [myAnimation2 performSelector:@selector(startAnimation) withObject:nil afterDelay:0.0];
-	if (animation == myAnimation2) [myAnimation1 performSelector:@selector(startAnimation) withObject:nil afterDelay:0.0];
-}
-- (IBAction) disclose:(id)sender;
-{
-	NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
-	NSUserDefaults *defaults = [controller defaults];
-	BOOL shouldAnimate = [defaults boolForKey:@"DoAnimations"];
-	
-	[self adjustWindow:([sender state] ? ([KSNetworkNotifier isNetworkAvailable] ? DISCLOSED : NO_NETWORK) : UNDISCLOSED) animate:shouldAnimate];
-}
 
 - (IBAction) doNew:(id)sender
 {
