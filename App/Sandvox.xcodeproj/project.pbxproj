@@ -3326,7 +3326,6 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
-				27196FA31090BBC90096B612 /* Inspector.xib */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -4327,6 +4326,7 @@
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				27196FA31090BBC90096B612 /* Inspector.xib */,
 				CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */,
 				CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */,
 				CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */,

@@ -11,9 +11,4 @@
 
 @implementation SVInspector
 
-- (id)init
-{
-    return [self initWithWindowNibName:@"Inspector"];
-}
-            
 @end
