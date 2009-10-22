@@ -662,7 +662,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         if ( [[[KTDocumentController sharedDocumentController] documents] count] == 1 )
         {
             // close media window
-            [[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
             [[iMediaBrowser sharedBrowser] close];
         }
     }
@@ -998,7 +997,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	// Attach inspector, if visible
-	NSWindowController *sharedController = [SVInspector sharedControllerWithoutLoading];
+	NSWindowController *sharedController = [[[KSDocumentController sharedDocumentController] inspectors] lastObject];
 	if ( nil != sharedController )
 	{
 		NSWindow *infoWindow = [sharedController window];

@@ -200,10 +200,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// Hide address bar if it's hidden (it's showing to begin with, in the nib)
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(anyWindowWillClose:)
-												 name:NSWindowWillCloseNotification
-											   object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateBuyNow:)
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
@@ -494,30 +490,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self updateToolbar];
 	[[self webViewController] reloadWebView];
 }
-
-- (IBAction)toggleInfoShown:(id)sender
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	
-	// reverse the flag in defaults
-	BOOL value = [defaults boolForKey:@"DisplayInfo"];
-	BOOL newValue = !value;
-	[defaults setBool:newValue forKey:@"DisplayInfo"];
-	
-	// set menu to opposite of flag
-	if ( newValue )
-	{
-		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTHideInfoMenuItemTitle];
-	}
-	else
-	{
-		[[NSApp delegate] setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
-	}
-	
-	// display info, if appropriate
-	[self showInfo:newValue];
-}
-
 
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
@@ -1268,21 +1240,6 @@ from representedObject */
     
     
 	[self setSiteOutlineViewController:nil];
-}
-
-/*!	Notification that some window is closing
-*/
-- (void)anyWindowWillClose:(NSNotification *)aNotification
-{
-	id obj = [aNotification object];
-	if (obj == [[iMediaBrowser sharedBrowserWithoutLoading] window])
-	{
-		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
-	}
-	else
-	{
-		// LOG((@"windowWillClose --> %@", [aNotification object]));
-	}
 }
 
 #pragma mark -

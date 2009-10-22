@@ -635,6 +635,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
+    else if (action == @selector(toggleMediaBrowserShown:))
+    {
+        if ([[[iMediaBrowser sharedBrowserWithDelegate:self] window] isVisible])
+        {
+            [menuItem setTitle:NSLocalizedString(@"Hide Media Browser", @"menu title to hide inspector panel")];
+        }
+        else
+        {
+            [menuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
+        }
+        return YES;
+    }
 	else if (action == @selector(showReleaseNotes:))
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
@@ -911,15 +923,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		
         [progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 		//[self buildSampleSitesMenu];
-		
-		if ( [defaults boolForKey:@"DisplayInfo"] )
-		{
-			[self setDisplayInfoMenuItemTitle:KTHideInfoMenuItemTitle];
-		}
-		else
-		{
-			[self setDisplayInfoMenuItemTitle:KTShowInfoMenuItemTitle];
-		}
 		
 		BOOL firstRun = [defaults boolForKey:@"FirstRun"];
         if (!firstRun)
@@ -1373,13 +1376,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTHideMediaMenuItemTitle];
 		[browser setIdentifier:@"Sandvox"];
 		[browser showWindow:sender];
 	}
 	else
 	{
-		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTShowMediaMenuItemTitle];
 		[browser close];
 	}
 
@@ -1566,31 +1567,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 #pragma mark -
 #pragma mark Support
-
-
-- (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType
-{
-	if ( aKTDisplayInfoMenuItemTitleType == KTHideInfoMenuItemTitle )
-	{
-		[oToggleInfoMenuItem setTitle:NSLocalizedString(@"Hide Inspector", @"menu title to hide inspector panel")];
-	}
-	else
-	{
-		[oToggleInfoMenuItem setTitle:NSLocalizedString(@"Show Inspector", @"menu title to show inspector panel")];
-	}
-}
-
-- (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType
-{
-	if ( aKTDisplayMediaMenuItemTitleType == KTHideMediaMenuItemTitle )
-	{
-		[oToggleMediaMenuItem setTitle:NSLocalizedString(@"Hide Media Browser", @"menu title to hide inspector panel")];
-	}
-	else
-	{
-		[oToggleMediaMenuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
-	}
-}
 
 /*! log undo-related notifications */
 - (void)logUndoNotification: (NSNotification *) notification

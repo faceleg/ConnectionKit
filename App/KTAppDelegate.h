@@ -24,19 +24,8 @@
 
 extern BOOL gWantToCatchSystemExceptions;
 
-// application-wide, so leaving control with AppDelegate
-typedef enum {
-	KTShowInfoMenuItemTitle,
-	KTHideInfoMenuItemTitle
-} KTDisplayInfoMenuItemTitleType;
-
-// application-wide, so leaving control with AppDelegate
-typedef enum {
-	KTShowMediaMenuItemTitle,
-	KTHideMediaMenuItemTitle
-} KTDisplayMediaMenuItemTitleType;
-
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
+
 
 @class KTDocument;
 @interface KTAppDelegate : KSLicensedAppDelegate
@@ -112,9 +101,5 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 - (IBAction)showPluginWindow:(id)sender;
-
-// methods to allow current document to update application-wide menus
-- (void)setDisplayMediaMenuItemTitle:(KTDisplayMediaMenuItemTitleType)aKTDisplayMediaMenuItemTitleType;
-- (void)setDisplayInfoMenuItemTitle:(KTDisplayInfoMenuItemTitleType)aKTDisplayInfoMenuItemTitleType;
 
 @end
