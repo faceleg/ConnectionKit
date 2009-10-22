@@ -56,7 +56,7 @@
     // Parse our built-in template
     NSString *template = [[[self delegateOwner] plugin] templateHTMLAsString];
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
-                                                                        component:[self delegateOwner]];
+                                                                        component:self];
     
     NSString *result = [parser parseTemplate];
     [parser release];
