@@ -33,7 +33,7 @@
 - (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
 - (NSString *)HTMLString;           // for publishing/editing (uses SVHTMLGenerationContext)
 
-
+- (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
 
 @end
 

@@ -197,6 +197,14 @@
     return result;
 }
 
+- (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
+{
+    OBPRECONDITION(document);
+    
+    DOMElement *result = [document getElementById:[[self plugIn] elementID]];
+    return result;
+}
+
 #pragma mark Deprecated
 
 // Loads of old plug-ins rely on this property

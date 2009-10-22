@@ -79,8 +79,7 @@
 {
     OBPRECONDITION([[self contentObjects] containsObject:contentObject]);
     
-    DOMElement *result = [[textAreaDOMElement ownerDocument] getElementById:
-                          [[contentObject plugIn] elementID]];
+    DOMElement *result = [contentObject DOMElementInDocument:[textAreaDOMElement ownerDocument]];
     
     if (![result isDescendantOfNode:textAreaDOMElement]) result = nil;
     return result;
