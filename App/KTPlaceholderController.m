@@ -95,11 +95,22 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[self window] setExcludedFromWindowsMenu:YES];
 	
 	KSYellowStickyWindow *sticky = [[KSYellowStickyWindow alloc]
-									 initWithContentRect:NSMakeRect(0,0,210,210)
+									 initWithContentRect:NSMakeRect(0,0,kStickyViewWidth,kStickyViewHeight)
 									 styleMask:NSBorderlessWindowMask
 									 backing:NSBackingStoreBuffered
 									 defer:YES];
 
+	[oStickyRotatedView setFrameCenterRotation:8.0];
+	
+	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:18.0], NSFontAttributeName, nil];
+	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
+
+	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
+											 NSLocalizedString(@"This is a demo of Sandvox", @"title of reminder note") attributes:attr1] autorelease];	
+	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n\n" attributes:attr1] autorelease]];
+	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Sandvox is fully functional except that only the home page can be published.", @"explanation of demo") attributes:attr2] autorelease]];
+																																	[[oStickyTextView textStorage] setAttributedString:attrStickyText];
+	[sticky setContentView:oStickyView];
 //	[sticky setAlphaValue:0.0];
 	NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(100,100)];
 	[sticky setFrameTopLeftPoint:convertedWindowOrigin];

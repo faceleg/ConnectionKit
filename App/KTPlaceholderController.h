@@ -18,7 +18,12 @@
 	IBOutlet NSButton *oLowLink;
 	IBOutlet QTMovieView *oPreviewMovie;
 	IBOutlet NSTextField *oDemoNotification;	// hide if not demo.  Top edge is window bottom.
-	
+
+	IBOutlet NSView *oStickyView;
+	IBOutlet NSView *oStickyRotatedView;
+	IBOutlet NSTextView *oStickyTextView;
+	IBOutlet NSButton *oStickyButton;
+
 	IBOutlet NSArrayController *oRecentDocsController;
 }
 
