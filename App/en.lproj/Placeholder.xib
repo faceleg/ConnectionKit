@@ -11,7 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="135"/>
+			<integer value="133"/>
 			<integer value="207"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
@@ -359,16 +359,16 @@
 															<object class="_NSCornerView" key="NSCornerView">
 																<nil key="NSNextResponder"/>
 																<int key="NSvFlags">-2147483392</int>
-																<string key="NSFrame">{{224, 0}, {16, 17}}</string>
+																<string key="NSFrame">{{209, 0}, {16, 17}}</string>
 															</object>
 															<array class="NSMutableArray" key="NSTableColumns">
 																<object class="NSTableColumn" id="962257408">
-																	<double key="NSWidth">48</double>
-																	<double key="NSMinWidth">48</double>
-																	<double key="NSMaxWidth">48</double>
+																	<double key="NSWidth">61</double>
+																	<double key="NSMinWidth">61</double>
+																	<double key="NSMaxWidth">61</double>
 																	<object class="NSTableHeaderCell" key="NSHeaderCell">
 																		<int key="NSCellFlags">75628096</int>
-																		<int key="NSCellFlags2">2048</int>
+																		<int key="NSCellFlags2">67110912</int>
 																		<string key="NSContents"/>
 																		<reference key="NSSupport" ref="26"/>
 																		<object class="NSColor" key="NSBackgroundColor" id="866422831">
@@ -397,7 +397,7 @@
 																	<reference key="NSTableView" ref="891262708"/>
 																</object>
 																<object class="NSTableColumn" id="92243721">
-																	<double key="NSWidth">169</double>
+																	<double key="NSWidth">156</double>
 																	<double key="NSMinWidth">40</double>
 																	<double key="NSMaxWidth">1000</double>
 																	<object class="NSTableHeaderCell" key="NSHeaderCell">
@@ -444,7 +444,7 @@
 																	<bytes key="NSWhite">MC41AA</bytes>
 																</object>
 															</object>
-															<double key="NSRowHeight">48</double>
+															<double key="NSRowHeight">57</double>
 															<int key="NSTvFlags">-700448768</int>
 															<reference key="NSDelegate"/>
 															<reference key="NSDataSource"/>
@@ -465,16 +465,16 @@
 												<object class="NSScroller" id="1017002275">
 													<reference key="NSNextResponder" ref="492737931"/>
 													<int key="NSvFlags">-2147483392</int>
-													<string key="NSFrame">{{209, 1}, {15, 367}}</string>
+													<string key="NSFrame">{{-100, -100}, {15, 336}}</string>
 													<reference key="NSSuperview" ref="492737931"/>
 													<reference key="NSTarget" ref="492737931"/>
 													<string key="NSAction">_doScroller:</string>
-													<double key="NSPercent">0.99719887971878052</double>
+													<double key="NSPercent">0.99715906381607056</double>
 												</object>
 												<object class="NSScroller" id="163293123">
 													<reference key="NSNextResponder" ref="492737931"/>
 													<int key="NSvFlags">-2147483392</int>
-													<string key="NSFrame">{{-100, -100}, {223, 15}}</string>
+													<string key="NSFrame">{{1, 353}, {223, 15}}</string>
 													<reference key="NSSuperview" ref="492737931"/>
 													<int key="NSsFlags">1</int>
 													<reference key="NSTarget" ref="492737931"/>
@@ -485,11 +485,11 @@
 											<string key="NSFrame">{{20, 16}, {225, 369}}</string>
 											<reference key="NSSuperview" ref="263548748"/>
 											<reference key="NSNextKeyView" ref="567445930"/>
-											<int key="NSsFlags">530</int>
+											<int key="NSsFlags">546</int>
 											<reference key="NSVScroller" ref="1017002275"/>
 											<reference key="NSHScroller" ref="163293123"/>
 											<reference key="NSContentView" ref="567445930"/>
-											<bytes key="NSScrollAmts">QSAAAEEgAABCSAAAQkgAAA</bytes>
+											<bytes key="NSScrollAmts">QSAAAEEgAABCbAAAQmwAAA</bytes>
 										</object>
 										<object class="NSTextField" id="1000201483">
 											<reference key="NSNextResponder" ref="263548748"/>
@@ -1218,7 +1218,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">217</int>
+			<int key="maxID">218</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1258,10 +1258,6 @@
 						<string key="openScreencastSmallSize:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
-						<string key="oDemoNotification">NSTextField</string>
-						<string key="oHighLink">NSButton</string>
-						<string key="oLowLink">NSButton</string>
-						<string key="oPreviewMovie">QTMovieView</string>
 						<string key="oRecentDocsController">NSArrayController</string>
 						<string key="oStickyButton">NSButton</string>
 						<string key="oStickyRotatedView">NSView</string>
@@ -2111,7 +2107,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="725745968">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">QTKit.framework/Headers/QTMovieView.h</string>
 					</object>
@@ -2464,32 +2460,6 @@
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSWindowController.h</string>
 					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">QTMovieView</string>
-					<string key="superclassName">NSView</string>
-					<dictionary class="NSMutableDictionary" key="actions">
-						<string key="add:">id</string>
-						<string key="addScaled:">id</string>
-						<string key="copy:">id</string>
-						<string key="cut:">id</string>
-						<string key="delete:">id</string>
-						<string key="gotoBeginning:">id</string>
-						<string key="gotoEnd:">id</string>
-						<string key="gotoNextSelectionPoint:">id</string>
-						<string key="gotoPosterFrame:">id</string>
-						<string key="gotoPreviousSelectionPoint:">id</string>
-						<string key="paste:">id</string>
-						<string key="pause:">id</string>
-						<string key="play:">id</string>
-						<string key="replace:">id</string>
-						<string key="selectAll:">id</string>
-						<string key="selectNone:">id</string>
-						<string key="stepBackward:">id</string>
-						<string key="stepForward:">id</string>
-						<string key="trim:">id</string>
-					</dictionary>
-					<reference key="sourceIdentifier" ref="725745968"/>
 				</object>
 			</array>
 		</object>
