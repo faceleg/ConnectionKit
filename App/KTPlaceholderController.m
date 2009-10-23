@@ -18,12 +18,15 @@
 #import "Registration.h"
 #import "NSDate+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "CIImage+Karelia.h"
+#import <QuickLook/QuickLook.h>
+#import <QuartzCore/QuartzCore.h>
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 
 @interface NSURL(PlaceholderTable)
-- (NSAttributedString *)attributedTitleAndDescription;
+- (NSAttributedString *)resourceAttributedTitleAndDescription;
 - (NSImage *)resourcePreviewImage;
 @end
 @implementation NSURL(PlaceholderTable)
@@ -48,20 +51,22 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	{
 		if (![displayName isEqualToString:value] && ![displayName hasPrefix:value])
 		{
-			[desc appendFormat:@"%@ ", value];	// only append if not equal, or a substring of file title
+			[desc appendString:value];	// only append if not equal, or a substring of file title
 		}
 	}
 	
 	if (value = [values objectForKey:(NSString*)kMDItemNumberOfPages])
 	{
+		if ([desc length]) [desc appendString:@", "];	// nice separator between previous info and this
 		if (![value intValue] > 1)
 		{
-			[desc appendFormat:@"%@ pgs. ", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
+			[desc appendFormat:@"%@ Pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
 		}
 	}
 
 	if (value = [values objectForKey:(NSString*)kMDItemLastUsedDate])
 	{
+		if ([desc length]) [desc appendString:@", "];	// nice separator between previous info and this
 		NSDate *date = (NSDate *)value;
 		
 		[desc appendFormat:@"Opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
@@ -81,7 +86,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 - (NSImage *)resourcePreviewImage;		// Get quicklook thumbnail and give it a bit of an outline
 {
 	NSImage *result = nil;
-	CGSize size = CGSizeMake(128,128);
+	CGSize size = CGSizeMake(46,46);	// 48 pixels possible - room for shadow
 	CGImageRef cgimage = QLThumbnailImageCreate(kCFAllocatorDefault,(CFURLRef)self,size,NULL);
 	
 	if (cgimage)
@@ -90,19 +95,15 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 		size.width = CGImageGetWidth(cgimage);
 		size.height = CGImageGetWidth(cgimage);
 		
-		result = [[[NSImage alloc] initWithSize:size] autorelease];
-		
-		NSBitmapImageRep* rep = [[NSBitmapImageRep alloc] initWithCGImage:cgimage];
-		[result addRepresentation:rep];		
-		[rep release];
-		
+		CIImage *ci = [CIImage imageWithCGImage:cgimage];
 		CGImageRelease(cgimage);
+		ci = [ci addShadow:1];
+		result = [ci toNSImage];
 	}
 	if (!result)
 	{
 		result = [[NSWorkspace sharedWorkspace] iconForFile:[self path]];
 	}
-	
 	return result;
 }
 

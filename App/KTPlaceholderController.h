@@ -14,11 +14,6 @@
 
 @interface KTPlaceholderController : KSSingletonWindowController {
 
-	IBOutlet NSButton *oHighLink;
-	IBOutlet NSButton *oLowLink;
-	IBOutlet QTMovieView *oPreviewMovie;
-	IBOutlet NSTextField *oDemoNotification;	// hide if not demo.  Top edge is window bottom.
-
 	IBOutlet NSView *oStickyView;
 	IBOutlet NSView *oStickyRotatedView;
 	IBOutlet NSTextView *oStickyTextView;

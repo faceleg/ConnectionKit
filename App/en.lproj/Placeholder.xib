@@ -11,8 +11,8 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="211"/>
-			<integer value="133"/>
+			<integer value="135"/>
+			<integer value="207"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -390,7 +390,7 @@
 																		<int key="NSCellFlags2">33554432</int>
 																		<reference key="NSSupport" ref="910301825"/>
 																		<int key="NSAlign">0</int>
-																		<int key="NSScale">0</int>
+																		<int key="NSScale">2</int>
 																		<int key="NSStyle">0</int>
 																		<bool key="NSAnimates">NO</bool>
 																	</object>
@@ -584,85 +584,7 @@
 									<object class="NSLayoutManager" key="NSLayoutManager">
 										<object class="NSTextStorage" key="NSTextStorage">
 											<object class="NSMutableString" key="NSString">
-												<bytes key="NS.bytes">VGhpcyBpcyBhIGRlbW8gb2YgU2FuZHZveC4KClNhbmR2b3ggaXMgZnVsbHkgZnVuY3Rpb25hbCBleGNl
-cHQgdGhhdCBvbmx5IHRoZSBob21lIHBhZ2UgY2FuIGJlIHB1Ymxpc2hlZC4</bytes>
-											</object>
-											<array class="NSMutableArray" key="NSAttributes">
-												<dictionary>
-													<object class="NSFont" key="NSFont">
-														<string key="NSName">MarkerFelt-Thin</string>
-														<double key="NSSize">21</double>
-														<int key="NSfFlags">16</int>
-													</object>
-													<object class="NSParagraphStyle" key="NSParagraphStyle">
-														<int key="NSAlignment">2</int>
-														<array key="NSTabStops">
-															<object class="NSTextTab" id="1011690013">
-																<double key="NSLocation">28</double>
-															</object>
-															<object class="NSTextTab" id="1042920176">
-																<double key="NSLocation">56</double>
-															</object>
-															<object class="NSTextTab" id="440676147">
-																<double key="NSLocation">84</double>
-															</object>
-															<object class="NSTextTab" id="895887958">
-																<double key="NSLocation">112</double>
-															</object>
-															<object class="NSTextTab" id="961434133">
-																<double key="NSLocation">140</double>
-															</object>
-															<object class="NSTextTab" id="629284084">
-																<double key="NSLocation">168</double>
-															</object>
-															<object class="NSTextTab" id="841761357">
-																<double key="NSLocation">196</double>
-															</object>
-															<object class="NSTextTab" id="199147105">
-																<double key="NSLocation">224</double>
-															</object>
-															<object class="NSTextTab" id="794839282">
-																<double key="NSLocation">252</double>
-															</object>
-															<object class="NSTextTab" id="93552104">
-																<double key="NSLocation">280</double>
-															</object>
-															<object class="NSTextTab" id="563586983">
-																<double key="NSLocation">308</double>
-															</object>
-															<object class="NSTextTab" id="698900815">
-																<double key="NSLocation">336</double>
-															</object>
-														</array>
-													</object>
-												</dictionary>
-												<dictionary>
-													<object class="NSFont" key="NSFont">
-														<string key="NSName">Chalkboard</string>
-														<double key="NSSize">12</double>
-														<int key="NSfFlags">16</int>
-													</object>
-													<object class="NSParagraphStyle" key="NSParagraphStyle">
-														<int key="NSAlignment">2</int>
-														<array key="NSTabStops">
-															<reference ref="1011690013"/>
-															<reference ref="1042920176"/>
-															<reference ref="440676147"/>
-															<reference ref="895887958"/>
-															<reference ref="961434133"/>
-															<reference ref="629284084"/>
-															<reference ref="841761357"/>
-															<reference ref="199147105"/>
-															<reference ref="794839282"/>
-															<reference ref="93552104"/>
-															<reference ref="563586983"/>
-															<reference ref="698900815"/>
-														</array>
-													</object>
-												</dictionary>
-											</array>
-											<object class="NSMutableData" key="NSAttributeInfo">
-												<bytes key="NS.bytes">GwBNAQ</bytes>
+												<characters key="NS.bytes"/>
 											</object>
 											<nil key="NSDelegate"/>
 										</object>
