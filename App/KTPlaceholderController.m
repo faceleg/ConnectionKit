@@ -100,9 +100,35 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 - (NSImage *)resourcePreviewImage;		// Get quicklook thumbnail and give it a bit of an outline
 {
+	const int thumbSize = 46;
+	CGImageRef cgimage = nil;
 	NSImage *result = nil;
-	CGSize size = CGSizeMake(46,46);	// 48 pixels possible - room for shadow
-	CGImageRef cgimage = QLThumbnailImageCreate(kCFAllocatorDefault,(CFURLRef)self,size,NULL);
+	
+	NSString *path2 = [self path];
+	path2 = [path2 stringByAppendingPathComponent:@"QuickLook"];
+	path2 = [path2 stringByAppendingPathComponent:@"thumbnail2.png"];		// look for our special "thumbnail2.png" image (no "Sandvox" emboss)
+	if ([[NSFileManager defaultManager] fileExistsAtPath:path2])
+	{
+		NSURL *url2 = [NSURL fileURLWithPath:path2 isDirectory:NO];
+		// image thumbnail options
+		NSDictionary* thumbOpts = [NSDictionary dictionaryWithObjectsAndKeys:
+								   (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailWithTransform,
+								   (id)kCFBooleanFalse, (id)kCGImageSourceCreateThumbnailFromImageIfAbsent,
+								   (id)kCFBooleanTrue, (id)kCGImageSourceCreateThumbnailFromImageAlways,	// bug in rotation so let's use the full size always
+								   [NSNumber numberWithInteger:thumbSize], (id)kCGImageSourceThumbnailMaxPixelSize, 
+								   nil];
+		CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)url2, NULL);
+		if (imageSource)
+		{
+			cgimage = CGImageSourceCreateThumbnailAtIndex(imageSource, 0, (CFDictionaryRef)thumbOpts);
+			CFRelease(imageSource);
+		}
+	}
+	if (!cgimage)	// use standard quicklook
+	{
+		CGSize size = CGSizeMake(thumbSize,thumbSize);	// 48 pixels possible - room for shadow
+		cgimage = QLThumbnailImageCreate(kCFAllocatorDefault,(CFURLRef)self,size,NULL);
+	}
 	
 	if (cgimage)
 	{
