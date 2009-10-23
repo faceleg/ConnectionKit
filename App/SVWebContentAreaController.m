@@ -18,15 +18,13 @@
     
     _webViewController = [[SVWebViewLoadController alloc] init];
     [_webViewController setDelegate:self];
+    [self insertViewController:_webViewController atIndex:0];
     
     _placeholderViewController = [[NSViewController alloc] initWithNibName:@"SelectionPlaceholder"
                                                                     bundle:nil];
+    [self insertViewController:_placeholderViewController atIndex:1];
     
-    [self setViewControllers:[NSArray arrayWithObjects:
-                              _webViewController,
-                              _placeholderViewController,
-                              nil]
-               selectedIndex:0];
+    [self setSelectedIndex:0];
     
     return self;
 }

@@ -19,16 +19,13 @@
     // Setup default inspectors
     SVInspectorViewController *documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
+    [[self inspectorTabsController] insertViewController:documentInspector atIndex:0];
+    [documentInspector release];
     
     SVInspectorViewController *pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
-    
-    NSArray *inspectors = [[NSArray alloc] initWithObjects:documentInspector, pageInspector, nil];
-    [documentInspector release];
+    [[self inspectorTabsController] insertViewController:pageInspector atIndex:1];
     [pageInspector release];
-    
-    [[self inspectorTabsController] setViewControllers:inspectors selectedIndex:0];
-    [inspectors release];
 }
 
 @end

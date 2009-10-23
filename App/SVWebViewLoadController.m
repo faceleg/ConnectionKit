@@ -31,18 +31,15 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     // Create controllers
     _primaryController = [[SVWebViewController alloc] init];
     [_primaryController setDelegate:self];
+    [self insertViewController:_primaryController atIndex:0];
     
     _secondaryController = [[SVWebViewController alloc] init];
     [_secondaryController setDelegate:self];
+    [self insertViewController:_secondaryController atIndex:1];
     
     _webViewLoadingPlaceholder = [[SVLoadingPlaceholderViewController alloc] init];
-    
-    [self setViewControllers:[NSArray arrayWithObjects:
-                              _primaryController,
-                              _secondaryController,
-                              _webViewLoadingPlaceholder,
-                              nil]
-               selectedIndex:2];
+    [self insertViewController:_webViewLoadingPlaceholder atIndex:2];
+    [self setSelectedIndex:2];
     
     
     // Delegation/observation
