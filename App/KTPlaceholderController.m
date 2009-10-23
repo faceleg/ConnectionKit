@@ -21,6 +21,7 @@
 #import "CIImage+Karelia.h"
 #import <QuickLook/QuickLook.h>
 #import <QuartzCore/QuartzCore.h>
+#import "KTDocument.h"
 
 enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
@@ -34,42 +35,56 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 - (NSAttributedString *)resourceAttributedTitleAndDescription
 {
 	NSString *displayName = [self displayName];
-	CFStringRef filePath = (CFStringRef)[self path];
-	MDItemRef mdItem = MDItemCreate(NULL, filePath);
-
-	/*
-	 NSPersistentStoreCoordinator metadataForPersistentStoreOfType:URL:error:
-	 */
 	
 	NSMutableString *desc = [NSMutableString string];	// METADATA -- CAN WE PUT IN TITLE/SUBTITLE?  NOT GETTING SAVED?
 
-	NSDictionary *values = NSMakeCollectable(MDItemCopyAttributeList(mdItem,kMDItemDisplayName,kMDItemKind,
-													kMDItemContentType,kMDItemLastUsedDate,kMDItemContentTypeTree) );
-	[values autorelease];
+	NSError *err = nil;
+	NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:self type:nil];
+	NSDictionary *values =[NSPersistentStoreCoordinator
+						   metadataForPersistentStoreOfType:NSSQLiteStoreType
+						   URL:datastoreURL
+						   error:&err];
+
 	id value = nil;
+	enum { kNone, kTitle, kPages, kDate };
+	int lastAppendedItem = kNone;
 	if (value = [values objectForKey:(NSString*)kMDItemTitle])
 	{
 		if (![displayName isEqualToString:value] && ![displayName hasPrefix:value])
 		{
-			[desc appendString:value];	// only append if not equal, or a substring of file title
+			[desc appendFormat:@"%C%@%C", 0x201C, value, 0x201D];	// only append if not equal, or a substring of file title
+			lastAppendedItem = kTitle;
 		}
 	}
 	
 	if (value = [values objectForKey:(NSString*)kMDItemNumberOfPages])
 	{
-		if ([desc length]) [desc appendString:@", "];	// nice separator between previous info and this
-		if (![value intValue] > 1)
+		if ([desc length]) [desc appendString:@" "];	// just a space to separate page count
+		if ([value intValue] > 1)
 		{
 			[desc appendFormat:@"%@ Pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
-		}
+			lastAppendedItem = kPages;
+	}
 	}
 
+	// Spotlight only, not in document metadata
+	CFStringRef filePath = (CFStringRef)[self path];
+	MDItemRef mdItem = MDItemCreate(NULL, filePath);
+	
+	values = NSMakeCollectable(MDItemCopyAttributeList(mdItem,kMDItemLastUsedDate) );
+	[values autorelease];
 	if (value = [values objectForKey:(NSString*)kMDItemLastUsedDate])
 	{
-		if ([desc length]) [desc appendString:@", "];	// nice separator between previous info and this
+		switch (lastAppendedItem)
+		{
+			case kTitle: [desc appendString:@" "]; break;
+			case kPages:  [desc appendString:@", "]; break;
+			default: break;
+		}
 		NSDate *date = (NSDate *)value;
 		
 		[desc appendFormat:@"Opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
+		lastAppendedItem = kDate;
 	}
 	
 	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:[NSFont systemFontSize]], NSFontAttributeName, nil];
@@ -159,25 +174,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsAvailableNotification object:nil];
 	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsNotAvailableNotification object:nil];
 		
-	NSMutableAttributedString *attrString = [[[oHighLink attributedTitle] mutableCopyWithZone:[oHighLink zone]] autorelease];
-	NSRange range = NSMakeRange(0,[attrString length]);
 	
-	[attrString addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor] range:range];
-	[attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1]  range:range];
-	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
-	[oHighLink setAttributedTitle:attrString];
-	
-	attrString = [[[oLowLink attributedTitle] mutableCopyWithZone:[oLowLink zone]] autorelease];
-	range = NSMakeRange(0,[attrString length]);
-	
-	[attrString addAttribute:NSForegroundColorAttributeName value:[NSColor linkColor] range:range];
-	[attrString addAttribute:NSUnderlineStyleAttributeName value:[NSNumber numberWithInt:1]  range:range];
-	[attrString addAttribute:NSCursorAttributeName value:[NSCursor pointingHandCursor] range:range];
-	[oLowLink setAttributedTitle:attrString];
-	
-	// NSLocalizedString(@"You are running a demonstration version of Sandvox.", "indicator that this is a demo")];
-	[oDemoNotification setStringValue:NSLocalizedString(@"Please purchase a license to Sandvox.", "indicator that this is a demo")];
-
 	[self updateLicenseStatus:nil];
 
 	[[self window] center];
