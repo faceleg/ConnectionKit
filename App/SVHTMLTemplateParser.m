@@ -158,7 +158,9 @@
 	
 	if (result)
 	{
-		if ([self currentPage]) [[self cache] overrideKey:@"CurrentPage" withValue:[self currentPage]];
+		KTAbstractPage *page = [[SVHTMLGenerationContext currentContext] currentPage];
+        if (page) [[self cache] overrideKey:@"CurrentPage" withValue:page];
+        
 		[[self cache] overrideKey:@"HTMLGenerationPurpose" withValue:[self valueForKey:@"HTMLGenerationPurpose"]];
 	}
 	
@@ -375,7 +377,7 @@
 	}
 	
 	// Mark for image replacement ONLY if QC supported.
-	KTAbstractPage *page = [self currentPage];
+	KTAbstractPage *page = [[SVHTMLGenerationContext currentContext] currentPage];
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
@@ -449,7 +451,7 @@
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
         if (resourceFilePath)
         {
-            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[self currentPage]];
+            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLGenerationContext currentContext] currentPage]];
         }
     }
     
@@ -494,7 +496,7 @@
 		return @"";
 	}
 	
-	NSURL *sourceURL = [[self currentPage] URL];
+	NSURL *sourceURL = [[SVHTMLGenerationContext currentContext] baseURL];
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
 	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
@@ -531,7 +533,7 @@
                 result= @"javascript:void(0)";
                 break;
             default:
-                result = [[(KTAbstractPage *)anObject URL] stringRelativeToURL:[[self currentPage] URL]];
+                result = [[(KTAbstractPage *)anObject URL] stringRelativeToURL:[[SVHTMLGenerationContext currentContext] baseURL]];
                 break;
         }
     }
@@ -544,7 +546,7 @@
                 result = [(NSURL *)anObject absoluteString];
                 break;
             default:
-                result = [(NSURL *)anObject stringRelativeToURL:[[self currentPage] URL]];
+                result = [(NSURL *)anObject stringRelativeToURL:[[SVHTMLGenerationContext currentContext] baseURL]];
                 break;
         }
     }
