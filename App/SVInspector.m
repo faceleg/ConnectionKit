@@ -9,23 +9,57 @@
 #import "SVInspector.h"
 #import "SVInspectorViewController.h"
 
+#import "KSTabViewController.h"
+
 
 @implementation SVInspector
 
-- (void)windowDidLoad
+- (NSArrayController *)inspectedPagesController
 {
-    [super windowDidLoad];
+    if (!_inspectedPagesController)
+    {
+        _inspectedPagesController = [[NSArrayController alloc] init];
+        [_inspectedPagesController setAvoidsEmptySelection:NO];
+        [_inspectedPagesController setPreservesSelection:NO];
+    }
     
-    // Setup default inspectors
+    return _inspectedPagesController;
+}
+
+- (void)setInspectedPages:(NSArray *)pages;
+{
+    NSArrayController *controller = [self inspectedPagesController];
+    [controller setContent:pages];
+    [controller setSelectionIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [pages count])]];
+}
+
+- (void)setInspectedWindow:(NSWindow *)window
+{
+    [super setInspectedWindow:window];
+    
+    NSArray *pages = [[[[window windowController] siteOutlineViewController] pagesController] selectedObjects];
+    [self setInspectedPages:pages];
+}
+
+- (NSArray *)defaultInspectorViewControllers;
+{
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:2];
+    
+
     SVInspectorViewController *documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
-    [[self inspectorTabsController] insertViewController:documentInspector atIndex:0];
+    [documentInspector setInspectedPagesController:[self inspectedPagesController]];
+    [result insertObject:documentInspector atIndex:0];
     [documentInspector release];
     
     SVInspectorViewController *pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
-    [[self inspectorTabsController] insertViewController:pageInspector atIndex:1];
+    [pageInspector setInspectedPagesController:[self inspectedPagesController]];
+    [result insertObject:pageInspector atIndex:1];
     [pageInspector release];
+    
+    
+    return result;
 }
 
 @end

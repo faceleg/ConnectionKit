@@ -11,7 +11,12 @@
 
 @interface SVInspectorViewController : NSViewController
 {
-
+  @private  // TODO: Enough spare ivars for later changes without breaking plug-ins
+    NSArray             *_inspectedPages;
+    NSArrayController   *_inspectedPagesController;
 }
+
+@property(nonatomic, copy, readonly) NSArray *inspectedPages;
+@property(nonatomic, retain) NSArrayController *inspectedPagesController;
 
 @end

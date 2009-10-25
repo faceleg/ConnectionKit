@@ -11,4 +11,13 @@
 
 @implementation SVInspectorViewController
 
+#pragma mark Pages
+
+- (NSArray *)inspectedPages
+{
+    return [[self inspectedPagesController] selectedObjects];
+}
+
+@synthesize inspectedPagesController = _inspectedPagesController;
+
 @end

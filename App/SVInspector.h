@@ -11,7 +11,11 @@
 
 @interface SVInspector : KSInspector
 {
-
+  @private
+    NSArrayController   *_inspectedPagesController;
 }
+
+@property(nonatomic, retain, readonly) NSArrayController *inspectedPagesController;
+- (void)setInspectedPages:(NSArray *)pages;
 
 @end
