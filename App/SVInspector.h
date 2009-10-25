@@ -12,10 +12,9 @@
 @interface SVInspector : KSInspector
 {
   @private
-    NSArrayController   *_inspectedPagesController;
+    NSObjectController  *_inspectedPagesController;
 }
 
-@property(nonatomic, retain, readonly) NSArrayController *inspectedPagesController;
-- (void)setInspectedPages:(NSArray *)pages;
+@property(nonatomic, retain) NSObjectController *inspectedPagesController;
 
 @end

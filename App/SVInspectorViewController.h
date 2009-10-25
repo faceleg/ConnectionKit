@@ -17,6 +17,6 @@
 }
 
 @property(nonatomic, copy, readonly) NSArray *inspectedPages;
-@property(nonatomic, retain) NSArrayController *inspectedPagesController;
+@property(nonatomic, retain) NSObjectController *inspectedPagesController;
 
 @end

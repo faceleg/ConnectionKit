@@ -14,31 +14,29 @@
 
 @implementation SVInspector
 
-- (NSArrayController *)inspectedPagesController
++ (void)initialize
 {
-    if (!_inspectedPagesController)
-    {
-        _inspectedPagesController = [[NSArrayController alloc] init];
-        [_inspectedPagesController setAvoidsEmptySelection:NO];
-        [_inspectedPagesController setPreservesSelection:NO];
-    }
-    
-    return _inspectedPagesController;
+    [self exposeBinding:@"inspectedPagesController"];
 }
 
-- (void)setInspectedPages:(NSArray *)pages;
-{
-    NSArrayController *controller = [self inspectedPagesController];
-    [controller setContent:pages];
-    [controller setSelectionIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [pages count])]];
-}
+@synthesize inspectedPagesController = _inspectedPagesController;
 
 - (void)setInspectedWindow:(NSWindow *)window
 {
+    if ([self inspectedWindow])
+    {
+        [self unbind:@"inspectedPagesController"];
+    }
+    
     [super setInspectedWindow:window];
     
-    NSArray *pages = [[[[window windowController] siteOutlineViewController] pagesController] selectedObjects];
-    [self setInspectedPages:pages];
+    if (window)
+    {
+        [self bind:@"inspectedPagesController"
+          toObject:window
+       withKeyPath:@"windowController.siteOutlineViewController.pagesController"
+           options:nil];
+    }
 }
 
 - (NSArray *)defaultInspectorViewControllers;
