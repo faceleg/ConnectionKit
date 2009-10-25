@@ -213,8 +213,6 @@
 		2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713C0681078177A000864C2 /* SVLayoutView.m */; };
 		271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 271568660D5B2EE100A91E58 /* KTElementTemplate.html */; };
 		27156A810D5CA1C700A91E58 /* SVHTMLTemplateParser+Index.m in Sources */ = {isa = PBXBuildFile; fileRef = 27156A800D5CA1C700A91E58 /* SVHTMLTemplateParser+Index.m */; };
-		2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 271575180D605CD900A91E58 /* KTStalenessHTMLParser.h */; settings = {ATTRIBUTES = (); }; };
-		2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */; };
 		271575540D60664500A91E58 /* SVSiteOutlineViewController+DragAndDrop.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575520D60664500A91E58 /* SVSiteOutlineViewController+DragAndDrop.m */; };
 		271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 271575CC0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m */; };
 		27158FCA1083FBE600E72B74 /* bak.png in Resources */ = {isa = PBXBuildFile; fileRef = CE264CD9081708DD009D3B6C /* bak.png */; };
@@ -4906,7 +4904,6 @@
 				27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */,
 				27ACA3110D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h in Headers */,
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
-				2715751A0D605CD900A91E58 /* KTStalenessHTMLParser.h in Headers */,
 				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */,
 				3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */,
@@ -6296,7 +6293,6 @@
 				27ACA3120D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m in Sources */,
 				27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */,
 				27156A810D5CA1C700A91E58 /* SVHTMLTemplateParser+Index.m in Sources */,
-				2715751B0D605CD900A91E58 /* KTStalenessHTMLParser.m in Sources */,
 				271575540D60664500A91E58 /* SVSiteOutlineViewController+DragAndDrop.m in Sources */,
 				271575CE0D60B5DC00A91E58 /* DOMNodeList+KTExtensions.m in Sources */,
 				CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */,
