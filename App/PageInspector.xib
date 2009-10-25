@@ -419,14 +419,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
 			</object>
-			<object class="NSObjectController" id="567718098">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>includeInSiteMenu</string>
-				</object>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -438,22 +430,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="destination" ref="58454268"/>
 					</object>
 					<int key="connectionID">38</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentObject: inspectedPagesController.selection</string>
-						<reference key="source" ref="567718098"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="567718098"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">contentObject: inspectedPagesController.selection</string>
-							<string key="NSBinding">contentObject</string>
-							<string key="NSKeyPath">inspectedPagesController.selection</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">60</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -470,6 +446,122 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">62</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.includeInSiteMap</string>
+						<reference key="source" ref="384717925"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="384717925"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.includeInSiteMap</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.includeInSiteMap</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">69</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.disableComments</string>
+						<reference key="source" ref="512307078"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="512307078"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.disableComments</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.disableComments</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">70</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.isDraft</string>
+						<reference key="source" ref="202756626"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="202756626"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.isDraft</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.isDraft</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">72</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.creationDate</string>
+						<reference key="source" ref="445586817"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="445586817"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.creationDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.creationDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">74</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.creationDate</string>
+						<reference key="source" ref="985988556"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="985988556"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.creationDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.creationDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">75</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.includeSidebar</string>
+						<reference key="source" ref="636638931"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="636638931"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.includeSidebar</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.includeSidebar</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">76</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedPagesController.selection.includeInheritedSidebar</string>
+						<reference key="source" ref="425887239"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="425887239"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedPagesController.selection.includeInheritedSidebar</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedPagesController.selection.includeInheritedSidebar</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">77</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -700,11 +792,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						<reference key="object" ref="846033315"/>
 						<reference key="parent" ref="1013490114"/>
 					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">55</int>
-						<reference key="object" ref="567718098"/>
-						<reference key="parent" ref="0"/>
-					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -745,7 +832,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<string>52.IBPluginDependency</string>
 					<string>53.IBPluginDependency</string>
 					<string>54.IBPluginDependency</string>
-					<string>55.IBPluginDependency</string>
 					<string>8.IBPluginDependency</string>
 					<string>8.ImportedFromIB2</string>
 					<string>9.IBPluginDependency</string>
@@ -788,7 +874,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
@@ -810,7 +895,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">64</int>
+			<int key="maxID">77</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -827,13 +912,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="39438142">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/NSView+Karelia.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSManagedObjectContext</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">NSManagedObjectContext+KTExtensions.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
