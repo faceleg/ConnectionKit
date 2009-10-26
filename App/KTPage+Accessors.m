@@ -51,7 +51,9 @@
  */
 - (void)setTitleHTML:(NSString *)value
 {
-	[super setTitleHTML:value];
+	NSString *oldTitleText = [self titleText];
+    
+    [super setTitleHTML:value];
 	
 	
 	// If the page hasn't been published yet, update the filename to match
@@ -67,6 +69,14 @@
 	{
 		[[self parent] invalidateSortedChildrenCache];
 	}
+    
+    
+    // Update title in site menu to match
+    NSString *menuTitle = [self menuTitle];
+    if ([menuTitle length] == 0 || [menuTitle isEqualToString:oldTitleText])
+    {
+        [self setMenuTitle:[self titleText]];
+    }
     
     
     // Update archive page titles to match
@@ -191,33 +201,7 @@
 	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 }
 
-- (NSString *)menuTitle { return [self wrappedValueForKey:@"menuTitle"]; }
-
-- (void)setMenuTitle:(NSString *)newTitle
-{
-	[self setWrappedValue:newTitle forKey:@"menuTitle"];
-}
-
-/*	The HTML to use for the Site Menu. Picks from -menuTitle or -titleText appropriately
- */
-- (NSString *)menuTitleOrTitle
-{
-	NSString *result = [self menuTitle];
-    if (nil == result || [result isEqualToString:@""])
-	{
-		result = [self titleText];
-	}
-	
-	result = [result stringByEscapingHTMLEntities];
-	
-	// Then convert spaces to be non-breaking since we don't want a fragmented menu
-	if ([[[self master] design] menusUseNonBreakingSpaces])
-	{
-		result = [result stringByReplacing:@" " with:@"&nbsp;"];
-	}
-	
-	return result;
-}
+@dynamic menuTitle;
 
 #pragma mark -
 #pragma mark Timestamp

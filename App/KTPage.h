@@ -61,12 +61,8 @@
 - (BOOL)excludedFromSiteMap;
 
 // Site menu
-- (BOOL)includeInSiteMenu;
-- (void)setIncludeInSiteMenu:(BOOL)include;
-
-- (NSString *)menuTitle;
-- (void)setMenuTitle:(NSString *)newTitle;
-- (NSString *)menuTitleOrTitle;
+@property(nonatomic) BOOL includeInSiteMenu;
+@property(nonatomic, copy) NSString *menuTitle;
 
 // Timestamps
 - (NSDate *)editableTimestamp;

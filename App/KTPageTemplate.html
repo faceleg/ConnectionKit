@@ -118,12 +118,12 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 
 [[if toplink==parser.currentPage]]
 									<li class="[[i]] [[eo]][[last]] currentPage">
-										[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:mc tag:span]]
+										[[textblock property:toplink.menuTitle flags:"line" graphicalTextCode:mc tag:span]]
 									</li>
 [[else2]]
 									<li class="[[i]] [[eo]][[last]][[if parser.currentPage.includeInSiteMenu]][[else3]][[if toplink==parser.currentPage.parent]][[if parser.currentPage.parent.index]] currentParent[[endif5]][[endif4]][[endif3]]">
 										<a [[target toplink]]href="[[path toplink]]" title="[[=&toplink.titleText]]">
-											[[textblock property:toplink.menuTitleOrTitle graphicalTextCode:m tag:span]]</a>
+											[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>
 									</li>
 [[endif2]]
 [[endForEach]]

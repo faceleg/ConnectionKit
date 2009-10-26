@@ -52,12 +52,7 @@
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
     
-    // Title
-                                [self setKeys:[NSArray arrayWithObjects:@"menuTitle", @"titleHTML", nil]
-    triggerChangeNotificationsForDependentKey:@"menuTitleOrTitle"];
-        
-	
-	// this is so we get notification of updaates to any properties that affect index type.
+    // this is so we get notification of updaates to any properties that affect index type.
 	// This is a fake attribute -- we don't actually have this accessor since it's more UI related
 	[self setKeys:[NSArray arrayWithObjects:
 		@"collectionShowPermanentLink",
