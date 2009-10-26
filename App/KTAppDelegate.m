@@ -53,7 +53,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTInfoWindowController.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
-#import "KTPlaceholderController.h"
+#import "SVWelcomeController.h"
 #import "KTPrefsController.h"
 #import "KTPrefsController.h"
 #import "KTReleaseNotesController.h"

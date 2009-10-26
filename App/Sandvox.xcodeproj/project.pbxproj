@@ -592,7 +592,7 @@
 		3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */; };
 		3C9BC1F2103DF8D300D2CF47 /* HostSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */; };
 		3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */; };
-		3C9BC1FA103DF92500D2CF47 /* Placeholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F8103DF92500D2CF47 /* Placeholder.xib */; };
+		3C9BC1FA103DF92500D2CF47 /* Welcome.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F8103DF92500D2CF47 /* Welcome.xib */; };
 		3C9BC1FE103DF94300D2CF47 /* Prefs.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1FC103DF94300D2CF47 /* Prefs.xib */; };
 		3C9BC202103DF95900D2CF47 /* NewDocumentAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC200103DF95900D2CF47 /* NewDocumentAccessoryView.xib */; };
 		3C9BC205103DF97F00D2CF47 /* DocumentMigration.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */; };
@@ -989,7 +989,7 @@
 		CE70D9EE094EA86F003169B8 /* qmark50.png in Resources */ = {isa = PBXBuildFile; fileRef = CE70D9ED094EA86F003169B8 /* qmark50.png */; };
 		CE7230EA0D85D5BB00E9C592 /* syringe.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE7230E90D85D5BB00E9C592 /* syringe.tiff */; };
 		CE7231220D85D96F00E9C592 /* favicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE7231210D85D96F00E9C592 /* favicon.icns */; };
-		CE7779E60AE499C3002E6844 /* KTPlaceholderController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */; };
+		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
 		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
@@ -2150,7 +2150,7 @@
 		3C9BC1ED103DF8BA00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CodeInjection.xib; sourceTree = "<group>"; };
 		3C9BC1F1103DF8D300D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HostSetup.xib; sourceTree = "<group>"; };
 		3C9BC1F5103DF90C00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTTransfer.xib; sourceTree = "<group>"; };
-		3C9BC1F9103DF92500D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Placeholder.xib; sourceTree = "<group>"; };
+		3C9BC1F9103DF92500D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Welcome.xib; sourceTree = "<group>"; };
 		3C9BC1FD103DF94300D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Prefs.xib; sourceTree = "<group>"; };
 		3C9BC201103DF95900D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/NewDocumentAccessoryView.xib; sourceTree = "<group>"; };
 		3C9BC204103DF97F00D2CF47 /* DocumentMigration.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentMigration.xib; sourceTree = "<group>"; };
@@ -2590,8 +2590,8 @@
 		CE70D9ED094EA86F003169B8 /* qmark50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qmark50.png; sourceTree = "<group>"; };
 		CE7230E90D85D5BB00E9C592 /* syringe.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = syringe.tiff; sourceTree = "<group>"; };
 		CE7231210D85D96F00E9C592 /* favicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = favicon.icns; sourceTree = "<group>"; };
-		CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderController.h; sourceTree = "<group>"; };
-		CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderController.m; sourceTree = "<group>"; };
+		CE7779E30AE499C2002E6844 /* SVWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWelcomeController.h; sourceTree = "<group>"; };
+		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
@@ -3744,7 +3744,7 @@
 				3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */,
 				3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */,
 				3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */,
-				3C9BC1F8103DF92500D2CF47 /* Placeholder.xib */,
+				3C9BC1F8103DF92500D2CF47 /* Welcome.xib */,
 				3C9BC200103DF95900D2CF47 /* NewDocumentAccessoryView.xib */,
 			);
 			name = Localized;
@@ -4750,8 +4750,8 @@
 				3C27FE01096F198E00702991 /* KTReleaseNotesController.m */,
 				CE510FCB090EA74C00547CFF /* KTTranscriptController.h */,
 				CE510FCC090EA74C00547CFF /* KTTranscriptController.m */,
-				CE7779E30AE499C2002E6844 /* KTPlaceholderController.h */,
-				CE7779E40AE499C3002E6844 /* KTPlaceholderController.m */,
+				CE7779E30AE499C2002E6844 /* SVWelcomeController.h */,
+				CE7779E40AE499C3002E6844 /* SVWelcomeController.m */,
 			);
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
@@ -5825,7 +5825,7 @@
 				3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */,
 				3C9BC1F2103DF8D300D2CF47 /* HostSetup.xib in Resources */,
 				3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */,
-				3C9BC1FA103DF92500D2CF47 /* Placeholder.xib in Resources */,
+				3C9BC1FA103DF92500D2CF47 /* Welcome.xib in Resources */,
 				3C9BC1FE103DF94300D2CF47 /* Prefs.xib in Resources */,
 				3C9BC202103DF95900D2CF47 /* NewDocumentAccessoryView.xib in Resources */,
 				3C9BC205103DF97F00D2CF47 /* DocumentMigration.xib in Resources */,
@@ -6238,7 +6238,7 @@
 				CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */,
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
 				79B731110A33BF9A008F7F58 /* KTHost.m in Sources */,
-				CE7779E60AE499C3002E6844 /* KTPlaceholderController.m in Sources */,
+				CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */,
 				3C26D8040BC5B7DD00FF874D /* KTCodeInjectionController.m in Sources */,
 				CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */,
 				3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */,
@@ -7007,12 +7007,12 @@
 			name = KTTransfer.xib;
 			sourceTree = "<group>";
 		};
-		3C9BC1F8103DF92500D2CF47 /* Placeholder.xib */ = {
+		3C9BC1F8103DF92500D2CF47 /* Welcome.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
 				3C9BC1F9103DF92500D2CF47 /* en */,
 			);
-			name = Placeholder.xib;
+			name = Welcome.xib;
 			sourceTree = "<group>";
 		};
 		3C9BC1FC103DF94300D2CF47 /* Prefs.xib */ = {

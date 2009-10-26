@@ -12,7 +12,7 @@
 @class QTMovieView, KSYellowStickyWindow;
 
 
-@interface KTPlaceholderController : KSSingletonWindowController {
+@interface SVWelcomeController : KSSingletonWindowController {
 
 	IBOutlet NSView *oStickyView;
 	IBOutlet NSView *oStickyRotatedView;

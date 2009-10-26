@@ -6,7 +6,7 @@
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTPlaceholderController.h"
+#import "SVWelcomeController.h"
 
 #import "NSColor+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -130,14 +130,14 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 @end
 
-@implementation KTPlaceholderController
+@implementation SVWelcomeController
 
 @synthesize sticky = _sticky;
 @synthesize networkAvailable = _networkAvailable;
 
 - (id)init
 {
-    self = [super initWithWindowNibName:@"Placeholder"];
+    self = [super initWithWindowNibName:@"Welcome"];
     return self;
 }
 

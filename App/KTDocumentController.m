@@ -23,7 +23,7 @@
 #import "KTMaster.h"
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
-#import "KTPlaceholderController.h"
+#import "SVWelcomeController.h"
 #import "KTPluginInstaller.h"
 
 #import "NSArray+Karelia.h"
@@ -58,7 +58,7 @@
     }
     else
     {
-		[[KTPlaceholderController sharedController] showWindowAndBringToFront:NO];
+		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO];
     }
 }
 
@@ -331,7 +331,7 @@
 {
 	[super addDocument:document];
     
-    [[KTPlaceholderController sharedController] hideWindow:self];
+    [[SVWelcomeController sharedController] hideWindow:self];
 	[self synchronizeOpenDocumentsUserDefault];
 }
 
