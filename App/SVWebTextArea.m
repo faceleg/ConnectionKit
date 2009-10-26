@@ -46,6 +46,9 @@
 
 - (void)dealloc
 {
+    // Bindings don't automatically unbind themselves; have to do it ourself
+    [self unbind:NSValueBinding];
+    
     [_element release];
     
     [super dealloc];
