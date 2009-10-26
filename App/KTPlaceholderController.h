@@ -22,17 +22,19 @@
 	IBOutlet NSArrayController *oRecentDocsController;
 	
 @private
+	BOOL _networkAvailable;
 	KSYellowStickyWindow *_sticky;
 	
 }
 
 @property (retain) KSYellowStickyWindow *sticky;
+@property (assign) BOOL networkAvailable;
 
 - (IBAction) doNew:(id)sender;
 - (IBAction) doOpen:(id)sender;
 - (IBAction) openLicensing:(id)sender;
-- (IBAction) openScreencastLargeSize:(id)sender;
-- (IBAction) openScreencastSmallSize:(id)sender;
+- (IBAction) openScreencast:(id)sender;
 - (IBAction) disclose:(id)sender;
+- (IBAction) showHelp:(id)sender;
 
 @end

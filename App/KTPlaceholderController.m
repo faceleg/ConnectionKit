@@ -133,6 +133,7 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 @implementation KTPlaceholderController
 
 @synthesize sticky = _sticky;
+@synthesize networkAvailable = _networkAvailable;
 
 - (id)init
 {
@@ -159,6 +160,11 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	}
 }
 
+- (void) updateNetworkStatus:(NSNotification *)aNotification
+{
+	self.networkAvailable = [KSNetworkNotifier isNetworkAvailable];
+}
+
 - (IBAction)showWindow:(id)sender;
 {
 
@@ -176,11 +182,12 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
 
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsAvailableNotification object:nil];
-	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateLicenseStatus:) name:kKSNetworkIsNotAvailableNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNetworkStatus:) name:kKSNetworkIsAvailableNotification object:nil];
+	[[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(updateNetworkStatus:) name:kKSNetworkIsNotAvailableNotification object:nil];
 		
 	
 	[self updateLicenseStatus:nil];
+	[self updateNetworkStatus:nil];
 
 	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
@@ -245,25 +252,17 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[[NSApp delegate] performSelector:@selector(showRegistrationWindow:) withObject:sender afterDelay:0.0];
 }
 
-- (IBAction) openScreencastLargeSize:(id)sender;
+- (IBAction) openScreencast:(id)sender;
 {
-	[[NSApp delegate] openScreencastLargeSize:nil];
+	[[NSApp delegate] openScreencast:nil];
 }
 
-- (IBAction) openHigh:(id)sender;		// LEGACY -- BACKWARD COMPATIBLE IF NIBS ARE NOT LOCALIZED YET
+- (IBAction) showHelp:(id)sender
 {
-	[[NSApp delegate] openScreencastLargeSize:nil];
+	[[NSApp delegate] showHelpPage:@"Discover"];	// HELPSTRING
 }
 
-- (IBAction) openScreencastSmallSize:(id)sender;
-{
-	[[NSApp delegate] openScreencastSmallSize:nil];
-}
 
-- (IBAction) openLow:(id)sender;	// LEGACY -- BACKWARD COMPATIBLE IF NIBS ARE NOT LOCALIZED YET
-{
-	[[NSApp delegate] openScreencastSmallSize:nil];
-}
 
 
 @end

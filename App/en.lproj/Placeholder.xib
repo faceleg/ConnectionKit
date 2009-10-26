@@ -11,8 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="133"/>
-			<integer value="207"/>
+			<integer value="6"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -225,14 +224,18 @@
 						<object class="NSTextField" id="248613423">
 							<reference key="NSNextResponder" ref="151379416"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{17, 116}, {313, 18}}</string>
+							<string key="NSFrame">{{17, 130}, {313, 18}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="960826127">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">4194304</int>
 								<string key="NSContents">Watch our Introduction Video.</string>
-								<reference key="NSSupport" ref="910301825"/>
+								<object class="NSFont" key="NSSupport">
+									<string key="NSName">LucidaGrande-Bold</string>
+									<double key="NSSize">13</double>
+									<int key="NSfFlags">16</int>
+								</object>
 								<reference key="NSControlView" ref="248613423"/>
 								<reference key="NSBackgroundColor" ref="400060368"/>
 								<object class="NSColor" key="NSTextColor" id="496525773">
@@ -245,13 +248,14 @@
 						<object class="NSTextField" id="463477505">
 							<reference key="NSNextResponder" ref="151379416"/>
 							<int key="NSvFlags">256</int>
-							<string key="NSFrame">{{17, 80}, {166, 28}}</string>
+							<string key="NSFrame">{{17, 66}, {186, 56}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="316288214">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">4325376</int>
-								<string type="base64-UTF8" key="NSContents">MTggbWludXRlcyBsb25nLCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
+								<string type="base64-UTF8" key="NSContents">U2VlIHVzIGJ1aWxkIGEgd2Vic2l0ZSBmcm9tIHN0YXJ0IHRvIGZpbmlzaC4KMTggbWludXRlcyBsb25n
+LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 								<object class="NSFont" key="NSSupport" id="26">
 									<string key="NSName">LucidaGrande</string>
 									<double key="NSSize">11</double>
@@ -268,7 +272,7 @@
 						<object class="NSTextField" id="674526629">
 							<reference key="NSNextResponder" ref="151379416"/>
 							<int key="NSvFlags">266</int>
-							<string key="NSFrame">{{345, 116}, {313, 18}}</string>
+							<string key="NSFrame">{{345, 130}, {313, 18}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="461842357">
@@ -276,7 +280,7 @@
 								<int key="NSCellFlags2">4194304</int>
 								<string key="NSContents">Help &amp; Documentation</string>
 								<object class="NSFont" key="NSSupport">
-									<string key="NSName">LucidaGrande</string>
+									<string key="NSName">LucidaGrande-Bold</string>
 									<double key="NSSize">14</double>
 									<int key="NSfFlags">16</int>
 								</object>
@@ -288,13 +292,13 @@
 						<object class="NSTextField" id="497452736">
 							<reference key="NSNextResponder" ref="151379416"/>
 							<int key="NSvFlags">256</int>
-							<string key="NSFrame">{{345, 80}, {166, 28}}</string>
+							<string key="NSFrame">{{345, 80}, {186, 42}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="516735742">
 								<int key="NSCellFlags">67239424</int>
 								<int key="NSCellFlags2">4325376</int>
-								<string key="NSContents">Detailed overview, blah blah blah.</string>
+								<string key="NSContents">Take a look at what kind of websites you can build with Sandvox.</string>
 								<reference key="NSSupport" ref="26"/>
 								<reference key="NSControlView" ref="497452736"/>
 								<reference key="NSBackgroundColor" ref="400060368"/>
@@ -579,6 +583,7 @@
 								<int key="NSvFlags">2322</int>
 								<string key="NSFrame">{{0, 37}, {170, 133}}</string>
 								<reference key="NSSuperview" ref="201415222"/>
+								<reference key="NSWindow"/>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<object class="NSTextContainer" key="NSTextContainer" id="365219668">
 									<object class="NSLayoutManager" key="NSLayoutManager">
@@ -641,6 +646,7 @@
 								<int key="NSvFlags">293</int>
 								<string key="NSFrame">{{30, 10}, {140, 17}}</string>
 								<reference key="NSSuperview" ref="201415222"/>
+								<reference key="NSWindow"/>
 								<int key="NSViewLayerContentsRedrawPolicy">2</int>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSButtonCell" key="NSCell" id="286026970">
@@ -669,12 +675,14 @@
 						</array>
 						<string key="NSFrame">{{25, 20}, {170, 180}}</string>
 						<reference key="NSSuperview" ref="157522561"/>
+						<reference key="NSWindow"/>
 						<int key="NSViewLayerContentsRedrawPolicy">2</int>
 						<string key="NSClassName">NSView</string>
 					</object>
 				</array>
 				<string key="NSFrameSize">{220, 220}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<int key="NSViewLayerContentsRedrawPolicy">2</int>
 				<string key="NSClassName">NSView</string>
 			</object>
@@ -704,14 +712,6 @@
 						<reference key="destination" ref="90877191"/>
 					</object>
 					<int key="connectionID">55</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">doOpen:</string>
-						<reference key="source" ref="283890133"/>
-						<reference key="destination" ref="48000294"/>
-					</object>
-					<int key="connectionID">146</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -813,6 +813,38 @@
 					</object>
 					<int key="connectionID">217</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: networkAvailable</string>
+						<reference key="source" ref="182225155"/>
+						<reference key="destination" ref="283890133"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="182225155"/>
+							<reference key="NSDestination" ref="283890133"/>
+							<string key="NSLabel">enabled: networkAvailable</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">networkAvailable</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">220</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openScreencast:</string>
+						<reference key="source" ref="283890133"/>
+						<reference key="destination" ref="182225155"/>
+					</object>
+					<int key="connectionID">222</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">showHelp:</string>
+						<reference key="source" ref="283890133"/>
+						<reference key="destination" ref="142364517"/>
+					</object>
+					<int key="connectionID">223</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -857,15 +889,15 @@
 							<reference ref="267273242"/>
 							<reference ref="390143923"/>
 							<reference ref="509516743"/>
-							<reference ref="497452736"/>
-							<reference ref="248613423"/>
-							<reference ref="463477505"/>
-							<reference ref="182225155"/>
-							<reference ref="674526629"/>
 							<reference ref="142364517"/>
-							<reference ref="974516634"/>
 							<reference ref="330291998"/>
 							<reference ref="858051390"/>
+							<reference ref="182225155"/>
+							<reference ref="248613423"/>
+							<reference ref="463477505"/>
+							<reference ref="674526629"/>
+							<reference ref="497452736"/>
+							<reference ref="974516634"/>
 						</array>
 						<reference key="parent" ref="90877191"/>
 					</object>
@@ -1187,7 +1219,7 @@
 				<string key="167.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="169.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="171.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="181.IBEditorWindowLastContentRect">{{148, 829}, {220, 220}}</string>
+				<string key="181.IBEditorWindowLastContentRect">{{148, 636}, {220, 220}}</string>
 				<string key="181.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="203.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="204.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1195,10 +1227,9 @@
 				<string key="211.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="44.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="44.ImportedFromIB2"/>
-				<string key="5.IBEditorWindowLastContentRect">{{147, 233}, {920, 482}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{232, 333}, {920, 482}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="5.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="5.IBWindowTemplateEditedContentRect">{{147, 233}, {920, 482}}</string>
+				<string key="5.IBWindowTemplateEditedContentRect">{{232, 333}, {920, 482}}</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<boolean value="NO" key="5.NSWindowTemplate.visibleAtLaunch"/>
 				<boolean value="NO" key="5.windowTemplate.hasMaxSize"/>
@@ -1218,7 +1249,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">218</int>
+			<int key="maxID">223</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1235,7 +1266,7 @@
 					<string key="superclassName">NSWindowController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSSingletonWindowController.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSSingletonWindowController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1254,8 +1285,8 @@
 						<string key="doNew:">id</string>
 						<string key="doOpen:">id</string>
 						<string key="openLicensing:">id</string>
-						<string key="openScreencastLargeSize:">id</string>
-						<string key="openScreencastSmallSize:">id</string>
+						<string key="openScreencast:">id</string>
+						<string key="showHelp:">id</string>
 					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oRecentDocsController">NSArrayController</string>
@@ -1285,7 +1316,7 @@
 					<string key="className">NSApplication</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSApplication+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSApplication+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1300,14 +1331,14 @@
 					<string key="className">NSArrayController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSArrayController+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSArrayController+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="478107952">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="67074291">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSView+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSView+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1329,42 +1360,42 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSPathInfoField.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSPathInfoField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSThreadProxy.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSThreadProxy.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Foundation/KSSimpleURLConnection.h</string>
+						<string key="minorKey">../../Shared/Foundation/KSSimpleURLConnection.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Foundation/NSObject+Karelia.h</string>
+						<string key="minorKey">../../Shared/Foundation/NSObject+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Imported/NTSUTaskController.h</string>
+						<string key="minorKey">../../Shared/Imported/NTSUTaskController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1445,7 +1476,7 @@
 					<string key="className">NSResponder</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSResponder+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSResponder+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1457,14 +1488,14 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="707356387">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="251422708">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSDragging.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSDragging.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<reference key="sourceIdentifier" ref="478107952"/>
+					<reference key="sourceIdentifier" ref="67074291"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
@@ -1480,13 +1511,13 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
-					<reference key="sourceIdentifier" ref="707356387"/>
+					<reference key="sourceIdentifier" ref="251422708"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSWindow+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSWindow+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1505,7 +1536,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSWindowController+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSWindowController+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

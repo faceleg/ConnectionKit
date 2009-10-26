@@ -651,11 +651,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
-	else if (action == @selector(openScreencastLargeSize:))
-	{
-		return [KSNetworkNotifier isNetworkAvailable];
-	}
-	else if (action == @selector(openScreencastSmallSize:))
+	else if (action == @selector(openScreencast:))
 	{
 		return [KSNetworkNotifier isNetworkAvailable];
 	}
@@ -1392,30 +1388,31 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[[NSDocumentController sharedDocumentController] editRawHTMLInSelectedBlock:sender];
 }
 
-- (IBAction) openScreencastLargeSize:(id)sender
+- (IBAction) openScreencast:(id)sender
 {
-	NSURL *url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_1024.mov"];
-	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
+	NSURL *url = nil;
+	
+	NSRect largestScreenFrame = NSZeroRect;
+	for (NSScreen *screen in [NSScreen screens])
 	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
+		NSRect thisFrame = [screen frame];
+		if (thisFrame.size.height > largestScreenFrame.size.height
+				&& thisFrame.size.width > largestScreenFrame.size.width)
+		{
+			largestScreenFrame = thisFrame;
+		}
+	}
+	// Leave enough for the dock on the left or right, plus some extra for controller of player, etc.
+	// Basically we can play the large size on a MBP, but the smaller one on the MacBook
+	if (largestScreenFrame.size.width > 1100 && largestScreenFrame.size.height > 850)
+	{
+		url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_1024.mov"];
 	}
 	else
 	{
-		BOOL opened = [[NSWorkspace sharedWorkspace] openURLs:[NSArray arrayWithObject:url]
-									  withAppBundleIdentifier:@"com.apple.quicktimeplayer" 
-													  options:NSWorkspaceLaunchAsync
-							   additionalEventParamDescriptor:nil launchIdentifiers:nil];
-		if (!opened)
-		{
-			// try to open some other way
-			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
-		}
+		url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_640.mov"];
 	}
-}
 
-- (IBAction) openScreencastSmallSize:(id)sender
-{
-	NSURL *url = [NSURL URLWithString: @"http://www.karelia.com/screencast/Introduction_to_Sandvox_640.mov"];
 	if  (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	

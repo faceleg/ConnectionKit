@@ -76,8 +76,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller;
 
-- (IBAction) openScreencastLargeSize:(id)sender;
-- (IBAction) openScreencastSmallSize:(id)sender;
+- (IBAction) openScreencast:(id)sender;
 
 + (void) registerDefaults;
 + (BOOL) coreImageAccelerated;
