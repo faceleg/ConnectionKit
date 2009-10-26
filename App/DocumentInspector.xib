@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="123"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -45,7 +45,7 @@
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<object class="NSTabView" id="812452045">
 						<reference key="NSNextResponder" ref="668451945"/>
-						<int key="NSvFlags">274</int>
+						<int key="NSvFlags">266</int>
 						<string key="NSFrame">{{-17, -10}, {284, 400}}</string>
 						<reference key="NSSuperview" ref="668451945"/>
 						<object class="NSMutableArray" key="NSTabViewItems">
@@ -1894,7 +1894,7 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
 			</object>
-			<object class="NSObjectController" id="655801064">
+			<object class="NSObjectController" id="848932296">
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>generateGoogleSitemap</string>
@@ -1934,10 +1934,10 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">contentObject: inspectedDocument</string>
-						<reference key="source" ref="655801064"/>
+						<reference key="source" ref="848932296"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="655801064"/>
+							<reference key="NSSource" ref="848932296"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">contentObject: inspectedDocument</string>
 							<string key="NSBinding">contentObject</string>
@@ -1951,10 +1951,10 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: selection.site.generateGoogleSitemap</string>
 						<reference key="source" ref="813553937"/>
-						<reference key="destination" ref="655801064"/>
+						<reference key="destination" ref="848932296"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="813553937"/>
-							<reference key="NSDestination" ref="655801064"/>
+							<reference key="NSDestination" ref="848932296"/>
 							<string key="NSLabel">value: selection.site.generateGoogleSitemap</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">selection.site.generateGoogleSitemap</string>
@@ -3125,7 +3125,7 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">149</int>
-						<reference key="object" ref="655801064"/>
+						<reference key="object" ref="848932296"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Document Controller</string>
 					</object>
