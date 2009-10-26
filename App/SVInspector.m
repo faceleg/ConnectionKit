@@ -46,12 +46,20 @@
 
     SVInspectorViewController *documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
+    [documentInspector bind:@"inspectedDocument"
+                   toObject:self
+                withKeyPath:@"inspectedWindow.windowController.document"
+                    options:nil];
     [documentInspector setInspectedPagesController:[self inspectedPagesController]];
     [result insertObject:documentInspector atIndex:0];
     [documentInspector release];
     
     SVInspectorViewController *pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
+    [pageInspector bind:@"inspectedDocument"
+               toObject:self
+            withKeyPath:@"inspectedWindow.windowController.document"
+                options:nil];
     [pageInspector setInspectedPagesController:[self inspectedPagesController]];
     [result insertObject:pageInspector atIndex:1];
     [pageInspector release];

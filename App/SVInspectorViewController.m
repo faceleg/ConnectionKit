@@ -11,6 +11,13 @@
 
 @implementation SVInspectorViewController
 
++ (void)initialize
+{
+    [self exposeBinding:@"inspectedDocument"];
+}
+
+@synthesize inspectedDocument = _inspectedDocument;
+
 #pragma mark Pages
 
 - (NSArray *)inspectedPages
