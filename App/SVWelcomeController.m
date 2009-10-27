@@ -94,7 +94,7 @@
 	{
 		if (![displayName isEqualToString:value] && ![displayName hasPrefix:value])
 		{
-			[desc appendFormat:NSLocalizedString(@"\\U201C%@\\U201D", @"quotes around the document name"), displayName];	// only append if not equal, or a substring of file title
+			[desc appendFormat:NSLocalizedString(@"\\U201C%@\\U201D", @"quotes around the document name"), value];	// only append if not equal, or a substring of file title
 			lastAppendedItem = kTitle;
 		}
 	}
