@@ -58,7 +58,8 @@
 @property(nonatomic, copy, readonly) NSArray *contentItems;
 
 
-#pragma mark Elements
+#pragma mark Content Objects
+- (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertElement:(id)sender;
 
 

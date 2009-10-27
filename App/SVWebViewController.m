@@ -307,7 +307,44 @@
 
 #pragma mark Elements
 
-- (IBAction)insertElement:(id)sender;
+- (void)insertPagelet:(id)sender;
+{
+    KTPage *page = [self page];
+    
+    // Create sidebar entry
+    SVSidebarEntry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"PageletSidebarEntry"
+                                                          inManagedObjectContext:[page managedObjectContext]];
+    SVSidebarEntry *lastEntry = [[page sidebar] firstEntry];
+    if (lastEntry)
+    {
+        SVSidebarEntry *nextEntry;
+        while (nextEntry = [lastEntry nextEntry])
+        {
+            lastEntry = nextEntry;
+        }
+        
+        [lastEntry setNextEntry:entry];
+    }
+    else
+    {
+        [entry setSidebar:[page sidebar]];
+    }
+    
+    
+	// Create the pagelet
+	SVPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
+													  inManagedObjectContext:[page managedObjectContext]];
+	OBASSERT(result);
+	[entry setPagelet:result];
+    
+    [result setTitleHTMLString:@"Double-click to edit"];
+    [[result body] setArchiveHTMLString:@"Test"];
+	
+    
+	return result;
+}
+
+- (void)insertElement:(id)sender;
 {
     // Create a new element of the requested type and insert into selected text block
     SVPageletBody *body = [[[self textAreaControllers] firstObjectKS] content];

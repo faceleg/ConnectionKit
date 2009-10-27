@@ -445,10 +445,19 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark IBActions
 
-- (IBAction)insertElement:(id)sender;
+/*  The WebView controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on
+ */
+
+- (void)insertPagelet:(id)sender;
+{
+    [[[[self webContentAreaController] selectedViewController] selectedViewController] insertPagelet:sender];
+}
+
+- (void)insertElement:(id)sender;
 {
     [[[[self webContentAreaController] selectedViewController] selectedViewController] insertElement:sender];
 }
+
 
 - (IBAction)windowHelp:(id)sender
 {
