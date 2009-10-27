@@ -18,6 +18,8 @@
 #import "KTSite.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
+#import "SVSidebar.h"
+#import "SVSidebarEntry.h"
 #import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
@@ -175,11 +177,12 @@
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    SVPagelet *aPagelet = [[[[self page] sidebar] firstEntry] pagelet];
-    NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:1];//[pagelets count]];
+    SVSidebarEntry *anEntry = [[[self page] sidebar] firstEntry];
+    NSMutableArray *contentObjects = [[NSMutableArray alloc] init];
     
-    //for (SVPagelet *aPagelet in pagelets)
+    while (anEntry)
     {
+        SVPagelet *aPagelet = [anEntry pagelet];
         DOMElement *element = [domDoc getElementById:[aPagelet elementID]];
         if (element)
         {
@@ -194,6 +197,8 @@
         {
             NSLog(@"Could not locate pagelet with ID: %@", [aPagelet elementID]);
         }
+        
+        anEntry = [anEntry nextEntry];
     }
     
     [self setContentItems:contentObjects];
