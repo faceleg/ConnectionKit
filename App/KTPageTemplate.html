@@ -137,24 +137,12 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				<div id="page-content" class="[[if includeInIndex]][[if parent.collectionShowNavigationArrows]][[if parent.index.navigationArrowsStyle==1]]has-photo-navigation[[else3]]has-text-navigation[[endif3]][[else2]]no-navigation[[endif2]][[endif]]">
 [[if includeSidebar]]
 					<div id="sidebar-container">
-[[if sidebar.pagelets|editing]]
+[[if sidebar.firstEntry|editing]]
 						<div id="sidebar">
 					  		<div id="sidebar-top"></div>
 							<div id="sidebar-content">
 								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a rel="nofollow" href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
-[[forEach sidebar.pagelets aPagelet]]
-								<div class="pagelet [[if aPagelet.showBorder]]bordered [[endif3]][[if aPagelet.titleHTMLString]]titled[[else3]]untitled[[endif3]] [[i]] [[eo]][[last]]"  id="[[=aPagelet.elementID]]">
-
-[[if aPagelet.titleHTMLString|editing]]
-									[[textblock property:aPagelet.titleHTMLString flags:"line" tag:h4 graphicalTextCode:h4s]]
-[[endif3]]
-									<div class="pagelet-body">
-                                        <div class="RichTextElement">
-                                            [[textblock property:aPagelet.body flags:"block imageable"]]
-                                        </div>
-									</div>
-								</div>
-[[endForEach]]
+								[[=pageletsHTMLString]]
 							</div> <!-- sidebar-content -->
 							<div id="sidebar-bottom"></div>	
 						</div> <!-- sidebar -->

@@ -9,23 +9,15 @@
 #import <CoreData/CoreData.h>
 
 @class KTAbstractPage;
-@class SVPagelet;
+@class SVSidebarEntry;
+
 
 @interface SVSidebar :  NSManagedObject  
-{
-}
 
-@property (nonatomic, retain) NSSet* pagelets;
-@property (nonatomic, retain) KTAbstractPage * page;
+@property(nonatomic, retain) KTAbstractPage * page;
 
-@end
-
-
-@interface SVSidebar (CoreDataGeneratedAccessors)
-- (void)addPageletsObject:(SVPagelet *)value;
-- (void)removePageletsObject:(SVPagelet *)value;
-- (void)addPagelets:(NSSet *)value;
-- (void)removePagelets:(NSSet *)value;
+@property(nonatomic, retain) SVSidebarEntry *firstEntry;
+//- (NSMutableArray *)pagelets; // NOT KVO-compliant
 
 @end
 

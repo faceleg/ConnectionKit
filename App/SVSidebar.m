@@ -13,7 +13,8 @@
 
 @implementation SVSidebar 
 
-@dynamic pagelets;
 @dynamic page;
+
+@dynamic firstEntry;
 
 @end

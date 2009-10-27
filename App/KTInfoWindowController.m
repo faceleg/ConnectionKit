@@ -702,7 +702,7 @@ enum { kPageletInSidebarPosition = 0, kPageletInCalloutPosition = 1 };
 			[self setSelectionInspectorView:pageletInspectorView];
 
 			[oTabSegmentedControl setEnabled:YES forSegment:SEGMENT_PAGE];
-			[oTabSegmentedControl setLabel:NSLocalizedString(@"Pagelet",@"Segment Label") forSegment:SEGMENT_SELECTION];
+			[oTabSegmentedControl setLabel:NSLocalizedString(@"OldPagelet",@"Segment Label") forSegment:SEGMENT_SELECTION];
 			[oTabSegmentedControl setEnabled:YES forSegment:SEGMENT_SELECTION];	// always something for pagelets!
 			// Always select selection when you click on a pagelet
 			[self setSelectedSegmentIndex:SEGMENT_SELECTION];

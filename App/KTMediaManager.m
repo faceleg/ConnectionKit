@@ -261,7 +261,7 @@ NSString *KTMediaLogDomain = @"Media";
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Collecting unneeded MediaContainers...");
 	
 	NSSet *pageMediaIDs = [self mediaIdentifiersRequiredByEntity:@"Page"];
-	NSSet *pageletMediaIDs = [self mediaIdentifiersRequiredByEntity:@"Pagelet"];
+	NSSet *pageletMediaIDs = [self mediaIdentifiersRequiredByEntity:@"OldPagelet"];
 	NSSet *masterMediaIDs = [self mediaIdentifiersRequiredByEntity:@"Master"];
 	
 	NSMutableSet *requiredMediaIDs =
