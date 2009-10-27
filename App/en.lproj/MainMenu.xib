@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="8.00">
 	<data>
-		<int key="IBDocument.SystemTarget">1050</int>
+		<int key="IBDocument.SystemTarget">1040</int>
 		<string key="IBDocument.SystemVersion">10B504</string>
 		<string key="IBDocument.InterfaceBuilderVersion">732</string>
 		<string key="IBDocument.AppKitVersion">1038.2</string>
@@ -11,7 +11,7 @@
 			<string key="NS.object.0">732</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="288"/>
+			<integer value="106"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1653,36 +1653,12 @@
 								</object>
 								<object class="NSMenuItem" id="357887160">
 									<reference key="NSMenu" ref="900881952"/>
-									<string key="NSTitle">Video Introduction</string>
+									<string key="NSTitle">Watch Video Introduction</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
-									<string key="NSAction">submenuAction:</string>
-									<object class="NSMenu" key="NSSubmenu" id="299964706">
-										<string key="NSTitle">Video Introduction</string>
-										<array class="NSMutableArray" key="NSMenuItems">
-											<object class="NSMenuItem" id="742088171">
-												<reference key="NSMenu" ref="299964706"/>
-												<string key="NSTitle">View Standard Size</string>
-												<string key="NSKeyEquiv"/>
-												<int key="NSKeyEquivModMask">1048576</int>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="73959282"/>
-												<reference key="NSMixedImage" ref="49718828"/>
-											</object>
-											<object class="NSMenuItem" id="447176979">
-												<reference key="NSMenu" ref="299964706"/>
-												<string key="NSTitle">View Full Size</string>
-												<string key="NSKeyEquiv"/>
-												<int key="NSKeyEquivModMask">1048576</int>
-												<int key="NSMnemonicLoc">2147483647</int>
-												<reference key="NSOnImage" ref="73959282"/>
-												<reference key="NSMixedImage" ref="49718828"/>
-											</object>
-										</array>
-									</object>
 								</object>
 								<object class="NSMenuItem" id="260291689">
 									<reference key="NSMenu" ref="900881952"/>
@@ -2529,22 +2505,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">openScreencastSmallSize:</string>
-						<reference key="source" ref="205882656"/>
-						<reference key="destination" ref="742088171"/>
-					</object>
-					<int key="connectionID">1171</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">openScreencastLargeSize:</string>
-						<reference key="source" ref="205882656"/>
-						<reference key="destination" ref="447176979"/>
-					</object>
-					<int key="connectionID">1172</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">saveDocument:</string>
 						<reference key="source" ref="464856506"/>
 						<reference key="destination" ref="968348270"/>
@@ -2766,6 +2726,14 @@
 						<reference key="destination" ref="781866686"/>
 					</object>
 					<int key="connectionID">1243</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">openScreencast:</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="357887160"/>
+					</object>
+					<int key="connectionID">1245</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3106,29 +3074,8 @@
 					<object class="IBObjectRecord">
 						<int key="objectID">840</int>
 						<reference key="object" ref="357887160"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="299964706"/>
-						</array>
+						<array class="NSMutableArray" key="children"/>
 						<reference key="parent" ref="900881952"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">841</int>
-						<reference key="object" ref="299964706"/>
-						<array class="NSMutableArray" key="children">
-							<reference ref="742088171"/>
-							<reference ref="447176979"/>
-						</array>
-						<reference key="parent" ref="357887160"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">842</int>
-						<reference key="object" ref="742088171"/>
-						<reference key="parent" ref="299964706"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">843</int>
-						<reference key="object" ref="447176979"/>
-						<reference key="parent" ref="299964706"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1153</int>
@@ -4059,6 +4006,7 @@
 				<boolean value="YES" key="1034.ImportedFromIB2"/>
 				<string key="1039.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1039.ImportedFromIB2"/>
+				<string key="106.IBEditorWindowLastContentRect">{{625, 563}, {243, 123}}</string>
 				<string key="106.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="106.ImportedFromIB2"/>
 				<string key="1068.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4200,7 +4148,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{495, 595}, {468, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{218, 686}, {468, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="291.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4344,12 +4292,6 @@
 				<boolean value="YES" key="83.ImportedFromIB2"/>
 				<string key="840.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="840.ImportedFromIB2"/>
-				<string key="841.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="841.ImportedFromIB2"/>
-				<string key="842.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="842.ImportedFromIB2"/>
-				<string key="843.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="843.ImportedFromIB2"/>
 				<string key="919.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="919.ImportedFromIB2"/>
 				<string key="92.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4405,7 +4347,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1243</int>
+			<int key="maxID">1245</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -4809,8 +4751,7 @@
 					<string key="superclassName">KSLicensedAppDelegate</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="editRawHTMLInSelectedBlock:">id</string>
-						<string key="openScreencastLargeSize:">id</string>
-						<string key="openScreencastSmallSize:">id</string>
+						<string key="openScreencast:">id</string>
 						<string key="orderFrontPreferencesPanel:">id</string>
 						<string key="reloadDebugTable:">id</string>
 						<string key="saveWindowSize:">id</string>
@@ -5536,6 +5477,28 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWebEditorView.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVWelcomeController</string>
+					<string key="superclassName">KSSingletonWindowController</string>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="doNew:">id</string>
+						<string key="doOpen:">id</string>
+						<string key="openLicensing:">id</string>
+						<string key="openScreencast:">id</string>
+						<string key="showHelp:">id</string>
+					</dictionary>
+					<dictionary class="NSMutableDictionary" key="outlets">
+						<string key="oRecentDocsController">NSArrayController</string>
+						<string key="oStickyButton">NSButton</string>
+						<string key="oStickyRotatedView">NSView</string>
+						<string key="oStickyTextView">NSTextView</string>
+						<string key="oStickyView">NSView</string>
+					</dictionary>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVWelcomeController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6707,7 +6670,7 @@
 		<int key="IBDocument.localizationMode">0</int>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1050" key="NS.object.0"/>
+			<integer value="1040" key="NS.object.0"/>
 		</object>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../Sandvox.xcodeproj</string>

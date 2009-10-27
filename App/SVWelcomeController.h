@@ -34,7 +34,6 @@
 - (IBAction) doOpen:(id)sender;
 - (IBAction) openLicensing:(id)sender;
 - (IBAction) openScreencast:(id)sender;
-- (IBAction) disclose:(id)sender;
 - (IBAction) showHelp:(id)sender;
 
 @end

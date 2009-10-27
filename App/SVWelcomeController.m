@@ -17,13 +17,13 @@
 #import "KSYellowStickyWindow.h"
 #import "Registration.h"
 #import "NSDate+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "NSArray+Karelia.h"
 #import "CIImage+Karelia.h"
 #import <QuickLook/QuickLook.h>
 #import <QuartzCore/QuartzCore.h>
 #import "KTDocument.h"
-
-enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 
 @interface NSURL(PlaceholderTable)
@@ -32,12 +32,51 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 @end
 @implementation NSURL(PlaceholderTable)
 
+/* Looks at URL list, ignores itself, but finds any other URLs with the same file title but in a different
+ directory,  Extracts the different parts of the path, so we can identify which version it is
+ */
+- (NSString *)differentDirectoryComparedToAllURLs:(NSArray *)allURLs
+{
+	NSString *result = nil;
+	NSString *myPath = [self path];
+	NSString *myFile = [myPath lastPathComponent];
+	NSString *myDir = [myPath stringByDeletingLastPathComponent];
+	for (NSURL *url in allURLs)
+	{
+		NSString *path = [url path];
+		if (![path isEqualToString:myPath])		// different path?
+		{
+			NSString *file = [path lastPathComponent];
+			if ([file isEqualToString:myFile])	// same file name? 
+			{
+				NSString *dir = [path stringByDeletingLastPathComponent];
+				// Now find what's different between dir and myDir
+				NSString *commonPrefix = [dir commonPrefixWithString:myDir options:NSCaseInsensitiveSearch];
+				NSRange keep = NSMakeRange([commonPrefix length], [dir length] - [commonPrefix length]);
+				NSString *differentPart = [dir substringWithRange:keep];
+				NSArray *uniquePathComponents = [differentPart pathComponents];
+				result = [uniquePathComponents firstObjectKS];	// just show highest level folder
+				break;	// we found what's unique about this file so stop searching
+					// Yes, there might be some other higher level folder if we keep looking
+					// but the odds of so many files with the same names are really low, and
+					// we can only do so much to help people distinguish them.
+			}
+		}
+	}
+	return result;
+}
+
 - (NSAttributedString *)resourceAttributedTitleAndDescription
 {
 	NSString *displayName = [self displayName];
 	
 	NSMutableString *desc = [NSMutableString string];	// METADATA -- CAN WE PUT IN TITLE/SUBTITLE?  NOT GETTING SAVED?
 
+	NSArray *allURLs = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
+	NSString *differenceInPaths = [self differentDirectoryComparedToAllURLs:allURLs];
+	
+	
+	
 	NSError *err = nil;
 	NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:self type:nil];
 	NSDictionary *values =[NSPersistentStoreCoordinator
@@ -46,27 +85,58 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 						   error:&err];
 
 	id value = nil;
-	enum { kNone, kTitle, kPages, kDate };
+	enum { kNone, kTitle, kWhere, kPages, kDate };
 	int lastAppendedItem = kNone;
+	
+	// Document title (if unique from file name)
+	
 	if (value = [values objectForKey:(NSString*)kMDItemTitle])
 	{
 		if (![displayName isEqualToString:value] && ![displayName hasPrefix:value])
 		{
-			[desc appendFormat:@"%C%@%C", 0x201C, value, 0x201D];	// only append if not equal, or a substring of file title
+			[desc appendFormat:NSLocalizedString(@"\\U201C%@\\U201D", @"quotes around the document name"), displayName];	// only append if not equal, or a substring of file title
 			lastAppendedItem = kTitle;
 		}
 	}
+
+	// Where -- unique folder, in case title same as other ones in the list
+	NSRange rangeToBold = NSMakeRange(NSNotFound, 0);
+	
+	if (nil != differenceInPaths)
+	{
+		if ([desc length]) [desc appendString:@" "];	// just a space to separate
+		NSString *folderFormatString = NSLocalizedString(@"in %@", @"Indicator what directory the file is found in, thus it is ''in <foldername>''");
+		// We will do our own manual substitution of the %@ so we can also bold it.
+		NSRange whereMarker = [folderFormatString rangeOfString:@"%@"];
+		if (NSNotFound != whereMarker.location)
+		{
+			NSString *replaced = [folderFormatString stringByReplacing:@"%@" with:differenceInPaths];
+			NSUInteger lengthSoFar = [desc length];
+			[desc appendString:replaced];
+			rangeToBold = NSMakeRange(lengthSoFar+whereMarker.location, [differenceInPaths length]);
+			lastAppendedItem = kWhere;
+		}
+	}
+	
+	
+	// Number of pages, if > 1 page
 	
 	if (value = [values objectForKey:(NSString*)kMDItemNumberOfPages])
 	{
-		if ([desc length]) [desc appendString:@" "];	// just a space to separate page count
+		switch (lastAppendedItem)
+		{
+			case kNone: break;
+			case kTitle: [desc appendString:@" "]; break;
+			default:  [desc appendString:@", "]; break;
+		}
 		if ([value intValue] > 1)
 		{
 			[desc appendFormat:@"%@ Pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
 			lastAppendedItem = kPages;
-	}
+		}
 	}
 
+	// Last Opened Date
 	// Spotlight only, not in document metadata
 	CFStringRef filePath = (CFStringRef)[self path];
 	MDItemRef mdItem = MDItemCreate(NULL, filePath);
@@ -87,14 +157,25 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 		lastAppendedItem = kDate;
 	}
 	
-	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:[NSFont systemFontSize]], NSFontAttributeName, nil];
-	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont systemFontOfSize:[NSFont labelFontSize]], NSFontAttributeName, 
+	NSFont *font1 = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+	NSFont *font2 = [NSFont systemFontOfSize:[NSFont labelFontSize]];
+	NSFont *font2bold = [[NSFontManager sharedFontManager] convertFont:font2 toHaveTrait:NSBoldFontMask];
+
+	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:font1, NSFontAttributeName, nil];
+	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, 
 						   [NSColor grayColor], NSForegroundColorAttributeName, nil];
 	
 	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
 												  displayName attributes:attr1] autorelease];	
 	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
-	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:desc attributes:attr2] autorelease]];
+	
+	NSMutableAttributedString *extraInfo = [[[NSMutableAttributedString alloc] initWithString:desc attributes:attr2] autorelease];
+	if (NSNotFound != rangeToBold.location)
+	{
+		[extraInfo addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font2bold, NSFontAttributeName, nil] range:rangeToBold];
+	}
+	
+	[attrStickyText appendAttributedString:extraInfo];
 	return attrStickyText;
 }
 
@@ -151,12 +232,13 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 
 - (void) updateLicenseStatus:(NSNotification *)aNotification
 {
-	int windowState = LICENSED;
-	if (nil == gRegistrationString )
+	if (nil != gRegistrationString )
 	{
-		// show disclosure triangle and such.
-		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-		windowState = [defaults boolForKey:@"hiddenIntro"] ? UNDISCLOSED : ([KSNetworkNotifier isNetworkAvailable] ? DISCLOSED : NO_NETWORK);
+		[self.sticky.animator setAlphaValue:0.0];	// animate to hidden
+	}
+	else
+	{
+		[self.sticky.animator setAlphaValue:1.0];	// animate open
 	}
 }
 
@@ -171,11 +253,46 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 	[super showWindow:sender];
 }
 
+- (void) setupStickyWindow
+{
+	if (!_sticky)
+	{
+		_sticky = [[KSYellowStickyWindow alloc]
+				   initWithContentRect:NSMakeRect(0,0,kStickyViewWidth,kStickyViewHeight)
+				   styleMask:NSBorderlessWindowMask
+				   backing:NSBackingStoreBuffered
+				   defer:YES];
+		
+		[oStickyRotatedView setFrameCenterRotation:8.0];
+		
+		NSColor *blueColor = [NSColor colorWithCalibratedRed:0.000 green:0.295 blue:0.528 alpha:1.000];
+		
+		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:20.0], NSFontAttributeName, nil];
+		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
+		
+		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
+													  NSLocalizedString(@"This is a demo of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed") attributes:attr1] autorelease];	
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Sandvox is fully functional except that only the home page can be published.", @"explanation of demo - please make sure this will fit on welcome window when unlicensed") attributes:attr2] autorelease]];
+		[attrStickyText addAttribute:NSForegroundColorAttributeName value:blueColor range:NSMakeRange(0, [attrStickyText length])];
+		[attrStickyText setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [attrStickyText length])];
+		
+		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
+		[_sticky setContentView:oStickyView];
+		[_sticky setAlphaValue:0.0];		// initially ZERO ALPHA!
+		NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(750,300)];
+		[_sticky setFrameTopLeftPoint:convertedWindowOrigin];
+		
+		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
+	}
+	return _sticky;
+}
+
 - (void)windowDidLoad
 {
     [super windowDidLoad];
 
-	[oRecentDocsController addObjects:[[NSDocumentController sharedDocumentController] recentDocumentURLs]];
+	[oRecentDocsController setContent:[[NSDocumentController sharedDocumentController] recentDocumentURLs]];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateLicenseStatus:)
@@ -200,39 +317,8 @@ enum { LICENSED = 0, UNDISCLOSED, DISCLOSED, NO_NETWORK };
 // the sticky window because that's weird if our welcome window is not in front.
 - (void)windowDidBecomeKey:(NSNotification *)notification
 {
-	if (!self.sticky)
-	{
-		_sticky = [[KSYellowStickyWindow alloc]
-				   initWithContentRect:NSMakeRect(0,0,kStickyViewWidth,kStickyViewHeight)
-				   styleMask:NSBorderlessWindowMask
-				   backing:NSBackingStoreBuffered
-				   defer:YES];
-		
-		[oStickyRotatedView setFrameCenterRotation:8.0];
-		
-		NSColor *blueColor = [NSColor colorWithCalibratedRed:0.000 green:0.295 blue:0.528 alpha:1.000];
-		
-		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:20.0], NSFontAttributeName, nil];
-		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
-		
-		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
-													  NSLocalizedString(@"This is a demo of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed") attributes:attr1] autorelease];	
-		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
-		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Sandvox is fully functional except that only the home page can be published.", @"explanation of demo - please make sure this will fit on welcome window when unlicensed") attributes:attr2] autorelease]];
-		[attrStickyText addAttribute:NSForegroundColorAttributeName value:blueColor range:NSMakeRange(0, [attrStickyText length])];
-		[attrStickyText setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [attrStickyText length])];
-		
-		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
-		[_sticky setContentView:oStickyView];
-		[_sticky setAlphaValue:0.0];
-		NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(750,300)];
-		[_sticky setFrameTopLeftPoint:convertedWindowOrigin];
-		
-		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
-		
-		 // Set up the animation for this window so we will get delegate methods
-		 [_sticky.animator setAlphaValue:1.0];	// animate open
-	}		
+	[self setupStickyWindow];
+	[self updateLicenseStatus:nil];
 }
 
 - (IBAction) doNew:(id)sender
