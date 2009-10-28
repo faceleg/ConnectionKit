@@ -131,7 +131,7 @@
 		}
 		if ([value intValue] > 1)
 		{
-			[desc appendFormat:@"%@ Pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
+			[desc appendFormat:@"%@ pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
 			lastAppendedItem = kPages;
 		}
 	}
@@ -153,7 +153,7 @@
 		}
 		NSDate *date = (NSDate *)value;
 		
-		[desc appendFormat:@"Opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
+		[desc appendFormat:@"opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
 		lastAppendedItem = kDate;
 	}
 	
@@ -163,7 +163,7 @@
 
 	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:font1, NSFontAttributeName, nil];
 	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, 
-						   [NSColor grayColor], NSForegroundColorAttributeName, nil];
+						   [NSColor darkGrayColor], NSForegroundColorAttributeName, nil];
 	
 	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
 												  displayName attributes:attr1] autorelease];	
@@ -285,14 +285,18 @@
 		
 		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
 	}
-	return _sticky;
 }
 
 - (void)windowDidLoad
 {
     [super windowDidLoad];
 
+	[oRecentDocumentsTable setDoubleAction:@selector(openSelectedRecentDocument:)];
+	[oRecentDocumentsTable setTarget:self];
+	[oRecentDocumentsTable setIntercellSpacing:NSMakeSize(0,3.0)];	// get the columns closer together
+
 	[oRecentDocsController setContent:[[NSDocumentController sharedDocumentController] recentDocumentURLs]];
+	[oRecentDocsController setSelectionIndexes:[NSIndexSet indexSet]];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateLicenseStatus:)
@@ -331,6 +335,48 @@
 {
 	[[self window] orderOut:self];
 	[[NSDocumentController sharedDocumentController] openDocument:self];
+}
+
+- (IBAction) openSelectedRecentDocument:(id)sender;
+{
+	id sel = [oRecentDocsController selection];
+	NSURL *fileURL = [sel valueForKey:@"self"];
+
+	NSError *localError = nil;
+	KTDocument *doc = nil;
+	NSDocumentController *controller = [NSDocumentController sharedDocumentController];
+	@try
+	{
+		doc = [controller openDocumentWithContentsOfURL:fileURL display:YES error:&localError];
+	}
+	@catch (NSException *exception)
+	{
+		LOG((@"open document (%@) threw %@", fileURL, exception));
+		
+		// COPIED FROM APP DELEGATE CODE -- LET'S ASSUME WE WANT TO HANDLE ERRORS THE SAME WAY.
+		
+		// Apple bug, I think -- if it couldn't open it, it is in some weird open state even though we didn't get it.
+		// So get the document pointer from the URL.
+		KTDocument *previouslyOpenDocument = (KTDocument *)[controller documentForURL:fileURL];
+		if (nil != previouslyOpenDocument)
+		{
+			// remove its window controller
+			NSWindowController *windowController = (NSWindowController *)[previouslyOpenDocument mainWindowController];
+			if (nil != windowController)
+			{
+				[previouslyOpenDocument removeWindowController:windowController];
+			}
+			[previouslyOpenDocument close];
+			previouslyOpenDocument = nil;
+		}
+		
+		[NSApp reportException:exception];
+	}
+	
+	if ( nil != localError )
+	{
+		[[NSApplication sharedApplication] presentError:localError];
+	}
 }
 
 - (IBAction) openLicensing:(id)sender

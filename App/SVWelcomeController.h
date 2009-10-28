@@ -18,6 +18,7 @@
 	IBOutlet NSView *oStickyRotatedView;
 	IBOutlet NSTextView *oStickyTextView;
 	IBOutlet NSButton *oStickyButton;
+	IBOutlet NSTableView *oRecentDocumentsTable;
 
 	IBOutlet NSArrayController *oRecentDocsController;
 	
@@ -32,6 +33,7 @@
 
 - (IBAction) doNew:(id)sender;
 - (IBAction) doOpen:(id)sender;
+- (IBAction) openSelectedRecentDocument:(id)sender;
 - (IBAction) openLicensing:(id)sender;
 - (IBAction) openScreencast:(id)sender;
 - (IBAction) showHelp:(id)sender;
