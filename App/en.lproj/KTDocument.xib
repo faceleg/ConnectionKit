@@ -11,8 +11,8 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1793"/>
 			<integer value="1726"/>
+			<integer value="1793"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -618,6 +618,11 @@
 					<string>metaDescription</string>
 					<string>fileName</string>
 					<string>canEditTitle</string>
+					<string>publishedPath</string>
+					<string>uploadPath</string>
+					<string>URL.absoluteString</string>
+					<string>URLString</string>
+					<string>baseExampleURLString</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1315,6 +1320,22 @@
 					</object>
 					<int key="connectionID">1819</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.baseExampleURLString</string>
+						<reference key="source" ref="209282229"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="209282229"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.baseExampleURLString</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.baseExampleURLString</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1825</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -1836,10 +1857,10 @@
 				<string key="1540.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1541.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1542.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1547.IBEditorWindowLastContentRect">{{589, 372}, {835, 553}}</string>
+				<string key="1547.IBEditorWindowLastContentRect">{{589, 303}, {835, 553}}</string>
 				<string key="1547.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1547.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="1547.IBWindowTemplateEditedContentRect">{{589, 372}, {835, 553}}</string>
+				<string key="1547.IBWindowTemplateEditedContentRect">{{589, 303}, {835, 553}}</string>
 				<boolean value="YES" key="1547.ImportedFromIB2"/>
 				<boolean value="YES" key="1547.windowTemplate.hasMinSize"/>
 				<string key="1547.windowTemplate.minSize">{800, 280}</string>
@@ -1907,7 +1928,7 @@
 				<string key="1770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1781.CustomClassName">KTPageDetailsController</string>
 				<string key="1781.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1793.IBEditorWindowLastContentRect">{{62, 1105}, {400, 29}}</string>
+				<string key="1793.IBEditorWindowLastContentRect">{{62, 827}, {400, 29}}</string>
 				<string key="1793.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1793.IBViewEditorWindowController.showingLayoutRectangles"/>
 				<string key="1794.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1954,7 +1975,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1819</int>
+			<int key="maxID">1825</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">

@@ -282,6 +282,64 @@
 #pragma mark -
 #pragma mark URL
 
+
+////////// Trying to bind the URL field in the page details.  Actually I want the URL string
+// of the parent, so that we can append the title to this.
+
+- (NSURL *)_baseExampleURL
+{
+	NSURL *result = nil;
+	if ([self isRoot])
+	{
+		// Root is a sepcial case where we just supply the site URL
+		result = [[[self site] hostProperties] siteURL];
+		if (!result)
+		{
+			result = [NSURL URLWithString:@"http://www.EXAMPLE.com/"];
+		}
+		// What if this contains an index.html at the end?
+	}
+	else
+	{
+		// For normal pages, figure out the path relative to parent and resolve it
+		NSString *path = [self pathRelativeToParent];
+		if (path)
+		{
+			result = [NSURL URLWithString:path relativeToURL:[[self parent] _baseExampleURL]];
+		}
+	}
+	return result;
+}
+- (NSString *)baseExampleURLString
+{
+	NSString *resultURL = nil;
+	// A plugin may have specified a custom path. If so, resolve it against the site URL
+	NSString *customPath = [self customPathRelativeToSite];
+	if (customPath)
+	{
+		NSURL *siteURL = [[[self site] hostProperties] siteURL];
+		resultURL = [NSURL URLWithString:customPath relativeToURL:siteURL];
+		// NOT SURE WHAT DO TO HERE - CHOP OFF THE LAST PATH COMPONENT?
+	}
+	else
+	{
+		if ([self isRoot])
+		{
+			resultURL = [self _baseExampleURL];
+		}
+		else
+		{
+			resultURL = [[self parent] _baseExampleURL];
+		}
+	}
+	return [resultURL absoluteString];
+}
++ (NSSet *)keyPathsForValuesAffectingBaseExampleURLString
+{
+    return [NSSet setWithObject:@"URL"];
+}
+/////////
+
 - (NSURL *)URL
 {
 	NSURL *result = [self wrappedValueForKey:@"URL"];

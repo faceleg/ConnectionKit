@@ -18,6 +18,7 @@
 #import "Registration.h"
 #import "NSDate+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSFileManager+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "CIImage+Karelia.h"
@@ -51,9 +52,9 @@
 			{
 				NSString *dir = [path stringByDeletingLastPathComponent];
 				// Now find what's different between dir and myDir
-				NSString *commonPrefix = [dir commonPrefixWithString:myDir options:NSCaseInsensitiveSearch];
-				NSRange keep = NSMakeRange([commonPrefix length], [dir length] - [commonPrefix length]);
-				NSString *differentPart = [dir substringWithRange:keep];
+				NSString *commonPrefix = [myDir commonPrefixWithString:dir options:NSCaseInsensitiveSearch];
+				NSRange keep = NSMakeRange([commonPrefix length], [myDir length] - [commonPrefix length]);
+				NSString *differentPart = [myDir substringWithRange:keep];
 				NSArray *uniquePathComponents = [differentPart pathComponents];
 				result = [uniquePathComponents firstObjectKS];	// just show highest level folder
 				break;	// we found what's unique about this file so stop searching
@@ -394,6 +395,14 @@
 	[[NSApp delegate] showHelpPage:@"Discover"];	// HELPSTRING
 }
 
+- (NSString *)tableView:(NSTableView *)aTableView toolTipForCell:(NSCell *)aCell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)row mouseLocation:(NSPoint)mouseLocation
+{
+	NSURL *url = [[oRecentDocsController arrangedObjects] objectAtIndex:row];
+	NSString *path = [url path];
+	NSString *displayPath = [[NSFileManager defaultManager] displayPathAtPath:path];
+
+	return displayPath;
+}
 
 
 

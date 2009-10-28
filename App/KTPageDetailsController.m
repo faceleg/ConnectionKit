@@ -401,6 +401,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
+	[self layoutPageURLComponents];	// I think do this for any change. Maybe redundant?
 	if (context == sMetaDescriptionObservationContext)
 	{
 		[self metaDescriptionDidChangeToValue:[object valueForKeyPath:keyPath]];
@@ -429,6 +430,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  Don't truncate oPageFileNameField - this is limited by character count and we want to see the whole thing
  So we will truncate oBaseURLField as much as we need.
  
+ 
+ We also need to call this when the observed page changes.
  
  */
 
