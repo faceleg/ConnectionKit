@@ -362,12 +362,8 @@
 		27A093320D1DECDA00F57801 /* WebViewEditingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */; };
 		27A094760D1F0EA900F57801 /* KTMediaManager+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27A095341097598600F43746 /* PageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A095331097598600F43746 /* PageletTemplate.html */; };
-		27A0954910975D6800F43746 /* SVSidebarEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A0954310975D6800F43746 /* SVSidebarEntry.h */; };
-		27A0954A10975D6800F43746 /* SVSidebarEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A0954410975D6800F43746 /* SVSidebarEntry.m */; };
-		27A0954B10975D6800F43746 /* SVInheritedSidebarEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A0954510975D6800F43746 /* SVInheritedSidebarEntry.h */; };
-		27A0954C10975D6800F43746 /* SVInheritedSidebarEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A0954610975D6800F43746 /* SVInheritedSidebarEntry.m */; };
-		27A0954D10975D6800F43746 /* SVPageletSidebarEntry.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A0954710975D6800F43746 /* SVPageletSidebarEntry.h */; };
-		27A0954E10975D6800F43746 /* SVPageletSidebarEntry.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A0954810975D6800F43746 /* SVPageletSidebarEntry.m */; };
+		27A096301097C8AC00F43746 /* SVSidebar.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A0962E1097C8AC00F43746 /* SVSidebar.h */; };
+		27A096311097C8AC00F43746 /* SVSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A0962F1097C8AC00F43746 /* SVSidebar.m */; };
 		27A50CC80D188C2700149038 /* KTDocWebViewController+Editing.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */; };
 		27A50E8A0D19282B00149038 /* SVHTMLTemplateTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTemplateTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTemplateTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTemplateTextBlock.m */; };
@@ -408,8 +404,6 @@
 		27C064C410825F4800795D66 /* SVContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C064C010825F4800795D66 /* SVContentObject.m */; };
 		27C0657010828E9900795D66 /* SVPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C0656C10828E9900795D66 /* SVPagelet.h */; };
 		27C0657110828E9900795D66 /* SVPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C0656D10828E9900795D66 /* SVPagelet.m */; };
-		27C06594108291F500795D66 /* SVSidebar.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C06592108291F500795D66 /* SVSidebar.h */; };
-		27C06595108291F500795D66 /* SVSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C06593108291F500795D66 /* SVSidebar.m */; };
 		27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */; };
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
 		27C745C7104EA01B00FBA79D /* SVWebContentItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C7458C104E96CF00FBA79D /* SVWebContentItem.h */; };
@@ -1821,12 +1815,8 @@
 		27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewEditingHelperClasses.m; sourceTree = "<group>"; };
 		27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaManager+Internal.h"; sourceTree = "<group>"; };
 		27A095331097598600F43746 /* PageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PageletTemplate.html; sourceTree = "<group>"; };
-		27A0954310975D6800F43746 /* SVSidebarEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebarEntry.h; sourceTree = "<group>"; };
-		27A0954410975D6800F43746 /* SVSidebarEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebarEntry.m; sourceTree = "<group>"; };
-		27A0954510975D6800F43746 /* SVInheritedSidebarEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInheritedSidebarEntry.h; sourceTree = "<group>"; };
-		27A0954610975D6800F43746 /* SVInheritedSidebarEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInheritedSidebarEntry.m; sourceTree = "<group>"; };
-		27A0954710975D6800F43746 /* SVPageletSidebarEntry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletSidebarEntry.h; sourceTree = "<group>"; };
-		27A0954810975D6800F43746 /* SVPageletSidebarEntry.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletSidebarEntry.m; sourceTree = "<group>"; };
+		27A0962E1097C8AC00F43746 /* SVSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebar.h; sourceTree = "<group>"; };
+		27A0962F1097C8AC00F43746 /* SVSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebar.m; sourceTree = "<group>"; };
 		27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Editing.m"; sourceTree = "<group>"; };
 		27A50E880D19282B00149038 /* SVHTMLTemplateTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLTemplateTextBlock.h; sourceTree = "<group>"; };
 		27A50E890D19282B00149038 /* SVHTMLTemplateTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLTemplateTextBlock.m; sourceTree = "<group>"; };
@@ -1869,8 +1859,6 @@
 		27C064C010825F4800795D66 /* SVContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentObject.m; sourceTree = "<group>"; };
 		27C0656C10828E9900795D66 /* SVPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagelet.h; sourceTree = "<group>"; };
 		27C0656D10828E9900795D66 /* SVPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagelet.m; sourceTree = "<group>"; };
-		27C06592108291F500795D66 /* SVSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebar.h; sourceTree = "<group>"; };
-		27C06593108291F500795D66 /* SVSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebar.m; sourceTree = "<group>"; };
 		27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjection.h; sourceTree = "<group>"; };
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
 		27C7458C104E96CF00FBA79D /* SVWebContentItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentItem.h; sourceTree = "<group>"; };
@@ -4026,14 +4014,8 @@
 		3C5A73710BF7B69300776464 /* Pagelets */ = {
 			isa = PBXGroup;
 			children = (
-				27A0954310975D6800F43746 /* SVSidebarEntry.h */,
-				27A0954410975D6800F43746 /* SVSidebarEntry.m */,
-				27A0954510975D6800F43746 /* SVInheritedSidebarEntry.h */,
-				27A0954610975D6800F43746 /* SVInheritedSidebarEntry.m */,
-				27A0954710975D6800F43746 /* SVPageletSidebarEntry.h */,
-				27A0954810975D6800F43746 /* SVPageletSidebarEntry.m */,
-				27C06592108291F500795D66 /* SVSidebar.h */,
-				27C06593108291F500795D66 /* SVSidebar.m */,
+				27A0962E1097C8AC00F43746 /* SVSidebar.h */,
+				27A0962F1097C8AC00F43746 /* SVSidebar.m */,
 				27C0656C10828E9900795D66 /* SVPagelet.h */,
 				27C0656D10828E9900795D66 /* SVPagelet.m */,
 				27C064BF10825F4800795D66 /* SVContentObject.h */,
@@ -5150,7 +5132,6 @@
 				27C064C110825F4800795D66 /* SVPageletBody.h in Headers */,
 				27C064C310825F4800795D66 /* SVContentObject.h in Headers */,
 				27C0657010828E9900795D66 /* SVPagelet.h in Headers */,
-				27C06594108291F500795D66 /* SVSidebar.h in Headers */,
 				CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */,
 				2731ECCD10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h in Headers */,
 				2731ECD410861FF300D8AAA5 /* SVWebTextField.h in Headers */,
@@ -5165,9 +5146,7 @@
 				27196F801090AEDC0096B612 /* KSDocumentController.h in Headers */,
 				27196F871090B1880096B612 /* KSInspector.h in Headers */,
 				2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */,
-				27A0954910975D6800F43746 /* SVSidebarEntry.h in Headers */,
-				27A0954B10975D6800F43746 /* SVInheritedSidebarEntry.h in Headers */,
-				27A0954D10975D6800F43746 /* SVPageletSidebarEntry.h in Headers */,
+				27A096301097C8AC00F43746 /* SVSidebar.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6550,7 +6529,6 @@
 				27C064C210825F4800795D66 /* SVPageletBody.m in Sources */,
 				27C064C410825F4800795D66 /* SVContentObject.m in Sources */,
 				27C0657110828E9900795D66 /* SVPagelet.m in Sources */,
-				27C06595108291F500795D66 /* SVSidebar.m in Sources */,
 				CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */,
 				2731ECCE10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m in Sources */,
 				2731ECD510861FF300D8AAA5 /* SVWebTextField.m in Sources */,
@@ -6565,9 +6543,7 @@
 				27196F811090AEDC0096B612 /* KSDocumentController.m in Sources */,
 				27196F881090B1880096B612 /* KSInspector.m in Sources */,
 				2782914710912B30008D0A64 /* SVInspectorViewController.m in Sources */,
-				27A0954A10975D6800F43746 /* SVSidebarEntry.m in Sources */,
-				27A0954C10975D6800F43746 /* SVInheritedSidebarEntry.m in Sources */,
-				27A0954E10975D6800F43746 /* SVPageletSidebarEntry.m in Sources */,
+				27A096311097C8AC00F43746 /* SVSidebar.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

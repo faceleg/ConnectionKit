@@ -18,11 +18,12 @@
 
 + (SVPagelet *)pageletWithPage:(KTPage *)page;
 
-@property(nonatomic, retain) SVSidebar * sidebar;
-
-@property(nonatomic, retain) NSString * elementID;
-@property(nonatomic, retain) NSString * titleHTMLString;
+@property(nonatomic, retain) NSString *elementID;
+@property(nonatomic, retain) NSString *titleHTMLString;
 @property(nonatomic, retain, readonly) SVPageletBody *body;
+
+@property(nonatomic, readonly) NSSet *sidebars;
+@property(nonatomic, copy) NSNumber *sidebarSortKey;    // should have no need to access this directly
 
 @end
 

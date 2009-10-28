@@ -64,7 +64,11 @@
 
 @dynamic elementID;
 @dynamic titleHTMLString;
-@dynamic sidebar;
 @dynamic body;
+
+#pragma mark Sidebar
+
+@dynamic sidebars;
+@dynamic sidebarSortKey;
 
 @end

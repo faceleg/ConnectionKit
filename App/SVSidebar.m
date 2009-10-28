@@ -2,7 +2,7 @@
 //  SVSidebar.m
 //  Sandvox
 //
-//  Created by Mike on 11/10/2009.
+//  Created by Mike on 28/10/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
@@ -13,8 +13,7 @@
 
 @implementation SVSidebar 
 
+@dynamic pagelets;
 @dynamic page;
-
-@dynamic firstEntry;
 
 @end
