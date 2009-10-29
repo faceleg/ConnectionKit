@@ -8,6 +8,7 @@
 
 #import "SVPagelet.h"
 
+#import "KTPage.h"
 #import "SVPageletBody.h"
 #import "SVSidebar.h"
 
