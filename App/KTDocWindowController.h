@@ -113,8 +113,6 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark Other
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
 
-// Getters
-- (BOOL) sidebarIsCollapsed;
 
 // Other public functions
 
