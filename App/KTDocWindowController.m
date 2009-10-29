@@ -35,6 +35,7 @@
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "KTPluginInspectorViewsManager.h"
+#import "SVSidebar.h"
 #import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
 #import "SVHTMLTemplateTextBlock.h"
