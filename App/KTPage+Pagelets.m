@@ -13,6 +13,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVPagelet.h"
 
 #import "NSArray+Karelia.h"
