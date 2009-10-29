@@ -11,11 +11,32 @@
 #import "KTAbstractPage.h"
 #import "SVPagelet.h"
 
+#import "NSSortDescriptor+Karelia.h"
+
+
 @implementation SVSidebar 
 
 @dynamic page;
 
+#pragma mark Pagelets
+
 @dynamic pagelets;
+
+- (NSArray *)sortedPagelets;
+{
+    // Our pagelets, but sorted by their sort key
+    static NSArray *sortDescriptors;
+    if (!sortDescriptors)
+    {
+        sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"sidebarSortKey"
+                                                             ascending:YES];
+        [sortDescriptors retain];
+        OBASSERT(sortDescriptors);
+    }
+    
+    NSArray *result = [[[self pagelets] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+    return result;
+}
 
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error
 {

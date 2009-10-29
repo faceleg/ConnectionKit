@@ -12,11 +12,12 @@
 @class SVPagelet;
 
 @interface SVSidebar :  NSManagedObject  
-{
-}
 
-@property (nonatomic, retain) NSSet* pagelets;
 @property (nonatomic, retain) KTAbstractPage * page;
+
+@property(nonatomic, retain) NSSet *pagelets;
+- (NSArray *)sortedPagelets;
+- (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
 
 @end
 

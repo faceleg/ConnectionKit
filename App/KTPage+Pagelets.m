@@ -15,6 +15,7 @@
 #import "KTElementPlugin.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVPagelet.h"
+#import "SVSidebar.h"
 
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -426,7 +427,7 @@
 {
     NSString *result = @"";
     
-    for (SVPagelet *aPagelet in [[self sidebar] pagelets])
+    for (SVPagelet *aPagelet in [[self sidebar] sortedPagelets])
     {
         // Generate HTML for the pagelet
         NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate" ofType:@"html"];
