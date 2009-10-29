@@ -536,6 +536,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			// Insert the page
             [self insertPage:page parent:nearestParent];
             
+            // Give it standard pagelets
+            [[page sidebar] addPagelets:[[nearestParent sidebar] pagelets]];
+            
             // Make the Site Outline display the new item nicely
 			[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSArray arrayWithObject:page]];
 		}
