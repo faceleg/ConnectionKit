@@ -242,6 +242,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // Create a starter pagelet
         SVPagelet *pagelet = [SVPagelet pageletWithPage:root];
+        [pagelet setSidebarSortKey:[NSNumber numberWithShort:0]];
         [pagelet setTitleHTMLString:@"Test"];
         [[pagelet body] setArchiveHTMLString:@"Test"];
         
