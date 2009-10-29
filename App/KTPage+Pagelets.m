@@ -13,7 +13,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
-#import "SVSidebarEntry.h"
+#import "SVPagelet.h"
 
 #import "NSArray+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -425,21 +425,16 @@
 {
     NSString *result = @"";
     
-    SVSidebarEntry *anEntry = [[self sidebar] firstEntry];
-    while (anEntry)
+    for (SVPagelet *aPagelet in [[self sidebar] pagelets])
     {
         // Generate HTML for the pagelet
         NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate" ofType:@"html"];
         NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
         
         SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
-                                                                            component:[anEntry pagelet]];
+                                                                            component:aPagelet];
         NSString *pageletHTML = [parser parseTemplate];
         result = [result stringByAppendingString:pageletHTML];
-        
-        
-        // Move onto next pagelet
-        anEntry = [anEntry nextEntry];
     }
     
     return result;

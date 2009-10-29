@@ -10,7 +10,6 @@
 
 #import "SVPageletBody.h"
 #import "SVSidebar.h"
-#import "SVSidebarEntry.h"
 
 #import "NSString+Karelia.h"
 
@@ -30,16 +29,11 @@
 	OBPRECONDITION([page managedObjectContext]);
 	
 	
-    // Create sidebar entry
-    SVSidebarEntry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"PageletSidebarEntry" inManagedObjectContext:[page managedObjectContext]];
-    [entry setSidebar:[page sidebar]];
-    
-    
-	// Create the pagelet
+    // Create the pagelet
 	SVPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 													  inManagedObjectContext:[page managedObjectContext]];
 	OBASSERT(result);
-	[entry setPagelet:result];
+	[[page sidebar] addPageletsObject:result];
 	
     
 	return result;

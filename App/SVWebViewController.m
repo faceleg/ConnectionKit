@@ -19,7 +19,6 @@
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
-#import "SVSidebarEntry.h"
 #import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
@@ -177,12 +176,11 @@
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    SVSidebarEntry *anEntry = [[[self page] sidebar] firstEntry];
-    NSMutableArray *contentObjects = [[NSMutableArray alloc] init];
+    NSSet *pagelets = [[[self page] sidebar] pagelets];
+    NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
-    while (anEntry)
+    for (SVPagelet *aPagelet in pagelets)
     {
-        SVPagelet *aPagelet = [anEntry pagelet];
         DOMElement *element = [domDoc getElementById:[aPagelet elementID]];
         if (element)
         {
@@ -197,8 +195,6 @@
         {
             NSLog(@"Could not locate pagelet with ID: %@", [aPagelet elementID]);
         }
-        
-        anEntry = [anEntry nextEntry];
     }
     
     [self setContentItems:contentObjects];
@@ -311,31 +307,12 @@
 {
     KTPage *page = [self page];
     
-    // Create sidebar entry
-    SVSidebarEntry *entry = [NSEntityDescription insertNewObjectForEntityForName:@"PageletSidebarEntry"
-                                                          inManagedObjectContext:[page managedObjectContext]];
-    SVSidebarEntry *lastEntry = [[page sidebar] firstEntry];
-    if (lastEntry)
-    {
-        SVSidebarEntry *nextEntry;
-        while (nextEntry = [lastEntry nextEntry])
-        {
-            lastEntry = nextEntry;
-        }
-        
-        [lastEntry setNextEntry:entry];
-    }
-    else
-    {
-        [entry setSidebar:[page sidebar]];
-    }
     
-    
-	// Create the pagelet
+    // Create the pagelet
 	SVPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 													  inManagedObjectContext:[page managedObjectContext]];
 	OBASSERT(result);
-	[entry setPagelet:result];
+	[[page sidebar] addPageletsObject:result];
     
     [result setTitleHTMLString:@"Double-click to edit"];
     [[result body] setArchiveHTMLString:@"Test"];
