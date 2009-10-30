@@ -427,7 +427,7 @@
 {
     NSString *result = @"";
     
-    for (SVPagelet *aPagelet in [[self sidebar] sortedPagelets])
+    for (SVPagelet *aPagelet in [SVPagelet arrayBySortingPagelets:[[self sidebar] pagelets]])
     {
         // Generate HTML for the pagelet
         NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate" ofType:@"html"];

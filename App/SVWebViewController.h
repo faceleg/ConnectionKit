@@ -60,6 +60,7 @@
 
 #pragma mark Content Objects
 - (IBAction)insertPagelet:(id)sender;
+- (IBAction)insertPageletInSidebar:(id)sender;
 - (IBAction)insertElement:(id)sender;
 
 

@@ -241,10 +241,11 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Create a starter pagelet
-        SVPagelet *pagelet = [SVPagelet pageletWithPage:root];
+        SVPagelet *pagelet = [SVPagelet pageletWithManagedObjectContext:[self managedObjectContext]];
         [pagelet setSidebarSortKey:[NSNumber numberWithShort:0]];
         [pagelet setTitleHTMLString:@"Test"];
         [[pagelet body] setArchiveHTMLString:@"Test"];
+        [[root sidebar] addPageletsObject:pagelet];
         
         
         // Make the initial Sandvox badge

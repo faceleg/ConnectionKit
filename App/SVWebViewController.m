@@ -305,20 +305,30 @@
 
 - (void)insertPagelet:(id)sender;
 {
+    // Will expand this to insert within the text if appropriate
+    [self insertPageletInSidebar:sender];
+}
+
+- (IBAction)insertPageletInSidebar:(id)sender;
+{
     KTPage *page = [self page];
     
     
     // Create the pagelet
-	SVPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
+	SVPagelet *pagelet = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
 													  inManagedObjectContext:[page managedObjectContext]];
-	OBASSERT(result);
-	[[page sidebar] addPageletsObject:result];
+	OBASSERT(pagelet);
     
-    [result setTitleHTMLString:@"Double-click to edit"];
-    [[result body] setArchiveHTMLString:@"Test"];
-	
+    [pagelet setTitleHTMLString:@"Double-click to edit"];
+    [[pagelet body] setArchiveHTMLString:@"Test"];
     
-	return result;
+    
+    // Place at end of the sidebar
+    SVSidebar *sidebar = [page sidebar];
+    SVPagelet *lastPagelet = [[SVPagelet arrayBySortingPagelets:[sidebar pagelets]] lastObject];
+    [pagelet moveAfterPagelet:lastPagelet];
+    
+	[sidebar addPageletsObject:pagelet];
 }
 
 - (void)insertElement:(id)sender;

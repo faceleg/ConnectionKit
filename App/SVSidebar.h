@@ -15,8 +15,7 @@
 
 @property (nonatomic, retain) KTAbstractPage * page;
 
-@property(nonatomic, retain) NSSet *pagelets;
-- (NSArray *)sortedPagelets;
+@property(nonatomic, retain) NSSet *pagelets;   // To sort, use SVPagelet class method
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
 
 @end
