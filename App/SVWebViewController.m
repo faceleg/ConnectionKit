@@ -176,7 +176,7 @@
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    NSSet *pagelets = [[[self page] sidebar] pagelets];
+    NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
     NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
     for (SVPagelet *aPagelet in pagelets)
