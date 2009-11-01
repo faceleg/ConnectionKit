@@ -620,43 +620,36 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
-    // Nothing to draw during a drag op
-    if (!_isDragging)
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    
+    // Draw selection parent items
+    for (id <SVWebEditorItem> anItem in [self selectionParentItems])
     {
-        SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-        
-        // Draw selection parent items
-        for (id <SVWebEditorItem> anItem in [self selectionParentItems])
+        // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+        [border setEditing:YES];
+        NSRect frameRect = [[anItem DOMElement] boundingBox];
+        NSRect drawingRect = [border drawingRectForFrame:frameRect];
+        if (NSIntersectsRect(drawingRect, dirtyRect))
         {
-            // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-            [border setEditing:YES];
-            NSRect frameRect = [[anItem DOMElement] boundingBox];
-            NSRect drawingRect = [border drawingRectForFrame:frameRect];
-            if (NSIntersectsRect(drawingRect, dirtyRect))
-            {
-                [border drawWithFrame:frameRect inView:view];
-            }
+            [border drawWithFrame:frameRect inView:view];
         }
-        
-        // Draw actual selection
-        [border setEditing:NO];
-        for (id <SVWebEditorItem> anItem in [self selectedItems])
-        {
-            // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-            NSRect frameRect = [[anItem DOMElement] boundingBox];
-            NSRect drawingRect = [border drawingRectForFrame:frameRect];
-            if (NSIntersectsRect(drawingRect, dirtyRect))
-            {
-                [border drawWithFrame:frameRect inView:view];
-            }
-        }
-        
-        // Tidy up
-        [border release];
     }
     
+    // Draw actual selection
+    [border setEditing:NO];
+    for (id <SVWebEditorItem> anItem in [self selectedItems])
+    {
+        // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
+        NSRect frameRect = [[anItem DOMElement] boundingBox];
+        NSRect drawingRect = [border drawingRectForFrame:frameRect];
+        if (NSIntersectsRect(drawingRect, dirtyRect))
+        {
+            [border drawWithFrame:frameRect inView:view];
+        }
+    }
     
-    
+    // Tidy up
+    [border release];
 }
 
 #pragma mark Event Handling
