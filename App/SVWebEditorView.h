@@ -40,10 +40,9 @@
     NSUndoManager   *_undoManager;
     
     // Drag & Drop
-    BOOL    _isDragging;
-    DOMNode *_dragHighlightNode;
-	DOMNode *_dragCaretNode1;
-    DOMNode *_dragCaretNode2;
+    BOOL        _isDragging;
+    DOMNode     *_dragHighlightNode;
+    DOMRange    *_dragCaretDOMRange;
     
     // Event Handling
     NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
@@ -137,7 +136,8 @@
 
 // Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
 - (void)moveDragHighlightToDOMNode:(DOMNode *)node;
-- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node1 beforeDOMNode:(DOMNode *)node2;
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
 - (void)removeDragCaret;
 
 
@@ -147,10 +147,6 @@
 
 #pragma mark Layout
 - (NSRect)rectOfDragCaret;
-- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
-                        beforeDOMNode:(DOMNode *)node2
-                          minimumSize:(CGFloat)minSize;
-
 
 
 @end

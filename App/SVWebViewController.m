@@ -400,6 +400,29 @@
     return result;
 }
 
+- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
+                        beforeDOMNode:(DOMNode *)node2
+                          minimumSize:(CGFloat)minSize;
+{
+    NSRect box1 = [node1 boundingBox];
+    NSRect box2 = [node2 boundingBox];
+    
+    // Claim the space between the pagelets
+    NSRect result;
+    result.origin.x = MIN(NSMinX(box1), NSMinX(box2));
+    result.origin.y = NSMaxY(box1);
+    result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
+    result.size.height = NSMinY(box2) - result.origin.y;
+    
+    // It should be at least 25 pixels tall
+    if (result.size.height < minSize)
+    {
+        result = NSInsetRect(result, 0.0f, -0.5 * (minSize - result.size.height));
+    }
+    
+    return [[self webEditorView] convertRect:result fromView:[node1 documentView]];
+}
+
 /*  Want to leave the Web Editor View in charge of drag & drop except for pagelets
  */
 - (NSDragOperation)webEditorView:(SVWebEditorView *)sender
@@ -417,16 +440,15 @@
             SVWebEditorItem *item2 = [pageletContentItems objectAtIndex:i+1];
             
             
-            NSRect aDropZone = [sender rectOfDragCaretAfterDOMNode:[item1 DOMElement]
+            NSRect aDropZone = [self rectOfDragCaretAfterDOMNode:[item1 DOMElement]
                                                                    beforeDOMNode:[item2 DOMElement]
-                                                                     minimumSize:25.0f];;
+                                                                     minimumSize:25.0f];
             
             if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]]
                      inRect:aDropZone])
             {
                 result = NSDragOperationMove;
-                [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]
-                                                    beforeDOMNode:[item2 DOMElement]];
+                [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]];
                 break;
             }
         }

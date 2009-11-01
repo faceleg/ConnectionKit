@@ -87,14 +87,31 @@
     }
 }
 
-- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node1 beforeDOMNode:(DOMNode *)node2;
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
 {
     // Dump the old caret
     [self removeDragCaret];
     
     // Draw new one
-    _dragCaretNode1 = [node1 retain];
-    _dragCaretNode2 = [node2 retain];
+    OBASSERT(!_dragCaretDOMRange);
+    _dragCaretDOMRange = [[[node ownerDocument] createRange] retain];
+    [_dragCaretDOMRange setStartBefore:node];
+    [_dragCaretDOMRange collapse:YES];
+    
+    [self setNeedsDisplayInRect:[self rectOfDragCaret]];
+}
+
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
+{
+    // Dump the old caret
+    [self removeDragCaret];
+    
+    // Draw new one
+    OBASSERT(!_dragCaretDOMRange);
+    _dragCaretDOMRange = [[[node ownerDocument] createRange] retain];
+    [_dragCaretDOMRange setStartAfter:node];
+    [_dragCaretDOMRange collapse:YES];
+    
     [self setNeedsDisplayInRect:[self rectOfDragCaret]];
 }
 
@@ -109,8 +126,7 @@
 {
     [self setNeedsDisplayInRect:[self rectOfDragCaret]];
     
-    [_dragCaretNode1 release],  _dragCaretNode1 = nil;
-    [_dragCaretNode1 release],  _dragCaretNode2 = nil;
+    [_dragCaretDOMRange release], _dragCaretDOMRange = nil;
 }
 
 #pragma mark Dragging Source
@@ -144,7 +160,7 @@
 
 - (void)drawDragCaretInView:(NSView *)view;
 {
-    if (_dragCaretNode1 && _dragCaretNode2)
+    if (_dragCaretDOMRange)
     {
         [[NSColor aquaColor] set];
         NSRect drawingRect = [view convertRect:[self rectOfDragCaret] fromView:self];
@@ -227,16 +243,10 @@
 
 - (NSRect)rectOfDragCaret;
 {
-    NSRect result = [self rectOfDragCaretAfterDOMNode:_dragCaretNode1
-                                        beforeDOMNode:_dragCaretNode2
-                                          minimumSize:7.0];
-    return result;
-}
-
-- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
-                        beforeDOMNode:(DOMNode *)node2
-                          minimumSize:(CGFloat)minSize;
-{
+    DOMNodeList *childNodes = [[_dragCaretDOMRange startContainer] childNodes];
+    DOMNode *node1 = [childNodes item:([_dragCaretDOMRange startOffset] - 1)];
+    DOMNode *node2 = [childNodes item:[_dragCaretDOMRange startOffset]];
+    
     NSRect box1 = [node1 boundingBox];
     NSRect box2 = [node2 boundingBox];
     
@@ -247,10 +257,10 @@
     result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
     result.size.height = NSMinY(box2) - result.origin.y;
     
-    // It should be at least 25 pixels tall
-    if (result.size.height < minSize)
+    // It should be at least 7 pixels tall
+    if (result.size.height < 7.0)
     {
-        result = NSInsetRect(result, 0.0f, -0.5 * (minSize - result.size.height));
+        result = NSInsetRect(result, 0.0f, -0.5 * (7.0 - result.size.height));
     }
     
     return [self convertRect:result fromView:[node1 documentView]];
