@@ -400,35 +400,37 @@
     return result;
 }
 
+/*  Want to leave the Web Editor View in charge of drag & drop except for pagelets
+ */
 - (NSDragOperation)webEditorView:(SVWebEditorView *)sender
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 {
     NSDragOperation result = NSDragOperationNone;
     
-    // Drags are generally fine unless they fall in the drop zone between pagelets.
-    NSArray *pagelets = [self contentItems];
-    
-    NSInteger i, count = [pagelets count] - 1;  // must use signed integer for now to handle 0 pagelets
-    for (i = 0; i < count; i++)
+    NSArray *pageletContentItems = [self contentItems];
+    if ([pageletContentItems count] > 0)
     {
-        SVWebEditorItem *item1 = [pagelets objectAtIndex:i];
-        SVWebEditorItem *item2 = [pagelets objectAtIndex:i+1];
-        
-        
-        NSRect aDropZone = [sender rectOfDragCaretAfterDOMNode:[item1 DOMElement]
-                                                               beforeDOMNode:[item2 DOMElement]
-                                                                 minimumSize:25.0f];;
-        
-        if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]]
-                 inRect:aDropZone])
+        NSUInteger i, count = [pageletContentItems count] - 1;
+        for (i = 0; i < count; i++)
         {
-            result = NSDragOperationMove;
-            [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]
-                                                beforeDOMNode:[item2 DOMElement]];
-            break;
+            SVWebEditorItem *item1 = [pageletContentItems objectAtIndex:i];
+            SVWebEditorItem *item2 = [pageletContentItems objectAtIndex:i+1];
+            
+            
+            NSRect aDropZone = [sender rectOfDragCaretAfterDOMNode:[item1 DOMElement]
+                                                                   beforeDOMNode:[item2 DOMElement]
+                                                                     minimumSize:25.0f];;
+            
+            if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]]
+                     inRect:aDropZone])
+            {
+                result = NSDragOperationMove;
+                [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]
+                                                    beforeDOMNode:[item2 DOMElement]];
+                break;
+            }
         }
     }
-    
     
     return result;
 }
