@@ -136,8 +136,7 @@
 
 // Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
 - (void)moveDragHighlightToDOMNode:(DOMNode *)node;
-- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
-- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToDOMRange:(DOMRange *)range;  // must be a collapsed range
 - (void)removeDragCaret;
 
 

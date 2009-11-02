@@ -482,7 +482,11 @@
         if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
         {
             result = NSDragOperationMove;
-            [sender moveDragCaretToBeforeDOMNode:[aPageletItem DOMElement]];
+            
+            DOMRange *range = [[[aPageletItem DOMElement] ownerDocument] createRange];
+            [range setStartBefore:[aPageletItem DOMElement]];
+            //[range setEndBefore:[aPageletItem DOMElement]];
+            [sender moveDragCaretToDOMRange:range];
             break;
         }
     }
@@ -498,7 +502,12 @@
         if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
         {
             result = NSDragOperationMove;
-            [sender moveDragCaretToAfterDOMNode:[_sidebarDiv lastChild]];
+            
+            DOMNode *node = [_sidebarDiv lastChild];
+            DOMRange *range = [[node ownerDocument] createRange];
+            [range setStartAfter:node];
+            //[range setEndBefore:[aPageletItem DOMElement]];
+            [sender moveDragCaretToDOMRange:range];
         }
     }
     

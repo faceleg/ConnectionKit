@@ -87,30 +87,18 @@
     }
 }
 
-- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToDOMRange:(DOMRange *)range;
 {
+    OBPRECONDITION(range);
+    OBPRECONDITION([range collapsed]);
+    
+    
     // Dump the old caret
     [self removeDragCaret];
     
     // Draw new one
     OBASSERT(!_dragCaretDOMRange);
-    _dragCaretDOMRange = [[[node ownerDocument] createRange] retain];
-    [_dragCaretDOMRange setStartBefore:node];
-    [_dragCaretDOMRange collapse:YES];
-    
-    [self setNeedsDisplayInRect:[self rectOfDragCaret]];
-}
-
-- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
-{
-    // Dump the old caret
-    [self removeDragCaret];
-    
-    // Draw new one
-    OBASSERT(!_dragCaretDOMRange);
-    _dragCaretDOMRange = [[[node ownerDocument] createRange] retain];
-    [_dragCaretDOMRange setStartAfter:node];
-    [_dragCaretDOMRange collapse:YES];
+    _dragCaretDOMRange = [range copy];
     
     [self setNeedsDisplayInRect:[self rectOfDragCaret]];
 }
@@ -241,28 +229,80 @@
 
 #pragma mark Layout
 
+/*  These 2 methods should one day probably be additions to DOMNode
+ */
+
+- (DOMNode *)_previousVisibleSibling:(DOMNode *)node
+{
+    DOMNode *result = node;
+    while (result)
+    {
+        if (NSIsEmptyRect([result boundingBox]))
+        {
+            result = [result previousSibling];
+        }
+        else
+        {
+            break;
+        }
+    }
+    
+    return result;
+}
+
+- (DOMNode *)_nextVisibleSibling:(DOMNode *)node
+{
+    DOMNode *result = node;
+    while (result)
+    {
+        if (NSIsEmptyRect([result boundingBox]))
+        {
+            result = [result nextSibling];
+        }
+        else
+        {
+            break;
+        }
+    }
+    
+    return result;
+}
+
+
 - (NSRect)rectOfDragCaret;
 {
     DOMNodeList *childNodes = [[_dragCaretDOMRange startContainer] childNodes];
-    DOMNode *node1 = [childNodes item:([_dragCaretDOMRange startOffset] - 1)];
-    DOMNode *node2 = [childNodes item:[_dragCaretDOMRange startOffset]];
+    
+    
+    //  Try to place between the 2 visible nodes
+    DOMNode *node1 = [self _previousVisibleSibling:[childNodes item:([_dragCaretDOMRange startOffset] - 1)]];
+    DOMNode *node2 = [self _previousVisibleSibling:[childNodes item:[_dragCaretDOMRange startOffset]]];
     
     NSRect box1 = [node1 boundingBox];
     NSRect box2 = [node2 boundingBox];
     
     
-    // Claim the space between the nodes, or the top strip
+    //  If they don't both exist, have to tweak drawing model
     NSRect result;
-    if (node1 && !NSEqualRects(box1, NSZeroRect))
+    if (node1 && node2)
     {
         result.origin.x = MIN(NSMinX(box1), NSMinX(box2));
         result.origin.y = NSMaxY(box1);
         result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
         result.size.height = NSMinY(box2) - result.origin.y;
     }
-    else
+    else if (node1)
+    {
+        result = box1;  result.origin.y += result.size.height,  result.size.height = 0.0f;
+    }
+    else if (node2)
     {
         result = box2;  result.size.height = 0.0f;
+    }
+    else
+    {
+        result = [[_dragCaretDOMRange startContainer] boundingBox];
+        result.size.height = 0.0f;
     }
     
     
@@ -272,7 +312,8 @@
         result = NSInsetRect(result, 0.0f, -0.5 * (7.0 - result.size.height));
     }
     
-    return [self convertRect:result fromView:[node1 documentView]];
+    
+    return [self convertRect:result fromView:[[_dragCaretDOMRange commonAncestorContainer] documentView]];
 }
 
 #pragma mark Tracking the Mouse
