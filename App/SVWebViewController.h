@@ -25,7 +25,7 @@
     NSArray         *_textAreaControllers;
     
     SVWebEditorView     *_webEditorView;
-    DOMHTMLDivElement   *_sidebarDiv;
+    DOMHTMLDivElement   *_sidebarContentDiv;
     NSArray             *_contentItems;
     
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref

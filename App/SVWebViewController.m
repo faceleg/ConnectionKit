@@ -250,7 +250,7 @@
     
     
     // Locate the sidebar
-    _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
+    _sidebarContentDiv = [[domDoc getElementById:@"sidebar-content"] retain];
     
     
     // Mark as loaded
@@ -300,6 +300,40 @@
 #pragma mark Content Items
 
 @synthesize contentItems = _contentItems;
+
+- (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
+{
+    NSRect nodeBox = [node boundingBox];
+    
+    DOMNode *previousNode = [node previousSibling];
+    NSRect previousNodeBox = [previousNode boundingBox];
+    
+    NSRect result;
+    if (previousNode && !NSEqualRects(previousNodeBox, NSZeroRect))
+    {
+        // Claim the space between the nodes
+        result.origin.x = MIN(NSMinX(previousNodeBox), NSMinX(nodeBox));
+        result.origin.y = NSMaxY(previousNodeBox);
+        result.size.width = MAX(NSMaxX(previousNodeBox), NSMaxX(nodeBox)) - result.origin.x;
+        result.size.height = NSMinY(nodeBox) - result.origin.y;
+    }
+    else
+    {
+        // Claim the strip at the top of the node
+        result.origin.x = NSMinX(nodeBox);
+        result.origin.y = NSMinY(nodeBox);
+        result.size.width = nodeBox.size.width;
+        result.size.height = 0.0f;
+    }
+    
+    // It should be at least ? pixels tall
+    if (result.size.height < minHeight)
+    {
+        result = NSInsetRect(result, 0.0f, -0.5 * (minHeight - result.size.height));
+    }
+    
+    return [[self webEditorView] convertRect:result fromView:[node documentView]];
+}
 
 #pragma mark Element Actions
 
@@ -400,62 +434,33 @@
     return result;
 }
 
-- (NSRect)rectOfDragCaretAfterDOMNode:(DOMNode *)node1
-                        beforeDOMNode:(DOMNode *)node2
-                          minimumSize:(CGFloat)minSize;
-{
-    NSRect box1 = [node1 boundingBox];
-    NSRect box2 = [node2 boundingBox];
-    
-    // Claim the space between the pagelets
-    NSRect result;
-    result.origin.x = MIN(NSMinX(box1), NSMinX(box2));
-    result.origin.y = NSMaxY(box1);
-    result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
-    result.size.height = NSMinY(box2) - result.origin.y;
-    
-    // It should be at least 25 pixels tall
-    if (result.size.height < minSize)
-    {
-        result = NSInsetRect(result, 0.0f, -0.5 * (minSize - result.size.height));
-    }
-    
-    return [[self webEditorView] convertRect:result fromView:[node1 documentView]];
-}
-
 /*  Want to leave the Web Editor View in charge of drag & drop except for pagelets
  */
 - (NSDragOperation)webEditorView:(SVWebEditorView *)sender
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditorView]);
-    
-    
     NSDragOperation result = NSDragOperationNone;
     
+    
+    // Ideally, we're making a drop *before* a pagelet
     NSArray *pageletContentItems = [self contentItems];
-    if ([pageletContentItems count] > 0)
+    for (SVWebEditorItem *aPageletItem in pageletContentItems) 
     {
-        NSUInteger i, count = [pageletContentItems count] - 1;
-        for (i = 0; i < count; i++)
+        NSRect dropZone = [self rectOfDropZoneAboveDOMNode:[aPageletItem DOMElement]
+                                                 minHeight:25.0f];
+        
+        if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
         {
-            SVWebEditorItem *item1 = [pageletContentItems objectAtIndex:i];
-            SVWebEditorItem *item2 = [pageletContentItems objectAtIndex:i+1];
-            
-            
-            NSRect aDropZone = [self rectOfDragCaretAfterDOMNode:[item1 DOMElement]
-                                                   beforeDOMNode:[item2 DOMElement]
-                                                     minimumSize:25.0f];
-            
-            if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]]
-                       inRect:aDropZone])
-            {
-                result = NSDragOperationMove;
-                [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]];
-                break;
-            }
+            result = NSDragOperationMove;
+            [sender moveDragCaretToBeforeDOMNode:[aPageletItem DOMElement]];
+            break;
         }
     }
+    
+    
+    // If not, is it a drop *after* the last pagelet, or into an empty sidebar?
+    
     
     return result;
 }
