@@ -51,8 +51,12 @@
 
 #pragma mark Dragging Destination
 
-- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
+- (BOOL)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation *)proposedOperation;
 {
+    BOOL result = NO;
+    NSDragOperation op = *proposedOperation;
+    
+    
     // Update drag highlight to match
     DOMNode *dropNode = nil;
     if (op > NSDragOperationNone)
@@ -70,11 +74,26 @@
     if (op == NSDragOperationNone)
     {
         op = [[self dataSource] webEditorView:self dataSourceShouldHandleDrop:sender];
-        if (op == NSDragOperationNone) [self removeDragCaret];
+        if (op == NSDragOperationNone)
+        {
+            [self removeDragCaret];
+        }
+        else
+        {
+            result = YES;
+        }
     }
     
     
-    return op;
+    // Finish up
+    *proposedOperation = op;
+    return result;
+}
+
+- (BOOL)acceptDrop:(id <NSDraggingInfo>)sender;
+{
+    //  Just make the datasource do the work
+    return [[self dataSource] webEditorView:self acceptDrop:sender];
 }
 
 - (void)moveDragHighlightToDOMNode:(DOMNode *)node

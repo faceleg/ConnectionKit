@@ -622,6 +622,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     
+    
     // Draw selection parent items
     for (id <SVWebEditorItem> anItem in [self selectionParentItems])
     {
@@ -635,6 +636,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
         }
     }
     
+    
     // Draw actual selection
     [border setEditing:NO];
     for (id <SVWebEditorItem> anItem in [self selectedItems])
@@ -647,6 +649,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
             [border drawWithFrame:frameRect inView:view];
         }
     }
+    
     
     // Tidy up
     [border release];

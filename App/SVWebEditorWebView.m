@@ -41,7 +41,8 @@
 - (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
 {
     NSDragOperation result = [super draggingEntered:sender];
-    result = [[self webEditorView] validateDrop:sender proposedOperation:result];
+    _webEditorViewWillHandleDrop = [[self webEditorView] validateDrop:sender
+                                                    proposedOperation:&result];
     
     return result;
 }
@@ -53,7 +54,9 @@
     // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not removed
     if (result == NSDragOperationNone) [self removeDragCaret];
     
-    result = [[self webEditorView] validateDrop:sender proposedOperation:result];
+    _webEditorViewWillHandleDrop = [[self webEditorView] validateDrop:sender
+                                                    proposedOperation:&result];
+    
     return result;
 }
 
@@ -68,13 +71,25 @@
 
 - (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
 {
-    BOOL result = [super prepareForDragOperation:sender];
+    BOOL result = (_webEditorViewWillHandleDrop ? YES : [super prepareForDragOperation:sender]);
     
     // Need to end any of our custom drawing. Do NOT call -[WebView removeDragCaret] as it will forget where the drop is supposed to go!
     [[self webEditorView] performSelector:@selector(removeDragCaretFromDOMNodes)];
     [[self webEditorView] moveDragHighlightToDOMNode:nil];
     
     return result;
+}
+
+- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
+{
+    if (_webEditorViewWillHandleDrop)
+    {
+        return [[self webEditorView] acceptDrop:sender];
+    }
+    else
+    {
+        return [super performDragOperation:sender];
+    }
 }
 
 @end

@@ -16,6 +16,9 @@
 
 
 @interface SVWebEditorWebView : WebView
+{
+    BOOL    _webEditorViewWillHandleDrop;
+}
 
 @property(nonatomic, readonly) SVWebEditorView *webEditorView;
 

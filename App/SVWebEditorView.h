@@ -172,9 +172,14 @@
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 
+
+#pragma mark Dragging
+
 // Return something other than NSDragOperationNone to take command of the drop
 - (NSDragOperation)webEditorView:(SVWebEditorView *)sender
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
+
+- (BOOL)webEditorView:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:
@@ -217,7 +222,11 @@ extern NSString *SVWebEditorViewSelectionDidChangeNotification;
 // Do NOT attempt to edit this WebView in any way. The whole point of SVWebEditorView is to provide a more structured API around a WebView's editing capabilities. You should only ever be modifying the WebView through the API SVWebEditorView and its Date Source/Delegate provides.
 @property(nonatomic, retain, readonly) WebView *webView;
 
-- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation)op;
+// Returns YES if the web editor is taking command of the drop, rather than the WebView.
+- (BOOL)validateDrop:(id <NSDraggingInfo>)sender proposedOperation:(NSDragOperation *)proposedOp;
+
+- (BOOL)acceptDrop:(id <NSDraggingInfo>)sender;
+
 @end
 
 
