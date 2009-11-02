@@ -250,12 +250,21 @@
     NSRect box1 = [node1 boundingBox];
     NSRect box2 = [node2 boundingBox];
     
-    // Claim the space between the pagelets
+    
+    // Claim the space between the nodes, or the top strip
     NSRect result;
-    result.origin.x = MIN(NSMinX(box1), NSMinX(box2));
-    result.origin.y = NSMaxY(box1);
-    result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
-    result.size.height = NSMinY(box2) - result.origin.y;
+    if (node1 && !NSEqualRects(box1, NSZeroRect))
+    {
+        result.origin.x = MIN(NSMinX(box1), NSMinX(box2));
+        result.origin.y = NSMaxY(box1);
+        result.size.width = MAX(NSMaxX(box1), NSMaxX(box2)) - result.origin.x;
+        result.size.height = NSMinY(box2) - result.origin.y;
+    }
+    else
+    {
+        result = box2;  result.size.height = 0.0f;
+    }
+    
     
     // It should be at least 7 pixels tall
     if (result.size.height < 7.0)
