@@ -301,7 +301,7 @@
 
 @synthesize contentItems = _contentItems;
 
-#pragma mark Elements
+#pragma mark Element Actions
 
 - (void)insertPagelet:(id)sender;
 {
@@ -428,6 +428,9 @@
 - (NSDragOperation)webEditorView:(SVWebEditorView *)sender
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 {
+    OBPRECONDITION(sender == [self webEditorView]);
+    
+    
     NSDragOperation result = NSDragOperationNone;
     
     NSArray *pageletContentItems = [self contentItems];
@@ -441,11 +444,11 @@
             
             
             NSRect aDropZone = [self rectOfDragCaretAfterDOMNode:[item1 DOMElement]
-                                                                   beforeDOMNode:[item2 DOMElement]
-                                                                     minimumSize:25.0f];
+                                                   beforeDOMNode:[item2 DOMElement]
+                                                     minimumSize:25.0f];
             
             if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]]
-                     inRect:aDropZone])
+                       inRect:aDropZone])
             {
                 result = NSDragOperationMove;
                 [sender moveDragCaretToAfterDOMNode:[item1 DOMElement]];
