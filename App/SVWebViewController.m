@@ -250,7 +250,7 @@
     
     
     // Locate the sidebar
-    _sidebarContentDiv = [[domDoc getElementById:@"sidebar-content"] retain];
+    _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
     
     
     // Mark as loaded
@@ -333,6 +333,35 @@
     }
     
     return [[self webEditorView] convertRect:result fromView:[node documentView]];
+}
+
+- (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
+                           belowNode:(DOMNode *)node
+                           minHeight:(CGFloat)minHeight;
+{
+    //Normally equal to element's -boundingBox.
+    NSRect result = [element boundingBox];
+    
+    
+    //  But then shortened to only include the area below boundingBox
+    if (node)
+    {
+        NSRect nodeBox = [node boundingBox];
+        CGFloat nodeBottom = NSMaxY(nodeBox);
+        
+        result.size.height = NSMaxY(result) - nodeBottom;
+        result.origin.y = nodeBottom;
+    }
+    
+    
+    //  Finally, expanded again to minHeight if needed.
+    if (result.size.height < minHeight)
+    {
+        result = NSInsetRect(result, 0.0f, -0.5 * (minHeight - result.size.height));
+    }
+    
+    
+    return [[self webEditorView] convertRect:result fromView:[element documentView]];
 }
 
 #pragma mark Element Actions
@@ -460,6 +489,18 @@
     
     
     // If not, is it a drop *after* the last pagelet, or into an empty sidebar?
+    if (result == NSDragOperationNone)
+    {
+        NSRect dropZone = [self rectOfDropZoneInDOMElement:_sidebarDiv
+                                                 belowNode:[[pageletContentItems lastObject] DOMElement]
+                                                 minHeight:25.0f];
+        
+        if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
+        {
+            result = NSDragOperationMove;
+            [sender moveDragCaretToAfterDOMNode:[_sidebarDiv lastChild]];
+        }
+    }
     
     
     return result;
