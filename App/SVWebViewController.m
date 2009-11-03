@@ -36,7 +36,13 @@
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
 @property(nonatomic, copy, readwrite) NSArray *textAreaControllers;
 
+
+// Pagelets
 @property(nonatomic, copy, readwrite) NSArray *contentItems;
+- (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
+- (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
+                           belowNode:(DOMNode *)node
+                           minHeight:(CGFloat)minHeight;
 
 @end
 
@@ -301,6 +307,49 @@
 
 @synthesize contentItems = _contentItems;
 
+/*  Similar to NSTableView's concept of dropping above a given row
+ */
+- (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo
+{
+    NSUInteger result = NSNotFound;
+    SVWebEditorView *editor = [self webEditorView];
+    NSArray *pageletContentItems = [self contentItems];
+    
+    
+    // Ideally, we're making a drop *before* a pagelet
+    NSUInteger i, count = [pageletContentItems count];
+    for (i = 0; i < count; i++)
+    {
+        SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:i];
+    
+        NSRect dropZone = [self rectOfDropZoneAboveDOMNode:[aPageletItem DOMElement]
+                                                 minHeight:25.0f];
+        
+        if ([editor mouse:[editor convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
+        {
+            result = i;
+            break;
+        }
+    }
+    
+    
+    // If not, is it a drop *after* the last pagelet, or into an empty sidebar?
+    if (result == NSNotFound)
+    {
+        NSRect dropZone = [self rectOfDropZoneInDOMElement:_sidebarDiv
+                                                 belowNode:[[pageletContentItems lastObject] DOMElement]
+                                                 minHeight:25.0f];
+        
+        if ([editor mouse:[editor convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
+        {
+            result = [pageletContentItems count];
+        }
+    }
+    
+    
+    return result;
+}
+
 - (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
 {
     NSRect nodeBox = [node boundingBox];
@@ -469,44 +518,30 @@
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditorView]);
+    
     NSDragOperation result = NSDragOperationNone;
     
-    
-    // Ideally, we're making a drop *before* a pagelet
-    NSArray *pageletContentItems = [self contentItems];
-    for (SVWebEditorItem *aPageletItem in pageletContentItems) 
+    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+    if (dropIndex != NSNotFound)
     {
-        NSRect dropZone = [self rectOfDropZoneAboveDOMNode:[aPageletItem DOMElement]
-                                                 minHeight:25.0f];
+        result = NSDragOperationMove;
         
-        if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
-        {
-            result = NSDragOperationMove;
-            
-            DOMRange *range = [[[aPageletItem DOMElement] ownerDocument] createRange];
-            [range setStartBefore:[aPageletItem DOMElement]];
-            //[range setEndBefore:[aPageletItem DOMElement]];
-            [sender moveDragCaretToDOMRange:range];
-            break;
-        }
-    }
-    
-    
-    // If not, is it a drop *after* the last pagelet, or into an empty sidebar?
-    if (result == NSDragOperationNone)
-    {
-        NSRect dropZone = [self rectOfDropZoneInDOMElement:_sidebarDiv
-                                                 belowNode:[[pageletContentItems lastObject] DOMElement]
-                                                 minHeight:25.0f];
         
-        if ([sender mouse:[sender convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
+        // Place the drag caret to match the drop index
+        NSArray *pageletContentItems = [self contentItems];
+        if (dropIndex >= [pageletContentItems count])
         {
-            result = NSDragOperationMove;
-            
             DOMNode *node = [_sidebarDiv lastChild];
             DOMRange *range = [[node ownerDocument] createRange];
             [range setStartAfter:node];
-            //[range setEndBefore:[aPageletItem DOMElement]];
+            [sender moveDragCaretToDOMRange:range];
+        }
+        else
+        {
+            SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
+            
+            DOMRange *range = [[[aPageletItem DOMElement] ownerDocument] createRange];
+            [range setStartBefore:[aPageletItem DOMElement]];
             [sender moveDragCaretToDOMRange:range];
         }
     }
@@ -515,6 +550,20 @@
     return result;
 }
 
+- (BOOL)webEditorView:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
+{
+    OBPRECONDITION(sender == [self webEditorView]);
+    
+    
+    // When dragging within the same view, there's no point allow a drop in the same location as the source (also, it looks messy)
+    SVWebEditorItem *draggedItem = nil;
+    if ([dragInfo draggingSource] == sender && [[sender selectedItems] count] == 1)
+    {
+        draggedItem = [sender selectedItem];
+    }
+    
+    return NO;
+}
 
 #pragma mark SVWebEditorViewDelegate
 
