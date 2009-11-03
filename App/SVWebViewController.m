@@ -553,16 +553,44 @@
 - (BOOL)webEditorView:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditorView]);
+    BOOL result = NO;
+    
+    NSArray *pageletContentItems = [self contentItems];
     
     
-    // When dragging within the same view, there's no point allow a drop in the same location as the source (also, it looks messy)
-    SVWebEditorItem *draggedItem = nil;
-    if ([dragInfo draggingSource] == sender && [[sender selectedItems] count] == 1)
+    //  When dragging within the same view, want to move the selected pagelets
+    //  Possibly bad, I'm assuming all selected items are pagelets
+    if ([dragInfo draggingSource] == sender)
     {
-        draggedItem = [sender selectedItem];
+        result = YES;
+        
+        NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+        if (dropIndex == NSNotFound)
+        {
+            result = NO;
+        }
+        else if (dropIndex >= [pageletContentItems count])
+        {
+            SVPagelet *lastPagelet = [[pageletContentItems lastObject] representedObject];
+            for (SVWebContentItem *aPageletItem in [sender selectedItems])
+            {
+                SVPagelet *pagelet = [aPageletItem representedObject];
+                [pagelet moveAfterPagelet:lastPagelet];
+            }
+        }
+        else
+        {
+            for (SVWebContentItem *aPageletItem in [sender selectedItems])
+            {
+                SVPagelet *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
+                SVPagelet *pagelet = [aPageletItem representedObject];
+                [pagelet moveBeforePagelet:anchorPagelet];
+            }
+        }
     }
     
-    return NO;
+    
+    return result;
 }
 
 #pragma mark SVWebEditorViewDelegate
