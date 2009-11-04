@@ -184,7 +184,7 @@
 
 /*!	Return the HTML.
 */
-- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
+- (NSString *)HTMLString;
 {
 	// Fallback to show problem
 	NSString *result = @"[PAGE, UNABLE TO GET CONTENT HTML]";
@@ -192,14 +192,6 @@
 	
 	// Build the HTML
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
-	[parser setDelegate:parserDelegate];
-	
-	if (isPreview) {
-		[parser setHTMLGenerationPurpose:kGeneratingPreview];
-	} else {
-		[parser setHTMLGenerationPurpose:kGeneratingRemote];
-	}
-	
 	result = [parser parseTemplate];
 	[parser release];
 	

@@ -394,7 +394,7 @@
 - (IBAction)validateSource:(id)sender
 {
 	KTPage *page = [self page];
-    NSString *pageSource = [page contentHTMLWithParserDelegate:nil isPreview:NO];
+    NSString *pageSource = [page HTMLString];
 	
     NSString *charset = [[page master] valueForKey:@"charset"];
 	NSStringEncoding encoding = [charset encodingFromCharset];

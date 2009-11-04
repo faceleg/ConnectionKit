@@ -436,7 +436,7 @@
 	switch ([self viewType])
 	{
 		case KTSourceCodeView:
-			sourceCode = [page contentHTMLWithParserDelegate:nil isPreview:NO];
+			sourceCode = [page HTMLString];
 			break;
 		
 		case KTDOMSourceView:

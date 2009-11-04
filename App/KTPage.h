@@ -195,7 +195,6 @@
 @interface KTPage (Web)
 + (NSString *)pageTemplate;
 
-- (NSString *)contentHTMLWithParserDelegate:(id)delegate isPreview:(BOOL)isPreview;
 - (BOOL)pluginHTMLIsFullPage;
 - (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
 - (BOOL)shouldPublishHTMLTemplate;

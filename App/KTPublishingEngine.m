@@ -541,7 +541,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	
 	// Generate HTML data
 	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
-	NSString *HTML = [[page contentHTMLWithParserDelegate:self isPreview:NO] stringByAdjustingHTMLForPublishing];
+	NSString *HTML = [[page HTMLString] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
     
     if ([self status] > KTPublishingEngineStatusUploading) return; // Engine may be cancelled mid-parse. If so, go no further.

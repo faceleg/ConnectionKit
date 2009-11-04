@@ -53,7 +53,7 @@
 
 /*!	Return the HTML.
 */
-- (NSString *)contentHTMLWithParserDelegate:(id)parserDelegate isPreview:(BOOL)isPreview;
+- (NSString *)HTMLString;
 {
 	BOOL isProFeature = (9 == [[[self plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
 	if (isProFeature && ![[NSApp delegate] isPro])
@@ -64,7 +64,7 @@
 	}
 	
 	
-	NSString *result = [super contentHTMLWithParserDelegate:parserDelegate isPreview:isPreview];
+	NSString *result = [super HTMLString];
 	
 	
 	return result;
