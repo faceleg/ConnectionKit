@@ -139,11 +139,11 @@
     [_HTMLGenerationContext setCurrentPage:page];
     [_HTMLGenerationContext setGenerationPurpose:kGeneratingPreview];
 	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
-	
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
-	NSString *pageHTML = [parser parseTemplateWithContext:_HTMLGenerationContext];
-	[parser release];
-	
+    
+    [SVHTMLGenerationContext pushContext:_HTMLGenerationContext];
+	NSString *pageHTML = [page HTMLString];
+	[SVHTMLGenerationContext popContext];
+    
     
     // Figure out the URL to use
 	NSURL *pageURL = [page URL];
