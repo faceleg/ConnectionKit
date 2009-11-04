@@ -26,3 +26,7 @@ form.contactElement th {
 	padding:0px 10%;
 	min-width: 0px;
 }
+
+textarea {
+    resize: vertical;
+}
