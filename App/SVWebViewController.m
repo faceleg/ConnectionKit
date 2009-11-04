@@ -482,8 +482,13 @@
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
-    return NO;
-    // TODO: Implement deletion support
+    for (SVWebContentItem *item in items)
+    {
+        SVPagelet *pagelet = [item representedObject];
+        [[pagelet managedObjectContext] deleteObject:pagelet];
+    }
+    
+    return YES;
 }
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender
