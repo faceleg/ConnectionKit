@@ -3567,8 +3567,8 @@
 			children = (
 				2759CC98103970FC00E2C046 /* Web Editor (Doc) */,
 				271B497B105468AA008B698C /* Web Editor (Generic) */,
-				275A641510501D2900AE6E2A /* Other content */,
 				275A641410501CF800AE6E2A /* Loading */,
+				275A641510501D2900AE6E2A /* Other content */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
 			);
 			name = "Web Content Area";

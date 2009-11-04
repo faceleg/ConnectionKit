@@ -19,7 +19,7 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTAbstractPage;
+@class KTAbstractPage, SVHTMLTemplateTextBlock;
 @interface SVHTMLGenerationContext : NSObject
 {
     NSURL                   *_baseURL;
@@ -27,6 +27,8 @@ typedef enum {
 	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
+    
+    NSMutableArray  *_textBlocks;
 }
 
 + (SVHTMLGenerationContext *)currentContext;
@@ -40,6 +42,13 @@ typedef enum {
 
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
 - (BOOL)isPublishing;
+
+
+#pragma mark Content
+
+@property(nonatomic, copy, readonly) NSArray *generatedTextBlocks;
+- (void)didGenerateTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+
 
 
 

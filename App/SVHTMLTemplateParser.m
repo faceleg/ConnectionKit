@@ -140,11 +140,7 @@
 
 - (void)didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseTextBlock:)])
-	{
-		[delegate HTMLParser:self didParseTextBlock:textBlock];
-	}
+	[[SVHTMLGenerationContext currentContext] didGenerateTextBlock:textBlock];
 }
 
 #pragma mark -

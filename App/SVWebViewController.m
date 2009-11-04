@@ -59,7 +59,6 @@
     [self setWebEditorView:nil];   // needed to tear down data source
     
     [_page release];
-    OBASSERT(!_parsedTextBlocks); [_parsedTextBlocks release];
     [_textAreas release];
     
     [super dealloc];
@@ -134,24 +133,15 @@
     [self setLoading:YES];
     
     
-	// Build the HTML
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
-	
-	/*KTWebViewComponent *webViewComponent = [[KTWebViewComponent alloc] initWithParser:parser];
-	[self setMainWebViewComponent:webViewComponent];*/
-	[parser setDelegate:self];
-	//[webViewComponent release];*/
-	
-    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
-    [context setCurrentPage:page];
-    [context setGenerationPurpose:kGeneratingPreview];
+	// Build the HTML. We hang onto the context so info about the HTML can be retrieved from it
+    [_HTMLGenerationContext release];
+	_HTMLGenerationContext = [[SVHTMLGenerationContext alloc] init];
+    [_HTMLGenerationContext setCurrentPage:page];
+    [_HTMLGenerationContext setGenerationPurpose:kGeneratingPreview];
 	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
 	
-    OBASSERT(!_parsedTextBlocks);
-    _parsedTextBlocks = [[NSMutableArray alloc] init];
-    
-	NSString *pageHTML = [parser parseTemplateWithContext:context];
-    [context release];
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
+	NSString *pageHTML = [parser parseTemplateWithContext:_HTMLGenerationContext];
 	[parser release];
 	
     
@@ -167,11 +157,6 @@
     
     // Load the HTML into the webview
     [[self webEditorView] loadHTMLString:pageHTML baseURL:pageURL];
-}
-
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
-{
-    if ([textBlock isEditable]) [_parsedTextBlocks addObject:textBlock];
 }
 
 @synthesize loading = _isLoading;
@@ -209,38 +194,46 @@
     
     
     // Prepare text areas and their controllers
-    NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[_parsedTextBlocks count]];
+    NSArray *parsedTextBlocks = [_HTMLGenerationContext generatedTextBlocks];
+    NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[parsedTextBlocks count]];
     NSMutableArray *textAreaControllers = [[NSMutableArray alloc] init];
     
-    for (SVHTMLTemplateTextBlock *aTextBlock in _parsedTextBlocks)
+    for (SVHTMLTemplateTextBlock *aTextBlock in parsedTextBlocks)
     {
         // Basic text area
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
-        OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
-        
-        SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithDOMElement:element];
-        [textArea setRichText:[aTextBlock isRichText]];
-        [textArea setFieldEditor:[aTextBlock isFieldEditor]];
-        
-        [textAreas addObject:textArea];
-        [textArea release];
-        
-        
-        // Binding
-        id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
-        if ([value isKindOfClass:[SVPageletBody class]])
+        if (element)
         {
-            SVPageletBodyTextAreaController *controller = [[SVPageletBodyTextAreaController alloc]
-                                                           initWithTextArea:textArea content:value];
-            [textAreaControllers addObject:controller];
-            [controller release];
+            OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
+            
+            SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithDOMElement:element];
+            [textArea setRichText:[aTextBlock isRichText]];
+            [textArea setFieldEditor:[aTextBlock isFieldEditor]];
+            
+            [textAreas addObject:textArea];
+            [textArea release];
+            
+            
+            // Binding
+            id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+            if ([value isKindOfClass:[SVPageletBody class]])
+            {
+                SVPageletBodyTextAreaController *controller = [[SVPageletBodyTextAreaController alloc]
+                                                               initWithTextArea:textArea content:value];
+                [textAreaControllers addObject:controller];
+                [controller release];
+            }
+            else
+            {
+                [textArea bind:NSValueBinding
+                         toObject:[aTextBlock HTMLSourceObject]
+                      withKeyPath:[aTextBlock HTMLSourceKeyPath]
+                          options:nil];
+            }
         }
         else
         {
-            [textArea bind:NSValueBinding
-                     toObject:[aTextBlock HTMLSourceObject]
-                  withKeyPath:[aTextBlock HTMLSourceKeyPath]
-                      options:nil];
+            NSLog(@"Couldn't find text area: %@", [aTextBlock DOMNodeID]);
         }
     }
     
@@ -248,7 +241,6 @@
     [textAreas release];
     [self setTextAreaControllers:textAreaControllers];
     [textAreaControllers release];
-    [_parsedTextBlocks release], _parsedTextBlocks = nil;
     
     
     

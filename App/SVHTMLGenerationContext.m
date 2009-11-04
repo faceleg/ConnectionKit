@@ -33,13 +33,25 @@
     if ([stack count] > 0) [stack removeLastObject];
 }
 
-#pragma mark Init
+#pragma mark Init & Dealloc
 
 - (id)init
 {
     [super init];
+    
     _includeStyling = YES;
+    _textBlocks = [[NSMutableArray alloc] init];
+    
     return self;
+}
+
+- (void)dealloc
+{
+    [_baseURL release];
+    [_currentPage release];
+    [_textBlocks release];
+    
+    [super dealloc];
 }
 
 #pragma mark Properties
@@ -55,6 +67,18 @@
                    [self generationPurpose] != kGeneratingQuickLookPreview);
     return result;
 }
+
+#pragma mark Content
+
+- (NSArray *)generatedTextBlocks { return [[_textBlocks copy] autorelease]; }
+
+- (void)didGenerateTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+{
+    OBPRECONDITION(_textBlocks);
+    [_textBlocks addObject:textBlock];
+}
+
+#pragma mark Legacy
 
 @synthesize currentPage = _currentPage;
 - (void)setCurrentPage:(KTAbstractPage *)page

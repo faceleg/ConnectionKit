@@ -11,16 +11,16 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVWebTextArea;
+@class KTPage, SVHTMLGenerationContext, SVWebTextArea;
 @protocol SVWebEditorViewControllerDelegate;
 
 
 @interface SVWebViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
 {
-    KTPage  *_page;
-    BOOL    _isLoading;
+    KTPage                  *_page;
+    BOOL                    _isLoading;
+    SVHTMLGenerationContext *_HTMLGenerationContext;
     
-    NSMutableArray  *_parsedTextBlocks;
     NSArray         *_textAreas;
     NSArray         *_textAreaControllers;
     
