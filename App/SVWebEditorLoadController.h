@@ -21,6 +21,7 @@
     NSViewController    *_webViewLoadingPlaceholder;
     
     KTPage  *_page;
+    NSSet   *_pageDependencies;
     
     BOOL    _needsLoad;
     

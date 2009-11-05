@@ -128,7 +128,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)load;
 {
-	// Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the background. It will be removed again after has finished since the webview will be properly part of the view hierarchy
+	// Tear down old dependencies
+    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
+    {
+        [[aDependency object] removeObserver:self
+                                  forKeyPath:[aDependency keyPath]];
+    }
+    
+    
+    // Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the background. It will be removed again after has finished since the webview will be properly part of the view hierarchy
     SVWebEditorViewController *webViewController = [self secondaryWebViewController];
     
     NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
@@ -148,7 +156,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	[webViewController loadHTMLString:pageHTML];
 	[SVHTMLContext popContext];
     
+    
     // Observe the used keypaths
+    [_pageDependencies release], _pageDependencies = [[context dependencies] copy];
+    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
+    {
+        [[aDependency object] addObserver:self
+                               forKeyPath:[aDependency keyPath]
+                                  options:0
+                                  context:sWebViewDependenciesObservationContext];
+    }
     [context release];
     
 	
@@ -214,7 +231,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else if (context == sWebViewDependenciesObservationContext)
     {
-        
+        [self setNeedsLoad:YES];
     }
     else
     {

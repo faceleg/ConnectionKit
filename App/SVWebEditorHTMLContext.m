@@ -8,6 +8,8 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "KTTemplateParser.h"
+
 #import "KSObjectKeyPathPair.h"
 
 
@@ -41,7 +43,12 @@
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 {
     OBASSERT(_objectKeyPathPairs);
-    [_objectKeyPathPairs addObject:pair];
+    
+    // Ignore parser properties
+    if (![[pair object] isKindOfClass:[KTTemplateParser class]])
+    {
+        [_objectKeyPathPairs addObject:pair];
+    }
 }
 
 - (NSSet *)dependencies { return [[_objectKeyPathPairs copy] autorelease]; }
