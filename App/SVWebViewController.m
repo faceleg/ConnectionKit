@@ -135,7 +135,7 @@
     
 	// Build the HTML. We hang onto the context so info about the HTML can be retrieved from it
     [_HTMLGenerationContext release];
-	_HTMLGenerationContext = [[SVHTMLContext alloc] init];
+	_HTMLGenerationContext = [[SVWebEditorHTMLContext alloc] init];
     [_HTMLGenerationContext setCurrentPage:page];
     [_HTMLGenerationContext setGenerationPurpose:kGeneratingPreview];
 	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];

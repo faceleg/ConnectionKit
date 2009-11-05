@@ -253,6 +253,8 @@
 		273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864320D50A6F900A8A209 /* KTPage+Children.m */; };
 		273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */ = {isa = PBXBuildFile; fileRef = 273864650D50BB1D00A8A209 /* KTPage+Indexes.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
+		273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */; };
+		273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */; };
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
 		27422441106A926E0058C8DA /* SVWebEditorWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* SVWebEditorWebView.h */; };
 		27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* SVWebEditorWebView.m */; };
@@ -1704,6 +1706,8 @@
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
+		273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorHTMLContext.h; sourceTree = "<group>"; };
+		273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorHTMLContext.m; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPage+Paths.m"; sourceTree = "<group>"; };
 		2742243F106A926E0058C8DA /* SVWebEditorWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorWebView.h; sourceTree = "<group>"; };
 		27422440106A926E0058C8DA /* SVWebEditorWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorWebView.m; sourceTree = "<group>"; };
@@ -3041,6 +3045,8 @@
 				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
 				2731ECCB10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h */,
 				2731ECCC10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m */,
+				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
+				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 			);
 			name = "Web Editor (Doc)";
 			sourceTree = "<group>";
@@ -5163,6 +5169,7 @@
 				27196F871090B1880096B612 /* KSInspector.h in Headers */,
 				2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */,
 				279C5881109916F20030F3B7 /* SVSidebar.h in Headers */,
+				273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6560,6 +6567,7 @@
 				27196F881090B1880096B612 /* KSInspector.m in Sources */,
 				2782914710912B30008D0A64 /* SVInspectorViewController.m in Sources */,
 				279C5882109916F20030F3B7 /* SVSidebar.m in Sources */,
+				273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
