@@ -25,6 +25,8 @@
 @implementation SVWebEditorLoadController
 
 static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLoadingObservationContext";
+static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependenciesObservationContext";
+
 
 - (id)init;
 {
@@ -146,8 +148,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 	[webViewController loadHTMLString:pageHTML];
 	[SVHTMLContext popContext];
     
-    
-    // Observe HTML's dependent keypaths so we know when next refresh is due
+    // Observe the used keypaths
     [context release];
     
 	
@@ -210,6 +211,10 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
             // The webview is now part of the view hierarchy, so no longer needs to be explicity told it's window
             [[[self primaryWebViewController] webView] setHostWindow:nil];
         }
+    }
+    else if (context == sWebViewDependenciesObservationContext)
+    {
+        
     }
     else
     {

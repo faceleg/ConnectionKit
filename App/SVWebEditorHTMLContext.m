@@ -8,12 +8,42 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "KSObjectKeyPathPair.h"
+
 
 @implementation SVWebEditorHTMLContext
+
+- (id)init
+{
+    [super init];
+    _objectKeyPathPairs = [[NSMutableSet alloc] init];
+    return self;
+}
+
+- (void)dealloc
+{
+    [_objectKeyPathPairs release];
+    
+    [super dealloc];
+}
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 {
     [super addDependencyOnObject:object keyPath:keyPath];
+    
+    
+    KSObjectKeyPathPair *pair = [[KSObjectKeyPathPair alloc] initWithObject:object
+                                                                    keyPath:keyPath];
+    [self addDependency:pair];
+    [pair release];
 }
+
+- (void)addDependency:(KSObjectKeyPathPair *)pair;
+{
+    OBASSERT(_objectKeyPathPairs);
+    [_objectKeyPathPairs addObject:pair];
+}
+
+- (NSSet *)dependencies { return [[_objectKeyPathPairs copy] autorelease]; }
 
 @end

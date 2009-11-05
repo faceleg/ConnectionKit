@@ -9,9 +9,13 @@
 #import "SVHTMLContext.h"
 
 
+@class KSObjectKeyPathPair;
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
-
+    NSMutableSet    *_objectKeyPathPairs;
 }
+
+- (void)addDependency:(KSObjectKeyPathPair *)pair;
+@property(nonatomic, copy, readonly) NSSet *dependencies;
 
 @end
