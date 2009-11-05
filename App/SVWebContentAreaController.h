@@ -7,7 +7,7 @@
 //
 
 #import "KSTabViewController.h"
-#import "SVWebViewLoadController.h"
+#import "SVWebEditorLoadController.h"
 
 
 @protocol SVWebContentAreaControllerDelegate;
@@ -16,7 +16,7 @@
 @interface SVWebContentAreaController : KSTabViewController <SVWebViewLoadControllerDelegate>
 {
   @private
-    SVWebViewLoadController *_webViewController;
+    SVWebEditorLoadController *_webViewController;
     NSViewController        *_placeholderViewController;
     
     NSArray *_selectedPages;
@@ -27,7 +27,7 @@
 // Set this and the webview/source list view will be updated to match. Can even bind it!
 @property(nonatomic, copy) NSArray *selectedPages;
 
-@property(nonatomic, readonly) SVWebViewLoadController *webViewLoadController;
+@property(nonatomic, readonly) SVWebEditorLoadController *webViewLoadController;
 
 @property(nonatomic, assign) id <SVWebContentAreaControllerDelegate> delegate;
 

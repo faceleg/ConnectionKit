@@ -109,45 +109,20 @@
 
 #pragma mark Loading
 
-- (KTPage *)page { return _page; }
-
-- (void)setPage:(KTPage *)page
-{
-    [page retain];
-    [_page release];
-    _page = page;
-    
-    if (page)
-    {
-        [self loadPage:page];
-    }
-    else
-    {
-        // TODO: load blank webview
-    }
-}
+@synthesize page = _page;
 
 // Support
-- (void)loadPage:(KTPage *)page;
+- (void)loadHTMLString:(NSString *)pageHTML;
 {
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests.
     [self setLoading:YES];
     
     
-	// Build the HTML. We hang onto the context so info about the HTML can be retrieved from it
-    [_HTMLGenerationContext release];
-	_HTMLGenerationContext = [[SVWebEditorHTMLContext alloc] init];
-    [_HTMLGenerationContext setCurrentPage:page];
-    [_HTMLGenerationContext setGenerationPurpose:kGeneratingPreview];
-	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
-    
-    [SVHTMLContext pushContext:_HTMLGenerationContext];
-	NSString *pageHTML = [page HTMLString];
-	[SVHTMLContext popContext];
+    [_HTMLGenerationContext release], _HTMLGenerationContext = [[SVHTMLContext currentContext] retain];
     
     
-    // Figure out the URL to use
-	NSURL *pageURL = [page URL];
+	// Figure out the URL to use
+	NSURL *pageURL = [[self page] URL];
     if (![pageURL scheme] ||        // case 44071: WebKit will not load the HTML or offer delegate
         ![pageURL host] ||          // info if the scheme is something crazy like fttp:
         !([[pageURL scheme] isEqualToString:@"http"] || [[pageURL scheme] isEqualToString:@"https"]))

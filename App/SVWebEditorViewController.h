@@ -39,6 +39,8 @@
 #pragma mark Page
 // These should all be KVO-compliant
 @property(nonatomic, retain) KTPage *page;
+
+- (void)loadHTMLString:(NSString *)html;  // you are expected to supply a valid SVHTMLContext while calling this
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
 

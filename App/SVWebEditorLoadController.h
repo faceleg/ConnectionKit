@@ -13,7 +13,7 @@
 @protocol SVWebViewLoadControllerDelegate;
 
 
-@interface SVWebViewLoadController : KSTabViewController <SVWebEditorViewControllerDelegate>
+@interface SVWebEditorLoadController : KSTabViewController <SVWebEditorViewControllerDelegate>
 {
   @private
     SVWebEditorViewController *_primaryController;    // loaded & probably on-screen
@@ -54,9 +54,9 @@
 
 @protocol SVWebViewLoadControllerDelegate
 
-- (void)loadControllerDidChangeTitle:(SVWebViewLoadController *)controller;
+- (void)loadControllerDidChangeTitle:(SVWebEditorLoadController *)controller;
 
 // The controller is not in a position to open a page by itself; it lets somebody else decide how to
-- (void)loadController:(SVWebViewLoadController *)sender openPage:(KTPage *)page;
+- (void)loadController:(SVWebEditorLoadController *)sender openPage:(KTPage *)page;
 @end
 

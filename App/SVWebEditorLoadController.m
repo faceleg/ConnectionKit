@@ -6,12 +6,15 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebViewLoadController.h"
+#import "SVWebEditorLoadController.h"
 #import "SVWebEditorViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
+#import "KTPage.h"
+#import "SVWebEditorHTMLContext.h"
 
-@interface SVWebViewLoadController ()
+
+@interface SVWebEditorLoadController ()
 - (void)swapWebViewControllers;
 @end
 
@@ -19,7 +22,7 @@
 #pragma mark -
 
 
-@implementation SVWebViewLoadController
+@implementation SVWebEditorLoadController
 
 static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLoadingObservationContext";
 
@@ -130,7 +133,23 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     [[webViewController webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
     [webViewController setPage:[self page]];
-	
+    
+    
+    // Build the HTML.
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [context setCurrentPage:[self page]];
+    [context setGenerationPurpose:kGeneratingPreview];
+	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
+    
+    [SVHTMLContext pushContext:context];
+	NSString *pageHTML = [[self page] HTMLString];
+	[webViewController loadHTMLString:pageHTML];
+	[SVHTMLContext popContext];
+    
+    
+    // Observe HTML's dependent keypaths so we know when next refresh is due
+    [context release];
+    
 	
     // Clearly the webview is no longer in need of refreshing
 	[self setNeedsLoad:NO];

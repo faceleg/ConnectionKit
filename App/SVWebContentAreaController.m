@@ -7,7 +7,7 @@
 //
 
 #import "SVWebContentAreaController.h"
-#import "SVWebViewLoadController.h"
+#import "SVWebEditorLoadController.h"
 
 
 @implementation SVWebContentAreaController
@@ -16,7 +16,7 @@
 {
     [super init];
     
-    _webViewController = [[SVWebViewLoadController alloc] init];
+    _webViewController = [[SVWebEditorLoadController alloc] init];
     [_webViewController setDelegate:self];
     [self insertViewController:_webViewController atIndex:0];
     
@@ -102,12 +102,12 @@
 
 #pragma mark Load Delegate
 
-- (void)loadControllerDidChangeTitle:(SVWebViewLoadController *)controller;
+- (void)loadControllerDidChangeTitle:(SVWebEditorLoadController *)controller;
 {
     [[self delegate] webContentAreaControllerDidChangeTitle:self];
 }
 
-- (void)loadController:(SVWebViewLoadController *)sender openPage:(KTPage *)page;
+- (void)loadController:(SVWebEditorLoadController *)sender openPage:(KTPage *)page;
 {
     // Take advantag of our binding and set that to the desired page. It will then trigger a change in our selected pages (probably)
     if (page)
