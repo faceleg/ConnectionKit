@@ -187,7 +187,7 @@
 	
 	if (comparisonType == kCompareNotEmptyOrEditing)	// mostly same test; we will "OR" with editing mode
 	{
-		result = ([self HTMLGenerationPurpose] == kGeneratingPreview || [self isNotEmpty:leftValue]);
+		result = (![[SVHTMLContext currentContext] isPublishing] || [self isNotEmpty:leftValue]);
 	}
 	else
 	{
@@ -313,7 +313,7 @@
 		else if ([keyword isEqualToString:@"flags"])
 		{
 			// Only generate these special classes if we are doing the local preview
-			if ([self HTMLGenerationPurpose] == kGeneratingPreview)
+			if (![[SVHTMLContext currentContext] isPublishing])
 			{		
 				value = [value lowercaseString];	// convert to lowercase before converting to classes
 				NSArray *flags = [value componentsSeparatedByWhitespace];
@@ -555,10 +555,6 @@
 /*  These methods are no longer public in 2.0 as we have moved to the SVHTMLContext concept. But many templates rely on these methods being present in the parser, so they stick around as wrappers around the new functionality
  */
 
-/*	Whenever parsing, it must be within the context of a particular page.
- *	e.g. A single pagelet may be parsed be 50 times, each on a different page.
- *	Use these two methods to specify which the component is being parsed in the context of.
- */
 - (KTAbstractPage *)currentPage
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
@@ -566,10 +562,6 @@
 	return [context currentPage];
 }
 
-/*	This accessor pair is a replacement for -[KTDocument publishingmode]
- *	Instead of limiting HTML generating to a single mode at a time, we tell each parser what it is generating the HTML for.
- *	
- */
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
