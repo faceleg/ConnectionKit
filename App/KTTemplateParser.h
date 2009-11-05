@@ -80,7 +80,6 @@
 @optional
 - (void)parserDidStartTemplate:(KTTemplateParser *)parser;
 - (NSString *)parser:(KTTemplateParser *)parser didEndTemplate:(NSString *)result;
-- (void)parser:(KTTemplateParser *)parser didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 - (void)parser:(KTTemplateParser *)parser willParseSubcomponentAtIndex:(unsigned)index;
 @end
 

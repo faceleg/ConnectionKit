@@ -70,6 +70,8 @@
 
 #pragma mark Content
 
+- (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
+
 - (NSArray *)generatedTextBlocks { return [[_textBlocks copy] autorelease]; }
 
 - (void)didGenerateTextBlock:(SVHTMLTemplateTextBlock *)textBlock;

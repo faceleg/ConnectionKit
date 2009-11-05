@@ -21,7 +21,7 @@
 
 // Init
 - (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTTemplateParser *)parser;
-- (KTTemplateParser *)parser;
+//- (KTTemplateParser *)parser;
 
 // KVC
 - (id)valueForKey:(NSString *)key;

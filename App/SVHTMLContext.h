@@ -46,6 +46,9 @@ typedef enum {
 
 #pragma mark Content
 
+// Default implementation does nothing. Subclasses can implement for introspecting the dependencies (WebView loading does)
+- (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
+                               
 @property(nonatomic, copy, readonly) NSArray *generatedTextBlocks;
 - (void)didGenerateTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
 

@@ -162,12 +162,8 @@
 
 - (void)registerRequestedKeyPath:(NSString *)keyPath forObject:(NSObject *)object
 {
-	// Alert the parser's delegate
-	id delegate = [[self parser] delegate];
-	if (delegate && [delegate respondsToSelector:@selector(parser:didEncounterKeyPath:ofObject:)])
-	{
-		[delegate parser:[self parser] didEncounterKeyPath:keyPath ofObject:object];
-	}
+	// Alert the context
+	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
 }
 
 @end

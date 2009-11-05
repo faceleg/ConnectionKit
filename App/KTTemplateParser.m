@@ -212,11 +212,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(parser:didEncounterKeyPath:ofObject:)])
-	{
-		[delegate parser:self didEncounterKeyPath:keyPath ofObject:object];
-	}
+	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
 }
 
 #pragma mark -
