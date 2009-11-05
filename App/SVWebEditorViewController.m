@@ -31,7 +31,6 @@
 
 
 @interface SVWebEditorViewController ()
-- (void)loadPage:(KTPage *)page;
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
