@@ -1,5 +1,5 @@
 //
-//  SVWebViewController.h
+//  SVWebEditorViewController.h
 //  Marvel
 //
 //  Created by Mike on 17/08/2009.
@@ -15,7 +15,7 @@
 @protocol SVWebEditorViewControllerDelegate;
 
 
-@interface SVWebViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
+@interface SVWebEditorViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
 {
     KTPage                  *_page;
     BOOL                    _isLoading;
@@ -77,7 +77,7 @@
 @protocol SVWebEditorViewControllerDelegate
 
 // The controller is not in a position to open a page by itself; it lets somebody else decide how to
-- (void)webEditorViewController:(SVWebViewController *)sender openPage:(KTPage *)page;
+- (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
 
 @end
 

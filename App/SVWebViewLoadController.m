@@ -7,7 +7,7 @@
 //
 
 #import "SVWebViewLoadController.h"
-#import "SVWebViewController.h"
+#import "SVWebEditorViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
 
@@ -29,11 +29,11 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     
     // Create controllers
-    _primaryController = [[SVWebViewController alloc] init];
+    _primaryController = [[SVWebEditorViewController alloc] init];
     [_primaryController setDelegate:self];
     [self insertViewController:_primaryController atIndex:0];
     
-    _secondaryController = [[SVWebViewController alloc] init];
+    _secondaryController = [[SVWebEditorViewController alloc] init];
     [_secondaryController setDelegate:self];
     [self insertViewController:_secondaryController atIndex:1];
     
@@ -90,7 +90,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     [self willChangeValueForKey:@"primaryWebViewController"];
     [self willChangeValueForKey:@"secondaryWebViewController"];
     
-    SVWebViewController *intermediateControllerVar = _primaryController;
+    SVWebEditorViewController *intermediateControllerVar = _primaryController;
     _primaryController = _secondaryController;
     _secondaryController = intermediateControllerVar;
     
@@ -124,7 +124,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 - (void)load;
 {
 	// Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the background. It will be removed again after has finished since the webview will be properly part of the view hierarchy
-    SVWebViewController *webViewController = [self secondaryWebViewController];
+    SVWebEditorViewController *webViewController = [self secondaryWebViewController];
     
     NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
     
@@ -200,7 +200,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 #pragma mark SVWebEditorViewControllerDelegate
 
-- (void)webEditorViewController:(SVWebViewController *)sender openPage:(KTPage *)page;
+- (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
 {
     // Only want to do as asked if the controller is the one currently visible. Otherwise it could come as a bit of a surprise!
     if (sender == [self selectedViewController])

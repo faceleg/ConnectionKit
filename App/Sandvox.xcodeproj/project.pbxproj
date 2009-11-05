@@ -277,8 +277,8 @@
 		275666ED0F015E8400878A05 /* KTMobileMePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */; };
 		275666EE0F015E8400878A05 /* KTMobileMePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */; };
 		2756671E0F0167C700878A05 /* KTDocWindowController+Publishing.m in Sources */ = {isa = PBXBuildFile; fileRef = 2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */; };
-		2759CC9B1039711200E2C046 /* SVWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC991039711200E2C046 /* SVWebViewController.h */; };
-		2759CC9C1039711300E2C046 /* SVWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebViewController.m */; };
+		2759CC9B1039711200E2C046 /* SVWebEditorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC991039711200E2C046 /* SVWebEditorViewController.h */; };
+		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
 		2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD051039AC6000E2C046 /* KSTabViewController.h */; };
@@ -1730,8 +1730,8 @@
 		275666EB0F015E8300878A05 /* KTMobileMePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMobileMePublishingEngine.h; sourceTree = "<group>"; };
 		275666EC0F015E8300878A05 /* KTMobileMePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMobileMePublishingEngine.m; sourceTree = "<group>"; };
 		2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Publishing.m"; sourceTree = "<group>"; };
-		2759CC991039711200E2C046 /* SVWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebViewController.h; sourceTree = "<group>"; };
-		2759CC9A1039711200E2C046 /* SVWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebViewController.m; sourceTree = "<group>"; };
+		2759CC991039711200E2C046 /* SVWebEditorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorViewController.h; sourceTree = "<group>"; };
+		2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorViewController.m; sourceTree = "<group>"; };
 		2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentAreaController.h; sourceTree = "<group>"; };
 		2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentAreaController.m; sourceTree = "<group>"; };
 		2759CD051039AC6000E2C046 /* KSTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSTabViewController.h; path = ../../Shared/AppKit/KSTabViewController.h; sourceTree = "<group>"; };
@@ -3035,8 +3035,8 @@
 				27C7458D104E96CF00FBA79D /* SVWebContentItem.m */,
 				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
 				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
-				2759CC991039711200E2C046 /* SVWebViewController.h */,
-				2759CC9A1039711200E2C046 /* SVWebViewController.m */,
+				2759CC991039711200E2C046 /* SVWebEditorViewController.h */,
+				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
 				2790BD9C103E890600654665 /* SVDOMController.h */,
 				2790BD9D103E890600654665 /* SVDOMController.m */,
 				27F243AC106BC873007FEC56 /* SVSidebarEditorItem.h */,
@@ -5124,7 +5124,7 @@
 				27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */,
 				CE9B4B420F5E0C780052134C /* UKDockProgressIndicator.h in Headers */,
 				27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */,
-				2759CC9B1039711200E2C046 /* SVWebViewController.h in Headers */,
+				2759CC9B1039711200E2C046 /* SVWebEditorViewController.h in Headers */,
 				2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */,
 				2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */,
 				2759CD441039B83900E2C046 /* SVWebViewLoadController.h in Headers */,
@@ -6525,7 +6525,7 @@
 				279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */,
 				CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */,
 				27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */,
-				2759CC9C1039711300E2C046 /* SVWebViewController.m in Sources */,
+				2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */,
 				2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */,
 				2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */,
 				2759CD451039B83900E2C046 /* SVWebViewLoadController.m in Sources */,

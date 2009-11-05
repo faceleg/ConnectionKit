@@ -7,7 +7,7 @@
 //
 
 #import "KSTabViewController.h"
-#import "SVWebViewController.h"
+#import "SVWebEditorViewController.h"
 
 
 @protocol SVWebViewLoadControllerDelegate;
@@ -16,8 +16,8 @@
 @interface SVWebViewLoadController : KSTabViewController <SVWebEditorViewControllerDelegate>
 {
   @private
-    SVWebViewController *_primaryController;    // loaded & probably on-screen
-    SVWebViewController *_secondaryController;  // offscreen, ready to load into
+    SVWebEditorViewController *_primaryController;    // loaded & probably on-screen
+    SVWebEditorViewController *_secondaryController;  // offscreen, ready to load into
     NSViewController    *_webViewLoadingPlaceholder;
     
     KTPage  *_page;
@@ -30,8 +30,8 @@
 // You should use this to create a controller as it will internally create the correct subcontrollers
 - (id)init;
 
-@property(nonatomic, retain, readonly) SVWebViewController *primaryWebViewController;
-@property(nonatomic, retain, readonly) SVWebViewController *secondaryWebViewController;
+@property(nonatomic, retain, readonly) SVWebEditorViewController *primaryWebViewController;
+@property(nonatomic, retain, readonly) SVWebEditorViewController *secondaryWebViewController;
 
 // Setting the page will automatically mark controller as needsLoad = YES
 @property(nonatomic, retain) KTPage *page;

@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-//  Between them, SVTextBlock & SVWebViewController create a system like NSView & NSWindow for handling display and editing of text via the webview. SVTextBlock's main aim is to provide an NSTextView-like API for the text (i.e. all properties/methods should have a "live" effect on the DOM).
+//  Between them, SVTextBlock & SVWebEditorViewController create a system like NSView & NSWindow for handling display and editing of text via the webview. SVTextBlock's main aim is to provide an NSTextView-like API for the text (i.e. all properties/methods should have a "live" effect on the DOM).
 
 
 #import <Cocoa/Cocoa.h>
@@ -36,7 +36,7 @@
     BOOL                        _isCommittingEditing;
 }
 
-- (id)initWithDOMElement:(DOMHTMLElement *)element;// controller:(SVWebViewController *)controller;
+- (id)initWithDOMElement:(DOMHTMLElement *)element;// controller:(SVWebEditorViewController *)controller;
 
 
 @property(nonatomic, retain, readonly) DOMHTMLElement *DOMElement;

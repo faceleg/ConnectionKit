@@ -1,12 +1,12 @@
 //
-//  SVWebViewController.m
+//  SVWebEditorViewController.m
 //  Marvel
 //
 //  Created by Mike on 17/08/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebViewController.h"
+#import "SVWebEditorViewController.h"
 
 #import "SVContentObject.h"
 #import "SVHTMLTemplateParser.h"
@@ -30,7 +30,7 @@
 #import "KSSilencingConfirmSheet.h"
 
 
-@interface SVWebViewController ()
+@interface SVWebEditorViewController ()
 - (void)loadPage:(KTPage *)page;
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
@@ -51,7 +51,7 @@
 #pragma mark -
 
 
-@implementation SVWebViewController
+@implementation SVWebEditorViewController
 
 #pragma mark Init & Dealloc
 
