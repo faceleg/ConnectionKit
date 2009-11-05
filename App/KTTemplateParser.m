@@ -859,12 +859,12 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	else
 	{
 		NSLog(@"forEach: missing %@ tag", endForEachDelim);
-		result = @"";
+		[result setString:@""];
 	}
 	
 	[self exitCurrentForeachLoop];
 	
-	return [NSString stringWithString:result];
+	return result;
 }
 
 /*!	return index of forEach loop (prefixed with "i"), or empty string if out of a loop
