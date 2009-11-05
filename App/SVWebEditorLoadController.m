@@ -121,7 +121,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_page release];
     _page = page;
     
-    [self setNeedsLoad:YES];
+    [self setNeedsLoad];
 }
 
 #pragma mark Loading
@@ -170,7 +170,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 	
     // Clearly the webview is no longer in need of refreshing
-	[self setNeedsLoad:NO];
+	_needsLoad = NO;
     
     
     // The webview gets a limited amount of time to load synchronously in, and then we switch to asynchronous
@@ -181,11 +181,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
-- (BOOL)needsLoad { return _needsLoad; }
-
-- (void)setNeedsLoad:(BOOL)flag
+@synthesize needsLoad = _needsLoad;
+- (void)setNeedsLoad;
 {
-    if (flag && ![self needsLoad])
+    if (![self needsLoad])
 	{
 		// Install a fresh observer for the end of the run loop
 		[[NSRunLoop currentRunLoop] performSelector:@selector(load)
@@ -194,16 +193,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                               order:0
                                               modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
 	}
-	else if (!flag && [self needsLoad])
-	{
-		// Unschedule the existing observer and throw it away
-		[[NSRunLoop currentRunLoop] cancelPerformSelector:@selector(load)
-                                                   target:self
-                                                 argument:nil];
-	}
-    
-    _needsLoad = flag;
+	
+    _needsLoad = YES;
 }
+
+- (void)loadIfNeeded { if ([self needsLoad]) [self load]; }
 
 #pragma mark Delegate
 
@@ -231,7 +225,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else if (context == sWebViewDependenciesObservationContext)
     {
-        [self setNeedsLoad:YES];
+        [self setNeedsLoad];
     }
     else
     {

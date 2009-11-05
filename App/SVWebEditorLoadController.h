@@ -39,8 +39,10 @@
 
 
 #pragma mark Loading
-@property(nonatomic) BOOL needsLoad;
 - (void)load;
+
+@property(nonatomic, readonly) BOOL needsLoad;
+- (void)setNeedsLoad;
 - (void)loadIfNeeded;
 
 
