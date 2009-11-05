@@ -9,6 +9,7 @@
 #import "KTHTMLParserMasterCache.h"
 
 #import "KTTemplateParser.h"
+#import "SVHTMLContext.h"
 
 
 @interface KTHTMLParserMasterCache ()

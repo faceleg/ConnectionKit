@@ -9,6 +9,8 @@
 #import "KTTemplateParser.h"
 #import "KTHTMLParserMasterCache.h"
 
+#import "SVHTMLContext.h"   // TODO: Shouldn't need this dependency
+
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSIndexPath+Karelia.h"
