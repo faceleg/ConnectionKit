@@ -16,12 +16,7 @@
 @interface KTHTMLParserMasterCache : KTHTMLParserCache
 {
 	NSMutableDictionary	*myOverrides;
-	KTTemplateParser		*myParser;		// Weak ref
 }
-
-// Init
-- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTTemplateParser *)parser;
-//- (KTTemplateParser *)parser;
 
 // KVC
 - (id)valueForKey:(NSString *)key;

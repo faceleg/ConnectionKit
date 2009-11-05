@@ -292,7 +292,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	
 	// Create a new cache for the parsing
-	KTHTMLParserMasterCache *cache = [[KTHTMLParserMasterCache alloc] initWithProxyObject:parsedComponent parser:self];
+	KTHTMLParserMasterCache *cache = [[KTHTMLParserMasterCache alloc] initWithProxyObject:parsedComponent];
 	[self setCache:cache];
 	[cache release];
 	

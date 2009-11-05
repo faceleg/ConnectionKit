@@ -23,14 +23,11 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithProxyObject:(NSObject *)proxyObject parser:(KTTemplateParser *)parser
+- (id)initWithProxyObject:(NSObject *)proxyObject
 {
-	OBASSERTSTRING(proxyObject, @"-[KTHTMLParserMasterCahce initWithProxyObject:parser:] Attempt with nil proxy object");
-	
 	[super initWithProxyObject:proxyObject];
 	
 	myOverrides = [[NSMutableDictionary alloc] init];
-	myParser = parser;		// Weak ref
 	
 	return self;
 }
@@ -41,11 +38,6 @@
 	
 	[super dealloc];
 }
-
-#pragma mark -
-#pragma mark Accessors
-
-- (KTTemplateParser *)parser { return myParser; }
 
 #pragma mark -
 #pragma mark KVC
