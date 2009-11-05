@@ -120,7 +120,7 @@
 
 - (NSString *)pathToMedia:(KTMediaFile *)media scalingProperties:(NSDictionary *)scalingProps
 {
-	switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
+	switch ([[SVHTMLContext currentContext] generationPurpose])
 	{
 		case kGeneratingPreview:
 			return [[media URLForImageScalingProperties:scalingProps] absoluteString];

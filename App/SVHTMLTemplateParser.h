@@ -20,10 +20,10 @@
 
 #import "KTTemplateParser.h"
 
-#import "SVHTMLGenerationContext.h"
+#import "SVHTMLContext.h"
 
 
-@class KTDocument, KTHTMLParserMasterCache, SVHTMLGenerationContext, KTMediaFileUpload, SVHTMLTemplateTextBlock;
+@class KTDocument, KTHTMLParserMasterCache, SVHTMLContext, KTMediaFileUpload, SVHTMLTemplateTextBlock;
 @class KTAbstractPage;
 @class KTMediaContainer, KTMediaFile;
 @protocol SVHTMLTemplateParserDelegate;
@@ -38,7 +38,7 @@
 
 #pragma mark Parse
 //  Convenience method to do parsing while pushing and popping a context on the stack
-- (NSString *)parseTemplateWithContext:(SVHTMLGenerationContext *)context;
+- (NSString *)parseTemplateWithContext:(SVHTMLContext *)context;
 
 
 // Functions

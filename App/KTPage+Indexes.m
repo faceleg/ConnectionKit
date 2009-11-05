@@ -11,7 +11,7 @@
 #import "KTAbstractElement+Internal.h"
 #import "KTAbstractIndex.h"
 #import "KTArchivePage.h"
-#import "SVHTMLGenerationContext.h"
+#import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTIndexPlugin.h"
 
@@ -289,7 +289,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
 	[parser setDelegate:parserDelegate];
 	
-    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    SVHTMLContext *context = [[SVHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingRemote];
     
 	NSString *result = [parser parseTemplateWithContext:context];

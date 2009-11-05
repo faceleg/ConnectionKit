@@ -102,13 +102,13 @@
 #pragma mark -
 #pragma mark Parsing
 
-- (NSString *)parseTemplateWithContext:(SVHTMLGenerationContext *)context;
+- (NSString *)parseTemplateWithContext:(SVHTMLContext *)context;
 {
     if (context)
     {
-        [SVHTMLGenerationContext pushContext:context];
+        [SVHTMLContext pushContext:context];
         NSString *result = [self parseTemplate];
-        [SVHTMLGenerationContext popContext];
+        [SVHTMLContext popContext];
         return result;
     }
     else
@@ -140,7 +140,7 @@
 
 - (void)didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
-	[[SVHTMLGenerationContext currentContext] didGenerateTextBlock:textBlock];
+	[[SVHTMLContext currentContext] didGenerateTextBlock:textBlock];
 }
 
 #pragma mark -
@@ -154,7 +154,7 @@
 	
 	if (result)
 	{
-		KTAbstractPage *page = [[SVHTMLGenerationContext currentContext] currentPage];
+		KTAbstractPage *page = [[SVHTMLContext currentContext] currentPage];
         if (page) [[self cache] overrideKey:@"CurrentPage" withValue:page];
         
 		[[self cache] overrideKey:@"HTMLGenerationPurpose" withValue:[self valueForKey:@"HTMLGenerationPurpose"]];
@@ -170,7 +170,7 @@
 	NSString *result = [super parseTemplate];
 	
     // We only need neat formatting when publishing
-    KTHTMLGenerationPurpose purpose = [[SVHTMLGenerationContext currentContext] generationPurpose];
+    KTHTMLGenerationPurpose purpose = [[SVHTMLContext currentContext] generationPurpose];
     if (purpose != kGeneratingPreview && purpose != kGeneratingQuickLookPreview)
     {
         result = [result stringByRemovingMultipleNewlines];
@@ -373,7 +373,7 @@
 	}
 	
 	// Mark for image replacement ONLY if QC supported.
-	KTAbstractPage *page = [[SVHTMLGenerationContext currentContext] currentPage];
+	KTAbstractPage *page = [[SVHTMLContext currentContext] currentPage];
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
@@ -447,7 +447,7 @@
         NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
         if (resourceFilePath)
         {
-            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLGenerationContext currentContext] currentPage]];
+            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLContext currentContext] currentPage]];
         }
     }
     
@@ -459,7 +459,7 @@
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTAbstractPage *)page
 {
 	NSString *result;
-	switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
+	switch ([[SVHTMLContext currentContext] generationPurpose])
 	{
 		case kGeneratingPreview:
 			result = [resourceURL absoluteString];
@@ -492,7 +492,7 @@
 		return @"";
 	}
 	
-	NSURL *sourceURL = [[SVHTMLGenerationContext currentContext] baseURL];
+	NSURL *sourceURL = [[SVHTMLContext currentContext] baseURL];
 	KTPage *targetPage = [[self cache] valueForKeyPath:inRestOfTag];
 	
 	NSString *result = [[targetPage feedURL] stringRelativeToURL:sourceURL];
@@ -520,7 +520,7 @@
     
     if ([anObject isKindOfClass:[KTAbstractPage class]])
     {
-        switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
+        switch ([[SVHTMLContext currentContext] generationPurpose])
         {
             case kGeneratingPreview:
                 result = [(KTAbstractPage *)anObject previewPath];
@@ -529,20 +529,20 @@
                 result= @"javascript:void(0)";
                 break;
             default:
-                result = [[(KTAbstractPage *)anObject URL] stringRelativeToURL:[[SVHTMLGenerationContext currentContext] baseURL]];
+                result = [[(KTAbstractPage *)anObject URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
                 break;
         }
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {
-        switch ([[SVHTMLGenerationContext currentContext] generationPurpose])
+        switch ([[SVHTMLContext currentContext] generationPurpose])
         {
             case kGeneratingPreview:
             case kGeneratingQuickLookPreview:
                 result = [(NSURL *)anObject absoluteString];
                 break;
             default:
-                result = [(NSURL *)anObject stringRelativeToURL:[[SVHTMLGenerationContext currentContext] baseURL]];
+                result = [(NSURL *)anObject stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
                 break;
         }
     }
@@ -552,7 +552,7 @@
 
 #pragma mark Deprecated
 
-/*  These methods are no longer public in 2.0 as we have moved to the SVHTMLGenerationContext concept. But many templates rely on these methods being present in the parser, so they stick around as wrappers around the new functionality
+/*  These methods are no longer public in 2.0 as we have moved to the SVHTMLContext concept. But many templates rely on these methods being present in the parser, so they stick around as wrappers around the new functionality
  */
 
 /*	Whenever parsing, it must be within the context of a particular page.
@@ -561,7 +561,7 @@
  */
 - (KTAbstractPage *)currentPage
 {
-    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
 	return [context currentPage];
 }
@@ -572,21 +572,21 @@
  */
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose
 {
-    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
 	return [context generationPurpose];
 }
 
 - (BOOL)isPublishing
 {
-    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
 	return [context isPublishing];
 }
 
 - (BOOL)includeStyling
 {
-    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
 	return [context includeStyling];
 }
@@ -595,7 +595,7 @@
  */
 - (BOOL)liveDataFeeds
 {
-    SVHTMLGenerationContext *context = [SVHTMLGenerationContext currentContext];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
 	return [context liveDataFeeds];
 }

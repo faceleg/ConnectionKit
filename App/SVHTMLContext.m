@@ -1,25 +1,25 @@
 //
-//  SVHTMLGenerationContext.m
+//  SVHTMLContext.m
 //  Sandvox
 //
 //  Created by Mike on 19/10/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLGenerationContext.h"
+#import "SVHTMLContext.h"
 
 
-@implementation SVHTMLGenerationContext
+@implementation SVHTMLContext
 
 #pragma mark Stack
 
-+ (SVHTMLGenerationContext *)currentContext
++ (SVHTMLContext *)currentContext
 {
-    SVHTMLGenerationContext *result = [[[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"] lastObject];
+    SVHTMLContext *result = [[[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"] lastObject];
     return result;
 }
 
-+ (void)pushContext:(SVHTMLGenerationContext *)context
++ (void)pushContext:(SVHTMLContext *)context
 {
     NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"];
     if (!stack) stack = [NSMutableArray arrayWithCapacity:1];

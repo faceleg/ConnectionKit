@@ -921,7 +921,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return YES;
 }
 
-// FIXME: This delegate method has been replaced by -[SVHTMLGenerationContext generatedTextBlocks]
+// FIXME: This delegate method has been replaced by -[SVHTMLContext generatedTextBlocks]
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
 {
 	[self addGraphicalTextBlock:textBlock];

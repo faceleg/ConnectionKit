@@ -1,5 +1,5 @@
 //
-//  SVHTMLGenerationContext.h
+//  SVHTMLContext.h
 //  Sandvox
 //
 //  Created by Mike on 19/10/2009.
@@ -20,7 +20,7 @@ typedef enum {
 
 
 @class KTAbstractPage, SVHTMLTemplateTextBlock;
-@interface SVHTMLGenerationContext : NSObject
+@interface SVHTMLContext : NSObject
 {
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;
@@ -31,8 +31,8 @@ typedef enum {
     NSMutableArray  *_textBlocks;
 }
 
-+ (SVHTMLGenerationContext *)currentContext;
-+ (void)pushContext:(SVHTMLGenerationContext *)context;
++ (SVHTMLContext *)currentContext;
++ (void)pushContext:(SVHTMLContext *)context;
 + (void)popContext;
 
 

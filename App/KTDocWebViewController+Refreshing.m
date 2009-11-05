@@ -19,7 +19,7 @@
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "KTDocWindowController.h"
-#import "SVHTMLGenerationContext.h"
+#import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTWebViewComponent.h"

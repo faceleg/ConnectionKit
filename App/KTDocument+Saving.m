@@ -813,7 +813,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    SVHTMLContext *context = [[SVHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingPreview];
     [context setLiveDataFeeds:NO];
     [context setCurrentPage:[[self site] root]];
@@ -1015,7 +1015,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
-    SVHTMLGenerationContext *context = [[SVHTMLGenerationContext alloc] init];
+    SVHTMLContext *context = [[SVHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingQuickLookPreview];
     [context setCurrentPage:[[self site] root]];
     

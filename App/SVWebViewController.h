@@ -11,7 +11,7 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVHTMLGenerationContext, SVWebTextArea;
+@class KTPage, SVHTMLContext, SVWebTextArea;
 @protocol SVWebEditorViewControllerDelegate;
 
 
@@ -19,7 +19,7 @@
 {
     KTPage                  *_page;
     BOOL                    _isLoading;
-    SVHTMLGenerationContext *_HTMLGenerationContext;
+    SVHTMLContext *_HTMLGenerationContext;
     
     NSArray         *_textAreas;
     NSArray         *_textAreaControllers;
