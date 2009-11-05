@@ -19,6 +19,7 @@
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
+#import "SVWebEditorHTMLContext.h"
 #import "SVWebTextArea.h"
 
 #import "DOMNode+Karelia.h"
