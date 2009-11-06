@@ -310,9 +310,15 @@
 	}
 	return result;
 }
+
+- (BOOL) canPreview
+{
+	return (nil != [self URL]);
+}
+
 - (NSString *)baseExampleURLString
 {
-	NSString *resultURL = nil;
+	NSURL *resultURL = nil;
 	// A plugin may have specified a custom path. If so, resolve it against the site URL
 	NSString *customPath = [self customPathRelativeToSite];
 	if (customPath)

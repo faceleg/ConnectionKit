@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
+@class KTDocSiteOutlineController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -23,8 +23,9 @@
 	IBOutlet KSPopUpButton			*oFileExtensionPopup;
 	IBOutlet NSTextField			*oCollectionFileNameField;
 	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
-		
-	IBOutlet NSObjectController		*oPagesController;
+	IBOutlet NSButton				*oFollowButton;
+
+	IBOutlet KTDocSiteOutlineController *oPagesController;
 	
 	IBOutlet NSView					*oAttachedWindowView;
 	IBOutlet NSTextField			*oAttachedWindowTextField;
@@ -42,6 +43,7 @@
 }
 
 - (IBAction) pageDetailsHelp:(id)sender;
+- (IBAction) pageDetailsPreview:(id)sender;
 
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;

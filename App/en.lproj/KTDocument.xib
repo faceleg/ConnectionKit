@@ -11,8 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.2</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="1726"/>
-			<integer value="1793"/>
+			<integer value="1649"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -301,10 +300,34 @@
 											<reference key="NSNextResponder" ref="520114257"/>
 											<int key="NSvFlags">290</int>
 											<array class="NSMutableArray" key="NSSubviews">
+												<object class="NSButton" id="597655839">
+													<reference key="NSNextResponder" ref="641495171"/>
+													<int key="NSvFlags">265</int>
+													<string key="NSFrame">{{627, 53}, {12, 12}}</string>
+													<reference key="NSSuperview" ref="641495171"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="NSButtonCell" key="NSCell" id="979489525">
+														<int key="NSCellFlags">67239424</int>
+														<int key="NSCellFlags2">134348800</int>
+														<string key="NSContents"/>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="597655839"/>
+														<int key="NSButtonFlags">-2042347265</int>
+														<int key="NSButtonFlags2">134</int>
+														<object class="NSCustomResource" key="NSNormalImage">
+															<string key="NSClassName">NSImage</string>
+															<string key="NSResourceName">NSFollowLinkFreestandingTemplate</string>
+														</object>
+														<string key="NSAlternateContents"/>
+														<string key="NSKeyEquivalent"/>
+														<int key="NSPeriodicDelay">400</int>
+														<int key="NSPeriodicInterval">75</int>
+													</object>
+												</object>
 												<object class="NSPopUpButton" id="408006662">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">265</int>
-													<string key="NSFrame">{{575, 48}, {64, 22}}</string>
+													<string key="NSFrame">{{561, 48}, {64, 22}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSPopUpButtonCell" key="NSCell" id="738358046">
@@ -411,7 +434,7 @@
 												<object class="NSTextField" id="486193302">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">266</int>
-													<string key="NSFrame">{{307, 52}, {255, 14}}</string>
+													<string key="NSFrame">{{307, 52}, {239, 14}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="747258577">
@@ -427,7 +450,7 @@
 												<object class="NSTextField" id="139174513">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">265</int>
-													<string key="NSFrame">{{564, 52}, {8, 14}}</string>
+													<string key="NSFrame">{{548, 52}, {8, 14}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="366439242">
@@ -623,6 +646,7 @@
 					<string>URL.absoluteString</string>
 					<string>URLString</string>
 					<string>baseExampleURLString</string>
+					<string>canPreview</string>
 				</array>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -836,7 +860,7 @@
 			</object>
 			<object class="NSViewController" id="408607898"/>
 			<object class="NSCustomView" id="82358768">
-				<reference key="NSNextResponder"/>
+				<nil key="NSNextResponder"/>
 				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSButton" id="383955512">
@@ -901,7 +925,6 @@
 					</object>
 				</array>
 				<string key="NSFrameSize">{400, 29}</string>
-				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
 		</array>
@@ -1336,6 +1359,38 @@
 					</object>
 					<int key="connectionID">1825</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oFollowButton</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="597655839"/>
+					</object>
+					<int key="connectionID">1828</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">pageDetailsPreview:</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="597655839"/>
+					</object>
+					<int key="connectionID">1829</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: selection.canPreview</string>
+						<reference key="source" ref="597655839"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="597655839"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">enabled: selection.canPreview</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">selection.canPreview</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1830</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -1637,13 +1692,14 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="84209680"/>
 							<reference ref="209282229"/>
-							<reference ref="139174513"/>
 							<reference ref="360802322"/>
 							<reference ref="680529185"/>
 							<reference ref="943593109"/>
 							<reference ref="452661693"/>
-							<reference ref="408006662"/>
 							<reference ref="486193302"/>
+							<reference ref="139174513"/>
+							<reference ref="408006662"/>
+							<reference ref="597655839"/>
 						</array>
 						<reference key="parent" ref="520114257"/>
 					</object>
@@ -1847,6 +1903,19 @@
 						<reference key="object" ref="645363474"/>
 						<reference key="parent" ref="1048777276"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1826</int>
+						<reference key="object" ref="597655839"/>
+						<array class="NSMutableArray" key="children">
+							<reference ref="979489525"/>
+						</array>
+						<reference key="parent" ref="641495171"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1827</int>
+						<reference key="object" ref="979489525"/>
+						<reference key="parent" ref="597655839"/>
+					</object>
 				</array>
 			</object>
 			<dictionary class="NSMutableDictionary" key="flattenedProperties">
@@ -1928,7 +1997,7 @@
 				<string key="1770.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1781.CustomClassName">KTPageDetailsController</string>
 				<string key="1781.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1793.IBEditorWindowLastContentRect">{{62, 827}, {400, 29}}</string>
+				<string key="1793.IBEditorWindowLastContentRect">{{111, 864}, {400, 29}}</string>
 				<string key="1793.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1793.IBViewEditorWindowController.showingLayoutRectangles"/>
 				<string key="1794.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -1937,6 +2006,20 @@
 				<string key="1797.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1817.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1818.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<dictionary class="NSMutableDictionary" key="1826.IBAttributePlaceholdersKey">
+					<object class="IBAccessibilityAttribute" key="AccessibilityDescription">
+						<string key="name">AccessibilityDescription</string>
+						<reference key="object" ref="597655839"/>
+						<string key="accessibilityValue">Preview</string>
+					</object>
+					<object class="IBToolTipAttribute" key="ToolTip">
+						<string key="name">ToolTip</string>
+						<reference key="object" ref="597655839"/>
+						<string key="toolTip">View the currently published version of this page in your browser.  May not match the version you see in Sandvox.</string>
+					</object>
+				</dictionary>
+				<string key="1826.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="1827.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="381.IBEditorWindowLastContentRect">{{69, 744}, {356, 101}}</string>
 				<string key="381.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="381.IBWindowTemplateEditedContentRect">{{69, 744}, {356, 101}}</string>
@@ -1975,7 +2058,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1825</int>
+			<int key="maxID">1830</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2162,10 +2245,10 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">KTPageDetailsController</string>
 					<string key="superclassName">NSViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">pageDetailsHelp:</string>
-						<string key="NS.object.0">id</string>
-					</object>
+					<dictionary class="NSMutableDictionary" key="actions">
+						<string key="pageDetailsHelp:">id</string>
+						<string key="pageDetailsPreview:">id</string>
+					</dictionary>
 					<dictionary class="NSMutableDictionary" key="outlets">
 						<string key="oAttachedWindowExplanation">NSTextField</string>
 						<string key="oAttachedWindowHelpButton">NSButton</string>
@@ -2176,6 +2259,7 @@
 						<string key="oCollectionIndexExtensionButton">KSPopUpButton</string>
 						<string key="oDotSeparator">NSTextField</string>
 						<string key="oFileExtensionPopup">KSPopUpButton</string>
+						<string key="oFollowButton">NSButton</string>
 						<string key="oMetaDescriptionField">NSTextField</string>
 						<string key="oPageFileNameField">NSTextField</string>
 						<string key="oPagesController">NSObjectController</string>

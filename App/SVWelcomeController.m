@@ -161,11 +161,18 @@
 	NSFont *font1 = [NSFont systemFontOfSize:[NSFont systemFontSize]];
 	NSFont *font2 = [NSFont systemFontOfSize:[NSFont labelFontSize]];
 	NSFont *font2bold = [[NSFontManager sharedFontManager] convertFont:font2 toHaveTrait:NSBoldFontMask];
-
-	NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:font1, NSFontAttributeName, nil];
-	NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, 
-						   [NSColor darkGrayColor], NSForegroundColorAttributeName, nil];
 	
+	NSMutableParagraphStyle *paraStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+	[paraStyle setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
+	[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+	[paraStyle setTighteningFactorForTruncation:0.1];
+	 
+	 NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:font1, NSFontAttributeName, 
+							paraStyle, NSParagraphStyleAttributeName, 
+							nil];
+	 NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, 
+							[NSColor darkGrayColor], NSForegroundColorAttributeName, nil];
+	 
 	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
 												  displayName attributes:attr1] autorelease];	
 	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];

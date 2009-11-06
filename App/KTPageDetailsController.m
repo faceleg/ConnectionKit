@@ -13,6 +13,8 @@
 #import "KSFocusingTextField.h"
 #import "MAAttachedWindow.h"
 #import "NSImage+Karelia.h"
+#import "NSWorkspace+Karelia.h"
+#import "KTDocSiteOutlineController.h"
 
 #import "NTBoxView.h"
 
@@ -22,6 +24,7 @@
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
 static NSString *sFileNameObservationContext = @"-fileName observation context";
+static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLString observation context";
 static NSString *sTitleTextObservationContext = @"-titleText observation context";
 
 enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePageDetailsContext, kMetaDescriptionPageDetailsContext
@@ -34,6 +37,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
 - (void) layoutPageURLComponents;
 - (NSColor *)metaDescriptionCharCountColor;
+- (NSColor *)windowTitleCharCountColor;
+- (NSColor *)fileNameCharCountColor;
 @end
 
 
@@ -107,6 +112,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						  options:NSKeyValueObservingOptionNew
 						  context:sFileNameObservationContext];
 	[self fileNameDidChangeToValue:[oPagesController valueForKeyPath:@"selection.fileName"]];
+
+	[oPagesController addObserver:self
+					   forKeyPath:@"selection.baseExampleURLString"
+						  options:NSKeyValueObservingOptionNew
+						  context:sBaseExampleURLStringObservationContext];
+	
 	
 	[oPagesController addObserver:self
 					   forKeyPath:@"selection.titleText"
@@ -414,6 +425,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[self fileNameDidChangeToValue:[object valueForKeyPath:keyPath]];
 	}
+	else if (context == sBaseExampleURLStringObservationContext)
+	{
+		[self layoutPageURLComponents];	// base URL changed, so re-layout
+	}
 	else if (context == sTitleTextObservationContext)
 	{
 		[self resetPlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
@@ -437,9 +452,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) layoutPageURLComponents;
 {
-	NSArray *itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,nil];
-	int extraX [] = {4,4,6,0};
-	int widths[4] = { -1 };
+	NSArray *itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,oFollowButton,nil];
+	int extraX [] = {4,4,6,8,0};
+	int marginsAfter[] = {0,0,0,8,0};
+	int widths[5] = { -1 }; // filled in below
 	int i = 0;
 	// Collect up the widths that these items *want* to be
 	for (NSView *fld in itemsToLayOut)
@@ -452,6 +468,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
 			int width = ceilf([text size].width);
 			width += extraX[i];
+			width += marginsAfter[i];
 			frame.size.width = width;
 		}
 		widths[i++] = frame.size.width;
@@ -466,7 +483,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		(extraX[0]
 		 + widths[1]
 		 + widths[2]
-		 + widths[3] );
+		 + widths[3]
+		 + widths[4] );
 	if (widths[0] > availableForBaseURL)
 	{
 		widths[0] = availableForBaseURL;	// truncate base URL
@@ -485,6 +503,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{							// (which we left wide enough so it wouldn't get clipped)
 			newLeft -= 4;
 		}
+		newLeft += marginsAfter[i];
 		i++;
 	}
 }
@@ -542,6 +561,15 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (IBAction) pageDetailsHelp:(id)sender;
 {
 	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
+}
+
+- (IBAction) pageDetailsPreview:(id)sender;		// If we can open the URL of the current page
+{
+	NSURL *pageURL = [[oPagesController selectedPage] URL];
+	if (pageURL)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
+	}
 }
 
 // Special responders to the subclass of the text field
