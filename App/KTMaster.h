@@ -47,11 +47,8 @@
 - (void)setFavicon:(KTMediaContainer *)favicon;
 
 #pragma mark Timestamp
-- (KTTimestampType)timestampType;
-- (void)setTimestampType:(KTTimestampType)timestampType;
-
-- (NSDateFormatterStyle)timestampFormat;
-- (void)setTimestampFormat:(NSDateFormatterStyle)format;
+@property(nonatomic) NSDateFormatterStyle timestampFormat;
+@property(nonatomic, copy) NSNumber *timestampShowTime;
 
 #pragma mark Language
 - (NSString *)language;

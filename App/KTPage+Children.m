@@ -149,7 +149,7 @@
 	
 	
 	// Create an archive to conatain the page if needed
-	[self archivePageForTimestamp:[page editableTimestamp] createIfNotFound:YES];
+	[self archivePageForTimestamp:[page timestampDate] createIfNotFound:YES];
 }
 
 
@@ -163,7 +163,7 @@
 	[self invalidateSortedChildrenCache];
 	
 	// Delete the corresponding archive page if unused now
-	KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
+	KTArchivePage *archive = [self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:NO];
 	if (archive)
 	{
 		NSArray *archivePages = [archive sortedPages];
@@ -188,7 +188,7 @@
 	KTPage *aPage;
 	while (aPage = [pagesEnumerator nextObject])
 	{
-		KTArchivePage *archive = [self archivePageForTimestamp:[aPage editableTimestamp] createIfNotFound:NO];
+		KTArchivePage *archive = [self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:NO];
 		if (archive)
 		{
 			NSArray *archivePages = [archive sortedPages];

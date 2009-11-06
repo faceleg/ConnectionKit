@@ -288,8 +288,7 @@
 	
 	
 	// Wake up the page
-    [result performSelector:@selector(reloadEditableTimestamp)];    // otherwise timestamp can be incorrect #43230
-	[result awakeFromBundleAsNewlyCreatedObject:NO];
+    [result awakeFromBundleAsNewlyCreatedObject:NO];
 	
 	
 	return result;

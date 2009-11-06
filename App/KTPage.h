@@ -64,10 +64,21 @@
 @property(nonatomic) BOOL includeInSiteMenu;
 @property(nonatomic, copy) NSString *menuTitle;
 
+
 // Timestamps
-- (NSDate *)editableTimestamp;
-- (void)setEditableTimestamp:(NSDate *)aDate;
+
+@property(nonatomic, copy) NSDate *creationDate;
+@property(nonatomic, copy) NSDate *lastModificationDate;
+
 - (NSString *)timestamp;
+- (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
+- (NSDate *)timestampDate;
+
+@property(nonatomic, copy) NSNumber *includeTimestamp;
+
+@property(nonatomic) KTTimestampType timestampType;
+- (NSString *)timestampTypeLabel;   // not KVO-compliant yet, but could easily be
+
 
 // Thumbnail
 - (KTMediaContainer *)thumbnail;

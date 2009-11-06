@@ -107,7 +107,7 @@
 - (void)setIsDraft:(BOOL)flag;
 {
 	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:!flag];
+	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self timestampDate] createIfNotFound:!flag];
 	
 	
 	[self setWrappedBool:flag forKey:@"isDraft"];
@@ -206,118 +206,24 @@
 #pragma mark -
 #pragma mark Timestamp
 
-- (NSDate *)editableTimestamp
+@dynamic creationDate;
+@dynamic lastModificationDate;
+
+- (NSString *)timestamp
 {
-	// Load the date on-demand from creation/modification date
-	NSDate *result = [self wrappedValueForKey:@"editableTimestamp"];
-	if (!result)
-	{
-		KTMaster *master = [self master];
-        if (master)
-        {
-            switch ([master timestampType])
-            {
-                case KTTimestampCreationDate:
-                    result = [self valueForKey:@"creationDate"];
-                    break;
-                case KTTimestampModificationDate:
-                    result = [self valueForKey:@"lastModificationDate"];
-                    break;
-                default:
-                    OBASSERT_NOT_REACHED("Page's master has an unknown timestamp type");
-                    break;
-            }
-            
-            [self setPrimitiveValue:result forKey:@"editableTimestamp"];
-        }
-	}
-	
-	return result;
+	NSDateFormatterStyle style = [[self master] timestampFormat];
+	return [self timestampWithStyle:style];
 }
 
-- (void)setEditableTimestamp:(NSDate *)aDate
++ (NSSet *)keyPathsForValuesAffectingTimestamp
 {
-	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
-	
-	
-	[self willChangeValueForKey:@"editableTimestamp"];
-	[self setPrimitiveValue:aDate forKey:@"editableTimestamp"];
-	
-	// Also update the corresponding persistent attribute
-	switch ([[self master] integerForKey:@"timestampType"])
-	{
-		case KTTimestampCreationDate:
-			[self setValue:aDate forKey:@"creationDate"];
-			break;
-		case KTTimestampModificationDate:
-			[self setValue:aDate forKey:@"lastModificationDate"];
-			break;
-	}
-	
-	[self didChangeValueForKey:@"editableTimestamp"];
-	
-	
-	// Delete the old archive page if it has nothing on it now
-	if (oldArchivePage)
-	{
-		NSArray *pages = [oldArchivePage sortedPages];
-		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
-	}
-	
-	
-	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
-	KTCollectionSortType sortType = [[self parent] collectionSortOrder];
-	if (sortType == KTCollectionSortLatestAtTop || sortType == KTCollectionSortLatestAtBottom)
-	{
-		[[self parent] invalidateSortedChildrenCache];
-	}
-	
-	
-	// Mark our new archive page (if there is one) stale
-	[[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
-}
-
-/*	A property affecting the timestamp has changed, update it.
- */
-- (void)reloadEditableTimestamp
-{
-	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:NO];
-	
-	
-	// Reload the timestamp
-	NSDate *date = nil;
-	switch ([[self master] timestampType])
-	{
-		case KTTimestampCreationDate:
-			date = [self valueForKey:@"creationDate"];
-			break;
-		case KTTimestampModificationDate:
-			date = [self valueForKey:@"lastModificationDate"];
-			break;
-	}
-	[self setWrappedValue:date forKey:@"editableTimestamp"];
-	
-	
-	// Delete the old archive page if it has nothing on it now
-	if (oldArchivePage)
-	{
-		NSArray *pages = [oldArchivePage sortedPages];
-		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
-	}
-	
-	
-	// Mark our new archive page (if there is one) stale
-	[[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
+    return [NSSet setWithObject:@"timestampType"];
 }
 
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
 {
-	BOOL showTime = [[[self master] valueForKey:@"timestampShowTime"] boolValue];
-	NSDate *date = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
-	? [self valueForKey:@"lastModificationDate"]
-	: [self valueForKey:@"creationDate"];
+	BOOL showTime = [[[self master] timestampShowTime] boolValue];
+	NSDate *date = [self timestampDate];
 	
 	NSDateFormatter *formatter = [[[NSDateFormatter alloc] init] autorelease];
 	[formatter setDateStyle:aStyle]; 
@@ -337,30 +243,33 @@
 	return result;
 }
 
-+ (NSSet *)keyPathsForValuesAffectingTimestamp
+- (NSDate *)timestampDate;
 {
-    return [NSSet setWithObject:@"editableTimestamp"];
+    NSDate *result = (KTTimestampModificationDate == [self timestampType])
+    ? [self lastModificationDate]
+    : [self creationDate];
+	
+	return result;
 }
 
-- (NSString *)timestamp
-{
-	NSDateFormatterStyle style = [[self master] timestampFormat];
-	return [self timestampWithStyle:style];
-}
+@dynamic includeTimestamp;
 
-- (NSString *)timestampAlways
+- (KTTimestampType)timestampType { return [self wrappedIntegerForKey:@"timestampType"]; }
+
+- (void)setTimestampType:(KTTimestampType)timestampType
 {
-	return [self timestampWithStyle:kCFDateFormatterMediumStyle];		// HARD-WIRE ????
+	OBPRECONDITION(timestampType == KTTimestampCreationDate || timestampType == KTTimestampModificationDate);
+	[self setWrappedInteger:timestampType forKey:@"timestampType"];
 }
 
 - (NSString *)timestampTypeLabel
 {
-	NSString *result = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
+	NSString *result = (KTTimestampModificationDate == [self timestampType])
 		? NSLocalizedString(@"(Modification Date)",@"Label to indicate that date shown is modification date")
 		: NSLocalizedString(@"(Creation Date)",@"Label to indicate that date shown is creation date");
 	return result;
 }
-	
+
 #pragma mark -
 #pragma mark Thumbnail
 
