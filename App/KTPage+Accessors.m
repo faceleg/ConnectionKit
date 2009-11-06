@@ -217,7 +217,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingTimestamp
 {
-    return [NSSet setWithObject:@"timestampType"];
+    return [NSSet setWithObject:@"timestampDate"];
 }
 
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
@@ -250,6 +250,11 @@
     : [self creationDate];
 	
 	return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingTimestampDate
+{
+    return [NSSet setWithObjects:@"timestampType", @"creationDate", @"lastModificationDate", nil];
 }
 
 @dynamic includeTimestamp;
