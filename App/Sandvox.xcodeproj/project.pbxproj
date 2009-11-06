@@ -2639,8 +2639,6 @@
 		CEAE1668084530C1007025D4 /* KTHostProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHostProperties.m; sourceTree = "<group>"; };
 		CEB0EEE9086A119A007F70EB /* fwdbak32x32.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwdbak32x32.png; sourceTree = "<group>"; };
 		CEB32CD50806E6ED00A92187 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
-		CEB3492F082961880073A7A4 /* KTInfoWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTInfoWindowController.h; sourceTree = "<group>"; };
-		CEB34930082961880073A7A4 /* KTInfoWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTInfoWindowController.m; sourceTree = "<group>"; };
 		CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindowController.h; sourceTree = "<group>"; };
 		CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindowController.m; sourceTree = "<group>"; };
 		CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+WebView.m"; sourceTree = "<group>"; };
@@ -3294,8 +3292,6 @@
 		27DB80770C84658200E29C38 /* 1.x Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				CEB3492F082961880073A7A4 /* KTInfoWindowController.h */,
-				CEB34930082961880073A7A4 /* KTInfoWindowController.m */,
 				27DB80780C8465C200E29C38 /* KTPluginInspectorViewsManager.h */,
 				27DB80790C8465C200E29C38 /* KTPluginInspectorViewsManager.m */,
 				27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */,
