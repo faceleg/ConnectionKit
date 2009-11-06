@@ -20,6 +20,11 @@
 }
 
 @synthesize inspectedPagesController = _inspectedPagesController;
+- (void)setInspectedPagesController:(NSObjectController *)controller
+{
+    [[[self inspectorTabsController] viewControllers] setValue:controller
+                                                        forKey:@"inspectedPagesController"];
+}
 
 - (void)setInspectedWindow:(NSWindow *)window
 {
