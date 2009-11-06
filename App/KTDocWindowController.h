@@ -35,7 +35,6 @@
 @class NTBoxView;
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
-@class KTPluginInspectorViewsManager;
 @class KTDocViewController, KTDocWebViewController, SVSiteOutlineViewController;
 @class KTPage, KTPagelet;
 @class KTCodeInjectionController;
@@ -92,8 +91,6 @@ extern NSString *gInfoWindowAutoSaveName;
     SVDesignChooserWindowController *designChooserWindowController_;
 
 
-	KTPluginInspectorViewsManager	*myPluginInspectorViewsManager;
-	
 	NSButton *myBuyNowButton;
     
 @private
@@ -142,9 +139,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 // clean up at document close
 - (void)selectionDealloc;
-
-// Plugin Inspector Views
-- (KTPluginInspectorViewsManager *)pluginInspectorViewsManager;
 
 @end
 

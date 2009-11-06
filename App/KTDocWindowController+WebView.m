@@ -19,7 +19,6 @@
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTElementPlugin.h"
-#import "KTInfoWindowController.h"
 #import "KTLinkSourceView.h"
 #import "KTMaster.h"
 #import "KTPage.h"

@@ -34,7 +34,6 @@
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
-#import "KTPluginInspectorViewsManager.h"
 #import "SVSidebar.h"
 #import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
@@ -132,7 +131,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setToolbars:nil];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
-	[myPluginInspectorViewsManager release];
 	[myBuyNowButton release]; myBuyNowButton = nil;
 
     [super dealloc];
@@ -292,11 +290,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
  */
 - (void)setDocument:(NSDocument *)document
 {
-	// Throw away any existing plugin Inspector manager we might have otherwise it will attempt to access an invalid
-	// managed object context later.
-	[myPluginInspectorViewsManager release];	myPluginInspectorViewsManager = nil;
-	
-	
 	// Default behaviour
 	[super setDocument:document];
 	
@@ -1212,19 +1205,6 @@ from representedObject */
 	}
 	
 	//[self updateEditMenuItems];
-}
-
-#pragma mark -
-#pragma mark Plugins
-
-- (KTPluginInspectorViewsManager *)pluginInspectorViewsManager
-{
-	if (!myPluginInspectorViewsManager)
-	{
-		myPluginInspectorViewsManager = [[KTPluginInspectorViewsManager alloc] init];
-	}
-	
-	return myPluginInspectorViewsManager;
 }
 
 #pragma mark -

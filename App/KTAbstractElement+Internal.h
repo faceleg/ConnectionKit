@@ -8,8 +8,6 @@
 
 #import "KTAbstractElement.h"
 
-#import "KTPluginInspectorViewsManager.h"
-
 
 @interface KTAbstractElement (Internal)
 
@@ -42,7 +40,7 @@
 @end
 
 
-@interface KTAbstractElement (Inspector) <KTInspectorPlugin>
+@interface KTAbstractElement (Inspector)
  
 // Inspector
 - (id)inspectorObject;

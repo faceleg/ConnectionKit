@@ -26,13 +26,12 @@
 #import <Cocoa/Cocoa.h>
 
 #import "KTAbstractElement.h"				// our container will be one of these
-#import "KTPluginInspectorViewsManager.h"	// for KTInspectorPlugin protocol
 
 
 @class DOMNode;
 
 
-@interface KTPseudoElement : NSObject <KTInspectorPlugin>
+@interface KTPseudoElement : NSObject
 {
 	DOMNode				*myDOMNode;
 	KTAbstractElement	*myContainer;

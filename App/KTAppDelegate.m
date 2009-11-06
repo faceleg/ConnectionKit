@@ -50,7 +50,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
-#import "KTInfoWindowController.h"
 #import "KTMediaManager.h"
 #import "KTPage.h"
 #import "SVWelcomeController.h"

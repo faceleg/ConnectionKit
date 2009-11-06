@@ -62,7 +62,6 @@
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "SVPagelet.h"
-#import "KTPluginInspectorViewsManager.h"
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
@@ -644,9 +643,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
 
-	
-	[[[self mainWindowController] pluginInspectorViewsManager] removeAllPluginInspectorViews];
-	
 	
 	// Close link panel
 	if ([[[self mainWindowController] linkPanel] isVisible])
