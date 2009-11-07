@@ -51,6 +51,7 @@
 
     SVInspectorViewController *documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
+    [documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
     [documentInspector bind:@"inspectedDocument"
                    toObject:self
                 withKeyPath:@"inspectedWindow.windowController.document"
@@ -61,6 +62,7 @@
     
     SVInspectorViewController *pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
+    [pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
     [pageInspector bind:@"inspectedDocument"
                toObject:self
             withKeyPath:@"inspectedWindow.windowController.document"

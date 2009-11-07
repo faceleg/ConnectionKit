@@ -16,6 +16,8 @@
     [self exposeBinding:@"inspectedDocument"];
 }
 
+@synthesize icon = _icon;
+
 @synthesize inspectedDocument = _inspectedDocument;
 
 #pragma mark Pages

@@ -8,17 +8,23 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "KSInspectorTabsController.h"
+
 
 @class KTDocument;
 
 
-@interface SVInspectorViewController : NSViewController
+@interface SVInspectorViewController : NSViewController <KSInspectorViewController>
 {
   @private  // TODO: Enough spare ivars for later changes without breaking plug-ins
+    NSImage *_icon;
+    
     KTDocument          *_inspectedDocument;
     NSArray             *_inspectedPages;
     NSArrayController   *_inspectedPagesController;
 }
+
+@property(nonatomic, retain) NSImage *icon;
 
 @property(nonatomic, retain) KTDocument *inspectedDocument;
 @property(nonatomic, copy, readonly) NSArray *inspectedPages;
