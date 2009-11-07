@@ -20,14 +20,15 @@
     NSImage *_icon;
     
     KTDocument          *_inspectedDocument;
-    NSArray             *_inspectedPages;
-    NSArrayController   *_inspectedPagesController;
+    NSArrayController   *_inspectedObjectsController;
 }
 
 @property(nonatomic, retain) NSImage *icon;
 
 @property(nonatomic, retain) KTDocument *inspectedDocument;
-@property(nonatomic, copy, readonly) NSArray *inspectedPages;
-@property(nonatomic, retain) NSObjectController *inspectedPagesController;
+
+//  Both of these are KVO-compliant so you can bind to them
+@property(nonatomic, copy, readonly) NSArray *inspectedObjects;
+@property(nonatomic, retain) NSObjectController *inspectedObjectsController;
 
 @end

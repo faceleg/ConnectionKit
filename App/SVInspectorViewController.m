@@ -22,11 +22,16 @@
 
 #pragma mark Pages
 
-- (NSArray *)inspectedPages
+- (NSArray *)inspectedObjects
 {
-    return [[self inspectedPagesController] selectedObjects];
+    return [[self inspectedObjectsController] selectedObjects];
 }
 
-@synthesize inspectedPagesController = _inspectedPagesController;
++ (NSSet *)keyPathsForValuesAffectingInspectedObjects
+{
+    return [NSSet setWithObject:@"inspectedObjectsController.selectedObjects"];
+}
+
+@synthesize inspectedObjectsController = _inspectedObjectsController;
 
 @end

@@ -555,47 +555,159 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.includeInSiteMenu</string>
+						<string key="label">value: inspectedObjectsController.selection.isDraft</string>
+						<reference key="source" ref="202756626"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="202756626"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.isDraft</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.isDraft</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">111</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.creationDate</string>
+						<reference key="source" ref="445586817"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="445586817"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.creationDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.creationDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">112</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.lastModificationDate</string>
+						<reference key="source" ref="985988556"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="985988556"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.lastModificationDate</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.lastModificationDate</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">113</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.includeTimestamp</string>
+						<reference key="source" ref="205583924"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="205583924"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.includeTimestamp</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.includeTimestamp</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">114</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.timestampType</string>
+						<reference key="source" ref="205583924"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="205583924"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.timestampType</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.timestampType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">115</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.includeTimestamp</string>
+						<reference key="source" ref="895513245"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="895513245"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.includeTimestamp</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.includeTimestamp</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">116</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.includeInSiteMenu</string>
 						<reference key="source" ref="424822735"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="424822735"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.includeInSiteMenu</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.includeInSiteMenu</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.includeInSiteMenu</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.includeInSiteMenu</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">62</int>
+					<int key="connectionID">117</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.includeInSiteMap</string>
+						<string key="label">value: inspectedObjectsController.selection.includeInSiteMap</string>
 						<reference key="source" ref="384717925"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="384717925"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.includeInSiteMap</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.includeInSiteMap</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.includeInSiteMap</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.includeInSiteMap</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">69</int>
+					<int key="connectionID">118</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.disableComments</string>
+						<string key="label">value: inspectedObjectsController.selection.includeSidebar</string>
+						<reference key="source" ref="636638931"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="636638931"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.includeSidebar</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.includeSidebar</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">119</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.disableComments</string>
 						<reference key="source" ref="512307078"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="512307078"/>
 							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.disableComments</string>
+							<string key="NSLabel">value: inspectedObjectsController.selection.disableComments</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.disableComments</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.disableComments</string>
 							<object class="NSDictionary" key="NSOptions">
 								<string key="NS.key.0">NSValueTransformerName</string>
 								<string key="NS.object.0">NSNegateBoolean</string>
@@ -603,119 +715,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">70</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.isDraft</string>
-						<reference key="source" ref="202756626"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="202756626"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.isDraft</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.isDraft</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">72</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.creationDate</string>
-						<reference key="source" ref="445586817"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="445586817"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.creationDate</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.creationDate</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">74</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.includeSidebar</string>
-						<reference key="source" ref="636638931"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="636638931"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.includeSidebar</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.includeSidebar</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">76</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: inspectedPagesController.selection.timestampType</string>
-						<reference key="source" ref="205583924"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="205583924"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">selectedTag: inspectedPagesController.selection.timestampType</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.timestampType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">105</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.includeTimestamp</string>
-						<reference key="source" ref="895513245"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="895513245"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.includeTimestamp</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.includeTimestamp</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">107</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: inspectedPagesController.selection.includeTimestamp</string>
-						<reference key="source" ref="205583924"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="205583924"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">enabled: inspectedPagesController.selection.includeTimestamp</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.includeTimestamp</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">108</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedPagesController.selection.lastModificationDate</string>
-						<reference key="source" ref="985988556"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="985988556"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedPagesController.selection.lastModificationDate</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedPagesController.selection.lastModificationDate</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">110</int>
+					<int key="connectionID">120</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1144,7 +1144,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">110</int>
+			<int key="maxID">120</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
