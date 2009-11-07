@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="62"/>
+			<integer value="1"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1387,7 +1387,7 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 																<int key="NSTCFlags">1</int>
 															</object>
 															<object class="NSTextViewSharedData" key="NSSharedData">
-																<int key="NSFlags">2917</int>
+																<int key="NSFlags">2661</int>
 																<int key="NSTextCheckingTypes">0</int>
 																<nil key="NSMarkedAttributes"/>
 																<reference key="NSBackgroundColor" ref="247225935"/>
@@ -1443,12 +1443,15 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 													<reference key="NSSuperview" ref="841599737"/>
 													<reference key="NSNextKeyView" ref="686726710"/>
 													<reference key="NSDocView" ref="686726710"/>
-													<reference key="NSBGColor" ref="247225935"/>
+													<object class="NSColor" key="NSBGColor">
+														<int key="NSColorSpace">3</int>
+														<bytes key="NSWhite">MSAwAA</bytes>
+													</object>
 													<object class="NSCursor" key="NSCursor" id="622538732">
 														<string key="NSHotSpot">{4, -5}</string>
 														<int key="NSCursorType">1</int>
 													</object>
-													<int key="NScvFlags">4</int>
+													<int key="NScvFlags">2</int>
 												</object>
 												<object class="NSScroller" id="360055561">
 													<reference key="NSNextResponder" ref="841599737"/>
@@ -1666,7 +1669,7 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 																<int key="NSTCFlags">1</int>
 															</object>
 															<object class="NSTextViewSharedData" key="NSSharedData">
-																<int key="NSFlags">2917</int>
+																<int key="NSFlags">2661</int>
 																<int key="NSTextCheckingTypes">0</int>
 																<nil key="NSMarkedAttributes"/>
 																<reference key="NSBackgroundColor" ref="247225935"/>
@@ -1711,7 +1714,7 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 													<reference key="NSDocView" ref="594035190"/>
 													<reference key="NSBGColor" ref="247225935"/>
 													<reference key="NSCursor" ref="622538732"/>
-													<int key="NScvFlags">4</int>
+													<int key="NScvFlags">2</int>
 												</object>
 												<object class="NSScroller" id="523351587">
 													<reference key="NSNextResponder" ref="786631666"/>
@@ -3108,6 +3111,7 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 					<string>18.ImportedFromIB2</string>
 					<string>19.IBPluginDependency</string>
 					<string>19.ImportedFromIB2</string>
+					<string>2.IBAttributePlaceholdersKey</string>
 					<string>2.IBPluginDependency</string>
 					<string>2.ImportedFromIB2</string>
 					<string>20.IBAttributePlaceholdersKey</string>
@@ -3361,6 +3365,14 @@ aXJtIHZlcmlmaWNhdGlvbi4</bytes>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<object class="NSMutableDictionary">
+						<string key="NS.key.0">InitialTabViewItem</string>
+						<object class="IBInitialTabViewItemAttribute" key="NS.object.0">
+							<string key="name">InitialTabViewItem</string>
+							<reference key="object" ref="812452045"/>
+							<reference key="initialTabViewItem" ref="409530022"/>
+						</object>
+					</object>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<object class="NSMutableDictionary">
