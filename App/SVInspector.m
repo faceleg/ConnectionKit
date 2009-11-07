@@ -9,15 +9,30 @@
 #import "SVInspector.h"
 #import "SVInspectorViewController.h"
 
+#import "KTDocWindowController.h"
+
 #import "KSTabViewController.h"
 
 
 @implementation SVInspector
 
+#pragma mark Init
+
 + (void)initialize
 {
     [self exposeBinding:@"inspectedPagesController"];
 }
+
+- (id)initWithWindow:(NSWindow *)window
+{
+    if (self = [super initWithWindow:window])
+    {
+        [self setInspectorFrameTopLeftPointAutosaveName:gInfoWindowAutoSaveName];
+    }
+    return self;
+}
+
+#pragma mark Inspected Pages
 
 @synthesize inspectedPagesController = _inspectedPagesController;
 - (void)setInspectedPagesController:(NSObjectController *)controller
