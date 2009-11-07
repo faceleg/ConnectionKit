@@ -46,9 +46,10 @@
 
 - (NSArray *)defaultInspectorViewControllers;
 {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:2];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:3];
     
-
+    
+    // Document
     SVInspectorViewController *documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
     [documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
@@ -60,6 +61,8 @@
     [result insertObject:documentInspector atIndex:0];
     [documentInspector release];
     
+    
+    // Page
     SVInspectorViewController *pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
     [pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
@@ -70,6 +73,19 @@
     [pageInspector setInspectedPagesController:[self inspectedPagesController]];
     [result insertObject:pageInspector atIndex:1];
     [pageInspector release];
+    
+    
+    // Wrap
+    SVInspectorViewController *wrapInspector = [[SVInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
+    [wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
+    [wrapInspector setIcon:[NSImage imageNamed:@"unsorted"]];
+    [wrapInspector bind:@"inspectedDocument"
+               toObject:self
+            withKeyPath:@"inspectedWindow.windowController.document"
+                options:nil];
+    [wrapInspector setInspectedPagesController:[self inspectedPagesController]];
+    [result insertObject:wrapInspector atIndex:2];
+    [wrapInspector release];
     
     
     return result;
