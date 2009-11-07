@@ -93,7 +93,9 @@
 	
 	if (value = [values objectForKey:(NSString*)kMDItemTitle])
 	{
-		if (![displayName isEqualToString:value] && ![displayName hasPrefix:value])
+		// If the title only differs from the filename by _ characters, don't bother showing the title!
+		NSString *displayNameReplacingUnderscores = [displayName stringByReplacing:@"_" with:@" "];
+		if (![displayNameReplacingUnderscores isEqualToString:value] && ![displayNameReplacingUnderscores hasPrefix:value])
 		{
 			[desc appendFormat:NSLocalizedString(@"\\U201C%@\\U201D", @"quotes around the document name"), value];	// only append if not equal, or a substring of file title
 			lastAppendedItem = kTitle;
