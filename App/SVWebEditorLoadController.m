@@ -103,9 +103,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self didChangeValueForKey:@"secondaryWebViewController"];
 }
 
-- (void)setSelectedIndex:(NSUInteger)index;
+- (void)didChangeSelectedViewController;
 {
-    [super setSelectedIndex:index];
+    [super didChangeSelectedViewController];
     
     // Update our title to match the new selection
     [self setTitle:[[self selectedViewController] title]];

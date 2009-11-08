@@ -83,9 +83,9 @@
 
 @synthesize webViewLoadController = _webViewController;
 
-- (void)setSelectedIndex:(NSUInteger)index;
+- (void)didChangeSelectedViewController;
 {
-    [super setSelectedIndex:index];
+    [super didChangeSelectedViewController];
     
     // Inform delegate of change to title
     NSString *title = nil;
