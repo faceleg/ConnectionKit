@@ -269,6 +269,10 @@
 		274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */; };
 		275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 275167870CBCE40000C91DFA /* KTMediaContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2751678A0CBCE40000C91DFA /* KTMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 275167880CBCE40000C91DFA /* KTMediaContainer.m */; };
+		2752330B10A8938400120CE8 /* KSInspectorTabCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 2752330910A8938400120CE8 /* KSInspectorTabCell.h */; };
+		2752330C10A8938400120CE8 /* KSInspectorTabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752330A10A8938400120CE8 /* KSInspectorTabCell.m */; };
+		2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 2752332210A8983700120CE8 /* KSInspectorTabsMatrix.h */; };
+		2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752332310A8983700120CE8 /* KSInspectorTabsMatrix.m */; };
 		275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */; settings = {ATTRIBUTES = (); }; };
 		275341350C993D8600AC7220 /* KTHTMLParserMasterCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */; };
 		27534C950C99C15A00AC7220 /* KTDocWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27534C930C99C15A00AC7220 /* KTDocWebViewController.m */; };
@@ -1724,6 +1728,10 @@
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
 		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
 		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
+		2752330910A8938400120CE8 /* KSInspectorTabCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabCell.h; sourceTree = "<group>"; };
+		2752330A10A8938400120CE8 /* KSInspectorTabCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabCell.m; sourceTree = "<group>"; };
+		2752332210A8983700120CE8 /* KSInspectorTabsMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsMatrix.h; sourceTree = "<group>"; };
+		2752332310A8983700120CE8 /* KSInspectorTabsMatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsMatrix.m; sourceTree = "<group>"; };
 		275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserMasterCache.h; sourceTree = "<group>"; };
 		275341330C993D8600AC7220 /* KTHTMLParserMasterCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLParserMasterCache.m; sourceTree = "<group>"; };
 		27534C920C99C15A00AC7220 /* KTDocWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWebViewController.h; sourceTree = "<group>"; };
@@ -4503,6 +4511,10 @@
 				27196F861090B1880096B612 /* KSInspector.m */,
 				270E82E510A4484D007E7848 /* KSInspectorTabsController.h */,
 				270E82E610A4484E007E7848 /* KSInspectorTabsController.m */,
+				2752330910A8938400120CE8 /* KSInspectorTabCell.h */,
+				2752330A10A8938400120CE8 /* KSInspectorTabCell.m */,
+				2752332210A8983700120CE8 /* KSInspectorTabsMatrix.h */,
+				2752332310A8983700120CE8 /* KSInspectorTabsMatrix.m */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -5155,6 +5167,8 @@
 				273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */,
 				270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */,
 				279F5EB510A73E0A00F6511F /* KSInspectorViewController.h in Headers */,
+				2752330B10A8938400120CE8 /* KSInspectorTabCell.h in Headers */,
+				2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */,
 				CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6555,6 +6569,8 @@
 				273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */,
 				270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */,
 				279F5EB710A73E0A00F6511F /* KSInspectorViewController.m in Sources */,
+				2752330C10A8938400120CE8 /* KSInspectorTabCell.m in Sources */,
+				2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */,
 				CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
