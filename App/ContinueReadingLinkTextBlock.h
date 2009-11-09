@@ -7,13 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 
 
 @class KTPage;
 
 
-@interface ContinueReadingLinkTextBlock : SVHTMLTemplateTextBlock
+@interface ContinueReadingLinkTextBlock : SVHTMLTextBlock
 {
 	KTPage *myTargetPage;
 }

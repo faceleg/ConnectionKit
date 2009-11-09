@@ -68,7 +68,7 @@
 		
 		
 		// Build the text block
-		SVHTMLTemplateTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
+		SVHTMLTextBlock *textBlock = [self textblockForKeyPath:textKeyPath
 													     ofObject:object
 														    flags:flags
 													      HTMLTag:tag
@@ -87,14 +87,14 @@
 	return result;
 }
 
-- (SVHTMLTemplateTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+- (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
 	// Build the text block
-	SVHTMLTemplateTextBlock *result = [[[SVHTMLTemplateTextBlock alloc] initWithParser:self] autorelease];
+	SVHTMLTextBlock *result = [[[SVHTMLTextBlock alloc] init] autorelease];
 	
 	BOOL fieldEditor = [flags containsObject:@"line"];
 	BOOL richText = [flags containsObject:@"block"];
@@ -137,7 +137,7 @@
 	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
 	if (parameters && [parameters count] == 1)
 	{
-		ContinueReadingLinkTextBlock *textBlock = [[ContinueReadingLinkTextBlock alloc] initWithParser:self];
+		ContinueReadingLinkTextBlock *textBlock = [[ContinueReadingLinkTextBlock alloc] init];
 		[textBlock setFieldEditor:YES];
 		[textBlock setRichText:NO];
 		[textBlock setImportsGraphics:NO];

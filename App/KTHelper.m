@@ -11,7 +11,7 @@
 #import "KTDocWindowController.h"
 #import "KTDocWebViewController.h"
 #import "KTWebViewComponent.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 
 #import "DOMNode+KTExtensions.h"
 #import "DOM+KTWebViewController.h"
@@ -39,7 +39,7 @@
 	DOMHTMLElement *newElement = [aNode replaceWithElementName:anElement elementClass:aClass elementID:anID text:aText innerSpan:aSpan innerParagraph:aParagraph];
 
 	// Get it ready to edit (take off image substitution)
-	SVHTMLTemplateTextBlock *textBlock = [[[myWindowController webViewController] mainWebViewComponent] textBlockForDOMNode:newElement];
+	SVHTMLTextBlock *textBlock = [[[myWindowController webViewController] mainWebViewComponent] textBlockForDOMNode:newElement];
 	
 	if (textBlock)
 	{

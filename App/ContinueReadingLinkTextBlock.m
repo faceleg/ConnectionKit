@@ -43,7 +43,7 @@
 - (NSString *)outerHTML
 {
 	NSString *result;
-    if ([[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
+    if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
     {
 		result = [NSString stringWithFormat:
                   @"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
@@ -77,34 +77,6 @@
 - (NSString *)innerEditingHTML
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
-	return result;
-}
-
-#pragma mark -
-#pragma mark Editing Status
-
-- (BOOL)becomeFirstResponder
-{
-	BOOL result = [super becomeFirstResponder];
-    
-    // Insert the new HTML
-    if (result)
-    {
-        [[self DOMNode] setInnerHTML:[self innerEditingHTML]];
-    }
-    
-	return result;
-}
-
-- (BOOL)resignFirstResponder
-{
-	BOOL result = [super resignFirstResponder];
-	
-	if (result)
-	{
-		[[self DOMNode] setInnerHTML:[self innerHTML]];
-	}
-	
 	return result;
 }
 

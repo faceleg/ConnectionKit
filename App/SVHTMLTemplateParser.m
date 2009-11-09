@@ -138,7 +138,7 @@
 	}
 }
 
-- (void)didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
+- (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock
 {
 	[[SVHTMLContext currentContext] didGenerateTextBlock:textBlock];
 }

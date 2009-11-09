@@ -10,7 +10,7 @@
 
 #import "SVContentObject.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVPageletBody.h"
@@ -173,7 +173,7 @@
     NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[parsedTextBlocks count]];
     NSMutableArray *textAreaControllers = [[NSMutableArray alloc] init];
     
-    for (SVHTMLTemplateTextBlock *aTextBlock in parsedTextBlocks)
+    for (SVHTMLTextBlock *aTextBlock in parsedTextBlocks)
     {
         // Basic text area
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];

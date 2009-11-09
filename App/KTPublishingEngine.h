@@ -37,7 +37,7 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTAbstractPage, KTMediaFileUpload, SVHTMLTemplateTextBlock, KSSimpleURLConnection;
+@class KTSite, KTAbstractPage, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -123,7 +123,7 @@ typedef enum {
 // Design
 - (void)uploadDesignIfNeeded;
 
-- (void)addGraphicalTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
 - (CKTransferRecord *)uploadMainCSSIfNeeded;
 - (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest;
 

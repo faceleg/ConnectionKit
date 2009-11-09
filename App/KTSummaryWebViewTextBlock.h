@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 
 
-@interface KTSummaryWebViewTextBlock : SVHTMLTemplateTextBlock
+@interface KTSummaryWebViewTextBlock : SVHTMLTextBlock
 {
     unsigned    myTruncateCharacters;
 }

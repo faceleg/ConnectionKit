@@ -7,13 +7,14 @@
 //
 
 
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "SVHTMLTemplateParser+Private.h"
 
 #import "KTDesign.h"
 #import "KTMaster+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
+#import "SVPageletBody.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTScaledImageContainer.h"
@@ -30,25 +31,16 @@
 #import "Macros.h"
 
 
-@implementation SVHTMLTemplateTextBlock
+@implementation SVHTMLTextBlock
 
 #pragma mark Init & Dealloc
 
 - (id)init
 {
-    return [self initWithParser:nil];
-}
-
-- (id)initWithParser:(SVHTMLTemplateParser *)parser;
-{
-	OBPRECONDITION(parser);
-    
     self = [super init];
     
     if (self)
     {
-        myParser = [parser retain];
-        
         myIsEditable = YES;
         [self setHTMLTag:@"div"];
     }
@@ -64,7 +56,6 @@
 	[myTargetString release];
 	[myHTMLSourceObject release];
 	[myHTMLSourceKeyPath release];
-    [myParser release];
     
 	[super dealloc];
 }
@@ -80,8 +71,6 @@
 	// We used to just use  [NSString shortUUIDString], but that changes with each webview refresh
 	return result;
 }
-
-- (SVHTMLTemplateParser *)parser { return myParser; }
 
 /*	Many bits of editable text contain a tag like so:
  *		<span class="in">.....</span>
@@ -184,7 +173,7 @@
     NSString *innerHTML = [self innerHTML];
 	if (graphicalTextCode && innerHTML && ![innerHTML isEqualToString:@""])
 	{
-		KTPage *page = (KTPage *)[[self parser] currentPage];		OBASSERT(page);
+		KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
 		KTMaster *master = [page master];
 		if ([master boolForKey:@"enableImageReplacement"])
 		{
@@ -258,7 +247,7 @@
 {
 	// When publishing, generate an empty string (or maybe nil) for empty text blocks
 	NSString *innerHTML = [self innerHTML];
-	if ([[self parser] HTMLGenerationPurpose] != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
+	if ([[SVHTMLContext currentContext] generationPurpose] != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
 	{
 		return @"";
 	}
@@ -273,7 +262,7 @@
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self HTMLTag] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
-		if ([self isEditable] && [[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
+		if ([self isEditable] && [[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:
              @" id=\"%@\" class=\"%@\" contentEditable=\"true\"",
@@ -287,13 +276,13 @@
 	}
 	
 	
-	// Add in graphical text styling if there is any
-	if ([[self parser] includeStyling])
+	// TODO: Add in graphical text styling if there is any
+	//if ([[self parser] includeStyling])
 	{
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if ([[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
+			if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
 			{
 				[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
 			}
@@ -322,7 +311,7 @@
 		[buffer appendString:@"<span"];
         
         NSString *CSSClassName = @"in";
-        if ([self isEditable] && [[self parser] HTMLGenerationPurpose] == kGeneratingPreview)
+        if ([self isEditable] && [[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
 		{
 			[buffer appendFormat:@" id=\"%@\" contentEditable=\"true\"", [self DOMNodeID]];
             CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
@@ -377,7 +366,7 @@
 						NSString *newPath = nil;
 						if (thePage)
 						{
-							newPath = [[thePage URL] stringRelativeToURL:[[[self parser] currentPage] URL]];
+							newPath = [[thePage URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
 						}
 						
 						if (!newPath) newPath = @"#";	// Fallback
@@ -396,7 +385,7 @@
 - (NSString *)processHTML:(NSString *)result
 {
     // Perform additional processing of the text according to HTML generation purpose
-	if ([[self parser] HTMLGenerationPurpose] != kGeneratingPreview)
+	if ([[SVHTMLContext currentContext] generationPurpose] != kGeneratingPreview)
 	{
 		// Fix page links
 		result = [self fixPageLinksFromString:result];
@@ -428,19 +417,18 @@
 					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
 					if (mediaContainer)
 					{
-						if ([[self parser] HTMLGenerationPurpose] == kGeneratingQuickLookPreview)
+						if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingQuickLookPreview)
 						{
 							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
 						}
 						else
 						{
-							KTAbstractPage *page = [[self parser] currentPage];
 							KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
                             KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
-							aMediaPath = [[upload URL] stringRelativeToURL:[page URL]];
+							aMediaPath = [[upload URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
 							
-							// Tell the parser's delegate
-							[[self parser] didEncounterMediaFile:mediaFile upload:upload];
+							// TODO: Tell the parser's delegate
+							//[[self parser] didEncounterMediaFile:mediaFile upload:upload];
 						}
 					}
 					

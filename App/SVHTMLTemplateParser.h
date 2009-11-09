@@ -23,7 +23,7 @@
 #import "SVHTMLContext.h"
 
 
-@class KTDocument, KTHTMLParserMasterCache, SVHTMLContext, KTMediaFileUpload, SVHTMLTemplateTextBlock;
+@class KTDocument, KTHTMLParserMasterCache, SVHTMLContext, KTMediaFileUpload, SVHTMLTextBlock;
 @class KTAbstractPage;
 @class KTMediaContainer, KTMediaFile;
 @protocol SVHTMLTemplateParserDelegate;
@@ -66,7 +66,7 @@
 
 
 @interface SVHTMLTemplateParser (Text)
-- (SVHTMLTemplateTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+- (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
 						  graphicalTextCode:(NSString *)GTCode

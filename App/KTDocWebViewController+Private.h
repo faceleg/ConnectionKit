@@ -20,7 +20,7 @@
 
 
 // Editing
-- (void)setCurrentTextEditingBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(SVHTMLTextBlock *)textBlock;
 - (KTWebViewUndoManagerProxy *)webViewUndoManagerProxy;
 
 @end

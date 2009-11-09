@@ -28,7 +28,7 @@ typedef enum {
 
 @class KTAbstractElement, KTPage, KTPagelet;
 @class KTWebViewComponent;
-@class SVHTMLTemplateTextBlock, KTWebViewUndoManagerProxy;
+@class SVHTMLTextBlock, KTWebViewUndoManagerProxy;
 @class SVHTMLTemplateParser;
 @class KTInlineImageElement;
 @class CIFilter;
@@ -80,7 +80,7 @@ typedef enum {
 	
 	
 	// Editing
-	SVHTMLTemplateTextBlock				*myTextEditingBlock;
+	SVHTMLTextBlock				*myTextEditingBlock;
 	KTWebViewUndoManagerProxy	*myUndoManagerProxy;
 	NSString					*myMidEditHTML;
 	
@@ -178,7 +178,7 @@ typedef enum {
 
 // Editing status
 - (BOOL)webViewIsEditing;
-- (SVHTMLTemplateTextBlock *)currentTextEditingBlock;
+- (SVHTMLTextBlock *)currentTextEditingBlock;
 - (BOOL)commitEditing;
 
 - (KTInlineImageElement *)inlineImageElementForNode:(DOMHTMLImageElement *)node

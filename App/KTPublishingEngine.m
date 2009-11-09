@@ -12,7 +12,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "KTMaster+Internal.h"
 #import "KTPage+Internal.h"
 #import "KTTranscriptController.h"
@@ -798,7 +798,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	}
 }
 
-- (void)addGraphicalTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
 {
     KTMediaFileUpload *media = [[[textBlock graphicalTextMedia] file] defaultUpload];
 	if (media)
@@ -857,7 +857,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
     
     NSEnumerator *graphicalTextBlocksEnumerator = [graphicalTextBlocks objectEnumerator];
-    SVHTMLTemplateTextBlock *aTextBlock;
+    SVHTMLTextBlock *aTextBlock;
     while (aTextBlock = [graphicalTextBlocksEnumerator nextObject])
     {
         KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
@@ -922,7 +922,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 }
 
 // FIXME: This delegate method has been replaced by -[SVHTMLContext generatedTextBlocks]
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTextBlock *)textBlock
 {
 	[self addGraphicalTextBlock:textBlock];
 }

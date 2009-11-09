@@ -56,7 +56,7 @@ NSString *KTSelectedDOMRangeKey = @"KTSelectedDOMRange";
 
 
 @interface KTDocWebViewController (EditingPrivate)
-- (void)setCurrentTextEditingBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(SVHTMLTextBlock *)textBlock;
 @end
 
 

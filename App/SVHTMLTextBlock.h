@@ -11,14 +11,12 @@
 #import "KTDocument.h"
 
 
-@class KTDocWebViewController, KTWebViewComponent, KTMediaContainer, KTAbstractPage, SVHTMLTemplateParser;
+@class KTMediaContainer;
 
 
-@interface SVHTMLTemplateTextBlock : NSObject
+@interface SVHTMLTextBlock : NSObject
 {
 //@private
-	SVHTMLTemplateParser		*myParser;    
-	
 	BOOL			myIsEditable;
 	BOOL			myIsFieldEditor;
 	BOOL			myIsRichText;
@@ -34,9 +32,6 @@
 }
 
 #pragma mark Accessors
-
-- (id)initWithParser:(SVHTMLTemplateParser *)parser;
-@property(nonatomic, retain, readonly) SVHTMLTemplateParser *parser;
 
 @property(nonatomic, readonly) NSString *DOMNodeID;
 

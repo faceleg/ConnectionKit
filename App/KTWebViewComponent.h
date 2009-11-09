@@ -42,9 +42,9 @@
 - (NSString *)componentHTML;
 
 - (NSSet *)textBlocks;
-- (void)addTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)addTextBlock:(SVHTMLTextBlock *)textBlock;
 - (void)removeAllTextBlocks;
-- (SVHTMLTemplateTextBlock *)textBlockForDOMNode:(DOMNode *)node;
+- (SVHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 
 - (NSArray *)subcomponents;
 - (void)addSubcomponent:(KTWebViewComponent *)component;

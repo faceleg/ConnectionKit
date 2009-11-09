@@ -155,7 +155,7 @@
 - (NSString *)summaryForContentOfPage:(KTPage *)page truncation:(unsigned)truncation
 {
 	// Create a text block object to handle truncation etc.
-	KTSummaryWebViewTextBlock *textBlock = [[KTSummaryWebViewTextBlock alloc] initWithParser:self];
+	KTSummaryWebViewTextBlock *textBlock = [[KTSummaryWebViewTextBlock alloc] init];
 	[textBlock setHTMLSourceObject:page];
 	[textBlock setHTMLSourceKeyPath:[page summaryHTMLKeyPath]];
     [textBlock setTruncateCharacters:truncation];

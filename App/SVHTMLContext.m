@@ -111,7 +111,7 @@
 
 - (NSArray *)generatedTextBlocks { return [[_textBlocks copy] autorelease]; }
 
-- (void)didGenerateTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)didGenerateTextBlock:(SVHTMLTextBlock *)textBlock;
 {
     OBPRECONDITION(_textBlocks);
     [_textBlocks addObject:textBlock];

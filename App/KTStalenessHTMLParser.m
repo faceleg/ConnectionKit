@@ -10,7 +10,7 @@
 #import "SVHTMLTemplateParser+Private.h"
 
 #import "KTSite.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "NSScanner+Karelia.h"
 
 
@@ -27,13 +27,13 @@
 
 /*	In addition to the usual behaviour, we want to pass out keypaths to the delegate which account for how to thingy
  */
-- (SVHTMLTemplateTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
+- (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
-	SVHTMLTemplateTextBlock *result =
+	SVHTMLTextBlock *result =
 		[super textblockForKeyPath:keypath ofObject:object flags:flags HTMLTag:tag graphicalTextCode:GTCode hyperlink:hyperlink];
 	
 	

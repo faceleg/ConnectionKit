@@ -11,7 +11,7 @@
 #import "Debug.h"
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "KTWebViewUndoManagerProxy.h"
 #import "KTToolbars.h"
 #import "WebViewEditingHelperClasses.h"
@@ -42,7 +42,7 @@
 
 
 @interface KTDocWebViewController (EditingPrivate)
-- (void)setCurrentTextEditingBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)setCurrentTextEditingBlock:(SVHTMLTextBlock *)textBlock;
 
 - (void)webViewWillEditDOM:(WebView *)webView;
 @end
@@ -283,9 +283,9 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 #pragma mark -
 #pragma mark Editing Status
 
-- (SVHTMLTemplateTextBlock *)currentTextEditingBlock { return myTextEditingBlock; }
+- (SVHTMLTextBlock *)currentTextEditingBlock { return myTextEditingBlock; }
 
-- (void)setCurrentTextEditingBlock:(SVHTMLTemplateTextBlock *)textBlock
+- (void)setCurrentTextEditingBlock:(SVHTMLTextBlock *)textBlock
 {
 	// Ignore unecessary changes
 	if (textBlock == myTextEditingBlock) {
@@ -363,7 +363,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
     /// I don't quite understand why the flow of this code only calls -setCurrentTextEditingBlock: if a valid block was found, but it's what the old code did and fails assertions otherwise. As far as I can find editing does all the right things still
     if (selectedDOMNode)
     {
-        SVHTMLTemplateTextBlock *newBlock = [[self mainWebViewComponent] textBlockForDOMNode:selectedDOMNode];
+        SVHTMLTextBlock *newBlock = [[self mainWebViewComponent] textBlockForDOMNode:selectedDOMNode];
         if (newBlock)
         {
             if (![[self windowController] isEditableElement:[newBlock DOMNode]]) newBlock = nil;
@@ -455,7 +455,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 {
 	BOOL result = NO;
 	
-	SVHTMLTemplateTextBlock *textBlock = [[self mainWebViewComponent] textBlockForDOMNode:[range startContainer]];
+	SVHTMLTextBlock *textBlock = [[self mainWebViewComponent] textBlockForDOMNode:[range startContainer]];
 	if (textBlock)
     {
 		result = [textBlock webView:aWebView shouldInsertNode:node replacingDOMRange:range givenAction:action];

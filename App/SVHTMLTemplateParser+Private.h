@@ -20,7 +20,7 @@
 
 // Delegate
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
-- (void)didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock;
 - (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
 - (void)didEncounterResourceFile:(NSURL *)resourceURL;
 

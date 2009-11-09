@@ -824,7 +824,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (result)
 	{
 		BOOL isRawHTML = NO;
-		SVHTMLTemplateTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
+		SVHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
 		id sourceObject = [textBlock HTMLSourceObject];
         
         NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use

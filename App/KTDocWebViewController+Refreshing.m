@@ -24,7 +24,7 @@
 #import "KTPage.h"
 #import "KTWebViewComponent.h"
 #import "KTAsyncOffscreenWebViewController.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "WebViewEditingHelperClasses.h"
 
 #import "NSDictionary+Karelia.h"

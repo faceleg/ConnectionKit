@@ -19,7 +19,7 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTAbstractPage, SVHTMLTemplateTextBlock;
+@class KTAbstractPage, SVHTMLTextBlock;
 @interface SVHTMLContext : NSObject
 {
     NSURL                   *_baseURL;
@@ -54,7 +54,7 @@ typedef enum {
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
                                
 @property(nonatomic, copy, readonly) NSArray *generatedTextBlocks;
-- (void)didGenerateTextBlock:(SVHTMLTemplateTextBlock *)textBlock;
+- (void)didGenerateTextBlock:(SVHTMLTextBlock *)textBlock;
 
 
 

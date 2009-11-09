@@ -11,7 +11,7 @@
 
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVHTMLTemplateTextBlock.h"
+#import "SVHTMLTextBlock.h"
 #import "DOM+KTWebViewController.h"
 
 
@@ -100,7 +100,7 @@
 
 - (NSSet *)textBlocks { return [NSSet setWithSet:myTextBlocks]; }
 
-- (void)addTextBlock:(SVHTMLTemplateTextBlock *)textBlock
+- (void)addTextBlock:(SVHTMLTextBlock *)textBlock
 {
 	[[self _textBlocks] addObject:textBlock];
 	[textBlock setWebViewComponent:self];
@@ -114,11 +114,11 @@
 
 /*	Search our text blocks for a match. If not found, do the same for subcomponents.
  */
-- (SVHTMLTemplateTextBlock *)textBlockForDOMNode:(DOMNode *)node;
+- (SVHTMLTextBlock *)textBlockForDOMNode:(DOMNode *)node;
 {
 	OBPRECONDITION(node);
 	
-	SVHTMLTemplateTextBlock *result = nil;
+	SVHTMLTextBlock *result = nil;
 	
 	// Find the overall element encapsualting the editing block
 	DOMHTMLElement *textBlockDOMElement = [node firstSelectableParentNode];
@@ -128,7 +128,7 @@
 
 		// Search for an existing TextBlock object with that ID
 		NSEnumerator *textBlocksEnumerator = [[self textBlocks] objectEnumerator];
-		SVHTMLTemplateTextBlock *aTextBlock;
+		SVHTMLTextBlock *aTextBlock;
 		while (aTextBlock = [textBlocksEnumerator nextObject])
 		{
 			if ([[aTextBlock DOMNodeID] isEqualToString:textBlockDOMID])
@@ -333,7 +333,7 @@
 /*	We want to record the text block.
  *	This includes making sure the webview refreshes upon a graphical text size change.
  */
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTemplateTextBlock *)textBlock
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTextBlock *)textBlock
 {
 	[self addTextBlock:textBlock];
 }
