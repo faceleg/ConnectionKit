@@ -383,7 +383,6 @@
 		27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */; settings = {ATTRIBUTES = (); }; };
 		27ACACB70D588F64004732D0 /* KTPlaceholderBindingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */; };
 		27ACADB60D589C8C004732D0 /* Z.png in Resources */ = {isa = PBXBuildFile; fileRef = 27ACADB50D589C8C004732D0 /* Z.png */; };
-		27AD539B0D6B3E8700883550 /* SVHTMLTemplateParser+CSS.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AD539A0D6B3E8700883550 /* SVHTMLTemplateParser+CSS.m */; };
 		27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */; };
 		27AE74750EEDE6CC00409D80 /* KTPublishingWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */; };
 		27AE74760EEDE6CC00409D80 /* KTPublishingWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */; };
@@ -1843,7 +1842,6 @@
 		27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPlaceholderBindingTextField.h; sourceTree = "<group>"; };
 		27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPlaceholderBindingTextField.m; sourceTree = "<group>"; };
 		27ACADB50D589C8C004732D0 /* Z.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Z.png; sourceTree = "<group>"; };
-		27AD539A0D6B3E8700883550 /* SVHTMLTemplateParser+CSS.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+CSS.m"; sourceTree = "<group>"; };
 		27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "SVHTMLTemplateParser+Private.h"; sourceTree = "<group>"; };
 		27AE74730EEDE6CC00409D80 /* KTPublishingWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPublishingWindowController.h; sourceTree = "<group>"; };
 		27AE74740EEDE6CC00409D80 /* KTPublishingWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPublishingWindowController.m; sourceTree = "<group>"; };
@@ -3127,7 +3125,6 @@
 				271575190D605CD900A91E58 /* KTStalenessHTMLParser.m */,
 				27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */,
 				27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */,
-				27AD539A0D6B3E8700883550 /* SVHTMLTemplateParser+CSS.m */,
 				27156A800D5CA1C700A91E58 /* SVHTMLTemplateParser+Index.m */,
 				2774E3990F16D9EF0085A4D8 /* SVHTMLTemplateParser+Media.m */,
 				27AD53A40D6B40C300883550 /* SVHTMLTemplateParser+Private.h */,
@@ -6351,7 +6348,6 @@
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
 				27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */,
-				27AD539B0D6B3E8700883550 /* SVHTMLTemplateParser+CSS.m in Sources */,
 				27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */,
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,

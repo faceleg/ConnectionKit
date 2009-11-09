@@ -44,7 +44,7 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
-[[if parser.includeStyling]][[stylesheet]][[endif]]
+		[[if parser.includeStyling]][[=stylesheetsHTMLString]][[endif]]
 <!--
 Photo credits for this website's design: <[[=&master.designDirectoryURL]]Credits.rtf>
 Licensing for this website's design:     <[[=&master.designDirectoryURL]]License.rtf>
