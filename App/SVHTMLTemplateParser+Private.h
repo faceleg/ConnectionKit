@@ -12,8 +12,6 @@
 
 @interface SVHTMLTemplateParser ()
 
-+ (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
-
 - (KTHTMLParserMasterCache *)cache;
 
 - (NSString *)resourceFilePath:(NSURL *)resourceFile relativeToPage:(KTAbstractPage *)page;

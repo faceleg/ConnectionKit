@@ -73,6 +73,11 @@
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue;
 - (BOOL)isNotEmpty:(id)aValue;
 
+
+// Support
++ (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
+
+
 @end
 
 
