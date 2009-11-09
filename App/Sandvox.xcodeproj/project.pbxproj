@@ -2672,7 +2672,7 @@
 		CEBCFEF90DB909E4001BF0DF /* arrow_black.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_black.pdf; sourceTree = "<group>"; };
 		CEBCFEFA0DB909E4001BF0DF /* arrow_grey_down.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_down.pdf; sourceTree = "<group>"; };
 		CEBCFEFB0DB909E4001BF0DF /* arrow_grey_up.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_up.pdf; sourceTree = "<group>"; };
-		CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../../imedia1/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../imedia/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
