@@ -44,6 +44,10 @@ typedef enum {
 - (BOOL)isPublishing;
 
 
+#pragma mark URLs/Paths
+- (NSString *)URLStringForResourceFile:(NSURL *)resourceURL;
+
+
 #pragma mark Content
 
 // Default implementation does nothing. Subclasses can implement for introspecting the dependencies (WebView loading does)

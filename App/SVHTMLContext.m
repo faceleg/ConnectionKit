@@ -8,6 +8,13 @@
 
 #import "SVHTMLContext.h"
 
+#import "NSURL+Karelia.h"
+
+#import "KTHostProperties.h"
+#import "KTAbstractPage.h"
+#import "KTSite.h"
+#import "BDAlias+QuickLook.h"
+
 
 @implementation SVHTMLContext
 
@@ -66,6 +73,36 @@
     BOOL result = ([self generationPurpose] != kGeneratingPreview &&
                    [self generationPurpose] != kGeneratingQuickLookPreview);
     return result;
+}
+
+#pragma mark URLs/Paths
+
+- (NSString *)URLStringForResourceFile:(NSURL *)resourceURL;
+{
+    NSString *result;
+	switch ([self generationPurpose])
+	{
+		case kGeneratingPreview:
+			result = [resourceURL absoluteString];
+			break;
+            
+		case kGeneratingQuickLookPreview:
+			result = [[BDAlias aliasWithPath:[resourceURL path]] quickLookPseudoTag];
+			break;
+			
+		default:
+		{
+			KTHostProperties *hostProperties = [[[self currentPage] site] hostProperties];
+			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceURL lastPathComponent]];
+			result = [resourceFileURL stringRelativeToURL:[self baseURL]];
+			break;
+		}
+	}
+    
+	// TODO: Tell the delegate
+	//[self didEncounterResourceFile:resourceURL];
+    
+	return result;
 }
 
 #pragma mark Content

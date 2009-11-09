@@ -458,25 +458,7 @@
  */
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTAbstractPage *)page
 {
-	NSString *result;
-	switch ([[SVHTMLContext currentContext] generationPurpose])
-	{
-		case kGeneratingPreview:
-			result = [resourceURL absoluteString];
-			break;
-            
-		case kGeneratingQuickLookPreview:
-			result = [[BDAlias aliasWithPath:[resourceURL path]] quickLookPseudoTag];
-			break;
-			
-		default:
-		{
-			KTHostProperties *hostProperties = [[[(KTAbstractElement *)[self component] page] site] hostProperties];
-			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceURL lastPathComponent]];
-			result = [resourceFileURL stringRelativeToURL:[page URL]];
-			break;
-		}
-	}
+	NSString *result = [[SVHTMLContext currentContext] URLStringForResourceFile:resourceURL];
     
 	// Tell the delegate
 	[self didEncounterResourceFile:resourceURL];
