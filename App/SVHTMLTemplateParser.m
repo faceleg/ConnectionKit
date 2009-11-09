@@ -232,12 +232,6 @@
 	return [self targetStringForPage:targetPage];
 }
 
-- (NSString *)cssWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	return @"";
-}
-
-
 /*!	ID/Class generator.  The IDs of clickable items are pretty complex, so this builds them and creates
 	the id="foo" class="bar" HTML (with leading space), so put this right after the tag type.
 
