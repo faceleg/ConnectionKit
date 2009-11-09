@@ -75,6 +75,8 @@
 
 
 // Support
+@property(nonatomic, retain, readonly) KTHTMLParserMasterCache *cache;
+- (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 + (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;
 
 
