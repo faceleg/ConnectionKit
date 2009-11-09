@@ -46,7 +46,6 @@
 
 
 // Prebuilt templates
-+ (NSString *)calloutContainerTemplateHTML;
 - (NSString *)calloutContainerTemplateHTML;
 
 - (NSString *)targetStringForPage:(id) aDestPage;

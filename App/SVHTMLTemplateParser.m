@@ -30,7 +30,7 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (NSString *)calloutContainerTemplateHTML
+- (NSString *)calloutContainerTemplateHTML
 {
 	static NSString *sCalloutContainerTemplateHTML;
 	
@@ -45,8 +45,6 @@
 	
 	return sCalloutContainerTemplateHTML;
 }
-
-- (NSString *)calloutContainerTemplateHTML { return [[self class] calloutContainerTemplateHTML]; }
 
 #pragma mark -
 #pragma mark Init & Dealloc
