@@ -66,9 +66,7 @@
 	[oBodyTagTextField setFont:font];
 	
 	
-	// Bind our text fields to the right controller.
-	KTDocSiteOutlineController *pagesController = [[mySiteOutlineController windowController] siteOutlineController];
-	
+	// Bind our text fields to the right controller.	
 	NSString *baseKeyPath = @"selection";
 	if ([self isMaster])
 	{
@@ -76,32 +74,32 @@
 	}
 	
 	[oPreludeTextView bind:@"value"
-				  toObject:pagesController
+				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.beforeHTML"]
 				   options:nil];
 	
 	[oEarlyHeadTextView bind:@"value"
-					toObject:pagesController
+					toObject:mySiteOutlineController
 				 withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.earlyHead"]
 				     options:nil];
 	
 	[oHeadTextView bind:@"value"
-				  toObject:pagesController
+				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.headArea"]
 				   options:nil];
 	
 	[oBodyStartTextView bind:@"value"
-				    toObject:pagesController
+				    toObject:mySiteOutlineController
 			     withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagStart"]
 				     options:nil];
 	
 	[oBodyEndTextView bind:@"value"
-				  toObject:pagesController
+				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagEnd"]
 				   options:nil];
 	
 	[oBodyTagTextField bind:@"value"
-				  toObject:pagesController
+				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTag"]
 				   options:nil];
 }
