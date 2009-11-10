@@ -26,6 +26,9 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KTDocument.h"
 
+static NSArray *sRecentDocumentURLs = nil;	// singleton object for URL display to consult.
+static NSMutableDictionary *sRecentDocumentURLTextCache = nil;
+static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 
 @interface NSURL(PlaceholderTable)
 - (NSAttributedString *)resourceAttributedTitleAndDescription;
@@ -69,153 +72,162 @@
 
 - (NSAttributedString *)resourceAttributedTitleAndDescription
 {
-	NSString *displayName = [self displayName];
-	
-	NSMutableString *desc = [NSMutableString string];	// METADATA -- CAN WE PUT IN TITLE/SUBTITLE?  NOT GETTING SAVED?
-
-	NSArray *allURLs = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
-	NSString *differenceInPaths = [self differentDirectoryComparedToAllURLs:allURLs];
-	
-	
-	
-	NSError *err = nil;
-	NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:self type:nil];
-	NSDictionary *values =[NSPersistentStoreCoordinator
-						   metadataForPersistentStoreOfType:NSSQLiteStoreType
-						   URL:datastoreURL
-						   error:&err];
-
-	id value = nil;
-	enum { kNone, kTitle, kWhere, kPages, kDate };
-	int lastAppendedItem = kNone;
-	
-	// Document title (if unique from file name)
-	
-	if (value = [values objectForKey:(NSString*)kMDItemTitle])
+	NSAttributedString *cachedText = [sRecentDocumentURLTextCache objectForKey:self];
+	if (!cachedText)
 	{
-		// If the title only differs from the filename by _ characters, don't bother showing the title!
-		NSString *displayNameReplacingUnderscores = [displayName stringByReplacing:@"_" with:@" "];
-		if (![displayNameReplacingUnderscores isEqualToString:value] && ![displayNameReplacingUnderscores hasPrefix:value])
-		{
-			[desc appendFormat:NSLocalizedString(@"\\U201C%@\\U201D", @"quotes around the document name"), value];	// only append if not equal, or a substring of file title
-			lastAppendedItem = kTitle;
-		}
-	}
-
-	// Where -- unique folder, in case title same as other ones in the list
-	NSRange rangeToBold = NSMakeRange(NSNotFound, 0);
-	
-	if (nil != differenceInPaths)
-	{
-		if ([desc length]) [desc appendString:@" "];	// just a space to separate
-		NSString *folderFormatString = NSLocalizedString(@"in %@", @"Indicator what directory the file is found in, thus it is ''in <foldername>''");
-		// We will do our own manual substitution of the %@ so we can also bold it.
-		NSRange whereMarker = [folderFormatString rangeOfString:@"%@"];
-		if (NSNotFound != whereMarker.location)
-		{
-			NSString *replaced = [folderFormatString stringByReplacing:@"%@" with:differenceInPaths];
-			NSUInteger lengthSoFar = [desc length];
-			[desc appendString:replaced];
-			rangeToBold = NSMakeRange(lengthSoFar+whereMarker.location, [differenceInPaths length]);
-			lastAppendedItem = kWhere;
-		}
-	}
-	
-	
-	// Number of pages, if > 1 page
-	
-	if (value = [values objectForKey:(NSString*)kMDItemNumberOfPages])
-	{
-		switch (lastAppendedItem)
-		{
-			case kNone: break;
-			case kTitle: [desc appendString:@" "]; break;
-			default:  [desc appendString:@", "]; break;
-		}
-		if ([value intValue] > 1)
-		{
-			[desc appendFormat:@"%@ pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
-			lastAppendedItem = kPages;
-		}
-	}
-
-	// Last Opened Date
-	// Spotlight only, not in document metadata
-	CFStringRef filePath = (CFStringRef)[self path];
-	MDItemRef mdItem = MDItemCreate(NULL, filePath);
-	
-	values = NSMakeCollectable(MDItemCopyAttributeList(mdItem,kMDItemLastUsedDate) );
-	[values autorelease];
-	if (value = [values objectForKey:(NSString*)kMDItemLastUsedDate])
-	{
-		switch (lastAppendedItem)
-		{
-			case kTitle: [desc appendString:@" "]; break;
-			case kPages:  [desc appendString:@", "]; break;
-			default: break;
-		}
-		NSDate *date = (NSDate *)value;
+		NSString *displayName = [self displayName];
 		
-		[desc appendFormat:@"opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
-		lastAppendedItem = kDate;
+		NSMutableString *desc = [NSMutableString string];	// METADATA -- CAN WE PUT IN TITLE/SUBTITLE?  NOT GETTING SAVED?
+
+		NSString *differenceInPaths = [self differentDirectoryComparedToAllURLs:sRecentDocumentURLs];
+		
+		NSError *err = nil;
+		NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:self type:nil];
+		NSDictionary *values =[NSPersistentStoreCoordinator
+							   metadataForPersistentStoreOfType:NSSQLiteStoreType
+							   URL:datastoreURL
+							   error:&err];
+
+		id value = nil;
+		enum { kNone, kTitle, kWhere, kPages, kDate };
+		int lastAppendedItem = kNone;
+		
+		// Document title (if unique from file name)
+		
+		if (value = [values objectForKey:(NSString*)kMDItemTitle])
+		{
+			// If the title only differs from the filename by _ characters, don't bother showing the title!
+			NSString *displayNameReplacingUnderscores = [displayName stringByReplacing:@"_" with:@" "];
+			if (![displayNameReplacingUnderscores isEqualToString:value] && ![displayNameReplacingUnderscores hasPrefix:value])
+			{
+				[desc appendFormat:NSLocalizedString(@"\\U201C%@\\U201D", @"quotes around the document name"), value];	// only append if not equal, or a substring of file title
+				lastAppendedItem = kTitle;
+			}
+		}
+
+		// Where -- unique folder, in case title same as other ones in the list
+		NSRange rangeToBold = NSMakeRange(NSNotFound, 0);
+		
+		if (nil != differenceInPaths)
+		{
+			if ([desc length]) [desc appendString:@" "];	// just a space to separate
+			NSString *folderFormatString = NSLocalizedString(@"in %@", @"Indicator what directory the file is found in, thus it is ''in <foldername>''");
+			// We will do our own manual substitution of the %@ so we can also bold it.
+			NSRange whereMarker = [folderFormatString rangeOfString:@"%@"];
+			if (NSNotFound != whereMarker.location)
+			{
+				NSString *replaced = [folderFormatString stringByReplacing:@"%@" with:differenceInPaths];
+				NSUInteger lengthSoFar = [desc length];
+				[desc appendString:replaced];
+				rangeToBold = NSMakeRange(lengthSoFar+whereMarker.location, [differenceInPaths length]);
+				lastAppendedItem = kWhere;
+			}
+		}
+		
+		
+		// Number of pages, if > 1 page
+		
+		if (value = [values objectForKey:(NSString*)kMDItemNumberOfPages])
+		{
+			switch (lastAppendedItem)
+			{
+				case kNone: break;
+				case kTitle: [desc appendString:@" "]; break;
+				default:  [desc appendString:@", "]; break;
+			}
+			if ([value intValue] > 1)
+			{
+				[desc appendFormat:@"%@ pages", value];	// only show if > 1 pages.  (Bypasses pluralization issue as a side benefit)
+				lastAppendedItem = kPages;
+			}
+		}
+
+		// Last Opened Date
+		// Spotlight only, not in document metadata
+		CFStringRef filePath = (CFStringRef)[self path];
+		MDItemRef mdItem = MDItemCreate(NULL, filePath);
+		
+		values = NSMakeCollectable(MDItemCopyAttributeList(mdItem,kMDItemLastUsedDate) );
+		[values autorelease];
+		if (value = [values objectForKey:(NSString*)kMDItemLastUsedDate])
+		{
+			switch (lastAppendedItem)
+			{
+				case kTitle: [desc appendString:@" "]; break;
+				case kPages:  [desc appendString:@", "]; break;
+				default: break;
+			}
+			NSDate *date = (NSDate *)value;
+			
+			[desc appendFormat:@"opened %@", [date relativeFormatWithStyle:NSDateFormatterShortStyle]];
+			lastAppendedItem = kDate;
+		}
+		
+		NSFont *font1 = [NSFont systemFontOfSize:[NSFont systemFontSize]];
+		NSFont *font2 = [NSFont systemFontOfSize:[NSFont labelFontSize]];
+		NSFont *font2bold = [[NSFontManager sharedFontManager] convertFont:font2 toHaveTrait:NSBoldFontMask];
+		
+		NSMutableParagraphStyle *paraStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
+		[paraStyle setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
+		[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+		[paraStyle setTighteningFactorForTruncation:0.1];
+		 
+		 NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:font1, NSFontAttributeName, 
+								paraStyle, NSParagraphStyleAttributeName, 
+								nil];
+		 NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, 
+								[NSColor darkGrayColor], NSForegroundColorAttributeName, nil];
+		 
+		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
+													  displayName attributes:attr1] autorelease];	
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
+		
+		NSMutableAttributedString *extraInfo = [[[NSMutableAttributedString alloc] initWithString:desc attributes:attr2] autorelease];
+		if (NSNotFound != rangeToBold.location)
+		{
+			[extraInfo addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font2bold, NSFontAttributeName, nil] range:rangeToBold];
+		}
+		
+		[attrStickyText appendAttributedString:extraInfo];
+		cachedText = [[attrStickyText copy] autorelease];
+		[sRecentDocumentURLTextCache setObject:cachedText forKey:self];
 	}
-	
-	NSFont *font1 = [NSFont systemFontOfSize:[NSFont systemFontSize]];
-	NSFont *font2 = [NSFont systemFontOfSize:[NSFont labelFontSize]];
-	NSFont *font2bold = [[NSFontManager sharedFontManager] convertFont:font2 toHaveTrait:NSBoldFontMask];
-	
-	NSMutableParagraphStyle *paraStyle = [[[NSMutableParagraphStyle alloc] init] autorelease];
-	[paraStyle setParagraphStyle:[NSParagraphStyle defaultParagraphStyle]];
-	[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
-	[paraStyle setTighteningFactorForTruncation:0.1];
-	 
-	 NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:font1, NSFontAttributeName, 
-							paraStyle, NSParagraphStyleAttributeName, 
-							nil];
-	 NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:font2, NSFontAttributeName, 
-							[NSColor darkGrayColor], NSForegroundColorAttributeName, nil];
-	 
-	NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
-												  displayName attributes:attr1] autorelease];	
-	[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
-	
-	NSMutableAttributedString *extraInfo = [[[NSMutableAttributedString alloc] initWithString:desc attributes:attr2] autorelease];
-	if (NSNotFound != rangeToBold.location)
-	{
-		[extraInfo addAttributes:[NSDictionary dictionaryWithObjectsAndKeys:font2bold, NSFontAttributeName, nil] range:rangeToBold];
-	}
-	
-	[attrStickyText appendAttributedString:extraInfo];
-	return attrStickyText;
+	return cachedText;
 }
 
 - (NSImage *)resourcePreviewImage;		// Get quicklook thumbnail, crop off bottom, and give it a bit of an outline
 {
-	const int thumbSize = 58;
-	const int thumbHeight = 46;	// only show the top pixels so we don't get the "SANDVOX" embossed
-	CGImageRef cgimage = nil;
-	NSImage *result = nil;
-	
-	CGSize size = CGSizeMake(thumbSize,thumbSize);
-	cgimage = QLThumbnailImageCreate(kCFAllocatorDefault,(CFURLRef)self,size,NULL);
-	
-	if (cgimage)
+	NSImage *cachedImage = [sRecentDocumentURLImageCache objectForKey:self];
+	if (!cachedImage)
 	{
-		NSSize size = NSZeroSize;
-		size.width = CGImageGetWidth(cgimage);
-		size.height = CGImageGetWidth(cgimage);
+		const int thumbSize = 58;
+		const int thumbHeight = 46;	// only show the top pixels so we don't get the "SANDVOX" embossed
+		CGImageRef cgimage = nil;
+		NSImage *result = nil;
 		
-		CIImage *ci = [CIImage imageWithCGImage:cgimage];
-		CGImageRelease(cgimage);
-		ci = [ci imageByCroppingToSize:CGSizeMake(thumbSize,thumbHeight) alignment:NSImageAlignTop];
-		ci = [ci addShadow:1];
-		result = [ci toNSImage];
+		CGSize size = CGSizeMake(thumbSize,thumbSize);
+		cgimage = QLThumbnailImageCreate(kCFAllocatorDefault,(CFURLRef)self,size,NULL);
+		
+		if (cgimage)
+		{
+			NSSize size = NSZeroSize;
+			size.width = CGImageGetWidth(cgimage);
+			size.height = CGImageGetWidth(cgimage);
+			
+			CIImage *ci = [CIImage imageWithCGImage:cgimage];
+			CGImageRelease(cgimage);
+			ci = [ci imageByCroppingToSize:CGSizeMake(thumbSize,thumbHeight) alignment:NSImageAlignTop];
+			ci = [ci addShadow:1];
+			result = [ci toNSImage];
+		}
+		if (!result)
+		{
+			result = [[NSWorkspace sharedWorkspace] iconForFile:[self path]];
+		}
+		cachedImage = result;
+		[sRecentDocumentURLImageCache setObject:result forKey:self];
 	}
-	if (!result)
-	{
-		result = [[NSWorkspace sharedWorkspace] iconForFile:[self path]];
-	}
-	return result;
+	return cachedImage;
 }
 
 
@@ -234,6 +246,10 @@
 
 - (void)dealloc
 {
+	[sRecentDocumentURLs release];			sRecentDocumentURLs = nil;
+	[sRecentDocumentURLTextCache release];	sRecentDocumentURLTextCache = nil;
+	[sRecentDocumentURLImageCache release]; sRecentDocumentURLImageCache = nil;
+	
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
 }
@@ -304,8 +320,33 @@
 	[oRecentDocumentsTable setDoubleAction:@selector(openSelectedRecentDocument:)];
 	[oRecentDocumentsTable setTarget:self];
 	[oRecentDocumentsTable setIntercellSpacing:NSMakeSize(0,3.0)];	// get the columns closer together
-
-	[oRecentDocsController setContent:[[NSDocumentController sharedDocumentController] recentDocumentURLs]];
+	
+	NSArray *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
+#if 0
+	// TESTING HARNESS ... I HAVE A BUNCH OF DOCUMENTS IN THERE.
+	NSFileManager *fm = [NSFileManager defaultManager];
+	NSString *dir = [@"~/Desktop/Sites" stringByExpandingTildeInPath];
+	NSArray *files = [fm contentsOfDirectoryAtPath:dir error:nil];
+	NSMutableArray *localURLs = [NSMutableArray array];
+	for (NSString *filename in files)
+	{
+		if (![filename hasPrefix:@"."])
+		{
+			NSString *path = [dir stringByAppendingPathComponent:filename];
+			NSURL *url = [NSURL fileURLWithPath:path];
+			[localURLs addObject:url];
+		}
+	}
+	urls = [NSArray arrayWithArray:localURLs];
+#endif
+	[oRecentDocsController setContent:urls];
+	
+	// Set up our storage for speeding up display of these recent documents.  Otherwise it's very sluggish.
+	sRecentDocumentURLs = [urls retain];
+	sRecentDocumentURLTextCache = [[NSMutableDictionary alloc] init];
+	sRecentDocumentURLImageCache = [[NSMutableDictionary alloc] init];
+	
+	
 	[oRecentDocsController setSelectionIndexes:[NSIndexSet indexSet]];
 
 	[[NSNotificationCenter defaultCenter] addObserver:self
