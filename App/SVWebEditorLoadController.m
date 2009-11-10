@@ -101,6 +101,17 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [self didChangeValueForKey:@"primaryWebViewController"];
     [self didChangeValueForKey:@"secondaryWebViewController"];
+    
+    
+    // Bring the new primary controller to the front, copying across scrollpoint if needed
+    if ([[self primaryWebViewController] page] == [[self secondaryWebViewController] page])
+    {
+        [[[[[[self primaryWebViewController] webView] mainFrame] frameView] documentView]
+         scrollRectToVisible:
+         [[[[[[self secondaryWebViewController] webView] mainFrame] frameView] documentView] visibleRect]];
+    }
+    
+    [self setSelectedViewController:[self primaryWebViewController]];
 }
 
 - (void)didChangeSelectedViewController;
@@ -217,9 +228,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         {
             // The webview is done loading! swap 'em
             [self swapWebViewControllers];
-            [self setSelectedViewController:[self primaryWebViewController]];
             
-            // The webview is now part of the view hierarchy, so no longer needs to be explicity told it's window
+            // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
             [[[self primaryWebViewController] webView] setHostWindow:nil];
         }
     }
