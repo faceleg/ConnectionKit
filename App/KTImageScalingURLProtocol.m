@@ -347,24 +347,27 @@ static NSURLCache *_sharedCache;
  */
 - (NSData *)_loadImageAtURL:(NSURL *)URL convertToType:(NSString *)fileType error:(NSError **)error
 {
+    NSMutableData *result = nil;
+    
     CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)URL, NULL);
-    OBASSERT(imageSource);
-    
-    NSMutableData *result = [NSMutableData data];
-    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                              (CFStringRef)fileType,
-                                                                              1,
-                                                                              NULL);
-    OBASSERT(imageDestination);
-    
-    CGImageDestinationAddImageFromSource(imageDestination,
-                                         imageSource,
-                                         0,
-                                         (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
-    
-    if (!CGImageDestinationFinalize(imageDestination)) result = nil;
-    CFRelease(imageDestination);
-    CFRelease(imageSource);
+    if (imageSource)    // We get no info why it might have failed. Assume it's because the file doesn't exist
+    {
+        result = [NSMutableData data];
+        CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
+                                                                                  (CFStringRef)fileType,
+                                                                                  1,
+                                                                                  NULL);
+        OBASSERT(imageDestination);
+        
+        CGImageDestinationAddImageFromSource(imageDestination,
+                                             imageSource,
+                                             0,
+                                             (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
+        
+        if (!CGImageDestinationFinalize(imageDestination)) result = nil;
+        CFRelease(imageDestination);
+        CFRelease(imageSource);
+    }
     
     return result;
 }
