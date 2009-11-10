@@ -103,14 +103,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self didChangeValueForKey:@"secondaryWebViewController"];
     
     
-    // Bring the new primary controller to the front, copying across scrollpoint if needed
     if ([[self primaryWebViewController] page] == [[self secondaryWebViewController] page])
     {
-        [[[[[[self primaryWebViewController] webView] mainFrame] frameView] documentView]
-         scrollRectToVisible:
-         [[[[[[self secondaryWebViewController] webView] mainFrame] frameView] documentView] visibleRect]];
+        //  Copying across scrollpoint
+        NSRect visibleRect = [[[[self secondaryWebViewController] webEditorView] documentView] visibleRect];
+        [[[self primaryWebViewController] webEditorView] scrollToPoint:visibleRect.origin];
+        
+        
+        // Copy across selection
+        
     }
     
+    
+    // Bring the new primary controller to the front
     [self setSelectedViewController:[self primaryWebViewController]];
 }
 

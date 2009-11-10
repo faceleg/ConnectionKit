@@ -53,6 +53,8 @@
 #pragma mark Document
 
 @property(nonatomic, readonly) DOMDocument *DOMDocument;
+- (NSView *)documentView;
+- (void)scrollToPoint:(NSPoint)point;
 
 
 #pragma mark Loading Data

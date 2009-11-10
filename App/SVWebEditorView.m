@@ -131,6 +131,13 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 
 - (DOMDocument *)DOMDocument { return [[self webView] mainFrameDocument]; }
 
+- (NSView *)documentView { return [[[[self webView] mainFrame] frameView] documentView]; }
+
+- (void)scrollToPoint:(NSPoint)point;
+{
+    [[self documentView] scrollPoint:point];
+}
+
 #pragma mark Loading Data
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
