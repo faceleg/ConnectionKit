@@ -1213,10 +1213,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 	OBASSERT([NSApp isKindOfClass:[KTApplication class]]);	// make sure we instantiated the right kind of NSApplication subclass
 	
-	// Force imedia browser to load just so we can get RBSplitView loaded
-	[iMediaBrowser class];
-	
-    
 	// Create a KTDocumentController instance that will become the "sharedInstance".  Do this early.
 	[[[KTDocumentController alloc] init] release];
     
