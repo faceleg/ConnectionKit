@@ -83,9 +83,9 @@
 
 @synthesize webViewLoadController = _webViewController;
 
-- (void)didChangeSelectedViewController;
+- (void)didSelectViewController;
 {
-    [super didChangeSelectedViewController];
+    [super didSelectViewController];
     
     // Inform delegate of change to title
     NSString *title = nil;
