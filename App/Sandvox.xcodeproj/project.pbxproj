@@ -1025,8 +1025,6 @@
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */; };
 		CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */; };
-		CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD7093D071B009767A8 /* tiny_down.png */; };
-		CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */ = {isa = PBXBuildFile; fileRef = CECB8CD8093D071B009767A8 /* tiny_up.png */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
 		CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CED26DC40D383F4B002C0137 /* a2hosting.png */; };
 		CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */ = {isa = PBXBuildFile; fileRef = CED45AEC0947891100BB172E /* CheckOpenGL.qtz */; };
@@ -2642,8 +2640,6 @@
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
 		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAAttachedWindow.h; path = ../ThirdParty/MAAttachedWindow/MAAttachedWindow.h; sourceTree = "<group>"; };
 		CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = MAAttachedWindow.m; path = ../ThirdParty/MAAttachedWindow/MAAttachedWindow.m; sourceTree = "<group>"; };
-		CECB8CD7093D071B009767A8 /* tiny_down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_down.png; sourceTree = SOURCE_ROOT; };
-		CECB8CD8093D071B009767A8 /* tiny_up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = tiny_up.png; sourceTree = SOURCE_ROOT; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
@@ -3647,8 +3643,6 @@
 				CED86ED909522E20000D78F9 /* karelia.png */,
 				798634F2094E763F003B2653 /* remove.png */,
 				CEA2349B086B6E02007A4C2D /* Haloscan.png */,
-				CECB8CD7093D071B009767A8 /* tiny_down.png */,
-				CECB8CD8093D071B009767A8 /* tiny_up.png */,
 				CE6BC84C096CA10B00F94F8B /* home.icns */,
 				3CB5E2A7080303C7006BB008 /* graydimple1.png */,
 				3CB5E2A8080303C7006BB008 /* graydimple2.png */,
@@ -5686,8 +5680,6 @@
 				CEA36D1E091AEF430073219B /* Lock.png in Resources */,
 				3C7DC2410921A7190081668F /* toolbar_edit_link.png in Resources */,
 				CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */,
-				CECB8CD9093D071B009767A8 /* tiny_down.png in Resources */,
-				CECB8CDA093D071B009767A8 /* tiny_up.png in Resources */,
 				CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */,
 				798634F4094E763F003B2653 /* remove.png in Resources */,
 				CE70D9EE094EA86F003169B8 /* qmark50.png in Resources */,
