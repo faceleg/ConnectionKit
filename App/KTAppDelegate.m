@@ -79,7 +79,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <QuartzCore/QuartzCore.h>
 #import <ScreenSaver/ScreenSaver.h>
 #import <SystemConfiguration/SystemConfiguration.h>
-#import <iMediaBrowser/iMediaBrowser.h>
+#import <iMedia/iMedia.h>
 #import <Sparkle/Sparkle.h>
 
 // Triggers to localize for the Comment/trackback stuff
@@ -636,7 +636,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	}
     else if (action == @selector(toggleMediaBrowserShown:))
     {
-        if ([[[iMediaBrowser sharedBrowserWithDelegate:self] window] isVisible])
+        if ([[[IMBPanelController sharedPanelControllerWithoutLoading] window] isVisible])
         {
             [menuItem setTitle:NSLocalizedString(@"Hide Media Browser", @"menu title to hide inspector panel")];
         }
@@ -1173,6 +1173,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 }
 #endif
 
+/*
 - (BOOL)iMediaBrowser:(iMediaBrowser *)browser willUseMediaParser:(NSString *)parserClassname forMediaType:(NSString *)media;
 {
 	BOOL result = YES;
@@ -1201,7 +1202,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	LOG((@"iMediaBrowser: willLoadBrowser:%@ ==> %d", browserClassname, result));
 	return result;
 }
-
+*/
 
 - (void)applicationWillFinishLaunching:(NSNotification *)notification
 {
@@ -1354,25 +1355,26 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (IBAction)toggleMediaBrowserShown:(id)sender
 {
-	
-	iMediaBrowser *browser = [iMediaBrowser sharedBrowserWithDelegate:self];
-	
-	if ( [browser infoWindowIsVisible] )
+	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
+	IMBPanelController* panelController = [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
+
+		
+	if ( [panelController infoWindowIsVisible] )
 	{
-		[browser flipBack:nil];
+		[panelController flipBack:nil];
 	}
 		
-	BOOL newValue = ![[browser window] isVisible];
+	BOOL newValue = ![[panelController window] isVisible];
 	
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-		[browser setIdentifier:@"Sandvox"];
-		[browser showWindow:sender];
+		[panelController setIdentifier:@"Sandvox"];
+		[panelController showWindow:sender];
 	}
 	else
 	{
-		[browser close];
+		[panelController close];
 	}
 
 	// display Media, if appropriate

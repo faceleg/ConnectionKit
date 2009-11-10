@@ -80,7 +80,7 @@
 #import "NSWindow+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import <iMediaBrowser/iMediaBrowser.h> // External frameworks
+#import <iMedia/iMedia.h>
 
 #import "Debug.h"                       // Debugging
 
@@ -654,13 +654,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
 
     // is the media browser up?
-    if ( nil != [iMediaBrowser sharedBrowserWithoutLoading] )
+    if ( nil != [IMBPanelController sharedPanelControllerWithoutLoading] )
     {
         // are we closing the last open document?
         if ( [[[KTDocumentController sharedDocumentController] documents] count] == 1 )
         {
             // close media window
-            [[iMediaBrowser sharedBrowser] close];
+            [[IMBPanelController sharedPanelController] close];
         }
     }
 	

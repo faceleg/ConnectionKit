@@ -1544,47 +1544,19 @@
 			remoteGlobalIDString = 8D576316048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
-		CEC0F94910852CEE002CE02E /* PBXContainerItemProxy */ = {
+		CEB122FA10AA0F6A00E36F07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D1107320486CEB800E47090;
-			remoteInfo = iMediaTester;
+			remoteGlobalIDString = 8DC2EF5B0486A6940098B216;
+			remoteInfo = iMedia;
 		};
-		CEC0F94B10852CEE002CE02E /* PBXContainerItemProxy */ = {
+		CEB122FC10AA0F6A00E36F07 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+			containerPortal = CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = E5DF5D160D68C03000E2FF8A;
-			remoteInfo = iMediaTesterSingle;
-		};
-		CEC0F94D10852CEE002CE02E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 791679FE0975255000D9EF74;
-			remoteInfo = iMediaBrowser;
-		};
-		CEC0F94F10852CEE002CE02E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = FD8EE5BC0C697C6C00E425BB;
-			remoteInfo = MetadataTool;
-		};
-		CEC0F95110852CEE002CE02E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 5B1AA73A0D6C7320003585CD;
-			remoteInfo = movietool;
-		};
-		CEC0F95510852D06002CE02E /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 791679FD0975255000D9EF74;
-			remoteInfo = iMediaBrowser;
+			remoteGlobalIDString = D09933551011B26E00C527B7;
+			remoteInfo = "iMedia2 Tester";
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2628,7 +2600,7 @@
 		CEBCFEF90DB909E4001BF0DF /* arrow_black.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_black.pdf; sourceTree = "<group>"; };
 		CEBCFEFA0DB909E4001BF0DF /* arrow_grey_down.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_down.pdf; sourceTree = "<group>"; };
 		CEBCFEFB0DB909E4001BF0DF /* arrow_grey_up.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = arrow_grey_up.pdf; sourceTree = "<group>"; };
-		CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMediaBrowse.xcodeproj; path = ../../imedia/iMediaBrowse.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../../imedia/iMedia.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
@@ -4230,7 +4202,7 @@
 			children = (
 				3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */,
 				3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */,
-				CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */,
+				CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -4744,11 +4716,8 @@
 		CEC0F93E10852CEE002CE02E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				CEC0F94A10852CEE002CE02E /* iMediaTester.app */,
-				CEC0F94C10852CEE002CE02E /* iMediaTesterSingle.app */,
-				CEC0F94E10852CEE002CE02E /* iMediaBrowser.framework */,
-				CEC0F95010852CEE002CE02E /* MetadataTool */,
-				CEC0F95210852CEE002CE02E /* movietool */,
+				CEB122FB10AA0F6A00E36F07 /* iMedia.framework */,
+				CEB122FD10AA0F6A00E36F07 /* iMedia2.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -5134,7 +5103,6 @@
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CE559B621085296D008870B5 /* PBXTargetDependency */,
-				CEC0F95610852D06002CE02E /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5265,7 +5233,7 @@
 				},
 				{
 					ProductGroup = CEC0F93E10852CEE002CE02E /* Products */;
-					ProjectRef = CEC0F93D10852CED002CE02E /* iMediaBrowse.xcodeproj */;
+					ProjectRef = CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */;
 				},
 				{
 					ProductGroup = 3C42E4840D64FCE3004F35FD /* Products */;
@@ -5571,39 +5539,18 @@
 			remoteRef = CE9983190D614DD700F2DD12 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CEC0F94A10852CEE002CE02E /* iMediaTester.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = iMediaTester.app;
-			remoteRef = CEC0F94910852CEE002CE02E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEC0F94C10852CEE002CE02E /* iMediaTesterSingle.app */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.application;
-			path = iMediaTesterSingle.app;
-			remoteRef = CEC0F94B10852CEE002CE02E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEC0F94E10852CEE002CE02E /* iMediaBrowser.framework */ = {
+		CEB122FB10AA0F6A00E36F07 /* iMedia.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
-			path = iMediaBrowser.framework;
-			remoteRef = CEC0F94D10852CEE002CE02E /* PBXContainerItemProxy */;
+			path = iMedia.framework;
+			remoteRef = CEB122FA10AA0F6A00E36F07 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CEC0F95010852CEE002CE02E /* MetadataTool */ = {
+		CEB122FD10AA0F6A00E36F07 /* iMedia2.app */ = {
 			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = MetadataTool;
-			remoteRef = CEC0F94F10852CEE002CE02E /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CEC0F95210852CEE002CE02E /* movietool */ = {
-			isa = PBXReferenceProxy;
-			fileType = "compiled.mach-o.executable";
-			path = movietool;
-			remoteRef = CEC0F95110852CEE002CE02E /* PBXContainerItemProxy */;
+			fileType = wrapper.application;
+			path = iMedia2.app;
+			remoteRef = CEB122FC10AA0F6A00E36F07 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */ = {
@@ -6709,11 +6656,6 @@
 			isa = PBXTargetDependency;
 			name = Framework;
 			targetProxy = CE559B611085296D008870B5 /* PBXContainerItemProxy */;
-		};
-		CEC0F95610852D06002CE02E /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = iMediaBrowser;
-			targetProxy = CEC0F95510852D06002CE02E /* PBXContainerItemProxy */;
 		};
 		CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

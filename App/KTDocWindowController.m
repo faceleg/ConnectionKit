@@ -62,7 +62,7 @@
 
 #import "Registration.h"
 
-#import <iMediaBrowser/iMedia.h>
+#import <iMedia/iMedia.h>
 #import <WebKit/WebKit.h>
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
