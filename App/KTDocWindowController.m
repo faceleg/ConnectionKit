@@ -20,7 +20,6 @@
 #import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTCodeInjectionController.h"
-#import "KTDesignPickerView.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
 #import "KTSite.h"

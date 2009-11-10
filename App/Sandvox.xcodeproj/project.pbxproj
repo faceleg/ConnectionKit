@@ -615,7 +615,6 @@
 		3CB5E2B2080303C7006BB008 /* graydimple2.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A8080303C7006BB008 /* graydimple2.png */; };
 		3CB5E2B3080303C7006BB008 /* links.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2A9080303C7006BB008 /* links.png */; };
 		3CB5E2B6080303C7006BB008 /* qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AC080303C7006BB008 /* qmark.png */; };
-		3CB5E2B7080303C7006BB008 /* design.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CB5E2AD080303C7006BB008 /* design.icns */; };
 		3CBDE9120EBA65D20059C56C /* KTLocalPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */; };
 		3CBDE9130EBA65D20059C56C /* KTLocalPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */; };
 		3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CBFD396093C45930057668A /* KTSiteOutlineView.m */; };
@@ -639,8 +638,6 @@
 		3CEC8B150BF9093100CC732B /* KTDocWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B190BF9095B00CC732B /* KTDesign.h in Headers */ = {isa = PBXBuildFile; fileRef = CEB53A800899A9AD006B0019 /* KTDesign.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B1B0BF9095C00CC732B /* KTStringRenderer.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C96FCAB07E7FF5100B418ED /* KTStringRenderer.h */; settings = {ATTRIBUTES = (); }; };
-		3CEC8B1C0BF9096300CC732B /* KTDesignPickerBackground.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */; settings = {ATTRIBUTES = (); }; };
-		3CEC8B1D0BF9096400CC732B /* KTDesignPickerView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6FFB8F088EF02500AD0154 /* KTDesignPickerView.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B1E0BF9096900CC732B /* KTBackgroundTabView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202DA607DFC4DD00DE4994 /* KTBackgroundTabView.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B220BF9096F00CC732B /* KTImageTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202DA807DFC4DD00DE4994 /* KTImageTextCell.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B230BF9097200CC732B /* KTPulsatingOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */; settings = {ATTRIBUTES = (); }; };
@@ -964,7 +961,6 @@
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2E80E40DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */; };
 		CE2E80E50DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */; };
-		CE330CB50D510C4500DE8086 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE3BBAC9097EE82A00BF3E5F /* toolbar_media.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
@@ -974,8 +970,6 @@
 		CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE494D7A0896B5CE005FBD81 /* TinyAdd.png */; };
 		CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4BFDBA108E287C00CFBC6A /* KSFocusingTextField.h */; };
 		CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */; };
-		CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */; };
-		CE4F81010891B55600556D47 /* designSelectedClickGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4F81000891B55600556D47 /* designSelectedClickGloss.png */; };
 		CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */; };
 		CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */; };
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
@@ -989,29 +983,13 @@
 		CE603A680D0C7EA60016A30E /* quality_sample.png in Resources */ = {isa = PBXBuildFile; fileRef = CE603A670D0C7EA60016A30E /* quality_sample.png */; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
 		CE6BC84D096CA10B00F94F8B /* home.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE6BC84C096CA10B00F94F8B /* home.icns */; };
-		CE6FFB83088EEFD100AD0154 /* designBG.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB79088EEFD100AD0154 /* designBG.png */; };
-		CE6FFB84088EEFD100AD0154 /* designBGSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB7A088EEFD100AD0154 /* designBGSearch.png */; };
-		CE6FFB86088EEFD100AD0154 /* designClickGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB7C088EEFD100AD0154 /* designClickGloss.png */; };
-		CE6FFB87088EEFD100AD0154 /* designHover.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB7D088EEFD100AD0154 /* designHover.png */; };
-		CE6FFB88088EEFD100AD0154 /* designMask.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB7E088EEFD100AD0154 /* designMask.png */; };
-		CE6FFB89088EEFD100AD0154 /* designNormalFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB7F088EEFD100AD0154 /* designNormalFrame.png */; };
-		CE6FFB8A088EEFD100AD0154 /* designNormalGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB80088EEFD100AD0154 /* designNormalGloss.png */; };
-		CE6FFB8B088EEFD100AD0154 /* designSelectedFrame.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB81088EEFD100AD0154 /* designSelectedFrame.png */; };
-		CE6FFB8C088EEFD100AD0154 /* designSelectedGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFB82088EEFD100AD0154 /* designSelectedGloss.png */; };
-		CE6FFB92088EF02500AD0154 /* KTDesignPickerView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE6FFB90088EF02500AD0154 /* KTDesignPickerView.m */; };
 		CE6FFBA2088EF30F00AD0154 /* ISPbackground.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFBA1088EF30F00AD0154 /* ISPbackground.png */; };
-		CE6FFE3E088EF7BF00AD0154 /* designRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFE3B088EF7BE00AD0154 /* designRight.png */; };
-		CE6FFE3F088EF7BF00AD0154 /* designLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE6FFE3C088EF7BF00AD0154 /* designLeft.png */; };
 		CE70D9EE094EA86F003169B8 /* qmark50.png in Resources */ = {isa = PBXBuildFile; fileRef = CE70D9ED094EA86F003169B8 /* qmark50.png */; };
 		CE7230EA0D85D5BB00E9C592 /* syringe.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE7230E90D85D5BB00E9C592 /* syringe.tiff */; };
 		CE7231220D85D96F00E9C592 /* favicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE7231210D85D96F00E9C592 /* favicon.icns */; };
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
-		CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834A0917EFE2001DC88D /* designCoverLeft.png */; };
-		CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */; };
-		CE8E83500917EFE2001DC88D /* designCoverRight.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834C0917EFE2001DC88D /* designCoverRight.png */; };
-		CE8E83510917EFE2001DC88D /* designCoverRightSearch.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8E834D0917EFE2001DC88D /* designCoverRightSearch.png */; };
 		CE91721209D51E530003310B /* target_set.png in Resources */ = {isa = PBXBuildFile; fileRef = CE91721109D51E530003310B /* target_set.png */; };
 		CE9218850809A40500E7F46B /* toolbar_collection.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218830809A40500E7F46B /* toolbar_collection.png */; };
 		CE9218860809A40500E7F46B /* toolbar_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218840809A40500E7F46B /* toolbar_group.png */; };
@@ -2567,7 +2545,6 @@
 		CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTExtensions.m"; sourceTree = "<group>"; };
 		CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAsyncOffscreenWebViewController.h; sourceTree = "<group>"; };
 		CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAsyncOffscreenWebViewController.m; sourceTree = "<group>"; };
-		CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE39C9A40D36BFF700364557 /* CyberDuck.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CyberDuck.icns; sourceTree = "<group>"; };
 		CE39C9A70D36C7C300364557 /* Transmit.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Transmit.icns; sourceTree = "<group>"; };
@@ -2583,9 +2560,6 @@
 		CE4BFDBB108E287C00CFBC6A /* KSFocusingTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSFocusingTextField.m; path = ../../Shared/AppKit/KSFocusingTextField.m; sourceTree = "<group>"; };
 		CE4F7D590891A3DB00556D47 /* pagecurltop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pagecurltop.png; sourceTree = "<group>"; };
 		CE4F7D5A0891A3DB00556D47 /* pagecurl.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = pagecurl.png; sourceTree = "<group>"; };
-		CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerBackground.h; sourceTree = "<group>"; };
-		CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPickerBackground.m; sourceTree = "<group>"; };
-		CE4F81000891B55600556D47 /* designSelectedClickGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designSelectedClickGloss.png; sourceTree = "<group>"; };
 		CE4FE30A1085427A00C43E31 /* KSShadowedRectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSShadowedRectView.h; sourceTree = "<group>"; };
 		CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSShadowedRectView.m; sourceTree = "<group>"; };
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
@@ -2604,20 +2578,7 @@
 		CE603A670D0C7EA60016A30E /* quality_sample.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = quality_sample.png; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
 		CE6BC84C096CA10B00F94F8B /* home.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = home.icns; sourceTree = "<group>"; };
-		CE6FFB79088EEFD100AD0154 /* designBG.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designBG.png; sourceTree = "<group>"; };
-		CE6FFB7A088EEFD100AD0154 /* designBGSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designBGSearch.png; sourceTree = "<group>"; };
-		CE6FFB7C088EEFD100AD0154 /* designClickGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designClickGloss.png; sourceTree = "<group>"; };
-		CE6FFB7D088EEFD100AD0154 /* designHover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designHover.png; sourceTree = "<group>"; };
-		CE6FFB7E088EEFD100AD0154 /* designMask.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designMask.png; sourceTree = "<group>"; };
-		CE6FFB7F088EEFD100AD0154 /* designNormalFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designNormalFrame.png; sourceTree = "<group>"; };
-		CE6FFB80088EEFD100AD0154 /* designNormalGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designNormalGloss.png; sourceTree = "<group>"; };
-		CE6FFB81088EEFD100AD0154 /* designSelectedFrame.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designSelectedFrame.png; sourceTree = "<group>"; };
-		CE6FFB82088EEFD100AD0154 /* designSelectedGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designSelectedGloss.png; sourceTree = "<group>"; };
-		CE6FFB8F088EF02500AD0154 /* KTDesignPickerView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerView.h; sourceTree = "<group>"; };
-		CE6FFB90088EF02500AD0154 /* KTDesignPickerView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; lineEnding = 0; path = KTDesignPickerView.m; sourceTree = "<group>"; };
 		CE6FFBA1088EF30F00AD0154 /* ISPbackground.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ISPbackground.png; sourceTree = "<group>"; };
-		CE6FFE3B088EF7BE00AD0154 /* designRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designRight.png; sourceTree = "<group>"; };
-		CE6FFE3C088EF7BF00AD0154 /* designLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designLeft.png; sourceTree = "<group>"; };
 		CE70D9ED094EA86F003169B8 /* qmark50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qmark50.png; sourceTree = "<group>"; };
 		CE7230E90D85D5BB00E9C592 /* syringe.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = syringe.tiff; sourceTree = "<group>"; };
 		CE7231210D85D96F00E9C592 /* favicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = favicon.icns; sourceTree = "<group>"; };
@@ -2626,10 +2587,6 @@
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
-		CE8E834A0917EFE2001DC88D /* designCoverLeft.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeft.png; sourceTree = "<group>"; };
-		CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverLeftSearch.png; sourceTree = "<group>"; };
-		CE8E834C0917EFE2001DC88D /* designCoverRight.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverRight.png; sourceTree = "<group>"; };
-		CE8E834D0917EFE2001DC88D /* designCoverRightSearch.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designCoverRightSearch.png; sourceTree = "<group>"; };
 		CE91721109D51E530003310B /* target_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target_set.png; sourceTree = "<group>"; };
 		CE9218830809A40500E7F46B /* toolbar_collection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_collection.png; sourceTree = "<group>"; };
 		CE9218840809A40500E7F46B /* toolbar_group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_group.png; sourceTree = "<group>"; };
@@ -3533,10 +3490,6 @@
 		3C202D9607DFC43300DE4994 /* Designs */ = {
 			isa = PBXGroup;
 			children = (
-				CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */,
-				CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */,
-				CE6FFB8F088EF02500AD0154 /* KTDesignPickerView.h */,
-				CE6FFB90088EF02500AD0154 /* KTDesignPickerView.m */,
 				CEB53A800899A9AD006B0019 /* KTDesign.h */,
 				CEB53A810899A9AD006B0019 /* KTDesign.m */,
 				3CC9AC850D1B64B10016A60E /* KTDesign+ScaledImages.m */,
@@ -3675,7 +3628,6 @@
 				3C202F2907E012DB00DE4994 /* Toolbar */,
 				3C0293F209E19ED700BECD2A /* Unused */,
 				CE01A0520804A934009FE78A /* WebView */,
-				CE330CB40D510C4500DE8086 /* designPlaceholder.tiff */,
 				3CF941DE0D623E6B00B1C83D /* larger.png */,
 				3CF941E00D623E6F00B1C83D /* mag.png */,
 				3CF941E40D623E7500B1C83D /* no_image.png */,
@@ -4712,22 +4664,6 @@
 		CE6FFB78088EEFD100AD0154 /* DesignPicker */ = {
 			isa = PBXGroup;
 			children = (
-				CE8E834A0917EFE2001DC88D /* designCoverLeft.png */,
-				CE8E834B0917EFE2001DC88D /* designCoverLeftSearch.png */,
-				CE8E834C0917EFE2001DC88D /* designCoverRight.png */,
-				CE8E834D0917EFE2001DC88D /* designCoverRightSearch.png */,
-				CE6FFE3B088EF7BE00AD0154 /* designRight.png */,
-				CE6FFE3C088EF7BF00AD0154 /* designLeft.png */,
-				CE6FFB79088EEFD100AD0154 /* designBG.png */,
-				CE6FFB7A088EEFD100AD0154 /* designBGSearch.png */,
-				CE6FFB7C088EEFD100AD0154 /* designClickGloss.png */,
-				CE4F81000891B55600556D47 /* designSelectedClickGloss.png */,
-				CE6FFB7D088EEFD100AD0154 /* designHover.png */,
-				CE6FFB7E088EEFD100AD0154 /* designMask.png */,
-				CE6FFB7F088EEFD100AD0154 /* designNormalFrame.png */,
-				CE6FFB80088EEFD100AD0154 /* designNormalGloss.png */,
-				CE6FFB81088EEFD100AD0154 /* designSelectedFrame.png */,
-				CE6FFB82088EEFD100AD0154 /* designSelectedGloss.png */,
 			);
 			path = DesignPicker;
 			sourceTree = "<group>";
@@ -4901,8 +4837,6 @@
 				3CEC8B150BF9093100CC732B /* KTDocWindowController.h in Headers */,
 				3CEC8B190BF9095B00CC732B /* KTDesign.h in Headers */,
 				3CEC8B1B0BF9095C00CC732B /* KTStringRenderer.h in Headers */,
-				3CEC8B1C0BF9096300CC732B /* KTDesignPickerBackground.h in Headers */,
-				3CEC8B1D0BF9096400CC732B /* KTDesignPickerView.h in Headers */,
 				3CEC8B1E0BF9096900CC732B /* KTBackgroundTabView.h in Headers */,
 				3CEC8B220BF9096F00CC732B /* KTImageTextCell.h in Headers */,
 				3CEC8B230BF9097200CC732B /* KTPulsatingOverlay.h in Headers */,
@@ -5725,7 +5659,6 @@
 				3CB5E2B2080303C7006BB008 /* graydimple2.png in Resources */,
 				3CB5E2B3080303C7006BB008 /* links.png in Resources */,
 				3CB5E2B6080303C7006BB008 /* qmark.png in Resources */,
-				3CB5E2B7080303C7006BB008 /* design.icns in Resources */,
 				CE01A0800804A9DD009FE78A /* index.icns in Resources */,
 				CE01A0820804A9DD009FE78A /* pageplugin.icns in Resources */,
 				CE01A0830804A9DD009FE78A /* datasource.icns in Resources */,
@@ -5748,27 +5681,11 @@
 				CE2232C20869F47200341BAF /* rss_off.png in Resources */,
 				CE2234A20869F76800341BAF /* down.png in Resources */,
 				CEA2349C086B6E02007A4C2D /* Haloscan.png in Resources */,
-				CE6FFB83088EEFD100AD0154 /* designBG.png in Resources */,
-				CE6FFB84088EEFD100AD0154 /* designBGSearch.png in Resources */,
-				CE6FFB86088EEFD100AD0154 /* designClickGloss.png in Resources */,
-				CE6FFB87088EEFD100AD0154 /* designHover.png in Resources */,
-				CE6FFB88088EEFD100AD0154 /* designMask.png in Resources */,
-				CE6FFB89088EEFD100AD0154 /* designNormalFrame.png in Resources */,
-				CE6FFB8A088EEFD100AD0154 /* designNormalGloss.png in Resources */,
-				CE6FFB8B088EEFD100AD0154 /* designSelectedFrame.png in Resources */,
-				CE6FFB8C088EEFD100AD0154 /* designSelectedGloss.png in Resources */,
 				CE6FFBA2088EF30F00AD0154 /* ISPbackground.png in Resources */,
-				CE6FFE3E088EF7BF00AD0154 /* designRight.png in Resources */,
-				CE6FFE3F088EF7BF00AD0154 /* designLeft.png in Resources */,
-				CE4F81010891B55600556D47 /* designSelectedClickGloss.png in Resources */,
 				CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */,
 				3C26FAC80898777500FCC13F /* 32favicon.png in Resources */,
 				CEB53A8E0899A9D0006B0019 /* toolbar_choose_design.png in Resources */,
 				CE26FA1408C4D9C500C9604B /* design-time.css in Resources */,
-				CE8E834E0917EFE2001DC88D /* designCoverLeft.png in Resources */,
-				CE8E834F0917EFE2001DC88D /* designCoverLeftSearch.png in Resources */,
-				CE8E83500917EFE2001DC88D /* designCoverRight.png in Resources */,
-				CE8E83510917EFE2001DC88D /* designCoverRightSearch.png in Resources */,
 				CEA36D1E091AEF430073219B /* Lock.png in Resources */,
 				3C7DC2410921A7190081668F /* toolbar_edit_link.png in Resources */,
 				CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */,
@@ -5809,7 +5726,6 @@
 				CE5CA36A0D15C1DE0021E9B3 /* pagemask.tiff in Resources */,
 				278ECBAF0D247BD60012BA6B /* KTCalloutContainerTemplate.html in Resources */,
 				CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */,
-				CE330CB50D510C4500DE8086 /* designPlaceholder.tiff in Resources */,
 				27ACADB60D589C8C004732D0 /* Z.png in Resources */,
 				271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */,
 				3C682B510D6231F600B4D485 /* KTScaledImageTypes.plist in Resources */,
@@ -6280,8 +6196,6 @@
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */,
 				CE16A3D9087319720006F80B /* KTStackView.m in Sources */,
-				CE6FFB92088EF02500AD0154 /* KTDesignPickerView.m in Sources */,
-				CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */,
 				CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */,
 				3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */,
 				CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */,
