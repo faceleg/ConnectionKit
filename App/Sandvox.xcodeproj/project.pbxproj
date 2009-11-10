@@ -291,8 +291,6 @@
 		2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD061039AC6000E2C046 /* KSTabViewController.m */; };
 		2759CD441039B83900E2C046 /* SVWebEditorLoadController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD421039B83900E2C046 /* SVWebEditorLoadController.h */; };
 		2759CD451039B83900E2C046 /* SVWebEditorLoadController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD431039B83900E2C046 /* SVWebEditorLoadController.m */; };
-		275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */ = {isa = PBXBuildFile; fileRef = 275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */; };
-		275A642510501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m in Sources */ = {isa = PBXBuildFile; fileRef = 275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
@@ -5073,7 +5071,6 @@
 				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
 				27C745C7104EA01B00FBA79D /* SVWebContentItem.h in Headers */,
 				2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */,
-				275A642310501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h in Headers */,
 				271B48601051C2F4008B698C /* SVWebEditorView.h in Headers */,
 				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
 				27FA884D1057AD9800E8D870 /* SVWebEditorItemProtocol.h in Headers */,
@@ -6457,7 +6454,6 @@
 				3C2DA6EB104C7AAE0037D270 /* MGScopeBar.m in Sources */,
 				27C745C8104EA01C00FBA79D /* SVWebContentItem.m in Sources */,
 				27851980104FD34A009C8558 /* KSWebViewController.m in Sources */,
-				275A642510501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m in Sources */,
 				271B48611051C2F4008B698C /* SVWebEditorView.m in Sources */,
 				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
 				27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */,
