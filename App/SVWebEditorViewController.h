@@ -58,6 +58,7 @@
 #pragma mark Selectable Objects
 
 @property(nonatomic, copy, readonly) NSArray *contentItems;
+- (id <SVWebEditorItem>)contentItemForObject:(id)object;
 
 
 #pragma mark Content Objects

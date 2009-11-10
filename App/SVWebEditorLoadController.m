@@ -111,7 +111,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         
         // Copy across selection
+        NSArray *oldSelection = [[[self secondaryWebViewController] webEditorView] selectedItems];
+        NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[oldSelection count]];
         
+        for (id anItem in oldSelection)
+        {
+            id object = [anItem representedObject];
+            if (object)
+            {
+                id newItem = [[self primaryWebViewController] contentItemForObject:object];
+                if (newItem) [newSelection addObject:newItem];
+            }
+        }
+        
+        [[[self primaryWebViewController] webEditorView] setSelectedItems:newSelection];
+        [newSelection release];
     }
     
     

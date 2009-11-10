@@ -274,6 +274,23 @@
 
 @synthesize contentItems = _contentItems;
 
+- (id <SVWebEditorItem>)contentItemForObject:(id)object;
+{
+    OBPRECONDITION(object);
+    id result = nil;
+    
+    for (SVWebContentItem *anItem in [self contentItems])
+    {
+        if ([[anItem representedObject] isEqual:object])
+        {
+            result = anItem;
+            break;
+        }
+    }
+    
+    return result;
+}
+
 /*  Similar to NSTableView's concept of dropping above a given row
  */
 - (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo
