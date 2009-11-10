@@ -924,7 +924,6 @@
 		CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */; };
 		CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */ = {isa = PBXBuildFile; fileRef = CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */; };
 		CE0F676A0A39EEE50092DC43 /* globe.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F67690A39EEE50092DC43 /* globe.png */; };
-		CE0F67BF0A39F53F0092DC43 /* trans16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F67BE0A39F53F0092DC43 /* trans16.png */; };
 		CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */ = {isa = PBXBuildFile; fileRef = CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
@@ -2488,7 +2487,6 @@
 		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
 		CE04723B0DC6D18B00FF39C0 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../Designs; sourceTree = SOURCE_ROOT; };
 		CE0F67690A39EEE50092DC43 /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
-		CE0F67BE0A39F53F0092DC43 /* trans16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = trans16.png; sourceTree = "<group>"; };
 		CE11E2C709ED76B600A734DE /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/Credits.html; sourceTree = "<group>"; };
 		CE1215420B5EFFC600C40320 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = fr; path = fr.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
 		CE1215430B5EFFC800C40320 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = de; path = de.lproj/LivePagesDisabled.html; sourceTree = "<group>"; };
@@ -3641,7 +3639,6 @@
 				CE603A670D0C7EA60016A30E /* quality_sample.png */,
 				CE0F67690A39EEE50092DC43 /* globe.png */,
 				CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */,
-				CE0F67BE0A39F53F0092DC43 /* trans16.png */,
 				795D666209D356C6005F166D /* target.png */,
 				CE91721109D51E530003310B /* target_set.png */,
 				CEC25E250997DC0F00335E28 /* diamondplate.png */,
@@ -5707,7 +5704,6 @@
 				CE91721209D51E530003310B /* target_set.png in Resources */,
 				CE2622A70A35E7C2009467ED /* preview.mp4 in Resources */,
 				CE0F676A0A39EEE50092DC43 /* globe.png in Resources */,
-				CE0F67BF0A39F53F0092DC43 /* trans16.png in Resources */,
 				CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */,
 				CEA962C30AF6A924008A1367 /* sandvox.css in Resources */,
 				3CE686D40B531F9B0097451B /* movie.png in Resources */,
