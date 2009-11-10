@@ -939,11 +939,9 @@
 		CE2232BC0869F47200341BAF /* bigtop.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B20869F47200341BAF /* bigtop.png */; };
 		CE2232BD0869F47200341BAF /* bigbot.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B30869F47200341BAF /* bigbot.png */; };
 		CE2232BE0869F47200341BAF /* A.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B40869F47200341BAF /* A.png */; };
-		CE2232BF0869F47200341BAF /* up.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B50869F47200341BAF /* up.png */; };
 		CE2232C00869F47200341BAF /* unsorted.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B60869F47200341BAF /* unsorted.png */; };
 		CE2232C10869F47200341BAF /* rss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B70869F47200341BAF /* rss_on.png */; };
 		CE2232C20869F47200341BAF /* rss_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B80869F47200341BAF /* rss_off.png */; };
-		CE2234A20869F76800341BAF /* down.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2234A10869F76800341BAF /* down.png */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
 		CE2622A70A35E7C2009467ED /* preview.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CE2622A60A35E7C2009467ED /* preview.mp4 */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
@@ -2513,11 +2511,9 @@
 		CE2232B20869F47200341BAF /* bigtop.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigtop.png; sourceTree = "<group>"; };
 		CE2232B30869F47200341BAF /* bigbot.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bigbot.png; sourceTree = "<group>"; };
 		CE2232B40869F47200341BAF /* A.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = A.png; sourceTree = "<group>"; };
-		CE2232B50869F47200341BAF /* up.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = up.png; sourceTree = "<group>"; };
 		CE2232B60869F47200341BAF /* unsorted.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = unsorted.png; sourceTree = "<group>"; };
 		CE2232B70869F47200341BAF /* rss_on.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_on.png; sourceTree = "<group>"; };
 		CE2232B80869F47200341BAF /* rss_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_off.png; sourceTree = "<group>"; };
-		CE2234A10869F76800341BAF /* down.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = down.png; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE2622A60A35E7C2009467ED /* preview.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = preview.mp4; sourceTree = "<group>"; };
@@ -3670,12 +3666,10 @@
 				CE2232AF0869F47200341BAF /* fwdbak32x20.png */,
 				CEB0EEE9086A119A007F70EB /* fwdbak32x32.png */,
 				CE2232B00869F47200341BAF /* fwdback.png */,
-				CE2234A10869F76800341BAF /* down.png */,
 				CE2232B20869F47200341BAF /* bigtop.png */,
 				CE2232B30869F47200341BAF /* bigbot.png */,
 				CE2232B40869F47200341BAF /* A.png */,
 				27ACADB50D589C8C004732D0 /* Z.png */,
-				CE2232B50869F47200341BAF /* up.png */,
 				CE2232B60869F47200341BAF /* unsorted.png */,
 				CE2232B70869F47200341BAF /* rss_on.png */,
 				CE2232B80869F47200341BAF /* rss_off.png */,
@@ -5666,11 +5660,9 @@
 				CE2232BC0869F47200341BAF /* bigtop.png in Resources */,
 				CE2232BD0869F47200341BAF /* bigbot.png in Resources */,
 				CE2232BE0869F47200341BAF /* A.png in Resources */,
-				CE2232BF0869F47200341BAF /* up.png in Resources */,
 				CE2232C00869F47200341BAF /* unsorted.png in Resources */,
 				CE2232C10869F47200341BAF /* rss_on.png in Resources */,
 				CE2232C20869F47200341BAF /* rss_off.png in Resources */,
-				CE2234A20869F76800341BAF /* down.png in Resources */,
 				CEA2349C086B6E02007A4C2D /* Haloscan.png in Resources */,
 				CE6FFBA2088EF30F00AD0154 /* ISPbackground.png in Resources */,
 				CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */,
