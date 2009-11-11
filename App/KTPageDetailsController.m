@@ -219,7 +219,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	if (value)
 	{
-		if ([value isSelectionMarker])
+		if (NSIsControllerMarker(value))
 		{
 			value = nil;
 		}
@@ -304,7 +304,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	if (value)
 	{
-		if ([value isSelectionMarker])
+		if (NSIsControllerMarker(value))
 		{
 			value = nil;
 		}
@@ -329,7 +329,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	if (value)
 	{
-		if ([value isSelectionMarker])
+		if (NSIsControllerMarker(value))
 		{
 			value = nil;
 		}
