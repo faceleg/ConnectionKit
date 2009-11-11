@@ -8,62 +8,44 @@
 
 #import "KTDocWindowController.h"
 
-
-#import "AMRollOverButton.h"
-#import "Debug.h"
-#import "KSSilencingConfirmSheet.h"
-#import "KSTextField.h"
-#import "KSNetworkNotifier.h"
 #import "KT.h"
-#import "KTElementPlugin+DataSourceRegistration.h"
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
-#import "KTApplication.h"
 #import "KTCodeInjectionController.h"
+#import "KTElementPlugin+DataSourceRegistration.h"
+#import "SVDesignChooserWindowController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
-#import "KTSite.h"
-#import "KTDocWebViewController.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
 #import "KTIndexPlugin.h"
 #import "KTInlineImageElement.h"
-#import "KTLinkSourceView.h"
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "SVSidebar.h"
+#import "KTSite.h"
 #import "SVSiteOutlineViewController.h"
 #import "KTToolbars.h"
-#import "SVHTMLTextBlock.h"
-
-#import "SVDesignChooserWindowController.h"
 
 #import "NSArray+Karelia.h"
-#import "NSArray+KTExtensions.h"
 #import "NSBundle+Karelia.h"
-#import "NSCharacterSet+Karelia.h"
-#import "NSColor+Karelia.h"
 #import "NSException+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSOutlineView+KTExtensions.h"
 #import "NSResponder+Karelia.h"
-#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
-#import "NSTextView+KTExtensions.h"
-#import "NSThread+Karelia.h"
 #import "NSWindow+Karelia.h"
 
-#import "NTBoxView.h"
 #import "KSProgressPanel.h"
-
-#import "Registration.h"
 
 #import <iMedia/iMedia.h>
 #import <WebKit/WebKit.h>
+
+#import "Debug.h"
+#import "Registration.h"
+
 
 NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
@@ -1070,7 +1052,7 @@ from representedObject */
         id context = [menuItem representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
 		
-		if ( ![selection containsRoot] )
+		if ( ![selection containsObject:[[[self document] site] root]] )
 		{
 			return YES;
 		}
