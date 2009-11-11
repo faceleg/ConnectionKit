@@ -24,7 +24,7 @@ IBC_FLATTEN_NIBS = YES
 CK_REVISION = 1442
 
 // iMedia
-IMEDIA_REVISION = 867
+IMEDIA_REVISION = 890
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
