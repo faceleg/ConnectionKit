@@ -1358,18 +1358,18 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
 	IMBPanelController* panelController = [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
 
-		
+/* TEMP -- TODO: PUT BACK IN
 	if ( [panelController infoWindowIsVisible] )
 	{
 		[panelController flipBack:nil];
 	}
-		
+*/		
 	BOOL newValue = ![[panelController window] isVisible];
 	
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-		[panelController setIdentifier:@"Sandvox"];
+// TODO: PUT BACK IN [panelController setIdentifier:@"Sandvox"];
 		[panelController showWindow:sender];
 	}
 	else

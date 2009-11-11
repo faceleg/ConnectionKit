@@ -8,7 +8,7 @@
 
 #import "KTCodeInjectionController.h"
 
-#import "KTCodeInjectionSplitView.h"
+#import <BWToolkitFramework/BWSplitView.h>
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 
