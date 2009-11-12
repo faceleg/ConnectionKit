@@ -393,7 +393,9 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];
-	
+
+	[[self window] setContentBorderThickness:50.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
+
 }
 
 // Attach sticky here becuase it seems we can only really make this child window appear when the window
