@@ -2332,8 +2332,8 @@
 		CE01A6890EAFD63600BDF264 /* NSAppleScript+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSAppleScript+Karelia.m"; sourceTree = "<group>"; };
 		CE01A68A0EAFD63600BDF264 /* NSApplication+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSApplication+Karelia.h"; sourceTree = "<group>"; };
 		CE01A68B0EAFD63600BDF264 /* NSApplication+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSApplication+Karelia.m"; sourceTree = "<group>"; };
-		CE01A68C0EAFD63600BDF264 /* NSArray+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSArray+Karelia.h"; path = "../Foundation/NSArray+Karelia.h"; sourceTree = "<group>"; };
-		CE01A68D0EAFD63600BDF264 /* NSArray+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSArray+Karelia.m"; path = "../Foundation/NSArray+Karelia.m"; sourceTree = "<group>"; };
+		CE01A68C0EAFD63600BDF264 /* NSArray+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+Karelia.h"; sourceTree = "<group>"; };
+		CE01A68D0EAFD63600BDF264 /* NSArray+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+Karelia.m"; sourceTree = "<group>"; };
 		CE01A68E0EAFD63600BDF264 /* NSArrayController+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArrayController+Karelia.h"; sourceTree = "<group>"; };
 		CE01A68F0EAFD63600BDF264 /* NSArrayController+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArrayController+Karelia.m"; sourceTree = "<group>"; };
 		CE01A6900EAFD63600BDF264 /* NSAttributedString+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAttributedString+Karelia.h"; sourceTree = "<group>"; };
@@ -3068,6 +3068,24 @@
 			children = (
 			);
 			name = "Connection Test";
+			sourceTree = "<group>";
+		};
+		2778D34E10AC59440027C323 /* Core Image */ = {
+			isa = PBXGroup;
+			children = (
+				CE01A6220EAFD63600BDF264 /* CIImage+Karelia.h */,
+				CE01A6230EAFD63600BDF264 /* CIImage+Karelia.m */,
+			);
+			path = "Core Image";
+			sourceTree = "<group>";
+		};
+		2778D38610AC5DE40027C323 /* QTKit */ = {
+			isa = PBXGroup;
+			children = (
+				CE01A6B00EAFD63600BDF264 /* QTMovie+Karelia.h */,
+				CE01A6B10EAFD63600BDF264 /* QTMovie+Karelia.m */,
+			);
+			path = QTKit;
 			sourceTree = "<group>";
 		};
 		277D3CB310A1B9DE00E4944A /* General */ = {
@@ -4303,8 +4321,6 @@
 				CE4FE30B1085427A00C43E31 /* KSShadowedRectView.m */,
 				279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */,
 				279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */,
-				CE01A6220EAFD63600BDF264 /* CIImage+Karelia.h */,
-				CE01A6230EAFD63600BDF264 /* CIImage+Karelia.m */,
 				CE01A6240EAFD63600BDF264 /* KSAbstractBugReporter.h */,
 				CE01A6250EAFD63600BDF264 /* KSAbstractBugReporter.m */,
 				CE01A6260EAFD63600BDF264 /* KSAlert.h */,
@@ -4341,8 +4357,6 @@
 				CE01A6450EAFD63600BDF264 /* KSLabel.m */,
 				CE01A6460EAFD63600BDF264 /* KSLicensedAppDelegate.h */,
 				CE01A6470EAFD63600BDF264 /* KSLicensedAppDelegate.m */,
-				CE01A6480EAFD63600BDF264 /* KSNetworkNotifier.h */,
-				CE01A6490EAFD63600BDF264 /* KSNetworkNotifier.m */,
 				CE01A64A0EAFD63600BDF264 /* KSNoCascadePanel.h */,
 				CE01A64B0EAFD63600BDF264 /* KSNoCascadePanel.m */,
 				CE01A64C0EAFD63600BDF264 /* KSNoCascadeWindow.h */,
@@ -4376,8 +4390,6 @@
 				CE01A6680EAFD63600BDF264 /* KSRegistrationController.m */,
 				CE01A6690EAFD63600BDF264 /* KSSavedFeedbackSender.h */,
 				CE01A66A0EAFD63600BDF264 /* KSSavedFeedbackSender.m */,
-				CE01A66B0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h */,
-				CE01A66C0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.m */,
 				CE01A66D0EAFD63600BDF264 /* KSSilencingConfirmSheet.h */,
 				CE01A66E0EAFD63600BDF264 /* KSSilencingConfirmSheet.m */,
 				CE01A66F0EAFD63600BDF264 /* KSSingletonWindowController.h */,
@@ -4388,8 +4400,6 @@
 				CE01A6780EAFD63600BDF264 /* KSTextFieldCell.m */,
 				CE01A6790EAFD63600BDF264 /* KSTextViewController.h */,
 				CE01A67A0EAFD63600BDF264 /* KSTextViewController.m */,
-				CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */,
-				CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */,
 				CE01A67D0EAFD63600BDF264 /* KSUnifiedTableButton.h */,
 				CE01A67E0EAFD63600BDF264 /* KSUnifiedTableButton.m */,
 				CE01A67F0EAFD63600BDF264 /* KSUnifiedTableButtonCell.h */,
@@ -4405,8 +4415,6 @@
 				CE01A6890EAFD63600BDF264 /* NSAppleScript+Karelia.m */,
 				CE01A68A0EAFD63600BDF264 /* NSApplication+Karelia.h */,
 				CE01A68B0EAFD63600BDF264 /* NSApplication+Karelia.m */,
-				CE01A68C0EAFD63600BDF264 /* NSArray+Karelia.h */,
-				CE01A68D0EAFD63600BDF264 /* NSArray+Karelia.m */,
 				CE01A68E0EAFD63600BDF264 /* NSArrayController+Karelia.h */,
 				CE01A68F0EAFD63600BDF264 /* NSArrayController+Karelia.m */,
 				CE01A6900EAFD63600BDF264 /* NSAttributedString+Karelia.h */,
@@ -4415,22 +4423,14 @@
 				CE01A6930EAFD63600BDF264 /* NSBezierPath+Karelia.m */,
 				CE01A6940EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h */,
 				CE01A6950EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m */,
-				CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */,
-				CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */,
 				CE01A6980EAFD63600BDF264 /* NSColor+Karelia.h */,
 				CE01A6990EAFD63600BDF264 /* NSColor+Karelia.m */,
-				CE01A69A0EAFD63600BDF264 /* NSError+Karelia.h */,
-				CE01A69B0EAFD63600BDF264 /* NSError+Karelia.m */,
 				CE01A69C0EAFD63600BDF264 /* NSException+Karelia.h */,
 				CE01A69D0EAFD63600BDF264 /* NSException+Karelia.m */,
 				CE01A69E0EAFD63600BDF264 /* NSHelpManager+Karelia.h */,
 				CE01A69F0EAFD63600BDF264 /* NSHelpManager+Karelia.m */,
-				CE01A6A00EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.h */,
-				CE01A6A10EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.m */,
 				CE01A6A20EAFD63600BDF264 /* NSImage+Karelia.h */,
 				CE01A6A30EAFD63600BDF264 /* NSImage+Karelia.m */,
-				CE01A6A40EAFD63600BDF264 /* NSSortDescriptor+Karelia.h */,
-				CE01A6A50EAFD63600BDF264 /* NSSortDescriptor+Karelia.m */,
 				CE01A6A60EAFD63600BDF264 /* NSToolbar+Karelia.h */,
 				CE01A6A70EAFD63600BDF264 /* NSToolbar+Karelia.m */,
 				CE01A6A80EAFD63600BDF264 /* NSView+Karelia.h */,
@@ -4441,8 +4441,6 @@
 				CE01A6AD0EAFD63600BDF264 /* NSWindowController+Karelia.m */,
 				CE01A6AE0EAFD63600BDF264 /* NSWorkspace+Karelia.h */,
 				CE01A6AF0EAFD63600BDF264 /* NSWorkspace+Karelia.m */,
-				CE01A6B00EAFD63600BDF264 /* QTMovie+Karelia.h */,
-				CE01A6B10EAFD63600BDF264 /* QTMovie+Karelia.m */,
 				CE01A6B20EAFD63600BDF264 /* Registration.h */,
 				CE01A6B30EAFD63600BDF264 /* RichTextHTMLTransformer.h */,
 				CE01A6B40EAFD63600BDF264 /* RichTextHTMLTransformer.m */,
@@ -4470,6 +4468,22 @@
 		CE01A6B50EAFD63600BDF264 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				CE01A6A40EAFD63600BDF264 /* NSSortDescriptor+Karelia.h */,
+				CE01A6A50EAFD63600BDF264 /* NSSortDescriptor+Karelia.m */,
+				CE01A6A00EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.h */,
+				CE01A6A10EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.m */,
+				CE01A69A0EAFD63600BDF264 /* NSError+Karelia.h */,
+				CE01A69B0EAFD63600BDF264 /* NSError+Karelia.m */,
+				CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */,
+				CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */,
+				CE01A68C0EAFD63600BDF264 /* NSArray+Karelia.h */,
+				CE01A68D0EAFD63600BDF264 /* NSArray+Karelia.m */,
+				CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */,
+				CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */,
+				CE01A66B0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.h */,
+				CE01A66C0EAFD63600BDF264 /* KSSelfRegisteringValueTransformer.m */,
+				CE01A6480EAFD63600BDF264 /* KSNetworkNotifier.h */,
+				CE01A6490EAFD63600BDF264 /* KSNetworkNotifier.m */,
 				277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */,
 				277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */,
 				CE5E55FB0EAFE98100A3EDDA /* Macros.h */,
@@ -4758,11 +4772,13 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				CEC69B02108E6F91000E6E84 /* ThirdParty */,
-				CE01A6210EAFD63600BDF264 /* AppKit */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
-				CE01A7050EAFD63600BDF264 /* Imported */,
+				CE01A6210EAFD63600BDF264 /* AppKit */,
 				CE01A71E0EAFD63600BDF264 /* WebKit */,
+				2778D38610AC5DE40027C323 /* QTKit */,
+				2778D34E10AC59440027C323 /* Core Image */,
+				CEC69B02108E6F91000E6E84 /* ThirdParty */,
+				CE01A7050EAFD63600BDF264 /* Imported */,
 			);
 			name = Shared;
 			path = ../../Shared;
