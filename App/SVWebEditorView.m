@@ -890,7 +890,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     BOOL result = [super resignFirstResponder];
     if (result && !_isChangingSelectedItems)
     {
-        result = [self selectItems:nil byExtendingSelection:NO isUIAction:YES];
+        result = [self selectItems:nil byExtendingSelection:NO isUIAction:NO];
     }
     return result;
 }

@@ -600,16 +600,19 @@
 
 #pragma mark SVWebEditorViewDelegate
 
-- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+- (BOOL)webEditorView:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
 {
     //  Update our content controller's selected objects to reflect the new selection in the Web Editor View
     
-    OBPRECONDITION([notification object] == [self webEditorView]);
+    OBPRECONDITION(sender == [self webEditorView]);
     
     // TODO: Can we do this without a cast?
-    [(NSArrayController *)[self contentController] setSelectedObjects:
-     [[[self webEditorView] selectedItems] valueForKey:@"representedObject"]];
+    NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
+    BOOL result = [(NSArrayController *)[self contentController] setSelectedObjects:objects];
+    return result;
 }
+
+- (void)webEditorViewDidChangeSelection:(NSNotification *)notification; { }
 
 - (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 {
