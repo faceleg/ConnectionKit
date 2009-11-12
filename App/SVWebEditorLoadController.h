@@ -10,9 +10,10 @@
 #import "SVWebEditorViewController.h"
 
 
+@protocol KSCollectionController;
+
+
 @protocol SVWebViewLoadControllerDelegate;
-
-
 @interface SVWebEditorLoadController : KSTabViewController <SVWebEditorViewControllerDelegate>
 {
   @private
@@ -38,7 +39,7 @@
 
 // Setting the page will automatically mark controller as needsLoad = YES
 @property(nonatomic, retain) KTPage *page;
-@property(nonatomic, retain, readonly) NSArrayController *selectableObjectsController;
+@property(nonatomic, retain, readonly) id <KSCollectionController> selectableObjectsController;
 
 
 #pragma mark Loading

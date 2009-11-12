@@ -12,14 +12,16 @@
 
 
 @class KTPage, SVHTMLContext, SVWebTextArea;
+@protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
 
 @interface SVWebEditorViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
 {
-    KTPage                  *_page;
-    BOOL                    _isLoading;
-    SVHTMLContext *_HTMLGenerationContext;
+    BOOL                        _isLoading;
+    SVHTMLContext               *_HTMLGenerationContext;
+    KTPage                      *_page;
+    id <KSCollectionController> _contentController;
     
     NSArray         *_textAreas;
     NSArray         *_textAreaControllers;
@@ -36,12 +38,15 @@
 @property(nonatomic, retain) SVWebEditorView *webEditorView;
 
 
-#pragma mark Page
-// These should all be KVO-compliant
-@property(nonatomic, retain) KTPage *page;
+#pragma mark Content
+// Everything here should be KVO-compliant
 
 - (void)loadHTMLString:(NSString *)html;  // you are expected to supply a valid SVHTMLContext while calling this
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
+
+//  Neither of these immediately affect the Web Editor, but are used for information upon the next load
+@property(nonatomic, retain) KTPage *page;
+@property(nonatomic, retain) id <KSCollectionController> contentController;
 
 
 #pragma mark Text Areas

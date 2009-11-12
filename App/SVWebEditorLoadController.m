@@ -13,6 +13,8 @@
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
 
+#import "KSCollectionController.h"
+
 
 @interface SVWebEditorLoadController ()
 - (void)swapWebViewControllers;
@@ -34,22 +36,24 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Create controllers
+    _selectableObjectsController = [[NSArrayController alloc] init];
+    [_selectableObjectsController setAvoidsEmptySelection:NO];
+    [_selectableObjectsController setObjectClass:[NSObject class]];
+    
+    
     _primaryController = [[SVWebEditorViewController alloc] init];
+    [_primaryController setContentController:[self selectableObjectsController]];
     [_primaryController setDelegate:self];
     [self insertViewController:_primaryController atIndex:0];
     
     _secondaryController = [[SVWebEditorViewController alloc] init];
+    [_secondaryController setContentController:[self selectableObjectsController]];
     [_secondaryController setDelegate:self];
     [self insertViewController:_secondaryController atIndex:1];
     
     _webViewLoadingPlaceholder = [[SVLoadingPlaceholderViewController alloc] init];
     [self insertViewController:_webViewLoadingPlaceholder atIndex:2];
     [self setSelectedIndex:2];
-    
-    
-    _selectableObjectsController = [[NSArrayController alloc] init];
-    [_selectableObjectsController setAvoidsEmptySelection:NO];
-    [_selectableObjectsController setObjectClass:[NSObject class]];
     
     
     // Delegation/observation

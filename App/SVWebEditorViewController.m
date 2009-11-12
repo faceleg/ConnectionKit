@@ -106,9 +106,7 @@
     [editor setDataSource:self];
 }
 
-#pragma mark Loading
-
-@synthesize page = _page;
+#pragma mark Content
 
 // Support
 - (void)loadHTMLString:(NSString *)pageHTML;
@@ -230,6 +228,9 @@
     [self setLoading:NO];
     
 }
+
+@synthesize page = _page;
+@synthesize contentController = _contentController;
 
 #pragma mark Text Areas
 
