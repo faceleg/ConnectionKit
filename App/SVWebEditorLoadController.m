@@ -47,6 +47,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setSelectedIndex:2];
     
     
+    _selectableObjectsController = [[NSArrayController alloc] init];
+    [_selectableObjectsController setAvoidsEmptySelection:NO];
+    [_selectableObjectsController setObjectClass:[NSObject class]];
+    
+    
     // Delegation/observation
     [_primaryController addObserver:self
                          forKeyPath:@"loading"
@@ -154,6 +159,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setNeedsLoad];
 }
 
+@synthesize selectableObjectsController = _selectableObjectsController;
+
 #pragma mark Loading
 
 - (void)load;
@@ -166,7 +173,24 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     
     
-    // Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the background. It will be removed again after has finished since the webview will be properly part of the view hierarchy
+    // Build the HTML.
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [context setCurrentPage:[self page]];
+    [context setGenerationPurpose:kGeneratingPreview];
+	/*[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];*/
+    
+    [SVHTMLContext pushContext:context];    // will pop after loading
+	NSString *pageHTML = [[self page] HTMLString];
+    
+    
+    //  What are the selectable objects?
+    [_selectableObjects release];
+    _selectableObjects = [[[[self page] sidebar] pagelets] copy];
+    [_selectableObjectsController setContent:_selectableObjects];
+	
+    
+    //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
+    //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
     SVWebEditorViewController *webViewController = [self secondaryWebViewController];
     
     NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
@@ -175,15 +199,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [webViewController setPage:[self page]];
     
     
-    // Build the HTML.
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
-    [context setCurrentPage:[self page]];
-    [context setGenerationPurpose:kGeneratingPreview];
-	//[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];
-    
-    [SVHTMLContext pushContext:context];
-	NSString *pageHTML = [[self page] HTMLString];
-	[webViewController loadHTMLString:pageHTML];
+    [webViewController loadHTMLString:pageHTML];
 	[SVHTMLContext popContext];
     
     

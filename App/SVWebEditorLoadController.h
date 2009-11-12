@@ -20,10 +20,12 @@
     SVWebEditorViewController *_secondaryController;  // offscreen, ready to load into
     NSViewController    *_webViewLoadingPlaceholder;
     
-    KTPage  *_page;
-    NSSet   *_pageDependencies;
+    KTPage              *_page;
+    NSSet               *_selectableObjects;
+    NSArrayController   *_selectableObjectsController;
     
     BOOL    _needsLoad;
+    NSSet   *_pageDependencies;
     
     id <SVWebViewLoadControllerDelegate>    _delegate;  // weak ref
 }
@@ -36,6 +38,7 @@
 
 // Setting the page will automatically mark controller as needsLoad = YES
 @property(nonatomic, retain) KTPage *page;
+@property(nonatomic, retain, readonly) NSArrayController *selectableObjectsController;
 
 
 #pragma mark Loading

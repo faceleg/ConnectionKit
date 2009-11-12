@@ -100,6 +100,13 @@
 
 @synthesize delegate = _delegate;
 
+#pragma mark Inspector
+
+- (NSObjectController *)objectsController;
+{
+    return [_webViewController selectableObjectsController];
+}
+
 #pragma mark Load Delegate
 
 - (void)loadControllerDidChangeTitle:(SVWebEditorLoadController *)controller;

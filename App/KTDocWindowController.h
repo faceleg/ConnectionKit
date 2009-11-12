@@ -9,8 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
+#import "KSInspector.h"
 #import "KTDocumentControllerChain.h"
-#import "SVHTMLTemplateParser.h"
+//#import "SVHTMLTemplateParser.h"
 #import "SVWebContentAreaController.h"
 
 
@@ -45,7 +46,7 @@
 extern NSString *gInfoWindowAutoSaveName;
 
 
-@interface KTDocWindowController : NSWindowController <DOMEventListener, KTDocumentControllerChain, SVWebContentAreaControllerDelegate>
+@interface KTDocWindowController : NSWindowController <KSInspection, DOMEventListener, KTDocumentControllerChain, SVWebContentAreaControllerDelegate>
 {
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
 	SVSiteOutlineViewController *_siteOutlineViewController;

@@ -328,6 +328,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self synchronizeWindowTitleWithDocumentName];
 }
 
+#pragma mark Inspector
+
+- (NSObjectController *)objectsController;
+{
+    return [[self webContentAreaController] objectsController];
+}
+
 #pragma mark -
 #pragma mark Missing Media
 

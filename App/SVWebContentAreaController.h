@@ -7,13 +7,15 @@
 //
 
 #import "KSTabViewController.h"
+
 #import "SVWebEditorLoadController.h"
+#import "KSInspector.h"
 
 
 @protocol SVWebContentAreaControllerDelegate;
 
 
-@interface SVWebContentAreaController : KSTabViewController <SVWebViewLoadControllerDelegate>
+@interface SVWebContentAreaController : KSTabViewController <KSInspection, SVWebViewLoadControllerDelegate>
 {
   @private
     SVWebEditorLoadController *_webViewController;

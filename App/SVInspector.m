@@ -48,7 +48,9 @@
         [self unbind:@"inspectedPagesController"];
     }
     
+    
     [super setInspectedWindow:window];
+    
     
     if (window)
     {
@@ -57,6 +59,8 @@
        withKeyPath:@"windowController.siteOutlineViewController.pagesController"
            options:nil];
     }
+    
+    [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
 }
 
 - (NSArray *)defaultInspectorViewControllers;
