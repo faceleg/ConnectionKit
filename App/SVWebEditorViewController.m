@@ -27,6 +27,7 @@
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
+#import "KSCollectionController.h"
 #import "KSSilencingConfirmSheet.h"
 
 
@@ -216,6 +217,20 @@
     [textAreaControllers release];
     
     
+    
+    
+    // Match selection to controller
+    NSArray *selectedObjects = [[self contentController] selectedObjects];
+    NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
+    
+    for (id anObject in selectedObjects)
+    {
+        id newItem = [self contentItemForObject:anObject];
+        if (newItem) [newSelection addObject:newItem];
+    }
+    
+    [[self webEditorView] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
+    [newSelection release];
     
     
     
