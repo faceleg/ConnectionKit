@@ -20,8 +20,10 @@
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
 
 @property(nonatomic, retain) NSString *elementID;
+
 @property(nonatomic, retain) NSString *titleHTMLString;
 @property(nonatomic, retain, readonly) SVPageletBody *body;
+@property(nonatomic, copy) NSNumber *showBorder;
 
 
 #pragma mark Sidebar

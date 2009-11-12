@@ -64,6 +64,7 @@
 @dynamic elementID;
 @dynamic titleHTMLString;
 @dynamic body;
+@dynamic showBorder;
 
 #pragma mark Sidebar
 
