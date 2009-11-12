@@ -587,9 +587,13 @@
 
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
 {
+    //  Update our content controller's selected objects to reflect the new selection in the Web Editor View
+    
     OBPRECONDITION([notification object] == [self webEditorView]);
     
-    
+    // TODO: Can we do this without a cast?
+    [(NSArrayController *)[self contentController] setSelectedObjects:
+     [[[self webEditorView] selectedItems] valueForKey:@"representedObject"]];
 }
 
 - (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
