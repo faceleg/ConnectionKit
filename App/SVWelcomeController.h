@@ -20,6 +20,8 @@
 	IBOutlet NSButton *oStickyButton;
 	IBOutlet NSTableView *oRecentDocumentsTable;
 
+	IBOutlet NSBox *oRecentBox;
+
 	IBOutlet NSArrayController *oRecentDocsController;
 	
 @private

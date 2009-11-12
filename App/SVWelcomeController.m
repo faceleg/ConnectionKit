@@ -275,7 +275,17 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 
 - (IBAction)showWindow:(id)sender;
 {
-
+	NSRect separatorFrame = [oRecentBox frame];
+	
+	NSArray *recentDocs = [oRecentDocsController content];
+	if ([recentDocs count])
+	{
+		[[self window] setContentSize:NSMakeSize(NSMaxX(separatorFrame), NSHeight([[self window] frame]))];
+	}
+	else
+	{
+		[[self window] setContentSize:NSMakeSize(NSMinX(separatorFrame)-1, NSHeight([[self window] frame]))];
+	}
 	[super showWindow:sender];
 }
 
@@ -306,8 +316,18 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
 		[_sticky setContentView:oStickyView];
 		[_sticky setAlphaValue:0.0];		// initially ZERO ALPHA!
-		NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:NSMakePoint(750,300)];
-		[_sticky setFrameTopLeftPoint:convertedWindowOrigin];
+
+		NSRect separatorFrame = [oRecentBox frame];
+		NSPoint convertedWindowOrigin;
+		if ([[oRecentDocsController content] count])
+		{
+			convertedWindowOrigin = NSMakePoint(NSMaxX(separatorFrame)-80,300);
+		}
+		else
+		{
+			convertedWindowOrigin = NSMakePoint(NSMinX(separatorFrame)-80,400);
+		}		
+		[_sticky setFrameTopLeftPoint:[[self window] convertBaseToScreen:convertedWindowOrigin]];
 		
 		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
 	}
@@ -339,7 +359,16 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 	}
 	urls = [NSArray arrayWithArray:localURLs];
 #endif
-	[oRecentDocsController setContent:urls];
+	
+#if 0
+	// Test for having ZERO recent documents.
+	urls = [NSArray array];
+#endif
+	
+	if ([urls count])
+	{
+		[oRecentDocsController setContent:urls];
+	}
 	
 	// Set up our storage for speeding up display of these recent documents.  Otherwise it's very sluggish.
 	sRecentDocumentURLs = [urls retain];
