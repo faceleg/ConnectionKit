@@ -73,32 +73,32 @@
 		baseKeyPath = [baseKeyPath stringByAppendingString:@".master"];
 	}
 	
-	[oPreludeTextView bind:@"value"
+	[oPreludeTextView bind:NSValueBinding
 				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.beforeHTML"]
 				   options:nil];
 	
-	[oEarlyHeadTextView bind:@"value"
+	[oEarlyHeadTextView bind:NSValueBinding
 					toObject:mySiteOutlineController
 				 withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.earlyHead"]
 				     options:nil];
 	
-	[oHeadTextView bind:@"value"
+	[oHeadTextView bind:NSValueBinding
 				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.headArea"]
 				   options:nil];
 	
-	[oBodyStartTextView bind:@"value"
+	[oBodyStartTextView bind:NSValueBinding
 				    toObject:mySiteOutlineController
 			     withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagStart"]
 				     options:nil];
 	
-	[oBodyEndTextView bind:@"value"
+	[oBodyEndTextView bind:NSValueBinding
 				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagEnd"]
 				   options:nil];
 	
-	[oBodyTagTextField bind:@"value"
+	[oBodyTagTextField bind:NSValueBinding
 				  toObject:mySiteOutlineController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTag"]
 				   options:nil];
