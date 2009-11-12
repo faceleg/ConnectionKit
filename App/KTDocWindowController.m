@@ -40,9 +40,6 @@
 
 #import "KSProgressPanel.h"
 
-#import <iMedia/iMedia.h>
-#import <WebKit/WebKit.h>
-
 #import "Debug.h"
 #import "Registration.h"
 
