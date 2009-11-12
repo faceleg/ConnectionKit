@@ -758,10 +758,6 @@
 		CE01A77F0EAFD63600BDF264 /* KSTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A67A0EAFD63600BDF264 /* KSTextViewController.m */; };
 		CE01A7800EAFD63600BDF264 /* KSThreadProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */; };
 		CE01A7810EAFD63600BDF264 /* KSThreadProxy.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */; };
-		CE01A7820EAFD63600BDF264 /* KSUnifiedTableButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A67D0EAFD63600BDF264 /* KSUnifiedTableButton.h */; };
-		CE01A7830EAFD63600BDF264 /* KSUnifiedTableButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A67E0EAFD63600BDF264 /* KSUnifiedTableButton.m */; };
-		CE01A7840EAFD63600BDF264 /* KSUnifiedTableButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A67F0EAFD63600BDF264 /* KSUnifiedTableButtonCell.h */; };
-		CE01A7850EAFD63600BDF264 /* KSUnifiedTableButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6800EAFD63600BDF264 /* KSUnifiedTableButtonCell.m */; };
 		CE01A7860EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6810EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7870EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */; };
 		CE01A7880EAFD63600BDF264 /* KSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6830EAFD63600BDF264 /* KSViewController.h */; };
@@ -2317,10 +2313,6 @@
 		CE01A67A0EAFD63600BDF264 /* KSTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSTextViewController.m; sourceTree = "<group>"; };
 		CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSThreadProxy.h; sourceTree = "<group>"; };
 		CE01A67C0EAFD63600BDF264 /* KSThreadProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSThreadProxy.m; sourceTree = "<group>"; };
-		CE01A67D0EAFD63600BDF264 /* KSUnifiedTableButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSUnifiedTableButton.h; sourceTree = "<group>"; };
-		CE01A67E0EAFD63600BDF264 /* KSUnifiedTableButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSUnifiedTableButton.m; sourceTree = "<group>"; };
-		CE01A67F0EAFD63600BDF264 /* KSUnifiedTableButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSUnifiedTableButtonCell.h; sourceTree = "<group>"; };
-		CE01A6800EAFD63600BDF264 /* KSUnifiedTableButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSUnifiedTableButtonCell.m; sourceTree = "<group>"; };
 		CE01A6810EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSVerticallyAlignedTextCell.h; sourceTree = "<group>"; };
 		CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVerticallyAlignedTextCell.m; sourceTree = "<group>"; };
 		CE01A6830EAFD63600BDF264 /* KSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSViewController.h; sourceTree = "<group>"; };
@@ -4400,10 +4392,6 @@
 				CE01A6780EAFD63600BDF264 /* KSTextFieldCell.m */,
 				CE01A6790EAFD63600BDF264 /* KSTextViewController.h */,
 				CE01A67A0EAFD63600BDF264 /* KSTextViewController.m */,
-				CE01A67D0EAFD63600BDF264 /* KSUnifiedTableButton.h */,
-				CE01A67E0EAFD63600BDF264 /* KSUnifiedTableButton.m */,
-				CE01A67F0EAFD63600BDF264 /* KSUnifiedTableButtonCell.h */,
-				CE01A6800EAFD63600BDF264 /* KSUnifiedTableButtonCell.m */,
 				CE01A6810EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h */,
 				CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */,
 				CE01A6830EAFD63600BDF264 /* KSViewController.h */,
@@ -4991,8 +4979,6 @@
 				CE01A77C0EAFD63600BDF264 /* KSTextFieldCell.h in Headers */,
 				CE01A77E0EAFD63600BDF264 /* KSTextViewController.h in Headers */,
 				CE01A7800EAFD63600BDF264 /* KSThreadProxy.h in Headers */,
-				CE01A7820EAFD63600BDF264 /* KSUnifiedTableButton.h in Headers */,
-				CE01A7840EAFD63600BDF264 /* KSUnifiedTableButtonCell.h in Headers */,
 				CE01A7860EAFD63600BDF264 /* KSVerticallyAlignedTextCell.h in Headers */,
 				CE01A7880EAFD63600BDF264 /* KSViewController.h in Headers */,
 				CE01A78B0EAFD63600BDF264 /* KSWebLocation.h in Headers */,
@@ -6372,8 +6358,6 @@
 				CE01A77D0EAFD63600BDF264 /* KSTextFieldCell.m in Sources */,
 				CE01A77F0EAFD63600BDF264 /* KSTextViewController.m in Sources */,
 				CE01A7810EAFD63600BDF264 /* KSThreadProxy.m in Sources */,
-				CE01A7830EAFD63600BDF264 /* KSUnifiedTableButton.m in Sources */,
-				CE01A7850EAFD63600BDF264 /* KSUnifiedTableButtonCell.m in Sources */,
 				CE01A7870EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m in Sources */,
 				CE01A7890EAFD63600BDF264 /* KSViewController.m in Sources */,
 				CE01A78A0EAFD63600BDF264 /* KSWebLocation+WeblocFiles.m in Sources */,
