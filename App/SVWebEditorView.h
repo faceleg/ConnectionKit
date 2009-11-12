@@ -202,6 +202,9 @@
 
 @protocol SVWebEditorViewDelegate <NSObject>
 
+//  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
+- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
@@ -213,7 +216,7 @@ handleNavigationAction:(NSDictionary *)actionInformation
 
 @end
 
-extern NSString *SVWebEditorViewSelectionDidChangeNotification;
+extern NSString *SVWebEditorViewDidChangeSelectionNotification;
 
 
 #pragma mark -

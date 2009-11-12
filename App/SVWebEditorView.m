@@ -20,7 +20,7 @@
 #import "NSWorkspace+Karelia.h"
 
 
-NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlaySelectionDidChange";
+NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
 
 
 @interface SVWebEditorView () <SVWebEditorWebUIDelegate>
@@ -332,7 +332,7 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
     
     
     // Alert observers
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewSelectionDidChangeNotification
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
                                                         object:self];
 }
 
@@ -853,6 +853,25 @@ NSString *SVWebEditorViewSelectionDidChangeNotification = @"SVWebEditingOverlayS
 @synthesize dataSource = _dataSource;
 
 @synthesize delegate = _delegate;
+- (void)setDelegate:(id <SVWebEditorViewDelegate>)delegate
+{
+    if ([self delegate])
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:[self delegate]
+                                                        name:SVWebEditorViewDidChangeSelectionNotification
+                                                      object:self];
+    }
+    
+    _delegate = delegate;
+    
+    if (delegate)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                                 selector:@selector(webEditorViewDidChangeSelection:)
+                                                     name:SVWebEditorViewDidChangeSelectionNotification
+                                                   object:self];
+    }
+}
 
 #pragma mark NSUserInterfaceValidations
 

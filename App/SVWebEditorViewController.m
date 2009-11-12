@@ -585,6 +585,13 @@
 
 #pragma mark SVWebEditorViewDelegate
 
+- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+{
+    OBPRECONDITION([notification object] == [self webEditorView]);
+    
+    
+}
+
 - (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 {
     [self setTitle:title];
