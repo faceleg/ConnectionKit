@@ -31,10 +31,14 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 // Selection
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 
-- (void)updateSelectionByDeselectingAll:(BOOL)deselectAll
+- (BOOL)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection isUIAction:(BOOL)isUIAction;
+- (BOOL)deselectItem:(id <SVWebEditorItem>)item isUIAction:(BOOL)isUIAction;
+
+- (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(id <SVWebEditorItem>)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
-                          updateWebView:(BOOL)updateWebView;
+                          updateWebView:(BOOL)updateWebView
+                             isUIAction:(BOOL)consultDelegateFirst;
 
 @property(nonatomic, copy) NSArray *selectionParentItems;
 
@@ -200,31 +204,46 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 {
-    [self updateSelectionByDeselectingAll:!extendSelection
-                           orDeselectItem:nil
-                              selectItems:items
-                            updateWebView:YES];
+    [self selectItems:items byExtendingSelection:extendSelection isUIAction:NO];
 }
 
 - (void)deselectItem:(id <SVWebEditorItem>)item;
 {
-    [self updateSelectionByDeselectingAll:NO
-                           orDeselectItem:item
-                              selectItems:nil
-                            updateWebView:YES];
+    [self deselectItem:item isUIAction:NO];
 }
 
 - (IBAction)deselectAll:(id)sender;
 {
-    [self setSelectedItems:nil];
+    [self selectItems:nil byExtendingSelection:NO isUIAction:YES];
 }
 
-/*  Support method to do the real work of all our selection methods
+
+/*  Support methods to do the real work of all our public selection methods
  */
-- (void)updateSelectionByDeselectingAll:(BOOL)deselectAll
+
+- (BOOL)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection isUIAction:(BOOL)isUIAction;
+{
+    return [self updateSelectionByDeselectingAll:!extendSelection
+                                  orDeselectItem:nil
+                                     selectItems:items
+                                   updateWebView:YES
+                                      isUIAction:isUIAction];
+}
+
+- (BOOL)deselectItem:(id <SVWebEditorItem>)item isUIAction:(BOOL)isUIAction;
+{
+    return [self updateSelectionByDeselectingAll:NO
+                                  orDeselectItem:item
+                                     selectItems:nil
+                                   updateWebView:YES
+                                      isUIAction:isUIAction];
+}
+
+- (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(id <SVWebEditorItem>)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
-                          updateWebView:(BOOL)updateWebView;
+                          updateWebView:(BOOL)updateWebView
+                             isUIAction:(BOOL)consultDelegateFirst;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
@@ -237,7 +256,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     
     
-    // Remove items, including marking them for display. Could almost certainly be more efficient
+    //  Calculate proposed selection
+    NSMutableArray *proposedSelection = [_selectedItems mutableCopy];
+    
     NSArray *itemsToDeselect = nil;
     if (deselectAll)
     {
@@ -250,28 +271,51 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     if (itemsToDeselect)
     {
+        [proposedSelection removeObjectsInArray:itemsToDeselect];
+    }
+    
+    if (itemsToSelect)
+    {
+        if (proposedSelection)  // slightly odd looking logic, but handles possibility of _selectedItems being nil
+        {
+            [proposedSelection addObjectsFromArray:itemsToSelect];
+        }
+        else
+        {
+            proposedSelection = [itemsToSelect mutableCopy];
+        }
+    }
+    
+    
+    
+    //  If needed, check the new selection with the delegate.
+    if (consultDelegateFirst)
+    {
+        if (![[self delegate] webEditorView:self shouldChangeSelection:proposedSelection]) return NO;
+    }
+    
+    
+    
+    //  Remove items, including marking them for display. Could almost certainly be more efficient
+    if (itemsToDeselect)
+    {
         for (id <SVWebEditorItem> anItem in itemsToDeselect)
         {
             NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
         }
-        
-        NSMutableArray *selection = [_selectedItems mutableCopy];
-        [selection removeObjectsInArray:itemsToDeselect];
-        [_selectedItems release], _selectedItems = selection;
     }
     
     
     
-    // Add new items to the selection.
+    //  Store new selection. MUST be performed after marking deselected items for display otherwise itemsToDeselect loses its objects somehow
+    [_selectedItems release]; _selectedItems = proposedSelection;
+    
+    
+    
+    //  Add new items to the selection.
     if (itemsToSelect)
     {
-        // Store them. Odd looking logic I know, but should handle edge cases like _selectedItems being nil
-        [_selectedItems autorelease];
-        _selectedItems = (_selectedItems ?
-                          [[_selectedItems arrayByAddingObjectsFromArray:itemsToSelect] retain] :
-                          [itemsToSelect copy]);
-        
         // Draw new selection
         for (id <SVWebEditorItem> anItem in itemsToSelect)
         {
@@ -334,6 +378,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     // Alert observers
     [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
                                                         object:self];
+    
+    
+    return YES;
 }
 
 - (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
@@ -762,16 +809,16 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         {
             if (itemIsSelected)
             {
-                [self deselectItem:item];
+                [self deselectItem:item isUIAction:YES];
             }
             else
             {
-                [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:YES];
+                [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:YES isUIAction:YES];
             }
         }
         else
         {
-            [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO];
+            [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO isUIAction:YES];
             
             if (itemIsSelected)
             {
@@ -843,7 +890,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     BOOL result = [super resignFirstResponder];
     if (result && !_isChangingSelectedItems)
     {
-        [self setSelectedItems:nil];
+        result = [self selectItems:nil byExtendingSelection:NO isUIAction:YES];
     }
     return result;
 }
@@ -1131,10 +1178,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             items = [self itemsInDOMRange:range];
         }
         
-        [self updateSelectionByDeselectingAll:YES
-                               orDeselectItem:nil
-                                  selectItems:nil
-                                updateWebView:YES];
+        [self deselectAll:self];
     }
 }
 

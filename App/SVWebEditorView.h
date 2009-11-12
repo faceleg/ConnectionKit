@@ -78,7 +78,7 @@
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(id <SVWebEditorItem>)item;
 
-- (IBAction)deselectAll:(id)sender;
+- (IBAction)deselectAll:(id)sender; // Action method, so asks the delegate if selection should change first
 
 
 #pragma mark Editing
@@ -202,9 +202,16 @@
 
 @protocol SVWebEditorViewDelegate <NSObject>
 
+#pragma mark Selection
+
+//  Only called in response to selection changes from the GUI and action methods. Could make it more flexible one day if needed
+- (BOOL)webEditorView:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+   
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
 
+   
+   
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
