@@ -22,7 +22,6 @@
 		CE3141A80CFE288E00696F81 /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE3141A70CFE288E00696F81 /* Quartz.framework */; };
 		CE56AB980CFF30950036FA3B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = CE56AB960CFF30950036FA3B /* NSBundle+QuickLook.h */; };
 		CE56AB990CFF30950036FA3B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = CE56AB970CFF30950036FA3B /* NSBundle+QuickLook.m */; };
-		CE5E59730EAFF3CB00A3EDDA /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E59710EAFF3CB00A3EDDA /* NSBundle+Karelia.h */; };
 		CE5E59740EAFF3CB00A3EDDA /* NSBundle+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5E59720EAFF3CB00A3EDDA /* NSBundle+Karelia.m */; };
 		CE5E59770EAFF3D900A3EDDA /* NSString+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E59750EAFF3D900A3EDDA /* NSString+Karelia.h */; };
 		CE5E59780EAFF3D900A3EDDA /* NSString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5E59760EAFF3D900A3EDDA /* NSString+Karelia.m */; };
@@ -30,6 +29,7 @@
 		CE5E597C0EAFF3F400A3EDDA /* KSPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5E597A0EAFF3F400A3EDDA /* KSPlugin.m */; };
 		CE5E59800EAFF41100A3EDDA /* BDAlias.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E597E0EAFF41100A3EDDA /* BDAlias.h */; };
 		CE5E59810EAFF41100A3EDDA /* BDAlias.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5E597F0EAFF41100A3EDDA /* BDAlias.m */; };
+		CE6EE2F110ACB0BF00BEAE15 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE6EE2F010ACB0BF00BEAE15 /* NSBundle+Karelia.h */; };
 		F28CFBFD0A3EC0AF000ABFF5 /* ApplicationServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F28CFBFC0A3EC0AF000ABFF5 /* ApplicationServices.framework */; };
 		F28CFC030A3EC0C6000ABFF5 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F28CFC020A3EC0C6000ABFF5 /* QuickLook.framework */; };
 /* End PBXBuildFile section */
@@ -54,14 +54,14 @@
 		CE56AB960CFF30950036FA3B /* NSBundle+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSBundle+QuickLook.h"; sourceTree = "<group>"; };
 		CE56AB970CFF30950036FA3B /* NSBundle+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSBundle+QuickLook.m"; sourceTree = "<group>"; };
 		CE56ADB80CFF78670036FA3B /* tinygif.pl */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.perl; path = tinygif.pl; sourceTree = "<group>"; };
-		CE5E59710EAFF3CB00A3EDDA /* NSBundle+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Karelia.h"; path = "../../../Shared/AppKit/NSBundle+Karelia.h"; sourceTree = SOURCE_ROOT; };
-		CE5E59720EAFF3CB00A3EDDA /* NSBundle+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Karelia.m"; path = "../../../Shared/AppKit/NSBundle+Karelia.m"; sourceTree = SOURCE_ROOT; };
+		CE5E59720EAFF3CB00A3EDDA /* NSBundle+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+Karelia.m"; path = "../../../../Shared/Foundation/NSBundle+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CE5E59750EAFF3D900A3EDDA /* NSString+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSString+Karelia.h"; path = "../../../Shared/Foundation/NSString+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		CE5E59760EAFF3D900A3EDDA /* NSString+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSString+Karelia.m"; path = "../../../Shared/Foundation/NSString+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CE5E59790EAFF3F400A3EDDA /* KSPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPlugin.h; path = ../../../Shared/AppKit/KSPlugin.h; sourceTree = SOURCE_ROOT; };
 		CE5E597A0EAFF3F400A3EDDA /* KSPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPlugin.m; path = ../../../Shared/AppKit/KSPlugin.m; sourceTree = SOURCE_ROOT; };
 		CE5E597E0EAFF41100A3EDDA /* BDAlias.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = BDAlias.h; path = ../../../Shared/Imported/BDAlias.h; sourceTree = SOURCE_ROOT; };
 		CE5E597F0EAFF41100A3EDDA /* BDAlias.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = BDAlias.m; path = ../../../Shared/Imported/BDAlias.m; sourceTree = SOURCE_ROOT; };
+		CE6EE2F010ACB0BF00BEAE15 /* NSBundle+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSBundle+Karelia.h"; path = "../../../../Shared/Foundation/NSBundle+Karelia.h"; sourceTree = SOURCE_ROOT; };
 		F28CFBFC0A3EC0AF000ABFF5 /* ApplicationServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ApplicationServices.framework; path = /System/Library/Frameworks/ApplicationServices.framework; sourceTree = "<absolute>"; };
 		F28CFC020A3EC0C6000ABFF5 /* QuickLook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickLook.framework; path = /System/Library/Frameworks/QuickLook.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -119,7 +119,7 @@
 		08FB77AFFE84173DC02AAC07 /* Source */ = {
 			isa = PBXGroup;
 			children = (
-				CE5E59710EAFF3CB00A3EDDA /* NSBundle+Karelia.h */,
+				CE6EE2F010ACB0BF00BEAE15 /* NSBundle+Karelia.h */,
 				CE5E59720EAFF3CB00A3EDDA /* NSBundle+Karelia.m */,
 				CE5E59750EAFF3D900A3EDDA /* NSString+Karelia.h */,
 				CE5E59760EAFF3D900A3EDDA /* NSString+Karelia.m */,
@@ -162,10 +162,10 @@
 				27EF5CD50D6B9C7E0024575B /* NSData+QuickLook.h in Headers */,
 				27EF5CDD0D6B9CF80024575B /* BDAlias+QuickLook.h in Headers */,
 				273B85CA0D9AFDFB00DF9FF7 /* SandvoxDesignPlugIn.h in Headers */,
-				CE5E59730EAFF3CB00A3EDDA /* NSBundle+Karelia.h in Headers */,
 				CE5E59770EAFF3D900A3EDDA /* NSString+Karelia.h in Headers */,
 				CE5E597B0EAFF3F400A3EDDA /* KSPlugin.h in Headers */,
 				CE5E59800EAFF41100A3EDDA /* BDAlias.h in Headers */,
+				CE6EE2F110ACB0BF00BEAE15 /* NSBundle+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
