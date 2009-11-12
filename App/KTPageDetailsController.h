@@ -20,9 +20,9 @@
 	IBOutlet NSTextField			*oBaseURLField;
 	IBOutlet NSTextField			*oPageFileNameField;
 	IBOutlet NSTextField			*oDotSeparator;
-	IBOutlet KSPopUpButton			*oFileExtensionPopup;
+	IBOutlet NSTextField			*oSlashIndexDotSeparator;
+	IBOutlet KSPopUpButton			*oExtensionPopup;
 	IBOutlet NSTextField			*oCollectionFileNameField;
-	IBOutlet KSPopUpButton			*oCollectionIndexExtensionButton;
 	IBOutlet NSButton				*oFollowButton;
 
 	IBOutlet KTDocSiteOutlineController *oPagesController;

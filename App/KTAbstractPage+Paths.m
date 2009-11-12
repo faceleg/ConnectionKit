@@ -213,6 +213,8 @@
 
 /*	Used for bindings to determine how the "Default" choice should read
  */
+// TODO: Mike to see if this needs to be removed.
+
 - (NSString *)defaultIndexFileName
 {
 	OBASSERT([self defaultFileExtension]);

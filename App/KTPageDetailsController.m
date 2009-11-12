@@ -141,17 +141,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oPageFileNameField setFormatter:formatter];
 	[oCollectionFileNameField setFormatter:formatter];
 	
-	
-	// Prepare the collection index.html popup
-	[oCollectionIndexExtensionButton bind:@"defaultValue"
-								 toObject:oPagesController
-							  withKeyPath:@"selection.defaultIndexFileName"
-								  options:nil];
-	
-	[oCollectionIndexExtensionButton setMenuTitle:NSLocalizedString(@"Index file name",
-																	"Popup menu title for setting the index.html file's extensions")];
-	
-	[oFileExtensionPopup bind:@"defaultValue"
+	[oExtensionPopup bind:@"defaultValue"
 					 toObject:oPagesController
 				  withKeyPath:@"selection.defaultFileExtension"
 					  options:nil];
@@ -445,66 +435,91 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  Don't truncate oPageFileNameField - this is limited by character count and we want to see the whole thing
  So we will truncate oBaseURLField as much as we need.
  
- 
  We also need to call this when the observed page changes.
  
  */
 
 - (void) layoutPageURLComponents;
 {
-	NSArray *itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oFileExtensionPopup,oFollowButton,nil];
-	int extraX [] = {4,4,6,8,0};
-	int marginsAfter[] = {0,0,0,8,0};
-	int widths[5] = { -1 }; // filled in below
-	int i = 0;
-	// Collect up the widths that these items *want* to be
-	for (NSView *fld in itemsToLayOut)
+	NSArray *itemsToLayOut = nil;
+	id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
+	if (NSMultipleValuesMarker == isCollectionMarker)
 	{
-		// Editable File Name
-		NSRect frame = [fld frame];
-		
-		if ([fld isKindOfClass:[NSTextField class]])
+		NSLog(@"NSMultipleValuesMarker");
+	}
+	else if (NSNoSelectionMarker == isCollectionMarker)
+	{
+		NSLog(@"NSNoSelectionMarker");
+	}
+	else if (NSNotApplicableMarker == isCollectionMarker)
+	{
+		NSLog(@"NSNotApplicableMarker");
+	}
+	else if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
+	{
+		BOOL isCollection = [isCollectionMarker boolValue];
+		if (isCollection)
 		{
-			NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
-			int width = ceilf([text size].width);
-			width += extraX[i];
-			width += marginsAfter[i];
-			frame.size.width = width;
+			itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
 		}
-		widths[i++] = frame.size.width;
-	}
-	
-	int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
-	const int rightMargin = 20;
-	int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
-	
-	// Calculate a new width for base URL
-	int availableForBaseURL = availableForAll -
-		(extraX[0]
-		 + widths[1]
-		 + widths[2]
-		 + widths[3]
-		 + widths[4] );
-	if (widths[0] > availableForBaseURL)
-	{
-		widths[0] = availableForBaseURL;	// truncate base URL
-	}
-	// Now set the new frames
-	i = 0;
-	for (NSView *fld2 in itemsToLayOut)
-	{
-		// Editable File Name
-		NSRect frame = [fld2 frame];
-		frame.origin.x = newLeft;
-		frame.size.width = widths[i];
-		[fld2 setFrame:frame];
-		newLeft = NSMaxX(frame);
-		if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
-		{							// (which we left wide enough so it wouldn't get clipped)
-			newLeft -= 4;
+		else
+		{
+			itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
 		}
-		newLeft += marginsAfter[i];
-		i++;
+			
+		int extraX [] = {4,4,6,8,0};
+		int marginsAfter[] = {0,0,0,8,0};
+		int widths[5] = { -1 }; // filled in below
+		int i = 0;
+		// Collect up the widths that these items *want* to be
+		for (NSView *fld in itemsToLayOut)
+		{
+			// Editable File Name
+			NSRect frame = [fld frame];
+			
+			if ([fld isKindOfClass:[NSTextField class]])
+			{
+				NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
+				int width = ceilf([text size].width);
+				width += extraX[i];
+				width += marginsAfter[i];
+				frame.size.width = width;
+			}
+			widths[i++] = frame.size.width;
+		}
+		
+		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+		const int rightMargin = 20;
+		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
+		
+		// Calculate a new width for base URL
+		int availableForBaseURL = availableForAll -
+			(extraX[0]
+			 + widths[1]
+			 + widths[2]
+			 + widths[3]
+			 + widths[4] );
+		if (widths[0] > availableForBaseURL)
+		{
+			widths[0] = availableForBaseURL;	// truncate base URL
+		}
+		// Now set the new frames
+		i = 0;
+		for (NSView *fld2 in itemsToLayOut)
+		{
+			// Editable File Name
+			NSRect frame = [fld2 frame];
+			frame.origin.x = newLeft;
+			frame.size.width = widths[i];
+			[fld2 setFrame:frame];
+			newLeft = NSMaxX(frame);
+			if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
+			{							// (which we left wide enough so it wouldn't get clipped)
+				newLeft -= 4;
+			}
+			newLeft += marginsAfter[i];
+			i++;
+		}
 	}
 }
 
