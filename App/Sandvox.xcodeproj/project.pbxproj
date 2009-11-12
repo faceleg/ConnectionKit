@@ -446,6 +446,7 @@
 		27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEC0EC30B6F000E85DD /* KSException.nib */; };
 		27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */; };
 		27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */; };
+		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; };
 		27EF1BCF0DC1F9BF00976C66 /* SVSiteOutlineViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (); }; };
@@ -1930,6 +1931,7 @@
 		27E4D0200EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSException.nib; sourceTree = "<group>"; };
 		27E4D0210EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSCrash.nib; sourceTree = "<group>"; };
 		27E4D0220EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
+		27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCollectionController.h; sourceTree = "<group>"; };
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
 		27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteOutlineViewController.h; sourceTree = "<group>"; };
 		27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteOutlineViewController.m; sourceTree = "<group>"; };
@@ -4460,6 +4462,7 @@
 				2752330A10A8938400120CE8 /* KSInspectorTabCell.m */,
 				2752332210A8983700120CE8 /* KSInspectorTabsMatrix.h */,
 				2752332310A8983700120CE8 /* KSInspectorTabsMatrix.m */,
+				27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -5115,6 +5118,7 @@
 				2752330B10A8938400120CE8 /* KSInspectorTabCell.h in Headers */,
 				2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */,
 				CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */,
+				27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

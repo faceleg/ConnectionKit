@@ -35,7 +35,7 @@
 #pragma mark Inspected Pages
 
 @synthesize inspectedPagesController = _inspectedPagesController;
-- (void)setInspectedPagesController:(NSObjectController *)controller
+- (void)setInspectedPagesController:(id <KSCollectionController>)controller
 {
     [_pageInspector setValue:controller
                       forKey:@"inspectedObjectsController"];

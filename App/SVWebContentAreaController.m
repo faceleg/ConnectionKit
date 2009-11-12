@@ -102,7 +102,7 @@
 
 #pragma mark Inspector
 
-- (NSObjectController *)objectsController;
+- (id <KSCollectionController>)objectsController;
 {
     return [_webViewController selectableObjectsController];
 }

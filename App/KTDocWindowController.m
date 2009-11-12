@@ -330,7 +330,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Inspector
 
-- (NSObjectController *)objectsController;
+- (id <KSCollectionController>)objectsController;
 {
     return [[self webContentAreaController] objectsController];
 }

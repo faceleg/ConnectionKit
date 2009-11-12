@@ -15,13 +15,13 @@
 @interface SVInspector : KSInspector
 {
   @private
-    NSObjectController  *_inspectedPagesController;
+    id <KSCollectionController> _inspectedPagesController;
     
     SVInspectorViewController   *_documentInspector;
     SVInspectorViewController   *_pageInspector;
     SVInspectorViewController   *_wrapInspector;
 }
 
-@property(nonatomic, retain) NSObjectController *inspectedPagesController;
+@property(nonatomic, retain) id <KSCollectionController> inspectedPagesController;
 
 @end
