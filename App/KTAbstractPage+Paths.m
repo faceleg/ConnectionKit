@@ -211,21 +211,6 @@
 	return result;
 }
 
-/*	Used for bindings to determine how the "Default" choice should read
- */
-// TODO: Mike to see if this needs to be removed.
-
-- (NSString *)defaultIndexFileName
-{
-	OBASSERT([self defaultFileExtension]);
-	NSString *filename = [[self indexFileName] stringByAppendingPathExtension:[self defaultFileExtension]];
-	
-	NSString *result = [NSString stringWithFormat:NSLocalizedString(@"Default (%@)", "The default item in a list."),
-												  filename];
-												  
-	return result;
-}
-
 - (NSString *)indexFileName
 {
 	NSString *result = nil;
