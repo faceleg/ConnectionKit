@@ -92,8 +92,9 @@ KTCollectionPathStyle;
 - (NSString *)suggestedFileName;
 
 
-// File Extension
-- (NSString *)fileExtension;
+#pragma mark Path Extension
+// TODO: Rename other methods to follow this scheme
+@property(nonatomic, copy, readonly) NSString *pathExtension;
 
 - (NSString *)customFileExtension;
 - (void)setCustomFileExtension:(NSString *)extension;

@@ -123,7 +123,7 @@
 
 /*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
  */
-- (NSString *)fileExtension
+- (NSString *)pathExtension
 {
 	NSString *result = [self customFileExtension];
 	
@@ -143,6 +143,11 @@
 			    format:@"-%@ is not supported. Please use -setCustomFileExtension instead.", NSStringFromSelector(_cmd)];
 }
 
+
++ (NSSet *)keyPathsForValuesAffectingPathExtension
+{
+    return [NSSet setWithObjects:@"customFileExtension", @"defaultFileExtension", nil];
+}
 
 /*	A custom file extension of nil signifies that the value should be taken from the user defaults.
  */
@@ -204,8 +209,8 @@
 	if ([self isCollection])
 	{
 		NSString *indexFileName = [[[self site] hostProperties] valueForKey:@"htmlIndexBaseName"];
-		OBASSERT([self fileExtension]);
-		result = [indexFileName stringByAppendingPathExtension:[self fileExtension]];
+		OBASSERT([self pathExtension]);
+		result = [indexFileName stringByAppendingPathExtension:[self pathExtension]];
 	}
 	
 	return result;
@@ -232,8 +237,8 @@
 	if ([self isCollection])
 	{
 		NSString *archivesFileName = [[[self site] hostProperties] valueForKey:@"archivesBaseName"];
-		OBASSERT([self fileExtension]);
-		result = [archivesFileName stringByAppendingPathExtension:[self fileExtension]];
+		OBASSERT([self pathExtension]);
+		result = [archivesFileName stringByAppendingPathExtension:[self pathExtension]];
 	}
 	
 	return result;
@@ -497,10 +502,10 @@
 	}
 	else
 	{
-		OBASSERT([self fileExtension]);
+		OBASSERT([self pathExtension]);
         if (![result isEqualToString:@""])  // appending to an empty string logs a warning. case 40704
         {
-            result = [result stringByAppendingPathExtension:[self fileExtension]];
+            result = [result stringByAppendingPathExtension:[self pathExtension]];
         }
 	}
 	
