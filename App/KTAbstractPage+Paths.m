@@ -305,6 +305,7 @@
 
 - (BOOL) canPreview
 {
+	NSLog(@"canPreview: url = %@", [self URL]);
 	return (nil != [self URL]);
 }
 

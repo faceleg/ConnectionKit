@@ -267,24 +267,35 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSDictionary *bindingOptions;
 	NSString *bindingKeyPath;
 	id observedObject;
-			
+	
 	// The Window Title field ... re-bind the null placeholder.
-		
+	
 	infoForBinding	= [oWindowTitleField infoForBinding:NSValueBinding];
 	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
 	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
 	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
-	
-	if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])
-	{
-		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-		
-		[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
-		
-		[oWindowTitleField unbind:NSValueBinding];
 
-		[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+
+	if (NSMultipleValuesMarker == comboTitleText)
+	{
+		// Try copying over the multiple values string to the null placeholder...
+		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
 	}
+	else if (![comboTitleText isKindOfClass:[NSString class]])	// some other kind of marker?
+	{
+		NSLog(@"resetPlaceholderToComboTitleText: %@ %@", comboTitleText, [comboTitleText class]);
+	}
+	else
+	{		
+		if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])	// why this check?
+		{
+			// For some reason it seems like you need to set the Null placeholder even with multiple bindings!
+			[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
+		}
+	}
+	[oWindowTitleField unbind:NSValueBinding];
+	[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
 }
 
 /*	Called in response to a change of selection.windowTitle or the user typing
