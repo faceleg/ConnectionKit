@@ -34,7 +34,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void)metaDescriptionDidChangeToValue:(id)value;
 - (void)windowTitleDidChangeToValue:(id)value;
 - (void)fileNameDidChangeToValue:(id)value;
-- (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText;
+- (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText;
+- (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
 - (void) layoutPageURLComponents;
 - (NSColor *)metaDescriptionCharCountColor;
 - (NSColor *)windowTitleCharCountColor;
@@ -102,6 +103,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						  options:NSKeyValueObservingOptionNew
 						  context:sMetaDescriptionObservationContext];
 	[self metaDescriptionDidChangeToValue:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
+	[self resetDescriptionPlaceholder:[oPagesController valueForKeyPath:@"selection.metaDescription"]];
+	
 	[oPagesController addObserver:self
 					   forKeyPath:@"selection.windowTitle"
 						  options:NSKeyValueObservingOptionNew
@@ -123,9 +126,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					   forKeyPath:@"selection.titleText"
 						  options:NSKeyValueObservingOptionNew
 						  context:sTitleTextObservationContext];
-	[self resetPlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
-	
-	
+	[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
+		
 	
 	/// turn off undo within the cell to avoid exception
 	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
@@ -261,7 +263,33 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     return [NSSet setWithObject:@"metaDescriptionCountdown"];
 }
 
-- (void) resetPlaceholderToComboTitleText:(NSString *)comboTitleText
+- (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
+{
+	NSDictionary *infoForBinding;
+	NSDictionary *bindingOptions;
+	NSString *bindingKeyPath;
+	id observedObject;
+	
+	// The Meta description field ... re-bind the null placeholder.
+	
+	infoForBinding	= [oMetaDescriptionField infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if ([[observedObject selectedObjects] count] > 1)
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		
+		// Move the multiple values placeholder to the null value, so that we see that when the values are empty
+		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
+
+		[oMetaDescriptionField unbind:NSValueBinding];
+		[oMetaDescriptionField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
+}
+
+- (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText
 {
 	NSDictionary *infoForBinding;
 	NSDictionary *bindingOptions;
@@ -280,13 +308,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	if (NSMultipleValuesMarker == comboTitleText)
 	{
 		// Try copying over the multiple values string to the null placeholder...
+		// I think that is so we see the multiple mark when the values are empty (unset)
 		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
 	}
-	else if (![comboTitleText isKindOfClass:[NSString class]])	// some other kind of marker?
-	{
-		NSLog(@"resetPlaceholderToComboTitleText: %@ %@", comboTitleText, [comboTitleText class]);
-	}
-	else
+	else if (!NSIsControllerMarker(comboTitleText))
 	{		
 		if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])	// why this check?
 		{
@@ -417,6 +442,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	if (context == sMetaDescriptionObservationContext)
 	{
 		[self metaDescriptionDidChangeToValue:[object valueForKeyPath:keyPath]];
+		[self resetDescriptionPlaceholder:[object valueForKeyPath:@"selection.metaDescription"]];
 	}
 	else if (context == sWindowTitleObservationContext)
 	{
@@ -432,7 +458,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else if (context == sTitleTextObservationContext)
 	{
-		[self resetPlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
+		[self resetTitlePlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
 	}
 	else
 	{
@@ -453,84 +479,107 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void) layoutPageURLComponents;
 {
 	NSArray *itemsToLayOut = nil;
+//	NSArray *itemsToHide = nil;
+	int *theExtraX = nil;
+	int *theMarginsAfter = nil;
+	
+	NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
+//	NSArray *pageItemsToHide = [NSArray arrayWithObjects:oCollectionFileNameField,oSlashIndexDotSeparator,nil];
+	int pageExtraX [] = {4,4,6,8,0};
+	int pageMarginsAfter[] = {0,0,0,8,0};
+	
+	NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
+//	NSArray *collectionItemsToHide = [NSArray arrayWithObjects:oPageFileNameField,oDotSeparator,nil];
+	int collectionExtraX [] = {4,4,6,8,0};
+	int collectionMarginsAfter[] = {0,0,0,8,0};
+	
+	NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
+//	NSArray *markerItemsToHide = [NSArray arrayWithObjects:oPageFileNameField,oDotSeparator,nil];
+	int markerExtraX [] = {4,4,6,8,0};
+	int markerMarginsAfter[] = {0,0,0,8,0};
+	
 	id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
-	if (NSMultipleValuesMarker == isCollectionMarker)
+	
+	if (NSIsControllerMarker(isCollectionMarker))
 	{
-		NSLog(@"NSMultipleValuesMarker");
-	}
-	else if (NSNoSelectionMarker == isCollectionMarker)
-	{
-		NSLog(@"NSNoSelectionMarker");
-	}
-	else if (NSNotApplicableMarker == isCollectionMarker)
-	{
-		NSLog(@"NSNotApplicableMarker");
+		itemsToLayOut = markerItemsToLayOut;
+		theExtraX = markerExtraX;
+		theMarginsAfter = markerMarginsAfter;
 	}
 	else if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
 	{
 		BOOL isCollection = [isCollectionMarker boolValue];
 		if (isCollection)
 		{
-			itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
+			itemsToLayOut = collectionItemsToLayOut;
+			theExtraX = collectionExtraX;
+			theMarginsAfter = collectionMarginsAfter;
 		}
 		else
 		{
-			itemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
+			itemsToLayOut = pageItemsToLayOut;
+			theExtraX = pageExtraX;
+			theMarginsAfter = pageMarginsAfter;
 		}
-			
-		int extraX [] = {4,4,6,8,0};
-		int marginsAfter[] = {0,0,0,8,0};
-		int widths[5] = { -1 }; // filled in below
-		int i = 0;
-		// Collect up the widths that these items *want* to be
-		for (NSView *fld in itemsToLayOut)
-		{
-			// Editable File Name
-			NSRect frame = [fld frame];
-			
-			if ([fld isKindOfClass:[NSTextField class]])
-			{
-				NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
-				int width = ceilf([text size].width);
-				width += extraX[i];
-				width += marginsAfter[i];
-				frame.size.width = width;
-			}
-			widths[i++] = frame.size.width;
-		}
+	}
+	int widths[5] = { -1 }; // filled in below
+	int i = 0;
+	// Collect up the widths that these items *want* to be
+	for (NSView *fld in itemsToLayOut)
+	{
+		// Editable File Name
+		NSRect frame = [fld frame];
 		
-		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
-		const int rightMargin = 20;
-		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
-		
-		// Calculate a new width for base URL
-		int availableForBaseURL = availableForAll -
-			(extraX[0]
-			 + widths[1]
-			 + widths[2]
-			 + widths[3]
-			 + widths[4] );
-		if (widths[0] > availableForBaseURL)
+		if ([fld isKindOfClass:[NSTextField class]])
 		{
-			widths[0] = availableForBaseURL;	// truncate base URL
+			NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
+			int width = ceilf([text size].width);
+			width += theExtraX[i];
+			width += theMarginsAfter[i];
+			frame.size.width = width;
 		}
-		// Now set the new frames
-		i = 0;
-		for (NSView *fld2 in itemsToLayOut)
+		widths[i++] = frame.size.width;
+	}
+	
+	int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+	const int rightMargin = 20;
+	int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
+	
+	// Calculate a new width for base URL
+	int availableForBaseURL = availableForAll -
+		(theExtraX[0]
+		 + widths[1]
+		 + widths[2]
+		 + widths[3]
+		 + widths[4] );
+	if (widths[0] > availableForBaseURL)
+	{
+		widths[0] = availableForBaseURL;	// truncate base URL
+	}
+	// Now set the new frames
+	i = 0;
+	for (NSView *fld2 in itemsToLayOut)
+	{
+		// Editable File Name
+		NSRect frame = [fld2 frame];
+		frame.origin.x = newLeft;
+		frame.size.width = widths[i];
+		[fld2 setFrame:frame];
+		newLeft = NSMaxX(frame);
+		if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
+		{							// (which we left wide enough so it wouldn't get clipped)
+			newLeft -= 4;
+		}
+		if (fld2 == oCollectionFileNameField)	// special case -- move file name over to left to adjoin previous field
+		{							// (which we left wide enough so it wouldn't get clipped)
+			newLeft -= 5;
+		}
+		if (fld2 == oPageFileNameField)	// to help align the dot with the "index ." when a collection is selected
 		{
-			// Editable File Name
-			NSRect frame = [fld2 frame];
-			frame.origin.x = newLeft;
-			frame.size.width = widths[i];
-			[fld2 setFrame:frame];
-			newLeft = NSMaxX(frame);
-			if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
-			{							// (which we left wide enough so it wouldn't get clipped)
-				newLeft -= 4;
-			}
-			newLeft += marginsAfter[i];
-			i++;
+			newLeft -= 1;
 		}
+		newLeft += theMarginsAfter[i];
+		i++;
 	}
 }
 
