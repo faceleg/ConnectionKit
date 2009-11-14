@@ -479,23 +479,19 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void) layoutPageURLComponents;
 {
 	NSArray *itemsToLayOut = nil;
-//	NSArray *itemsToHide = nil;
 	int *theExtraX = nil;
 	int *theMarginsAfter = nil;
 	
 	NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-//	NSArray *pageItemsToHide = [NSArray arrayWithObjects:oCollectionFileNameField,oSlashIndexDotSeparator,nil];
 	int pageExtraX [] = {4,4,6,8,0};
 	int pageMarginsAfter[] = {0,0,0,8,0};
 	
 	NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-//	NSArray *collectionItemsToHide = [NSArray arrayWithObjects:oPageFileNameField,oDotSeparator,nil];
 	int collectionExtraX [] = {4,4,6,8,0};
 	int collectionMarginsAfter[] = {0,0,0,8,0};
 	
 	NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-//	NSArray *markerItemsToHide = [NSArray arrayWithObjects:oPageFileNameField,oDotSeparator,nil];
-	int markerExtraX [] = {4,4,6,8,0};
+	int markerExtraX [] = {200,4,6,8,0};
 	int markerMarginsAfter[] = {0,0,0,8,0};
 	
 	id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
