@@ -14,20 +14,14 @@
 @class SVPageletBody, KTElementPlugin;
 
 
-@interface SVContentObject :  KSExtensibleManagedObject  
+@interface SVContentObject : NSManagedObject
 {
     id  _plugIn;
 }
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
-
 
 
 @property (nonatomic, retain) SVPageletBody *container;
-
-@property(nonatomic, retain, readonly) id <SVElementPlugIn> plugIn;
-@property(nonatomic, copy, readonly) NSString *plugInIdentifier;
-- (KTElementPlugin *)plugin;
 
 
 #pragma mark HTML

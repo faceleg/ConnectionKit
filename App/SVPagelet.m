@@ -61,7 +61,6 @@
 
 #pragma mark Properties
 
-@dynamic elementID;
 @dynamic titleHTMLString;
 @dynamic body;
 @dynamic showBorder;

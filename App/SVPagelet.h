@@ -6,20 +6,18 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "SVContentObject.h"
 
 @class SVPageletBody;
 @class KTPage, SVSidebar;
 
 
-@interface SVPagelet : NSManagedObject  
+@interface SVPagelet : SVContentObject  
 
 + (SVPagelet *)pageletWithManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
-
-@property(nonatomic, retain) NSString *elementID;
 
 @property(nonatomic, retain) NSString *titleHTMLString;
 @property(nonatomic, retain, readonly) SVPageletBody *body;

@@ -236,6 +236,8 @@
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
+		272B38CD10B18FB60056B4CA /* SVPlugInContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInContentObject.h */; };
+		272B38CE10B18FB60056B4CA /* SVPlugInContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInContentObject.m */; };
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
 		272DA58A108E6F42007A99D5 /* SVElementPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVElementPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1672,6 +1674,8 @@
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
 		272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Selection.m"; sourceTree = "<group>"; };
+		272B38CB10B18FB60056B4CA /* SVPlugInContentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInContentObject.h; sourceTree = "<group>"; };
+		272B38CC10B18FB60056B4CA /* SVPlugInContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInContentObject.m; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
 		272DA588108E6F42007A99D5 /* SVElementPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVElementPlugIn.h; sourceTree = "<group>"; };
@@ -4011,6 +4015,8 @@
 				3C682B220D622FA600B4D485 /* KTPagelet.m */,
 				276503790EAD313100461A0E /* KTPagelet+Internal.h */,
 				27A095331097598600F43746 /* PageletTemplate.html */,
+				272B38CB10B18FB60056B4CA /* SVPlugInContentObject.h */,
+				272B38CC10B18FB60056B4CA /* SVPlugInContentObject.m */,
 			);
 			name = Pagelets;
 			sourceTree = "<group>";
@@ -5121,6 +5127,7 @@
 				2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */,
 				CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */,
 				27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */,
+				272B38CD10B18FB60056B4CA /* SVPlugInContentObject.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6498,6 +6505,7 @@
 				2752330C10A8938400120CE8 /* KSInspectorTabCell.m in Sources */,
 				2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */,
 				CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */,
+				272B38CE10B18FB60056B4CA /* SVPlugInContentObject.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
