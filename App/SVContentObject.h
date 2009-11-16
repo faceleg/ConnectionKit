@@ -17,8 +17,8 @@
 #define SVContentObjectWrapBlockLeft [NSNumber numberWithInteger:4]
 #define SVContentObjectWrapBlockCenter [NSNumber numberWithInteger:5]
 #define SVContentObjectWrapBlockRight [NSNumber numberWithInteger:6]
-typedef NSNumber SVContentObjectWrap;
-
+//typedef NSNumber SVContentObjectWrap;
+#define SVContentObjectWrap NSNumber
 
 #pragma mark -
 
@@ -30,7 +30,9 @@ typedef NSNumber SVContentObjectWrap;
 
 
 #pragma mark Placement
+
 @property(nonatomic, copy, readonly) SVContentObjectWrap *wrap;
+
 @property(nonatomic, retain) SVPageletBody *container;
 
 

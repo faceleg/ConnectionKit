@@ -16,14 +16,18 @@
 #import "NSString+Karelia.h"
 
 
-@implementation SVContentObject 
+@implementation SVContentObject
 
 #pragma mark Placement
 
-@dynamic wrap;
 @dynamic container;
 
 #pragma mark HTML
+
+- (SVContentObjectWrap *)wrap
+{
+    return nil;
+}
 
 @dynamic elementID;
 
