@@ -941,18 +941,6 @@ from representedObject */
 	}
 	
 	// View menu
-	// "Hide Designs" toggleDesignsShown:
-    else if (itemAction == @selector(toggleDesignsShown:))
-    {
-        if ([[self document] showDesigns])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Designs", @"menu title to hide designs bar")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Designs", @"menu title to show design bar")];
-        }
-    }
     
     else if (itemAction == @selector(toggleEditingControlsShown:))
     {
@@ -1139,10 +1127,6 @@ from representedObject */
     {
         [toolbarItem setLabel:
          ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
-    }
-    else if ( [toolbarItem action] == @selector(toggleDesignsShown:) )
-    {
-        return YES;
     }
     
     return YES;
