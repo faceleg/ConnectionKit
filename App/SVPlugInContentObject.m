@@ -154,7 +154,7 @@
 	}
 }
 
-/*	Whenver validating something, we give our delegate first crack at it if they wish
+/*	Whenever validating something, we give our delegate first crack at it if they wish
  */
 - (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
 {
@@ -182,6 +182,23 @@
     BOOL result = YES;
     // FIXME: ensure it's one of the allowed values
     return result;
+}
+
+- (NSNumber *)wrapIsFloatOrBlock
+{
+    NSNumber *result = [self wrap];
+    if ([result intValue] > 1) result = [NSNumber numberWithBool:YES];
+    return result;
+}
+
+- (void)setWrapIsFloatOrBlock:(NSNumber *)useFloatOrBlock
+{
+    
+}
+
+- (NSSet *)keyPathsForValuesAffectingWrapIsFloatOrBlock
+{
+    return [NSSet setWithObject:@"wrap"];
 }
 
 #pragma mark HTML

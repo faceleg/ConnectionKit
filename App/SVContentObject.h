@@ -23,15 +23,26 @@
 #pragma mark -
 
 
+//  I'm declaring a protocol for content objects first to keep things nice and pure. (Also, it means I can make some things @optional so that Core Data will still generate accessors when the superclass chooses not to implement the method)
+
+@protocol SVContentObject
+- (NSString *)elementID;
+@optional
+- (SVContentObjectWrap *)wrap;
+@end
+
+
+#pragma mark -
+
+
 @class SVPageletBody, KTElementPlugin;
 
 
-@interface SVContentObject : NSManagedObject
+@interface SVContentObject : NSManagedObject <SVContentObject>
 
 
 #pragma mark Placement
 
-@property(nonatomic, copy, readonly) SVContentObjectWrap *wrap;
 
 @property(nonatomic, retain) SVPageletBody *container;
 

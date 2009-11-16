@@ -10,7 +10,9 @@
 #import "SVWebEditorViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
+#import "SVHTMLTextBlock.h"
 #import "KTPage.h"
+#import "SVPageletBody.h"
 #import "SVWebEditorHTMLContext.h"
 
 #import "KSCollectionController.h"
@@ -169,9 +171,20 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	NSString *pageHTML = [[self page] HTMLString];
     
     
-    //  What are the selectable objects?
+    //  What are the selectable objects? Pagelets and other SVContentObjects
+    NSMutableSet *selectableObjects = [[NSMutableSet alloc] init];
+    [selectableObjects unionSet:[[[self page] sidebar] pagelets]];
+    for (SVHTMLTextBlock *aTextBlock in [context generatedTextBlocks])
+    {
+        id content = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+        if ([content isKindOfClass:[SVPageletBody class]])
+        {
+            [selectableObjects unionSet:[content contentObjects]];
+        }
+    }
+    
     [_selectableObjects release];
-    _selectableObjects = [[[[self page] sidebar] pagelets] copy];
+    _selectableObjects = selectableObjects;
     [_selectableObjectsController setContent:_selectableObjects];
 	
     

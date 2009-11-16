@@ -24,11 +24,6 @@
 
 #pragma mark HTML
 
-- (SVContentObjectWrap *)wrap
-{
-    return nil;
-}
-
 @dynamic elementID;
 
 - (NSString *)archiveHTMLString;

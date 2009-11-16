@@ -8,7 +8,7 @@
 
 #import "SVWebEditorViewController.h"
 
-#import "SVContentObject.h"
+#import "SVPlugInContentObject.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
@@ -144,13 +144,13 @@
     NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
     NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
-    for (SVPagelet *aPagelet in pagelets)
+    for (SVContentObject *aContentObject in [[self contentController] arrangedObjects])
     {
-        DOMElement *element = [domDoc getElementById:[aPagelet elementID]];
+        DOMElement *element = [aContentObject DOMElementInDocument:domDoc];
         if (element)
         {
             SVWebContentItem *item = [[SVWebContentItem alloc] initWithDOMElement:element];
-            [item setRepresentedObject:aPagelet];
+            [item setRepresentedObject:aContentObject];
             [item setEditable:YES];
             
             [contentObjects addObject:item];
@@ -158,7 +158,7 @@
         }
         else
         {
-            NSLog(@"Could not locate pagelet with ID: %@", [aPagelet elementID]);
+            NSLog(@"Could not locate content object with ID: %@", [aContentObject elementID]);
         }
     }
     
@@ -447,7 +447,7 @@
 {
     // Create a new element of the requested type and insert into selected text block
     SVPageletBody *body = [[[self textAreaControllers] firstObjectKS] content];
-    SVContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"ContentObject"    
+    SVPlugInContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"ContentObject"    
                                                              inManagedObjectContext:[body managedObjectContext]];
     [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
     [element setContainer:body];
