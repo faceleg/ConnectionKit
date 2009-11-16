@@ -238,6 +238,8 @@
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInContentObject.h */; };
 		272B38CE10B18FB60056B4CA /* SVPlugInContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInContentObject.m */; };
+		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
+		272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */; };
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */ = {isa = PBXBuildFile; fileRef = 272C18940D0C131B00734495 /* KTMediaFileUpload.m */; };
 		272DA58A108E6F42007A99D5 /* SVElementPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVElementPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1676,6 +1678,8 @@
 		272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocSiteOutlineController+Selection.m"; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInContentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInContentObject.h; sourceTree = "<group>"; };
 		272B38CC10B18FB60056B4CA /* SVPlugInContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInContentObject.m; sourceTree = "<group>"; };
+		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
+		272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorButtonCell.m; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
 		272DA588108E6F42007A99D5 /* SVElementPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVElementPlugIn.h; sourceTree = "<group>"; };
@@ -2773,6 +2777,8 @@
 				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
 				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
 				27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */,
+				272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */,
+				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -5128,6 +5134,7 @@
 				CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */,
 				27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */,
 				272B38CD10B18FB60056B4CA /* SVPlugInContentObject.h in Headers */,
+				272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6506,6 +6513,7 @@
 				2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */,
 				CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */,
 				272B38CE10B18FB60056B4CA /* SVPlugInContentObject.m in Sources */,
+				272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -24,5 +24,6 @@
 
 
 @property(nonatomic, copy) SVContentObjectWrap *wrap;
+@property(nonatomic, copy) NSNumber *wrapIsFloatOrBlock;    // setter picks best wrap type
 
 @end

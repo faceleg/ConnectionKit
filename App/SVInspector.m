@@ -8,6 +8,7 @@
 
 #import "SVInspector.h"
 #import "SVInspectorViewController.h"
+//#import "SVWrapInspector.h"
 
 #import "KTDocWindowController.h"
 

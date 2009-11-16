@@ -187,13 +187,16 @@
 - (NSNumber *)wrapIsFloatOrBlock
 {
     NSNumber *result = [self wrap];
-    if ([result intValue] > 1) result = [NSNumber numberWithBool:YES];
+    if (![result isEqualToNumber:SVContentObjectWrapNone])
+    {
+        result = [NSNumber numberWithBool:YES];
+    }
     return result;
 }
 
 - (void)setWrapIsFloatOrBlock:(NSNumber *)useFloatOrBlock
 {
-    
+    [self setWrap:useFloatOrBlock];
 }
 
 - (NSSet *)keyPathsForValuesAffectingWrapIsFloatOrBlock
