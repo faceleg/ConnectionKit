@@ -22,4 +22,7 @@
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (KTElementPlugin *)plugin;
 
+
+@property(nonatomic, copy) SVContentObjectWrap *wrap;
+
 @end

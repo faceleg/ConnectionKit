@@ -18,8 +18,9 @@
 
 @implementation SVContentObject 
 
-#pragma mark Accessors
+#pragma mark Placement
 
+@dynamic wrap;
 @dynamic container;
 
 #pragma mark HTML

@@ -175,6 +175,15 @@
 	return result;
 }
 
+#pragma mark Placement
+
+@dynamic wrap;
+- (BOOL)validateWrap:(SVContentObjectWrap **)wrap error:(NSError **)error
+{
+    BOOL result = YES;
+    // FIXME: ensure it's one of the allowed values
+    return result;
+}
 
 #pragma mark HTML
 

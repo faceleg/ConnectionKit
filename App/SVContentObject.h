@@ -11,13 +11,27 @@
 #import "SVElementPlugIn.h"
 
 
+#define SVContentObjectWrapNone [NSNumber numberWithInteger:0]
+#define SVContentObjectWrapFloatLeft [NSNumber numberWithInteger:1]
+#define SVContentObjectWrapFloatRight [NSNumber numberWithInteger:3]
+#define SVContentObjectWrapBlockLeft [NSNumber numberWithInteger:4]
+#define SVContentObjectWrapBlockCenter [NSNumber numberWithInteger:5]
+#define SVContentObjectWrapBlockRight [NSNumber numberWithInteger:6]
+typedef NSNumber SVContentObjectWrap;
+
+
+#pragma mark -
+
+
 @class SVPageletBody, KTElementPlugin;
 
 
 @interface SVContentObject : NSManagedObject
 
 
-@property (nonatomic, retain) SVPageletBody *container;
+#pragma mark Placement
+@property(nonatomic, copy, readonly) SVContentObjectWrap *wrap;
+@property(nonatomic, retain) SVPageletBody *container;
 
 
 #pragma mark HTML
@@ -28,6 +42,5 @@
 - (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
 
 @end
-
 
 
