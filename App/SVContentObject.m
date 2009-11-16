@@ -29,7 +29,9 @@
 
 - (NSString *)archiveHTMLString;
 {
-    NSString *result = [NSString stringWithFormat:@"<object id=\"%@\" />", [self elementID]];
+    NSString *result = [NSString stringWithFormat:
+                        @"<object id=\"%@\" />",
+                        [self elementID]];
     return result;
 }
 
