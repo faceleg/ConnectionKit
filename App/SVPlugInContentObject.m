@@ -191,6 +191,15 @@
     return [[self plugIn] HTMLString];
 }
 
+- (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
+{
+    // Need to use the plug-in's ID rather than our own
+    OBPRECONDITION(document);
+    
+    DOMElement *result = [document getElementById:[[self plugIn] elementID]];
+    return result;
+}
+
 #pragma mark Deprecated
 
 // Loads of old plug-ins rely on this property
