@@ -32,7 +32,11 @@
     return result;
 }
 
-- (NSString *)HTMLString { SUBCLASSMUSTIMPLEMENT; }
+- (NSString *)HTMLString
+{
+    SUBCLASSMUSTIMPLEMENT;
+    return nil;
+}
 
 - (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
 {

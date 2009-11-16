@@ -10,6 +10,11 @@
 
 
 @interface SVPlugInContentObject : SVContentObject
+{
+  @private
+    id  _plugIn;
+}
+
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 

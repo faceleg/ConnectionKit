@@ -15,10 +15,6 @@
 
 
 @interface SVContentObject : NSManagedObject
-{
-    id  _plugIn;
-}
-
 
 
 @property (nonatomic, retain) SVPageletBody *container;
