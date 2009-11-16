@@ -451,6 +451,7 @@
                                                              inManagedObjectContext:[body managedObjectContext]];
     [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
     [element setContainer:body];
+    [element setWrap:SVContentObjectWrapNone];
     [element awakeFromBundleAsNewlyCreatedObject:YES];
     
     
