@@ -1,0 +1,150 @@
+{
+	da =
+	{
+		"EMail:" = "E-post:";	/* or E-postadresse */
+		"Message:" = "Besked:";	/* or Meddelelse ? */
+		"Name:" = "Navn:";
+		"Send" = "Send";
+		"Subject:" = "Emne:";
+	};
+	de =
+	{
+		"EMail:" = "E-Mail:";
+		"Message:" = "Nachricht:";
+		"Name:" = "Name:";
+		"Send" = "Senden";
+		"Subject:" = "Betreff:";
+	};
+	en =
+	{
+		"EMail:" = "Email:";
+		"Message:" = "Message:";
+		"Name:" = "Name:";
+		"Send" = "Send";
+		"Subject:" = "Subject:";
+	};
+	es =
+	{
+		"EMail:" = "Correo electr.:";	/* or just Correo or Dirección de correo */
+		"Message:" = "Mensaje:";
+		"Name:" = "Nombre:";
+		"Send" = "Enviar";
+		"Subject:" = "Asunto:";
+	};
+	fi =
+	{
+		"EMail:" = "Sähköposti:";	/* or Sähköpostiosoite */
+		"Message:" = "Viesti:";
+		"Name:" = "Nimi:";
+		"Send" = "Lähetä";
+		"Subject:" = "Aihe:";
+	};
+	fr =
+	{
+		"EMail:" = "Adresse électr. :"; /* or Adresse électronique */
+		"Message:" = "Message :";
+		"Name:" = "Nom :";
+		"Send" = "Envoyer";
+		"Subject:" = "Objet :";
+	};
+	it =
+	{
+		"EMail:" = "E-mail:";	/* or Indirizzo e-mail */
+		"Message:" = "Messaggio:";
+		"Name:" = "Nome:";
+		"Send" = "Invia";
+		"Subject:" = "Oggetto:";
+	};
+	ja =
+	{
+		"EMail:" = "メール：";		/* or メールアドレス： */
+		"Message:" = "メッセージ：";
+		"Name:" = "名前：";
+		"Send" = "送信";
+		"Subject:" = "件名：";
+	};
+	ko =
+	{
+		"EMail:" = "이메일:";		/* or 이메일 주소: */
+		"Message:" = "메시지:";
+		"Name:" = "이름:";
+		"Send" = "전송";	/* or 보내기 */
+		"Subject:" = "제목:";
+	};
+	nl =
+	{
+		"EMail:" = "E-mail:";	/* or E-mailadres: */
+		"Message:" = "Bericht:";
+		"Name:" = "Naam:";
+		"Send" = "Verstuur";
+		"Subject:" = "Onderwerp:";
+	};
+	no =
+	{
+		"EMail:" = "E-post:";	/* or E-postadresse: */
+		"Message:" = "Melding:";
+		"Name:" = "Navn:";
+		"Send" = "Send";
+		"Subject:" = "Emne:";
+	};
+	pt =
+	{
+		"EMail:" = "E-mail:";	/* or Endereço de E-mail */
+		"Message:" = "Mensagem:";
+		"Name:" = "Nome:";
+		"Send" = "Enviar";
+		"Subject:" = "Assunto:";
+	};
+	ru =
+	{
+		/* courtesy of Evgeny Bykov */
+		"EMail:" = "Адрес Email:";
+		"Message:" = "Сообщение:";
+		"Name:" = "Имя:";
+		"Send" = "Отправить";
+		"Subject:" = "Тема:";
+	};
+	sv =
+	{
+		"EMail:" = "E-post:";	/* or E-postadress */
+		"Message:" = "Meddelande:";
+		"Name:" = "Namn:";
+		"Send" = "Skicka";
+		"Subject:" = "Ämne:";
+	};
+	zh =	/* zh_CN strictly, but if we just have zh then it will be found more likely */
+	{
+		"EMail:" = "电子邮件:";	/* or 电子邮件地址： */
+		"Message:" = "信息：";
+		"Name:" = "名称：";
+		"Send" = "发送";
+		"Subject:" = "主题： ";
+	};
+	zh_TW = /* equivalent of zh-Hant ?  use that for the language code in the page types? */
+	{
+		/* courtesy of Jack Lin */
+		"EMail:" = "子]件：";
+		"Message:" = "息：";
+		"Name:" = "姓名：";
+		"Send" = "魉";
+		"Subject:" = "主}：";
+		
+		/*
+			original candidates, from apple glossaries
+		"EMail:" = "電子郵件：";	or 電子郵件位址：
+		"Message:" = "信件：";	or 訊息：
+		"Name:" = "名稱：";
+		"Send" = "傳送";
+		"Subject:" = "標題：";
+		*/
+	};
+}
+
+
+
+
+
+
+
+
+
