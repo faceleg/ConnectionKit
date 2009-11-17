@@ -1025,6 +1025,7 @@
 		CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CED26DC40D383F4B002C0137 /* a2hosting.png */; };
 		CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */ = {isa = PBXBuildFile; fileRef = CED45AEC0947891100BB172E /* CheckOpenGL.qtz */; };
 		CED45B900947904D00BB172E /* ScreenSaver.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CED45B8F0947904D00BB172E /* ScreenSaver.framework */; };
+		CED82C7D10B23248004677E4 /* SVDesignChooserImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */; };
 		CED850780BD33EAE00FED416 /* dotmac.png in Resources */ = {isa = PBXBuildFile; fileRef = CED850770BD33EAE00FED416 /* dotmac.png */; };
 		CED85A6B0BD35D5600FED416 /* draftPattern.png in Resources */ = {isa = PBXBuildFile; fileRef = CED85A6A0BD35D5600FED416 /* draftPattern.png */; };
 		CED8650910AA45AF002DF34F /* iMedia.framework in Copy Frameworks */ = {isa = PBXBuildFile; fileRef = CEB122FB10AA0F6A00E36F07 /* iMedia.framework */; };
@@ -2577,6 +2578,8 @@
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
+		CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageView.h; sourceTree = "<group>"; };
+		CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageView.m; sourceTree = "<group>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
 		CE91721109D51E530003310B /* target_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target_set.png; sourceTree = "<group>"; };
 		CE9218830809A40500E7F46B /* toolbar_collection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_collection.png; sourceTree = "<group>"; };
@@ -3445,6 +3448,8 @@
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
 				3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */,
 				3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */,
+				CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */,
+				CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */,
 			);
 			name = "Design Chooser";
 			sourceTree = "<group>";
@@ -6514,6 +6519,7 @@
 				CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */,
 				272B38CE10B18FB60056B4CA /* SVPlugInContentObject.m in Sources */,
 				272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */,
+				CED82C7D10B23248004677E4 /* SVDesignChooserImageView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

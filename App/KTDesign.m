@@ -24,6 +24,137 @@
 #import "Debug.h"
 
 
+const CGFloat kMyDrawingFunctionWidth = 100.0;
+const CGFloat kMyDrawingFunctionHeight = 65.0;
+
+void MyDrawingFunction(CGContextRef context, CGRect bounds)
+{
+	CGRect imageBounds = CGRectMake(0.0, 0.0, kMyDrawingFunctionWidth, kMyDrawingFunctionHeight);
+	CFMutableArrayRef contexts = CFArrayCreateMutable(NULL, 0, &kCFTypeArrayCallBacks);
+	size_t bytesPerRow;
+	void *bitmapData;
+	CGColorSpaceRef space = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+	CGImageRef contextImage;
+	CGRect effectBounds;
+	unsigned char *pixels;
+	CGFloat minX, maxX, minY, maxY;
+	size_t width, height;
+	CGRect drawRect;
+	CGMutablePathRef path;
+	CGGradientRef gradient;
+	CGFloat topHeight;
+	CGFloat bottomHeight;
+	CGColorRef clearColor;
+	CGContextRef maskContext;
+	CGImageRef maskImage;
+	CGFloat resolution;
+	CGColorRef color;
+	CFMutableArrayRef colors;
+	CGAffineTransform transform;
+	
+	transform = CGContextGetUserSpaceToDeviceSpaceTransform(context);
+	resolution = sqrt(fabs(transform.a * transform.d - transform.b * transform.c)) * 0.5 * (bounds.size.width / imageBounds.size.width + bounds.size.height / imageBounds.size.height);
+	
+	CGContextSaveGState(context);
+	CGContextClipToRect(context, bounds);
+	CGContextTranslateCTM(context, bounds.origin.x, bounds.origin.y);
+	CGContextScaleCTM(context, (bounds.size.width / imageBounds.size.width), (bounds.size.height / imageBounds.size.height));
+	
+	// Setup for Glass Effect
+	CFArrayAppendValue(contexts, context);
+	bytesPerRow = 4 * round(bounds.size.width);
+	bitmapData = calloc(bytesPerRow * round(bounds.size.height), 8);
+	context = CGBitmapContextCreate(bitmapData, round(bounds.size.width), round(bounds.size.height), 8, bytesPerRow, space, kCGImageAlphaPremultipliedLast);
+	CGContextClipToRect(context, bounds);
+	CGContextScaleCTM(context, (bounds.size.width / imageBounds.size.width), (bounds.size.height / imageBounds.size.height));
+	
+	// Layer 1
+	
+	// Glass Effect
+	bitmapData = CGBitmapContextGetData(context);
+	pixels = (unsigned char *)bitmapData;
+	width = round(bounds.size.width);
+	height = round(bounds.size.height);
+	minX = width;
+	maxX = -1.0;
+	minY = height;
+	maxY = -1.0;
+	for (size_t row = 0; row < height; row++) {
+		for (size_t column = 0; column < width; column++) {
+			if (pixels[4 * (width * row + column) + 3] > 0) {
+				minX = fmin(minX, (CGFloat)column);
+				maxX = fmax(maxX, (CGFloat)column);
+				minY = fmin(minY, (CGFloat)(height - row));
+				maxY = fmax(maxY, (CGFloat)(height - row));
+			}
+		}
+	}
+	contextImage = CGBitmapContextCreateImage(context);
+	CGContextRelease(context);
+	free(bitmapData);
+	context = (CGContextRef)CFArrayGetValueAtIndex(contexts, CFArrayGetCount(contexts) - 1);
+	CFArrayRemoveValueAtIndex(contexts, CFArrayGetCount(contexts) - 1);
+	CGContextDrawImage(context, imageBounds, contextImage);
+	if ((minX <= maxX) && (minY <= maxY)) {
+		CGContextSaveGState(context);
+		effectBounds = CGRectMake(minX, minY - 1.0, maxX - minX + 1.0, maxY - minY + 1.0);
+		bytesPerRow = round(effectBounds.size.width);
+		maskContext = CGBitmapContextCreate(NULL, round(effectBounds.size.width), round(effectBounds.size.height), 8, bytesPerRow, NULL, kCGImageAlphaOnly);
+		CGContextDrawImage(maskContext, CGRectMake(-effectBounds.origin.x, -effectBounds.origin.y, bounds.size.width, bounds.size.height), contextImage);
+		maskImage = CGBitmapContextCreateImage(maskContext);
+		CGContextClipToRect(context, bounds);
+		CGContextScaleCTM(context, (imageBounds.size.width / bounds.size.width), (imageBounds.size.height / bounds.size.height));
+		CGContextClipToMask(context, effectBounds, maskImage);
+		CGImageRelease(maskImage);
+		CGContextRelease(maskContext);
+		path = CGPathCreateMutable();
+		topHeight = effectBounds.size.height - (effectBounds.size.height * 0.7) * sqrt(1.0 - (0.5 * 0.5));
+		bottomHeight = effectBounds.size.height * 0.7;
+		drawRect = effectBounds;
+		drawRect.origin.y -= drawRect.size.height * 0.7;
+		drawRect.size.height *= 2.0 * 0.7;
+		drawRect.size.width *= 1.0 / 0.5;
+		drawRect.origin.x -= 0.5 * (drawRect.size.width - effectBounds.size.width);
+		CGPathAddEllipseInRect(path, NULL, drawRect);
+		CGContextSaveGState(context);
+		CGContextAddPath(context, path);
+		CGContextEOClip(context);
+		drawRect = effectBounds;
+		drawRect.size.height = bottomHeight;
+		color = CGColorCreateGenericRGB(0.0, 0.0, 0.0, 0.5);
+		clearColor = CGColorCreateCopyWithAlpha(color, 0.0);
+		colors = CFArrayCreateMutable(NULL, 2, &kCFTypeArrayCallBacks);
+		CFArrayAppendValue(colors, clearColor);
+		CFArrayAppendValue(colors, color);
+		gradient = CGGradientCreateWithColors(CGColorGetColorSpace(color), colors, NULL);
+		CFRelease(colors);
+		CGColorRelease(clearColor);
+		CGColorRelease(color);
+		CGContextDrawLinearGradient(context, gradient, CGPointMake(drawRect.origin.x, CGRectGetMaxY(drawRect)), drawRect.origin, 0);
+		CGContextRestoreGState(context);
+		CGContextAddPath(context, path);
+		CGContextAddRect(context, effectBounds);
+		CGContextEOClip(context);
+		CGPathRelease(path);
+		drawRect = effectBounds;
+		drawRect.size.height = topHeight;
+		drawRect.origin.y += effectBounds.size.height - topHeight;
+		CGContextDrawLinearGradient(context, gradient, CGPointMake(drawRect.origin.x, CGRectGetMaxY(drawRect)), drawRect.origin, 0);
+		CGGradientRelease(gradient);
+		color = CGColorCreateGenericRGB(1.0, 1.0, 1.0, 0.3);
+		CGContextSetFillColorWithColor(context, color);
+		CGColorRelease(color);
+		CGContextFillRect(context, effectBounds);
+		CGContextRestoreGState(context);
+	}
+	CGImageRelease(contextImage);
+	
+	CGContextRestoreGState(context);
+	CGColorSpaceRelease(space);
+	CFRelease(contexts);
+}
+
+
 @implementation KTDesign
 
 #pragma mark -
@@ -106,7 +237,8 @@
 
 - (NSString *)contributor
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
+	return @"Cowabunga Baby let the good times roll";
+	// return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
 }
 
 - (NSString *)sidebarBorderable
@@ -214,6 +346,14 @@
 	}
 	return myThumbnail;
 }
+
+
++ (NSSet *)keyPathsForValuesAffectingThumbnailGloss
+{
+    return [NSSet setWithObject:@"thumbnail"];
+}
+
+
 
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
 {

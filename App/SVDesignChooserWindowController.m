@@ -125,12 +125,12 @@
 
 - (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber
 {
-    return [NSArray arrayWithObjects:@"All", @"Business", @"Personal", @"Kids", nil];
+    return [NSArray arrayWithObjects:@"All", @"Business", @"Artistic", @"Family", @"Light", @"Dark", nil ];
 }
 
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar labelForGroup:(NSInteger)groupNumber
 {
-    return @"Kind:";
+    return NSLocalizedString (@"Kind:", @"Label for kind of design; right before list of kinds of designs");
 }
 
 - (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(NSInteger)groupNumber
@@ -142,7 +142,20 @@
            titleOfItem:(NSString *)identifier 
                inGroup:(NSInteger)groupNumber
 {
-    return identifier;
+	static NSDictionary *sDesignScopeBarTitles = nil;
+	if (!sDesignScopeBarTitles)
+	{
+		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
+							  NSLocalizedString(@"All", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"All",
+NSLocalizedString(@"Business", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Business",
+NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Artistic",
+NSLocalizedString(@"Family", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Family",
+NSLocalizedString(@"Light", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Light",
+NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Dark",
+								 nil];
+	}
+	return [sDesignScopeBarTitles objectForKey:identifier];
 }
+
 
 @end

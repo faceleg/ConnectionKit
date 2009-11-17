@@ -64,20 +64,21 @@
 
 @implementation SVDesignChooserSelectionView
 
+
 // view's hidden binding is bound to viewcontoller.selection (NSNegateBoolean)
 // so this only appears drawn around the selection
 - (void)drawRect:(NSRect)rect
 {
-    // do a very thick line in a dark color to frame what's underneath
-    NSBezierPath *lowlightPath = [NSBezierPath bezierPathWithRect:rect];
-    [lowlightPath setLineJoinStyle:NSRoundLineJoinStyle];
-    [lowlightPath setLineWidth:7.0];
-    [[NSColor blackColor] set];
-    [lowlightPath stroke];
-    
-    // do a thinner line in selectedControlColor to indicate selection
-    NSBezierPath *highlightPath = [NSBezierPath bezierPathWithRect:rect];
-    [highlightPath setLineWidth:6.0];
+	// draw a rectangle under where the highlight will go
+    NSBezierPath *underPath = [NSBezierPath bezierPathWithRect:rect];
+    [underPath setLineWidth:3.0];
+    [underPath setLineJoinStyle:NSRoundLineJoinStyle];
+    [[NSColor colorWithCalibratedWhite:0.10 alpha:1.0] set];
+    [underPath stroke];
+	
+    // do a thicker line in selectedControlColor to indicate selection
+    NSBezierPath *highlightPath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(rect, 1.5, 1.5) xRadius:9.0 yRadius:9.0];
+    [highlightPath setLineWidth:3.0];
     [highlightPath setLineJoinStyle:NSRoundLineJoinStyle];
     [[NSColor alternateSelectedControlColor] set];
     [highlightPath stroke];
