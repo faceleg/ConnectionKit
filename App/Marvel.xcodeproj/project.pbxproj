@@ -551,7 +551,7 @@
 		3CEC8B230BF9097200CC732B /* KTPulsatingOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B280BF9097900CC732B /* KTSiteOutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBFD395093C45930057668A /* KTSiteOutlineView.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B290BF9097B00CC732B /* KTStackView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE16A3D8087319720006F80B /* KTStackView.h */; settings = {ATTRIBUTES = (); }; };
-		3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941DC0D623E5400B1C83D /* ContactPassword.h */; settings = {ATTRIBUTES = (Private, ); }; };
+		3CF941DD0D623E5400B1C83D /* SubscribePassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941DC0D623E5400B1C83D /* SubscribePassword.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3CF941DF0D623E6B00B1C83D /* larger.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941DE0D623E6B00B1C83D /* larger.png */; };
 		3CF941E10D623E6F00B1C83D /* mag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941E00D623E6F00B1C83D /* mag.png */; };
 		3CF941E30D623E7200B1C83D /* none.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941E20D623E7200B1C83D /* none.png */; };
@@ -2058,7 +2058,7 @@
 		3CF941CC0D623BDF00B1C83D /* KTDataMigrator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrator.h; sourceTree = "<group>"; };
 		3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrator.m; sourceTree = "<group>"; };
 		3CF941DA0D623E4900B1C83D /* NSImagePicker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NSImagePicker.h; sourceTree = "<group>"; };
-		3CF941DC0D623E5400B1C83D /* ContactPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPassword.h; sourceTree = "<group>"; };
+		3CF941DC0D623E5400B1C83D /* SubscribePassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SubscribePassword.h; sourceTree = "<group>"; };
 		3CF941DE0D623E6B00B1C83D /* larger.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = larger.png; sourceTree = "<group>"; };
 		3CF941E00D623E6F00B1C83D /* mag.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = mag.png; sourceTree = "<group>"; };
 		3CF941E20D623E7200B1C83D /* none.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = none.png; sourceTree = "<group>"; };
@@ -3895,7 +3895,7 @@
 		3C5A73330BF7B39500776464 /* Private Headers (DO NOT EXPORT) */ = {
 			isa = PBXGroup;
 			children = (
-				3CF941DC0D623E5400B1C83D /* ContactPassword.h */,
+				3CF941DC0D623E5400B1C83D /* SubscribePassword.h */,
 			);
 			name = "Private Headers (DO NOT EXPORT)";
 			sourceTree = "<group>";
@@ -4791,7 +4791,7 @@
 				3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */,
 				3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */,
 				3C682BDC0D62354700B4D485 /* KTView.h in Headers */,
-				3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */,
+				3CF941DD0D623E5400B1C83D /* SubscribePassword.h in Headers */,
 				3CF942290D6244BB00B1C83D /* DOMNode+KTExtensions.h in Headers */,
 				3CE79D890D6260D000FCEE6D /* NSArray+KTExtensions.h in Headers */,
 				3CE79DB90D6261B300FCEE6D /* NSOutlineView+KTExtensions.h in Headers */,

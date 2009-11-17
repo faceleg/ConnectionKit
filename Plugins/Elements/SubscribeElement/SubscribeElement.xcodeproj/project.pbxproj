@@ -304,7 +304,7 @@
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
-					0x500e0000,
+					0x505e0000,
 					"-lssl",
 					"-lcrypto",
 					"-lz",
@@ -321,7 +321,7 @@
 				INFOPLIST_FILE = Info.plist;
 				OTHER_LDFLAGS = (
 					"-seg1addr",
-					0x500e0000,
+					0x505e0000,
 					"-lssl",
 					"-lcrypto",
 					"-lz",
