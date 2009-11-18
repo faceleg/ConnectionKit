@@ -25,6 +25,7 @@
 #pragma mark HTML
 
 @dynamic elementID;
+- (NSString *)editingElementID { return [self elementID]; }
 
 - (NSString *)archiveHTMLString;
 {

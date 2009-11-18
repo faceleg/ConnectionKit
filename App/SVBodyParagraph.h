@@ -12,8 +12,6 @@
 @class SVPlugInContentObject;
 
 @interface SVBodyParagraph :  SVBodyElement  
-{
-}
 
 @property (nonatomic, retain) NSString * tagName;
 @property (nonatomic, retain) NSString * archivedInnerHTMLString;

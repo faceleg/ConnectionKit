@@ -9,6 +9,8 @@
 #import "SVBodyParagraph.h"
 
 #import "SVPlugInContentObject.h"
+#import "SVHTMLContext.h"
+
 
 @implementation SVBodyParagraph 
 
@@ -18,10 +20,22 @@
 
 - (NSString *)HTMLString;
 {
-    NSString *result = [NSString stringWithFormat:
-                        @"<%@>%@</>",
-                        [self tagName],
-                        [self archivedInnerHTMLString]];
+    NSString *result;
+    if ([[SVHTMLContext currentContext] isEditable])
+    {
+        result = [NSString stringWithFormat:
+                  @"<%@ id=\"%@\">%@</>",
+                  [self tagName],
+                  [self editingElementID],
+                  [self archivedInnerHTMLString]];
+    }
+    else
+    {
+        result = [NSString stringWithFormat:
+                            @"<%@>%@</>",
+                            [self tagName],
+                            [self archivedInnerHTMLString]];
+    }
     
     return result;
 }

@@ -28,6 +28,9 @@
 #pragma mark HTML
 - (NSString *)HTMLString;
 
+// When editing, all SVBodyElements should generate a valid ID that can be used to identify them. Otherwise, they have free choice whether to supply an ID. Thus, this value is not required to be KVO-compliant, but subclasses may choose to do so.
+- (NSString *)editingElementID;
+
 @end
 
 
