@@ -11,6 +11,12 @@
 #import "KSPlugin.h"
 #import "KT.h"
 
+@interface NSCollectionView (LeopardPrivateOrSnowLeopardOnly)
+
+- (struct CGRect)_frameRectForIndexInGrid:(unsigned long long)arg1 gridSize:(struct CGSize)arg2;
+- (NSRect)frameForItemAtIndex:(NSUInteger)index;
+
+@end
 
 @implementation SVDesignChooserViewController
 
@@ -21,6 +27,74 @@
     
     // restrict to a max of 4 columns
     [oCollectionView setMaxNumberOfColumns:4];
+}
+
+- (void) setupTrackingRects;		// do this after the view is added and resized
+{
+	trackingRect_ = [oCollectionView addTrackingRect:[oCollectionView frame] owner:self userData:nil assumeInside:NO];
+	
+	// a register for those notifications on the synchronized content view.
+    [[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(viewBoundsDidChange:)
+												 name:NSViewBoundsDidChangeNotification
+											   object:oCollectionView];
+}
+
+
+- (void)mouseEntered:(NSEvent *)theEvent
+{
+	wasAcceptingMouseEvents_ = [[oCollectionView window] acceptsMouseMovedEvents];
+	[[oCollectionView window] setAcceptsMouseMovedEvents:YES];
+    [[oCollectionView window] makeFirstResponder:self];
+
+	NSLog(@"%s %@",__FUNCTION__, theEvent);
+}
+- (void)mouseExited:(NSEvent *)theEvent
+{
+    [[oCollectionView window] setAcceptsMouseMovedEvents:wasAcceptingMouseEvents_];
+	NSLog(@"%s %@",__FUNCTION__, theEvent);
+}
+- (void)mouseMoved:(NSEvent *)theEvent
+{
+//	NSLog(@"%s %@",__FUNCTION__, theEvent);
+	NSPoint windowPoint = [theEvent locationInWindow];
+	NSPoint localPoint = [oCollectionView convertPoint:windowPoint fromView:nil];
+
+	NSSize itemSize = [oCollectionView minItemSize];		// this is constant in our case
+	int xIndex = localPoint.x / itemSize.width;
+	int yIndex = localPoint.y / itemSize.height;
+	int listIndex = yIndex * 4 + xIndex;
+	if (listIndex <= [[oCollectionView content] count])
+	{
+		
+		NSRect frameForItemAtIndex = NSZeroRect;
+		
+		if ([oCollectionView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.5
+		{
+			frameForItemAtIndex = [oCollectionView frameForItemAtIndex:listIndex];
+		}
+		if ([oCollectionView respondsToSelector:@selector(_frameRectForIndexInGrid:gridSize:)])		// 10.6
+		{
+			CGSize gridSize = NSSizeToCGSize(itemSize);
+			CGRect asCGRect = [oCollectionView _frameRectForIndexInGrid:listIndex gridSize:gridSize];
+			frameForItemAtIndex = NSRectFromCGRect(asCGRect);
+		}
+		
+		NSLog(@"%s %d,%d -> %d : %@",__FUNCTION__, xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
+	}
+	else
+	{
+		NSLog(@"out of bounds");
+	}
+}
+
+
+
+- (void)viewBoundsDidChange:(NSNotification *)aNotif;
+{
+    // we set up a tracking region so we can get mouseEntered and mouseExited events
+    [oCollectionView removeTrackingRect:trackingRect_];
+    trackingRect_ = [oCollectionView addTrackingRect:[oCollectionView frame] owner:self userData:nil assumeInside:NO];
 }
 
 @synthesize designs = designs_;

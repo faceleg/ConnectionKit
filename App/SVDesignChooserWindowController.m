@@ -32,6 +32,8 @@
     
     // make sure we resize the viewController's view to match its superview
     [[viewController_ view] setFrame:[oTargetView bounds]];
+	
+	[viewController_ setupTrackingRects];
 }
 
 - (void)displayAsSheet

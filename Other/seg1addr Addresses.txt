@@ -38,7 +38,7 @@ Reserved for use by system services. Do not use this address range.
 0x40000000				Third-party plugins
 
 0x50000000             Our Plugins
-505E 0000 is next available slot, increment by 2 0000 .... see a crash report for layout
+5060 0000 is next available slot, increment by 2 0000 .... see a crash report for layout
 0x504c0000 - amazon (giving 3 slots)
 0x50520000 - IM status
 0x50540000 - Page Counter
