@@ -6,11 +6,11 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVParagraph.h"
+#import "SVBodyParagraph.h"
 
 #import "SVPlugInContentObject.h"
 
-@implementation SVParagraph 
+@implementation SVBodyParagraph 
 
 @dynamic tagName;
 @dynamic archivedInnerHTMLString;

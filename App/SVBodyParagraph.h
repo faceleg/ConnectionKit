@@ -11,7 +11,7 @@
 
 @class SVPlugInContentObject;
 
-@interface SVParagraph :  SVBodyElement  
+@interface SVBodyParagraph :  SVBodyElement  
 {
 }
 
@@ -22,7 +22,7 @@
 @end
 
 
-@interface SVParagraph (CoreDataGeneratedAccessors)
+@interface SVBodyParagraph (CoreDataGeneratedAccessors)
 - (void)addInlineContentObjectsObject:(SVPlugInContentObject *)value;
 - (void)removeInlineContentObjectsObject:(SVPlugInContentObject *)value;
 - (void)addInlineContentObjects:(NSSet *)value;

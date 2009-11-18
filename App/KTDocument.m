@@ -62,7 +62,7 @@
 #import "KTPage+Internal.h"
 #import "KTPagelet+Internal.h"
 #import "SVPagelet.h"
-#import "SVParagraph.h"
+#import "SVBodyParagraph.h"
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
@@ -245,7 +245,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [pagelet setSidebarSortKey:[NSNumber numberWithShort:0]];
         [pagelet setTitleHTMLString:@"Test"];
         
-        SVParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"Paragraph"
+        SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
                                                                inManagedObjectContext:[self managedObjectContext]];
         [paragraph setTagName:@"p"];
         [paragraph setArchivedInnerHTMLString:@"Test paragraph"];
