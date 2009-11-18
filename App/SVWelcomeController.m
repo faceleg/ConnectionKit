@@ -278,13 +278,16 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 	NSRect separatorFrame = [oRecentBox frame];
 	
 	NSArray *recentDocs = [oRecentDocsController content];
+	NSRect contentViewRect = [[self window] contentRectForFrameRect:[[self window] frame]];
+	
+	
 	if ([recentDocs count])
 	{
-		[[self window] setContentSize:NSMakeSize(NSMaxX(separatorFrame), NSHeight([[self window] frame]))];
+		[[self window] setContentSize:NSMakeSize(NSMaxX(separatorFrame), NSHeight(contentViewRect))];
 	}
 	else
 	{
-		[[self window] setContentSize:NSMakeSize(NSMinX(separatorFrame)-1, NSHeight([[self window] frame]))];
+		[[self window] setContentSize:NSMakeSize(NSMinX(separatorFrame)-1, NSHeight(contentViewRect))];
 	}
 	[super showWindow:sender];
 }

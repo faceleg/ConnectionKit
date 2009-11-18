@@ -12,6 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="6"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -47,10 +48,10 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSWindowContentMaxSize">{920, 482}</string>
 				<string key="NSWindowContentMinSize">{920, 482}</string>
 				<object class="NSView" key="NSWindowView" id="151379416">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -127,7 +128,7 @@
 						</object>
 						<object class="NSBox" id="815357590">
 							<reference key="NSNextResponder" ref="151379416"/>
-							<int key="NSvFlags">12</int>
+							<int key="NSvFlags">20</int>
 							<string key="NSFrame">{{652, 50}, {5, 432}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<string key="NSOffsets">{0, 0}</string>
@@ -290,6 +291,7 @@
 													</object>
 													<string key="NSFrame">{{1, 1}, {208, 367}}</string>
 													<reference key="NSSuperview" ref="492737931"/>
+													<reference key="NSNextKeyView" ref="891262708"/>
 													<reference key="NSDocView" ref="891262708"/>
 													<reference key="NSBGColor" ref="789047625"/>
 													<int key="NScvFlags">4</int>
@@ -316,6 +318,7 @@
 											</object>
 											<string key="NSFrame">{{20, 16}, {225, 369}}</string>
 											<reference key="NSSuperview" ref="263548748"/>
+											<reference key="NSNextKeyView" ref="567445930"/>
 											<int key="NSsFlags">18</int>
 											<reference key="NSVScroller" ref="1017002275"/>
 											<reference key="NSHScroller" ref="163293123"/>
@@ -378,7 +381,7 @@
 						</object>
 						<object class="NSBox" id="695330562">
 							<reference key="NSNextResponder" ref="151379416"/>
-							<int key="NSvFlags">36</int>
+							<int key="NSvFlags">20</int>
 							<object class="NSMutableArray" key="NSSubviews">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSView" id="916748901">
@@ -592,6 +595,8 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 							<int key="NSBoxType">4</int>
 							<int key="NSTitlePosition">0</int>
 							<bool key="NSTransparent">NO</bool>
+							<real value="0.0" key="NSBorderWidth2"/>
+							<reference key="NSBorderColor2" ref="797544106"/>
 							<object class="NSColor" key="NSFillColor2">
 								<int key="NSColorSpace">3</int>
 								<bytes key="NSWhite">MC45Mzk5OTk5OTc2AA</bytes>
@@ -599,10 +604,11 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 						</object>
 					</object>
 					<string key="NSFrameSize">{920, 482}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{920, 504}</string>
-				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
+				<string key="NSMaxSize">{920, 504}</string>
 				<string key="NSFrameAutosaveName"/>
 			</object>
 			<object class="NSUserDefaultsController" id="556529560">
@@ -1381,6 +1387,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 					<string>44.ImportedFromIB2</string>
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
+					<string>5.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>5.IBWindowTemplateEditedContentRect</string>
 					<string>5.ImportedFromIB2</string>
 					<string>5.NSWindowTemplate.visibleAtLaunch</string>
@@ -1451,14 +1458,15 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{65, 319}, {920, 482}}</string>
+					<string>{{634, 529}, {920, 482}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{65, 319}, {920, 482}}</string>
+					<boolean value="YES"/>
+					<string>{{634, 529}, {920, 482}}</string>
 					<boolean value="YES"/>
 					<boolean value="NO"/>
-					<boolean value="NO"/>
 					<boolean value="YES"/>
-					<string>{800, 371}</string>
+					<boolean value="YES"/>
+					<string>{920, 482}</string>
 					<string>{920, 482}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>

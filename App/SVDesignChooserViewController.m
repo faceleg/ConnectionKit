@@ -60,7 +60,7 @@
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [oCollectionView convertPoint:windowPoint fromView:nil];
 
-	NSSize itemSize = [oCollectionView minItemSize];		// this is constant in our case
+	NSSize itemSize = NSMakeSize(190,140);		// this is constant in our case ... is there any good way to query this?
 	int xIndex = localPoint.x / itemSize.width;
 	int yIndex = localPoint.y / itemSize.height;
 	int listIndex = yIndex * 4 + xIndex;
@@ -69,11 +69,11 @@
 		
 		NSRect frameForItemAtIndex = NSZeroRect;
 		
-		if ([oCollectionView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.5
+		if ([oCollectionView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
 		{
 			frameForItemAtIndex = [oCollectionView frameForItemAtIndex:listIndex];
 		}
-		if ([oCollectionView respondsToSelector:@selector(_frameRectForIndexInGrid:gridSize:)])		// 10.6
+		if ([oCollectionView respondsToSelector:@selector(_frameRectForIndexInGrid:gridSize:)])		// 10.5
 		{
 			CGSize gridSize = NSSizeToCGSize(itemSize);
 			CGRect asCGRect = [oCollectionView _frameRectForIndexInGrid:listIndex gridSize:gridSize];
