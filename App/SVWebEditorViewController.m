@@ -432,7 +432,7 @@
 	OBASSERT(pagelet);
     
     [pagelet setTitleHTMLString:@"Double-click to edit"];
-    [[pagelet body] setArchiveHTMLString:@"Test"];
+    [[pagelet pageletBody] setArchiveHTMLString:@"Test"];
     
     
     // Place at end of the sidebar

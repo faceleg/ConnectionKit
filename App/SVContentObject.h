@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "KSExtensibleManagedObject.h"
+#import "SVBodyElement.h"
 
 #import "SVElementPlugIn.h"
 
@@ -38,7 +38,7 @@
 @class SVPageletBody, KTElementPlugin;
 
 
-@interface SVContentObject : NSManagedObject <SVContentObject>
+@interface SVContentObject : SVBodyElement <SVContentObject>
 
 
 #pragma mark Placement
