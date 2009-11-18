@@ -7,8 +7,6 @@
 //
 
 #import "KTCodeInjectionController.h"
-
-#import <BWToolkitFramework/BWSplitView.h>
 #import "KTDocWindowController.h"
 #import "KTDocSiteOutlineController.h"
 
@@ -145,14 +143,7 @@
 	}
 	[oCodeInjectionDescriptionLabel setStringValue:description];
 	
-	
-	// Localize other text
-	[oHeadSplitView setDividerDescription:
-		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
-	
-	[oBodySplitView setDividerDescription:
-		NSLocalizedString(@"Sandvox will insert its content between these fields", "Code Injection information")];
-	
+
 	[oPreludeTextView setPlaceholderString:NSLocalizedString(
 		@"Use this field to insert code at the very beginning of the document, before the opening <html> tag. This is never any HTML or Javascript code; it's only for server-side scripts (such as PHP code) to affect the headers, set cookies, etc.",
 		"Code Injection placeholder text")];
