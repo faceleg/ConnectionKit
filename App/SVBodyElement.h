@@ -11,14 +11,21 @@
 @class SVPageletBody;
 
 @interface SVBodyElement :  NSManagedObject  
-{
-}
 
-@property (nonatomic, retain) SVPageletBody * body;
-@property (nonatomic, retain) SVBodyElement * previousElement;
-@property (nonatomic, retain) SVBodyElement * nextElement;
+@property (nonatomic, retain) SVPageletBody *body;
 
 
+#pragma mark Elements Linked List
+
+@property(nonatomic, retain, readonly) SVBodyElement *previousElement;
+@property(nonatomic, retain, readonly) SVBodyElement *nextElement;
+
+- (void)insertAfterElement:(SVBodyElement *)element;    // also use to move an already inserted element...
+- (void)insertBeforeElement:(SVBodyElement *)element;   // ...does NOT set -body to match
+- (void)removeFromElementsList;
+
+
+#pragma mark HTML
 - (NSString *)HTMLString;
 
 @end
