@@ -68,6 +68,13 @@
 @synthesize liveDataFeeds = _liveDataFeeds;
 
 @synthesize generationPurpose = _generationPurpose;
+
+- (BOOL)isEditable { return [self generationPurpose] == kGeneratingPreview; }
++ (NSSet *)keyPathsForValuesAffectingEditable
+{
+    return [NSSet setWithObject:@"generationPurpose"];
+}
+
 - (BOOL)isPublishing
 {
     BOOL result = ([self generationPurpose] != kGeneratingPreview &&
