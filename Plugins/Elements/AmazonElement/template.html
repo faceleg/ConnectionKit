@@ -1,20 +1,20 @@
-[[if listSource==0]]
-[[if delegate.productsSuitableForPublishing]]
+[[if propertiesStorage.listSource==0]]
+[[if productsSuitableForPublishing]]
 [[comment WE HAVE PRODUCTS.  LET'S SHOW 'EM. ]]
-[[if layout==6]]
+[[if propertiesStorage.layout==6]]
 <ul>
-[[foreach delegate.productsSuitableForPublishing aProduct]]
+[[foreach productsSuitableForPublishing aProduct]]
 	<li class="amazonList">
 		<p class="amazonListBulletsParagraph"><a href="[[=&aProduct.URL]]">[[=&aProduct.title]]</a></p>
-[[if showCreators&&aProduct.creator]]		<p class="amazonListBulletsParagraph">[[=&aProduct.creator]]</p>[[endif4]]
-[[if showComments&&aProduct.comment]]		<p class="amazonListBulletsParagraph"><i>[[=&aProduct.comment]]</i></p>[[endif4]]
+[[if propertiesStorage.showCreators&&aProduct.creator]]		<p class="amazonListBulletsParagraph">[[=&aProduct.creator]]</p>[[endif4]]
+[[if propertiesStorage.showComments&&aProduct.comment]]		<p class="amazonListBulletsParagraph"><i>[[=&aProduct.comment]]</i></p>[[endif4]]
 	</li>
 [[endForEach]]
 </ul>
 [[else3]]
-<div class="amazonList [[=layoutCSSClassName]][[if frame==1]] amazonListWhiteBackground[[endif4]]">
+<div class="amazonList [[=propertiesStorage.layoutCSSClassName]][[if propertiesStorage.frame==1]] amazonListWhiteBackground[[endif4]]">
 [[if layout==8]]
-<iframe	src="[[=delegate.randomLayoutIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
+<iframe	src="[[=randomLayoutIFrameURL]][[if propertiesStorage.showPrices]][[if propertiesStorage.showNewPricesOnly]]&nou=1[[endif6]][[else5]]&npa=1[[endif5]]"
 	style="width:120px; height:240px;"
 	scrolling="no"
 	marginwidth="0"
@@ -22,11 +22,11 @@
 	frameborder="0">
 </iframe>
 [[else4]]
-[[foreach delegate.productsSuitableForPublishing aProduct]]
+[[foreach productsSuitableForPublishing aProduct]]
 <div class="amazonListRow [[eo]]">
-[[if layout==7]]
+[[if propertiesStorage.layout==7]]
 [[if HTMLGenerationPurpose||parser.liveDataFeeds]]
-<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL]][[if showPrices]][[if showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
+<iframe	src="[[=&aProduct.enhancedDisplayIFrameURL]][[if propertiesStorage.showPrices]][[if propertiesStorage.showNewPricesOnly]]&nou=1[[endif8]][[else7]]&npa=1[[endif7]]"
 	style="width:120px; height:240px;"
 	scrolling="no"
 	marginwidth="0"
@@ -39,27 +39,27 @@
 </div>
 [[endif6]]
 [[else5]]
-[[if showThumbnails&&aProduct.publishingThumbnailURLString]]
+[[if propertiesStorage.showThumbnails&&aProduct.publishingThumbnailURLString]]
 <a class="imageLink" href="[[=&aProduct.URL]]"><img
 	class="amazonProductThumbnail[[if frame==2]] amazonProductThumbnailFrame[[endif7]]"
-	src="[[if HTMLGenerationPurpose||parser.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&thumbnailPlaceholderURL]][[endif7]]"
+	src="[[if HTMLGenerationPurpose||parser.liveDataFeeds]][[=&aProduct.publishingThumbnailURLString]][[else7]][[=&propertiesStorage.thumbnailPlaceholderURL]][[endif7]]"
 	alt="[[=&aProduct.title]]"
-	width="[[=&delegate.thumbnailWidthsString]]" /></a>
+	width="[[=&thumbnailWidthsString]]" /></a>
 [[endif6]]
 <div class="amazonText">
-[[if showThumbnails]]<div class="amazonListShowThumbnails">[[endif6]]
+[[if propertiesStorage.showThumbnails]]<div class="amazonListShowThumbnails">[[endif6]]
 [[if aProduct.publishingThumbnailURLString]]<div class="amazonTextWithThumbnail">[[endif6]]
-[[if showTitles]]
+[[if propertiesStorage.showTitles]]
 <p class="amazonText"><a href="[[=&aProduct.URL]]">[[=&aProduct.title]]</a></p>
 [[endif6]]
-[[if showCreators&&aProduct.creator]]
+[[if propertiesStorage.showCreators&&aProduct.creator]]
 <p class="amazonText">[[=&aProduct.creator]]</p>
 [[endif6]]
-[[if showComments&&aProduct.comment]]
+[[if propertiesStorage.showComments&&aProduct.comment]]
 <p class="amazonText"><i>[[=&aProduct.comment]]</i></p>
 [[endif6]]
 [[if aProduct.publishingThumbnailURLString]]</div>[[endif6]]
-[[if showThumbnails]]</div>[[endif6]]
+[[if propertiesStorage.showThumbnails]]</div>[[endif6]]
 </div>
 [[comment This is a little hacky but it nicely stops thumbnails being taller than the div. <br style="clear:both"> doesn't work since it inserts an extra, invisible, line of text]]
 <div style="clear:both;"></div>
@@ -79,7 +79,7 @@
 [[comment WISH LIST ]]
 [[if automaticListType>0]]
 [[if HTMLGenerationPurpose||parser.liveDataFeeds]]
-<script src="[[=&delegate.kareliaHTMLURL]]" type="text/javascript"></script>
+<script src="[[=&kareliaHTMLURL]]" type="text/javascript"></script>
 [[else3]]
 <div class="amazonListPlaceholder">
 	[['This is a placeholder; your Amazon list will appear here once published or if you enable live data feeds in the preferences.]]
@@ -91,6 +91,3 @@
 [[endif3]]
 [[endif2]]
 [[endif]]
-<div class="caption">
-	[[textblock property:captionHTML flags:"block optional"]]
-</div>

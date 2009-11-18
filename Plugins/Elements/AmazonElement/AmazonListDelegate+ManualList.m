@@ -48,7 +48,7 @@
 	{
 		// If the store of a product is changed either reset it to the default or change our value to match
 		AmazonStoreCountry productStore = [product store];
-		AmazonStoreCountry currentStore = [[self delegateOwner] integerForKey:@"store"];
+		AmazonStoreCountry currentStore = [[self propertiesStorage] integerForKey:@"store"];
 		
 		if (productStore == currentStore) {
 			return;
@@ -57,7 +57,7 @@
 		unsigned count = [self numberOfManualProductsWithAProductCode];
 		if (count == 0 || (count == 1 & [[self products] containsObjectIdenticalTo:product]))
 		{
-			[[self delegateOwner] setInteger:productStore forKey:@"store"];
+			[[self propertiesStorage] setInteger:productStore forKey:@"store"];
 		}
 		else
 		{
@@ -75,10 +75,10 @@
 {
 	// If the product's store differs to ours, reset it to the default or change our value to match
 	AmazonStoreCountry productStore = [product store];
-	AmazonStoreCountry currentStore = [[self delegateOwner] integerForKey:@"store"];
+	AmazonStoreCountry currentStore = [[self propertiesStorage] integerForKey:@"store"];
 	
 	if ([self numberOfManualProductsWithAProductCode] == 0) {
-		[[self delegateOwner] setInteger:productStore forKey:@"store"];
+		[[self propertiesStorage] setInteger:productStore forKey:@"store"];
 	}
 	else {
 		[product setStore:currentStore];
@@ -167,7 +167,7 @@
 	}
 	
 	NSData *productsData = [NSKeyedArchiver archivedDataWithRootObject:[self products]];
-	[[self delegateOwner] setObject:productsData forKey:@"manualListProducts"];
+	[[self propertiesStorage] setObject:productsData forKey:@"manualListProducts"];
 	
 	if (!registerUndo)
 	{
@@ -183,7 +183,7 @@
 {
 	manualListIsBeingArchivedOrUnarchived = YES;
 	
-	NSData *productsData = [[self delegateOwner] objectForKey:@"manualListProducts"];
+	NSData *productsData = [[self propertiesStorage] objectForKey:@"manualListProducts"];
 	
 	NSArray *products = nil;
 	if (productsData) {
@@ -228,7 +228,7 @@
 - (NSURL *)randomLayoutIFrameURL
 {
 	return [AmazonECSOperation enhancedProductLinkForASINs:[[self productsSuitableForPublishing] valueForKey:@"ASIN"]
-													 store:[[self delegateOwner] integerForKey:@"store"]];
+													 store:[[self propertiesStorage] integerForKey:@"store"]];
 }
 
 #pragma mark -
@@ -238,7 +238,7 @@
 {
 	unsigned result = 0;
 	
-	switch ([[self delegateOwner] integerForKey:@"layout"])
+	switch ([[self propertiesStorage] integerForKey:@"layout"])
 	{
 		case APLayoutLeft:
 		case APLayoutRight:
@@ -246,14 +246,14 @@
 			result = 55;
 			break;
 		case APLayoutCentered:
-			result = [[self delegateOwner] integerForKey:@"centeredThumbnailWidths"];
+			result = [[self propertiesStorage] integerForKey:@"centeredThumbnailWidths"];
 			break;
 		case APLayoutTwoUp:
 			result = 85;
 			break;
 	}
 	
-	if ([[self delegateOwner] integerForKey:@"frame"] == APFrameThumbnails) {
+	if ([[self propertiesStorage] integerForKey:@"frame"] == APFrameThumbnails) {
 		result -= 8;
 	}
 	

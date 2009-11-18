@@ -37,7 +37,7 @@
 		if (store != AmazonStoreUnknown)
 		{
 			// Set our store from the URL
-			[[self delegateOwner] setInteger:store forKey:@"store"];
+			[[self propertiesStorage] setInteger:store forKey:@"store"];
 			
 			// Attempt to get the list type and ID from the URL
 			[URL getAmazonListType:&listType andID:&listID];
@@ -91,7 +91,7 @@
 	if (listID) {
 		*code = listID;
 	}
-	[[self delegateOwner] setInteger:listType forKey:@"automaticListType"];
+	[[self propertiesStorage] setInteger:listType forKey:@"automaticListType"];
 	
 	return YES;
 }
@@ -126,7 +126,7 @@
 - (void)loadAutomaticList
 {
 	// Don't bother if there is no list code set
-	NSString *listCode = [[self delegateOwner] valueForKey:@"automaticListCode"];
+	NSString *listCode = [[self propertiesStorage] valueForKey:@"automaticListCode"];
 	if (!listCode || [listCode isEqualToString:@""])
 	{
 		[self setAutomaticList:nil];
@@ -136,9 +136,9 @@
 	
 	// Begin loading
 	APAmazonList *list = [[APAmazonList alloc] initWithID:listCode
-												 listType:[[self delegateOwner] integerForKey:@"automaticListType"]
-													store:[[self delegateOwner] integerForKey:@"store"]
-												  sorting:[[self delegateOwner] integerForKey:@"automaticListSorting"]
+												 listType:[[self propertiesStorage] integerForKey:@"automaticListType"]
+													store:[[self propertiesStorage] integerForKey:@"store"]
+												  sorting:[[self propertiesStorage] integerForKey:@"automaticListSorting"]
 												 delegate:self];
 	
 	[self setAutomaticList:list];
@@ -161,7 +161,7 @@
 		NSManagedObjectContext *moc = [[self delegateOwner] managedObjectContext];
 		[moc processPendingChanges];
 		[[moc undoManager] disableUndoRegistration];
-		[[self delegateOwner] setInteger:[list listType] forKey:@"automaticListType"];
+		[[self propertiesStorage] setInteger:[list listType] forKey:@"automaticListType"];
 		[moc processPendingChanges];
 		[[moc undoManager] enableUndoRegistration];
 	}
@@ -176,45 +176,45 @@
 	NSMutableDictionary *query = [NSMutableDictionary dictionaryWithCapacity: 19];
 	
 	[query setValue:@"on" forKey:@"js"];	// Enable javascript
-	[query setValue:[NSString stringWithFormat:@"%i", [[self delegateOwner] integerForKey:@"store"]] forKey:@"s"];	// Store
-	[query setValue:[[self delegateOwner] valueForKey:@"automaticListCode"] forKey:@"id"];		// listID
-	[query setValue:[NSString stringWithFormat:@"%i", [[self delegateOwner] integerForKey:@"automaticListType"]] forKey:@"t"];	// listType
-	[query setValue:[NSString stringWithFormat:@"%i", [[self delegateOwner] integerForKey:@"automaticListSorting"]] forKey:@"o"];	// Sorting
-	[query setValue:[NSString stringWithFormat:@"%i", [[self delegateOwner] integerForKey:@"layout"]] forKey:@"l"];	// layout
-	[query setValue:[NSString stringWithFormat:@"%u", [[self delegateOwner] integerForKey:@"centeredThumbnailWidths"]] forKey:@"w"];	// Width of centered thubmnails
-	[query setValue:[NSString stringWithFormat:@"%i", [[self delegateOwner] integerForKey:@"frame"]] forKey:@"f"];	// Frame
+	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"store"]] forKey:@"s"];	// Store
+	[query setValue:[[self propertiesStorage] valueForKey:@"automaticListCode"] forKey:@"id"];		// listID
+	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"automaticListType"]] forKey:@"t"];	// listType
+	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"automaticListSorting"]] forKey:@"o"];	// Sorting
+	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"layout"]] forKey:@"l"];	// layout
+	[query setValue:[NSString stringWithFormat:@"%u", [[self propertiesStorage] integerForKey:@"centeredThumbnailWidths"]] forKey:@"w"];	// Width of centered thubmnails
+	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"frame"]] forKey:@"f"];	// Frame
 	
 	// Number products
-	int maxNoProducts = [[self delegateOwner] integerForKey:@"maxNumberProducts"];
+	int maxNoProducts = [[self propertiesStorage] integerForKey:@"maxNumberProducts"];
 	if (maxNoProducts > 0) {
 		[query setValue:[NSString stringWithFormat:@"%i", maxNoProducts] forKey:@"m"];
 	}
 	
-	if ([[self delegateOwner] boolForKey:@"showThumbnails"]) {
+	if ([[self propertiesStorage] boolForKey:@"showThumbnails"]) {
 		[query setValue:@"on" forKey:@"th"];
 	}
-	if ([[self delegateOwner] boolForKey:@"showTitles"]) {
+	if ([[self propertiesStorage] boolForKey:@"showTitles"]) {
 		[query setValue:@"on" forKey:@"ti"];
 	}
-	if ([[self delegateOwner] boolForKey:@"showCreators"]) {
+	if ([[self propertiesStorage] boolForKey:@"showCreators"]) {
 		[query setValue:@"on" forKey:@"cr"];
 	}
-	if ([[self delegateOwner] boolForKey:@"showComments"]) {
+	if ([[self propertiesStorage] boolForKey:@"showComments"]) {
 		[query setValue:@"on" forKey:@"cm"];
 	}
-	if ([[self delegateOwner] boolForKey:@"showPrices"]) {
+	if ([[self propertiesStorage] boolForKey:@"showPrices"]) {
 		[query setValue:@"on" forKey:@"pr"];
 	}
-	if ([[self delegateOwner] boolForKey:@"showNewPricesOnly"]) {
+	if ([[self propertiesStorage] boolForKey:@"showNewPricesOnly"]) {
 		[query setValue:@"on" forKey:@"np"];
 	}
-	if ([[self delegateOwner] boolForKey:@"showLinkToList"]) {
+	if ([[self propertiesStorage] boolForKey:@"showLinkToList"]) {
 		[query setValue:@"on" forKey:@"fl"];
 	}
 	
 	// Whether products should be bought for the visitor or site owner
-	if ([[self delegateOwner] integerForKey:@"automaticListType"] == AmazonWishList ||
-		[[self delegateOwner] integerForKey:@"automaticListType"] == AmazonWeddingRegistry)
+	if ([[self propertiesStorage] integerForKey:@"automaticListType"] == AmazonWishList ||
+		[[self propertiesStorage] integerForKey:@"automaticListType"] == AmazonWeddingRegistry)
 	{
 		[query setValue:@"on" forKey:@"me"];
 	}

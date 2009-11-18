@@ -45,7 +45,7 @@ typedef enum {
 @class AutomaticAmazonListController;
 
 
-@interface AmazonListDelegate : KTAbstractPluginDelegate <KTDataSource>
+@interface AmazonListDelegate : SVAbstractElementPlugIn <KTDataSource>
 {
 	@private
 	

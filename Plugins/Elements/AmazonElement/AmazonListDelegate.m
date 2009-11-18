@@ -77,23 +77,45 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	//[AmazonOperation setAssociateID:@"karelsofwa-20"];
 }
 
+- (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
+{
+    self = [super initWithPropertiesStorage:storage];
+    
+    
+    // Observer storage
+    [storage addObserver:self
+			   forKeyPath:@"store"
+				  options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
+				  context:NULL];
+	
+	[storage addObserver:self
+			  forKeyPaths:[NSSet setWithObjects:@"layout", @"showThumbnails", @"showTitles", @"automaticListCode", @"automaticListSorting", nil]
+				  options:NSKeyValueObservingOptionNew
+				  context:NULL];
+	
+	[storage addObserver:self
+			  forKeyPaths:[NSSet setWithObjects:@"listSource", @"manualListProducts", nil]
+				  options:0
+				  context:NULL];
+    
+    
+    return self;
+}
+
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
 {
-	KTAbstractElement *element = [self delegateOwner];
-    
-    
-    if (isNewlyCreatedObject)
+	if (isNewlyCreatedObject)
 	{
 		// When creating a new pagelet, try to use the most recent Amazon store
 		NSNumber *lastSelectedStore = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLatestStore"];
 		if (lastSelectedStore)
-			[element setValue:lastSelectedStore forKey:@"store"];
+			[[self propertiesStorage] setValue:lastSelectedStore forKey:@"store"];
 		
 		
 		// And also most recent layout
 		NSNumber *lastLayout = [[NSUserDefaults standardUserDefaults] objectForKey:@"AmazonLastLayout"];
 		if (lastLayout) {
-			[element setValue:lastLayout forKey:@"layout"];
+			[[self propertiesStorage] setValue:lastLayout forKey:@"layout"];
 		}
 		
 		
@@ -115,16 +137,16 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		[browserURL getAmazonListType:NULL andID:&listID];
 		if (listID && ![listID isEqualToString:@""])
 		{
-			[element setInteger:AmazonPageletLoadFromList forKey:@"listSource"];
-			[element setValue:[browserURL absoluteString] forKey:@"automaticListCode"];
+			[[self propertiesStorage] setInteger:AmazonPageletLoadFromList forKey:@"listSource"];
+			[[self propertiesStorage] setValue:[browserURL absoluteString] forKey:@"automaticListCode"];
 		}
 		
 		
 		// If there is a predefined list ID, go with it
 		NSString *defaultListCode = [[[self bundle] objectForInfoDictionaryKey:@"DefaultListIDs"]
-			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[element integerForKey:@"store"]]];
+			objectForKey:[AmazonECSOperation ISOCountryCodeOfStore:[[self propertiesStorage] integerForKey:@"store"]]];
 		
-		[element setValue:defaultListCode forKey:@"automaticListCode"];
+		[[self propertiesStorage] setValue:defaultListCode forKey:@"automaticListCode"];
 	}
 	else
 	{
@@ -134,9 +156,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     
     
     // Make sure we have a valid layout CSS class
-    if (![element valueForKey:@"layoutCSSClassName"])
+    if (![[self propertiesStorage] valueForKey:@"layoutCSSClassName"])
     {
-        [self plugin:element didSetValue:[element valueForKey:@"layout"] forPluginKey:@"layout" oldValue:nil];
+        [self plugin:[self propertiesStorage]
+         didSetValue:[[self propertiesStorage] valueForKey:@"layout"]
+        forPluginKey:@"layout" oldValue:nil];
     }
 }
 
@@ -166,7 +190,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (void)awakeFromNib
 {
 	// Load the automatic list if needed
-	if ([[self delegateOwner] integerForKey:@"listSource"] == AmazonPageletLoadFromList) {
+	if ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletLoadFromList) {
 		[self loadAutomaticList];
 	}
 }
@@ -176,6 +200,17 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 - (void)dealloc
 {
+	// Remove old observations
+	[[self propertiesStorage] removeObserver:self forKeyPaths:[NSSet setWithObjects:@"manualListProducts",
+                                                               @"store",
+                                                               @"layout",
+                                                               @"showThumbnails",
+                                                               @"showTitles",
+                                                               @"automaticListCode",
+                                                               @"automaticListSorting",
+                                                               @"listSource",
+                                                               nil]];
+	
 	// End KVO
 	[myProducts removeObserver:self
 		  fromObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [myProducts count])]
@@ -213,39 +248,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 }
 
-/*	We wish to observe various changes to the plugin
- */
-- (void)setDelegateOwner:(id)newOwner
-{
-	// Remove old observations
-	[[self delegateOwner] removeObserver:self forKeyPaths:[NSSet setWithObjects:@"manualListProducts",
-																				@"store",
-																				@"layout",
-																				@"showThumbnails",
-																				@"showTitles",
-																				@"automaticListCode",
-																				@"automaticListSorting",
-																				@"listSource",
-																				nil]];
-	
-	[super setDelegateOwner:newOwner];
-	
-	[newOwner addObserver:self
-			   forKeyPath:@"store"
-				  options:(NSKeyValueObservingOptionOld | NSKeyValueObservingOptionNew)
-				  context:NULL];
-	
-	[newOwner addObserver:self
-			  forKeyPaths:[NSSet setWithObjects:@"layout", @"showThumbnails", @"showTitles", @"automaticListCode", @"automaticListSorting", nil]
-				  options:NSKeyValueObservingOptionNew
-				  context:NULL];
-	
-	[newOwner addObserver:self
-			  forKeyPaths:[NSSet setWithObjects:@"listSource", @"manualListProducts", nil]
-				  options:0
-				  context:NULL];
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath
 					  ofObject:(id)object
 					    change:(NSDictionary *)change
@@ -258,7 +260,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	}
 	
 	// Bail if the object's not our associated plugin
-	if (object != [self delegateOwner]) {
+	if (object != [self propertiesStorage]) {
 		return;
 	}
 	
@@ -290,14 +292,14 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	{
 		// When setting showThumbnails to false, ensure showing titles is true
 		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
-			[[self delegateOwner] setBool:YES forKey:@"showTitles"];
+			[[self propertiesStorage] setBool:YES forKey:@"showTitles"];
 		}
 	}
 	else if ([keyPath isEqualToString:@"showTitles"])
 	{
 		// When setting showThumbnails to false, ensure showing titles is true
 		if (changeNewObject == [NSNull null] || ![changeNewObject boolValue]) {
-			[[self delegateOwner] setBool:YES forKey:@"showThumbnails"];
+			[[self propertiesStorage] setBool:YES forKey:@"showThumbnails"];
 		}
 	}
 	else if ([keyPath isEqualToString:@"automaticListCode"] || [keyPath isEqualToString:@"automaticListSorting"])
@@ -329,7 +331,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (BOOL)validateStore:(NSNumber **)store error:(NSError **)error
 {
 	// If there are existing list items, warn the user of the possible implications
-	if ([[self delegateOwner] integerForKey:@"listSource"] == AmazonPageletPickByHand)
+	if ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletPickByHand)
 	{
 		if ([self products] && [[self products] count] > 0)
 		{
@@ -346,11 +348,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			
 			int result = [alert runModal];
 			if (result == NSAlertAlternateReturn) {
-				*store = [[self delegateOwner] valueForKey:@"store"];
+				*store = [[self propertiesStorage] valueForKey:@"store"];
 			}
 		}
 	}
-	else if ([[self delegateOwner] integerForKey:@"listSource"] == AmazonPageletLoadFromList)
+	else if ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletLoadFromList)
 	{
 		NSArray *listProducts = [[self automaticList] products];
 		if (listProducts && [listProducts count] > 0)
@@ -368,7 +370,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			
 			int result = [alert runModal];
 			if (result == NSAlertAlternateReturn) {
-				*store = [[self delegateOwner] valueForKey:@"store"];
+				*store = [[self propertiesStorage] valueForKey:@"store"];
 			}
 		}
 	}
@@ -434,9 +436,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (BOOL)showPricesOptionAvailable
 {
 	// Not available in all circumstances
-	BOOL result = ([[self delegateOwner] integerForKey:@"listSource"] == AmazonPageletLoadFromList ||
-				   [[self delegateOwner] integerForKey:@"layout"] == APLayoutEnhanced ||
-				   [[self delegateOwner] integerForKey:@"layout"] == APLayoutRandom);
+	BOOL result = ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletLoadFromList ||
+				   [[self propertiesStorage] integerForKey:@"layout"] == APLayoutEnhanced ||
+				   [[self propertiesStorage] integerForKey:@"layout"] == APLayoutRandom);
 				   
 	return result;
 }
@@ -447,9 +449,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 /*	If the user has requested it, add the product preview popups javascript to the end of the page */
 - (void)addLevelTextToEndBody:(NSMutableString *)ioString forPage:(KTPage *)aPage	// level, since we don't want this on all pages on the site!
 {
-	if ([[self delegateOwner] boolForKey:@"showProductPreviews"])
+	if ([[self propertiesStorage] boolForKey:@"showProductPreviews"])
 	{
-		NSString *script = [AmazonECSOperation productPreviewsScriptForStore:[[self delegateOwner] integerForKey:@"store"]];
+		NSString *script = [AmazonECSOperation productPreviewsScriptForStore:[[self propertiesStorage] integerForKey:@"store"]];
 		if (script)
 		{
 			// Only append the script if it's not already there (e.g. if there's > 1 element)
