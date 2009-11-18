@@ -17,6 +17,7 @@
 @property (nonatomic, retain) SVPagelet *pagelet;
 
 @property (nonatomic, retain, readonly) NSSet *elements;
+- (NSArray *)orderedElements;                   // not KVO-compliant
 - (void)addElement:(SVBodyElement *)element;    // must follow up by sending element a -move… call
 
 

@@ -28,11 +28,47 @@
 @dynamic pagelet;
 @dynamic elements;
 
+- (NSArray *)orderedElements;
+{
+    //  Piece together each of our elements to generate the HTML
+    NSMutableArray *result = nil;
+    
+    NSSet *elements = [self elements];
+    if (elements)
+    {
+        result = [NSMutableArray arrayWithCapacity:[elements count]];
+        
+        SVBodyElement *startElement = [elements anyObject];
+        if (startElement)
+        {
+            [result addObject:startElement];
+            
+            // Add on everything after the start element
+            SVBodyElement *anElement;
+            while (anElement = [startElement nextElement])
+            {
+                [result addObject:startElement];
+            }
+            
+            // Insert everything before the start element
+            while (anElement = [startElement previousElement])
+            {
+                [result insertObject:anElement atIndex:0];
+            }
+        }
+    }
+    
+    
+    return result;
+}
+
 - (void)addElement:(SVBodyElement *)element;
 {
     // TODO: Ensure the element is not already part of another group
     [self addElementsObject:element];
 }
+
+#pragma mark HTML
 
 - (NSString *)HTMLString;
 {
