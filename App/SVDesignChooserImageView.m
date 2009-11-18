@@ -24,6 +24,12 @@ const CGFloat kMyViewCornerRadius = 6.0;
 	NSBezierPath *clipPath = [NSBezierPath bezierPathWithRoundedRect:boundsOfThumb xRadius:kMyViewCornerRadius yRadius:kMyViewCornerRadius];
 	[clipPath addClip];
 
+/*
+ 
+ TAKING OUT THE COOL OPACITY GLOSS STUFF. IT WAS JUST SLOWING THINGS DOWN. MAYBE IF WE PRE-RENDER THE GLOSS IMAGE?
+ 
+ 
+ 
 	NSRect imageBounds = NSMakeRect(0.0, 0.0, kMyViewWidth, kMyViewHeight);
 	NSRect bounds = [self bounds];
 	NSAffineTransform *transform;
@@ -63,10 +69,10 @@ const CGFloat kMyViewCornerRadius = 6.0;
 	transform = [NSAffineTransform transform];
 	[transform scaleXBy:(bounds.size.width / imageBounds.size.width) yBy:(bounds.size.height / imageBounds.size.height)];
 	[transform concat];
-	
+*/
 	// Layer 1 -- HERE IS WHERE I CALL SUPER
 	[super drawRect:dirtyRect];
-
+/*
 	// Glass Effect
 	bitmapData = CGBitmapContextGetData(context);
 	pixels = (unsigned char *)bitmapData;
@@ -140,7 +146,7 @@ const CGFloat kMyViewCornerRadius = 6.0;
 	
 	[[NSGraphicsContext currentContext] restoreGraphicsState];
 	CGColorSpaceRelease(space);
-		
+*/
 	// Finally restore state and put a nice outline around the thing
 	[[NSGraphicsContext currentContext] restoreGraphicsState];
 	NSRect boundsEdges = NSInsetRect(boundsOfThumb, -0.5, -0.5);

@@ -7,13 +7,12 @@
 //
 
 #import "SVDesignChooserViewController.h"
-
+#import "NSBundle+Karelia.h"
 #import "KSPlugin.h"
 #import "KT.h"
 
-@interface NSCollectionView (LeopardPrivateOrSnowLeopardOnly)
+@interface NSCollectionView (SnowLeopardOnly)
 
-- (struct CGRect)_frameRectForIndexInGrid:(unsigned long long)arg1 gridSize:(struct CGSize)arg2;
 - (NSRect)frameForItemAtIndex:(NSUInteger)index;
 
 @end
@@ -27,10 +26,16 @@
     
     // restrict to a max of 4 columns
     [oCollectionView setMaxNumberOfColumns:4];
+	
+	NSCollectionViewItem *prototype = [[[NSCollectionViewItem alloc] init] autorelease];
+	[[NSBundle mainBundle] loadNibNamed:@"SVDesignViewPrototype" owner:prototype];
+	[oCollectionView setItemPrototype:prototype];
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
+	return;
+	
 	trackingRect_ = [oCollectionView addTrackingRect:[oCollectionView frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
@@ -56,31 +61,28 @@
 }
 - (void)mouseMoved:(NSEvent *)theEvent
 {
+#define CELLWIDTH 150
+#define CELLHEIGHT 112
 //	NSLog(@"%s %@",__FUNCTION__, theEvent);
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [oCollectionView convertPoint:windowPoint fromView:nil];
 
-	NSSize itemSize = NSMakeSize(190,140);		// this is constant in our case ... is there any good way to query this?
+	NSSize itemSize = NSMakeSize(CELLWIDTH,CELLHEIGHT);		// this is constant in our case ... is there any good way to query this?
 	int xIndex = localPoint.x / itemSize.width;
 	int yIndex = localPoint.y / itemSize.height;
 	int listIndex = yIndex * 4 + xIndex;
 	if (listIndex <= [[oCollectionView content] count])
 	{
 		
-		NSRect frameForItemAtIndex = NSZeroRect;
+		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
+		NSRect frameForItemAtIndexManual = frameForItemAtIndex;
 		
 		if ([oCollectionView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
 		{
 			frameForItemAtIndex = [oCollectionView frameForItemAtIndex:listIndex];
 		}
-		if ([oCollectionView respondsToSelector:@selector(_frameRectForIndexInGrid:gridSize:)])		// 10.5
-		{
-			CGSize gridSize = NSSizeToCGSize(itemSize);
-			CGRect asCGRect = [oCollectionView _frameRectForIndexInGrid:listIndex gridSize:gridSize];
-			frameForItemAtIndex = NSRectFromCGRect(asCGRect);
-		}
 		
-		NSLog(@"%s %d,%d -> %d : %@",__FUNCTION__, xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
+		NSLog(@"%@ %d,%d -> %d : %@ %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex), NSStringFromRect(frameForItemAtIndexManual));
 	}
 	else
 	{
