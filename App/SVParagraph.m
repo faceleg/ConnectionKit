@@ -16,4 +16,14 @@
 @dynamic archivedInnerHTMLString;
 @dynamic inlineContentObjects;
 
+- (NSString *)HTMLString;
+{
+    NSString *result = [NSString stringWithFormat:
+                        @"<%@>%@</>",
+                        [self tagName],
+                        [self archivedInnerHTMLString]];
+    
+    return result;
+}
+
 @end

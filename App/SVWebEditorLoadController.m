@@ -179,7 +179,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         id content = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
         if ([content isKindOfClass:[SVPageletBody class]])
         {
-            [selectableObjects unionSet:[content contentObjects]];
+            //[selectableObjects unionSet:[content contentObjects]];
         }
     }
     

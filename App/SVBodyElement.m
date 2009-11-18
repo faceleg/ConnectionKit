@@ -16,4 +16,10 @@
 @dynamic previousElement;
 @dynamic nextElement;
 
+
+- (NSString *)HTMLString;
+{
+    SUBCLASSMUSTIMPLEMENT;
+}
+
 @end

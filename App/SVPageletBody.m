@@ -9,6 +9,7 @@
 #import "SVPageletBody.h"
 
 #import "SVPagelet.h"
+#import "SVBodyElement.h"
 
 
 @interface SVPageletBody (CoreDataGeneratedAccessors)
@@ -31,6 +32,34 @@
 {
     // TODO: Ensure the element is not already part of another group
     [self addElementsObject:element];
+}
+
+- (NSString *)HTMLString;
+{
+    //  Piece together each of our elements to generate the HTML
+    NSMutableString *result = [NSMutableString string];
+    
+    SVBodyElement *startElement = [[self elements] anyObject];
+    if (startElement)
+    {
+        [result appendString:[startElement HTMLString]];
+        
+        // Add on everything after the start element
+        SVBodyElement *anElement;
+        while (anElement = [startElement nextElement])
+        {
+            [result appendString:[anElement HTMLString]];
+        }
+        
+        // Insert everything before the start element
+        while (anElement = [startElement previousElement])
+        {
+            [result insertString:[anElement HTMLString] atIndex:0];
+        }
+    }
+    
+    
+    return result;
 }
 
 @end

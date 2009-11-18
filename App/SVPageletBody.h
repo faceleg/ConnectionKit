@@ -19,4 +19,7 @@
 @property (nonatomic, retain, readonly) NSSet *elements;
 - (void)addElement:(SVBodyElement *)element;    // must follow up by sending element a -move… call
 
+
+- (NSString *)HTMLString;
+
 @end

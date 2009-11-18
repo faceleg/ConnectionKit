@@ -18,6 +18,9 @@
 @property (nonatomic, retain) SVBodyElement * previousElement;
 @property (nonatomic, retain) SVBodyElement * nextElement;
 
+
+- (NSString *)HTMLString;
+
 @end
 
 

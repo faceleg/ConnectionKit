@@ -50,7 +50,7 @@
 - (void)updateEditorItems
 {
     // Generate an editor item for each -contentItem
-    NSSet *contentObjects = [[self content] contentObjects];
+    NSSet *contentObjects = nil;//[[self content] contentObjects];
     NSMutableArray *editorItems = [[NSMutableArray alloc] initWithCapacity:[contentObjects count]];
     
     for (SVContentObject *aContentObject in contentObjects)
