@@ -45,7 +45,7 @@
 - (void)awakeFromNib
 {
 	// Connect up the target icon if needed
-	[collectionLinkSourceView setConnected:([[self delegateOwner] valueForKey:@"collection"] != nil)];
+	[collectionLinkSourceView setConnected:([[self propertiesStorage] valueForKey:@"collection"] != nil)];
 }
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
@@ -56,16 +56,16 @@
 		KTPage *parent = (KTPage *)[self page];
 		if ([parent isCollection])
 		{
-			[[self delegateOwner] setValue:parent forKey:@"collection"];
+			[[self propertiesStorage] setValue:parent forKey:@"collection"];
 			
 			NSString *title = [NSString stringWithFormat:@"%@ %@",
 														 [parent titleText],
 														 LocalizedStringInThisBundle(@"Archive", @"Portion of pagelet title")];
-			[(KTPagelet *)[self delegateOwner] setTitleHTML:title];
+			//[(KTPagelet *)[self delegateOwner] setTitleHTML:title];
 		}
 	}
 	
-	[[[self delegateOwner] valueForKey:@"collection"] setCollectionGenerateArchives:YES];
+	[[[self propertiesStorage] valueForKey:@"collection"] setCollectionGenerateArchives:YES];
 }
 
 #pragma mark -
@@ -99,13 +99,13 @@
 	KTPage *target = [KTPage pageWithUniqueID:collectionID inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
 	if (target)
 	{
-		[[self delegateOwner] setValue:target forKey:@"collection"];
+		[[self propertiesStorage] setValue:target forKey:@"collection"];
 	}
 }
 
 - (IBAction)clearCollectionLink:(id)sender
 {
-	[[self delegateOwner] setValue:nil forKey:@"collection"];
+	[[self propertiesStorage] setValue:nil forKey:@"collection"];
 	[collectionLinkSourceView setConnected:NO];
 }
 
