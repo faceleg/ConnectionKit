@@ -11,6 +11,8 @@
 #import "SVPagelet.h"
 #import "SVBodyElement.h"
 
+#import "NSError+Karelia.h"
+
 
 @interface SVPageletBody (CoreDataGeneratedAccessors)
 - (void)addElementsObject:(SVBodyElement *)value;
@@ -30,6 +32,31 @@
 #pragma mark Elements
 
 @dynamic elements;
+- (BOOL)validateElements:(NSSet **)elements error:(NSError **)error
+{
+    //  The set is only valid if it matches up to the ordered version. i.e. want to make sure nothing in the set is orphaned from the link list. I'm cheating right now and testing with [self orderedElements] when really should generate directly from elements
+    BOOL result = YES;
+    
+    NSUInteger expectedCount = [[self orderedElements] count];
+    if ([*elements count] > expectedCount)
+    {
+        result = NO;
+        
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSValidationRelationshipExceedsMaximumCountError
+                                localizedDescription:@"There are more objects in elements than expected, suggesting some elements have been removed from the linked list, but not the relationship."];
+    }
+    else if ([*elements count] < expectedCount)
+    {
+        result = NO;
+        
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSValidationRelationshipLacksMinimumCountError
+                                localizedDescription:@"There are fewer objects in elements than expected, suggesting some elements have been inserted into the linked list, but not the relationship."];
+    }
+    
+    return result;
+}
 
 - (NSArray *)orderedElements;
 {
