@@ -988,6 +988,10 @@
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
+		CE8E710F10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E710D10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h */; };
+		CE8E711010B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E710E10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m */; };
+		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
+		CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */; };
 		CE91721209D51E530003310B /* target_set.png in Resources */ = {isa = PBXBuildFile; fileRef = CE91721109D51E530003310B /* target_set.png */; };
 		CE9218850809A40500E7F46B /* toolbar_collection.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218830809A40500E7F46B /* toolbar_collection.png */; };
 		CE9218860809A40500E7F46B /* toolbar_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218840809A40500E7F46B /* toolbar_group.png */; };
@@ -2588,6 +2592,10 @@
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageView.h; sourceTree = "<group>"; };
 		CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageView.m; sourceTree = "<group>"; };
+		CE8E710D10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserCollectionViewItem.h; sourceTree = "<group>"; };
+		CE8E710E10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserCollectionViewItem.m; sourceTree = "<group>"; };
+		CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignFamily.h; sourceTree = "<group>"; };
+		CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignFamily.m; sourceTree = "<group>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
 		CE91721109D51E530003310B /* target_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target_set.png; sourceTree = "<group>"; };
 		CE9218830809A40500E7F46B /* toolbar_collection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_collection.png; sourceTree = "<group>"; };
@@ -3476,6 +3484,10 @@
 				3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */,
 				CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */,
 				CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */,
+				CE8E710D10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h */,
+				CE8E710E10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m */,
+				CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */,
+				CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */,
 			);
 			name = "Design Chooser";
 			sourceTree = "<group>";
@@ -5162,6 +5174,8 @@
 				278F799C10B44A1B00BDBAF7 /* SVBodyParagraph.h in Headers */,
 				278F799E10B44A1B00BDBAF7 /* SVPageletBody.h in Headers */,
 				278F79A210B44A3B00BDBAF7 /* SVBodyElement.h in Headers */,
+				CE8E710F10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h in Headers */,
+				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6544,6 +6558,8 @@
 				278F799D10B44A1B00BDBAF7 /* SVBodyParagraph.m in Sources */,
 				278F799F10B44A1B00BDBAF7 /* SVPageletBody.m in Sources */,
 				278F79A310B44A3B00BDBAF7 /* SVBodyElement.m in Sources */,
+				CE8E711010B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m in Sources */,
+				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -21,6 +21,9 @@
 	BOOL myFontsLoaded;
 }
 
++ (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs;
+- (NSString *)parentBundleIdentifier;
+
 - (int)numberOfSubDesigns;
 - (NSArray *)subDesigns;
 
@@ -52,6 +55,7 @@
 // Other
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
 - (void) loadLocalFontsIfNeeded;
+- (NSString *)titleOrParentName;
 
 // Resource data
 - (NSSet *)resourceFileURLs;

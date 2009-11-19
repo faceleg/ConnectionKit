@@ -7,9 +7,11 @@
 //
 
 #import "SVDesignChooserViewController.h"
+#import "SVDesignChooserCollectionViewItem.h"
 #import "NSBundle+Karelia.h"
 #import "KSPlugin.h"
 #import "KT.h"
+#import "KTDesign.h"
 
 @interface NSCollectionView (SnowLeopardOnly)
 
@@ -23,6 +25,7 @@
 {
     // load designs -- only seems to work if I do it here? seems as good a place as any...
     [self setDesigns:[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension]];
+	self.designs = [KTDesign consolidateDesignsIntoFamilies:self.designs];
     
     // restrict to a max of 4 columns
     [oCollectionView setMaxNumberOfColumns:4];
@@ -83,6 +86,8 @@
 		}
 		
 		NSLog(@"%@ %d,%d -> %d : %@ %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex), NSStringFromRect(frameForItemAtIndexManual));
+		
+		
 	}
 	else
 	{

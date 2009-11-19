@@ -9,6 +9,7 @@
 
 #import "KT.h"
 #import "KTDesign.h"
+#import "KTDesignFamily.h"
 #import "KTImageScalingSettings.h"
 #import "KTStringRenderer.h"
 
@@ -20,6 +21,7 @@
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
+#import "NSColor+Karelia.h"
 
 #import "Debug.h"
 
@@ -211,6 +213,33 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	return result;
 }
 
+// Go through a list of designs and 
++ (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs
+{
+	NSMutableArray *result = [NSMutableArray array];
+	NSMutableDictionary *families = [NSMutableDictionary dictionary];	// remember what we've seen
+	for (KTDesign *design in designs)
+	{
+		NSString *parentBundleIdentifier = nil;
+		if (nil != (parentBundleIdentifier = [design parentBundleIdentifier]))
+		{
+			KTDesignFamily *family = [families objectForKey:parentBundleIdentifier];
+			if (!family)
+			{
+				family = [[[KTDesignFamily alloc] init] autorelease];
+				[families setObject:family forKey:parentBundleIdentifier];	// so we can find later
+				[result addObject:result];	// first time seen, so add to result list
+			}
+			[family addDesign:design];	// add to list of children
+		}
+		else
+		{
+			[result addObject:design];
+		}
+	}
+	return [NSArray arrayWithArray:result];
+}
+
 #pragma mark -
 #pragma mark Init & Dealloc
 
@@ -240,6 +269,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	return @"Cowabunga Baby let the good times roll";
 	// return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
 }
+
 
 - (NSString *)sidebarBorderable
 {
@@ -354,15 +384,61 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 }
 
 
-
+// Special version that compares the titles - but uses the ParentName if it exists
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
 {
-	return [[self title] caseInsensitiveCompare:[aDesign title]];
+	return [[self titleOrParentName] caseInsensitiveCompare:[aDesign titleOrParentName]];
 }
 
 - (NSString *)description
 {
 	return [NSString stringWithFormat:@"%@ %@", [super description], [[self bundle] bundleIdentifier]];
+}
+
+#pragma mark design coalescing into families
+
+- (NSColor *)mainColor
+{
+	NSColor *result = nil;
+	
+	NSString *hexColorString = [[self bundle] objectForInfoDictionaryKey:@"MainColor"];
+	if (hexColorString)
+	{
+		result = [NSColor colorFromHexString:hexColorString];
+	}
+	return result;
+}
+
+- (BOOL)isFamilyPrototype
+{
+	BOOL result = NO;
+	
+	NSNumber *value = [[self bundle] objectForInfoDictionaryKey:@"IsFamilyPrototype"];
+	if (value)
+	{
+		result = [value boolValue];
+	}
+	return result;
+}
+
+- (NSString *)parentName
+{
+	return [[self bundle] objectForInfoDictionaryKey:@"ParentName"];
+}
+
+- (NSString *)titleOrParentName
+{
+	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"ParentName"];
+	if (!result)
+	{
+		result = [self title];
+	}
+	return result;
+}
+
+- (NSString *)parentBundleIdentifier
+{
+	return [[self bundle] objectForInfoDictionaryKey:@"ParentBundleIdentifier"];
 }
 
 #pragma mark -
