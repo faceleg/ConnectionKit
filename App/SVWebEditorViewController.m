@@ -8,6 +8,7 @@
 
 #import "SVWebEditorViewController.h"
 
+#import "SVBodyParagraph.h"
 #import "SVPlugInContentObject.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
@@ -432,7 +433,11 @@
 	OBASSERT(pagelet);
     
     [pagelet setTitleHTMLString:@"Double-click to edit"];
-    [[pagelet pageletBody] setArchiveHTMLString:@"Test"];
+    
+    SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[page managedObjectContext]];
+    [paragraph setTagName:@"p"];
+    [paragraph setArchivedInnerHTMLString:@"Test"];
+    [[pagelet pageletBody] addElement:paragraph];
     
     
     // Place at end of the sidebar
