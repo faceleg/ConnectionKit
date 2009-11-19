@@ -46,7 +46,7 @@
     return [self archivedInnerHTMLString];
 }
 
-- (void)setHTMLStringFromDOMHTMLElement:(DOMHTMLElement *)element;
+- (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 {
     //  Use the element to update our tagName, inner HTML, and inline content objects
     [self setTagName:[element tagName]];

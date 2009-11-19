@@ -19,7 +19,7 @@
 
 - (NSString *)HTMLString;
 - (NSString *)innerHTMLString;
-- (void)setHTMLStringFromDOMHTMLElement:(DOMHTMLElement *)element;
+- (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 @property(nonatomic, copy) NSString *archivedInnerHTMLString;
 
 @end
