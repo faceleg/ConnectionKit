@@ -8,6 +8,7 @@
 
 #import "SVPageletBodyTextAreaController.h"
 
+#import "SVBodyParagraph.h"
 #import "SVContentObject.h"
 #import "SVPageletBody.h"
 #import "SVWebContentItem.h"
@@ -71,7 +72,68 @@
 
 - (BOOL)commitEditing;
 {
-    [[self content] updateWithHTMLElement:[[self textArea] HTMLDOMElement]];
+    // Walk the list of DOM and model elements, inserting/deleting/updating as appropriate
+    DOMHTMLElement *textHTMLArea = [[self textArea] HTMLDOMElement];
+    
+    SVBodyElement *aModelElement = [[self content] firstElement];
+    SVBodyElement *previousModelElement = nil;
+    DOMNode *aNode = [textHTMLArea firstChild];
+    DOMNode *previousNode = nil;
+    
+    
+    while (aNode || aModelElement)
+    {
+        BOOL deleteNode = YES;
+        
+        if ([aNode isKindOfClass:[DOMHTMLElement class]])
+        {
+            deleteNode = NO;
+           
+            // The HTML element should match up to the corresponding model element, or need a new one inserted
+            DOMHTMLElement *htmlElement = (DOMHTMLElement *)aNode;
+            if ([[htmlElement idName] isEqualToString:[aModelElement editingElementID]])
+            {
+                // Update the model to match the node. Only paragraphs should need this doing
+                if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
+                {
+                    [(SVBodyParagraph *)aModelElement setHTMLStringFromElement:htmlElement];
+                }
+            }
+            else
+            {
+                // It's a new element, insert a paragraph to match
+                SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
+                                                                           inManagedObjectContext:[[self content] managedObjectContext]];
+                [paragraph setHTMLStringFromElement:htmlElement];
+                [[self content] addElement:paragraph];
+                
+                [paragraph insertBeforeElement:aModelElement];
+                aModelElement = paragraph;
+                
+                [htmlElement setIdName:[paragraph editingElementID]];
+                
+            }
+            
+            
+            previousModelElement = aModelElement;
+            aModelElement = [aModelElement nextElement];
+        }
+        
+        
+        // Move onto next DOM node
+        previousNode = aNode;
+        aNode = [aNode nextSibling];
+        
+        
+        if (deleteNode)
+        {
+            // Strip out any non-HTML element top-level nodes
+            [textHTMLArea removeChild:previousNode];    // aNode has already been changed by this point
+        }
+    }
+    
+    
+    
     return YES;
 }
 
