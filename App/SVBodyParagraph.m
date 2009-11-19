@@ -15,7 +15,6 @@
 @implementation SVBodyParagraph 
 
 @dynamic tagName;
-@dynamic archivedInnerHTMLString;
 @dynamic inlineContentObjects;
 
 - (NSString *)HTMLString;
@@ -27,7 +26,7 @@
                   @"<%@ id=\"%@\">%@</%@>",
                   [self tagName],
                   [self editingElementID],
-                  [self archivedInnerHTMLString],
+                  [self innerHTMLString],
                   [self tagName]];
     }
     else
@@ -35,11 +34,25 @@
         result = [NSString stringWithFormat:
                   @"<%@>%@</%@>",
                   [self tagName],
-                  [self archivedInnerHTMLString],
+                  [self innerHTMLString],
                   [self tagName]];
     }
     
     return result;
 }
+
+- (NSString *)innerHTMLString;
+{
+    return [self archivedInnerHTMLString];
+}
+
+- (void)setHTMLStringFromDOMHTMLElement:(DOMHTMLElement *)element;
+{
+    //  Use the element to update our tagName, inner HTML, and inline content objects
+    [self setTagName:[element tagName]];
+    [self setArchivedInnerHTMLString:[element innerHTML]];
+}
+
+@dynamic archivedInnerHTMLString;
 
 @end

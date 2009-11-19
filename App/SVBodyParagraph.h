@@ -14,8 +14,13 @@
 @interface SVBodyParagraph :  SVBodyElement  
 
 @property (nonatomic, retain) NSString * tagName;
-@property (nonatomic, retain) NSString * archivedInnerHTMLString;
 @property (nonatomic, retain) NSSet* inlineContentObjects;
+
+
+- (NSString *)HTMLString;
+- (NSString *)innerHTMLString;
+- (void)setHTMLStringFromDOMHTMLElement:(DOMHTMLElement *)element;
+@property(nonatomic, copy) NSString *archivedInnerHTMLString;
 
 @end
 
