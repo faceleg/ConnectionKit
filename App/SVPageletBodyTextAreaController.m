@@ -45,7 +45,7 @@
                 if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
                 {
                     SVParagraphController *controller = [[SVParagraphController alloc]
-                                                         initWithParagraph:(SVParagraphController *)aModelElement
+                                                         initWithParagraph:(SVBodyParagraph *)aModelElement
                                                          HTMLElement:htmlElement];
                     
                     [_paragraphControllers addObject:controller];
