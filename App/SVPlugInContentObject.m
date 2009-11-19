@@ -276,6 +276,8 @@
 
 #pragma mark HTML
 
+- (NSString *)editingElementID { return [[self plugIn] elementID]; }
+
 - (NSString *)HTMLString;
 {
     return [[self plugIn] HTMLString];
