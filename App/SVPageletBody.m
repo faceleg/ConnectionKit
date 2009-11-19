@@ -44,14 +44,15 @@
             [result addObject:startElement];
             
             // Add on everything after the start element
-            SVBodyElement *anElement;
-            while (anElement = [startElement nextElement])
+            SVBodyElement *anElement = startElement;
+            while (anElement = [anElement nextElement])
             {
                 [result addObject:startElement];
             }
             
             // Insert everything before the start element
-            while (anElement = [startElement previousElement])
+            anElement = startElement;
+            while (anElement = [anElement previousElement])
             {
                 [result insertObject:anElement atIndex:0];
             }
@@ -81,14 +82,15 @@
         [result appendString:[startElement HTMLString]];
         
         // Add on everything after the start element
-        SVBodyElement *anElement;
-        while (anElement = [startElement nextElement])
+        SVBodyElement *anElement = startElement;
+        while (anElement = [anElement nextElement])
         {
             [result appendString:[anElement HTMLString]];
         }
         
         // Insert everything before the start element
-        while (anElement = [startElement previousElement])
+        anElement = startElement;
+        while (anElement = [anElement previousElement])
         {
             [result insertString:[anElement HTMLString] atIndex:0];
         }
