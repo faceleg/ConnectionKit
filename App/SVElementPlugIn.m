@@ -39,7 +39,7 @@
 - (NSString *)HTMLString;
 {
     NSString *result = [NSString stringWithFormat:
-                        @"<span id=\"%@\">%@</span>",
+                        @"<div id=\"%@\">%@</div>",
                         [self elementID],
                         [self innerHTMLString]];
     return result;
