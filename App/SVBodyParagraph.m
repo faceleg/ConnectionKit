@@ -24,17 +24,19 @@
     if ([[SVHTMLContext currentContext] isEditable])
     {
         result = [NSString stringWithFormat:
-                  @"<%@ id=\"%@\">%@</>",
+                  @"<%@ id=\"%@\">%@</%@>",
                   [self tagName],
                   [self editingElementID],
-                  [self archivedInnerHTMLString]];
+                  [self archivedInnerHTMLString],
+                  [self tagName]];
     }
     else
     {
         result = [NSString stringWithFormat:
-                            @"<%@>%@</>",
-                            [self tagName],
-                            [self archivedInnerHTMLString]];
+                  @"<%@>%@</%@>",
+                  [self tagName],
+                  [self archivedInnerHTMLString],
+                  [self tagName]];
     }
     
     return result;
