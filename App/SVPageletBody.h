@@ -21,6 +21,11 @@
 - (void)addElement:(SVBodyElement *)element;    // must follow up by sending element a -move… call
 
 
+#pragma mark HTML
+
 - (NSString *)HTMLString;
+
+// Acts kind of like a binding & a formatter in one. The receiver is edited to match the element, but the element may also be "standardised" too
+- (void)updateWithHTMLElement:(DOMHTMLElement *)element;
 
 @end
