@@ -11,6 +11,7 @@
 #import "SVPagelet.h"
 #import "SVBodyElement.h"
 
+#import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
 
 
@@ -31,13 +32,35 @@
 
 #pragma mark Elements
 
++ (NSArray *)orderedElementsWithElements:(NSSet *)elements
+{
+    NSArray *result = nil;
+    
+    if (elements)
+    {
+        SVBodyElement *startElement = [elements anyObject];
+        if (startElement)
+        {
+            result = [NSArray arrayWithDoublyLinkedListObject:startElement
+                                           nextObjectSelector:@selector(nextElement)
+                                       previousObjectSelector:@selector(previousElement)];
+        }
+        else
+        {
+            result = [NSArray array];
+        }
+    }
+    
+    return result;
+}
+
 @dynamic elements;
 - (BOOL)validateElements:(NSSet **)elements error:(NSError **)error
 {
-    //  The set is only valid if it matches up to the ordered version. i.e. want to make sure nothing in the set is orphaned from the link list. I'm cheating right now and testing with [self orderedElements] when really should generate directly from elements
+    //  The set is only valid if it matches up to the ordered version. i.e. want to make sure nothing in the set is orphaned from the link list.
     BOOL result = YES;
     
-    NSUInteger expectedCount = [[self orderedElements] count];
+    NSUInteger expectedCount = [[[self class] orderedElementsWithElements:*elements] count];
     if ([*elements count] > expectedCount)
     {
         result = NO;
@@ -60,36 +83,7 @@
 
 - (NSArray *)orderedElements;
 {
-    //  Piece together each of our elements to generate the HTML
-    NSMutableArray *result = nil;
-    
-    NSSet *elements = [self elements];
-    if (elements)
-    {
-        result = [NSMutableArray arrayWithCapacity:[elements count]];
-        
-        SVBodyElement *startElement = [elements anyObject];
-        if (startElement)
-        {
-            [result addObject:startElement];
-            
-            // Add on everything after the start element
-            SVBodyElement *anElement = startElement;
-            while (anElement = [anElement nextElement])
-            {
-                [result addObject:startElement];
-            }
-            
-            // Insert everything before the start element
-            anElement = startElement;
-            while (anElement = [anElement previousElement])
-            {
-                [result insertObject:anElement atIndex:0];
-            }
-        }
-    }
-    
-    
+    NSArray *result = [[self class] orderedElementsWithElements:[self elements]];
     return result;
 }
 
