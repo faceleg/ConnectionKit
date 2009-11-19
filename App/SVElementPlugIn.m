@@ -78,7 +78,7 @@
 
 - (KTPage *)page
 {
-    return [[[[[[self delegateOwner] container] pagelet] sidebars] anyObject] page];
+    return [[[[[[self delegateOwner] body] pagelet] sidebars] anyObject] page];
 }
 
 @end
