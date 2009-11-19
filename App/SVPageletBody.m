@@ -26,6 +26,9 @@
 @implementation SVPageletBody 
 
 @dynamic pagelet;
+
+#pragma mark Elements
+
 @dynamic elements;
 
 - (NSArray *)orderedElements;
@@ -59,6 +62,20 @@
         }
     }
     
+    
+    return result;
+}
+
+- (SVBodyElement *)firstElement;
+{
+    // Start with a random element and search backwards to the beginning
+    SVBodyElement *result = [[self elements] anyObject];
+    
+    SVBodyElement *previousElement;
+    while (previousElement = [result previousElement])
+    {
+        result = previousElement;
+    }
     
     return result;
 }
