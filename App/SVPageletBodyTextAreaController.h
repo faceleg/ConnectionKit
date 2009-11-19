@@ -19,6 +19,8 @@
     SVPageletBody   *_pageletBody;
     
     NSArray *_editorItems;
+    
+    NSMutableArray  *_paragraphControllers;
 }
 
 - (id)initWithTextArea:(SVWebTextArea *)textArea content:(SVPageletBody *)pageletBody;

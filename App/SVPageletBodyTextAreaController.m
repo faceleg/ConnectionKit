@@ -7,6 +7,7 @@
 //
 
 #import "SVPageletBodyTextAreaController.h"
+#import "SVParagraphController.h"
 
 #import "SVBodyParagraph.h"
 #import "SVContentObject.h"
@@ -27,6 +28,38 @@
     _textArea = [textArea retain];
     [textArea setDelegate:self];
     [self updateEditorItems];
+    
+    
+    // Match paragraphs up to the model
+    _paragraphControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
+    DOMNode *aDOMNode = [[textArea HTMLDOMElement] firstChild];
+    SVBodyElement *aModelElement = [pageletBody firstElement];
+    
+    while (aModelElement)
+    {
+        if ([aDOMNode isKindOfClass:[DOMHTMLElement class]])
+        {
+            DOMHTMLElement *htmlElement = (DOMHTMLElement *)aDOMNode;
+            if ([[htmlElement idName] isEqualToString:[aModelElement editingElementID]])
+            {
+                if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
+                {
+                    SVParagraphController *controller = [[SVParagraphController alloc]
+                                                         initWithParagraph:(SVParagraphController *)aModelElement
+                                                         HTMLElement:htmlElement];
+                    
+                    [_paragraphControllers addObject:controller];
+                    [controller release];
+                }
+                
+                aModelElement = [aModelElement nextElement];
+            }
+        }
+        
+        aDOMNode = [aDOMNode nextSibling];
+    }
+    
+    
     
     return self;
 }
@@ -80,7 +113,10 @@
     DOMNode *aNode = [textHTMLArea firstChild];
     DOMNode *previousNode = nil;
     
+#define nextModelElement previousModelElement = aModelElement; aModelElement = [aModelElement nextElement];
+#define nextDOMNode previousNode = aNode; aNode = [aNode nextSibling];
     
+
     while (aNode || aModelElement)
     {
         BOOL deleteNode = YES;
@@ -91,12 +127,27 @@
            
             // The HTML element should match up to the corresponding model element, or need a new one inserted
             DOMHTMLElement *htmlElement = (DOMHTMLElement *)aNode;
-            if ([[htmlElement idName] isEqualToString:[aModelElement editingElementID]])
+            NSString *htmlElementID = [htmlElement idName];
+            
+            if ([htmlElementID length] > 0)
             {
-                // Update the model to match the node. Only paragraphs should need this doing
-                if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
+                if ([htmlElementID isEqualToString:[aModelElement editingElementID]])
                 {
-                    [(SVBodyParagraph *)aModelElement setHTMLStringFromElement:htmlElement];
+                    // Update the model to match the node. Only paragraphs should need this doing
+                    if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
+                    {
+                        [(SVBodyParagraph *)aModelElement setHTMLStringFromElement:htmlElement];
+                    }
+                    
+                    nextModelElement;
+                    nextDOMNode;
+                }
+                else
+                {
+                    // There should be a match but it isn't our current model element. Delete it and try again
+                    [aModelElement removeFromElementsList];
+                    [[aModelElement managedObjectContext] deleteObject:aModelElement];
+                    aModelElement = [previousModelElement nextElement];
                 }
             }
             else
@@ -112,17 +163,10 @@
                 
                 [htmlElement setIdName:[paragraph editingElementID]];
                 
+                nextModelElement;
+                nextDOMNode;
             }
-            
-            
-            previousModelElement = aModelElement;
-            aModelElement = [aModelElement nextElement];
         }
-        
-        
-        // Move onto next DOM node
-        previousNode = aNode;
-        aNode = [aNode nextSibling];
         
         
         if (deleteNode)
