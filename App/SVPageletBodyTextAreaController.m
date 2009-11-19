@@ -69,6 +69,12 @@
     [_editorItems release], _editorItems = editorItems;
 }
 
+- (BOOL)commitEditing;
+{
+    [[self content] updateWithHTMLElement:[[self textArea] HTMLDOMElement]];
+    return YES;
+}
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

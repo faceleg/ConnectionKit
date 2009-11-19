@@ -30,4 +30,6 @@
 @property(nonatomic, readonly) NSArray *editorItems;
 - (void)updateEditorItems;
 
+- (BOOL)commitEditing;
+
 @end

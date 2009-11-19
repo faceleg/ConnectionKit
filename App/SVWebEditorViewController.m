@@ -92,6 +92,17 @@
     // TODO: Define a constant or method for this
     BOOL spellCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"ContinuousSpellChecking"];
 	[webView setContinuousSpellCheckingEnabled:spellCheck];
+    
+    
+    
+    /// FIXME: THIS IS A HACK TO REMOVE
+    if (webView)
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChange:) name:WebViewDidChangeNotification object:[self webView]];
+}
+
+- (void)webViewDidChange:(NSNotification *)notification
+{
+    [[self textAreaControllers] makeObjectsPerformSelector:@selector(commitEditing)];
 }
 
 @synthesize webEditorView = _webEditorView;
