@@ -359,8 +359,6 @@
 		278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */; };
 		278FCE941079F2AD0091A239 /* NSEvent+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */; };
 		278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */; };
-		2790BD9E103E890600654665 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BD9C103E890600654665 /* SVDOMController.h */; };
-		2790BD9F103E890600654665 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BD9D103E890600654665 /* SVDOMController.m */; };
 		2790BDAF1040162000654665 /* SVWebTextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVWebTextArea.h */; };
 		2790BDB01040162000654665 /* SVWebTextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVWebTextArea.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
@@ -1813,8 +1811,6 @@
 		278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+Karelia.h"; sourceTree = "<group>"; };
 		278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+Karelia.m"; sourceTree = "<group>"; };
 		278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextProtocol.h; sourceTree = "<group>"; };
-		2790BD9C103E890600654665 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
-		2790BD9D103E890600654665 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		2790BDAD1040162000654665 /* SVWebTextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebTextArea.h; sourceTree = "<group>"; };
 		2790BDAE1040162000654665 /* SVWebTextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebTextArea.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
@@ -3027,8 +3023,6 @@
 				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
 				2759CC991039711200E2C046 /* SVWebEditorViewController.h */,
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
-				2790BD9C103E890600654665 /* SVDOMController.h */,
-				2790BD9D103E890600654665 /* SVDOMController.m */,
 				27F243AC106BC873007FEC56 /* SVSidebarEditorItem.h */,
 				27F243AD106BC873007FEC56 /* SVSidebarEditorItem.m */,
 				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
@@ -5130,7 +5124,6 @@
 				2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */,
 				2759CD441039B83900E2C046 /* SVWebEditorLoadController.h in Headers */,
 				279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */,
-				2790BD9E103E890600654665 /* SVDOMController.h in Headers */,
 				2790BDAF1040162000654665 /* SVWebTextArea.h in Headers */,
 				3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */,
 				3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */,
@@ -6518,7 +6511,6 @@
 				2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */,
 				2759CD451039B83900E2C046 /* SVWebEditorLoadController.m in Sources */,
 				279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */,
-				2790BD9F103E890600654665 /* SVDOMController.m in Sources */,
 				2790BDB01040162000654665 /* SVWebTextArea.m in Sources */,
 				3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */,
 				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
