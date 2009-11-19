@@ -181,7 +181,7 @@
         {
             OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
             
-            SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithDOMElement:element];
+            SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithHTMLDOMElement:element];
             [textArea setRichText:[aTextBlock isRichText]];
             [textArea setFieldEditor:[aTextBlock isFieldEditor]];
             
@@ -262,7 +262,7 @@
         // Search each text block in turn for a match
         for (result in [self textAreas])
         {
-            if ([result DOMElement] == editableElement)
+            if ([result HTMLDOMElement] == editableElement)
             {
                 break;
             }

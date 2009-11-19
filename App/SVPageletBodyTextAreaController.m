@@ -56,7 +56,7 @@
     for (SVContentObject *aContentObject in contentObjects)
     {
         DOMElement *domElement = [[self content] elementForContentObject:aContentObject
-                                                            inDOMElement:[[self textArea] DOMElement]];
+                                                            inDOMElement:[[self textArea] HTMLDOMElement]];
         
         if (domElement)
         {
