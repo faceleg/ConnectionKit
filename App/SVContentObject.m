@@ -18,10 +18,6 @@
 
 @implementation SVContentObject
 
-#pragma mark Placement
-
-@dynamic container;
-
 #pragma mark HTML
 
 @dynamic elementID;

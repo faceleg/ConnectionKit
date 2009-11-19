@@ -41,12 +41,6 @@
 @interface SVContentObject : SVBodyElement <SVContentObject>
 
 
-#pragma mark Placement
-
-
-@property(nonatomic, retain) SVPageletBody *container;
-
-
 #pragma mark HTML
 @property(nonatomic, retain, readonly) NSString *elementID;
 - (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML

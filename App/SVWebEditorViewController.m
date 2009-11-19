@@ -445,17 +445,19 @@
 
 - (void)insertElement:(id)sender;
 {
-    // Create a new element of the requested type and insert into selected text block
+    // Create a new element of the requested type and insert at the end of the pagelet
     SVPageletBody *body = [[[self textAreaControllers] firstObjectKS] content];
-    SVPlugInContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"ContentObject"    
+    
+    SVPlugInContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInContentObject"    
                                                              inManagedObjectContext:[body managedObjectContext]];
+    
     [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
-    [element setContainer:body];
     [element setWrap:SVContentObjectWrapNone];
     [element awakeFromBundleAsNewlyCreatedObject:YES];
     
-    
-    [body setArchiveHTMLString:[[body archiveHTMLString] stringByAppendingString:[element archiveHTMLString]]];
+    SVBodyElement *lastElement = [[body orderedElements] lastObject];
+    [body addElement:element];
+    [element insertAfterElement:lastElement];
 }
 
 #pragma mark Delegate
