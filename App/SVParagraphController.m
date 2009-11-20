@@ -8,6 +8,8 @@
 
 #import "SVParagraphController.h"
 
+#import "SVBodyParagraph.h"
+
 
 @implementation SVParagraphController
 
@@ -18,8 +20,11 @@
     self = [self init];
     
     _paragraph = [paragraph retain];
+    
+    // Observer our bit of the DOM
     _HTMLElement = [domElement retain];
     [domElement setIdName:nil]; // don't want it cluttering up the DOM any more
+    [domElement addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
     
     [self setWebView:[[[domElement ownerDocument] webFrame] webView]];
     
@@ -28,7 +33,10 @@
 
 - (void)dealloc
 {
+    // Stop observation
+    [[self paragraphHTMLElement] removeEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
     [self setWebView:nil];
+    
     [_paragraph release];
     [_HTMLElement release];
     
@@ -82,6 +90,12 @@
         
         _editTimestamp = 0;
     }
+}
+
+- (void)handleEvent:(DOMEvent *)event
+{
+    // Mark as having changes
+    _editTimestamp = [[NSApp currentEvent] timestamp];
 }
 
 @end
