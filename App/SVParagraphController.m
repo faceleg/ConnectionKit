@@ -11,6 +11,8 @@
 
 @implementation SVParagraphController
 
+#pragma mark Init & Dealloc
+
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph HTMLElement:(DOMHTMLElement *)domElement;
 {
     self = [self init];
@@ -19,18 +21,67 @@
     _HTMLElement = [domElement retain];
     [domElement setIdName:nil]; // don't want it cluttering up the DOM any more
     
+    [self setWebView:[[[domElement ownerDocument] webFrame] webView]];
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [self setWebView:nil];
     [_paragraph release];
     [_HTMLElement release];
     
     [super dealloc];
 }
 
+#pragma mark Properties
+
 @synthesize paragraph = _paragraph;
 @synthesize paragraphHTMLElement = _HTMLElement;
+
+#pragma mark Editing
+
+- (void)updateModelFromDOM;
+{
+    [[self paragraph] setHTMLStringFromElement:[self paragraphHTMLElement]];
+}
+
+@synthesize webView = _webView;
+- (void)setWebView:(WebView *)webView
+{
+    // We wish to monitor the webview for change notifications so edits can be committed to the store
+    if (_webView)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                       name:WebViewDidChangeNotification
+                                                     object:_webView];
+    }
+    
+    [webView retain];
+    [_webView release], _webView = webView;
+    
+    if (webView)
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(webViewDidChange:)
+                                                     name:WebViewDidChangeNotification
+                                                   object:_webView];
+    }
+}
+
+- (void)webViewDidChange:(NSNotification *)notification
+{
+    // Commit any changes caused by the user
+    if (_editTimestamp)
+    {
+        if ([[NSApp currentEvent] timestamp] == _editTimestamp)
+        {
+            [self updateModelFromDOM];
+        }
+        
+        _editTimestamp = 0;
+    }
+}
 
 @end

@@ -12,15 +12,21 @@
 
 @class SVBodyParagraph;
 
-@interface SVParagraphController : NSObject
+@interface SVParagraphController : NSObject <DOMEventListener>
 {
   @private
     DOMHTMLElement  *_HTMLElement;
     SVBodyParagraph *_paragraph;
+    
+    WebView         *_webView;
+    NSTimeInterval  _editTimestamp;
 }
 
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph HTMLElement:(DOMHTMLElement *)domElement;
 @property(nonatomic, retain, readonly) SVBodyParagraph *paragraph;
 @property(nonatomic, retain, readonly) DOMHTMLElement *paragraphHTMLElement;
+
+- (void)updateModelFromDOM;
+@property(nonatomic, retain) WebView *webView;
 
 @end
