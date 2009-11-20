@@ -112,24 +112,26 @@
 
 - (void)handleEvent:(DOMMutationEvent *)event
 {
+    // We're only interested in nodes being added or removed from our own node
+    if ([event relatedNode] != [[self textArea] HTMLDOMElement]) return;
+    
+    
     // Add or remove controllers for the new element
     if ([[event type] isEqualToString:@"DOMNodeInserted"])
     {
-        DOMHTMLElement *element = (DOMHTMLElement *)[event relatedNode];
+        DOMHTMLElement *insertedNode = (DOMHTMLElement *)[event target];
         
-        if (element != [[self textArea] HTMLDOMElement] &&
-            [element isKindOfClass:[DOMHTMLElement class]] &&
-            ![self controllerForHTMLElement:element])   // for some reason, get told a node is inserted twice
+        if (![self controllerForHTMLElement:insertedNode])   // for some reason, get told a node is inserted twice
         {
             // Create paragraph
             SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[[self content] managedObjectContext]];
             
-            [paragraph setHTMLStringFromElement:element];
+            [paragraph setHTMLStringFromElement:insertedNode];
             [[self content] addElement:paragraph];
             
             
             // Figure out where it should be placed
-            DOMHTMLElement *previousElement = [element previousSiblingOfClass:[DOMHTMLElement class]];
+            DOMHTMLElement *previousElement = [insertedNode previousSiblingOfClass:[DOMHTMLElement class]];
             if (previousElement)
             {
                 id <SVElementController> controller = [self controllerForHTMLElement:previousElement];
@@ -138,7 +140,7 @@
             }
             else
             {
-                DOMHTMLElement *nextElement = [element nextSiblingOfClass:[DOMHTMLElement class]];
+                DOMHTMLElement *nextElement = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
                 if (nextElement)
                 {
                     id <SVElementController> controller = [self controllerForHTMLElement:nextElement];
@@ -150,7 +152,7 @@
             
             // Create a controller
             SVParagraphController *controller = [[SVParagraphController alloc] initWithParagraph:paragraph
-                                                                                     HTMLElement:element];
+                                                                                     HTMLElement:insertedNode];
             [_elementControllers insertObject:controller atIndex:0];
             [controller release];
         }
@@ -158,12 +160,10 @@
     else if ([[event type] isEqualToString:@"DOMNodeRemoved"])
     {
         // Remove paragraph
-        DOMHTMLElement *element = (DOMHTMLElement *)[event relatedNode];
-        
-        if (element != [[self textArea] HTMLDOMElement] &&
-            [element isKindOfClass:[DOMHTMLElement class]])
+        DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
+        if ([removedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            id <SVElementController> controller = [self controllerForHTMLElement:element];
+            id <SVElementController> controller = [self controllerForHTMLElement:removedNode];
             if (controller)
             {
                 SVBodyElement *element = [controller bodyElement];
