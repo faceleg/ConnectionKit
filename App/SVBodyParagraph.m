@@ -41,11 +41,6 @@
     return result;
 }
 
-- (NSString *)innerHTMLString;
-{
-    return [self innerHTMLArchiveString];
-}
-
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 {
     //  Use the element to update our tagName, inner HTML, and inline content objects
@@ -54,5 +49,19 @@
 }
 
 @dynamic innerHTMLArchiveString;
+
+- (NSString *)innerHTMLString;
+{
+    NSString *result = [[self class] innerHTMLStringWithArchive:[self innerHTMLArchiveString]
+                                           inlineContentObjects:[self inlineContentObjects]];
+    
+    return result;
+}
+
++ (NSString *)innerHTMLStringWithArchive:(NSString *)innerHTMLArchiveString
+                    inlineContentObjects:(NSSet *)contentObjects;
+{
+    return innerHTMLArchiveString;
+}
 
 @end

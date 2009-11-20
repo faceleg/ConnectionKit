@@ -19,6 +19,7 @@
     
     WebView         *_webView;
     NSTimeInterval  _editTimestamp;
+    BOOL            _isUpdatingModel;
 }
 
 - (id)initWithHTMLElement:(DOMHTMLElement *)domElement paragraph:(SVBodyParagraph *)paragraph;

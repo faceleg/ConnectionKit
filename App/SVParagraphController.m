@@ -11,6 +11,9 @@
 #import "SVBodyParagraph.h"
 
 
+static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObservationContext";
+
+
 @implementation SVParagraphController
 
 #pragma mark Init & Dealloc
@@ -27,9 +30,13 @@
     
     self = [super initWithHTMLElement:domElement];
     
-    _paragraph = [paragraph retain];
     
-    // Observer our bit of the DOM
+    // Observe the model
+    _paragraph = [paragraph retain];
+    [paragraph addObserver:self forKeyPath:@"innerHTMLArchiveString" options:0 context:sParagraphInnerHTMLObservationContext];
+    
+    
+    // Observe our bit of the DOM
     [domElement setIdName:nil]; // don't want it cluttering up the DOM any more
     [domElement addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
     
@@ -41,6 +48,8 @@
 - (void)dealloc
 {
     // Stop observation
+    [[self paragraph] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
+    
     [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
                                             listener:self
                                           useCapture:NO];
@@ -58,11 +67,35 @@
 
 - (SVBodyElement *)bodyElement { return [self paragraph]; }
 
+#pragma mark Model Changes
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sParagraphInnerHTMLObservationContext)
+    {
+        // Update the view to match the model.
+        if (!_isUpdatingModel)
+        {
+            // TODO: Should we also supply a valid HTML context?
+            [self setHTMLString:[[self paragraph] innerHTMLString]];
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
 #pragma mark Editing
 
 - (void)updateModelFromDOM;
 {
+    OBPRECONDITION(!_isUpdatingModel);
+    _isUpdatingModel = YES;
+    
     [[self paragraph] setHTMLStringFromElement:[self HTMLElement]];
+    
+    _isUpdatingModel = NO;
 }
 
 @synthesize webView = _webView;

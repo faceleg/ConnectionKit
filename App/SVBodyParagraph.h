@@ -27,6 +27,9 @@
 
 - (NSString *)innerHTMLString;
 
++ (NSString *)innerHTMLStringWithArchive:(NSString *)innerHTMLArchiveString
+                    inlineContentObjects:(NSSet *)contentObjects;
+
 @end
 
 
