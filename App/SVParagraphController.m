@@ -15,14 +15,21 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithParagraph:(SVBodyParagraph *)paragraph HTMLElement:(DOMHTMLElement *)domElement;
+- (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
-    self = [self init];
+    return [self initWithHTMLElement:element paragraph:nil];
+}
+
+- (id)initWithHTMLElement:(DOMHTMLElement *)domElement paragraph:(SVBodyParagraph *)paragraph;
+{
+    OBPRECONDITION(paragraph);
+    
+    
+    self = [super initWithHTMLElement:domElement];
     
     _paragraph = [paragraph retain];
     
     // Observer our bit of the DOM
-    _HTMLElement = [domElement retain];
     [domElement setIdName:nil]; // don't want it cluttering up the DOM any more
     [domElement addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
     
@@ -41,7 +48,6 @@
     [self setWebView:nil];
     
     [_paragraph release];
-    [_HTMLElement release];
     
     [super dealloc];
 }
@@ -49,7 +55,6 @@
 #pragma mark Properties
 
 @synthesize paragraph = _paragraph;
-@synthesize HTMLElement = _HTMLElement;
 
 - (SVBodyElement *)bodyElement { return [self paragraph]; }
 
