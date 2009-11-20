@@ -105,6 +105,7 @@
     
     [editor setDelegate:self];
     [editor setDataSource:self];
+    [editor setAllowsUndo:NO];  // will be managing this entirely ourselves
 }
 
 #pragma mark Content
