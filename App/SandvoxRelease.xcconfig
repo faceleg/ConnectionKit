@@ -16,7 +16,7 @@ DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
 GCC_GENERATE_DEBUGGING_SYMBOLS = YES
 ZERO_LINK = NO
 
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Shared/ThirdParty/Sparkle $(SRCROOT)/../../Shared/ThirdParty/Growl $(SRCROOT)/../../Shared/ThirdParty/BWToolkit
+FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Shared/ThirdParty/BWToolkit $(SRCROOT)/../../Shared/ThirdParty/Sparkle $(SRCROOT)/../../Shared/ThirdParty/Growl
 
 // we strip the installed product
 STRIP_INSTALLED_PRODUCT = YES
