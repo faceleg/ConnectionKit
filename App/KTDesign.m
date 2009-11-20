@@ -404,7 +404,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	NSString *hexColorString = [[self bundle] objectForInfoDictionaryKey:@"MainColor"];
 	if (hexColorString)
 	{
-		result = [NSColor colorFromHexString:hexColorString];
+		result = [NSColor colorFromHexRGB:hexColorString];
 	}
 	return result;
 }

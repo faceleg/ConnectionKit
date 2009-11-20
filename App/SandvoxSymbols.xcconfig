@@ -35,7 +35,7 @@ DEPLOYMENT_LOCATION=NO
 GCC_SYMBOLS_PRIVATE_EXTERN=NO
 
 // other GCC settings
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Shared/ThirdParty/Growl $(SRCROOT)/../../Shared/ThirdParty/Sparkle
+FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Shared/ThirdParty/Growl $(SRCROOT)/../../Shared/ThirdParty/Sparkle $(SRCROOT)/../../Shared/ThirdParty/BWToolkit
 
 GCC_DYNAMIC_NO_PIC = YES
 GCC_ENABLE_FIX_AND_CONTINUE = NO

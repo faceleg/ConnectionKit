@@ -37,8 +37,6 @@
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
-	return;
-	
 	trackingRect_ = [oCollectionView addTrackingRect:[oCollectionView frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
@@ -76,16 +74,16 @@
 	int listIndex = yIndex * 4 + xIndex;
 	if (listIndex <= [[oCollectionView content] count])
 	{
-		
 		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
-		NSRect frameForItemAtIndexManual = frameForItemAtIndex;
 		
 		if ([oCollectionView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
 		{
 			frameForItemAtIndex = [oCollectionView frameForItemAtIndex:listIndex];
 		}
 		
-		NSLog(@"%@ %d,%d -> %d : %@ %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex), NSStringFromRect(frameForItemAtIndexManual));
+		NSLog(@"%@ %d,%d -> %d : %@ %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
+
+		[oCollectionView setNeedsDisplayInRect:frameForItemAtIndex];
 		
 		
 	}
