@@ -158,6 +158,22 @@
     else if ([[event type] isEqualToString:@"DOMNodeRemoved"])
     {
         // Remove paragraph
+        DOMHTMLElement *element = (DOMHTMLElement *)[event relatedNode];
+        
+        if (element != [[self textArea] HTMLDOMElement] &&
+            [element isKindOfClass:[DOMHTMLElement class]])
+        {
+            id <SVElementController> controller = [self controllerForHTMLElement:element];
+            if (controller)
+            {
+                SVBodyElement *element = [controller bodyElement];
+                [element removeFromElementsList];
+                [element setBody:nil];
+                [[element managedObjectContext] deleteObject:element];
+                
+                [_elementControllers removeObject:controller];
+            }
+        }
     }
 }
 
