@@ -1744,8 +1744,6 @@
 		2759CD061039AC6000E2C046 /* KSTabViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSTabViewController.m; path = ../../Shared/AppKit/KSTabViewController.m; sourceTree = "<group>"; };
 		2759CD421039B83900E2C046 /* SVWebEditorLoadController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorLoadController.h; sourceTree = "<group>"; };
 		2759CD431039B83900E2C046 /* SVWebEditorLoadController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorLoadController.m; sourceTree = "<group>"; };
-		275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMNodeBoundsTracker.h; sourceTree = "<group>"; };
-		275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMNodeBoundsTracker.m; sourceTree = "<group>"; };
 		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
@@ -3019,8 +3017,6 @@
 				CE26FA1308C4D9C500C9604B /* design-time.css */,
 				27C7458C104E96CF00FBA79D /* SVWebContentItem.h */,
 				27C7458D104E96CF00FBA79D /* SVWebContentItem.m */,
-				275A642210501E1C00AE6E2A /* SVDOMNodeBoundsTracker.h */,
-				275A642410501E1C00AE6E2A /* SVDOMNodeBoundsTracker.m */,
 				2759CC991039711200E2C046 /* SVWebEditorViewController.h */,
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
 				27F243AC106BC873007FEC56 /* SVSidebarEditorItem.h */,
