@@ -289,9 +289,11 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     
     //  If needed, check the new selection with the delegate.
-    if (consultDelegateFirst)
-    {
-        if (![[self delegate] webEditorView:self shouldChangeSelection:proposedSelection]) return NO;
+    if (consultDelegateFirst && ![[self delegate] webEditorView:self shouldChangeSelection:proposedSelection])
+        {
+            [proposedSelection release];
+            return NO;
+        }
     }
     
     
