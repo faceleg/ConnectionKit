@@ -30,10 +30,10 @@
 
 - (id)init
 {
-    return [self initWithHTMLDOMElement:nil];
+    return [self initWithHTMLElement:nil];
 }
 
-- (id)initWithHTMLDOMElement:(DOMHTMLElement *)element;
+- (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
     OBPRECONDITION(element);
     
@@ -56,43 +56,43 @@
 
 #pragma mark WebView
 
-@synthesize HTMLDOMElement = _element;
+@synthesize HTMLElement = _element;
 
 #pragma mark Contents
 
 - (NSString *)HTMLString
 {
-    NSString *result = [[self HTMLDOMElement] innerHTML];
+    NSString *result = [[self HTMLElement] innerHTML];
     return result;
 }
 
 - (void)setHTMLString:(NSString *)html
 {
-    [[self HTMLDOMElement] setInnerHTML:html];
+    [[self HTMLElement] setInnerHTML:html];
 }
 
 - (NSString *)string
 {
-    NSString *result = [[self HTMLDOMElement] innerText];
+    NSString *result = [[self HTMLElement] innerText];
     return result;
 }
 
 - (void)setString:(NSString *)string
 {
-    [[self HTMLDOMElement] setInnerText:string];
+    [[self HTMLElement] setInnerText:string];
 }
 
 #pragma mark Attributes
 
 - (BOOL)isEditable
 {
-    BOOL result = [[self HTMLDOMElement] isContentEditable];
+    BOOL result = [[self HTMLElement] isContentEditable];
     return result;
 }
 
 - (void)setEditable:(BOOL)flag
 {
-    [[self HTMLDOMElement] setContentEditable:(flag ? @"true" : nil)];
+    [[self HTMLElement] setContentEditable:(flag ? @"true" : nil)];
 }
 
 // Note that it's only a property for controlling editing by the user, it does not affect the existing HTML or stop programmatic editing of the HTML.
@@ -203,7 +203,7 @@
     
     
     // Clear out the undo stack as the changes have propogated to the model
-    [[[[self HTMLDOMElement] documentView] undoManager] removeAllActions];
+    [[[[self HTMLElement] documentView] undoManager] removeAllActions];
     
     
     _isEditing = NO;
@@ -212,7 +212,7 @@
     // Like NSTextField, we want the return key to select the field's contents
     if ([self isFieldEditor] && [textMovement intValue] == NSReturnTextMovement)
     {
-        [[[self HTMLDOMElement] documentView] selectAll:self];
+        [[[self HTMLElement] documentView] selectAll:self];
     }
 }
 
@@ -234,7 +234,7 @@
 	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
 	{
 		// When the user hits option-return insert a line break.
-        [[[self HTMLDOMElement] documentView] insertLineBreak:self];
+        [[[self HTMLElement] documentView] insertLineBreak:self];
 		result = YES;
 	}
 	

@@ -191,7 +191,7 @@
             }
             else
             {
-                textArea = [[SVWebTextArea alloc] initWithHTMLDOMElement:element];
+                textArea = [[SVWebTextArea alloc] initWithHTMLElement:element];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
                 
@@ -258,7 +258,7 @@
         // Search each text block in turn for a match
         for (result in [self textAreas])
         {
-            if ([result HTMLDOMElement] == editableElement)
+            if ([result HTMLElement] == editableElement)
             {
                 break;
             }

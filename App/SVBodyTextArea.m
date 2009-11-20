@@ -21,7 +21,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithHTMLDOMElement:(DOMHTMLElement *)element;
+- (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
     return [self initWithHTMLElement:element body:nil];
 }
@@ -31,7 +31,7 @@
     OBASSERT(pageletBody);
     
     
-    self = [super initWithHTMLDOMElement:element];
+    self = [super initWithHTMLElement:element];
     
     
     _pageletBody = [pageletBody retain];
@@ -39,7 +39,7 @@
     
     // Match paragraphs up to the model
     _elementControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
-    DOMNode *aDOMNode = [[self HTMLDOMElement] firstChild];
+    DOMNode *aDOMNode = [[self HTMLElement] firstChild];
     SVBodyElement *aModelElement = [pageletBody firstElement];
     
     while (aModelElement)
@@ -75,8 +75,8 @@
     
     
     // Observe elements being added or removed
-    [[self HTMLDOMElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[self HTMLDOMElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    [[self HTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[self HTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
     
@@ -86,8 +86,8 @@
 - (void)dealloc
 {
     // Stop observation
-    [[self HTMLDOMElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[self HTMLDOMElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    [[self HTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[self HTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
     
@@ -116,7 +116,7 @@
 - (void)handleEvent:(DOMMutationEvent *)event
 {
     // We're only interested in nodes being added or removed from our own node
-    if ([event relatedNode] != [self HTMLDOMElement]) return;
+    if ([event relatedNode] != [self HTMLElement]) return;
     
     
     // Add or remove controllers for the new element
