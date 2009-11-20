@@ -34,7 +34,10 @@
 - (void)dealloc
 {
     // Stop observation
-    [[self paragraphHTMLElement] removeEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
+    [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
+                                            listener:self
+                                          useCapture:NO];
+    
     [self setWebView:nil];
     
     [_paragraph release];
@@ -46,13 +49,15 @@
 #pragma mark Properties
 
 @synthesize paragraph = _paragraph;
-@synthesize paragraphHTMLElement = _HTMLElement;
+@synthesize HTMLElement = _HTMLElement;
+
+- (SVBodyElement *)bodyElement { return [self paragraph]; }
 
 #pragma mark Editing
 
 - (void)updateModelFromDOM;
 {
-    [[self paragraph] setHTMLStringFromElement:[self paragraphHTMLElement]];
+    [[self paragraph] setHTMLStringFromElement:[self HTMLElement]];
 }
 
 @synthesize webView = _webView;

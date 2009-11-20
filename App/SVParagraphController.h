@@ -8,11 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
+#import "SVPageletBodyTextAreaController.h"
 
 
 @class SVBodyParagraph;
 
-@interface SVParagraphController : NSObject <DOMEventListener>
+@interface SVParagraphController : NSObject <SVElementController, DOMEventListener>
 {
   @private
     DOMHTMLElement  *_HTMLElement;
@@ -24,7 +25,7 @@
 
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph HTMLElement:(DOMHTMLElement *)domElement;
 @property(nonatomic, retain, readonly) SVBodyParagraph *paragraph;
-@property(nonatomic, retain, readonly) DOMHTMLElement *paragraphHTMLElement;
+@property(nonatomic, retain, readonly) DOMHTMLElement *HTMLElement;
 
 - (void)updateModelFromDOM;
 @property(nonatomic, retain) WebView *webView;

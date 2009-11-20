@@ -474,11 +474,7 @@
 - (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id <SVWebEditorItem>)item;
 {
     NSArray *result = [self contentItems];
-    for (SVPageletBodyTextAreaController *aController in [self textAreaControllers])
-    {
-        result = [result arrayByAddingObjectsFromArray:[aController editorItems]];
-    }
-    
+     
     return result;
 }
 

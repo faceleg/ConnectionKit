@@ -10,17 +10,22 @@
 #import "SVWebTextArea.h"
 
 
+@class SVBodyElement;
+@protocol SVElementController <NSObject>
+- (SVBodyElement *)bodyElement;
+- (DOMHTMLElement *)HTMLElement;
+@end
+
+
 @class SVPageletBody;
 
 
-@interface SVPageletBodyTextAreaController : NSObject <SVWebTextAreaDelegate>
+@interface SVPageletBodyTextAreaController : NSObject <SVWebTextAreaDelegate, DOMEventListener>
 {
     SVWebTextArea   *_textArea;
     SVPageletBody   *_pageletBody;
-    
-    NSArray *_editorItems;
-    
-    NSMutableArray  *_paragraphControllers;
+        
+    NSMutableArray  *_elementControllers;
 }
 
 - (id)initWithTextArea:(SVWebTextArea *)textArea content:(SVPageletBody *)pageletBody;
@@ -28,8 +33,11 @@
 @property(nonatomic, retain, readonly) SVWebTextArea *textArea;
 @property(nonatomic, retain, readonly) SVPageletBody *content;
 
-// There should be one item per content object. Update by observing model
-@property(nonatomic, readonly) NSArray *editorItems;
-- (void)updateEditorItems;
+- (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 
+@end
+
+
+#import "SVWebContentItem.h"
+@interface SVWebContentItem (SVElementController) <SVElementController>
 @end

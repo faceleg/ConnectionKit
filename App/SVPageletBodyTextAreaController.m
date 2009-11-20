@@ -14,6 +14,8 @@
 #import "SVPageletBody.h"
 #import "SVWebContentItem.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVPageletBodyTextAreaController
 
@@ -27,11 +29,10 @@
     
     _textArea = [textArea retain];
     [textArea setDelegate:self];
-    [self updateEditorItems];
     
     
     // Match paragraphs up to the model
-    _paragraphControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
+    _elementControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
     DOMNode *aDOMNode = [[textArea HTMLDOMElement] firstChild];
     SVBodyElement *aModelElement = [pageletBody firstElement];
     
@@ -48,7 +49,14 @@
                                                          initWithParagraph:(SVBodyParagraph *)aModelElement
                                                          HTMLElement:htmlElement];
                     
-                    [_paragraphControllers addObject:controller];
+                    [_elementControllers addObject:controller];
+                    [controller release];
+                }
+                else
+                {
+                    SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
+                    [controller setRepresentedObject:aModelElement];
+                    [_elementControllers addObject:controller];
                     [controller release];
                 }
                 
@@ -60,12 +68,22 @@
     }
     
     
+    // Observe elements being added or removed
+    [[[self textArea] HTMLDOMElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[[self textArea] HTMLDOMElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    
+    
     
     return self;
 }
 
 - (void)dealloc
 {
+    // Stop observation
+    [[[self textArea] HTMLDOMElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[[self textArea] HTMLDOMElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    
+    
     [_textArea setDelegate:nil];
     [_textArea release];
     
@@ -79,28 +97,68 @@
 @synthesize textArea = _textArea;
 @synthesize content = _pageletBody;
 
-@synthesize editorItems = _editorItems;
-
-- (void)updateEditorItems
+- (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 {
-    // Generate an editor item for each -contentItem
-    NSSet *contentObjects = nil;//[[self content] contentObjects];
-    NSMutableArray *editorItems = [[NSMutableArray alloc] initWithCapacity:[contentObjects count]];
-    
-    for (SVContentObject *aContentObject in contentObjects)
+    id <SVElementController> result = nil;
+    for (result in _elementControllers)
     {
-        DOMElement *domElement = [[self content] elementForContentObject:aContentObject
-                                                            inDOMElement:[[self textArea] HTMLDOMElement]];
+        if ([result HTMLElement] == element) break;
+    }
+             
+    return result;
+}
+
+#pragma mark Editing
+
+- (void)handleEvent:(DOMMutationEvent *)event
+{
+    // Add or remove controllers for the new element
+    if ([[event type] isEqualToString:@"DOMNodeInserted"])
+    {
+        DOMHTMLElement *element = (DOMHTMLElement *)[event relatedNode];
         
-        if (domElement)
+        if (element != [[self textArea] HTMLDOMElement] &&
+            [element isKindOfClass:[DOMHTMLElement class]] &&
+            ![self controllerForHTMLElement:element])   // for some reason, get told a node is inserted twice
         {
-            SVWebContentItem *anItem = [[SVWebContentItem alloc] initWithDOMElement:domElement];
-            [editorItems addObject:anItem];
-            [anItem release];
+            // Create paragraph
+            SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[[self content] managedObjectContext]];
+            
+            [paragraph setHTMLStringFromElement:element];
+            [[self content] addElement:paragraph];
+            
+            
+            // Figure out where it should be placed
+            DOMHTMLElement *previousElement = [element previousSiblingOfClass:[DOMHTMLElement class]];
+            if (previousElement)
+            {
+                id <SVElementController> controller = [self controllerForHTMLElement:previousElement];
+                OBASSERT(controller);
+                [paragraph insertAfterElement:[controller bodyElement]];
+            }
+            else
+            {
+                DOMHTMLElement *nextElement = [element nextSiblingOfClass:[DOMHTMLElement class]];
+                if (nextElement)
+                {
+                    id <SVElementController> controller = [self controllerForHTMLElement:nextElement];
+                    OBASSERT(controller);
+                    [paragraph insertBeforeElement:[controller bodyElement]];
+                }
+            }                
+            
+            
+            // Create a controller
+            SVParagraphController *controller = [[SVParagraphController alloc] initWithParagraph:paragraph
+                                                                                     HTMLElement:element];
+            [_elementControllers insertObject:controller atIndex:0];
+            [controller release];
         }
     }
-    
-    [_editorItems release], _editorItems = editorItems;
+    else if ([[event type] isEqualToString:@"DOMNodeRemoved"])
+    {
+        // Remove paragraph
+    }
 }
 
 #pragma mark KVO
@@ -111,3 +169,27 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVWebContentItem (SVElementController)
+
+- (DOMHTMLElement *)HTMLElement;
+{
+    DOMHTMLElement *result = (id)[self DOMElement];
+    if (![result isKindOfClass:[DOMHTMLElement class]]) result = nil;
+        
+    return result;
+}
+
+- (SVBodyElement *)bodyElement
+{
+    SVBodyElement *result = [self representedObject];
+    if (![result isKindOfClass:[SVBodyElement class]]) result = nil;
+    return result;
+}
+
+@end
+
