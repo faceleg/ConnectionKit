@@ -92,6 +92,7 @@
     
     
     [_pageletBody release];
+    [_elementControllers release];
     
     [super dealloc];
 }
