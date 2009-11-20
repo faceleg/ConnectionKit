@@ -248,7 +248,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
                                                                inManagedObjectContext:[self managedObjectContext]];
         [paragraph setTagName:@"p"];
-        [paragraph setArchivedInnerHTMLString:@"Test paragraph"];
+        [paragraph setInnerHTMLArchiveString:@"Test paragraph"];
         
         [[pagelet pageletBody] addElement:paragraph];
         [[root sidebar] addPageletsObject:pagelet];

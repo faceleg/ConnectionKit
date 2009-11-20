@@ -43,16 +43,16 @@
 
 - (NSString *)innerHTMLString;
 {
-    return [self archivedInnerHTMLString];
+    return [self innerHTMLArchiveString];
 }
 
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 {
     //  Use the element to update our tagName, inner HTML, and inline content objects
     [self setTagName:[element tagName]];
-    [self setArchivedInnerHTMLString:[element innerHTML]];
+    [self setInnerHTMLArchiveString:[element innerHTML]];
 }
 
-@dynamic archivedInnerHTMLString;
+@dynamic innerHTMLArchiveString;
 
 @end

@@ -431,7 +431,7 @@
     
     SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[page managedObjectContext]];
     [paragraph setTagName:@"p"];
-    [paragraph setArchivedInnerHTMLString:@"Test"];
+    [paragraph setInnerHTMLArchiveString:@"Test"];
     [[pagelet pageletBody] addElement:paragraph];
     
     

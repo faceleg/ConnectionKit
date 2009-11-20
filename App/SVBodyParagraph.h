@@ -13,14 +13,19 @@
 
 @interface SVBodyParagraph :  SVBodyElement  
 
+#pragma mark Properties
+
 @property (nonatomic, retain) NSString * tagName;
+@property(nonatomic, copy) NSString *innerHTMLArchiveString;
 @property (nonatomic, retain) NSSet* inlineContentObjects;
 
 
+#pragma mark HTML
+
 - (NSString *)HTMLString;
-- (NSString *)innerHTMLString;
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
-@property(nonatomic, copy) NSString *archivedInnerHTMLString;
+
+- (NSString *)innerHTMLString;
 
 @end
 
