@@ -24,7 +24,6 @@
     id <KSCollectionController> _contentController;
     
     NSArray         *_textAreas;
-    NSArray         *_textAreaControllers;
     
     SVWebEditorView     *_webEditorView;
     DOMHTMLDivElement   *_sidebarDiv;
@@ -56,8 +55,6 @@
 // A series of methods for retrieving the Text Block to go with a bit of the webview
 - (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
 - (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
-
-@property(nonatomic, copy, readonly) NSArray *textAreaControllers;
 
 
 #pragma mark Selectable Objects

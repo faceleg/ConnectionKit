@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVPageletBodyTextAreaController.h"
+#import "SVBodyTextArea.h"
 #import "SVParagraphController.h"
 
 #import "SVBodyParagraph.h"
@@ -17,23 +17,29 @@
 #import "DOMNode+Karelia.h"
 
 
-@implementation SVPageletBodyTextAreaController
+@implementation SVBodyTextArea
 
 #pragma mark Init & Dealloc
 
-- (id)initWithTextArea:(SVWebTextArea *)textArea content:(SVPageletBody *)pageletBody;
+- (id)initWithHTMLDOMElement:(DOMHTMLElement *)element;
 {
-    [self init];
+    return [self initWithHTMLElement:element body:nil];
+}
+
+- (id)initWithHTMLElement:(DOMHTMLElement *)element body:(SVPageletBody *)pageletBody;
+{
+    OBASSERT(pageletBody);
+    
+    
+    self = [super initWithHTMLDOMElement:element];
+    
     
     _pageletBody = [pageletBody retain];
-    
-    _textArea = [textArea retain];
-    [textArea setDelegate:self];
     
     
     // Match paragraphs up to the model
     _elementControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
-    DOMNode *aDOMNode = [[textArea HTMLDOMElement] firstChild];
+    DOMNode *aDOMNode = [[self HTMLDOMElement] firstChild];
     SVBodyElement *aModelElement = [pageletBody firstElement];
     
     while (aModelElement)
@@ -69,8 +75,8 @@
     
     
     // Observe elements being added or removed
-    [[[self textArea] HTMLDOMElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[[self textArea] HTMLDOMElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    [[self HTMLDOMElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[self HTMLDOMElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
     
@@ -80,12 +86,10 @@
 - (void)dealloc
 {
     // Stop observation
-    [[[self textArea] HTMLDOMElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[[self textArea] HTMLDOMElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    [[self HTMLDOMElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[self HTMLDOMElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
-    [_textArea setDelegate:nil];
-    [_textArea release];
     
     [_pageletBody release];
     
@@ -94,8 +98,7 @@
 
 #pragma mark Accessors
 
-@synthesize textArea = _textArea;
-@synthesize content = _pageletBody;
+@synthesize body = _pageletBody;
 
 - (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 {
@@ -113,7 +116,7 @@
 - (void)handleEvent:(DOMMutationEvent *)event
 {
     // We're only interested in nodes being added or removed from our own node
-    if ([event relatedNode] != [[self textArea] HTMLDOMElement]) return;
+    if ([event relatedNode] != [self HTMLDOMElement]) return;
     
     
     // Add or remove controllers for the new element
@@ -124,10 +127,10 @@
         if (![self controllerForHTMLElement:insertedNode])   // for some reason, get told a node is inserted twice
         {
             // Create paragraph
-            SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[[self content] managedObjectContext]];
+            SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[[self body] managedObjectContext]];
             
             [paragraph setHTMLStringFromElement:insertedNode];
-            [[self content] addElement:paragraph];
+            [[self body] addElement:paragraph];
             
             
             // Figure out where it should be placed

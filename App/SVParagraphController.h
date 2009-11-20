@@ -8,7 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
-#import "SVPageletBodyTextAreaController.h"
+#import "SVBodyTextArea.h"
 
 
 @class SVBodyParagraph;

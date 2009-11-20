@@ -6,7 +6,6 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "SVWebTextArea.h"
 
 
@@ -20,18 +19,16 @@
 @class SVPageletBody;
 
 
-@interface SVPageletBodyTextAreaController : NSObject <SVWebTextAreaDelegate, DOMEventListener>
+@interface SVBodyTextArea : SVWebTextArea <DOMEventListener>
 {
-    SVWebTextArea   *_textArea;
     SVPageletBody   *_pageletBody;
         
     NSMutableArray  *_elementControllers;
 }
 
-- (id)initWithTextArea:(SVWebTextArea *)textArea content:(SVPageletBody *)pageletBody;
+- (id)initWithHTMLElement:(DOMHTMLElement *)element body:(SVPageletBody *)body;
 
-@property(nonatomic, retain, readonly) SVWebTextArea *textArea;
-@property(nonatomic, retain, readonly) SVPageletBody *content;
+@property(nonatomic, retain, readonly) SVPageletBody *body;
 
 - (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 

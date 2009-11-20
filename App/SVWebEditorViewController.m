@@ -15,7 +15,7 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVPageletBody.h"
-#import "SVPageletBodyTextAreaController.h"
+#import "SVBodyTextArea.h"
 #import "KTSite.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
@@ -36,7 +36,6 @@
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
-@property(nonatomic, copy, readwrite) NSArray *textAreaControllers;
 
 
 // Pagelets
@@ -168,43 +167,42 @@
     
     
     
-    // Prepare text areas and their controllers
+    // Prepare text areas
     NSArray *parsedTextBlocks = [_HTMLGenerationContext generatedTextBlocks];
     NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[parsedTextBlocks count]];
-    NSMutableArray *textAreaControllers = [[NSMutableArray alloc] init];
     
     for (SVHTMLTextBlock *aTextBlock in parsedTextBlocks)
     {
-        // Basic text area
         DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
         if (element)
         {
             OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
             
-            SVWebTextArea *textArea = [[SVWebTextArea alloc] initWithHTMLDOMElement:element];
-            [textArea setRichText:[aTextBlock isRichText]];
-            [textArea setFieldEditor:[aTextBlock isFieldEditor]];
             
-            [textAreas addObject:textArea];
-            [textArea release];
-            
-            
-            // Binding
+            // Use the right sort of text area
+            id textArea;
             id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+            
             if ([value isKindOfClass:[SVPageletBody class]])
             {
-                SVPageletBodyTextAreaController *controller = [[SVPageletBodyTextAreaController alloc]
-                                                               initWithTextArea:textArea content:value];
-                [textAreaControllers addObject:controller];
-                [controller release];
+                textArea = [[SVBodyTextArea alloc] initWithHTMLElement:element body:value];
+                [textArea setRichText:YES];
+                [textArea setFieldEditor:NO];
             }
             else
             {
+                textArea = [[SVWebTextArea alloc] initWithHTMLDOMElement:element];
+                [textArea setRichText:[aTextBlock isRichText]];
+                [textArea setFieldEditor:[aTextBlock isFieldEditor]];
+                
                 [textArea bind:NSValueBinding
-                         toObject:[aTextBlock HTMLSourceObject]
-                      withKeyPath:[aTextBlock HTMLSourceKeyPath]
-                          options:nil];
+                      toObject:[aTextBlock HTMLSourceObject]
+                   withKeyPath:[aTextBlock HTMLSourceKeyPath]
+                       options:nil];
             }
+            
+            [textAreas addObject:textArea];
+            [textArea release];
         }
         else
         {
@@ -214,8 +212,6 @@
     
     [self setTextAreas:textAreas];
     [textAreas release];
-    [self setTextAreaControllers:textAreaControllers];
-    [textAreaControllers release];
     
     
     
@@ -284,8 +280,6 @@
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];
 }
-
-@synthesize textAreaControllers = _textAreaControllers;
 
 #pragma mark Content Items
 
@@ -451,7 +445,7 @@
 - (void)insertElement:(id)sender;
 {
     // Create a new element of the requested type and insert at the end of the pagelet
-    SVPageletBody *body = [[[self textAreaControllers] firstObjectKS] content];
+    SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] body];
     
     SVPlugInContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInContentObject"    
                                                              inManagedObjectContext:[body managedObjectContext]];

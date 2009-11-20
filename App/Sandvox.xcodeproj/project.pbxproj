@@ -248,8 +248,8 @@
 		272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */; };
 		2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2730D66E0DE18ACA004858F5 /* KTTemplateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */; };
-		2731ECCD10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECCB10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h */; };
-		2731ECCE10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECCC10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m */; };
+		2731ECCD10861E1500D8AAA5 /* SVBodyTextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */; };
+		2731ECCE10861E1500D8AAA5 /* SVBodyTextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */; };
 		2731ECD410861FF300D8AAA5 /* SVWebTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECD210861FF300D8AAA5 /* SVWebTextField.h */; };
 		2731ECD510861FF300D8AAA5 /* SVWebTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECD310861FF300D8AAA5 /* SVWebTextField.m */; };
 		27368AFB0DE496110045E406 /* KTDataMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */; };
@@ -1697,8 +1697,8 @@
 		272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVSiteOutlineViewController+Icons.m"; sourceTree = "<group>"; };
 		2730D66B0DE18ACA004858F5 /* KTTemplateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTemplateParser.h; sourceTree = "<group>"; };
 		2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTemplateParser.m; sourceTree = "<group>"; };
-		2731ECCB10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletBodyTextAreaController.h; sourceTree = "<group>"; };
-		2731ECCC10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletBodyTextAreaController.m; sourceTree = "<group>"; };
+		2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyTextArea.h; sourceTree = "<group>"; };
+		2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyTextArea.m; sourceTree = "<group>"; };
 		2731ECD210861FF300D8AAA5 /* SVWebTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebTextField.h; sourceTree = "<group>"; };
 		2731ECD310861FF300D8AAA5 /* SVWebTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebTextField.m; sourceTree = "<group>"; };
 		27324D7D0EAFF72500383B15 /* DocumentSaving.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DocumentSaving.graffle; sourceTree = "<group>"; };
@@ -3027,8 +3027,8 @@
 				27F243AD106BC873007FEC56 /* SVSidebarEditorItem.m */,
 				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
 				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
-				2731ECCB10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h */,
-				2731ECCC10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m */,
+				2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */,
+				2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */,
 				2752005B10B5DF4400F96309 /* SVParagraphController.h */,
 				2752005C10B5DF4400F96309 /* SVParagraphController.m */,
 			);
@@ -5147,7 +5147,7 @@
 				27C064C310825F4800795D66 /* SVContentObject.h in Headers */,
 				27C0657010828E9900795D66 /* SVPagelet.h in Headers */,
 				CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */,
-				2731ECCD10861E1500D8AAA5 /* SVPageletBodyTextAreaController.h in Headers */,
+				2731ECCD10861E1500D8AAA5 /* SVBodyTextArea.h in Headers */,
 				2731ECD410861FF300D8AAA5 /* SVWebTextField.h in Headers */,
 				27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */,
 				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
@@ -6531,7 +6531,7 @@
 				27C064C410825F4800795D66 /* SVContentObject.m in Sources */,
 				27C0657110828E9900795D66 /* SVPagelet.m in Sources */,
 				CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */,
-				2731ECCE10861E1500D8AAA5 /* SVPageletBodyTextAreaController.m in Sources */,
+				2731ECCE10861E1500D8AAA5 /* SVBodyTextArea.m in Sources */,
 				2731ECD510861FF300D8AAA5 /* SVWebTextField.m in Sources */,
 				27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */,
 				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
