@@ -155,8 +155,8 @@
             
             
             // Create a controller
-            SVParagraphController *controller = [[SVParagraphController alloc] initWithParagraph:paragraph
-                                                                                     HTMLElement:insertedNode];
+            SVParagraphController *controller = [[SVParagraphController alloc] initWithHTMLElement:insertedNode
+                                                                                         paragraph:paragraph];
             [_elementControllers insertObject:controller atIndex:0];
             [controller release];
         }
