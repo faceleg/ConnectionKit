@@ -82,7 +82,7 @@
 			frameForItemAtIndex = [oCollectionView frameForItemAtIndex:listIndex];
 		}
 		
-		NSLog(@"%@ %d,%d -> %d : %@ %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
+		NSLog(@"%@ %d,%d -> %d : %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
 
 		[oCollectionView setNeedsDisplayInRect:frameForItemAtIndex];
 		
