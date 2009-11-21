@@ -23,16 +23,17 @@
 
 - (void)awakeFromNib
 {
-    // load designs -- only seems to work if I do it here? seems as good a place as any...
-    [self setDesigns:[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension]];
-	self.designs = [KTDesign consolidateDesignsIntoFamilies:self.designs];
-    
     // restrict to a max of 4 columns
     [oCollectionView setMaxNumberOfColumns:4];
 	
-	NSCollectionViewItem *prototype = [[[NSCollectionViewItem alloc] init] autorelease];
+	NSCollectionViewItem *prototype = [[[SVDesignChooserCollectionViewItem alloc] init] autorelease];
 	[[NSBundle mainBundle] loadNibNamed:@"SVDesignViewPrototype" owner:prototype];
 	[oCollectionView setItemPrototype:prototype];
+
+    // load designs -- only seems to work if I do it here? seems as good a place as any...
+	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
+	self.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
+    
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
@@ -72,7 +73,7 @@
 	int xIndex = localPoint.x / itemSize.width;
 	int yIndex = localPoint.y / itemSize.height;
 	int listIndex = yIndex * 4 + xIndex;
-	if (listIndex <= [[oCollectionView content] count])
+	if (listIndex < [[oCollectionView content] count])
 	{
 		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
 		

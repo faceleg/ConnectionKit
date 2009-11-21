@@ -27,7 +27,7 @@
     viewController_ = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserCollectionView" 
                                                                       bundle:nil];
 
-    // pop the collection view into the window
+    // pop the collection view into the window.  This awakens SVDesignChooserCollectionView's nib
     [oTargetView addSubview:[viewController_ view]];
     
     // make sure we resize the viewController's view to match its superview
