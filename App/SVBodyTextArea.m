@@ -55,14 +55,14 @@
                                                          initWithHTMLElement:htmlElement
                                                          paragraph:(SVBodyParagraph *)aModelElement];
                     
-                    [_elementControllers addObject:controller];
+                    [self addElementController:controller];
                     [controller release];
                 }
                 else
                 {
                     SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
                     [controller setRepresentedObject:aModelElement];
-                    [_elementControllers addObject:controller];
+                    [self addElementController:controller];
                     [controller release];
                 }
                 
@@ -102,6 +102,21 @@
 #pragma mark Accessors
 
 @synthesize body = _pageletBody;
+
+- (void)addElementController:(id <SVElementController>)controller;
+{
+    [_elementControllers addObject:controller];
+}
+
+- (void)removeElementController:(id <SVElementController>)controller;
+{
+    if ([controller isKindOfClass:[SVBodyParagraphDOMAdapter class]])
+    {
+        [(SVBodyParagraphDOMAdapter *)controller stop];
+    }
+    
+    [_elementControllers removeObject:controller];
+}
 
 - (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 {
@@ -159,7 +174,7 @@
             // Create a controller
             SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:insertedNode
                                                                                          paragraph:paragraph];
-            [_elementControllers insertObject:controller atIndex:0];
+            [self addElementController:controller];
             [controller release];
         }
     }
@@ -177,7 +192,7 @@
                 [element setBody:nil];
                 [[element managedObjectContext] deleteObject:element];
                 
-                [_elementControllers removeObject:controller];
+                [self removeElementController:controller];
             }
         }
     }

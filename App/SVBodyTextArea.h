@@ -30,6 +30,8 @@
 
 @property(nonatomic, retain, readonly) SVPageletBody *body;
 
+- (void)addElementController:(id <SVElementController>)controller;
+- (void)removeElementController:(id <SVElementController>)controller;
 - (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 
 @end
