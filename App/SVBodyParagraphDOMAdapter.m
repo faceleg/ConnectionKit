@@ -40,6 +40,8 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [domElement setIdName:nil]; // don't want it cluttering up the DOM any more
     [domElement addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
     
+    _isObserving = YES;
+    
     [self setWebView:[[[domElement ownerDocument] webFrame] webView]];
     
     return self;
@@ -47,13 +49,17 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 - (void)stop;
 {
-    [[self paragraph] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
-    
-    [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
-                                   listener:self
-                                 useCapture:NO];
-    
-    _editTimestamp = 0;
+    if (_isObserving)
+    {
+        [[self paragraph] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
+        
+        [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
+                                       listener:self
+                                     useCapture:NO];
+        
+        _editTimestamp = 0; // otherwise webview changes may still commit us
+        _isObserving = NO;
+    }
 }
 
 - (void)dealloc

@@ -20,6 +20,7 @@
   @private
     SVBodyParagraph *_paragraph;
     
+    BOOL            _isObserving;
     WebView         *_webView;
     NSTimeInterval  _editTimestamp;
     BOOL            _isUpdatingModel;
