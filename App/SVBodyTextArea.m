@@ -7,7 +7,7 @@
 //
 
 #import "SVBodyTextArea.h"
-#import "SVParagraphController.h"
+#import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
 #import "SVContentObject.h"
@@ -51,7 +51,7 @@
             {
                 if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
                 {
-                    SVParagraphController *controller = [[SVParagraphController alloc]
+                    SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
                                                          initWithHTMLElement:htmlElement
                                                          paragraph:(SVBodyParagraph *)aModelElement];
                     
@@ -92,6 +92,8 @@
     
     
     [_pageletBody release];
+    
+    [_elementControllers makeObjectsPerformSelector:@selector(stop)];
     [_elementControllers release];
     
     [super dealloc];
@@ -155,7 +157,7 @@
             
             
             // Create a controller
-            SVParagraphController *controller = [[SVParagraphController alloc] initWithHTMLElement:insertedNode
+            SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:insertedNode
                                                                                          paragraph:paragraph];
             [_elementControllers insertObject:controller atIndex:0];
             [controller release];

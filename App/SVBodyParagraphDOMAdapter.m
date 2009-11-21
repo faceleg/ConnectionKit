@@ -1,12 +1,12 @@
 //
-//  SVParagraphController.m
+//  SVBodyParagraphDOMAdapter.m
 //  Sandvox
 //
 //  Created by Mike on 19/11/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVParagraphController.h"
+#import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
 
@@ -14,7 +14,7 @@
 static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObservationContext";
 
 
-@implementation SVParagraphController
+@implementation SVBodyParagraphDOMAdapter
 
 #pragma mark Init & Dealloc
 
@@ -45,17 +45,23 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     return self;
 }
 
-- (void)dealloc
+- (void)stop;
 {
-    // Stop observation
     [[self paragraph] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
     
     [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
-                                            listener:self
-                                          useCapture:NO];
+                                   listener:self
+                                 useCapture:NO];
+    
+    _editTimestamp = 0;
+}
+
+- (void)dealloc
+{
+    // Stop observation
+    [self stop];
     
     [self setWebView:nil];
-    
     [_paragraph release];
     
     [super dealloc];
@@ -76,8 +82,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
         // Update the view to match the model.
         if (!_isUpdatingModel)
         {
-            // TODO: Should we also supply a valid HTML context?
-            [self setHTMLString:[[self paragraph] innerHTMLString]];
+            [self updateDOMFromParagraph];
         }
     }
     else
@@ -86,9 +91,15 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     }
 }
 
+- (void)updateDOMFromParagraph;
+{
+    // TODO: Should we also supply a valid HTML context?
+    [self setHTMLString:[[self paragraph] innerHTMLString]];
+}
+
 #pragma mark Editing
 
-- (void)updateModelFromDOM;
+- (void)updateParagraphFromDOM;
 {
     OBPRECONDITION(!_isUpdatingModel);
     _isUpdatingModel = YES;
@@ -128,7 +139,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     {
         if ([[NSApp currentEvent] timestamp] == _editTimestamp)
         {
-            [self updateModelFromDOM];
+            [self updateParagraphFromDOM];
         }
         
         _editTimestamp = 0;
