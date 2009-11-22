@@ -62,10 +62,6 @@
             [self addElementController:controller];
             [controller release];
         }
-        
-        
-        // Move onto next element
-        aModelElement = [aModelElement nextElement];
     }
     
     
