@@ -14,7 +14,11 @@
 #import "SVPageletBody.h"
 #import "SVWebContentItem.h"
 
+#import "NSDictionary+Karelia.h"
 #import "DOMNode+Karelia.h"
+
+
+static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObservationContext";
 
 
 @implementation SVBodyTextArea
@@ -72,6 +76,13 @@
     [[self HTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
+    // Observe model changes
+    [[self body] addObserver:self
+                  forKeyPath:@"elements"
+                     options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
+                     context:sBodyElementsObservationContext];
+    
+    
     // Finish up
     return self;
 }
@@ -111,6 +122,17 @@
     [_elementControllers removeObject:controller];
 }
 
+- (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
+{
+    id <SVElementController> result = nil;
+    for (result in _elementControllers)
+    {
+        if ([result bodyElement] == element) break;
+    }
+    
+    return result;
+}
+
 - (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 {
     id <SVElementController> result = nil;
@@ -122,12 +144,32 @@
     return result;
 }
 
+#pragma mark Updates
+
+@synthesize updating = _isUpdating;
+
+- (void)willUpdate
+{
+    OBPRECONDITION(!_isUpdating);
+    _isUpdating = YES;
+}
+
+- (void)didUpdate
+{
+    OBPRECONDITION(_isUpdating);
+    _isUpdating = NO;
+}
+
 #pragma mark Editing
 
 - (void)handleEvent:(DOMMutationEvent *)event
 {
     // We're only interested in nodes being added or removed from our own node
     if ([event relatedNode] != [self HTMLElement]) return;
+    
+    
+    // Nor do we care mid-update
+    if ([self isUpdating]) return;
     
     
     // Add or remove controllers for the new element
@@ -138,6 +180,8 @@
         if (![self controllerForHTMLElement:insertedNode])   // for some reason, get told a node is inserted twice
         {
             // Create paragraph
+            [self willUpdate];
+            
             SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[[self body] managedObjectContext]];
             
             [paragraph setHTMLStringFromElement:insertedNode];
@@ -163,6 +207,8 @@
                 }
             }                
             
+            [self didUpdate];
+            
             
             // Create a controller
             SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:insertedNode
@@ -180,10 +226,14 @@
             id <SVElementController> controller = [self controllerForHTMLElement:removedNode];
             if (controller)
             {
+                [self willUpdate];
+                
                 SVBodyElement *element = [controller bodyElement];
                 [element removeFromElementsList];
                 [element setBody:nil];
                 [[element managedObjectContext] deleteObject:element];
+                
+                [self didUpdate];
                 
                 [self removeElementController:controller];
             }
@@ -195,7 +245,30 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    if (context == sBodyElementsObservationContext)
+    {
+        if (![self isUpdating])
+        {
+            // For each element removed from the model, reflect it by removing the matching element in the DOM
+            NSSet *removedElements = [change KVOChange_removedObjects];
+            for (SVBodyElement *aRemovedElement in removedElements)
+            {
+                id <SVElementController> controller = [self controllerForBodyElement:aRemovedElement];
+                OBASSERT(controller);
+                
+                DOMHTMLElement *htmlElement = [controller HTMLElement];
+                [self willUpdate];
+                [[htmlElement parentNode] removeChild:htmlElement];
+                [self didUpdate];
+                
+                [self removeElementController:controller];
+            }
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
