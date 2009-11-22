@@ -37,49 +37,44 @@
     _pageletBody = [pageletBody retain];
     
     
-    // Match paragraphs up to the model
+    // Match each model element up with its DOM equivalent
     _elementControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
-    DOMNode *aDOMNode = [[self HTMLElement] firstChild];
-    SVBodyElement *aModelElement = [pageletBody firstElement];
+    DOMDocument *document = [element ownerDocument]; 
     
-    while (aModelElement)
+    for (SVBodyElement *aModelElement in [pageletBody elements])
     {
-        if ([aDOMNode isKindOfClass:[DOMHTMLElement class]])
+        DOMHTMLElement *anHTMLElement = (id)[document getElementById:[aModelElement editingElementID]];
+        OBASSERT([anHTMLElement isKindOfClass:[DOMHTMLElement class]]);
+        
+        if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
         {
-            DOMHTMLElement *htmlElement = (DOMHTMLElement *)aDOMNode;
-            if ([[htmlElement idName] isEqualToString:[aModelElement editingElementID]])
-            {
-                if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
-                {
-                    SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
-                                                         initWithHTMLElement:htmlElement
-                                                         paragraph:(SVBodyParagraph *)aModelElement];
-                    
-                    [self addElementController:controller];
-                    [controller release];
-                }
-                else
-                {
-                    SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
-                    [controller setRepresentedObject:aModelElement];
-                    [self addElementController:controller];
-                    [controller release];
-                }
-                
-                aModelElement = [aModelElement nextElement];
-            }
+            SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
+                                                 initWithHTMLElement:anHTMLElement
+                                                 paragraph:(SVBodyParagraph *)aModelElement];
+            
+            [self addElementController:controller];
+            [controller release];
+        }
+        else
+        {
+            SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:anHTMLElement];
+            [controller setRepresentedObject:aModelElement];
+            [self addElementController:controller];
+            [controller release];
         }
         
-        aDOMNode = [aDOMNode nextSibling];
+        
+        // Move onto next element
+        aModelElement = [aModelElement nextElement];
     }
     
     
-    // Observe elements being added or removed
+    // Observe DOM changes. Each SVBodyParagraphDOMAdapter will take care of its own section of the DOM
     [[self HTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
     [[self HTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
-    
+    // Finish up
     return self;
 }
 
