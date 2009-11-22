@@ -37,7 +37,6 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     
     // Observe our bit of the DOM
-    [domElement setIdName:nil]; // don't want it cluttering up the DOM any more
     [domElement addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
     
     _isObserving = YES;

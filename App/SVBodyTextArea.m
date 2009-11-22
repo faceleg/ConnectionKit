@@ -43,13 +43,13 @@
     
     for (SVBodyElement *aModelElement in [pageletBody elements])
     {
-        DOMHTMLElement *anHTMLElement = (id)[document getElementById:[aModelElement editingElementID]];
-        OBASSERT([anHTMLElement isKindOfClass:[DOMHTMLElement class]]);
+        DOMHTMLElement *htmlElement = (id)[document getElementById:[aModelElement editingElementID]];
+        OBASSERT([htmlElement isKindOfClass:[DOMHTMLElement class]]);
         
         if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
         {
             SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
-                                                 initWithHTMLElement:anHTMLElement
+                                                 initWithHTMLElement:htmlElement
                                                  paragraph:(SVBodyParagraph *)aModelElement];
             
             [self addElementController:controller];
@@ -57,11 +57,13 @@
         }
         else
         {
-            SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:anHTMLElement];
+            SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
             [controller setRepresentedObject:aModelElement];
             [self addElementController:controller];
             [controller release];
         }
+        
+        [htmlElement setIdName:nil]; // don't want it cluttering up the DOM any more
     }
     
     
