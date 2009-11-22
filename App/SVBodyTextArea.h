@@ -38,6 +38,9 @@
 - (void)addElementController:(id <SVElementController>)controller;
 - (void)removeElementController:(id <SVElementController>)controller;
 
+- (id <SVElementController>)makeAndAddControllerForBodyElement:(SVBodyElement *)element
+                                                   HTMLElement:(DOMHTMLElement *)element;
+
 - (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
 - (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
 

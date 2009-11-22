@@ -122,6 +122,31 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [_elementControllers removeObject:controller];
 }
 
+- (id <SVElementController>)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
+                                                   HTMLElement:(DOMHTMLElement *)htmlElement;
+{
+    id result;
+    
+    if ([bodyElement isKindOfClass:[SVBodyParagraph class]])
+    {
+        result = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:htmlElement
+                                                              paragraph:(SVBodyParagraph *)bodyElement];
+        
+        [self addElementController:result];
+        [result release];
+    }
+    else
+    {
+        result = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
+        [result setRepresentedObject:bodyElement];
+        [self addElementController:result];
+        [result release];
+    }
+    
+    
+    return result;
+}
+
 - (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
 {
     id <SVElementController> result = nil;
@@ -257,11 +282,30 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
                 OBASSERT(controller);
                 
                 DOMHTMLElement *htmlElement = [controller HTMLElement];
+                
                 [self willUpdate];
                 [[htmlElement parentNode] removeChild:htmlElement];
                 [self didUpdate];
                 
                 [self removeElementController:controller];
+            }
+            
+            
+            // For each element added to the model, reflect it by creating matching nodes and inserting into the DOM
+            NSSet *addedElements = [change KVOChange_insertedObjects];
+            for (SVBodyElement *anAddedElement in addedElements)
+            {
+                // Create DOM Node
+                DOMDocument *document = [[self HTMLElement] ownerDocument];
+                DOMHTMLElement *htmlElement = (id)[document createElement:[(id)anAddedElement tagName]];
+                [htmlElement setInnerHTML:[(SVBodyParagraph *)anAddedElement innerHTMLString]];
+                
+                [self willUpdate];
+                [[self HTMLElement] appendChild:htmlElement];
+                [self didUpdate];
+                
+                
+                [self makeAndAddControllerForBodyElement:anAddedElement HTMLElement:htmlElement];
             }
         }
     }
