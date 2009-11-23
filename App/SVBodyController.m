@@ -46,4 +46,12 @@
     [element insertAfterElement:[[self arrangedObjects] objectAtIndex:(index - 1)]];
 }
 
+- (void)removeObject:(SVBodyElement *)element
+{
+    // First remove from linked list
+    [element removeFromElementsList];
+    
+    [super removeObject:element];
+}
+
 @end

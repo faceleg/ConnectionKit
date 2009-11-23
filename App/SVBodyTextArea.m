@@ -298,13 +298,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             id <SVElementController> controller = [self controllerForHTMLElement:removedNode];
             if (controller)
             {
-                [self willUpdate];
-                
                 SVBodyElement *element = [controller bodyElement];
-                [element removeFromElementsList];
-                [element setBody:nil];
-                [[element managedObjectContext] deleteObject:element];
                 
+                [self willUpdate];
+                [[self content] removeObject:element];
                 [self didUpdate];
                 
                 [self removeElementController:controller];
