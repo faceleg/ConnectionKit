@@ -93,6 +93,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [[self HTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
     [[self HTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
+    [[self body] removeObserver:self forKeyPath:@"elements"];
     
     
     [_pageletBody release];
