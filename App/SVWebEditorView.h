@@ -26,7 +26,7 @@
     SVWebEditorWebView              *_webView;
     id <SVWebEditorViewDataSource>  _dataSource;    // weak ref as you'd expect
     id <SVWebEditorViewDelegate>    _delegate;      // "
-    BOOL    _isLoading;
+    BOOL    _isStartingLoad;
     
     // Selection
     id <SVWebEditorText>    _focusedText;
@@ -64,7 +64,7 @@
 // Blocks until either loading is finished or date is reached. Returns YES if the former.
 - (BOOL)loadUntilDate:(NSDate *)date;
 
-@property(nonatomic, readonly, getter=isLoading) BOOL loading;
+@property(nonatomic, readonly, getter=isStartingLoad) BOOL startingLoad;
 
 
 #pragma mark Selection

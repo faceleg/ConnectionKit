@@ -146,9 +146,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
 {
-    _isLoading = YES;
+    _isStartingLoad = YES;
     [[[self webView] mainFrame] loadHTMLString:string baseURL:URL];
-    _isLoading = NO;
+    _isStartingLoad = NO;
 }
 
 - (BOOL)loadUntilDate:(NSDate *)date;
@@ -159,13 +159,13 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     while (!result && [date timeIntervalSinceNow] > 0)
     {
         [runLoop runUntilDate:[NSDate distantPast]];
-        result = ![self isLoading];
+        result = ![self isStartingLoad];
     }
     
     return result;
 }
 
-@synthesize loading = _isLoading;
+@synthesize startingLoad = _isStartingLoad;
 
 #pragma mark Selected DOM Range
 
@@ -1025,7 +1025,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 		request:(NSURLRequest *)request
 		  frame:(WebFrame *)frame decisionListener:(id <WebPolicyDecisionListener>)listener
 {
-    if ([self isLoading])
+    if ([self isStartingLoad])
     {
         // We want to allow initial loading of the webview…
         [listener use];
