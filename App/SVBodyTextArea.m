@@ -245,43 +245,51 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     // Add or remove controllers for the new element
     if ([[event type] isEqualToString:@"DOMNodeInserted"])
     {
+        // WebKit sometimes likes to keep the HTML neat by inserting both a newline character and HTML element at the same time. Ignore the former
         DOMHTMLElement *insertedNode = (DOMHTMLElement *)[event target];
-        
-        if (![self controllerForHTMLElement:insertedNode])   // for some reason, get told a node is inserted twice
+        if (![insertedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            // Create paragraph
-            SVBodyParagraph *paragraph = [[self content] newObject];
-            [paragraph setHTMLStringFromElement:insertedNode];
-            
-            
-            // Insert the paragraph into the model in the same spot as it is in the DOM
-            [self willUpdate];
-             
-            DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
-            if (nextNode)
-            {
-                id <SVElementController> nextController = [self controllerForHTMLElement:nextNode];
-                OBASSERT(nextController);
-                
-                NSArrayController *content = [self content];
-                NSUInteger index = [[content arrangedObjects] indexOfObject:[nextController bodyElement]];
-                [content insertObject:paragraph atArrangedObjectIndex:index];
-            }
-            else
-            {
-                // shortcut, know we're inserting at the end
-                [[self content] addObject:paragraph];
-            }
-            
-            [self didUpdate];
-            
-            
-            // Create a matching controller
-            SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:insertedNode
-                                                                                         paragraph:paragraph];
-            [self addElementController:controller];
-            [controller release];
+            return;
         }
+        
+        
+        // Create paragraph
+        SVBodyParagraph *paragraph = [[self content] newObject];
+        [paragraph setHTMLStringFromElement:insertedNode];
+        
+        
+        // Create a matching controller
+        SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
+                                                 initWithHTMLElement:insertedNode
+                                                 paragraph:paragraph];
+        [paragraph release];
+        
+        
+        // Insert the paragraph into the model in the same spot as it is in the DOM
+        [self willUpdate];
+         
+        DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
+        if (nextNode)
+        {
+            id <SVElementController> nextController = [self controllerForHTMLElement:nextNode];
+            OBASSERT(nextController);
+            
+            NSArrayController *content = [self content];
+            NSUInteger index = [[content arrangedObjects] indexOfObject:[nextController bodyElement]];
+            [content insertObject:paragraph atArrangedObjectIndex:index];
+        }
+        else
+        {
+            // shortcut, know we're inserting at the end
+            [[self content] addObject:paragraph];
+        }
+        
+        [self didUpdate];
+        
+        
+        // Insert the controller into our array
+        [self addElementController:controller];
+        [controller release];
     }
     else if ([[event type] isEqualToString:@"DOMNodeRemoved"])
     {
