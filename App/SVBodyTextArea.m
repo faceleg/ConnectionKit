@@ -259,9 +259,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         
         
         // Create a matching controller
-        SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
-                                                 initWithHTMLElement:insertedNode
-                                                 paragraph:paragraph];
+        [self makeAndAddControllerForBodyElement:paragraph HTMLElement:insertedNode];
         [paragraph release];
         
         
@@ -285,11 +283,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         }
         
         [self didUpdate];
-        
-        
-        // Insert the controller into our array
-        [self addElementController:controller];
-        [controller release];
     }
     else if ([[event type] isEqualToString:@"DOMNodeRemoved"])
     {
