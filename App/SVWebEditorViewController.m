@@ -606,6 +606,11 @@
 
 #pragma mark SVWebEditorViewDelegate
 
+- (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
+{
+    
+}
+
 - (BOOL)webEditorView:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
 {
     //  Update our content controller's selected objects to reflect the new selection in the Web Editor View

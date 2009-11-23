@@ -212,6 +212,7 @@
 
    
    
+- (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
