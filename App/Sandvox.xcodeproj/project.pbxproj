@@ -361,6 +361,8 @@
 		278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */; };
 		2790BDAF1040162000654665 /* SVWebTextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVWebTextArea.h */; };
 		2790BDB01040162000654665 /* SVWebTextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVWebTextArea.m */; };
+		279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279214CA10BAB7EF00E590D5 /* SVBodyController.h */; };
+		279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279214CB10BAB7EF00E590D5 /* SVBodyController.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
 		2797B4BE0EF6E65E00F91398 /* KTURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */; };
@@ -1811,6 +1813,8 @@
 		278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextProtocol.h; sourceTree = "<group>"; };
 		2790BDAD1040162000654665 /* SVWebTextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebTextArea.h; sourceTree = "<group>"; };
 		2790BDAE1040162000654665 /* SVWebTextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebTextArea.m; sourceTree = "<group>"; };
+		279214CA10BAB7EF00E590D5 /* SVBodyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyController.h; sourceTree = "<group>"; };
+		279214CB10BAB7EF00E590D5 /* SVBodyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyController.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
 		2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportSavePanelController.m; sourceTree = "<group>"; };
 		2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLFormatter.h; sourceTree = "<group>"; };
@@ -3027,6 +3031,8 @@
 				2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */,
 				2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */,
 				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
+				279214CA10BAB7EF00E590D5 /* SVBodyController.h */,
+				279214CB10BAB7EF00E590D5 /* SVBodyController.m */,
 			);
 			name = "Editor View Controller";
 			sourceTree = "<group>";
@@ -5172,6 +5178,7 @@
 				2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */,
 				CE8E710F10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
+				279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6556,6 +6563,7 @@
 				2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */,
 				CE8E711010B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
+				279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

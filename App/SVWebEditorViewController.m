@@ -8,9 +8,9 @@
 
 #import "SVWebEditorViewController.h"
 
+#import "SVBodyController.h"
 #import "SVBodyParagraph.h"
 #import "SVPlugInContentObject.h"
-#import "SVHTMLTemplateParser.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
@@ -186,7 +186,12 @@
             
             if ([value isKindOfClass:[SVPageletBody class]])
             {
-                textArea = [[SVBodyTextArea alloc] initWithHTMLElement:element body:value];
+                NSArrayController *elementsController = [[SVBodyController alloc] init];
+                [elementsController setManagedObjectContext:[[self page] managedObjectContext]];
+                [elementsController setAutomaticallyRearrangesObjects:YES];
+                [elementsController bind:NSContentSetBinding toObject:value withKeyPath:@"elements" options:nil];
+                
+                textArea = [[SVBodyTextArea alloc] initWithHTMLElement:element content:elementsController];
                 [textArea setRichText:YES];
                 [textArea setFieldEditor:NO];
             }

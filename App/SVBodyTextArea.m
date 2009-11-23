@@ -27,25 +27,29 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
-    return [self initWithHTMLElement:element body:nil];
+    return [self initWithHTMLElement:element content:nil];
 }
 
-- (id)initWithHTMLElement:(DOMHTMLElement *)element body:(SVPageletBody *)pageletBody;
+- (id)initWithHTMLElement:(DOMHTMLElement *)element content:(NSArrayController *)elementsController;
 {
-    OBASSERT(pageletBody);
+    OBPRECONDITION(elementsController);
     
     
     self = [super initWithHTMLElement:element];
     
     
-    _pageletBody = [pageletBody retain];
+    // Get our content populated first so we don't have to teardown and restup the DOM
+    _content = [elementsController retain];
+    
     
     
     // Match each model element up with its DOM equivalent
-    _elementControllers = [[NSMutableArray alloc] initWithCapacity:[[pageletBody elements] count]];
+    NSArray *bodyElements = [[self content] arrangedObjects];
+    _elementControllers = [[NSMutableArray alloc] initWithCapacity:[bodyElements count]];
+    
     DOMDocument *document = [element ownerDocument]; 
     
-    for (SVBodyElement *aModelElement in [pageletBody elements])
+    for (SVBodyElement *aModelElement in bodyElements)
     {
         DOMHTMLElement *htmlElement = (id)[document getElementById:[aModelElement editingElementID]];
         OBASSERT([htmlElement isKindOfClass:[DOMHTMLElement class]]);
@@ -76,11 +80,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [[self HTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
-    // Observe model changes
-    [[self body] addObserver:self
-                  forKeyPath:@"elements"
-                     options:(NSKeyValueObservingOptionNew | NSKeyValueObservingOptionOld)
-                     context:sBodyElementsObservationContext];
+    // Observe content changes
+    [[self content] addObserver:self
+                     forKeyPath:@"arrangedObjects"
+                        options:0
+                        context:sBodyElementsObservationContext];
     
     
     // Finish up
@@ -93,10 +97,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [[self HTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
     [[self HTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
-    [[self body] removeObserver:self forKeyPath:@"elements"];
+    [[self content] removeObserver:self forKeyPath:@"arrangedObjects"];
     
     
-    [_pageletBody release];
+    // Release ivars
+    [_content release];
     
     [_elementControllers makeObjectsPerformSelector:@selector(stop)];
     [_elementControllers release];
@@ -104,9 +109,48 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [super dealloc];
 }
 
-#pragma mark Accessors
+#pragma mark Content
 
-@synthesize body = _pageletBody;
+@synthesize content = _content;
+
+- (void)contentElementsDidChange
+{
+    // For each element removed from the model, reflect it by removing the matching element in the DOM
+    NSSet *removedElements = nil;
+    for (SVBodyElement *aRemovedElement in removedElements)
+    {
+        id <SVElementController> controller = [self controllerForBodyElement:aRemovedElement];
+        OBASSERT(controller);
+        
+        DOMHTMLElement *htmlElement = [controller HTMLElement];
+        
+        [self willUpdate];
+        [[htmlElement parentNode] removeChild:htmlElement];
+        [self didUpdate];
+        
+        [self removeElementController:controller];
+    }
+    
+    
+    // For each element added to the model, reflect it by creating matching nodes and inserting into the DOM
+    NSSet *addedElements = nil;
+    for (SVBodyElement *anAddedElement in addedElements)
+    {
+        // Create DOM Node
+        DOMDocument *document = [[self HTMLElement] ownerDocument];
+        DOMHTMLElement *htmlElement = (id)[document createElement:[(id)anAddedElement tagName]];
+        [htmlElement setInnerHTML:[(SVBodyParagraph *)anAddedElement innerHTMLString]];
+        
+        [self willUpdate];
+        [[self HTMLElement] appendChild:htmlElement];
+        [self didUpdate];
+        
+        
+        [self makeAndAddControllerForBodyElement:anAddedElement HTMLElement:htmlElement];
+    }
+}
+
+#pragma mark Subcontrollers
 
 - (void)addElementController:(id <SVElementController>)controller;
 {
@@ -208,13 +252,15 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             // Create paragraph
             [self willUpdate];
             
-            SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[[self body] managedObjectContext]];
+            SVBodyParagraph *paragraph = [NSEntityDescription
+                                          insertNewObjectForEntityForName:@"BodyParagraph" 
+                                          inManagedObjectContext:[[self content] managedObjectContext]];
             
             [paragraph setHTMLStringFromElement:insertedNode];
-            [[self body] addElement:paragraph];
+            [[self content] addObject:paragraph];
             
             
-            // Figure out where it should be placed
+            // TODO: Figure out where it should be placed
             DOMHTMLElement *previousElement = [insertedNode previousSiblingOfClass:[DOMHTMLElement class]];
             if (previousElement)
             {
@@ -275,39 +321,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     {
         if (![self isUpdating])
         {
-            // For each element removed from the model, reflect it by removing the matching element in the DOM
-            NSSet *removedElements = [change KVOChange_removedObjects];
-            for (SVBodyElement *aRemovedElement in removedElements)
-            {
-                id <SVElementController> controller = [self controllerForBodyElement:aRemovedElement];
-                OBASSERT(controller);
-                
-                DOMHTMLElement *htmlElement = [controller HTMLElement];
-                
-                [self willUpdate];
-                [[htmlElement parentNode] removeChild:htmlElement];
-                [self didUpdate];
-                
-                [self removeElementController:controller];
-            }
-            
-            
-            // For each element added to the model, reflect it by creating matching nodes and inserting into the DOM
-            NSSet *addedElements = [change KVOChange_insertedObjects];
-            for (SVBodyElement *anAddedElement in addedElements)
-            {
-                // Create DOM Node
-                DOMDocument *document = [[self HTMLElement] ownerDocument];
-                DOMHTMLElement *htmlElement = (id)[document createElement:[(id)anAddedElement tagName]];
-                [htmlElement setInnerHTML:[(SVBodyParagraph *)anAddedElement innerHTMLString]];
-                
-                [self willUpdate];
-                [[self HTMLElement] appendChild:htmlElement];
-                [self didUpdate];
-                
-                
-                [self makeAndAddControllerForBodyElement:anAddedElement HTMLElement:htmlElement];
-            }
+            [self contentElementsDidChange];
         }
     }
     else

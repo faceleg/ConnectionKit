@@ -21,16 +21,19 @@
 
 @interface SVBodyTextArea : SVWebTextArea <DOMEventListener>
 {
-    SVPageletBody   *_pageletBody;
-        
+    NSArrayController   *_content;
+    
     NSMutableArray  *_elementControllers;
     
     BOOL    _isUpdating;    
 }
 
-- (id)initWithHTMLElement:(DOMHTMLElement *)element body:(SVPageletBody *)body;
+- (id)initWithHTMLElement:(DOMHTMLElement *)element content:(NSArrayController *)content;
 
-@property(nonatomic, retain, readonly) SVPageletBody *body;
+
+#pragma mark Content
+@property(nonatomic, retain, readonly) NSArrayController *content;
+- (void)contentElementsDidChange;
 
 
 #pragma mark Subcontrollers
