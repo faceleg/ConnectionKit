@@ -7,29 +7,19 @@
 //
 
 #import "SVDesignChooserViewController.h"
-#import "SVDesignChooserCollectionViewItem.h"
 #import "NSBundle+Karelia.h"
 #import "KSPlugin.h"
 #import "KT.h"
 #import "KTDesign.h"
 
-@interface NSCollectionView (SnowLeopardOnly)
-
-- (NSRect)frameForItemAtIndex:(NSUInteger)index;
-
-@end
 
 @implementation SVDesignChooserViewController
 
 - (void)awakeFromNib
 {
     // restrict to a max of 4 columns
-    [oCollectionView setMaxNumberOfColumns:4];
+    [oImageBrowserView setMaxNumberOfColumns:4];
 	
-	NSCollectionViewItem *prototype = [[[SVDesignChooserCollectionViewItem alloc] init] autorelease];
-	[[NSBundle mainBundle] loadNibNamed:@"SVDesignViewPrototype" owner:prototype];
-	[oCollectionView setItemPrototype:prototype];
-
     // load designs -- only seems to work if I do it here? seems as good a place as any...
 	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
 	self.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
@@ -38,27 +28,27 @@
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
-	trackingRect_ = [oCollectionView addTrackingRect:[oCollectionView frame] owner:self userData:nil assumeInside:NO];
+	trackingRect_ = [oImageBrowserView addTrackingRect:[oImageBrowserView frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(viewBoundsDidChange:)
 												 name:NSViewBoundsDidChangeNotification
-											   object:oCollectionView];
+											   object:oImageBrowserView];
 }
 
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	wasAcceptingMouseEvents_ = [[oCollectionView window] acceptsMouseMovedEvents];
-	[[oCollectionView window] setAcceptsMouseMovedEvents:YES];
-    [[oCollectionView window] makeFirstResponder:self];
+	wasAcceptingMouseEvents_ = [[oImageBrowserView window] acceptsMouseMovedEvents];
+	[[oImageBrowserView window] setAcceptsMouseMovedEvents:YES];
+    [[oImageBrowserView window] makeFirstResponder:self];
 
 	NSLog(@"%s %@",__FUNCTION__, theEvent);
 }
 - (void)mouseExited:(NSEvent *)theEvent
 {
-    [[oCollectionView window] setAcceptsMouseMovedEvents:wasAcceptingMouseEvents_];
+    [[oImageBrowserView window] setAcceptsMouseMovedEvents:wasAcceptingMouseEvents_];
 	NSLog(@"%s %@",__FUNCTION__, theEvent);
 }
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -67,24 +57,24 @@
 #define CELLHEIGHT 112
 //	NSLog(@"%s %@",__FUNCTION__, theEvent);
 	NSPoint windowPoint = [theEvent locationInWindow];
-	NSPoint localPoint = [oCollectionView convertPoint:windowPoint fromView:nil];
+	NSPoint localPoint = [oImageBrowserView convertPoint:windowPoint fromView:nil];
 
 	NSSize itemSize = NSMakeSize(CELLWIDTH,CELLHEIGHT);		// this is constant in our case ... is there any good way to query this?
 	int xIndex = localPoint.x / itemSize.width;
 	int yIndex = localPoint.y / itemSize.height;
 	int listIndex = yIndex * 4 + xIndex;
-	if (listIndex < [[oCollectionView content] count])
+	if (listIndex < [[oImageBrowserView content] count])
 	{
 		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
 		
-		if ([oCollectionView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
+		if ([oImageBrowserView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
 		{
-			frameForItemAtIndex = [oCollectionView frameForItemAtIndex:listIndex];
+//			frameForItemAtIndex = [oImageBrowserView frameForItemAtIndex:listIndex];
 		}
 		
 		NSLog(@"%@ %d,%d -> %d : %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
 
-		[oCollectionView setNeedsDisplayInRect:frameForItemAtIndex];
+		[oImageBrowserView setNeedsDisplayInRect:frameForItemAtIndex];
 		
 		
 	}
@@ -99,13 +89,13 @@
 - (void)viewBoundsDidChange:(NSNotification *)aNotif;
 {
     // we set up a tracking region so we can get mouseEntered and mouseExited events
-    [oCollectionView removeTrackingRect:trackingRect_];
-    trackingRect_ = [oCollectionView addTrackingRect:[oCollectionView frame] owner:self userData:nil assumeInside:NO];
+    [oImageBrowserView removeTrackingRect:trackingRect_];
+    trackingRect_ = [oImageBrowserView addTrackingRect:[oImageBrowserView frame] owner:self userData:nil assumeInside:NO];
 }
 
 @synthesize designs = designs_;
 @synthesize designsArrayController = oArrayController;
-@synthesize designsCollectionView = oCollectionView;
+@synthesize designsImageBrowserView = oImageBrowserView;
 @end
 
 @implementation SVDesignChooserScrollView

@@ -7,11 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import <Quartz/Quartz.h>
 
 @interface SVDesignChooserViewController : NSViewController
 {
-    IBOutlet NSCollectionView	*oCollectionView;
+    IBOutlet IKImageBrowserView	*oImageBrowserView;
     IBOutlet NSArrayController  *oArrayController;
     
     NSArray                     *designs_;
@@ -23,7 +23,7 @@
  
 @property(retain) NSArray *designs;
 @property(readonly) NSArrayController *designsArrayController;
-@property(readonly) NSCollectionView *designsCollectionView;
+@property(readonly) IKImageBrowserView *designsImageBrowserView;
 @end
 
 @interface SVDesignChooserScrollView : NSScrollView

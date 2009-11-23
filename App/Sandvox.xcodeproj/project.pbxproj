@@ -588,12 +588,11 @@
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
-		3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EA9321048D1BE00B0763D /* SVDesignViewPrototype.xib */; };
 		3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */; };
 		3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */; };
 		3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */; };
 		3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */; };
-		3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EA96B1048EA3E00B0763D /* SVDesignChooserCollectionView.xib */; };
+		3C6EA96C1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EA96B1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
@@ -990,8 +989,6 @@
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE82FF430E777F62003A0110 /* vmutils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE82FF420E777F62003A0110 /* vmutils.framework */; };
-		CE8E710F10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E710D10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h */; };
-		CE8E711010B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E710E10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m */; };
 		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
 		CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */; };
 		CE91721209D51E530003310B /* target_set.png in Resources */ = {isa = PBXBuildFile; fileRef = CE91721109D51E530003310B /* target_set.png */; };
@@ -2141,12 +2138,11 @@
 		3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+KTExtensions.m"; sourceTree = "<group>"; };
 		3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KTExtensions.h"; sourceTree = "<group>"; };
 		3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KTExtensions.m"; sourceTree = "<group>"; };
-		3C6EA9321048D1BE00B0763D /* SVDesignViewPrototype.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignViewPrototype.xib; sourceTree = "<group>"; };
 		3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserWindowController.h; sourceTree = "<group>"; };
 		3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserWindowController.m; sourceTree = "<group>"; };
 		3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserViewController.h; sourceTree = "<group>"; };
 		3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserViewController.m; sourceTree = "<group>"; };
-		3C6EA96B1048EA3E00B0763D /* SVDesignChooserCollectionView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignChooserCollectionView.xib; sourceTree = "<group>"; };
+		3C6EA96B1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignChooserImageBrowser.xib; sourceTree = "<group>"; };
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
@@ -2594,8 +2590,6 @@
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageView.h; sourceTree = "<group>"; };
 		CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageView.m; sourceTree = "<group>"; };
-		CE8E710D10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserCollectionViewItem.h; sourceTree = "<group>"; };
-		CE8E710E10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserCollectionViewItem.m; sourceTree = "<group>"; };
 		CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignFamily.h; sourceTree = "<group>"; };
 		CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignFamily.m; sourceTree = "<group>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
@@ -3478,16 +3472,13 @@
 			isa = PBXGroup;
 			children = (
 				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
-				3C6EA96B1048EA3E00B0763D /* SVDesignChooserCollectionView.xib */,
-				3C6EA9321048D1BE00B0763D /* SVDesignViewPrototype.xib */,
+				3C6EA96B1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib */,
 				3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */,
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
 				3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */,
 				3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */,
 				CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */,
 				CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */,
-				CE8E710D10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h */,
-				CE8E710E10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m */,
 				CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */,
 				CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */,
 			);
@@ -5176,7 +5167,6 @@
 				278F799E10B44A1B00BDBAF7 /* SVPageletBody.h in Headers */,
 				278F79A210B44A3B00BDBAF7 /* SVBodyElement.h in Headers */,
 				2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */,
-				CE8E710F10B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
 				279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */,
 			);
@@ -5845,8 +5835,7 @@
 				3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */,
 				3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */,
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
-				3C6EA9331048D1BE00B0763D /* SVDesignViewPrototype.xib in Resources */,
-				3C6EA96C1048EA3E00B0763D /* SVDesignChooserCollectionView.xib in Resources */,
+				3C6EA96C1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib in Resources */,
 				2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */,
 				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
 				CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */,
@@ -6561,7 +6550,6 @@
 				278F799F10B44A1B00BDBAF7 /* SVPageletBody.m in Sources */,
 				278F79A310B44A3B00BDBAF7 /* SVBodyElement.m in Sources */,
 				2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */,
-				CE8E711010B5B96F0005BD91 /* SVDesignChooserCollectionViewItem.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
 				279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */,
 			);

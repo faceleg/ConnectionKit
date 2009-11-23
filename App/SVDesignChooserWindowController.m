@@ -24,10 +24,10 @@
 - (void)awakeFromNib
 {
     // load the xib that contains the collection view
-    viewController_ = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserCollectionView" 
+    viewController_ = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserImageBrowser" 
                                                                       bundle:nil];
 
-    // pop the collection view into the window.  This awakens SVDesignChooserCollectionView's nib
+    // pop the collection view into the window.  This awakens SVDesignChooserImageBrowser's nib
     [oTargetView addSubview:[viewController_ view]];
     
     // make sure we resize the viewController's view to match its superview
