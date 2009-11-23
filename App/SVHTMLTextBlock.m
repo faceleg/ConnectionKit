@@ -247,7 +247,7 @@
 {
 	// When publishing, generate an empty string (or maybe nil) for empty text blocks
 	NSString *innerHTML = [self innerHTML];
-	if ([[SVHTMLContext currentContext] generationPurpose] != kGeneratingPreview && (!innerHTML || [innerHTML isEqualToString:@""]))
+	if (![[SVHTMLContext currentContext] isEditable] && (!innerHTML || [innerHTML isEqualToString:@""]))
 	{
 		return @"";
 	}
@@ -262,7 +262,7 @@
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self HTMLTag] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
-		if ([self isEditable] && [[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
+		if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
 		{
 			[buffer appendFormat:
              @" id=\"%@\" class=\"%@\" contentEditable=\"true\"",
@@ -282,7 +282,7 @@
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
+			if ([[SVHTMLContext currentContext] isEditable])
 			{
 				[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
 			}
@@ -311,7 +311,7 @@
 		[buffer appendString:@"<span"];
         
         NSString *CSSClassName = @"in";
-        if ([self isEditable] && [[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
+        if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
 		{
 			[buffer appendFormat:@" id=\"%@\" contentEditable=\"true\"", [self DOMNodeID]];
             CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
@@ -385,7 +385,7 @@
 - (NSString *)processHTML:(NSString *)result
 {
     // Perform additional processing of the text according to HTML generation purpose
-	if ([[SVHTMLContext currentContext] generationPurpose] != kGeneratingPreview)
+	if (![[SVHTMLContext currentContext] isEditable])
 	{
 		// Fix page links
 		result = [self fixPageLinksFromString:result];
