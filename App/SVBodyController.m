@@ -8,12 +8,20 @@
 
 #import "SVBodyController.h"
 
-#import "SVBodyElement.h"
+#import "SVBodyParagraph.h"
 
 #import "NSArray+Karelia.h"
 
 
 @implementation SVBodyController
+
+- (id)newObject
+{
+    SVBodyParagraph *result = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
+                                                            inManagedObjectContext:[self managedObjectContext]];
+    
+    return [result retain];
+}
 
 - (NSArray *)arrangeObjects:(NSArray *)objects
 {

@@ -250,39 +250,33 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         if (![self controllerForHTMLElement:insertedNode])   // for some reason, get told a node is inserted twice
         {
             // Create paragraph
-            [self willUpdate];
-            
-            SVBodyParagraph *paragraph = [NSEntityDescription
-                                          insertNewObjectForEntityForName:@"BodyParagraph" 
-                                          inManagedObjectContext:[[self content] managedObjectContext]];
-            
+            SVBodyParagraph *paragraph = [[self content] newObject];
             [paragraph setHTMLStringFromElement:insertedNode];
-            [[self content] addObject:paragraph];
             
             
-            // TODO: Figure out where it should be placed
-            DOMHTMLElement *previousElement = [insertedNode previousSiblingOfClass:[DOMHTMLElement class]];
-            if (previousElement)
+            // Insert the paragraph into the model in the same spot as it is in the DOM
+            [self willUpdate];
+             
+            DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
+            if (nextNode)
             {
-                id <SVElementController> controller = [self controllerForHTMLElement:previousElement];
-                OBASSERT(controller);
-                [paragraph insertAfterElement:[controller bodyElement]];
+                id <SVElementController> nextController = [self controllerForHTMLElement:nextNode];
+                OBASSERT(nextController);
+                
+                NSArrayController *content = [self content];
+                NSUInteger index = [[content arrangedObjects] indexOfObject:[nextController bodyElement]];
+                [content insertObject:paragraph atArrangedObjectIndex:index];
             }
             else
             {
-                DOMHTMLElement *nextElement = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
-                if (nextElement)
-                {
-                    id <SVElementController> controller = [self controllerForHTMLElement:nextElement];
-                    OBASSERT(controller);
-                    [paragraph insertBeforeElement:[controller bodyElement]];
-                }
-            }                
+                // shortcut, know we're inserting at the end
+                [[self content] addObject:paragraph];
+            }
             
             [self didUpdate];
             
             
-            // Create a controller
+            // Create a matching controller
             SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:insertedNode
                                                                                          paragraph:paragraph];
             [self addElementController:controller];
