@@ -194,12 +194,14 @@
                 textArea = [[SVBodyTextArea alloc] initWithHTMLElement:element content:elementsController];
                 [textArea setRichText:YES];
                 [textArea setFieldEditor:NO];
+                [textArea setEditable:YES];
             }
             else
             {
                 textArea = [[SVWebTextArea alloc] initWithHTMLElement:element];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
+                [textArea setEditable:[aTextBlock isEditable]];
                 
                 [textArea bind:NSValueBinding
                       toObject:[aTextBlock HTMLSourceObject]
