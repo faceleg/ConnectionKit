@@ -8,6 +8,8 @@
 
 #import "SVBodyController.h"
 
+#import "SVBodyElement.h"
+
 #import "NSArray+Karelia.h"
 
 
@@ -34,6 +36,14 @@
     }
     
     return result;
+}
+
+- (void)insertObject:(SVBodyElement *)element atArrangedObjectIndex:(NSUInteger)index
+{
+    [super insertObject:element atArrangedObjectIndex:index];
+    
+    // Also insert into linked list
+    [element insertAfterElement:[[self arrangedObjects] objectAtIndex:(index - 1)]];
 }
 
 @end
