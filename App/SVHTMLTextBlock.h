@@ -35,7 +35,15 @@
 
 @property(nonatomic, readonly) NSString *DOMNodeID;
 
+//  Indicates if the template specifed the block as editable. Regardless of the value, text blocks NEVER generate HTML that includes:
+//      contenteditable="true"
+//  
+//  Instead, whosever is loading the HTML into DOM is responsible for making the appropriate text editable afterwards. This is to:
+//      a)  Reduce the difference between standard and editing HTML output
+//      b)  Place responsibility for handling invalid HTML (such as from a Raw HTML plug-in) on the controller layer, not the model
+//  
 @property(nonatomic, getter=isEditable) BOOL editable;
+
 @property(nonatomic, setter=setRichText:) BOOL isRichText;
 @property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
 

@@ -265,7 +265,7 @@
 		if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
 		{
 			[buffer appendFormat:
-             @" id=\"%@\" class=\"%@\" contentEditable=\"true\"",
+             @" id=\"%@\" class=\"%@\"",
              [self DOMNodeID],
              ([self isRichText]) ? @"kBlock" : @"kLine"];
 		}
@@ -313,7 +313,7 @@
         NSString *CSSClassName = @"in";
         if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
 		{
-			[buffer appendFormat:@" id=\"%@\" contentEditable=\"true\"", [self DOMNodeID]];
+			[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
             CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
