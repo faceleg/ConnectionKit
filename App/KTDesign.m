@@ -624,6 +624,9 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 #pragma mark IKImageBrowserViewItem
 
 - (NSString *)  imageUID;  /* required */
+{
+	return @"imageUID";
+}
 
 /*! 
  @method imageRepresentationType
@@ -631,35 +634,45 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  @discussion Keys for imageRepresentationType are defined below.
  */
 - (NSString *) imageRepresentationType; /* required */
-
+{
+	return @"imageRepresentationType";
+}
 /*! 
  @method imageRepresentation
  @abstract Returns the image to display (required). Can return nil if the item has no image to display.
  @discussion This methods is called frequently, so the receiver should cache the returned instance.
  */
 - (id) imageRepresentation; /* required */
-
+{
+	return nil;
+}
 /*! 
  @method imageVersion
  @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
  */
 - (NSUInteger) imageVersion;
-
+{
+	return 1;
+}
 /*! 
  @method imageTitle
  @abstract Returns the title to display as a NSString. Use setValue:forKey: with IKImageBrowserCellTitleAttribute to set text attributes.
  */
 - (NSString *) imageTitle;
-
+{
+	return @"imageTitle";
+}
 /*! 
  @method imageSubtitle
  @abstract Returns the subtitle to display as a NSString. Use setValue:forKey: with IKImageBrowserCellSubtitleAttribute to set text attributes.
  */
 - (NSString *) imageSubtitle;
-
+{
+	return @"imageSubtitle";
+}
 - (BOOL) isSelectable;
 {
-	
+	return YES;
 }
 
 @end
