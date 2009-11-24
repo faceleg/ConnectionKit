@@ -123,11 +123,13 @@
 - (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
 	NSLog(@"%s",__FUNCTION__);
+	return 87
 }
 
 - (id /*IKImageBrowserItem*/) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index;
 {
 	NSLog(@"%s",__FUNCTION__);
+	
 }
 
 
