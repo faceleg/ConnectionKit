@@ -23,6 +23,8 @@
 @implementation SVBodyElement 
 
 @dynamic body;
+@dynamic sortKey;
+
 @dynamic previousElement;
 @dynamic nextElement;
 

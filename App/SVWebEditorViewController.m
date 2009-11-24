@@ -465,9 +465,7 @@
     [element setWrap:SVContentObjectWrapNone];
     [element awakeFromBundleAsNewlyCreatedObject:YES];
     
-    SVBodyElement *lastElement = [[body orderedElements] lastObject];
-    [element setSortKey:[NSNumber numberWithShort:[[lastElement sortKey] shortValue] + 1]];
-    [body addElementsObject:element];
+    [body addElement:element];
 }
 
 #pragma mark Delegate

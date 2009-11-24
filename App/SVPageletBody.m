@@ -80,6 +80,13 @@
     return result;
 }
 
+- (void)addElement:(SVBodyElement *)element;
+{
+    SVBodyElement *lastElement = [[self orderedElements] lastObject];
+    [element setSortKey:[NSNumber numberWithShort:[[lastElement sortKey] shortValue] + 1]];
+    [self addElementsObject:element];
+}
+
 #pragma mark HTML
 
 - (NSString *)HTMLString;
