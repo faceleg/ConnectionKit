@@ -10,27 +10,22 @@
 
 
 #import "SVWebTextArea.h"
-#import "SVBodyTextArea.h"
 
 
 @class SVBodyParagraph;
 
-@interface SVBodyParagraphDOMAdapter : SVWebTextArea <SVElementController, DOMEventListener>
+@interface SVBodyParagraphDOMAdapter : SVWebTextArea <DOMEventListener>
 {
-  @private
-    SVBodyParagraph *_paragraph;
-    
+  @private    
     BOOL            _isObserving;
     WebView         *_webView;
     NSTimeInterval  _editTimestamp;
     BOOL            _isUpdatingModel;
 }
 
-// It's assumed the element already contains the right HTML to match paragraph
+// It's assumed the element already contains the right HTML to match paragraph. Paragraph is stored in representedObject
 - (id)initWithHTMLElement:(DOMHTMLElement *)domElement paragraph:(SVBodyParagraph *)paragraph;
 - (void)stop;
-
-@property(nonatomic, retain, readonly) SVBodyParagraph *paragraph;
 
 - (void)updateParagraphFromDOM;
 - (void)updateDOMFromParagraph;

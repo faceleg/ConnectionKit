@@ -32,8 +32,12 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     
     // Observe the model
-    _paragraph = [paragraph retain];
-    [paragraph addObserver:self forKeyPath:@"innerHTMLArchiveString" options:0 context:sParagraphInnerHTMLObservationContext];
+    [self setRepresentedObject:paragraph];
+    
+    [[self representedObject] addObserver:self
+                               forKeyPath:@"innerHTMLArchiveString"
+                                  options:0
+                                  context:sParagraphInnerHTMLObservationContext];
     
     
     // Observe our bit of the DOM
@@ -58,7 +62,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 {
     if (_isObserving)
     {
-        [[self paragraph] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
+        [[self representedObject] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
         
         [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
                                        listener:self
@@ -75,16 +79,9 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [self stop];
     
     [self setWebView:nil];
-    [_paragraph release];
     
     [super dealloc];
 }
-
-#pragma mark Properties
-
-@synthesize paragraph = _paragraph;
-
-- (SVBodyElement *)bodyElement { return [self paragraph]; }
 
 #pragma mark Model Changes
 
@@ -107,7 +104,8 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 - (void)updateDOMFromParagraph;
 {
     // TODO: Should we also supply a valid HTML context?
-    [self setHTMLString:[[self paragraph] innerHTMLString]];
+    SVBodyParagraph *paragraph = [self representedObject];
+    [self setHTMLString:[paragraph innerHTMLString]];
 }
 
 #pragma mark Editing
@@ -117,7 +115,8 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     OBPRECONDITION(!_isUpdatingModel);
     _isUpdatingModel = YES;
     
-    [[self paragraph] setHTMLStringFromElement:[self HTMLElement]];
+    SVBodyParagraph *paragraph = [self representedObject];
+    [paragraph setHTMLStringFromElement:[self HTMLElement]];
     
     _isUpdatingModel = NO;
 }
