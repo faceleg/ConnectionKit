@@ -109,7 +109,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
         // Locate the matching controller
-        SVHTMLElementController * controller = [self controllerForBodyElement:aModelElement];
+        SVHTMLElementController *controller = [self controllerForBodyElement:aModelElement];
         if (controller)
         {
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
@@ -127,10 +127,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         {
             // It's a new object, create controller and node to match
             Class controllerClass = [self controllerClassForBodyElement:aModelElement];
-            
-            SVHTMLElementController * controller = [[controllerClass alloc]
-                                                   initWithBodyElement:aModelElement
-                                                   DOMDocument:[[self HTMLElement] ownerDocument]];
+            controller = [[controllerClass alloc] initWithDOMDocument:[[self HTMLElement] ownerDocument]];
+            [controller setRepresentedObject:aModelElement];
             
             [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
             
@@ -325,16 +323,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 
 @implementation SVHTMLElementController (SVElementController)
-
-- (id)initWithBodyElement:(SVPlugInContentObject *)element DOMDocument:(DOMDocument *)document;
-{
-    // Create DOM node
-    DOMHTMLElement *domElement = (DOMHTMLElement *)[document createElement:@"div"];
-    
-    self = [self initWithHTMLElement:domElement];
-    [self setRepresentedObject:element];
-    return self;
-}
 
 - (SVBodyElement *)bodyElement
 {
