@@ -11,6 +11,10 @@
 
 @class SVBodyElement;
 @protocol SVElementController <NSObject>
+
+// Asks the controller to create an HTML Element for itself using the document
+- (id)initWithBodyElement:(id)element DOMDocument:(DOMDocument *)document;
+
 - (SVBodyElement *)bodyElement;
 - (DOMHTMLElement *)HTMLElement;
 @end
@@ -41,11 +45,13 @@
 - (void)addElementController:(id <SVElementController>)controller;
 - (void)removeElementController:(id <SVElementController>)controller;
 
+- (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
+- (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
+
 - (id <SVElementController>)makeAndAddControllerForBodyElement:(SVBodyElement *)element
                                                    HTMLElement:(DOMHTMLElement *)element;
 
-- (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
-- (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
+- (Class <SVElementController>)controllerClassForBodyElement:(SVBodyElement *)element;
 
 
 #pragma mark Updates

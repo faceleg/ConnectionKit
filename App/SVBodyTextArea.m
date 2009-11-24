@@ -115,39 +115,57 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)contentElementsDidChange
 {
-    // For each element removed from the model, reflect it by removing the matching element in the DOM
-    NSSet *removedElements = nil;
-    for (SVBodyElement *aRemovedElement in removedElements)
+    [self willUpdate];
+    
+    // Walk the content array. Shuffle up DOM nodes to match if needed
+    DOMHTMLElement *domNode = [[self HTMLElement] firstChildOfClass:[DOMHTMLElement class]];
+    
+    for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
-        id <SVElementController> controller = [self controllerForBodyElement:aRemovedElement];
-        OBASSERT(controller);
+        // Locate the matching controller
+        id <SVElementController> controller = [self controllerForBodyElement:aModelElement];
+        if (controller)
+        {
+            // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
+            if ([controller HTMLElement] != domNode)
+            {
+                [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
+                domNode = [controller HTMLElement];
+            }
         
-        DOMHTMLElement *htmlElement = [controller HTMLElement];
         
-        [self willUpdate];
-        [[htmlElement parentNode] removeChild:htmlElement];
-        [self didUpdate];
         
-        [self removeElementController:controller];
+            domNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
+        }
+        else
+        {
+            // It's a new object, create controller and node to match
+            Class controllerClass = [self controllerClassForBodyElement:aModelElement];
+            
+            id <SVElementController> controller = [[controllerClass alloc]
+                                                   initWithBodyElement:aModelElement
+                                                   DOMDocument:[[self HTMLElement] ownerDocument]];
+            
+            [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
+            
+            [self addElementController:controller];
+            [controller release];
+        }
     }
     
     
-    // For each element added to the model, reflect it by creating matching nodes and inserting into the DOM
-    NSSet *addedElements = nil;
-    for (SVBodyElement *anAddedElement in addedElements)
+    // All the nodes for deletion should have been pushed to the end, so we can delete them
+    while (domNode)
     {
-        // Create DOM Node
-        DOMDocument *document = [[self HTMLElement] ownerDocument];
-        DOMHTMLElement *htmlElement = (id)[document createElement:[(id)anAddedElement tagName]];
-        [htmlElement setInnerHTML:[(SVBodyParagraph *)anAddedElement innerHTMLString]];
+        DOMHTMLElement *nextNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
         
-        [self willUpdate];
-        [[self HTMLElement] appendChild:htmlElement];
-        [self didUpdate];
+        [self removeElementController:[self controllerForHTMLElement:domNode]];
+        [[domNode parentNode] removeChild:domNode];
         
-        
-        [self makeAndAddControllerForBodyElement:anAddedElement HTMLElement:htmlElement];
+        domNode = nextNode;
     }
+    
+    [self didUpdate];
 }
 
 #pragma mark Subcontrollers
@@ -211,6 +229,14 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         if ([result HTMLElement] == element) break;
     }
              
+    return result;
+}
+
+- (Class <SVElementController>)controllerClassForBodyElement:(SVBodyElement *)element;
+{
+    Class result = ([element isKindOfClass:[SVBodyParagraph class]] ? 
+                    [SVBodyParagraphDOMAdapter class] : [SVWebContentItem class]);
+    
     return result;
 }
 
@@ -329,6 +355,16 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 
 @implementation SVWebContentItem (SVElementController)
+
+- (id)initWithBodyElement:(SVPlugInContentObject *)element DOMDocument:(DOMDocument *)document;
+{
+    // Create DOM node
+    DOMElement *domElement = [document createElement:@"div"];
+    
+    self = [self initWithDOMElement:domElement];
+    [self setRepresentedObject:element];
+    return self;
+}
 
 - (DOMHTMLElement *)HTMLElement;
 {

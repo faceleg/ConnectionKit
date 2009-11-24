@@ -46,6 +46,14 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     return self;
 }
 
+- (id)initWithBodyElement:(SVBodyParagraph *)paragraph DOMDocument:(DOMDocument *)document;
+{
+    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[document createElement:[paragraph tagName]];
+    [htmlElement setInnerHTML:[paragraph innerHTMLString]];
+    
+    return [self initWithHTMLElement:htmlElement paragraph:paragraph];
+}
+
 - (void)stop;
 {
     if (_isObserving)
