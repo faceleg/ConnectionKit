@@ -80,10 +80,10 @@
     OBASSERT(index != NSNotFound);
     
     // Set our sort key to match
-    NSNumber *pageletSortKey = [pagelet sidebarSortKey];
+    NSNumber *pageletSortKey = [pagelet sortKey];
     OBASSERT(pageletSortKey);
     NSInteger previousSortKey = [pageletSortKey integerValue] - 1;
-    [self setSidebarSortKey:[NSNumber numberWithInteger:previousSortKey]];
+    [self setSortKey:[NSNumber numberWithInteger:previousSortKey]];
     
     // Bump previous pagelets along as needed
     for (NSUInteger i = index; i > 0; i--)  // odd handling of index so we can use an *unsigned* integer
@@ -93,9 +93,9 @@
         {
             previousSortKey--;
             
-            if ([[previousPagelet sidebarSortKey] integerValue] > previousSortKey)
+            if ([[previousPagelet sortKey] integerValue] > previousSortKey)
             {
-                [previousPagelet setSidebarSortKey:[NSNumber numberWithInteger:previousSortKey]];
+                [previousPagelet setSortKey:[NSNumber numberWithInteger:previousSortKey]];
             }
             else
             {
@@ -116,10 +116,10 @@
     OBASSERT(index != NSNotFound);
     
     // Set our sort key to match
-    NSNumber *pageletSortKey = [pagelet sidebarSortKey];
+    NSNumber *pageletSortKey = [pagelet sortKey];
     OBASSERT(pageletSortKey);
     NSInteger nextSortKey = [pageletSortKey integerValue] + 1;
-    [self setSidebarSortKey:[NSNumber numberWithInteger:nextSortKey]];
+    [self setSortKey:[NSNumber numberWithInteger:nextSortKey]];
     
     // Bump following pagelets along as needed
     for (NSUInteger i = index+1; i < [pagelets count]; i++)
@@ -129,9 +129,9 @@
         {
             nextSortKey++;
             
-            if ([[nextPagelet sidebarSortKey] integerValue] < nextSortKey)
+            if ([[nextPagelet sortKey] integerValue] < nextSortKey)
             {
-                [nextPagelet setSidebarSortKey:[NSNumber numberWithInteger:nextSortKey]];
+                [nextPagelet setSortKey:[NSNumber numberWithInteger:nextSortKey]];
             }
             else
             {
@@ -141,8 +141,6 @@
     }
 }
 
-@dynamic sidebarSortKey;
-
 #pragma mark Sorting
 
 + (NSArray *)pageletSortDescriptors
@@ -150,7 +148,7 @@
     static NSArray *result;
     if (!result)
     {
-        result = [NSSortDescriptor sortDescriptorArrayWithKey:@"sidebarSortKey"
+        result = [NSSortDescriptor sortDescriptorArrayWithKey:@"sortKey"
                                                              ascending:YES];
         [result retain];
         OBASSERT(result);

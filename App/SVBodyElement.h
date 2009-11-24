@@ -15,14 +15,8 @@
 @property (nonatomic, retain) SVPageletBody *body;
 
 
-#pragma mark Elements Linked List
-
-@property(nonatomic, retain, readonly) SVBodyElement *previousElement;
-@property(nonatomic, retain, readonly) SVBodyElement *nextElement;
-
-- (void)insertAfterElement:(SVBodyElement *)element;    // also use to move an already inserted element...
-- (void)insertBeforeElement:(SVBodyElement *)element;   // ...does NOT set -body to match
-- (void)removeFromElementsList;
+// Shouldn't really have any need to set this yourself. Use a proper array controller instead please.
+@property(nonatomic, copy) NSNumber *sortKey;
 
 
 #pragma mark HTML

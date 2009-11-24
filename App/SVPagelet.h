@@ -30,7 +30,6 @@
 
 - (void)moveBeforePagelet:(SVPagelet *)pagelet;
 - (void)moveAfterPagelet:(SVPagelet *)pagelet;
-@property(nonatomic, copy) NSNumber *sidebarSortKey;    // should have no need to access this directly
 
 
 @end

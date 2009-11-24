@@ -29,6 +29,7 @@
 #import "NSWorkspace+Karelia.h"
 
 #import "KSCollectionController.h"
+#import "KSOrderedManagedObjectControllers.h"
 #import "KSSilencingConfirmSheet.h"
 
 
@@ -186,8 +187,10 @@
             
             if ([value isKindOfClass:[SVPageletBody class]])
             {
-                NSArrayController *elementsController = [[SVBodyController alloc] init];
+                KSSetController *elementsController = [[KSSetController alloc] init];
+                [elementsController setOrderingSortKey:@"sortKey"];
                 [elementsController setManagedObjectContext:[[self page] managedObjectContext]];
+                [elementsController setEntityName:@"BodyParagraph"];
                 [elementsController setAutomaticallyRearrangesObjects:YES];
                 [elementsController bind:NSContentSetBinding toObject:value withKeyPath:@"elements" options:nil];
                 

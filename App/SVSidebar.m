@@ -27,7 +27,7 @@
     BOOL result = YES;
     
     // All our pagelets should have unique sort keys
-    NSSet *sortKeys = [*pagelets valueForKey:@"sidebarSortKey"];
+    NSSet *sortKeys = [*pagelets valueForKey:@"sortKey"];
     if ([sortKeys count] != [*pagelets count])
     {
         result = NO;

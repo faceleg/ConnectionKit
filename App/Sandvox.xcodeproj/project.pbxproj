@@ -364,6 +364,8 @@
 		279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279214CA10BAB7EF00E590D5 /* SVBodyController.h */; };
 		279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279214CB10BAB7EF00E590D5 /* SVBodyController.m */; };
 		279217D110BC11CF00E590D5 /* HTMLSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279217D010BC11CF00E590D5 /* HTMLSourceView.xib */; };
+		279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */; };
+		279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
 		2797B4BE0EF6E65E00F91398 /* KTURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */; };
@@ -1814,6 +1816,8 @@
 		279214CA10BAB7EF00E590D5 /* SVBodyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyController.h; sourceTree = "<group>"; };
 		279214CB10BAB7EF00E590D5 /* SVBodyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyController.m; sourceTree = "<group>"; };
 		279217D010BC11CF00E590D5 /* HTMLSourceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLSourceView.xib; sourceTree = "<group>"; };
+		279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOrderedManagedObjectControllers.h; sourceTree = "<group>"; };
+		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
 		2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportSavePanelController.m; sourceTree = "<group>"; };
 		2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLFormatter.h; sourceTree = "<group>"; };
@@ -4347,6 +4351,8 @@
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */,
+				279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */,
 				279F5EB410A73E0A00F6511F /* KSInspectorViewController.h */,
 				CE578C8310A895DC004C5380 /* KSNonBlackTextFieldCell.h */,
 				CE578C8410A895DC004C5380 /* KSNonBlackTextFieldCell.m */,
@@ -5172,6 +5178,7 @@
 				2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
 				279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */,
+				279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6556,6 +6563,7 @@
 				2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
 				279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */,
+				279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

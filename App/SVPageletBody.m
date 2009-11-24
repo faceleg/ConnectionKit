@@ -13,6 +13,8 @@
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
+#import "NSSet+Karelia.h"
+#import "NSSortDescriptor+Karelia.h"
 
 
 @interface SVPageletBody (CoreDataGeneratedAccessors)
@@ -34,23 +36,14 @@
 
 + (NSArray *)orderedElementsWithElements:(NSSet *)elements
 {
-    NSArray *result = nil;
-    
-    if (elements)
+    static NSArray *sortDescriptors;
+    if (!sortDescriptors)
     {
-        SVBodyElement *startElement = [elements anyObject];
-        if (startElement)
-        {
-            result = [NSArray arrayWithDoublyLinkedListObject:startElement
-                                           nextObjectSelector:@selector(nextElement)
-                                       previousObjectSelector:@selector(previousElement)];
-        }
-        else
-        {
-            result = [NSArray array];
-        }
+        sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"sortKey" ascending:YES];
+        [sortDescriptors retain];
     }
     
+    NSArray *result = [elements KS_sortedArrayUsingDescriptors:sortDescriptors];
     return result;
 }
 
@@ -87,26 +80,6 @@
     return result;
 }
 
-- (SVBodyElement *)firstElement;
-{
-    // Start with a random element and search backwards to the beginning
-    SVBodyElement *result = [[self elements] anyObject];
-    
-    SVBodyElement *previousElement;
-    while (previousElement = [result previousElement])
-    {
-        result = previousElement;
-    }
-    
-    return result;
-}
-
-- (void)addElement:(SVBodyElement *)element;
-{
-    // TODO: Ensure the element is not already part of another group
-    [self addElementsObject:element];
-}
-
 #pragma mark HTML
 
 - (NSString *)HTMLString;
@@ -114,24 +87,9 @@
     //  Piece together each of our elements to generate the HTML
     NSMutableString *result = [NSMutableString string];
     
-    SVBodyElement *startElement = [[self elements] anyObject];
-    if (startElement)
+    for (SVBodyElement *anElement in [self orderedElements])
     {
-        [result appendString:[startElement HTMLString]];
-        
-        // Add on everything after the start element
-        SVBodyElement *anElement = startElement;
-        while (anElement = [anElement nextElement])
-        {
-            [result appendString:[anElement HTMLString]];
-        }
-        
-        // Insert everything before the start element
-        anElement = startElement;
-        while (anElement = [anElement previousElement])
-        {
-            [result insertString:[anElement HTMLString] atIndex:0];
-        }
+        [result appendString:[anElement HTMLString]];
     }
     
     
