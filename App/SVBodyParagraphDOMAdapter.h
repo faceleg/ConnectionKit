@@ -20,12 +20,7 @@
     WebView         *_webView;
     NSTimeInterval  _editTimestamp;
     BOOL            _isUpdatingModel;
-    
-    DOMDocument *_DOMDocument;
 }
-
-// When -HTMLElement is first called, it will create an appropriate element
-- (id)initWithBodyElement:(SVBodyElement *)element DOMDocument:(DOMDocument *)document;
 
 - (void)updateParagraphFromDOM;
 - (void)updateDOMFromParagraph;

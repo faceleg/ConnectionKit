@@ -18,16 +18,6 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 #pragma mark Init & Dealloc
 
-- (id)initWithBodyElement:(SVBodyElement *)element DOMDocument:(DOMDocument *)document;
-{
-    self = [self init];
-    
-    _DOMDocument = [document retain];
-    [self setRepresentedObject:element];
-    
-    return self;
-}
-
 - (void)dealloc
 {
     // Stop observation
@@ -63,7 +53,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     SVBodyParagraph *paragraph = [self representedObject];
     NSString *tagName = [paragraph tagName];
     
-    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[_DOMDocument createElement:tagName];
+    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[[self DOMDocument] createElement:tagName];
     [htmlElement setInnerHTML:[paragraph innerHTMLString]];
     
     [self setHTMLElement:htmlElement];

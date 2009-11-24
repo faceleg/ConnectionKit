@@ -13,6 +13,14 @@
 
 #pragma mark Init & Dealloc
 
+- (id)initWithDOMDocument:(DOMDocument *)document;
+{
+    self = [self init];
+    _DOMElement = [document retain];
+    return self;
+}
+@synthesize DOMDocument = _DOMDocument;
+
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {
     self = [self init];
@@ -22,6 +30,7 @@
 
 - (void)dealloc
 {
+    [_DOMDocument release];
     [_DOMElement release];
     [_representedObject release];
     
