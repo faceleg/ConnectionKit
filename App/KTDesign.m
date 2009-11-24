@@ -625,7 +625,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 
 - (NSString *)  imageUID;  /* required */
 {
-	return @"imageUID";
+	return [[self bundle] bundlePath];
 }
 
 /*! 
@@ -635,7 +635,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageRepresentationType; /* required */
 {
-	return @"imageRepresentationType";
+	return IKImageBrowserNSImageRepresentationType;
 }
 /*! 
  @method imageRepresentation
@@ -644,7 +644,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (id) imageRepresentation; /* required */
 {
-	return nil;
+	return myThumbnail;
 }
 /*! 
  @method imageVersion

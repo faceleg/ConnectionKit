@@ -24,6 +24,7 @@
 //    [bv setMaxNumberOfColumns:4];
 	[bv setConstrainsToOriginalSize:YES];
 	[bv setDataSource:self];
+	[bv setDelegate:self];
 	
     // load designs -- only seems to work if I do it here? seems as good a place as any...
 	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
@@ -123,13 +124,13 @@
 - (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
 	NSLog(@"%s",__FUNCTION__);
-	return 87;
+	return [self.designs count];
 }
 
 - (id /*IKImageBrowserItem*/) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index;
 {
 	NSLog(@"%s",__FUNCTION__);
-	
+	return [self.designs objectAtIndex:index];
 }
 
 
@@ -142,24 +143,28 @@
 - (BOOL) imageBrowser:(IKImageBrowserView *) aBrowser moveItemsAtIndexes: (NSIndexSet *)indexes toIndex:(NSUInteger)destinationIndex;
 {
 	NSLog(@"%s",__FUNCTION__);
+	return NO;
 }
 
 
 - (NSUInteger) imageBrowser:(IKImageBrowserView *) aBrowser writeItemsAtIndexes:(NSIndexSet *) itemIndexes toPasteboard:(NSPasteboard *)pasteboard;
 {
 	NSLog(@"%s",__FUNCTION__);
+	return -99;
 }
 
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
 	NSLog(@"%s",__FUNCTION__);
+	return 1;
 }
 
 
 - (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
 {
 	NSLog(@"%s",__FUNCTION__);
+	return nil;
 }
 
 
