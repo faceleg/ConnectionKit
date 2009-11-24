@@ -21,6 +21,7 @@
 
 
 @property(nonatomic, retain) DOMHTMLElement *HTMLElement;
+- (void)loadHTMLElement;
 @property(nonatomic, readonly, getter=isHTMLElementLoaded) BOOL HTMLElementLoaded;
 
 
