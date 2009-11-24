@@ -48,18 +48,20 @@
 
 - (void)insertObject:(SVBodyElement *)element atArrangedObjectIndex:(NSUInteger)index
 {
-    [super insertObject:element atArrangedObjectIndex:index];
-    
-    // Also insert into linked list
+    // First insert into linked list
     [element insertAfterElement:[[self arrangedObjects] objectAtIndex:(index - 1)]];
+    
+    [[self managedObjectContext] processPendingChanges];
+    [super insertObject:element atArrangedObjectIndex:index];
 }
 
 - (void)removeObject:(SVBodyElement *)element
 {
-    // First remove from linked list
-    [element removeFromElementsList];
-    
     [super removeObject:element];
+    [[self managedObjectContext] processPendingChanges];
+    
+    // Then remove from linked list
+    [element removeFromElementsList];
 }
 
 @end
