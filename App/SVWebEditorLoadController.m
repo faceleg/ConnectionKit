@@ -19,7 +19,6 @@
 
 
 @interface SVWebEditorLoadController ()
-//- (void)swapWebViewControllers;
 @end
 
 
@@ -48,10 +47,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_webEditorViewController setDelegate:self];
     [self insertViewController:_webEditorViewController atIndex:0];
     
-    //_secondaryController = [[SVWebEditorViewController alloc] init];
-    //[_secondaryController setContentController:[self selectableObjectsController]];
-    //[_secondaryController setDelegate:self];
-    //[self insertViewController:_secondaryController atIndex:1];
     
     _webViewLoadingPlaceholder = [[SVLoadingPlaceholderViewController alloc] init];
     [self insertViewController:_webViewLoadingPlaceholder atIndex:1];
@@ -64,11 +59,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                          forKeyPath:@"loading"
                             options:0
                             context:sWebViewLoadingObservationContext];
-    //[_secondaryController addObserver:self
-    //                      forKeyPath:@"loading"
-    //                         options:0
-    //                         context:sWebViewLoadingObservationContext];
-    //
+    
     
     return self;
 }
@@ -77,11 +68,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // Tear down delegation/observation
     [_webEditorViewController removeObserver:self forKeyPath:@"loading"];
-    //[_secondaryController removeObserver:self forKeyPath:@"loading"];
     
     
     [_webEditorViewController release];
-    //[_secondaryController release];
     [_webViewLoadingPlaceholder release];
     
     [super dealloc];
@@ -99,7 +88,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 #pragma mark Controllers
 
 @synthesize webEditorViewController = _webEditorViewController;
-//@synthesize secondaryWebViewController = _secondaryController;
 
 - (void)didSelectViewController;
 {
@@ -166,9 +154,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
     SVWebEditorViewController *webViewController = [self webEditorViewController];
-    
-    NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
-    
+        
     [[webViewController webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
     [webViewController setPage:[self page]];
     
@@ -191,14 +177,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	
     // Clearly the webview is no longer in need of refreshing
 	_needsLoad = NO;
-    
-    
-    // The webview gets a limited amount of time to load synchronously in, and then we switch to asynchronous
-    BOOL loaded = YES;//[[webViewController webEditorView] loadUntilDate:synchronousLoadEndDate];
-    if (!loaded)
-    {
-        [self setSelectedViewController:_webViewLoadingPlaceholder];    // TODO: avoid ivar
-    }
 }
 
 @synthesize needsLoad = _needsLoad;

@@ -34,7 +34,6 @@
 - (id)init;
 
 @property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
-//@property(nonatomic, retain, readonly) SVWebEditorViewController *secondaryWebViewController;
 
 // Setting the page will automatically mark controller as needsLoad = YES
 @property(nonatomic, retain) KTPage *page;
