@@ -11,8 +11,13 @@
 
 @class KTImageScalingSettings;
 
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+@protocol IKImageBrowserItem <NSObject> @end
+#endif
 
-@interface KTDesign : KSPlugin
+
+
+@interface KTDesign : KSPlugin <IKImageBrowserItem>
 {
     @protected
     NSImage *myThumbnail;

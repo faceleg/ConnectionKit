@@ -17,8 +17,13 @@
 
 - (void)awakeFromNib
 {
+	IKImageBrowserView *bv = (IKImageBrowserView *)[self view];
+	OBASSERT([bv isKindOfClass:[IKImageBrowserView class]]);
+	
     // restrict to a max of 4 columns
-    [oImageBrowserView setMaxNumberOfColumns:4];
+//    [bv setMaxNumberOfColumns:4];
+	[bv setConstrainsToOriginalSize:YES];
+	[bv setDataSource:self];
 	
     // load designs -- only seems to work if I do it here? seems as good a place as any...
 	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
@@ -28,27 +33,27 @@
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
-	trackingRect_ = [oImageBrowserView addTrackingRect:[oImageBrowserView frame] owner:self userData:nil assumeInside:NO];
+	// trackingRect_ = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(viewBoundsDidChange:)
 												 name:NSViewBoundsDidChangeNotification
-											   object:oImageBrowserView];
+											   object:[self view]];
 }
 
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	wasAcceptingMouseEvents_ = [[oImageBrowserView window] acceptsMouseMovedEvents];
-	[[oImageBrowserView window] setAcceptsMouseMovedEvents:YES];
-    [[oImageBrowserView window] makeFirstResponder:self];
+	wasAcceptingMouseEvents_ = [[[self view] window] acceptsMouseMovedEvents];
+	[[[self view] window] setAcceptsMouseMovedEvents:YES];
+    [[[self view] window] makeFirstResponder:self];
 
 	NSLog(@"%s %@",__FUNCTION__, theEvent);
 }
 - (void)mouseExited:(NSEvent *)theEvent
 {
-    [[oImageBrowserView window] setAcceptsMouseMovedEvents:wasAcceptingMouseEvents_];
+    [[[self view] window] setAcceptsMouseMovedEvents:wasAcceptingMouseEvents_];
 	NSLog(@"%s %@",__FUNCTION__, theEvent);
 }
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -57,24 +62,24 @@
 #define CELLHEIGHT 112
 //	NSLog(@"%s %@",__FUNCTION__, theEvent);
 	NSPoint windowPoint = [theEvent locationInWindow];
-	NSPoint localPoint = [oImageBrowserView convertPoint:windowPoint fromView:nil];
+	NSPoint localPoint = [[self view] convertPoint:windowPoint fromView:nil];
 
 	NSSize itemSize = NSMakeSize(CELLWIDTH,CELLHEIGHT);		// this is constant in our case ... is there any good way to query this?
 	int xIndex = localPoint.x / itemSize.width;
 	int yIndex = localPoint.y / itemSize.height;
 	int listIndex = yIndex * 4 + xIndex;
-	if (listIndex < [[oImageBrowserView content] count])
+	if (listIndex < [[[self view] content] count])
 	{
 		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
 		
-		if ([oImageBrowserView respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
+		if ([[self view] respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
 		{
-//			frameForItemAtIndex = [oImageBrowserView frameForItemAtIndex:listIndex];
+//			frameForItemAtIndex = [[self view] frameForItemAtIndex:listIndex];
 		}
 		
 		NSLog(@"%@ %d,%d -> %d : %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
 
-		[oImageBrowserView setNeedsDisplayInRect:frameForItemAtIndex];
+		[[self view] setNeedsDisplayInRect:frameForItemAtIndex];
 		
 		
 	}
@@ -89,14 +94,79 @@
 - (void)viewBoundsDidChange:(NSNotification *)aNotif;
 {
     // we set up a tracking region so we can get mouseEntered and mouseExited events
-    [oImageBrowserView removeTrackingRect:trackingRect_];
-    trackingRect_ = [oImageBrowserView addTrackingRect:[oImageBrowserView frame] owner:self userData:nil assumeInside:NO];
+    [[self view] removeTrackingRect:trackingRect_];
+    trackingRect_ = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 }
+
+- (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *) event;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser backgroundWasRightClickedWithEvent:(NSEvent *) event;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+// Data source
+
+- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+- (id /*IKImageBrowserItem*/) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+
+- (void) imageBrowser:(IKImageBrowserView *) aBrowser removeItemsAtIndexes:(NSIndexSet *) indexes; 
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+
+- (BOOL) imageBrowser:(IKImageBrowserView *) aBrowser moveItemsAtIndexes: (NSIndexSet *)indexes toIndex:(NSUInteger)destinationIndex;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+
+- (NSUInteger) imageBrowser:(IKImageBrowserView *) aBrowser writeItemsAtIndexes:(NSIndexSet *) itemIndexes toPasteboard:(NSPasteboard *)pasteboard;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+
+- (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+
+- (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
+{
+	NSLog(@"%s",__FUNCTION__);
+}
+
+
 
 @synthesize designs = designs_;
 @synthesize designsArrayController = oArrayController;
-@synthesize designsImageBrowserView = oImageBrowserView;
 @end
+
+
 
 @implementation SVDesignChooserScrollView
 

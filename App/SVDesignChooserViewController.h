@@ -9,9 +9,13 @@
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
 
-@interface SVDesignChooserViewController : NSViewController
+#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+@protocol IKImageBrowserDataSource <NSObject> @end
+@protocol IKImageBrowserDelegate <NSObject> @end
+#endif
+
+@interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
 {
-    IBOutlet IKImageBrowserView	*oImageBrowserView;
     IBOutlet NSArrayController  *oArrayController;
     
     NSArray                     *designs_;
@@ -23,7 +27,6 @@
  
 @property(retain) NSArray *designs;
 @property(readonly) NSArrayController *designsArrayController;
-@property(readonly) IKImageBrowserView *designsImageBrowserView;
 @end
 
 @interface SVDesignChooserScrollView : NSScrollView
