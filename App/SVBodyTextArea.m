@@ -381,5 +381,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
+- (void)stop
+{    
+}
+
 @end
 

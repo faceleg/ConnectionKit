@@ -456,7 +456,7 @@
 - (void)insertElement:(id)sender;
 {
     // Create a new element of the requested type and insert at the end of the pagelet
-    SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] body];
+    SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] pageletBody];
     
     SVPlugInContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInContentObject"    
                                                              inManagedObjectContext:[body managedObjectContext]];
@@ -466,8 +466,8 @@
     [element awakeFromBundleAsNewlyCreatedObject:YES];
     
     SVBodyElement *lastElement = [[body orderedElements] lastObject];
-    [body addElement:element];
-    [element insertAfterElement:lastElement];
+    [lastElement setSortKey:[NSNumber numberWithShort:[[lastElement sortKey] shortValue] + 1]];
+    [body addElementsObject:element];
 }
 
 #pragma mark Delegate
