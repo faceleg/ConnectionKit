@@ -65,5 +65,5 @@
 
 
 #import "SVWebContentItem.h"
-@interface SVWebContentItem (SVElementController) <SVElementController>
+@interface SVHTMLElementController (SVElementController) <SVElementController>
 @end

@@ -354,7 +354,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 #pragma mark -
 
 
-@implementation SVWebContentItem (SVElementController)
+@implementation SVHTMLElementController (SVElementController)
 
 - (id)initWithBodyElement:(SVPlugInContentObject *)element DOMDocument:(DOMDocument *)document;
 {

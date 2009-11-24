@@ -45,8 +45,6 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     _isObserving = YES;
     
-    [self setWebView:[[[domElement ownerDocument] webFrame] webView]];
-    
     return self;
 }
 
@@ -81,6 +79,14 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [self setWebView:nil];
     
     [super dealloc];
+}
+
+#pragma mark DOM
+
+- (void)setHTMLElement:(DOMHTMLElement *)element
+{
+    [super setHTMLElement:element];
+    [self setWebView:[[[element ownerDocument] webFrame] webView]];
 }
 
 #pragma mark Model Changes
