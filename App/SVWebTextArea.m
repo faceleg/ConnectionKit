@@ -28,35 +28,13 @@
     [self exposeBinding:NSValueBinding];
 }
 
-- (id)init
-{
-    return [self initWithHTMLElement:nil];
-}
-
-- (id)initWithHTMLElement:(DOMHTMLElement *)element;
-{
-    OBPRECONDITION(element);
-    
-    [super init];
-    
-    _element = [element retain];
-    
-    return self;
-}
-
 - (void)dealloc
 {
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
-    
-    [_element release];
-    
+        
     [super dealloc];
 }
-
-#pragma mark WebView
-
-@synthesize HTMLElement = _element;
 
 #pragma mark Contents
 

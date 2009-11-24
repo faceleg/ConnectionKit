@@ -148,7 +148,7 @@
     
     for (SVContentObject *aContentObject in [[self contentController] arrangedObjects])
     {
-        DOMElement *element = [aContentObject DOMElementInDocument:domDoc];
+        DOMHTMLElement *element = (DOMHTMLElement *)[aContentObject DOMElementInDocument:domDoc];
         if (element)
         {
             SVWebContentItem *item = [[SVWebContentItem alloc] initWithHTMLElement:element];

@@ -9,18 +9,15 @@
 //  Between them, SVTextBlock & SVWebEditorViewController create a system like NSView & NSWindow for handling display and editing of text via the webview. SVTextBlock's main aim is to provide an NSTextView-like API for the text (i.e. all properties/methods should have a "live" effect on the DOM).
 
 
-#import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
+#import "SVHTMLElementController.h"
 #import "SVWebEditorTextProtocol.h"
 #import "KSKeyValueBinding.h"
 
 
 @protocol SVWebTextAreaDelegate;
-@interface SVWebTextArea : NSObject <SVWebEditorText, KSEditor>
+@interface SVWebTextArea : SVHTMLElementController <SVWebEditorText, KSEditor>
 {
   @private
-    DOMHTMLElement      *_element;
-    
     BOOL    _isRichText;
     BOOL    _isFieldEditor;
     
@@ -35,11 +32,6 @@
     id <KSEditorRegistration>   _controller;  // weak ref
     BOOL                        _isCommittingEditing;
 }
-
-- (id)initWithHTMLElement:(DOMHTMLElement *)element;
-
-
-@property(nonatomic, retain, readonly) DOMHTMLElement *HTMLElement;
 
 
 // Returns whatever is entered into the text box right now. This is what gets used for the "value" binding. You want to use this rather than querying the DOM Element for its -innerHTML directly as it takes into account the presence of any inner tags like a <span class="in">
