@@ -608,7 +608,8 @@
 
 - (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
 {
-    
+    OBPRECONDITION(sender == [self webEditorView]);
+    [[self delegate] webEditorViewControllerDidFirstLayout:self];
 }
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;

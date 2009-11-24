@@ -19,7 +19,7 @@
 
 
 @interface SVWebEditorLoadController ()
-- (void)swapWebViewControllers;
+//- (void)swapWebViewControllers;
 @end
 
 
@@ -43,31 +43,32 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
     
-    _primaryController = [[SVWebEditorViewController alloc] init];
-    [_primaryController setContentController:[self selectableObjectsController]];
-    [_primaryController setDelegate:self];
-    [self insertViewController:_primaryController atIndex:0];
+    _webEditorViewController = [[SVWebEditorViewController alloc] init];
+    [_webEditorViewController setContentController:[self selectableObjectsController]];
+    [_webEditorViewController setDelegate:self];
+    [self insertViewController:_webEditorViewController atIndex:0];
     
-    _secondaryController = [[SVWebEditorViewController alloc] init];
-    [_secondaryController setContentController:[self selectableObjectsController]];
-    [_secondaryController setDelegate:self];
-    [self insertViewController:_secondaryController atIndex:1];
+    //_secondaryController = [[SVWebEditorViewController alloc] init];
+    //[_secondaryController setContentController:[self selectableObjectsController]];
+    //[_secondaryController setDelegate:self];
+    //[self insertViewController:_secondaryController atIndex:1];
     
     _webViewLoadingPlaceholder = [[SVLoadingPlaceholderViewController alloc] init];
-    [self insertViewController:_webViewLoadingPlaceholder atIndex:2];
-    [self setSelectedIndex:2];
+    [self insertViewController:_webViewLoadingPlaceholder atIndex:1];
+    
+    [self setSelectedViewController:_webEditorViewController];
     
     
     // Delegation/observation
-    [_primaryController addObserver:self
+    [_webEditorViewController addObserver:self
                          forKeyPath:@"loading"
                             options:0
                             context:sWebViewLoadingObservationContext];
-    [_secondaryController addObserver:self
-                           forKeyPath:@"loading"
-                              options:0
-                              context:sWebViewLoadingObservationContext];
-    
+    //[_secondaryController addObserver:self
+    //                      forKeyPath:@"loading"
+    //                         options:0
+    //                         context:sWebViewLoadingObservationContext];
+    //
     
     return self;
 }
@@ -75,12 +76,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)dealloc
 {
     // Tear down delegation/observation
-    [_primaryController removeObserver:self forKeyPath:@"loading"];
-    [_secondaryController removeObserver:self forKeyPath:@"loading"];
+    [_webEditorViewController removeObserver:self forKeyPath:@"loading"];
+    //[_secondaryController removeObserver:self forKeyPath:@"loading"];
     
     
-    [_primaryController release];
-    [_secondaryController release];
+    [_webEditorViewController release];
+    //[_secondaryController release];
     [_webViewLoadingPlaceholder release];
     
     [super dealloc];
@@ -97,34 +98,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Controllers
 
-@synthesize primaryWebViewController = _primaryController;
-@synthesize secondaryWebViewController = _secondaryController;
-
-- (void)swapWebViewControllers
-{
-    // There's no way (or need) to change an individual controller, but we do swap them round after a load.
-    [self willChangeValueForKey:@"primaryWebViewController"];
-    [self willChangeValueForKey:@"secondaryWebViewController"];
-    
-    SVWebEditorViewController *intermediateControllerVar = _primaryController;
-    _primaryController = _secondaryController;
-    _secondaryController = intermediateControllerVar;
-    
-    [self didChangeValueForKey:@"primaryWebViewController"];
-    [self didChangeValueForKey:@"secondaryWebViewController"];
-    
-    
-    if ([[self primaryWebViewController] page] == [[self secondaryWebViewController] page])
-    {
-        //  Copying across scrollpoint
-        NSRect visibleRect = [[[[self secondaryWebViewController] webEditorView] documentView] visibleRect];
-        [[[self primaryWebViewController] webEditorView] scrollToPoint:visibleRect.origin];
-   }
-    
-    
-    // Bring the new primary controller to the front
-    [self setSelectedViewController:[self primaryWebViewController]];
-}
+@synthesize webEditorViewController = _webEditorViewController;
+//@synthesize secondaryWebViewController = _secondaryController;
 
 - (void)didSelectViewController;
 {
@@ -190,7 +165,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
-    SVWebEditorViewController *webViewController = [self secondaryWebViewController];
+    SVWebEditorViewController *webViewController = [self webEditorViewController];
     
     NSDate *synchronousLoadEndDate = [[NSDate date] addTimeInterval:0.2];
     
@@ -219,7 +194,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // The webview gets a limited amount of time to load synchronously in, and then we switch to asynchronous
-    BOOL loaded = [[webViewController webEditorView] loadUntilDate:synchronousLoadEndDate];
+    BOOL loaded = YES;//[[webViewController webEditorView] loadUntilDate:synchronousLoadEndDate];
     if (!loaded)
     {
         [self setSelectedViewController:_webViewLoadingPlaceholder];    // TODO: avoid ivar
@@ -244,6 +219,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)loadIfNeeded { if ([self needsLoad]) [self load]; }
 
+- (void)switchToLoadingPlaceholderViewIfNeeded
+{
+    // This method will be called fractionally after the webview has done its first layout, and (hopefully!) before that layout has actually been drawn. Therefore, if the webview is still loading by this point, it was an intermediate load and not suitable for display to the user, so switch over to the placeholder.
+    if ([[self webEditorViewController] isLoading]) 
+    {
+        [self setSelectedViewController:_webViewLoadingPlaceholder];
+    }
+}
+
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
@@ -257,14 +241,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     if (context == sWebViewLoadingObservationContext)
     {
-        if (object == [self secondaryWebViewController] &&
-            ![[self secondaryWebViewController] isLoading])
+        if (![[self webEditorViewController] isLoading])
         {
             // The webview is done loading! swap 'em
-            [self swapWebViewControllers];
+            [self setSelectedViewController:[self webEditorViewController]];
             
             // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
-            [[[self primaryWebViewController] webView] setHostWindow:nil];
+            [[[self webEditorViewController] webView] setHostWindow:nil];
         }
     }
     else if (context == sWebViewDependenciesObservationContext)
@@ -278,6 +261,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 #pragma mark SVWebEditorViewControllerDelegate
+
+- (void)webEditorViewControllerDidFirstLayout:(SVWebEditorViewController *)sender;
+{
+    // Being a little bit cunning to make sure we sneak in before views can be drawn
+    [[NSRunLoop currentRunLoop] performSelector:@selector(switchToLoadingPlaceholderViewIfNeeded)
+                                         target:self
+                                       argument:nil
+                                          order:(NSDisplayWindowRunLoopOrdering - 1)
+                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+}
 
 - (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
 {

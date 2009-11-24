@@ -25,6 +25,7 @@
 {
     [super loadView];
     
+    [[self progressIndicator] setUsesThreadedAnimation:NO];
     [[self progressIndicator] startAnimation:self];
 }
 
