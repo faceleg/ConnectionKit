@@ -45,7 +45,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Match each model element up with its DOM equivalent
     NSArray *bodyElements = [[self content] arrangedObjects];
-    _elementControllers = [[NSMutableArray alloc] initWithCapacity:[bodyElements count]];
+    _elementControllers = [[NSMutableSet alloc] initWithCapacity:[bodyElements count]];
     
     DOMDocument *document = [element ownerDocument]; 
     

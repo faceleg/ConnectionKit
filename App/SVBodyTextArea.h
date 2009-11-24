@@ -23,7 +23,7 @@
 {
     NSArrayController   *_content;
     
-    NSMutableArray  *_elementControllers;
+    NSMutableSet    *_elementControllers;
     
     BOOL    _isUpdating;    
 }
