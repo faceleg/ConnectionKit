@@ -9,21 +9,9 @@
 #import <Cocoa/Cocoa.h>
 #import "KTDocViewController.h"
 
+#import "SVWebContentAreaController.h"
 
 #import "KTDocumentControllerChain.h"
-
-
-// myViewTypes
-typedef enum {
-	KTStandardWebView,
-	KTWithoutStylesView,
-	KTSourceCodeView,
-	KTPreviewSourceCodeView,	// Unimplemented
-	KTDOMSourceView,
-	KTRSSView,					// Unimplemented
-	KTRSSSourceView,
-	KTHTMLValidationView
-} KTWebViewViewType;
 
 
 @class KTAbstractElement, KTPage, KTPagelet;

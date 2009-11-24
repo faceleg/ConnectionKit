@@ -79,6 +79,41 @@
     [self setSelectedViewController:controller];
 }
 
+#pragma mark View Type
+
+@synthesize viewType = _viewType;
+- (void)setViewType:(KTWebViewViewType)type
+{
+    _viewType = type;
+}
+
+- (IBAction)selectWebViewViewType:(id)sender;
+{
+    KTWebViewViewType viewType = [sender tag];
+	if (viewType == [self viewType])
+	{
+		viewType = KTStandardWebView;
+	}
+	
+	[self setViewType:viewType];
+}
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+    BOOL result = YES;
+    
+    if ([menuItem action] == @selector(selectWebViewViewType:))
+    {
+        // Tick the selected state
+        [menuItem setState:([menuItem tag] == [self viewType])];
+        
+        // Only allow the user to select standard and source code view for now.
+        result = [menuItem tag] == KTStandardWebView || [menuItem tag] == KTSourceCodeView;
+    }
+    
+    return result;
+}
+
 #pragma mark View controllers
 
 @synthesize webViewLoadController = _webViewController;

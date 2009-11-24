@@ -437,6 +437,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[[[self webContentAreaController] selectedViewController] selectedViewController] insertElement:sender];
 }
 
+- (IBAction)selectWebViewViewType:(id)sender;
+{
+    [[self webContentAreaController] selectWebViewViewType:sender];
+}
 
 - (IBAction)windowHelp:(id)sender
 {
@@ -881,7 +885,7 @@ from representedObject */
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    return YES;
+    //return YES;
     
 	OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	SEL itemAction = [menuItem action];
@@ -952,6 +956,11 @@ from representedObject */
         {
             [menuItem setTitle:NSLocalizedString(@"Show Editing Markers", @"menu title to show Editing Markers")];
         }
+    }
+    
+    else if (itemAction == @selector(selectWebViewViewType:))
+    {
+        return [[self webContentAreaController] validateMenuItem:menuItem];
     }
 	
 	// "Hide Site Outline" toggleSiteOutlineShown:
