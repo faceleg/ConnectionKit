@@ -51,6 +51,8 @@ typedef enum {
 @property(nonatomic) KTWebViewViewType viewType;
 - (IBAction)selectWebViewViewType:(id)sender;
 
+- (NSViewController *)viewControllerForViewType:(KTWebViewViewType)viewType;
+
 
 #pragma mark View Controllers
 @property(nonatomic, readonly) SVWebEditorLoadController *webViewLoadController;

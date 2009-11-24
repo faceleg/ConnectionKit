@@ -16,15 +16,25 @@
 {
     [super init];
     
+    
+    // Create controllers
     _webViewController = [[SVWebEditorLoadController alloc] init];
     [_webViewController setDelegate:self];
     [self insertViewController:_webViewController atIndex:0];
     
+    
+    _sourceViewController = [[NSViewController alloc] initWithNibName:@"HTMLSourceView"
+                                                               bundle:nil];
+    [self addViewController:_sourceViewController];
+    
+    
     _placeholderViewController = [[NSViewController alloc] initWithNibName:@"SelectionPlaceholder"
                                                                     bundle:nil];
-    [self insertViewController:_placeholderViewController atIndex:1];
+    [self addViewController:_placeholderViewController];
+    
     
     [self setSelectedIndex:0];
+    
     
     return self;
 }
@@ -67,7 +77,7 @@
             
         case 1:
             [[self webViewLoadController] setPage:[pages objectAtIndex:0]];
-            controller = [self webViewLoadController];
+            controller = [self viewControllerForViewType:[self viewType]];
             break;
             
         default:
@@ -85,6 +95,11 @@
 - (void)setViewType:(KTWebViewViewType)type
 {
     _viewType = type;
+    
+    if ([[self selectedPages] count] == 1)
+    {
+        [self setSelectedViewController:[self viewControllerForViewType:type]];
+    }
 }
 
 - (IBAction)selectWebViewViewType:(id)sender;
@@ -109,6 +124,27 @@
         
         // Only allow the user to select standard and source code view for now.
         result = [menuItem tag] == KTStandardWebView || [menuItem tag] == KTSourceCodeView;
+    }
+    
+    return result;
+}
+
+- (NSViewController *)viewControllerForViewType:(KTWebViewViewType)viewType;
+{
+    NSViewController *result;
+    switch (viewType)
+    {
+        case KTStandardWebView:
+            result = [self webViewLoadController];
+            break;
+            
+        case KTSourceCodeView:
+        case KTPreviewSourceCodeView:
+            result = _sourceViewController;
+            break;
+            
+        default:
+            result = nil;
     }
     
     return result;
