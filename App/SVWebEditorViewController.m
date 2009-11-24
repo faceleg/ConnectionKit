@@ -151,7 +151,7 @@
         DOMElement *element = [aContentObject DOMElementInDocument:domDoc];
         if (element)
         {
-            SVWebContentItem *item = [[SVWebContentItem alloc] initWithDOMElement:element];
+            SVWebContentItem *item = [[SVWebContentItem alloc] initWithHTMLElement:element];
             [item setRepresentedObject:aContentObject];
             [item setEditable:YES];
             

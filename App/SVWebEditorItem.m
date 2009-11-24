@@ -11,34 +11,9 @@
 
 @implementation SVWebEditorItem
 
-#pragma mark Init & Dealloc
-
-- (id)init
-{
-    return [self initWithDOMElement:nil];
-}
-
-- (id)initWithDOMElement:(DOMHTMLElement *)element;
-{
-    OBPRECONDITION(element);
-    
-    self = [super init];
-    
-    _DOMElement = [element retain];
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [_DOMElement release];
-    
-    [super dealloc];
-}
-
 #pragma mark Accessors
 
-@synthesize DOMElement = _DOMElement;
+- (DOMElement *)DOMElement { return [self HTMLElement]; }
 
 - (BOOL)isEditable { return NO; }
 

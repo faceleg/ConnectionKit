@@ -24,15 +24,12 @@
 
 - (void)dealloc
 {
-    [_representedObject release];
     [_textAreas release];
     
     [super dealloc];
 }
 
 #pragma mark Accessors
-
-@synthesize representedObject = _representedObject;
 
 - (NSArray *)textAreas { return [[_textAreas copy] autorelease]; }
 

@@ -65,7 +65,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         }
         else
         {
-            SVWebContentItem *controller = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
+            SVWebContentItem *controller = [[SVWebContentItem alloc] initWithHTMLElement:htmlElement];
             [controller setRepresentedObject:aModelElement];
             [self addElementController:controller];
             [controller release];
@@ -200,7 +200,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
     else
     {
-        result = [[SVWebContentItem alloc] initWithDOMElement:htmlElement];
+        result = [[SVWebContentItem alloc] initWithHTMLElement:htmlElement];
         [result setRepresentedObject:bodyElement];
         [self addElementController:result];
         [result release];
@@ -359,19 +359,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (id)initWithBodyElement:(SVPlugInContentObject *)element DOMDocument:(DOMDocument *)document;
 {
     // Create DOM node
-    DOMElement *domElement = [document createElement:@"div"];
+    DOMHTMLElement *domElement = (DOMHTMLElement *)[document createElement:@"div"];
     
-    self = [self initWithDOMElement:domElement];
+    self = [self initWithHTMLElement:domElement];
     [self setRepresentedObject:element];
     return self;
-}
-
-- (DOMHTMLElement *)HTMLElement;
-{
-    DOMHTMLElement *result = (id)[self DOMElement];
-    if (![result isKindOfClass:[DOMHTMLElement class]]) result = nil;
-        
-    return result;
 }
 
 - (SVBodyElement *)bodyElement
