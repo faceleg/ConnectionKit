@@ -54,22 +54,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *htmlElement = (id)[document getElementById:[aModelElement editingElementID]];
         OBASSERT([htmlElement isKindOfClass:[DOMHTMLElement class]]);
         
-        if ([aModelElement isKindOfClass:[SVBodyParagraph class]])
-        {
-            SVBodyParagraphDOMAdapter *controller = [[SVBodyParagraphDOMAdapter alloc]
-                                                 initWithHTMLElement:htmlElement
-                                                 paragraph:(SVBodyParagraph *)aModelElement];
-            
-            [self addElementController:controller];
-            [controller release];
-        }
-        else
-        {
-            SVWebContentItem *controller = [[SVWebContentItem alloc] initWithHTMLElement:htmlElement];
-            [controller setRepresentedObject:aModelElement];
-            [self addElementController:controller];
-            [controller release];
-        }
+        [self makeAndAddControllerForBodyElement:aModelElement HTMLElement:htmlElement];
         
         [htmlElement setIdName:nil]; // don't want it cluttering up the DOM any more
     }
@@ -103,7 +88,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     // Release ivars
     [_content release];
     
-    [_elementControllers makeObjectsPerformSelector:@selector(stop)];
+    [_elementControllers setValue:nil forKey:@"representedObject"];
+    [_elementControllers setValue:nil forKey:@"HTMLElement"];
     [_elementControllers release];
     
     [super dealloc];
@@ -123,7 +109,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
         // Locate the matching controller
-        id <SVElementController> controller = [self controllerForBodyElement:aModelElement];
+        SVHTMLElementController * controller = [self controllerForBodyElement:aModelElement];
         if (controller)
         {
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
@@ -142,7 +128,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             // It's a new object, create controller and node to match
             Class controllerClass = [self controllerClassForBodyElement:aModelElement];
             
-            id <SVElementController> controller = [[controllerClass alloc]
+            SVHTMLElementController * controller = [[controllerClass alloc]
                                                    initWithBodyElement:aModelElement
                                                    DOMDocument:[[self HTMLElement] ownerDocument]];
             
@@ -170,60 +156,44 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Subcontrollers
 
-- (void)addElementController:(id <SVElementController>)controller;
+- (void)addElementController:(SVHTMLElementController *)controller;
 {
     [_elementControllers addObject:controller];
 }
 
-- (void)removeElementController:(id <SVElementController>)controller;
+- (void)removeElementController:(SVHTMLElementController *)controller;
 {
-    if ([controller isKindOfClass:[SVBodyParagraphDOMAdapter class]])
-    {
-        [(SVBodyParagraphDOMAdapter *)controller stop];
-    }
-    
+    [controller setRepresentedObject:nil];
+    [controller setHTMLElement:nil];
     [_elementControllers removeObject:controller];
 }
 
-- (id <SVElementController>)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
+- (SVHTMLElementController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
                                                    HTMLElement:(DOMHTMLElement *)htmlElement;
 {
-    id result;
-    
-    if ([bodyElement isKindOfClass:[SVBodyParagraph class]])
-    {
-        result = [[SVBodyParagraphDOMAdapter alloc] initWithHTMLElement:htmlElement
-                                                              paragraph:(SVBodyParagraph *)bodyElement];
-        
-        [self addElementController:result];
-        [result release];
-    }
-    else
-    {
-        result = [[SVWebContentItem alloc] initWithHTMLElement:htmlElement];
-        [result setRepresentedObject:bodyElement];
-        [self addElementController:result];
-        [result release];
-    }
+    id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
+    [result setRepresentedObject:bodyElement];
+    [self addElementController:result];
+    [result release];
     
     
     return result;
 }
 
-- (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
+- (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
 {
-    id <SVElementController> result = nil;
+    SVHTMLElementController * result = nil;
     for (result in _elementControllers)
     {
-        if ([result bodyElement] == element) break;
+        if ([result representedObject] == element) break;
     }
     
     return result;
 }
 
-- (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
+- (SVHTMLElementController *)controllerForHTMLElement:(DOMHTMLElement *)element;
 {
-    id <SVElementController> result = nil;
+    SVHTMLElementController * result = nil;
     for (result in _elementControllers)
     {
         if ([result HTMLElement] == element) break;
@@ -232,7 +202,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (Class <SVElementController>)controllerClassForBodyElement:(SVBodyElement *)element;
+- (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 {
     Class result = ([element isKindOfClass:[SVBodyParagraph class]] ? 
                     [SVBodyParagraphDOMAdapter class] : [SVWebContentItem class]);
@@ -295,11 +265,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
         if (nextNode)
         {
-            id <SVElementController> nextController = [self controllerForHTMLElement:nextNode];
+            SVHTMLElementController * nextController = [self controllerForHTMLElement:nextNode];
             OBASSERT(nextController);
             
             NSArrayController *content = [self content];
-            NSUInteger index = [[content arrangedObjects] indexOfObject:[nextController bodyElement]];
+            NSUInteger index = [[content arrangedObjects] indexOfObject:[nextController representedObject]];
             [content insertObject:paragraph atArrangedObjectIndex:index];
         }
         else
@@ -316,10 +286,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
         if ([removedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            id <SVElementController> controller = [self controllerForHTMLElement:removedNode];
+            SVHTMLElementController * controller = [self controllerForHTMLElement:removedNode];
             if (controller)
             {
-                SVBodyElement *element = [controller bodyElement];
+                SVBodyElement *element = [controller representedObject];
                 
                 [self willUpdate];
                 [[self content] removeObject:element];
@@ -371,10 +341,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVBodyElement *result = [self representedObject];
     if (![result isKindOfClass:[SVBodyElement class]]) result = nil;
     return result;
-}
-
-- (void)stop
-{    
 }
 
 @end

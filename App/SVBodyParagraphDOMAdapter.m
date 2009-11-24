@@ -18,65 +18,23 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 #pragma mark Init & Dealloc
 
-- (id)initWithHTMLElement:(DOMHTMLElement *)element;
+- (id)initWithBodyElement:(SVBodyElement *)element DOMDocument:(DOMDocument *)document;
 {
-    return [self initWithHTMLElement:element paragraph:nil];
-}
-
-- (id)initWithHTMLElement:(DOMHTMLElement *)domElement paragraph:(SVBodyParagraph *)paragraph;
-{
-    OBPRECONDITION(paragraph);
+    self = [self init];
     
-    
-    self = [super initWithHTMLElement:domElement];
-    
-    
-    // Observe the model
-    [self setRepresentedObject:paragraph];
-    
-    [[self representedObject] addObserver:self
-                               forKeyPath:@"innerHTMLArchiveString"
-                                  options:0
-                                  context:sParagraphInnerHTMLObservationContext];
-    
-    
-    // Observe our bit of the DOM
-    [domElement addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
-    
-    _isObserving = YES;
+    _DOMDocument = [document retain];
+    [self setRepresentedObject:element];
     
     return self;
-}
-
-- (id)initWithBodyElement:(SVBodyParagraph *)paragraph DOMDocument:(DOMDocument *)document;
-{
-    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[document createElement:[paragraph tagName]];
-    [htmlElement setInnerHTML:[paragraph innerHTMLString]];
-    
-    return [self initWithHTMLElement:htmlElement paragraph:paragraph];
-}
-
-- (void)stop;
-{
-    if (_isObserving)
-    {
-        [[self representedObject] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
-        
-        [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
-                                       listener:self
-                                     useCapture:NO];
-        
-        _editTimestamp = 0; // otherwise webview changes may still commit us
-        _isObserving = NO;
-    }
 }
 
 - (void)dealloc
 {
     // Stop observation
-    [self stop];
+    [self setRepresentedObject:nil];
+    [self setHTMLElement:nil];
     
-    [self setWebView:nil];
+    OBASSERT(!_webView);
     
     [super dealloc];
 }
@@ -85,11 +43,47 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 - (void)setHTMLElement:(DOMHTMLElement *)element
 {
+    // Stop & reset old observation
+    if ([self isHTMLElementLoaded])
+    {
+        [[self HTMLElement] removeEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
+    }
+    _editTimestamp = 0; // otherwise webview changes may still try to commit us
+    
+    // Store element and WebView
     [super setHTMLElement:element];
     [self setWebView:[[[element ownerDocument] webFrame] webView]];
+    
+    // Observe our bit of the DOM
+    [element addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
+}
+
+- (void)loadHTMLElement
+{
+    SVBodyParagraph *paragraph = [self representedObject];
+    NSString *tagName = [paragraph tagName];
+    
+    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[_DOMDocument createElement:tagName];
+    [htmlElement setInnerHTML:[paragraph innerHTMLString]];
+    
+    [self setHTMLElement:htmlElement];
 }
 
 #pragma mark Model Changes
+
+- (void)setRepresentedObject:(id)paragraph
+{
+    // Stop observation
+    [[self representedObject] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
+    
+    [super setRepresentedObject:paragraph];
+    
+    // Observe paragraph
+    [[self representedObject] addObserver:self
+                               forKeyPath:@"innerHTMLArchiveString"
+                                  options:0
+                                  context:sParagraphInnerHTMLObservationContext];
+}
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {

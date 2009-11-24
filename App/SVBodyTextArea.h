@@ -10,18 +10,7 @@
 
 
 @class SVBodyElement;
-@protocol SVElementController <NSObject>
-
-// Asks the controller to create an HTML Element for itself using the document
-- (id)initWithBodyElement:(id)element DOMDocument:(DOMDocument *)document;
-
-- (SVBodyElement *)bodyElement;
-- (DOMHTMLElement *)HTMLElement;
-@end
-
-
 @class SVPageletBody;
-
 
 @interface SVBodyTextArea : SVWebTextArea <DOMEventListener>
 {
@@ -42,16 +31,16 @@
 
 #pragma mark Subcontrollers
 
-- (void)addElementController:(id <SVElementController>)controller;
-- (void)removeElementController:(id <SVElementController>)controller;
+- (void)addElementController:(SVHTMLElementController *)controller;
+- (void)removeElementController:(SVHTMLElementController *)controller;
 
-- (id <SVElementController>)controllerForBodyElement:(SVBodyElement *)element;
-- (id <SVElementController>)controllerForHTMLElement:(DOMHTMLElement *)element;
+- (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
+- (SVHTMLElementController *)controllerForHTMLElement:(DOMHTMLElement *)element;
 
-- (id <SVElementController>)makeAndAddControllerForBodyElement:(SVBodyElement *)element
+- (SVHTMLElementController *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
                                                    HTMLElement:(DOMHTMLElement *)element;
 
-- (Class <SVElementController>)controllerClassForBodyElement:(SVBodyElement *)element;
+- (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 
 
 #pragma mark Updates
@@ -64,6 +53,5 @@
 @end
 
 
-#import "SVWebContentItem.h"
-@interface SVHTMLElementController (SVElementController) <SVElementController>
+@interface SVHTMLElementController (SVElementController)
 @end
