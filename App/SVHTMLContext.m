@@ -28,6 +28,8 @@
 
 + (void)pushContext:(SVHTMLContext *)context
 {
+    OBPRECONDITION(context);
+    
     NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"];
     if (!stack) stack = [NSMutableArray arrayWithCapacity:1];
     [stack addObject:context];
@@ -39,6 +41,10 @@
     NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"];
     if ([stack count] > 0) [stack removeLastObject];
 }
+
+- (void)push { [SVHTMLContext pushContext:self]; }
+
+- (void)pop; { [SVHTMLContext popContext]; }
 
 #pragma mark Init & Dealloc
 

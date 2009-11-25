@@ -35,11 +35,10 @@
 - (NSString *)representedObjectHTMLString;
 {
     SVHTMLContext *context = [self HTMLContext];
-    [[context class] pushContext:context];  // ignored if context is nil
     
+    [context push];
     NSString *result = [[self representedObject] HTMLString];
-    
-    [[context class] popContext];
+    [context pop];
     
     return result;
 }

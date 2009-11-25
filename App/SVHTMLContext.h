@@ -31,10 +31,18 @@ typedef enum {
     NSMutableArray  *_textBlocks;
 }
 
+#pragma mark Stack
+
 + (SVHTMLContext *)currentContext;
 + (void)pushContext:(SVHTMLContext *)context;
 + (void)popContext;
 
+// Convenience methods for pushing and popping that will just do the right thing when the receiver is nil
+- (void)push;
+- (void)pop;
+
+
+#pragma mark Properties
 
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL includeStyling;
