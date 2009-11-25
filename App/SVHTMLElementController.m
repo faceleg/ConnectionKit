@@ -16,7 +16,7 @@
 - (id)initWithDOMDocument:(DOMDocument *)document;
 {
     self = [self init];
-    _DOMElement = [document retain];
+    _DOMDocument = [document retain];
     return self;
 }
 @synthesize DOMDocument = _DOMDocument;
