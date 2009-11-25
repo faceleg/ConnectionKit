@@ -16,6 +16,9 @@
 
 @property(nonatomic, retain, readonly) DOMElement *DOMElement;
 
-- (BOOL)isEditable;
+
+#pragma mark Content
+// Uses the receiver's HTML context to call -HTMLString from the represented object
+- (NSString *)representedObjectHTMLString;
 
 @end

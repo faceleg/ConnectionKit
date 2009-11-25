@@ -9,6 +9,7 @@
 #import "SVWebEditorItem.h"
 
 #import "SVBodyElement.h"
+#import "SVHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -20,8 +21,8 @@
 - (void)loadHTMLElement
 {
     // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)
-    SVBodyElement *content = [self representedObject];  OBASSERT(content);
-    NSString *htmlString = [content HTMLString];
+    NSString *htmlString = [self representedObjectHTMLString];
+    OBASSERT(htmlString);
     
     DOMDocumentFragment *fragment = [[self HTMLDocument]
                                      createDocumentFragmentWithMarkupString:htmlString
@@ -29,6 +30,18 @@
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
     [self setHTMLElement:element];
+}
+
+- (NSString *)representedObjectHTMLString;
+{
+    SVHTMLContext *context = [self HTMLContext];
+    [[context class] pushContext:context];  // ignored if context is nil
+    
+    NSString *result = [[self representedObject] HTMLString];
+    
+    [[context class] popContext];
+    
+    return result;
 }
 
 - (DOMElement *)DOMElement { return [self HTMLElement]; }
