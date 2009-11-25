@@ -51,7 +51,3 @@
 - (void)didUpdate;
 
 @end
-
-
-@interface SVHTMLElementController (SVElementController)
-@end

@@ -323,18 +323,3 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 @end
 
-
-#pragma mark -
-
-
-@implementation SVHTMLElementController (SVElementController)
-
-- (SVBodyElement *)bodyElement
-{
-    SVBodyElement *result = [self representedObject];
-    if (![result isKindOfClass:[SVBodyElement class]]) result = nil;
-    return result;
-}
-
-@end
-
