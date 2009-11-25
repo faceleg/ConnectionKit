@@ -3,7 +3,7 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10C540</string>
-		<string key="IBDocument.InterfaceBuilderVersion">732</string>
+		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038.25</string>
 		<string key="IBDocument.HIToolboxVersion">458.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
@@ -15,12 +15,13 @@
 			</object>
 			<object class="NSMutableArray" key="dict.values">
 				<bool key="EncodedWithXMLCoder">YES</bool>
-				<string>732</string>
+				<string>740</string>
 				<string>1.2.2</string>
 			</object>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="1547"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -60,7 +61,7 @@
 				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSWindowContentMinSize">{800, 280}</string>
 				<object class="NSView" key="NSWindowView" id="810270195">
-					<nil key="NSNextResponder"/>
+					<reference key="NSNextResponder"/>
 					<int key="NSvFlags">256</int>
 					<object class="NSMutableArray" key="NSSubviews">
 						<bool key="EncodedWithXMLCoder">YES</bool>
@@ -197,6 +198,7 @@
 													</object>
 													<string key="NSFrameSize">{160, 530}</string>
 													<reference key="NSSuperview" ref="243233654"/>
+													<reference key="NSNextKeyView" ref="373687824"/>
 													<reference key="NSDocView" ref="373687824"/>
 													<reference key="NSBGColor" ref="245490345"/>
 													<int key="NScvFlags">4</int>
@@ -223,6 +225,7 @@
 											</object>
 											<string key="NSFrame">{{0, 23}, {175, 530}}</string>
 											<reference key="NSSuperview" ref="23163371"/>
+											<reference key="NSNextKeyView" ref="218882052"/>
 											<int key="NSsFlags">16</int>
 											<reference key="NSVScroller" ref="523380596"/>
 											<reference key="NSHScroller" ref="181544056"/>
@@ -682,6 +685,7 @@
 						</object>
 					</object>
 					<string key="NSFrameSize">{835, 553}</string>
+					<reference key="NSSuperview"/>
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{800, 302}</string>
@@ -1990,6 +1994,7 @@
 						<int key="objectID">1675</int>
 						<reference key="object" ref="601368962"/>
 						<reference key="parent" ref="0"/>
+						<string key="objectName">Pages Controller</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1684</int>
@@ -2633,7 +2638,7 @@
 					<string key="superclassName">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSBorderlessWindow.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSBorderlessWindow.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2649,7 +2654,7 @@
 					<string key="superclassName">NSTextField</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSFocusingTextField.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSFocusingTextField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2661,7 +2666,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSPopUpButton.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSPopUpButton.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2669,7 +2674,7 @@
 					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSShadowedRectView.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSShadowedRectView.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2679,9 +2684,9 @@
 						<string key="NS.key.0">tabView</string>
 						<string key="NS.object.0">NSTabView</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="556572542">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="560837587">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSTabViewController.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSTabViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2931,7 +2936,7 @@
 					<string key="className">NSApplication</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSApplication+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSApplication+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2946,14 +2951,14 @@
 					<string key="className">NSArrayController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSCollectionController.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSCollectionController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSArrayController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSArrayController+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSArrayController+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2966,9 +2971,9 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSCell</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="205530219">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="963322664">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSView+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSView+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2998,42 +3003,42 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSPathInfoField.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSPathInfoField.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSSilencingConfirmSheet.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Foundation/KSSimpleURLConnection.h</string>
+						<string key="minorKey">../../Shared/Foundation/KSSimpleURLConnection.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Foundation/KSThreadProxy.h</string>
+						<string key="minorKey">../../Shared/Foundation/KSThreadProxy.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Foundation/NSObject+Karelia.h</string>
+						<string key="minorKey">../../Shared/Foundation/NSObject+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Imported/NTSUTaskController.h</string>
+						<string key="minorKey">../../Shared/Imported/NTSUTaskController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3132,26 +3137,26 @@
 					<string key="className">NSResponder</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSResponder+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSResponder+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSTabView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSTabView+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSTabView+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="176067862">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="924262746">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/KSDragging.h</string>
+						<string key="minorKey">../../Shared/AppKit/KSDragging.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<reference key="sourceIdentifier" ref="205530219"/>
+					<reference key="sourceIdentifier" ref="963322664"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
@@ -3167,7 +3172,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSViewController</string>
-					<reference key="sourceIdentifier" ref="556572542"/>
+					<reference key="sourceIdentifier" ref="560837587"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSViewController</string>
@@ -3179,13 +3184,13 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
-					<reference key="sourceIdentifier" ref="176067862"/>
+					<reference key="sourceIdentifier" ref="924262746"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSWindow+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSWindow+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3204,7 +3209,7 @@
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/AppKit/NSWindowController+Karelia.h</string>
+						<string key="minorKey">../../Shared/AppKit/NSWindowController+Karelia.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3220,7 +3225,7 @@
 					<string key="superclassName">NSBox</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">../../../Shared/Imported/RoundedBox.h</string>
+						<string key="minorKey">../../Shared/Imported/RoundedBox.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3278,6 +3283,10 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebContentAreaController</string>
 					<string key="superclassName">KSTabViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">selectWebViewViewType:</string>
+						<string key="NS.object.0">id</string>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVWebContentAreaController.h</string>
