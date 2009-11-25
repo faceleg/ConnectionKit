@@ -26,7 +26,7 @@
     
     DOMDocumentFragment *fragment = [[self HTMLDocument]
                                      createDocumentFragmentWithMarkupString:htmlString
-                                     baseURL:nil];
+                                     baseURL:[[self HTMLContext] baseURL]];
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
     [self setHTMLElement:element];
