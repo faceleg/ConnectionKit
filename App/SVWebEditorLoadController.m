@@ -132,6 +132,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [SVHTMLContext pushContext:context];    // will pop after loading
 	NSString *pageHTML = [[self page] HTMLString];
+    [SVHTMLContext popContext];
     
     
     //  What are the selectable objects? Pagelets and other SVContentObjects
@@ -157,11 +158,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
     [[webViewController webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
     [webViewController setPage:[self page]];
+    [webViewController setHTMLContext:context];
     
     
     [webViewController loadHTMLString:pageHTML];
-	[SVHTMLContext popContext];
-    
+	
     
     // Observe the used keypaths
     [_pageDependencies release], _pageDependencies = [[context dependencies] copy];
@@ -172,6 +173,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                   options:0
                                   context:sWebViewDependenciesObservationContext];
     }
+    
+    
+    // Tidy up
     [context release];
     
 	

@@ -62,6 +62,7 @@
     
     [_page release];
     [_textAreas release];
+    [_context release];
     
     [super dealloc];
 }
@@ -118,9 +119,6 @@
     [self setLoading:YES];
     
     
-    [_HTMLGenerationContext release], _HTMLGenerationContext = [[SVHTMLContext currentContext] retain];
-    
-    
 	// Figure out the URL to use
 	NSURL *pageURL = [[self page] URL];
     if (![pageURL scheme] ||        // case 44071: WebKit will not load the HTML or offer delegate
@@ -170,7 +168,7 @@
     
     
     // Prepare text areas
-    NSArray *parsedTextBlocks = [_HTMLGenerationContext generatedTextBlocks];
+    NSArray *parsedTextBlocks = [[self HTMLContext] generatedTextBlocks];
     NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[parsedTextBlocks count]];
     
     for (SVHTMLTextBlock *aTextBlock in parsedTextBlocks)
@@ -254,6 +252,8 @@
 
 @synthesize page = _page;
 @synthesize contentController = _contentController;
+
+@synthesize HTMLContext = _context;
 
 #pragma mark Text Areas
 
