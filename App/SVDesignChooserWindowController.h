@@ -15,7 +15,7 @@
 {
     SVDesignChooserViewController   *viewController_;
     IBOutlet MGScopeBar             *oScopeBar;
-    IBOutlet NSView                 *oTargetView;
+    IBOutlet NSBox                 *oTargetView;
     
     KTDesign                        *selectedDesign_;
 }
