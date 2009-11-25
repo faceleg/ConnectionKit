@@ -52,7 +52,7 @@
 
 #pragma mark Document
 
-@property(nonatomic, readonly) DOMDocument *DOMDocument;
+@property(nonatomic, readonly) DOMDocument *HTMLDocument;
 - (NSView *)documentView;
 - (void)scrollToPoint:(NSPoint)point;
 

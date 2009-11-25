@@ -133,7 +133,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 @synthesize webView = _webView;
 
-- (DOMDocument *)DOMDocument { return [[self webView] mainFrameDocument]; }
+- (DOMDocument *)HTMLDocument { return [[self webView] mainFrameDocument]; }
 
 - (NSView *)documentView { return [[[[self webView] mainFrame] frameView] documentView]; }
 

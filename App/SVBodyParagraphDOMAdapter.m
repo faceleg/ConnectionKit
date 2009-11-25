@@ -53,7 +53,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     SVBodyParagraph *paragraph = [self representedObject];
     NSString *tagName = [paragraph tagName];
     
-    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[[self DOMDocument] createElement:tagName];
+    DOMHTMLElement *htmlElement = (DOMHTMLElement *)[[self HTMLDocument] createElement:tagName];
     [htmlElement setInnerHTML:[paragraph innerHTMLString]];
     
     [self setHTMLElement:htmlElement];

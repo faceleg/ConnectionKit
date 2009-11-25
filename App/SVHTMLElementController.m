@@ -13,13 +13,13 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithDOMDocument:(DOMDocument *)document;
+- (id)initWithHTMLDocument:(DOMHTMLDocument *)document;
 {
     self = [self init];
     _DOMDocument = [document retain];
     return self;
 }
-@synthesize DOMDocument = _DOMDocument;
+@synthesize HTMLDocument = _DOMDocument;
 
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
 {

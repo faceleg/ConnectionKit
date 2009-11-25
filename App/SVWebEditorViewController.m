@@ -139,7 +139,7 @@
 
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
-    DOMDocument *domDoc = [[self webEditorView] DOMDocument];
+    DOMDocument *domDoc = [[self webEditorView] HTMLDocument];
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?

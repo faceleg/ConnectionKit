@@ -127,7 +127,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         {
             // It's a new object, create controller and node to match
             Class controllerClass = [self controllerClassForBodyElement:aModelElement];
-            controller = [[controllerClass alloc] initWithDOMDocument:[[self HTMLElement] ownerDocument]];
+            controller = [[controllerClass alloc] initWithHTMLDocument:
+                          (DOMHTMLDocument *)[[self HTMLElement] ownerDocument]];
             [controller setRepresentedObject:aModelElement];
             
             [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];

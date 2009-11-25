@@ -15,14 +15,14 @@
     DOMHTMLElement  *_DOMElement;
     id              _representedObject;
     
-    DOMDocument *_DOMDocument;
+    DOMHTMLDocument *_DOMDocument;
 }
 
 #pragma mark Init
 
 // For subclasses that know how to load HTML element from the document
-- (id)initWithDOMDocument:(DOMDocument *)document;
-@property(nonatomic, retain, readonly) DOMDocument *DOMDocument;
+- (id)initWithHTMLDocument:(DOMHTMLDocument *)document;
+@property(nonatomic, retain, readonly) DOMHTMLDocument *HTMLDocument;
 
 // Convenience method:
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
