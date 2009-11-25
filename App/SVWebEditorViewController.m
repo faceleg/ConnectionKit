@@ -151,6 +151,7 @@
         {
             SVWebContentItem *item = [[SVWebContentItem alloc] initWithHTMLElement:element];
             [item setRepresentedObject:aContentObject];
+            [item setHTMLContext:[self HTMLContext]];
             [item setEditable:YES];
             
             [contentObjects addObject:item];
@@ -193,6 +194,7 @@
                 [elementsController bind:NSContentSetBinding toObject:value withKeyPath:@"elements" options:nil];
                 
                 textArea = [[SVBodyTextArea alloc] initWithHTMLElement:element content:elementsController];
+                [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:YES];
                 [textArea setFieldEditor:NO];
                 [textArea setEditable:YES];
@@ -200,6 +202,7 @@
             else
             {
                 textArea = [[SVWebTextArea alloc] initWithHTMLElement:element];
+                [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
                 [textArea setEditable:[aTextBlock isEditable]];

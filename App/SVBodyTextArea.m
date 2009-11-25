@@ -129,6 +129,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             Class controllerClass = [self controllerClassForBodyElement:aModelElement];
             controller = [[controllerClass alloc] initWithHTMLDocument:
                           (DOMHTMLDocument *)[[self HTMLElement] ownerDocument]];
+            [controller setHTMLContext:[self HTMLContext]];
             [controller setRepresentedObject:aModelElement];
             
             [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
@@ -164,6 +165,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     [controller setRepresentedObject:nil];
     [controller setHTMLElement:nil];
+    [controller setHTMLContext:nil];
+    
     [_elementControllers removeObject:controller];
 }
 
@@ -171,6 +174,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
                                                    HTMLElement:(DOMHTMLElement *)htmlElement;
 {
     id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
+    [result setHTMLContext:[self HTMLContext]];
     [result setRepresentedObject:bodyElement];
     [self addElementController:result];
     [result release];
