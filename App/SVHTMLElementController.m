@@ -31,6 +31,7 @@
 - (void)dealloc
 {
     [_DOMDocument release];
+    [_context release];
     [_DOMElement release];
     [_representedObject release];
     
@@ -55,8 +56,9 @@
 
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
-#pragma mark Represented Object
+#pragma mark Content
 
 @synthesize representedObject = _representedObject;
+@synthesize HTMLContext = _context;
 
 @end

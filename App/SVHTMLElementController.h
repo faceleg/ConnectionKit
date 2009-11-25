@@ -9,11 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class SVHTMLContext;
+
 @interface SVHTMLElementController : NSResponder
 {
   @private
     DOMHTMLElement  *_DOMElement;
     id              _representedObject;
+    SVHTMLContext   *_context;
     
     DOMHTMLDocument *_DOMDocument;
 }
@@ -36,6 +39,8 @@
 
 #pragma mark Content
 @property(nonatomic, retain) id representedObject;
+
+@property(nonatomic, retain) SVHTMLContext *HTMLContext;
 
 
 @end
