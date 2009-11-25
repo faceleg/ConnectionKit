@@ -8,10 +8,28 @@
 
 #import "SVWebEditorItem.h"
 
+#import "SVBodyElement.h"
+
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVWebEditorItem
 
 #pragma mark Accessors
+
+- (void)loadHTMLElement
+{
+    // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)
+    SVBodyElement *content = [self representedObject];  OBASSERT(content);
+    NSString *htmlString = [content HTMLString];
+    
+    DOMDocumentFragment *fragment = [[self HTMLDocument]
+                                     createDocumentFragmentWithMarkupString:htmlString
+                                     baseURL:nil];
+    
+    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
+    [self setHTMLElement:element];
+}
 
 - (DOMElement *)DOMElement { return [self HTMLElement]; }
 
