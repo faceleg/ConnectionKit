@@ -660,20 +660,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
     
-    // is the media browser up?
-    if ( nil != [IMBPanelController sharedPanelControllerWithoutLoading] )
-    {
-        // are we closing the last open document?
-        if ( [[[KTDocumentController sharedDocumentController] documents] count] == 1 )
-        {
-            // close media window
-            [[IMBPanelController sharedPanelController] close];
-        }
-    }
-	
-	
-
-	// Remove temporary media files
+    // Remove temporary media files
 	[[self mediaManager] deleteTemporaryMediaFiles];
 	
 	[super close];
