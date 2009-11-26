@@ -23,53 +23,6 @@
 @implementation KTDocWindowController ( Accessors )
 
 #pragma mark -
-#pragma mark Page Selection
-
-/*!	Determine the default collection, either the root (if nothing selected), or the selected
- collection, or the selection's parent collection if it's not a collection.
- */
-- (KTPage *)nearestParent:(NSManagedObjectContext *)aManagedObjectContext
-{
-	KTPage *parentCollection = nil;
-	
-	/// Case 17992: TJT changed nearestParent to
-	// 1) use a specified context for thread safety
-	// 2) if nil, return root so that there is always
-	// some kind of nearestParent
-	KTPage *contextRoot = [aManagedObjectContext root];
-	
-	// figure out our selection
-	if (![[[self siteOutlineViewController] pagesController] selectedPage])
-	{
-		// if nothing selected, treat as if root we're selected
-		parentCollection = contextRoot;
-	}
-	else if ( [[[[self siteOutlineViewController] pagesController] selectedPage] isEqual:contextRoot]  )
-	{
-		// if root is selected, we're adding to root
-		parentCollection = [[[self siteOutlineViewController] pagesController] selectedPage];
-	}
-	else if ( [[[[self siteOutlineViewController] pagesController] selectedPage] isCollection] )
-	{
-		// if the selected page has an index, it must be a collection, so we're adding to it
-		parentCollection = [[[self siteOutlineViewController] pagesController] selectedPage];
-	}
-	else
-	{
-		// selection won't do it, so we add to selection's parent
-		parentCollection = [[[[self siteOutlineViewController] pagesController] selectedPage] parent];
-	}
-	
-	if ( nil == parentCollection )
-	{
-		NSLog(@"error: unable to determine nearestParent to selectedPage, substituting home page");
-		parentCollection = contextRoot;
-	}
-	
-	return parentCollection;
-}
-
-#pragma mark -
 #pragma mark Pagelet Selection
 
 - (KTPagelet *)selectedPagelet

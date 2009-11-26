@@ -182,8 +182,6 @@ extern NSString *KTSelectedDOMRangeKey;
 
 @interface KTDocWindowController ( Accessors )
 
-- (KTPage *)nearestParent:(NSManagedObjectContext *)aManagedObjectContext;
-
 - (KTPagelet *)selectedPagelet;
 - (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
 
