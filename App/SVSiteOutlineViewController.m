@@ -962,10 +962,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	NSArray *selectedPages = [[self outlineView] selectedItems];
 	[[self pagesController] setSelectedObjects:selectedPages];
-	
-	// let interested parties know that selection changed
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification
-														object:[selectedPages firstObjectKS]];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.

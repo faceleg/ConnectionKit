@@ -660,8 +660,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification object:nil];	// select nothing
-
     // is the media browser up?
     if ( nil != [IMBPanelController sharedPanelControllerWithoutLoading] )
     {
@@ -776,10 +774,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	{
 		[hostProperties setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
 	}
-	
-	// force the current page to be the selection, deselecting any inline image.
-	[[NSNotificationCenter defaultCenter] postNotificationName:(NSString *)kKTItemSelectedNotification
-	object:[[[self mainWindowController] siteOutlineController] selectedPage]];
 	
 	// no undo after publishing
 	[[self undoManager] removeAllActions];

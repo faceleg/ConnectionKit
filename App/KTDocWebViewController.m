@@ -945,7 +945,6 @@
 	DOMElement *element = [document getElementById:divID];
 
 	[self setSelectedPageletHTMLElement:(DOMHTMLElement *)element];
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:aPagelet];
 }
 
 - (void)setHilite:(BOOL)inHilite onHTMLElement:(DOMHTMLElement *)aSelectedPageletHTMLElement

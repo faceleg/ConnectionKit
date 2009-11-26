@@ -186,12 +186,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	myLastClickedPoint = NSZeroPoint;
 	
-	// register for updates
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateSelectedItemForDocWindow:)
-												 name:kKTItemSelectedNotification
-											   object:nil];
-	
 	//	[[NSNotificationCenter defaultCenter] addObserver:self
 	//											 selector:@selector(infoWindowMayNeedRefreshing:)
 	//												 name:kKTInfoWindowMayNeedRefreshingNotification
@@ -761,8 +755,6 @@ from representedObject */
 	
 	// label undo and perserve the current selection
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Add Pagelet", @"action name for adding a page")];
-	
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification object:aPagelet];
 }
 
 /*! group the selection in a new summary */
@@ -1146,8 +1138,7 @@ from representedObject */
 
 - (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:kKTItemSelectedNotification 
-														object:aSelectableItem];
+	
 }
 
 - (void)updateSelectedItemForDocWindow:(NSNotification *)aNotification
