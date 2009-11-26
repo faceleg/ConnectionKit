@@ -327,21 +327,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 }
 
-#pragma mark -
 #pragma mark IBActions
 
-/*  The WebView controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on
+/*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.
+ *  BUT, do I actually want to always pass this on to the web editor? Might there be times when a different controller is desired?
  */
-
 - (void)insertPagelet:(id)sender;
 {
-    [[[self webContentAreaController] selectedViewController] insertPagelet:sender];
+    [[[self webContentAreaController] webEditorViewController] insertPagelet:sender];
 }
-
 - (void)insertElement:(id)sender;
 {
-    [[[self webContentAreaController] selectedViewController] insertElement:sender];
+    [[[self webContentAreaController] webEditorViewController] insertElement:sender];
 }
+
 
 - (IBAction)selectWebViewViewType:(id)sender;
 {
