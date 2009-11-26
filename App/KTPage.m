@@ -145,11 +145,11 @@
 + (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin
 {
 	// Figure out nearest sibling/parent
-    KTPage *previousPage = aParent;
+    KTPage *predecessor = aParent;
 	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
 	if ([children count] > 0)
 	{
-		previousPage = [children firstObjectKS];
+		predecessor = [children firstObjectKS];
 	}
 	
 	
@@ -158,8 +158,8 @@
 	
 	
 	// Load properties from parent/sibling
-	[page setBool:[previousPage boolForKey:@"allowComments"] forKey:@"allowComments"];
-	[page setBool:[previousPage boolForKey:@"includeTimestamp"] forKey:@"includeTimestamp"];
+	[page setAllowComments:[predecessor allowComments]];
+	[page setIncludeTimestamp:[predecessor includeTimestamp]];
 	
 	
 	// And we're finally ready to let normal initalisation take over
