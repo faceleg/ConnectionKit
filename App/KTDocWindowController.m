@@ -855,21 +855,6 @@ from representedObject */
         return [[self webContentAreaController] validateMenuItem:menuItem];
     }
 	
-	// "Hide Site Outline" toggleSiteOutlineShown:
-	else if (itemAction == @selector(toggleSiteOutlineShown:))
-	{
-		if ([self sidebarIsCollapsed])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Site Outline", @"menu title to show site outline")];
-            [menuItem setToolTip:NSLocalizedString(@"Shows the outline of the site on the left side of the window. Window must be wide enough to accomodate it.", @"Tooltip: menu tooltip to show site outline")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Site Outline", @"menu title to hide site outline")];
-            [menuItem setToolTip:NSLocalizedString(@"Collapses the outline of the site from the left side of the window.", @"menu tooltip to hide site outline")];
-        }
-	}
-	
 	// "Use Small Page Icons" toggleSmallPageIcons:
     else if ( itemAction == @selector(toggleSmallPageIcons:) )
 	{
