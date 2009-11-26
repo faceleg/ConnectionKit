@@ -47,8 +47,8 @@
 
 @interface KTPage (Accessors)
 
-- (BOOL)disableComments;
-- (void)setDisableComments:(BOOL)disableComments;
+@property(nonatomic, copy) NSNumber *allowComments;
+@property(nonatomic) BOOL disableComments;
 
 // Title
 @property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;

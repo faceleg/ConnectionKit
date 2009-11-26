@@ -35,7 +35,9 @@
 @implementation KTPage (Accessors)
 
 #pragma mark -
-#pragma mark Simple Accessors
+#pragma mark Comments
+
+@dynamic allowComments;
 
 /*	By default this is set to NO. Plugins can override it either in their info.plist, or dynamically at run-time
  *	using the -setDisableComments: method.
