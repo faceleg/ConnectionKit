@@ -44,7 +44,7 @@
 extern NSString *gInfoWindowAutoSaveName;
 
 
-@interface KTDocWindowController : NSWindowController <KSInspection, DOMEventListener, SVWebContentAreaControllerDelegate>
+@interface KTDocWindowController : NSWindowController <KSInspection, SVWebContentAreaControllerDelegate>
 {
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
 	SVSiteOutlineViewController *_siteOutlineViewController;

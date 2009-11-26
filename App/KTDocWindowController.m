@@ -1269,12 +1269,5 @@ from representedObject */
     [[[self webContentAreaController] webEditorViewController] setNeedsLoad];
 }
 
-// the goal here will be to clear the HTML markup from the pasteboard before pasting,
-// if we can just get this to work!
-- (void)handleEvent:(DOMEvent *)event;
-{
-	LOG((@"event= %@", event));
-}
-
 @end
 
