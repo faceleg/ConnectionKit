@@ -39,7 +39,7 @@
 		if ([parameters objectForKey:@"sizeName"])
 		{
 			NSString *settingsName = [parameters objectForKey:@"sizeName"];
-			scalingProperties = [[[[self currentPage] master] design] imageScalingPropertiesForUse:settingsName];
+			scalingProperties = [[[[[SVHTMLContext currentContext] currentPage] master] design] imageScalingPropertiesForUse:settingsName];
 		}
 		else if ([parameters objectForKey:@"sizeToFit"])
 		{
@@ -137,7 +137,7 @@
 			// The delegate may want to know
 			[self didEncounterMediaFile:media upload:upload];
 			
-			return [[upload URL] stringRelativeToURL:[[self currentPage] URL]];
+			return [[upload URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
 			break;
 		}
 	}
