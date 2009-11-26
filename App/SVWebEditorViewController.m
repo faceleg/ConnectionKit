@@ -220,7 +220,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
     NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
-    for (SVContentObject *aContentObject in [[self contentController] arrangedObjects])
+    for (SVContentObject *aContentObject in [[self selectedObjectsController] arrangedObjects])
     {
         DOMHTMLElement *element = (DOMHTMLElement *)[aContentObject DOMElementInDocument:domDoc];
         if (element)
@@ -309,7 +309,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Match selection to controller
-    NSArray *selectedObjects = [[self contentController] selectedObjects];
+    NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
     NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
     
     for (id anObject in selectedObjects)
@@ -352,7 +352,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Content
 
-@synthesize contentController = _selectableObjectsController;
+@synthesize selectedObjectsController = _selectableObjectsController;
 
 @synthesize HTMLContext = _context;
 
@@ -743,7 +743,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // TODO: Can we do this without a cast?
     NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
-    BOOL result = [(NSArrayController *)[self contentController] setSelectedObjects:objects];
+    BOOL result = [(NSArrayController *)[self selectedObjectsController] setSelectedObjects:objects];
     return result;
 }
 

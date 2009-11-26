@@ -55,7 +55,7 @@
 
 // Everything here should be KVO-compliant
 @property(nonatomic, retain) KTPage *page;  // reloads
-@property(nonatomic, retain, readonly) id <KSCollectionController> contentController;
+@property(nonatomic, retain, readonly) id <KSCollectionController> selectedObjectsController;
 @property(nonatomic, retain, readonly) SVHTMLContext *HTMLContext;
 
 

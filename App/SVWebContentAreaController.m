@@ -198,7 +198,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 - (id <KSCollectionController>)objectsController;
 {
-    return [[self webEditorViewController] contentController];
+    return [[self webEditorViewController] selectedObjectsController];
 }
 
 #pragma mark Web Editor View Controller Delegate
