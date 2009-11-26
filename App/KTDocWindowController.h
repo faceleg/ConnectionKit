@@ -82,6 +82,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSPoint							myLastClickedPoint;
 	NSRect							mySelectionRect;
 	
+@private
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
 	KTCodeInjectionController	*myPageCodeInjectionController;
@@ -91,8 +92,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 
 	NSButton *myBuyNowButton;
-    
-@private
 }
 
 #pragma mark View Controllers

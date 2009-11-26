@@ -98,7 +98,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setToolbars:nil];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
-	[myBuyNowButton release]; myBuyNowButton = nil;
+	[myBuyNowButton release];
 
     [super dealloc];
 }
