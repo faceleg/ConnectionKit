@@ -1136,11 +1136,6 @@ from representedObject */
 #pragma mark -
 #pragma mark Selection
 
-- (void)postSelectionAndUpdateNotificationsForItem:(id)aSelectableItem
-{
-	
-}
-
 - (void)updateSelectedItemForDocWindow:(NSNotification *)aNotification
 {
 	OFF((@"windowController shows you selected %@", [[aNotification object] managedObjectDescription]));

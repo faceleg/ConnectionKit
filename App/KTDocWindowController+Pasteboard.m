@@ -445,9 +445,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
             
             if ( [newPagelets count] > 0 )
             {
-                // reload the page, selected the newly added pagelet, and update the inspector 
-                [self postSelectionAndUpdateNotificationsForItem:[newPagelets objectAtIndex:0]];
-                
                 // label undo
                 [[[self document] undoManager] setActionName:NSLocalizedString(@"Duplicate Pagelet", "Duplicate Pagelet MenuItem")];              
             }
