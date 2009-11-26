@@ -8,7 +8,11 @@
 
 #import "KTDocSiteOutlineController.h"
 
-#import "KTPage.h"
+#import "KTElementPlugin.h"
+#import "KTPage+Internal.h"
+#import "SVSidebar.h"
+
+#import "NSArray+Karelia.h"
 
 #import "Debug.h"
 
@@ -32,7 +36,57 @@
 
 - (void)addObject:(KTPage *)page
 {
+    // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
+    KTPage *parent = [[self selectedObjects] lastObject];
+    if (![parent isCollection]) parent = [parent parent];
+    if (!parent) parent = [self root];
+    
+    
+    // Figure out the predecessor (which page to inherit properties from)
+    KTPage *predecessor = parent;
+	NSArray *children = [parent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
+	if ([children count] > 0)
+	{
+		predecessor = [children firstObjectKS];
+	}
+	
+	
+    // Attach to parent & other relationships
+	[page setMaster:[parent master]];
+	[page setSite:[parent valueForKeyPath:@"site"]];
+	[parent addPage:page];	// Must use this method to correctly maintain ordering
+	
+	
+    // Load properties from parent/sibling
+	[page setAllowComments:[predecessor allowComments]];
+	[page setIncludeTimestamp:[predecessor includeTimestamp]];
+	
+	
+	// Keeping it old school. Let the page know it's being inserted
+    [page awakeFromBundleAsNewlyCreatedObject:YES];
+    
+    
+    // Give it standard pagelets
+    [[page sidebar] addPagelets:[[parent sidebar] pagelets]];
+    
+    
+    // Finally, do the actual controller-level insertion
     [super addObject:page];
+}
+
+- (void)add:(id)sender
+{
+    KTPage *page = [self newObject];
+    
+    
+    // Store the plugin identifier. This HAS to be done before attaching the parent or Site Outline icon caching fails.
+	KTElementPlugin *plugIn = [sender representedObject];
+    OBASSERT(plugIn);
+    [page setValue:[[plugIn bundle] bundleIdentifier] forKey:@"pluginIdentifier"];
+	
+	
+	// Insert
+    [self addObject:page];
 }
 
 #pragma mark -

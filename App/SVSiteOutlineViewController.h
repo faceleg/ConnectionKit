@@ -55,7 +55,10 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 #pragma mark Actions
-// All act upon the selected pages
+// All act using the selected page(s) as context
+
+- (IBAction)addPage:(id)sender;
+
 - (IBAction)cut:(id)sender;
 - (IBAction)copy:(id)sender;
 - (IBAction)delete:(id)sender;

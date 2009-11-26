@@ -112,7 +112,6 @@ extern NSString *gInfoWindowAutoSaveName;
 // Actions
 
 - (IBAction)windowHelp:(id)sender;
-- (IBAction)addPage:(id)sender;
 - (IBAction)addPagelet:(id)sender;
 - (IBAction)addCollection:(id)sender;
 - (IBAction)group:(id)sender;

@@ -327,6 +327,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark IBActions
 
+- (IBAction)addPage:(id)sender;
+{
+    [[[self siteOutlineViewController] pagesController] add:sender];
+}
+
 /*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.
  *  BUT, do I actually want to always pass this on to the web editor? Might there be times when a different controller is desired?
  */
@@ -392,53 +397,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark Page Actions
-
-/*! adds a new page to site outline, obtaining its class from representedObject */
-- (IBAction)addPage:(id)sender
-{
-    // LOG((@"%@: addPage using bundle: %@", self, [sender representedObject]));
-	KTElementPlugin *plugin = nil;
-	if ( [sender respondsToSelector:@selector(representedObject)] )
-	{
-		plugin = [sender representedObject];
-	}
-	
-	if ( nil != plugin )
-    {
-		/// Case 17992, we now pass in a context to nearestParent
-		KTPage *nearestParent = [self nearestParent:[[self document] managedObjectContext]];
-		if ( ![nearestParent isKindOfClass:[KTPage class]] )
-		{
-			NSLog(@"unable to addPage: nearestParent is nil");
-			return;
-		}
-		
-		KTPage *page = [KTPage insertNewPageWithParent:nearestParent 
-									   plugin:plugin];
-		
-		if (page)
-		{
-			// Insert the page
-            [self insertPage:page parent:nearestParent];
-            
-            // Give it standard pagelets
-            [[page sidebar] addPagelets:[[nearestParent sidebar] pagelets]];
-            
-            // Make the Site Outline display the new item nicely
-			[[[self siteOutlineViewController] pagesController] setSelectedObjects:[NSArray arrayWithObject:page]];
-		}
-		else
-		{
-			NSLog(@"unable to addPage: unable to create Page");
-			return;
-		}
-	}
-	else
-    {
-		NSLog(@"unable to addPage: sender has no representedObject");
-		return;
-    }
-}
 
 /*! adds a new pagelet to current page, obtaining its class from representedObject */
 - (IBAction)addPagelet:(id)sender
