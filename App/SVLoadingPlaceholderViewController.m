@@ -30,5 +30,17 @@
 }
 
 @synthesize progressIndicator = _progressIndicator;
+- (NSProgressIndicator *)progressIndicator
+{
+    [self view];    // make sure it's loaded
+    return _progressIndicator;
+}
+
+@synthesize label = _label;
+- (NSTextField *)label
+{
+    [self view];    // make sure it's loaded
+    return _label;
+}
 
 @end
