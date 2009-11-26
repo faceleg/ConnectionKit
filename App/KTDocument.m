@@ -746,26 +746,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark Actions
 
-- (void)cleanupBeforePublishing
-{
-	[[[self mainWindowController] webViewController] commitEditing];
-	if (nil == gRegistrationString)
-	{
-		[KSSilencingConfirmSheet alertWithWindow:[[self mainWindowController] window] silencingKey:@"shutUpDemoUploadWarning" title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert") format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
-	}
-	
-	// Make sure both localHosting and remoteHosting are set to true
-	KTHostProperties *hostProperties = [self valueForKeyPath:@"site.hostProperties"];
-	if ([[hostProperties valueForKey:@"localHosting"] intValue] == 1 && 
-		[[hostProperties valueForKey:@"remoteHosting"] intValue] == 1)
-	{
-		[hostProperties setValue:[NSNumber numberWithInt:0] forKey:@"localHosting"];
-	}
-	
-	// no undo after publishing
-	[[self undoManager] removeAllActions];
-}
-
 - (IBAction)setupHost:(id)sender
 {
 	KTHostSetupController* sheetController

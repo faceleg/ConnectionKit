@@ -21,10 +21,12 @@
 #import "SVSiteOutlineViewController.h"
 #import "KTDocSiteOutlineController.h"
 #import "KTToolbars.h"
-#import "NSURL+Karelia.h"
-#import "NSWorkspace+Karelia.h"
+
+#import "KSSilencingConfirmSheet.h"
 
 #import "NSObject+Karelia.h"
+#import "NSURL+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 #import "Registration.h"
 
@@ -96,10 +98,22 @@
  */
 - (BOOL)shouldPublish
 {
-    // TODO: Commit any pending edits
+    // Check registration
+    if (nil == gRegistrationString)
+	{
+		[KSSilencingConfirmSheet alertWithWindow:[self window]
+                                    silencingKey:@"shutUpDemoUploadWarning"
+                                           title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert")
+                                          format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
+	}
+	
     
+	// TODO: Commit any pending edits
     BOOL result = [[[self siteOutlineViewController] pagesController] commitEditing];
 
+    
+    
+    // Check host setup
     result = ([[[[self document] site] hostProperties] siteURL] != nil);
     
     if (result)
