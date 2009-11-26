@@ -677,7 +677,6 @@
 		795F0360098F0293000202D5 /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 795F035F098F0293000202D5 /* warning.png */; };
 		796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */ = {isa = PBXBuildFile; fileRef = 796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */; };
 		798634F4094E763F003B2653 /* remove.png in Resources */ = {isa = PBXBuildFile; fileRef = 798634F2094E763F003B2653 /* remove.png */; };
-		79B731110A33BF9A008F7F58 /* KTHost.m in Sources */ = {isa = PBXBuildFile; fileRef = 79B7310F0A33BF9A008F7F58 /* KTHost.m */; };
 		79D35F9D0974C84000241EDA /* Growl.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
 		79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 79D35F950974C84000241EDA /* Growl.framework */; };
 		79EC3C030973CECD00FE7D50 /* upload_complete.png in Resources */ = {isa = PBXBuildFile; fileRef = 79EC3C020973CECD00FE7D50 /* upload_complete.png */; };
@@ -2237,8 +2236,6 @@
 		796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPulsatingOverlay.h; sourceTree = "<group>"; };
 		796C9CB709D26DF8003BFA3B /* KTPulsatingOverlay.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPulsatingOverlay.m; sourceTree = "<group>"; };
 		798634F2094E763F003B2653 /* remove.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = remove.png; sourceTree = "<group>"; };
-		79B7310E0A33BF9A008F7F58 /* KTHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHost.h; sourceTree = "<group>"; };
-		79B7310F0A33BF9A008F7F58 /* KTHost.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHost.m; sourceTree = "<group>"; };
 		79D35F950974C84000241EDA /* Growl.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Growl.framework; path = ../../Shared/ThirdParty/Growl/Growl.framework; sourceTree = SOURCE_ROOT; };
 		79EC3C020973CECD00FE7D50 /* upload_complete.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_complete.png; sourceTree = "<group>"; };
 		8D15AC360486D014006FF6A4 /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
@@ -3276,8 +3273,6 @@
 				3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */,
 				CEAE1667084530C1007025D4 /* KTHostProperties.h */,
 				CEAE1668084530C1007025D4 /* KTHostProperties.m */,
-				79B7310E0A33BF9A008F7F58 /* KTHost.h */,
-				79B7310F0A33BF9A008F7F58 /* KTHost.m */,
 				2756662D0F00760800878A05 /* KTURLCredentialStorage.h */,
 				2756662E0F00760800878A05 /* KTURLCredentialStorage.m */,
 			);
@@ -6253,7 +6248,6 @@
 				CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */,
 				CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */,
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
-				79B731110A33BF9A008F7F58 /* KTHost.m in Sources */,
 				CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */,
 				3C26D8040BC5B7DD00FF874D /* KTCodeInjectionController.m in Sources */,
 				CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */,
