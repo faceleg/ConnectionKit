@@ -124,43 +124,5 @@
 	return result;
 }
 
-#pragma mark File Management
-
-// NOTE: For Leopard, we can use:  - (BOOL)createDirectoryAtPath:(NSString *)pathwithIntermediateDirectories:(BOOL)createIntermediatesattributes:(NSDictionary *)attributeserror:(NSError **)error
-
-+ (BOOL)createPathIfNecessary:(NSString *)storeDirectory error:(NSError **)outError
-{
-    NSFileManager *defaultManager = [NSFileManager defaultManager];
-    BOOL success = NO;
-    
-    int i, c;
-    NSArray *components = [storeDirectory pathComponents];
-    NSString *current = @"";
-    c = [components count];  
-    for ( i = 0; i < c; i++ ) 
-	{
-        NSString *anIndex = [components objectAtIndex:i];
-        NSString *next = [current stringByAppendingPathComponent:anIndex];
-        current = next;
-        if ( ![[NSFileManager defaultManager] fileExistsAtPath:next] ) 
-		{
-            success = [defaultManager createDirectoryAtPath:next attributes:nil];
-            if ( !success ) 
-			{
-				NSString *errorDescription = [NSString stringWithFormat:NSLocalizedString(@"Unable to create directory at path (%@).",@"Error: Unable to create directory at path (%@)."), next];
-				if (outError)
-				{
-					*outError = [NSError errorWithDomain:NSCocoaErrorDomain
-													code:NSFileWriteUnknownError
-									localizedDescription:errorDescription];
-				}
-				return NO;
-            }
-        } 
-    }
-    
-    return YES;
-}
-
 @end
 

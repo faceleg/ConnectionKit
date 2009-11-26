@@ -43,8 +43,4 @@
 #endif
 
 
-+ (BOOL)createPathIfNecessary:(NSString *)storeDirectory error:(NSError **)outError DEPRECATED_IN_MAC_OS_X_VERSION_10_5_AND_LATER;
-
-
-
 @end
