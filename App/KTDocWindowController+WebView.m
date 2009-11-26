@@ -311,7 +311,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	if (info)
 	{
 		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
-		DOMRange *selectedRange = [[[self webViewController] webView] selectedDOMRange];
+		DOMRange *selectedRange = [[[[self webContentAreaController] webEditorViewController] webEditorView] selectedDOMRange];
 		
         
 		// Hunt down the anchor to edit
@@ -343,7 +343,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
             
             // Since we're editing a link, select it
             [selectedRange selectNode:possibleAnchor];
-            [[[self webViewController] webView] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
+            [[[[self webContentAreaController] webEditorViewController] webEditorView] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
 		}
 		else if ( nil != node )
 		{
@@ -440,7 +440,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 		if ( [anchor hasChildNodes] )
 		{
 			DOMNode *child = [anchor firstChild];
-			[[[self webViewController] webView] replaceNode:anchor withNode:child];
+			[[[[self webContentAreaController] webEditorViewController] webView] replaceNode:anchor withNode:child];
 		}
 		else
 		{
@@ -462,7 +462,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 - (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow
 {
 	// Preparation
-    WebView *webView = [[self webViewController] webView];      OBASSERT(webView);
+    WebView *webView = [[[self webContentAreaController] webEditorViewController] webView];      OBASSERT(webView);
     DOMRange *selectedRange = [webView selectedDOMRange];
 	if (selectedRange)
 	{
@@ -561,13 +561,13 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 		// update webview to reflect node changes
 		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                            object:[[self webViewController] webView]];	
+                                                            object:[[[self webContentAreaController] webEditorViewController] webView]];	
 		[self setContextElementInformation:nil];
 		
 		// label undo last
 		if ( nil != undoActionName )
 		{
-			[[[[self webViewController] webView] undoManager] setActionName:undoActionName];
+			[[[[[self webContentAreaController] webEditorViewController] webView] undoManager] setActionName:undoActionName];
 		}
 	}
 	@finally
