@@ -83,11 +83,6 @@
     [mySelectedPagelet release];
     mySelectedPagelet = aSelectedPagelet;
 //	LOG((@"selectedPagelet set to %@", [mySelectedPagelet managedObjectDescription]));
-	if (nil != aSelectedPagelet)
-	{
-		// Can't have both a selected pagelet and inline image element
-		[self setSelectedInlineImageElement:nil];
-	}
 }
 
 - (NSRect)selectionRect

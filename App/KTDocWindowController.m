@@ -93,7 +93,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [self setAddCollectionPopUpButton:nil];
     [self setAddPagePopUpButton:nil];
     [self setAddPageletPopUpButton:nil];
-    [self setSelectedInlineImageElement:nil];
     [self setSelectedPagelet:nil];
     [self setToolbars:nil];
 	[myMasterCodeInjectionController release];
@@ -105,7 +104,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)selectionDealloc
 {
-	[self setSelectedInlineImageElement:nil];
     [self setSelectedPagelet:nil];
 }
 
