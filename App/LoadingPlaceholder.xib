@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="45"/>
+			<integer value="46"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -54,7 +54,7 @@
 								<object class="NSPSMatrix" key="NSDrawMatrix"/>
 								<string key="NSFrame">{{169, 42}, {32, 32}}</string>
 								<reference key="NSSuperview" ref="276277314"/>
-								<int key="NSpiFlags">20490</int>
+								<int key="NSpiFlags">28682</int>
 								<double key="NSMaxValue">100</double>
 							</object>
 							<object class="NSTextField" id="611038579">

@@ -16,14 +16,6 @@
     return [self initWithNibName:@"LoadingPlaceholder" bundle:nil];
 }
 
-- (void)loadView
-{
-    [super loadView];
-    
-    [[self progressIndicator] setUsesThreadedAnimation:NO];
-    [[self progressIndicator] startAnimation:self];
-}
-
 @synthesize progressIndicator = _progressIndicator;
 - (NSProgressIndicator *)progressIndicator
 {
