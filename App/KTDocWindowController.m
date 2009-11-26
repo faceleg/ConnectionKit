@@ -48,10 +48,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
 @interface KTDocWindowController ()
-
-// Controller chain
-- (void)removeAllChildControllers;
-
 @end
 
 
@@ -64,11 +60,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
  */
 - (id)initWithWindow:(NSWindow *)window;
 {
-	self = [super initWithWindow:window];
-	
-    if (self)
+	if (self = [super initWithWindow:window])
     {
-        _childControllers = [[NSMutableArray alloc] init];
         [self setShouldCloseDocument:YES];
     }
         
@@ -92,11 +85,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self setSiteOutlineViewController:nil];
 	
 	
-    // Dispose of the controller chain
-    [self removeAllChildControllers];
-	
-    
-	// stop observing
+    // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     // release ivars
@@ -195,79 +184,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 						  afterDelay:0.0];
 }
 
-#pragma mark -
-#pragma mark Controller Chain
-
-- (id <KTDocumentControllerChain>)parentController { return nil; }
-
-- (NSArray *)childControllers { return [[_childControllers copy] autorelease]; }
-
-- (void)addChildController:(KTDocViewController *)controller
-{
-    OBPRECONDITION(controller);
-    OBPRECONDITION(![controller parentController]); // The controller shouldn't already have a parent
-    
-    
-    // Patch responder chain
-    NSResponder *previousResponder = [_childControllers lastObject];
-    if (!previousResponder) previousResponder = self;
-    [previousResponder setNextResponder:controller insert:YES];
-    
-    
-    // Add to controller chain
-    [controller setParentController:self];
-    [_childControllers addObject:controller];
-}
-
-- (void)removeChildController:(KTDocViewController *)controller
-{
-    unsigned index = [_childControllers indexOfObjectIdenticalTo:controller];
-    if (index != NSNotFound)
-    {
-        // Patch responder chain
-        NSResponder *previousResponder = (index > 0) ? [_childControllers objectAtIndex:(index - 1)] : self;
-        [previousResponder setNextResponder:[controller nextResponder]];
-        [controller setNextResponder:nil];
-        
-        
-        // Remove from controller chain
-        [controller setParentController:nil];
-        [_childControllers removeObjectAtIndex:index];
-    }
-}
-
-- (void)removeAllChildControllers
-{
-    // Patch responder chain
-    KTDocViewController *lastController = [_childControllers lastObject];
-    if (lastController)
-    {
-        [self setNextResponder:[lastController nextResponder]];
-    }
-    
-    [_childControllers makeObjectsPerformSelector:@selector(setNextResponder:) withObject:nil];
-    
-    
-    // Dump controllers
-    [_childControllers makeObjectsPerformSelector:@selector(setParentController:) withObject:nil];
-    [_childControllers removeAllObjects];
-}
-
-/*	We observe notifications from the document's undo manager
- */
-- (void)setDocument:(NSDocument *)document
-{
-	// Default behaviour
-	[super setDocument:document];
-	
-	
-	// Alert sub-controllers to the change
-    [[self childControllers] makeObjectsPerformSelector:@selector(setDocument:) withObject:[self document]];
-}
-
-- (KTDocWindowController *)windowController { return self; }
-
-#pragma mark individual controllers
+#pragma mark Controllers
 
 @synthesize siteOutlineViewController = _siteOutlineViewController;
 - (void)setSiteOutlineViewController:(SVSiteOutlineViewController *)controller

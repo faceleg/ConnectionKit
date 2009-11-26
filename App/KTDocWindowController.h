@@ -10,8 +10,6 @@
 #import <WebKit/WebKit.h>
 
 #import "KSInspector.h"
-#import "KTDocumentControllerChain.h"
-//#import "SVHTMLTemplateParser.h"
 #import "SVWebContentAreaController.h"
 
 
@@ -46,7 +44,7 @@
 extern NSString *gInfoWindowAutoSaveName;
 
 
-@interface KTDocWindowController : NSWindowController <KSInspection, DOMEventListener, KTDocumentControllerChain, SVWebContentAreaControllerDelegate>
+@interface KTDocWindowController : NSWindowController <KSInspection, DOMEventListener, SVWebContentAreaControllerDelegate>
 {
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
 	SVSiteOutlineViewController *_siteOutlineViewController;
@@ -95,15 +93,9 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSButton *myBuyNowButton;
     
 @private
-    // Controller Chain
-    NSMutableArray  *_childControllers;
 }
 
-#pragma mark Controller Chain
-- (NSArray *)childControllers;
-- (void)addChildController:(KTDocViewController *)controller;
-- (void)removeChildController:(KTDocViewController *)controller;
-
+#pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
 

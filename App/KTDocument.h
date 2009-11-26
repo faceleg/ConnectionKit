@@ -20,8 +20,6 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/WebKit.h>
 
-#import "KTDocumentControllerChain.h"
-
 
 extern NSString *KTDocumentDidChangeNotification;
 extern NSString *KTDocumentWillCloseNotification;
@@ -35,7 +33,7 @@ extern NSString *KTDocumentWillSaveNotification;
 @class KTElementPlugin;
 
 
-@interface KTDocument : NSDocument //<KTDocumentControllerChain>
+@interface KTDocument : NSDocument
 {
 @private
 	

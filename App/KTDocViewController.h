@@ -8,23 +8,21 @@
 
 #import "KSViewController.h"
 
-#import "KTDocumentControllerChain.h"
-
 
 @class KTDocument, KTDocWindowController;
 
 
-@interface KTDocViewController : KSViewController <KTDocumentControllerChain>
+@interface KTDocViewController : KSViewController
 {
 @private
-    id <KTDocumentControllerChain>  _parentController;  // All weak refs
-    KTDocWindowController           *_windowController;
-    KTDocument                      *_document;
+    id                      _parentController;  // All weak refs
+    KTDocWindowController   *_windowController;
+    KTDocument              *_document;
 }
 
 #pragma mark Controller Chain
-- (id <KTDocumentControllerChain>)parentController;
-- (void)setParentController:(id <KTDocumentControllerChain>)controller;
+- (id)parentController;
+- (void)setParentController:(id)controller;
 
 - (KTDocWindowController *)windowController;
 - (void)setWindowController:(KTDocWindowController *)controller;

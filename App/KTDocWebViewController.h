@@ -11,8 +11,6 @@
 
 #import "SVWebContentAreaController.h"
 
-#import "KTDocumentControllerChain.h"
-
 
 @class KTAbstractElement, KTPage, KTPagelet;
 @class KTWebViewComponent;

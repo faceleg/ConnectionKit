@@ -14,9 +14,9 @@
 #pragma mark -
 #pragma mark Controller Chain
 
-- (id <KTDocumentControllerChain>)parentController { return _parentController; }
+- (id)parentController { return _parentController; }
 
-- (void)setParentController:(id <KTDocumentControllerChain>)controller
+- (void)setParentController:(id)controller
 {
     _parentController = controller; // Weak ref
     [self setWindowController:[controller windowController]];
