@@ -1079,15 +1079,19 @@
 		{
 			if (outError)
 			{
-				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain code:KSParentNotDirectory localizedDescription:[NSString stringWithFormat:
-                                                                                                                             NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]];
+				*outError = [NSError errorWithDomain:kKTDataMigrationErrorDomain
+                                                code:KSParentNotDirectory
+                                localizedDescription:[NSString stringWithFormat:NSLocalizedString(@"Can\\U2019t write file to path - parent is not a directory (%@)","Error: Can't write file to path - parent is not a directory (%@)"), storeDirectory]];
 			}
             return NO;
         }
     }
 	else
 	{
-        return [KTUtilities createPathIfNecessary:storeDirectory error:outError];
+        return [[NSFileManager defaultManager] createDirectoryAtPath:storeDirectory
+                                         withIntermediateDirectories:YES
+                                                          attributes:nil
+                                                               error:outError];
     }
 	
     return YES;
