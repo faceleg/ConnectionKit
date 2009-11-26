@@ -155,12 +155,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	
-	// Split View
-	// Do not use autosave, we save this in document... [oSidebarSplitView restoreState:YES];
-	short sourceOutlineSize = [[[self document] site] integerForKey:@"sourceOutlineSize"];
-// TODO: set split view position
-    
-    
+	
     // Tie the web content area to the source list's selection
     [[self webContentAreaController] bind:@"selectedPages"
                                  toObject:[self siteOutlineViewController]
