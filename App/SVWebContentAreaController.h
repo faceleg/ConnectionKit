@@ -26,14 +26,15 @@ typedef enum {
 
 
 @protocol SVWebContentAreaControllerDelegate;
+@class SVLoadingPlaceholderViewController;
 
 
 @interface SVWebContentAreaController : KSTabViewController <KSInspection, SVWebViewLoadControllerDelegate>
 {
   @private
-    SVWebEditorLoadController   *_webViewController;
-    NSViewController            *_sourceViewController;
-    NSViewController            *_placeholderViewController;
+    SVWebEditorLoadController           *_webViewController;
+    NSViewController                    *_sourceViewController;
+    SVLoadingPlaceholderViewController  *_placeholderViewController;
     
     NSArray *_selectedPages;
     

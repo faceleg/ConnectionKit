@@ -13,12 +13,7 @@
 
 - (id)init;
 {
-    if (self = [self initWithNibName:@"WebViewLoadingPlaceholder" bundle:nil])
-    {
-        
-    }
-    
-    return self;
+    return [self initWithNibName:@"LoadingPlaceholder" bundle:nil];
 }
 
 - (void)loadView

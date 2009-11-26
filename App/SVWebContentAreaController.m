@@ -7,7 +7,9 @@
 //
 
 #import "SVWebContentAreaController.h"
+
 #import "SVWebEditorLoadController.h"
+#import "SVLoadingPlaceholderViewController.h"
 
 
 @implementation SVWebContentAreaController
@@ -28,8 +30,7 @@
     [self addViewController:_sourceViewController];
     
     
-    _placeholderViewController = [[NSViewController alloc] initWithNibName:@"SelectionPlaceholder"
-                                                                    bundle:nil];
+    _placeholderViewController = [[SVLoadingPlaceholderViewController alloc] init];
     [self addViewController:_placeholderViewController];
     
     
@@ -71,7 +72,7 @@
     switch ([pages count])
     {
         case 0:
-            [_placeholderViewController setTitle:NSLocalizedString(@"Nothing Selected", @"Selection placeholder")];
+            [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Nothing Selected", @"Selection placeholder")];
             controller = _placeholderViewController;
             break;
             
@@ -81,7 +82,7 @@
             break;
             
         default:
-            [_placeholderViewController setTitle:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
+            [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
             controller = _placeholderViewController;
             break;
     }

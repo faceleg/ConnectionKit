@@ -261,7 +261,7 @@
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
 		27422441106A926E0058C8DA /* SVWebEditorWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* SVWebEditorWebView.h */; };
 		27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* SVWebEditorWebView.m */; };
-		27443266103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */; };
+		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -296,7 +296,6 @@
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
 		275E07230DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h in Headers */ = {isa = PBXBuildFile; fileRef = 275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */; };
 		275E07240DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m in Sources */ = {isa = PBXBuildFile; fileRef = 275E07220DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m */; };
-		2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2761C0181079074F00683C23 /* SelectionPlaceholder.xib */; };
 		276503170EAD26AB00461A0E /* KTMaster+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503160EAD26AB00461A0E /* KTMaster+Internal.h */; };
 		276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */; };
 		276503720EAD2FFB00461A0E /* KTAbstractElement+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503700EAD2FFB00461A0E /* KTAbstractElement+Internal.h */; };
@@ -1701,7 +1700,7 @@
 		2742243F106A926E0058C8DA /* SVWebEditorWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorWebView.h; sourceTree = "<group>"; };
 		27422440106A926E0058C8DA /* SVWebEditorWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../Plugins/Elements/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WebViewLoadingPlaceholder.xib; sourceTree = "<group>"; };
+		27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingPlaceholder.xib; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
@@ -1737,7 +1736,6 @@
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
 		275E07210DDA2A250072567F /* KTMediaPersistentStoreCoordinator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaPersistentStoreCoordinator.h; sourceTree = "<group>"; };
 		275E07220DDA2A250072567F /* KTMediaPersistentStoreCoordinator.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaPersistentStoreCoordinator.m; sourceTree = "<group>"; };
-		2761C0181079074F00683C23 /* SelectionPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SelectionPlaceholder.xib; sourceTree = "<group>"; };
 		276503160EAD26AB00461A0E /* KTMaster+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMaster+Internal.h"; sourceTree = "<group>"; };
 		276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractPage+Internal.h"; sourceTree = "<group>"; };
 		276503700EAD2FFB00461A0E /* KTAbstractElement+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractElement+Internal.h"; sourceTree = "<group>"; };
@@ -3025,9 +3023,6 @@
 				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 				2759CD421039B83900E2C046 /* SVWebEditorLoadController.h */,
 				2759CD431039B83900E2C046 /* SVWebEditorLoadController.m */,
-				27443265103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib */,
-				2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */,
-				2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */,
 				2713C0671078177A000864C2 /* SVLayoutView.h */,
 				2713C0681078177A000864C2 /* SVLayoutView.m */,
 			);
@@ -3037,10 +3032,12 @@
 		275A641510501D2900AE6E2A /* General */ = {
 			isa = PBXGroup;
 			children = (
+				27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */,
+				2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */,
+				2713C05310780FFD000864C2 /* SVLoadingPlaceholderViewController.m */,
 				279217D010BC11CF00E590D5 /* HTMLSourceView.xib */,
 				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
 				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
-				2761C0181079074F00683C23 /* SelectionPlaceholder.xib */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -5802,7 +5799,7 @@
 				CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */,
 				277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */,
 				CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */,
-				27443266103D8693007E7FF0 /* WebViewLoadingPlaceholder.xib in Resources */,
+				27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */,
 				3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */,
 				3C9BC1DE103DF7E200D2CF47 /* InlineImageElement.xib in Resources */,
 				3C9BC1E2103DF7FD00D2CF47 /* MissingMedia.xib in Resources */,
@@ -5822,7 +5819,6 @@
 				3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */,
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
 				3C6EA96C1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib in Resources */,
-				2761C0191079074F00683C23 /* SelectionPlaceholder.xib in Resources */,
 				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
 				CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */,
 				CEB720FF108FC2AA00511E74 /* WelcomeSandvox.png in Resources */,
