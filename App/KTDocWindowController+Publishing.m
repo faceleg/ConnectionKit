@@ -96,7 +96,8 @@
  */
 - (BOOL)shouldPublish
 {
-    BOOL result = [[self webViewController] commitEditing];
+    // TODO: Commit any pending edits
+    
     [[[self siteOutlineViewController] pagesController] commitEditing];
 
     result = ([[[[self document] site] hostProperties] siteURL] != nil);
