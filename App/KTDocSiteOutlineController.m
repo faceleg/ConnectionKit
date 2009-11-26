@@ -7,26 +7,10 @@
 //
 
 #import "KTDocSiteOutlineController.h"
-#import "SVSiteOutlineViewController.h"
 
-#import "Debug.h"
-#import "KTAbstractElement.h"
-#import "KTAppDelegate.h"
-#import "KTElementPlugin+DataSourceRegistration.h"
-#import "KTDocWebViewController.h"
-#import "KTDocWindowController.h"
-#import "KTDocument.h"
-#import "KTElementPlugin.h"
-#import "KTHTMLInspectorController.h"
-#import "KTImageTextCell.h"
-#import "KTMaster.h"
 #import "KTPage.h"
 
-#import "NSAttributedString+Karelia.h"
-#import "NSDate+Karelia.h"
-#import "NSObject+Karelia.h"
-#import "NSOutlineView+KTExtensions.h"
-#import "NSString+Karelia.h"
+#import "Debug.h"
 
 
 /*	These strings are localizations for case https://karelia.fogbugz.com/default.asp?4736
@@ -44,6 +28,15 @@
 
 @implementation KTDocSiteOutlineController
 
+#pragma mark Managing Objects
+
+- (void)addObject:(KTPage *)page
+{
+    [super addObject:page];
+}
+
+#pragma mark -
+
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
 {
 	if ([key isEqualToString:@"selectedPages"])
@@ -56,33 +49,10 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Init/Dealloc/Awake
-
-- (id)initWithCoder:(NSCoder *)decoder
-{
-	self = [super initWithCoder:decoder];
-	
-	if ( nil != self )
-	{
-		// Prepare tree controller parameters
-		[self setObjectClass:[KTPage class]];
-        [self setEntityName:@"Page"];
-		
-		[self setAvoidsEmptySelection:NO];
-		[self setPreservesSelection:YES];
-		[self setSelectsInsertedObjects:NO];
-	}
-	
-	return self;
-}
-
-#pragma mark -
 #pragma mark Accessors
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }
 
-#pragma mark -
 #pragma mark KVC
 
 /*	When the user customizes the filename, we want it to become fixed on their choice
