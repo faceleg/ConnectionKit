@@ -203,8 +203,9 @@
 			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
                                                                     type:([fileType isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
             
-			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreWithURL:datastoreURL
-                                                                                 error:outError];
+			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
+                                                                                  URL:datastoreURL
+                                                                                error:outError];
 		}
 		@catch (NSException *exception)
 		{
