@@ -137,7 +137,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
         [menuItem setState:([menuItem tag] == [self viewType])];
         
         // Only allow the user to select standard and source code view for now.
-        result = [menuItem tag] == KTStandardWebView || [menuItem tag] == KTSourceCodeView;
+        result = ([menuItem tag] == KTStandardWebView || [menuItem tag] == KTSourceCodeView);
     }
     
     return result;
