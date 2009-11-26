@@ -287,7 +287,7 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTMediaManager *result = [[[self site] document] mediaManager];
+	KTMediaManager *result = [[[[self page] site] document] mediaManager];
 	return result;
 }
 
