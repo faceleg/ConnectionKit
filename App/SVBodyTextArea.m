@@ -213,6 +213,21 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
+- (NSArray *)contentItems;
+{
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[_elementControllers count]];
+    
+    for (SVHTMLElementController *aController in _elementControllers)
+    {
+        if ([aController conformsToProtocol:@protocol(SVWebEditorItem)])
+        {
+            [result addObject:aController];
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Updates
 
 @synthesize updating = _isUpdating;

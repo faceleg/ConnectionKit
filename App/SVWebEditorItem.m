@@ -16,6 +16,12 @@
 
 @implementation SVWebEditorItem
 
+- (void)dealloc
+{
+    [_bodyText release];
+    [super dealloc];
+}
+
 #pragma mark Accessors
 
 - (void)loadHTMLElement
@@ -31,6 +37,8 @@
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
     [self setHTMLElement:element];
 }
+
+@synthesize bodyText = _bodyText;
 
 - (NSString *)representedObjectHTMLString;
 {

@@ -113,8 +113,8 @@
 #pragma mark Getting Item Information
 
 //  These methods do their work by querying the datasource, but must also take into account the current selection. i.e. if editing an item, any sub-items then become available for selection. But selection handles are ignored.
-- (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
-- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node;
+- (id)itemAtPoint:(NSPoint)point;
+- (id)itemForDOMNode:(DOMNode *)node;
 - (NSArray *)itemsInDOMRange:(DOMRange *)range;
 
 - (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
@@ -165,7 +165,7 @@
  @param item The item whose children to search for. Nil if after top-level items
  @result An array of SVWebEditorItem objects.
  */
-- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id <SVWebEditorItem>)item;
+- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id)item;
 
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.

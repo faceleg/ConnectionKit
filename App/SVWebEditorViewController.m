@@ -198,6 +198,10 @@
                 [textArea setRichText:YES];
                 [textArea setFieldEditor:NO];
                 [textArea setEditable:YES];
+                
+                // Store as the body text of correct item
+                SVWebEditorItem *item = [[self webEditorView] itemForDOMNode:element];
+                [item setBodyText:textArea];
             }
             else
             {
@@ -477,9 +481,18 @@
 
 #pragma mark WebEditorViewDataSource
 
-- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id <SVWebEditorItem>)item;
+- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id)item;
 {
-    NSArray *result = (item ? nil : [self contentItems]);
+    NSArray *result = nil;
+    
+    if (item)
+    {
+        result = [[item bodyText] contentItems];  
+    }
+    else
+    {
+        result = [self contentItems];
+    }
     
     return result;
 }
