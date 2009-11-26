@@ -410,58 +410,42 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 	[self updateLicenseStatus:nil];
 }
 
-- (IBAction) doNew:(id)sender
+- (IBAction)doNew:(id)sender
 {
 	[[self window] orderOut:self];
-	[[NSDocumentController sharedDocumentController] newDocument:nil];
+	
+    NSError *error;
+    if (![[NSDocumentController sharedDocumentController] openUntitledDocumentAndDisplay:YES error:&error])
+    {
+        [self presentError:error
+            modalForWindow:[self window]
+                  delegate:nil
+        didPresentSelector:nil
+               contextInfo:NULL];
+    }
 }
 
-- (IBAction) doOpen:(id)sender
+- (IBAction)doOpen:(id)sender
 {
 	[[self window] orderOut:self];
 	[[NSDocumentController sharedDocumentController] openDocument:self];
 }
 
-- (IBAction) openSelectedRecentDocument:(id)sender;
+- (IBAction)openSelectedRecentDocument:(id)sender;
 {
-	id sel = [oRecentDocsController selection];
-	NSURL *fileURL = [sel valueForKey:@"self"];
+	NSURL *fileURL = [[oRecentDocsController selectedObjects] lastObject];  // should only be a single object selected anyhow
 
-	NSError *localError = nil;
-	KTDocument *doc = nil;
-	NSDocumentController *controller = [NSDocumentController sharedDocumentController];
-	@try
-	{
-		doc = [controller openDocumentWithContentsOfURL:fileURL display:YES error:&localError];
-	}
-	@catch (NSException *exception)
-	{
-		LOG((@"open document (%@) threw %@", fileURL, exception));
-		
-		// COPIED FROM APP DELEGATE CODE -- LET'S ASSUME WE WANT TO HANDLE ERRORS THE SAME WAY.
-		
-		// Apple bug, I think -- if it couldn't open it, it is in some weird open state even though we didn't get it.
-		// So get the document pointer from the URL.
-		KTDocument *previouslyOpenDocument = (KTDocument *)[controller documentForURL:fileURL];
-		if (nil != previouslyOpenDocument)
-		{
-			// remove its window controller
-			NSWindowController *windowController = (NSWindowController *)[previouslyOpenDocument mainWindowController];
-			if (nil != windowController)
-			{
-				[previouslyOpenDocument removeWindowController:windowController];
-			}
-			[previouslyOpenDocument close];
-			previouslyOpenDocument = nil;
-		}
-		
-		[NSApp reportException:exception];
-	}
-	
-	if ( nil != localError )
-	{
-		[[NSApplication sharedApplication] presentError:localError];
-	}
+	NSError *error;
+	if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL
+                                                                                display:YES
+                                                                                  error:&error])
+    {
+        [self presentError:error
+            modalForWindow:[self window]
+                  delegate:nil
+        didPresentSelector:nil
+               contextInfo:NULL];
+    }
 }
 
 - (IBAction) openLicensing:(id)sender
