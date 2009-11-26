@@ -29,7 +29,6 @@ TO DO:
 #import "KTApplication.h"
 #import "KTBackgroundTabView.h"
 #import "KTDocument.h"
-#import "KTHost.h"
 #import "KTHostProperties.h"
 #import "KTTranscriptController.h"
 #import "NSApplication+Karelia.h"
