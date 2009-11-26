@@ -8,6 +8,7 @@
 
 #import "KTManagedObject.h"
 
+#import "KTAbstractPage.h"
 #import "KTDocument.h"
 #import "KTExtensiblePluginPropertiesArchivedObject.h"
 
@@ -166,7 +167,7 @@
             }
             else if ([self isKindOfClass:[KTAbstractPage class]])
             {
-                page = self;
+                page = (KTAbstractPage *)self;
             }
             
             KTDocument *document = [[page site] document];
