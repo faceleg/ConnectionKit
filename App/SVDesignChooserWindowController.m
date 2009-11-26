@@ -7,6 +7,7 @@
 //
 
 #import "SVDesignChooserWindowController.h"
+#import "SVDesignChooserViewController.h"
 
 #import "Debug.h"
 #import "KSPlugin.h"
@@ -14,8 +15,10 @@
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
+#import "SVSiteOutlineViewController.h"
+
 #import "NSArray+Karelia.h"
-#import "SVDesignChooserViewController.h"
+
 #import "MGScopeBar.h"
 
 
