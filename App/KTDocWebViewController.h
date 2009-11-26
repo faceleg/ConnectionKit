@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTDocViewController.h"
 
 #import "SVWebContentAreaController.h"
 
@@ -23,7 +22,7 @@
 @class KTAsyncOffscreenWebViewController;
 
 
-@interface KTDocWebViewController : KTDocViewController
+@interface KTDocWebViewController : NSViewController
 {
 	IBOutlet WebView	*webView;
 	IBOutlet NSTextView *oSourceTextView;

@@ -230,8 +230,6 @@
 		27196FA41090BBC90096B612 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27196FA31090BBC90096B612 /* Inspector.xib */; };
 		271B48601051C2F4008B698C /* SVWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 271B485E1051C2F4008B698C /* SVWebEditorView.h */; };
 		271B48611051C2F4008B698C /* SVWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B485F1051C2F4008B698C /* SVWebEditorView.m */; };
-		2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */; };
-		2721E0F10E9E0CBD00A458B2 /* KTDocViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2721E0EF0E9E0CBD00A458B2 /* KTDocViewController.m */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		272326060D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m in Sources */ = {isa = PBXBuildFile; fileRef = 272326050D4A0F720075F31F /* KTDocSiteOutlineController+Selection.m */; };
@@ -1672,8 +1670,6 @@
 		27196FA31090BBC90096B612 /* Inspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Inspector.xib; sourceTree = "<group>"; };
 		271B485E1051C2F4008B698C /* SVWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorView.h; sourceTree = "<group>"; };
 		271B485F1051C2F4008B698C /* SVWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorView.m; sourceTree = "<group>"; };
-		2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocViewController.h; sourceTree = "<group>"; };
-		2721E0EF0E9E0CBD00A458B2 /* KTDocViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocViewController.m; sourceTree = "<group>"; };
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
@@ -2818,8 +2814,6 @@
 		2721E0ED0E9E0CA200A458B2 /* Controller Chain */ = {
 			isa = PBXGroup;
 			children = (
-				2721E0EE0E9E0CBD00A458B2 /* KTDocViewController.h */,
-				2721E0EF0E9E0CBD00A458B2 /* KTDocViewController.m */,
 			);
 			name = "Controller Chain";
 			sourceTree = "<group>";
@@ -4962,7 +4956,6 @@
 				2730D66D0DE18ACA004858F5 /* KTTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
-				2721E0F00E9E0CBD00A458B2 /* KTDocViewController.h in Headers */,
 				27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */,
 				276503170EAD26AB00461A0E /* KTMaster+Internal.h in Headers */,
 				276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */,
@@ -6348,7 +6341,6 @@
 				27368B210DE499170045E406 /* KTStoredSet.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
 				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
-				2721E0F10E9E0CBD00A458B2 /* KTDocViewController.m in Sources */,
 				27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */,
 				276503730EAD2FFB00461A0E /* KTAbstractElement+Internal.m in Sources */,
 				2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */,
