@@ -33,14 +33,6 @@
 #import "NSString+Karelia.h"
 
 
-@interface KTPage ()
-- (BOOL)validateForInsertOrUpdate:(NSError **)error;
-@end
-
-
-#pragma mark -
-
-
 @implementation KTPage
 
 #pragma mark -
