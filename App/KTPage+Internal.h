@@ -32,6 +32,10 @@
 							   sortType:(KTCollectionSortType)aSortType;
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
+@property(nonatomic, retain) KTMaster *master;
+@property(nonatomic, retain) KTSite *site;
+
+
 // Index
 - (void)setIndex:(KTAbstractIndex *)anIndex;
 - (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;

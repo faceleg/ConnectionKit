@@ -135,8 +135,8 @@
 	
 	
 	// Attach to parent & other relationships
-	[result setValue:[parent master] forKey:@"master"];
-	[result setValue:[parent valueForKeyPath:@"site"] forKey:@"site"];
+	[result setMaster:[parent master]];
+	[result setSite:[parent valueForKeyPath:@"site"]];
 	[parent addPage:result];	// Must use this method to correctly maintain ordering
 	
 	return result;
