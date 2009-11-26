@@ -81,26 +81,25 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     
     // Update subcontrollers
-    NSViewController *controller;
     switch ([pages count])
     {
         case 0:
+            [[_placeholderViewController progressIndicator] stopAnimation:self];
             [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Nothing Selected", @"Selection placeholder")];
-            controller = _placeholderViewController;
+            [self setSelectedViewController:_placeholderViewController];
             break;
             
         case 1:
+            // Start the load here. Once it's finished (or takes too long) we'll switch to the appropriate view
             [[self webEditorViewController] setPage:[pages objectAtIndex:0]];
-            controller = [self viewControllerForViewType:[self viewType]];
             break;
             
         default:
+            [[_placeholderViewController progressIndicator] stopAnimation:self];
             [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
-            controller = _placeholderViewController;
+            [self setSelectedViewController:_placeholderViewController];
             break;
     }
-    
-    [self setSelectedViewController:controller];
 }
 
 #pragma mark View Type
