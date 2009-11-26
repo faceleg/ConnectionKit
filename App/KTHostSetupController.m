@@ -1034,7 +1034,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		[myTestConnection setPermissions:0644 forFile:remoteFile];
 	}
 	
-	LOG((remoteFile));
+	LOG((@"%@", remoteFile));
 	
 	//		NSLog(@"Queuing timeout test before upload, from didChangeToDir");
 	[self performSelector:@selector(timeoutTest:) withObject:nil afterDelay:[self connectionTimeoutValue]];
