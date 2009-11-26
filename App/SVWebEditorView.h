@@ -112,10 +112,11 @@
 
 #pragma mark Getting Item Information
 
-//  Queries the datasource
+//  These methods do their work by querying the datasource, but must also take into account the current selection. i.e. if editing an item, any sub-items then become available for selection. But selection handles are ignored.
 - (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
 - (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node;
 - (NSArray *)itemsInDOMRange:(DOMRange *)range;
+
 - (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
 
 - (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;

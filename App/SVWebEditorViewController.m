@@ -479,8 +479,8 @@
 
 - (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id <SVWebEditorItem>)item;
 {
-    NSArray *result = [self contentItems];
-     
+    NSArray *result = (item ? nil : [self contentItems]);
+    
     return result;
 }
 

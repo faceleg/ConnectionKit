@@ -558,25 +558,25 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 - (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
-    
-    // Figure out deepest item
-    NSArray *items = [[self dataSource] webEditorView:self childrenOfItem:nil];
-    id <SVWebEditorItem> result = [self itemForDOMNode:node inItems:items];
+    id <SVWebEditorItem> result = nil;
     
     
-    // Then work our way up the tree looking for the highest-level object that isn't in the parents list
-    while (result)
+    // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
+    NSArray *selectionParentItems = [self selectionParentItems];
+    NSInteger index = [selectionParentItems count] - 1;
+    
+    while (!result && index > -2)
     {
-        id <SVWebEditorItem> parent = [self parentForItem:result];
-        if (parent && ![[self selectionParentItems] containsObject:parent])
-        {
-            result = parent;
-        }
-        else
-        {
-            break;
-        }
+        id <SVWebEditorItem> parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : nil;
+        
+        NSArray *items = [[self dataSource] webEditorView:self
+                                           childrenOfItem:parentItem];
+    
+        result = [self itemForDOMNode:node inItems:items];
+        
+        index--;
     }
+    
     
     return result;
 }
