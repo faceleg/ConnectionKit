@@ -772,16 +772,6 @@ from representedObject */
 	[[[self document] undoManager] setActionName:NSLocalizedString(@"Group", @"action name for grouping selected items")];
 }
 
-- (IBAction)insertList:(id)sender
-{
-    [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<p><ul><li></li></ul></p>"];
-}
-
-- (IBAction)insert2Table:(id)sender
-{
-    [[[self webViewController] webView] replaceSelectionWithMarkupString:@"<table><tr><td></td><td></td></tr></table>"];
-}
-
 #pragma mark -
 #pragma mark Action Validation
 
