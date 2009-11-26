@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1547"/>
+			<integer value="1726"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1726,6 +1726,22 @@
 					</object>
 					<int key="connectionID">1921</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">managedObjectContext: document.managedObjectContext</string>
+						<reference key="source" ref="601368962"/>
+						<reference key="destination" ref="496514088"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="601368962"/>
+							<reference key="NSDestination" ref="496514088"/>
+							<string key="NSLabel">managedObjectContext: document.managedObjectContext</string>
+							<string key="NSBinding">managedObjectContext</string>
+							<string key="NSKeyPath">document.managedObjectContext</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1922</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -2601,7 +2617,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1921</int>
+			<int key="maxID">1922</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2734,7 +2750,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addCollection:</string>
-							<string>addPage:</string>
 							<string>addPagelet:</string>
 							<string>chooseDesign:</string>
 							<string>clearLinkDestination:</string>
@@ -2763,7 +2778,6 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -3251,12 +3265,14 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>addPage:</string>
 							<string>copy:</string>
 							<string>cut:</string>
 							<string>delete:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

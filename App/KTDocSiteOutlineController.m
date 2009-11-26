@@ -67,6 +67,7 @@
 	{
 		// Prepare tree controller parameters
 		[self setObjectClass:[KTPage class]];
+        [self setEntityName:@"Page"];
 		
 		[self setAvoidsEmptySelection:NO];
 		[self setPreservesSelection:YES];
