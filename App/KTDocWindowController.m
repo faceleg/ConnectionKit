@@ -215,7 +215,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
     SVWebContentAreaController *contentController = [self webContentAreaController];
-    if ([contentController selectedViewController] == [contentController webViewLoadController])
+    if ([contentController selectedViewController] == [contentController webEditorViewController])
     {
         NSString *contentTitle = [[contentController selectedViewController] title];
         if ([contentTitle length] > 0)
@@ -335,12 +335,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)insertPagelet:(id)sender;
 {
-    [[[[self webContentAreaController] selectedViewController] selectedViewController] insertPagelet:sender];
+    [[[self webContentAreaController] selectedViewController] insertPagelet:sender];
 }
 
 - (void)insertElement:(id)sender;
 {
-    [[[[self webContentAreaController] selectedViewController] selectedViewController] insertElement:sender];
+    [[[self webContentAreaController] selectedViewController] insertElement:sender];
 }
 
 - (IBAction)selectWebViewViewType:(id)sender;

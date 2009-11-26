@@ -8,8 +8,10 @@
 
 #import "SVWebContentAreaController.h"
 
-#import "SVWebEditorLoadController.h"
 #import "SVLoadingPlaceholderViewController.h"
+
+
+static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLoadingObservationContext";
 
 
 @implementation SVWebContentAreaController
@@ -20,9 +22,9 @@
     
     
     // Create controllers
-    _webViewController = [[SVWebEditorLoadController alloc] init];
-    [_webViewController setDelegate:self];
-    [self insertViewController:_webViewController atIndex:0];
+    _webEditorViewController = [[SVWebEditorViewController alloc] init];
+    [_webEditorViewController setDelegate:self];
+    [self insertViewController:_webEditorViewController atIndex:0];
     
     
     _sourceViewController = [[NSViewController alloc] initWithNibName:@"HTMLSourceView"
@@ -37,6 +39,13 @@
     [self setSelectedIndex:0];
     
     
+    // Delegation/observation
+    [_webEditorViewController addObserver:self
+                               forKeyPath:@"loading"
+                                  options:0
+                                  context:sWebViewLoadingObservationContext];
+    
+    
     return self;
 }
 
@@ -48,7 +57,11 @@
 
 - (void)dealloc
 {
-    [_webViewController release];
+    // Tear down delegation/observation
+    [_webEditorViewController removeObserver:self forKeyPath:@"loading"];
+    
+    
+    [_webEditorViewController release];
     [_placeholderViewController release];
     
     [_selectedPages release];
@@ -77,7 +90,7 @@
             break;
             
         case 1:
-            [[[self webViewLoadController] webEditorViewController] setPage:[pages objectAtIndex:0]];
+            [[self webEditorViewController] setPage:[pages objectAtIndex:0]];
             controller = [self viewControllerForViewType:[self viewType]];
             break;
             
@@ -136,7 +149,7 @@
     switch (viewType)
     {
         case KTStandardWebView:
-            result = [self webViewLoadController];
+            result = [self webEditorViewController];
             break;
             
         case KTSourceCodeView:
@@ -153,7 +166,17 @@
 
 #pragma mark View controllers
 
-@synthesize webViewLoadController = _webViewController;
+@synthesize webEditorViewController = _webEditorViewController;
+
+- (void)switchToLoadingPlaceholderViewIfNeeded
+{
+    // This method will be called fractionally after the webview has done its first layout, and (hopefully!) before that layout has actually been drawn. Therefore, if the webview is still loading by this point, it was an intermediate load and not suitable for display to the user, so switch over to the placeholder.
+    if ([[self webEditorViewController] isLoading]) 
+    {
+        [self setSelectedViewController:_placeholderViewController];
+        [[_placeholderViewController progressIndicator] startAnimation:self];
+    }
+}
 
 - (void)didSelectViewController;
 {
@@ -161,9 +184,9 @@
     
     // Inform delegate of change to title
     NSString *title = nil;
-    if ([self selectedViewController] == [self webViewLoadController])
+    if ([self selectedViewController] == [self webEditorViewController])
     {
-        title = [[self webViewLoadController] title];
+        title = [[self webEditorViewController] title];
     }
     [[self delegate] webContentAreaControllerDidChangeTitle:self];
 }
@@ -176,17 +199,22 @@
 
 - (id <KSCollectionController>)objectsController;
 {
-    return [_webViewController selectableObjectsController];
+    return [[self webEditorViewController] contentController];
 }
 
-#pragma mark Load Delegate
+#pragma mark Web Editor View Controller Delegate
 
-- (void)loadControllerDidChangeTitle:(SVWebEditorLoadController *)controller;
+- (void)webEditorViewControllerDidFirstLayout:(SVWebEditorViewController *)sender;
 {
-    [[self delegate] webContentAreaControllerDidChangeTitle:self];
+    // Being a little bit cunning to make sure we sneak in before views can be drawn
+    [[NSRunLoop currentRunLoop] performSelector:@selector(switchToLoadingPlaceholderViewIfNeeded)
+                                         target:self
+                                       argument:nil
+                                          order:(NSDisplayWindowRunLoopOrdering - 1)
+                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
 }
 
-- (void)loadController:(SVWebEditorLoadController *)sender openPage:(KTPage *)page;
+- (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
 {
     // Take advantag of our binding and set that to the desired page. It will then trigger a change in our selected pages (probably)
     if (page)
@@ -198,6 +226,30 @@
             NSString *keyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
             [object setValue:[NSArray arrayWithObject:page] forKeyPath:keyPath];
         }
+    }
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (context == sWebViewLoadingObservationContext)
+    {
+        if (![[self webEditorViewController] isLoading])
+        {
+            // The webview is done loading! swap 'em
+            [self setSelectedViewController:[self webEditorViewController]];
+            
+            // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
+            [[[self webEditorViewController] webView] setHostWindow:nil];
+        }
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 

@@ -8,7 +8,7 @@
 
 #import "KSTabViewController.h"
 
-#import "SVWebEditorLoadController.h"
+#import "SVWebEditorViewController.h"
 #import "KSInspector.h"
 
 
@@ -29,10 +29,10 @@ typedef enum {
 @class SVLoadingPlaceholderViewController;
 
 
-@interface SVWebContentAreaController : KSTabViewController <KSInspection, SVWebViewLoadControllerDelegate>
+@interface SVWebContentAreaController : KSTabViewController <KSInspection, SVWebEditorViewControllerDelegate>
 {
   @private
-    SVWebEditorLoadController           *_webViewController;
+    SVWebEditorViewController           *_webEditorViewController;
     NSViewController                    *_sourceViewController;
     SVLoadingPlaceholderViewController  *_placeholderViewController;
     
@@ -56,7 +56,7 @@ typedef enum {
 
 
 #pragma mark View Controllers
-@property(nonatomic, readonly) SVWebEditorLoadController *webViewLoadController;
+@property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
 
 
 #pragma mark Delegate
