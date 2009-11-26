@@ -75,7 +75,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	IBOutlet NSTextField			*oMessageTextField;
 	
 	// selection
-	KTInlineImageElement			*mySelectedInlineImageElement;
 	KTPagelet						*mySelectedPagelet;
 	
 	// oWebView selection
@@ -183,9 +182,6 @@ extern NSString *kKTLocalLinkPboardType;
 extern NSString *KTSelectedDOMRangeKey;
 
 @interface KTDocWindowController ( Accessors )
-
-- (KTInlineImageElement *)selectedInlineImageElement;
-- (void)setSelectedInlineImageElement:(KTInlineImageElement *)anElement;
 
 - (KTPage *)nearestParent:(NSManagedObjectContext *)aManagedObjectContext;
 

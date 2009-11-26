@@ -22,40 +22,6 @@
 
 @implementation KTDocWindowController ( Accessors )
 
-- (KTInlineImageElement *)selectedInlineImageElement
-{
-	return mySelectedInlineImageElement;
-}
-
-- (void)setSelectedInlineImageElement:(KTInlineImageElement *)anElement
-{
-	// Remove vestigial halos
-	if (nil != mySelectedInlineImageElement)
-	{
-		// deselect previous outline
-		[((DOMHTMLElement *)[mySelectedInlineImageElement DOMNode]) setAttribute:@"style" value:@"outline:none;"];
-	}
-	
-	if (mySelectedInlineImageElement != anElement && nil != anElement)
-	{
-		DOMRange *selectionRange = [[[[[self webViewController] webView] selectedFrame] DOMDocument] createRange];
-		[selectionRange selectNode:(DOMNode *)[anElement DOMNode]];
-		[[[self webViewController] webView] setSelectedDOMRange:selectionRange affinity:NSSelectionAffinityDownstream];
-	}
-	// standard setter pattern, but tell old object to release its nib objects first!
-	[anElement retain];
-	//[mySelectedInlineImageElement releaseTopLevelObjects];	/// The PluginInspectorViewsManager should handle this instead
-	[mySelectedInlineImageElement release];
-	mySelectedInlineImageElement = anElement;
-	//LOG((@"selectedInlineImageElement set to %@", [mySelectedInlineImageElement description]));
-	
-	if (nil != anElement)
-	{
-		// Can't have both a selected pagelet and inline image element
-		[self setSelectedPagelet:nil];
-	}
-}
-
 #pragma mark -
 #pragma mark Page Selection
 
