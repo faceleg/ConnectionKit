@@ -40,7 +40,7 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 		
 		if ( [bestType isEqual:kKTOutlineDraggingPboardType] )
 		{
-			[(KTDocWindowController *)[[self window] windowController] deletePages:pboard];
+			//FIXME: Delete the pages
 		}
 	}
 }
