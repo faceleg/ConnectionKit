@@ -171,6 +171,11 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
 
+- (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
+{
+    [[self webView] setSelectedDOMRange:range affinity:selectionAffinity];
+}
+
 #pragma mark Text Selection
 
 @synthesize focusedText = _focusedText;

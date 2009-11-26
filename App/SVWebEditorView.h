@@ -70,6 +70,7 @@
 #pragma mark Selection
 
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
+- (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
 
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;
 
