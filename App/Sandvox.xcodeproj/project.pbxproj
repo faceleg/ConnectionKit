@@ -353,8 +353,6 @@
 		278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */; };
 		2790BDAF1040162000654665 /* SVWebTextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVWebTextArea.h */; };
 		2790BDB01040162000654665 /* SVWebTextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVWebTextArea.m */; };
-		279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279214CA10BAB7EF00E590D5 /* SVBodyController.h */; };
-		279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279214CB10BAB7EF00E590D5 /* SVBodyController.m */; };
 		279217D110BC11CF00E590D5 /* HTMLSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279217D010BC11CF00E590D5 /* HTMLSourceView.xib */; };
 		279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */; };
 		279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */; };
@@ -1794,8 +1792,6 @@
 		278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextProtocol.h; sourceTree = "<group>"; };
 		2790BDAD1040162000654665 /* SVWebTextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebTextArea.h; sourceTree = "<group>"; };
 		2790BDAE1040162000654665 /* SVWebTextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebTextArea.m; sourceTree = "<group>"; };
-		279214CA10BAB7EF00E590D5 /* SVBodyController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyController.h; sourceTree = "<group>"; };
-		279214CB10BAB7EF00E590D5 /* SVBodyController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyController.m; sourceTree = "<group>"; };
 		279217D010BC11CF00E590D5 /* HTMLSourceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLSourceView.xib; sourceTree = "<group>"; };
 		279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOrderedManagedObjectControllers.h; sourceTree = "<group>"; };
 		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
@@ -3008,8 +3004,6 @@
 				2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */,
 				2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */,
 				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
-				279214CA10BAB7EF00E590D5 /* SVBodyController.h */,
-				279214CB10BAB7EF00E590D5 /* SVBodyController.m */,
 			);
 			name = "Editor View Controller";
 			sourceTree = "<group>";
@@ -5134,7 +5128,6 @@
 				278F79A210B44A3B00BDBAF7 /* SVBodyElement.h in Headers */,
 				2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
-				279214CC10BAB7EF00E590D5 /* SVBodyController.h in Headers */,
 				279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */,
 				2792197D10BC631D00E590D5 /* SVHTMLElementController.h in Headers */,
 			);
@@ -6511,7 +6504,6 @@
 				278F79A310B44A3B00BDBAF7 /* SVBodyElement.m in Sources */,
 				2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
-				279214CD10BAB7EF00E590D5 /* SVBodyController.m in Sources */,
 				279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */,
 				2792197E10BC631D00E590D5 /* SVHTMLElementController.m in Sources */,
 			);

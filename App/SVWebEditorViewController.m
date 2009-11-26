@@ -8,7 +8,6 @@
 
 #import "SVWebEditorViewController.h"
 
-#import "SVBodyController.h"
 #import "SVBodyParagraph.h"
 #import "SVPlugInContentObject.h"
 #import "SVHTMLTextBlock.h"
