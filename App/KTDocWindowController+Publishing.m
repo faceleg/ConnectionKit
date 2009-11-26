@@ -98,7 +98,7 @@
 {
     // TODO: Commit any pending edits
     
-    [[[self siteOutlineViewController] pagesController] commitEditing];
+    BOOL result = [[[self siteOutlineViewController] pagesController] commitEditing];
 
     result = ([[[[self document] site] hostProperties] siteURL] != nil);
     
