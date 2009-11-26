@@ -3014,13 +3014,6 @@
 			name = "Editor View Controller";
 			sourceTree = "<group>";
 		};
-		275A641410501CF800AE6E2A /* Web Editor Loading */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = "Web Editor Loading";
-			sourceTree = "<group>";
-		};
 		275A641510501D2900AE6E2A /* General */ = {
 			isa = PBXGroup;
 			children = (
@@ -3543,7 +3536,6 @@
 			isa = PBXGroup;
 			children = (
 				275A641510501D2900AE6E2A /* General */,
-				275A641410501CF800AE6E2A /* Web Editor Loading */,
 				2759CC98103970FC00E2C046 /* Editor View Controller */,
 				271B497B105468AA008B698C /* SVWebEditorView */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
