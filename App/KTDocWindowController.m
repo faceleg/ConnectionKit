@@ -385,7 +385,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 	// update UI
 	[self updateToolbar];
-	[[self webViewController] reloadWebView];
 }
 
 - (IBAction)toggleSmallPageIcons:(id)sender
