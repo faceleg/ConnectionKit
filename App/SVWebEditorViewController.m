@@ -33,9 +33,13 @@
 #import "KSSilencingConfirmSheet.h"
 
 
+static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependenciesObservationContext";
+
+
 @interface SVWebEditorViewController ()
 @property(nonatomic, readwrite, getter=isLoading) BOOL loading;
 
+@property(nonatomic, retain, readwrite) SVHTMLContext *HTMLContext;
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
 
 
@@ -56,6 +60,17 @@
 
 #pragma mark Init & Dealloc
 
+- (id)init
+{
+    self = [super init];
+    
+    _selectableObjectsController = [[NSArrayController alloc] init];
+    [_selectableObjectsController setAvoidsEmptySelection:NO];
+    [_selectableObjectsController setObjectClass:[NSObject class]];
+    
+    return self;
+}
+    
 - (void)dealloc
 {
     [self setWebEditorView:nil];   // needed to tear down data source
@@ -110,11 +125,53 @@
     [editor setAllowsUndo:NO];  // will be managing this entirely ourselves
 }
 
-#pragma mark Content
+#pragma mark Loading
 
-// Support
-- (void)loadHTMLString:(NSString *)pageHTML;
+- (void)load;
 {
+	// Tear down old dependencies
+    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
+    {
+        [[aDependency object] removeObserver:self
+                                  forKeyPath:[aDependency keyPath]];
+    }
+    
+    
+    // Build the HTML.
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [context setCurrentPage:[self page]];
+    [context setGenerationPurpose:kGeneratingPreview];
+	/*[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];*/
+    
+    [SVHTMLContext pushContext:context];    // will pop after loading
+	NSString *pageHTML = [[self page] HTMLString];
+    [SVHTMLContext popContext];
+    
+    
+    //  What are the selectable objects? Pagelets and other SVContentObjects
+    NSMutableSet *selectableObjects = [[NSMutableSet alloc] init];
+    [selectableObjects unionSet:[[[self page] sidebar] pagelets]];
+    for (SVHTMLTextBlock *aTextBlock in [context generatedTextBlocks])
+    {
+        id content = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+        if ([content isKindOfClass:[SVPageletBody class]])
+        {
+            //[selectableObjects unionSet:[content contentObjects]];
+        }
+    }
+    
+    [_selectableObjects release];
+    _selectableObjects = selectableObjects;
+    [_selectableObjectsController setContent:_selectableObjects];
+	
+    
+    //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
+    //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
+    
+    [[self webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
+    [self setHTMLContext:context];
+    
+    
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests.
     [self setLoading:YES];
     
@@ -131,6 +188,25 @@
     
     // Load the HTML into the webview
     [[self webEditorView] loadHTMLString:pageHTML baseURL:pageURL];
+    
+    
+    // Observe the used keypaths
+    [_pageDependencies release], _pageDependencies = [[context dependencies] copy];
+    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
+    {
+        [[aDependency object] addObserver:self
+                               forKeyPath:[aDependency keyPath]
+                                  options:0
+                                  context:sWebViewDependenciesObservationContext];
+    }
+    
+    
+    // Tidy up
+    [context release];
+    
+	
+    // Clearly the webview is no longer in need of refreshing
+	_needsLoad = NO;
 }
 
 @synthesize loading = _isLoading;
@@ -254,13 +330,41 @@
     
     // Mark as loaded
     [self setLoading:NO];
-    
 }
 
-@synthesize page = _page;
-@synthesize contentController = _contentController;
+@synthesize needsLoad = _needsLoad;
+- (void)setNeedsLoad;
+{
+    if (![self needsLoad])
+	{
+		// Install a fresh observer for the end of the run loop
+		[[NSRunLoop currentRunLoop] performSelector:@selector(load)
+                                             target:self
+                                           argument:nil
+                                              order:0
+                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
+	}
+	
+    _needsLoad = YES;
+}
+
+- (void)loadIfNeeded { if ([self needsLoad]) [self load]; }
+
+#pragma mark Content
+
+@synthesize contentController = _selectableObjectsController;
 
 @synthesize HTMLContext = _context;
+
+@synthesize page = _page;
+- (void)setPage:(KTPage *)page
+{
+    [page retain];
+    [_page release];
+    _page = page;
+    
+    [self load];
+}
 
 #pragma mark Text Areas
 
@@ -478,6 +582,8 @@
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
+
+#pragma mark -
 
 #pragma mark WebEditorViewDataSource
 
@@ -702,6 +808,25 @@
     
     // We used to do [listener use] for file: URLs. Why?
     // And again the fallback option for to -use. Why?
+}
+
+#pragma mark -
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (context == sWebViewDependenciesObservationContext)
+    {
+        [self setNeedsLoad];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end

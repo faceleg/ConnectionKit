@@ -1317,7 +1317,7 @@ from representedObject */
 
 - (void)updateWebView:(id)sender;
 {
-    [[[self webContentAreaController] webViewLoadController] setNeedsLoad];
+    [[[[self webContentAreaController] webViewLoadController] webEditorViewController] setNeedsLoad];
 }
 
 // the goal here will be to clear the HTML markup from the pasteboard before pasting,

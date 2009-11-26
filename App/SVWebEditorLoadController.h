@@ -20,13 +20,6 @@
     SVWebEditorViewController   *_webEditorViewController;
     NSViewController            *_webViewLoadingPlaceholder;
     
-    KTPage              *_page;
-    NSSet               *_selectableObjects;
-    NSArrayController   *_selectableObjectsController;
-    
-    BOOL    _needsLoad;
-    NSSet   *_pageDependencies;
-    
     id <SVWebViewLoadControllerDelegate>    _delegate;  // weak ref
 }
 
@@ -34,18 +27,6 @@
 - (id)init;
 
 @property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
-
-// Setting the page will automatically mark controller as needsLoad = YES
-@property(nonatomic, retain) KTPage *page;
-@property(nonatomic, retain, readonly) id <KSCollectionController> selectableObjectsController;
-
-
-#pragma mark Loading
-- (void)load;
-
-@property(nonatomic, readonly) BOOL needsLoad;
-- (void)setNeedsLoad;
-- (void)loadIfNeeded;
 
 
 #pragma mark Delegate

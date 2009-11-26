@@ -18,16 +18,21 @@
 
 @interface SVWebEditorViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
 {
-    BOOL                        _isLoading;
-    SVHTMLContext               *_context;
     KTPage                      *_page;
-    id <KSCollectionController> _contentController;
+    SVHTMLContext               *_context;
+    BOOL                        _isLoading;
+    
+    NSSet               *_selectableObjects;
+    NSArrayController   *_selectableObjectsController;
     
     NSArray         *_textAreas;
     
     SVWebEditorView     *_webEditorView;
     DOMHTMLDivElement   *_sidebarDiv;
     NSArray             *_contentItems;
+    
+    BOOL    _needsLoad;
+    NSSet   *_pageDependencies;
     
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
 }
@@ -37,17 +42,21 @@
 @property(nonatomic, retain) SVWebEditorView *webEditorView;
 
 
-#pragma mark Content
-// Everything here should be KVO-compliant
-
-- (void)loadHTMLString:(NSString *)html;
+#pragma mark Loading
+- (void)load;
 @property(nonatomic, readonly, getter=isLoading) BOOL loading;
 
-//  Neither of these immediately affect the Web Editor, but are used for information upon the next load
-@property(nonatomic, retain) KTPage *page;
-@property(nonatomic, retain) id <KSCollectionController> contentController;
+@property(nonatomic, readonly) BOOL needsLoad;
+- (void)setNeedsLoad;
+- (void)loadIfNeeded;
 
-@property(nonatomic, retain) SVHTMLContext *HTMLContext;
+
+#pragma mark Content
+
+// Everything here should be KVO-compliant
+@property(nonatomic, retain) KTPage *page;  // reloads
+@property(nonatomic, retain, readonly) id <KSCollectionController> contentController;
+@property(nonatomic, retain, readonly) SVHTMLContext *HTMLContext;
 
 
 #pragma mark Text Areas

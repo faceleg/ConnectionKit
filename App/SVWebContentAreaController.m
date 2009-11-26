@@ -76,7 +76,7 @@
             break;
             
         case 1:
-            [[self webViewLoadController] setPage:[pages objectAtIndex:0]];
+            [[[self webViewLoadController] webEditorViewController] setPage:[pages objectAtIndex:0]];
             controller = [self viewControllerForViewType:[self viewType]];
             break;
             
