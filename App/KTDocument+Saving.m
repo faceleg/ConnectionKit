@@ -1054,7 +1054,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
  */
 - (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error
 {
-    BOOL result = [KTUtilities createPathIfNecessary:[[URL path] stringByDeletingLastPathComponent] error:error];
+    BOOL result = [[NSFileManager defaultManager] createDirectoryAtPath:[[URL path] stringByDeletingLastPathComponent]
+                                            withIntermediateDirectories:YES
+                                                             attributes:nil
+                                                                  error:error];
+    
     if (result)
     {
         result = [self copyDocumentToURL:URL recycleExistingFiles:YES error:error];
