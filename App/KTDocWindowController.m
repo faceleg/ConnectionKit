@@ -1033,45 +1033,6 @@ from representedObject */
     return YES;
 }
 
-#pragma mark -
-#pragma mark Selection
-
-- (void)updateSelectedItemForDocWindow:(NSNotification *)aNotification
-{
-	OFF((@"windowController shows you selected %@", [[aNotification object] managedObjectDescription]));
-	id selectedObject = [aNotification object];
-	
-	if ([selectedObject respondsToSelector:@selector(DOMNode)])
-	{
-		DOMNode *dn = [selectedObject DOMNode];
-		DOMDocument *dd = [dn ownerDocument];
-		DOMDocument *myDD = [[[[self webViewController] webView] mainFrame] DOMDocument];
-		if (dd != myDD)
-		{
-			return;		// notification is coming from a different dom document, thus differnt svx document
-		}
-	}
-	
-	if ( [selectedObject isKindOfClass:[KTInlineImageElement class]] )
-	{
-		[self setSelectedInlineImageElement:selectedObject];
-	}
-	else if ( [selectedObject isKindOfClass:[KTPagelet class]] )
-	{
-		[self setSelectedPagelet:selectedObject];
-	}
-	else	// KTPage
-	{
-		myDocumentVisibleRect = NSZeroRect;
-		myHasSavedVisibleRect = YES;		// new page, so don't save the scroll position.
-		[self setSelectedPagelet:nil];
-		[self setSelectedInlineImageElement:nil];
-	}
-	
-	//[self updateEditMenuItems];
-}
-
-#pragma mark -
 #pragma mark Window Delegate
 
 - (void)windowDidResize:(NSNotification *)aNotification
