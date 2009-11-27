@@ -410,7 +410,7 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
 	[self updateLicenseStatus:nil];
 }
 
-- (IBAction)doNew:(id)sender
+- (IBAction)newDocument:(id)sender
 {
 	[[self window] orderOut:self];
 	
@@ -425,7 +425,7 @@ static NSMutableDictionary *sRecentDocumentURLImageCache = nil;
     }
 }
 
-- (IBAction)doOpen:(id)sender
+- (IBAction)openDocument:(id)sender
 {
 	[[self window] orderOut:self];
 	[[NSDocumentController sharedDocumentController] openDocument:self];
