@@ -183,13 +183,6 @@
 
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
 {
-	LOG((@"opening document %@", [absoluteURL path]));
-	// first, close any modal windows
-	if ( nil != [NSApp modalWindow] )
-	{
-		[NSApp stopModalWithCode:NSAlertSecondButtonReturn]; // cancel
-	}	
-	
 	NSString *requestedPath = [absoluteURL path];
     NSString *fileType = [self typeForContentsOfURL:absoluteURL error:outError];
 	
