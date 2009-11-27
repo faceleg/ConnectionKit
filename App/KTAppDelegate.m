@@ -991,39 +991,11 @@ IMPLEMENTATION NOTES & CAUTIONS:
                         
                         NSURL *fileURL = [NSURL fileURLWithPath:path];
                         
-                        NSError *localError = nil;
-                        KTDocument *previouslyOpenDocument = nil;
-                        NSDocumentController *controller = [NSDocumentController sharedDocumentController];
-                        @try
+                        NSError *error = nil;
+                        if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
                         {
-                            previouslyOpenDocument = [controller openDocumentWithContentsOfURL:fileURL display:YES error:&localError];
-                        }
-                        @catch (NSException *exception)
-                        {
-                            LOG((@"open document (%@) threw %@", fileURL, exception));
-                            // Apple bug, I think -- if it couldn't open it, it is in some weird open state even though we didn't get it.
-                            // So get the document pointer from the URL.
-                            previouslyOpenDocument = (KTDocument *)[controller documentForURL:fileURL];
-                            if (nil != previouslyOpenDocument)
-                            {
-                                // remove its window controller
-                                NSWindowController *windowController = [previouslyOpenDocument mainWindowController];
-                                if (nil != windowController)
-                                {
-                                    [previouslyOpenDocument removeWindowController:windowController];
-                                }
-                                [previouslyOpenDocument close];
-                                previouslyOpenDocument = nil;
-                            }
-							
-							[NSApp reportException:exception];
-                        }
-                        
-                        if ( nil != localError )
-                        {
-                            LOG((@"openDocument error:%@", localError));
-                        }
-                    }
+                            [NSApp presentError:error];
+                        }                    }
                 }
                 
                 // put up an alert showing any files not found (files in Trash are ignored)
