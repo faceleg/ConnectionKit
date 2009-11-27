@@ -19,8 +19,6 @@
 + (KTPage *)pageWithParent:(KTPage *)aParent
 	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
 
-+ (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle;
-
 // Inspector
 - (BOOL)separateInspectorSegment;
 

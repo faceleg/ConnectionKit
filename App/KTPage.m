@@ -86,26 +86,6 @@
 
 + (NSString *)entityName { return @"Page"; }
 
-+ (KTPage *)rootPageWithDocument:(KTDocument *)aDocument bundle:(NSBundle *)aBundle
-{
-	OBPRECONDITION([aBundle bundleIdentifier]);
-	
-	id root = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
-											inManagedObjectContext:[aDocument managedObjectContext]];
-	
-	if ( nil != root )
-	{
-		[root setValue:[aDocument site] forKey:@"site"];	// point to yourself
-		
-		[root setValue:[aBundle bundleIdentifier] forKey:@"pluginIdentifier"];
-		[root setBool:YES forKey:@"isCollection"];	// root is automatically a collection
-		[root setBool:NO forKey:@"allowComments"];
-		[root awakeFromBundleAsNewlyCreatedObject:YES];
-	}
-
-	return root;
-}
-
 #pragma mark -
 #pragma mark Initialisation
 
