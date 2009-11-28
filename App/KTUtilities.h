@@ -31,11 +31,6 @@
 /*! returns an autoreleased core data stack with file at aStoreURL */
 + (NSManagedObjectContext *)contextWithURL:(NSURL *)aStoreURL model:(NSManagedObjectModel *)aModel;
 
-/*! returns an autoreleased model from "KTComponents<_aVersion>.mom"
-	passing in nil for aVersion yields default model
-*/
-+ (NSManagedObjectModel *)modelWithVersion:(NSString *)aVersion;
-
 #pragma mark File Manager
 
 #ifndef DEPRECATED_IN_MAC_OS_X_VERSION_10_5_AND_LATER

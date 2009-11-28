@@ -24,6 +24,12 @@
 
 + (BOOL)componentsFrameworkModelContainsEntityNamed:(NSString *)aString;
 
+/*! returns an autoreleased model from "KTComponents<_aVersion>.mom"
+ passing in nil for aVersion yields default model
+ */
++ (NSManagedObjectModel *)modelWithVersion:(NSString *)aVersion;
+
+
 + (id)modelWithPath:(NSString *)aPath;
 + (id)modelWithURL:(NSURL *)aFileURL;
 

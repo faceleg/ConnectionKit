@@ -45,6 +45,43 @@ static NSManagedObjectModel *sKTComponentsModel;
 	return nil;
 }
 
+/*! Returns an autoreleaed model from KTComponents_aVersion.mom.
+ *  Passing in nil for aVersion will return the standard KTComponents model.
+ */
++ (NSManagedObjectModel *)modelWithVersion:(NSString *)aVersion
+{
+	NSManagedObjectModel *result = nil;
+	
+    
+    // Figure out the name of the model.
+	NSString *modelName = nil;
+	if (!aVersion || [aVersion isEqualToString:kKTModelVersion])
+	{
+		modelName = @"Sandvox";
+	}
+    else if ([aVersion isEqualToString:kKTModelVersion_ORIGINAL])
+    {
+        modelName = @"KTComponents";
+    }
+    
+    
+    // Try to locate the model
+    if (modelName)
+    {
+        NSBundle *bundle = [NSBundle bundleForClass:[self class]];
+        NSString *path = [bundle pathForResource:modelName
+                                          ofType:@"mom"];
+        //inDirectory:@"Models"];
+        
+        if (path)
+        {
+            result = [NSManagedObjectModel modelWithPath:path];
+        }
+	}
+	
+	return result;
+}
+
 #pragma mark -
 #pragma mark Modifying models
 

@@ -443,7 +443,7 @@
 - (BOOL)genericallyMigrateDataFromOldModelVersion:(NSString *)aVersion error:(NSError **)outError
 {
 	// Set up old model and Core Data stack
-	NSManagedObjectModel *model = [KTUtilities modelWithVersion:aVersion];
+	NSManagedObjectModel *model = [NSManagedObjectModel modelWithVersion:aVersion];
     [model makeGeneric];
     [self setOldManagedObjectModel:model];
     
