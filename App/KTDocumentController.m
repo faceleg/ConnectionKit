@@ -22,7 +22,6 @@
 #import "KTMediaManager.h"
 #import "KTMaster.h"
 #import "KTPage+Internal.h"
-#import "KTPagelet+Internal.h"
 #import "SVWelcomeController.h"
 #import "KTPluginInstaller.h"
 

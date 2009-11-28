@@ -122,7 +122,7 @@
 		BOOL enableArchives = NO;
 		NSArray *archivePagelets = [[plugin managedObjectContext] pageletsWithPluginIdentifier:[[self bundle] bundleIdentifier]];
 		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
-		KTPagelet *aPagelet;
+		id aPagelet;    // was KTPagelet
 		while (aPagelet = [pageletsEnumerator nextObject])
 		{
 			if ([[aPagelet valueForKey:@"collection"] isEqual:(KTPage *)oldValue])

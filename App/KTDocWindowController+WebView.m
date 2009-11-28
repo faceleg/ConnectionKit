@@ -190,46 +190,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	return foundDiv;
 }
 
-- (DOMHTMLElement *)pageletElementEnclosing:(DOMNode *)aNode;
-{
-	return [self elementOfClass:@"pagelet" enclosing:aNode];
-}
-
-- (KTPagelet *)pageletEnclosing:(DOMNode *)aNode;
-{
-	KTPagelet *result = nil;
-	DOMHTMLElement *foundDiv = [self pageletElementEnclosing:aNode];
-	
-	if (nil != foundDiv)
-	{
-		NSString *divID = [foundDiv idName];
-		
-		// NB: we expect a 1 character prefix on divID (the pagelet DIV)
-		// which we have to strip before passing to Core Data
-		// pagelet DIVs are built from the various pagelet templates
-		
-		if ([divID length] > 2)
-		{
-			divID = [divID substringFromIndex:2];
-			
-			// Fetch the pagelet object
-			// peform fetch
-			NSManagedObjectContext *context = [[self document] managedObjectContext];
-			NSError *fetchError = nil;
-			NSArray *fetchedObjects = [context objectsWithEntityName:@"OldPagelet"
-														   predicate:[NSPredicate predicateWithFormat:@"uniqueID like %@", divID]
-															   error:&fetchError];	
-			// extract result
-			if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1) )
-			{
-				result = [fetchedObjects objectAtIndex:0];
-			}
-		}
-	}
-	return result;
-}
-
-
 #pragma mark in-line link editor methods
 
 - (NSWindow *)linkPanel { return oLinkPanel; }

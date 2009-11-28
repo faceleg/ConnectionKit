@@ -70,12 +70,6 @@
     {
         [page setFileExtensionIsEditable:NO];	// Transient property, so must set it each time
     }
-    else if (page && [page isKindOfClass:[KTPagelet class]])
-    {
-        NSLog(@"Deleting unwanted Download PAGELET");
-        [[(KTPagelet *)page page] removePagelet:(KTPagelet *)page];
-        [[page managedObjectContext] deleteObject:page];
-    }
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary

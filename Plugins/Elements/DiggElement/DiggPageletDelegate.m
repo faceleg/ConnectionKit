@@ -91,7 +91,7 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
 {
 	// Ensure our derived properties are up-to-date
-	KTPagelet *pagelet = [self delegateOwner];
+	id pagelet = [self delegateOwner];  // was KTPagelet
 	[pagelet setValue:[[self class] diggCategoryString:[pagelet valueForKey:@"diggCategory"]] forKey:@"diggCategoryString"];
 	
 	[pagelet setValue:[[self class] diggUserOptionString:[pagelet integerForKey:@"diggUserOptions"]]

@@ -16,7 +16,6 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
 #import "KTPage+Internal.h"
-#import "KTPagelet+Internal.h"
 #import "KTUtilities.h"
 
 #import "KTStoredArray.h"
@@ -773,54 +772,6 @@
 }
 
 #pragma mark -
-#pragma mark Pagelet Migration
-
-- (BOOL)migratePagelet:(NSManagedObject *)oldPagelet toPagelet:(KTPagelet *)newPagelet error:(NSError **)error
-{
-    // Migrate the matching keys. However, there's a couple of special cases we should NOT import.
-    NSMutableSet *matchingKeys = [[self matchingAttributesFromObject:oldPagelet toObject:newPagelet] mutableCopy];
-    [matchingKeys minusSet:[[self class] elementAttributesToIgnore]];
-    
-    [self migrateAttributes:matchingKeys fromObject:oldPagelet toObject:newPagelet];
-    
-    [matchingKeys release];
-    
-    
-    // Do normal element migration
-    BOOL result = [self migrateElementContainer:oldPagelet toElement:newPagelet error:error];
-    return result;
-}
-
-- (BOOL)migratePageletsFromPage:(NSManagedObject *)oldPage toPage:(KTPage *)newPage error:(NSError **)error
-{
-    NSSet *oldCallouts = [oldPage valueForKey:@"callouts"];
-    NSSet *oldSidebars = [oldPage valueForKey:@"sidebars"];
-    
-    NSMutableSet *oldPagelets = [oldCallouts mutableCopy];  [oldPagelets unionSet:oldSidebars];
-    NSArray *sortedOldPagelets = [[oldPagelets allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
-    [oldPagelets release];
-    
-    NSEnumerator *oldPageletsEnumerator = [sortedOldPagelets objectEnumerator];
-    NSManagedObject *anOldPagelet;
-    while (anOldPagelet = [oldPageletsEnumerator nextObject])
-    {
-        NSString *pageletIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:[anOldPagelet valueForKey:@"pluginIdentifier"]];
-        KTPageletLocation pageletLocation = ([anOldPagelet valueForKey:@"calloutOwner"]) ? KTCalloutPageletLocation : KTSidebarPageletLocation;
-        KTPagelet *newPagelet = [KTPagelet insertNewPageletWithPage:newPage pluginIdentifier:pageletIdentifier location:pageletLocation];
-        
-        if (![self migratePagelet:anOldPagelet toPagelet:newPagelet error:error])
-        {
-            return NO;
-        }
-		
-		// The pagelet is finished with, so it can be turned back into a fault to conserve memory
-		[[anOldPagelet managedObjectContext] refreshObject:anOldPagelet mergeChanges:NO];
-    }
-    
-    return YES;
-}
-
-#pragma mark -
 #pragma mark Element Migration
 
 + (NSSet *)elementAttributesToIgnore
@@ -854,10 +805,6 @@
     {
         // Figure out the maximum image size we'll allow
         NSString *settings = @"inTextMediumImage";
-        if ([newElement isKindOfClass:[KTPagelet class]])
-        {
-            settings = @"sidebarImage";
-        }
         
         
         // Update media refs to the new system.

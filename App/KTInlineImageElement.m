@@ -13,7 +13,6 @@
 #import "KTImageView.h"
 #import "KTMaster.h"
 #import "KSPathInfoField.h"
-#import "KTPagelet.h"
 #import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 #import "NSArray+Karelia.h"
@@ -95,16 +94,7 @@
 	
 	// Figure out the maximum image size
 	KTAbstractElement *container = [self container];
-	NSString *imageScalingSettings = nil;
-	if ([container isKindOfClass:[KTPagelet class]])
-	{
-		imageScalingSettings = @"sidebarImage";
-	}
-	else
-	{
-		// TODO: could we vary the size based on whether the page is showing a sidebar?
-		imageScalingSettings = @"inTextMediumImage";
-	}
+	NSString *imageScalingSettings = @"inTextMediumImage";
 	
 	
 	// Scale the image

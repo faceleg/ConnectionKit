@@ -55,15 +55,7 @@
 		// (in the future, maybe randomize between different selections)
 		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
 		
-		NSString *path = nil;
-		if ([[self delegateOwner] isKindOfClass:[KTPagelet class]])
-		{
-			path = [bundle pathForResource:@"loremipsum1" ofType:@"html"]; // use shorter text for a pagelet
-		}
-		else
-		{
-			path = [bundle pathForResource:@"loremipsum2" ofType:@"html"];
-		}
+		NSString *path = [bundle pathForResource:@"loremipsum2" ofType:@"html"];
 		
 		if ( nil != path )
 		{
@@ -233,11 +225,7 @@
     // Figure out the maximum image size we'll allow
 	KTAbstractElement *container = [self delegateOwner];
 	NSString *settings = nil;
-	if ([container isKindOfClass:[KTPagelet class]])
-	{
-		settings = @"sidebarImage";
-	}
-	else if ([container isKindOfClass:[KTPage class]])
+	if ([container isKindOfClass:[KTPage class]])
 	{
 		// TODO: could we vary the size based on whether the page is showing a sidebar?
 		settings = @"inTextMediumImage";

@@ -35,7 +35,7 @@
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class KTDocViewController, KTDocWebViewController, SVSiteOutlineViewController;
-@class KTPage, KTPagelet;
+@class KTPage;
 @class KTCodeInjectionController;
 @class KTAbstractElement;
 @class KSPlaceholderTextView;
@@ -73,9 +73,6 @@ extern NSString *gInfoWindowAutoSaveName;
 	
 	IBOutlet KSBorderlessWindow		*oMessageWindow;
 	IBOutlet NSTextField			*oMessageTextField;
-	
-	// selection
-	KTPagelet						*mySelectedPagelet;
 	
 	// oWebView selection
 	NSPoint							myLastClickedPoint;
@@ -123,10 +120,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)updateWebView:(id)sender;
 
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
-- (void)insertPagelet:(KTPagelet *)aPagelet toSelectedItem:(KTPage *)selectedItem;
-
-// clean up at document close
-- (void)selectionDealloc;
 
 @end
 
@@ -171,9 +164,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement;
 
-- (KTPagelet *)pageletEnclosing:(DOMNode *)aDomNode;
-- (DOMHTMLElement *)pageletElementEnclosing:(DOMNode *)aNode;
-
 @end
 
 
@@ -181,9 +171,6 @@ extern NSString *kKTLocalLinkPboardType;
 extern NSString *KTSelectedDOMRangeKey;
 
 @interface KTDocWindowController ( Accessors )
-
-- (KTPagelet *)selectedPagelet;
-- (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet;
 
 //- (DOMNode *)selectedDomNode;
 

@@ -68,9 +68,6 @@
 	[transformer release];
 	
 	
-	// Pagelets
-	[self performSelector:@selector(initialize_pagelets)];
-	
 	[pool release];
 }
 
@@ -224,7 +221,7 @@
 	
 	// Default values pulled from the plugin's Info.plist
 	[self setDisableComments:[[[self plugin] pluginPropertyForKey:@"KTPageDisableComments"] boolValue]];
-	[self setSidebarChangeable:[[[self plugin] pluginPropertyForKey:@"KTPageSidebarChangeable"] boolValue]];
+	[self setSidebarChangeable:[[self plugin] pluginPropertyForKey:@"KTPageSidebarChangeable"]];
 	
 	
 	// I moved this below the above, in order to give the delegates a chance to override the

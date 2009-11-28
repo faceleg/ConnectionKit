@@ -60,7 +60,6 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
-#import "KTPagelet+Internal.h"
 #import "SVPagelet.h"
 #import "SVPageletBody.h"
 #import "SVBodyParagraph.h"
@@ -256,19 +255,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         [[pagelet pageletBody] addElement:paragraph];
         [[root sidebar] addPageletsObject:pagelet];
-        
-        
-        // Make the initial Sandvox badge
-        NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultBadgeBundleIdentifier"];
-        if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-        {
-            KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-            if (badgePlugin)
-            {
-                KTPagelet *pagelet = [KTPagelet pageletWithPage:root plugin:badgePlugin];
-                [pagelet setPrefersBottom:YES];
-            }
-        }
     }
 	
 	
@@ -613,18 +599,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	//LOG((@"KTDocument -removeWindowController"));
 	if ( [windowController isKindOfClass:[KTDocWindowController class]] )
     {
-		// cleanup
-
-		[[self mainWindowController] selectionDealloc];
-		
-		// suspend webview updating
-		//[[[self windowController] webViewController] setSuspendNextWebViewUpdate:SUSPEND];
-		//[NSObject cancelPreviousPerformRequestsWithTarget:[[self windowController] webViewController] selector:@selector(doDelayedRefreshWebViewOnMainThread) object:nil];
-		[[self mainWindowController] setSelectedPagelet:nil];
-		
-		// suspend outline view updating
-		///[[self windowController] siteOutlineDeallocSupport];
-				
 		// balance retain in makeWindowControllers
 		[_mainWindowController release]; _mainWindowController = nil;
 	}
@@ -833,19 +807,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		{
 			isRawHTML = YES;
 			sourceKeyPath = @"html";	// raw HTML
-			KTPagelet *selPagelet = [[self mainWindowController] selectedPagelet];
-			if (nil != selPagelet)
-			{
-				if (![@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
-				{
-					sourceObject = nil;		// no, don't try to edit a non-rich text
-				}
-				else
-				{
-					sourceObject = selPagelet;
-				}
-			}
-			
 			if (nil == sourceObject)	// no appropriate pagelet selected, try page
 			{
 				sourceObject = [[[[self mainWindowController] siteOutlineViewController] pagesController] selectedPage];

@@ -81,21 +81,6 @@
 	}
 	
 	
-	// Pagelets
-	NSEnumerator *pageletsEnumerator = [[self callouts] objectEnumerator];
-	KTPagelet *aPagelet;
-	while (aPagelet = [pageletsEnumerator nextObject])
-	{
-		[aPagelet makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:NO];
-	}
-	
-	pageletsEnumerator = [[self sidebarPagelets] objectEnumerator];
-	while (aPagelet = [pageletsEnumerator nextObject])
-	{
-		[aPagelet makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:NO];
-	}
-	
-	
 	// Index - if we have no index, this call is to nil, so does nothing
 	KTAbstractIndex *index = [self index];
 	[index makeComponentsPerformSelector:selector withObject:anObject withPage:page];
@@ -139,30 +124,5 @@
 
 #pragma mark -
 #pragma mark Spotlight
-
-- (NSString *)spotlightHTML
-{
-	NSMutableString *buf = [NSMutableString stringWithString:[super spotlightHTML]];
-	
-	// Add spotlightHTML of any pagelets owned by this page	
-	NSEnumerator *e = [[self pagelets] objectEnumerator];
-	KTPagelet *pagelet;
-	while ( pagelet = [e nextObject] )
-	{
-		NSString *pageletHTML = [pagelet spotlightHTML];
-		if ( (nil != pageletHTML) && ![pageletHTML isEqualToString:@""] )
-		{
-			[buf appendFormat:@" %@", pageletHTML];
-		}
-	}
-	
-	NSString *result = @"";
-	if ( nil != buf )
-	{
-		result = [NSString stringWithString:buf];
-	}
-	
-	return result;
-}
 
 @end

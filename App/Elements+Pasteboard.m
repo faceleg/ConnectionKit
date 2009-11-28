@@ -218,19 +218,6 @@
 	[attributes removeObjectForKey:@"pluginIdentifier"];
 	
 	
-	// Set up our pagelets
-	NSMutableSet *pagelets = [result mutableSetValueForKey:@"pagelets"];
-	NSSet *archivedPagelets = [archive objectForKey:@"pagelets"];
-	NSEnumerator *pageletsEnumerator = [archivedPagelets objectEnumerator];
-	NSDictionary *anArchivedPagelet;
-	while (anArchivedPagelet = [pageletsEnumerator nextObject])
-	{
-		KTPagelet *pagelet = [KTPagelet pageletWithPasteboardRepresentation:anArchivedPagelet page:result];
-        OBASSERT(pagelet);
-		[pagelets addObject:pagelet];
-	}
-	
-	
 	// Set up the children
 	NSMutableSet *children = [result mutableSetValueForKey:@"children"];
 	NSEnumerator *pagesEnumerator = [[archive objectForKey:@"children"] objectEnumerator];
@@ -289,92 +276,6 @@
 	
 	// Wake up the page
     [result awakeFromBundleAsNewlyCreatedObject:NO];
-	
-	
-	return result;
-}
-
-@end
-
-
-#pragma mark -
-
-
-@interface KTPagelet ()
-+ (KTPagelet *)_insertNewPageletWithPage:(KTPage *)page
-						pluginIdentifier:(NSString *)pluginIdentifier
-								location:(KTPageletLocation)location;
-@end
-
-
-@implementation KTPagelet (Pasteboard)
-
-/*	Ignore our page relationship, the page will set it for us
- */
-+ (NSSet *)keysToIgnoreForPasteboardRepresentation
-{
-	NSMutableSet *result = [NSMutableSet setWithSet:[super keysToIgnoreForPasteboardRepresentation]];
-	[result addObject:@"page"];
-	return result;
-}
-
-+ (KTPagelet *)pageletWithPasteboardRepresentation:(NSDictionary *)archive page:(KTPage *)page
-{
-	OBPRECONDITION(archive && [archive isKindOfClass:[NSDictionary class]]);
-	OBPRECONDITION(page);	
-	
-	
-	// Create a basic pagelet
-	NSMutableDictionary *attributes = [NSMutableDictionary dictionaryWithDictionary:archive];
-	
-	KTPagelet *result = [self _insertNewPageletWithPage:page
-                                       pluginIdentifier:[archive objectForKey:@"pluginIdentifier"]
-                                               location:[archive integerForKey:@"location"]];
-	
-	[attributes removeObjectForKey:@"pluginIdentifier"];
-	[attributes removeObjectForKey:@"location"];
-	
-	
-	// Prune away any properties no longer needing to be set
-	NSArray *relationships = [[[result entity] relationshipsByName] allKeys];
-	[attributes removeObjectsForKeys:relationships];
-	[attributes removeObjectsForKeys:[[self keysToIgnoreForPasteboardRepresentation] allObjects]];
-	
-	
-	// Convert Media and PluginIdentifiers back into real objects
-	NSEnumerator *attributesEnumerator = [[NSDictionary dictionaryWithDictionary:attributes] keyEnumerator];
-	id aKey;
-	while (aKey = [attributesEnumerator nextObject])
-	{
-		id anObject = [attributes objectForKey:aKey];
-		
-		if ([anObject isKindOfClass:[KTMediaContainerPasteboardRepresentation class]])
-		{
-			NSString *mediaPath = [[(KTMediaContainerPasteboardRepresentation *)anObject alias] fullPath];
-            if (mediaPath)
-            {
-                KTMediaContainer *mediaContainer = [[result mediaManager] mediaContainerWithPath:mediaPath];
-                [attributes setObject:mediaContainer forKey:aKey];
-            }
-            else
-            {
-                [attributes removeObjectForKey:aKey];
-            }
-		}
-		else if ([anObject isKindOfClass:[KTPluginIDPasteboardRepresentation class]])
-		{
-			// TODO: Properly handle plugin IDs
-			[attributes removeObjectForKey:aKey];
-		}
-	}
-	
-	
-	// Set the attributes
-	[result setValuesForKeysWithDictionary:attributes setAllValues:YES];
-	
-	
-	// Wake up the page
-	[result awakeFromBundleAsNewlyCreatedObject:NO];
 	
 	
 	return result;

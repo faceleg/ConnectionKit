@@ -70,8 +70,6 @@
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
 - (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
 
-- (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier;
-
 // returns context's Root
 - (KTPage *)root;
 

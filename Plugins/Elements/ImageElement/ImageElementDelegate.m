@@ -274,12 +274,7 @@
 	NSDictionary *scalingProperties = nil;
 	
 	id container = [self delegateOwner];
-	if ([container isKindOfClass:[KTPagelet class]])
-	{
-		// we're in a pagelet
-		scalingProperties = [[(KTPage *)[container page] master] imageScalingPropertiesForUse:@"KTPageletMedia"];
-	}
-	else if ([container isKindOfClass:[KTPage class]])
+	if ([container isKindOfClass:[KTPage class]])
 	{
 		if ([container includeSidebar])
 		{

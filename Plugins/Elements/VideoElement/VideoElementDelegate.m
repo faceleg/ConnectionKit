@@ -533,12 +533,7 @@ After deflating starting at byte 8, you get:
 									// Scale down if too wide to fit
 	int maxWidth = 0;
 	id container = [self delegateOwner];
-	if ( [container isKindOfClass:[KTPagelet class]] )
-	{
-		maxWidth = 200;
-		minHeight = 150;
-	}
-	else if ( [container isKindOfClass:[KTPage class]] )
+	if ( [container isKindOfClass:[KTPage class]] )
 	{
 		if ([((KTPage *)container) includeSidebar])
 		{

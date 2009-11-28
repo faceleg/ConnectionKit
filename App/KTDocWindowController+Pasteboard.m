@@ -66,11 +66,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	NSString *selectionClassName = [[sender representedObject] valueForKey:kKTSelectedObjectsClassNameKey];
 	if ( nil != selectionClassName )
 	{
-		if ( [selectionClassName isEqual:[KTPagelet className]] )
-		{
-			[self pastePagelets:sender];
-		}
-		else if ( [selectionClassName isEqual:[KTPage className]] )
+		if ( [selectionClassName isEqual:[KTPage className]] )
 		{
 			[self pastePages:sender];
 		}
@@ -229,24 +225,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
                 {
                     [[[self document] undoManager] setActionName:NSLocalizedString(@"Paste Pagelet", "Paste Pagelet MenuItem")];
                 }
-				//stale the page they belong to
-				NSEnumerator *e = [pastedPagelets objectEnumerator];
-				KTPagelet *cur;
-				
-				while (cur = [e nextObject])
-				{
-					if ([cur boolForKey:@"shouldPropagate"])
-					{
-						////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because pagelet is marked as shouldPropagate", NSStringFromSelector(_cmd), [[cur page] titleText]));
-						//[[cur page] markStale:kStaleFamily];
-						break; // only need to propagate the once.
-					}
-					else
-					{
-						////LOG((@"~~~~~~~~~ %@ ....", NSStringFromSelector(_cmd)));
-						//[[cur page] markStale:kStalePage];
-					}
-				}
             }
             
         }
@@ -255,58 +233,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     {
         LOG((@"would like to paste pagelets, but there's no selectedPage to paste to!"));
     }    
-}
-
-- (NSArray *)pastePageletsFromPasteboard:(NSPasteboard *)aPboard toPage:(KTPage *)aPage keepingUniqueID:(BOOL)aFlag
-{
-
-	NSMutableArray *result = [NSMutableArray array];
-    
-    NSString *type = nil;
-    type = [aPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPageletsPboardType]];
-    
-    if ([type length] > 0)
-    {
-        @try	// Just in case there's any reall screwy data on the pasteboard
-        {
-			NSData *data = [aPboard dataForType:kKTPageletsPboardType];
-			NSArray *pasteboardReps = [NSKeyedUnarchiver unarchiveObjectWithData:data];
-			
-			if (pasteboardReps && [pasteboardReps count] > 0)
-			{
-                NSEnumerator *e = [pasteboardReps objectEnumerator];
-                NSDictionary *anArchivedPagelet;
-                while (anArchivedPagelet = [e nextObject])
-                {
-                    KTPagelet *pagelet = [KTPagelet pageletWithPasteboardRepresentation:anArchivedPagelet page:aPage];
-                    
-                    if ( nil != pagelet )
-                    {
-                        [result addObject:pagelet];
-                    }
-                    else
-                    {
-                        LOG((@"would like to paste pagelets, but unable to create pagelet in this context!"));
-                    }
-                }
-            }
-            else
-            {
-                LOG((@"would like to paste pagelets, but there's nothing on the pasteboard!"));
-            }
-        }
-        @catch (NSException *exception)
-        {
-            [NSApp reportException:exception];
-        }
-    }
-    else
-    {
-        LOG((@"expecting to paste pagelets, but KTPageletsPboardType is not on the pboard!"));
-    }
-	
-
-	return [NSArray arrayWithArray:result];
 }
 
 - (BOOL)canPastePagelets
@@ -349,10 +275,6 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     {
         [self duplicateSelectedPages:sender];
     }
-    else if ( [selectionClassName isEqualToString:[KTPagelet className]] )
-    {
-        [self duplicatePagelets:sender];
-    } 
 }
 
 /*  Duplicates the selected pages in the Site Outline

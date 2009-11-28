@@ -12,7 +12,6 @@
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
-#import "KTPagelet.h"
 #import "SVHTMLTemplateParser.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -84,12 +83,6 @@
         container = [container valueForKeyPath:@"container.pagelet.sidebar.page"];
     }
     
-	// Try to get out of pagelet to page
-	else if ([container isKindOfClass:[KTPagelet class]])
-	{
-		container = [container page];
-	}
-	
 	// At this point we should have a page
 	if (container)
     {

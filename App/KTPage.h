@@ -20,7 +20,6 @@
 #import "KT.h"
 
 #import "KTAbstractPage.h"
-#import "KTPagelet.h"
 #import "NSManagedObject+KTExtensions.h"
 
 
@@ -171,35 +170,6 @@
 - (void)setCollectionGenerateArchives:(BOOL)generateArchive;
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
 - (NSArray *)sortedArchivePages;
-@end
-
-
-@interface KTPage (Pagelets)
-// General accessors
-- (BOOL)includeSidebar;
-- (void)setIncludeSidebar:(BOOL)flag;
-- (BOOL)includeCallout;
-
-- (BOOL)sidebarChangeable;
-- (void)setSidebarChangeable:(BOOL)flag;
-
-// Pagelet accessors
-- (NSSet *)pagelets;	// IMPORTANT: Never try to use -mutableSetValueForKey:@"pagelets"
-
-- (NSArray *)pageletsInLocation:(KTPageletLocation)location;
-- (void)insertPagelet:(KTPagelet *)pagelet atIndex:(unsigned)index;
-- (void)addPagelet:(KTPagelet *)pagelet;
-- (void)removePagelet:(KTPagelet *)pagelet;
-
-- (NSArray *)callouts;	// KVO-compliant
-- (void)invalidateCalloutsCache;
-
-// All sidebar pagelets that will appear in the HTML. i.e. Our sidebars plus any inherited ones
-- (NSArray *)sidebarPagelets;
-- (void)invalidateSidebarPageletsCache:(BOOL)invalidateCache recursive:(BOOL)recursive;
-
-// Support
-+ (void)updatePageletOrderingsFromArray:(NSArray *)pagelets;
 @end
 
 

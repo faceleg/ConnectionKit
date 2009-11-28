@@ -104,7 +104,7 @@ Break
 		}
 		
 		// Initial size depends on our location
-		YouTubeVideoSize videoSize = ([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizePageletWidth : YouTubeVideoSizeDefault;
+		YouTubeVideoSize videoSize = YouTubeVideoSizeDefault;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizePageletWidth : YouTubeVideoSizeDefault;
 		[element setInteger:videoSize forKey:@"videoSize"];
 		
 		// Prepare initial colors
@@ -112,11 +112,6 @@ Break
 	}
 	
 	
-	// Pagelets cannot adjust their size
-	if ([element isKindOfClass:[KTPagelet class]])
-	{
-		[videoSizeSlider setEnabled:NO];
-	}
 	// Pages should have a thumbnail
 	else
 	{
@@ -140,15 +135,6 @@ Break
 		{
 			[[self delegateOwner] setValue:URLString forKey:@"userVideoCode"];
 		}
-	}
-}
-
-- (void)awakeFromNib
-{
-	// Pagelets cannot adjust their size
-	if ([[self delegateOwner] isKindOfClass:[KTPagelet class]])
-	{
-		[videoSizeSlider setEnabled:NO];
 	}
 }
 

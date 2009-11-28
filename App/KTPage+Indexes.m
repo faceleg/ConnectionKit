@@ -624,7 +624,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	if (!result)
 	{
 		result = [NSNumber numberWithBool:NO];
-		
+		/*
 		NSArray *archivePagelets = [[self managedObjectContext] pageletsWithPluginIdentifier:@"sandvox.CollectionArchiveElement"];
 		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
 		KTPagelet *aPagelet;
@@ -635,7 +635,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 				result = [NSNumber numberWithBool:YES];
 				break;
 			}
-		}
+		}*/
 		
 		[self setPrimitiveValue:result forKey:@"collectionGenerateArchives"];
 	}

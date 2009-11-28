@@ -25,19 +25,6 @@
 #pragma mark -
 #pragma mark Pagelet Selection
 
-- (KTPagelet *)selectedPagelet
-{
-    return mySelectedPagelet; 
-}
-
-- (void)setSelectedPagelet:(KTPagelet *)aSelectedPagelet
-{
-    [aSelectedPagelet retain];
-    [mySelectedPagelet release];
-    mySelectedPagelet = aSelectedPagelet;
-//	LOG((@"selectedPagelet set to %@", [mySelectedPagelet managedObjectDescription]));
-}
-
 - (NSRect)selectionRect
 { 
 	return mySelectionRect;

@@ -11,7 +11,6 @@
 #import "AmazonListDelegate.h"
 #import "APManualListProduct.h"
 
-#import <KTPagelet.h>
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "NSURL+AmazonPagelet.h"

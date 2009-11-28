@@ -39,7 +39,7 @@
     // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
     KTPage *parent = [[self selectedObjects] lastObject];
     if (![parent isCollection]) parent = [parent parent];
-    if (!parent) parent = [self root];
+    if (!parent) parent = [[self managedObjectContext] root];
     
     
     // Figure out the predecessor (which page to inherit properties from)

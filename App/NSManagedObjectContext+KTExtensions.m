@@ -12,7 +12,6 @@
 #import "KTSite.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"
-#import "KTPagelet.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSFetchRequest+KTExtensions.h"
 #import "NSString+KTExtensions.h"
@@ -183,7 +182,6 @@
 	// we have to search in Root, Page, Pagelet, Element, and Media
 	NSArray *entityNames = [NSArray arrayWithObjects:
 		@"Page", 
-		@"OldPagelet", 
 		nil];
 	
 	return (KTManagedObject *)[self objectWithUniqueID:aUniqueID entityNames:entityNames];
@@ -196,25 +194,10 @@
 	static NSArray *entityNames;
 	if (!entityNames)
 	{
-		entityNames = [[NSArray alloc] initWithObjects:@"OldPagelet", @"Page", nil];
+		entityNames = [[NSArray alloc] initWithObjects:@"Page", nil];
 	}
 	
 	KTAbstractElement *result = (KTAbstractElement *)[self objectWithUniqueID:pluginID entityNames:entityNames];
-	return result;
-}
-
-- (NSArray *)pageletsWithPluginIdentifier:(NSString *)pluginIdentifier
-{
-	NSArray *result = nil;
-	
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"pluginIdentifier == %@", pluginIdentifier];
-	
-	NSError *error = nil;
-	result = [self objectsWithEntityName:@"OldPagelet" predicate:predicate error:&error];
-	if (error) {
-		[[NSAlert alertWithError:error] runModal];
-	}
-	
 	return result;
 }
 
@@ -314,7 +297,7 @@
 - (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page
 {
 	NSArray *pages = [self allObjectsWithEntityName:@"Page" error:NULL];
-	NSArray *pagelets = [self allObjectsWithEntityName:@"OldPagelet" error:NULL];
+	NSArray *pagelets = [NSArray array];//[self allObjectsWithEntityName:@"OldPagelet" error:NULL];
 	
 	NSMutableArray *plugins = [[NSMutableArray alloc] initWithCapacity:[pages count] + [pagelets count]];
 	[plugins addObjectsFromArray:pages];

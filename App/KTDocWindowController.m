@@ -23,7 +23,6 @@
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"
-#import "KTPagelet+Internal.h"
 #import "SVSidebar.h"
 #import "KTSite.h"
 #import "SVSiteOutlineViewController.h"
@@ -100,11 +99,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[myBuyNowButton release];
 
     [super dealloc];
-}
-
-- (void)selectionDealloc
-{
-    [self setSelectedPagelet:nil];
 }
 
 - (void)windowDidLoad
@@ -398,46 +392,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Page Actions
 
-/*! adds a new pagelet to current page, obtaining its class from representedObject */
-- (IBAction)addPagelet:(id)sender
-{
-    //LOG((@"%@: addPagelet using bundle: %@", self, [sender representedObject]));
-	KTElementPlugin *pageletPlugin = nil;
-	
-	if ([sender respondsToSelector:@selector(representedObject)])
-	{
-		pageletPlugin = [sender representedObject];
-	}
-	
-	if (pageletPlugin && [pageletPlugin isKindOfClass:[KTElementPlugin class]])
-    {
-		KTPage *targetPage = [[[self siteOutlineViewController] pagesController] selectedPage];
-		if (nil == targetPage)
-		{
-			// if nothing is selected, treat as if the root folder were selected
-			targetPage = [[[self document] site] root];
-		}
-		
-		KTPagelet *pagelet = [KTPagelet pageletWithPage:targetPage plugin:pageletPlugin];
-		
-		if ( nil != pagelet )
-		{
-			[self insertPagelet:pagelet toSelectedItem:targetPage];
-		}
-		else
-		{
-			[NSException raise:kKareliaDocumentException format:@"unable to create Pagelet"];
-		}
-	}
-	else
-    {
-		[NSException raise:kKareliaDocumentException
-							  reason:@"sender has no representedObject"
-							userInfo:[NSDictionary dictionaryWithObject:sender forKey:@"sender"]];
-    }
-}
-
-
 /*! adds a new collection to site outline, obtaining the information of a dictionary
 from representedObject */
 
@@ -530,22 +484,6 @@ from representedObject */
 		// Any collection with an RSS feed should have an RSS Badge.
 		if ([pageSettings boolForKey:@"collectionSyndicate"])
 		{
-			NSNumber *includeRSSBadge = [presetDict objectForKey:@"KTIncludeRSSBadge"];
-			if (!includeRSSBadge || [includeRSSBadge boolValue])
-			{
-				// Make the initial RSS badge
-				NSString *initialBadgeBundleID = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultRSSBadgeBundleIdentifier"];
-				if (nil != initialBadgeBundleID && ![initialBadgeBundleID isEqualToString:@""])
-				{
-					KTElementPlugin *badgePlugin = [KTElementPlugin pluginWithIdentifier:initialBadgeBundleID];
-					if (badgePlugin)
-					{
-						[KTPagelet pageletWithPage:indexPage plugin:badgePlugin];
-					}
-				}
-			}
-		
-		
 			// Give weblogs special introductory text
 			if ([[presetDict objectForKey:@"KTPresetIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
 			{
@@ -596,31 +534,6 @@ from representedObject */
 		//[aCollection markStale:kStaleFamily];
 	}
 	
-}
-
-/*! inserts aPagelet at the current selection.  Just insert as a sidebar; let it be moved to callout */
-- (void)insertPagelet:(KTPagelet *)aPagelet toSelectedItem:(KTPage *)selectedItem
-{
-	if ( [selectedItem isKindOfClass:[KTPage class]] )
-	{
-		if ([selectedItem includeSidebar] || [selectedItem includeCallout]) {
-			//[selectedItem insertPagelet:aPagelet atIndex:0];
-			/// There's no need to actually insert the pagelet, since creating it on this page did the job. Mike.
-		}
-		else {
-            NSBeep();
-		}
-	}
-	else
-	{
-		RAISE_EXCEPTION(kKareliaDocumentException, @"selectedItem is of unknown class", [NSDictionary dictionaryWithObject:selectedItem forKey:@"selectedItem"]);
-		return;
-	}
-	
-	// add component to parent
-	
-	// label undo and perserve the current selection
-	[[[self document] undoManager] setActionName:NSLocalizedString(@"Add Pagelet", @"action name for adding a page")];
 }
 
 /*! group the selection in a new summary */
