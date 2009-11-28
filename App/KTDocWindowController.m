@@ -699,7 +699,9 @@ from representedObject */
 	// "Create Link..." showLinkPanel:
 	else if (itemAction == @selector(showLinkPanel:))
 	{
-		NSString *title;
+		return NO;
+        
+        NSString *title;
 		BOOL result = [[self webViewController] validateCreateLinkItem:menuItem title:&title];
 		[menuItem setTitle:title];
 		return result;
