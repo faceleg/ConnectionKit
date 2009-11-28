@@ -58,7 +58,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
-#import "KTUtilities.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSArray+KTExtensions.h"

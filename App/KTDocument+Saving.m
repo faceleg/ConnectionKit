@@ -20,7 +20,6 @@
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
-#import "KTUtilities.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"

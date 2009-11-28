@@ -24,7 +24,13 @@
 
 @interface NSManagedObjectContext (KTExtensions)
 
-#pragma mark genernal NSManagedObjectContext extensions
+#pragma mark General NSManagedObjectContext extensions
+
+/*! returns an autoreleased core data stack with file at aStoreURL */
++ (NSManagedObjectContext *)contextWithStoreType:(NSString *)storeType
+                                             URL:(NSURL *)aStoreURL
+                                           model:(NSManagedObjectModel *)aModel
+                                           error:(NSError **)error;
 
 /*! returns set of all updated, inserted, and deleted objects in context */
 - (NSSet *)changedObjects;

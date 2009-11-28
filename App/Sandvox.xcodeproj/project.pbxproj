@@ -541,7 +541,6 @@
 		3C682B470D62317E00B4D485 /* KTRTFDImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B460D62317E00B4D485 /* KTRTFDImporter.m */; };
 		3C682B4A0D6231CB00B4D485 /* KTOffScreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B490D6231CB00B4D485 /* KTOffScreenWebViewController.m */; };
 		3C682B4C0D6231DA00B4D485 /* KTStrings.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B4B0D6231DA00B4D485 /* KTStrings.m */; };
-		3C682B4F0D6231E700B4D485 /* KTUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B4E0D6231E700B4D485 /* KTUtilities.m */; };
 		3C682B510D6231F600B4D485 /* KTScaledImageTypes.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */; };
 		3C682B570D62321900B4D485 /* CropMarker.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B560D62321900B4D485 /* CropMarker.m */; };
 		3C682B5A0D62322400B4D485 /* CroppingImageView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B590D62322400B4D485 /* CroppingImageView.m */; };
@@ -568,7 +567,6 @@
 		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B450D62317600B4D485 /* KTRTFDImporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCD0D62351000B4D485 /* KTOffScreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B480D6231C500B4D485 /* KTOffScreenWebViewController.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BCE0D62351300B4D485 /* KTUtilities.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B4D0D6231E100B4D485 /* KTUtilities.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD20D62352800B4D485 /* KTImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B640D62325F00B4D485 /* KTImageView.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6A0D62327900B4D485 /* KTLinkConnector.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2086,8 +2084,6 @@
 		3C682B480D6231C500B4D485 /* KTOffScreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTOffScreenWebViewController.h; sourceTree = "<group>"; };
 		3C682B490D6231CB00B4D485 /* KTOffScreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTOffScreenWebViewController.m; sourceTree = "<group>"; };
 		3C682B4B0D6231DA00B4D485 /* KTStrings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStrings.m; sourceTree = "<group>"; };
-		3C682B4D0D6231E100B4D485 /* KTUtilities.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTUtilities.h; sourceTree = "<group>"; };
-		3C682B4E0D6231E700B4D485 /* KTUtilities.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTUtilities.m; sourceTree = "<group>"; };
 		3C682B500D6231F600B4D485 /* KTScaledImageTypes.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = KTScaledImageTypes.plist; sourceTree = "<group>"; };
 		3C682B550D62321500B4D485 /* CropMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CropMarker.h; sourceTree = "<group>"; };
 		3C682B560D62321900B4D485 /* CropMarker.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CropMarker.m; sourceTree = "<group>"; };
@@ -4106,8 +4102,6 @@
 			isa = PBXGroup;
 			children = (
 				3C682B4B0D6231DA00B4D485 /* KTStrings.m */,
-				3C682B4D0D6231E100B4D485 /* KTUtilities.h */,
-				3C682B4E0D6231E700B4D485 /* KTUtilities.m */,
 			);
 			name = Support;
 			sourceTree = "<group>";
@@ -4884,7 +4878,6 @@
 				3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */,
 				3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */,
 				3C682BCD0D62351000B4D485 /* KTOffScreenWebViewController.h in Headers */,
-				3C682BCE0D62351300B4D485 /* KTUtilities.h in Headers */,
 				3C682BD20D62352800B4D485 /* KTImageView.h in Headers */,
 				3C682BD40D62352D00B4D485 /* KTLinkConnector.h in Headers */,
 				3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */,
@@ -6259,7 +6252,6 @@
 				3C682B470D62317E00B4D485 /* KTRTFDImporter.m in Sources */,
 				3C682B4A0D6231CB00B4D485 /* KTOffScreenWebViewController.m in Sources */,
 				3C682B4C0D6231DA00B4D485 /* KTStrings.m in Sources */,
-				3C682B4F0D6231E700B4D485 /* KTUtilities.m in Sources */,
 				3C682B570D62321900B4D485 /* CropMarker.m in Sources */,
 				3C682B5A0D62322400B4D485 /* CroppingImageView.m in Sources */,
 				3C682B5D0D62323500B4D485 /* ImageCropperController.m in Sources */,

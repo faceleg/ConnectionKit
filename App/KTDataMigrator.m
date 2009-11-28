@@ -16,7 +16,6 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager.h"
 #import "KTPage+Internal.h"
-#import "KTUtilities.h"
 
 #import "KTStoredArray.h"
 #import "KTStoredDictionary.h"
@@ -447,8 +446,18 @@
     [model makeGeneric];
     [self setOldManagedObjectModel:model];
     
-    [self setOldManagedObjectContext:[KTUtilities contextWithURL:[self oldStoreURL] 
-														   model:[self oldManagedObjectModel]]];
+    NSManagedObjectContext *context = [NSManagedObjectContext contextWithStoreType:NSSQLiteStoreType
+                                                                               URL:[self oldStoreURL]
+                                                                             model:[self oldManagedObjectModel]
+                                                                             error:outError];
+    if (context)
+    {
+        [self setOldManagedObjectContext:context];
+    }
+    else
+    {
+        return NO;
+    }
 	
     
     // Set up the new document

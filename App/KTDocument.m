@@ -66,7 +66,6 @@
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
-#import "KTUtilities.h"
 
 #import "NSApplication+Karelia.h"       // Karelia Cocoa additions
 #import "NSArray+Karelia.h"

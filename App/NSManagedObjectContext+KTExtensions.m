@@ -21,6 +21,33 @@
 
 @implementation NSManagedObjectContext (KTExtensions)
 
+/*! returns an autoreleased core data stack with file at aStoreURL */
++ (NSManagedObjectContext *)contextWithStoreType:(NSString *)storeType
+                                             URL:(NSURL *)aStoreURL
+                                           model:(NSManagedObjectModel *)aModel
+                                           error:(NSError **)outError;
+{
+	NSPersistentStoreCoordinator *coordinator = [[NSPersistentStoreCoordinator alloc] initWithManagedObjectModel:aModel];
+	
+    NSPersistentStore *store = [coordinator addPersistentStoreWithType:storeType
+                                                         configuration:nil
+                                                                   URL:aStoreURL
+                                                               options:nil
+                                                                 error:outError];
+	
+	NSManagedObjectContext *result = nil;
+    if (store)
+	{
+		NSManagedObjectContext *result = [[[NSManagedObjectContext alloc] init] autorelease];
+        [result setPersistentStoreCoordinator:coordinator];
+	}
+    
+    // Tidy up
+	[coordinator release];
+	
+	return result;	
+}
+
 - (void)deleteObjectsInCollection:(id)collection   // Assume objects conform to -objectEnumerator
 {
 	NSEnumerator *enumerator = [collection objectEnumerator];
