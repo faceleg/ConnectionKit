@@ -1,5 +1,5 @@
 //
-//  SVContentObject.h
+//  SVGraphic.h
 //  Sandvox
 //
 //  Created by Mike on 11/10/2009.
@@ -23,9 +23,11 @@
 #pragma mark -
 
 
-//  I'm declaring a protocol for content objects first to keep things nice and pure. (Also, it means I can make some things @optional so that Core Data will still generate accessors when the superclass chooses not to implement the method)
+//  Have decided to use the term "graphic" in the same way that Pages does through its scripting API (and probably in its class hierarchy). That is, a graphic is anything on the page that can be selected and isn't text. e.g. pagelets, images, plug-ins.
 
-@protocol SVContentObject
+//  I'm declaring a protocol for graphics first to keep things nice and pure. (Also, it means I can make some things @optional so that Core Data will still generate accessors when the superclass chooses not to implement the method)
+
+@protocol SVGraphic
 - (NSString *)elementID;
 @optional
 - (SVContentObjectWrap *)wrap;
@@ -38,7 +40,7 @@
 @class SVPageletBody, KTElementPlugin;
 
 
-@interface SVContentObject : SVBodyElement <SVContentObject>
+@interface SVGraphic : SVBodyElement <SVGraphic>
 
 
 #pragma mark HTML

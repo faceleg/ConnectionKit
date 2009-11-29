@@ -9,7 +9,7 @@
 #import <CoreData/CoreData.h>
 #import "SVBodyElement.h"
 
-@class SVPlugInContentObject;
+@class SVPlugInGraphic;
 
 @interface SVBodyParagraph :  SVBodyElement  
 
@@ -17,7 +17,7 @@
 
 @property (nonatomic, retain) NSString * tagName;
 @property(nonatomic, copy) NSString *innerHTMLArchiveString;
-@property (nonatomic, retain) NSSet* inlineContentObjects;
+@property (nonatomic, retain) NSSet* inlineGraphics;
 
 
 #pragma mark HTML
@@ -34,10 +34,10 @@
 
 
 @interface SVBodyParagraph (CoreDataGeneratedAccessors)
-- (void)addInlineContentObjectsObject:(SVPlugInContentObject *)value;
-- (void)removeInlineContentObjectsObject:(SVPlugInContentObject *)value;
-- (void)addInlineContentObjects:(NSSet *)value;
-- (void)removeInlineContentObjects:(NSSet *)value;
+- (void)addInlineGraphicsObject:(SVPlugInGraphic *)value;
+- (void)removeInlineGraphicsObject:(SVPlugInGraphic *)value;
+- (void)addInlineGraphics:(NSSet *)value;
+- (void)removeInlineGraphics:(NSSet *)value;
 
 @end
 

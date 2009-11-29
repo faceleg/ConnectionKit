@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVContentObject.h"
+#import "SVGraphic.h"
 
 @class SVPageletBody;
 @class KTPage, SVSidebar;
 
 
-@interface SVPagelet : SVContentObject  
+@interface SVPagelet : SVGraphic  
 
 + (SVPagelet *)pageletWithManagedObjectContext:(NSManagedObjectContext *)context;
 

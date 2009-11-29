@@ -6,10 +6,10 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVContentObject.h"
+#import "SVGraphic.h"
 
 
-@interface SVPlugInContentObject : SVContentObject
+@interface SVPlugInGraphic : SVGraphic
 {
   @private
     id  _plugIn;

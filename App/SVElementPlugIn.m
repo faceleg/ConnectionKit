@@ -9,7 +9,7 @@
 #import "SVElementPlugIn.h"
 
 #import "KTAbstractHTMLPlugin.h"
-#import "SVContentObject.h"
+#import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 
 

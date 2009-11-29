@@ -1,12 +1,12 @@
 // 
-//  SVContentObject.m
+//  SVGraphic.m
 //  Sandvox
 //
 //  Created by Mike on 11/10/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVContentObject.h"
+#import "SVGraphic.h"
 
 #import "KTAbstractElement.h"
 #import "SVHTMLTemplateParser.h"
@@ -16,7 +16,7 @@
 #import "NSString+Karelia.h"
 
 
-@implementation SVContentObject
+@implementation SVGraphic
 
 #pragma mark HTML
 

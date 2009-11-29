@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVPlugInContentObject.h"
+#import "SVPlugInGraphic.h"
 
 #import "KTAbstractPluginDelegate.h"
 #import "SVElementPlugIn.h"
@@ -16,7 +16,7 @@
 #import "NSString+Karelia.h"
 
 
-@implementation SVPlugInContentObject
+@implementation SVPlugInGraphic
 
 #pragma mark Lifecycle
 

@@ -8,14 +8,14 @@
 
 #import "SVBodyParagraph.h"
 
-#import "SVPlugInContentObject.h"
+#import "SVPlugInGraphic.h"
 #import "SVHTMLContext.h"
 
 
 @implementation SVBodyParagraph 
 
 @dynamic tagName;
-@dynamic inlineContentObjects;
+@dynamic inlineGraphics;
 
 - (NSString *)HTMLString;
 {
@@ -43,7 +43,7 @@
 
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 {
-    //  Use the element to update our tagName, inner HTML, and inline content objects
+    //  Use the element to update our tagName, inner HTML, and inline graphics
     [self setTagName:[element tagName]];
     [self setInnerHTMLArchiveString:[element innerHTML]];
 }
@@ -53,7 +53,7 @@
 - (NSString *)innerHTMLString;
 {
     NSString *result = [[self class] innerHTMLStringWithArchive:[self innerHTMLArchiveString]
-                                           inlineContentObjects:[self inlineContentObjects]];
+                                           inlineContentObjects:[self inlineGraphics]];
     
     return result;
 }

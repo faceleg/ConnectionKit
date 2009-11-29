@@ -9,7 +9,7 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVBodyParagraph.h"
-#import "SVPlugInContentObject.h"
+#import "SVPlugInGraphic.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
@@ -219,7 +219,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
     NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
-    for (SVContentObject *aContentObject in [[self selectedObjectsController] arrangedObjects])
+    for (SVGraphic *aContentObject in [[self selectedObjectsController] arrangedObjects])
     {
         DOMHTMLElement *element = (DOMHTMLElement *)[aContentObject DOMElementInDocument:domDoc];
         if (element)
@@ -568,7 +568,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Create a new element of the requested type and insert at the end of the pagelet
     SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] pageletBody];
     
-    SVPlugInContentObject *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInContentObject"    
+    SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
                                                              inManagedObjectContext:[body managedObjectContext]];
     
     [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];

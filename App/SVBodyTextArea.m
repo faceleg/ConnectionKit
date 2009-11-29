@@ -10,7 +10,7 @@
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
-#import "SVContentObject.h"
+#import "SVGraphic.h"
 #import "SVPageletBody.h"
 #import "SVWebContentItem.h"
 

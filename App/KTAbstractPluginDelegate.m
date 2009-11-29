@@ -78,7 +78,7 @@
 	// Get owner of this delegate
 	id container = [self delegateOwner];
 	
-    if ([container isKindOfClass:NSClassFromString(@"SVContentObject")])
+    if ([container isKindOfClass:NSClassFromString(@"SVGraphic")])
     {
         container = [container valueForKeyPath:@"container.pagelet.sidebar.page"];
     }
