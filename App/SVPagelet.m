@@ -17,7 +17,7 @@
 
 
 @interface SVPagelet ()
-@property(nonatomic, retain, readwrite) SVPageletBody *pageletBody;
+@property(nonatomic, retain, readwrite) SVPageletBody *body;
 @end
 
 
@@ -56,13 +56,13 @@
                                  insertNewObjectForEntityForName:@"PageletBody"
                                  inManagedObjectContext:[self managedObjectContext]];
     
-    [self setPageletBody:content];
+    [self setBody:content];
 }
 
 #pragma mark Properties
 
 @dynamic titleHTMLString;
-@dynamic pageletBody;
+@dynamic body;
 @dynamic showBorder;
 
 #pragma mark Sidebar

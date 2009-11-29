@@ -552,7 +552,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[page managedObjectContext]];
     [paragraph setTagName:@"p"];
     [paragraph setInnerHTMLArchiveString:@"Test"];
-    [[pagelet pageletBody] addElement:paragraph];
+    [[pagelet body] addElement:paragraph];
     
     
     // Place at end of the sidebar
@@ -566,7 +566,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)insertElement:(id)sender;
 {
     // Create a new element of the requested type and insert at the end of the pagelet
-    SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] pageletBody];
+    SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] body];
     
     SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
                                                              inManagedObjectContext:[body managedObjectContext]];

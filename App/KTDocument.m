@@ -252,7 +252,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [paragraph setInnerHTMLArchiveString:@"Test paragraph"];
         [paragraph setSortKey:[NSNumber numberWithShort:0]];
         
-        [[pagelet pageletBody] addElement:paragraph];
+        [[pagelet body] addElement:paragraph];
         [[root sidebar] addPageletsObject:pagelet];
     }
 	

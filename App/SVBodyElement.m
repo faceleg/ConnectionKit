@@ -13,7 +13,7 @@
 
 @implementation SVBodyElement 
 
-@dynamic body;
+@dynamic enclosingBody;
 @dynamic sortKey;
 
 @end
