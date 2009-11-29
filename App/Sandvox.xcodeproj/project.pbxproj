@@ -632,7 +632,6 @@
 		3CEC8B220BF9096F00CC732B /* KTImageTextCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202DA807DFC4DD00DE4994 /* KTImageTextCell.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B230BF9097200CC732B /* KTPulsatingOverlay.h in Headers */ = {isa = PBXBuildFile; fileRef = 796C9CB609D26DF8003BFA3B /* KTPulsatingOverlay.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B280BF9097900CC732B /* KTSiteOutlineView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CBFD395093C45930057668A /* KTSiteOutlineView.h */; settings = {ATTRIBUTES = (); }; };
-		3CEC8B290BF9097B00CC732B /* KTStackView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE16A3D8087319720006F80B /* KTStackView.h */; settings = {ATTRIBUTES = (); }; };
 		3CF941DD0D623E5400B1C83D /* ContactPassword.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CF941DC0D623E5400B1C83D /* ContactPassword.h */; settings = {ATTRIBUTES = (Private, ); }; };
 		3CF941DF0D623E6B00B1C83D /* larger.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941DE0D623E6B00B1C83D /* larger.png */; };
 		3CF941E10D623E6F00B1C83D /* mag.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941E00D623E6F00B1C83D /* mag.png */; };
@@ -913,7 +912,6 @@
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
 		CE13900009BAB73000661A1A /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */; };
-		CE16A3D9087319720006F80B /* KTStackView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16A3D7087319720006F80B /* KTStackView.m */; };
 		CE16DCE40D871C860077C779 /* KTMovieViewPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */; };
 		CE16DD090D871EA20077C779 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CE16DD0A0D871EA60077C779 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
@@ -2475,8 +2473,6 @@
 		CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = HTMLSyntaxColoring.plist; sourceTree = "<group>"; };
 		CE138FFF09BAB73000661A1A /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = /System/Library/Frameworks/SystemConfiguration.framework; sourceTree = "<absolute>"; };
 		CE15C2920E75C74D00755113 /* SandvoxSymbols.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; path = SandvoxSymbols.xcconfig; sourceTree = "<group>"; };
-		CE16A3D7087319720006F80B /* KTStackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStackView.m; sourceTree = "<group>"; };
-		CE16A3D8087319720006F80B /* KTStackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStackView.h; sourceTree = "<group>"; };
 		CE16DC510D870FC40077C779 /* KTMovieViewPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMovieViewPlugin.h; sourceTree = "<group>"; };
 		CE16DC520D870FC40077C779 /* KTMovieViewPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMovieViewPlugin.m; sourceTree = "<group>"; };
 		CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = MovieWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -4070,8 +4066,6 @@
 				3C682B6E0D62328E00B4D485 /* KTLinkSourceView.m */,
 				3C682B700D62329500B4D485 /* KTMagnifyButton.h */,
 				3C682B710D62329A00B4D485 /* KTMagnifyButton.m */,
-				CE16A3D8087319720006F80B /* KTStackView.h */,
-				CE16A3D7087319720006F80B /* KTStackView.m */,
 				3C682B820D6232EA00B4D485 /* KTView.h */,
 				3C682B830D6232EF00B4D485 /* KTView.m */,
 			);
@@ -4828,7 +4822,6 @@
 				3CEC8B220BF9096F00CC732B /* KTImageTextCell.h in Headers */,
 				3CEC8B230BF9097200CC732B /* KTPulsatingOverlay.h in Headers */,
 				3CEC8B280BF9097900CC732B /* KTSiteOutlineView.h in Headers */,
-				3CEC8B290BF9097B00CC732B /* KTStackView.h in Headers */,
 				3CD6B0EF0BFA380600B9287E /* ThirdParty.h in Headers */,
 				278EC6F30C97136500A212EC /* KTHTMLParserCache.h in Headers */,
 				275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */,
@@ -6171,7 +6164,6 @@
 				CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */,
 				CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */,
 				CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */,
-				CE16A3D9087319720006F80B /* KTStackView.m in Sources */,
 				CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */,
 				3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */,
 				CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */,
