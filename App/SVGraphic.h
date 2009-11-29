@@ -8,8 +8,6 @@
 
 #import "SVBodyElement.h"
 
-#import "SVElementPlugIn.h"
-
 
 #define SVContentObjectWrapNone [NSNumber numberWithInteger:0]
 #define SVContentObjectWrapFloatLeft [NSNumber numberWithInteger:1]

@@ -9,6 +9,9 @@
 #import "SVGraphic.h"
 
 
+@protocol SVElementPlugIn;
+
+
 @interface SVPlugInGraphic : SVGraphic
 {
   @private
