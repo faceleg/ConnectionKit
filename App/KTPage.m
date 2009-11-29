@@ -12,6 +12,8 @@
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "KTAppDelegate.h"
+#import "SVBody.h"
+#import "SVBodyParagraph.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
@@ -165,6 +167,17 @@
 	[super awakeFromInsert];
 	
 	
+    // Body text. Give it a starting paragraph
+    SVBody *body = [SVBody insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
+    [self setBody:body];
+    
+    SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[self managedObjectContext]];
+    [paragraph setTagName:@"p"];
+    [paragraph setInnerHTMLArchiveString:@"Lorem ipsum..."];
+    [paragraph setSortKey:[NSNumber numberWithInt:0]];
+    [body addElement:paragraph];
+    
+    
 	// attributes
 	NSDate *now = [NSDate date];
 	[self setPrimitiveValue:now forKey:@"creationDate"];

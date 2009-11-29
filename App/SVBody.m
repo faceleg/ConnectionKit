@@ -17,6 +17,9 @@
 #import "NSSortDescriptor+Karelia.h"
 
 
+@interface SVBody ()
+@end
+
 @interface SVBody (CoreDataGeneratedAccessors)
 - (void)addElementsObject:(SVBodyElement *)value;
 - (void)removeElementsObject:(SVBodyElement *)value;
@@ -30,7 +33,19 @@
 
 @implementation SVBody 
 
-@dynamic pagelet;
+#pragma mark Init
+
++ (SVBody *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:@"PageBody"
+                                         inManagedObjectContext:context];
+}
+
++ (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    return [NSEntityDescription insertNewObjectForEntityForName:@"PageletBody"
+                                         inManagedObjectContext:context];
+}
 
 #pragma mark Elements
 

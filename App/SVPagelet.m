@@ -51,12 +51,8 @@
     [self setPrimitiveValue:[NSString shortUUIDString] forKey:@"elementID"];
     
     
-    // Create a corresponding content object
-    SVBody *content = [NSEntityDescription
-                                 insertNewObjectForEntityForName:@"PageletBody"
-                                 inManagedObjectContext:[self managedObjectContext]];
-    
-    [self setBody:content];
+    // Create corresponding body text
+    [self setBody:[SVBody insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
 #pragma mark Properties

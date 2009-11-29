@@ -14,7 +14,8 @@
 
 @interface SVBody :  NSManagedObject  
 
-@property (nonatomic, retain) SVPagelet *pagelet;
++ (SVBody *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 @property (nonatomic, retain, readonly) NSSet *elements;
