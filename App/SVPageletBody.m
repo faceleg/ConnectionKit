@@ -103,9 +103,4 @@
     return result;
 }
 
-- (void)updateWithHTMLElement:(DOMHTMLElement *)element;
-{
-    
-}
-
 @end
