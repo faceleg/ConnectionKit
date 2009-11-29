@@ -10,7 +10,7 @@
 
 #import "KTAbstractElement.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVPageletBody.h"
+#import "SVBody.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"

@@ -12,7 +12,7 @@
 @class SVPagelet;
 
 
-@interface SVPageletBody :  NSManagedObject  
+@interface SVBody :  NSManagedObject  
 
 @property (nonatomic, retain) SVPagelet *pagelet;
 

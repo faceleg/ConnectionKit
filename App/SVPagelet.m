@@ -9,7 +9,7 @@
 #import "SVPagelet.h"
 
 #import "KTPage.h"
-#import "SVPageletBody.h"
+#import "SVBody.h"
 #import "SVSidebar.h"
 
 #import "NSSortDescriptor+Karelia.h"
@@ -17,7 +17,7 @@
 
 
 @interface SVPagelet ()
-@property(nonatomic, retain, readwrite) SVPageletBody *body;
+@property(nonatomic, retain, readwrite) SVBody *body;
 @end
 
 
@@ -52,7 +52,7 @@
     
     
     // Create a corresponding content object
-    SVPageletBody *content = [NSEntityDescription
+    SVBody *content = [NSEntityDescription
                                  insertNewObjectForEntityForName:@"PageletBody"
                                  inManagedObjectContext:[self managedObjectContext]];
     

@@ -10,7 +10,7 @@
 
 
 @class SVBodyElement;
-@class SVPageletBody;
+@class SVBody;
 
 @interface SVBodyTextArea : SVWebTextArea <DOMEventListener>
 {

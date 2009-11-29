@@ -11,7 +11,7 @@
 
 #import "SVBodyParagraph.h"
 #import "SVGraphic.h"
-#import "SVPageletBody.h"
+#import "SVBody.h"
 #import "SVWebContentItem.h"
 
 #import "NSDictionary+Karelia.h"

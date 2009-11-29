@@ -14,7 +14,7 @@
 #import "KTMaster+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
-#import "SVPageletBody.h"
+#import "SVBody.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTScaledImageContainer.h"
@@ -234,7 +234,7 @@
 - (NSString *)innerHTML
 {
 	id source = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
-    NSString *result = ([source isKindOfClass:[SVPageletBody class]] ? [source HTMLString] : source);
+    NSString *result = ([source isKindOfClass:[SVBody class]] ? [source HTMLString] : source);
 	if (!result) result = @"";
 
 	result = [self processHTML:result];

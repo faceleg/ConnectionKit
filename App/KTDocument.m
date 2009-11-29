@@ -61,7 +61,7 @@
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVPagelet.h"
-#import "SVPageletBody.h"
+#import "SVBody.h"
 #import "SVBodyParagraph.h"
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"

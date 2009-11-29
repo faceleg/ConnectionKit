@@ -8,7 +8,7 @@
 
 #import "SVGraphic.h"
 
-@class SVPageletBody;
+@class SVBody;
 @class KTPage, SVSidebar;
 
 
@@ -20,7 +20,7 @@
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
 
 @property(nonatomic, retain) NSString *titleHTMLString;
-@property(nonatomic, retain, readonly) SVPageletBody *body;
+@property(nonatomic, retain, readonly) SVBody *body;
 @property(nonatomic, copy) NSNumber *showBorder;
 
 

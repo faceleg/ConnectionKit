@@ -13,7 +13,7 @@
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
-#import "SVPageletBody.h"
+#import "SVBody.h"
 #import "SVBodyTextArea.h"
 #import "KTSite.h"
 #import "SVWebContentItem.h"
@@ -153,7 +153,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     for (SVHTMLTextBlock *aTextBlock in [context generatedTextBlocks])
     {
         id content = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
-        if ([content isKindOfClass:[SVPageletBody class]])
+        if ([content isKindOfClass:[SVBody class]])
         {
             //[selectableObjects unionSet:[content contentObjects]];
         }
@@ -259,7 +259,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             id textArea;
             id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
             
-            if ([value isKindOfClass:[SVPageletBody class]])
+            if ([value isKindOfClass:[SVBody class]])
             {
                 KSSetController *elementsController = [[KSSetController alloc] init];
                 [elementsController setOrderingSortKey:@"sortKey"];
@@ -566,7 +566,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)insertElement:(id)sender;
 {
     // Create a new element of the requested type and insert at the end of the pagelet
-    SVPageletBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] body];
+    SVBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] body];
     
     SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
                                                              inManagedObjectContext:[body managedObjectContext]];

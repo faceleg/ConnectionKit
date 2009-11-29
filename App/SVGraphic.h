@@ -35,7 +35,7 @@
 #pragma mark -
 
 
-@class SVPageletBody, KTElementPlugin;
+@class SVBody, KTElementPlugin;
 
 
 @interface SVGraphic : SVBodyElement <SVGraphic>
