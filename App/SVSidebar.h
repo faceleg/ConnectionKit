@@ -18,6 +18,10 @@
 @property(nonatomic, retain) NSSet *pagelets;   // To sort, use SVPagelet class method
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
 
+
+#pragma mark HTML
+- (NSString *)pageletsHTMLString;
+
 @end
 
 

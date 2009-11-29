@@ -9,6 +9,7 @@
 #import "SVSidebar.h"
 
 #import "KTAbstractPage.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVPagelet.h"
 
 #import "NSSortDescriptor+Karelia.h"
@@ -36,6 +37,27 @@
             NSDictionary *info = [NSDictionary dictionaryWithObject:@"Pagelet sort keys are not unique" forKey:NSLocalizedDescriptionKey];
             *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSManagedObjectValidationError userInfo:info];
         }
+    }
+    
+    return result;
+}
+
+#pragma mark HTML
+
+- (NSString *)pageletsHTMLString;
+{
+    NSString *result = @"";
+    
+    for (SVPagelet *aPagelet in [SVPagelet arrayBySortingPagelets:[self pagelets]])
+    {
+        // Generate HTML for the pagelet
+        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate" ofType:@"html"];
+        NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
+        
+        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
+                                                                            component:aPagelet];
+        NSString *pageletHTML = [parser parseTemplate];
+        result = [result stringByAppendingString:pageletHTML];
     }
     
     return result;
