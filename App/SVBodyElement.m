@@ -16,19 +16,4 @@
 @dynamic body;
 @dynamic sortKey;
 
-#pragma mark HTML
-
-- (NSString *)HTMLString;
-{
-    SUBCLASSMUSTIMPLEMENT;
-    return nil;
-}
-
-- (NSString *)editingElementID;
-{
-    //  The default is just to generate a string based on object address, keeping us nicely unique
-    NSString *result = [NSString stringWithFormat:@"%p", self];
-    return result;
-}
-
 @end

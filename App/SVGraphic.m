@@ -23,26 +23,4 @@
 @dynamic elementID;
 - (NSString *)editingElementID { return [self elementID]; }
 
-- (NSString *)archiveHTMLString;
-{
-    NSString *result = [NSString stringWithFormat:
-                        @"<object id=\"%@\" />",
-                        [self elementID]];
-    return result;
-}
-
-- (NSString *)HTMLString
-{
-    SUBCLASSMUSTIMPLEMENT;
-    return nil;
-}
-
-- (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
-{
-    OBPRECONDITION(document);
-    
-    DOMElement *result = [document getElementById:[self elementID]];
-    return result;
-}
-
 @end

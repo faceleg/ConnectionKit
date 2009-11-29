@@ -221,7 +221,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (SVGraphic *aContentObject in [[self selectedObjectsController] arrangedObjects])
     {
-        DOMHTMLElement *element = (DOMHTMLElement *)[aContentObject DOMElementInDocument:domDoc];
+        DOMHTMLElement *element = (DOMHTMLElement *)[aContentObject elementForEditingInDOMDocument:domDoc];
         if (element)
         {
             SVWebContentItem *item = [[SVWebContentItem alloc] initWithHTMLElement:element];

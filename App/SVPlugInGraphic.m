@@ -283,7 +283,7 @@
     return [[self plugIn] HTMLString];
 }
 
-- (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
+- (DOMElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
 {
     // Need to use the plug-in's ID rather than our own
     OBPRECONDITION(document);

@@ -43,10 +43,6 @@
 
 #pragma mark HTML
 @property(nonatomic, retain, readonly) NSString *elementID;
-- (NSString *)archiveHTMLString;    // how to archive a reference to the object in some HTML
-- (NSString *)HTMLString;           // for publishing/editing (uses SVHTMLContext)
-
-- (DOMElement *)DOMElementInDocument:(DOMDocument *)document;
 
 @end
 

@@ -64,4 +64,14 @@
     return innerHTMLArchiveString;
 }
 
+- (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document
+{
+    // Want to make sure it's also got the right tagname
+    DOMHTMLElement *result = [super elementForEditingInDOMDocument:document];
+    
+    if (![[result tagName] isEqualToString:[self tagName]]) result = nil;
+    
+    return result;
+}
+
 @end
