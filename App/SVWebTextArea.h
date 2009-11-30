@@ -18,8 +18,9 @@
 @interface SVWebTextArea : SVHTMLElementController <SVWebEditorText, KSEditor>
 {
   @private
-    BOOL    _isRichText;
-    BOOL    _isFieldEditor;
+    NSString    *_HTMLString;
+    BOOL        _isRichText;
+    BOOL        _isFieldEditor;
     
     // Editing
     BOOL            _isEditing;

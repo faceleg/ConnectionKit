@@ -12,6 +12,7 @@
 
 
 @interface SVWebTextArea ()
+- (void)setHTMLString:(NSString *)html updateDOM:(BOOL)updateDOM;
 @end
 
 
@@ -32,20 +33,29 @@
 {
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
+    
+    [_HTMLString release];
+    [_uneditedValue release];
+    
         
     [super dealloc];
 }
 
 #pragma mark Contents
 
-- (NSString *)HTMLString
-{
-    NSString *result = [[self HTMLElement] innerHTML];
-    return result;
-}
-
+@synthesize HTMLString = _HTMLString;
 - (void)setHTMLString:(NSString *)html
 {
+    [self setHTMLString:html updateDOM:YES];
+}
+
+- (void)setHTMLString:(NSString *)html updateDOM:(BOOL)updateDOM
+{
+    // Store HTML
+    html = [html copy];
+    [_HTMLString release]; _HTMLString = html;
+    
+    // Update DOM to match
     [[self HTMLElement] setInnerHTML:html];
 }
 
@@ -142,6 +152,9 @@
     {
         [self didBeginEditing];
     }
+    
+    // Copy HTML across to ourself
+    [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
     
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
