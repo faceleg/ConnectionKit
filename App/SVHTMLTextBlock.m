@@ -50,6 +50,7 @@
 
 - (void)dealloc
 {
+    [_placeholder release];
 	[myHTMLTag release];
 	[myGraphicalTextCode release];
 	[myHyperlinkString release];
@@ -80,6 +81,7 @@
 
 - (void)setHasSpanIn:(BOOL)flag { myHasSpanIn = flag; }
 
+@synthesize placeholderString = _placeholder;
 
 - (NSString *)HTMLTag { return myHTMLTag; }
 

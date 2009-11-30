@@ -20,6 +20,7 @@
 	BOOL			myIsEditable;
 	BOOL			myIsFieldEditor;
 	BOOL			myIsRichText;
+    NSString        *_placeholder;
 	BOOL			myImportsGraphics;
 	BOOL			myHasSpanIn;
 	NSString		*myHTMLTag;
@@ -46,6 +47,9 @@
 
 @property(nonatomic, setter=setRichText:) BOOL isRichText;
 @property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
+
+//  Like .editable, has no effect on the HTML generated. But when editing, UI code will check the value to see if a custom string has been requested
+@property(nonatomic, copy) NSString *placeholderString;
 
 - (BOOL)importsGraphics;
 - (void)setImportsGraphics:(BOOL)flag;
