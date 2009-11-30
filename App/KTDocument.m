@@ -108,7 +108,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 @interface KTDocument ()
 
-- (KTPage *)makeRootPageWithBundle:(NSBundle *)bundle;
+- (KTPage *)makeRootPage;
 
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
@@ -197,10 +197,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // make a new root
         // POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
-        KTElementPlugin *plugin = [KSPlugin pluginWithIdentifier:@"sandvox.RichTextElement"];
-        OBASSERT(plugin);
-        [[plugin bundle] load];
-        KTPage *root = [self makeRootPageWithBundle:[plugin bundle]];
+        KTPage *root = [self makeRootPage];
         OBASSERTSTRING((nil != root), @"root page is nil!");
         [[self site] setValue:root forKey:@"root"];
         
@@ -260,17 +257,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return self;
 }
 
-- (KTPage *)makeRootPageWithBundle:(NSBundle *)bundle
+- (KTPage *)makeRootPage
 {
-    OBPRECONDITION([bundle bundleIdentifier]);
-	
-	id result = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
+    id result = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
                                               inManagedObjectContext:[self managedObjectContext]];
 	OBASSERT(result);
 	
 	[result setValue:[self site] forKey:@"site"];	// point to yourself
 		
-    [result setValue:[bundle bundleIdentifier] forKey:@"pluginIdentifier"];
     [result setBool:YES forKey:@"isCollection"];	// root is automatically a collection
     [result setAllowComments:[NSNumber numberWithBool:NO]];
     [result awakeFromBundleAsNewlyCreatedObject:YES];
