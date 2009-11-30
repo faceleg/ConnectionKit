@@ -11,7 +11,7 @@
 
 @class SVHTMLContext;
 
-@interface SVHTMLElementController : NSResponder
+@interface SVHTMLElementController : NSController
 {
   @private
     DOMHTMLElement  *_DOMElement;
