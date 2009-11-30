@@ -817,17 +817,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 				return title;
 			}
 			
-			// page type
-			if ( [defaults boolForKey:@"OutlineTooltipShowPageType"] )
-			{
-				NSString *pageType = [[item plugin] pluginPropertyForKey:@"KTPluginName"];
-				if ( nil != pageType )
-				{
-					result = [result stringByAppendingFormat:@"\n%@%@", pageTypeLabel, pageType];
-				}
-			}		   
-			
-			
 			// Sorting
 			if ([item isCollection])
 			{
