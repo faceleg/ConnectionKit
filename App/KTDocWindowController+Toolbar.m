@@ -343,7 +343,6 @@ TO DO:
 	OBASSERTSTRING([self siteOutlineViewController], @"Could not bind Pagelets popup button as there is no Site Outline controller");
 	NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
 														forKey:NSMultipleValuesPlaceholderBindingOption];
-	[button bind:@"enabled" toObject:[self siteOutlineViewController] withKeyPath:@"pagesController.selection.sidebarChangeable" options:options];
 	
 	
 	// Add the proper menu items
