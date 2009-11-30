@@ -34,7 +34,7 @@
     
     if (recursive)
     {
-        NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
+        NSEnumerator *childrenEnumerator = [[self childPages] objectEnumerator];
         KTPage *aChildPage;
         while (aChildPage = [childrenEnumerator nextObject])
         {
@@ -57,7 +57,7 @@
 	
 	if (recursive)
 	{
-		NSEnumerator *childrenEnumerator = [[self children] objectEnumerator];
+		NSEnumerator *childrenEnumerator = [[self childPages] objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [childrenEnumerator nextObject])
 		{

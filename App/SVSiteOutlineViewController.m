@@ -239,7 +239,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
 		[self iconForPage:page];
-		NSEnumerator *pagesEnumerator = [[page children] objectEnumerator];
+		NSEnumerator *pagesEnumerator = [[page childPages] objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pagesEnumerator nextObject])
 		{

@@ -567,7 +567,7 @@
 			// but reposition the drop to be at the root level
 			// NB: we add 1 to account for the row taken up by "home"
 			[[self outlineView] setDropItem:nil 
-					   dropChildIndex:([[[self rootPage] children] count]+1)];
+					   dropChildIndex:([[[self rootPage] childPages] count]+1)];
 			return NSDragOperationCopy;
 		}
 		else
@@ -852,7 +852,7 @@
 	
 	if ( [anotherItem hasChildren] )
 	{
-		NSEnumerator *e = [[anotherItem children] objectEnumerator];
+		NSEnumerator *e = [[anotherItem childPages] objectEnumerator];
 		KTPage *child;
 		while ( child = [e nextObject] )
 		{

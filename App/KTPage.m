@@ -199,7 +199,7 @@
 	{
 		KTPage *parent = [self parentPage];
 		// Set includeInSiteMenu if this page's parent is root, and not too many siblings
-		if (nil != parent && [parent isRoot] && [[parent valueForKey:@"children"] count] < 7)
+		if (nil != parent && [parent isRoot] && [[parent childPages] count] < 7)
 		{
 			[self setIncludeInSiteMenu:YES];
 		}
@@ -304,14 +304,14 @@
 	// Children should be affected last since they depend on parents' path
 	if (recursive)
 	{
-		NSSet *children = [self children];
+		NSSet *children = [self childPages];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pageEnumerator nextObject])
 		{
 			OBASSERT(![self isDescendantOfPage:aPage]); // lots of assertions for #44139
             OBASSERT(aPage != self);
-            OBASSERT(![[aPage children] containsObject:self]);
+            OBASSERT(![[aPage childPages] containsObject:self]);
             
             [aPage recursivelyInvalidateURL:YES];
 		}

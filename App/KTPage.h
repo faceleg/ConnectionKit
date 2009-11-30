@@ -117,7 +117,7 @@
 - (void)moveToIndex:(unsigned)index;
 
 // Unsorted Children
-- (NSSet *)children;
+@property(nonatomic, copy, readonly) NSSet *childPages;
 - (void)addPage:(KTPage *)page;
 - (void)removePage:(KTPage *)page;
 - (void)removePages:(NSSet *)pages;

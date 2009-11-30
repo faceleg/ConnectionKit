@@ -219,8 +219,8 @@
 	
 	
 	// Set up the children
-	NSMutableSet *children = [result mutableSetValueForKey:@"children"];
-	NSEnumerator *pagesEnumerator = [[archive objectForKey:@"children"] objectEnumerator];
+	NSMutableSet *children = [result mutableSetValueForKey:@"childPages"];
+	NSEnumerator *pagesEnumerator = [[archive objectForKey:@"childPages"] objectEnumerator];
 	NSDictionary *anArchivedPage;
 	while (anArchivedPage = [pagesEnumerator nextObject])
 	{
