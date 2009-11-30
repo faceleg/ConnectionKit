@@ -52,25 +52,6 @@
 #pragma mark -
 #pragma mark HTML Generation
 
-/*!	Return the HTML.
-*/
-- (NSString *)HTMLString;
-{
-	BOOL isProFeature = (9 == [[[self plugin] pluginPropertyForKey:@"KTPluginPriority"] intValue]);
-	if (isProFeature && ![[NSApp delegate] isPro])
-	{
-		return [NSString stringWithFormat:@"<html><h1>%@</h1></html>", 
-			NSLocalizedString(@"Sandvox PRO is required to generate this type of page", @"")];
-		// No pagelet is published if you are not registered and you are 
-	}
-	
-	
-	NSString *result = [super HTMLString];
-	
-	
-	return result;
-}
-
 /*	Some page types (e.g. File Download) do not want to publish the HTML, it's just for peviewing.
  */
 - (BOOL)shouldPublishHTMLTemplate

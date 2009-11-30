@@ -74,21 +74,6 @@
     [super addObject:page];
 }
 
-- (void)add:(id)sender
-{
-    KTPage *page = [self newObject];
-    
-    
-    // Store the plugin identifier. This HAS to be done before attaching the parent or Site Outline icon caching fails.
-	KTElementPlugin *plugIn = [sender representedObject];
-    OBASSERT(plugIn);
-    [page setValue:[[plugIn bundle] bundleIdentifier] forKey:@"pluginIdentifier"];
-	
-	
-	// Insert
-    [self addObject:page];
-}
-
 #pragma mark -
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
