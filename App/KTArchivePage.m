@@ -33,7 +33,7 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTMaster *)master { return [[self parent] master]; }
+- (KTMaster *)master { return [[self parentPage] master]; }
 
 - (NSString *)dateDescription
 {
@@ -54,7 +54,7 @@
 
 - (NSArray *)sortedPages
 {
-	NSMutableArray *result = [NSMutableArray arrayWithArray:[[[self parent] children] allObjects]];
+	NSMutableArray *result = [NSMutableArray arrayWithArray:[[[self parentPage] children] allObjects]];
 	
 	// Filter to only pages in our date range
 	NSDate *startDate = [self valueForKey:@"archiveStartDate"];
@@ -107,7 +107,7 @@
                               NSLocalizedString(@"Archive", "Part of an archive's page title"),
                               dateDescription];
     
-    NSString *collectionTitle = [[self parent] titleText];
+    NSString *collectionTitle = [[self parentPage] titleText];
     if (collectionTitle && ![collectionTitle isEqualToString:@""])
     {
         archiveTitle = [NSString stringWithFormat:@"%@ %@", collectionTitle, archiveTitle];
@@ -122,19 +122,19 @@
 
 - (NSString *)windowTitle
 {
-    NSString *result = [[[self parent] windowTitle] stringByAppendingFormat:@" - %@", [self dateDescription]];
+    NSString *result = [[[self parentPage] windowTitle] stringByAppendingFormat:@" - %@", [self dateDescription]];
     return result;
 }
 
 - (NSString *)comboTitleText
 {
-    NSString *result = [[[self parent] comboTitleText] stringByAppendingFormat:@" - %@", [self dateDescription]];
+    NSString *result = [[[self parentPage] comboTitleText] stringByAppendingFormat:@" - %@", [self dateDescription]];
     return result;
 }
 
 - (NSString *)metaDescription
 {
-    NSString *result = [[[self parent] metaDescription] stringByAppendingFormat:@" - %@", [self dateDescription]];
+    NSString *result = [[[self parentPage] metaDescription] stringByAppendingFormat:@" - %@", [self dateDescription]];
     return result;
 }
 
@@ -157,6 +157,6 @@
 	return sPageTemplateString;
 }
 
-- (BOOL)isXHTML { return [[self parent] isXHTML]; }
+- (BOOL)isXHTML { return [[self parentPage] isXHTML]; }
 
 @end

@@ -84,7 +84,7 @@
 
 - (void)moveToIndex:(unsigned)index
 {
-	KTPage *parent = [self parent];
+	KTPage *parent = [self parentPage];
 	
 	NSAssert1(parent, @"-%@ called upon page with not in a collection", NSStringFromSelector(_cmd));
 	NSAssert1(([parent collectionSortOrder] == KTCollectionUnsorted),
@@ -140,7 +140,7 @@
 	
 	
 	// Attach the page to ourself and update the page cache
-	[page setValue:self forKey:@"parent"];
+	[page setValue:self forKey:@"parentPage"];
 	[self invalidateSortedChildrenCache];
 	
 	
@@ -347,7 +347,7 @@
 
 - (KTPage *)parentOrRoot
 {
-	KTPage *result = [self parent];
+	KTPage *result = [self parentPage];
 	if (nil == result)
 	{
 		result = self;
@@ -368,7 +368,7 @@
 			// Something went wrong. We need to generate an error object
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
 				self, NSValidationObjectErrorKey,
-				@"parent", NSValidationKeyErrorKey,
+				@"parentPage", NSValidationKeyErrorKey,
 				NSLocalizedString(@"Page without a parent","Validation error"), NSLocalizedDescriptionKey, nil];
 			
 			if (outError)
@@ -425,7 +425,7 @@
 {
 	NSIndexPath *result = nil;
 	
-	KTPage *parent = [self parent];
+	KTPage *parent = [self parentPage];
 	if (parent)
 	{
 		unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:self];

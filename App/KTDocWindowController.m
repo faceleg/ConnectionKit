@@ -614,7 +614,7 @@ from representedObject */
 	KTPage *firstSelectedPage = [selectedPages objectAtIndex:0];
 	
 	// our group's parent will be the original parent of firstSelectedPage
-	KTPage *parentCollection = [(KTPage *)firstSelectedPage parent];
+	KTPage *parentCollection = [(KTPage *)firstSelectedPage parentPage];
 	if ( (nil == parentCollection) || (nil == [[parentCollection site] root]) )
 	{
 		NSLog(@"Unable to create group: could not determine parent collection.");
@@ -659,7 +659,7 @@ from representedObject */
 	for ( i=0; i < [selectedPages count]; i++ )
 	{
 		KTPage *page = [selectedPages objectAtIndex:i];
-		[[page parent] removePage:page];
+		[[page parentPage] removePage:page];
 	}
 	
 	

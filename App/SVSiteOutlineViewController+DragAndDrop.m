@@ -162,7 +162,7 @@
 					// we only allow, for now, dropping onto a page if it's already a collection
 					// but not already the parent of firstDraggedItem and not a parent of proposedParent
 					if ( [proposedParent isCollection] 
-						&& ![proposedParent isEqual:[firstDraggedItem parent]]
+						&& ![proposedParent isEqual:[firstDraggedItem parentPage]]
 						&& ![self item:proposedParent isDescendantOfItem:firstDraggedItem] )
 					{
 						//LOG((@"allowing drop directly onto collection %@", [proposedParent fileName]));
@@ -198,9 +198,9 @@
 					//LOG((@"disallowing drop since don't allow creating a collection via drag"));
 					return NSDragOperationNone;
 				}
-				else if ( [proposedParent isEqual:[firstDraggedItem parent]]
-						 && ((proposedParent != [self rootPage] && ((unsigned)anIndex == [[[firstDraggedItem parent] sortedChildren] indexOfObject:firstDraggedItem]))
-							 || (proposedParent == [self rootPage] && ((unsigned)(anIndex-1) == [[[firstDraggedItem parent] sortedChildren] indexOfObject:firstDraggedItem]))) )
+				else if ( [proposedParent isEqual:[firstDraggedItem parentPage]]
+						 && ((proposedParent != [self rootPage] && ((unsigned)anIndex == [[[firstDraggedItem parentPage] sortedChildren] indexOfObject:firstDraggedItem]))
+							 || (proposedParent == [self rootPage] && ((unsigned)(anIndex-1) == [[[firstDraggedItem parentPage] sortedChildren] indexOfObject:firstDraggedItem]))) )
 				{
 					// the text of the above conditional is "if the parent is the same and
 					// the index is the same or, if the parent is the same and also root and
@@ -687,7 +687,7 @@
 		{
 			[draggedItem retain];
 			
-			KTPage *draggedItemParent = [draggedItem parent];
+			KTPage *draggedItemParent = [draggedItem parentPage];
 			if (page != draggedItemParent)
 			{
 				[draggedItemParent removePage:draggedItem];
@@ -706,7 +706,7 @@
 		while (aPage = [e nextObject])
 		{
 			[aPage retain];
-			[[aPage parent] removePage:aPage];
+			[[aPage parentPage] removePage:aPage];
 			[page addPage:aPage];
 			[aPage release];
 		}
@@ -834,9 +834,9 @@
     id object;
     while ( object = [e nextObject] )
 	{
-        if ( nil != [item parent] )
+        if ( nil != [item parentPage] )
 		{
-            if ( object == [item parent] )
+            if ( object == [item parentPage] )
 			{
                 result = YES;
             }

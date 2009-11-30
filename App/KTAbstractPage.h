@@ -44,7 +44,7 @@ KTCollectionPathStyle;
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
 
 #pragma mark Relationships
-- (KTPage *)parent;
+@property(nonatomic, retain, readonly) KTPage *parentPage;
 - (BOOL)isCollection;
 - (BOOL)isRoot;
 - (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;

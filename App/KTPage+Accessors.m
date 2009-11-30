@@ -66,10 +66,10 @@
 	
 	
 	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
-	KTCollectionSortType sorting = [[self parent] collectionSortOrder];
+	KTCollectionSortType sorting = [[self parentPage] collectionSortOrder];
 	if (sorting == KTCollectionSortAlpha || sorting == KTCollectionSortReverseAlpha)
 	{
-		[[self parent] invalidateSortedChildrenCache];
+		[[self parentPage] invalidateSortedChildrenCache];
 	}
     
     
@@ -109,7 +109,7 @@
 - (void)setIsDraft:(BOOL)flag;
 {
 	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self timestampDate] createIfNotFound:!flag];
+	KTArchivePage *oldArchivePage = [[self parentPage] archivePageForTimestamp:[self timestampDate] createIfNotFound:!flag];
 	
 	
 	[self setWrappedBool:flag forKey:@"isDraft"];
@@ -130,15 +130,15 @@
 	}
 	
 	// And the index
-	[[self parent] invalidatePagesInIndexCache];
+	[[self parentPage] invalidatePagesInIndexCache];
 }
 
 - (BOOL)pageOrParentDraft
 {
 	BOOL result = [self boolForKey:@"isDraft"];
-	if (!result && [self parent] != nil)
+	if (!result && [self parentPage] != nil)
 	{
-		result = [[self parent] pageOrParentDraft];
+		result = [[self parentPage] pageOrParentDraft];
 	}
 	return result;
 }
@@ -321,9 +321,9 @@
 	
 	
 	// Propogate the thumbnail to our parent if needed
-	if ([[self parent] pageToUseForCollectionThumbnail] == self)
+	if ([[self parentPage] pageToUseForCollectionThumbnail] == self)
 	{
-		[[self parent] _setThumbnail:thumbnail];
+		[[self parentPage] _setThumbnail:thumbnail];
 	}
 }
 

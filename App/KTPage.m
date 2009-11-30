@@ -197,7 +197,7 @@
 {
 	if ( isNewlyCreatedObject )
 	{
-		KTPage *parent = [self parent];
+		KTPage *parent = [self parentPage];
 		// Set includeInSiteMenu if this page's parent is root, and not too many siblings
 		if (nil != parent && [parent isRoot] && [[parent valueForKey:@"children"] count] < 7)
 		{

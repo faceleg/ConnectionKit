@@ -540,7 +540,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
 	
 	// Generate HTML data
-	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parent];
+	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parentPage];
 	NSString *HTML = [[page HTMLString] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
     
@@ -626,7 +626,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     KTPage *result = nil;
     
     // Buld the list of siblings
-    KTPage *parent = [page parent];
+    KTPage *parent = [page parentPage];
     NSArray *siblings = [[parent sortedChildren] arrayByAddingObjectsFromArray:[parent sortedArchivePages]];
     
     // Search for the next sibling. If none is found, publish the parent.

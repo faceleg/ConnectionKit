@@ -497,7 +497,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         NSSet *selection = [[NSSet alloc] initWithArray:[[self pagesController] selectedObjects]];
         
         // Remove the pages from their parents
-        NSSet *parentPages = [selection valueForKey:@"parent"];
+        NSSet *parentPages = [selection valueForKey:@"parentPage"];
         for (KTPage *aParentPage in parentPages)
         {
             [aParentPage removePages:selection];	// Far more efficient than calling -removePage: repetitively
@@ -685,7 +685,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	id result = nil;
 	if ([item isKindOfClass:[KTPage class]])
 	{
-		result = [item parent];
+		result = [item parentPage];
 	}
 	
 	return result;

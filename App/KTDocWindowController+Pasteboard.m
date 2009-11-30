@@ -103,7 +103,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     // if we haven't selected a collection, use its parent
 	if ( ![selectedPage isCollection] )
 	{
-		selectedPage = [selectedPage parent];
+		selectedPage = [selectedPage parentPage];
 	}
         
     if ( nil != selectedPage )
@@ -388,7 +388,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     id archive = [page pasteboardRepresentation];
     
-    KTPage *parent = [page parent];
+    KTPage *parent = [page parentPage];
     KTPage *result = [KTPage pageWithPasteboardRepresentation:archive parent:parent];
     
     // For unordered collections, the duplicate should appear just after the original

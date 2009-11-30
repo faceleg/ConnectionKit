@@ -81,7 +81,7 @@
 	}
 	else
 	{
-		[result setValue:aParent forKey:@"parent"];
+		[result setValue:aParent forKey:@"parentPage"];
 	}
 	
 	
@@ -101,7 +101,7 @@
 
 #pragma mark Accessors
 
-- (KTPage *)parent { return [self wrappedValueForKey:@"parent"]; }
+@dynamic parentPage;
 
 /*	Only KTPages can be collections
  */
@@ -115,7 +115,7 @@
 
 - (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
 {
-	KTPage *parent = [self parent];
+	KTPage *parent = [self parentPage];
 	if (nil == parent)		// we are at the root node, so it can't be descended from the given node
 	{
 		return NO;

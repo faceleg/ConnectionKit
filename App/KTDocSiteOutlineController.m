@@ -38,7 +38,7 @@
 {
     // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
     KTPage *parent = [[self selectedObjects] lastObject];
-    if (![parent isCollection]) parent = [parent parent];
+    if (![parent isCollection]) parent = [parent parentPage];
     if (!parent) parent = [[self managedObjectContext] root];
     
     

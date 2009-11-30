@@ -99,8 +99,8 @@
 	
     
 	// Build a list of the file names already taken
-	NSSet *siblingFileNames = [[[self parent] children] valueForKey:@"fileName"];
-	NSSet *archiveFileNames = [[self parent] valueForKeyPath:@"archivePages.fileName"];
+	NSSet *siblingFileNames = [[[self parentPage] children] valueForKey:@"fileName"];
+	NSSet *archiveFileNames = [[self parentPage] valueForKeyPath:@"archivePages.fileName"];
 	NSMutableSet *unavailableFileNames = [NSMutableSet setWithCapacity:([siblingFileNames count] + [archiveFileNames count])];
 	[unavailableFileNames unionSet:siblingFileNames];
 	[unavailableFileNames unionSet:archiveFileNames];
@@ -297,7 +297,7 @@
 		NSString *path = [self pathRelativeToParent];
 		if (path)
 		{
-			result = [NSURL URLWithString:path relativeToURL:[[self parent] _baseExampleURL]];
+			result = [NSURL URLWithString:path relativeToURL:[[self parentPage] _baseExampleURL]];
 		}
 	}
 	return result;
@@ -328,7 +328,7 @@
 		}
 		else
 		{
-			resultURL = [[self parent] _baseExampleURL];
+			resultURL = [[self parentPage] _baseExampleURL];
 		}
 	}
 	return [resultURL absoluteString];
@@ -382,7 +382,7 @@
 			NSString *path = [self pathRelativeToParent];
 			if (path)
 			{
-				result = [NSURL URLWithString:path relativeToURL:[[self parent] URL]];
+				result = [NSURL URLWithString:path relativeToURL:[[self parentPage] URL]];
 			}
 		}
 	}
@@ -463,7 +463,7 @@
 	[self setWrappedValue:path forKey:@"publishedPath"];
 	
 	// Our status in the index could depend on this key
-	[[self parent] invalidatePagesInIndexCache];
+	[[self parentPage] invalidatePagesInIndexCache];
 }
 
 #pragma mark -
@@ -521,7 +521,7 @@
 	NSString *parentPath = @"";
 	if (![self isRoot])
 	{
-		parentPath = [[self parent] pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
+		parentPath = [[self parentPage] pathRelativeToSiteWithCollectionPathStyle:KTCollectionDirectoryPath];
 	}
 	
 	NSString *relativePath = [self pathRelativeToParentWithCollectionPathStyle:collectionPathStyle];

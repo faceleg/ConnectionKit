@@ -53,7 +53,7 @@
 {
 	// Archive pages are specially parsed so that the component is the parent page.
 	KTPage *component = (KTPage *)page;
-	if ([page isKindOfClass:[KTArchivePage class]]) component = [page parent];
+	if ([page isKindOfClass:[KTArchivePage class]]) component = [page parentPage];
 	
 	
 	// Create the parser and set up as much of the environment as possible
@@ -351,7 +351,7 @@
 	
 	// Mark for image replacement ONLY if QC supported.
 	KTAbstractPage *page = [[SVHTMLContext currentContext] currentPage];
-	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parent];
+	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parentPage];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
 	//OBASSERT([self document]);

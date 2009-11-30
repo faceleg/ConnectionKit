@@ -66,7 +66,7 @@
 - (void)setIncludeInIndex:(BOOL)flag
 {
 	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parent] archivePageForTimestamp:[self timestampDate] createIfNotFound:flag];
+	KTArchivePage *oldArchivePage = [[self parentPage] archivePageForTimestamp:[self timestampDate] createIfNotFound:flag];
 	
 	
 	[self setWrappedBool:flag forKey:@"includeInIndex"];
@@ -81,7 +81,7 @@
 	
 	
 	// We must update the parent's list of pages
-	[[self parent] invalidatePagesInIndexCache];
+	[[self parentPage] invalidatePagesInIndexCache];
 }
 
 #pragma mark -
@@ -179,7 +179,7 @@
 {
 	KTPage *result = nil;
 	
-	NSArray *siblings = [[self parent] navigablePages];
+	NSArray *siblings = [[self parentPage] navigablePages];
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
 	if (index > 0 && index < [siblings count])
 	{
@@ -193,7 +193,7 @@
 {
 	KTPage *result = nil;
 	
-	NSArray *siblings = [[self parent] navigablePages];
+	NSArray *siblings = [[self parentPage] navigablePages];
 	unsigned index = [siblings indexOfObjectIdenticalTo:self];
 	if (index != NSNotFound && index < ([siblings count] - 1))
 	{

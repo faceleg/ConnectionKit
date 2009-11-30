@@ -21,13 +21,13 @@
 	}
 	
 	KTPage *firstPage = [self firstObjectKS];
-	KTPage *firstParent = [firstPage parent];
+	KTPage *firstParent = [firstPage parentPage];
 	
 	unsigned int i;
 	for ( i=1; i<[self count]; i++ )
 	{
 		KTPage *nextPage = [self objectAtIndex:i];
-		if ( ![firstParent isEqual:[nextPage parent]] )
+		if ( ![firstParent isEqual:[nextPage parentPage]] )
 		{
 			return NO;
 		}
@@ -90,9 +90,9 @@
     KTPage *page;
     while ( page = [e nextObject] )
 	{
-        if ( nil != [aPage parent] )
+        if ( nil != [aPage parentPage] )
 		{
-            if ( page == [aPage parent] )
+            if ( page == [aPage parentPage] )
 			{
                 return YES;
             }
