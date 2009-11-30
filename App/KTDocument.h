@@ -47,7 +47,6 @@ extern NSString *KTDocumentWillSaveNotification;
 	
 	KTMediaManager				*myMediaManager;
 		
-	KTDocWindowController		*_mainWindowController;
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	
@@ -95,10 +94,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (IBAction)setupHost:(id)sender;
 
-// Controller chain
-- (KTDocWindowController *)mainWindowController;
-
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 
 // Editing
 

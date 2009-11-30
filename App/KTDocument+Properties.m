@@ -143,7 +143,6 @@
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDisplaySmallPageIconsDidChange"
 														object:self];
 														
-	[[self mainWindowController] updatePopupButtonSizesSmall:aSmall];
 	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
 }
 
@@ -186,11 +185,6 @@
  */
 - (void)copyDocumentDisplayPropertiesToModel
 {
-	// Selected pages
-	NSIndexSet *outlineSelectedRowIndexSet = [[[[self mainWindowController] siteOutlineViewController] outlineView] selectedRowIndexes];
-	[[self site] setLastSelectedRows:[outlineSelectedRowIndexSet indexSetAsString]];
-	
-	
 	// Source Outline width
 	float width = 99;	// TODO: Get the split view position
 	[[self site] setInteger:width forKey:@"sourceOutlineSize"];
@@ -201,7 +195,7 @@
 	
 	
 	// Window size
-	NSWindow *window = [[self mainWindowController] window];
+	NSWindow *window = [[[self windowControllers] firstObjectKS] window];
 	if (window)
 	{
 		[[self site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];

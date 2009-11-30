@@ -575,14 +575,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark -
 #pragma mark Controller Chain
 
-- (KTDocWindowController *)mainWindowController { return _mainWindowController; }
-
 /*!	Force KTDocument to use a custom subclass of NSWindowController
  */
 - (void)makeWindowControllers
 {
-    _mainWindowController = [[KTDocWindowController alloc] init];
-    [self addWindowController:_mainWindowController];
+    NSWindowController *windowController = [[KTDocWindowController alloc] init];
+    [self addWindowController:windowController];
+    [windowController release];
 }
 
 - (void)addWindowController:(NSWindowController *)windowController
@@ -595,13 +594,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)removeWindowController:(NSWindowController *)windowController
 {
-	//LOG((@"KTDocument -removeWindowController"));
-	if ( [windowController isKindOfClass:[KTDocWindowController class]] )
-    {
-		// balance retain in makeWindowControllers
-		[_mainWindowController release]; _mainWindowController = nil;
-	}
-    else if ( [windowController isEqual:myHTMLInspectorController] )
+	if ( [windowController isEqual:myHTMLInspectorController] )
     {
 		[self setHTMLInspectorController:nil];
 	}
@@ -646,14 +639,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
 
 	
-	// Close link panel
-	if ([[[self mainWindowController] linkPanel] isVisible])
-	{
-		[[self mainWindowController] closeLinkPanel];
-	}
-	
-    
-    // Remove temporary media files
+	// Remove temporary media files
 	[[self mediaManager] deleteTemporaryMediaFiles];
 	
 	[super close];
@@ -746,7 +732,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// LEAKING ON PURPOSE, THIS WILL BE AUTORELEASED IN setupHostSheetDidEnd:
 	
 	[NSApp beginSheet:[sheetController window]
-	   modalForWindow:[[self mainWindowController] window]
+	   modalForWindow:[self windowForSheet]
 	modalDelegate:self
 	   didEndSelector:@selector(setupHostSheetDidEnd:returnCode:contextInfo:)
 		  contextInfo:sheetController];
@@ -779,59 +765,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[self HTMLInspectorController] showWindow:nil];
 }
 
-
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender
-{
-	BOOL result = [[[self mainWindowController] webViewController] commitEditing];
-
-	if (result)
-	{
-		BOOL isRawHTML = NO;
-		SVHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
-		id sourceObject = [textBlock HTMLSourceObject];
-        
-        NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use
-		if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])    // a special key path
-        {
-            KTPage *page = sourceObject;
-            if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
-            {
-                sourceKeyPath = @"customSummaryHTML";
-            }
-        }
-        
-        
-        // Fallback for non-text blocks
-		if (!textBlock)
-		{
-			isRawHTML = YES;
-			sourceKeyPath = @"html";	// raw HTML
-			if (nil == sourceObject)	// no appropriate pagelet selected, try page
-			{
-				sourceObject = [[[[self mainWindowController] siteOutlineViewController] pagesController] selectedPage];
-				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
-				{
-					sourceObject = nil;		// no, don't try to edit a non-rich text
-				}
-				else
-				{
-				}
-			}
-
-			
-		}
-		
-		if (sourceObject)
-		{
-            
-			[self editSourceObject:sourceObject keyPath:sourceKeyPath isRawHTML:isRawHTML];
-		}
-	}
-	else
-	{
-		NSLog(@"Cannot commit editing to edit HTML");
-	}
-}
 
 #pragma mark -
 #pragma mark Delegate Methods
@@ -892,7 +825,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)warnThatHostUsesCharset:(NSString *)hostCharset
 {
-	[KSSilencingConfirmSheet alertWithWindow:[[self mainWindowController] window] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
+	[KSSilencingConfirmSheet alertWithWindow:[self windowForSheet] silencingKey:@"ShutUpCharsetMismatch" title:NSLocalizedString(@"Host Character Set Mismatch", @"alert title when the character set specified on the host doesn't match settings") format:NSLocalizedString(@"The host you have chosen always serves its text encoded as '%@'.  In order to prevent certain text from appearing incorrectly, we suggest that you set your site's 'Character Encoding' property to match this, using the inspector.",@""), [hostCharset uppercaseString]];
 }
 
 #pragma mark -
@@ -900,7 +833,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)mayAddScreenshotsToAttachments;
 {
-	NSWindow *window = [[[[NSApp delegate] currentDocument] mainWindowController] window];
+	NSWindow *window = [self windowForSheet];
 	return (window && [window isVisible]);
 }
 
@@ -912,7 +845,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 {
 	
-	NSWindow *window = [[[[NSApp delegate] currentDocument] mainWindowController] window];
+	NSWindow *window = [self windowForSheet];
 	NSImage *snapshot = [window snapshotShowingBorder:NO];
 	if ( nil != snapshot )
 	{

@@ -39,11 +39,20 @@
 - (void)displayAsSheet
 {
     [NSApp beginSheet:[self window]
-       modalForWindow:[[(KTDocument *)[self document] mainWindowController] window]
+       modalForWindow:[[self document] windowForSheet]
         modalDelegate:self
        didEndSelector:@selector(didEndSheet:returnCode:contextInfo:)
           contextInfo:nil];
     
+    // Dear Dan,
+    // The -mainWindowController API has been removed as it's a nuisance on the whole and kinda breaks encapsulation. Regardless,
+    // the design chooser should have no concept of a document; it doesn't need to work at that level. Instead please could you make it
+    // so that when ending the sheet, a callback is sent to the object that invoked the sheet in the first place, informing it of
+    // the design that has been chosen. In practice, KTDocWindowController will use this callback to update the design of the master.
+    // 
+    // Lots of love,
+    // Mike.
+    //
     [self bind:@"selectedDesign"
       toObject:[[[[self document] mainWindowController] siteOutlineViewController] pagesController]
    withKeyPath:@"selection.master.design"

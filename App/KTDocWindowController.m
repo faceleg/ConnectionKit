@@ -18,6 +18,7 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"
+#import "SVHTMLTextBlock.h"
 #import "KTIndexPlugin.h"
 #import "KTInlineImageElement.h"
 #import "KTMediaManager+Internal.h"
@@ -26,6 +27,7 @@
 #import "SVSidebar.h"
 #import "KTSite.h"
 #import "SVSiteOutlineViewController.h"
+#import "KTSummaryWebViewTextBlock.h"
 #import "KTToolbars.h"
 
 #import "NSArray+Karelia.h"
@@ -347,6 +349,61 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
+}
+
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+{
+	BOOL result = [[self webViewController] commitEditing];
+    
+	if (result)
+	{
+		BOOL isRawHTML = NO;
+		SVHTMLTextBlock *textBlock = [self valueForKeyPath:@"webViewController.currentTextEditingBlock"];
+		id sourceObject = [textBlock HTMLSourceObject];
+        
+        NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use
+		if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])    // a special key path
+        {
+            KTPage *page = sourceObject;
+            if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
+            {
+                sourceKeyPath = @"customSummaryHTML";
+            }
+        }
+        
+        
+        // Fallback for non-text blocks
+		if (!textBlock)
+		{
+			isRawHTML = YES;
+			sourceKeyPath = @"html";	// raw HTML
+			if (nil == sourceObject)	// no appropriate pagelet selected, try page
+			{
+				sourceObject = [[[self siteOutlineViewController] pagesController] selectedPage];
+				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
+				{
+					sourceObject = nil;		// no, don't try to edit a non-rich text
+				}
+				else
+				{
+				}
+			}
+            
+			
+		}
+		
+		if (sourceObject)
+		{
+            
+			[[self document] editSourceObject:sourceObject
+                                      keyPath:sourceKeyPath
+                                    isRawHTML:isRawHTML];
+		}
+	}
+	else
+	{
+		NSLog(@"Cannot commit editing to edit HTML");
+	}
 }
 
 #pragma mark -

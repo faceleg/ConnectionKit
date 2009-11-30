@@ -118,6 +118,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)showChooseDesignSheet:(id)sender;
 
 - (IBAction)updateWebView:(id)sender;
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
 
