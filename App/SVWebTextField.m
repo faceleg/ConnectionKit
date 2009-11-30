@@ -20,9 +20,11 @@
 @synthesize placeholderString = _placeholder;
 - (void)setPlaceholderString:(NSString *)placeholder
 {
+    // Store placeholder
     placeholder = [placeholder copy];
     [_placeholder release]; _placeholder = placeholder;
     
+    // Display new placeholder if appropriate
     if ([[self HTMLString] length] == 0)
     {
         [[self HTMLElement] setInnerText:placeholder];
@@ -33,19 +35,8 @@
 {
     [super setHTMLElement:element];
     
-    if ([[self HTMLString] length] == 0)
-    {
-        [[self HTMLElement] setInnerText:[self placeholderString]];
-    }
-}
-
-- (void)setHTMLString:(NSString *)html
-{
-    if ([html length] > 0)
-    {
-        [super setHTMLString:html];
-    }
-    else
+    // Once attached to our DOM node, give it the placeholder text if needed
+    if ([[self HTMLString] length] == 0 && [self placeholderString])
     {
         [[self HTMLElement] setInnerText:[self placeholderString]];
     }
