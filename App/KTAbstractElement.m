@@ -169,12 +169,7 @@
 		return; // stop these calls if we're not really there any more
 	}
 	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:selector])
-	{
-		[delegate performSelector:selector withObject:(id)anObject withObject:page];
-	}
-	else if ([self respondsToSelector:selector])
+	if ([self respondsToSelector:selector])
 	{
 		[self performSelector:selector withObject:(id)anObject withObject:page];
 	}
@@ -185,13 +180,7 @@
 {
 	NSString *result = nil;
 	
-	// default implementation just calls delegate
-	id delegate = [self delegate];
-	if ( [delegate respondsToSelector:@selector(spotlightHTML)] )
-	{
-		result = [delegate spotlightHTML];
-	}
-	
+	// TODO: Figure a nice way to get reasonable plain text out of our body
 	if ( nil == result )
 	{
 		result = @"";

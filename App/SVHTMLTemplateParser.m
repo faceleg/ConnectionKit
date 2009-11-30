@@ -56,18 +56,9 @@
 	if ([page isKindOfClass:[KTArchivePage class]]) component = [page parent];
 	
 	
-	// Pick the right template to use
-	NSString *template;
-	if ([component pluginHTMLIsFullPage]) {
-		template = [component templateHTML];
-	}
-	else {
-		template = [[component class] pageTemplate];
-	}
-	
-	
 	// Create the parser and set up as much of the environment as possible
-	[self initWithTemplate:template component:component];
+	[self initWithTemplate:[[component class] pageTemplate]
+                 component:component];
 	
 	
 	return self;

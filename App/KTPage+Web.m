@@ -71,16 +71,6 @@
 	return result;
 }
 
-- (BOOL)pluginHTMLIsFullPage;
-{
-	return [self wrappedBoolForKey:@"pluginHTMLIsFullPage"];
-}
-
-- (void)setPluginHTMLIsFullPage:(BOOL)fullPage
-{
-	[self setWrappedBool:fullPage forKey:@"pluginHTMLIsFullPage"];
-}
-
 /*	Some page types (e.g. File Download) do not want to publish the HTML, it's just for peviewing.
  */
 - (BOOL)shouldPublishHTMLTemplate
@@ -99,7 +89,7 @@
 #pragma mark -
 #pragma mark CSS
 
-- (NSString *)cssClassName { return [[self plugin] pageCSSClassName]; }
+- (NSString *)cssClassName { return @"text-page"; }
 
 /*	Generates a <link> tag to the specified stylesheet. Include a title attribute when possible.
  */
