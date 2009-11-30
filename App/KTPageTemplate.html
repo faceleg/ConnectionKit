@@ -1,9 +1,9 @@
 [[if parser.isPublishing]]				[[comment Code Injection here is only for publishing]]
-[[if master.codeInjectionBeforeHTML]]
-[[=master.codeInjectionBeforeHTML]]
+[[if master.codeInjection.beforeHTML]]
+[[=master.codeInjection.beforeHTML]]
 [[endif2]]
-[[if codeInjectionBeforeHTML]]
-[[=codeInjectionBeforeHTML]]
+[[if codeInjection.beforeHTML]]
+[[=codeInjection.beforeHTML]]
 [[endif2]]
 [[endif]]
 
@@ -11,11 +11,11 @@
 <html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&master.language]]" [[endif]]lang="[[=&master.language]]">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
-[[if master.codeInjectionEarlyHead]]
-[[=master.codeInjectionEarlyHead]]
+[[if master.codeInjection.earlyHead]]
+[[=master.codeInjection.earlyHead]]
 [[endif]]
-[[if codeInjectionEarlyHead]]
-[[=codeInjectionEarlyHead]]
+[[if codeInjection.earlyHead]]
+[[=codeInjection.earlyHead]]
 [[endif]]
 [[if parser.currentPage.windowTitle]]
 		<title>[[=&parser.currentPage.windowTitle]]</title>
@@ -61,19 +61,19 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif]]
 [[extraheaders]]
 
-[[if master.codeInjectionHeadArea]]
-[[=master.codeInjectionHeadArea]]
+[[if master.codeInjection.headArea]]
+[[=master.codeInjection.headArea]]
 [[endif]]
-[[if codeInjectionHeadArea]]
-[[=codeInjectionHeadArea]]
+[[if codeInjection.headArea]]
+[[=codeInjection.headArea]]
 [[endif]]
 	</head>
-	<body class="sandvox [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
-[[if master.codeInjectionBodyTagStart]]
-[[=master.codeInjectionBodyTagStart]]
+	<body class="sandvox [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjection.bodyTag]][[=master.codeInjection.bodyTag]][[endif]][[if codeInjection.bodyTag]][[=codeInjection.bodyTag]][[endif]]>
+[[if master.codeInjection.bodyTagStart]]
+[[=master.codeInjection.bodyTagStart]]
 [[endif]]
-[[if codeInjectionBodyTagStart]]
-[[=codeInjectionBodyTagStart]]
+[[if codeInjection.bodyTagStart]]
+[[=codeInjection.bodyTagStart]]
 [[endif]]
 		<div id="page-container"[[if cssClassName]] class="[[=&cssClassName]]"[[endif]]>
 			<div id="page">
@@ -200,12 +200,12 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif2]]
 [[endif]]
 
-[[if codeInjectionBodyTagEnd]]
-[[=codeInjectionBodyTagEnd]]
+[[if codeInjection.bodyTagEnd]]
+[[=codeInjection.bodyTagEnd]]
 [[endif]]
 
-[[if master.codeInjectionBodyTagEnd]]
-[[=master.codeInjectionBodyTagEnd]]
+[[if master.codeInjection.bodyTagEnd]]
+[[=master.codeInjection.bodyTagEnd]]
 [[endif]]
 
 [[if parser.HTMLGenerationPurpose==10]]
