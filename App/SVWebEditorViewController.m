@@ -217,7 +217,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
     NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
-    NSMutableArray *contentObjects = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
+    NSMutableArray *editorItems = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
     for (SVGraphic *aContentObject in [[self selectedObjectsController] arrangedObjects])
     {
@@ -229,7 +229,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             [item setHTMLContext:[self HTMLContext]];
             [item setEditable:YES];
             
-            [contentObjects addObject:item];
+            [editorItems addObject:item];
             [item release];
         }
         else
@@ -237,9 +237,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             NSLog(@"Could not locate content object with ID: %@", [aContentObject elementID]);
         }
     }
-    
-    [self setContentItems:contentObjects];
-    [contentObjects release];
     
     
     
@@ -296,6 +293,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                       toObject:[aTextBlock HTMLSourceObject]
                    withKeyPath:[aTextBlock HTMLSourceKeyPath]
                        options:nil];
+                
+                // Make top-level text fields selectable. The way I determine this is admittedly hacky at the moment
+                if ([[aTextBlock HTMLSourceObject] isKindOfClass:[KTAbstractPage class]])
+                {
+                    [editorItems addObject:textArea];
+                }
             }
             
             [textAreas addObject:textArea];
@@ -306,6 +309,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             NSLog(@"Couldn't find text area: %@", [aTextBlock DOMNodeID]);
         }
     }
+    
+    
+    
+    // Store controllers
+    [self setContentItems:editorItems];
+    [editorItems release];
     
     [self setTextAreas:textAreas];
     [textAreas release];
@@ -598,7 +607,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     if (item)
     {
-        result = [[item bodyText] contentItems];  
+        if ([item isKindOfClass:[SVWebEditorItem class]])
+        {
+            result = [[item bodyText] contentItems];  
+        }
     }
     else
     {
