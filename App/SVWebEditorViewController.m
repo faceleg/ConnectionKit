@@ -280,12 +280,18 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             }
             else
             {
+                // Copy basic properties from text block
                 textArea = [[SVWebTextField alloc] initWithHTMLElement:element];
                 [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
                 [textArea setEditable:[aTextBlock isEditable]];
                 
+                // Choose a placeholder string
+                NSString *placeholder = NSLocalizedString(@"Click to edit", "Placeholder string");
+                [textArea setPlaceholderString:placeholder];
+                
+                // Bind to model
                 [textArea bind:NSValueBinding
                       toObject:[aTextBlock HTMLSourceObject]
                    withKeyPath:[aTextBlock HTMLSourceKeyPath]

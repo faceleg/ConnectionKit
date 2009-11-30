@@ -11,7 +11,9 @@
 
 @interface SVWebTextField : SVWebTextArea
 {
-
+    NSString    *_placeholder;
 }
+
+@property(nonatomic, copy) NSString *placeholderString;
 
 @end
