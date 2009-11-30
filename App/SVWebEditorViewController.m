@@ -29,6 +29,7 @@
 
 #import "KSCollectionController.h"
 #import "KSOrderedManagedObjectControllers.h"
+#import "KSPlugin.h"
 #import "KSSilencingConfirmSheet.h"
 
 
