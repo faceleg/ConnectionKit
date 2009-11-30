@@ -215,29 +215,6 @@
 }
 
 #pragma mark -
-#pragma mark Meta tags
-
-- (NSString *)metaDescription
-{
-	return [self valueForUndefinedKey:@"metaDescription"];
-}
-
-- (void)setMetaDescription:(NSString *)description
-{
-	[self setValue:description forUndefinedKey:@"metaDescription"];
-}
-
-- (NSString *)windowTitle
-{
-	return [self valueForUndefinedKey:@"windowTitle"];
-}
-
-- (void)setWindowTitle:(NSString *)wTitle
-{
-	[self setValue:wTitle forUndefinedKey:@"windowTitle"];
-}
-
-#pragma mark -
 #pragma mark Comments
 
 /*  http://wiki.js-kit.com/Admin-Guide#Importantattributes
