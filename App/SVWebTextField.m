@@ -42,4 +42,6 @@
     }
 }
 
+- (DOMElement *)DOMElement { return [self HTMLElement]; }
+
 @end

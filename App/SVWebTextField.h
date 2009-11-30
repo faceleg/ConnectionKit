@@ -7,9 +7,10 @@
 //
 
 #import "SVWebTextArea.h"
+#import "SVWebEditorItemProtocol.h"
 
 
-@interface SVWebTextField : SVWebTextArea
+@interface SVWebTextField : SVWebTextArea <SVWebEditorItem>
 {
     NSString    *_placeholder;
 }
