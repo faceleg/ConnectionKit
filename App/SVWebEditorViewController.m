@@ -20,7 +20,7 @@
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVWebTextArea.h"
+#import "SVWebTextField.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -280,7 +280,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             }
             else
             {
-                textArea = [[SVWebTextArea alloc] initWithHTMLElement:element];
+                textArea = [[SVWebTextField alloc] initWithHTMLElement:element];
                 [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
