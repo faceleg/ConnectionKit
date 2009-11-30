@@ -18,16 +18,12 @@
 [[endif3]]
 [[endif2]][[endif]]
 
-[[if includeCallout]]
-							<div class="article [[if callouts]]has-callout[[else2]]no-callout[[endif2]]">
-[[if callouts]]
-[[parseComponent self parser.calloutContainerTemplateHTML]]
-[[endif2]]
+							<div class="article">
 								<div class="article-content">
-[[endif]]
-								[[if includeCallout]][[else]]<div class="no-callouts">[[endif]]
-									[[parsecomponent self elementTemplate]]
-								</div>[[comment END OF NO-CALLOUTS OR ARTICLE-CONTENT]]
+                                    <div class="RichTextElement">
+                                        [[textblock property:body flags:"block imageable"]]
+                                    </div>
+								</div> <!-- /article-content -->
 
 								<div class="article-info">
 
@@ -40,7 +36,7 @@
 [[parsecomponent self commentsTemplate]]
 
 								</div> <!-- /article-info -->
-							[[if includeCallout]]</div>[[endif]] <!-- /article -->
+							</div> <!-- /article -->
 [[if index]]
 							<div id="index" class="[[=&index.cssClassName]]">
 [[index index pagesInIndex]]
