@@ -33,8 +33,6 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (KTElementPlugin *)plugin { return nil; }
-
 - (KTMaster *)master { return [[self parent] master]; }
 
 - (NSString *)dateDescription

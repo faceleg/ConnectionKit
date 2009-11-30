@@ -10,9 +10,7 @@
 #import "Debug.h"
 #import "KT.h"
 #import "KTAbstractElement+Internal.h"
-#import "KTAbstractPluginDelegate.h"
 #import "KTDocument.h"
-#import "KTElementPlugin.h"
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
 #import "KTPage.h"
@@ -34,61 +32,6 @@
 
 #pragma mark -
 #pragma mark Core Data
-
-/*!	Called when an object is done initializing; specifically, the bundle has been set.
-*/
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-{
-	KTElementPlugin *plugin = [self plugin];
-	
-	if ( isNewlyCreatedObject )
-	{
-		NSString *marketingVersion = @"";
-		if ([plugin bundle])
-		{
-			marketingVersion = [plugin marketingVersion];
-		}
-		if (nil == marketingVersion)
-		{
-			marketingVersion = @"0";		// fallback for unspecified
-		}
-		[self setWrappedValue:marketingVersion forKey:@"pluginVersion"];
-		
-		NSDictionary *localizedInfoDictionary = [[plugin bundle] localizedInfoDictionary];
-        NSDictionary *initialProperties = [plugin pluginPropertyForKey:@"KTPluginInitialProperties"];
-        if (nil != initialProperties)
-        {
-// TODO: deal with localization of initial properties
-            NSEnumerator *theEnum = [initialProperties keyEnumerator];
-            id key;
-            
-            while (nil != (key = [theEnum nextObject]) )
-            {
-                id value = [initialProperties objectForKey:key];
-				if ([value isKindOfClass:[NSString class]])
-				{
-					// Try to localize the string
-					NSString *localized = [localizedInfoDictionary objectForKey:key];
-					if (nil != localized)
-					{
-						value = localized;
-					}
-				}
-                if ([value respondsToSelector:@selector(mutableCopyWithZone:)])
-                {
-                    value = [[value mutableCopyWithZone:[value zone]] autorelease];
-                }
-				/// we can't use setWrappedValue:forKey: here as key is likely not a modeled property of self
-				//[self lockPSCAndMOC];
-				[self setValue:value forKey:key];
-				//[self unlockPSCAndMOC];
-            }
-        }        
-	}
-	
-	// Ensure our delegate is setup
-	[self delegate];
-}
 
 - (void)awakeFromInsert
 {
@@ -131,57 +74,6 @@
 	[super didTurnIntoFault];
 }
 
-#pragma mark -
-#pragma mark Delegate / Plugin
-
-- (id)delegate
-{
-	if (!myDelegate) 
-	{
-		Class delegateClass = [[[self plugin] bundle] principalClass];
-        if (delegateClass)
-        {                
-            // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
-            if (!myDelegate)
-            {
-                myDelegate = [[delegateClass alloc] init];
-                OBASSERTSTRING(myDelegate, @"plugin delegate cannot be nil!");
-                
-                [myDelegate setDelegateOwner:self];
-                
-                
-                // Let the delegate know that it's awoken
-                if ([myDelegate respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
-                {
-                    [myDelegate awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
-                }
-            }
-        }
-    }
-        
-	return myDelegate;
-}
-
-- (KTElementPlugin *)plugin
-{
-	KTElementPlugin *result = [self wrappedValueForKey:@"plugin"];
-	
-	if (!result)
-	{
-		NSString *identifier = [self valueForKey:@"pluginIdentifier"];
-        if (identifier)
-        {
-            result = [KTElementPlugin pluginWithIdentifier:identifier];
-            [self setPrimitiveValue:result forKey:@"plugin"];
-        }
-	}
-	
-	return result;
-}
-
-- (void)setPlugin:(KTAbstractElement *)plugin { OBASSERT_NOT_REACHED("Please don't call -setPlugin:"); }
-
-
 - (id)valueForUndefinedKey:(NSString *)key
 {
 	if ([key isEqualToString:@"root"])
@@ -190,46 +82,6 @@
 	}
 	
 	return [super valueForUndefinedKey:key];
-}
-
-/*	Whenever setting a value in the extensible properties inform our delegate if they're interested
- */
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-	OBPRECONDITION(key);
-    
-    // Let our delegate know if possible
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(plugin:didSetValue:forPluginKey:oldValue:)])
-	{
-		id oldValue = [self valueForUndefinedKey:key];
-		[super setValue:value forUndefinedKey:key];
-		[delegate plugin:self didSetValue:value forPluginKey:key oldValue:oldValue];
-	}
-	else
-	{
-		[super setValue:value forUndefinedKey:key];
-	}
-}
-
-/*	Whenver validating something, we give our delegate first crack at it if they wish
- */
-- (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
-{
-	BOOL result = YES;
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(validatePluginValue:forKeyPath:error:)])
-	{
-		result = [delegate validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
-	}
-	
-	if (result)
-	{
-		result = [super validateValue:ioValue forKeyPath:inKeyPath error:outError];
-	}
-	
-	return result;
 }
 
 #pragma mark -
@@ -245,13 +97,6 @@
 {
 	NSString *result = [self wrappedValueForKey:@"uniqueID"];
 	return result;
-}
-
-/*	Simply pulls the value from the plugin's Info.plist
- */
-- (BOOL)allowIntroduction
-{
-	return [[[self plugin] pluginPropertyForKey:@"KTElementAllowsIntroduction"] boolValue];
 }
 
 #pragma mark title
@@ -336,46 +181,6 @@
 }
 
 
-// Called via recursiveComponentPerformSelector
-- (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
-{
-	NSBundle *bundle = [[self plugin] bundle];
-	NSString *resourcePath = [bundle resourcePath];
-    if (resourcePath)
-    {
-        NSArray *resourcesNeeded = [[self plugin] pluginPropertyForKey:@"KTPluginResourcesNeeded"];
-        NSEnumerator *theEnum = [resourcesNeeded objectEnumerator];
-        NSString *fileName;
-        
-        while (nil != (fileName = [theEnum nextObject]) )
-        {
-            NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
-            OBASSERT(path);
-            [aSet addObject:path];
-        }
-    }
-}
-
-- (void)addCSSFilePathToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
-{
-	NSBundle *bundle = [[self plugin] bundle];
-	
-	if ( nil == bundle ) return;
-	
-	NSString *resourcePath = [bundle resourcePath];
-	NSArray *cssFilesNeeded = [[self plugin] pluginPropertyForKey:@"KTPluginCSSFilesNeeded"];
-	NSEnumerator *theEnum = [cssFilesNeeded objectEnumerator];
-	NSString *fileName;
-	
-	while (nil != (fileName = [theEnum nextObject]) )
-	{
-		NSString *path = [resourcePath stringByAppendingPathComponent:fileName];
-//		LOG((@"%@ adding css file:%@", [self class], path));
-        OBASSERT(path);
-		[aSet addObject:path];
-	}
-}
-
 - (NSString *)spotlightHTML
 {
 	NSString *result = nil;
@@ -421,14 +226,6 @@
 		result = [[NSString alloc] initWithContentsOfFile:templatePath];
 	}
 	
-	return result;
-}
-
-/*	If we have a template use that. If not, fallback to our element's.
- */
-- (NSString *)templateHTML
-{
-	NSString *result = [[self plugin] templateHTMLAsString];
 	return result;
 }
 

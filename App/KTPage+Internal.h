@@ -11,16 +11,16 @@
 #import "KTAbstractElement+Internal.h"
 
 
+@class KTAbstractHTMLPlugin;
+
+
 @interface KTPage (Internal)
 
 // Creation
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin;
++ (KTPage *)insertNewPageWithParent:(KTPage *)aParent;
 
 + (KTPage *)pageWithParent:(KTPage *)aParent
 	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
-
-// Inspector
-- (BOOL)separateInspectorSegment;
 
 // Hierarchy
 - (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;	// DEPRECATED.  FASTER TO USE isDescendantOfPage:

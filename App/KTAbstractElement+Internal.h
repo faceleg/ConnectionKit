@@ -8,11 +8,11 @@
 
 #import "KTAbstractElement.h"
 
+@class KTPage, KTMediaManager;
+
 
 @interface KTAbstractElement (Internal)
 
-- (KTElementPlugin *)plugin;
-//- (KTDocument *)document;
 - (KTPage *)page;	// enclosing page (self if this is a page)
 - (BOOL)allowIntroduction;
 

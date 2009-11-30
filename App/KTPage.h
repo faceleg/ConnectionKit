@@ -23,7 +23,7 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
-@class KTDesign, KTAbstractHTMLPlugin;
+@class KTDesign;
 @class KTArchivePage, KTAbstractIndex, KTMaster, KTCodeInjection;
 @class WebView;
 @class KTMediaContainer;
@@ -176,8 +176,6 @@
 @interface KTPage (Web)
 + (NSString *)pageTemplate;
 
-- (BOOL)pluginHTMLIsFullPage;
-- (void)setPluginHTMLIsFullPage:(BOOL)fullPage;
 - (BOOL)shouldPublishHTMLTemplate;
 
 - (NSString *)javascriptURLPath;

@@ -17,7 +17,6 @@
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
-#import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
 
@@ -91,18 +90,14 @@
 /*	Private support method that creates a generic, blank page.
  *	It gets created either by unarchiving or the user creating a new page.
  */
-+ (KTPage *)_insertNewPageWithParent:(KTPage *)parent pluginIdentifier:(NSString *)pluginIdentifier
++ (KTPage *)_insertNewPageWithParent:(KTPage *)parent
 {
-	OBPRECONDITION([parent managedObjectContext]);		OBPRECONDITION(pluginIdentifier);
+	OBPRECONDITION([parent managedObjectContext]);
 	
 	
 	// Create the page
 	KTPage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Page"
                                                    inManagedObjectContext:[parent managedObjectContext]];
-	
-	
-	// Store the plugin identifier. This HAS to be done before attaching the parent or Site Outline icon caching fails.
-	[result setValue:pluginIdentifier forKey:@"pluginIdentifier"];
 	
 	
 	// Attach to parent & other relationships
@@ -113,7 +108,7 @@
 	return result;
 }
 
-+ (KTPage *)insertNewPageWithParent:(KTPage *)aParent plugin:(KTElementPlugin *)aPlugin
++ (KTPage *)insertNewPageWithParent:(KTPage *)aParent;
 {
 	// Figure out nearest sibling/parent
     KTPage *predecessor = aParent;
@@ -125,7 +120,7 @@
 	
 	
     // Create the page
-	KTPage *page = [self _insertNewPageWithParent:aParent pluginIdentifier:[[aPlugin bundle] bundleIdentifier]];
+	KTPage *page = [self _insertNewPageWithParent:aParent];
 	
 	
 	// Load properties from parent/sibling
@@ -145,10 +140,7 @@
 {
 	OBPRECONDITION(nil != aParent);
 
-	KTElementPlugin *plugin = [aDictionary objectForKey:kKTDataSourcePlugin];
-	OBASSERTSTRING((nil != plugin), @"drag dictionary does not have a real plug-in");
-	
-	id page = [self insertNewPageWithParent:aParent plugin:plugin];
+	id page = [self insertNewPageWithParent:aParent];
 	
 	// anything else to do with the drag source dictionary other than to get the bundle?
 	// should the delegate be passed the dictionary and have an opportunity to use it?
@@ -202,14 +194,6 @@
 {
 	if ( isNewlyCreatedObject )
 	{
-		// Initialize this required value from the info dictionary
-		NSNumber *includeSidebar = [[self plugin] pluginPropertyForKey:@"KTPageShowSidebar"];
-		[self setValue:includeSidebar forKey:@"includeSidebar"];
-			
-		NSString *titleText = [[self plugin] pluginPropertyForKey:@"KTPageUntitledName"];
-		[self setTitleText:titleText];
-		// Note: there won't be a site title set for a newly created object.
-		
 		KTPage *parent = [self parent];
 		// Set includeInSiteMenu if this page's parent is root, and not too many siblings
 		if (nil != parent && [parent isRoot] && [[parent valueForKey:@"children"] count] < 7)
@@ -230,16 +214,6 @@
 	}
 		
 	[self setNewPage:isNewlyCreatedObject];		// for benefit of webkit editing only
-	
-	
-	// Default values pulled from the plugin's Info.plist
-	[self setDisableComments:[[[self plugin] pluginPropertyForKey:@"KTPageDisableComments"] boolValue]];
-	[self setSidebarChangeable:[[self plugin] pluginPropertyForKey:@"KTPageSidebarChangeable"]];
-	
-	
-	// I moved this below the above, in order to give the delegates a chance to override the
-	// defaults.
-	[super awakeFromBundleAsNewlyCreatedObject:isNewlyCreatedObject];
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
@@ -256,7 +230,7 @@
 	if (nil != title)
 	{
 		NSString *titleHTML = [self titleHTML];
-		if (nil == titleHTML || [titleHTML isEqualToString:@""] || [titleHTML isEqualToString:[[self plugin] pluginPropertyForKey:@"KTPluginUntitledName"]])
+		if (nil == titleHTML || [titleHTML isEqualToString:@""])
 		{
 			[self setTitleText:title];
 		}
@@ -396,16 +370,6 @@
 }
 
 - (NSString *)archiveIdentifier { return [self uniqueID]; }
-
-#pragma mark -
-#pragma mark Inspector
-
-/*!	True if this page type should put the inspector in the third inspector segment -- use sparingly.
-*/
-- (BOOL)separateInspectorSegment
-{
-	return [[[self plugin] pluginPropertyForKey:@"KTPageSeparateInspectorSegment"] boolValue];
-}
 
 #pragma mark -
 #pragma mark Debugging

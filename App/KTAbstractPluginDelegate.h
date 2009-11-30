@@ -20,6 +20,10 @@
 #import <Cocoa/Cocoa.h>
 #import "KTAbstractElement.h"
 
+
+@class KTPage, KTMediaManager;
+
+
 // this class essentially defines an informal plugin delegate protocol
 
 @interface KTAbstractPluginDelegate : NSObject

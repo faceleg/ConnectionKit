@@ -21,7 +21,7 @@
 #import <WebKit/WebKit.h>
 
 
-@class KTDocument, KTMediaManager, KTElementPlugin, KTPage;
+@class KTDocument;
 @interface KTAbstractElement : KTManagedObject 
 {
     // optional delegate
@@ -46,19 +46,6 @@
 - (NSString *)titleText;
 - (void)setTitleText:(NSString *)title;
 
-@end
-
-
-@interface NSObject (KTAbstractPluginDelegate)
-- (void)plugin:(KTAbstractElement *)plugin 
-   didSetValue:(id)value 
-  forPluginKey:(NSString *)key 
-	  oldValue:(id)oldValue;
-
-- (BOOL)plugin:(KTAbstractElement *)plugin
-	shouldInsertNode:(DOMNode *)node
-  intoTextForKeyPath:(NSString *)keyPath
-		 givenAction:(WebViewInsertAction)action;
 @end
 
 
