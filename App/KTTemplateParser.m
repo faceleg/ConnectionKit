@@ -501,7 +501,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 {
 	NSString *theString = [tag substringFromIndex:1];			// String to localize in user's language
 	
-	NSBundle *theBundle = [[self cache] valueForKeyPath:@"plugin.bundle"];
+	NSBundle *theBundle = [NSBundle mainBundle];//[[self cache] valueForKeyPath:@"plugin.bundle"];
 	NSString *theNewString = [theBundle localizedStringForKey:theString value:@"" table:nil];
 	//LOG((@"USER %@ -> %@", theString, theNewString));
 	
