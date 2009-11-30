@@ -84,6 +84,9 @@
 
 + (NSString *)entityName { return @"Page"; }
 
+// Disable support for extensible properties
+-(BOOL) canStoreExtensiblePropertyForKey:(NSString *)key { return NO; }
+
 #pragma mark -
 #pragma mark Initialisation
 
