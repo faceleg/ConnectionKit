@@ -68,7 +68,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[=codeInjectionHeadArea]]
 [[endif]]
 	</head>
-	<body class="sandvox [[if includeSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
+	<body class="sandvox [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.bannerImage]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRoot]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjectionBodyTag]][[=master.codeInjectionBodyTag]][[endif]][[if codeInjectionBodyTag]][[=codeInjectionBodyTag]][[endif]]>
 [[if master.codeInjectionBodyTagStart]]
 [[=master.codeInjectionBodyTagStart]]
 [[endif]]
@@ -135,7 +135,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				</div> <!-- page-top -->
 				<div class="clear"></div>
 				<div id="page-content" class="[[if includeInIndex]][[if parent.collectionShowNavigationArrows]][[if parent.index.navigationArrowsStyle==1]]has-photo-navigation[[else3]]has-text-navigation[[endif3]][[else2]]no-navigation[[endif2]][[endif]]">
-[[if includeSidebar]]
+[[if showSidebar]]
 					<div id="sidebar-container">
 [[if sidebar.pagelets|editing]]
 						<div id="sidebar">

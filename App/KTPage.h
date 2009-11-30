@@ -38,10 +38,18 @@
 // Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 
-// Debugging
+
+#pragma mark Properties
+@property(nonatomic, copy) NSNumber *showSidebar;
+
+
+#pragma mark Debugging
 - (NSString *)shortDescription;
 
 @end
+
+
+#pragma mark -
 
 
 @interface KTPage (Accessors)

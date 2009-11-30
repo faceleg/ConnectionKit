@@ -208,7 +208,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     if ( [selectedPage isKindOfClass:[KTPage class]] )
     {
-        BOOL canPaste = ([selectedPage includeSidebar] || [selectedPage includeCallout]);
+        BOOL canPaste = ([[selectedPage showSidebar] boolValue] || [selectedPage includeCallout]);
         if ( canPaste )
         {
             // paste

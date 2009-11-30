@@ -253,6 +253,10 @@
 	}
 }
 
+#pragma mark Properties
+
+@dynamic showSidebar;
+
 #pragma mark -
 #pragma mark Dates
 

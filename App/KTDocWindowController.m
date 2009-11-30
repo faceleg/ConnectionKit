@@ -729,7 +729,7 @@ from representedObject */
 			}
 			else if ( [self canPastePagelets] )
 			{
-				return ([selectedPage includeSidebar] || [selectedPage includeCallout]);
+				return ([[selectedPage showSidebar] boolValue] || [selectedPage includeCallout]);
 			}
 			else
 			{
