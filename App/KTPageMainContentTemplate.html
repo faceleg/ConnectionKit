@@ -1,22 +1,21 @@
 						<div id="main-content">
 							[[textblock property:titleHTML flags:"line" tag:h2 graphicalTextCode:h2]]
 							
-[[if includeInIndex]][[if parentPage.collectionShowNavigationArrows]]
+[[if showNavigationArrows]]
 [[if parentPage.index.navigationArrowsStyle==1]]
 							<div class="collection-navigation photo-navigation">
-								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[endif4]]</div>
-								<div id="next-photo" class="next-page">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[`navigateNextHTML]]</a>[[endif4]]</div>
+								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[endif3]]</div>
+								<div id="next-photo" class="next-page">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[`navigateNextHTML]]</a>[[endif3]]</div>
 								<div id="photo-list" class="collection-index"><a class="imageLink" href="[[path parentPage]]">[[`navigateListHTML]]</a></div>
 							</div>
-[[endif3]]
-[[if parentPage.index.navigationArrowsStyle==2]]
+[[else2]]
 							<div class="collection-navigation text-navigation">
-								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.titleText]]</a></div>[[endif4]]
+								[[if previousPage]]<div class="previous-page"><a href="[[path previousPage]]"><span>&laquo;</span> [[=&previousPage.titleText]]</a></div>[[endif3]]
 								<div class="collection-index"><a href="[[path parentPage]]">[[=&parentPage.titleText]]</a></div>
-								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.titleText]] <span>&raquo;</span></a></div>[[endif4]]
+								[[if nextPage]]<div class="next-page"><a href="[[path nextPage]]">[[=&nextPage.titleText]] <span>&raquo;</span></a></div>[[endif3]]
 							</div>
-[[endif3]]
-[[endif2]][[endif]]
+[[endif2]]
+[[endif]]
 
 							<div class="article">
 								<div class="article-content">

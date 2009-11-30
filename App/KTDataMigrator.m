@@ -592,13 +592,6 @@
     }
     
     
-    // We want photo grids to have navigation arrows turned on.
-    if ([newPage isCollection] && [[newPage valueForKey:@"collectionIndexBundleIdentifier"] isEqualToString:@"sandvox.PhotoGridIndex"])
-    {
-        [newPage setBool:YES forKey:@"collectionShowNavigationArrows"];
-    }
-    
-    
     // Migrate the special addX properties
     BOOL excludeFromSitemap = [oldPage boolForKey:@"addBool1"];
     [newPage setBool:!excludeFromSitemap forKey:@"includeInSiteMap"];

@@ -459,6 +459,10 @@
 	return result;
 }
 
+#pragma mark Navigation Arrows
+
+@dynamic showNavigationArrows;
+
 #pragma mark -
 #pragma mark Should probably be deprecated
 

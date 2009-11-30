@@ -72,7 +72,7 @@
 @property(nonatomic, copy) NSString *menuTitle;
 
 
-// Timestamps
+#pragma mark Timestamp
 
 @property(nonatomic, copy) NSDate *creationDate;
 @property(nonatomic, copy) NSDate *lastModificationDate;
@@ -107,6 +107,9 @@
 @end
 
 
+#pragma mark -
+
+
 @interface KTPage (Children)
 // Basic Accessors
 - (KTCollectionSortType)collectionSortOrder;
@@ -131,6 +134,10 @@
 - (BOOL)hasChildren;
 
 - (NSIndexPath *)indexPath;
+
+#pragma mark Navigation Arrows
+@property(nonatomic, copy) NSNumber *showNavigationArrows;
+
 @end
 
 
