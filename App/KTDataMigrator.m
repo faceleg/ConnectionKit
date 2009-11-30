@@ -478,11 +478,8 @@
         return NO;
     }
     
-    NSString *oldRootPluginIdentifier = [oldRoot valueForKey:@"pluginIdentifier"];
-    NSString *newRootPluginIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:oldRootPluginIdentifier];
-    KTElementPlugin *newRootPlugin = [KTElementPlugin pluginWithIdentifier:newRootPluginIdentifier];
     
-    KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI rootPlugin:newRootPlugin error:outError];
+    KTDocument *newDoc = [[KTDocument alloc] initWithType:kKTDocumentUTI error:outError];
     if (newDoc)
     {
         [[newDoc undoManager] disableUndoRegistration];
