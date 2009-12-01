@@ -93,7 +93,7 @@
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
-	// Build the text block
+	// Build a text block
 	SVHTMLTextBlock *result = [[[SVHTMLTextBlock alloc] init] autorelease];
 	
 	BOOL fieldEditor = [flags containsObject:@"line"];
@@ -116,9 +116,17 @@
 	[result setHTMLSourceObject:object];
 	[result setHTMLSourceKeyPath:keypath];
 	
-	
-	// Inform delegate
-	[self didParseTextBlock:result];
+    
+    // Only generate the block if there is text to use
+	if ([[result innerHTMLString] length] > 0)
+    {
+        // Inform delegate
+        [self didParseTextBlock:result];
+    }
+    else
+    {
+        result = nil;
+    }
     
     
     return result;
