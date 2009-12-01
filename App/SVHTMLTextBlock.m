@@ -247,12 +247,8 @@
  */
 - (NSString *)HTMLString
 {
-	// When publishing, generate an empty string (or maybe nil) for empty text blocks
+	// Ignore empty text
 	NSString *innerHTML = [self innerHTMLString];
-	if (![[SVHTMLContext currentContext] isEditable] && (!innerHTML || [innerHTML isEqualToString:@""]))
-	{
-		return @"";
-	}
 	
 	
 	// Construct the actual HTML
