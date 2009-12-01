@@ -692,7 +692,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         [border setEditing:YES];
         NSRect frameRect = [[anItem DOMElement] boundingBox];
         NSRect drawingRect = [border drawingRectForFrame:frameRect];
-        if (NSIntersectsRect(drawingRect, dirtyRect))
+        if ([view needsToDrawRect:drawingRect])
         {
             [border drawWithFrame:frameRect inView:view];
         }
@@ -706,7 +706,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
         NSRect frameRect = [[anItem DOMElement] boundingBox];
         NSRect drawingRect = [border drawingRectForFrame:frameRect];
-        if (NSIntersectsRect(drawingRect, dirtyRect))
+        if ([view needsToDrawRect:drawingRect])
         {
             [border drawWithFrame:frameRect inView:view];
         }
