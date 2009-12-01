@@ -161,7 +161,12 @@
 {
 	[super awakeFromInsert];
 	
+    
+    // Placeholder text
+    [self setPrimitiveValue:NSLocalizedString(@"Page Title", "placeholder text")
+                     forKey:@"titleHTML"];
 	
+    
     // Body text. Give it a starting paragraph
     SVBody *body = [SVBody insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
     [self setBody:body];
