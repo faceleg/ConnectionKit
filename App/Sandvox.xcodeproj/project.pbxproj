@@ -1052,6 +1052,20 @@
 			remoteGlobalIDString = 8D57630D048677EA00EA77CD;
 			remoteInfo = MetaSandvox;
 		};
+		27BDA74310C5E410008C8199 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6A8666490F9593B200325E1C /* ObjectiveFlickr.framework */;
+			remoteInfo = "ObjectiveFlickr (framework)";
+		};
+		27BDA74510C5E410008C8199 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 6ABF72E60F939BE600B9179E /* libObjectiveFlickr.a */;
+			remoteInfo = "ObjectiveFlickr (library)";
+		};
 		27E4D4500EC30CEE000E85DD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
@@ -1555,27 +1569,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8DC2EF4F0486A6940098B216;
 			remoteInfo = iMedia;
-		};
-		CED864EE10AA435C002DF34F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6A8666490F9593B200325E1C;
-			remoteInfo = "ObjectiveFlickr (framework)";
-		};
-		CED864F010AA435C002DF34F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 6ABF72E60F939BE600B9179E;
-			remoteInfo = "ObjectiveFlickr (library)";
-		};
-		CED864F210AA43D9002DF34F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 6ABF72E50F939BE600B9179E;
-			remoteInfo = "ObjectiveFlickr (library)";
 		};
 		CEEE5AEC0DAE886500B7F6A2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2625,7 +2618,7 @@
 		CED45B8F0947904D00BB172E /* ScreenSaver.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScreenSaver.framework; path = /System/Library/Frameworks/ScreenSaver.framework; sourceTree = "<absolute>"; };
 		CED850770BD33EAE00FED416 /* dotmac.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = dotmac.png; sourceTree = "<group>"; };
 		CED85A6A0BD35D5600FED416 /* draftPattern.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = draftPattern.png; sourceTree = "<group>"; };
-		CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = ../../../imedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ObjectiveFlickr.xcodeproj; path = ../../imedia/ObjectiveFlickr/ObjectiveFlickr.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CED86ED909522E20000D78F9 /* karelia.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = karelia.png; sourceTree = "<group>"; };
 		CEDE18960A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_TW; path = zh_TW.lproj/Credits.html; sourceTree = "<group>"; };
 		CEDE189B0A5C697E0055352C /* zh_TW */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -3236,6 +3229,15 @@
 				27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */,
 			);
 			name = "Publishing Engine";
+			sourceTree = "<group>";
+		};
+		27BDA73E10C5E410008C8199 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				27BDA74410C5E410008C8199 /* ObjectiveFlickr.framework */,
+				27BDA74610C5E410008C8199 /* libObjectiveFlickr.a */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
@@ -4761,15 +4763,6 @@
 			name = ThirdParty;
 			sourceTree = "<group>";
 		};
-		CED864E610AA435C002DF34F /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				CED864EF10AA435C002DF34F /* ObjectiveFlickr.framework */,
-				CED864F110AA435C002DF34F /* libObjectiveFlickr.a */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		CEF12E780D908EB400FCAC70 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -5118,7 +5111,6 @@
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				CE559B621085296D008870B5 /* PBXTargetDependency */,
-				CED864F310AA43D9002DF34F /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -5276,7 +5268,7 @@
 					ProjectRef = 3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */;
 				},
 				{
-					ProductGroup = CED864E610AA435C002DF34F /* Products */;
+					ProductGroup = 27BDA73E10C5E410008C8199 /* Products */;
 					ProjectRef = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
 				},
 				{
@@ -5340,6 +5332,20 @@
 			fileType = wrapper.cfbundle;
 			path = CollectionArchive.svxElement;
 			remoteRef = 274339ED0D77339B00164FA5 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27BDA74410C5E410008C8199 /* ObjectiveFlickr.framework */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.framework;
+			path = ObjectiveFlickr.framework;
+			remoteRef = 27BDA74310C5E410008C8199 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		27BDA74610C5E410008C8199 /* libObjectiveFlickr.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libObjectiveFlickr.a;
+			remoteRef = 27BDA74510C5E410008C8199 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		27E62FF90EC3060A0044ED36 /* AmazonSupport.framework */ = {
@@ -5571,20 +5577,6 @@
 			fileType = wrapper.application;
 			path = iMedia2.app;
 			remoteRef = CEB122FC10AA0F6A00E36F07 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CED864EF10AA435C002DF34F /* ObjectiveFlickr.framework */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.framework;
-			path = ObjectiveFlickr.framework;
-			remoteRef = CED864EE10AA435C002DF34F /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
-		CED864F110AA435C002DF34F /* libObjectiveFlickr.a */ = {
-			isa = PBXReferenceProxy;
-			fileType = archive.ar;
-			path = libObjectiveFlickr.a;
-			remoteRef = CED864F010AA435C002DF34F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CEF12E7F0D908EB400FCAC70 /* YouTube.svxElement */ = {
@@ -6688,11 +6680,6 @@
 			isa = PBXTargetDependency;
 			name = iMedia;
 			targetProxy = CED864B010AA41DC002DF34F /* PBXContainerItemProxy */;
-		};
-		CED864F310AA43D9002DF34F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = "ObjectiveFlickr (library)";
-			targetProxy = CED864F210AA43D9002DF34F /* PBXContainerItemProxy */;
 		};
 		CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
