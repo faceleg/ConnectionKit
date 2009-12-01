@@ -191,6 +191,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     [[self undoManager] removeAllActions];
     
     // Store the new text
+    [text webEditorTextWillGainFocus:nil];
     [_focusedText release], _focusedText = [text retain];
 }
 

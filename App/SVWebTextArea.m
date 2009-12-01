@@ -142,6 +142,8 @@
                                                         object:self];
 }
 
+- (void)webEditorTextWillGainFocus; { }
+
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
     // Notify that editing began if this is the case

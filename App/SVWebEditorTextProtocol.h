@@ -23,6 +23,9 @@
                            pasteboard:(NSPasteboard *)pasteboard;
 
 
+// Informs the receiver that it is about to gain focus.
+- (void)webEditorTextWillGainFocus;
+
 // Informs the receiver that some portion of it did change through editing. The notification is the same as a WebView will have dished out.
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 
