@@ -21,12 +21,15 @@ enum SVSelectionResizeMask
 @interface SVSelectionBorder : NSObject
 {
     BOOL    _isEditing;
+    NSSize  _minSize;
 }
 
 @property(nonatomic, getter=isEditing) BOOL editing;
+@property(nonatomic) NSSize minSize;
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 
+- (NSRect)frameRectForFrame:(NSRect)frameRect;  // adjusts frame to suit -minSize if needed
 - (NSRect)drawingRectForFrame:(NSRect)frameRect;
 - (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view;
 

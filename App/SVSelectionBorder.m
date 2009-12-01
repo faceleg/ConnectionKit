@@ -20,16 +20,12 @@
 @implementation SVSelectionBorder
 
 @synthesize editing = _isEditing;
-
-- (void)dealloc
-{
-    
-    [super dealloc];
-}
-
+@synthesize minSize = _minSize;
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
+    frameRect = [self frameRectForFrame:frameRect];
+    
     // First draw overall frame
     [[NSColor grayColor] setFill];
     NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
@@ -69,10 +65,28 @@
     NSFrameRect(rect);
 }
 
-/*  Enlarge by 3 pixels to accomodate selection handles
- */
+- (NSRect)frameRectForFrame:(NSRect)frameRect;
+{
+    // Make sure the frame meets the requirements of -minFrame.
+    NSSize frameSize = frameRect.size;
+    NSSize minSize = [self minSize];
+    
+    if (frameSize.width < minSize.width || frameSize.height < minSize.height)
+    {
+        CGFloat dX = 0.5 * (MAX(frameSize.width, minSize.width) - frameSize.width);
+        CGFloat dY = 0.5 * (MAX(frameSize.height, minSize.height) - frameSize.height);
+        frameRect = NSInsetRect(frameRect, dX, dY);
+    }
+    
+    return frameRect;
+}
+
 - (NSRect)drawingRectForFrame:(NSRect)frameRect;
 {
+    // First, make sure the frame meets the requirements of -minFrame.
+    frameRect = [self frameRectForFrame:frameRect];
+    
+    // Then enlarge to accomodate selection handles
     NSRect result = NSInsetRect(frameRect, -3.0, -3.0);
     return result;
 }
