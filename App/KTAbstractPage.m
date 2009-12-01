@@ -140,6 +140,13 @@
 #pragma mark Title
 
 @dynamic titleHTMLString;
+- (void)setTitleHTMLString:(NSString *)value
+{
+    // Very annoying, if you try to override a dynamically generated Core Data accessor in a subclass, Core Data won't actually generate the super method, so we have to do so here ourself.
+    [self willChangeValueForKey:@"titleHTMLString"];
+    [self setPrimitiveValue:value forKey:@"titleHTMLString"];
+    [self didChangeValueForKey:@"titleHTMLString"];
+}
 
 - (NSString *)titleText	// get title, but without attributes
 {
