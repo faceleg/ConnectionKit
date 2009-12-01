@@ -182,11 +182,6 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     [super didSelectViewController];
     
     // Inform delegate of change to title
-    NSString *title = nil;
-    if ([self selectedViewController] == [self webEditorViewController])
-    {
-        title = [[self webEditorViewController] title];
-    }
     [[self delegate] webContentAreaControllerDidChangeTitle:self];
 }
 
