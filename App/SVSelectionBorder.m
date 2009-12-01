@@ -22,10 +22,10 @@
 @synthesize editing = _isEditing;
 @synthesize minSize = _minSize;
 
+#pragma mark Drawing
+
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
-    frameRect = [self frameRectForFrame:frameRect];
-    
     // First draw overall frame
     [[NSColor grayColor] setFill];
     NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
@@ -53,6 +53,11 @@
     }
 }
 
+- (void)drawWithGraphicBounds:(NSRect)frameRect inView:(NSView *)view;
+{
+    [self drawWithFrame:[self frameRectForGraphicBounds:frameRect] inView:view];
+}
+
 - (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view
 {
     NSRect rect = [view centerScanRect:NSMakeRect(point.x - 3.0,
@@ -65,7 +70,9 @@
     NSFrameRect(rect);
 }
 
-- (NSRect)frameRectForFrame:(NSRect)frameRect;
+#pragma mark Layout
+
+- (NSRect)frameRectForGraphicBounds:(NSRect)frameRect;
 {
     // Make sure the frame meets the requirements of -minFrame.
     NSSize frameSize = frameRect.size;
@@ -81,10 +88,10 @@
     return frameRect;
 }
 
-- (NSRect)drawingRectForFrame:(NSRect)frameRect;
+- (NSRect)drawingRectForGraphicBounds:(NSRect)frameRect;
 {
     // First, make sure the frame meets the requirements of -minFrame.
-    frameRect = [self frameRectForFrame:frameRect];
+    frameRect = [self frameRectForGraphicBounds:frameRect];
     
     // Then enlarge to accomodate selection handles
     NSRect result = NSInsetRect(frameRect, -3.0, -3.0);

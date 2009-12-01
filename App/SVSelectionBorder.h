@@ -28,9 +28,10 @@ enum SVSelectionResizeMask
 @property(nonatomic) NSSize minSize;
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
+- (void)drawWithGraphicBounds:(NSRect)bounds inView:(NSView *)view;
 
-- (NSRect)frameRectForFrame:(NSRect)frameRect;  // adjusts frame to suit -minSize if needed
-- (NSRect)drawingRectForFrame:(NSRect)frameRect;
+- (NSRect)frameRectForGraphicBounds:(NSRect)bounds;  // adjusts frame to suit -minSize if needed
+- (NSRect)drawingRectForGraphicBounds:(NSRect)bounds;
 - (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view;
 
 @end

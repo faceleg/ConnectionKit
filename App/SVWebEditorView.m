@@ -309,7 +309,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     {
         for (id <SVWebEditorItem> anItem in itemsToDeselect)
         {
-            NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
         }
     }
@@ -327,7 +327,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         // Draw new selection
         for (id <SVWebEditorItem> anItem in itemsToSelect)
         {
-            NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
         }
     }
@@ -421,7 +421,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     [border setEditing:YES];
     for (id <SVWebEditorItem> anItem in [self selectionParentItems])
     {
-        NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
         [docView setNeedsDisplayInRect:drawingRect];
     }
     
@@ -432,7 +432,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     // Draw new items
     for (id <SVWebEditorItem> anItem in items)
     {
-        NSRect drawingRect = [border drawingRectForFrame:[[anItem DOMElement] boundingBox]];
+        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
         [docView setNeedsDisplayInRect:drawingRect];
     }
     
@@ -691,10 +691,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
         [border setEditing:YES];
         NSRect frameRect = [[anItem DOMElement] boundingBox];
-        NSRect drawingRect = [border drawingRectForFrame:frameRect];
+        NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:drawingRect])
         {
-            [border drawWithFrame:frameRect inView:view];
+            [border drawWithGraphicBounds:frameRect inView:view];
         }
     }
     
@@ -705,10 +705,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     {
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
         NSRect frameRect = [[anItem DOMElement] boundingBox];
-        NSRect drawingRect = [border drawingRectForFrame:frameRect];
+        NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:drawingRect])
         {
-            [border drawWithFrame:frameRect inView:view];
+            [border drawWithGraphicBounds:frameRect inView:view];
         }
     }
     
