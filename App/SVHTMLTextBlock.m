@@ -172,7 +172,7 @@
 	KTMediaContainer *result = nil;
 	
 	NSString *graphicalTextCode = [self graphicalTextCode];
-    NSString *innerHTML = [self innerHTML];
+    NSString *innerHTML = [self innerHTMLString];
 	if (graphicalTextCode && innerHTML && ![innerHTML isEqualToString:@""])
 	{
 		KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
@@ -233,7 +233,7 @@
 
 #pragma mark HTML
 
-- (NSString *)innerHTML
+- (NSString *)innerHTMLString
 {
 	id source = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
     NSString *result = ([source isKindOfClass:[SVBody class]] ? [source HTMLString] : source);
@@ -245,10 +245,10 @@
 
 /*	Includes the editable tag(s) + innerHTML
  */
-- (NSString *)outerHTML
+- (NSString *)HTMLString
 {
 	// When publishing, generate an empty string (or maybe nil) for empty text blocks
-	NSString *innerHTML = [self innerHTML];
+	NSString *innerHTML = [self innerHTMLString];
 	if (![[SVHTMLContext currentContext] isEditable] && (!innerHTML || [innerHTML isEqualToString:@""]))
 	{
 		return @"";

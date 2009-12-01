@@ -154,7 +154,7 @@
     
     
     // Copy HTML across to ourself
-    [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
+    [self setHTMLString:[[self HTMLElement] innerHTMLString] updateDOM:NO];
     
     
     // Push change down into the model

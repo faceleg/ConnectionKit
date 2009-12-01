@@ -160,7 +160,7 @@
 	[textBlock setHTMLSourceKeyPath:[page summaryHTMLKeyPath]];
     [textBlock setTruncateCharacters:truncation];
 	
-	NSString *result = [textBlock innerHTML];
+	NSString *result = [textBlock innerHTMLString];
 	
 	
 	// Enclose the HTML in an editable div if it needs it

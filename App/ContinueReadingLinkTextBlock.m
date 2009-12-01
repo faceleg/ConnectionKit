@@ -40,7 +40,7 @@
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)outerHTML
+- (NSString *)HTMLString
 {
 	NSString *result;
     if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
@@ -48,11 +48,11 @@
 		result = [NSString stringWithFormat:
                   @"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
                   [self DOMNodeID],
-                  [self innerHTML]];
+                  [self innerHTMLString]];
 	}
     else
     {
-        result = [NSString stringWithFormat:@"<span class=\"kLine\">\n%@\n</span>", [self innerHTML]];
+        result = [NSString stringWithFormat:@"<span class=\"kLine\">\n%@\n</span>", [self innerHTMLString]];
     }
     
 	return result;
@@ -60,7 +60,7 @@
 
 /*	Convert @@ to the page title
  */
-- (NSString *)innerHTML
+- (NSString *)innerHTMLString
 {
 	NSString *contentFormat = [self innerEditingHTML];
 	NSString *titleText = [[self targetPage] titleText];

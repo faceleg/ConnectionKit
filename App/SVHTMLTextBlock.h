@@ -74,8 +74,8 @@
 - (NSString *)graphicalTextCSSID;
 
 #pragma mark HTML
-- (NSString *)innerHTML;
-- (NSString *)outerHTML;
+- (NSString *)innerHTMLString;
+- (NSString *)HTMLString;
 
 - (NSString *)processHTML:(NSString *)originalHTML;
 

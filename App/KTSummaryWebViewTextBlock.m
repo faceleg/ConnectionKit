@@ -98,7 +98,7 @@
 		KTPage *page = [self HTMLSourceObject];
 		if (![page customSummaryHTML] && [page summaryHTMLKeyPath])
 		{
-			[[self DOMNode] setInnerHTML:[self innerHTML]];
+			[[self DOMNode] setInnerHTML:[self innerHTMLString]];
 		}
 	}
 	
@@ -124,7 +124,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (NSString *)innerHTML
+- (NSString *)innerHTMLString
 {
 	KTPage *page = [self HTMLSourceObject];
 	
@@ -170,7 +170,7 @@
 - (IBAction)overrideSummary:(id)sender		// respond to menu
 {
 	KTPage *page = [self HTMLSourceObject];
-	[page setCustomSummaryHTML:[self innerHTML]];
+	[page setCustomSummaryHTML:[self innerHTMLString]];
 	[[self DOMNode] setInnerHTML:[self innerEditingHTML]];
 }
 
