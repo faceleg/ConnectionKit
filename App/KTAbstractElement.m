@@ -50,28 +50,6 @@
 */
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
 {
-    if ([[self delegate] respondsToSelector:@selector(awakeFromDragWithDictionary:)])
-	{
-		[[self delegate] awakeFromDragWithDictionary:aDictionary];
-	}
-}
-
-/*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.
- */
-- (void)willTurnIntoFault
-{
-    [myDelegate setDelegateOwner:nil];
-	[myDelegate release];	myDelegate = nil;
-}
-
-- (void)didTurnIntoFault
-{
-	// Dispose of delegate
-	[myDelegate setDelegateOwner:nil];
-	[myDelegate release];	myDelegate = nil;
-	
-	
-	[super didTurnIntoFault];
 }
 
 #pragma mark -
@@ -104,12 +82,6 @@
 	NSMutableSet *result = [NSMutableSet set];
     
     [result unionSet:[KTMediaContainer mediaContainerIdentifiersInHTML:[self valueForKey:@"introductionHTML"]]];
-	
-	if ([[self delegate] respondsToSelector:@selector(requiredMediaIdentifiers)])
-	{
-		NSSet *delegateMedia = [[self delegate] performSelector:@selector(requiredMediaIdentifiers)];
-        if (delegateMedia) [result unionSet:delegateMedia];
-	}
 	
 	return result;
 }

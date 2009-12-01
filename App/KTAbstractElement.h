@@ -23,19 +23,12 @@
 
 @class KTDocument;
 @interface KTAbstractElement : KTManagedObject 
-{
-    // optional delegate
-	id myDelegate;
-}
 
 #pragma mark awake
 
 // Plugin awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject; // we want to be able to pass a flag here for special circumstances
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
-
-// Delegate
-- (id)delegate;
 
 
 // Accessors
