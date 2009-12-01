@@ -16,8 +16,10 @@
 #import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
+#import "NSArray+Karelia.h"
 #import "NSIndexSet+Karelia.h"
 #import "NSObject+Karelia.h"
+
 
 @interface KTDocument (PropertiesPrivate)
 - (void)updateDefaultDocumentProperty:(NSString *)key;
