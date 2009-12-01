@@ -79,9 +79,9 @@
 
 /*  When updating the page title, also update filename to match
  */
-- (void)setTitleHTML:(NSString *)value
+- (void)setTitleHTMLString:(NSString *)value
 {
-    [super setTitleHTML:value];
+    [super setTitleHTMLString:value];
     
     
     // Get the month formatted like "01_2008"

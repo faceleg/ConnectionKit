@@ -41,11 +41,6 @@
 // Accessors
 - (NSString *)uniqueID; // for convenience
 
-- (NSString *)titleHTML;
-- (void)setTitleHTML:(NSString *)value;
-- (NSString *)titleText;
-- (void)setTitleText:(NSString *)title;
-
 @end
 
 

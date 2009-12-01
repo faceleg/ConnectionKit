@@ -57,6 +57,8 @@ KTCollectionPathStyle;
 
 
 #pragma mark Title
+@property(nonatomic, copy) NSString *titleHTMLString;
+@property(nonatomic, copy) NSString *titleText;
 - (BOOL)canEditTitle;
 
 #pragma mark Web

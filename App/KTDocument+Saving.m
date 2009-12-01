@@ -695,7 +695,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			
 			// add unique page titles
 			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
-			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTML" entityName:@"Page"];
+			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTMLString" entityName:@"Page"];
 			unsigned int i;
 			for ( i=0; i<[pageTitles count]; i++ )
 			{

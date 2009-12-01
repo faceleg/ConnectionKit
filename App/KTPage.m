@@ -164,7 +164,7 @@
     
     // Placeholder text
     [self setPrimitiveValue:NSLocalizedString(@"Page Title", "placeholder text")
-                     forKey:@"titleHTML"];
+                     forKey:@"titleHTMLString"];
 	
     
     // Body text. Give it a starting paragraph
@@ -237,7 +237,7 @@
 	}
 	if (nil != title)
 	{
-		NSString *titleHTML = [self titleHTML];
+		NSString *titleHTML = [self titleHTMLString];
 		if (nil == titleHTML || [titleHTML isEqualToString:@""])
 		{
 			[self setTitleText:title];

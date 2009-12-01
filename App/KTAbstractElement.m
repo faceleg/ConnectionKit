@@ -89,35 +89,6 @@
 	return result;
 }
 
-#pragma mark title
-
-- (NSString *)titleHTML { return [self wrappedValueForKey:@"titleHTML"]; }
-
-/*	Very simple accessor for setting the titleHTML. Page subclasses override this to do additional work
- */
-- (void)setTitleHTML:(NSString *)value
-{
-	[self setWrappedValue:value forKey:@"titleHTML"];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingTitleText
-{
-    return [NSSet setWithObject:@"titleHTML"];
-}
-
-- (NSString *)titleText	// get title, but without attributes
-{
-	NSString *html = [self titleHTML];
-	NSString *result = [html stringByConvertingHTMLToPlainText];
-	return result;
-}
-
-- (void)setTitleText:(NSString *)value
-{
-	[self setTitleHTML:[value stringByEscapingHTMLEntities]];
-}
-
-#pragma mark -
 #pragma mark Media
 
 - (KTMediaManager *)mediaManager

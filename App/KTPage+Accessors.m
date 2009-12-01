@@ -51,11 +51,11 @@
 
 /*	Pages may need to be resorted after changing the title. This only affects KTPage, not KTAbstractPage
  */
-- (void)setTitleHTML:(NSString *)value
+- (void)setTitleHTMLString:(NSString *)value
 {
 	NSString *oldTitleText = [self titleText];
     
-    [super setTitleHTML:value];
+    [super setTitleHTMLString:value];
 	
 	
 	// If the page hasn't been published yet, update the filename to match

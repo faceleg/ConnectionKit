@@ -603,7 +603,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	KTPage *aPage;
 	while (aPage = [pagesEnumerator nextObject])
 	{
-		[result appendFormat:@"\t<li>%@</li>\n", [aPage titleHTML]];
+		[result appendFormat:@"\t<li>%@</li>\n", [aPage titleHTMLString]];
 	}
 	
 	[result appendFormat:@"</ul>"];

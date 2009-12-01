@@ -137,8 +137,26 @@
 
 @dynamic sidebar;
 
-#pragma mark -
 #pragma mark Title
+
+@dynamic titleHTMLString;
+
+- (NSString *)titleText	// get title, but without attributes
+{
+	NSString *html = [self titleHTMLString];
+	NSString *result = [html stringByConvertingHTMLToPlainText];
+	return result;
+}
+
+- (void)setTitleText:(NSString *)value
+{
+	[self setTitleHTMLString:[value stringByEscapingHTMLEntities]];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTitleText
+{
+    return [NSSet setWithObject:@"titleHTML"];
+}
 
 // For bindings.  We can edit title if we aren't root;
 - (BOOL)canEditTitle
