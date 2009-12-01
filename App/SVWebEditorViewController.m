@@ -285,10 +285,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
                 [textArea setEditable:[aTextBlock isEditable]];
                 
-                // Choose a placeholder string
-                NSString *placeholder = NSLocalizedString(@"Click to edit", "Placeholder string");
-                [textArea setPlaceholderString:placeholder];
-                
                 // Bind to model
                 [textArea bind:NSValueBinding
                       toObject:[aTextBlock HTMLSourceObject]
