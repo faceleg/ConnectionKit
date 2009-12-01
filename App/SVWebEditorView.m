@@ -252,7 +252,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
                              isUIAction:(BOOL)consultDelegateFirst;
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
+    
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
+    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     
     
@@ -415,7 +417,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 - (void)setSelectionParentItems:(NSArray *)items
 {
     NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
+    
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     // Mark old as needing display
     [border setEditing:YES];
@@ -683,6 +687,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 - (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     
     // Draw selection parent items
