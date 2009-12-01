@@ -30,7 +30,6 @@
     id <SVWebTextAreaDelegate>  _delegate;
     
     // Bindings
-    id <KSEditorRegistration>   _controller;  // weak ref
     BOOL                        _isCommittingEditing;
 }
 

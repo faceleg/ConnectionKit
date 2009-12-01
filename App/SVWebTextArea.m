@@ -140,9 +140,6 @@
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification
                                                         object:self];
-    
-    // Tell controller we're starting editing
-    [_controller objectDidBeginEditing:self];
 }
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
@@ -153,15 +150,28 @@
         [self didBeginEditing];
     }
     
+    
     // Copy HTML across to ourself
     [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
+    
+    
+    // Push change down into the model
+    NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
+    if (![editedValue isEqualToString:_uneditedValue])
+    {
+        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
+        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+        
+        _isCommittingEditing = YES;
+        [observedObject setValue:editedValue
+                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+        _isCommittingEditing = NO;
+    }
+
     
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
                                                         object:self];
-    
-    
-    /* Can now do other stuff in response to change */
 }
 
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
@@ -169,32 +179,6 @@
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification
                                                         object:self];
-    
-    
-    // Handle any bindings
-    if ([self isEditing])
-    {
-        // Push changes from the DOM down into the model
-        NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
-        if (![editedValue isEqualToString:_uneditedValue])
-        {
-            NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-            id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
-            
-            _isCommittingEditing = YES;
-            [observedObject setValue:editedValue
-                          forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
-            _isCommittingEditing = NO;
-        }
-        
-        
-        // Inform controller
-        [_controller objectDidEndEditing:self];
-    }
-    
-    
-    // Clear out the undo stack as the changes have propogated to the model
-    [[[[self HTMLElement] documentView] undoManager] removeAllActions];
     
     
     _isEditing = NO;
@@ -233,31 +217,6 @@
 }
 
 #pragma mark Bindings/NSEditor
-
-- (void)bind:(NSString *)binding toObject:(id)observableController withKeyPath:(NSString *)keyPath options:(NSDictionary *)options
-{
-    [super bind:binding toObject:observableController withKeyPath:keyPath options:options];
-    
-    // Want to store the controller for covenience
-    if ([binding isEqualToString:NSValueBinding])
-    {
-        if ([observableController respondsToSelector:@selector(objectDidBeginEditing:)] &&
-            [observableController respondsToSelector:@selector(objectDidEndEditing:)])
-        {
-            _controller = observableController; // weak ref
-        }
-    }
-}
-
-- (void)unbind:(NSString *)binding
-{
-    [super unbind:binding];
-    
-    if ([binding isEqualToString:NSValueBinding])
-    {
-        _controller = nil;
-    }
-}
 
 /*  These 2 bridge Cocoa's "value" binding terminology with our internal one
  */
