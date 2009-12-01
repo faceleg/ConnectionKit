@@ -738,7 +738,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			[localPool release];
 			
 			//  kMDItemTitle
-			NSString *siteTitle = [[[[self site] root] master] valueForKey:@"siteTitleHTML"];        
+			NSString *siteTitle = [[[[self site] root] master] siteTitleHTMLString];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemTitle];

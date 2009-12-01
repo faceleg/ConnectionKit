@@ -53,7 +53,7 @@
 	
 	// Placeholder text
     [self setPrimitiveValue:NSLocalizedString(@"Site Title", "placeholder text")
-                     forKey:@"siteTitleHTML"];
+                     forKey:@"siteTitleHTMLString"];
     [self setPrimitiveValue:NSLocalizedString(@"Site Subtitle", "placeholder text")
                      forKey:@"siteSubtitleHTML"];
 	
@@ -82,16 +82,8 @@
 {
 	[super awakeFromFetch];
 	
-	// Sort site title
-	NSString *html = [self valueForKey:@"siteTitleHTML"];	// just in case there is a site title set here
-	if (nil != html)
-	{
-		NSString *flattenedTitle = [html stringByConvertingHTMLToPlainText];
-		NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:flattenedTitle];
-		[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
-	}
 	
-	// Existing sites may not have their timestamp format set properly
+    // Existing sites may not have their timestamp format set properly
 	if (![self timestampFormat])
 	{
 		[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
@@ -108,38 +100,23 @@
 #pragma mark -
 #pragma mark Site Title & Subtitle
 
+@dynamic siteTitleHTMLString;
+
 - (NSString *)siteTitleText	// get title, but without attributes
 {
-	NSAttributedString *attrString = nil;
-	
-	id value = [self wrappedValueForKey:@"siteTitleAttributed"];
-	if ( nil != value )
-	{
-		if ( [value isKindOfClass:[NSData class]] )
-		{
-			attrString = [NSAttributedString attributedStringWithArchivedData:value];
-		}
-		else if ( [value isKindOfClass:[NSAttributedString class]] )
-		{
-			attrString = value;
-		}
-	}
-	
-    return [attrString string];
+	NSString *html = [self siteTitleHTMLString];
+	NSString *result = [html stringByConvertingHTMLToPlainText];
+	return result;
 }
-
-// Equivalent to above, but where we know it's text that we're getting
-
-// We set attributed title, but since we're giving it plain text, it's just an attributed version of that.
 
 - (void)setSiteTitleText:(NSString *)value
 {
-	NSString *escaped = [value stringByEscapingHTMLEntities];
-	[self setWrappedValue:escaped forKey:@"siteTitleHTML"];
-	
-	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:value];
-	
-	[self setWrappedValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
+	[self setSiteTitleHTMLString:[value stringByEscapingHTMLEntities]];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteTitleText
+{
+    return [NSSet setWithObject:@"siteTitleHTMLString"];
 }
 
 - (NSString *)siteSubtitleText	// get subtitle, but without attributes ... by flattening the HTML
@@ -155,17 +132,6 @@
 
 // Flatten the string and just store a fake attributed string.
 
-- (void)setSiteTitleHTML:(NSString *)value
-{
-	[self setWrappedValue:value forKey:@"siteTitleHTML"];
-	// set siteTitleAttributed LAST
-	NSString *siteTitleText = [value stringByConvertingHTMLToPlainText];
-	NSAttributedString *attrString = [NSAttributedString systemFontStringWithString:siteTitleText];
-	
-	[self setPrimitiveValue:[attrString archivableData] forKey:@"siteTitleAttributed"];
-}
-
-#pragma mark -
 #pragma mark Footer
 
 - (NSString *)copyrightHTML

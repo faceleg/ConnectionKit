@@ -28,8 +28,8 @@
 
 @interface KTMaster : KTManagedObject 
 
-- (NSString *)siteTitleText;
-- (void)setSiteTitleHTML:(NSString *)value;
+@property(nonatomic, copy) NSString *siteTitleHTMLString;
+@property(nonatomic, copy) NSString *siteTitleText;
 
 - (NSString *)copyrightHTML;
 - (void)setCopyrightHTML:(NSString *)copyrightHTML;
