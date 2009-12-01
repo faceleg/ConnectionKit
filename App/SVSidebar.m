@@ -57,6 +57,8 @@
         SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
                                                                             component:aPagelet];
         NSString *pageletHTML = [parser parseTemplate];
+        [parser release];
+        
         result = [result stringByAppendingString:pageletHTML];
     }
     
