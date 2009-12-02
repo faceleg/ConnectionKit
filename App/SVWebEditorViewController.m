@@ -11,6 +11,7 @@
 #import "SVBodyParagraph.h"
 #import "SVPlugInGraphic.h"
 #import "SVHTMLTextBlock.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
@@ -588,6 +589,57 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [element awakeFromBundleAsNewlyCreatedObject:YES];
     
     [body addElement:element];
+}
+
+- (IBAction)insertSiteTitle:(id)sender;
+{
+    // Create placeholder if needed
+    KTMaster *master = [[self page] master];
+    if ([[master siteTitleText] length] <= 0)
+    {
+        [master setSiteTitleText:NSLocalizedString(@"Site Title", "placeholder text")];
+    }
+    
+    // Begin editing in the webview. This is tricky because the addition may have required a reload
+    
+}
+
+- (IBAction)insertSiteSubtitle:(id)sender;
+{
+    // Create placeholder if needed
+    KTMaster *master = [[self page] master];
+    if ([[master siteSubtitleText] length] <= 0)
+    {
+        [master setSiteSubtitleText:NSLocalizedString(@"Site Subtitle", "placeholder text")];
+    }
+    
+    // Begin editing in the webview. This is tricky because the addition may have required a reload
+    
+}
+
+- (IBAction)insertPageTitle:(id)sender;
+{
+    // Create placeholder if needed
+    if ([[[self page] titleText] length] <= 0)
+    {
+        [[self page] setTitleText:NSLocalizedString(@"Page Title", @"placeholder text")];
+    }
+    
+    // Begin editing in the webview. This is tricky because the addition may have required a reload
+    
+}
+
+- (IBAction)insertFooter:(id)sender;
+{
+    // Create placeholder if needed
+    KTMaster *master = [[self page] master];
+    if ([[master copyrightHTML] length] <= 0)
+    {
+        [master setCopyrightHTML:[master defaultCopyrightHTML]];
+    }
+    
+    // Begin editing in the webview. This is tricky because the addition may have required a reload
+    
 }
 
 #pragma mark Delegate
