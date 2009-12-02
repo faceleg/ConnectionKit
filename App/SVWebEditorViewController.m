@@ -376,11 +376,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 @synthesize page = _page;
 - (void)setPage:(KTPage *)page
 {
-    [page retain];
-    [_page release];
-    _page = page;
+    if (page != _page)
+    {
+        [_page release]; _page = [page retain];
     
-    [self load];
+        [self load];
+    }
 }
 
 #pragma mark Text Areas
