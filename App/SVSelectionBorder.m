@@ -26,21 +26,25 @@
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
-    // First draw overall frame
+    // First draw overall frame. enlarge by 1 pixel to avoid drawing directly over the graphic
     [[NSColor grayColor] setFill];
     NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
                                        1.0,
                                        NSCompositeSourceOver);
     
-    // Then draw handles
+    // Then draw handles. Pixels are weird, need to draw using a slightly smaller rectangle otherwise edges get cut off
     if (![self isEditing])
     {
-        CGFloat minX = NSMinX(frameRect);
-        CGFloat midX = NSMidX(frameRect);
-        CGFloat maxX = NSMaxX(frameRect) - 1.0;
-        CGFloat minY = NSMinY(frameRect);
-        CGFloat midY = NSMidY(frameRect);
-        CGFloat maxY = NSMaxY(frameRect) - 1.0;
+        NSRect editingHandlesRect = frameRect;
+        editingHandlesRect.size.width -= 1.0f;
+        editingHandlesRect.size.height -= 1.0f;
+        
+        CGFloat minX = NSMinX(editingHandlesRect);
+        CGFloat midX = NSMidX(editingHandlesRect);
+        CGFloat maxX = NSMaxX(editingHandlesRect);
+        CGFloat minY = NSMinY(editingHandlesRect);
+        CGFloat midY = NSMidY(editingHandlesRect);
+        CGFloat maxY = NSMaxY(editingHandlesRect);
         
         [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view];
         [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view];
