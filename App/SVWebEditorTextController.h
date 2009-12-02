@@ -23,7 +23,10 @@
     BOOL        _isFieldEditor;
     
     // Editing
-    BOOL            _isEditing;
+    BOOL    _isEditing;
+    
+    // Undo
+    NSEvent *_lastTypingEvent;
     
     // Delegate
     id <SVWebTextAreaDelegate>  _delegate;
@@ -55,6 +58,10 @@
 
 
 #pragma mark Undo
+
+// The basic idea is that after every -didChange notification, the change should be pushed down to the model. BUT, if both the change and the previous one was a simple bit of typing, we don't want two separate undo operations recorded. So the undo is coalesced. That is to say, we take advantage of Core Data's behaviour by disabling undo registration during the change, which means the change effectively gets tacked onto the end of the previous one.
+
+@property(nonatomic, readonly) BOOL isCoalescingUndo;
 - (void)breakUndoCoalescing;
 
 

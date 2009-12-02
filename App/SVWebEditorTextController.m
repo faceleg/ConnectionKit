@@ -116,6 +116,13 @@
                            pasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = YES;
+    
+    // Note the event for the benefit of -textDidChange:
+    if (action == WebViewInsertActionTyped)
+    {
+        [_lastTypingEvent release]; _lastTypingEvent = [NSApp currentEvent];
+    }
+    
     return result;
 }
 
@@ -192,6 +199,14 @@
 	}
 	
 	return result;
+}
+
+#pragma mark Undo
+
+- (BOOL)isCoalescingUndo { return NO; }
+
+- (void)breakUndoCoalescing;
+{
 }
 
 #pragma mark Delegate
