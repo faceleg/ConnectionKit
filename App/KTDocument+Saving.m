@@ -686,7 +686,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			
 			//  kMDItemTextContent (free-text account of content)
 			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[self site] root] master] valueForKey:@"siteSubtitleHTML"];
+			NSString *subtitle = [[[[self site] root] master] siteSubtitleHTMLString];
 			if ( nil == subtitle )
 			{
 				subtitle = @"";

@@ -55,7 +55,7 @@
     [self setPrimitiveValue:NSLocalizedString(@"Site Title", "placeholder text")
                      forKey:@"siteTitleHTMLString"];
     [self setPrimitiveValue:NSLocalizedString(@"Site Subtitle", "placeholder text")
-                     forKey:@"siteSubtitleHTML"];
+                     forKey:@"siteSubtitleHTMLString"];
 	
 	
 	// Prepare our continue reading link
@@ -97,8 +97,7 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Site Title & Subtitle
+#pragma mark Site Title
 
 @dynamic siteTitleHTMLString;
 
@@ -119,18 +118,26 @@
     return [NSSet setWithObject:@"siteTitleHTMLString"];
 }
 
-- (NSString *)siteSubtitleText	// get subtitle, but without attributes ... by flattening the HTML
+#pragma mark Site Subtitle
+
+@dynamic siteSubtitleHTMLString;
+
+- (NSString *)siteSubtitleText	// get title, but without attributes
 {
-	NSString *result = [[self valueForKey:@"siteSubtitleHTML"] stringByConvertingHTMLToPlainText];
-	if (!result)
-	{
-		result = @"";
-	}
-	
-    return result;
+	NSString *html = [self siteSubtitleHTMLString];
+	NSString *result = [html stringByConvertingHTMLToPlainText];
+	return result;
 }
 
-// Flatten the string and just store a fake attributed string.
+- (void)setSiteSubtitleText:(NSString *)value
+{
+	[self setSiteSubtitleHTMLString:[value stringByEscapingHTMLEntities]];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteSubtitleText
+{
+    return [NSSet setWithObject:@"siteSubtitleHTMLString"];
+}
 
 #pragma mark Footer
 

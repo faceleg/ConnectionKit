@@ -31,6 +31,9 @@
 @property(nonatomic, copy) NSString *siteTitleHTMLString;
 @property(nonatomic, copy) NSString *siteTitleText;
 
+@property(nonatomic, copy) NSString *siteSubtitleHTMLString;
+@property(nonatomic, copy) NSString *siteSubtitleText;
+
 - (NSString *)copyrightHTML;
 - (void)setCopyrightHTML:(NSString *)copyrightHTML;
 - (NSString *)defaultCopyrightHTML;
