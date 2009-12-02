@@ -80,6 +80,56 @@
 
 #pragma mark Editing
 
+@synthesize editing = _isEditing;
+
+- (void)didBeginEditingText;
+{
+    // Mark as editing
+    OBPRECONDITION(_isEditing == NO);
+    _isEditing = YES;
+    
+    // Notify delegate/others
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification
+                                                        object:self];
+}
+
+- (void)didChangeText;
+{
+    // Notify that editing began if this is the case
+    if (![self isEditing])
+    {
+        [self didBeginEditingText];
+    }
+    
+    
+    // Copy HTML across to ourself
+    [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
+    
+    
+    // Notify delegate/others
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
+                                                        object:self];
+}
+
+- (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
+{
+    // Notify delegate/others
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification
+                                                        object:self];
+    
+    
+    _isEditing = NO;
+    
+    
+    // Like NSTextField, we want the return key to select the field's contents
+    if ([self isFieldEditor] && [textMovement intValue] == NSReturnTextMovement)
+    {
+        [[[self HTMLElement] documentView] selectAll:self];
+    }
+}
+
+#pragma mark SVWebEditorText
+
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
                     replacingDOMRange:(DOMRange *)range
                           givenAction:(WebViewInsertAction)action
@@ -126,59 +176,16 @@
     return result;
 }
 
-@synthesize editing = _isEditing;
-
-- (void)didBeginEditing;
-{
-    // Mark as editing
-    OBPRECONDITION(_isEditing == NO);
-    _isEditing = YES;
-    
-    // Notify delegate/others
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification
-                                                        object:self];
-}
-
 - (void)webEditorTextWillGainFocus; { }
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
-    // Notify that editing began if this is the case
-    if (![self isEditing])
-    {
-        [self didBeginEditing];
-    }
-    
-    
-    // Copy HTML across to ourself
-    [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
-    
-    
-    // Notify delegate/others
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
-                                                        object:self];
-}
-
-- (void)didEndEditingWithMovement:(NSNumber *)textMovement;
-{
-    // Notify delegate/others
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification
-                                                        object:self];
-    
-    
-    _isEditing = NO;
-    
-    
-    // Like NSTextField, we want the return key to select the field's contents
-    if ([self isFieldEditor] && [textMovement intValue] == NSReturnTextMovement)
-    {
-        [[[self HTMLElement] documentView] selectAll:self];
-    }
+    [self didChangeText];
 }
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
 {
-    [self didEndEditingWithMovement:nil];
+    [self didEndEditingTextWithMovement:nil];
 }
 
 - (BOOL)doCommandBySelector:(SEL)selector
@@ -188,7 +195,7 @@
     if (selector == @selector(insertNewline:) && [self isFieldEditor])
 	{
 		// Return key ends editing
-        [self didEndEditingWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
+        [self didEndEditingTextWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
 		result = YES;
 	}
 	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))

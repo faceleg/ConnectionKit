@@ -74,13 +74,13 @@
 - (BOOL)commitEditing;
 {
     // It's just like ending editing via the return key
-    [self didEndEditingWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
+    [self didEndEditingTextWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
     return YES;
 }
 
-- (void)webEditorTextDidChange:(NSNotification *)notification;
+- (void)didChangeText;
 {
-    [super webEditorTextDidChange:notification];
+    [super didChangeText];
     
     
     // Push change down into the model

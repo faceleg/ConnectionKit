@@ -48,13 +48,10 @@
 
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
 
-- (void)didBeginEditing;
-
-// Calls -didBeginEditing if needed
-- (void)webEditorTextDidChange:(NSNotification *)notification;
-
+- (void)didBeginEditingText;
+- (void)didChangeText;
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
-- (void)didEndEditingWithMovement:(NSNumber *)textMovement;
+- (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 
 
 #pragma mark Undo
