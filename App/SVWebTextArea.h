@@ -58,6 +58,10 @@
 - (void)didEndEditingWithMovement:(NSNumber *)textMovement;
 
 
+#pragma mark Undo
+- (void)breakUndoCoalescing;
+
+
 #pragma mark Delegate
 @property(nonatomic, assign) id <SVWebTextAreaDelegate> delegate;
 
