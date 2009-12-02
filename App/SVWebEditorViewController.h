@@ -18,6 +18,10 @@
 
 @interface SVWebEditorViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
 {
+    // View
+    SVWebEditorView *_webEditorView;
+    
+    // Model
     KTPage                      *_page;
     SVHTMLContext               *_context;
     BOOL                        _isLoading;
@@ -25,15 +29,18 @@
     NSSet               *_selectableObjects;
     NSArrayController   *_selectableObjectsController;
     
+    // Controllers
     NSArray         *_textAreas;
     
-    SVWebEditorView     *_webEditorView;
-    DOMHTMLDivElement   *_sidebarDiv;
     NSArray             *_contentItems;
+    DOMHTMLDivElement   *_sidebarDiv;
+    NSArray             *_sidebarPageletItems;
     
+    // Loading
     BOOL    _needsLoad;
     NSSet   *_pageDependencies;
     
+    // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
 }
 
@@ -68,10 +75,11 @@
 - (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
 
 
-#pragma mark Selectable Objects
+#pragma mark Graphics
 
 @property(nonatomic, copy, readonly) NSArray *contentItems;
 - (id <SVWebEditorItem>)contentItemForObject:(id)object;
+@property(nonatomic, copy, readonly) NSArray *sidebarPageletItems;
 
 
 #pragma mark Content Objects

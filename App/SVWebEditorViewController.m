@@ -46,6 +46,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 // Pagelets
 @property(nonatomic, copy, readwrite) NSArray *contentItems;
+@property(nonatomic, copy, readwrite) NSArray *sidebarPageletItems;
 - (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
 - (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
                            belowNode:(DOMNode *)node
@@ -240,6 +241,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
     }
     
+    NSArray *sidebarPageletItems = [editorItems copy];
+    [self setSidebarPageletItems:sidebarPageletItems];
+    [sidebarPageletItems release];
+    
     
     
     // Prepare text areas
@@ -415,7 +420,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return [self textAreaForDOMNode:[range startContainer]];
 }
 
-#pragma mark Content Items
+#pragma mark Graphics
 
 @synthesize contentItems = _contentItems;
 
@@ -436,13 +441,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
+@synthesize sidebarPageletItems = _sidebarPageletItems;
+
 /*  Similar to NSTableView's concept of dropping above a given row
  */
 - (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo
 {
     NSUInteger result = NSNotFound;
     SVWebEditorView *editor = [self webEditorView];
-    NSArray *pageletContentItems = [self contentItems];
+    NSArray *pageletContentItems = [self sidebarPageletItems];
     
     
     // Ideally, we're making a drop *before* a pagelet
@@ -728,7 +735,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         
         // Place the drag caret to match the drop index
-        NSArray *pageletContentItems = [self contentItems];
+        NSArray *pageletContentItems = [self sidebarPageletItems];
         if (dropIndex >= [pageletContentItems count])
         {
             DOMNode *node = [_sidebarDiv lastChild];
@@ -755,7 +762,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     OBPRECONDITION(sender == [self webEditorView]);
     BOOL result = NO;
     
-    NSArray *pageletContentItems = [self contentItems];
+    NSArray *pageletContentItems = [self sidebarPageletItems];
     
     
     //  When dragging within the same view, want to move the selected pagelets
