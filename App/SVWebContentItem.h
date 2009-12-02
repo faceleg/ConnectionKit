@@ -10,7 +10,7 @@
 #import "SVWebEditorItem.h"
 
 
-@class SVWebTextArea;
+@class SVWebEditorTextController;
 
 
 @interface SVWebContentItem : SVWebEditorItem
@@ -22,7 +22,7 @@
 }
 
 @property(nonatomic, readonly) NSArray *textAreas;
-- (void)insertObject:(SVWebTextArea *)textArea inTextAreasAtIndex:(NSUInteger)index;
+- (void)insertObject:(SVWebEditorTextController *)textArea inTextAreasAtIndex:(NSUInteger)index;
 - (void)removeObjectFromTextAreasAtIndex:(NSUInteger)index;
 
 @property(nonatomic, getter=isEditable) BOOL editable;

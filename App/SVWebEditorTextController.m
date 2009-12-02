@@ -6,12 +6,12 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebTextArea.h"
+#import "SVWebEditorTextController.h"
 
 #import "DOMNode+Karelia.h"
 
 
-@interface SVWebTextArea ()
+@interface SVWebEditorTextController ()
 - (void)setHTMLString:(NSString *)html updateDOM:(BOOL)updateDOM;
 @end
 
@@ -19,23 +19,13 @@
 #pragma mark -
 
 
-@implementation SVWebTextArea
+@implementation SVWebEditorTextController
 
 #pragma mark Init & Dealloc
 
-+ (void)initialize
-{
-    // Bindings
-    [self exposeBinding:NSValueBinding];
-}
-
 - (void)dealloc
 {
-    // Bindings don't automatically unbind themselves; have to do it ourself
-    [self unbind:NSValueBinding];
-    
     [_HTMLString release];
-    [_uneditedValue release];
     
         
     [super dealloc];
@@ -157,20 +147,6 @@
     [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
     
     
-    // Push change down into the model
-    NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
-    if (![editedValue isEqualToString:_uneditedValue])
-    {
-        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
-        
-        _isCommittingEditing = YES;
-        [observedObject setValue:editedValue
-                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
-        _isCommittingEditing = NO;
-    }
-
-    
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
                                                         object:self];
@@ -216,56 +192,6 @@
 	}
 	
 	return result;
-}
-
-#pragma mark Bindings/NSEditor
-
-/*  These 2 bridge Cocoa's "value" binding terminology with our internal one
- */
-
-- (id)valueForKey:(NSString *)key
-{
-    if ([key isEqualToString:NSValueBinding])
-    {
-        return _uneditedValue;
-    }
-    else
-    {
-        return [super valueForKey:key];
-    }
-}
-
-- (void)setValue:(id)value forKey:(NSString *)key
-{
-    if ([key isEqualToString:NSValueBinding])
-    {
-        value = [value copy];
-        [_uneditedValue release], _uneditedValue = value;
-        
-        // The change needs to be pushed through the GUI unless it was triggered by the user in the first place
-        if (!_isCommittingEditing)
-        {
-            if ([self isRichText])
-            {
-                [self setHTMLString:value];
-            }
-            else
-            {
-                [self setString:value];
-            }
-        }
-    }
-    else
-    {
-        [super setValue:value forKey:key];
-    }
-}
-
-- (BOOL)commitEditing;
-{
-    // It's just like ending editing via the return key
-    [self didEndEditingWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
-    return YES;
 }
 
 #pragma mark Delegate

@@ -249,8 +249,8 @@
 		2730D66E0DE18ACA004858F5 /* KTTemplateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */; };
 		2731ECCD10861E1500D8AAA5 /* SVBodyTextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */; };
 		2731ECCE10861E1500D8AAA5 /* SVBodyTextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */; };
-		2731ECD410861FF300D8AAA5 /* SVWebTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECD210861FF300D8AAA5 /* SVWebTextField.h */; };
-		2731ECD510861FF300D8AAA5 /* SVWebTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECD310861FF300D8AAA5 /* SVWebTextField.m */; };
+		2731ECD410861FF300D8AAA5 /* SVWebEditorTextFieldController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */; };
+		2731ECD510861FF300D8AAA5 /* SVWebEditorTextFieldController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */; };
 		27368B1F0DE499100045E406 /* KTStoredArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF941C60D623BCA00B1C83D /* KTStoredArray.m */; };
 		27368B200DE499120045E406 /* KTStoredDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF941C20D623BBF00B1C83D /* KTStoredDictionary.m */; };
 		27368B210DE499170045E406 /* KTStoredSet.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF941CA0D623BD400B1C83D /* KTStoredSet.m */; };
@@ -349,8 +349,8 @@
 		278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */; };
 		278FCE941079F2AD0091A239 /* NSEvent+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */; };
 		278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */; };
-		2790BDAF1040162000654665 /* SVWebTextArea.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVWebTextArea.h */; };
-		2790BDB01040162000654665 /* SVWebTextArea.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVWebTextArea.m */; };
+		2790BDAF1040162000654665 /* SVWebEditorTextController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2790BDAD1040162000654665 /* SVWebEditorTextController.h */; };
+		2790BDB01040162000654665 /* SVWebEditorTextController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2790BDAE1040162000654665 /* SVWebEditorTextController.m */; };
 		279217D110BC11CF00E590D5 /* HTMLSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279217D010BC11CF00E590D5 /* HTMLSourceView.xib */; };
 		279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */; };
 		279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */; };
@@ -1669,8 +1669,8 @@
 		2730D66C0DE18ACA004858F5 /* KTTemplateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTemplateParser.m; sourceTree = "<group>"; };
 		2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyTextArea.h; sourceTree = "<group>"; };
 		2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyTextArea.m; sourceTree = "<group>"; };
-		2731ECD210861FF300D8AAA5 /* SVWebTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebTextField.h; sourceTree = "<group>"; };
-		2731ECD310861FF300D8AAA5 /* SVWebTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebTextField.m; sourceTree = "<group>"; };
+		2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextFieldController.h; sourceTree = "<group>"; };
+		2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorTextFieldController.m; sourceTree = "<group>"; };
 		27324D7D0EAFF72500383B15 /* DocumentSaving.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = DocumentSaving.graffle; sourceTree = "<group>"; };
 		273864320D50A6F900A8A209 /* KTPage+Children.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Children.m"; sourceTree = "<group>"; };
 		273864650D50BB1D00A8A209 /* KTPage+Indexes.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Indexes.m"; sourceTree = "<group>"; };
@@ -1772,8 +1772,8 @@
 		278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+Karelia.h"; sourceTree = "<group>"; };
 		278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+Karelia.m"; sourceTree = "<group>"; };
 		278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextProtocol.h; sourceTree = "<group>"; };
-		2790BDAD1040162000654665 /* SVWebTextArea.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebTextArea.h; sourceTree = "<group>"; };
-		2790BDAE1040162000654665 /* SVWebTextArea.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebTextArea.m; sourceTree = "<group>"; };
+		2790BDAD1040162000654665 /* SVWebEditorTextController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextController.h; sourceTree = "<group>"; };
+		2790BDAE1040162000654665 /* SVWebEditorTextController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorTextController.m; sourceTree = "<group>"; };
 		279217D010BC11CF00E590D5 /* HTMLSourceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLSourceView.xib; sourceTree = "<group>"; };
 		279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOrderedManagedObjectControllers.h; sourceTree = "<group>"; };
 		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
@@ -2757,8 +2757,8 @@
 		271B497B105468AA008B698C /* SVWebEditorView */ = {
 			isa = PBXGroup;
 			children = (
-				2790BDAD1040162000654665 /* SVWebTextArea.h */,
-				2790BDAE1040162000654665 /* SVWebTextArea.m */,
+				2790BDAD1040162000654665 /* SVWebEditorTextController.h */,
+				2790BDAE1040162000654665 /* SVWebEditorTextController.m */,
 				271B485E1051C2F4008B698C /* SVWebEditorView.h */,
 				271B485F1051C2F4008B698C /* SVWebEditorView.m */,
 				2755279A10546D990037524C /* SVSelectionBorder.h */,
@@ -2768,8 +2768,8 @@
 				27422440106A926E0058C8DA /* SVWebEditorWebView.m */,
 				278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */,
 				278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */,
-				2731ECD210861FF300D8AAA5 /* SVWebTextField.h */,
-				2731ECD310861FF300D8AAA5 /* SVWebTextField.m */,
+				2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */,
+				2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */,
 				2792197B10BC631D00E590D5 /* SVHTMLElementController.h */,
 				2792197C10BC631D00E590D5 /* SVHTMLElementController.m */,
 			);
@@ -5023,7 +5023,7 @@
 				2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */,
 				2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */,
 				279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */,
-				2790BDAF1040162000654665 /* SVWebTextArea.h in Headers */,
+				2790BDAF1040162000654665 /* SVWebEditorTextController.h in Headers */,
 				3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */,
 				3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */,
 				3C2DA6E8104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h in Headers */,
@@ -5046,7 +5046,7 @@
 				27C0657010828E9900795D66 /* SVPagelet.h in Headers */,
 				CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */,
 				2731ECCD10861E1500D8AAA5 /* SVBodyTextArea.h in Headers */,
-				2731ECD410861FF300D8AAA5 /* SVWebTextField.h in Headers */,
+				2731ECD410861FF300D8AAA5 /* SVWebEditorTextFieldController.h in Headers */,
 				27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */,
 				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
 				27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */,
@@ -6395,7 +6395,7 @@
 				2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */,
 				2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */,
 				279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */,
-				2790BDB01040162000654665 /* SVWebTextArea.m in Sources */,
+				2790BDB01040162000654665 /* SVWebEditorTextController.m in Sources */,
 				3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */,
 				3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */,
 				3C2DA6E9104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m in Sources */,
@@ -6415,7 +6415,7 @@
 				27C0657110828E9900795D66 /* SVPagelet.m in Sources */,
 				CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */,
 				2731ECCE10861E1500D8AAA5 /* SVBodyTextArea.m in Sources */,
-				2731ECD510861FF300D8AAA5 /* SVWebTextField.m in Sources */,
+				2731ECD510861FF300D8AAA5 /* SVWebEditorTextFieldController.m in Sources */,
 				27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */,
 				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
 				27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */,

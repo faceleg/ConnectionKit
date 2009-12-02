@@ -21,7 +21,7 @@
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVWebTextField.h"
+#import "SVWebEditorTextFieldController.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -286,7 +286,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             else
             {
                 // Copy basic properties from text block
-                textArea = [[SVWebTextField alloc] initWithHTMLElement:element];
+                textArea = [[SVWebEditorTextFieldController alloc] initWithHTMLElement:element];
                 [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
@@ -393,9 +393,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @synthesize textAreas = _textAreas;
 
-- (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
+- (SVWebEditorTextController *)textAreaForDOMNode:(DOMNode *)node;
 {
-    SVWebTextArea *result = nil;
+    SVWebEditorTextController *result = nil;
     DOMHTMLElement *editableElement = [node containingContentEditableElement];
     
     if (editableElement)
@@ -420,7 +420,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-- (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
+- (SVWebEditorTextController *)textAreaForDOMRange:(DOMRange *)range;
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];

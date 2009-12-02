@@ -11,7 +11,7 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVHTMLContext, SVWebTextArea;
+@class KTPage, SVHTMLContext, SVWebEditorTextController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
@@ -72,8 +72,8 @@
 // An array of SVTextBlock objects, one per text block created when setting up the page
 @property(nonatomic, copy, readonly) NSArray *textAreas;
 // A series of methods for retrieving the Text Block to go with a bit of the webview
-- (SVWebTextArea *)textAreaForDOMNode:(DOMNode *)node;
-- (SVWebTextArea *)textAreaForDOMRange:(DOMRange *)range;
+- (SVWebEditorTextController *)textAreaForDOMNode:(DOMNode *)node;
+- (SVWebEditorTextController *)textAreaForDOMRange:(DOMRange *)range;
 
 
 #pragma mark Graphics

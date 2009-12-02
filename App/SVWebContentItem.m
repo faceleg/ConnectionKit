@@ -33,7 +33,7 @@
 
 - (NSArray *)textAreas { return [[_textAreas copy] autorelease]; }
 
-- (void)insertObject:(SVWebTextArea *)textArea inTextAreasAtIndex:(NSUInteger)index;
+- (void)insertObject:(SVWebEditorTextController *)textArea inTextAreasAtIndex:(NSUInteger)index;
 {
     [_textAreas insertObject:textArea atIndex:index];
 }

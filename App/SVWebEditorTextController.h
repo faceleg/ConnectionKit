@@ -1,12 +1,12 @@
 //
-//  SVTextBoxController.h
+//  SVWebEditorTextController.h
 //  Marvel
 //
 //  Created by Mike on 22/08/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-//  Between them, SVTextBlock & SVWebEditorViewController create a system like NSView & NSWindow for handling display and editing of text via the webview. SVTextBlock's main aim is to provide an NSTextView-like API for the text (i.e. all properties/methods should have a "live" effect on the DOM).
+//  An HTML element controller specialised to deal with text, generally of the editable variety. In a way, a bit like how NSText is too abstract to do anything on its own, but central to the operation of NSTextView and NSTextField. So check out the subclasses for more advanced stuff.
 
 
 #import "SVHTMLElementController.h"
@@ -15,7 +15,7 @@
 
 
 @protocol SVWebTextAreaDelegate;
-@interface SVWebTextArea : SVHTMLElementController <SVWebEditorText, KSEditor>
+@interface SVWebEditorTextController : SVHTMLElementController <SVWebEditorText, KSEditor>
 {
   @private
     NSString    *_HTMLString;
@@ -24,13 +24,9 @@
     
     // Editing
     BOOL            _isEditing;
-    NSString        *_uneditedValue;
     
     // Delegate
     id <SVWebTextAreaDelegate>  _delegate;
-    
-    // Bindings
-    BOOL                        _isCommittingEditing;
 }
 
 
