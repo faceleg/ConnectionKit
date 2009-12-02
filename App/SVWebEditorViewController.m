@@ -174,8 +174,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setHTMLContext:context];
     
     
-    // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests.
+    // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
     [self setLoading:YES];
+    _visibleRect = [[[self webEditorView] documentView] visibleRect];
     
     
 	// Figure out the URL to use
@@ -343,6 +344,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Locate the sidebar
     _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
+    
+    
+    // Restore scroll point
+    [[self webEditorView] scrollToPoint:_visibleRect.origin];
     
     
     // Mark as loaded

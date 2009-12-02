@@ -24,7 +24,6 @@
     // Model
     KTPage                      *_page;
     SVHTMLContext               *_context;
-    BOOL                        _isLoading;
     
     NSSet               *_selectableObjects;
     NSArrayController   *_selectableObjectsController;
@@ -37,8 +36,10 @@
     NSArray             *_sidebarPageletItems;
     
     // Loading
-    BOOL    _needsLoad;
     NSSet   *_pageDependencies;
+    BOOL    _needsLoad;
+    BOOL    _isLoading;
+    NSRect  _visibleRect;
     
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
