@@ -162,7 +162,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingTitleText
 {
-    return [NSSet setWithObject:@"titleHTML"];
+    return [NSSet setWithObject:@"titleHTMLString"];
 }
 
 // For bindings.  We can edit title if we aren't root;
