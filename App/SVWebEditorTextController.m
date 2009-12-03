@@ -9,13 +9,20 @@
 #import "SVWebEditorTextController.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 
 
 @interface SVWebEditorTextController ()
+
 - (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM;
 
-// Undo
+
+#pragma mark Undo
 - (void)willChangeTextSuitableForUndoCoalescing;
+
+@property(nonatomic, readonly) NSUInteger undoCoalescingActionIdentifier;
+@property(nonatomic, copy, readonly) DOMRange *undoCoalescingSelectedDOMRange;
+- (void)setUndoCoalescingActionIdentifier:(NSUInteger)identifer selectedDOMRange:(DOMRange *)selection;
 
 @end
 
@@ -30,7 +37,7 @@
 - (id)init
 {
     self = [super init];
-    _lastTypingActionIdentifier = NSNotFound;
+    _undoCoalescingActionIdentifier = NSNotFound;
     return self;
 }
 
@@ -201,8 +208,8 @@
     _isCoalescingUndo = NO;
     
     // So was this a typing change?
-    BOOL isTypingChange = [_lastTypingEvent isEqual:[NSApp currentEvent]];
-    [_lastTypingEvent release]; _lastTypingEvent = nil; // reset event monitor
+    BOOL isTypingChange = [_inProgressEventSuitableForUndoCoalescing isEqual:[NSApp currentEvent]];
+    [_inProgressEventSuitableForUndoCoalescing release]; _inProgressEventSuitableForUndoCoalescing = nil; // reset event monitor
     
     if (isTypingChange)
     {
@@ -211,7 +218,7 @@
         NSUndoManager *undoManager = [moc undoManager];
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
-            if ([undoManager lastRegisteredActionIdentifier] == _lastTypingActionIdentifier)
+            if ([undoManager lastRegisteredActionIdentifier] == [self undoCoalescingActionIdentifier])
             {
                 // Go for coalescing
                 _isCoalescingUndo = YES;
@@ -237,9 +244,12 @@
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
             [moc processPendingChanges];
-            if ([self isCoalescingUndo]) [undoManager enableUndoRegistration];
+            if (_isCoalescingUndo) [undoManager enableUndoRegistration];
             
-            _lastTypingActionIdentifier = [undoManager lastRegisteredActionIdentifier];
+            // Record the action identifier and DOM selection so we know whether to coalesce the next change
+            WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
+            [self setUndoCoalescingActionIdentifier:[undoManager lastRegisteredActionIdentifier]
+                                   selectedDOMRange:[[webView selectedDOMRange] copy]];
         }
     }
     
@@ -284,16 +294,35 @@
 
 #pragma mark Undo
 
-- (BOOL)isCoalescingUndo { return _isCoalescingUndo; }
-
-- (void)breakUndoCoalescing; { _isCoalescingUndo = NO; }
+- (void)breakUndoCoalescing;
+{
+    [self setUndoCoalescingActionIdentifier:NSNotFound selectedDOMRange:nil];
+}
 
 - (NSManagedObjectContext *)managedObjectContext; { return nil; }
 
 - (void)willChangeTextSuitableForUndoCoalescing;
 {
+    // At this point we know the TYPE of change will be suitable for undo calescing, but not whether the specific event is.
+    // In practice this means that we want to ignore the change if the insertion point has been moved
+    WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
+    if (![[webView selectedDOMRange] isEqualToDOMRange:[self undoCoalescingSelectedDOMRange]])
+    {
+        [self breakUndoCoalescing];
+    }
+    
     // Store the event so we can identify the change after it happens
-    [_lastTypingEvent release]; _lastTypingEvent = [[NSApp currentEvent] retain];
+    [_inProgressEventSuitableForUndoCoalescing release]; _inProgressEventSuitableForUndoCoalescing = [[NSApp currentEvent] retain];
+}
+
+@synthesize undoCoalescingActionIdentifier = _undoCoalescingActionIdentifier;
+@synthesize undoCoalescingSelectedDOMRange = _undoCoalescingSelection;
+- (void)setUndoCoalescingActionIdentifier:(NSUInteger)identifier selectedDOMRange:(DOMRange *)selection;
+{
+    _undoCoalescingActionIdentifier = identifier;
+    
+    selection = [selection copy];
+    [_undoCoalescingSelection release]; _undoCoalescingSelection = selection;
 }
 
 #pragma mark Delegate
