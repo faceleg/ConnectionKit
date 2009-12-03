@@ -33,31 +33,31 @@
 - (void)dealloc
 {
     [self setPage:nil];
-	[myPlugin release];
+	[_plugin release];
 	
 	[super dealloc];
 }
 
 
-- (KTAbstractHTMLPlugin *)plugin { return myPlugin; }
+- (KTAbstractHTMLPlugin *)plugin { return _plugin; }
 
 - (void)setPlugin:(KTAbstractHTMLPlugin *)plugin
 {
     [plugin retain];
-    [myPlugin release];
-    myPlugin = plugin;
+    [_plugin release];
+    _plugin = plugin;
 }
 
 - (KTPage *)page
 {
-    return myPage; 
+    return _page; 
 }
 
 - (void)setPage:(KTPage *)aPage
 {
     [aPage retain];
-    [myPage release];
-    myPage = aPage;
+    [_page release];
+    _page = aPage;
 }
 
 /*!	Most of the context for an index comes from its page.  So chain requests to page
@@ -66,7 +66,7 @@
 {
 	NSLog(@"Attempt to access page property '%@' from index", aKey);
 	
-	id result = [myPage valueForKey:aKey];
+	id result = [_page valueForKey:aKey];
 	return result;
 }
 

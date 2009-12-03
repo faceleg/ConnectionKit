@@ -21,17 +21,17 @@
 
 		NSRect frame = NSMakeRect(0.0, 0.0, 800,800);
 		
-		myWindow = [[NSWindow alloc]
+		_window = [[NSWindow alloc]
 							initWithContentRect:frame styleMask:NSBorderlessWindowMask
 // |NSTitledWindowMask|NSClosableWindowMask|NSResizableWindowMask|NSMiniaturizableWindowMask
 					backing:NSBackingStoreBuffered defer:NO];
 
-		[myWindow setReleasedWhenClosed:NO];
+		[_window setReleasedWhenClosed:NO];
 		
-		myWebView = [[WebView alloc] initWithFrame:frame];
-		[myWindow setContentView:myWebView];
+		_webView = [[WebView alloc] initWithFrame:frame];
+		[_window setContentView:_webView];
 		
-		[myWebView setFrameLoadDelegate:self];
+		[_webView setFrameLoadDelegate:self];
 		
 //		[myWindow orderFront:nil]; 
 	}
@@ -41,20 +41,20 @@
 
 - (void)dealloc
 {
-    [myWebView release];
-	[myWindow release];
+    [_webView release];
+	[_window release];
     [super dealloc];
 }
 
 
 - (void)loadHTMLFragment:(NSString *)anHTMLFragment;
 {
-	[myWebView setApplicationNameForUserAgent:[NSApplication applicationName]];
+	[_webView setApplicationNameForUserAgent:[NSApplication applicationName]];
 	
 	// Create the webview. It must be in an offscreen window to do this properly.
 	
 	// Go ahead and begin building the thumbnail
-	[[myWebView mainFrame] loadHTMLString:anHTMLFragment baseURL:nil];
+	[[_webView mainFrame] loadHTMLString:anHTMLFragment baseURL:nil];
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
@@ -69,21 +69,21 @@
 	{
 		body = (DOMHTMLElement *)[bodyList item:0];
 	}
-	[myDelegate spliceElement:body];
+	[_delegate spliceElement:body];
 }
 
 - (void)stopLoading
 {
-	[myWebView stopLoading:nil];
+	[_webView stopLoading:nil];
 }
 
 - (id)delegate
 {
-    return myDelegate; 
+    return _delegate; 
 }
 - (void)setDelegate:(id)aDelegate
 {
-    myDelegate = aDelegate;
+    _delegate = aDelegate;
 }
 
 @end

@@ -12,8 +12,8 @@
 
 @interface KTAbstractHTMLPlugin : KSPlugin
 {
-	NSImage *myIcon;
-	NSString *myTemplateHTML;
+	NSImage     *_icon;
+	NSString    *_templateHTML;
 }
 
 - (NSString *)pluginName;

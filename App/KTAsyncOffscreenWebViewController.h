@@ -12,10 +12,10 @@
 
 @interface KTAsyncOffscreenWebViewController : NSObject {
 
-	WebView *myWebView;
-	NSWindow *myWindow;
+	WebView     *_webView;
+	NSWindow    *_window;
 	
-	id myDelegate;
+	id _delegate;
 }
 
 

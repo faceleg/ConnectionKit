@@ -9,6 +9,6 @@
 #import "KSTextViewController.h"
 
 
-@interface KTAcknowledgmentsController : KSTextViewController { }
+@interface KTAcknowledgmentsController : KSTextViewController
 
 @end

@@ -63,7 +63,7 @@
 
 - (NSManagedObjectContext *)managedObjectContext
 {
-	return [myDelegateOwner managedObjectContext];
+	return [_delegateOwner managedObjectContext];
 }
 
 - (KTMediaManager *)mediaManager { return [[self delegateOwner] mediaManager]; }
@@ -95,14 +95,14 @@
 // We return "id" since it's easier to bind methods to an "id"
 - (id)delegateOwner
 {
-	return myDelegateOwner;
+	return _delegateOwner;
 }
 
 - (void)setDelegateOwner:(id)anObject
 {
 	[anObject retain];
-	[myDelegateOwner release];
-	myDelegateOwner = anObject;
+	[_delegateOwner release];
+	_delegateOwner = anObject;
 }
 
 @end

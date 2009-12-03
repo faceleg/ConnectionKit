@@ -28,7 +28,7 @@
 
 @interface KTAbstractPluginDelegate : NSObject
 {
-	KTAbstractElement *myDelegateOwner; // should be a subclass of KTAbstractElement
+	KTAbstractElement *_delegateOwner; // should be a subclass of KTAbstractElement
 }
 
 #pragma mark awake

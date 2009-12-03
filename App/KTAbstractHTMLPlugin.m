@@ -41,8 +41,8 @@
 
 - (void)dealloc
 {
-	[myIcon release];
-	[myTemplateHTML release];
+	[_icon release];
+	[_templateHTML release];
 	
 	[super dealloc];
 }
@@ -57,7 +57,7 @@
 - (NSImage *)pluginIcon
 {
 	// The icon is cached; load it if not cached yet
-	if (!myIcon)
+	if (!_icon)
 	{
 		// It could be a relative (to the bundle) or absolute path
 		NSString *filename = [self pluginPropertyForKey:@"KTPluginIconName"];
@@ -70,14 +70,14 @@
 		
 		//	Create the icon, falling back to the broken image if necessary
 		/// BUGSID:34635	Used to use -initByReferencingFile: but seems to upset Tiger and the Pages/Pagelets popups
-		myIcon = [[NSImage alloc] initWithContentsOfFile:filename];
-		if (!myIcon)
+		_icon = [[NSImage alloc] initWithContentsOfFile:filename];
+		if (!_icon)
 		{
-			myIcon = [[NSImage brokenImage] retain];
+			_icon = [[NSImage brokenImage] retain];
 		}
 	}
 	
-	return myIcon;
+	return _icon;
 }
 
 - (NSString *)CSSClassName
@@ -88,23 +88,23 @@
 
 - (NSString *)templateHTMLAsString
 {
-	if (!myTemplateHTML)
+	if (!_templateHTML)
 	{
 		NSString *templateName = [self pluginPropertyForKey:@"KTTemplateName"];
 		NSString *path = [[self bundle] overridingPathForResource:templateName ofType:@"html"];
 		
 		if (path)	// This actually used to use NSData and then NSString, but no-one recalls why!
 		{
-			myTemplateHTML = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
+			_templateHTML = [[NSString alloc] initWithContentsOfFile:path encoding:NSUTF8StringEncoding error:NULL];
 		}
 		
-		if (!myTemplateHTML)	// If the HTML can't be loaded, don't bother trying again
+		if (!_templateHTML)	// If the HTML can't be loaded, don't bother trying again
 		{
-			myTemplateHTML = [[NSNull null] retain];
+			_templateHTML = [[NSNull null] retain];
 		}
 	}
 	
-	NSString *result = myTemplateHTML;
+	NSString *result = _templateHTML;
 	if ([result isEqual:[NSNull null]])
 	{
 		result = nil;

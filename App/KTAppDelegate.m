@@ -545,10 +545,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
     if ( self )
     {
 
-		myCascadePoint = NSMakePoint(100, 100);
+		_cascadePoint = NSMakePoint(100, 100);
 
-        myApplicationIsLaunching = YES;
-		myAppIsTerminating = NO;
+        _applicationIsLaunching = YES;
+		_appIsTerminating = NO;
 	}
     return self;
 }
@@ -799,7 +799,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 - (BOOL)applicationShouldOpenUntitledFile:(NSApplication *)theApplication
 {
-    if ( !myApplicationIsLaunching )
+    if ( !_applicationIsLaunching )
     {
         return [[NSUserDefaults standardUserDefaults] boolForKey:@"OpenUntitledFileWhenIconClicked"];
     }
@@ -1098,7 +1098,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
 	}
 		
-    myApplicationIsLaunching = NO; // we're done
+    _applicationIsLaunching = NO; // we're done
 }
 
 #if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
@@ -1493,7 +1493,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	[[debugTable window] setTitle:inTitle];
 
 	// cascade the window.
-	myCascadePoint = [[debugTable window] cascadeTopLeftFromPoint:myCascadePoint];
+	_cascadePoint = [[debugTable window] cascadeTopLeftFromPoint:_cascadePoint];
 
 	[[debugTable window] orderFront:nil];
 }

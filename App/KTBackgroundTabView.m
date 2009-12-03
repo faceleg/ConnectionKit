@@ -57,11 +57,11 @@ TO DO:
 - (void)drawRect:(NSRect)aRect
 {
 	// Draw background color
-	[myBackgroundColor set];
+	[_backgroundColor set];
 	[NSBezierPath fillRect:aRect];
 
 	// Draw border on the bounds (which will clip if that's all we want)
-	[myBorderColor set];
+	[_borderColor set];
 	[NSBezierPath strokeRect:[self bounds]];
 
 	[super drawRect:aRect];
@@ -70,24 +70,24 @@ TO DO:
 
 - (NSColor *)backgroundColor
 {
-    return myBackgroundColor;
+    return _backgroundColor;
 }
 - (void)setBackgroundColor:(NSColor *)aBackgroundColor
 {
     [aBackgroundColor retain];
-    [myBackgroundColor release];
-    myBackgroundColor = aBackgroundColor;
+    [_backgroundColor release];
+    _backgroundColor = aBackgroundColor;
 }
 
 - (NSColor *)borderColor
 {
-    return myBorderColor;
+    return _borderColor;
 }
 - (void)setBorderColor:(NSColor *)aBorderColor
 {
     [aBorderColor retain];
-    [myBorderColor release];
-    myBorderColor = aBorderColor;
+    [_borderColor release];
+    _borderColor = aBorderColor;
 }
 
 

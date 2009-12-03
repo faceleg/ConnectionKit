@@ -10,8 +10,8 @@
 
 @interface KTBackgroundTabView : NSTabView {
 
-	NSColor *myBackgroundColor;
-	NSColor *myBorderColor;
+	NSColor *_backgroundColor;
+	NSColor *_borderColor;
 }
 
 - (NSColor *)backgroundColor;

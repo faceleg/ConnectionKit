@@ -67,11 +67,11 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSPanel		*oDebugMediaPanel;
 	
     // ivars	
-    BOOL myApplicationIsLaunching;
+    BOOL _applicationIsLaunching;
 	
-	BOOL myAppIsTerminating;
+	BOOL _appIsTerminating;
 	
-	NSPoint myCascadePoint;
+	NSPoint _cascadePoint;
 }
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller;

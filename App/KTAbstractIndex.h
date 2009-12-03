@@ -31,8 +31,8 @@ typedef enum {
 
 @interface KTAbstractIndex : NSObject
 {
-	KTPage *myPage;
-	KTAbstractHTMLPlugin *myPlugin;
+	KTPage                  *_page;
+	KTAbstractHTMLPlugin    *_plugin;
 }
 
 - (id)initWithPage:(KTPage *)aPage plugin:(KTAbstractHTMLPlugin *)plugin;
