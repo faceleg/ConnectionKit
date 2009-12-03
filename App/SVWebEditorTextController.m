@@ -236,7 +236,8 @@
     }
     
     
-    
+    // Tidy up
+    _isCoalescingUndo = NO;
 }
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
