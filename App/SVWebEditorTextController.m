@@ -191,7 +191,11 @@
         {
             if ([undoManager lastRegisteredActionIdentifier] == [_lastTypingActionIdentifier unsignedIntegerValue])
             {
+                // Go for coalescing
                 _isCoalescingUndo = YES;
+                
+                [moc processPendingChanges];
+                [undoManager disableUndoRegistration];
             }
         }
     }
@@ -205,9 +209,12 @@
         // Process the change so that nothing is scheduled to be added to the undo manager
         NSManagedObjectContext *moc = [self managedObjectContext];
         NSUndoManager *undoManager = [moc undoManager];
+        
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
             [moc processPendingChanges];
+            if ([self isCoalescingUndo]) [undoManager enableUndoRegistration];
+            
             _lastTypingActionIdentifier = [NSNumber numberWithUnsignedInteger:[undoManager lastRegisteredActionIdentifier]];
         }
     }
