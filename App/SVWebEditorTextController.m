@@ -53,7 +53,10 @@
     [_HTMLString release]; _HTMLString = html;
     
     // Update DOM to match
-    [[self HTMLElement] setInnerHTML:html];
+    if (updateDOM)
+    {
+        [[self HTMLElement] setInnerHTML:html];
+    }
 }
 
 - (NSString *)string
