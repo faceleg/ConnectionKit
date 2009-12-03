@@ -23,6 +23,13 @@
 
 #pragma mark Init & Dealloc
 
+- (id)init
+{
+    self = [super init];
+    _lastTypingActionIdentifier = NSNotFound;
+    return self;
+}
+
 - (void)dealloc
 {
     [_HTMLString release];
@@ -180,8 +187,12 @@
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
+    _isCoalescingUndo = NO;
+    
     // So was this a typing change?
     BOOL isTypingChange = [_lastTypingEvent isEqual:[NSApp currentEvent]];
+    [_lastTypingEvent release]; _lastTypingEvent = nil; // reset event monitor
+    
     if (isTypingChange && _lastTypingActionIdentifier)
     {
         // Does it put us into coalescing mode?
@@ -189,7 +200,7 @@
         NSUndoManager *undoManager = [moc undoManager];
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
-            if ([undoManager lastRegisteredActionIdentifier] == [_lastTypingActionIdentifier unsignedIntegerValue])
+            if ([undoManager lastRegisteredActionIdentifier] == _lastTypingActionIdentifier)
             {
                 // Go for coalescing
                 _isCoalescingUndo = YES;
@@ -200,6 +211,8 @@
         }
     }
     
+    
+    // Handle the edit
     [self didChangeText];
     
     
@@ -215,10 +228,9 @@
             [moc processPendingChanges];
             if ([self isCoalescingUndo]) [undoManager enableUndoRegistration];
             
-            _lastTypingActionIdentifier = [NSNumber numberWithUnsignedInteger:[undoManager lastRegisteredActionIdentifier]];
+            _lastTypingActionIdentifier = [undoManager lastRegisteredActionIdentifier];
         }
     }
-    [_lastTypingEvent release]; _lastTypingEvent = nil; // reset event monitor
     
     
     

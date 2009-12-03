@@ -28,7 +28,7 @@
     // Undo
     BOOL        _isCoalescingUndo;
     NSEvent     *_lastTypingEvent;
-    NSNumber    *_lastTypingActionIdentifier;
+    NSUInteger  _lastTypingActionIdentifier;
     
     // Delegate
     id <SVWebTextAreaDelegate>  _delegate;
