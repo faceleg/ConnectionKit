@@ -196,7 +196,7 @@
     BOOL isTypingChange = [_lastTypingEvent isEqual:[NSApp currentEvent]];
     [_lastTypingEvent release]; _lastTypingEvent = nil; // reset event monitor
     
-    if (isTypingChange && _lastTypingActionIdentifier)
+    if (isTypingChange)
     {
         // Does it put us into coalescing mode?
         NSManagedObjectContext *moc = [self managedObjectContext];
