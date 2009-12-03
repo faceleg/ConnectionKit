@@ -26,11 +26,12 @@
 	
 @private
 	BOOL _networkAvailable;
-	KSYellowStickyWindow *_sticky;
-	
+	KSYellowStickyWindow *sticky_;
+	NSArray *recentDocuments_;
 }
 
 @property (retain) KSYellowStickyWindow *sticky;
+@property (copy) NSArray *recentDocuments;
 @property (assign) BOOL networkAvailable;
 
 // Match the selectors used by NSDocumentController when possible so that actions from menu bar items gets directed to us if the panel is main/key

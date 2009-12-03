@@ -906,6 +906,8 @@
 		CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E60EAFDF2900BDF264 /* KSRTFDWindow.nib */; };
 		CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */; };
 		CE033FA20B862BB90098735B /* Web-safe Mac:Windows.collection in Resources */ = {isa = PBXBuildFile; fileRef = CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */; };
+		CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = CE043A6810C7363600F76F97 /* KSRecentDocument.h */; };
+		CE043A6B10C7363600F76F97 /* KSRecentDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE043A6910C7363600F76F97 /* KSRecentDocument.m */; };
 		CE0F676A0A39EEE50092DC43 /* globe.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F67690A39EEE50092DC43 /* globe.png */; };
 		CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */ = {isa = PBXBuildFile; fileRef = CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
@@ -1054,14 +1056,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 6A8666490F9593B200325E1C /* ObjectiveFlickr.framework */;
+			remoteGlobalIDString = 6A8666490F9593B200325E1C;
 			remoteInfo = "ObjectiveFlickr (framework)";
 		};
 		27BDA74510C5E410008C8199 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 6ABF72E60F939BE600B9179E /* libObjectiveFlickr.a */;
+			remoteGlobalIDString = 6ABF72E60F939BE600B9179E;
 			remoteInfo = "ObjectiveFlickr (library)";
 		};
 		27E4D4500EC30CEE000E85DD /* PBXContainerItemProxy */ = {
@@ -2449,6 +2451,8 @@
 		CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSWebViewWindow.nib; sourceTree = "<group>"; };
 		CE02AE450843EAD000D8A9F9 /* Sample Sites */ = {isa = PBXFileReference; lastKnownFileType = folder; name = "Sample Sites"; path = "../Sample Sites"; sourceTree = SOURCE_ROOT; };
 		CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = "Web-safe Mac:Windows.collection"; sourceTree = "<group>"; };
+		CE043A6810C7363600F76F97 /* KSRecentDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSRecentDocument.h; sourceTree = "<group>"; };
+		CE043A6910C7363600F76F97 /* KSRecentDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSRecentDocument.m; sourceTree = "<group>"; };
 		CE04723B0DC6D18B00FF39C0 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../Designs; sourceTree = SOURCE_ROOT; };
 		CE0F67690A39EEE50092DC43 /* globe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = globe.png; sourceTree = "<group>"; };
 		CE11E2C709ED76B600A734DE /* fr */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = fr; path = fr.lproj/Credits.html; sourceTree = "<group>"; };
@@ -4266,6 +4270,8 @@
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				CE043A6810C7363600F76F97 /* KSRecentDocument.h */,
+				CE043A6910C7363600F76F97 /* KSRecentDocument.m */,
 				279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */,
 				279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */,
 				279F5EB410A73E0A00F6511F /* KSInspectorViewController.h */,
@@ -5076,6 +5082,7 @@
 				279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */,
 				2792197D10BC631D00E590D5 /* SVHTMLElementController.h in Headers */,
 				272F1F5110C2CBE600BBB836 /* SVContentObject.h in Headers */,
+				CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6446,6 +6453,7 @@
 				2792197E10BC631D00E590D5 /* SVHTMLElementController.m in Sources */,
 				276E9EC610C0465500EFDA36 /* KTDataMigrator.m in Sources */,
 				272F1F5210C2CBE600BBB836 /* SVContentObject.m in Sources */,
+				CE043A6B10C7363600F76F97 /* KSRecentDocument.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
