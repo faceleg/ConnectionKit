@@ -56,6 +56,10 @@
 
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
+- (void)update; { }
+
+- (void)setNeedsUpdate; { [self update]; }
+
 #pragma mark Content
 
 @synthesize representedObject = _representedObject;

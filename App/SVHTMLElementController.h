@@ -32,9 +32,13 @@
 
 
 #pragma mark DOM
+
 @property(nonatomic, retain) DOMHTMLElement *HTMLElement;
 - (void)loadHTMLElement;
-@property(nonatomic, readonly, getter=isHTMLElementLoaded) BOOL HTMLElementLoaded;
+- (BOOL)isHTMLElementLoaded;
+
+- (void)update; //override to push changes through to the DOM
+- (void)setNeedsUpdate; // call to mark for needing update. Instantaneous at the moment, but might not be in the future
 
 
 #pragma mark Content

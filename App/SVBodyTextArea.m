@@ -99,7 +99,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 @synthesize content = _content;
 
-- (void)contentElementsDidChange
+- (void)update
 {
     [self willUpdate];
     
@@ -339,7 +339,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     {
         if (![self isUpdating])
         {
-            [self contentElementsDidChange];
+            [self setNeedsUpdate];
         }
     }
     else

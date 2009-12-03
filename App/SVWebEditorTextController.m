@@ -12,7 +12,7 @@
 
 
 @interface SVWebEditorTextController ()
-- (void)setHTMLString:(NSString *)html updateDOM:(BOOL)updateDOM;
+- (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM;
 
 // Undo
 - (void)willChangeTextSuitableForUndoCoalescing;
@@ -47,20 +47,17 @@
 @synthesize HTMLString = _HTMLString;
 - (void)setHTMLString:(NSString *)html
 {
-    [self setHTMLString:html updateDOM:YES];
+    [self setHTMLString:html needsUpdate:YES];
 }
 
-- (void)setHTMLString:(NSString *)html updateDOM:(BOOL)updateDOM
+- (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM
 {
     // Store HTML
     html = [html copy];
     [_HTMLString release]; _HTMLString = html;
     
     // Update DOM to match
-    if (updateDOM)
-    {
-        [[self HTMLElement] setInnerHTML:html];
-    }
+    if (updateDOM) [self setNeedsUpdate];
 }
 
 - (NSString *)string
@@ -117,7 +114,7 @@
     
     
     // Copy HTML across to ourself
-    [self setHTMLString:[[self HTMLElement] innerHTML] updateDOM:NO];
+    [self setHTMLString:[[self HTMLElement] innerHTML] needsUpdate:NO];
     
     
     // Notify delegate/others
@@ -140,6 +137,13 @@
     {
         [[[self HTMLElement] documentView] selectAll:self];
     }
+}
+
+#pragma mark Updating
+
+- (void)update
+{
+    [[self HTMLElement] setInnerHTML:[self HTMLString]];
 }
 
 #pragma mark SVWebEditorText

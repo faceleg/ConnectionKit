@@ -82,7 +82,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
         // Update the view to match the model.
         if (!_isUpdatingModel)
         {
-            [self updateDOMFromParagraph];
+            [self setNeedsUpdate];
         }
     }
     else
@@ -91,8 +91,10 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     }
 }
 
-- (void)updateDOMFromParagraph;
+- (void)update;
 {
+    [super update];
+    
     // TODO: Should we also supply a valid HTML context?
     SVBodyParagraph *paragraph = [self representedObject];
     [[self HTMLElement] setInnerHTML:[paragraph innerHTMLString]];
