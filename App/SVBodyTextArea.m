@@ -327,6 +327,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
 }
 
+#pragma mark Undo
+
+- (NSManagedObjectContext *)managedObjectContext; { return [[self content] managedObjectContext]; }
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
