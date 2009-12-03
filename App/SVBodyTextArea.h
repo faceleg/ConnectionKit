@@ -26,7 +26,6 @@
 
 #pragma mark Content
 @property(nonatomic, retain, readonly) NSArrayController *content;
-- (void)contentElementsDidChange;
 
 
 #pragma mark Subcontrollers
