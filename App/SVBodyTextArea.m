@@ -230,6 +230,14 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Updates
 
+- (void)didChangeText
+{
+    [super didChangeText];
+    
+    // Let subcontrollers know the change took place
+    [_elementControllers makeObjectsPerformSelector:@selector(didChangeText)];
+}
+
 @synthesize updating = _isUpdating;
 
 - (void)willUpdate

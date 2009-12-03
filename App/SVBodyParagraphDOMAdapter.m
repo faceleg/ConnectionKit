@@ -95,58 +95,32 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 {
     // TODO: Should we also supply a valid HTML context?
     SVBodyParagraph *paragraph = [self representedObject];
-    [self setHTMLString:[paragraph innerHTMLString]];
+    [[self HTMLElement] setInnerHTML:[paragraph innerHTMLString]];
 }
 
 #pragma mark Editing
 
-- (void)updateParagraphFromDOM;
+- (void)didChangeText
 {
-    OBPRECONDITION(!_isUpdatingModel);
-    _isUpdatingModel = YES;
-    
-    SVBodyParagraph *paragraph = [self representedObject];
-    [paragraph setHTMLStringFromElement:[self HTMLElement]];
-    
-    _isUpdatingModel = NO;
-}
-
-@synthesize webView = _webView;
-- (void)setWebView:(WebView *)webView
-{
-    // We wish to monitor the webview for change notifications so edits can be committed to the store
-    if (_webView)
-    {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                       name:WebViewDidChangeNotification
-                                                     object:_webView];
-    }
-    
-    [webView retain];
-    [_webView release], _webView = webView;
-    
-    if (webView)
-    {
-        [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(webViewDidChange:)
-                                                     name:WebViewDidChangeNotification
-                                                   object:_webView];
-    }
-}
-
-- (void)webViewDidChange:(NSNotification *)notification
-{
-    // Commit any changes caused by the user
+    // Commit any changes caused by the user. Caller will take care of undo coalescing and other behaviour
     if (_editTimestamp)
     {
         if ([[NSApp currentEvent] timestamp] == _editTimestamp)
         {
-            [self updateParagraphFromDOM];
+            OBPRECONDITION(!_isUpdatingModel);
+            _isUpdatingModel = YES;
+            
+            SVBodyParagraph *paragraph = [self representedObject];
+            [paragraph setHTMLStringFromElement:[self HTMLElement]];
+            
+            _isUpdatingModel = NO;;
         }
         
         _editTimestamp = 0;
     }
 }
+
+@synthesize webView = _webView;
 
 - (void)handleEvent:(DOMEvent *)event
 {

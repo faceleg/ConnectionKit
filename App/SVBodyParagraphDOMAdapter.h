@@ -14,7 +14,7 @@
 
 @class SVBodyParagraph, SVBodyElement;
 
-@interface SVBodyParagraphDOMAdapter : SVWebEditorTextController <DOMEventListener>
+@interface SVBodyParagraphDOMAdapter : SVHTMLElementController <DOMEventListener>
 {
   @private    
     WebView         *_webView;
@@ -22,7 +22,9 @@
     BOOL            _isUpdatingModel;
 }
 
-- (void)updateParagraphFromDOM;
+// The receiver itself will not call this method. Instead, is designed such that the owning body text controller will call it after a change, and the receiver will commit any changes it might have.
+- (void)didChangeText;
+
 - (void)updateDOMFromParagraph;
 @property(nonatomic, retain) WebView *webView;
 
