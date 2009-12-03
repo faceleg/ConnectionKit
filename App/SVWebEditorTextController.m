@@ -13,6 +13,10 @@
 
 @interface SVWebEditorTextController ()
 - (void)setHTMLString:(NSString *)html updateDOM:(BOOL)updateDOM;
+
+// Undo
+- (void)willChangeTextSuitableForUndoCoalescing;
+
 @end
 
 
@@ -180,7 +184,7 @@
     // Note the event for the benefit of -textDidChange:
     if (action == WebViewInsertActionTyped)
     {
-        [_lastTypingEvent release]; _lastTypingEvent = [[NSApp currentEvent] retain];
+        [self willChangeTextSuitableForUndoCoalescing];
     }
     
     return result;
@@ -249,13 +253,17 @@
 {
     BOOL result = NO;
     
-    if (selector == @selector(insertNewline:) && [self isFieldEditor])
+    if (selector == @selector(deleteBackward:))
+    {
+        [self willChangeTextSuitableForUndoCoalescing];
+    }
+	else if (selector == @selector(insertNewline:) && [self isFieldEditor])
 	{
 		// Return key ends editing
         [self didEndEditingTextWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
 		result = YES;
 	}
-	else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
+    else if (selector == @selector(insertNewlineIgnoringFieldEditor:))
 	{
 		// When the user hits option-return insert a line break.
         [[[self HTMLElement] documentView] insertLineBreak:self];
@@ -272,6 +280,12 @@
 - (void)breakUndoCoalescing; { _isCoalescingUndo = NO; }
 
 - (NSManagedObjectContext *)managedObjectContext; { return nil; }
+
+- (void)willChangeTextSuitableForUndoCoalescing;
+{
+    // Store the event so we can identify the change after it happens
+    [_lastTypingEvent release]; _lastTypingEvent = [[NSApp currentEvent] retain];
+}
 
 #pragma mark Delegate
 
