@@ -26,7 +26,9 @@
     BOOL    _isEditing;
     
     // Undo
-    NSEvent *_lastTypingEvent;
+    BOOL        _isCoalescingUndo;
+    NSEvent     *_lastTypingEvent;
+    NSNumber    *_lastTypingActionIdentifier;
     
     // Delegate
     id <SVWebTextAreaDelegate>  _delegate;
@@ -61,6 +63,14 @@
 @property(nonatomic, readonly) BOOL isCoalescingUndo;
 - (void)breakUndoCoalescing;
 
+//  To implement this is actually a bit painful. We need some cooperation from subclasses and other infrastructure, which are:
+//  
+//      -   reference to the MOC so as to process changes when suits us, and access from there to undo manager
+//
+//      -   cooperation of the undo manager. NSTextView does its undo coalescing by inspecting the undo stack to see if the last op registered was by itself. We don't have that access, but can request that somebody else (*cough* the document) supply a suitable NSUndoManager subclass which gives an identifer for the item on top of the stack.
+
+- (NSManagedObjectContext *)managedObjectContext;   // subclasses should provide one
+
 
 #pragma mark Delegate
 @property(nonatomic, assign) id <SVWebTextAreaDelegate> delegate;
@@ -75,5 +85,23 @@
 #endif
 
 @protocol SVWebTextAreaDelegate <NSTextDelegate>
+@end
+
+
+
+#pragma mark -
+
+
+// See comments above for why this is necessary. You MUST supply a NSUndoManager subclass that implements this API properly for undo coalescing to work.
+@interface NSUndoManager (SVWebEditorTextControllerUndoCoalescing)
+- (NSUInteger)lastRegisteredActionIdentifier;
+@end
+
+
+@interface SVWebEditorTextControllerUndoManager : NSUndoManager
+{
+    NSUInteger  _lastRegisteredActionIdentifier;
+}
+- (NSUInteger)lastRegisteredActionIdentifier;
 @end
 

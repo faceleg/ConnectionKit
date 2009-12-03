@@ -170,7 +170,7 @@
     // Note the event for the benefit of -textDidChange:
     if (action == WebViewInsertActionTyped)
     {
-        [_lastTypingEvent release]; _lastTypingEvent = [NSApp currentEvent];
+        [_lastTypingEvent release]; _lastTypingEvent = [[NSApp currentEvent] retain];
     }
     
     return result;
@@ -180,7 +180,41 @@
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
+    // So was this a typing change?
+    BOOL isTypingChange = [_lastTypingEvent isEqual:[NSApp currentEvent]];
+    if (isTypingChange && _lastTypingActionIdentifier)
+    {
+        // Does it put us into coalescing mode?
+        NSManagedObjectContext *moc = [self managedObjectContext];
+        NSUndoManager *undoManager = [moc undoManager];
+        if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
+        {
+            if ([undoManager lastRegisteredActionIdentifier] == [_lastTypingActionIdentifier unsignedIntegerValue])
+            {
+                _isCoalescingUndo = YES;
+            }
+        }
+    }
+    
     [self didChangeText];
+    
+    
+    // Wait until after -didChangeText so subclass has done its work
+    if (isTypingChange)
+    {
+        // Process the change so that nothing is scheduled to be added to the undo manager
+        NSManagedObjectContext *moc = [self managedObjectContext];
+        NSUndoManager *undoManager = [moc undoManager];
+        if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
+        {
+            [moc processPendingChanges];
+            _lastTypingActionIdentifier = [NSNumber numberWithUnsignedInteger:[undoManager lastRegisteredActionIdentifier]];
+        }
+    }
+    [_lastTypingEvent release]; _lastTypingEvent = nil; // reset event monitor
+    
+    
+    
 }
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
@@ -210,11 +244,11 @@
 
 #pragma mark Undo
 
-- (BOOL)isCoalescingUndo { return NO; }
+- (BOOL)isCoalescingUndo { return _isCoalescingUndo; }
 
-- (void)breakUndoCoalescing;
-{
-}
+- (void)breakUndoCoalescing; { _isCoalescingUndo = NO; }
+
+- (NSManagedObjectContext *)managedObjectContext; { return nil; }
 
 #pragma mark Delegate
 
@@ -255,5 +289,43 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVWebEditorTextControllerUndoManager
+
+- (NSUInteger)lastRegisteredActionIdentifier;
+{
+    return _lastRegisteredActionIdentifier;
+}
+
+- (void)forwardInvocation:(NSInvocation *)anInvocation
+{
+    _lastRegisteredActionIdentifier++;
+    return [super forwardInvocation:anInvocation];
+}
+
+- (void)registerUndoWithTarget:(id)target selector:(SEL)aSelector object:(id)anObject
+{
+    _lastRegisteredActionIdentifier++;
+    return [super registerUndoWithTarget:target selector:aSelector object:anObject];
+}
+
+- (void)undoNestedGroup
+{
+    _lastRegisteredActionIdentifier++;
+    return [super undoNestedGroup];
+}
+
+- (void)redo
+{
+    _lastRegisteredActionIdentifier++;
+    return [super redo];
+}
+
+@end
+
 
 

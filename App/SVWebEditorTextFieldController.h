@@ -21,8 +21,13 @@
     // Bindings
     NSString        *_uneditedValue;
     BOOL            _isCommittingEditing;
+    
+    // Undo
+    NSManagedObjectContext  *_moc;
 }
 
 @property(nonatomic, copy) NSString *placeholderString;
+
+@property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @end

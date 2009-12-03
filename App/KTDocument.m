@@ -66,6 +66,7 @@
 #import "KTStalenessManager.h"
 #import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
+#import "SVWebEditorTextController.h"
 
 #import "NSApplication+Karelia.h"       // Karelia Cocoa additions
 #import "NSArray+Karelia.h"
@@ -148,6 +149,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[[self managedObjectContext] setPersistentStoreCoordinator:PSC];
 		[PSC release];
         
+        NSUndoManager *undoManager = [[SVWebEditorTextControllerUndoManager alloc] init];
+        [[self managedObjectContext] setUndoManager:undoManager];
+        [undoManager release];
         [super setUndoManager:[[self managedObjectContext] undoManager]];
         
         

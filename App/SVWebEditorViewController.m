@@ -303,6 +303,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 {
                     [editorItems addObject:textArea];
                 }
+                
+                // Tell it the MOC for undo purposes
+                [textArea setManagedObjectContext:[[self page] managedObjectContext]];
             }
             
             [textAreas addObject:textArea];
@@ -357,6 +360,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 @synthesize needsLoad = _needsLoad;
 - (void)setNeedsLoad;
 {
+    return; // FIXME: !!! THIS IS JUST FOR DEBUGGING !!!
     if (![self needsLoad])
 	{
 		// Install a fresh observer for the end of the run loop

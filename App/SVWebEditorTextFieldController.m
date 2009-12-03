@@ -126,4 +126,8 @@
 
 - (DOMElement *)DOMElement { return [self HTMLElement]; }
 
+#pragma mark Undo
+
+@synthesize managedObjectContext = _moc;
+
 @end
