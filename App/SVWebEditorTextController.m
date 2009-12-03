@@ -259,7 +259,12 @@
     
     if (selector == @selector(deleteBackward:))
     {
-        [self willChangeTextSuitableForUndoCoalescing];
+        // A sequence of |type, backspace, type| should be coalesced. But if deleting a non-collapsed selection, that's not applicable
+        WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
+        if ([[webView selectedDOMRange] collapsed])
+        {
+            [self willChangeTextSuitableForUndoCoalescing];
+        }
     }
 	else if (selector == @selector(insertNewline:) && [self isFieldEditor])
 	{
