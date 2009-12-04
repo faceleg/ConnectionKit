@@ -100,8 +100,8 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 - (void)invalidateIconCaches
 {
 	[self setCachedFavicon:nil];
-	[myCachedPluginIcons removeAllObjects];
-	[myCachedCustomPageIcons removeAllObjects];
+	[_cachedPluginIcons removeAllObjects];
+	[_cachedCustomPageIcons removeAllObjects];
 }
 
 #pragma mark -
@@ -132,13 +132,13 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	return result;
 }
 
-- (NSImage *)cachedFavicon { return myCachedFavicon; }
+- (NSImage *)cachedFavicon { return _cachedFavicon; }
 
 - (void)setCachedFavicon:(NSImage *)icon
 {
 	[icon retain];
-	[myCachedFavicon release];
-	myCachedFavicon = icon;
+	[_cachedFavicon release];
+	_cachedFavicon = icon;
 }
 
 #pragma mark -
@@ -150,12 +150,12 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
 	NSString *bundleIdentifier = [plugin identifier];
 	OBASSERT(bundleIdentifier);
-	NSImage *result = [myCachedPluginIcons objectForKey:bundleIdentifier];
+	NSImage *result = [_cachedPluginIcons objectForKey:bundleIdentifier];
 	
 	if (!result)
 	{
 		result = [plugin pluginIcon];
-		[myCachedPluginIcons setObject:result forKey:bundleIdentifier];
+		[_cachedPluginIcons setObject:result forKey:bundleIdentifier];
 	}
 	
     OBPOSTCONDITION(result);
@@ -194,7 +194,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 
 - (NSImage *)customIconForPage:(KTPage *)page
 {
-	NSImage *result = [myCachedCustomPageIcons objectForKey:page];
+	NSImage *result = [_cachedCustomPageIcons objectForKey:page];
 	
 	if (!result)
 	{
@@ -307,20 +307,20 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 - (void)addPageToCustomIconGenerationQueue:(KTPage *)page
 {
 	// If the page is already in the queue, bump it to the top of the list
-	unsigned index = [myCustomIconGenerationQueue indexOfObject:page];
+	unsigned index = [_customIconGenerationQueue indexOfObject:page];
 	if (index != NSNotFound)
 	{
-		[myCustomIconGenerationQueue removeObjectAtIndex:index];
-		[myCustomIconGenerationQueue insertObject:page atIndex:0];
+		[_customIconGenerationQueue removeObjectAtIndex:index];
+		[_customIconGenerationQueue insertObject:page atIndex:0];
 	}
 	
 	// Otherwise add the page to the queue
 	else
 	{
-		[myCustomIconGenerationQueue addObject:page];
+		[_customIconGenerationQueue addObject:page];
 		
 		// Begin generating if there's space
-		if (!myGeneratingCustomIcon)
+		if (!_generatingCustomIcon)
 		{
 			[self beginGeneratingCustomIconForPage:page];
 		}
@@ -330,16 +330,16 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 - (void)beginGeneratingCustomIconForPage:(KTPage *)page
 {
 	// We only ever generate 1 icon at a time since it's a pretty low priority task
-	OBASSERTSTRING(!myGeneratingCustomIcon, @"Can only generate 1 icon at a time");
+	OBASSERTSTRING(!_generatingCustomIcon, @"Can only generate 1 icon at a time");
 	
 	// Remove the page from the queue
-	[myCustomIconGenerationQueue removeObject:page];
+	[_customIconGenerationQueue removeObject:page];
 	
 	// Detach thread for generation if possible
 	NSString *iconSourcePath = [[[page customSiteOutlineIcon] file] currentPath];
 	if (iconSourcePath)
 	{
-		myGeneratingCustomIcon = [page retain];
+		_generatingCustomIcon = [page retain];
 		
 		BOOL mask = NO;
 		if (![self displaySmallPageIcons])
@@ -366,16 +366,16 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
     // Update the cache. We want to retain, not copy the key
     if (icon)
     {
-        [myCachedCustomPageIcons setObject:icon forKey:page copyKeyFirst:NO];
+        [_cachedCustomPageIcons setObject:icon forKey:page copyKeyFirst:NO];
     }
     else
     {
-        [myCachedCustomPageIcons removeObjectForKey:page];
+        [_cachedCustomPageIcons removeObjectForKey:page];
     }
 	
     
 	// Remove page from generating list
-	[myGeneratingCustomIcon release];	myGeneratingCustomIcon = nil;
+	[_generatingCustomIcon release];	_generatingCustomIcon = nil;
 	
     
 	// Refresh Site Outline for new icon
@@ -386,9 +386,9 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
     
 	// Generate the first icon in queue
-	if ([myCustomIconGenerationQueue count] > 0)
+	if ([_customIconGenerationQueue count] > 0)
 	{
-		[self beginGeneratingCustomIconForPage:[myCustomIconGenerationQueue objectAtIndex:0]];
+		[self beginGeneratingCustomIconForPage:[_customIconGenerationQueue objectAtIndex:0]];
 	}
 }
 

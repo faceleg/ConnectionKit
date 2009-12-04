@@ -20,7 +20,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @interface SVSiteOutlineViewController : NSViewController <NSUserInterfaceValidations>
 {
   @private
-    NSOutlineView               *_outlineView;
+    NSOutlineView       *_outlineView;
     SVPagesController	*_pagesController;
 	    
     // Content
@@ -31,12 +31,12 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
     BOOL    _useSmallIconSize;
 	
     // Cache
-	NSImage				*myCachedFavicon;
-	NSMutableDictionary	*myCachedPluginIcons;
-	NSMutableDictionary	*myCachedCustomPageIcons;
+	NSImage				*_cachedFavicon;
+	NSMutableDictionary	*_cachedPluginIcons;
+	NSMutableDictionary	*_cachedCustomPageIcons;
 	
-	NSMutableArray		*myCustomIconGenerationQueue;
-	KTPage				*myGeneratingCustomIcon;			// Used in KTSiteOutlineDataSource+Icons.m
+	NSMutableArray		*_customIconGenerationQueue;
+	KTPage				*_generatingCustomIcon;			// Used in KTSiteOutlineDataSource+Icons.m
 }
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;

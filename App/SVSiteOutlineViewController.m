@@ -80,11 +80,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         _pages = [[NSMutableSet alloc] initWithCapacity:200];
         
         // Caches
-        myCachedPluginIcons = [[NSMutableDictionary alloc] init];
-        myCachedCustomPageIcons = [[NSMutableDictionary alloc] init];
+        _cachedPluginIcons = [[NSMutableDictionary alloc] init];
+        _cachedCustomPageIcons = [[NSMutableDictionary alloc] init];
         
         // Icon queue
-        myCustomIconGenerationQueue = [[NSMutableArray alloc] init];
+        _customIconGenerationQueue = [[NSMutableArray alloc] init];
     }
         
 	return self;
@@ -92,10 +92,10 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)dealloc
 {
-	[myCachedFavicon release];
-	[myCachedPluginIcons release];
-	[myCachedCustomPageIcons release];
-	[myCustomIconGenerationQueue release];
+	[_cachedFavicon release];
+	[_cachedPluginIcons release];
+	[_cachedCustomPageIcons release];
+	[_customIconGenerationQueue release];
 	
 	// Dump the pages list
 	[self resetPageObservation];       // This will also remove home page observation
@@ -268,7 +268,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
 		// Uncache custom icon to free memory
-		[myCachedCustomPageIcons removeObjectForKey:aPage];
+		[_cachedCustomPageIcons removeObjectForKey:aPage];
 		
 		// Remove from the set
 		[_pages removeObject:aPage];
@@ -302,7 +302,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)resetPageObservation
 {
     // Cancel any pending icons
-    [myCustomIconGenerationQueue removeAllObjects];
+    [_customIconGenerationQueue removeAllObjects];
     
     // We could use -mutableSetValueForKey to do this, but it will crash if used during -dealloc
     NSEnumerator *pagesEnumerator = [[self pages] objectEnumerator];
@@ -400,7 +400,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	}
 	else if ([keyPath isEqualToString:@"customSiteOutlineIcon"])
 	{
-		[myCachedCustomPageIcons removeObjectForKey:page];
+		[_cachedCustomPageIcons removeObjectForKey:page];
 	}
 	
 	
