@@ -288,7 +288,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	if (!keyPaths)
 	{
-		keyPaths = [[NSSet alloc] initWithObjects:@"titleHTML",
+		keyPaths = [[NSSet alloc] initWithObjects:@"titleText",
 					@"isStale",
 					@"codeInjection.hasCodeInjection",
 					@"isDraft",
