@@ -8,7 +8,6 @@
 
 #import "KTDocWindowController.h"
 
-#import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTInlineImageElement.h"
 #import "KTPage.h"

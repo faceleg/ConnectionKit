@@ -10,8 +10,6 @@
 
 #import "Debug.h"
 #import "KT.h"
-#import "KTAppDelegate.h"
-#import "KTDocSiteOutlineController.h"
 #import "KTDocument.h"
 #import "KTPage.h"
 #import "Elements+Pasteboard.h"

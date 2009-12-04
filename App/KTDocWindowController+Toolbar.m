@@ -24,7 +24,6 @@ TO DO:
 
 #import "Debug.h"
 #import "KT.h"
-#import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
