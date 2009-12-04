@@ -106,6 +106,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {	
     [super windowDidLoad];
 	
+    
+    // Finish setting up controllers
+	[[self siteOutlineViewController] setRootPage:[[[self document] site] root]];
+    [[self siteOutlineViewController] setContent:[self pagesController]];
+	
 	
 	// Now let the webview and the site outline initialize themselves.
 	[self linkPanelDidLoad];
@@ -185,10 +190,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Set up the new controller
 	[controller retain];
 	[_siteOutlineViewController release];   _siteOutlineViewController = controller;
-	
-    
-	[controller setRootPage:[[[self document] site] root]];
-    [controller setContent:[self pagesController]];
 }
 
 @synthesize webContentAreaController = _webContentAreaController;
@@ -207,8 +208,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
     [controller retain];
     [_pagesController release]; _pagesController = controller;
-    
-    [[self siteOutlineViewController] setContent:controller];
 }
 
 #pragma mark -

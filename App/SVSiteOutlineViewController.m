@@ -177,8 +177,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
     [_pagesController removeObserver:self forKeyPath:@"selectedObjects"];
     
+    // Store
     [controller retain];
     [_pagesController release]; _pagesController = controller;
+    
+    
+    // Load
+    [[self outlineView] reloadData];
     
     [controller addObserver:self
                  forKeyPath:@"selectedObjects"
