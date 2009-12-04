@@ -574,7 +574,6 @@
 		3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */; };
 		3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */; };
 		3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */; };
-		3C6EA96C1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C6EA96B1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
 		3C72D4F6094A24390061A876 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D4F5094A24390061A876 /* libz.dylib */; };
@@ -2102,7 +2101,6 @@
 		3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserWindowController.m; sourceTree = "<group>"; };
 		3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserViewController.h; sourceTree = "<group>"; };
 		3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserViewController.m; sourceTree = "<group>"; };
-		3C6EA96B1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignChooserImageBrowser.xib; sourceTree = "<group>"; };
 		3C72D3C5094A23880061A876 /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = /System/Library/Frameworks/Carbon.framework; sourceTree = "<absolute>"; };
 		3C72D482094A23D80061A876 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = /System/Library/Frameworks/Security.framework; sourceTree = "<absolute>"; };
 		3C72D4F5094A24390061A876 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = /usr/lib/libz.dylib; sourceTree = "<absolute>"; };
@@ -3420,7 +3418,6 @@
 			isa = PBXGroup;
 			children = (
 				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
-				3C6EA96B1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib */,
 				3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */,
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
 				3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */,
@@ -5753,7 +5750,6 @@
 				3C9BC211103DF9CB00D2CF47 /* MediaInspector.xib in Resources */,
 				3C9BC214103DF9DF00D2CF47 /* HTMLEditor.xib in Resources */,
 				3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */,
-				3C6EA96C1048EA3E00B0763D /* SVDesignChooserImageBrowser.xib in Resources */,
 				27158FCA1083FBE600E72B74 /* bak.png in Resources */,
 				CEB4C3D7108EB40C000C6E13 /* QuestionMark.pdf in Resources */,
 				CEB720FF108FC2AA00511E74 /* WelcomeSandvox.png in Resources */,
