@@ -2758,11 +2758,9 @@
 			name = Inspector;
 			sourceTree = "<group>";
 		};
-		271B497B105468AA008B698C /* SVWebEditorView */ = {
+		271B497B105468AA008B698C /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2790BDAD1040162000654665 /* SVWebEditorTextController.h */,
-				2790BDAE1040162000654665 /* SVWebEditorTextController.m */,
 				271B485E1051C2F4008B698C /* SVWebEditorView.h */,
 				271B485F1051C2F4008B698C /* SVWebEditorView.m */,
 				2755279A10546D990037524C /* SVSelectionBorder.h */,
@@ -2772,12 +2770,8 @@
 				27422440106A926E0058C8DA /* SVWebEditorWebView.m */,
 				278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */,
 				278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */,
-				2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */,
-				2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */,
-				2792197B10BC631D00E590D5 /* SVHTMLElementController.h */,
-				2792197C10BC631D00E590D5 /* SVHTMLElementController.m */,
 			);
-			name = SVWebEditorView;
+			name = View;
 			sourceTree = "<group>";
 		};
 		272321DB0D48B5A70075F31F /* Page Details */ = {
@@ -2957,9 +2951,15 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* Editor View Controller */ = {
+		2759CC98103970FC00E2C046 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				2792197B10BC631D00E590D5 /* SVHTMLElementController.h */,
+				2792197C10BC631D00E590D5 /* SVHTMLElementController.m */,
+				2790BDAD1040162000654665 /* SVWebEditorTextController.h */,
+				2790BDAE1040162000654665 /* SVWebEditorTextController.m */,
+				2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */,
+				2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */,
 				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
 				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 				CE26FA1308C4D9C500C9604B /* design-time.css */,
@@ -2974,7 +2974,7 @@
 				2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */,
 				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
 			);
-			name = "Editor View Controller";
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 		275A641510501D2900AE6E2A /* General */ = {
@@ -3238,6 +3238,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		27BDAA6A10C88E49008C8199 /* Web Editor */ = {
+			isa = PBXGroup;
+			children = (
+				2759CC98103970FC00E2C046 /* Controllers */,
+				271B497B105468AA008B698C /* View */,
+			);
+			name = "Web Editor";
+			sourceTree = "<group>";
+		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -3276,7 +3285,6 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
-				3C951FF70D762D9C009FCAC9 /* Configuration */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Documents */,
 				278849800F5FF0C400C70629 /* Site */,
@@ -3313,6 +3321,7 @@
 				2A37F4B8FDCFA73011CA2CEA /* Resources */,
 				CE04723B0DC6D18B00FF39C0 /* Designs */,
 				CE02AE450843EAD000D8A9F9 /* Sample Sites */,
+				3C951FF70D762D9C009FCAC9 /* Configuration */,
 				2A37F4C3FDCFA73011CA2CEA /* Frameworks */,
 				3C72D4F4094A240E0061A876 /* Libraries */,
 				3C5A73770BF7B82600776464 /* Debugging */,
@@ -3507,8 +3516,7 @@
 			isa = PBXGroup;
 			children = (
 				275A641510501D2900AE6E2A /* General */,
-				2759CC98103970FC00E2C046 /* Editor View Controller */,
-				271B497B105468AA008B698C /* SVWebEditorView */,
+				27BDAA6A10C88E49008C8199 /* Web Editor */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
 			);
 			name = "Web Content Area";
