@@ -7,7 +7,6 @@
 //
 
 #import "SVSiteOutlineViewController.h"
-#import "SVPagesController.h"
 
 #import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
@@ -167,7 +166,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark Other Accessors
 
 @synthesize content = _pagesController;
-- (void)setContent:(SVPagesController *)controller
+- (void)setContent:(NSArrayController *)controller
 {
     [controller retain];
     [_pagesController release]; _pagesController = controller;
@@ -212,7 +211,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         
         //	Begin observing the page
 		[page addObserver:self
-				forKeyPath:[[self content] childrenKeyPath]
+				forKeyPath:@"sortedChildren"
 				   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
 				   context:nil];
 		
@@ -254,7 +253,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
                        usingObjects:[NSSet setWithObject:aPage]];
         
         // Remove observers
-		[aPage removeObserver:self forKeyPath:[[self content] childrenKeyPath]];
+		[aPage removeObserver:self forKeyPath:@"sortedChildren"];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
 		// Uncache custom icon to free memory
@@ -317,7 +316,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Having prescreened the parameters, pass them onto the right support methods for processing
 	OBASSERT([object isKindOfClass:[KTPage class]]);
-	if ([keyPath isEqualToString:[[self content] childrenKeyPath]])
+	if ([keyPath isEqualToString:@"sortedChildren"])
 	{
 		[self observeValueForSortedChildrenOfPage:object change:change context:context];
 	}
@@ -563,9 +562,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		KTPage *page = (item) ? item : [self rootPage];
 		OBASSERT(page);
 		
-		NSString *childrenKeyPath = [[self content] childrenKeyPath];	// Don't use -children as a shortcut as
-		OBASSERT(childrenKeyPath);													// it may be our of sync during an undo
-		result = [[page valueForKey:childrenKeyPath] count];						//  op.
+		result = [[page valueForKey:@"sortedChildren"] count];
 		
 		// Root is a special case where we have to add 1 to the total
 		if (!item) result += 1;
