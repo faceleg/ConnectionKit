@@ -13,11 +13,11 @@
 @class SVDesignChooserViewController;
 @interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
 {
-    SVDesignChooserViewController   *viewController_;
+    SVDesignChooserViewController   *_viewController;
     IBOutlet MGScopeBar             *oScopeBar;
     IBOutlet NSBox                 *oTargetView;
     
-    KTDesign                        *selectedDesign_;
+    KTDesign                        *_selectedDesign;
 }
 
 @property(retain) SVDesignChooserViewController *viewController;

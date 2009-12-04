@@ -30,9 +30,9 @@
 
 @implementation SVWelcomeController
 
-@synthesize sticky = sticky_;
+@synthesize sticky = _sticky;
 @synthesize networkAvailable = _networkAvailable;
-@synthesize recentDocuments = recentDocuments_;
+@synthesize recentDocuments = _recentDocuments;
 
 - (id)init
 {
@@ -86,9 +86,9 @@
 
 - (void) setupStickyWindow
 {
-	if (!sticky_)
+	if (!_sticky)
 	{
-		sticky_ = [[KSYellowStickyWindow alloc]
+		_sticky = [[KSYellowStickyWindow alloc]
 				   initWithContentRect:NSMakeRect(0,0,kStickyViewWidth,kStickyViewHeight)
 				   styleMask:NSBorderlessWindowMask
 				   backing:NSBackingStoreBuffered
@@ -109,8 +109,8 @@
 		[attrStickyText setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [attrStickyText length])];
 		
 		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
-		[sticky_ setContentView:oStickyView];
-		[sticky_ setAlphaValue:0.0];		// initially ZERO ALPHA!
+		[_sticky setContentView:oStickyView];
+		[_sticky setAlphaValue:0.0];		// initially ZERO ALPHA!
 
 		NSRect separatorFrame = [oRecentBox frame];
 		NSPoint convertedWindowOrigin;
@@ -122,9 +122,9 @@
 		{
 			convertedWindowOrigin = NSMakePoint(NSMinX(separatorFrame)-80,400);
 		}		
-		[sticky_ setFrameTopLeftPoint:[[self window] convertBaseToScreen:convertedWindowOrigin]];
+		[_sticky setFrameTopLeftPoint:[[self window] convertBaseToScreen:convertedWindowOrigin]];
 		
-		[[self window] addChildWindow:sticky_ ordered:NSWindowAbove];
+		[[self window] addChildWindow:_sticky ordered:NSWindowAbove];
 	}
 }
 

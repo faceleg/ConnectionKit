@@ -26,8 +26,8 @@
 	
 @private
 	BOOL _networkAvailable;
-	KSYellowStickyWindow *sticky_;
-	NSArray *recentDocuments_;
+	KSYellowStickyWindow *_sticky;
+	NSArray *_recentDocuments;
 }
 
 @property (retain) KSYellowStickyWindow *sticky;

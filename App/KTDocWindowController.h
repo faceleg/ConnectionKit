@@ -85,7 +85,7 @@ extern NSString *gInfoWindowAutoSaveName;
 	KTCodeInjectionController	*myPageCodeInjectionController;
     
     // Design Chooser
-    SVDesignChooserWindowController *designChooserWindowController_;
+    SVDesignChooserWindowController *_designChooserWindowController;
 
 
 	NSButton *myBuyNowButton;

@@ -12,7 +12,7 @@
 
 @interface KTDesignFamily : NSObject {
 
-	NSMutableArray *designs_;
+	NSMutableArray *_designs;
 }
 
 - (void) addDesign:(KTDesign *)aDesign;

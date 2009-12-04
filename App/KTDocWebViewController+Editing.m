@@ -160,7 +160,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 					DOMHTMLAnchorElement *a = (DOMHTMLAnchorElement *)[doc createElement:@"A"];
 					[a setHref:@"#"];
 					[a setTitle:NSLocalizedString(@"Click on + to insert an element", @"title of '+' button; instructions for what to do")];
-					// replace_withElementName_elementClass_elementID_text_innerSpan_innerParagraph_
+					// replace_withElementName_elementClass_elementID_text_innerSpan_i_nnerParagraph
 					NSString *jsFunction = [NSString stringWithFormat:@"window.helper.replaceElement(this,'%@','%@','%@','%@',%@,%@); return false;",
 						[element tagName],
 						[element className],

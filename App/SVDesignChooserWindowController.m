@@ -27,13 +27,13 @@
 - (void)awakeFromNib
 {
     // load the xib that contains the collection view
-    viewController_ = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserImageBrowser" 
+    _viewController = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserImageBrowser" 
                                                                       bundle:nil];
 
     // pop the collection view into the window.  This awakens SVDesignChooserImageBrowser's nib
-    [oTargetView setContentView:[viewController_ view]];
+    [oTargetView setContentView:[_viewController view]];
     
-    [viewController_ setupTrackingRects];
+    [_viewController setupTrackingRects];
 }
 
 - (void)displayAsSheet
@@ -65,8 +65,8 @@
 - (IBAction)chooseDesign:(id)sender
 {
     // get the selected design
-    NSUInteger selectedIndex = [[viewController_ designsArrayController] selectionIndex];
-    KTDesign *design = [[viewController_ designs] objectAtIndex:selectedIndex];
+    NSUInteger selectedIndex = [[_viewController designsArrayController] selectionIndex];
+    KTDesign *design = [[_viewController designs] objectAtIndex:selectedIndex];
     OBASSERT(nil != design);
     
     // prep the design
@@ -114,17 +114,17 @@
     [self unbind:@"selectedDesign"];
 }
 
-@synthesize selectedDesign = selectedDesign_;
+@synthesize selectedDesign = _selectedDesign;
 - (void)setSelectedDesign:(KTDesign *)aDesign
 {
     [aDesign retain];
-    [selectedDesign_ release];
-    selectedDesign_ = aDesign;
+    [_selectedDesign release];
+    _selectedDesign = aDesign;
     
-    (void)[[viewController_ designsArrayController] setSelectedObjects:[NSArray arrayWithObject:selectedDesign_]];
+    (void)[[_viewController designsArrayController] setSelectedObjects:[NSArray arrayWithObject:_selectedDesign]];
 }
 
-@synthesize viewController = viewController_;
+@synthesize viewController = _viewController;
 
 #pragma mark -
 #pragma mark MGScopeBarDelegate

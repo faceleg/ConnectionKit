@@ -434,7 +434,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Design Chooser
 
-@synthesize designChooserWindowController = designChooserWindowController_;
+@synthesize designChooserWindowController = _designChooserWindowController;
 
 - (IBAction)chooseDesign:(id)sender
 {
@@ -443,13 +443,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)showChooseDesignSheet:(id)sender
 {
-    if ( !designChooserWindowController_ )
+    if ( !_designChooserWindowController )
     {
-        designChooserWindowController_ = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
-        [[self document] addWindowController:designChooserWindowController_];
+        _designChooserWindowController = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
+        [[self document] addWindowController:_designChooserWindowController];
     }
     
-    [designChooserWindowController_ displayAsSheet];
+    [_designChooserWindowController displayAsSheet];
 }
 
 #pragma mark -

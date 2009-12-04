@@ -35,7 +35,7 @@
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
-	// trackingRect_ = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
+	// _trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -47,7 +47,7 @@
 
 - (void)mouseEntered:(NSEvent *)theEvent
 {
-	wasAcceptingMouseEvents_ = [[[self view] window] acceptsMouseMovedEvents];
+	_wasAcceptingMouseEvents = [[[self view] window] acceptsMouseMovedEvents];
 	[[[self view] window] setAcceptsMouseMovedEvents:YES];
     [[[self view] window] makeFirstResponder:self];
 
@@ -55,7 +55,7 @@
 }
 - (void)mouseExited:(NSEvent *)theEvent
 {
-    [[[self view] window] setAcceptsMouseMovedEvents:wasAcceptingMouseEvents_];
+    [[[self view] window] setAcceptsMouseMovedEvents:_wasAcceptingMouseEvents];
 	NSLog(@"%s %@",__FUNCTION__, theEvent);
 }
 - (void)mouseMoved:(NSEvent *)theEvent
@@ -96,8 +96,8 @@
 - (void)viewBoundsDidChange:(NSNotification *)aNotif;
 {
     // we set up a tracking region so we can get mouseEntered and mouseExited events
-    [[self view] removeTrackingRect:trackingRect_];
-    trackingRect_ = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
+    [[self view] removeTrackingRect:_trackingRect];
+    _trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 }
 
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
@@ -170,7 +170,7 @@
 
 
 
-@synthesize designs = designs_;
+@synthesize designs = _designs;
 @synthesize designsArrayController = oArrayController;
 @end
 
@@ -182,20 +182,20 @@
 {
     //NSColor *startingColor = [NSColor darkGrayColor];
     //NSColor *endingColor = [NSColor blackColor];
-    //backgroundGradient_ = [[NSGradient alloc] initWithStartingColor:startingColor
+    //_backgroundGradient = [[NSGradient alloc] initWithStartingColor:startingColor
     //                                                    endingColor:endingColor];    
 }
 
 - (void)drawRect:(NSRect)rect
 {
-    //[backgroundGradient_ drawInRect:[self bounds] angle:90.0];
+    //[_backgroundGradient drawInRect:[self bounds] angle:90.0];
     //[[NSColor colorWithCalibratedRed:0.079 green:0.079 blue:0.079 alpha:1.000] set];
     //[NSBezierPath fillRect:rect];
 }
 
 - (void)dealloc
 {
-    //[backgroundGradient_ release];
+    //[_backgroundGradient release];
     [super dealloc];
 }
 

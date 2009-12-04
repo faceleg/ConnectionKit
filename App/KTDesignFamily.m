@@ -11,14 +11,14 @@
 
 @implementation KTDesignFamily
 
-@synthesize designs = designs_;
+@synthesize designs = _designs;
 
 - (id) init
 {
 	self = [super init];
 	if ( self != nil )
 	{
-		designs_ = [[NSMutableArray alloc] init];
+		_designs = [[NSMutableArray alloc] init];
 	}
 	return self;
 }

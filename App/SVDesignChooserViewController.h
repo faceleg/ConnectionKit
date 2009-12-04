@@ -18,9 +18,9 @@
 {
     IBOutlet NSArrayController  *oArrayController;
     
-    NSArray                     *designs_;
-	NSTrackingRectTag			trackingRect_;
-	BOOL						wasAcceptingMouseEvents_;
+    NSArray                     *_designs;
+	NSTrackingRectTag			_trackingRect;
+	BOOL						_wasAcceptingMouseEvents;
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
@@ -31,7 +31,7 @@
 
 @interface SVDesignChooserScrollView : NSScrollView
 {
-    NSGradient *backgroundGradient_;
+    NSGradient *_backgroundGradient;
 }
 @end
 
