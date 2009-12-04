@@ -41,7 +41,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
 
-@property(nonatomic, retain) IBOutlet NSArrayController *content;
+@property(nonatomic, retain) NSArrayController *content;
 
 
 @property(nonatomic, retain) KTPage *rootPage;

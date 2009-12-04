@@ -186,7 +186,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[controller retain];
 	[_siteOutlineViewController release];   _siteOutlineViewController = controller;
 	
+    
 	[controller setRootPage:[[[self document] site] root]];
+    [controller setContent:[self pagesController]];
 }
 
 @synthesize webContentAreaController = _webContentAreaController;
@@ -198,6 +200,15 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [_webContentAreaController release],   _webContentAreaController = controller;
     
     [controller setDelegate:self];
+}
+
+@synthesize pagesController = _pagesController;
+- (void)setPagesController:(NSArrayController *)controller
+{
+    [controller retain];
+    [_pagesController release]; _pagesController = controller;
+    
+    [[self siteOutlineViewController] setContent:controller];
 }
 
 #pragma mark -

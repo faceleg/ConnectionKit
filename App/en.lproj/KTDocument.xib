@@ -24,8 +24,8 @@
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string>com.brandonwalkin.BWToolkit</string>
+			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</object>
 		<object class="NSMutableDictionary" key="IBDocument.Metadata">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -57,7 +57,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSWindowContentMinSize">{800, 280}</string>
 				<object class="NSView" key="NSWindowView" id="810270195">
 					<nil key="NSNextResponder"/>
@@ -146,7 +146,7 @@
 																			<string key="NSColorName">controlBackgroundColor</string>
 																			<object class="NSColor" key="NSColor" id="47196996">
 																				<int key="NSColorSpace">3</int>
-																				<bytes key="NSWhite">MC42NjY2NjY2NjY3AA</bytes>
+																				<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
 																			</object>
 																		</object>
 																		<object class="NSColor" key="NSTextColor" id="801130899">
@@ -687,7 +687,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{800, 302}</string>
-				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSFrameAutosaveName">KTDocument</string>
 			</object>
 			<object class="NSViewController" id="363902086"/>
@@ -728,7 +728,7 @@
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
-				<string key="NSWindowContentMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSWindowContentMaxSize">{3.40282e+38, 3.40282e+38}</string>
 				<string key="NSWindowContentMinSize">{213, 14}</string>
 				<object class="NSView" key="NSWindowView" id="834058994">
 					<nil key="NSNextResponder"/>
@@ -919,7 +919,7 @@
 				</object>
 				<string key="NSScreenRect">{{0, 0}, {1920, 1178}}</string>
 				<string key="NSMinSize">{213, 36}</string>
-				<string key="NSMaxSize">{1.79769e+308, 1.79769e+308}</string>
+				<string key="NSMaxSize">{3.40282e+38, 3.40282e+38}</string>
 			</object>
 			<object class="NSViewController" id="408607898"/>
 			<object class="NSCustomView" id="82358768">
@@ -1736,11 +1736,11 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">content</string>
-						<reference key="source" ref="363902086"/>
+						<string key="label">pagesController</string>
+						<reference key="source" ref="496514088"/>
 						<reference key="destination" ref="601368962"/>
 					</object>
-					<int key="connectionID">1924</int>
+					<int key="connectionID">1925</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2617,7 +2617,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1924</int>
+			<int key="maxID">1925</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2791,6 +2791,7 @@
 							<string>oLinkView</string>
 							<string>oMessageTextField</string>
 							<string>oMessageWindow</string>
+							<string>pagesController</string>
 							<string>siteOutlineViewController</string>
 							<string>webContentAreaController</string>
 						</object>
@@ -2804,6 +2805,7 @@
 							<string>KTLinkSourceView</string>
 							<string>NSTextField</string>
 							<string>KSBorderlessWindow</string>
+							<string>NSArrayController</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>SVWebContentAreaController</string>
 						</object>
@@ -3231,17 +3233,8 @@
 						</object>
 					</object>
 					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>content</string>
-							<string>outlineView</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>SVPagesController</string>
-							<string>NSOutlineView</string>
-						</object>
+						<string key="NS.key.0">outlineView</string>
+						<string key="NS.object.0">NSOutlineView</string>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>

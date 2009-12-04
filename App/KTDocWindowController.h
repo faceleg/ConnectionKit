@@ -46,9 +46,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 @interface KTDocWindowController : NSWindowController <KSInspection, SVWebContentAreaControllerDelegate>
 {
-	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
-	SVSiteOutlineViewController *_siteOutlineViewController;
-		
 	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
 	RYZImagePopUpButton             *myAddPagePopUpButton;       // constructed via toolbar code
@@ -79,6 +76,10 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSRect							mySelectionRect;
 	
 @private
+	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
+	SVSiteOutlineViewController *_siteOutlineViewController;
+    NSArrayController           *_pagesController;
+		
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
 	KTCodeInjectionController	*myPageCodeInjectionController;
@@ -93,6 +94,7 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
+@property(nonatomic, retain) IBOutlet NSArrayController *pagesController;
 
 
 #pragma mark Other

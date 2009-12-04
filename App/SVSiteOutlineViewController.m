@@ -180,7 +180,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [controller retain];
     [_pagesController release]; _pagesController = controller;
     
-    [controller addObserver:self forKeyPath:@"selectedObjects" options:0 context:sContentSelectionObservationContext];
+    [controller addObserver:self
+                 forKeyPath:@"selectedObjects"
+                    options:NSKeyValueObservingOptionInitial
+                    context:sContentSelectionObservationContext];
 }
 
 #pragma mark Pages List
