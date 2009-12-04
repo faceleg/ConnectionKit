@@ -42,7 +42,7 @@
     if (self)
     {
         myIsEditable = YES;
-        [self setHTMLTag:@"div"];
+        [self setTagName:@"div"];
     }
 	
 	return self;
@@ -83,9 +83,8 @@
 
 @synthesize placeholderString = _placeholder;
 
-- (NSString *)HTMLTag { return myHTMLTag; }
-
-- (void)setHTMLTag:(NSString *)tag
+@synthesize tagName = myHTMLTag;
+- (void)setTagName:(NSString *)tag
 {
 	OBPRECONDITION(tag);
 	
@@ -93,6 +92,8 @@
 	[myHTMLTag release];
 	myHTMLTag = tag;
 }
+
+@synthesize className = _className;
 
 - (NSString *)hyperlinkString { return myHyperlinkString; }
 
@@ -252,12 +253,12 @@
 	
 	
 	// Construct the actual HTML
-	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<%@", [self HTMLTag]];
+	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<%@", [self tagName]];
 	
 	
 	// Open the main tag
 	// In some situations we generate both the main tag, and a <span class="in">
-	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self HTMLTag] isEqualToString:@"span"]);
+	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self tagName] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
 		if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
@@ -329,7 +330,7 @@
 		[buffer appendString:@"</span>"];
 	}
 	if ([self hyperlinkString]) [buffer appendString:@"</a>"];
-	[buffer appendFormat:@"</%@>", [self HTMLTag]];
+	[buffer appendFormat:@"</%@>", [self tagName]];
 	
 	
 	// Tidy up

@@ -103,7 +103,7 @@
 	[result setFieldEditor:fieldEditor];
 	[result setRichText:richText];	// Presumably there must be some cases where this is not desired.
 	[result setImportsGraphics:[flags containsObject:@"imageable"]];
-	if (tag) [result setHTMLTag:tag];
+	if (tag) [result setTagName:tag];
 	[result setGraphicalTextCode:GTCode];
 	
 	if (hyperlink)

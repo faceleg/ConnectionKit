@@ -22,9 +22,12 @@
 	BOOL			myIsRichText;
     NSString        *_placeholder;
 	BOOL			myImportsGraphics;
+	
+    NSString		*myHTMLTag;
+    NSString        *_className;
 	BOOL			myHasSpanIn;
-	NSString		*myHTMLTag;
-	NSString		*myGraphicalTextCode;
+	
+    NSString		*myGraphicalTextCode;
 	NSString		*myHyperlinkString;
 	NSString		*myTargetString;
 	
@@ -47,17 +50,16 @@
 
 @property(nonatomic, setter=setRichText:) BOOL isRichText;
 @property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
+- (BOOL)importsGraphics;
+- (void)setImportsGraphics:(BOOL)flag;
 
 //  Like .editable, has no effect on the HTML generated. But when editing, UI code will check the value to see if a custom string has been requested
 @property(nonatomic, copy) NSString *placeholderString;
 
-- (BOOL)importsGraphics;
-- (void)setImportsGraphics:(BOOL)flag;
-- (BOOL)hasSpanIn;
-- (void)setHasSpanIn:(BOOL)flag;
+@property(nonatomic, copy) NSString *tagName;
+@property(nonatomic, copy) NSString *className;
+@property(nonatomic) BOOL hasSpanIn;
 
-- (NSString *)HTMLTag;
-- (void)setHTMLTag:(NSString *)tag;
 
 - (NSString *)hyperlinkString;
 - (void)setHyperlinkString:(NSString *)hyperlinkString;
