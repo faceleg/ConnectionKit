@@ -16,10 +16,6 @@
 
 @interface SVInspectorViewController : KSInspectorViewController <KSInspectorViewController>
 {
-  @private  // TODO: Enough spare ivars for later changes without breaking plug-ins
-    KTDocument          *_inspectedDocument;
 }
-
-@property(nonatomic, retain) KTDocument *inspectedDocument;
 
 @end

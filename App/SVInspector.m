@@ -38,8 +38,8 @@
 @synthesize inspectedPagesController = _inspectedPagesController;
 - (void)setInspectedPagesController:(id <KSCollectionController>)controller
 {
-    [_pageInspector setValue:controller
-                      forKey:@"inspectedObjectsController"];
+    [_documentInspector setInspectedObjectsController:controller];
+    [_pageInspector setInspectedObjectsController:controller];
 }
 
 - (void)setInspectedWindow:(NSWindow *)window
@@ -61,7 +61,12 @@
            options:nil];
     }
     
-    [_documentInspector setRepresentedObject:[[window windowController] document]];
+    
+    // Document
+    KTDocument *document = [[window windowController] document];
+    [[[self inspectorTabsController] viewControllers] setValue:document forKey:@"representedObject"];
+    
+    // Objects
     [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
 }
 
@@ -71,10 +76,6 @@
     _documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
     [_documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
-    [_documentInspector bind:@"inspectedDocument"
-                   toObject:self
-                withKeyPath:@"inspectedWindow.windowController.document"
-                    options:nil];
     [_documentInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
@@ -82,10 +83,6 @@
     _pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [_pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
     [_pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
-    [_pageInspector bind:@"inspectedDocument"
-               toObject:self
-            withKeyPath:@"inspectedWindow.windowController.document"
-                options:nil];
     [_pageInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
@@ -93,10 +90,6 @@
     _wrapInspector = [[SVInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
     [_wrapInspector setIcon:[NSImage imageNamed:@"unsorted"]];
-    [_wrapInspector bind:@"inspectedDocument"
-               toObject:self
-            withKeyPath:@"inspectedWindow.windowController.document"
-                options:nil];
     [_wrapInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     

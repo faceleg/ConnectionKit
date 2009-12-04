@@ -11,11 +11,4 @@
 
 @implementation SVInspectorViewController
 
-+ (void)initialize
-{
-    [self exposeBinding:@"inspectedDocument"];
-}
-
-@synthesize inspectedDocument = _inspectedDocument;
-
 @end
