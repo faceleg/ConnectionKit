@@ -52,6 +52,7 @@
 {
     [_placeholder release];
 	[myHTMLTag release];
+    [_className release];
 	[myGraphicalTextCode release];
 	[myHyperlinkString release];
 	[myTargetString release];
@@ -93,7 +94,39 @@
 	myHTMLTag = tag;
 }
 
-@synthesize className = _className;
+@synthesize customCSSClassName = _className;
+
+- (NSString *)CSSClassName;
+{
+    NSMutableArray *classNames = [[NSMutableArray alloc] init];
+    
+    
+    // Any custom classname specifed
+    if ([[self customCSSClassName] length] > 0)
+    {
+        [classNames addObject:[self customCSSClassName]];
+    }
+    
+    
+    // Editing
+    if ([self isEditable])
+    {
+        if ([[SVHTMLContext currentContext] isEditable])
+        { 
+            [classNames addObject:([self isRichText] ? @"kBlock" : @"kLine")];
+        }
+    }
+    else
+    {
+        [classNames addObject:@"in"];
+    }
+    
+    
+    // Turn into a single string
+    NSString *result = [classNames componentsJoinedByString:@" "];
+    [classNames release];
+    return result;
+}
 
 - (NSString *)hyperlinkString { return myHyperlinkString; }
 
@@ -266,11 +299,11 @@
 			[buffer appendFormat:
              @" id=\"%@\" class=\"%@\"",
              [self DOMNodeID],
-             ([self isRichText]) ? @"kBlock" : @"kLine"];
+             [self CSSClassName]];
 		}
 		else if (![self isEditable])
 		{
-			[buffer appendString:@" class=\"in\""];
+			[buffer appendFormat:@" class=\"%@\"", [self CSSClassName]];
 		}
 	}
 	

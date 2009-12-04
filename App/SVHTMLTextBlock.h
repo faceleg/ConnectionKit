@@ -57,7 +57,8 @@
 @property(nonatomic, copy) NSString *placeholderString;
 
 @property(nonatomic, copy) NSString *tagName;
-@property(nonatomic, copy) NSString *className;
+@property(nonatomic, copy) NSString *customCSSClassName;
+- (NSString *)CSSClassName;
 @property(nonatomic) BOOL hasSpanIn;
 
 
