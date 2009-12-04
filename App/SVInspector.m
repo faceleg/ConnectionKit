@@ -61,6 +61,7 @@
            options:nil];
     }
     
+    [_documentInspector setRepresentedObject:[[window windowController] document]];
     [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
 }
 
