@@ -581,14 +581,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [windowController release];
 }
 
-- (void)addWindowController:(NSWindowController *)windowController
-{
-	if ( nil != windowController )
-    {
-		[super addWindowController:windowController];
-	}
-}
-
 - (void)removeWindowController:(NSWindowController *)windowController
 {
 	if ( [windowController isEqual:myHTMLInspectorController] )
