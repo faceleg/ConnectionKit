@@ -54,7 +54,7 @@
     // Mike.
     //
     [self bind:@"selectedDesign"
-      toObject:[[[[self document] mainWindowController] siteOutlineViewController] pagesController]
+      toObject:[[[[self document] mainWindowController] siteOutlineViewController] content]
    withKeyPath:@"selection.master.design"
        options:nil];
     

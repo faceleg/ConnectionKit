@@ -95,7 +95,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
     else
     {
-        selectedPage = [[[[self siteOutlineViewController] pagesController] selectedObjects] objectAtIndex:0];
+        selectedPage = [[[[self siteOutlineViewController] content] selectedObjects] objectAtIndex:0];
     }
     
     // if we haven't selected a collection, use its parent
@@ -201,7 +201,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     }
     else
     {
-        selectedPage = [[[[self siteOutlineViewController] pagesController] selectedObjects] objectAtIndex:0];
+        selectedPage = [[[[self siteOutlineViewController] content] selectedObjects] objectAtIndex:0];
     }
     
     if ( [selectedPage isKindOfClass:[KTPage class]] )
@@ -260,7 +260,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 	{
 		[self duplicatePagelets:sender];
 	}
-	else if ([[[[self siteOutlineViewController] pagesController] selectionIndexes] count] > 0)
+	else if ([[[[self siteOutlineViewController] content] selectionIndexes] count] > 0)
 	{
 		[self duplicateSelectedPages:sender];
 	}
@@ -280,7 +280,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 - (IBAction)duplicateSelectedPages:(id)sender
 {
 	// Figure out our selection
-	NSArray *selectedPages = [[[self siteOutlineViewController] pagesController] selectedObjects];
+	NSArray *selectedPages = [[[self siteOutlineViewController] content] selectedObjects];
     if ([sender isKindOfClass:[NSMenuItem class]] && (nil != [sender representedObject]) )
     {
         // Duplicate was sent from a contextual menuitem, get the selection from the context
@@ -310,7 +310,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     
     
     // Select the new pages
-    [[[self siteOutlineViewController] pagesController] setSelectedObjects:newPages];
+    [[[self siteOutlineViewController] content] setSelectedObjects:newPages];
     [newPages release];
     
     

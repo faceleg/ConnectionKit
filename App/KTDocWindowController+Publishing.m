@@ -109,7 +109,7 @@
 	
     
 	// TODO: Commit any pending edits
-    BOOL result = [[[self siteOutlineViewController] pagesController] commitEditing];
+    BOOL result = [[[self siteOutlineViewController] content] commitEditing];
 
     
     
@@ -303,7 +303,7 @@
 
 - (IBAction)visitPublishedPage:(id)sender
 {
-	NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selection] valueForKey:@"URL"];
+	NSURL *pageURL = [[[[self siteOutlineViewController] content] selection] valueForKey:@"URL"];
 	if (pageURL && !NSIsControllerMarker(pageURL))
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];

@@ -156,16 +156,6 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	// Finally, hook up outline delegate & data source
 	if (outlineView)
 	{
-		[[NSNotificationCenter defaultCenter] addObserver:[self pagesController]
-												 selector:@selector(outlineViewSelectionDidChange:)
-													 name:NSOutlineViewSelectionDidChangeNotification
-												   object:outlineView];
-		
-		[[NSNotificationCenter defaultCenter] addObserver:[self pagesController]
-												 selector:@selector(outlineViewItemWillCollapse:)
-													 name:NSOutlineViewItemWillCollapseNotification
-												   object:outlineView];
-		
 		[outlineView setDelegate:self];		// -setDelegate: MUST come first to receive all notifications
 		[outlineView setDataSource:self];
 		
@@ -176,8 +166,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 #pragma mark Other Accessors
 
-@synthesize pagesController = _pagesController;
-- (void)setPagesController:(SVPagesController *)controller
+@synthesize content = _pagesController;
+- (void)setContent:(SVPagesController *)controller
 {
     [controller retain];
     [_pagesController release]; _pagesController = controller;
@@ -222,7 +212,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         
         //	Begin observing the page
 		[page addObserver:self
-				forKeyPath:[[self pagesController] childrenKeyPath]
+				forKeyPath:[[self content] childrenKeyPath]
 				   options:(NSKeyValueObservingOptionNew|NSKeyValueObservingOptionOld)
 				   context:nil];
 		
@@ -264,7 +254,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
                        usingObjects:[NSSet setWithObject:aPage]];
         
         // Remove observers
-		[aPage removeObserver:self forKeyPath:[[self pagesController] childrenKeyPath]];
+		[aPage removeObserver:self forKeyPath:[[self content] childrenKeyPath]];
 		[aPage removeObserver:self forKeyPaths:[[self class] mostSiteOutlineRefreshingKeyPaths]];
 		
 		// Uncache custom icon to free memory
@@ -327,7 +317,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	
 	// Having prescreened the parameters, pass them onto the right support methods for processing
 	OBASSERT([object isKindOfClass:[KTPage class]]);
-	if ([keyPath isEqualToString:[[self pagesController] childrenKeyPath]])
+	if ([keyPath isEqualToString:[[self content] childrenKeyPath]])
 	{
 		[self observeValueForSortedChildrenOfPage:object change:change context:context];
 	}
@@ -476,7 +466,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
         NSPasteboard *pboard = [NSPasteboard generalPasteboard];
         [pboard declareTypes:[NSArray arrayWithObjects:kKTPagesPboardType, nil] owner:self];
         
-        NSArray *topLevelPages = [[[self pagesController] selectedObjects] parentObjects];
+        NSArray *topLevelPages = [[[self content] selectedObjects] parentObjects];
         NSArray *pasteboardReps = [topLevelPages valueForKey:@"pasteboardRepresentation"];
         [pboard setData:[NSKeyedArchiver archivedDataWithRootObject:pasteboardReps] forType:kKTPagesPboardType];
     }
@@ -494,7 +484,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
     
     if ([self canDelete])
     {
-        NSSet *selection = [[NSSet alloc] initWithArray:[[self pagesController] selectedObjects]];
+        NSSet *selection = [[NSSet alloc] initWithArray:[[self content] selectedObjects]];
         
         // Remove the pages from their parents
         NSSet *parentPages = [selection valueForKey:@"parentPage"];
@@ -533,14 +523,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (BOOL)canCopy
 {
-    BOOL result = ([[[self pagesController] selectedObjects] count] > 0);
+    BOOL result = ([[[self content] selectedObjects] count] > 0);
     return result;
 }
 
 // Can only delete a page if there's a selection and that selection doesn't include the root page
 - (BOOL)canDelete
 {
-    NSObjectController *objectController = [self pagesController];
+    NSObjectController *objectController = [self content];
     BOOL result = ([objectController canRemove] &&
                    ![[objectController selectedObjects] containsObjectIdenticalTo:[self rootPage]]);
     return result;
@@ -573,7 +563,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 		KTPage *page = (item) ? item : [self rootPage];
 		OBASSERT(page);
 		
-		NSString *childrenKeyPath = [[self pagesController] childrenKeyPath];	// Don't use -children as a shortcut as
+		NSString *childrenKeyPath = [[self content] childrenKeyPath];	// Don't use -children as a shortcut as
 		OBASSERT(childrenKeyPath);													// it may be our of sync during an undo
 		result = [[page valueForKey:childrenKeyPath] count];						//  op.
 		
@@ -950,7 +940,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
 	NSArray *selectedPages = [[self outlineView] selectedItems];
-	[[self pagesController] setSelectedObjects:selectedPages];
+	[[self content] setSelectedObjects:selectedPages];
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
@@ -959,7 +949,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 {
 	KTPage *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
 	BOOL shouldSelectCollapsingItem = YES;
-	NSEnumerator *selectionEnumerator = [[[self pagesController] selectedObjects] objectEnumerator];
+	NSEnumerator *selectionEnumerator = [[[self content] selectedObjects] objectEnumerator];
 	KTPage *aPage;
 	
 	while (aPage = [selectionEnumerator nextObject])

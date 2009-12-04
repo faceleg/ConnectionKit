@@ -800,7 +800,7 @@
 	
 	
 	// Select the dropped pages
-	[[self pagesController] setSelectedObjects:droppedPages];
+	[[self content] setSelectedObjects:droppedPages];
 	
 	
 	return result;
@@ -809,7 +809,7 @@
 #pragma mark -
 #pragma mark Support
 
-- (KTDocWindowController *)windowController { return [[self pagesController] windowController]; }
+- (KTDocWindowController *)windowController { return [[self content] windowController]; }
 
 - (NSArray *)itemsForRows:(NSArray *)anArray
 {
