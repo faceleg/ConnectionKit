@@ -21,6 +21,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
   @private
     NSOutlineView       *_outlineView;
     NSArrayController	*_pagesController;
+    BOOL                _isChangingSelection;
 	    
     // Content
 	NSMutableSet    *_pages;

@@ -58,7 +58,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark -
 
 
+static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewControllerContentSelectionObservationContext";
+
+
 @implementation SVSiteOutlineViewController
+
+#pragma mark Init & Dealloc
 
 + (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
 {
@@ -170,8 +175,12 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 @synthesize content = _pagesController;
 - (void)setContent:(NSArrayController *)controller
 {
+    [_pagesController removeObserver:self forKeyPath:@"selectedObjects"];
+    
     [controller retain];
     [_pagesController release]; _pagesController = controller;
+    
+    [controller addObserver:self forKeyPath:@"selectedObjects" options:0 context:sContentSelectionObservationContext];
 }
 
 #pragma mark Pages List
@@ -309,23 +318,33 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-	// Ignore objects not in our pages list. If we don't NSOutlineView can occasionally embark on an endless loop.
-	if (![[self pages] containsObject:object])
-	{
-		return;
-	}
-	
-	
-	// Having prescreened the parameters, pass them onto the right support methods for processing
-	OBASSERT([object isKindOfClass:[KTPage class]]);
-	if ([keyPath isEqualToString:@"sortedChildren"])
-	{
-		[self observeValueForSortedChildrenOfPage:object change:change context:context];
-	}
-	else
-	{
-		[self observeValueForOtherKeyPath:keyPath ofPage:object change:change context:context];
-	}
+	if (context == sContentSelectionObservationContext)
+    {
+        if (!_isChangingSelection)
+        {
+            [[self outlineView] selectItems:[[self content] selectedObjects]];
+        }
+    }
+    else
+    {
+        // Ignore objects not in our pages list. If we don't NSOutlineView can occasionally embark on an endless loop.
+        if (![[self pages] containsObject:object])
+        {
+            return;
+        }
+        
+        
+        // Having prescreened the parameters, pass them onto the right support methods for processing
+        OBASSERT([object isKindOfClass:[KTPage class]]);
+        if ([keyPath isEqualToString:@"sortedChildren"])
+        {
+            [self observeValueForSortedChildrenOfPage:object change:change context:context];
+        }
+        else
+        {
+            [self observeValueForOtherKeyPath:keyPath ofPage:object change:change context:context];
+        }
+    }
 }
 
 /*	Oh noes, the sortedChildren property of a page has changed! We need to reload something.
@@ -938,8 +957,14 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
  */
 - (void)outlineViewSelectionDidChange:(NSNotification *)notification
 {
-	NSArray *selectedPages = [[self outlineView] selectedItems];
-	[[self content] setSelectedObjects:selectedPages];
+	if (!_isChangingSelection)
+    {
+        NSArray *selectedPages = [[self outlineView] selectedItems];
+        
+        _isChangingSelection = YES;
+        [[self content] setSelectedObjects:selectedPages];
+        _isChangingSelection = NO;
+    }
 }
 
 /*	If the current selection is about to be collapsed away, select the parent.
