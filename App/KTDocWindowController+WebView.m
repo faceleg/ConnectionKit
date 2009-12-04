@@ -10,10 +10,9 @@
 
 #import "KT.h"
 #import "KTAbstractElement+Internal.h"
-#import "KTAppDelegate.h"
+#import "SVApplicationController.h"
 #import "KSBorderlessWindow.h"
 #import "KTDesign.h"
-#import "KTDocSiteOutlineController.h"
 #import "KTDocWebViewController.h"
 #import "KTWebViewComponent.h"
 #import "KTDocument.h"
