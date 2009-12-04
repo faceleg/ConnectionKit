@@ -19,7 +19,7 @@
 #import "KTPublishingWindowController.h"
 #import "KTRemotePublishingEngine.h"
 #import "SVSiteOutlineViewController.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 #import "KTToolbars.h"
 
 #import "KSSilencingConfirmSheet.h"

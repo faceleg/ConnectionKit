@@ -8,7 +8,7 @@
 
 #import "KTCodeInjectionController.h"
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 
 #import "KTApplication.h"
 #import "KTPage.h"
@@ -23,7 +23,7 @@
 
 @implementation KTCodeInjectionController
 
-- (id)initWithSiteOutlineController:(KTDocSiteOutlineController *)siteOutline
+- (id)initWithSiteOutlineController:(SVPagesController *)siteOutline
 							 master:(BOOL)isMaster;
 {
 	if ( !(gIsPro || (nil == gRegistrationString)) )	// don't allow this to be created if we're not pro

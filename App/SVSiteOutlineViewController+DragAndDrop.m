@@ -11,7 +11,6 @@
 #import "DOMNode+KTExtensions.h"
 #import "KT.h"
 #import "KTElementPlugin+DataSourceRegistration.h"
-#import "KTAppDelegate.h"
 #import "SVSiteOutlineViewController.h"
 #import "KTDocument.h"
 #import "KTSite.h"

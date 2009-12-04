@@ -6,7 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 
 #import "KTElementPlugin.h"
 #import "KTPage+Internal.h"
@@ -30,7 +30,7 @@
 #pragma mark -
 
 
-@implementation KTDocSiteOutlineController
+@implementation SVPagesController
 
 #pragma mark Managing Objects
 

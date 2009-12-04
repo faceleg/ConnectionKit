@@ -10,11 +10,11 @@
 
 #import "KT.h"
 #import "KTAbstractIndex.h"
-#import "KTAppDelegate.h"
+#import "SVApplicationController.h"
 #import "KTCodeInjectionController.h"
 #import "KTElementPlugin+DataSourceRegistration.h"
 #import "SVDesignChooserWindowController.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTHostProperties.h"

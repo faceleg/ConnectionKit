@@ -14,7 +14,7 @@
 #import "MAAttachedWindow.h"
 #import "NSImage+Karelia.h"
 #import "NSWorkspace+Karelia.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 
 #import "NTBoxView.h"
 

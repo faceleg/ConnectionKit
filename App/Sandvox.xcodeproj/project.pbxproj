@@ -504,8 +504,8 @@
 		3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */; };
 		3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C301619103DE0580036A9D0 /* KTDocument.xib */; };
 		3C382D610E98170600113137 /* dsa_pub.pem in Resources */ = {isa = PBXBuildFile; fileRef = 3C382D600E98170600113137 /* dsa_pub.pem */; };
-		3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */; settings = {ATTRIBUTES = (); }; };
-		3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */; };
+		3C39822C0D2C3EC800432A0C /* SVPagesController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C39822A0D2C3EC800432A0C /* SVPagesController.h */; settings = {ATTRIBUTES = (); }; };
+		3C39822D0D2C3EC800432A0C /* SVPagesController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C39822B0D2C3EC800432A0C /* SVPagesController.m */; };
 		3C3F54540D6258AA004885E7 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54530D6258AA004885E7 /* Sparkle.framework */; };
 		3C3F547D0D625919004885E7 /* Connection.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F547C0D625919004885E7 /* Connection.framework */; };
 		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
@@ -2005,8 +2005,8 @@
 		3C2DA6E7104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MGScopeBarDelegateProtocol.h; path = ../../Shared/ThirdParty/MGScopeBar/MGScopeBarDelegateProtocol.h; sourceTree = SOURCE_ROOT; };
 		3C30161A103DE0580036A9D0 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTDocument.xib; sourceTree = "<group>"; };
 		3C382D600E98170600113137 /* dsa_pub.pem */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = dsa_pub.pem; path = ../../Shared/Security/dsa_pub.pem; sourceTree = SOURCE_ROOT; };
-		3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocSiteOutlineController.h; sourceTree = "<group>"; };
-		3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocSiteOutlineController.m; sourceTree = "<group>"; };
+		3C39822A0D2C3EC800432A0C /* SVPagesController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagesController.h; sourceTree = "<group>"; };
+		3C39822B0D2C3EC800432A0C /* SVPagesController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagesController.m; sourceTree = "<group>"; };
 		3C3EB90F09F71C3F00881A08 /* Connection.xcodeproj */ = {isa = PBXFileReference; explicitFileType = "wrapper.pb-project"; name = Connection.xcodeproj; path = ../../connection/Connection.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F147C09D521AE00C01EED /* MetaMarvel.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = MetaMarvel.xcodeproj; path = ../Code/MetaMarvel/MetaMarvel.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C3F54530D6258AA004885E7 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = ../../Shared/ThirdParty/Sparkle/Sparkle.framework; sourceTree = SOURCE_ROOT; };
@@ -3861,8 +3861,8 @@
 				3CBFD396093C45930057668A /* KTSiteOutlineView.m */,
 				3C202DA807DFC4DD00DE4994 /* KTImageTextCell.h */,
 				3C202DA907DFC4DD00DE4994 /* KTImageTextCell.m */,
-				3C39822A0D2C3EC800432A0C /* KTDocSiteOutlineController.h */,
-				3C39822B0D2C3EC800432A0C /* KTDocSiteOutlineController.m */,
+				3C39822A0D2C3EC800432A0C /* SVPagesController.h */,
+				3C39822B0D2C3EC800432A0C /* SVPagesController.m */,
 				272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */,
 				271575520D60664500A91E58 /* SVSiteOutlineViewController+DragAndDrop.m */,
 			);
@@ -4831,7 +4831,7 @@
 				27A094760D1F0EA900F57801 /* KTMediaManager+Internal.h in Headers */,
 				278ECEA20D25C4F90012BA6B /* KTPasteboardArchiving.h in Headers */,
 				278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */,
-				3C39822C0D2C3EC800432A0C /* KTDocSiteOutlineController.h in Headers */,
+				3C39822C0D2C3EC800432A0C /* SVPagesController.h in Headers */,
 				27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */,
 				278B95AF0D382AC700E5053A /* KTSimpleScaledImageContainer.h in Headers */,
 				278B95B30D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h in Headers */,
@@ -6192,7 +6192,7 @@
 				3CC9AC860D1B64B10016A60E /* KTDesign+ScaledImages.m in Sources */,
 				27A093320D1DECDA00F57801 /* WebViewEditingHelperClasses.m in Sources */,
 				278ECF1E0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m in Sources */,
-				3C39822D0D2C3EC800432A0C /* KTDocSiteOutlineController.m in Sources */,
+				3C39822D0D2C3EC800432A0C /* SVPagesController.m in Sources */,
 				27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */,
 				27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */,
 				278B95B00D382AC700E5053A /* KTSimpleScaledImageContainer.m in Sources */,

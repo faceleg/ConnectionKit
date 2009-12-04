@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTDocSiteOutlineController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
+@class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -25,7 +25,7 @@
 	IBOutlet NSTextField			*oCollectionFileNameField;
 	IBOutlet NSButton				*oFollowButton;
 
-	IBOutlet KTDocSiteOutlineController *oPagesController;
+	IBOutlet SVPagesController *oPagesController;
 	
 	IBOutlet NSView					*oAttachedWindowView;
 	IBOutlet NSTextField			*oAttachedWindowTextField;

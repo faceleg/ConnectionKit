@@ -12,7 +12,7 @@
 @class KTPage, KTDocument, KTDocWindowController;
 
 
-@interface KTDocSiteOutlineController : NSArrayController
+@interface SVPagesController : NSArrayController
 {
   @private
 }

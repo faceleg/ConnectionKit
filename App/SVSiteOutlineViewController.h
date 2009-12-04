@@ -13,7 +13,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 
-@class KTDocSiteOutlineController, KTDocWindowController;
+@class SVPagesController, KTDocWindowController;
 @class KTPage;
 
 
@@ -21,7 +21,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 {
   @private
     NSOutlineView               *_outlineView;
-    KTDocSiteOutlineController	*_pagesController;
+    SVPagesController	*_pagesController;
 	    
     // Content
 	NSMutableSet    *_pages;
@@ -41,7 +41,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
 
-@property(nonatomic, retain) IBOutlet KTDocSiteOutlineController *pagesController;
+@property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
 
 
 @property(nonatomic, retain) KTPage *rootPage;

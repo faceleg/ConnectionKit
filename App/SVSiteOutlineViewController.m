@@ -7,7 +7,7 @@
 //
 
 #import "SVSiteOutlineViewController.h"
-#import "KTDocSiteOutlineController.h"
+#import "SVPagesController.h"
 
 #import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
@@ -177,7 +177,7 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 #pragma mark Other Accessors
 
 @synthesize pagesController = _pagesController;
-- (void)setPagesController:(KTDocSiteOutlineController *)controller
+- (void)setPagesController:(SVPagesController *)controller
 {
     [controller retain];
     [_pagesController release]; _pagesController = controller;
