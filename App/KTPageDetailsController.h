@@ -43,7 +43,6 @@
 }
 
 - (IBAction) pageDetailsHelp:(id)sender;
-- (IBAction) pageDetailsPreview:(id)sender;
 
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;

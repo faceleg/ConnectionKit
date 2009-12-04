@@ -634,15 +634,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
 }
 
-- (IBAction) pageDetailsPreview:(id)sender;		// If we can open the URL of the current page
-{
-	NSURL *pageURL = [[oPagesController selectedPage] URL];
-	if (pageURL)
-	{
-		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
-	}
-}
-
 // Special responders to the subclass of the text field
 
 - (void)controlTextDidBecomeFirstResponder:(NSNotification *)notification;
