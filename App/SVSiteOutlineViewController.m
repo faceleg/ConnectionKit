@@ -92,15 +92,15 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 - (void)dealloc
 {
-	[_cachedFavicon release];
-	[_cachedPluginIcons release];
-	[_cachedCustomPageIcons release];
-	[_customIconGenerationQueue release];
-	
 	// Dump the pages list
 	[self resetPageObservation];       // This will also remove home page observation
     OBASSERT([_pages count] == 0);
 	[_pages release];
+	
+	[_cachedFavicon release];
+	[_cachedPluginIcons release];
+	[_cachedCustomPageIcons release];
+	[_customIconGenerationQueue release];
 	
 	[super dealloc];
 }
