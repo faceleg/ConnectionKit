@@ -74,20 +74,6 @@
     [super addObject:page];
 }
 
-#pragma mark -
-
-+ (BOOL)automaticallyNotifiesObserversForKey:(NSString *)key
-{
-	if ([key isEqualToString:@"selectedPages"])
-	{
-		return NO;
-	}
-	else
-	{
-		return [super automaticallyNotifiesObserversForKey:key];
-	}
-}
-
 #pragma mark Accessors
 
 - (NSString *)childrenKeyPath { return @"sortedChildren"; }

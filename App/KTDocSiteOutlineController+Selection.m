@@ -38,10 +38,5 @@
 	return result;
 }
 
-+ (NSSet *)keyPathsForValuesAffectingSelectedPage
-{
-    return [NSSet setWithObject:@"selectedPages"];
-}
-
 @end
 
