@@ -28,7 +28,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 
 @class KTDocument;
-@interface KTAppDelegate : KSLicensedAppDelegate
+@interface SVApplicationController : KSLicensedAppDelegate
 {
     // IBOutlets
     IBOutlet NSMenuItem     *oToggleInfoMenuItem; // used

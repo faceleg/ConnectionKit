@@ -618,7 +618,7 @@
 		3CE79DB90D6261B300FCEE6D /* NSOutlineView+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3CE79DB70D6261B300FCEE6D /* NSOutlineView+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CE79DB80D6261B300FCEE6D /* NSOutlineView+KTExtensions.m */; };
 		3CEC877A0BF8DD2700CC732B /* KT.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1407DFC06100DE4994 /* KT.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3CEC877B0BF8DD2B00CC732B /* KTAppDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */; settings = {ATTRIBUTES = (); }; };
+		3CEC877B0BF8DD2B00CC732B /* SVApplicationController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1807DFC0AA00DE4994 /* SVApplicationController.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC877D0BF8DD3400CC732B /* KTDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D3307DFC0F000DE4994 /* KTDocument.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B100BF9092900CC732B /* KTApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C202D1A07DFC0AA00DE4994 /* KTApplication.h */; settings = {ATTRIBUTES = (); }; };
 		3CEC8B120BF9092C00CC732B /* KTPluginInstaller.h in Headers */ = {isa = PBXBuildFile; fileRef = CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */; settings = {ATTRIBUTES = (); }; };
@@ -649,7 +649,7 @@
 		3CF948BC0D624A1100B1C83D /* getFirefoxFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FD0D623F0A00B1C83D /* getFirefoxFrontmostPage.scpt */; };
 		3CF948BD0D624A1100B1C83D /* getSafariFrontmostFeed.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FE0D623F1500B1C83D /* getSafariFrontmostFeed.scpt */; };
 		3CF948BE0D624A1200B1C83D /* getSafariFrontmostPage.scpt in Resources */ = {isa = PBXBuildFile; fileRef = 3CF941FF0D623F1900B1C83D /* getSafariFrontmostPage.scpt */; };
-		3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */; };
+		3CFACFBE07E899160060E5C4 /* SVApplicationController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */; };
 		775DFF38067A968500C5B868 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		795D666309D356C6005F166D /* target.png in Resources */ = {isa = PBXBuildFile; fileRef = 795D666209D356C6005F166D /* target.png */; };
 		795F0360098F0293000202D5 /* warning.png in Resources */ = {isa = PBXBuildFile; fileRef = 795F035F098F0293000202D5 /* warning.png */; };
@@ -1949,8 +1949,8 @@
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
-		3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAppDelegate.h; sourceTree = "<group>"; };
-		3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAppDelegate.m; sourceTree = "<group>"; };
+		3C202D1807DFC0AA00DE4994 /* SVApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVApplicationController.h; sourceTree = "<group>"; };
+		3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVApplicationController.m; sourceTree = "<group>"; };
 		3C202D1A07DFC0AA00DE4994 /* KTApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTApplication.h; sourceTree = "<group>"; };
 		3C202D1B07DFC0AA00DE4994 /* KTApplication.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTApplication.m; sourceTree = "<group>"; };
 		3C202D2407DFC0AA00DE4994 /* KTPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPrefsController.h; sourceTree = "<group>"; };
@@ -3448,8 +3448,8 @@
 				3C202D2407DFC0AA00DE4994 /* KTPrefsController.h */,
 				3C202D2507DFC0AA00DE4994 /* KTPrefsController.m */,
 				3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */,
-				3C202D1807DFC0AA00DE4994 /* KTAppDelegate.h */,
-				3C202D1907DFC0AA00DE4994 /* KTAppDelegate.m */,
+				3C202D1807DFC0AA00DE4994 /* SVApplicationController.h */,
+				3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */,
 				3C202D1A07DFC0AA00DE4994 /* KTApplication.h */,
 				3C202D1B07DFC0AA00DE4994 /* KTApplication.m */,
 			);
@@ -4795,7 +4795,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CEC877A0BF8DD2700CC732B /* KT.h in Headers */,
-				3CEC877B0BF8DD2B00CC732B /* KTAppDelegate.h in Headers */,
+				3CEC877B0BF8DD2B00CC732B /* SVApplicationController.h in Headers */,
 				3CEC877D0BF8DD3400CC732B /* KTDocument.h in Headers */,
 				3CEC8B100BF9092900CC732B /* KTApplication.h in Headers */,
 				3CEC8B120BF9092C00CC732B /* KTPluginInstaller.h in Headers */,
@@ -6142,7 +6142,7 @@
 				3C5C20EA07E7A4A400994477 /* KTPrefsController.m in Sources */,
 				3C5C20FD07E7B09200994477 /* KTHostArrayController.m in Sources */,
 				3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */,
-				3CFACFBE07E899160060E5C4 /* KTAppDelegate.m in Sources */,
+				3CFACFBE07E899160060E5C4 /* SVApplicationController.m in Sources */,
 				3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */,
 				3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */,
 				3CA9B30E0804643200C3053B /* KTDocument+Properties.m in Sources */,

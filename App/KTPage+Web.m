@@ -9,7 +9,7 @@
 #import "KTPage+Internal.h"
 
 #import "KT.h"
-#import "KTAppDelegate.h"
+#import "SVApplicationController.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTElementPlugin.h"

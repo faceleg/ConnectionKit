@@ -36,7 +36,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KSUtilities.h"
 #import "KT.h"
 #import "KTAcknowledgmentsController.h"
-#import "KTAppDelegate.h"
+#import "SVApplicationController.h"
 #import "KTApplication.h"
 #import "KTDataSourceProtocol.h"
 #import "KTDesign.h"
@@ -117,7 +117,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 @end
 
 
-@interface KTAppDelegate ()
+@interface SVApplicationController ()
 
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
@@ -133,7 +133,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 @end
 
 
-@implementation KTAppDelegate
+@implementation SVApplicationController
 
 
 - (NSDate *)referenceTimestamp

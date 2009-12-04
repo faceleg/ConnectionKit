@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10C540</string>
-		<string key="IBDocument.InterfaceBuilderVersion">732</string>
+		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038.25</string>
 		<string key="IBDocument.HIToolboxVersion">458.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">732</string>
+			<string key="NS.object.0">740</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -29,7 +29,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="669444589">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="848932847">
-				<string key="NSClassName">KTAppDelegate</string>
+				<string key="NSClassName">SVApplicationController</string>
 			</object>
 			<object class="NSCustomObject" id="234968512">
 				<string key="NSClassName">FirstResponder</string>
@@ -821,210 +821,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTAppDelegate</string>
-					<string key="superclassName">KSLicensedAppDelegate</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>editRawHTMLInSelectedBlock:</string>
-							<string>openScreencast:</string>
-							<string>orderFrontPreferencesPanel:</string>
-							<string>reloadDebugTable:</string>
-							<string>saveWindowSize:</string>
-							<string>showAcknowledgments:</string>
-							<string>showAvailableComponents:</string>
-							<string>showAvailableDesigns:</string>
-							<string>showPluginWindow:</string>
-							<string>showProductPage:</string>
-							<string>showReleaseNotes:</string>
-							<string>showTranscriptWindow:</string>
-							<string>toggleMediaBrowserShown:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>oAddCollectionMenu</string>
-							<string>oAddPageMenu</string>
-							<string>oAddPageletMenu</string>
-							<string>oAdvancedMenu</string>
-							<string>oCodeInjectionLevelMenuItem</string>
-							<string>oCodeInjectionMenuItem</string>
-							<string>oCodeInjectionSeparator</string>
-							<string>oDOMViewMenuItem</string>
-							<string>oDebugMediaPanel</string>
-							<string>oDebugTable</string>
-							<string>oEditRawHTMLMenuItem</string>
-							<string>oFindSeparator</string>
-							<string>oFindSubmenu</string>
-							<string>oInstallPluginsMenuItem</string>
-							<string>oPasteAsMarkupMenuItem</string>
-							<string>oRSSViewMenuItem</string>
-							<string>oSourceViewMenuItem</string>
-							<string>oStandardViewMenuItem</string>
-							<string>oStandardViewWithoutStylesMenuItem</string>
-							<string>oToggleInfoMenuItem</string>
-							<string>oToggleMediaMenuItem</string>
-							<string>oValidateSourceViewMenuItem</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSMenu</string>
-							<string>NSMenu</string>
-							<string>NSMenu</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSPanel</string>
-							<string>NSTableView</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTAppDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">KTAppDelegate</string>
-					<string key="superclassName">KSLicensedAppDelegate</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>openHigh:</string>
-							<string>openLow:</string>
-							<string>openSampleDocument:</string>
-							<string>showAvailableMedia:</string>
-							<string>showDiscussionGroup:</string>
-							<string>toggleLogAllContextChanges:</string>
-							<string>viewPublishedSite:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>oAcknowledgementsMenuItem</string>
-							<string>oBuyRegisterSandvoxMenuItem</string>
-							<string>oCheckForUpdatesMenuItem</string>
-							<string>oCopyMenuItem</string>
-							<string>oCopyPagesMenuItem</string>
-							<string>oCreateLinkMenuItem</string>
-							<string>oCutMenuItem</string>
-							<string>oCutPagesMenuItem</string>
-							<string>oDeletePageletsMenuItem</string>
-							<string>oDeletePagesMenuItem</string>
-							<string>oDuplicateMenuItem</string>
-							<string>oExportSiteAgainMenuItem</string>
-							<string>oExportSiteMenuItem</string>
-							<string>oJoinListMenuItem</string>
-							<string>oMakeTextLargerMenuItem</string>
-							<string>oMakeTextNormalMenuItem</string>
-							<string>oMakeTextSmallerMenuItem</string>
-							<string>oOpenSampleSiteMenuItem</string>
-							<string>oProductPageMenuItem</string>
-							<string>oPublishChangesMenuItem</string>
-							<string>oPublishEntireSiteMenuItem</string>
-							<string>oReleaseNotesMenuItem</string>
-							<string>oSandvoxHelpMenuItem</string>
-							<string>oSandvoxQuickStartMenuItem</string>
-							<string>oSaveMenuItem</string>
-							<string>oSendFeedbackMenuItem</string>
-							<string>oSetupHostMenuItem</string>
-							<string>oToggleAddressBarMenuItem</string>
-							<string>oToggleEditingControlsMenuItem</string>
-							<string>oToggleSiteOutlineMenuItem</string>
-							<string>oToggleSmallPageIconsMenuItem</string>
-							<string>oToggleStatusBarMenuItem</string>
-							<string>oVideoIntroductionMenuItem</string>
-							<string>oViewPublishedSiteMenuItem</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-							<string>NSMenuItem</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">KTDocument</string>
 					<string key="superclassName">NSDocument</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -1289,6 +1085,184 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
 					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBUserSource</string>
+						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVApplicationController</string>
+					<string key="superclassName">KSLicensedAppDelegate</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>editRawHTMLInSelectedBlock:</string>
+							<string>openHigh:</string>
+							<string>openLow:</string>
+							<string>openSampleDocument:</string>
+							<string>openScreencast:</string>
+							<string>orderFrontPreferencesPanel:</string>
+							<string>reloadDebugTable:</string>
+							<string>saveWindowSize:</string>
+							<string>showAcknowledgments:</string>
+							<string>showAvailableComponents:</string>
+							<string>showAvailableDesigns:</string>
+							<string>showAvailableMedia:</string>
+							<string>showDiscussionGroup:</string>
+							<string>showPluginWindow:</string>
+							<string>showProductPage:</string>
+							<string>showReleaseNotes:</string>
+							<string>showTranscriptWindow:</string>
+							<string>toggleLogAllContextChanges:</string>
+							<string>toggleMediaBrowserShown:</string>
+							<string>viewPublishedSite:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>oAcknowledgementsMenuItem</string>
+							<string>oAddCollectionMenu</string>
+							<string>oAddPageMenu</string>
+							<string>oAddPageletMenu</string>
+							<string>oAdvancedMenu</string>
+							<string>oBuyRegisterSandvoxMenuItem</string>
+							<string>oCheckForUpdatesMenuItem</string>
+							<string>oCodeInjectionLevelMenuItem</string>
+							<string>oCodeInjectionMenuItem</string>
+							<string>oCodeInjectionSeparator</string>
+							<string>oCopyMenuItem</string>
+							<string>oCopyPagesMenuItem</string>
+							<string>oCreateLinkMenuItem</string>
+							<string>oCutMenuItem</string>
+							<string>oCutPagesMenuItem</string>
+							<string>oDOMViewMenuItem</string>
+							<string>oDebugMediaPanel</string>
+							<string>oDebugTable</string>
+							<string>oDeletePageletsMenuItem</string>
+							<string>oDeletePagesMenuItem</string>
+							<string>oDuplicateMenuItem</string>
+							<string>oEditRawHTMLMenuItem</string>
+							<string>oExportSiteAgainMenuItem</string>
+							<string>oExportSiteMenuItem</string>
+							<string>oFindSeparator</string>
+							<string>oFindSubmenu</string>
+							<string>oInstallPluginsMenuItem</string>
+							<string>oJoinListMenuItem</string>
+							<string>oMakeTextLargerMenuItem</string>
+							<string>oMakeTextNormalMenuItem</string>
+							<string>oMakeTextSmallerMenuItem</string>
+							<string>oOpenSampleSiteMenuItem</string>
+							<string>oPasteAsMarkupMenuItem</string>
+							<string>oProductPageMenuItem</string>
+							<string>oPublishChangesMenuItem</string>
+							<string>oPublishEntireSiteMenuItem</string>
+							<string>oRSSViewMenuItem</string>
+							<string>oReleaseNotesMenuItem</string>
+							<string>oSandvoxHelpMenuItem</string>
+							<string>oSandvoxQuickStartMenuItem</string>
+							<string>oSaveMenuItem</string>
+							<string>oSendFeedbackMenuItem</string>
+							<string>oSetupHostMenuItem</string>
+							<string>oSourceViewMenuItem</string>
+							<string>oStandardViewMenuItem</string>
+							<string>oStandardViewWithoutStylesMenuItem</string>
+							<string>oToggleAddressBarMenuItem</string>
+							<string>oToggleEditingControlsMenuItem</string>
+							<string>oToggleInfoMenuItem</string>
+							<string>oToggleMediaMenuItem</string>
+							<string>oToggleSiteOutlineMenuItem</string>
+							<string>oToggleSmallPageIconsMenuItem</string>
+							<string>oToggleStatusBarMenuItem</string>
+							<string>oValidateSourceViewMenuItem</string>
+							<string>oVideoIntroductionMenuItem</string>
+							<string>oViewPublishedSiteMenuItem</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSMenuItem</string>
+							<string>NSMenu</string>
+							<string>NSMenu</string>
+							<string>NSMenu</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSPanel</string>
+							<string>NSTableView</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
