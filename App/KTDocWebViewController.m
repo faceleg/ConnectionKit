@@ -19,7 +19,6 @@
 #import "KTMaster+Internal.h"
 #import "KTPage.h"
 #import "KTWebViewComponent.h"
-#import "KTAppDelegate.h"
 #import "KTDocument.h"
 #import "KTSite.h"
 

@@ -9,7 +9,6 @@
 #import "KTMaster+Internal.h"
 
 #import "KT.h"
-#import "KTAppDelegate.h"
 #import "KTArchivePage.h"
 #import "KTDesignPlaceholder.h"
 #import "KTDocument.h"

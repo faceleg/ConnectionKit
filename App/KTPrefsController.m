@@ -11,7 +11,6 @@
 
 #import "KT.h"
 #import "KTApplication.h"
-#import "KTAppDelegate.h"
 #import "KSEmailAddressComboBox.h"
 #import "CIImage+Karelia.h"
 #import "NSImage+Karelia.h"

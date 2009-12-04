@@ -11,7 +11,6 @@
 #import "KT.h"
 #import "KTAbstractIndex.h"
 #import "KTAbstractPage+Internal.h"
-#import "KTAppDelegate.h"
 #import "KTDataMigrator.h"
 #import "KTDataMigrationDocument.h"
 #import "KTDocument.h"

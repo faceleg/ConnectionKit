@@ -9,7 +9,6 @@
 #import "KTIndexPlugin.h"
 #import "KT.h"
 #import "NSBundle+Karelia.h"
-#import "KTAppDelegate.h"
 
 #import "Registration.h"
 

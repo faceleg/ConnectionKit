@@ -8,7 +8,6 @@
 
 #import "KTHostProperties.h"
 
-#import "KTAppDelegate.h"
 #import "KTHostSetupController.h"
 
 #import "NSCharacterSet+Karelia.h"

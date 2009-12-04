@@ -19,7 +19,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
  */
 
 #import "KTApplication.h"
-#import "KTAppDelegate.h"
 
 
 @implementation KTApplication

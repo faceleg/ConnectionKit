@@ -9,7 +9,6 @@
 #import "KTSite.h"
 
 #import "KT.h"
-#import "KTAppDelegate.h"
 #import "KTHostProperties.h"
 #import "KTPage.h"
 

@@ -25,7 +25,6 @@ TO DO:
 #import "Debug.h"
 #import "KSUtilities.h"
 #import "KT.h"
-#import "KTAppDelegate.h"
 #import "KTApplication.h"
 #import "KTBackgroundTabView.h"
 #import "KTDocument.h"
