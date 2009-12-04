@@ -11,7 +11,6 @@
 #import "Debug.h"
 
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
 #import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"

@@ -10,11 +10,9 @@
 #import "NSDocument+KTExtensions.h"
 
 #import "KTAbstractElement+Internal.h"
-#import "KTAppDelegate.h"
 #import "KTDesign.h"
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"
-#import "KTDocSiteOutlineController.h"
 #import "KTSite.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"

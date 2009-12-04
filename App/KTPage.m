@@ -11,7 +11,6 @@
 #import "KSContainsObjectValueTransformer.h"
 #import "Debug.h"
 #import "KTAbstractIndex.h"
-#import "KTAppDelegate.h"
 #import "SVBody.h"
 #import "SVBodyParagraph.h"
 #import "KTDesign.h"
