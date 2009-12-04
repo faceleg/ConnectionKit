@@ -13,7 +13,6 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 
-@class KTDocWindowController;
 @class KTPage;
 
 
