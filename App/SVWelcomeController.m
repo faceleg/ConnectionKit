@@ -137,7 +137,7 @@
 	[oRecentDocumentsTable setIntercellSpacing:NSMakeSize(0,3.0)];	// get the columns closer together
 	
 	NSArray *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
-#if 1
+#if 0
 	// TESTING HARNESS ... I HAVE A BUNCH OF DOCUMENTS IN THERE.
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSString *dir = [@"~/Subversion/company/KareliaWebSite" stringByExpandingTildeInPath];
@@ -155,7 +155,7 @@
 	urls = [NSArray arrayWithArray:localURLs];
 #endif
 	
-#if 0
+#if 1
 	// Test for having ZERO recent documents.
 	urls = [NSArray array];
 #endif

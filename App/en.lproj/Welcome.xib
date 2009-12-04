@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="133"/>
+			<integer value="229"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -58,7 +58,7 @@
 						<object class="NSButton" id="267273242">
 							<reference key="NSNextResponder" ref="151379416"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{26, 12}, {225, 25}}</string>
+							<string key="NSFrame">{{20, 12}, {225, 25}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="170784435">
@@ -87,7 +87,7 @@
 						<object class="NSButton" id="858051390">
 							<reference key="NSNextResponder" ref="151379416"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{410, 12}, {225, 25}}</string>
+							<string key="NSFrame">{{409, 12}, {225, 25}}</string>
 							<reference key="NSSuperview" ref="151379416"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="804959621">
@@ -413,7 +413,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 										<object class="NSTextField" id="390143923">
 											<reference key="NSNextResponder" ref="916748901"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{17, 133}, {620, 51}}</string>
+											<string key="NSFrame">{{17, 133}, {621, 51}}</string>
 											<reference key="NSSuperview" ref="916748901"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="565314341">
@@ -439,7 +439,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 										<object class="NSButton" id="142364517">
 											<reference key="NSNextResponder" ref="916748901"/>
 											<int key="NSvFlags">289</int>
-											<string key="NSFrame">{{533, 19}, {100, 19}}</string>
+											<string key="NSFrame">{{534, 19}, {100, 19}}</string>
 											<reference key="NSSuperview" ref="916748901"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="80535537">
@@ -464,7 +464,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 										<object class="NSTextField" id="674526629">
 											<reference key="NSNextResponder" ref="916748901"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{343, 91}, {294, 18}}</string>
+											<string key="NSFrame">{{343, 91}, {295, 18}}</string>
 											<reference key="NSSuperview" ref="916748901"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="461842357">
@@ -508,7 +508,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 										<object class="NSTextField" id="497452736">
 											<reference key="NSNextResponder" ref="916748901"/>
 											<int key="NSvFlags">256</int>
-											<string key="NSFrame">{{343, 37}, {293, 42}}</string>
+											<string key="NSFrame">{{343, 37}, {295, 42}}</string>
 											<reference key="NSSuperview" ref="916748901"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="516735742">
@@ -1223,7 +1223,6 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 						<reference key="object" ref="695330562"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="463477505"/>
 							<reference ref="390143923"/>
 							<reference ref="674526629"/>
 							<reference ref="497452736"/>
@@ -1231,6 +1230,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 							<reference ref="509516743"/>
 							<reference ref="182225155"/>
 							<reference ref="142364517"/>
+							<reference ref="463477505"/>
 						</object>
 						<reference key="parent" ref="151379416"/>
 					</object>
@@ -1498,7 +1498,7 @@ LCBpbiBFbmdsaXNoCkludGVybmV0IGNvbm5lY3Rpb24gcmVxdWlyZWQuA</string>
 						</object>
 						<object class="IBUserGuide">
 							<reference key="view" ref="151379416"/>
-							<double key="location">635</double>
+							<double key="location">634</double>
 							<int key="affinity">0</int>
 						</object>
 					</object>
