@@ -100,6 +100,8 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 	[_cachedPluginIcons release];
 	[_cachedCustomPageIcons release];
 	[_customIconGenerationQueue release];
+    
+    [self setContent:nil];
 	
 	[super dealloc];
 }
