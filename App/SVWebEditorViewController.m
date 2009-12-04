@@ -695,8 +695,25 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     for (SVWebContentItem *item in items)
     {
-        SVPagelet *pagelet = [item representedObject];
-        [[pagelet managedObjectContext] deleteObject:pagelet];
+        if ([[self sidebarPageletItems] containsObjectIdenticalTo:item])
+        {
+            // Remove pagelet from sidebar. Delete if appropriate
+            SVPagelet *pagelet = [item representedObject];
+            [[[self page] sidebar] removePageletsObject:pagelet];
+            
+            if ([[pagelet sidebars] count] == 0)
+            {
+                NSError *error;
+                if (![pagelet validateForDelete:&error]) {
+                    return NO;
+                }
+                [[pagelet managedObjectContext] deleteObject:pagelet];
+            }
+        }
+        else
+        {
+            return NO;
+        }
     }
     
     return YES;
