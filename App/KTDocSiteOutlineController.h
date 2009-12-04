@@ -20,10 +20,3 @@
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 
 @end
-
-
-@interface KTDocSiteOutlineController (Selection)
-
-- (KTPage *)selectedPage;
-
-@end

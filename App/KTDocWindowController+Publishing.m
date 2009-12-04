@@ -303,8 +303,8 @@
 
 - (IBAction)visitPublishedPage:(id)sender
 {
-	NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selectedPage] URL];
-	if (pageURL)
+	NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selection] valueForKey:@"URL"];
+	if (pageURL && !NSIsControllerMarker(pageURL))
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:pageURL];
 	}

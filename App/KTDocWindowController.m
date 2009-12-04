@@ -850,8 +850,9 @@ from representedObject */
 	// "Visit Published Page" visitPublishedPage:
 	else if ( itemAction == @selector(visitPublishedPage:) ) 
 	{
-		NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selectedPage] URL];
-		return (nil != pageURL);
+		NSURL *pageURL = [[[[self siteOutlineViewController] pagesController] selection] valueForKey:@"URL"];
+		BOOL result = (pageURL && !NSIsControllerMarker(pageURL));
+        return result;
 	}
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
