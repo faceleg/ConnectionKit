@@ -1396,8 +1396,8 @@
 								<object class="NSMenuItem" id="45546053">
 									<reference key="NSMenu" ref="220650628"/>
 									<string key="NSTitle">Show/Hide Inspector(s)</string>
-									<string key="NSKeyEquiv">I</string>
-									<int key="NSKeyEquivModMask">1048576</int>
+									<string key="NSKeyEquiv">i</string>
+									<int key="NSKeyEquivModMask">1572864</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
