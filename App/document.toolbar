@@ -5,20 +5,18 @@
 	<key>default set</key>
 	<array>
 		<string>addPagePop:</string>
-		<string>addPageletPop:</string>
-		<string>NSToolbarSeparatorItem</string>
 		<string>addCollectionPop:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>chooseDesign:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
+		<string>addPageletPop:</string>
 		<string>showLinkPanel:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>setupHost:</string>
 		<string>saveToHost:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
-		<string>chooseDesign:</string>
-		<string>toggleMediaBrowserShown:</string>
 		<string>toggleInfoShown:</string>
+		<string>toggleMediaBrowserShown:</string>
 	</array>
 	<key>item array</key>
 	<array>
