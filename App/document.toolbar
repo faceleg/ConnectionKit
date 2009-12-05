@@ -12,7 +12,6 @@
 		<string>chooseDesign:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>showLinkPanel:</string>
-		<string>toggleEditingControlsShown:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>setupHost:</string>
 		<string>saveToHost:</string>
@@ -106,22 +105,6 @@
 			<string>TOOLBAR_CREATE_LINK</string>
 			<key>paletteLabel</key>
 			<string>PALETTE_CREATE_EDIT_LINK</string>
-			<key>target</key>
-			<string>windowcontroller</string>
-		</dict>
-		<dict>
-			<key>action</key>
-			<string>toggleEditingControlsShown:</string>
-			<key>help</key>
-			<string>TOOLTIP_EDIT_ON</string>
-			<key>identifier</key>
-			<string>toggleEditingControlsShown:</string>
-			<key>image</key>
-			<string>toolbar_edit_on</string>
-			<key>label</key>
-			<string>TOOLBAR_EDIT_ON</string>
-			<key>paletteLabel</key>
-			<string>PALETTE_EDIT_ONOFF</string>
 			<key>target</key>
 			<string>windowcontroller</string>
 		</dict>
