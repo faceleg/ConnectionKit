@@ -455,17 +455,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Other
 
-- (IBAction)toggleEditingControlsShown:(id)sender
-{
-    // set value
-	BOOL value = [[self document] displayEditingControls];
-	BOOL newValue = !value;
-	[[self document] setDisplayEditingControls:newValue];
-
-	// update UI
-	[self updateToolbar];
-}
-
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
 	BOOL value = [[self document] displaySmallPageIcons];
@@ -790,18 +779,6 @@ from representedObject */
 	}
 	
 	// View menu
-    
-    else if (itemAction == @selector(toggleEditingControlsShown:))
-    {
-        if ([[self document] displayEditingControls])
-        {
-            [menuItem setTitle:NSLocalizedString(@"Hide Editing Markers", @"menu title to hide Editing Markers")];
-        }
-        else
-        {
-            [menuItem setTitle:NSLocalizedString(@"Show Editing Markers", @"menu title to show Editing Markers")];
-        }
-    }
     
     else if (itemAction == @selector(selectWebViewViewType:))
     {

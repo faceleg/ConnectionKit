@@ -67,27 +67,6 @@ TO DO:
 
 - (void)updateToolbar
 {
-	NSToolbar *toolbar = [[self window] toolbar];
-	NSToolbarItem *toolbarItem = [toolbar itemWithIdentifier:@"toggleEditingControlsShown:"];
-	BOOL displayEditing = [[self document] displayEditingControls];
-	if (displayEditing)
-	{
-		[toolbarItem setLabel:TOOLBAR_EDIT_OFF];
-		[toolbarItem setToolTip:TOOLTIP_EDIT_OFF];
-		NSImage *theImage = [NSImage imageNamed:@"toolbar_edit_off"];
-		[theImage normalizeSize];
-		[theImage setDataRetained:YES];	// allow image to be scaled.
-		[toolbarItem setImage:theImage];
-	}
-	else
-	{
-		[toolbarItem setLabel:TOOLBAR_EDIT_ON];
-		[toolbarItem setToolTip:TOOLTIP_EDIT_ON];
-		NSImage *theImage = [NSImage imageNamed:@"toolbar_edit_on"];
-		[theImage normalizeSize];
-		[theImage setDataRetained:YES];	// allow image to be scaled.
-		[toolbarItem setImage:theImage];
-	}
 }
 
 /*  Holding down the option key should change "Publish" to "Publish All"
