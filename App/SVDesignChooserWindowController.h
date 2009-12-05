@@ -13,7 +13,7 @@
 @class SVDesignChooserViewController;
 @interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
 {
-    SVDesignChooserViewController   *_viewController;
+    IBOutlet SVDesignChooserViewController   *oViewController;
     IBOutlet MGScopeBar             *oScopeBar;
     IBOutlet NSBox                 *oTargetView;
     

@@ -27,13 +27,13 @@
 - (void)awakeFromNib
 {
     // load the xib that contains the collection view
-    _viewController = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserImageBrowser" 
+    oViewController = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserImageBrowser" 
                                                                       bundle:nil];
 
     // pop the collection view into the window.  This awakens SVDesignChooserImageBrowser's nib
-    [oTargetView setContentView:[_viewController view]];
+    [oTargetView setContentView:[oViewController view]];
     
-    [_viewController setupTrackingRects];
+    [oViewController setupTrackingRects];
 }
 
 - (void)displayAsSheet
@@ -65,8 +65,8 @@
 - (IBAction)chooseDesign:(id)sender
 {
     // get the selected design
-    NSUInteger selectedIndex = [[_viewController designsArrayController] selectionIndex];
-    KTDesign *design = [[_viewController designs] objectAtIndex:selectedIndex];
+    NSUInteger selectedIndex = [[oViewController designsArrayController] selectionIndex];
+    KTDesign *design = [[oViewController designs] objectAtIndex:selectedIndex];
     OBASSERT(nil != design);
     
     // prep the design
@@ -121,10 +121,10 @@
     [_selectedDesign release];
     _selectedDesign = aDesign;
     
-    (void)[[_viewController designsArrayController] setSelectedObjects:[NSArray arrayWithObject:_selectedDesign]];
+    (void)[[oViewController designsArrayController] setSelectedObjects:[NSArray arrayWithObject:_selectedDesign]];
 }
 
-@synthesize viewController = _viewController;
+@synthesize viewController = oViewController;
 
 #pragma mark -
 #pragma mark MGScopeBarDelegate
