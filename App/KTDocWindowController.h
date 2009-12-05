@@ -109,6 +109,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (void) updateBuyNow:(NSNotification *)aNotification;
 
 // Actions
+- (IBAction)toggleSmallPageIcons:(id)sender;
 
 - (IBAction)windowHelp:(id)sender;
 - (IBAction)addPagelet:(id)sender;
