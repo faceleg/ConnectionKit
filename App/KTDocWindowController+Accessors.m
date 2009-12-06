@@ -56,42 +56,6 @@
     myToolbars = aToolbars;
 }
 
-- (RYZImagePopUpButton *)addPagePopUpButton
-{
-    return myAddPagePopUpButton;
-}
-
-- (void)setAddPagePopUpButton:(RYZImagePopUpButton *)anAddPagePopUpButton
-{
-    [anAddPagePopUpButton retain];
-    [myAddPagePopUpButton release];
-    myAddPagePopUpButton = anAddPagePopUpButton;
-}
-
-- (RYZImagePopUpButton *)addPageletPopUpButton
-{
-    return myAddPageletPopUpButton;
-}
-
-- (void)setAddPageletPopUpButton:(RYZImagePopUpButton *)anAddPageletPopUpButton
-{
-    [anAddPageletPopUpButton retain];
-    [myAddPageletPopUpButton release];
-    myAddPageletPopUpButton = anAddPageletPopUpButton;
-}
-
-- (RYZImagePopUpButton *)addCollectionPopUpButton
-{
-    return myAddCollectionPopUpButton;
-}
-
-- (void)setAddCollectionPopUpButton:(RYZImagePopUpButton *)anAddCollectionPopUpButton
-{
-    [anAddCollectionPopUpButton retain];
-    [myAddCollectionPopUpButton release];
-    myAddCollectionPopUpButton = anAddCollectionPopUpButton;
-}
-
 @end
 
 

@@ -48,9 +48,6 @@ extern NSString *gInfoWindowAutoSaveName;
 {
 	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
-	RYZImagePopUpButton             *myAddPagePopUpButton;       // constructed via toolbar code
-    RYZImagePopUpButton             *myAddPageletPopUpButton;       // constructed via toolbar code
-    RYZImagePopUpButton             *myAddCollectionPopUpButton;    // constructed via toolbar code
 	
 	// WEBVIEW STUFF ....
 	@public
@@ -188,15 +185,6 @@ extern NSString *KTSelectedDOMRangeKey;
 
 - (NSMutableDictionary *)toolbars;
 - (void)setToolbars:(NSMutableDictionary *)aToolbars;
-
-- (RYZImagePopUpButton *)addPagePopUpButton;
-- (void)setAddPagePopUpButton:(RYZImagePopUpButton *)anAddPagePopUpButton;
-
-- (RYZImagePopUpButton *)addPageletPopUpButton;
-- (void)setAddPageletPopUpButton:(RYZImagePopUpButton *)anAddPageletPopUpButton;
-
-- (RYZImagePopUpButton *)addCollectionPopUpButton;
-- (void)setAddCollectionPopUpButton:(RYZImagePopUpButton *)anAddCollectionPopUpButton;
 
 @end
 

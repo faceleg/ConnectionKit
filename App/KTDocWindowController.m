@@ -91,9 +91,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
     // release ivars
 	[self setContextElementInformation:nil];
-    [self setAddCollectionPopUpButton:nil];
-    [self setAddPagePopUpButton:nil];
-    [self setAddPageletPopUpButton:nil];
     [self setToolbars:nil];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];

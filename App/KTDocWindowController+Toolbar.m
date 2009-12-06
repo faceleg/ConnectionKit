@@ -199,23 +199,23 @@ TO DO:
 					[image setDataRetained:YES];	// allow image to be scaled.
 					image = [image imageWithCompositedAddBadge];
 
-					[self setAddPagePopUpButton:[[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease]];
-                    [[myAddPagePopUpButton cell] setUsesItemFromMenu:NO];
-                    [myAddPagePopUpButton setIconImage:image];
-                    [myAddPagePopUpButton setShowsMenuWhenIconClicked:YES];
-                    [[myAddPagePopUpButton cell] setToolbar:[[self window] toolbar]];
+					RYZImagePopUpButton *addPagePopUpButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
+                    [[addPagePopUpButton cell] setUsesItemFromMenu:NO];
+                    [addPagePopUpButton setIconImage:image];
+                    [addPagePopUpButton setShowsMenuWhenIconClicked:YES];
+                    [[addPagePopUpButton cell] setToolbar:[[self window] toolbar]];
                     
 					[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
-										 toMenu:[myAddPagePopUpButton menu]
+										 toMenu:[addPagePopUpButton menu]
 										 target:self
 										 action:@selector(addPage:)
 									  pullsDown:YES
 									  showIcons:YES
 									 smallIcons:NO 
 									  smallText:YES];
-                    [toolbarItem setView:myAddPagePopUpButton];
-                    [toolbarItem setMinSize:[[myAddPagePopUpButton cell] minimumSize]];
-                    [toolbarItem setMaxSize:[[myAddPagePopUpButton cell] maximumSize]];
+                    [toolbarItem setView:addPagePopUpButton];
+                    [toolbarItem setMinSize:[[addPagePopUpButton cell] minimumSize]];
+                    [toolbarItem setMaxSize:[[addPagePopUpButton cell] maximumSize]];
 					
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
@@ -246,21 +246,21 @@ TO DO:
 					[image setDataRetained:YES];	// allow image to be scaled.
 					image = [image imageWithCompositedAddBadge];
 					
-                    [self setAddCollectionPopUpButton:[[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease]];
-                    [[myAddCollectionPopUpButton cell] setUsesItemFromMenu:NO];
-                    [myAddCollectionPopUpButton setIconImage:image];
-                    [myAddCollectionPopUpButton setShowsMenuWhenIconClicked:YES];
-                    [[myAddCollectionPopUpButton cell] setToolbar:[[self window] toolbar]];
+                    RYZImagePopUpButton *addCollectionPopUpButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
+                    [[addCollectionPopUpButton cell] setUsesItemFromMenu:NO];
+                    [addCollectionPopUpButton setIconImage:image];
+                    [addCollectionPopUpButton setShowsMenuWhenIconClicked:YES];
+                    [[addCollectionPopUpButton cell] setToolbar:[[self window] toolbar]];
 					
-                    [KTIndexPlugin addPresetPluginsToMenu:[myAddCollectionPopUpButton menu]
+                    [KTIndexPlugin addPresetPluginsToMenu:[addCollectionPopUpButton menu]
 												   target:self
 												   action:@selector(addCollection:)
 												pullsDown:YES
 												showIcons:YES smallIcons:NO
 												smallText:YES allowNewPageTypes:YES];
-                    [toolbarItem setView:myAddCollectionPopUpButton];
-                    [toolbarItem setMinSize:[[myAddCollectionPopUpButton cell] minimumSize]];
-                    [toolbarItem setMaxSize:[[myAddCollectionPopUpButton cell] maximumSize]];
+                    [toolbarItem setView:addCollectionPopUpButton];
+                    [toolbarItem setMinSize:[[addCollectionPopUpButton cell] minimumSize]];
+                    [toolbarItem setMaxSize:[[addCollectionPopUpButton cell] maximumSize]];
 			
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
@@ -309,7 +309,6 @@ TO DO:
 	
 	// Build the basic popup button
 	RYZImagePopUpButton *button = [[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease];
-	[self setAddPageletPopUpButton:button];
 	[[button cell] setUsesItemFromMenu:NO];
 	[button setIconImage:image];
 	[button setShowsMenuWhenIconClicked:YES];
