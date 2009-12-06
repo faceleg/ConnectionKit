@@ -2898,6 +2898,27 @@
 			name = Page;
 			sourceTree = "<group>";
 		};
+		273DCF9410CBD49D003CCE97 /* DOM Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
+				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
+				2790BDAD1040162000654665 /* SVWebEditorTextController.h */,
+				2790BDAE1040162000654665 /* SVWebEditorTextController.m */,
+				2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */,
+				2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */,
+				2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */,
+				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
+				2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */,
+				2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */,
+				2792197B10BC631D00E590D5 /* SVHTMLElementController.h */,
+				2792197C10BC631D00E590D5 /* SVHTMLElementController.m */,
+				27C7458C104E96CF00FBA79D /* SVWebContentItem.h */,
+				27C7458D104E96CF00FBA79D /* SVWebContentItem.m */,
+			);
+			name = "DOM Controllers";
+			sourceTree = "<group>";
+		};
 		27409DFC0DEC685300C2387E /* Data Migration */ = {
 			isa = PBXGroup;
 			children = (
@@ -2947,30 +2968,16 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* Controllers */ = {
+		2759CC98103970FC00E2C046 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
-				2792197B10BC631D00E590D5 /* SVHTMLElementController.h */,
-				2792197C10BC631D00E590D5 /* SVHTMLElementController.m */,
-				2790BDAD1040162000654665 /* SVWebEditorTextController.h */,
-				2790BDAE1040162000654665 /* SVWebEditorTextController.m */,
-				2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */,
-				2731ECD310861FF300D8AAA5 /* SVWebEditorTextFieldController.m */,
 				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
 				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 				CE26FA1308C4D9C500C9604B /* design-time.css */,
-				27C7458C104E96CF00FBA79D /* SVWebContentItem.h */,
-				27C7458D104E96CF00FBA79D /* SVWebContentItem.m */,
 				2759CC991039711200E2C046 /* SVWebEditorViewController.h */,
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
-				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
-				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
-				2731ECCB10861E1500D8AAA5 /* SVBodyTextArea.h */,
-				2731ECCC10861E1500D8AAA5 /* SVBodyTextArea.m */,
-				2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */,
-				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
 			);
-			name = Controllers;
+			name = Controller;
 			sourceTree = "<group>";
 		};
 		275A641510501D2900AE6E2A /* General */ = {
@@ -3237,7 +3244,8 @@
 		27BDAA6A10C88E49008C8199 /* Web Editor */ = {
 			isa = PBXGroup;
 			children = (
-				2759CC98103970FC00E2C046 /* Controllers */,
+				2759CC98103970FC00E2C046 /* Controller */,
+				273DCF9410CBD49D003CCE97 /* DOM Controllers */,
 				271B497B105468AA008B698C /* View */,
 			);
 			name = "Web Editor";
