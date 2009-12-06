@@ -141,9 +141,70 @@ TO DO:
 
 #pragma mark Delegate (NSToolbar)
 
-- (NSToolbarItem *)makeNewPageToolbarItemWithIdentifier:(NSString *)identifier;
+- (NSToolbarItem *)makeNewPageToolbarItemWithIdentifier:(NSString *)identifier
+                                              imageName:(NSString *)imageName;
 {
-    return [[[NSToolbarItem alloc] initWithItemIdentifier:identifier] autorelease];
+    NSToolbarItem *result = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
+    
+    
+    // construct popup button
+    NSImage *image = [NSImage imageNamed:imageName];
+    image = [image imageWithCompositedAddBadge];
+    
+    RYZImagePopUpButton *popUpButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
+    NSPopUpButtonCell *cell = [popUpButton cell];
+    
+    [cell setUsesItemFromMenu:NO];
+    [popUpButton setIconImage:image];
+    [popUpButton setShowsMenuWhenIconClicked:YES];
+    [[popUpButton cell] setToolbar:[[self window] toolbar]];
+    
+    [result setView:popUpButton];
+    [result setMinSize:[[popUpButton cell] minimumSize]];
+    [result setMaxSize:[[popUpButton cell] maximumSize]];
+    
+    
+    // Generate the menu
+    NSMenu *menu = [cell menu];
+    
+    [cell addItemWithTitle:@"New"]; // pull-down buttons don't use the first item in their menu when displayed
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page popup button menu item title")
+                    action:@selector(addPage:)
+             keyEquivalent:@""];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    [KTIndexPlugin addPresetPluginsToMenu:menu
+                                   target:self
+                                   action:@selector(addCollection:)
+                                pullsDown:NO
+                                showIcons:YES smallIcons:NO
+                                smallText:YES allowNewPageTypes:YES];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Choose File…", "New page popup button menu item title")
+                    action:@selector(addPage:)
+             keyEquivalent:@""];
+    
+    [menu addItemWithTitle:NSLocalizedString(@"External URL", "New page popup button menu item title")
+                    action:@selector(addPage:)
+             keyEquivalent:@""];
+    
+    
+    
+    
+    
+    // Create menu for text-only version
+    NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
+    [mItem setSubmenu:menu];
+    [mItem setTitle:[result label]];
+    [result setMenuFormRepresentation:mItem];
+    
+    
+    
+    return [result autorelease];
 }
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString*)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
@@ -161,7 +222,8 @@ TO DO:
             // Custom?
             if ([[itemInfo objectForKey:@"view"] isEqualToString:@"NewPagePopUpButton"])
             {
-                result = [self makeNewPageToolbarItemWithIdentifier:itemIdentifier];
+                result = [self makeNewPageToolbarItemWithIdentifier:itemIdentifier
+                                                          imageName:[itemInfo valueForKey:@"image"]];
             }
             
             
@@ -199,7 +261,7 @@ TO DO:
 			NSString *imageName = [itemInfo valueForKey:@"image"];
             // are we a view or an image?
             // views can still have images, so we check whether it's a view first
-            if ( (nil != [itemInfo valueForKey:@"view"]) && ![[itemInfo valueForKey:@"view"] isEqualToString:@""] ) 
+            if ([[itemInfo valueForKey:@"view"] length] > 0) 
 			{
 				// we're a view, walk through the possibilities
                     // FIXME: much of this should be reduceable to an xml specification
