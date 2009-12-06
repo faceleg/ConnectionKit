@@ -101,10 +101,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
 
 
-// Other public functions
-
-- (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
-
 //- (void)updateEditMenuItems;
 - (void) updateBuyNow:(NSNotification *)aNotification;
 

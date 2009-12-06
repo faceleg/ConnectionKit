@@ -129,7 +129,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Toolbar
 	[self setToolbars:[NSMutableDictionary dictionary]];
 	[self makeDocumentToolbar];
-	[self updatePopupButtonSizesSmall:[[self document] displaySmallPageIcons]];
 	
 	
 	// Restore the window's previous frame, if available. Always do this after loading toolbar to make rect consistent
@@ -284,49 +283,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	if (returnCode == 0)
 	{
 		[[self window] performClose:self]; 
-	}
-}
-
-#pragma mark -
-#pragma mark Public Functions
-
-
-- (void)updatePopupButtonSizesSmall:(BOOL)aSmall;
-{
-	NSSize iconSize = aSmall ? NSMakeSize(16.0,16.0) : NSMakeSize(32.0, 32.0);
-	
-	NSArray *popupButtonsToAdjust = [NSArray arrayWithObjects:
-		[self addPagePopUpButton],
-		[self addPageletPopUpButton],
-		[self addCollectionPopUpButton],
-		nil];
-	NSEnumerator *theEnum = [popupButtonsToAdjust objectEnumerator];
-	RYZImagePopUpButton *aPopup;
-	
-	NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
-	[style setMinimumLineHeight:iconSize.height];
-	
-	while (nil != (aPopup = [theEnum nextObject]) )
-	{
-		NSEnumerator *thePopupEnum = [[[aPopup menu] itemArray] objectEnumerator];
-		NSMenuItem *item;
-		
-		while (nil != (item = [thePopupEnum nextObject]) )
-		{
-			NSImage *image = [item image];
-			[image setSize:iconSize];
-			
-			// We also have to set the line height.
-			NSMutableAttributedString *titleString
-				= [[[NSMutableAttributedString alloc] initWithAttributedString:[item attributedTitle]] autorelease];
-			[titleString addAttribute:NSParagraphStyleAttributeName value:style range:NSMakeRange(0,[titleString length])];
-			[titleString addAttribute:NSBaselineOffsetAttributeName
-								value:[NSNumber numberWithFloat:((([image size].height-[NSFont smallSystemFontSize])/2.0)+2.0)]
-								range:NSMakeRange(0,[titleString length])];
-			
-			
-			[item setAttributedTitle:titleString];
-		}
 	}
 }
 
