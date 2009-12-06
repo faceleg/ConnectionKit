@@ -40,6 +40,7 @@
 {
     [_documentInspector setInspectedObjectsController:controller];
     [_pageInspector setInspectedObjectsController:controller];
+    [_collectionInspector setInspectedObjectsController:controller];
 }
 
 - (void)setInspectedWindow:(NSWindow *)window
@@ -86,6 +87,13 @@
     [_pageInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
+    // Collection
+    _collectionInspector = [[SVInspectorViewController alloc] initWithNibName:@"CollectionInspector" bundle:nil];
+    [_collectionInspector setTitle:NSLocalizedString(@"Collection", @"Collection Inspector")];
+    [_collectionInspector setIcon:[NSImage imageNamed:@"toolbar_collection"]];
+    [_collectionInspector setInspectedObjectsController:[self inspectedPagesController]];
+    
+    
     // Wrap
     _wrapInspector = [[SVInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
@@ -97,6 +105,7 @@
     NSArray *result = [NSArray arrayWithObjects:
                        _documentInspector,
                        _pageInspector,
+                       _collectionInspector,
                        _wrapInspector,
                        nil];
     

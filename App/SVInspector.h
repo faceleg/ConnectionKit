@@ -19,6 +19,7 @@
     
     SVInspectorViewController   *_documentInspector;
     SVInspectorViewController   *_pageInspector;
+    SVInspectorViewController   *_collectionInspector;
     SVInspectorViewController   *_wrapInspector;
 }
 
