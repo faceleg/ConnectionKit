@@ -23,12 +23,10 @@ TO DO:
 #import "KTDocWindowController.h"
 
 #import "KT.h"
-#import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "KTToolbars.h"
 
-//#import "KSDocumentController.h"
 #import "NSImage+KTExtensions.h"
 #import "NSImage+Karelia.h"
 #import "NSToolbar+Karelia.h"
