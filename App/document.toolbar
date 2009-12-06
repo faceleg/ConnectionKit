@@ -36,7 +36,7 @@
 			<key>target</key>
 			<string>windowcontroller</string>
 			<key>view</key>
-			<string>myAddPagePopUpButton</string>
+			<string>NewPagePopUpButton</string>
 		</dict>
 		<dict>
 			<key>action</key>

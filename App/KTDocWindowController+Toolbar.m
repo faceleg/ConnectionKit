@@ -141,9 +141,14 @@ TO DO:
 
 #pragma mark Delegate (NSToolbar)
 
+- (NSToolbarItem *)makeNewPageToolbarItemWithIdentifier:(NSString *)identifier;
+{
+    return [[[NSToolbarItem alloc] initWithItemIdentifier:identifier] autorelease];
+}
+
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString*)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
-    NSToolbarItem *toolbarItem = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+    NSToolbarItem *result = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
 
     NSArray *itemsArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
     NSEnumerator *enumerator = [itemsArray objectEnumerator];
@@ -153,35 +158,42 @@ TO DO:
 	{
         if ( [[itemInfo valueForKey:@"identifier"] isEqualToString:itemIdentifier] ) 
 		{
+            // Custom?
+            if ([[itemInfo objectForKey:@"view"] isEqualToString:@"NewPagePopUpButton"])
+            {
+                result = [self makeNewPageToolbarItemWithIdentifier:itemIdentifier];
+            }
+            
+            
             // cosmetics
 			
-            [toolbarItem setLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"label"] value:@"" table:nil]];
-            [toolbarItem setPaletteLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"paletteLabel"] value:@"" table:nil]];
-            [toolbarItem setToolTip:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"help"] value:@"" table:nil]];
+            [result setLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"label"] value:@"" table:nil]];
+            [result setPaletteLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"paletteLabel"] value:@"" table:nil]];
+            [result setToolTip:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"help"] value:@"" table:nil]];
 
             // target
 			NSString *target = [[itemInfo valueForKey:@"target"] lowercaseString];
             if ( [target isEqualToString:@"windowcontroller"] ) 
 			{
-                [toolbarItem setTarget:self];
+                [result setTarget:self];
             }
             else if ( [target isEqualToString:@"document"] ) 
 			{
-                [toolbarItem setTarget:[self document]];
+                [result setTarget:[self document]];
             }
             else
 			{
-                [toolbarItem setTarget:nil];
+                [result setTarget:nil];
             }
 			
             // action
             if ( (nil != [itemInfo valueForKey:@"action"]) && ![[itemInfo valueForKey:@"action"] isEqualToString:@""] ) 
 			{
-				[toolbarItem setAction:NSSelectorFromString([itemInfo valueForKey:@"action"])];
+				[result setAction:NSSelectorFromString([itemInfo valueForKey:@"action"])];
             }
             else
 			{
-                [toolbarItem setAction:nil];
+                [result setAction:nil];
             }
 
 			NSString *imageName = [itemInfo valueForKey:@"image"];
@@ -213,9 +225,9 @@ TO DO:
 									  showIcons:YES
 									 smallIcons:NO 
 									  smallText:YES];
-                    [toolbarItem setView:addPagePopUpButton];
-                    [toolbarItem setMinSize:[[addPagePopUpButton cell] minimumSize]];
-                    [toolbarItem setMaxSize:[[addPagePopUpButton cell] maximumSize]];
+                    [result setView:addPagePopUpButton];
+                    [result setMinSize:[[addPagePopUpButton cell] minimumSize]];
+                    [result setMaxSize:[[addPagePopUpButton cell] maximumSize]];
 					
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
@@ -230,13 +242,13 @@ TO DO:
 									  smallText:YES];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
-					[mItem setTitle: [toolbarItem label]];
-					[toolbarItem setMenuFormRepresentation:mItem];
+					[mItem setTitle: [result label]];
+					[result setMenuFormRepresentation:mItem];
 					
                 }
                 else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"]) 
 				{
-					[self buildAddPageletToolbarItem:toolbarItem imageName:imageName];
+					[self buildAddPageletToolbarItem:result imageName:imageName];
 				}
                 else if ( [[itemInfo valueForKey:@"view"] isEqualToString:@"myAddCollectionPopUpButton"] ) 
 				{
@@ -258,9 +270,9 @@ TO DO:
 												pullsDown:YES
 												showIcons:YES smallIcons:NO
 												smallText:YES allowNewPageTypes:YES];
-                    [toolbarItem setView:addCollectionPopUpButton];
-                    [toolbarItem setMinSize:[[addCollectionPopUpButton cell] minimumSize]];
-                    [toolbarItem setMaxSize:[[addCollectionPopUpButton cell] maximumSize]];
+                    [result setView:addCollectionPopUpButton];
+                    [result setMinSize:[[addCollectionPopUpButton cell] minimumSize]];
+                    [result setMaxSize:[[addCollectionPopUpButton cell] maximumSize]];
 			
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
@@ -272,8 +284,8 @@ TO DO:
 												smallText:YES allowNewPageTypes:YES];
 					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
 					[mItem setSubmenu: menu];
-					[mItem setTitle: [toolbarItem label]];
-					[toolbarItem setMenuFormRepresentation:mItem];
+					[mItem setTitle: [result label]];
+					[result setMenuFormRepresentation:mItem];
 				}
             }
             else if ( (nil != imageName) && ![imageName isEqualToString:@""] ) 
@@ -289,12 +301,12 @@ TO DO:
 				}
 				[theImage normalizeSize];
 				[theImage setDataRetained:YES];	// allow image to be scaled.
-                [toolbarItem setImage:theImage];
+                [result setImage:theImage];
             }
         }
     }
 
-    return toolbarItem;
+    return result;
 }
 
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
