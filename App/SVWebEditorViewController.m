@@ -20,6 +20,7 @@
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
+#import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextFieldController.h"
 
@@ -66,7 +67,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     self = [super init];
     
-    _selectableObjectsController = [[NSArrayController alloc] init];
+    _selectableObjectsController = [[SVWebContentObjectsController alloc] init];
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
@@ -164,6 +165,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [_selectableObjects release];
     _selectableObjects = selectableObjects;
+    [_selectableObjectsController setManagedObjectContext:[[self page] managedObjectContext]];
+    [_selectableObjectsController setPage:[self page]];
     [_selectableObjectsController setContent:_selectableObjects];
 	
     
@@ -693,29 +696,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
-    for (SVWebContentItem *item in items)
-    {
-        if ([[self sidebarPageletItems] containsObjectIdenticalTo:item])
-        {
-            // Remove pagelet from sidebar. Delete if appropriate
-            SVPagelet *pagelet = [item representedObject];
-            [[[self page] sidebar] removePageletsObject:pagelet];
-            
-            if ([[pagelet sidebars] count] == 0)
-            {
-                NSError *error;
-                if (![pagelet validateForDelete:&error]) {
-                    return NO;
-                }
-                [[pagelet managedObjectContext] deleteObject:pagelet];
-            }
-        }
-        else
-        {
-            return NO;
-        }
-    }
-    
+    [_selectableObjectsController remove:self];
     return YES;
 }
 

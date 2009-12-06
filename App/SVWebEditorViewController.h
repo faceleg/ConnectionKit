@@ -12,6 +12,7 @@
 
 
 @class KTPage, SVHTMLContext, SVWebEditorTextController;
+@class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
@@ -25,8 +26,8 @@
     KTPage                      *_page;
     SVHTMLContext               *_context;
     
-    NSSet               *_selectableObjects;
-    NSArrayController   *_selectableObjectsController;
+    NSSet                           *_selectableObjects;
+    SVWebContentObjectsController   *_selectableObjectsController;
     
     // Controllers
     NSArray         *_textAreas;
