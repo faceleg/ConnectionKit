@@ -5,7 +5,6 @@
 	<key>default set</key>
 	<array>
 		<string>addPagePop:</string>
-		<string>addCollectionPop:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>chooseDesign:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
