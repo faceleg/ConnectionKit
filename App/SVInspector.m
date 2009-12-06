@@ -77,28 +77,24 @@
     _documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
     [_documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
-    [_documentInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
     // Page
     _pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [_pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
     [_pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
-    [_pageInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
     // Collection
     _collectionInspector = [[SVInspectorViewController alloc] initWithNibName:@"CollectionInspector" bundle:nil];
     [_collectionInspector setTitle:NSLocalizedString(@"Collection", @"Collection Inspector")];
     [_collectionInspector setIcon:[NSImage imageNamed:@"toolbar_collection"]];
-    [_collectionInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
     // Wrap
     _wrapInspector = [[SVInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
     [_wrapInspector setIcon:[NSImage imageNamed:@"unsorted"]];
-    [_wrapInspector setInspectedObjectsController:[self inspectedPagesController]];
     
     
     //  Finish up
