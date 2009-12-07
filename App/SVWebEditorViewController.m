@@ -610,7 +610,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [body addElement:element];
 }
 
-- (IBAction)insertSiteTitle:(id)sender;
+- (void)insertSiteTitle:(id)sender;
 {
     // Create placeholder if needed
     KTMaster *master = [[self page] master];
@@ -623,7 +623,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 }
 
-- (IBAction)insertSiteSubtitle:(id)sender;
+- (void)insertSiteSubtitle:(id)sender;
 {
     // Create placeholder if needed
     KTMaster *master = [[self page] master];
@@ -636,7 +636,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 }
 
-- (IBAction)insertPageTitle:(id)sender;
+- (void)insertPageTitle:(id)sender;
 {
     // Create placeholder if needed
     if ([[[self page] titleText] length] <= 0)
@@ -648,7 +648,23 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 }
 
-- (IBAction)insertFooter:(id)sender;
+- (void)insertPageletTitle:(id)sender;
+{
+    // Give the selected pagelets a title if needed
+    for (id anObject in [[self selectedObjectsController] selectedObjects])
+    {
+        if ([anObject isKindOfClass:[SVPagelet class]])
+        {
+            SVPagelet *pagelet = anObject;
+            if ([[pagelet titleHTMLString] length] <= 0)
+            {
+                [pagelet setTitleHTMLString:NSLocalizedString(@"Pagelet Title", @"placeholder text")];
+            }
+        }
+    }
+}
+
+- (void)insertFooter:(id)sender;
 {
     // Create placeholder if needed
     KTMaster *master = [[self page] master];

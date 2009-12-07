@@ -314,6 +314,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
     [[[self webContentAreaController] webEditorViewController] insertPageTitle:sender];
 }
+- (void)insertPageletTitle:(id)sender;
+{
+    [[[self webContentAreaController] webEditorViewController] insertPageletTitle:sender];
+}
 - (IBAction)insertFooter:(id)sender;
 {
     [[[self webContentAreaController] webEditorViewController] insertFooter:sender];
