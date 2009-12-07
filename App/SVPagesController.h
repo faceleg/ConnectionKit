@@ -20,6 +20,7 @@
 // Use -add: to create a regular page. -addCollection: for collections
 - (IBAction)addCollection:(id)sender;
 
+- (void)addPage:(KTPage *)page asChildOfPage:(KTPage *)parent;
 
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 
