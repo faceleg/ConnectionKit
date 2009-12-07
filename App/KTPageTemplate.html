@@ -90,7 +90,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if master.headerImageHidesH1]]
 						<h1 class="hidden">[[=master.siteTitleHTMLString]]</h1>
 [[else2]]
-						[[textblock property:master.siteTitleHTMLString flags:"line" tag:h1 graphicalTextCode:h1h placeholder:"Site Title"]]
+						[[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1h placeholder:"Site Title"]]
 [[endif2]]
 [[else]]
 [[if master.logoImage]]
@@ -103,10 +103,10 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path site.root]]">[[=master.siteTitleHTMLString]]</a></h1>
 [[else2]]
-						[[textblock property:master.siteTitleHTMLString flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.root]]
+						[[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.root]]
 [[endif2]]
 [[endif]]
-						[[textblock property:master.siteSubtitleHTMLString flags:"line" tag:p graphicalTextCode:st placeholder:"Site Subtitle"]]
+						[[textblock property:master.siteSubtitle flags:"line" tag:p graphicalTextCode:st placeholder:"Site Subtitle"]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
 [[if site.pagesInSiteMenu]]
@@ -159,7 +159,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 
 				<div id="page-bottom">
 					<div id="page-bottom-contents">
-						[[textblock property:master.copyrightHTML flags:"block" placeholder:"Footer"]]
+						[[textblock property:master.footer flags:"block" placeholder:"Footer"]]
 						<div class="hidden">[[`backToTopTitleHTML]]<a rel="nofollow" href="#title">[[`backToTopLinkHTML]]</a></div>
 					</div>
 				</div> <!-- page-bottom -->

@@ -15,6 +15,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVBody.h"
+#import "SVTextField.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTScaledImageContainer.h"
@@ -269,11 +270,21 @@
 
 - (NSString *)innerHTMLString
 {
-	id source = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
-    NSString *result = ([source isKindOfClass:[SVBody class]] ? [source HTMLString] : source);
+	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+    if ([result isKindOfClass:[SVBody class]])
+    {
+        result = [(SVBody *)result HTMLString];
+    }
+    else if ([result isKindOfClass:[SVTextField class]])
+    {
+        result = [(SVTextField *)result textHTMLString];
+    }
+    
+    
+    // Tidy up
 	if (!result) result = @"";
-
 	result = [self processHTML:result];
+    
 	return result;
 }
 

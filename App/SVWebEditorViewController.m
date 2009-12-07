@@ -20,6 +20,7 @@
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
+#import "SVTextField.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextFieldController.h"
@@ -267,7 +268,31 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             id textArea;
             id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
             
-            if ([value isKindOfClass:[SVBody class]])
+            if ([value isKindOfClass:[SVTextField class]])
+            {
+                // Copy basic properties from text block
+                textArea = [[SVWebEditorTextFieldController alloc] initWithHTMLElement:element];
+                [textArea setHTMLContext:[self HTMLContext]];
+                [textArea setRichText:[aTextBlock isRichText]];
+                [textArea setFieldEditor:[aTextBlock isFieldEditor]];
+                [textArea setEditable:[aTextBlock isEditable]];
+                
+                // Bind to model
+                [textArea bind:NSValueBinding
+                      toObject:value
+                   withKeyPath:@"textHTMLString"
+                       options:nil];
+                
+                // Make top-level text fields selectable. The way I determine this is admittedly hacky at the moment
+                if ([[aTextBlock HTMLSourceObject] isKindOfClass:[KTAbstractPage class]])
+                {
+                    [editorItems addObject:textArea];
+                }
+                
+                // Tell it the MOC for undo purposes
+                [textArea setManagedObjectContext:[[self page] managedObjectContext]];
+            }
+            else if ([value isKindOfClass:[SVBody class]])
             {
                 KSSetController *elementsController = [[KSSetController alloc] init];
                 [elementsController setOrderingSortKey:@"sortKey"];
