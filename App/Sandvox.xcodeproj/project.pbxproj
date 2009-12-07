@@ -344,7 +344,6 @@
 		278B95B40D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */; };
 		278EC6F30C97136500A212EC /* KTHTMLParserCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EC6F10C97136500A212EC /* KTHTMLParserCache.h */; settings = {ATTRIBUTES = (); }; };
 		278EC6F40C97136500A212EC /* KTHTMLParserCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EC6F20C97136500A212EC /* KTHTMLParserCache.m */; };
-		278ECBAF0D247BD60012BA6B /* KTCalloutContainerTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */; };
 		278ECEA20D25C4F90012BA6B /* KTPasteboardArchiving.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */; settings = {ATTRIBUTES = (); }; };
 		278ECF1E0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 278ECF1D0D25DAF80012BA6B /* KTMediaContainer+Pasteboard.m */; };
 		278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */; settings = {ATTRIBUTES = (); }; };
@@ -5714,7 +5713,6 @@
 				CE5CA3470D15BE580021E9B3 /* GenericFileServerIcon.icns in Resources */,
 				CE5CA3690D15C1DE0021E9B3 /* pageborder.tiff in Resources */,
 				CE5CA36A0D15C1DE0021E9B3 /* pagemask.tiff in Resources */,
-				278ECBAF0D247BD60012BA6B /* KTCalloutContainerTemplate.html in Resources */,
 				CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */,
 				27ACADB60D589C8C004732D0 /* Z.png in Resources */,
 				271568670D5B2EE100A91E58 /* KTElementTemplate.html in Resources */,
