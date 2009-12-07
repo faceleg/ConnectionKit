@@ -95,8 +95,8 @@
 				<true/>
 				<key>pluginIdentifier</key>
 				<string>sandvox.RichTextElement</string>
-				<key>richTextHTML</key>
-				<string>&lt;p&gt;This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!&lt;/p&gt;</string>
+				<key>bodyText</key>
+				<string>This is your first blog entry. What are you waiting for? Replace this text with some of your own and start blogging!</string>
 			</dict>
 			<key>KTPageSettings</key>
 			<dict>
