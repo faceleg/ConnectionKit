@@ -525,13 +525,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
  */
 - (NSString *)summaryHTMLKeyPath
 {
-	NSString *result = @"captionHTML";
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(summaryHTMLKeyPath)])
-	{
-		result = [delegate summaryHTMLKeyPath];
-	}
+	NSString *result = @"titleHTMLString";
 	
 	return result;
 }
@@ -543,16 +537,6 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 - (BOOL)summaryHTMLIsEditable
 {
 	BOOL result = NO;
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(summaryHTMLIsEditable)])
-	{
-		result = [delegate summaryHTMLIsEditable];
-	}
-    else if (!delegate || ![delegate respondsToSelector:@selector(summaryHTMLKeyPath)])
-    {
-        result = YES;
-    }
 	
 	return result;
 }
