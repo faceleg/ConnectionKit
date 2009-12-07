@@ -14,12 +14,6 @@
 				height="[[mediainfo info:height media:item.thumbnail sizeToFit:thumbnailImageSize]]" /></a>
 		</div>
 [[endif]]
-[[if item.customSummaryHTML]]
-[[else]]
-[[if userDefaults.allowCalloutsInIndex]][[COMMENT -- A HACK THAT WE SHOULD EXPOSE BETTER ]]
-[[parseComponent item parser.calloutContainerTemplateHTML]]
-[[endif2]]
-[[endif]]
 		<div class="article-summary">[[summary item page.collectionTruncateCharacters]]</div>
 		<div class="article-info">
 [[if page.collectionTruncateCharacters>0]]
