@@ -165,8 +165,7 @@
 - (BOOL)collectionSyndicate;
 - (void)setCollectionSyndicate:(BOOL)syndicate;
 
-- (NSString *)RSSFileName;
-- (void)setRSSFileName:(NSString *)file;
+@property(nonatomic, copy) NSString *RSSFileName;
 - (NSURL *)feedURL;
 
 - (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate;

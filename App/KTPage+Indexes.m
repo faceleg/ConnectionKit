@@ -225,31 +225,9 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 - (void)setCollectionSyndicate:(BOOL)syndicate
 {
     [self setWrappedBool:syndicate forKey:@"collectionSyndicate"];
-    
-    // For Sandvox 1.6 and onwards, once the user makes a definitive decision, finalise the filename
-    // Until then, we stick with the default Sandvox 1.5 + earlier name. case 40230.
-    if (![self valueForUndefinedKey:@"RSSFileName"])
-    {
-        [self setRSSFileName:(syndicate ? @"index.rss" : [self RSSFileName])];
-    }
 }
 
-- (NSString *)RSSFileName
-{
-    NSString *result = [self valueForUndefinedKey:@"RSSFileName"];
-    if (!result)
-    {
-        // We don't want to upset existing RSS feeds, so stick to default filename for those
-        result = [[NSUserDefaults standardUserDefaults] objectForKey:@"RSSFileName"];
-    }
-    
-    return result;
-}
-
-- (void)setRSSFileName:(NSString *)file
-{
-    [self setValue:file forUndefinedKey:@"RSSFileName"];
-}
+@dynamic RSSFileName;
 
 - (NSURL *)feedURL
 {

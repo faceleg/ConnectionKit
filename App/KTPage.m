@@ -188,6 +188,9 @@
         [self setPrimitiveValue:maxTitles forKey:@"collectionSummaryMaxPages"];
     }
     
+    [self setPrimitiveValue:[[NSUserDefaults standardUserDefaults] stringForKey:@"RSSFileName"]
+                     forKey:@"RSSFileName"];
+    
     
     // Code Injection
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"PageCodeInjection"

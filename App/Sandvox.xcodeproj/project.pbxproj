@@ -3014,15 +3014,17 @@
 			name = General;
 			sourceTree = "<group>";
 		};
-		275E067A0DDA0F1A0072567F /* Elements */ = {
+		275E067A0DDA0F1A0072567F /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
+				278849810F5FF0D300C70629 /* Master */,
 				275E067B0DDA0F560072567F /* Element */,
 				273864300D50A6A000A8A209 /* Page */,
 				3C5A73710BF7B69300776464 /* Pagelets */,
 				278F798F10B4485C00BDBAF7 /* Body Text */,
 			);
-			name = Elements;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		275E067B0DDA0F560072567F /* Element */ = {
@@ -3311,8 +3313,7 @@
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Documents */,
 				278849800F5FF0C400C70629 /* Site */,
-				278849810F5FF0D300C70629 /* Master */,
-				275E067A0DDA0F1A0072567F /* Elements */,
+				275E067A0DDA0F1A0072567F /* Model */,
 				2786BE970CAD10530086F9E0 /* Media */,
 				27DF88CE0D85785D00AEF4B5 /* Main Document Window */,
 				3C0B1D53104798F5002EE098 /* Design Chooser */,
@@ -4002,7 +4003,6 @@
 		3C5A736E0BF7B67300776464 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				3C682B240D622FC100B4D485 /* KTManagedObject.h */,
 				3C682B250D622FC700B4D485 /* KTManagedObject.m */,
 				27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */,
