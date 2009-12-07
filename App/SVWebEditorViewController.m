@@ -681,10 +681,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         if ([anObject isKindOfClass:[SVPagelet class]])
         {
-            SVPagelet *pagelet = anObject;
-            if ([[pagelet titleHTMLString] length] <= 0)
+            SVTextField *text = [(SVPagelet *)anObject title];
+            if ([[text text] length] <= 0)
             {
-                [pagelet setTitleHTMLString:NSLocalizedString(@"Pagelet Title", @"placeholder text")];
+                [text setText:NSLocalizedString(@"Pagelet Title", @"placeholder text")];
             }
         }
     }
