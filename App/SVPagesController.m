@@ -85,9 +85,18 @@
         [NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"KTFirstChildSettings"]];
         [firstChildProperties removeObjectForKey:@"pluginIdentifier"];
         
-        KTPage *firstChild = [KTPage insertNewPageWithParent:collection
-                                                      plugin:[KTElementPlugin pluginWithIdentifier:firstChildIdentifier]];
+        // Create first child
+        KTPage *firstChild = [self newObject];
         
+        // Insert at right place. DON'T want this one to be selected
+        BOOL insertSelected = [self selectsInsertedObjects];
+        [self setSelectsInsertedObjects:NO];
+        [self addPage:firstChild asChildOfPage:collection];
+        [self setSelectsInsertedObjects:insertSelected];
+        
+        [firstChild release];
+        
+        // Initial properties
         NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
         NSString *aKey;
         while (aKey = [propertiesEnumerator nextObject])
