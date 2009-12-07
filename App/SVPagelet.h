@@ -8,7 +8,7 @@
 
 #import "SVGraphic.h"
 
-@class SVBody;
+@class SVTextField, SVBody;
 @class KTPage, SVSidebar;
 
 
@@ -19,7 +19,13 @@
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
 
-@property(nonatomic, retain) NSString *titleHTMLString;
+
+#pragma mark Title
+@property(nonatomic, retain) SVTextField *title;
+- (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
+
+
+#pragma mark Other
 @property(nonatomic, retain, readonly) SVBody *body;
 @property(nonatomic, copy) NSNumber *showBorder;
 

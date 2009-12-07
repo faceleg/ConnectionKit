@@ -11,6 +11,7 @@
 #import "KTPage.h"
 #import "SVBody.h"
 #import "SVSidebar.h"
+#import "SVTextField.h"
 
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
@@ -55,9 +56,23 @@
     [self setBody:[SVBody insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
+#pragma mark Title
+
+@dynamic title;
+
+- (void)setTitleWithString:(NSString *)title;
+{
+    SVTextField *text = [self title];
+    if (!text)
+    {
+        text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletTitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setTitle:text];
+    }
+    [text setText:title];
+}
+
 #pragma mark Properties
 
-@dynamic titleHTMLString;
 @dynamic body;
 @dynamic showBorder;
 
@@ -172,6 +187,46 @@
     NSArray *sortDescriptors = [self pageletSortDescriptors];
     NSArray *result = [[pagelets allObjects] sortedArrayUsingDescriptors:sortDescriptors];
     return result;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVPagelet (Deprecated)
+
+#pragma mark Title
+
+- (NSString *)titleHTMLString
+{
+    return [[self title] textHTMLString];
+}
+
+- (void)setTitleHTMLString:(NSString *)value
+{
+    [[self title] setTextHTMLString:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTitleHTMLString
+{
+    return [NSSet setWithObject:@"title.textHTMLString"];
+}
+
+- (NSString *)titleText	// get title, but without attributes
+{
+	return [[self title] text];
+}
+
+- (void)setTitleText:(NSString *)value
+{
+	[self setTitleWithString:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTitleText
+{
+    return [NSSet setWithObject:@"title.textHTMLString"];
 }
 
 @end

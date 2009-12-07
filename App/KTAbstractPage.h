@@ -31,7 +31,7 @@ typedef enum	//	Defines the 3 ways of linking to a collection:
 KTCollectionPathStyle;
 
 
-@class KTPage, KTSite, KTMaster, SVSidebar;
+@class KTPage, KTSite, KTMaster, SVSidebar, SVTextField;
 @class SVHTMLTemplateParser;
 
 
@@ -57,8 +57,8 @@ KTCollectionPathStyle;
 
 
 #pragma mark Title
-@property(nonatomic, copy) NSString *titleHTMLString;
-@property(nonatomic, copy) NSString *titleText;
+@property(nonatomic, retain) SVTextField *title;
+- (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
 - (BOOL)canEditTitle;
 
 #pragma mark Web

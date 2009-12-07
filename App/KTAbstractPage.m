@@ -13,6 +13,7 @@
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
+#import "SVTextField.h"
 
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -139,30 +140,17 @@
 
 #pragma mark Title
 
-@dynamic titleHTMLString;
-- (void)setTitleHTMLString:(NSString *)value
-{
-    // Very annoying, if you try to override a dynamically generated Core Data accessor in a subclass, Core Data won't actually generate the super method, so we have to do so here ourself.
-    [self willChangeValueForKey:@"titleHTMLString"];
-    [self setPrimitiveValue:value forKey:@"titleHTMLString"];
-    [self didChangeValueForKey:@"titleHTMLString"];
-}
+@dynamic title;
 
-- (NSString *)titleText	// get title, but without attributes
+- (void)setTitleWithString:(NSString *)title;
 {
-	NSString *html = [self titleHTMLString];
-	NSString *result = [html stringByConvertingHTMLToPlainText];
-	return result;
-}
-
-- (void)setTitleText:(NSString *)value
-{
-	[self setTitleHTMLString:[value stringByEscapingHTMLEntities]];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingTitleText
-{
-    return [NSSet setWithObject:@"titleHTMLString"];
+    SVTextField *text = [self title];
+    if (!text)
+    {
+        text = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setTitle:text];
+    }
+    [text setText:title];
 }
 
 // For bindings.  We can edit title if we aren't root;
@@ -279,6 +267,46 @@
 - (void)setPublishedDataDigest:(NSData *)digest
 {
     [self setValue:digest forUndefinedKey:@"publishedDataDigest"];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation KTAbstractPage (Deprecated)
+
+#pragma mark Title
+
+- (NSString *)titleHTMLString
+{
+    return [[self title] textHTMLString];
+}
+
+- (void)setTitleHTMLString:(NSString *)value
+{
+    [[self title] setTextHTMLString:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTitleHTMLString
+{
+    return [NSSet setWithObject:@"title.textHTMLString"];
+}
+
+- (NSString *)titleText	// get title, but without attributes
+{
+	return [[self title] text];
+}
+
+- (void)setTitleText:(NSString *)value
+{
+	[self setTitleWithString:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTitleText
+{
+    return [NSSet setWithObject:@"title.textHTMLString"];
 }
 
 @end

@@ -244,7 +244,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Create a starter pagelet
         SVPagelet *pagelet = [SVPagelet pageletWithManagedObjectContext:[self managedObjectContext]];
         [pagelet setSortKey:[NSNumber numberWithShort:0]];
-        [pagelet setTitleHTMLString:@"Test"];
+        [pagelet setTitleWithString:@"Test"];
         
         SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
                                                                inManagedObjectContext:[self managedObjectContext]];
