@@ -130,6 +130,10 @@
 
 - (void)addPage:(KTPage *)page asChildOfPage:(KTPage *)parent;
 {
+    OBPRECONDITION(page);
+    OBPRECONDITION(parent);
+    
+    
     // Figure out the predecessor (which page to inherit properties from)
     KTPage *predecessor = parent;
 	NSArray *children = [parent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
