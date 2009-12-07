@@ -272,6 +272,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             {
                 // Copy basic properties from text block
                 textArea = [[SVWebEditorTextFieldController alloc] initWithHTMLElement:element];
+                [textArea setRepresentedObject:value];
                 [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:[aTextBlock isRichText]];
                 [textArea setFieldEditor:[aTextBlock isFieldEditor]];
