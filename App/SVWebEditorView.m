@@ -1065,6 +1065,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return result;
 }
 
+-(void) webView:(WebView *)sender makeFirstResponder:(NSResponder *)responder
+{
+    [[self window] makeFirstResponder:responder];
+}
+
 #pragma mark WebUIDelegatePrivate
 
 /*  Log javacript to the standard console; it may be helpful for us or for people who put javascript into their stuff.
