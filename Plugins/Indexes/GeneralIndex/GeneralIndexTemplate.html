@@ -1,9 +1,9 @@
 [[foreach pages item]]
 	<div class="article [[i]] [[eo]][[last]]">
 [[if page.collectionHyperlinkPageTitles]]
-		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
+		[[textblock property:item.titleHTMLString flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
 [[else]]
-		[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3]]
+		[[textblock property:item.titleHTMLString flags:"line" tag:h3 graphicalTextCode:h3]]
 [[endif]]
 [[if item.thumbnail]]
 		<div class="article-thumbnail">
