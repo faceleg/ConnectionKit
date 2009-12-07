@@ -165,7 +165,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [_selectableObjects release];
     _selectableObjects = selectableObjects;
-    [_selectableObjectsController setManagedObjectContext:[[self page] managedObjectContext]];
+    // Do NOT set the controller's MOC. Unless you set both MOC and entity name, saving will raise an exception. (crazy I know!)
     [_selectableObjectsController setPage:[self page]];
     [_selectableObjectsController setContent:_selectableObjects];
 	
