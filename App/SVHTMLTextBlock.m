@@ -67,12 +67,19 @@
 
 - (NSString *)DOMNodeID
 {
-	NSString *result = [NSString stringWithFormat:@"k-svxTextBlock-%@-%p",
-						[self HTMLSourceKeyPath],
-						[self HTMLSourceObject]];
-	
-	// We used to just use  [NSString shortUUIDString], but that changes with each webview refresh
-	return result;
+    id value = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	if ([value isKindOfClass:[SVTextField class]])
+    {
+        return [value editingElementID];
+    }
+    else
+    {
+        NSString *result = [NSString stringWithFormat:@"k-svxTextBlock-%@-%p",
+                            [self HTMLSourceKeyPath],
+                            [self HTMLSourceObject]];
+        
+        return result;
+    }
 }
 
 /*	Many bits of editable text contain a tag like so:

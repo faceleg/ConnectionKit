@@ -158,6 +158,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     for (SVHTMLTextBlock *aTextBlock in [context generatedTextBlocks])
     {
         id content = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+        if ([content isKindOfClass:[SVTextField class]])
+        {
+            [selectableObjects addObject:content];
+        }
         if ([content isKindOfClass:[SVBody class]])
         {
             //[selectableObjects unionSet:[content contentObjects]];

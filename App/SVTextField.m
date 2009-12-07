@@ -15,6 +15,8 @@
 
 @implementation SVTextField 
 
+#pragma mark Content
+
 @dynamic textHTMLString;
 
 - (NSString *)text	// get title, but without attributes
