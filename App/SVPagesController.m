@@ -107,7 +107,14 @@
                 aProperty = [indexBundle localizedStringForKey:aProperty value:nil table:@"InfoPlist"];
             }
             
-            [firstChild setValue:aProperty forKey:aKey];
+            if ([aKey isEqualToString:@"bodyText"]) // special case
+            {
+                [[[[firstChild body] orderedElements] lastObject] setInnerHTMLArchiveString:aProperty];
+            }
+            else
+            {
+                [firstChild setValue:aProperty forKeyPath:aKey];
+            }
         }
     }
     
