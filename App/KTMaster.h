@@ -23,20 +23,26 @@
 #import "KTManagedObject.h"
 
 
-@class KTDesign;
+@class KTDesign, SVTextField;
 @class KTMediaContainer;
+
 
 @interface KTMaster : KTManagedObject 
 
-@property(nonatomic, copy) NSString *siteTitleHTMLString;
-@property(nonatomic, copy) NSString *siteTitleText;
+#pragma mark Text
 
-@property(nonatomic, copy) NSString *siteSubtitleHTMLString;
-@property(nonatomic, copy) NSString *siteSubtitleText;
+@property(nonatomic, retain) SVTextField *siteTitle;
+- (void)setSiteTitleWithString:(NSString *)title;   // creates Title object if needed
 
-- (NSString *)copyrightHTML;
-- (void)setCopyrightHTML:(NSString *)copyrightHTML;
+@property(nonatomic, retain) SVTextField *siteSubtitle;
+- (void)setSiteSubtitleWithString:(NSString *)title;   // creates Title object if needed
+
+@property(nonatomic, retain) SVTextField *footer;
+- (void)setFooterWithString:(NSString *)text;   // creates Title object if needed
 - (NSString *)defaultCopyrightHTML;
+
+
+#pragma mark Other
 
 - (NSURL *)designDirectoryURL;
 

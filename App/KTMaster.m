@@ -15,6 +15,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
+#import "SVTextField.h"
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
@@ -98,63 +99,47 @@
 
 #pragma mark Site Title
 
-@dynamic siteTitleHTMLString;
+@dynamic siteTitle;
 
-- (NSString *)siteTitleText	// get title, but without attributes
+- (void)setSiteTitleWithString:(NSString *)title;
 {
-	NSString *html = [self siteTitleHTMLString];
-	NSString *result = [html stringByConvertingHTMLToPlainText];
-	return result;
-}
-
-- (void)setSiteTitleText:(NSString *)value
-{
-	[self setSiteTitleHTMLString:[value stringByEscapingHTMLEntities]];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingSiteTitleText
-{
-    return [NSSet setWithObject:@"siteTitleHTMLString"];
+    SVTextField *text = [self siteTitle];
+    if (!text)
+    {
+        text = [NSEntityDescription insertNewObjectForEntityForName:@"SiteTitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setSiteTitle:text];
+    }
+    [text setText:title];
 }
 
 #pragma mark Site Subtitle
 
-@dynamic siteSubtitleHTMLString;
+@dynamic siteSubtitle;
 
-- (NSString *)siteSubtitleText	// get title, but without attributes
+- (void)setSiteSubtitleWithString:(NSString *)title;
 {
-	NSString *html = [self siteSubtitleHTMLString];
-	NSString *result = [html stringByConvertingHTMLToPlainText];
-	return result;
-}
-
-- (void)setSiteSubtitleText:(NSString *)value
-{
-	[self setSiteSubtitleHTMLString:[value stringByEscapingHTMLEntities]];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingSiteSubtitleText
-{
-    return [NSSet setWithObject:@"siteSubtitleHTMLString"];
+    SVTextField *text = [self siteSubtitle];
+    if (!text)
+    {
+        text = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setSiteSubtitle:text];
+    }
+    [text setText:title];
 }
 
 #pragma mark Footer
 
-- (NSString *)copyrightHTML
-{
-	NSString *result = [self wrappedValueForKey:@"copyrightHTML"];
-	if (!result)
-	{
-		result = [self defaultCopyrightHTML];
-	}
-	
-	return result;
-}
+@dynamic footer;
 
-- (void)setCopyrightHTML:(NSString *)copyrightHTML
+- (void)setFooterWithString:(NSString *)title;
 {
-	if (!copyrightHTML) copyrightHTML = @"";
-	[self setWrappedValue:copyrightHTML forKey:@"copyrightHTML"];
+    SVTextField *text = [self footer];
+    if (!text)
+    {
+        text = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
+        [self setFooter:text];
+    }
+    [text setText:title];
 }
 
 - (NSString *)defaultCopyrightHTML
@@ -674,6 +659,68 @@
 - (NSDictionary *)imageScalingPropertiesForUse:(NSString *)mediaUse
 {
     return [[self design] imageScalingPropertiesForUse:mediaUse];
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation KTMaster (Deprecated)
+
+#pragma mark Site Title
+
+- (NSString *)siteTitleHTMLString
+{
+    return [[self siteTitle] textHTMLString];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteTitleHTMLString
+{
+    return [NSSet setWithObject:@"siteTitle.textHTMLString"];
+}
+
+- (NSString *)siteTitleText	// get title, but without attributes
+{
+	return [[self siteTitle] text];
+}
+
+- (void)setSiteTitleText:(NSString *)value
+{
+	[self setSiteTitleWithString:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteTitleText
+{
+    return [NSSet setWithObject:@"siteTitle.textHTMLString"];
+}
+
+#pragma mark Site Subtitle
+
+- (NSString *)siteSubtitleHTMLString
+{
+    return [[self siteSubtitle] textHTMLString];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteSubtitleHTMLString
+{
+    return [NSSet setWithObject:@"siteSubtitle.textHTMLString"];
+}
+
+- (NSString *)siteSubtitleText	// get title, but without attributes
+{
+	return [[self siteSubtitle] text];
+}
+
+- (void)setSiteSubtitleText:(NSString *)value
+{
+	[self setSiteSubtitleWithString:value];
+}
+
++ (NSSet *)keyPathsForValuesAffectingSiteSubtitleText
+{
+    return [NSSet setWithObject:@"siteSubtitle.textHTMLString"];
 }
 
 @end

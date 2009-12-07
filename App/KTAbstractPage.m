@@ -284,11 +284,6 @@
     return [[self title] textHTMLString];
 }
 
-- (void)setTitleHTMLString:(NSString *)value
-{
-    [[self title] setTextHTMLString:value];
-}
-
 + (NSSet *)keyPathsForValuesAffectingTitleHTMLString
 {
     return [NSSet setWithObject:@"title.textHTMLString"];
