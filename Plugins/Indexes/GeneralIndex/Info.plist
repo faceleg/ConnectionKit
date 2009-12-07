@@ -53,8 +53,6 @@
 				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
-				<key>collectionShowNavigationArrows</key>
-				<false/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
@@ -72,8 +70,6 @@
 				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
-				<key>collectionShowNavigationArrows</key>
-				<false/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
@@ -108,8 +104,6 @@
 				<true/>
 				<key>collectionMaxIndexItems</key>
 				<integer>20</integer>
-				<key>collectionShowNavigationArrows</key>
-				<true/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
