@@ -45,8 +45,6 @@
 				<false/>
 				<key>collectionMaxIndexItems</key>
 				<integer>0</integer>
-				<key>collectionShowNavigationArrows</key>
-				<false/>
 				<key>collectionShowPermanentLink</key>
 				<false/>
 				<key>collectionSortOrder</key>
