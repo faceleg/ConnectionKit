@@ -17,6 +17,10 @@
   @private
 }
 
+// Use -add: to create a regular page. -addCollection: for collections
+- (IBAction)addCollection:(id)sender;
+
+
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 
 @end

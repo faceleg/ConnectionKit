@@ -9,10 +9,14 @@
 #import "SVPagesController.h"
 
 #import "KTElementPlugin.h"
+#import "KTAbstractIndex.h"
+#import "KTIndexPlugin.h"
 #import "KTPage+Internal.h"
 #import "SVSidebar.h"
 
 #import "NSArray+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSObject+Karelia.h"
 
 #import "Debug.h"
 
@@ -33,6 +37,85 @@
 @implementation SVPagesController
 
 #pragma mark Managing Objects
+
+- (IBAction)addCollection:(id)sender;
+{
+    //  Create a collection. Populate according to the index plug-in (-representedObject) if applicable.
+    
+    
+    NSDictionary *presetDict = [sender representedObject];
+	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
+	KTIndexPlugin *indexPlugin = identifier ? [KTIndexPlugin pluginWithIdentifier:identifier] : nil;
+	
+    NSBundle *indexBundle = [indexPlugin bundle];
+    
+    
+    // Create the basic collection
+    KTPage *collection = [self newObject];
+    [collection setBool:YES forKey:@"isCollection"]; // Duh!
+    
+    
+    // Set the index on the page
+    [collection setWrappedValue:identifier forKey:@"collectionIndexBundleIdentifier"];
+    Class indexToAllocate = [indexBundle principalClassIncludingOtherLoadedBundles:YES];
+    KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:indexPlugin] autorelease];
+    [collection setIndex:theIndex];
+    
+    
+    // Now re-set title of page to be the appropriate untitled name
+    NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetUntitled"];
+    NSString *presetTitle = [indexBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
+    
+    [collection setTitleText:presetTitle];
+    
+    NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
+    [collection setValuesForKeysWithDictionary:pageSettings];
+        
+    
+    // Insert the new collection
+    [self addObject:collection];
+    [collection release];
+    
+    
+    // Generate a first child page if desired
+    NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
+    if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
+    {
+        NSMutableDictionary *firstChildProperties =
+        [NSMutableDictionary dictionaryWithDictionary:[presetDict objectForKey:@"KTFirstChildSettings"]];
+        [firstChildProperties removeObjectForKey:@"pluginIdentifier"];
+        
+        KTPage *firstChild = [KTPage insertNewPageWithParent:collection
+                                                      plugin:[KTElementPlugin pluginWithIdentifier:firstChildIdentifier]];
+        
+        NSEnumerator *propertiesEnumerator = [firstChildProperties keyEnumerator];
+        NSString *aKey;
+        while (aKey = [propertiesEnumerator nextObject])
+        {
+            id aProperty = [firstChildProperties objectForKey:aKey];
+            if ([aProperty isKindOfClass:[NSString class]])
+            {
+                aProperty = [indexBundle localizedStringForKey:aProperty value:nil table:@"InfoPlist"];
+            }
+            
+            [firstChild setValue:aProperty forKey:aKey];
+        }
+    }
+    
+    
+    // Any collection with an RSS feed should have an RSS Badge.
+    if ([pageSettings boolForKey:@"collectionSyndicate"])
+    {
+        // Give weblogs special introductory text
+        if ([[presetDict objectForKey:@"KTPresetIndexBundleIdentifier"] isEqualToString:@"sandvox.GeneralIndex"])
+        {
+            NSString *intro = NSLocalizedString(@"<p>This is a new weblog. You can replace this text with an introduction to your blog, or just delete it if you wish. To add an entry to the weblog, add a new page using the \\U201CPages\\U201D button in the toolbar. For more information on blogging with Sandvox, please have a look through our <a href=\"help:Blogging_with_Sandvox\">help guide</a>.</p>",
+                                                "Introductory text for Weblogs");
+            
+            [collection setValue:intro forKey:@"richTextHTML"];
+        }
+    }
+}
 
 - (void)addObject:(KTPage *)page
 {

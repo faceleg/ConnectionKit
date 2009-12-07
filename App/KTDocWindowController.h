@@ -34,6 +34,7 @@
 @class NTBoxView;
 @class RYZImagePopUpButton;
 @class KTLinkSourceView;
+@class SVPagesController;
 @class KTDocViewController, KTDocWebViewController, SVSiteOutlineViewController;
 @class KTPage;
 @class KTCodeInjectionController;
@@ -75,7 +76,7 @@ extern NSString *gInfoWindowAutoSaveName;
 @private
 	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
 	SVSiteOutlineViewController *_siteOutlineViewController;
-    NSArrayController           *_pagesController;
+    SVPagesController           *_pagesController;
 		
 	// Code Injection
 	KTCodeInjectionController	*myMasterCodeInjectionController;
@@ -91,7 +92,7 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
-@property(nonatomic, retain) IBOutlet NSArrayController *pagesController;
+@property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
 
 
 #pragma mark Other

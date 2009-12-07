@@ -176,7 +176,7 @@ TO DO:
     [menu addItem:[NSMenuItem separatorItem]];
     
     [KTIndexPlugin addPresetPluginsToMenu:menu
-                                   target:self
+                                   target:[self pagesController]
                                    action:@selector(addCollection:)
                                 pullsDown:NO
                                 showIcons:YES smallIcons:NO
