@@ -11,12 +11,12 @@
 [[endif]]
 		</td>
 		<td class="dli2">
-			[[textblock property:item.titleHTML flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
+			[[textblock property:item.titleHTMLString flags:"line" tag:h3 graphicalTextCode:h3 hyperlink:item]]
 		</td>
 		<td class="dli3">
 			<div class="article-summary">[[summary item page.collectionTruncateCharacters]]</div>
 		</td>
-[[if item.shouldShowTimestamp]]
+[[if item.includeTimestamp]]
 		<td class="dli4">
 			[[=&item.timestamp]]
 		</td>
