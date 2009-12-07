@@ -94,7 +94,7 @@
     // Wrap
     _wrapInspector = [[SVInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
-    [_wrapInspector setIcon:[NSImage imageNamed:@"unsorted"]];
+    [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
     
     
     //  Finish up
