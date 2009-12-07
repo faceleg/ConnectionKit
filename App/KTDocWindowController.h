@@ -26,20 +26,14 @@
 #define DELETE_PAGES_MENUITEM_TITLE			NSLocalizedString(@"Delete Pages", "Delete Pages MenuItem")
 
 
-@class CIFilter;
 @class KSBorderlessWindow;
-@class KTInlineImageElement;
 @class KSTextField, KSPopUpButton;
 @class RoundedBox;
-@class NTBoxView;
-@class RYZImagePopUpButton;
 @class KTLinkSourceView;
 @class SVPagesController;
-@class KTDocViewController, KTDocWebViewController, SVSiteOutlineViewController;
+@class SVSiteOutlineViewController;
 @class KTPage;
 @class KTCodeInjectionController;
-@class KTAbstractElement;
-@class KSPlaceholderTextView;
 @class SVDesignChooserWindowController;
 
 extern NSString *gInfoWindowAutoSaveName;
