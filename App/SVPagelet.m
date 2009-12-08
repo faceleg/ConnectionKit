@@ -29,7 +29,7 @@
 
 #pragma mark Initialization
 
-+ (SVPagelet *)pageletWithManagedObjectContext:(NSManagedObjectContext *)moc;
++ (SVPagelet *)insertNewPageletIntoManagedObjectContext:(NSManagedObjectContext *)moc;
 {
 	OBPRECONDITION(moc);
 	

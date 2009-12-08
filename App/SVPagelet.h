@@ -14,7 +14,7 @@
 
 @interface SVPagelet : SVGraphic  
 
-+ (SVPagelet *)pageletWithManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVPagelet *)insertNewPageletIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;

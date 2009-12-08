@@ -605,8 +605,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Create the pagelet
-	SVPagelet *pagelet = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
-													  inManagedObjectContext:[page managedObjectContext]];
+	SVPagelet *pagelet = [SVPagelet insertNewPageletIntoManagedObjectContext:[page managedObjectContext]];
 	OBASSERT(pagelet);
     
     [pagelet setTitleHTMLString:@"Double-click to edit"];
