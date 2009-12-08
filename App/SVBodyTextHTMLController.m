@@ -51,7 +51,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     for (SVBodyElement *aModelElement in bodyElements)
     {
-        DOMHTMLElement *htmlElement = (id)[document getElementById:[aModelElement editingElementID]];
+        DOMHTMLElement *htmlElement = [aModelElement elementForEditingInDOMDocument:document];
         OBASSERT([htmlElement isKindOfClass:[DOMHTMLElement class]]);
         
         [self makeAndAddControllerForBodyElement:aModelElement HTMLElement:htmlElement];
