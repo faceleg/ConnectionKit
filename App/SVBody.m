@@ -114,13 +114,8 @@
 - (NSString *)HTMLString;
 {
     //  Piece together each of our elements to generate the HTML
-    NSMutableString *result = [NSMutableString string];
-    
-    for (SVBodyElement *anElement in [self orderedElements])
-    {
-        [result appendString:[anElement HTMLString]];
-    }
-    
+    NSArray *elements = [self orderedElements];
+    NSString *result = [[elements valueForKey:@"HTMLString"] componentsJoinedByString:@"\n"];
     
     return result;
 }
