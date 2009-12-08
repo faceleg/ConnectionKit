@@ -46,13 +46,9 @@
 
 - (NSString *)pageletsHTMLString;
 {
-    NSString *result = @"";
-    
-    for (SVPagelet *aPagelet in [SVPagelet arrayBySortingPagelets:[self pagelets]])
-    {
-        NSString *pageletHTML = [aPagelet HTMLString];
-        result = [result stringByAppendingString:pageletHTML];
-    }
+    NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[self pagelets]];
+    NSArray *pageletsHTML = [pagelets valueForKey:@"HTMLString"];
+    NSString *result = [pageletsHTML componentsJoinedByString:@"\n"];
     
     return result;
 }
