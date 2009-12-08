@@ -14,7 +14,9 @@
 #import "KSKeyValueBinding.h"
 
 
-@protocol SVWebTextAreaDelegate;
+@class SVPagelet;
+
+
 @interface SVWebEditorTextController : SVHTMLElementController <SVWebEditorText, KSEditor>
 {
   @private
@@ -54,6 +56,11 @@
 - (void)didChangeText;
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
+
+
+#pragma mark Graphics
+// The default implementation just returns NO since it doesn't know how to handle pagelets. Subclasses should override to return YES and handle the pagelet if they can.
+- (BOOL)insertPagelet:(SVPagelet *)pagelet;
 
 
 #pragma mark Undo

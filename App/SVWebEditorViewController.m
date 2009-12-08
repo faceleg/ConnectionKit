@@ -593,25 +593,36 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Element Actions
 
-- (void)insertPagelet:(id)sender;
+- (void)_insertPageletInSidebar:(SVPagelet *)pagelet;
 {
-    // Will expand this to insert within the text if appropriate
-    [self insertPageletInSidebar:sender];
-}
-
-- (IBAction)insertPageletInSidebar:(id)sender;
-{
-    KTPage *page = [self page];
-    SVPagelet *pagelet = [_selectableObjectsController newPagelet];
-    
     // Place at end of the sidebar
+    KTPage *page = [self page];
     SVSidebar *sidebar = [page sidebar];
     SVPagelet *lastPagelet = [[SVPagelet arrayBySortingPagelets:[sidebar pagelets]] lastObject];
     [pagelet moveAfterPagelet:lastPagelet];
     
 	[sidebar addPageletsObject:pagelet];
+}
+
+- (void)insertPagelet:(id)sender;
+{
+    // Is the user editing some body text? If so, insert the pagelet as near there as possible. If not, insert into the sidebar
+    DOMRange *selection = [[self webEditorView] selectedDOMRange];
+    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
+    SVPagelet *pagelet = [_selectableObjectsController newPagelet];
     
-    // Tidy up
+    if (![text insertPagelet:pagelet])
+    {
+        [self _insertPageletInSidebar:pagelet];
+    }
+     
+    [pagelet release];
+}
+
+- (IBAction)insertPageletInSidebar:(id)sender;
+{
+    SVPagelet *pagelet = [_selectableObjectsController newPagelet];
+    [self _insertPageletInSidebar:pagelet];
     [pagelet release];
 }
 

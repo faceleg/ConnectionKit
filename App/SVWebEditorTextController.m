@@ -146,6 +146,10 @@
     }
 }
 
+#pragma mark Graphics
+
+- (BOOL)insertPagelet:(SVPagelet *)pagelet; { return NO; }
+
 #pragma mark Updating
 
 - (void)update
