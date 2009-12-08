@@ -644,9 +644,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // Create placeholder if needed
     KTMaster *master = [[self page] master];
-    if ([[master siteTitleText] length] <= 0)
+    if ([[[master siteTitle] text] length] <= 0)
     {
-        [master setSiteTitleText:NSLocalizedString(@"Site Title", "placeholder text")];
+        [master setSiteTitleWithString:NSLocalizedString(@"Site Title", "placeholder text")];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
@@ -657,9 +657,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // Create placeholder if needed
     KTMaster *master = [[self page] master];
-    if ([[master siteSubtitleText] length] <= 0)
+    if ([[[master siteSubtitle] text] length] <= 0)
     {
-        [master setSiteSubtitleText:NSLocalizedString(@"Site Subtitle", "placeholder text")];
+        [master setSiteSubtitleWithString:NSLocalizedString(@"Site Subtitle", "placeholder text")];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
@@ -669,9 +669,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)insertPageTitle:(id)sender;
 {
     // Create placeholder if needed
-    if ([[[self page] titleText] length] <= 0)
+    if ([[[[self page] title] text] length] <= 0)
     {
-        [[self page] setTitleText:NSLocalizedString(@"Page Title", @"placeholder text")];
+        [[self page] setTitleWithString:NSLocalizedString(@"Page Title", @"placeholder text")];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
@@ -685,10 +685,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         if ([anObject isKindOfClass:[SVPagelet class]])
         {
-            SVTextField *text = [(SVPagelet *)anObject title];
-            if ([[text text] length] <= 0)
+            SVPagelet *pagelet = (SVPagelet *)anObject;
+            if ([[[pagelet title] text] length] <= 0)
             {
-                [text setText:NSLocalizedString(@"Pagelet Title", @"placeholder text")];
+                [pagelet setTitleWithString:NSLocalizedString(@"Pagelet Title", @"placeholder text")];
             }
         }
     }
@@ -698,9 +698,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // Create placeholder if needed
     KTMaster *master = [[self page] master];
-    if ([[master copyrightHTML] length] <= 0)
+    if ([[[master footer] text] length] <= 0)
     {
-        [master setCopyrightHTML:[master defaultCopyrightHTML]];
+        [master setFooterWithString:[master defaultCopyrightHTML]];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
