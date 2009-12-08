@@ -26,7 +26,34 @@
 	[view setDataSource:self];
 	[view setDelegate:self];
 	
-	// [view setCellSize:NSMakeSize(100,65)];
+
+	NSMutableDictionary *attributes;
+	NSMutableParagraphStyle *paraStyle;
+	
+	attributes = [NSMutableDictionary dictionaryWithDictionary:[view valueForKey:IKImageBrowserCellsTitleAttributesKey]];
+	paraStyle = [[[attributes objectForKey:NSParagraphStyleAttributeName] mutableCopy] autorelease];
+	[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+	[paraStyle setTighteningFactorForTruncation:0.2];
+	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
+	[view setValue:attributes forKey:IKImageBrowserCellsTitleAttributesKey];	
+
+	// Same, but for highlighted
+	attributes = [NSMutableDictionary dictionaryWithDictionary:[view valueForKey:IKImageBrowserCellsHighlightedTitleAttributesKey]];
+	paraStyle = [[[attributes objectForKey:NSParagraphStyleAttributeName] mutableCopy] autorelease];
+	[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
+	[paraStyle setTighteningFactorForTruncation:0.2];
+	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
+	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
+	
+	
+
+	//[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
+	//[view setValue:attributes forKey:IKImageBrowserCellsTitleAttributesKey];
+	if ([view respondsToSelector:@selector(setIntercellSpacing:)])
+	{
+		[view setCellSize:NSMakeSize(140,100)];	// a bit wider to allow for 4 columns
+		[((id)view) setIntercellSpacing:NSMakeSize(4.0,0.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
+	}
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
