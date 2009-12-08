@@ -9,8 +9,8 @@
 #import "SVWebEditorTextController.h"
 
 
-@class SVBodyElement;
-@class SVBody;
+@class SVBody, SVBodyElement, SVGraphic;
+
 
 @interface SVBodyTextHTMLController : SVWebEditorTextController <DOMEventListener>
 {
@@ -27,6 +27,8 @@
 #pragma mark Content
 @property(nonatomic, retain, readonly) NSArrayController *content;
 
+- (BOOL)insertGraphic:(SVGraphic *)pagelet;
+- (BOOL)insertPagelet:(SVPagelet *)pagelet;
 
 #pragma mark Subcontrollers
 
@@ -34,7 +36,7 @@
 - (void)removeElementController:(SVHTMLElementController *)controller;
 
 - (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
-- (SVHTMLElementController *)controllerForHTMLElement:(DOMHTMLElement *)element;
+- (SVHTMLElementController *)controllerForDOMNode:(DOMNode *)node;
 
 - (SVHTMLElementController *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
                                                    HTMLElement:(DOMHTMLElement *)element;

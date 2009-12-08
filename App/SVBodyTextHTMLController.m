@@ -10,7 +10,7 @@
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
-#import "SVGraphic.h"
+#import "SVPagelet.h"
 #import "SVBody.h"
 #import "SVWebContentItem.h"
 
@@ -145,13 +145,47 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     {
         DOMHTMLElement *nextNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
         
-        [self removeElementController:[self controllerForHTMLElement:domNode]];
+        [self removeElementController:[self controllerForDOMNode:domNode]];
         [[domNode parentNode] removeChild:domNode];
         
         domNode = nextNode;
     }
     
     [self didUpdate];
+}
+
+- (BOOL)insertGraphic:(SVGraphic *)pagelet;
+{
+    BOOL result = NO;
+    
+    // First remove any selected text
+    WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
+    [webView delete:self];
+    
+    
+    // Figure out the body element to insert next to
+    DOMRange *selection = [webView selectedDOMRange];
+    OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
+    
+    SVHTMLElementController *controller = [self controllerForDOMNode:[selection startContainer]];
+    if (controller)
+    {
+        SVBodyElement *bodyElement = [controller representedObject];
+        NSUInteger index = [[[self content] arrangedObjects] indexOfObject:bodyElement];
+        if (index != NSNotFound)
+        {
+            [[self content] insertObject:bodyElement atArrangedObjectIndex:index];
+            result = YES;
+        }
+    }
+    
+    
+    return result;
+}
+
+- (BOOL)insertPagelet:(SVPagelet *)pagelet
+{
+    return [self insertGraphic:pagelet];
 }
 
 #pragma mark Subcontrollers
@@ -194,12 +228,12 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVHTMLElementController *)controllerForHTMLElement:(DOMHTMLElement *)element;
+- (SVHTMLElementController *)controllerForDOMNode:(DOMNode *)node;
 {
-    SVHTMLElementController * result = nil;
+    SVHTMLElementController *result = nil;
     for (result in _elementControllers)
     {
-        if ([result HTMLElement] == element) break;
+        if ([node isDescendantOfNode:[result HTMLElement]]) break;
     }
              
     return result;
@@ -291,7 +325,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
         if (nextNode)
         {
-            SVHTMLElementController * nextController = [self controllerForHTMLElement:nextNode];
+            SVHTMLElementController * nextController = [self controllerForDOMNode:nextNode];
             OBASSERT(nextController);
             
             NSArrayController *content = [self content];
@@ -312,7 +346,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
         if ([removedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            SVHTMLElementController * controller = [self controllerForHTMLElement:removedNode];
+            SVHTMLElementController * controller = [self controllerForDOMNode:removedNode];
             if (controller)
             {
                 SVBodyElement *element = [controller representedObject];
