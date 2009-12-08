@@ -325,44 +325,6 @@
     [_undoCoalescingSelection release]; _undoCoalescingSelection = selection;
 }
 
-#pragma mark Delegate
-
-@synthesize delegate = _delegate;
-- (void)setDelegate:(id <SVWebTextAreaDelegate>)delegate
-{
-    NSNotificationCenter *center = [NSNotificationCenter defaultCenter];
-    
-    // Dump old delegate
-    if ([_delegate respondsToSelector:@selector(textDidChange:)])
-    {
-        [center removeObserver:_delegate name:NSTextDidChangeNotification object:self];
-    }
-    if ([_delegate respondsToSelector:@selector(textDidBeginEditing:)])
-    {
-        [center removeObserver:_delegate name:NSTextDidBeginEditingNotification object:self];
-    }
-    if ([_delegate respondsToSelector:@selector(textDidEndEditing:)])
-    {
-        [center removeObserver:_delegate name:NSTextDidEndEditingNotification object:self];
-    }
-    
-    // Store new delegate
-    _delegate = delegate;
-    
-    if ([_delegate respondsToSelector:@selector(textDidChange:)])
-    {
-        [center addObserver:_delegate selector:@selector(textDidChange:) name:NSTextDidChangeNotification object:self];
-    }
-    if ([_delegate respondsToSelector:@selector(textDidBeginEditing:)])
-    {
-        [center addObserver:_delegate selector:@selector(textDidBeginEditing:) name:NSTextDidBeginEditingNotification object:self];
-    }
-    if ([_delegate respondsToSelector:@selector(textDidEndEditing:)])
-    {
-        [center addObserver:_delegate selector:@selector(textDidEndEditing:) name:NSTextDidEndEditingNotification object:self];
-    }
-}
-
 @end
 
 

@@ -30,9 +30,6 @@
     NSEvent     *_inProgressEventSuitableForUndoCoalescing;
     NSUInteger  _undoCoalescingActionIdentifier;
     DOMRange    *_undoCoalescingSelection;
-    
-    // Delegate
-    id <SVWebTextAreaDelegate>  _delegate;
 }
 
 
@@ -74,19 +71,6 @@
 - (NSManagedObjectContext *)managedObjectContext;   // subclasses should provide one
 
 
-#pragma mark Delegate
-@property(nonatomic, assign) id <SVWebTextAreaDelegate> delegate;
-
-@end
-
-
-#pragma mark -
-
-#if !defined MAC_OS_X_VERSION_10_6 || MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_6
-@protocol NSTextDelegate <NSObject> @end
-#endif
-
-@protocol SVWebTextAreaDelegate <NSTextDelegate>
 @end
 
 
