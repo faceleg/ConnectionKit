@@ -50,15 +50,7 @@
     
     for (SVPagelet *aPagelet in [SVPagelet arrayBySortingPagelets:[self pagelets]])
     {
-        // Generate HTML for the pagelet
-        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate" ofType:@"html"];
-        NSString *template = [NSString stringWithContentsOfFile:templatePath encoding:NSUTF8StringEncoding error:nil];
-        
-        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
-                                                                            component:aPagelet];
-        NSString *pageletHTML = [parser parseTemplate];
-        [parser release];
-        
+        NSString *pageletHTML = [aPagelet HTMLString];
         result = [result stringByAppendingString:pageletHTML];
     }
     

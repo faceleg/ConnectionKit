@@ -198,6 +198,26 @@
     return result;
 }
 
+#pragma mark HTML
+
+- (NSString *)HTMLString
+{
+    //  All SVContentObject subclasses must implement this to suit themselves
+    
+    NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate"
+                                                             ofType:@"html"];
+    NSString *template = [NSString stringWithContentsOfFile:templatePath
+                                                   encoding:NSUTF8StringEncoding
+                                                      error:nil];
+    
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
+                                                                        component:self];
+    NSString *result = [parser parseTemplate];
+    [parser release];
+    
+    return result;
+}
+
 @end
 
 
