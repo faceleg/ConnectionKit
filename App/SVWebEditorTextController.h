@@ -36,6 +36,8 @@
 }
 
 
+#pragma mark Properties
+
 // Returns whatever is entered into the text box right now. This is what gets used for the "value" binding. You want to use this rather than querying the DOM Element for its -innerHTML directly as it takes into account the presence of any inner tags like a <span class="in">
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSString *string;
