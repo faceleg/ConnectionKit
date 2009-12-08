@@ -8,6 +8,8 @@
 
 #import "SVWebContentObjectsController.h"
 
+#import "SVBody.h"
+#import "SVBodyParagraph.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVSidebar.h"
@@ -19,6 +21,23 @@
 {
     [_page release];
     [super dealloc];
+}
+
+- (SVPagelet *)newPagelet;
+{
+    NSManagedObjectContext *moc = [[self page] managedObjectContext];
+    SVPagelet *result = [SVPagelet insertNewPageletIntoManagedObjectContext:moc];
+	OBASSERT(result);
+    
+    // Create matching first paragraph
+    SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
+                                                               inManagedObjectContext:moc];
+    [paragraph setTagName:@"p"];
+    [paragraph setInnerHTMLArchiveString:@"Test"];
+    [[result body] addElement:paragraph];
+    
+    
+    return [result retain]; // it's a -newFoo method
 }
 
 @synthesize page = _page;

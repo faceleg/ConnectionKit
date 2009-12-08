@@ -47,6 +47,13 @@
                                          inManagedObjectContext:context];
 }
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    // Should we take the opportinity to create a starter paragraph?
+}
+
 #pragma mark Elements
 
 + (NSArray *)orderedElementsWithElements:(NSSet *)elements

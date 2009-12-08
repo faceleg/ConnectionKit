@@ -602,17 +602,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)insertPageletInSidebar:(id)sender;
 {
     KTPage *page = [self page];
-    
-    
-    // Create the pagelet
-	SVPagelet *pagelet = [SVPagelet insertNewPageletIntoManagedObjectContext:[page managedObjectContext]];
-	OBASSERT(pagelet);
-    
-    SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[page managedObjectContext]];
-    [paragraph setTagName:@"p"];
-    [paragraph setInnerHTMLArchiveString:@"Test"];
-    [[pagelet body] addElement:paragraph];
-    
+    SVPagelet *pagelet = [_selectableObjectsController newPagelet];
     
     // Place at end of the sidebar
     SVSidebar *sidebar = [page sidebar];
@@ -620,6 +610,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [pagelet moveAfterPagelet:lastPagelet];
     
 	[sidebar addPageletsObject:pagelet];
+    
+    // Tidy up
+    [pagelet release];
 }
 
 - (void)insertElement:(id)sender;
