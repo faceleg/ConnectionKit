@@ -11,6 +11,8 @@
 #import "SVPlugInGraphic.h"
 #import "SVHTMLContext.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVBodyParagraph 
 
@@ -69,7 +71,7 @@
     // Want to make sure it's also got the right tagname
     DOMHTMLElement *result = [super elementForEditingInDOMDocument:document];
     
-    if (![[result tagName] isEqualToString:[self tagName]]) result = nil;
+    if (![[result tagName] isEqualToStringCaseInsensitive:[self tagName]]) result = nil;
     
     return result;
 }
