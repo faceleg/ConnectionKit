@@ -591,7 +591,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return [[self webEditorView] convertRect:result fromView:[element documentView]];
 }
 
-#pragma mark Element Actions
+#pragma mark Element Insertion
 
 - (void)_insertPageletInSidebar:(SVPagelet *)pagelet;
 {
@@ -640,6 +640,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [body addElement:element];
 }
+
+#pragma mark Special Insertion
 
 - (void)insertSiteTitle:(id)sender;
 {

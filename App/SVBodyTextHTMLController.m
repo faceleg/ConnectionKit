@@ -174,7 +174,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         NSUInteger index = [[[self content] arrangedObjects] indexOfObject:bodyElement];
         if (index != NSNotFound)
         {
-            [[self content] insertObject:bodyElement atArrangedObjectIndex:index];
+            [[self content] insertObject:pagelet atArrangedObjectIndex:index];
             result = YES;
         }
     }
