@@ -16,15 +16,12 @@
 @implementation SVDesignChooserViewController
 
 - (void)awakeFromNib
-{
-	IKImageBrowserView *bv = (IKImageBrowserView *)[self view];
-	OBASSERT([bv isKindOfClass:[IKImageBrowserView class]]);
-	
+{	
     // restrict to a max of 4 columns
-//    [bv setMaxNumberOfColumns:4];
-	[bv setConstrainsToOriginalSize:YES];
-	[bv setDataSource:self];
-	[bv setDelegate:self];
+//    [oImageBrowserView setMaxNumberOfColumns:4];
+//	[oImageBrowserView setConstrainsToOriginalSize:YES];
+	[oImageBrowserView setDataSource:self];
+	[oImageBrowserView setDelegate:self];
 	
     // load designs -- only seems to work if I do it here? seems as good a place as any...
 	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
@@ -171,7 +168,6 @@
 
 
 @synthesize designs = _designs;
-@synthesize designsArrayController = oArrayController;
 @end
 
 

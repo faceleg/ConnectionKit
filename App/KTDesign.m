@@ -625,6 +625,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 
 - (NSString *)  imageUID;  /* required */
 {
+	NSLog(@"%s",__FUNCTION__);
 	return [[self bundle] bundlePath];
 }
 
@@ -635,6 +636,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageRepresentationType; /* required */
 {
+	NSLog(@"%s",__FUNCTION__);
 	return IKImageBrowserNSImageRepresentationType;
 }
 /*! 
@@ -644,6 +646,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (id) imageRepresentation; /* required */
 {
+	NSLog(@"%s",__FUNCTION__);
 	return myThumbnail;
 }
 /*! 
@@ -652,6 +655,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSUInteger) imageVersion;
 {
+	NSLog(@"%s",__FUNCTION__);
 	return 1;
 }
 /*! 
@@ -660,6 +664,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageTitle;
 {
+	NSLog(@"%s",__FUNCTION__);
 	return @"imageTitle";
 }
 /*! 
@@ -668,10 +673,12 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageSubtitle;
 {
+	NSLog(@"%s",__FUNCTION__);
 	return @"imageSubtitle";
 }
 - (BOOL) isSelectable;
 {
+	NSLog(@"%s",__FUNCTION__);
 	return YES;
 }
 

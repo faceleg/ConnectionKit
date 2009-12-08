@@ -16,7 +16,7 @@
 
 @interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
 {
-    IBOutlet NSArrayController  *oArrayController;
+	IBOutlet IKImageBrowserView	*oImageBrowserView;
     
     NSArray                     *_designs;
 	NSTrackingRectTag			_trackingRect;
@@ -26,7 +26,6 @@
 - (void) setupTrackingRects;		// do this after the view is added and resized
  
 @property(retain) NSArray *designs;
-@property(readonly) NSArrayController *designsArrayController;
 @end
 
 @interface SVDesignChooserScrollView : NSScrollView
