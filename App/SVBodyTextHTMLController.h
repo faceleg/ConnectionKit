@@ -12,7 +12,7 @@
 @class SVBodyElement;
 @class SVBody;
 
-@interface SVBodyTextArea : SVWebEditorTextController <DOMEventListener>
+@interface SVBodyTextHTMLController : SVWebEditorTextController <DOMEventListener>
 {
     NSArrayController   *_content;
     

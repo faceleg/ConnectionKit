@@ -12,17 +12,17 @@
 #import "SVWebEditorItemProtocol.h"
 
 
-@class SVBodyTextArea;
+@class SVBodyTextHTMLController;
 @interface SVWebEditorItem : SVHTMLElementController <SVWebEditorItem>
 {
   @private
-    SVBodyTextArea  *_bodyText;
+    SVBodyTextHTMLController  *_bodyText;
 }
 
 @property(nonatomic, retain, readonly) DOMElement *DOMElement;
 
 // Strictly speaking, there could be more than one per item, but there isn't in practice at the moment, so this is a rather handy optimisation
-@property(nonatomic, retain) SVBodyTextArea *bodyText;
+@property(nonatomic, retain) SVBodyTextHTMLController *bodyText;
 
 
 #pragma mark Content

@@ -15,7 +15,7 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
-#import "SVBodyTextArea.h"
+#import "SVBodyTextHTMLController.h"
 #import "KTSite.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
@@ -306,7 +306,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 [elementsController setAutomaticallyRearrangesObjects:YES];
                 [elementsController bind:NSContentSetBinding toObject:value withKeyPath:@"elements" options:nil];
                 
-                textArea = [[SVBodyTextArea alloc] initWithHTMLElement:element content:elementsController];
+                textArea = [[SVBodyTextHTMLController alloc] initWithHTMLElement:element content:elementsController];
                 [textArea setHTMLContext:[self HTMLContext]];
                 [textArea setRichText:YES];
                 [textArea setFieldEditor:NO];

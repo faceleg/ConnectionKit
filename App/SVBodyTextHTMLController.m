@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBodyTextArea.h"
+#import "SVBodyTextHTMLController.h"
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
@@ -21,7 +21,7 @@
 static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObservationContext";
 
 
-@implementation SVBodyTextArea
+@implementation SVBodyTextHTMLController
 
 #pragma mark Init & Dealloc
 
