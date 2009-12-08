@@ -608,8 +608,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	SVPagelet *pagelet = [SVPagelet insertNewPageletIntoManagedObjectContext:[page managedObjectContext]];
 	OBASSERT(pagelet);
     
-    [pagelet setTitleHTMLString:@"Double-click to edit"];
-    
     SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[page managedObjectContext]];
     [paragraph setTagName:@"p"];
     [paragraph setInnerHTMLArchiveString:@"Test"];
@@ -687,7 +685,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             SVPagelet *pagelet = (SVPagelet *)anObject;
             if ([[[pagelet title] text] length] <= 0)
             {
-                [pagelet setTitleWithString:NSLocalizedString(@"Pagelet Title", @"placeholder text")];
+                [pagelet setTitleWithString:[[pagelet class] placeholderTitleText]];
             }
         }
     }

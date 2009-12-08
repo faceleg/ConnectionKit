@@ -23,6 +23,7 @@
 #pragma mark Title
 @property(nonatomic, retain) SVTextField *title;
 - (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
++ (NSString *)placeholderTitleText;
 
 
 #pragma mark Other

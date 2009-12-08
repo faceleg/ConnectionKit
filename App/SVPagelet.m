@@ -52,6 +52,10 @@
     [self setPrimitiveValue:[NSString shortUUIDString] forKey:@"elementID"];
     
     
+    // Title
+    [self setTitleWithString:[[self class] placeholderTitleText]];
+    
+    
     // Create corresponding body text
     [self setBody:[SVBody insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
@@ -69,6 +73,11 @@
         [self setTitle:text];
     }
     [text setText:title];
+}
+
++ (NSString *)placeholderTitleText;
+{
+    return NSLocalizedString(@"Pagelet", "pagelet title placeholder");
 }
 
 #pragma mark Properties
