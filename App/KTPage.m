@@ -334,24 +334,6 @@
 }
 
 #pragma mark -
-#pragma mark contextual menu validation
-
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
-{
-	OFF((@"KTPage validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
-    if ( [menuItem action] == @selector(movePageletToSidebar:) )
-    {
-        return YES;
-    }
-    else if ( [menuItem action] == @selector(movePageletToCallouts:) )
-    {
-        return YES;
-    }
-    
-    return YES;
-}
-
-#pragma mark -
 #pragma mark Media
 
 /*	Each page adds a number of possible required media to the default. e.g. thumbnail
