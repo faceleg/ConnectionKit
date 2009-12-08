@@ -96,7 +96,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)dealloc
 {
-	// Dump the pages list
+	// Dump view
+    [self setOutlineView:nil];
+    
+    // Dump the pages list
 	[self resetPageObservation];       // This will also remove home page observation
     OBASSERT([_pages count] == 0);
 	[_pages release];
