@@ -10,6 +10,7 @@
 
 #import "KTPage.h"
 #import "SVBody.h"
+#import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
 #import "SVTextField.h"
 
