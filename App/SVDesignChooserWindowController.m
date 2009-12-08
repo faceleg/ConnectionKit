@@ -27,11 +27,6 @@
 - (void)awakeFromNib
 {
     // load the xib that contains the collection view
-    oViewController = [[SVDesignChooserViewController alloc] initWithNibName:@"SVDesignChooserImageBrowser" 
-                                                                      bundle:nil];
-
-    // pop the collection view into the window.  This awakens SVDesignChooserImageBrowser's nib
-    [oTargetView setContentView:[oViewController view]];
     
     [oViewController setupTrackingRects];
 }

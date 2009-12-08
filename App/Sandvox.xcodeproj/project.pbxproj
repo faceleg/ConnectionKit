@@ -1027,7 +1027,6 @@
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
-		CEE8CC1910BCA21C00848E88 /* SVDesignChooserImageBrowser.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEE8CC1810BCA21C00848E88 /* SVDesignChooserImageBrowser.xib */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
@@ -2642,7 +2641,6 @@
 		CEDE18B60A5C69840055352C /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEE09F7009ED94D8004850FB /* fr */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 10; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CEE8CC1810BCA21C00848E88 /* SVDesignChooserImageBrowser.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SVDesignChooserImageBrowser.xib; sourceTree = "<group>"; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3453,7 +3451,6 @@
 		3C0B1D53104798F5002EE098 /* Design Chooser */ = {
 			isa = PBXGroup;
 			children = (
-				CEE8CC1810BCA21C00848E88 /* SVDesignChooserImageBrowser.xib */,
 				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
 				3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */,
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,

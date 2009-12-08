@@ -27,7 +27,7 @@
 	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
 	self.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
     
-    [bv reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
+    [oImageBrowserView reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
