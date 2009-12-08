@@ -406,7 +406,42 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         [[self document] addWindowController:_designChooserWindowController];
     }
     
-    [_designChooserWindowController displayAsSheet];
+    [_designChooserWindowController displayWithSelectorButIWishWeCouldSpecifyABlock:@selector(designChosen:)
+		object:self
+		designWas:nil];
+
+	// FIXME: Need to get to the selected page's design ... e.g. [[[self page] master] design]
+}
+
+- (void) designChosen:(KTDesign *)aDesign
+{
+	NSLog(@"%s %p",__FUNCTION__, aDesign);
+	/*
+	 // Dear Dan,
+	 // The -mainWindowController API has been removed as it's a nuisance on the whole and kinda breaks encapsulation. Regardless,
+	 // the design chooser should have no concept of a document; it doesn't need to work at that level. Instead please could you make it
+	 // so that when ending the sheet, a callback is sent to the object that invoked the sheet in the first place, informing it of
+	 // the design that has been chosen. In practice, KTDocWindowController will use this callback to update the design of the master.
+	 // 
+	 // Lots of love,
+	 // Mike.
+	 //
+	 // notify observers ?
+	 // FIXME: webview needs to actually update/redraw
+	 // here's the old notification code that the new SVWeb classes don't observe
+	 //    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+	 //                              [NSNumber numberWithBool:YES], @"animate",
+	 //                              NSStringFromPoint(NSMakePoint(0, 0)), @"mouse",
+	 //                              nil];
+	 //    [[NSNotificationCenter defaultCenter] postNotificationName:kKTDesignChangedNotification
+	 //                                                        object:[self document]
+	 //                                                      userInfo:userInfo];
+	 
+	 // prep the design
+	 [design loadLocalFontsIfNeeded];
+	 
+	 
+*/	 
 }
 
 #pragma mark -

@@ -578,9 +578,7 @@
 		3C682BD50D62353300B4D485 /* KTLinkSourceView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B6D0D62328600B4D485 /* KTLinkSourceView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BD60D62353500B4D485 /* KTMagnifyButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B700D62329500B4D485 /* KTMagnifyButton.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BDC0D62354700B4D485 /* KTView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B820D6232EA00B4D485 /* KTView.h */; settings = {ATTRIBUTES = (); }; };
-		3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */; };
 		3C6EA9491048E4E700B0763D /* SVDesignChooserWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */; };
-		3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */; };
 		3C6EA94F1048E59300B0763D /* SVDesignChooserViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */; };
 		3C72D3C6094A23880061A876 /* Carbon.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D3C5094A23880061A876 /* Carbon.framework */; };
 		3C72D483094A23D80061A876 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C72D482094A23D80061A876 /* Security.framework */; };
@@ -1013,6 +1011,8 @@
 		CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEBEB32C10AA7B07006E7D8A /* iMedia.framework */; };
 		CEC11F770D79355700513E70 /* NSImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = CE27F6600D6193B200D211EA /* NSImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */ = {isa = PBXBuildFile; fileRef = CEC25E250997DC0F00335E28 /* diamondplate.png */; };
+		CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */; };
+		CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC4C55D10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m */; };
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */; };
 		CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */; };
@@ -2620,6 +2620,11 @@
 		CEBEB32C10AA7B07006E7D8A /* iMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = iMedia.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEC0F93D10852CED002CE02E /* iMedia.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = iMedia.xcodeproj; path = ../../imedia/iMedia.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CEC25E250997DC0F00335E28 /* diamondplate.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = diamondplate.png; sourceTree = "<group>"; };
+		CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageBrowserView.h; sourceTree = "<group>"; };
+		CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageBrowserView.m; sourceTree = "<group>"; };
+		CEC4C55C10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageBrowserCell.h; sourceTree = "<group>"; };
+		CEC4C55D10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageBrowserCell.m; sourceTree = "<group>"; };
+		CEC4C56210CEEFD200AEE22D /* DumpedImageKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DumpedImageKit.h; sourceTree = "<group>"; };
 		CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ExceptionHandling.framework; path = /System/Library/Frameworks/ExceptionHandling.framework; sourceTree = "<absolute>"; };
 		CEC4DB2F0935179500D75C23 /* NonStandardURL.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = NonStandardURL.html; sourceTree = "<group>"; };
 		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MAAttachedWindow.h; path = ../ThirdParty/MAAttachedWindow/MAAttachedWindow.h; sourceTree = "<group>"; };
@@ -3456,8 +3461,13 @@
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
 				3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */,
 				3C6EA94D1048E59300B0763D /* SVDesignChooserViewController.m */,
+				CEC4C55510CEED7E00AEE22D /* SVDesignChooserImageBrowserView.h */,
+				CEC4C55610CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m */,
 				CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */,
 				CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */,
+				CEC4C55C10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.h */,
+				CEC4C55D10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m */,
+				CEC4C56210CEEFD200AEE22D /* DumpedImageKit.h */,
 				CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */,
 				CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */,
 			);
@@ -5066,8 +5076,6 @@
 				2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */,
 				279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */,
 				2790BDAF1040162000654665 /* SVWebEditorTextController.h in Headers */,
-				3C6EA9481048E4E700B0763D /* SVDesignChooserWindowController.h in Headers */,
-				3C6EA94E1048E59300B0763D /* SVDesignChooserViewController.h in Headers */,
 				3C2DA6E8104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h in Headers */,
 				3C2DA6EA104C7AAE0037D270 /* MGScopeBar.h in Headers */,
 				3C2DA6EC104C7AAE0037D270 /* MGScopeBarDelegateProtocol.h in Headers */,
@@ -6496,6 +6504,8 @@
 				273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */,
 				273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */,
 				277892A110CD5FA3008AA683 /* SVTextField.m in Sources */,
+				CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */,
+				CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

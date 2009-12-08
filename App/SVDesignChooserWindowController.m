@@ -24,66 +24,47 @@
 
 @implementation SVDesignChooserWindowController
 
+
+@synthesize selectorWhenChosen = _selectorWhenChosen;
+@synthesize targetWhenChosen = _targetWhenChosen;
+
+
 - (void)awakeFromNib
 {
-    // load the xib that contains the collection view
-    
     [oViewController setupTrackingRects];
 }
 
-- (void)displayAsSheet
+- (void)displayWithSelectorButIWishWeCouldSpecifyABlock:(SEL)aSelector object:aTarget designWas:(KTDesign *)oldDesign;
 {
+	self.selectorWhenChosen = aSelector;
+	self.targetWhenChosen = aTarget;
+	
     [NSApp beginSheet:[self window]
        modalForWindow:[[self document] windowForSheet]
         modalDelegate:self
-       didEndSelector:@selector(didEndSheet:returnCode:contextInfo:)
+       didEndSelector:@selector(designChooserDidEndSheet:returnCode:contextInfo:)
           contextInfo:nil];
-    
-    // Dear Dan,
-    // The -mainWindowController API has been removed as it's a nuisance on the whole and kinda breaks encapsulation. Regardless,
-    // the design chooser should have no concept of a document; it doesn't need to work at that level. Instead please could you make it
-    // so that when ending the sheet, a callback is sent to the object that invoked the sheet in the first place, informing it of
-    // the design that has been chosen. In practice, KTDocWindowController will use this callback to update the design of the master.
-    // 
-    // Lots of love,
-    // Mike.
-    //
-    [self bind:@"selectedDesign"
-      toObject:[[[[self document] mainWindowController] siteOutlineViewController] content]
-   withKeyPath:@"selection.master.design"
-       options:nil];
     
     [oScopeBar setDelegate:self];
     [oScopeBar reloadData];
+	
+	// load designs -- only seems to work if I do it here? seems as good a place as any...
+	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
+	oViewController.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
+    oViewController.selectedDesign = oldDesign;	
 }
 
-- (IBAction)chooseDesign:(id)sender
+- (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     // get the selected design
-    NSUInteger selectedIndex = [[oViewController designsArrayController] selectionIndex];
-    KTDesign *design = [[oViewController designs] objectAtIndex:selectedIndex];
-    OBASSERT(nil != design);
-    
-    // prep the design
-    [design loadLocalFontsIfNeeded];
-    
-    // message the document to change its design
-    // (by telling the KTDocSiteOutlineController to update its selection.master.design)
-    NSDictionary *bindingsInfo = [self infoForBinding:@"selectedDesign"];
-    id controller = [bindingsInfo objectForKey:NSObservedObjectKey];
-    NSString *keyPath = [bindingsInfo objectForKey:NSObservedKeyPathKey];
-    [controller setValue:design forKeyPath:keyPath];
-    
-    // notify observers ?
-    // FIXME: webview needs to actually update/redraw
-    // here's the old notification code that the new SVWeb classes don't observe
-//    NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
-//                              [NSNumber numberWithBool:YES], @"animate",
-//                              NSStringFromPoint(NSMakePoint(0, 0)), @"mouse",
-//                              nil];
-//    [[NSNotificationCenter defaultCenter] postNotificationName:kKTDesignChangedNotification
-//                                                        object:[self document]
-//                                                      userInfo:userInfo];
+	KTDesign *selectedDesign = [oViewController selectedDesign];
+	if (selectedDesign)
+	{
+		if (self.targetWhenChosen && [self.targetWhenChosen respondsToSelector:self.selectorWhenChosen])
+		{
+			[self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:selectedDesign];
+		}
+	}
     
     // close up shop, we're done
     [NSApp endSheet:[self window]];    
@@ -101,22 +82,10 @@
     [NSApp endSheet:[self window]];
 }
 
-- (void)didEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+- (void)designChooserDidEndSheet:(NSWindow *)sheet returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
     OBASSERT(sheet == [self window]);
     [sheet orderOut:self];
-    
-    [self unbind:@"selectedDesign"];
-}
-
-@synthesize selectedDesign = _selectedDesign;
-- (void)setSelectedDesign:(KTDesign *)aDesign
-{
-    [aDesign retain];
-    [_selectedDesign release];
-    _selectedDesign = aDesign;
-    
-    (void)[[oViewController designsArrayController] setSelectedObjects:[NSArray arrayWithObject:_selectedDesign]];
 }
 
 @synthesize viewController = oViewController;

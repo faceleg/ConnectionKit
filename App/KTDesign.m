@@ -266,8 +266,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 
 - (NSString *)contributor
 {
-	return @"Cowabunga Baby let the good times roll";
-	// return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
+	return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
 }
 
 
@@ -625,7 +624,6 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 
 - (NSString *)  imageUID;  /* required */
 {
-	NSLog(@"%s",__FUNCTION__);
 	return [[self bundle] bundlePath];
 }
 
@@ -636,7 +634,6 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageRepresentationType; /* required */
 {
-	NSLog(@"%s",__FUNCTION__);
 	return IKImageBrowserNSImageRepresentationType;
 }
 /*! 
@@ -646,8 +643,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (id) imageRepresentation; /* required */
 {
-	NSLog(@"%s",__FUNCTION__);
-	return myThumbnail;
+	return self.thumbnail;
 }
 /*! 
  @method imageVersion
@@ -655,7 +651,6 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSUInteger) imageVersion;
 {
-	NSLog(@"%s",__FUNCTION__);
 	return 1;
 }
 /*! 
@@ -664,8 +659,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageTitle;
 {
-	NSLog(@"%s",__FUNCTION__);
-	return @"imageTitle";
+	return self.title;
 }
 /*! 
  @method imageSubtitle
@@ -673,12 +667,10 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
  */
 - (NSString *) imageSubtitle;
 {
-	NSLog(@"%s",__FUNCTION__);
-	return @"imageSubtitle";
+	return self.contributor;
 }
 - (BOOL) isSelectable;
 {
-	NSLog(@"%s",__FUNCTION__);
 	return YES;
 }
 

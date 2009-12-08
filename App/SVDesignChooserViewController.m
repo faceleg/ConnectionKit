@@ -12,22 +12,21 @@
 #import "KT.h"
 #import "KTDesign.h"
 
-
 @implementation SVDesignChooserViewController
 
 - (void)awakeFromNib
 {	
-    // restrict to a max of 4 columns
-//    [oImageBrowserView setMaxNumberOfColumns:4];
-//	[oImageBrowserView setConstrainsToOriginalSize:YES];
-	[oImageBrowserView setDataSource:self];
-	[oImageBrowserView setDelegate:self];
+	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	OBASSERT([view isKindOfClass:[IKImageBrowserView class]]);
+
+	// We want to be notified when designs are set so we can refresh data display
+	[self addObserver:self forKeyPath:@"designs" options:(NSKeyValueObservingOptionNew) context:nil];
+	[self addObserver:self forKeyPath:@"selectedDesign" options:(NSKeyValueObservingOptionNew) context:nil];
 	
-    // load designs -- only seems to work if I do it here? seems as good a place as any...
-	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
-	self.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
-    
-    [oImageBrowserView reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
+	[view setDataSource:self];
+	[view setDelegate:self];
+	
+	// [view setCellSize:NSMakeSize(100,65)];
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
@@ -67,7 +66,7 @@
 	int xIndex = localPoint.x / itemSize.width;
 	int yIndex = localPoint.y / itemSize.height;
 	int listIndex = yIndex * 4 + xIndex;
-	if (listIndex < [[[self view] content] count])
+	if (listIndex < [self.designs count])
 	{
 		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
 		
@@ -121,13 +120,11 @@
 
 - (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
-	NSLog(@"%s",__FUNCTION__);
 	return [self.designs count];
 }
 
 - (id /*IKImageBrowserItem*/) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index;
 {
-	NSLog(@"%s",__FUNCTION__);
 	return [self.designs objectAtIndex:index];
 }
 
@@ -140,7 +137,6 @@
 
 - (BOOL) imageBrowser:(IKImageBrowserView *) aBrowser moveItemsAtIndexes: (NSIndexSet *)indexes toIndex:(NSUInteger)destinationIndex;
 {
-	NSLog(@"%s",__FUNCTION__);
 	return NO;
 }
 
@@ -165,6 +161,47 @@
 	return nil;
 }
 
+// We get and set the design from the IKImageBrowserView
+
+- (void) setSelectedDesign:(KTDesign *)aDesign
+{
+	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	NSUInteger index = [self.designs indexOfObject:aDesign];
+	if (NSNotFound != index)
+	{
+		[view setSelectionIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
+		[view scrollIndexToVisible:index];
+	}
+	else	// no selection
+	{
+		[view setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
+	}
+}
+- (KTDesign *)selectedDesign;
+{
+	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	NSIndexSet *selectedIndexSet = [view selectionIndexes];
+	NSUInteger firstIndex = [selectedIndexSet firstIndex];
+	KTDesign *result = nil;
+	if (NSNotFound != firstIndex)
+	{
+		result = [self.designs objectAtIndex:firstIndex];
+	}
+	return result;
+}
+
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath
+                      ofObject:(id)anObject
+                        change:(NSDictionary *)aChange
+                       context:(void *)aContext
+{
+	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	if ([@"designs" isEqualToString:aKeyPath])
+	{
+		[view reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
+	}
+}
 
 
 @synthesize designs = _designs;

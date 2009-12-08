@@ -15,16 +15,18 @@
 {
     IBOutlet SVDesignChooserViewController   *oViewController;
     IBOutlet MGScopeBar             *oScopeBar;
-    IBOutlet NSBox                 *oTargetView;
-    
-    KTDesign                        *_selectedDesign;
+    	
+	SEL _selectorWhenChosen;
+	id	_targetWhenChosen;		// weak to avoid retain cycle
 }
 
+@property(assign) SEL selectorWhenChosen;
+@property(assign) id  targetWhenChosen;
 @property(retain) SVDesignChooserViewController *viewController;
-@property(retain) KTDesign *selectedDesign;
 
-- (void)displayAsSheet;
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
+
+- (void)displayWithSelectorButIWishWeCouldSpecifyABlock:(SEL)aSelector object:aTarget designWas:(KTDesign *)oldDesign;
 
 @end
