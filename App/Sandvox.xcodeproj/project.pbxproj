@@ -2993,7 +2993,7 @@
 			name = "Publishing UI";
 			sourceTree = "<group>";
 		};
-		2759CC98103970FC00E2C046 /* Controller */ = {
+		2759CC98103970FC00E2C046 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
 				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
@@ -3004,7 +3004,7 @@
 				273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */,
 				273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */,
 			);
-			name = Controller;
+			name = "View Controller";
 			sourceTree = "<group>";
 		};
 		275A641510501D2900AE6E2A /* General */ = {
@@ -3276,7 +3276,7 @@
 		27BDAA6A10C88E49008C8199 /* Web Editor */ = {
 			isa = PBXGroup;
 			children = (
-				2759CC98103970FC00E2C046 /* Controller */,
+				2759CC98103970FC00E2C046 /* View Controller */,
 				273DCF9410CBD49D003CCE97 /* DOM Controllers */,
 				271B497B105468AA008B698C /* View */,
 			);
