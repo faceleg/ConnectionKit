@@ -39,7 +39,7 @@
 + (void)popContext
 {
     NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"];
-    if ([stack count] > 0) [stack removeLastObject];
+    [stack removeLastObject];
 }
 
 - (void)push { [SVHTMLContext pushContext:self]; }
