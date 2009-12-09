@@ -214,27 +214,30 @@
 	KTMediaContainer *result = nil;
 	
 	NSString *graphicalTextCode = [self graphicalTextCode];
-    NSString *innerHTML = [self innerHTMLString];
-	if (graphicalTextCode && innerHTML && ![innerHTML isEqualToString:@""])
-	{
-		KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
-		KTMaster *master = [page master];
-		if ([master boolForKey:@"enableImageReplacement"])
-		{
-			KTDesign *design = [master design];
-			NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
-			if (graphicalTextSettings)
-			{
-				// Generate the image
-				KTMediaManager *mediaManager = [page mediaManager];
-				result = [mediaManager graphicalTextWithString:[innerHTML stringByConvertingHTMLToPlainText]
-														design:design
-										  imageReplacementCode:graphicalTextCode
-														  size:[master floatForKey:@"graphicalTitleSize"]];
-			}
-		}
+    if (graphicalTextCode)
+    {
+        NSString *innerHTML = [self innerHTMLString];
+        if (innerHTML && ![innerHTML isEqualToString:@""])
+        {
+            KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
+            KTMaster *master = [page master];
+            if ([master boolForKey:@"enableImageReplacement"])
+            {
+                KTDesign *design = [master design];
+                NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+                if (graphicalTextSettings)
+                {
+                    // Generate the image
+                    KTMediaManager *mediaManager = [page mediaManager];
+                    result = [mediaManager graphicalTextWithString:[innerHTML stringByConvertingHTMLToPlainText]
+                                                            design:design
+                                              imageReplacementCode:graphicalTextCode
+                                                              size:[master floatForKey:@"graphicalTitleSize"]];
+                }
+            }
+        }
 	}
-	
+    
 	return result;
 }
 

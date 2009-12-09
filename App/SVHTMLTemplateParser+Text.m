@@ -118,15 +118,23 @@
 	
     
     // Only generate the block if there is text to use
+    // HACK: Don't want to report anything to the context while checking this, so pop on a fake context
+    SVHTMLContext *fakeContext = [[SVHTMLContext alloc] init];
+    [fakeContext setCurrentPage:[[SVHTMLContext currentContext] currentPage]];
+    [fakeContext push];
 	if ([[result innerHTMLString] length] > 0)
     {
         // Inform delegate
+        [fakeContext pop];  // pop early so -didParseTextBlock: goes to the origina context
         [self didParseTextBlock:result];
     }
     else
     {
         result = nil;
     }
+    
+    [fakeContext pop];
+    [fakeContext release];
     
     
     return result;
