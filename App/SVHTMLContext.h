@@ -39,7 +39,7 @@ typedef enum {
 
 // Convenience methods for pushing and popping that will just do the right thing when the receiver is nil
 - (void)push;
-- (void)pop;
+- (void)pop;    // only pops if receiver is the current context
 
 
 #pragma mark Properties

@@ -44,7 +44,10 @@
 
 - (void)push { [SVHTMLContext pushContext:self]; }
 
-- (void)pop; { [SVHTMLContext popContext]; }
+- (void)pop;
+{
+    if ([SVHTMLContext currentContext] == self) [SVHTMLContext popContext];
+}
 
 #pragma mark Init & Dealloc
 
