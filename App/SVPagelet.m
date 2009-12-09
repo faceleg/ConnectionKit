@@ -81,10 +81,19 @@
     return NSLocalizedString(@"Pagelet", "pagelet title placeholder");
 }
 
-#pragma mark Properties
+#pragma mark Body Text
 
 @dynamic body;
+
+#pragma mark Layout/Styling
+
 @dynamic showBorder;
+
+- (BOOL)isCallout;
+{
+    BOOL result = ([self enclosingBody] != nil);
+    return result;
+}
 
 #pragma mark Sidebar
 

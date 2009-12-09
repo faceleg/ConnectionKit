@@ -26,9 +26,13 @@
 + (NSString *)placeholderTitleText;
 
 
-#pragma mark Other
+#pragma mark Body Text
 @property(nonatomic, retain, readonly) SVBody *body;
+
+
+#pragma mark Layout/Styling
 @property(nonatomic, copy) NSNumber *showBorder;
+- (BOOL)isCallout;  // name is hangover from 1.x. Not KVO-compliant. Yet.
 
 
 #pragma mark Sidebar
