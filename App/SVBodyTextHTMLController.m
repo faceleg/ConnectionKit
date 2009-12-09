@@ -269,7 +269,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [super didChangeText];
     
     // Let subcontrollers know the change took place
-    [_elementControllers makeObjectsPerformSelector:@selector(didChangeText)];
+    [_elementControllers makeObjectsPerformSelector:@selector(enclosingBodyControllerDidChangeText)];
 }
 
 @synthesize updating = _isUpdating;

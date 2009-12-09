@@ -23,7 +23,7 @@
 }
 
 // The receiver itself will not call this method. Instead, is designed such that the owning body text controller will call it after a change, and the receiver will commit any changes it might have.
-- (void)didChangeText;
+- (void)enclosingBodyControllerDidChangeText;
 
 @property(nonatomic, retain) WebView *webView;
 
