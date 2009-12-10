@@ -109,6 +109,18 @@
     [self addElementsObject:element];
 }
 
+- (NSSet *)graphics;
+{
+    // Just those elements that are graphics
+    NSMutableSet *result = [[NSMutableSet alloc] init];
+    for (SVBodyElement *anElement in [self elements])
+    {
+        if ([anElement isKindOfClass:[SVGraphic class]]) [result addObject:anElement];
+    }
+    
+    return result;
+}
+
 #pragma mark HTML
 
 - (NSString *)HTMLString;

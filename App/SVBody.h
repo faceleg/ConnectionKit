@@ -21,6 +21,7 @@
 @property (nonatomic, retain, readonly) NSSet *elements;
 - (NSArray *)orderedElements;       // not KVO-compliant
 - (void)addElement:(SVBodyElement *)element;    // convenience
+- (NSSet *)graphics;
 
 #pragma mark HTML
 
