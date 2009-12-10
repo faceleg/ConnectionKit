@@ -362,6 +362,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         [textAreas addObject:controller];
         if (isSelectable) [editorItems addObject:controller];
+        if ([controller respondsToSelector:@selector(contentItems)])
+        {
+            [editorItems addObjectsFromArray:[(id)controller contentItems]];
+        }
     }
     
     
