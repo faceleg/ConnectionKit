@@ -193,7 +193,12 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)setEditable:(BOOL)editable
 {
     // TODO: Embedded graphics must NOT be selectable
+    for (SVWebContentItem *aGraphicController in [self graphicControllers])
+    {
+        [[aGraphicController HTMLElement] setContentEditable:@"false"];
+    }
     
+    // Carry on
     [super setEditable:editable];
 }
 
