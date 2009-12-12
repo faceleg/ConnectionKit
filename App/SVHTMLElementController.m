@@ -60,6 +60,27 @@
 
 @synthesize parentDOMController = _parentController;
 
+- (void)addChildDOMController:(SVHTMLElementController *)controller;
+{
+    OBPRECONDITION(controller);
+    
+    NSArray *children = [[self childDOMControllers] arrayByAddingObject:controller];
+    [_childControllers release]; _childControllers = [children copy];
+    
+    [controller setParentDOMController:self];
+}
+
+- (void)removeFromParentDOMController;
+{
+    [self setParentDOMController:nil];
+    
+    SVHTMLElementController *parent = [self parentDOMController];
+    
+    NSMutableArray *children = [[parent childDOMControllers] mutableCopy];
+    [children removeObject:self];
+    [parent->_childControllers release]; parent->_childControllers = children;
+}
+
 #pragma mark DOM
 
 @synthesize HTMLElement = _DOMElement;

@@ -44,6 +44,8 @@
 #pragma mark Tree
 @property(nonatomic, copy) NSArray *childDOMControllers;
 @property(nonatomic, assign) SVHTMLElementController *parentDOMController;  // don't call setter directly
+- (void)addChildDOMController:(SVHTMLElementController *)controller;
+- (void)removeFromParentDOMController;
 
 
 #pragma mark DOM
