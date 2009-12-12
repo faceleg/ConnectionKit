@@ -67,6 +67,7 @@
     OBPRECONDITION(controller);
     
     NSArray *children = [[self childDOMControllers] arrayByAddingObject:controller];
+    if (!children) children = [NSArray arrayWithObject:controller];
     [_childControllers release]; _childControllers = [children copy];
     
     [controller setParentDOMController:self];
