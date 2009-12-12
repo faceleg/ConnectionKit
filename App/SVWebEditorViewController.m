@@ -40,7 +40,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 
 @interface SVWebEditorViewController ()
-@property(nonatomic, readwrite, getter=isLoading) BOOL loading;
+@property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
 
 @property(nonatomic, retain, readwrite) SVHTMLContext *HTMLContext;
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
@@ -131,7 +131,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Loading
 
-- (void)load;
+- (void)update;
 {
 	// Tear down old dependencies
     for (KSObjectKeyPathPair *aDependency in _pageDependencies)
@@ -183,7 +183,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
-    [self setLoading:YES];
+    [self setUpdating:YES];
     _visibleRect = [[[self webEditorView] documentView] visibleRect];
     
     
@@ -217,10 +217,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 	
     // Clearly the webview is no longer in need of refreshing
-	_needsLoad = NO;
+	_needsUpdate = NO;
 }
 
-@synthesize loading = _isLoading;
+@synthesize updating = _isUpdating;
 
 - (SVWebEditorTextController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock
                                              isSelectable:(BOOL *)outIsSelectable; 
@@ -405,26 +405,26 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Mark as loaded
-    [self setLoading:NO];
+    [self setUpdating:NO];
 }
 
-@synthesize needsLoad = _needsLoad;
-- (void)setNeedsLoad;
+@synthesize needsUpdate = _needsUpdate;
+- (void)setNeedsUpdate;
 {
-    if (![self needsLoad])
+    if (![self needsUpdate])
 	{
 		// Install a fresh observer for the end of the run loop
-		[[NSRunLoop currentRunLoop] performSelector:@selector(load)
+		[[NSRunLoop currentRunLoop] performSelector:@selector(update)
                                              target:self
                                            argument:nil
                                               order:0
                                               modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
 	}
 	
-    _needsLoad = YES;
+    _needsUpdate = YES;
 }
 
-- (void)loadIfNeeded { if ([self needsLoad]) [self load]; }
+- (void)updateIfNeeded { if ([self needsUpdate]) [self update]; }
 
 #pragma mark Content
 
@@ -439,7 +439,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         [_page release]; _page = [page retain];
     
-        [self load];
+        [self update];
     }
 }
 
@@ -968,7 +968,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     if (context == sWebViewDependenciesObservationContext)
     {
-        [self setNeedsLoad];
+        [self setNeedsUpdate];
     }
     else
     {

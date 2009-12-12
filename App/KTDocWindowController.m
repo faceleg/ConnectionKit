@@ -1072,7 +1072,7 @@ from representedObject */
 
 - (void)updateWebView:(id)sender;
 {
-    [[[self webContentAreaController] webEditorViewController] setNeedsLoad];
+    [[[self webContentAreaController] webEditorViewController] setNeedsUpdate];
 }
 
 @end

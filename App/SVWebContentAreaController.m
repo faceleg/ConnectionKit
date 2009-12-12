@@ -41,7 +41,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     // Delegation/observation
     [_webEditorViewController addObserver:self
-                               forKeyPath:@"loading"
+                               forKeyPath:@"updating"
                                   options:0
                                   context:sWebViewLoadingObservationContext];
     
@@ -58,7 +58,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 - (void)dealloc
 {
     // Tear down delegation/observation
-    [_webEditorViewController removeObserver:self forKeyPath:@"loading"];
+    [_webEditorViewController removeObserver:self forKeyPath:@"updating"];
     
     
     [_webEditorViewController release];
@@ -170,7 +170,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 - (void)switchToLoadingPlaceholderViewIfNeeded
 {
     // This method will be called fractionally after the webview has done its first layout, and (hopefully!) before that layout has actually been drawn. Therefore, if the webview is still loading by this point, it was an intermediate load and not suitable for display to the user, so switch over to the placeholder.
-    if ([[self webEditorViewController] isLoading]) 
+    if ([[self webEditorViewController] isUpdating]) 
     {
         [self setSelectedViewController:_placeholderViewController];
         [[_placeholderViewController progressIndicator] startAnimation:self];
@@ -232,7 +232,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 {
     if (context == sWebViewLoadingObservationContext)
     {
-        if (![[self webEditorViewController] isLoading])
+        if (![[self webEditorViewController] isUpdating])
         {
             // The webview is done loading! swap 'em
             [self setSelectedViewController:[self webEditorViewController]];

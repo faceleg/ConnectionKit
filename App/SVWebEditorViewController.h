@@ -38,8 +38,8 @@
     
     // Loading
     NSSet   *_pageDependencies;
-    BOOL    _needsLoad;
-    BOOL    _isLoading;
+    BOOL    _needsUpdate;
+    BOOL    _isUpdating;
     NSRect  _visibleRect;
     
     // Delegate
@@ -52,12 +52,12 @@
 
 
 #pragma mark Loading
-- (void)load;
-@property(nonatomic, readonly, getter=isLoading) BOOL loading;
+- (void)update;
+@property(nonatomic, readonly, getter=isUpdating) BOOL updating;
 
-@property(nonatomic, readonly) BOOL needsLoad;
-- (void)setNeedsLoad;
-- (void)loadIfNeeded;
+@property(nonatomic, readonly) BOOL needsUpdate;
+- (void)setNeedsUpdate;
+- (void)updateIfNeeded;
 
 
 #pragma mark Content
