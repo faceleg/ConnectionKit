@@ -9,16 +9,26 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVHTMLContext;
+@class SVHTMLContext, SVWebEditorViewController;
+
 
 @interface SVHTMLElementController : NSController
 {
   @private
+    // DOM
     DOMHTMLElement  *_DOMElement;
+    BOOL            _needsUpdate;
+    
+    // Content
     id              _representedObject;
     SVHTMLContext   *_context;
     
+    // Loading by creation
     DOMHTMLDocument *_DOMDocument;
+    
+    // Tree
+    NSArray                 *_childControllers;
+    SVHTMLElementController *_parentController;
 }
 
 #pragma mark Init
@@ -29,6 +39,11 @@
 
 // Convenience method:
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
+
+
+#pragma mark Tree
+@property(nonatomic, copy) NSArray *childDOMControllers;
+@property(nonatomic, assign) SVHTMLElementController *parentDOMController;  // don't call setter directly
 
 
 #pragma mark DOM

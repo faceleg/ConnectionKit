@@ -30,6 +30,8 @@
 
 - (void)dealloc
 {
+    [self setChildDOMControllers:nil];
+    
     [_DOMDocument release];
     [_context release];
     [_DOMElement release];
@@ -38,7 +40,27 @@
     [super dealloc];
 }
 
-#pragma mark HTML Element
+#pragma mark Tree
+
+/*  Fairly basic heirarchy maintenance stuff here
+ */
+
+@synthesize childDOMControllers = _childControllers;
+- (void)setChildDOMControllers:(NSArray *)controllers
+{
+    [[self childDOMControllers] makeObjectsPerformSelector:@selector(setParentDOMController:)
+                                                withObject:nil];
+    
+    controllers = [controllers copy];
+    [_childControllers release]; _childControllers = controllers;
+    
+    [controllers makeObjectsPerformSelector:@selector(setParentDOMController:)
+                                 withObject:self];
+}
+
+@synthesize parentDOMController = _parentController;
+
+#pragma mark DOM
 
 @synthesize HTMLElement = _DOMElement;
 - (DOMHTMLElement *)HTMLElement
