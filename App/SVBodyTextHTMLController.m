@@ -45,7 +45,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Match each model element up with its DOM equivalent
     NSArray *bodyElements = [[self content] arrangedObjects];
-    _elementControllers = [[NSMutableSet alloc] initWithCapacity:[bodyElements count]];
     
     DOMDocument *document = [element ownerDocument]; 
     
@@ -87,10 +86,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Release ivars
     [_content release];
-    
-    [_elementControllers setValue:nil forKey:@"representedObject"];
-    [_elementControllers setValue:nil forKey:@"HTMLElement"];
-    [_elementControllers release];
     
     [super dealloc];
 }
@@ -134,7 +129,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             
             [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
             
-            [self addElementController:controller];
+            [self addChildDOMController:controller];
             [controller release];
         }
     }
@@ -145,7 +140,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     {
         DOMHTMLElement *nextNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
         
-        [self removeElementController:[self controllerForDOMNode:domNode]];
+        [[self controllerForDOMNode:domNode] removeFromParentDOMController];
         [[domNode parentNode] removeChild:domNode];
         
         domNode = nextNode;
@@ -206,27 +201,13 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Subcontrollers
 
-- (void)addElementController:(SVHTMLElementController *)controller;
-{
-    [_elementControllers addObject:controller];
-}
-
-- (void)removeElementController:(SVHTMLElementController *)controller;
-{
-    [controller setRepresentedObject:nil];
-    [controller setHTMLElement:nil];
-    [controller setHTMLContext:nil];
-    
-    [_elementControllers removeObject:controller];
-}
-
 - (SVHTMLElementController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
                                                    HTMLElement:(DOMHTMLElement *)htmlElement;
 {
     id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
     [result setHTMLContext:[self HTMLContext]];
     [result setRepresentedObject:bodyElement];
-    [self addElementController:result];
+    [self addChildDOMController:result];
     [result release];
     
     
@@ -236,7 +217,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
 {
     SVHTMLElementController * result = nil;
-    for (result in _elementControllers)
+    for (result in [self childDOMControllers])
     {
         if ([result representedObject] == element) break;
     }
@@ -247,7 +228,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (SVHTMLElementController *)controllerForDOMNode:(DOMNode *)node;
 {
     SVHTMLElementController *result = nil;
-    for (result in _elementControllers)
+    for (result in [self childDOMControllers])
     {
         if ([node isDescendantOfNode:[result HTMLElement]]) break;
     }
@@ -265,9 +246,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (NSArray *)graphicControllers;
 {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[_elementControllers count]];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childDOMControllers] count]];
     
-    for (SVHTMLElementController *aController in _elementControllers)
+    for (SVHTMLElementController *aController in [self childDOMControllers])
     {
         if ([aController conformsToProtocol:@protocol(SVWebEditorItem)])
         {
@@ -285,7 +266,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [super didChangeText];
     
     // Let subcontrollers know the change took place
-    [_elementControllers makeObjectsPerformSelector:@selector(enclosingBodyControllerDidChangeText)];
+    [[self childDOMControllers] makeObjectsPerformSelector:@selector(enclosingBodyControllerDidChangeText)];
 }
 
 @synthesize updating = _isUpdating;
@@ -371,7 +352,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
                 [[self content] removeObject:element];
                 [self didUpdate];
                 
-                [self removeElementController:controller];
+                [controller removeFromParentDOMController];
             }
         }
     }

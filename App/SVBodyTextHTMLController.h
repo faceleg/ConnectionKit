@@ -15,9 +15,7 @@
 @interface SVBodyTextHTMLController : SVWebEditorTextController <DOMEventListener>
 {
     NSArrayController   *_content;
-    
-    NSMutableSet    *_elementControllers;
-    
+        
     BOOL    _isUpdating;    
 }
 
@@ -31,9 +29,6 @@
 - (BOOL)insertPagelet:(SVPagelet *)pagelet;
 
 #pragma mark Subcontrollers
-
-- (void)addElementController:(SVHTMLElementController *)controller;
-- (void)removeElementController:(SVHTMLElementController *)controller;
 
 - (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
 - (SVHTMLElementController *)controllerForDOMNode:(DOMNode *)node;
