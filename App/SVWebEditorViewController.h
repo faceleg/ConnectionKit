@@ -11,7 +11,7 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVHTMLContext, SVHTMLElementController, SVWebEditorTextController;
+@class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
 @class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -40,7 +40,7 @@
     BOOL                    _needsUpdate;
     BOOL                    _isUpdating;
     NSRect                  _visibleRect;
-    SVHTMLElementController *_mainDOMController;
+    SVDOMController *_mainDOMController;
     
     NSSet   *_pageDependencies;
     
@@ -62,7 +62,7 @@
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded;
 
-@property(nonatomic, retain, readonly) SVHTMLElementController *mainDOMController;
+@property(nonatomic, retain, readonly) SVDOMController *mainDOMController;
 
 
 #pragma mark Content

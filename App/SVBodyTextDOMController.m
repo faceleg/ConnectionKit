@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBodyTextHTMLController.h"
+#import "SVBodyTextDOMController.h"
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
@@ -21,7 +21,7 @@
 static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObservationContext";
 
 
-@implementation SVBodyTextHTMLController
+@implementation SVBodyTextDOMController
 
 #pragma mark Init & Dealloc
 
@@ -104,7 +104,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
         // Locate the matching controller
-        SVHTMLElementController *controller = [self controllerForBodyElement:aModelElement];
+        SVDOMController *controller = [self controllerForBodyElement:aModelElement];
         if (controller)
         {
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
@@ -162,7 +162,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     DOMRange *selection = [webView selectedDOMRange];
     OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
     
-    SVHTMLElementController *controller = [self controllerForDOMNode:[selection startContainer]];
+    SVDOMController *controller = [self controllerForDOMNode:[selection startContainer]];
     if (controller)
     {
         SVBodyElement *bodyElement = [controller representedObject];
@@ -201,7 +201,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Subcontrollers
 
-- (SVHTMLElementController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
+- (SVDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
                                                    HTMLElement:(DOMHTMLElement *)htmlElement;
 {
     id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
@@ -214,9 +214,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
+- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 {
-    SVHTMLElementController * result = nil;
+    SVDOMController * result = nil;
     for (result in [self childDOMControllers])
     {
         if ([result representedObject] == element) break;
@@ -225,9 +225,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVHTMLElementController *)controllerForDOMNode:(DOMNode *)node;
+- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 {
-    SVHTMLElementController *result = nil;
+    SVDOMController *result = nil;
     for (result in [self childDOMControllers])
     {
         if ([node isDescendantOfNode:[result HTMLElement]]) break;
@@ -248,7 +248,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childDOMControllers] count]];
     
-    for (SVHTMLElementController *aController in [self childDOMControllers])
+    for (SVDOMController *aController in [self childDOMControllers])
     {
         if ([aController conformsToProtocol:@protocol(SVWebEditorItem)])
         {
@@ -322,7 +322,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
         if (nextNode)
         {
-            SVHTMLElementController * nextController = [self controllerForDOMNode:nextNode];
+            SVDOMController * nextController = [self controllerForDOMNode:nextNode];
             OBASSERT(nextController);
             
             NSArrayController *content = [self content];
@@ -343,7 +343,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
         if ([removedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            SVHTMLElementController * controller = [self controllerForDOMNode:removedNode];
+            SVDOMController * controller = [self controllerForDOMNode:removedNode];
             if (controller)
             {
                 SVBodyElement *element = [controller representedObject];

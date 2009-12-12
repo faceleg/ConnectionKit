@@ -15,7 +15,7 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
-#import "SVBodyTextHTMLController.h"
+#import "SVBodyTextDOMController.h"
 #import "KTSite.h"
 #import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
@@ -281,7 +281,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         [elementsController setAutomaticallyRearrangesObjects:YES];
         [elementsController bind:NSContentSetBinding toObject:value withKeyPath:@"elements" options:nil];
         
-        result = [[SVBodyTextHTMLController alloc] initWithHTMLElement:element content:elementsController];
+        result = [[SVBodyTextDOMController alloc] initWithHTMLElement:element content:elementsController];
         [result setHTMLContext:[self HTMLContext]];
         [result setRichText:YES];
         [result setFieldEditor:NO];
@@ -289,7 +289,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         // Store as the body text of correct item
         SVWebEditorItem *item = [[self webEditorView] itemForDOMNode:element];
-        [item setBodyText:(SVBodyTextHTMLController *)result];
+        [item setBodyText:(SVBodyTextDOMController *)result];
     }
     else
     {

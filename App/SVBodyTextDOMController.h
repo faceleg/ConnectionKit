@@ -12,7 +12,7 @@
 @class SVBody, SVBodyElement, SVGraphic;
 
 
-@interface SVBodyTextHTMLController : SVWebEditorTextController <DOMEventListener>
+@interface SVBodyTextDOMController : SVWebEditorTextController <DOMEventListener>
 {
     NSArrayController   *_content;
         
@@ -30,10 +30,10 @@
 
 #pragma mark Subcontrollers
 
-- (SVHTMLElementController *)controllerForBodyElement:(SVBodyElement *)element;
-- (SVHTMLElementController *)controllerForDOMNode:(DOMNode *)node;
+- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
+- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 
-- (SVHTMLElementController *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
+- (SVDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
                                                    HTMLElement:(DOMHTMLElement *)element;
 
 - (Class)controllerClassForBodyElement:(SVBodyElement *)element;

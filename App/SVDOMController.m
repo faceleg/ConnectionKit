@@ -1,12 +1,12 @@
 //
-//  SVHTMLElementController.m
+//  SVDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 24/11/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLElementController.h"
+#import "SVDOMController.h"
 
 
 @interface SVDOMEventListener : NSObject <DOMEventListener>
@@ -24,15 +24,15 @@
 
 
 
-@interface SVHTMLElementController ()
-- (void)setDescendantNeedsUpdate:(SVHTMLElementController *)controller;
+@interface SVDOMController ()
+- (void)setDescendantNeedsUpdate:(SVDOMController *)controller;
 @end
 
 
 #pragma mark -
 
 
-@implementation SVHTMLElementController
+@implementation SVDOMController
 
 #pragma mark Init & Dealloc
 
@@ -85,7 +85,7 @@
 
 @synthesize parentDOMController = _parentController;
 
-- (void)addChildDOMController:(SVHTMLElementController *)controller;
+- (void)addChildDOMController:(SVDOMController *)controller;
 {
     OBPRECONDITION(controller);
     
@@ -100,7 +100,7 @@
 {
     [self setParentDOMController:nil];
     
-    SVHTMLElementController *parent = [self parentDOMController];
+    SVDOMController *parent = [self parentDOMController];
     
     NSMutableArray *children = [[parent childDOMControllers] mutableCopy];
     [children removeObject:self];
@@ -148,10 +148,10 @@
     [self setDescendantNeedsUpdate:self];
 }
 
-- (void)setDescendantNeedsUpdate:(SVHTMLElementController *)controller;
+- (void)setDescendantNeedsUpdate:(SVDOMController *)controller;
 {
     // If possible ask our parent to take care of it. But if not must just update the controller immediately
-    SVHTMLElementController *parent = [self parentDOMController];
+    SVDOMController *parent = [self parentDOMController];
     if (parent)
     {
         [parent setDescendantNeedsUpdate:controller];

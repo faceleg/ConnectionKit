@@ -1,5 +1,5 @@
 //
-//  SVHTMLElementController.h
+//  SVDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 24/11/2009.
@@ -13,7 +13,7 @@
 @class SVDOMEventListener;
 
 
-@interface SVHTMLElementController : NSController
+@interface SVDOMController : NSController
 {
   @private
     // DOM
@@ -30,7 +30,7 @@
     
     // Tree
     NSArray                 *_childControllers;
-    SVHTMLElementController *_parentController;
+    SVDOMController *_parentController;
 }
 
 #pragma mark Init
@@ -45,8 +45,8 @@
 
 #pragma mark Tree
 @property(nonatomic, copy) NSArray *childDOMControllers;
-@property(nonatomic, assign) SVHTMLElementController *parentDOMController;  // don't call setter directly
-- (void)addChildDOMController:(SVHTMLElementController *)controller;
+@property(nonatomic, assign) SVDOMController *parentDOMController;  // don't call setter directly
+- (void)addChildDOMController:(SVDOMController *)controller;
 - (void)removeFromParentDOMController;
 
 

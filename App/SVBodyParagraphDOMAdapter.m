@@ -141,7 +141,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 
 
-@implementation SVHTMLElementController (enclosingBodyControllerDidChangeText)
+@implementation SVDOMController (enclosingBodyControllerDidChangeText)
 - (void)enclosingBodyControllerDidChangeText
 {
     // I don't care

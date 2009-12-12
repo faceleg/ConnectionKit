@@ -8,21 +8,21 @@
 //  Concrete implementation of the SVWebEditorItem protocol
 
 
-#import "SVHTMLElementController.h"
+#import "SVDOMController.h"
 #import "SVWebEditorItemProtocol.h"
 
 
-@class SVBodyTextHTMLController;
-@interface SVWebEditorItem : SVHTMLElementController <SVWebEditorItem>
+@class SVBodyTextDOMController;
+@interface SVWebEditorItem : SVDOMController <SVWebEditorItem>
 {
   @private
-    SVBodyTextHTMLController  *_bodyText;
+    SVBodyTextDOMController  *_bodyText;
 }
 
 @property(nonatomic, retain, readonly) DOMElement *DOMElement;
 
 // Strictly speaking, there could be more than one per item, but there isn't in practice at the moment, so this is a rather handy optimisation
-@property(nonatomic, retain) SVBodyTextHTMLController *bodyText;
+@property(nonatomic, retain) SVBodyTextDOMController *bodyText;
 
 
 #pragma mark Content

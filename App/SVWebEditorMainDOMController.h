@@ -6,10 +6,10 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLElementController.h"
+#import "SVDOMController.h"
 
 
-@interface SVWebEditorMainDOMController : SVHTMLElementController
+@interface SVWebEditorMainDOMController : SVDOMController
 {
 
 }
