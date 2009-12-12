@@ -8,6 +8,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "SVDOMEventListener.h"
+
 
 @class SVHTMLContext, SVWebEditorViewController;
 
@@ -16,8 +18,9 @@
 {
   @private
     // DOM
-    DOMHTMLElement  *_DOMElement;
-    BOOL            _needsUpdate;
+    DOMHTMLElement      *_DOMElement;
+    SVDOMEventListener  *_eventListener;
+    BOOL                _needsUpdate;
     
     // Content
     id              _representedObject;
@@ -53,6 +56,9 @@
 @property(nonatomic, retain) DOMHTMLElement *HTMLElement;
 - (void)loadHTMLElement;
 - (BOOL)isHTMLElementLoaded;
+
+// See the header for SVDOMEventListener as to why you'd want to use this. We provide a default one for each controller on-demand. Its target is already set to the receiver
+@property(nonatomic, retain, readonly) SVDOMEventListener *eventListener;
 
 - (void)update; //override to push changes through to the DOM
 - (void)setNeedsUpdate; // call to mark for needing update. Instantaneous at the moment, but might not be in the future

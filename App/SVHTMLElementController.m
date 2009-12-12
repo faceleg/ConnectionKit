@@ -30,11 +30,13 @@
 
 - (void)dealloc
 {
+    [_eventListener setEventsTarget:nil];
     [self setChildDOMControllers:nil];
     
     [_DOMDocument release];
     [_context release];
     [_DOMElement release];
+    [_eventListener release];
     [_representedObject release];
     
     [super dealloc];
@@ -98,6 +100,16 @@
 }
 
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
+
+- (SVDOMEventListener *)eventListener;
+{
+    if (!_eventListener)
+    {
+        _eventListener = [[SVDOMEventListener alloc] init];
+        [_eventListener setEventsTarget:(id <DOMEventListener>)self];   // expect subclasses to conform
+    }
+    return _eventListener;
+}
 
 - (void)update; { }
 
