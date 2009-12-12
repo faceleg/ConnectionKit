@@ -195,7 +195,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     // TODO: Embedded graphics must NOT be selectable
     for (SVWebContentItem *aGraphicController in [self graphicControllers])
     {
-        [[aGraphicController HTMLElement] setContentEditable:@"false"];
+        [[[aGraphicController HTMLElement] style] setProperty:@"-webkit-user-select"
+                                                        value:@"none"
+                                                     priority:@"!important"];
     }
     
     // Carry on
