@@ -23,6 +23,15 @@
 #pragma mark -
 
 
+
+@interface SVHTMLElementController ()
+- (void)setDescendantNeedsUpdate:(SVHTMLElementController *)controller;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVHTMLElementController
 
 #pragma mark Init & Dealloc
@@ -132,7 +141,24 @@
 
 - (void)update; { }
 
-- (void)setNeedsUpdate; { [self update]; }
+- (void)setNeedsUpdate;
+{
+    [self setDescendantNeedsUpdate:self];
+}
+
+- (void)setDescendantNeedsUpdate:(SVHTMLElementController *)controller;
+{
+    // If possible ask our parent to take care of it. But if not must just update the controller immediately
+    SVHTMLElementController *parent = [self parentDOMController];
+    if (parent)
+    {
+        [parent setDescendantNeedsUpdate:controller];
+    }
+    else
+    {
+        [controller update];
+    }
+}
 
 #pragma mark Content
 
