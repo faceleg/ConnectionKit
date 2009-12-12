@@ -131,9 +131,6 @@
 {
     OBPRECONDITION(_textBlocks);
     
-    // There REALLY shouldn't be 2 blocks with the same ID.
-    OBASSERT(![[_textBlocks valueForKey:@"DOMNodeID"] containsObject:[textBlock DOMNodeID]]);
-    
     [_textBlocks addObject:textBlock];
 }
 
