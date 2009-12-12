@@ -139,6 +139,8 @@
     return _eventListener;
 }
 
+#pragma mark Updating
+
 - (void)update; { }
 
 - (void)setNeedsUpdate;

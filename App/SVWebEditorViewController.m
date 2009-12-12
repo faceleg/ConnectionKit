@@ -129,7 +129,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [editor setAllowsUndo:NO];  // will be managing this entirely ourselves
 }
 
-#pragma mark Loading
+#pragma mark Updating
 
 - (void)update;
 {
@@ -425,6 +425,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 - (void)updateIfNeeded { if ([self needsUpdate]) [self update]; }
+
+@synthesize mainDOMController = _mainDOMController;
 
 #pragma mark Content
 

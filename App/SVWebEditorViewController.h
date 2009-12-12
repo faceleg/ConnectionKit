@@ -11,7 +11,7 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVHTMLContext, SVWebEditorTextController;
+@class KTPage, SVHTMLContext, SVHTMLElementController, SVWebEditorTextController;
 @class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -37,10 +37,12 @@
     NSArray             *_sidebarPageletItems;
     
     // Loading
+    BOOL                    _needsUpdate;
+    BOOL                    _isUpdating;
+    NSRect                  _visibleRect;
+    SVHTMLElementController *_mainDOMController;
+    
     NSSet   *_pageDependencies;
-    BOOL    _needsUpdate;
-    BOOL    _isUpdating;
-    NSRect  _visibleRect;
     
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
@@ -51,13 +53,16 @@
 @property(nonatomic, retain) SVWebEditorView *webEditorView;
 
 
-#pragma mark Loading
+#pragma mark Updating
+
 - (void)update;
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;
 
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded;
+
+@property(nonatomic, retain, readonly) SVHTMLElementController *mainDOMController;
 
 
 #pragma mark Content
