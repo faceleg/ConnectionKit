@@ -44,7 +44,7 @@
 - (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 
 // All the selectable items within ourself
-- (NSArray *)contentItems;
+- (NSArray *)graphicControllers;
 
 
 #pragma mark Updates

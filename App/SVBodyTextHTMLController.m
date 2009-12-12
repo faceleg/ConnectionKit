@@ -188,6 +188,15 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return [self insertGraphic:pagelet];
 }
 
+#pragma mark Editability
+
+- (void)setEditable:(BOOL)editable
+{
+    // TODO: Embedded graphics must NOT be selectable
+    
+    [super setEditable:editable];
+}
+
 #pragma mark Subcontrollers
 
 - (void)addElementController:(SVHTMLElementController *)controller;
@@ -247,7 +256,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (NSArray *)contentItems;
+- (NSArray *)graphicControllers;
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[_elementControllers count]];
     

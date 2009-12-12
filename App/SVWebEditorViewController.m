@@ -362,9 +362,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         [textAreas addObject:controller];
         if (isSelectable) [editorItems addObject:controller];
-        if ([controller respondsToSelector:@selector(contentItems)])
+        if ([controller respondsToSelector:@selector(graphicControllers)])
         {
-            [editorItems addObjectsFromArray:[(id)controller contentItems]];
+            [editorItems addObjectsFromArray:[(id)controller graphicControllers]];
         }
     }
     
@@ -744,7 +744,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         if ([item isKindOfClass:[SVWebEditorItem class]])
         {
-            result = [[item bodyText] contentItems];  
+            result = [[item bodyText] graphicControllers];  
         }
     }
     else
