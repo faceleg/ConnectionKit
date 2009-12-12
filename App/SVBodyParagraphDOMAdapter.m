@@ -36,7 +36,9 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     // Stop & reset old observation
     if ([self isHTMLElementLoaded])
     {
-        [[self HTMLElement] removeEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
+        [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
+                                       listener:[self eventsListener]
+                                     useCapture:NO];
     }
     _editTimestamp = 0; // otherwise webview changes may still try to commit us
     
@@ -45,7 +47,9 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [self setWebView:[[[element ownerDocument] webFrame] webView]];
     
     // Observe our bit of the DOM
-    [element addEventListener:@"DOMSubtreeModified" listener:self useCapture:NO];
+    [element addEventListener:@"DOMSubtreeModified"
+                     listener:[self eventsListener]
+                   useCapture:NO];
 }
 
 - (void)loadHTMLElement

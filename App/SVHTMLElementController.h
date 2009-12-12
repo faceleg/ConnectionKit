@@ -8,10 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "SVDOMEventListener.h"
-
 
 @class SVHTMLContext, SVWebEditorViewController;
+@class SVDOMEventListener;
 
 
 @interface SVHTMLElementController : NSController
@@ -57,8 +56,9 @@
 - (void)loadHTMLElement;
 - (BOOL)isHTMLElementLoaded;
 
-// See the header for SVDOMEventListener as to why you'd want to use this. We provide a default one for each controller on-demand. Its target is already set to the receiver
-@property(nonatomic, retain, readonly) SVDOMEventListener *eventListener;
+//  Somewhat problematically, the DOM will retain any event listeners added to it. This can quite easily leave a DOM controller and its HTML element in a retain cycle. When the DOM is torn down, it somehow releases the listener repeatedly, causing a crash.
+//  The best solution I can come up with is to avoid the retain cycle between listener and DOM by creating a simple proxy to listen to events and forward them on to the real target, but not retain either object. That object is automatically managed for you and returned here.
+@property(nonatomic, retain, readonly) id <DOMEventListener> eventsListener;
 
 - (void)update; //override to push changes through to the DOM
 - (void)setNeedsUpdate; // call to mark for needing update. Instantaneous at the moment, but might not be in the future

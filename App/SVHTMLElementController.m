@@ -9,6 +9,20 @@
 #import "SVHTMLElementController.h"
 
 
+@interface SVDOMEventListener : NSObject <DOMEventListener>
+{
+@private
+    id <DOMEventListener>   _target;    // weak ref
+}
+
+@property(nonatomic, assign) id <DOMEventListener> eventsTarget;
+
+@end
+
+
+#pragma mark -
+
+
 @implementation SVHTMLElementController
 
 #pragma mark Init & Dealloc
@@ -106,7 +120,7 @@
 
 - (BOOL)isHTMLElementLoaded { return (_DOMElement != nil); }
 
-- (SVDOMEventListener *)eventListener;
+- (id <DOMEventListener>)eventsListener;
 {
     if (!_eventListener)
     {
@@ -124,5 +138,20 @@
 
 @synthesize representedObject = _representedObject;
 @synthesize HTMLContext = _context;
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVDOMEventListener
+
+@synthesize eventsTarget = _target;
+
+- (void)handleEvent:(DOMEvent *)event;
+{
+    [[self eventsTarget] handleEvent:event];
+}
 
 @end
