@@ -9,6 +9,14 @@
 #import "SVHTMLElementController.h"
 
 
+@interface SVHTMLElementController ()
+@property(nonatomic, assign, readwrite) SVHTMLElementController *parentDOMController;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVHTMLElementController
 
 #pragma mark Init & Dealloc
