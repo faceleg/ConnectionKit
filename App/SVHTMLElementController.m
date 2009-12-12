@@ -81,7 +81,11 @@
     
     NSMutableArray *children = [[parent childDOMControllers] mutableCopy];
     [children removeObject:self];
-    [parent->_childControllers release]; parent->_childControllers = children;
+    
+    if (parent)
+    {
+        [parent->_childControllers release]; parent->_childControllers = children;
+    }
 }
 
 #pragma mark DOM
