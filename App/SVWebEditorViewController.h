@@ -11,7 +11,7 @@
 #import "SVWebEditorView.h"
 
 
-@class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
+@class KTPage, SVHTMLContext, KSDOMController, SVWebEditorTextController;
 @class SVWebContentObjectsController, SVWebEditorMainDOMController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -62,7 +62,7 @@
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
 
-@property(nonatomic, retain, readonly) SVDOMController *mainDOMController;
+@property(nonatomic, retain, readonly) KSDOMController *mainDOMController;
 
 
 #pragma mark Content

@@ -14,7 +14,7 @@
 
 @class SVBodyParagraph, SVBodyElement;
 
-@interface SVBodyParagraphDOMAdapter : SVDOMController <DOMEventListener>
+@interface SVBodyParagraphDOMAdapter : KSDOMController <DOMEventListener>
 {
   @private    
     WebView         *_webView;

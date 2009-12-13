@@ -8,12 +8,12 @@
 //  Concrete implementation of the SVWebEditorItem protocol
 
 
-#import "SVDOMController.h"
+#import "KSDOMController.h"
 #import "SVWebEditorItemProtocol.h"
 
 
 @class SVBodyTextDOMController;
-@interface SVWebEditorItem : SVDOMController <SVWebEditorItem>
+@interface SVWebEditorItem : KSDOMController <SVWebEditorItem>
 {
   @private
     SVBodyTextDOMController  *_bodyText;

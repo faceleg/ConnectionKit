@@ -363,8 +363,8 @@
 		279217D110BC11CF00E590D5 /* HTMLSourceView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 279217D010BC11CF00E590D5 /* HTMLSourceView.xib */; };
 		279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */ = {isa = PBXBuildFile; fileRef = 279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */; };
 		279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */; };
-		2792197D10BC631D00E590D5 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2792197B10BC631D00E590D5 /* SVDOMController.h */; };
-		2792197E10BC631D00E590D5 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2792197C10BC631D00E590D5 /* SVDOMController.m */; };
+		2792197D10BC631D00E590D5 /* KSDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2792197B10BC631D00E590D5 /* KSDOMController.h */; };
+		2792197E10BC631D00E590D5 /* KSDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2792197C10BC631D00E590D5 /* KSDOMController.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
 		2797B4BE0EF6E65E00F91398 /* KTURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */; };
@@ -1797,8 +1797,8 @@
 		279217D010BC11CF00E590D5 /* HTMLSourceView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = HTMLSourceView.xib; sourceTree = "<group>"; };
 		279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOrderedManagedObjectControllers.h; sourceTree = "<group>"; };
 		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
-		2792197B10BC631D00E590D5 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
-		2792197C10BC631D00E590D5 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
+		2792197B10BC631D00E590D5 /* KSDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDOMController.h; sourceTree = "<group>"; };
+		2792197C10BC631D00E590D5 /* KSDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSDOMController.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
 		2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportSavePanelController.m; sourceTree = "<group>"; };
 		2797B4BC0EF6E65D00F91398 /* KTURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTURLFormatter.h; sourceTree = "<group>"; };
@@ -2940,8 +2940,6 @@
 				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
 				2731ECCB10861E1500D8AAA5 /* SVBodyTextDOMController.h */,
 				2731ECCC10861E1500D8AAA5 /* SVBodyTextDOMController.m */,
-				2792197B10BC631D00E590D5 /* SVDOMController.h */,
-				2792197C10BC631D00E590D5 /* SVDOMController.m */,
 				27C7458C104E96CF00FBA79D /* SVWebContentItem.h */,
 				27C7458D104E96CF00FBA79D /* SVWebContentItem.m */,
 			);
@@ -4606,6 +4604,8 @@
 		CE01A71E0EAFD63600BDF264 /* WebKit */ = {
 			isa = PBXGroup;
 			children = (
+				2792197B10BC631D00E590D5 /* KSDOMController.h */,
+				2792197C10BC631D00E590D5 /* KSDOMController.m */,
 				2785197D104FD34A009C8558 /* KSWebViewController.h */,
 				2785197E104FD34A009C8558 /* KSWebViewController.m */,
 				CE01A71F0EAFD63600BDF264 /* DOM+Debugging.h */,
@@ -5130,7 +5130,7 @@
 				2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
 				279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */,
-				2792197D10BC631D00E590D5 /* SVDOMController.h in Headers */,
+				2792197D10BC631D00E590D5 /* KSDOMController.h in Headers */,
 				272F1F5110C2CBE600BBB836 /* SVContentObject.h in Headers */,
 				CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */,
 				273DCF9F10CBD5D3003CCE97 /* SVWebContentObjectsController.h in Headers */,
@@ -6504,7 +6504,7 @@
 				2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
 				279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */,
-				2792197E10BC631D00E590D5 /* SVDOMController.m in Sources */,
+				2792197E10BC631D00E590D5 /* KSDOMController.m in Sources */,
 				276E9EC610C0465500EFDA36 /* KTDataMigrator.m in Sources */,
 				272F1F5210C2CBE600BBB836 /* SVContentObject.m in Sources */,
 				CE043A6B10C7363600F76F97 /* KSRecentDocument.m in Sources */,

@@ -104,7 +104,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
         // Locate the matching controller
-        SVDOMController *controller = [self controllerForBodyElement:aModelElement];
+        KSDOMController *controller = [self controllerForBodyElement:aModelElement];
         if (controller)
         {
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
@@ -162,7 +162,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     DOMRange *selection = [webView selectedDOMRange];
     OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
     
-    SVDOMController *controller = [self controllerForDOMNode:[selection startContainer]];
+    KSDOMController *controller = [self controllerForDOMNode:[selection startContainer]];
     if (controller)
     {
         SVBodyElement *bodyElement = [controller representedObject];
@@ -201,7 +201,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Subcontrollers
 
-- (SVDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
+- (KSDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
                                                    HTMLElement:(DOMHTMLElement *)htmlElement;
 {
     id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
@@ -214,9 +214,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
+- (KSDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 {
-    SVDOMController * result = nil;
+    KSDOMController * result = nil;
     for (result in [self childDOMControllers])
     {
         if ([result representedObject] == element) break;
@@ -225,9 +225,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
+- (KSDOMController *)controllerForDOMNode:(DOMNode *)node;
 {
-    SVDOMController *result = nil;
+    KSDOMController *result = nil;
     for (result in [self childDOMControllers])
     {
         if ([node isDescendantOfNode:[result HTMLElement]]) break;
@@ -248,7 +248,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childDOMControllers] count]];
     
-    for (SVDOMController *aController in [self childDOMControllers])
+    for (KSDOMController *aController in [self childDOMControllers])
     {
         if ([aController conformsToProtocol:@protocol(SVWebEditorItem)])
         {
@@ -322,7 +322,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
         if (nextNode)
         {
-            SVDOMController * nextController = [self controllerForDOMNode:nextNode];
+            KSDOMController * nextController = [self controllerForDOMNode:nextNode];
             OBASSERT(nextController);
             
             NSArrayController *content = [self content];
@@ -343,7 +343,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
         if ([removedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            SVDOMController * controller = [self controllerForDOMNode:removedNode];
+            KSDOMController * controller = [self controllerForDOMNode:removedNode];
             if (controller)
             {
                 SVBodyElement *element = [controller representedObject];

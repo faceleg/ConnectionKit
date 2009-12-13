@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVDOMController.h"
+#import "KSDOMController.h"
 
 
 @class SVWebEditorViewController;
 
 
-@interface SVWebEditorMainDOMController : SVDOMController
+@interface SVWebEditorMainDOMController : KSDOMController
 {
   @private
     SVWebEditorViewController   *_webEditorController;
