@@ -684,7 +684,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			
 			//  kMDItemTextContent (free-text account of content)
 			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[self site] root] master] siteSubtitleHTMLString];
+			NSString *subtitle = [[[[[self site] root] master] siteSubtitle] textHTMLString];
 			if ( nil == subtitle )
 			{
 				subtitle = @"";
@@ -736,7 +736,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 			[localPool release];
 			
 			//  kMDItemTitle
-			NSString *siteTitle = [[[[self site] root] master] siteTitleHTMLString];        
+			NSString *siteTitle = [[[[[self site] root] master] siteTitle] textHTMLString];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
