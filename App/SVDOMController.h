@@ -19,7 +19,9 @@
     // DOM
     DOMHTMLElement      *_DOMElement;
     SVDOMEventListener  *_eventListener;
-    BOOL                _needsUpdate;
+    
+    // Updating
+    BOOL    _needsUpdate;
     
     // Content
     id              _representedObject;
@@ -29,7 +31,7 @@
     DOMHTMLDocument *_DOMDocument;
     
     // Tree
-    NSArray                 *_childControllers;
+    NSArray         *_childControllers;
     SVDOMController *_parentController;
 }
 
@@ -43,13 +45,6 @@
 - (id)initWithHTMLElement:(DOMHTMLElement *)element;
 
 
-#pragma mark Tree
-@property(nonatomic, copy) NSArray *childDOMControllers;
-@property(nonatomic, assign) SVDOMController *parentDOMController;  // don't call setter directly
-- (void)addChildDOMController:(SVDOMController *)controller;
-- (void)removeFromParentDOMController;
-
-
 #pragma mark DOM
 
 @property(nonatomic, retain) DOMHTMLElement *HTMLElement;
@@ -60,8 +55,19 @@
 //  The best solution I can come up with is to avoid the retain cycle between listener and DOM by creating a simple proxy to listen to events and forward them on to the real target, but not retain either object. That object is automatically managed for you and returned here.
 @property(nonatomic, retain, readonly) id <DOMEventListener> eventsListener;
 
-- (void)update; //override to push changes through to the DOM
-- (void)setNeedsUpdate; // call to mark for needing update. Instantaneous at the moment, but might not be in the future
+
+#pragma mark Tree
+@property(nonatomic, copy) NSArray *childDOMControllers;
+@property(nonatomic, assign) SVDOMController *parentDOMController;  // don't call setter directly
+- (void)addChildDOMController:(SVDOMController *)controller;
+- (void)removeFromParentDOMController;
+
+
+#pragma mark Updating
+- (void)update; // override to push changes through to the DOM. Rarely call directly
+@property(nonatomic, readonly) BOOL needsUpdate;
+- (void)setNeedsUpdate; // call to mark for needing update.
+- (void)updateIfNeeded; // recurses down the tree
 
 
 #pragma mark Content

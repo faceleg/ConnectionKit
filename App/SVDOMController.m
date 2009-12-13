@@ -141,11 +141,25 @@
 
 #pragma mark Updating
 
-- (void)update; { }
+- (void)update; { _needsUpdate = NO; }
+
+@synthesize needsUpdate = _needsUpdate;
 
 - (void)setNeedsUpdate;
 {
     [self setDescendantNeedsUpdate:self];
+}
+
+- (void)updateIfNeeded; // recurses down the tree
+{
+    if ([self needsUpdate])
+    {
+        [self update];
+    }
+    else
+    {
+        [[self childDOMControllers] makeObjectsPerformSelector:_cmd];
+    }
 }
 
 - (void)setDescendantNeedsUpdate:(SVDOMController *)controller;
