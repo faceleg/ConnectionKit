@@ -34,4 +34,5 @@
 
 @interface SVWebEditorItem (SVDOMController)
 - (void)update;
+- (void)updateIfNeeded; // recurses down the tree
 @end

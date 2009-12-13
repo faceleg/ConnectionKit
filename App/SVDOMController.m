@@ -43,8 +43,7 @@
         [self update];
     }
     
-    // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
-    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+    [super updateIfNeeded];
 }
 
 @end
@@ -56,6 +55,12 @@
 @implementation SVWebEditorItem (SVDOMController)
 
 - (void)update; { }
+
+- (void)updateIfNeeded; // recurses down the tree
+{
+    // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+}
 
 @end
 
