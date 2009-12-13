@@ -9,7 +9,7 @@
 //  An HTML element controller specialised to deal with text, generally of the editable variety. In a way, a bit like how NSText is too abstract to do anything on its own, but central to the operation of NSTextView and NSTextField. So check out the subclasses for more advanced stuff.
 
 
-#import "SVWebEditorItem.h"
+#import "SVDOMController.h"
 #import "SVWebEditorTextProtocol.h"
 #import "KSKeyValueBinding.h"
 
@@ -17,7 +17,7 @@
 @class SVPagelet;
 
 
-@interface SVWebEditorTextController : SVWebEditorItem <SVWebEditorText, KSEditor>
+@interface SVWebEditorTextController : SVDOMController <SVWebEditorText, KSEditor>
 {
   @private
     NSString    *_HTMLString;

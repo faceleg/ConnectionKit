@@ -7,13 +7,13 @@
 //
 
 
-#import "SVWebEditorItem.h"
+#import "SVDOMController.h"
 
 
 @class SVWebEditorTextController;
 
 
-@interface SVWebContentItem : SVWebEditorItem
+@interface SVWebContentItem : SVDOMController
 {
   @private
     NSMutableArray  *_textAreas;
