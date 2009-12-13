@@ -408,23 +408,40 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setUpdating:NO];
 }
 
-@synthesize needsUpdate = _needsUpdate;
-- (void)setNeedsUpdate;
+- (void)scheduleUpdate
 {
-    if (![self needsUpdate])
+    // Private method known only to our Main DOM Controller. Schedules an update if needed.
+    if (!_willUpdate)
 	{
 		// Install a fresh observer for the end of the run loop
-		[[NSRunLoop currentRunLoop] performSelector:@selector(update)
+		[[NSRunLoop currentRunLoop] performSelector:@selector(updateIfNeeded)
                                              target:self
                                            argument:nil
                                               order:0
                                               modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
 	}
-	
-    _needsUpdate = YES;
 }
 
-- (void)updateIfNeeded { if ([self needsUpdate]) [self update]; }
+@synthesize needsUpdate = _needsUpdate;
+- (void)setNeedsUpdate;
+{
+    _needsUpdate = YES;
+    [self scheduleUpdate];
+}
+
+- (void)updateIfNeeded
+{
+    if (!_willUpdate) return;   // don't you waste my time sucker!
+    
+    if ([self needsUpdate])
+    {
+        [self update];
+    }
+    else
+    {
+        [[self mainDOMController] updateIfNeeded];
+    }
+}
 
 @synthesize mainDOMController = _mainDOMController;
 

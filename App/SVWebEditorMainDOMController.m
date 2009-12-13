@@ -13,4 +13,12 @@
 
 - (DOMHTMLElement *)HTMLElement { return nil; }
 
+@synthesize webEditorViewController = _webEditorController;
+
+- (void)setDescendantNeedsUpdate:(SVDOMController *)controller
+{
+    // We are the top of the tree and need to hand off responsibility for the update to the Web Editor View Controller
+    [[self webEditorViewController] performSelector:@selector(setDOMControllersNeedUpdate)];
+}
+
 @end

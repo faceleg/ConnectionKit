@@ -37,7 +37,7 @@
     NSArray             *_sidebarPageletItems;
     
     // Loading
-    BOOL                    _needsUpdate;
+    BOOL                    _needsUpdate, _willUpdate;
     BOOL                    _isUpdating;
     NSRect                  _visibleRect;
     SVDOMController *_mainDOMController;
@@ -60,7 +60,7 @@
 
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
-- (void)updateIfNeeded;
+- (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
 
 @property(nonatomic, retain, readonly) SVDOMController *mainDOMController;
 

@@ -9,9 +9,15 @@
 #import "SVDOMController.h"
 
 
+@class SVWebEditorViewController;
+
+
 @interface SVWebEditorMainDOMController : SVDOMController
 {
-
+  @private
+    SVWebEditorViewController   *_webEditorController;
 }
+
+@property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
 
 @end
