@@ -9,17 +9,17 @@
 
 
 #import "KSDOMController.h"
-#import "SVWebEditorItemProtocol.h"
 
 
 @class SVBodyTextDOMController;
-@interface SVWebEditorItem : KSDOMController <SVWebEditorItem>
+@interface SVWebEditorItem : KSDOMController
 {
   @private
     SVBodyTextDOMController  *_bodyText;
 }
 
-@property(nonatomic, retain, readonly) DOMElement *DOMElement;
+- (BOOL)isEditable;
+
 
 // Strictly speaking, there could be more than one per item, but there isn't in practice at the moment, so this is a rather handy optimisation
 @property(nonatomic, retain) SVBodyTextDOMController *bodyText;

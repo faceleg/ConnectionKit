@@ -10,10 +10,9 @@
 
 
 #import "SVWebEditorTextController.h"
-#import "SVWebEditorItemProtocol.h"
 
 
-@interface SVWebEditorTextFieldController : SVWebEditorTextController <SVWebEditorItem>
+@interface SVWebEditorTextFieldController : SVWebEditorTextController
 {
   @private
     NSString    *_placeholder;

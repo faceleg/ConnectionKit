@@ -51,8 +51,6 @@
     return result;
 }
 
-- (DOMElement *)DOMElement { return [self HTMLElement]; }
-
 - (BOOL)isEditable { return NO; }
 
 @end

@@ -11,11 +11,11 @@
 
 
 #import <WebKit/WebKit.h>
-#import "SVWebEditorItemProtocol.h"
 #import "SVWebEditorTextProtocol.h"
 
 
 @protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
+@class SVWebEditorItem;
 @class SVWebEditorWebView;
 
 
@@ -75,9 +75,9 @@
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;
 
 @property(nonatomic, copy) NSArray *selectedItems;
-@property(nonatomic, retain, readonly) id <SVWebEditorItem> selectedItem;
+@property(nonatomic, retain, readonly) SVWebEditorItem *selectedItem;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
-- (void)deselectItem:(id <SVWebEditorItem>)item;
+- (void)deselectItem:(SVWebEditorItem *)item;
 
 - (IBAction)deselectAll:(id)sender; // Action method, so asks the delegate if selection should change first
 
@@ -118,9 +118,7 @@
 - (id)itemForDOMNode:(DOMNode *)node;
 - (NSArray *)itemsInDOMRange:(DOMRange *)range;
 
-- (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
-
-- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
+- (SVWebEditorItem *)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
 
 
 #pragma mark Setting the DataSource/Delegate

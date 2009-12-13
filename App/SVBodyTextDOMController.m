@@ -250,7 +250,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     for (KSDOMController *aController in [self childDOMControllers])
     {
-        if ([aController conformsToProtocol:@protocol(SVWebEditorItem)])
+        if (![aController isKindOfClass:[SVBodyParagraphDOMAdapter class]])
         {
             [result addObject:aController];
         }

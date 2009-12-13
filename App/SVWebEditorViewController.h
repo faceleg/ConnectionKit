@@ -85,7 +85,7 @@
 #pragma mark Graphics
 
 @property(nonatomic, copy, readonly) NSArray *contentItems;
-- (id <SVWebEditorItem>)contentItemForObject:(id)object;
+- (SVWebEditorItem *)contentItemForObject:(id)object;
 @property(nonatomic, copy, readonly) NSArray *sidebarPageletItems;
 
 

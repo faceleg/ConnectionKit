@@ -8,6 +8,7 @@
 
 #import "SVWebEditorView.h"
 #import "SVWebEditorWebView.h"
+#import "SVWebEditorItem.h"
 #import "SVSelectionBorder.h"
 
 #import "SVDocWindow.h"
@@ -32,10 +33,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 
 - (BOOL)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection isUIAction:(BOOL)isUIAction;
-- (BOOL)deselectItem:(id <SVWebEditorItem>)item isUIAction:(BOOL)isUIAction;
+- (BOOL)deselectItem:(SVWebEditorItem *)item isUIAction:(BOOL)isUIAction;
 
 - (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
-                         orDeselectItem:(id <SVWebEditorItem>)itemToDeselect
+                         orDeselectItem:(SVWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
                           updateWebView:(BOOL)updateWebView
                              isUIAction:(BOOL)consultDelegateFirst;
@@ -44,7 +45,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 
 // Getting Item Information
-- (NSArray *)ancestorsForItem:(id <SVWebEditorItem>)item includeItem:(BOOL)includeItem;
+- (NSArray *)ancestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
 
 
 // Event handling
@@ -203,7 +204,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     [self selectItems:items byExtendingSelection:NO];
 }
 
-- (id <SVWebEditorItem>)selectedItem
+- (SVWebEditorItem *)selectedItem
 {
     return [[self selectedItems] lastObject];
 }
@@ -213,7 +214,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     [self selectItems:items byExtendingSelection:extendSelection isUIAction:NO];
 }
 
-- (void)deselectItem:(id <SVWebEditorItem>)item;
+- (void)deselectItem:(SVWebEditorItem *)item;
 {
     [self deselectItem:item isUIAction:NO];
 }
@@ -236,7 +237,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
                                       isUIAction:isUIAction];
 }
 
-- (BOOL)deselectItem:(id <SVWebEditorItem>)item isUIAction:(BOOL)isUIAction;
+- (BOOL)deselectItem:(SVWebEditorItem *)item isUIAction:(BOOL)isUIAction;
 {
     return [self updateSelectionByDeselectingAll:NO
                                   orDeselectItem:item
@@ -246,7 +247,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 }
 
 - (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
-                         orDeselectItem:(id <SVWebEditorItem>)itemToDeselect
+                         orDeselectItem:(SVWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
                           updateWebView:(BOOL)updateWebView
                              isUIAction:(BOOL)consultDelegateFirst;
@@ -309,9 +310,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     //  Remove items, including marking them for display. Could almost certainly be more efficient
     if (itemsToDeselect)
     {
-        for (id <SVWebEditorItem> anItem in itemsToDeselect)
+        for (SVWebEditorItem *anItem in itemsToDeselect)
         {
-            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
+            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
         }
     }
@@ -327,9 +328,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     if (itemsToSelect)
     {
         // Draw new selection
-        for (id <SVWebEditorItem> anItem in itemsToSelect)
+        for (SVWebEditorItem *anItem in itemsToSelect)
         {
-            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
+            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
             [docView setNeedsDisplayInRect:drawingRect];
         }
     }
@@ -337,10 +338,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
-    id <SVWebEditorItem> selectedItem = [self selectedItem];
+    SVWebEditorItem *selectedItem = [self selectedItem];
     if (updateWebView && selectedItem)
     {
-        DOMElement *domElement = [selectedItem DOMElement];
+        DOMElement *domElement = [selectedItem HTMLElement];
         if ([domElement containingContentEditableElement])
         {
             [[self window] makeFirstResponder:[domElement documentView]];
@@ -368,7 +369,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         DOMNode *selectionNode = [[self selectedDOMRange] commonAncestorContainer];
         if (selectionNode)
         {
-            id <SVWebEditorItem> parent = [self itemForDOMNode:selectionNode];
+            SVWebEditorItem *parent = [self itemForDOMNode:selectionNode];
             if (parent)
             {
                 parentItems = [self ancestorsForItem:parent includeItem:YES];
@@ -423,9 +424,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     // Mark old as needing display
     [border setEditing:YES];
-    for (id <SVWebEditorItem> anItem in [self selectionParentItems])
+    for (SVWebEditorItem *anItem in [self selectionParentItems])
     {
-        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
+        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
         [docView setNeedsDisplayInRect:drawingRect];
     }
     
@@ -434,9 +435,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     [_selectionParentItems release]; _selectionParentItems = items;
     
     // Draw new items
-    for (id <SVWebEditorItem> anItem in items)
+    for (SVWebEditorItem *anItem in items)
     {
-        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem DOMElement] boundingBox]];
+        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
         [docView setNeedsDisplayInRect:drawingRect];
     }
     
@@ -551,9 +552,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 /*  What item would be selected if you click at that point?
  */
-- (id <SVWebEditorItem>)itemAtPoint:(NSPoint)point;
+- (SVWebEditorItem *)itemAtPoint:(NSPoint)point;
 {
-    id <SVWebEditorItem> result = nil;
+    SVWebEditorItem *result = nil;
     
     NSDictionary *element = [[self webView] elementAtPoint:point];
     DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
@@ -565,10 +566,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node;
+- (SVWebEditorItem *)itemForDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
-    id <SVWebEditorItem> result = nil;
+    SVWebEditorItem *result = nil;
     
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
@@ -577,7 +578,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     while (!result && index > -2)
     {
-        id <SVWebEditorItem> parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : nil;
+        SVWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : nil;
         
         NSArray *items = [[self dataSource] webEditorView:self
                                            childrenOfItem:parentItem];
@@ -596,9 +597,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     NSMutableArray *result = [NSMutableArray array];
     NSArray *items = [[self dataSource] webEditorView:self childrenOfItem:nil];
     
-    for (id <SVWebEditorItem> anItem in items)
+    for (SVWebEditorItem *anItem in items)
     {
-        if ([range containsNode:[anItem DOMElement]])
+        if ([range containsNode:[anItem HTMLElement]])
         {
             [result addObject:anItem];
         }
@@ -607,26 +608,16 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (id <SVWebEditorItem>)parentForItem:(id <SVWebEditorItem>)item;
-{
-    OBPRECONDITION(item);
-    
-    // Pretty simple actually; just search up the DOM again
-    DOMNode *parentNode = [[item DOMElement] parentNode];
-    id <SVWebEditorItem> result = [self itemForDOMNode:parentNode];
-    return result;
-}
-
-- (NSArray *)ancestorsForItem:(id <SVWebEditorItem>)item includeItem:(BOOL)includeItem;
+- (NSArray *)ancestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
 {
     OBPRECONDITION(item);
     
     NSArray *result = (includeItem ? [NSArray arrayWithObject:item] : nil);
     
-    id <SVWebEditorItem> parent = item;
+    SVWebEditorItem *parent = item;
     while (parent)
     {
-        parent = [self parentForItem:parent];
+        parent = [parent parentDOMController];
         if (parent)
         {
             if (result)
@@ -643,9 +634,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (id <SVWebEditorItem>)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
+- (SVWebEditorItem *)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
 {
-    id <SVWebEditorItem> result = nil;
+    SVWebEditorItem *result = nil;
     NSArray *itemDOMElements = [items valueForKey:@"DOMElement"];
     
     DOMNode *aNode = node;
@@ -691,11 +682,11 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     
     // Draw selection parent items
-    for (id <SVWebEditorItem> anItem in [self selectionParentItems])
+    for (SVWebEditorItem *anItem in [self selectionParentItems])
     {
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
         [border setEditing:YES];
-        NSRect frameRect = [[anItem DOMElement] boundingBox];
+        NSRect frameRect = [[anItem HTMLElement] boundingBox];
         NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:drawingRect])
         {
@@ -706,10 +697,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     // Draw actual selection
     [border setEditing:NO];
-    for (id <SVWebEditorItem> anItem in [self selectedItems])
+    for (SVWebEditorItem *anItem in [self selectedItems])
     {
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-        NSRect frameRect = [[anItem DOMElement] boundingBox];
+        NSRect frameRect = [[anItem HTMLElement] boundingBox];
         NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:drawingRect])
         {
@@ -739,7 +730,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
-        id <SVWebEditorItem> item = [self itemAtPoint:point];
+        SVWebEditorItem *item = [self itemAtPoint:point];
         if (item)
         {
             if (![[self selectionParentItems] containsObject:item])
@@ -811,7 +802,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     // What was clicked? We want to know top-level object
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    id <SVWebEditorItem> item = [self itemAtPoint:location];
+    SVWebEditorItem *item = [self itemAtPoint:location];
       
     if (item)
     {

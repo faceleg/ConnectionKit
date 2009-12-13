@@ -517,7 +517,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @synthesize contentItems = _contentItems;
 
-- (id <SVWebEditorItem>)contentItemForObject:(id)object;
+- (SVWebEditorItem *)contentItemForObject:(id)object;
 {
     OBPRECONDITION(object);
     id result = nil;
@@ -551,7 +551,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:i];
     
-        NSRect dropZone = [self rectOfDropZoneAboveDOMNode:[aPageletItem DOMElement]
+        NSRect dropZone = [self rectOfDropZoneAboveDOMNode:[aPageletItem HTMLElement]
                                                  minHeight:25.0f];
         
         if ([editor mouse:[editor convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
@@ -566,7 +566,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (result == NSNotFound)
     {
         NSRect dropZone = [self rectOfDropZoneInDOMElement:_sidebarDiv
-                                                 belowNode:[[pageletContentItems lastObject] DOMElement]
+                                                 belowNode:[[pageletContentItems lastObject] HTMLElement]
                                                  minHeight:25.0f];
         
         if ([editor mouse:[editor convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
@@ -854,8 +854,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         {
             SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
             
-            DOMRange *range = [[[aPageletItem DOMElement] ownerDocument] createRange];
-            [range setStartBefore:[aPageletItem DOMElement]];
+            DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
+            [range setStartBefore:[aPageletItem HTMLElement]];
             [sender moveDragCaretToDOMRange:range];
         }
     }

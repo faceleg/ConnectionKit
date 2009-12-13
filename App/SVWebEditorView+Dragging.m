@@ -8,6 +8,7 @@
 
 
 #import "SVWebEditorView.h"
+#import "SVWebEditorItem.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSColor+Karelia.h"
@@ -156,9 +157,9 @@
     // Make the dragged items visible again
     _isDragging = NO;
     
-    for (id <SVWebEditorItem> anItem in [self selectedItems])
+    for (SVWebEditorItem *anItem in [self selectedItems])
     {
-        DOMElement *element = [anItem DOMElement];
+        DOMElement *element = [anItem HTMLElement];
         [[element style] removeProperty:@"visibility"];
     }
 }
@@ -179,11 +180,11 @@
 
 /*  When beginning a drag, you want to drag all the selected items. I haven't quite decided how to do this yet – one big image containing them all or an image for the item under the mouse and a numeric overlay? – so this is fairly temporary. Also return by reference the origin of the image within our own coordinate system.
  */
-- (NSImage *)dragImageForSelectionFromItem:(id <SVWebEditorItem>)item
+- (NSImage *)dragImageForSelectionFromItem:(SVWebEditorItem *)item
                                   location:(NSPoint *)outImageLocation
 {
     // The core items involved
-    DOMElement *element = [item DOMElement];
+    DOMElement *element = [item HTMLElement];
     NSRect itemRect = NSInsetRect([element boundingBox], -1.0f, -1.0f);  // Expand by 1px to capture border
     NSImage *result = [[[NSImage alloc] initWithSize:itemRect.size] autorelease];
     
@@ -358,7 +359,7 @@
     if ([[self dataSource] webEditorView:self writeItems:selection toPasteboard:pboard])
     {
         // Now let's start a-dragging!
-        id <SVWebEditorItem> item = [selection lastObject]; // FIXME: use the item actually being dragged
+        SVWebEditorItem *item = [selection lastObject]; // FIXME: use the item actually being dragged
         
         NSPoint dragImageRect;
         NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
