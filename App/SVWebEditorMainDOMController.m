@@ -15,10 +15,4 @@
 
 @synthesize webEditorViewController = _webEditorController;
 
-- (void)descendantNeedsUpdate:(KSDOMController *)controller
-{
-    // We are the top of the tree and need to hand off responsibility for the update to the Web Editor View Controller
-    [[self webEditorViewController] performSelector:@selector(scheduleUpdate)];
-}
-
 @end

@@ -9,14 +9,6 @@
 #import "SVDOMController.h"
 
 
-@interface SVDOMController ()
-- (void)descendantNeedsUpdate:(SVWebEditorItem *)controller;
-@end
-
-
-#pragma mark -
-
-
 @implementation SVDOMController
 
 #pragma mark Updating
@@ -31,8 +23,17 @@
 
 - (void)setNeedsUpdate;
 {
-    _needsUpdate = YES;
-    [self descendantNeedsUpdate:self];
+    // Try to get hold of the controller in charge of update coalescing
+    id controller = (id)[[self webEditorView] delegate];
+    if ([controller respondsToSelector:@selector(scheduleUpdate)])
+    {
+        _needsUpdate = YES;
+        [controller performSelector:@selector(scheduleUpdate)];
+    }
+    else
+    {
+        [self update];
+    }
 }
 
 - (void)updateIfNeeded; // recurses down the tree
@@ -44,20 +45,6 @@
     
     // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
-}
-
-- (void)descendantNeedsUpdate:(SVWebEditorItem *)controller;
-{
-    // If possible ask our parent to take care of it. But if not must just update the controller immediately
-    SVWebEditorItem *parent = [self parentWebEditorItem];
-    if (parent)
-    {
-        [parent descendantNeedsUpdate:controller];
-    }
-    else
-    {
-        [controller update];
-    }
 }
 
 @end
