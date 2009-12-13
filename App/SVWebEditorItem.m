@@ -55,6 +55,11 @@
 
 - (BOOL)isEditable { return NO; }
 
+- (SVWebEditorView *)webEditorView
+{
+    return [[self parentWebEditorItem] webEditorView];
+}
+
 #pragma mark Tree
 
 /*  Fairly basic heirarchy maintenance stuff here

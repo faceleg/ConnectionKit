@@ -11,6 +11,7 @@
 #import "KSDOMController.h"
 
 
+@class SVWebEditorView;
 @class SVBodyTextDOMController;
 
 
@@ -25,6 +26,8 @@
 }
 
 - (BOOL)isEditable;
+
+@property(nonatomic, assign, readonly) SVWebEditorView *webEditorView;  // NOT KVO-compliant
 
 
 #pragma mark Tree
