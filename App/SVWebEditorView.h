@@ -16,7 +16,7 @@
 
 @protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
 @class SVWebEditorItem;
-@class SVWebEditorWebView;
+@class SVWebEditorWebView, SVMainWebEditorItem;
 
 
 @interface SVWebEditorView : NSView <NSUserInterfaceValidations>
@@ -24,6 +24,7 @@
   @private
     // Content
     SVWebEditorWebView              *_webView;
+    SVMainWebEditorItem             *_mainItem;
     id <SVWebEditorViewDataSource>  _dataSource;    // weak ref as you'd expect
     id <SVWebEditorViewDelegate>    _delegate;      // "
     BOOL    _isStartingLoad;
@@ -60,11 +61,12 @@
 #pragma mark Loading Data
 
 - (void)loadHTMLString:(NSString *)string baseURL:(NSURL *)URL;
+@property(nonatomic, readonly, getter=isStartingLoad) BOOL startingLoad;
 
 // Blocks until either loading is finished or date is reached. Returns YES if the former.
 - (BOOL)loadUntilDate:(NSDate *)date;
 
-@property(nonatomic, readonly, getter=isStartingLoad) BOOL startingLoad;
+@property(nonatomic, readonly) SVWebEditorItem *mainItem;   // add your items here after loading finishes
 
 
 #pragma mark Selection
@@ -157,15 +159,6 @@
 
 
 @protocol SVWebEditorViewDataSource <NSObject>
-
-/*!
- @method webEditorView:childrenOfItem:
- @param sender The SVWebEditorView object sending the message.
- @param item The item whose children to search for. Nil if after top-level items
- @result An array of SVWebEditorItem objects.
- */
-- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id)item;
-
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */

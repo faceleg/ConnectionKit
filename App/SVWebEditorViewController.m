@@ -769,25 +769,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark WebEditorViewDataSource
 
-- (NSArray *)webEditorView:(SVWebEditorView *)sender childrenOfItem:(id)item;
-{
-    NSArray *result = nil;
-    
-    if (item)
-    {
-        if ([item isKindOfClass:[SVWebEditorItem class]])
-        {
-            result = [[item bodyText] graphicControllers];  
-        }
-    }
-    else
-    {
-        result = [self contentItems];
-    }
-    
-    return result;
-}
-
 - (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender
                  textBlockForDOMRange:(DOMRange *)range;
 {

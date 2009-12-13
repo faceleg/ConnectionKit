@@ -24,6 +24,17 @@
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
 
 
+@interface SVMainWebEditorItem : SVWebEditorItem
+{
+    SVWebEditorView *_webEditor;
+}
+@property(nonatomic, assign) SVWebEditorView *webEditorView;
+@end
+
+
+#pragma mark -
+
+
 @interface SVWebEditorView () <SVWebEditorWebUIDelegate>
 
 @property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
@@ -67,6 +78,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     
     // ivars
+    _mainItem = [[SVMainWebEditorItem alloc] init];
+    [_mainItem setWebEditorView:self];
+    
     _selectedItems = [[NSMutableArray alloc] init];
     
     
@@ -119,6 +133,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (void)dealloc
 {
+    [_mainItem setWebEditorView:nil];
+    [_mainItem release];
+    
     [_webView setFrameLoadDelegate:nil];
     [_webView setPolicyDelegate:nil];
     [_webView setUIDelegate:nil];
@@ -152,6 +169,8 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     _isStartingLoad = NO;
 }
 
+@synthesize startingLoad = _isStartingLoad;
+
 - (BOOL)loadUntilDate:(NSDate *)date;
 {
     BOOL result = NO;
@@ -166,7 +185,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-@synthesize startingLoad = _isStartingLoad;
+@synthesize mainItem = _mainItem;
 
 #pragma mark Selected DOM Range
 
@@ -578,10 +597,9 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     while (!result && index > -2)
     {
-        SVWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : nil;
+        SVWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self mainItem];
         
-        NSArray *items = [[self dataSource] webEditorView:self
-                                           childrenOfItem:parentItem];
+        NSArray *items = [parentItem childWebEditorItems];
     
         result = [self itemForDOMNode:node inItems:items];
         
@@ -595,7 +613,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 - (NSArray *)itemsInDOMRange:(DOMRange *)range
 {
     NSMutableArray *result = [NSMutableArray array];
-    NSArray *items = [[self dataSource] webEditorView:self childrenOfItem:nil];
+    NSArray *items = [[self mainItem] childWebEditorItems];
     
     for (SVWebEditorItem *anItem in items)
     {
@@ -1213,6 +1231,19 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVMainWebEditorItem
+
+- (DOMHTMLElement *)HTMLElement { return nil; }
+
+@synthesize webEditorView = _webEditor;
+
+@end
+
 
 
 /*  SEP - Somebody Else's Problem
