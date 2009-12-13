@@ -23,7 +23,6 @@
 #import "SVTextField.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVWebEditorMainDOMController.h"
 #import "SVWebEditorTextFieldController.h"
 
 #import "DOMNode+Karelia.h"
@@ -73,20 +72,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
-    _mainDOMController = [[SVWebEditorMainDOMController alloc] init];
-    [_mainDOMController setWebEditorViewController:self];
-    
     return self;
 }
     
 - (void)dealloc
 {
-    [_mainDOMController setWebEditorViewController:nil];
     [self setWebEditorView:nil];   // needed to tear down data source
     
     [_page release];
     [_textAreas release];
-    [_mainDOMController release];
     [_context release];
     
     [super dealloc];
@@ -146,8 +140,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                   forKeyPath:[aDependency keyPath]];
     }
     
-    // And DOM controllers
-    [[self mainDOMController] setChildWebEditorItems:nil];
+    // And DOM controllers. TODO: WebEditorView should take care of this for itself?
+    [[[self webEditorView] mainItem] setChildWebEditorItems:nil];
     
     
     // Build the HTML.
@@ -381,7 +375,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Store controllers
-    [[self mainDOMController] setChildWebEditorItems:textAreas];
+    [[[self webEditorView] mainItem] setChildWebEditorItems:editorItems];
     
     [self setContentItems:editorItems];
     [editorItems release];
@@ -452,12 +446,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else
     {
-        [[self mainDOMController] updateIfNeeded];
+        [[[self webEditorView] mainItem] updateIfNeeded];
         _willUpdate = NO;
     }
 }
-
-@synthesize mainDOMController = _mainDOMController;
 
 #pragma mark Content
 

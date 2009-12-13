@@ -312,8 +312,6 @@
 		27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugin.h */; settings = {ATTRIBUTES = (); }; };
 		27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugin.m */; };
 		276E9EC610C0465500EFDA36 /* KTDataMigrator.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CF941CE0D623BE400B1C83D /* KTDataMigrator.m */; };
-		276F88FC10D462EE0094AA73 /* SVWebEditorMainDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F88FA10D462EE0094AA73 /* SVWebEditorMainDOMController.h */; };
-		276F88FD10D462EE0094AA73 /* SVWebEditorMainDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F88FB10D462EE0094AA73 /* SVWebEditorMainDOMController.m */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
 		277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 277026730E1E645200407CD1 /* KTCommentsTemplate.html */; };
@@ -1743,8 +1741,6 @@
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
 		27668FC20D63D3070019686C /* KTIndexPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugin.h; sourceTree = "<group>"; };
 		27668FC30D63D3070019686C /* KTIndexPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTIndexPlugin.m; sourceTree = "<group>"; };
-		276F88FA10D462EE0094AA73 /* SVWebEditorMainDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorMainDOMController.h; sourceTree = "<group>"; };
-		276F88FB10D462EE0094AA73 /* SVWebEditorMainDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorMainDOMController.m; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		277026730E1E645200407CD1 /* KTCommentsTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCommentsTemplate.html; sourceTree = "<group>"; };
@@ -3001,8 +2997,6 @@
 		2759CC98103970FC00E2C046 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				276F88FA10D462EE0094AA73 /* SVWebEditorMainDOMController.h */,
-				276F88FB10D462EE0094AA73 /* SVWebEditorMainDOMController.m */,
 				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
 				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 				CE26FA1308C4D9C500C9604B /* design-time.css */,
@@ -5138,7 +5132,6 @@
 				273DCF9F10CBD5D3003CCE97 /* SVWebContentObjectsController.h in Headers */,
 				273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */,
 				277892A010CD5FA3008AA683 /* SVTextField.h in Headers */,
-				276F88FC10D462EE0094AA73 /* SVWebEditorMainDOMController.h in Headers */,
 				276F8AB210D572780094AA73 /* SVDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6516,7 +6509,6 @@
 				277892A110CD5FA3008AA683 /* SVTextField.m in Sources */,
 				CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */,
 				CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */,
-				276F88FD10D462EE0094AA73 /* SVWebEditorMainDOMController.m in Sources */,
 				276F8AB310D572780094AA73 /* SVDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

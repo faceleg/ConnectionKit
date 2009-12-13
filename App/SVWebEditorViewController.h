@@ -12,7 +12,7 @@
 
 
 @class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
-@class SVWebContentObjectsController, SVWebEditorMainDOMController;
+@class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
@@ -40,7 +40,6 @@
     BOOL                            _needsUpdate, _willUpdate;
     BOOL                            _isUpdating;
     NSRect                          _visibleRect;
-    SVWebEditorMainDOMController    *_mainDOMController;
     
     NSSet   *_pageDependencies;
     
@@ -61,8 +60,6 @@
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
-
-@property(nonatomic, retain, readonly) SVDOMController *mainDOMController;
 
 
 #pragma mark Content
