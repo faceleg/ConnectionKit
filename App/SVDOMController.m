@@ -156,10 +156,9 @@
     {
         [self update];
     }
-    else
-    {
-        [[self childDOMControllers] makeObjectsPerformSelector:_cmd];
-    }
+    
+    // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
+    [[self childDOMControllers] makeObjectsPerformSelector:_cmd];
 }
 
 - (void)setDescendantNeedsUpdate:(SVDOMController *)controller;
