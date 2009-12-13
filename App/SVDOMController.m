@@ -25,7 +25,7 @@
 
 
 @interface SVDOMController ()
-- (void)setDescendantNeedsUpdate:(SVDOMController *)controller;
+- (void)descendantNeedsUpdate:(SVDOMController *)controller;
 @end
 
 
@@ -147,7 +147,8 @@
 
 - (void)setNeedsUpdate;
 {
-    [self setDescendantNeedsUpdate:self];
+    _needsUpdate = YES;
+    [self descendantNeedsUpdate:self];
 }
 
 - (void)updateIfNeeded; // recurses down the tree
@@ -161,13 +162,13 @@
     [[self childDOMControllers] makeObjectsPerformSelector:_cmd];
 }
 
-- (void)setDescendantNeedsUpdate:(SVDOMController *)controller;
+- (void)descendantNeedsUpdate:(SVDOMController *)controller;
 {
     // If possible ask our parent to take care of it. But if not must just update the controller immediately
     SVDOMController *parent = [self parentDOMController];
     if (parent)
     {
-        [parent setDescendantNeedsUpdate:controller];
+        [parent descendantNeedsUpdate:controller];
     }
     else
     {

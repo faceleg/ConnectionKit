@@ -15,10 +15,10 @@
 
 @synthesize webEditorViewController = _webEditorController;
 
-- (void)setDescendantNeedsUpdate:(SVDOMController *)controller
+- (void)descendantNeedsUpdate:(SVDOMController *)controller
 {
     // We are the top of the tree and need to hand off responsibility for the update to the Web Editor View Controller
-    [[self webEditorViewController] performSelector:@selector(setDOMControllersNeedUpdate)];
+    [[self webEditorViewController] performSelector:@selector(scheduleUpdate)];
 }
 
 @end

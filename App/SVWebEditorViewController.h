@@ -12,7 +12,7 @@
 
 
 @class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
-@class SVWebContentObjectsController;
+@class SVWebContentObjectsController, SVWebEditorMainDOMController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
@@ -37,10 +37,10 @@
     NSArray             *_sidebarPageletItems;
     
     // Loading
-    BOOL                    _needsUpdate, _willUpdate;
-    BOOL                    _isUpdating;
-    NSRect                  _visibleRect;
-    SVDOMController *_mainDOMController;
+    BOOL                            _needsUpdate, _willUpdate;
+    BOOL                            _isUpdating;
+    NSRect                          _visibleRect;
+    SVWebEditorMainDOMController    *_mainDOMController;
     
     NSSet   *_pageDependencies;
     

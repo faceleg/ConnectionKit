@@ -23,6 +23,7 @@
 #import "SVTextField.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorMainDOMController.h"
 #import "SVWebEditorTextFieldController.h"
 
 #import "DOMNode+Karelia.h"
@@ -72,15 +73,20 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
+    _mainDOMController = [[SVWebEditorMainDOMController alloc] init];
+    [_mainDOMController setWebEditorViewController:self];
+    
     return self;
 }
     
 - (void)dealloc
 {
+    [_mainDOMController setWebEditorViewController:nil];
     [self setWebEditorView:nil];   // needed to tear down data source
     
     [_page release];
     [_textAreas release];
+    [_mainDOMController release];
     [_context release];
     
     [super dealloc];
@@ -139,6 +145,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         [[aDependency object] removeObserver:self
                                   forKeyPath:[aDependency keyPath]];
     }
+    
+    // And DOM controllers
+    [[self mainDOMController] setChildDOMControllers:nil];
     
     
     // Build the HTML.
@@ -217,6 +226,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 	
     // Clearly the webview is no longer in need of refreshing
+    _willUpdate = NO;
 	_needsUpdate = NO;
 }
 
@@ -371,6 +381,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Store controllers
+    [[self mainDOMController] setChildDOMControllers:textAreas];
+    
     [self setContentItems:editorItems];
     [editorItems release];
     
@@ -420,6 +432,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                               order:0
                                               modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
 	}
+    _willUpdate = YES;
 }
 
 @synthesize needsUpdate = _needsUpdate;
@@ -440,6 +453,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     else
     {
         [[self mainDOMController] updateIfNeeded];
+        _willUpdate = NO;
     }
 }
 
