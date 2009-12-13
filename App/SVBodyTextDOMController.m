@@ -104,7 +104,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
         // Locate the matching controller
-        KSDOMController *controller = [self controllerForBodyElement:aModelElement];
+        SVWebEditorItem *controller = [self controllerForBodyElement:aModelElement];
         if (controller)
         {
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
@@ -129,7 +129,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             
             [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
             
-            [self addChildDOMController:controller];
+            [self addChildWebEditorItem:controller];
             [controller release];
         }
     }
@@ -140,7 +140,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     {
         DOMHTMLElement *nextNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
         
-        [[self controllerForDOMNode:domNode] removeFromParentDOMController];
+        [[self controllerForDOMNode:domNode] removeFromParentWebEditorItem];
         [[domNode parentNode] removeChild:domNode];
         
         domNode = nextNode;
@@ -207,17 +207,17 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
     [result setHTMLContext:[self HTMLContext]];
     [result setRepresentedObject:bodyElement];
-    [self addChildDOMController:result];
+    [self addChildWebEditorItem:result];
     [result release];
     
     
     return result;
 }
 
-- (KSDOMController *)controllerForBodyElement:(SVBodyElement *)element;
+- (SVWebEditorItem *)controllerForBodyElement:(SVBodyElement *)element;
 {
-    KSDOMController * result = nil;
-    for (result in [self childDOMControllers])
+    SVWebEditorItem * result = nil;
+    for (result in [self childWebEditorItems])
     {
         if ([result representedObject] == element) break;
     }
@@ -225,10 +225,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (KSDOMController *)controllerForDOMNode:(DOMNode *)node;
+- (SVWebEditorItem *)controllerForDOMNode:(DOMNode *)node;
 {
-    KSDOMController *result = nil;
-    for (result in [self childDOMControllers])
+    SVWebEditorItem *result = nil;
+    for (result in [self childWebEditorItems])
     {
         if ([node isDescendantOfNode:[result HTMLElement]]) break;
     }
@@ -246,9 +246,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (NSArray *)graphicControllers;
 {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childDOMControllers] count]];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childWebEditorItems] count]];
     
-    for (KSDOMController *aController in [self childDOMControllers])
+    for (KSDOMController *aController in [self childWebEditorItems])
     {
         if (![aController isKindOfClass:[SVBodyParagraphDOMAdapter class]])
         {
@@ -266,7 +266,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [super didChangeText];
     
     // Let subcontrollers know the change took place
-    [[self childDOMControllers] makeObjectsPerformSelector:@selector(enclosingBodyControllerDidChangeText)];
+    [[self childWebEditorItems] makeObjectsPerformSelector:@selector(enclosingBodyControllerDidChangeText)];
 }
 
 @synthesize updating = _isUpdating;
@@ -343,7 +343,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
         if ([removedNode isKindOfClass:[DOMHTMLElement class]])
         {
-            KSDOMController * controller = [self controllerForDOMNode:removedNode];
+            SVWebEditorItem *controller = [self controllerForDOMNode:removedNode];
             if (controller)
             {
                 SVBodyElement *element = [controller representedObject];
@@ -352,7 +352,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
                 [[self content] removeObject:element];
                 [self didUpdate];
                 
-                [controller removeFromParentDOMController];
+                [controller removeFromParentWebEditorItem];
             }
         }
     }

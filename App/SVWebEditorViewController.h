@@ -62,7 +62,7 @@
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
 
-@property(nonatomic, retain, readonly) KSDOMController *mainDOMController;
+@property(nonatomic, retain, readonly) SVWebEditorItem *mainDOMController;
 
 
 #pragma mark Content

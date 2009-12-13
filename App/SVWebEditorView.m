@@ -617,7 +617,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     SVWebEditorItem *parent = item;
     while (parent)
     {
-        parent = [parent parentDOMController];
+        parent = [parent parentWebEditorItem];
         if (parent)
         {
             if (result)

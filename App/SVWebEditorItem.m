@@ -18,7 +18,9 @@
 
 - (void)dealloc
 {
+    [self setChildWebEditorItems:nil];
     [_bodyText release];
+    
     [super dealloc];
 }
 
@@ -52,5 +54,51 @@
 }
 
 - (BOOL)isEditable { return NO; }
+
+#pragma mark Tree
+
+/*  Fairly basic heirarchy maintenance stuff here
+ */
+
+@synthesize childWebEditorItems = _childControllers;
+- (void)setChildWebEditorItems:(NSArray *)controllers
+{
+    [[self childWebEditorItems] makeObjectsPerformSelector:@selector(setParentWebEditorItem:)
+                                                withObject:nil];
+    
+    controllers = [controllers copy];
+    [_childControllers release]; _childControllers = controllers;
+    
+    [controllers makeObjectsPerformSelector:@selector(setParentWebEditorItem:)
+                                 withObject:self];
+}
+
+@synthesize parentWebEditorItem = _parentController;
+
+- (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
+{
+    OBPRECONDITION(controller);
+    
+    NSArray *children = [[self childWebEditorItems] arrayByAddingObject:controller];
+    if (!children) children = [NSArray arrayWithObject:controller];
+    [_childControllers release]; _childControllers = [children copy];
+    
+    [controller setParentWebEditorItem:self];
+}
+
+- (void)removeFromParentWebEditorItem;
+{
+    [self setParentWebEditorItem:nil];
+    
+    SVWebEditorItem *parent = [self parentWebEditorItem];
+    
+    NSMutableArray *children = [[parent childWebEditorItems] mutableCopy];
+    [children removeObject:self];
+    
+    if (parent)
+    {
+        [parent->_childControllers release]; parent->_childControllers = children;
+    }
+}
 
 @end

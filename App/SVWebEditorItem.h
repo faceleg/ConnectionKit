@@ -12,15 +12,29 @@
 
 
 @class SVBodyTextDOMController;
+
+
 @interface SVWebEditorItem : KSDOMController
 {
   @private
     SVBodyTextDOMController  *_bodyText;
+    
+    // Tree
+    NSArray         *_childControllers;
+    SVWebEditorItem *_parentController;
 }
 
 - (BOOL)isEditable;
 
 
+#pragma mark Tree
+@property(nonatomic, copy) NSArray *childWebEditorItems;
+@property(nonatomic, assign) SVWebEditorItem *parentWebEditorItem;  // don't call setter directly
+- (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
+- (void)removeFromParentWebEditorItem;
+
+
+#pragma mark Body
 // Strictly speaking, there could be more than one per item, but there isn't in practice at the moment, so this is a rather handy optimisation
 @property(nonatomic, retain) SVBodyTextDOMController *bodyText;
 

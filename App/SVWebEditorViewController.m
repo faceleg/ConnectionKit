@@ -147,7 +147,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     
     // And DOM controllers
-    [[self mainDOMController] setChildDOMControllers:nil];
+    [[self mainDOMController] setChildWebEditorItems:nil];
     
     
     // Build the HTML.
@@ -381,7 +381,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Store controllers
-    [[self mainDOMController] setChildDOMControllers:textAreas];
+    [[self mainDOMController] setChildWebEditorItems:textAreas];
     
     [self setContentItems:editorItems];
     [editorItems release];

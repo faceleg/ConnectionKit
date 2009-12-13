@@ -9,12 +9,12 @@
 //  Keeps an HTML element in sync with a matching SVBodyParagraph object.
 
 
-#import "SVWebEditorTextController.h"
+#import "SVWebEditorItem.h"
 
 
 @class SVBodyParagraph, SVBodyElement;
 
-@interface SVBodyParagraphDOMAdapter : KSDOMController <DOMEventListener>
+@interface SVBodyParagraphDOMAdapter : SVWebEditorItem <DOMEventListener>
 {
   @private    
     WebView         *_webView;
