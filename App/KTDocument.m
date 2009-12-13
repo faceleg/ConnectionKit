@@ -232,7 +232,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                                     language:language
                                                                                     fallback:
                                               NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];
-        [root setTitleText:defaultRootPageTitleText];
+        [root setTitleWithString:defaultRootPageTitleText];
         
         
         // Set the Favicon
@@ -741,7 +741,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// Get title of page/pagelet we are editing
 		if ([aSourceObject respondsToSelector:@selector(titleText)])
 		{
-			NSString *itsTitle = [((KTAbstractPage *)aSourceObject) titleText];
+			NSString *itsTitle = [[((KTAbstractPage *)aSourceObject) title] text];
 			if (nil != itsTitle && ![itsTitle isEqualToString:@""])
 			{
 				title = itsTitle;
