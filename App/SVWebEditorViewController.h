@@ -37,9 +37,9 @@
     NSArray             *_sidebarPageletItems;
     
     // Loading
-    BOOL                            _needsUpdate, _willUpdate;
-    BOOL                            _isUpdating;
-    NSRect                          _visibleRect;
+    BOOL    _needsUpdate, _willUpdate;
+    BOOL    _isUpdating;
+    NSRect  _visibleRect;
     
     NSSet   *_pageDependencies;
     
