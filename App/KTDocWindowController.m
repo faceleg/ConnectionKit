@@ -415,7 +415,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void) designChosen:(KTDesign *)aDesign
 {
-	NSLog(@"%s %p",__FUNCTION__, aDesign);
+	DJW((@"%s %p",__FUNCTION__, aDesign));
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
 }
 

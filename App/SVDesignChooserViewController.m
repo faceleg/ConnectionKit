@@ -74,18 +74,18 @@
 	[[[self view] window] setAcceptsMouseMovedEvents:YES];
     [[[self view] window] makeFirstResponder:self];
 
-	NSLog(@"%s %@",__FUNCTION__, theEvent);
+	DJW((@"%s %@",__FUNCTION__, theEvent));
 }
 - (void)mouseExited:(NSEvent *)theEvent
 {
     [[[self view] window] setAcceptsMouseMovedEvents:_wasAcceptingMouseEvents];
-	NSLog(@"%s %@",__FUNCTION__, theEvent);
+	DJW((@"%s %@",__FUNCTION__, theEvent));
 }
 - (void)mouseMoved:(NSEvent *)theEvent
 {
 #define CELLWIDTH 150
 #define CELLHEIGHT 112
-//	NSLog(@"%s %@",__FUNCTION__, theEvent);
+	DJW((@"%s %@",__FUNCTION__, theEvent));
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [[self view] convertPoint:windowPoint fromView:nil];
 
@@ -125,22 +125,22 @@
 
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 }
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 }
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *) event;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 }
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser backgroundWasRightClickedWithEvent:(NSEvent *) event;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 }
 
 // Data source
@@ -158,7 +158,7 @@
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser removeItemsAtIndexes:(NSIndexSet *) indexes; 
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 }
 
 
@@ -170,21 +170,21 @@
 
 - (NSUInteger) imageBrowser:(IKImageBrowserView *) aBrowser writeItemsAtIndexes:(NSIndexSet *) itemIndexes toPasteboard:(NSPasteboard *)pasteboard;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 	return -99;
 }
 
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 	return 1;
 }
 
 
 - (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
 {
-	NSLog(@"%s",__FUNCTION__);
+	DJW((@"%s",__FUNCTION__));
 	return nil;
 }
 
