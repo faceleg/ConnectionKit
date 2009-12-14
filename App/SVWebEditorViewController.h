@@ -17,7 +17,7 @@
 @protocol SVWebEditorViewControllerDelegate;
 
 
-@interface SVWebEditorViewController : KSWebViewController <SVWebEditorViewDataSource, SVWebEditorViewDelegate, SVHTMLTemplateParserDelegate>
+@interface SVWebEditorViewController : KSWebViewController <SVWebEditorDataSource, SVWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {
     // View
     SVWebEditorView *_webEditorView;
@@ -49,7 +49,7 @@
 
 
 #pragma mark View
-@property(nonatomic, retain) SVWebEditorView *webEditorView;
+@property(nonatomic, retain) SVWebEditorView *webEditor;
 
 
 #pragma mark Updating

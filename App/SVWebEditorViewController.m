@@ -77,7 +77,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 - (void)dealloc
 {
-    [self setWebEditorView:nil];   // needed to tear down data source
+    [self setWebEditor:nil];   // needed to tear down data source
     
     [_page release];
     [_textAreas release];
@@ -93,7 +93,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     SVWebEditorView *editor = [[SVWebEditorView alloc] init];
     
     [self setView:editor];
-    [self setWebEditorView:editor];
+    [self setWebEditor:editor];
     [self setWebView:[editor webView]];
     
     // Register the editor for drag & drop
@@ -114,11 +114,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	[webView setContinuousSpellCheckingEnabled:spellCheck];
 }
 
-@synthesize webEditorView = _webEditorView;
-- (void)setWebEditorView:(SVWebEditorView *)editor
+@synthesize webEditor = _webEditorView;
+- (void)setWebEditor:(SVWebEditorView *)editor
 {
-    [[self webEditorView] setDelegate:nil];
-    [[self webEditorView] setDataSource:nil];
+    [[self webEditor] setDelegate:nil];
+    [[self webEditor] setDataSource:nil];
     
     [editor retain];
     [_webEditorView release];
@@ -141,7 +141,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     
     // And DOM controllers. TODO: WebEditorView should take care of this for itself?
-    [[[self webEditorView] mainItem] setChildWebEditorItems:nil];
+    [[[self webEditor] mainItem] setChildWebEditorItems:nil];
     
     
     // Build the HTML.
@@ -187,7 +187,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
     [self setUpdating:YES];
-    _visibleRect = [[[self webEditorView] documentView] visibleRect];
+    _visibleRect = [[[self webEditor] documentView] visibleRect];
     
     
 	// Figure out the URL to use
@@ -201,7 +201,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Load the HTML into the webview
-    [[self webEditorView] loadHTMLString:pageHTML baseURL:pageURL];
+    [[self webEditor] loadHTMLString:pageHTML baseURL:pageURL];
     
     
     // Observe the used keypaths
@@ -236,7 +236,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Locate the corresponding HTML element
-    DOMDocument *domDoc = [[self webEditorView] HTMLDocument];
+    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
     DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
     
     
@@ -292,7 +292,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         [result setEditable:YES];
         
         // Store as the body text of correct item
-        SVWebEditorItem *item = [[self webEditorView] itemForDOMNode:element];
+        SVWebEditorItem *item = [[self webEditor] itemForDOMNode:element];
         [item setBodyText:(SVBodyTextDOMController *)result];
     }
     else
@@ -322,7 +322,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
-    DOMDocument *domDoc = [[self webEditorView] HTMLDocument];
+    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
@@ -375,7 +375,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Store controllers
-    [[[self webEditorView] mainItem] setChildWebEditorItems:editorItems];
+    [[[self webEditor] mainItem] setChildWebEditorItems:editorItems];
     
     [self setContentItems:editorItems];
     [editorItems release];
@@ -396,7 +396,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if (newItem) [newSelection addObject:newItem];
     }
     
-    [[self webEditorView] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
+    [[self webEditor] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
     [newSelection release];
     
     
@@ -407,7 +407,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Restore scroll point
-    [[self webEditorView] scrollToPoint:_visibleRect.origin];
+    [[self webEditor] scrollToPoint:_visibleRect.origin];
     
     
     // Mark as loaded
@@ -446,7 +446,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else
     {
-        [[[self webEditorView] mainItem] updateIfNeeded];
+        [[[self webEditor] mainItem] updateIfNeeded];
         _willUpdate = NO;
     }
 }
@@ -533,7 +533,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo
 {
     NSUInteger result = NSNotFound;
-    SVWebEditorView *editor = [self webEditorView];
+    SVWebEditorView *editor = [self webEditor];
     NSArray *pageletContentItems = [self sidebarPageletItems];
     
     
@@ -602,7 +602,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         result = NSInsetRect(result, 0.0f, -0.5 * (minHeight - result.size.height));
     }
     
-    return [[self webEditorView] convertRect:result fromView:[node documentView]];
+    return [[self webEditor] convertRect:result fromView:[node documentView]];
 }
 
 - (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
@@ -631,7 +631,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     
     
-    return [[self webEditorView] convertRect:result fromView:[element documentView]];
+    return [[self webEditor] convertRect:result fromView:[element documentView]];
 }
 
 #pragma mark Element Insertion
@@ -650,7 +650,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)insertPagelet:(id)sender;
 {
     // Is the user editing some body text? If so, insert the pagelet as near there as possible. If not, insert into the sidebar
-    DOMRange *selection = [[self webEditorView] selectedDOMRange];
+    DOMRange *selection = [[self webEditor] selectedDOMRange];
     SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
     SVPagelet *pagelet = [_selectableObjectsController newPagelet];
     
@@ -761,19 +761,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark WebEditorViewDataSource
 
-- (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender
+- (id <SVWebEditorText>)webEditor:(SVWebEditorView *)sender
                  textBlockForDOMRange:(DOMRange *)range;
 {
     return [self textAreaForDOMRange:range];
 }
 
-- (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
+- (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
     [_selectableObjectsController remove:self];
     return YES;
 }
 
-- (BOOL)webEditorView:(SVWebEditorView *)sender
+- (BOOL)webEditor:(SVWebEditorView *)sender
            writeItems:(NSArray *)items
          toPasteboard:(NSPasteboard *)pasteboard;
 {
@@ -801,10 +801,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 /*  Want to leave the Web Editor View in charge of drag & drop except for pagelets
  */
-- (NSDragOperation)webEditorView:(SVWebEditorView *)sender
+- (NSDragOperation)webEditor:(SVWebEditorView *)sender
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 {
-    OBPRECONDITION(sender == [self webEditorView]);
+    OBPRECONDITION(sender == [self webEditor]);
     
     NSDragOperation result = NSDragOperationNone;
     
@@ -837,9 +837,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-- (BOOL)webEditorView:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
+- (BOOL)webEditor:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
 {
-    OBPRECONDITION(sender == [self webEditorView]);
+    OBPRECONDITION(sender == [self webEditor]);
     BOOL result = NO;
     
     NSArray *pageletContentItems = [self sidebarPageletItems];
@@ -884,15 +884,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
 {
-    OBPRECONDITION(sender == [self webEditorView]);
+    OBPRECONDITION(sender == [self webEditor]);
     [[self delegate] webEditorViewControllerDidFirstLayout:self];
 }
 
-- (BOOL)webEditorView:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+- (BOOL)webEditor:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
 {
     //  Update our content controller's selected objects to reflect the new selection in the Web Editor View
     
-    OBPRECONDITION(sender == [self webEditorView]);
+    OBPRECONDITION(sender == [self webEditor]);
     
     // TODO: Can we do this without a cast?
     NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
@@ -902,12 +902,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification; { }
 
-- (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
+- (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 {
     [self setTitle:title];
 }
 
-- (void)webEditorView:(SVWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
+- (void)webEditor:(SVWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
 {
     NSURL *URL = [actionInfo objectForKey:@"WebActionOriginalURLKey"];
     

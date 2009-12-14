@@ -270,7 +270,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	if (info)
 	{
 		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
-		DOMRange *selectedRange = [[[[self webContentAreaController] webEditorViewController] webEditorView] selectedDOMRange];
+		DOMRange *selectedRange = [[[[self webContentAreaController] webEditorViewController] webEditor] selectedDOMRange];
 		
         
 		// Hunt down the anchor to edit
@@ -302,7 +302,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
             
             // Since we're editing a link, select it
             [selectedRange selectNode:possibleAnchor];
-            [[[[self webContentAreaController] webEditorViewController] webEditorView] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
+            [[[[self webContentAreaController] webEditorViewController] webEditor] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
 		}
 		else if ( nil != node )
 		{

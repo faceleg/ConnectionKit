@@ -14,7 +14,7 @@
 #import "SVWebEditorTextProtocol.h"
 
 
-@protocol SVWebEditorViewDataSource, SVWebEditorViewDelegate;
+@protocol SVWebEditorDataSource, SVWebEditorDelegate;
 @class SVWebEditorItem;
 @class SVWebEditorWebView, SVMainWebEditorItem;
 
@@ -25,8 +25,8 @@
     // Content
     SVWebEditorWebView              *_webView;
     SVMainWebEditorItem             *_mainItem;
-    id <SVWebEditorViewDataSource>  _dataSource;    // weak ref as you'd expect
-    id <SVWebEditorViewDelegate>    _delegate;      // "
+    id <SVWebEditorDataSource>  _dataSource;    // weak ref as you'd expect
+    id <SVWebEditorDelegate>    _delegate;      // "
     BOOL    _isStartingLoad;
     
     // Selection
@@ -125,8 +125,8 @@
 
 #pragma mark Setting the DataSource/Delegate
 
-@property(nonatomic, assign) id <SVWebEditorViewDataSource> dataSource;
-@property(nonatomic, assign) id <SVWebEditorViewDelegate> delegate;
+@property(nonatomic, assign) id <SVWebEditorDataSource> dataSource;
+@property(nonatomic, assign) id <SVWebEditorDelegate> delegate;
 
 @end
 
@@ -158,23 +158,23 @@
 #pragma mark -
 
 
-@protocol SVWebEditorViewDataSource <NSObject>
+@protocol SVWebEditorDataSource <NSObject>
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
-- (id <SVWebEditorText>)webEditorView:(SVWebEditorView *)sender
+- (id <SVWebEditorText>)webEditor:(SVWebEditorView *)sender
                       textBlockForDOMRange:(DOMRange *)range;
 
-- (BOOL)webEditorView:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
+- (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 
 
 #pragma mark Dragging
 
 // Return something other than NSDragOperationNone to take command of the drop
-- (NSDragOperation)webEditorView:(SVWebEditorView *)sender
+- (NSDragOperation)webEditor:(SVWebEditorView *)sender
       dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
 
-- (BOOL)webEditorView:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
+- (BOOL)webEditor:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:
@@ -183,7 +183,7 @@
  @param pasteboard
  @result YES if the items could be written to the pasteboard
  */
-- (BOOL)webEditorView:(SVWebEditorView *)sender
+- (BOOL)webEditor:(SVWebEditorView *)sender
            writeItems:(NSArray *)items
          toPasteboard:(NSPasteboard *)pasteboard;
 
@@ -193,12 +193,12 @@
 #pragma mark -
 
 
-@protocol SVWebEditorViewDelegate <NSObject>
+@protocol SVWebEditorDelegate <NSObject>
 
 #pragma mark Selection
 
 //  Only called in response to selection changes from the GUI and action methods. Could make it more flexible one day if needed
-- (BOOL)webEditorView:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+- (BOOL)webEditor:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
    
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
@@ -209,9 +209,9 @@
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
-- (void)webEditorView:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
+- (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 
- - (void)webEditorView:(SVWebEditorView *)webEditorView
+ - (void)webEditor:(SVWebEditorView *)webEditorView
 handleNavigationAction:(NSDictionary *)actionInformation
                request:(NSURLRequest *)request;
 

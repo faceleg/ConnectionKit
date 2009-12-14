@@ -317,7 +317,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     
     //  If needed, check the new selection with the delegate.
-    if (consultDelegateFirst && ![[self delegate] webEditorView:self shouldChangeSelection:proposedSelection])
+    if (consultDelegateFirst && ![[self delegate] webEditor:self shouldChangeSelection:proposedSelection])
 	{
 		[proposedSelection release];
 		return NO;
@@ -493,7 +493,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     OBPRECONDITION(range);
     
     // Alert the corresponding Text object that it did change
-    id <SVWebEditorText> text = [[self dataSource] webEditorView:self
+    id <SVWebEditorText> text = [[self dataSource] webEditor:self
                                             textBlockForDOMRange:range];
     [text webEditorTextDidChange:notification];
 }
@@ -551,7 +551,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 - (BOOL)copySelectedItemsToGeneralPasteboard;
 {
     // Rely on the datasource to serialize items to the pasteboard
-    BOOL result = [[self dataSource] webEditorView:self 
+    BOOL result = [[self dataSource] webEditor:self 
                                         writeItems:[self selectedItems]
                                       toPasteboard:[NSPasteboard generalPasteboard]];
     if (!result) NSBeep();
@@ -561,7 +561,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (void)delete:(id)sender;
 {
-    if (![[self dataSource] webEditorView:self deleteItems:[self selectedItems]])
+    if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]])
     {
         NSBeep();
     }
@@ -922,7 +922,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 @synthesize dataSource = _dataSource;
 
 @synthesize delegate = _delegate;
-- (void)setDelegate:(id <SVWebEditorViewDelegate>)delegate
+- (void)setDelegate:(id <SVWebEditorDelegate>)delegate
 {
     if ([self delegate])
     {
@@ -1009,7 +1009,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 {
     if (frame == [sender mainFrame])
     {
-        [[self delegate] webEditorView:self didReceiveTitle:title];
+        [[self delegate] webEditor:self didReceiveTitle:title];
     }
 }
 
@@ -1054,7 +1054,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     {
         // …but after that navigation is undesireable
         [listener ignore];
-        [[self delegate] webEditorView:self handleNavigationAction:actionInformation request:request];
+        [[self delegate] webEditor:self handleNavigationAction:actionInformation request:request];
     }
 }
 
@@ -1066,7 +1066,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     NSUInteger result = WebDragDestinationActionEdit;
     
-    if ([[self dataSource] webEditorView:self dataSourceShouldHandleDrop:dragInfo])
+    if ([[self dataSource] webEditor:self dataSourceShouldHandleDrop:dragInfo])
     {
         result = WebDragDestinationActionNone;
     }
@@ -1107,7 +1107,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
 {
-    id <SVWebEditorText> text = [[self dataSource] webEditorView:self
+    id <SVWebEditorText> text = [[self dataSource] webEditor:self
                                             textBlockForDOMRange:range];
     [self setFocusedText:text notification:nil];
     
@@ -1126,7 +1126,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     if (result)
     {
-        id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+        id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
         
         // Let the text object decide
         NSPasteboard *pasteboard = nil;
@@ -1155,7 +1155,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     if (result)
     {
-        id <SVWebEditorText> text = [[self dataSource] webEditorView:self textBlockForDOMRange:range];
+        id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
         
         // Let the text object decide
         NSPasteboard *pasteboard = nil;

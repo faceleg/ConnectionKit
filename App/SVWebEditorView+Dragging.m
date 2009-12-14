@@ -74,7 +74,7 @@
     // Let datasource have a crack at the drop. If it's not interested either, ensure the drag caret is removed
     if (op == NSDragOperationNone)
     {
-        op = [[self dataSource] webEditorView:self dataSourceShouldHandleDrop:sender];
+        op = [[self dataSource] webEditor:self dataSourceShouldHandleDrop:sender];
         if (op == NSDragOperationNone)
         {
             [self removeDragCaret];
@@ -94,7 +94,7 @@
 - (BOOL)acceptDrop:(id <NSDraggingInfo>)sender;
 {
     //  Just make the datasource do the work
-    return [[self dataSource] webEditorView:self acceptDrop:sender];
+    return [[self dataSource] webEditor:self acceptDrop:sender];
 }
 
 - (void)moveDragHighlightToDOMNode:(DOMNode *)node
@@ -356,7 +356,7 @@
     NSArray *selection = [self selectedItems];
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
-    if ([[self dataSource] webEditorView:self writeItems:selection toPasteboard:pboard])
+    if ([[self dataSource] webEditor:self writeItems:selection toPasteboard:pboard])
     {
         // Now let's start a-dragging!
         SVWebEditorItem *item = [selection lastObject]; // FIXME: use the item actually being dragged
