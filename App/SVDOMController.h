@@ -9,11 +9,15 @@
 #import "SVWebEditorItem.h"
 
 
+@class SVHTMLContext;
+
+
 @interface SVDOMController : SVWebEditorItem
 {
   @private
     // Updating
     BOOL    _needsUpdate;
+    SVHTMLContext   *_context;
 }
 
 #pragma mark Updating
@@ -21,6 +25,8 @@
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate; // call to mark for needing update.
 - (void)updateIfNeeded; // recurses down the tree
+
+@property(nonatomic, retain) SVHTMLContext *HTMLContext;
 
 
 @end

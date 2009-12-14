@@ -104,7 +104,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
         // Locate the matching controller
-        SVWebEditorItem *controller = [self controllerForBodyElement:aModelElement];
+        SVDOMController *controller = [self controllerForBodyElement:aModelElement];
         if (controller)
         {
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
@@ -214,9 +214,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVWebEditorItem *)controllerForBodyElement:(SVBodyElement *)element;
+- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 {
-    SVWebEditorItem * result = nil;
+    SVDOMController * result = nil;
     for (result in [self childWebEditorItems])
     {
         if ([result representedObject] == element) break;
@@ -225,9 +225,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (SVWebEditorItem *)controllerForDOMNode:(DOMNode *)node;
+- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 {
-    SVWebEditorItem *result = nil;
+    SVDOMController *result = nil;
     for (result in [self childWebEditorItems])
     {
         if ([node isDescendantOfNode:[result HTMLElement]]) break;

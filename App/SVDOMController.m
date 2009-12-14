@@ -11,6 +11,12 @@
 
 @implementation SVDOMController
 
+- (void)dealloc
+{
+    [_context release];
+    [super dealloc];
+}
+
 #pragma mark Updating
 
 - (void)update;
@@ -45,6 +51,8 @@
     
     [super updateIfNeeded];
 }
+
+@synthesize HTMLContext = _context;
 
 @end
 

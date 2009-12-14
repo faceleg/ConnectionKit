@@ -30,10 +30,10 @@
 
 #pragma mark Subcontrollers
 
-- (SVWebEditorItem *)controllerForBodyElement:(SVBodyElement *)element;
-- (SVWebEditorItem *)controllerForDOMNode:(DOMNode *)node;
+- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
+- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 
-- (SVWebEditorItem *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
+- (SVDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
                                                    HTMLElement:(DOMHTMLElement *)element;
 
 - (Class)controllerClassForBodyElement:(SVBodyElement *)element;
