@@ -8,6 +8,11 @@
 
 #import "SVDOMController.h"
 
+#import "SVContentObject.h"
+#import "SVHTMLContext.h"
+
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVDOMController
 
@@ -20,6 +25,20 @@
 }
 
 #pragma mark Content
+
+- (void)createHTMLElement
+{
+    // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)
+    NSString *htmlString = [self representedObjectHTMLString];
+    OBASSERT(htmlString);
+    
+    DOMDocumentFragment *fragment = [[self HTMLDocument]
+                                     createDocumentFragmentWithMarkupString:htmlString
+                                     baseURL:[[self HTMLContext] baseURL]];
+    
+    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
+    [self setHTMLElement:element];
+}
 
 - (NSString *)representedObjectHTMLString;
 {
