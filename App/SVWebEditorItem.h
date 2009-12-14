@@ -31,10 +31,13 @@
 
 
 #pragma mark Tree
+
 @property(nonatomic, copy) NSArray *childWebEditorItems;
 @property(nonatomic, assign) SVWebEditorItem *parentWebEditorItem;  // don't call setter directly
 - (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
 - (void)removeFromParentWebEditorItem;
+
+- (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
 
 #pragma mark Body

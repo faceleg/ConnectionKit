@@ -78,4 +78,21 @@
     }
 }
 
+- (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
+{
+    OBPRECONDITION(object);
+    
+    id result = ([[self representedObject] isEqual:object] ? self : nil);
+    if (!result)
+    {
+        for (SVWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            result = [anItem descendantItemWithRepresentedObject:object];
+            if (result) break;
+        }
+    }
+    
+    return result;
+}
+
 @end
