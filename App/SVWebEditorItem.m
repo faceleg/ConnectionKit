@@ -42,17 +42,6 @@
 
 @synthesize bodyText = _bodyText;
 
-- (NSString *)representedObjectHTMLString;
-{
-    SVHTMLContext *context = [self HTMLContext];
-    
-    [context push];
-    NSString *result = [[self representedObject] HTMLString];
-    [context pop];
-    
-    return result;
-}
-
 - (BOOL)isEditable { return NO; }
 
 - (SVWebEditorView *)webEditorView

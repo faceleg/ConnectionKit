@@ -11,11 +11,28 @@
 
 @implementation SVDOMController
 
+#pragma mark Dealloc
+
 - (void)dealloc
 {
     [_context release];
     [super dealloc];
 }
+
+#pragma mark Content
+
+- (NSString *)representedObjectHTMLString;
+{
+    SVHTMLContext *context = [self HTMLContext];
+    
+    [context push];
+    NSString *result = [[self representedObject] HTMLString];
+    [context pop];
+    
+    return result;
+}
+
+@synthesize HTMLContext = _context;
 
 #pragma mark Updating
 
@@ -51,8 +68,6 @@
     
     [super updateIfNeeded];
 }
-
-@synthesize HTMLContext = _context;
 
 @end
 

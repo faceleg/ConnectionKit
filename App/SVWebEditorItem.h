@@ -41,9 +41,4 @@
 // Strictly speaking, there could be more than one per item, but there isn't in practice at the moment, so this is a rather handy optimisation
 @property(nonatomic, retain) SVBodyTextDOMController *bodyText;
 
-
-#pragma mark Content
-// Uses the receiver's HTML context to call -HTMLString from the represented object
-- (NSString *)representedObjectHTMLString;
-
 @end
