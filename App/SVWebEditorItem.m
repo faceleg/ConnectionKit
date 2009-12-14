@@ -26,7 +26,7 @@
 
 #pragma mark Accessors
 
-- (void)loadHTMLElement
+- (void)createHTMLElement
 {
     // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)
     NSString *htmlString = [self representedObjectHTMLString];

@@ -34,7 +34,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 - (void)setHTMLElement:(DOMHTMLElement *)element
 {
     // Stop & reset old observation
-    if ([self isHTMLElementLoaded])
+    if ([self isHTMLElementCreated])
     {
         [[self HTMLElement] removeEventListener:@"DOMSubtreeModified"
                                        listener:[self eventsListener]
@@ -52,7 +52,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
                    useCapture:NO];
 }
 
-- (void)loadHTMLElement
+- (void)createHTMLElement
 {
     SVBodyParagraph *paragraph = [self representedObject];
     NSString *tagName = [paragraph tagName];
