@@ -47,7 +47,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 
 // Pagelets
-@property(nonatomic, copy, readwrite) NSArray *contentItems;
 @property(nonatomic, copy, readwrite) NSArray *sidebarPageletItems;
 - (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
 - (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
@@ -376,8 +375,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Store controllers
     [[[self webEditor] mainItem] setChildWebEditorItems:editorItems];
-    
-    [self setContentItems:editorItems];
     [editorItems release];
     
     [self setTextAreas:textAreas];
@@ -392,7 +389,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (id anObject in selectedObjects)
     {
-        id newItem = [self contentItemForObject:anObject];
+        id newItem = [[[self webEditor] mainItem] descendantItemWithRepresentedObject:anObject];
         if (newItem) [newSelection addObject:newItem];
     }
     
@@ -506,25 +503,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 #pragma mark Graphics
-
-@synthesize contentItems = _contentItems;
-
-- (SVWebEditorItem *)contentItemForObject:(id)object;
-{
-    OBPRECONDITION(object);
-    id result = nil;
-    
-    for (SVWebContentItem *anItem in [self contentItems])
-    {
-        if ([[anItem representedObject] isEqual:object])
-        {
-            result = anItem;
-            break;
-        }
-    }
-    
-    return result;
-}
 
 @synthesize sidebarPageletItems = _sidebarPageletItems;
 

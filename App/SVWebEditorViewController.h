@@ -32,7 +32,6 @@
     // Controllers
     NSArray         *_textAreas;
     
-    NSArray             *_contentItems;
     DOMHTMLDivElement   *_sidebarDiv;
     NSArray             *_sidebarPageletItems;
     
@@ -81,8 +80,6 @@
 
 #pragma mark Graphics
 
-@property(nonatomic, copy, readonly) NSArray *contentItems;
-- (SVWebEditorItem *)contentItemForObject:(id)object;
 @property(nonatomic, copy, readonly) NSArray *sidebarPageletItems;
 
 
