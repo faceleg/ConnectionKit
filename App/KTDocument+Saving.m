@@ -18,6 +18,7 @@
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
+#import "SVTextField.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
