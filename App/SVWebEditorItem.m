@@ -133,4 +133,30 @@
     return result;
 }
 
+#pragma mark Debugging
+
+- (NSString *)descriptionWithIndent:(NSUInteger)level
+{
+    // Indent
+    NSString *result = [@"" stringByPaddingToLength:level withString:@"\t" startingAtIndex:0];
+    
+    // Standard
+    result = [result stringByAppendingString:[super description]];
+    
+    // Children
+    for (SVWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        result = [result stringByAppendingFormat:
+                  @"\n%@",
+                  [anItem descriptionWithIndent:(level + 1)]];
+    }
+    
+    return result;
+}
+
+- (NSString *)description
+{
+    return [self descriptionWithIndent:0];
+}
+
 @end
