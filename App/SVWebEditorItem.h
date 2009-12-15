@@ -12,14 +12,11 @@
 
 
 @class SVWebEditorView;
-@class SVBodyTextDOMController;
 
 
 @interface SVWebEditorItem : KSDOMController
 {
   @private
-    SVBodyTextDOMController  *_bodyText;
-    
     // Tree
     NSArray         *_childControllers;
     SVWebEditorItem *_parentController;
@@ -44,9 +41,5 @@
 
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
-
-#pragma mark Body
-// Strictly speaking, there could be more than one per item, but there isn't in practice at the moment, so this is a rather handy optimisation
-@property(nonatomic, retain) SVBodyTextDOMController *bodyText;
 
 @end

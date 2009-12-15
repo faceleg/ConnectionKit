@@ -289,10 +289,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         [result setRichText:YES];
         [result setFieldEditor:NO];
         [result setEditable:YES];
-        
-        // Store as the body text of correct item
-        SVWebEditorItem *item = [[self webEditor] itemForDOMNode:element];
-        [item setBodyText:(SVBodyTextDOMController *)result];
     }
     else
     {

@@ -16,14 +16,11 @@
 - (void)dealloc
 {
     [self setChildWebEditorItems:nil];
-    [_bodyText release];
     
     [super dealloc];
 }
 
 #pragma mark Accessors
-
-@synthesize bodyText = _bodyText;
 
 - (BOOL)isEditable { return NO; }
 
