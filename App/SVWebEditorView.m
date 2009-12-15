@@ -187,6 +187,25 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 @synthesize mainItem = _mainItem;
 
+- (void)insertItem:(SVWebEditorItem *)item;
+{
+    // Search the tree for the appropriate parent
+    SVWebEditorItem *parent = [[self mainItem] descendantItemForDOMNode:[item HTMLElement]];
+    
+    // But does the parent already have children that should move to become children of the new item?
+    for (SVWebEditorItem *aChild in [parent childWebEditorItems])
+    {
+        if ([[aChild HTMLElement] isDescendantOfNode:[item HTMLElement]])
+        {
+            [aChild removeFromParentWebEditorItem];
+            [item addChildWebEditorItem:aChild];
+        }
+    }
+    
+    // Insert the new item
+    [parent addChildWebEditorItem:item];
+}
+
 #pragma mark Selected DOM Range
 
 - (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }

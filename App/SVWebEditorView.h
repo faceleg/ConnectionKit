@@ -67,6 +67,7 @@
 - (BOOL)loadUntilDate:(NSDate *)date;
 
 @property(nonatomic, readonly) SVWebEditorItem *mainItem;   // add your items here after loading finishes
+- (void)insertItem:(SVWebEditorItem *)item; // inserts the item into the tree in the place that matches the DOM
 
 
 #pragma mark Selection
