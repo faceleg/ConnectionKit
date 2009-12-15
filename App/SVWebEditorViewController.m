@@ -321,12 +321,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
-    NSMutableArray *editorItems = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
     for (SVGraphic *aContentObject in [[self selectedObjectsController] arrangedObjects])
     {
-        DOMHTMLElement *element = (DOMHTMLElement *)[aContentObject elementForEditingInDOMDocument:domDoc];
+        DOMHTMLElement *element = [aContentObject elementForEditingInDOMDocument:domDoc];
         if (element)
         {
             SVWebContentItem *item = [[SVWebContentItem alloc] initWithHTMLElement:element];
@@ -334,7 +332,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             [item setHTMLContext:[self HTMLContext]];
             [item setEditable:YES];
             
-            [editorItems addObject:item];
+            [[self webEditor] insertItem:item];
             [item release];
         }
         else
@@ -343,7 +341,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
     }
     
-    NSArray *sidebarPageletItems = [editorItems copy];
+    NSArray *sidebarPageletItems = nil;
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
     
@@ -360,19 +358,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                                                     isSelectable:&isSelectable];
         
         [textAreas addObject:controller];
-        if (isSelectable) [editorItems addObject:controller];
-        if ([controller respondsToSelector:@selector(graphicControllers)])
-        {
-            [editorItems addObjectsFromArray:[(id)controller graphicControllers]];
-        }
     }
     
     
     
-    // Store controllers
-    [[[self webEditor] mainItem] setChildWebEditorItems:editorItems];
-    [editorItems release];
-    
+    // Store controllers    
     [self setTextAreas:textAreas];
     [textAreas release];
     
