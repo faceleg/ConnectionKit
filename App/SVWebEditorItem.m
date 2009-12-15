@@ -113,7 +113,7 @@
         result = self;
     }
     
-    return self;
+    return result;
 }
 
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
