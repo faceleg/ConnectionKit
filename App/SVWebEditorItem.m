@@ -78,6 +78,47 @@
     }
 }
 
+#pragma mark Searching the Tree
+
+- (SVWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
+{
+    OBPRECONDITION(node);
+    
+    SVWebEditorItem *result = nil;
+    NSArray *childItemDOMNodes = [[self childWebEditorItems] valueForKey:@"HTMLElement"];
+    
+    DOMNode *aNode = node;
+    while (aNode)
+    {
+        NSUInteger index = [childItemDOMNodes indexOfObjectIdenticalTo:aNode];
+        if (index != NSNotFound)
+        {
+            result = [[self childWebEditorItems] objectAtIndex:index];
+            break;
+        }
+        aNode = [aNode parentNode];
+    }
+    
+    return result;
+}
+
+- (SVWebEditorItem *)descendantItemForDOMNode:(DOMNode *)node;
+{
+    OBPRECONDITION(node);
+    
+    SVWebEditorItem *result = [self childItemForDOMNode:node];
+    if (result)
+    {
+        result = [result descendantItemForDOMNode:node];
+    }
+    else
+    {
+        result = self;
+    }
+    
+    return self;
+}
+
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 {
     OBPRECONDITION(object);

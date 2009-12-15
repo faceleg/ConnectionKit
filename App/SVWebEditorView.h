@@ -115,12 +115,12 @@
 
 #pragma mark Getting Item Information
 
-//  These methods do their work by querying the datasource, but must also take into account the current selection. i.e. if editing an item, any sub-items then become available for selection. But selection handles are ignored.
+/*  SVWebEditorItem has many similar methods. The crucial difference is that these also take into account the current selection. i.e. if editing an item, any sub-items then become available for selection. But selection handles are ignored.
+ */
+
 - (id)itemAtPoint:(NSPoint)point;
 - (id)itemForDOMNode:(DOMNode *)node;
 - (NSArray *)itemsInDOMRange:(DOMRange *)range;
-
-- (SVWebEditorItem *)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
 
 
 #pragma mark Setting the DataSource/Delegate

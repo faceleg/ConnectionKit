@@ -31,11 +31,16 @@
 
 
 #pragma mark Tree
-
 @property(nonatomic, copy) NSArray *childWebEditorItems;
 @property(nonatomic, assign) SVWebEditorItem *parentWebEditorItem;  // don't call setter directly
 - (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
 - (void)removeFromParentWebEditorItem;
+
+
+#pragma mark Searching the Tree
+
+- (SVWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
+- (SVWebEditorItem *)descendantItemForDOMNode:(DOMNode *)node;  // guaranteed a match (returns self if nothing else fits)
 
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 

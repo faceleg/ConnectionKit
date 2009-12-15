@@ -598,10 +598,8 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     while (!result && index > -2)
     {
         SVWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self mainItem];
-        
-        NSArray *items = [parentItem childWebEditorItems];
-    
-        result = [self itemForDOMNode:node inItems:items];
+            
+        result = [parentItem childItemForDOMNode:node];
         
         index--;
     }
@@ -647,26 +645,6 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
                 result = [NSArray arrayWithObject:parent];
             }
         }
-    }
-    
-    return result;
-}
-
-- (SVWebEditorItem *)itemForDOMNode:(DOMNode *)node inItems:(NSArray *)items;
-{
-    SVWebEditorItem *result = nil;
-    NSArray *itemDOMElements = [items valueForKey:@"DOMElement"];
-    
-    DOMNode *aNode = node;
-    while (aNode)
-    {
-        NSUInteger index = [itemDOMElements indexOfObjectIdenticalTo:aNode];
-        if (index != NSNotFound)
-        {
-            result = [items objectAtIndex:index];
-            break;
-        }
-        aNode = [aNode parentNode];
     }
     
     return result;
