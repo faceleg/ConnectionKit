@@ -59,6 +59,7 @@ typedef enum {
 #pragma mark Iterations
 
 // It's pretty common to loop through a series of items when generating HTML. e.g. Pagelets in the Sidebar. When doing so, it's nice to generate a CSS class name that corresponds so special styling can be applied based on that. The Template Parser provides nice functions for generating these class names, but the stack of such iterations is maintained here.
+// IMPORTANT: Iteration in the context is 0-based. For CSS class names you generally want it to be 1-based, so bump up values by 1. The HTML Template Parser functions do this automatically interally.
 
 @property(nonatomic, readonly) NSUInteger currentIteration;
 @property(nonatomic, readonly) NSUInteger currentIterationsCount;

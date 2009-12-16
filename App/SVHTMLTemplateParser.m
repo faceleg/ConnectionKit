@@ -414,7 +414,7 @@
 	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
 	if (index != NSNotFound)
 	{
-		result = [NSString stringWithFormat:@"i%i", index];
+		result = [NSString stringWithFormat:@"i%i", index + 1];
 	}
 	
 	return result;
@@ -429,7 +429,7 @@
 	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
 	if (index != NSNotFound)
 	{
-		result = (0 == (index % 2)) ? @"e" : @"o";
+		result = (0 == ((index + 1) % 2)) ? @"e" : @"o";
 	}
 	
 	return result;
@@ -445,7 +445,7 @@
 	if (index != NSNotFound)
 	{
 		int count = [[SVHTMLContext currentContext] currentIterationsCount];
-		if (index == count)
+		if (index == (count - 1))
 		{
 			result = @" last-item";
 		}
