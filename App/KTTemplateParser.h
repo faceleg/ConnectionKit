@@ -36,8 +36,8 @@
 	
 	NSMutableDictionary	*myOverriddenKeys;
 	
-	int myIfCount;
-    NSUInteger  _foreachCount;
+	NSUInteger  _ifFunctionDepth;
+    NSUInteger  _foreachFunctionDepth;
 }
 
 - (id)initWithTemplate:(NSString *)templateString component:(id)parsedComponent;

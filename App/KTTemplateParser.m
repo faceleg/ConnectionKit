@@ -317,7 +317,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 - (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner
 {
 	[inScanner setScanLocation:0];		// start at the front
-	myIfCount = 0;
+	_ifFunctionDepth = 0;
 	return [self HTMLStringByScanning:inScanner];
 }
 
@@ -557,13 +557,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (NSString *)ifWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	myIfCount++;
+	_ifFunctionDepth++;
 	NSString *elseDelim = @"[[else]]";
 	NSString *endifDelim = @"[[endif]]";
-	if (myIfCount > 1)
+	if (_ifFunctionDepth > 1)
 	{
-		elseDelim = [NSString stringWithFormat:@"[[else%d]]", myIfCount];
-		endifDelim = [NSString stringWithFormat:@"[[endif%d]]", myIfCount];
+		elseDelim = [NSString stringWithFormat:@"[[else%d]]", _ifFunctionDepth];
+		endifDelim = [NSString stringWithFormat:@"[[endif%d]]", _ifFunctionDepth];
 	}
 	
 	int beforeScanLocation = [inScanner scanLocation];
@@ -619,7 +619,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	NSString *result = [self HTMLStringByScanning:ifScanner];
 	
-	myIfCount--;
+	_ifFunctionDepth--;
 	return result;
 }
 
@@ -741,14 +741,14 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
                                     scaner:(NSScanner *)inScanner;
 {
     // Begin the new loop
-	_foreachCount++;
+	_foreachFunctionDepth++;
 	
 	
 	// Get the HTML within the loop to scan
 	NSString *endForEachDelim = @"[[endForEach]]";
-	if (_foreachCount > 1)
+	if (_foreachFunctionDepth > 1)
 	{
-		endForEachDelim = [NSString stringWithFormat:@"[[endForEach%d]]", _foreachCount];
+		endForEachDelim = [NSString stringWithFormat:@"[[endForEach%d]]", _foreachFunctionDepth];
 	}
 	
 	
@@ -788,7 +788,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     
     
     // End the loop
-    _foreachCount--;
+    _foreachFunctionDepth--;
     
 	
 	return result;
