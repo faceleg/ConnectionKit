@@ -403,6 +403,80 @@
 	return string;
 }
 
+#pragma mark foreach loop
+
+/*!	return index of forEach loop (prefixed with "i"), or empty string if out of a loop
+ */
+- (NSString *)iWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+	NSString *result = @"";
+	
+	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
+	if (index != NSNotFound)
+	{
+		result = [NSString stringWithFormat:@"i%i", index];
+	}
+	
+	return result;
+}
+
+/*!	Return "e" or "o" for index in forEach loop being even or odd ... or empty string if out of a loop
+ */
+- (NSString *)eoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+	NSString *result = @"";
+	
+	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
+	if (index != NSNotFound)
+	{
+		result = (0 == (index % 2)) ? @"e" : @"o";
+	}
+	
+	return result;
+}
+
+/*!	Return " last-item" if this is the last item in the loop; an empty string otherwise
+ */
+- (NSString *)lastWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+{
+	NSString *result = @"";
+	
+	unsigned int index = [[SVHTMLContext currentContext] currentIteration];
+	if (index != NSNotFound)
+	{
+		int count = [[SVHTMLContext currentContext] currentIterationsCount];
+		if (index == count)
+		{
+			result = @" last-item";
+		}
+	}
+	
+	return result;
+}
+
+- (NSString *)evaluateForeachLoopWithArray:(NSArray *)components iterationsCount:(NSUInteger)specifiedNumberIterations keyPath:(NSString *)keyPath scaner:(NSScanner *)inScanner
+{
+    // Send the loop parameters to the HTML context to keep track of. Iterating will automatically pop it from the stack
+    [[SVHTMLContext currentContext] beginIteratingWithCount:specifiedNumberIterations];
+    
+    
+    return [super evaluateForeachLoopWithArray:components
+                               iterationsCount:specifiedNumberIterations
+                                       keyPath:keyPath
+                                        scaner:inScanner];
+}
+
+- (NSString *)doForeachIterationWithObject:(id)object
+                                  template:(NSString *)template
+                                   keyPath:(NSString *)keyPath;
+{
+    // Increment the iteration after each run
+    NSString *result = [super doForeachIterationWithObject:object template:template keyPath:keyPath];
+    [[SVHTMLContext currentContext] nextIteration];
+    
+    return result;
+}
+    
 #pragma mark resources
 
 // Following parameters:  (1) key-value path to media or mediaImage object

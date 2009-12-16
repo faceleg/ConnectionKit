@@ -84,9 +84,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	[myCache release];
 	[myOverriddenKeys release];
 	
-	[myForEachIndexes release];
-	[myForEachCounts release];
-	
 	[myID release];
 	
 	[super dealloc];
@@ -709,77 +706,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 #pragma mark -
 #pragma mark ForEach Loops
 
-- (unsigned int)currentForeachLoopIndex
-{
-	unsigned int result = NSNotFound;
-	if (myForEachIndexes)
-	{
-		result = [myForEachIndexes lastIndex];
-	}
-	return result;
-}
-
-/*	The number of items in the current foreach loop.
- */
-- (unsigned int)currentForeachLoopCount
-{
-	unsigned int result = NSNotFound;
-	if (myForEachCounts)
-	{
-		result = [myForEachCounts lastIndex];
-	}
-	return result;
-}
-
-- (unsigned int)currentForeachLoopDepth
-{
-	unsigned int result = 0;
-	
-	if (myForEachIndexes)
-	{
-		result = [myForEachIndexes length];
-	}
-	
-	return result;
-}
-
-- (void)incrementCurrentForeachLoop
-{
-	NSIndexPath *newIndexPath = [myForEachIndexes indexPathByIncrementingLastIndex];
-	[myForEachIndexes release];
-	myForEachIndexes = [newIndexPath retain];
-}
-
-- (void)enterNewForeachLoopWithCount:(unsigned int)count
-{
-	if (myForEachIndexes)
-	{
-		NSIndexPath *newIndexPath = [myForEachIndexes indexPathByAddingIndex:1];
-		[myForEachIndexes release];
-		myForEachIndexes = [newIndexPath retain];
-		
-		NSIndexPath *newCountPath = [myForEachCounts indexPathByAddingIndex:count];
-		[myForEachCounts release];
-		myForEachCounts = [newCountPath retain];
-	}
-	else
-	{
-		myForEachIndexes = [[NSIndexPath alloc] initWithIndex:1];
-		myForEachCounts = [[NSIndexPath alloc] initWithIndex:count];
-	}
-}
-
-- (void)exitCurrentForeachLoop
-{
-	NSIndexPath *newIndexPath = [myForEachIndexes indexPathByRemovingLastIndex];
-	[myForEachIndexes release];
-	myForEachIndexes = [newIndexPath retain];
-	
-	NSIndexPath *newCountPath = [myForEachCounts indexPathByRemovingLastIndex];
-	[myForEachCounts release];
-	myForEachCounts = [newCountPath retain];
-}
-
 - (NSString *)foreachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
 	// Put together the parameters and complain if they are incorrect
@@ -794,25 +720,35 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	// Load the array to loop over
 	NSArray *arrayToRepeat = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
 	
-	unsigned int numberIterations = [arrayToRepeat count];
+	NSUInteger iterationsCount = 0;
 	if ([params count] > 2)
 	{
-		unsigned int specifiedNumberIterations = [[self parseValue:[params objectAtIndex:2]] unsignedIntValue];
-		if (specifiedNumberIterations > 0) {
-			numberIterations = specifiedNumberIterations;
-		}
+		iterationsCount = [[self parseValue:[params objectAtIndex:2]] unsignedIntValue];
 	}
-	
-	
-	// Begin the new loop
-	[self enterNewForeachLoopWithCount:numberIterations];
+    if (iterationsCount == 0) iterationsCount = [arrayToRepeat count];
+    
+    
+	NSString *result = [self evaluateForeachLoopWithArray:arrayToRepeat
+                                          iterationsCount:iterationsCount
+                                                  keyPath:[params objectAtIndex:1]
+                                                   scaner:inScanner];
+    return result;
+}
+
+- (NSString *)evaluateForeachLoopWithArray:(NSArray *)components
+                           iterationsCount:(NSUInteger)iterationsCount
+                                   keyPath:(NSString *)keyPath
+                                    scaner:(NSScanner *)inScanner;
+{
+    // Begin the new loop
+	_foreachCount++;
 	
 	
 	// Get the HTML within the loop to scan
 	NSString *endForEachDelim = @"[[endForEach]]";
-	if ([self currentForeachLoopDepth] > 1)
+	if (_foreachCount > 1)
 	{
-		endForEachDelim = [NSString stringWithFormat:@"[[endForEach%d]]", [self currentForeachLoopDepth]];
+		endForEachDelim = [NSString stringWithFormat:@"[[endForEach%d]]", _foreachCount];
 	}
 	
 	
@@ -825,32 +761,20 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		&&
 		[inScanner scanRealString:endForEachDelim intoString:nil] )
 	{
-		NSString *keyForNewElement = [params objectAtIndex:1];
-		NSEnumerator *theEnum = [arrayToRepeat objectEnumerator];
+		NSEnumerator *theEnum = [components objectEnumerator];
 		id object;
 		
+        NSUInteger iteration = 0;
 		while (nil != (object = [theEnum nextObject]) )
 		{
-			NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+			[result appendString:[self doForeachIterationWithObject:object
+                                                           template:stuffToRepeat
+                                                            keyPath:keyPath]];
 			
-			// We override the specified key in the cache so that KVC calls are directed to the right object
-			[[self cache] overrideKey:keyForNewElement withValue:object];
-			
-			// need a scanner up to next endForEach
-			NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
-			[eachScanner setCharactersToBeSkipped:nil];
-			
-			NSString *eachResult = [self HTMLStringByScanning:eachScanner];
-			[result appendString:eachResult];
-			
-			// And then remove the override
-			[[self cache] removeOverrideForKey:keyForNewElement];
-			
-			[innerPool release];
-			
-			[self incrementCurrentForeachLoop];
-			
-			if ([self currentForeachLoopIndex] > [self currentForeachLoopCount])	// break if we've hit the max
+            
+            // Increment
+			iteration++;
+			if (iteration > iterationsCount)	// break if we've hit the max
 			{
 				break;
 			}
@@ -861,59 +785,40 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		NSLog(@"forEach: missing %@ tag", endForEachDelim);
 		[result setString:@""];
 	}
-	
-	[self exitCurrentForeachLoop];
-	
-	return result;
-}
-
-/*!	return index of forEach loop (prefixed with "i"), or empty string if out of a loop
- */
-- (NSString *)iWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	unsigned int index = [self currentForeachLoopIndex];
-	if (index != NSNotFound)
-	{
-		result = [NSString stringWithFormat:@"i%i", index];
-	}
+    
+    
+    // End the loop
+    _foreachCount--;
+    
 	
 	return result;
 }
 
-/*!	Return "e" or "o" for index in forEach loop being even or odd ... or empty string if out of a loop
- */
-- (NSString *)eoWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
+- (NSString *)doForeachIterationWithObject:(id)object
+                                  template:(NSString *)stuffToRepeat
+                                   keyPath:(NSString *)keyPath;
 {
-	NSString *result = @"";
-	
-	unsigned int index = [self currentForeachLoopIndex];
-	if (index != NSNotFound)
-	{
-		result = (0 == (index % 2)) ? @"e" : @"o";
-	}
-	
-	return result;
-}
-
-/*!	Return " last-item" if this is the last item in the loop; an empty string otherwise
- */
-- (NSString *)lastWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	NSString *result = @"";
-	
-	unsigned int index = [self currentForeachLoopIndex];
-	if (index != NSNotFound)
-	{
-		int count = [self currentForeachLoopCount];
-		if (index == count)
-		{
-			result = @" last-item";
-		}
-	}
-	
-	return result;
+    NSAutoreleasePool *innerPool = [[NSAutoreleasePool alloc] init];
+    
+    // We override the specified key in the cache so that KVC calls are directed to the right object
+    [[self cache] overrideKey:keyPath withValue:object];
+    
+    // need a scanner up to next endForEach
+    NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
+    [eachScanner setCharactersToBeSkipped:nil];
+    
+    NSString *result = [self HTMLStringByScanning:eachScanner];
+    
+    // And then remove the override
+    [[self cache] removeOverrideForKey:keyPath];
+    
+    
+    // Tidy up
+    [result retain];
+    [innerPool release];
+    [result autorelease];
+    
+    return result;
 }
 
 - (NSString *)endforeachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner

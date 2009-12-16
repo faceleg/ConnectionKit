@@ -337,7 +337,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
         else
         {
-            NSLog(@"Could not locate content object with ID: %@", [aContentObject elementID]);
+            NSLog(@"Could not locate content object: %@", aContentObject);
         }
     }
     

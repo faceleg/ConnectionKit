@@ -37,9 +37,7 @@
 	NSMutableDictionary	*myOverriddenKeys;
 	
 	int myIfCount;
-	
-	NSIndexPath	*myForEachIndexes;
-	NSIndexPath *myForEachCounts;
+    NSUInteger  _foreachCount;
 }
 
 - (id)initWithTemplate:(NSString *)templateString component:(id)parsedComponent;
@@ -72,6 +70,16 @@
 // If function
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue;
 - (BOOL)isNotEmpty:(id)aValue;
+
+
+// Foreach loops
+- (NSString *)evaluateForeachLoopWithArray:(NSArray *)components
+                           iterationsCount:(NSUInteger)specifiedNumberIterations
+                                   keyPath:(NSString *)keyPath
+                                    scaner:(NSScanner *)inScanner;
+- (NSString *)doForeachIterationWithObject:(id)object
+template:(NSString *)stuffToRepeat
+keyPath:(NSString *)keyPath;
 
 
 // Support
