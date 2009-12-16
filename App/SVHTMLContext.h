@@ -24,9 +24,12 @@ typedef enum {
 {
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;
+    
 	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
+    
+    NSMutableArray  *_iteratorsStack;
     
     NSMutableArray  *_textBlocks;
 }
@@ -51,6 +54,17 @@ typedef enum {
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isPublishing;
+
+
+#pragma mark Iterations
+
+// It's pretty common to loop through a series of items when generating HTML. e.g. Pagelets in the Sidebar. When doing so, it's nice to generate a CSS class name that corresponds so special styling can be applied based on that. The Template Parser provides nice functions for generating these class names, but the stack of such iterations is maintained here.
+
+@property(nonatomic, readonly) NSUInteger currentIteration;
+@property(nonatomic, readonly) NSUInteger currentIterationsCount;
+- (void)nextIteration;  // increments -currentIteration. Pops the iterators stack if this was the last one.
+- (void)beginIteratingWithCount:(NSUInteger)count;  // Pushes a new iterator on the stack
+- (void)popIterator;  // Pops the iterators stack early
 
 
 #pragma mark URLs/Paths

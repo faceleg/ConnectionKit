@@ -8,12 +8,31 @@
 
 #import "SVHTMLContext.h"
 
-#import "NSURL+Karelia.h"
-
 #import "KTHostProperties.h"
 #import "KTAbstractPage.h"
 #import "KTSite.h"
 #import "BDAlias+QuickLook.h"
+
+#import "NSIndexPath+Karelia.h"
+#import "NSURL+Karelia.h"
+
+
+@interface SVHTMLIterator : NSObject
+{
+    NSUInteger  _iteration;
+    NSUInteger  _count;
+}
+
+- (id)initWithCount:(NSUInteger)count;
+@property(nonatomic, readonly) NSUInteger count;
+
+@property(nonatomic, readonly) NSUInteger iteration;
+- (NSUInteger)nextIteration;
+
+@end
+
+
+#pragma mark -
 
 
 @implementation SVHTMLContext
@@ -56,6 +75,7 @@
     [super init];
     
     _includeStyling = YES;
+    _iteratorsStack = [[NSMutableArray alloc] init];
     _textBlocks = [[NSMutableArray alloc] init];
     
     return self;
@@ -65,6 +85,7 @@
 {
     [_baseURL release];
     [_currentPage release];
+    [_iteratorsStack release];
     [_textBlocks release];
     
     [super dealloc];
@@ -121,6 +142,36 @@
 	return result;
 }
 
+#pragma mark Iterations
+
+- (SVHTMLIterator *)currentIterator { return [_iteratorsStack lastObject]; }
+
+- (NSUInteger)currentIteration; { return [[self currentIterator] iteration]; }
+
+- (NSUInteger)currentIterationsCount; { return [[self currentIterator] count]; }
+
+- (void)nextIteration;  // increments -currentIteration. Pops the iterators stack if this was the last one.
+{
+    if ([[self currentIterator] nextIteration] == NSNotFound)
+    {
+        [self popIterator];
+    }
+}
+
+- (void)beginIteratingWithCount:(NSUInteger)count;  // Pushes a new iterator on the stack
+{
+    OBPRECONDITION(count > 0);
+    
+    SVHTMLIterator *iterator = [[SVHTMLIterator alloc] initWithCount:count];
+    [_iteratorsStack addObject:iterator];
+    [iterator release];
+}
+
+- (void)popIterator;  // Pops the iterators stack early
+{
+    [_iteratorsStack removeLastObject];
+}
+
 #pragma mark Content
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
@@ -146,3 +197,31 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+
+@implementation SVHTMLIterator
+
+- (id)initWithCount:(NSUInteger)count;
+{
+    [self init];
+    _count = count;
+    return self;
+}
+
+@synthesize count = _count;
+
+@synthesize iteration = _iteration;
+
+- (NSUInteger)nextIteration;
+{
+    _iteration = [self iteration] + 1;
+    if (_iteration == [self count]) _iteration = NSNotFound;
+    return _iteration;
+}
+
+@end
+
