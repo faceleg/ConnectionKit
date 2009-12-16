@@ -386,7 +386,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							// first replace spaces with an underscore
 							if (NSNotFound != spacesToUnderscoreLocation)
 							{
-								toAppend = [toAppend legalizedURLNameWithFallbackID:@"_"];	// doesn't really matter if we lose everything
+								toAppend = [toAppend legalizedURLNameWithFallbackID:@"_"  separatorChar:@"_"];	// doesn't really matter if we lose everything
 							}
 							
 							// now deal with url encoding and/or html escaping

@@ -65,7 +65,7 @@
         NSString *fileName = *outFileName;
         if (!fileName || ![NSURL URLWithString:fileName])
         {
-            NSString *legalizedFileName = [fileName legalizedWebPublishingFileName];
+            NSString *legalizedFileName = [fileName suggestedLegalizedWebPublishingFileName];
             if (!legalizedFileName || [legalizedFileName isEqualToString:@""])
             {
                 legalizedFileName = [self uniqueID];
@@ -88,7 +88,7 @@
 	
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-    NSString *result = [[self titleText] legalizedWebPublishingFileName];
+    NSString *result = [[self titleText] suggestedLegalizedWebPublishingFileName];
     if (!result || [result isEqualToString:@""])
     {
         result = [self uniqueID];
@@ -110,7 +110,7 @@
 	// Now munge it to make it unique.  Keep adding a number until we find an open slot.
 	while ([unavailableFileNames containsObject:result])
 	{
-		result = [baseFileName stringByAppendingFormat:@"_%d", suffixCount++];
+		result = [baseFileName stringByAppendingFormat:@"-%d", suffixCount++];		// changed from underscore
 	}
 	
 	OBPOSTCONDITION(result);
