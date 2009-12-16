@@ -32,6 +32,11 @@
 @end
 
 
+@interface SVHTMLContext ()
+- (SVHTMLIterator *)currentIterator;
+@end
+
+
 #pragma mark -
 
 
@@ -153,8 +158,6 @@
 
 #pragma mark Iterations
 
-- (SVHTMLIterator *)currentIterator { return [_iteratorsStack lastObject]; }
-
 - (NSUInteger)currentIteration; { return [[self currentIterator] iteration]; }
 
 - (NSUInteger)currentIterationsCount; { return [[self currentIterator] count]; }
@@ -166,6 +169,8 @@
         [self popIterator];
     }
 }
+
+- (SVHTMLIterator *)currentIterator { return [_iteratorsStack lastObject]; }
 
 - (void)beginIteratingWithCount:(NSUInteger)count;  // Pushes a new iterator on the stack
 {
