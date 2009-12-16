@@ -58,6 +58,15 @@
 + (void)popContext
 {
     NSMutableArray *stack = [[[NSThread currentThread] threadDictionary] objectForKey:@"SVHTMLGenerationContextStack"];
+    
+    // Be kind and warn if it looks like the stack shouldn't be popped yet
+    SVHTMLContext *context = [stack lastObject];
+    if ([context currentIterator])
+    {
+        NSLog(@"Popping HTML context while it is still iterating. Either you popped the context too soon, or forgot to call -[SVHTMLContext nextIteration] enough times");
+    }
+    
+    // Do the pop
     [stack removeLastObject];
 }
 
