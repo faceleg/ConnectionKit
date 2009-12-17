@@ -43,6 +43,11 @@
 - (void)moveAfterPagelet:(SVPagelet *)pagelet;
 
 
+#pragma mark HTML
+- (NSString *)HTMLString;
++ (NSString *)pageletHTMLTemplate;
++ (NSString *)calloutHTMLTemplate;
+
 @end
 
 

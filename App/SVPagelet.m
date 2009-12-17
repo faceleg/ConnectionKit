@@ -214,16 +214,45 @@
 {
     //  All SVContentObject subclasses must implement this to suit themselves
     
-    NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate"
-                                                             ofType:@"html"];
-    NSString *template = [NSString stringWithContentsOfFile:templatePath
-                                                   encoding:NSUTF8StringEncoding
-                                                      error:nil];
+    NSString *template = ([self isCallout] ?
+                          [[self class] calloutHTMLTemplate] :  // will call pagelet template internally
+                          [[self class] pageletHTMLTemplate]);
     
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
-                                                                        component:self];
+                                         component:self];
+    
     NSString *result = [parser parseTemplate];
     [parser release];
+    
+    return result;
+}
+
++ (NSString *)pageletHTMLTemplate;
+{
+    static NSString *result;
+    if (!result)
+    {
+        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate"
+                                                                 ofType:@"html"];
+        result = [[NSString alloc] initWithContentsOfFile:templatePath
+                                                 encoding:NSUTF8StringEncoding
+                                                    error:nil];
+    }
+    
+    return result;
+}
+
++ (NSString *)calloutHTMLTemplate;
+{
+    static NSString *result;
+    if (!result)
+    {
+        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"CalloutTemplate"
+                                                                 ofType:@"html"];
+        result = [[NSString alloc] initWithContentsOfFile:templatePath
+                                                 encoding:NSUTF8StringEncoding
+                                                    error:nil];
+    }
     
     return result;
 }

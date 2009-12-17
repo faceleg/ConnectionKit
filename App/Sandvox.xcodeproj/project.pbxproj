@@ -456,6 +456,7 @@
 		27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */; };
 		27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */; };
 		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; };
+		27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */; };
 		27EF1BCF0DC1F9BF00976C66 /* SVSiteOutlineViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (); }; };
@@ -1934,6 +1935,7 @@
 		27E4D0210EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSCrash.nib; sourceTree = "<group>"; };
 		27E4D0220EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
 		27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCollectionController.h; sourceTree = "<group>"; };
+		27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = CalloutTemplate.html; sourceTree = "<group>"; };
 		27EAA90D0E30979A0068E6C5 /* Page URLs and Paths.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Page URLs and Paths.graffle"; sourceTree = "<group>"; };
 		27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteOutlineViewController.h; sourceTree = "<group>"; };
 		27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteOutlineViewController.m; sourceTree = "<group>"; };
@@ -4030,6 +4032,7 @@
 		3C5A73710BF7B69300776464 /* Pagelets */ = {
 			isa = PBXGroup;
 			children = (
+				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
 				279C587F109916F20030F3B7 /* SVSidebar.h */,
 				279C5880109916F20030F3B7 /* SVSidebar.m */,
 				27C0656C10828E9900795D66 /* SVPagelet.h */,
@@ -5815,6 +5818,7 @@
 				273DD20810CC74AA003CCE97 /* CollectionInspector.xib in Resources */,
 				273DD22210CC90B4003CCE97 /* WrapInspector.png in Resources */,
 				273DD23110CC9466003CCE97 /* Wrap Inspector tab icon.opacity in Resources */,
+				27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
