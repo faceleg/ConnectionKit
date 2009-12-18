@@ -7,7 +7,7 @@
 //
 
 #import "SVTextField.h"
-
+#import "SVWebEditorTextFieldController.h"
 
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
@@ -34,6 +34,11 @@
 + (NSSet *)keyPathsForValuesAffectingText
 {
     return [NSSet setWithObject:@"textHTMLString"];
+}
+
++ (Class)DOMControllerClass;
+{
+    return [SVWebEditorTextFieldController class];
 }
 
 @end
