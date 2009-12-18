@@ -134,6 +134,8 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     _editTimestamp = [[NSApp currentEvent] timestamp];
 }
 
+- (BOOL)isSelectable { return NO; }
+
 @end
 
 
