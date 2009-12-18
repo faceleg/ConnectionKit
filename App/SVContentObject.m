@@ -8,6 +8,8 @@
 
 #import "SVContentObject.h"
 
+#import "SVDOMController.h"
+
 
 @implementation SVContentObject
 
@@ -37,6 +39,11 @@
     //  The default is just to generate a string based on object address, keeping us nicely unique
     NSString *result = [NSString stringWithFormat:@"%p", self];
     return result;
+}
+
++ (Class)DOMControllerClass;
+{
+    return [SVDOMController class];
 }
 
 @end
