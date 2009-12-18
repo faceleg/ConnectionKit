@@ -138,7 +138,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                   forKeyPath:[aDependency keyPath]];
     }
     
-    // And DOM controllers. TODO: WebEditorView should take care of this for itself?
+    // And DOM controllers.
     [[[self webEditor] mainItem] setChildWebEditorItems:nil];
     
     
