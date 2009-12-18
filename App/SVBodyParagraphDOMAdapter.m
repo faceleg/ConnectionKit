@@ -136,6 +136,13 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 - (BOOL)isSelectable { return NO; }
 
+#pragma mark Debugging
+
+- (NSString *)blurb
+{
+    return [[self HTMLElement] innerText];
+}
+
 @end
 
 

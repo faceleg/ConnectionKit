@@ -143,10 +143,13 @@
 - (NSString *)descriptionWithIndent:(NSUInteger)level
 {
     // Indent
-    NSString *result = [@"" stringByPaddingToLength:level withString:@"\t" startingAtIndex:0];
+    NSString *indent = [@"" stringByPaddingToLength:level withString:@"\t" startingAtIndex:0];
     
     // Standard
-    result = [result stringByAppendingString:[super description]];
+    NSString *result = [indent stringByAppendingString:[super description]];
+                        
+    NSString *blurb = [self blurb];
+    if (blurb) result = [result stringByAppendingFormat:@" %@", blurb];
     
     // Children
     for (SVWebEditorItem *anItem in [self childWebEditorItems])
@@ -162,6 +165,11 @@
 - (NSString *)description
 {
     return [self descriptionWithIndent:0];
+}
+
+- (NSString *)blurb
+{
+    return nil;
 }
 
 @end

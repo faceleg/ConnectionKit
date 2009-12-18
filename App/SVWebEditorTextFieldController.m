@@ -130,4 +130,11 @@
 
 @synthesize managedObjectContext = _moc;
 
+#pragma mark Debugging
+
+- (NSString *)blurb
+{
+    return [[self HTMLElement] innerText];
+}
+
 @end
