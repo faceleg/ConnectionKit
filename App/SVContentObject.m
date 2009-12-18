@@ -21,13 +21,6 @@
 
 #pragma mark Editing Support
 
-- (NSString *)editingElementID;
-{
-    //  The default is just to generate a string based on object address, keeping us nicely unique
-    NSString *result = [NSString stringWithFormat:@"%p", self];
-    return result;
-}
-
 - (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
 {
     OBPRECONDITION(document);
@@ -36,6 +29,13 @@
     
     if (![result isKindOfClass:[DOMHTMLElement class]]) result = nil;
     
+    return result;
+}
+
+- (NSString *)editingElementID;
+{
+    //  The default is just to generate a string based on object address, keeping us nicely unique
+    NSString *result = [NSString stringWithFormat:@"%p", self];
     return result;
 }
 

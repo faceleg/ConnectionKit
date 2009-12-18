@@ -26,10 +26,10 @@
 
 #pragma mark Editing Support
 
-// The returned ID should be suitable for using as a DOMElement's ID attribute. It should be unique for the page being generated. The default implementation is based upon the receiver's location in memory, as it is assumed that the object will be retained for the duration of the editing cycle. Subclasses can override to specify a different ID format, perhaps because the object will already generate a unique ID as part of its HTML.
-- (NSString *)editingElementID;
-
 //  Uses the receiver's -editingElementID to locate the matching DOM element. Returns nil if nothing suitable is found. The default implementation works fine, but it could be useful for subclasses to check the return value to make sure it matches expectations, and return nil if it doesn't.
 - (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
+
+// The returned ID should be suitable for using as a DOMElement's ID attribute. It should be unique for the page being generated. The default implementation is based upon the receiver's location in memory, as it is assumed that the object will be retained for the duration of the editing cycle. Subclasses can override to specify a different ID format, perhaps because the object will already generate a unique ID as part of its HTML.
+- (NSString *)editingElementID;
 
 @end
