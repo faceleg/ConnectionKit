@@ -9,7 +9,7 @@
 #import "SVWebEditorItem.h"
 
 
-@class SVHTMLContext;
+@class SVContentObject, SVHTMLContext;
 
 
 @interface SVDOMController : SVWebEditorItem
