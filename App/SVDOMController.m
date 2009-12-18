@@ -26,6 +26,12 @@
 
 #pragma mark Content
 
+- (id)initWithContentObject:(SVContentObject *)contentObject
+              inDOMDocument:(DOMDocument *)document;
+{
+    return [self initWithHTMLElement:[contentObject elementForEditingInDOMDocument:document]];
+}
+
 - (void)createHTMLElement
 {
     // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)

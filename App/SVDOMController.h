@@ -21,6 +21,10 @@
 }
 
 #pragma mark Content
+
+- (id)initWithContentObject:(SVContentObject *)contentObject
+              inDOMDocument:(DOMDocument *)document;
+
 // Uses the receiver's HTML context to call -HTMLString from the represented object
 - (NSString *)representedObjectHTMLString;
 @property(nonatomic, retain) SVHTMLContext *HTMLContext;
