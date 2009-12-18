@@ -12,7 +12,6 @@
 #import "SVBodyParagraph.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
-#import "SVWebContentItem.h"
 
 #import "NSDictionary+Karelia.h"
 #import "DOMNode+Karelia.h"
@@ -188,7 +187,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)setEditable:(BOOL)editable
 {
     // TODO: Embedded graphics must NOT be selectable
-    for (SVWebContentItem *aGraphicController in [self graphicControllers])
+    for (SVDOMController *aGraphicController in [self graphicControllers])
     {
         [[[aGraphicController HTMLElement] style] setProperty:@"-webkit-user-select"
                                                         value:@"none"
@@ -238,8 +237,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 {
-    Class result = ([element isKindOfClass:[SVBodyParagraph class]] ? 
-                    [SVBodyParagraphDOMAdapter class] : [SVWebContentItem class]);
+    Class result = [[element class] DOMControllerClass];
     
     return result;
 }

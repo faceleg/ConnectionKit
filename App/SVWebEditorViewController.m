@@ -17,7 +17,6 @@
 #import "SVBody.h"
 #import "SVBodyTextDOMController.h"
 #import "KTSite.h"
-#import "SVWebContentItem.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
 #import "SVTextField.h"
@@ -327,10 +326,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         DOMHTMLElement *element = [aContentObject elementForEditingInDOMDocument:domDoc];
         if (element)
         {
-            SVWebContentItem *item = [[SVWebContentItem alloc] initWithHTMLElement:element];
+            SVDOMController *item = [[SVDOMController alloc] initWithHTMLElement:element];
             [item setRepresentedObject:aContentObject];
             [item setHTMLContext:[self HTMLContext]];
-            [item setEditable:YES];
             
             [[self webEditor] insertItem:item];
             [item release];
@@ -823,7 +821,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         else if (dropIndex >= [pageletContentItems count])
         {
             SVPagelet *lastPagelet = [[pageletContentItems lastObject] representedObject];
-            for (SVWebContentItem *aPageletItem in [sender selectedItems])
+            for (SVDOMController *aPageletItem in [sender selectedItems])
             {
                 SVPagelet *pagelet = [aPageletItem representedObject];
                 [pagelet moveAfterPagelet:lastPagelet];
@@ -831,7 +829,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
         else
         {
-            for (SVWebContentItem *aPageletItem in [sender selectedItems])
+            for (SVDOMController *aPageletItem in [sender selectedItems])
             {
                 SVPagelet *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
                 SVPagelet *pagelet = [aPageletItem representedObject];
