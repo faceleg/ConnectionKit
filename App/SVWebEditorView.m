@@ -590,7 +590,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 /*  What item would be selected if you click at that point?
  */
-- (SVWebEditorItem *)itemAtPoint:(NSPoint)point;
+- (SVWebEditorItem *)selectableItemAtPoint:(NSPoint)point;
 {
     SVWebEditorItem *result = nil;
     
@@ -622,7 +622,11 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         while (parentItem)
         {
             result = [parentItem childItemForDOMNode:node];
-            if (![result isSelectable])
+            if ([result isSelectable])
+            {
+                break;
+            }
+            else
             {
                 parentItem = result;
                 result = nil;
