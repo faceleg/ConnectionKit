@@ -7,6 +7,7 @@
 //
 
 #import "SVBodyParagraph.h"
+#import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVPlugInGraphic.h"
 #import "SVHTMLContext.h"
@@ -74,6 +75,11 @@
     if (![[result tagName] isEqualToStringCaseInsensitive:[self tagName]]) result = nil;
     
     return result;
+}
+
++ (Class)DOMControllerClass;
+{
+    return [SVBodyParagraphDOMAdapter class];
 }
 
 @end
