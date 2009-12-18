@@ -184,6 +184,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Editability
 
+- (BOOL)isSelectable { return NO; }
+
 - (void)setEditable:(BOOL)editable
 {
     // TODO: Embedded graphics must NOT be selectable

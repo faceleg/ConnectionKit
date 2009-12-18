@@ -22,6 +22,7 @@
     SVWebEditorItem *_parentController;
 }
 
+- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
 - (BOOL)isEditable;
 
 @property(nonatomic, assign, readonly) SVWebEditorView *webEditorView;  // NOT KVO-compliant

@@ -22,6 +22,11 @@
 
 #pragma mark Accessors
 
+- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
+{
+    return YES;
+}
+
 - (BOOL)isEditable { return NO; }
 
 - (SVWebEditorView *)webEditorView
