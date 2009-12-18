@@ -407,7 +407,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         DOMNode *selectionNode = [[self selectedDOMRange] commonAncestorContainer];
         if (selectionNode)
         {
-            SVWebEditorItem *parent = [self itemForDOMNode:selectionNode];
+            SVWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
             if (parent)
             {
                 parentItems = [self ancestorsForItem:parent includeItem:YES];
@@ -598,13 +598,13 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
     if (domNode)
     {
-        result = [self itemForDOMNode:domNode];
+        result = [self selectableItemForDOMNode:domNode];
     }
     
     return result;
 }
 
-- (SVWebEditorItem *)itemForDOMNode:(DOMNode *)node;
+- (SVWebEditorItem *)selectableItemForDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
     SVWebEditorItem *result = nil;
@@ -617,8 +617,17 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     while (!result && index > -2)
     {
         SVWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self mainItem];
-            
-        result = [parentItem childItemForDOMNode:node];
+         
+        // The child matching the node may not be selectable. If so, search its children
+        while (parentItem)
+        {
+            result = [parentItem childItemForDOMNode:node];
+            if (![result isSelectable])
+            {
+                parentItem = result;
+                result = nil;
+            }
+        }
         
         index--;
     }
@@ -745,7 +754,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
-        SVWebEditorItem *item = [self itemAtPoint:point];
+        SVWebEditorItem *item = [self selectableItemAtPoint:point];
         if (item)
         {
             if (![[self selectionParentItems] containsObject:item])
@@ -817,7 +826,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     // What was clicked? We want to know top-level object
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    SVWebEditorItem *item = [self itemAtPoint:location];
+    SVWebEditorItem *item = [self selectableItemAtPoint:location];
       
     if (item)
     {
