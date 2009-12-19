@@ -29,7 +29,9 @@
 - (id)initWithContentObject:(SVContentObject *)contentObject
               inDOMDocument:(DOMDocument *)document;
 {
-    return [self initWithHTMLElement:[contentObject elementForEditingInDOMDocument:document]];
+    self = [self initWithHTMLElement:[contentObject elementForEditingInDOMDocument:document]];
+    [self setRepresentedObject:contentObject];
+    return self;
 }
 
 - (void)createHTMLElement
