@@ -153,28 +153,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [SVHTMLContext popContext];
     
     
-    //  What are the selectable objects? Pagelets and other SVContentObjects
-    NSMutableSet *selectableObjects = [[NSMutableSet alloc] init];
-    [selectableObjects unionSet:[[[self page] sidebar] pagelets]];
-    for (SVHTMLTextBlock *aTextBlock in [context generatedTextBlocks])
-    {
-        id content = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
-        if ([content isKindOfClass:[SVTextField class]])
-        {
-            [selectableObjects addObject:content];
-        }
-        if ([content isKindOfClass:[SVBody class]])
-        {
-            //[selectableObjects unionSet:[content contentObjects]];
-        }
-    }
-    
-    // Do NOT set the controller's MOC. Unless you set both MOC and entity name, saving will raise an exception. (crazy I know!)
-    [_selectableObjectsController setPage:[self page]];
-    [_selectableObjectsController setContent:selectableObjects];
-    [selectableObjects release];
-	
-    
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
     
@@ -360,6 +338,20 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     
+    
+    //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
+    NSEnumerator *itemsEnumerator = [[[self webEditor] mainItem] enumerator];
+    NSMutableArray *selectableObjects = [[NSMutableArray alloc] init];
+    SVWebEditorItem *anItem;
+    while (anItem = [itemsEnumerator nextObject])
+    {
+        id anObject = [anItem representedObject];
+        if (anObject) [selectableObjects addObject:anObject];
+    }
+    
+    [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC 
+    [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
+	
     
     // Match selection to controller
     NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
