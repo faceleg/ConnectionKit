@@ -218,8 +218,7 @@
     if (isTypingChange)
     {
         // Does it put us into coalescing mode?
-        NSManagedObjectContext *moc = [self managedObjectContext];
-        NSUndoManager *undoManager = [moc undoManager];
+        NSUndoManager *undoManager = [[self webEditor] undoManager];
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
             if ([undoManager lastRegisteredActionIdentifier] == [self undoCoalescingActionIdentifier])
@@ -243,8 +242,7 @@
     if (isTypingChange)
     {
         // Process the change so that nothing is scheduled to be added to the undo manager
-        NSManagedObjectContext *moc = [self managedObjectContext];
-        NSUndoManager *undoManager = [moc undoManager];
+        NSUndoManager *undoManager = [[self webEditor] undoManager];
         
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
