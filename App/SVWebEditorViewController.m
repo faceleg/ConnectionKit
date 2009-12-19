@@ -290,27 +290,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     DOMDocument *domDoc = [[self webEditor] HTMLDocument];
     
     
-    // Set up selection borders for all pagelets. Could we do this better by receiving a list of pagelets from the parser?
+    // Set up controllers for all sidebar pagelets. Could we do this better by receiving a list of pagelets from the parser?
+    NSArray *sidebarPagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
+    NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] initWithCapacity:[sidebarPagelets count]];
     
-    for (SVGraphic *aContentObject in [[self selectedObjectsController] arrangedObjects])
+    for (SVPagelet *aPagelet in sidebarPagelets)
     {
-        DOMHTMLElement *element = [aContentObject elementForEditingInDOMDocument:domDoc];
-        if (element)
-        {
-            SVDOMController *item = [[SVDOMController alloc] initWithHTMLElement:element];
-            [item setRepresentedObject:aContentObject];
-            [item setHTMLContext:[self HTMLContext]];
-            
-            [[self webEditor] insertItem:item];
-            [item release];
-        }
-        else
-        {
-            NSLog(@"Could not locate content object: %@", aContentObject);
-        }
+        SVDOMController *controller = [[SVDOMController alloc] initWithContentObject:aPagelet
+                                                                       inDOMDocument:domDoc];
+        [controller setHTMLContext:[self HTMLContext]];
+        [[self webEditor] insertItem:controller];
+        [controller release];
     }
     
-    NSArray *sidebarPageletItems = nil;
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
     
