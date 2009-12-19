@@ -169,11 +169,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
     }
     
-    [_selectableObjects release];
-    _selectableObjects = selectableObjects;
     // Do NOT set the controller's MOC. Unless you set both MOC and entity name, saving will raise an exception. (crazy I know!)
     [_selectableObjectsController setPage:[self page]];
-    [_selectableObjectsController setContent:_selectableObjects];
+    [_selectableObjectsController setContent:selectableObjects];
+    [selectableObjects release];
 	
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the

@@ -26,7 +26,6 @@
     KTPage                      *_page;
     SVHTMLContext               *_context;
     
-    NSSet                           *_selectableObjects;
     SVWebContentObjectsController   *_selectableObjectsController;
     
     // Controllers
