@@ -29,9 +29,9 @@
 
 - (BOOL)isEditable { return NO; }
 
-- (SVWebEditorView *)webEditorView
+- (SVWebEditorView *)webEditor
 {
-    return [[self parentWebEditorItem] webEditorView];
+    return [[self parentWebEditorItem] webEditor];
 }
 
 #pragma mark Tree

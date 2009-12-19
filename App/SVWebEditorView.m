@@ -28,7 +28,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 {
     SVWebEditorView *_webEditor;
 }
-@property(nonatomic, assign) SVWebEditorView *webEditorView;
+@property(nonatomic, assign) SVWebEditorView *webEditor;
 @end
 
 
@@ -79,7 +79,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     // ivars
     _mainItem = [[SVMainWebEditorItem alloc] init];
-    [_mainItem setWebEditorView:self];
+    [_mainItem setWebEditor:self];
     
     _selectedItems = [[NSMutableArray alloc] init];
     
@@ -133,7 +133,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (void)dealloc
 {
-    [_mainItem setWebEditorView:nil];
+    [_mainItem setWebEditor:nil];
     [_mainItem release];
     
     [_webView setFrameLoadDelegate:nil];
@@ -1250,7 +1250,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (DOMHTMLElement *)HTMLElement { return nil; }
 
-@synthesize webEditorView = _webEditor;
+@synthesize webEditor = _webEditor;
 
 @end
 

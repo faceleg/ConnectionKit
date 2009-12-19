@@ -72,7 +72,7 @@
 - (void)setNeedsUpdate;
 {
     // Try to get hold of the controller in charge of update coalescing
-    id controller = (id)[[self webEditorView] delegate];
+    id controller = (id)[[self webEditor] delegate];
     if ([controller respondsToSelector:@selector(scheduleUpdate)])
     {
         _needsUpdate = YES;
