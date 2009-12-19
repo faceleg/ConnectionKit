@@ -227,7 +227,8 @@
                 // Go for coalescing
                 _isCoalescingUndo = YES;
                 
-                [moc processPendingChanges];
+                // Push through any pending changes. (Any MOCs observe this notification and call -processPendingChanges)
+                [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
                 [undoManager disableUndoRegistration];
             }
         }
@@ -247,7 +248,8 @@
         
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
-            [moc processPendingChanges];
+            // Push through any pending changes. (Any MOCs observe this notification and call -processPendingChanges)
+            [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
             if (_isCoalescingUndo) [undoManager enableUndoRegistration];
             
             // Record the action identifier and DOM selection so we know whether to coalesce the next change
