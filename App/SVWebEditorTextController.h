@@ -75,8 +75,6 @@
 //
 //      -   cooperation of the undo manager. NSTextView does its undo coalescing by inspecting the undo stack to see if the last op registered was by itself. We don't have that access, but can request that somebody else (*cough* the document) supply a suitable NSUndoManager subclass which gives an identifer for the item on top of the stack.
 
-- (NSManagedObjectContext *)managedObjectContext;   // subclasses should provide one
-
 
 @end
 

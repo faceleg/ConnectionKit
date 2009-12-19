@@ -270,9 +270,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         // Make top-level text fields selectable. The way I determine this is admittedly hacky at the moment
         *outIsSelectable = ([[aTextBlock HTMLSourceObject] isKindOfClass:[KTAbstractPage class]]);
-        
-        // Tell it the MOC for undo purposes
-        [(SVWebEditorTextFieldController *)result setManagedObjectContext:[[self page] managedObjectContext]];
     }
     else if ([value isKindOfClass:[SVBody class]])
     {
@@ -306,9 +303,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         // Make top-level text fields selectable. The way I determine this is admittedly hacky at the moment
         *outIsSelectable = ([[aTextBlock HTMLSourceObject] isKindOfClass:[KTAbstractPage class]]);
-        
-        // Tell it the MOC for undo purposes
-        [(SVWebEditorTextFieldController *)result setManagedObjectContext:[[self page] managedObjectContext]];
     }
     
     return [result autorelease];

@@ -303,8 +303,6 @@
     [self setUndoCoalescingActionIdentifier:NSNotFound selectedDOMRange:nil];
 }
 
-- (NSManagedObjectContext *)managedObjectContext; { return nil; }
-
 - (void)willChangeTextSuitableForUndoCoalescing;
 {
     // At this point we know the TYPE of change will be suitable for undo calescing, but not whether the specific event is.

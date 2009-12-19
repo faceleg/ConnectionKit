@@ -126,10 +126,6 @@
 
 - (DOMElement *)DOMElement { return [self HTMLElement]; }
 
-#pragma mark Undo
-
-@synthesize managedObjectContext = _moc;
-
 #pragma mark Debugging
 
 - (NSString *)blurb
