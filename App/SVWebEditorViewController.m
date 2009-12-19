@@ -299,7 +299,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         SVDOMController *controller = [[SVDOMController alloc] initWithContentObject:aPagelet
                                                                        inDOMDocument:domDoc];
         [controller setHTMLContext:[self HTMLContext]];
+        
         [[self webEditor] insertItem:controller];
+        [sidebarPageletItems addObject:controller];
         [controller release];
     }
     
