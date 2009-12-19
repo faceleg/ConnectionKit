@@ -62,6 +62,10 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
 
+
+// Undo
+- (NSUndoManager *)webViewUndoManager;
+
 @end
 
 
@@ -227,7 +231,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     
     // Let the old text know it's done
     [[self focusedText] webEditorTextDidEndEditing:notification];
-    [[self undoManager] removeAllActions];
+    [[self webViewUndoManager] removeAllActions];
     
     // Store the new text
     [text webEditorTextWillGainFocus];
@@ -519,26 +523,13 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 #pragma mark Undo Support
 
-- (NSUndoManager *)undoManager
+- (NSUndoManager *)webViewUndoManager
 {
     if (!_undoManager)
     {
         _undoManager = [[NSUndoManager alloc] init];
     }
     return _undoManager;
-}
-
-/*  This is pretty sucky: There are -undo: and -redo: actions for menu items but they are not documented anywhere. Since we're using a custom undo manager, need to implement these methods ourself
- */
-
-- (void)undo:(id)sender
-{
-    [[self undoManager] undo];
-}
-
-- (void)redo:(id)sender
-{
-    [[self undoManager] redo];
 }
 
 /*  Covers for prviate WebKit methods
@@ -972,26 +963,6 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     else if (action == @selector(cut:) || action == @selector(copy:))
     {
         result = ([[self selectedItems] count] >= 1);
-    }
-    
-    return result;
-}
-
-- (BOOL)respondsToSelector:(SEL)aSelector
-{
-    //  And here I am forced to lie a bit to the undo manager. If we're not in the middle of editing, we want undo messages to be handled by the window as usual. Easiest way is just to claim we don't respond.
-    BOOL result;
-    if (aSelector == @selector(undo:))
-    {
-        result = [[self undoManager] canUndo];
-    }
-    else if (aSelector == @selector(redo:))
-    {
-        result = [[self undoManager] canRedo];
-    }
-    else
-    {
-        result = [super respondsToSelector:aSelector];
     }
     
     return result;
