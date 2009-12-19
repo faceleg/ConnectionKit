@@ -11,6 +11,20 @@
 #import "SVBodyElement.h"
 
 
+@interface SVWebEditorItemEnumerator : NSEnumerator
+{
+    NSEnumerator    *_iterator;
+}
+
+- (id)initWithItem:(SVWebEditorItem *)item;
+
+@end
+
+
+#pragma mark -
+
+
+
 @implementation SVWebEditorItem
 
 - (void)dealloc
@@ -78,6 +92,18 @@
     {
         [parent->_childControllers release]; parent->_childControllers = children;
     }
+}
+
+- (NSEnumerator *)enumerator;
+{
+    NSEnumerator *result = [[[SVWebEditorItemEnumerator alloc] initWithItem:self] autorelease];
+    return result;
+}
+
+- (void)addDescendantsToMutableArray:(NSMutableArray *)descendants;
+{
+    [descendants addObjectsFromArray:[self childWebEditorItems]];
+    [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:descendants];
 }
 
 #pragma mark Searching the Tree
@@ -173,3 +199,37 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVWebEditorItemEnumerator
+
+- (id)initWithItem:(SVWebEditorItem *)item;
+{
+    [self init];
+    
+    // For now, the easy thing is to cheat and gather everything up into a single array immediately, and enumerate that
+    NSMutableArray *items = [[NSMutableArray alloc] init];
+    [item addDescendantsToMutableArray:items];
+    
+    _iterator = [[items objectEnumerator] retain];
+    [items release];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_iterator release];
+    
+    [super dealloc];
+}
+
+- (id)nextObject { return [_iterator nextObject]; }
+
+- (NSArray *)allObjects { return [_iterator allObjects]; }
+
+@end
+

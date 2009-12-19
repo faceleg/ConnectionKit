@@ -42,6 +42,8 @@
 
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
+- (NSEnumerator *)enumerator;
+
 
 #pragma mark Debugging
 - (NSString *)descriptionWithIndent:(NSUInteger)level;
