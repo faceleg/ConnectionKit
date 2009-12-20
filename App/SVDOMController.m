@@ -96,6 +96,10 @@
     [super updateIfNeeded];
 }
 
+#pragma mark Editing
+
+- (BOOL)isEditable { return YES; }
+
 @end
 
 
