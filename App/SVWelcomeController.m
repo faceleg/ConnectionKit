@@ -155,7 +155,7 @@
 	urls = [NSArray arrayWithArray:localURLs];
 #endif
 	
-#if 1
+#if 0
 	// Test for having ZERO recent documents.
 	urls = [NSArray array];
 #endif
