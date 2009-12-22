@@ -737,7 +737,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (NSString *)cleanedOuterHTML
 {
-	NSString *result = [NSString stringWithFormat:@"%@=\"%@\"", [[self name] lowercaseString], [[self value] stringByEscapingHTMLEntities] ];	// escape entities properly
+	NSString *result = [NSString stringWithFormat:@"%@=\"%@\"", [[self name] lowercaseString], [[self value] stringByEscapingHTMLEntitiesWithQuot:YES] ];	// escape entities properly
 	return result;
 }
 @end

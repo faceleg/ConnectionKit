@@ -179,7 +179,7 @@
 	
 	if (title)
 	{
-		[buffer appendFormat:@" title=\"%@\"", [title stringByEscapingHTMLEntities]];
+		[buffer appendFormat:@" title=\"%@\"", [title stringByEscapingHTMLEntitiesWithQuot:YES]];
 	}
 	
 	if (media)
