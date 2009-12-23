@@ -1083,6 +1083,35 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 #pragma mark -
 
+@implementation DOMHTMLScriptElement  ( KTExtensions )
+
+
+- (NSString *)cleanedInnerHTML
+{
+	NSMutableString *output = [NSMutableString string];
+	if ([self hasChildNodes])
+	{
+		DOMNodeList *childNodes = [self childNodes];
+		int i, length = [childNodes length];
+		for (i = 0 ; i < length ; i++)
+		{
+			DOMNode *childNode = [childNodes item:i];
+			if ([childNode respondsToSelector:@selector(data)])
+			{
+				[output appendString:[((DOMText *)childNode) data]];
+			}
+			else
+			{
+				[output appendString:[childNode cleanedOuterHTML]];			// <----- RECURSION POINT
+			}
+			
+		}
+	}
+	return output;
+}
+
+@end
+
 
 @implementation DOMComment  ( KTExtensions )
 
@@ -1128,11 +1157,11 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 		if (foundRange.location != NSNotFound)
 		{
 			// First, append what was the search range and the found range -- before match -- to output
-		{
-			NSRange beforeRange = NSMakeRange(range.location, foundRange.location - range.location);
-			NSString *before = [text substringWithRange:beforeRange];
-			[buf appendString:[before stringByEscapingHTMLEntities]];
-		}
+			{
+				NSRange beforeRange = NSMakeRange(range.location, foundRange.location - range.location);
+				NSString *before = [text substringWithRange:beforeRange];
+				[buf appendString:[before stringByEscapingHTMLEntities]];
+			}
 			// Now, figure out what was between those two strings
 			{
 				NSRange betweenRange = NSMakeRange(foundRange.location, foundRange.length);

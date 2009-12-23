@@ -263,7 +263,7 @@ initial syntax coloring.
         // Re-enable undo registration
         if (MOC)
         {
-            [MOC processPendingCohanges];
+            [MOC processPendingChanges];
             [[MOC undoManager] enableUndoRegistration];
         }
         
