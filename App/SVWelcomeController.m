@@ -225,7 +225,8 @@
 
 - (IBAction)openSelectedRecentDocument:(id)sender;
 {
-	NSURL *fileURL = [[oRecentDocsController selectedObjects] lastObject];  // should only be a single object selected anyhow
+	KSRecentDocument *recentDoc = [[oRecentDocsController selectedObjects] lastObject];  // should only be a single object selected anyhow
+    NSURL *fileURL = [recentDoc URL];
 
 	NSError *error;
 	if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL
