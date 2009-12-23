@@ -161,12 +161,14 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
             NSString *errorDescription = [[NSString alloc] initWithFormat:
                                           NSLocalizedString(@"The document could not be saved as “%@”. The volume is read only.", "file save error"),
                                           [absoluteURL lastPathComponent]];
-            
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                            code:NSFileWriteInvalidFileNameError
-                            localizedDescription:errorDescription
-                     localizedRecoverySuggestion:NSLocalizedString(@"Try saving the file to another volume.", "file save error")
-                                 underlyingError:nil];
+            if (outError)
+			{
+				*outError = [NSError errorWithDomain:NSCocoaErrorDomain
+												code:NSFileWriteInvalidFileNameError
+								localizedDescription:errorDescription
+						 localizedRecoverySuggestion:NSLocalizedString(@"Try saving the file to another volume.", "file save error")
+									 underlyingError:nil];
+			}
             
             [errorDescription release];
         }
