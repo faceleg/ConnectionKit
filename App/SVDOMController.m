@@ -29,8 +29,23 @@
 - (id)initWithContentObject:(SVContentObject *)contentObject
               inDOMDocument:(DOMDocument *)document;
 {
-    self = [self initWithHTMLElement:[contentObject elementForEditingInDOMDocument:document]];
+    // See header for what steps are
+    
+    //  1)
+    DOMHTMLElement *element = [contentObject elementForEditingInDOMDocument:document];
+    
+    //  2)
+    self = [self initWithHTMLElement:element];
+    
+    //  3)
     [self setRepresentedObject:contentObject];
+    
+    //  4)
+    if (![contentObject shouldPublishEditingElementID])
+    {
+        [element setIdName:nil];
+    }
+    
     return self;
 }
 

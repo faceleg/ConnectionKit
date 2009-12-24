@@ -22,6 +22,11 @@
 
 #pragma mark Content
 
+// Convenience method that:
+//  1)  Locates the DOMNode using SVContentObject's API.
+//  2)  Passes that node onto -initWithHTMLElement:
+//  3)  Stores the content object in .representedObject.
+//  4)  Removes the node's ID attribute from the DOM if it's only there for editing support (so as to keep the Web Inspector tidy)
 - (id)initWithContentObject:(SVContentObject *)contentObject
               inDOMDocument:(DOMDocument *)document;
 
