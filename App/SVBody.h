@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "SVContentObject.h"
 
 @class SVBodyElement;
 @class SVPagelet;
 
 
-@interface SVBody :  NSManagedObject  
+@interface SVBody : SVContentObject  
 
 + (SVBody *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 + (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;

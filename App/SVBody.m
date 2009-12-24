@@ -10,6 +10,7 @@
 
 #import "SVPagelet.h"
 #import "SVBodyElement.h"
+#import "SVBodyTextDOMController.h"
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
@@ -131,5 +132,9 @@
     
     return result;
 }
+
+#pragma mark Editing
+
++ (Class)DOMControllerClass; { return [SVBodyTextDOMController class]; }
 
 @end

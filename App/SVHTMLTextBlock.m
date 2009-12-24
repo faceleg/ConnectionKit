@@ -68,7 +68,7 @@
 - (NSString *)DOMNodeID
 {
     id value = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
-	if ([value isKindOfClass:[SVTextField class]])
+	if ([value isKindOfClass:[SVContentObject class]])
     {
         return [value editingElementID];
     }
