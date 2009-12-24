@@ -34,6 +34,8 @@
     return result;
 }
 
+- (BOOL)shouldPublishEditingElementID; { return NO; }
+
 - (NSString *)editingElementID;
 {
     //  The default is just to generate a string based on object address, keeping us nicely unique

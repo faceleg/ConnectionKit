@@ -277,6 +277,7 @@
 #pragma mark HTML
 
 - (NSString *)editingElementID { return [[self plugIn] elementID]; }
+- (BOOL)shouldPublishEditingElementID { return YES; }
 
 - (NSString *)HTMLString;
 {
