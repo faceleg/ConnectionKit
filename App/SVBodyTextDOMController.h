@@ -19,7 +19,7 @@
     BOOL    _isUpdating;    
 }
 
-- (id)initWithHTMLElement:(DOMHTMLElement *)element content:(NSArrayController *)content;
+- (id)initWithContentObject:(SVContentObject *)body inDOMDocument:(DOMDocument *)document;
 
 
 #pragma mark Content

@@ -16,6 +16,8 @@
 #import "NSDictionary+Karelia.h"
 #import "DOMNode+Karelia.h"
 
+#import "KSOrderedManagedObjectControllers.h"
+
 
 static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObservationContext";
 
@@ -24,21 +26,23 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Init & Dealloc
 
-- (id)initWithHTMLElement:(DOMHTMLElement *)element;
+- (id)initWithContentObject:(SVContentObject *)body inDOMDocument:(DOMDocument *)document;
 {
-    return [self initWithHTMLElement:element content:nil];
-}
-
-- (id)initWithHTMLElement:(DOMHTMLElement *)element content:(NSArrayController *)elementsController;
-{
-    OBPRECONDITION(elementsController);
+    // Make an object controller
+    KSSetController *elementsController = [[KSSetController alloc] init];
+    [elementsController setOrderingSortKey:@"sortKey"];
+    [elementsController setManagedObjectContext:[body managedObjectContext]];
+    [elementsController setEntityName:@"BodyParagraph"];
+    [elementsController setAutomaticallyRearrangesObjects:YES];
+    [elementsController bind:NSContentSetBinding toObject:body withKeyPath:@"elements" options:nil];
     
     
-    self = [super initWithHTMLElement:element];
+    // Super
+    self = [super initWithContentObject:body inDOMDocument:document];
     
     
     // Get our content populated first so we don't have to teardown and restup the DOM
-    _content = [elementsController retain];
+    _content = elementsController;
     
     
     

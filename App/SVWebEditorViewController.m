@@ -30,7 +30,6 @@
 #import "NSWorkspace+Karelia.h"
 
 #import "KSCollectionController.h"
-#import "KSOrderedManagedObjectControllers.h"
 #import "KSPlugin.h"
 #import "KSSilencingConfirmSheet.h"
 
@@ -232,8 +231,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if ([value isKindOfClass:[SVTextField class]])
     {
         // Copy basic properties from text block
-        result = [[SVWebEditorTextFieldController alloc] initWithHTMLElement:element];
-        [result setRepresentedObject:value];
+        result = [[SVWebEditorTextFieldController alloc] initWithContentObject:value inDOMDocument:domDoc];
         [result setHTMLContext:[self HTMLContext]];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
@@ -250,14 +248,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else if ([value isKindOfClass:[SVBody class]])
     {
-        KSSetController *elementsController = [[KSSetController alloc] init];
-        [elementsController setOrderingSortKey:@"sortKey"];
-        [elementsController setManagedObjectContext:[[self page] managedObjectContext]];
-        [elementsController setEntityName:@"BodyParagraph"];
-        [elementsController setAutomaticallyRearrangesObjects:YES];
-        [elementsController bind:NSContentSetBinding toObject:value withKeyPath:@"elements" options:nil];
-        
-        result = [[SVBodyTextDOMController alloc] initWithHTMLElement:element content:elementsController];
+        result = [[SVBodyTextDOMController alloc] initWithContentObject:value inDOMDocument:domDoc];
         [result setHTMLContext:[self HTMLContext]];
         [result setRichText:YES];
         [result setFieldEditor:NO];
