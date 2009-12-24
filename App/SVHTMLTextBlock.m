@@ -312,20 +312,15 @@
 	
 	// Open the main tag
 	// In some situations we generate both the main tag, and a <span class="in">
+    if ([[SVHTMLContext currentContext] isEditable])
+    {
+        [buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
+    }
+    
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self tagName] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
-		if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
-		{
-			[buffer appendFormat:
-             @" id=\"%@\" class=\"%@\"",
-             [self DOMNodeID],
-             [self CSSClassName]];
-		}
-		else if (![self isEditable])
-		{
-			[buffer appendFormat:@" class=\"%@\"", [self CSSClassName]];
-		}
+		[buffer appendFormat:@" class=\"%@\"", [self CSSClassName]];
 	}
 	
 	
@@ -335,7 +330,7 @@
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if ([[SVHTMLContext currentContext] isEditable])
+			if ([[SVHTMLContext currentContext] isEditable])    // id has already been supplied
 			{
 				[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
 			}
@@ -366,8 +361,7 @@
         NSString *CSSClassName = @"in";
         if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
 		{
-			[buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
-            CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
+			CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
         [buffer appendFormat:@" class=\"%@\">", CSSClassName];
