@@ -44,17 +44,16 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Match each model element up with its DOM equivalent
     NSArray *bodyElements = [[self content] arrangedObjects];
-    
-    DOMDocument *document = [element ownerDocument]; 
-    
     for (SVBodyElement *aModelElement in bodyElements)
     {
-        DOMHTMLElement *htmlElement = [aModelElement elementForEditingInDOMDocument:document];
-        OBASSERT([htmlElement isKindOfClass:[DOMHTMLElement class]]);
+        Class class = [self controllerClassForBodyElement:aModelElement];
+        SVDOMController *result = [[class alloc] initWithContentObject:aModelElement
+                                                         inDOMDocument:[[self HTMLElement] ownerDocument]];
         
-        [self makeAndAddControllerForBodyElement:aModelElement HTMLElement:htmlElement];
+        [result setHTMLContext:[self HTMLContext]];
         
-        [htmlElement setIdName:nil]; // don't want it cluttering up the DOM any more
+        [self addChildWebEditorItem:result];
+        [result release];
     }
     
     
@@ -202,19 +201,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Subcontrollers
 
-- (KSDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)bodyElement
-                                                   HTMLElement:(DOMHTMLElement *)htmlElement;
-{
-    id result = [[[self controllerClassForBodyElement:bodyElement] alloc] initWithHTMLElement:htmlElement];
-    [result setHTMLContext:[self HTMLContext]];
-    [result setRepresentedObject:bodyElement];
-    [self addChildWebEditorItem:result];
-    [result release];
-    
-    
-    return result;
-}
-
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 {
     SVDOMController * result = nil;
@@ -312,8 +298,15 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         
         
         // Create a matching controller
-        [self makeAndAddControllerForBodyElement:paragraph HTMLElement:insertedNode];
+        Class class = [self controllerClassForBodyElement:paragraph];
+        SVDOMController *controller = [[class alloc] initWithHTMLElement:insertedNode];
+        
+        [controller setRepresentedObject:paragraph];
         [paragraph release];
+        [controller setHTMLContext:[self HTMLContext]];
+        
+        [self addChildWebEditorItem:controller];
+        [controller release];
         
         
         // Insert the paragraph into the model in the same spot as it is in the DOM

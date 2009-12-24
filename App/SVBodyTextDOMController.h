@@ -33,9 +33,6 @@
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 - (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 
-- (SVDOMController *)makeAndAddControllerForBodyElement:(SVBodyElement *)element
-                                                   HTMLElement:(DOMHTMLElement *)element;
-
 - (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 
 // All the selectable items within ourself
