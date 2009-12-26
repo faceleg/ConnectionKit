@@ -257,6 +257,24 @@
     return result;
 }
 
+- (NSString *)editingElementID
+{
+    // Sidebar pagelets can use default, callouts need to generate their own. #59325
+    if ([self isCallout])
+    {
+        return [NSString stringWithFormat:@"%p", self];
+    }
+    else
+    {
+        return [super editingElementID];
+    }
+}
+
+- (BOOL)shouldPublishEditingElementID
+{
+    return (![self isCallout]);
+}
+
 @end
 
 
