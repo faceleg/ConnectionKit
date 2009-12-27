@@ -686,6 +686,37 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 }
 
+#pragma mark UI Validation
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+{
+    BOOL result = YES;
+    
+    if (result)
+    {
+        SEL action = [menuItem action];
+        if (action == @selector(insertPageletTitle:))
+        {
+            // To insert a pagelet title, the selection just needs to contain at least one title-less pagelet. #56871
+            result = NO;
+            for (id <NSObject> anObject in [[self selectedObjectsController] selectedObjects])
+            {
+                if ([anObject isKindOfClass:[SVPagelet class]])
+                {
+                    if ([[[(SVPagelet *)anObject title] text] length] == 0)
+                    {
+                        result = YES;
+                        break;
+                    }
+                }
+            }
+        }
+    }
+              
+    
+    return result;
+}
+
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
