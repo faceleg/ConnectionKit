@@ -109,6 +109,12 @@
 #pragma mark -
 #pragma mark Delegate
 
+- (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
+{
+    [super didEncounterKeyPath:keyPath ofObject:object];
+	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
+}
+
 - (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload
 {
 	id delegate = [self delegate];

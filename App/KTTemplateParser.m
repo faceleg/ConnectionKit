@@ -9,7 +9,6 @@
 #import "KTTemplateParser.h"
 #import "KTHTMLParserMasterCache.h"
 
-#import "SVHTMLContext.h"   // TODO: Shouldn't need this dependency
 #import "SVTemplate.h"
 
 #import "NSBundle+Karelia.h"
@@ -213,7 +212,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
 {
-	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
+	// Does nothing, but subclasses can reimplement
 }
 
 #pragma mark -
