@@ -3185,6 +3185,7 @@
 		278F798F10B4485C00BDBAF7 /* Body Text */ = {
 			isa = PBXGroup;
 			children = (
+				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
 				272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */,
 				272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */,
 				27C064BF10825F4800795D66 /* SVGraphic.h */,
@@ -4038,7 +4039,6 @@
 		3C5A73710BF7B69300776464 /* Pagelets */ = {
 			isa = PBXGroup;
 			children = (
-				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
 				279C587F109916F20030F3B7 /* SVSidebar.h */,
 				279C5880109916F20030F3B7 /* SVSidebar.m */,
 				27C0656C10828E9900795D66 /* SVPagelet.h */,
