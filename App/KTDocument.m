@@ -361,7 +361,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType
 {
-	return NSSQLiteStoreType;
+	return NSBinaryStoreType;
 }
 
 - (void)setFileURL:(NSURL *)absoluteURL
@@ -470,7 +470,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
 	{
-		result = [inURL URLByAppendingPathComponent:@"datastore.sqlite3" isDirectory:NO];
+		result = [inURL URLByAppendingPathComponent:@"datastore" isDirectory:NO];
 	}
 	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
