@@ -582,9 +582,7 @@ from representedObject */
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    //return YES;
-    
-	OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+    OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 	SEL itemAction = [menuItem action];
 		
 	// File menu handled by KTDocument
@@ -642,6 +640,14 @@ from representedObject */
 		[menuItem setTitle:title];
 		return result;
 	}
+    
+    
+    // Insert menu
+    if (itemAction == @selector(insertPageletTitle:))
+    {
+        return [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
+    }
+    
 	
 	// View menu
     
