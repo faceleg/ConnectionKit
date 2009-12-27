@@ -19,6 +19,9 @@
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
 
+// Checks that a given set of pagelets have unique sort keys
++ (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
+
 
 #pragma mark Title
 @property(nonatomic, retain) SVTextField *title;

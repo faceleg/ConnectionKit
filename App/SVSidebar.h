@@ -11,7 +11,7 @@
 @class KTAbstractPage;
 @class SVPagelet;
 
-@interface SVSidebar :  NSManagedObject  
+@interface SVSidebar : NSManagedObject  
 
 @property (nonatomic, retain) KTAbstractPage * page;
 
