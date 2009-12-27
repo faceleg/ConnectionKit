@@ -6,17 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "SVPageletsContainer.h"
 
 @class KTAbstractPage;
-@class SVPagelet;
 
-@interface SVSidebar :  NSManagedObject  
+@interface SVSidebar : SVPageletsContainer  
 
-@property (nonatomic, retain) KTAbstractPage * page;
-
-@property(nonatomic, retain) NSSet *pagelets;   // To sort, use SVPagelet class method
-- (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
+@property (nonatomic, retain) KTAbstractPage *page;
 
 
 #pragma mark HTML
@@ -24,12 +20,4 @@
 
 @end
 
-
-@interface SVSidebar (CoreDataGeneratedAccessors)
-- (void)addPageletsObject:(SVPagelet *)value;
-- (void)removePageletsObject:(SVPagelet *)value;
-- (void)addPagelets:(NSSet *)value;
-- (void)removePagelets:(NSSet *)value;
-
-@end
 
