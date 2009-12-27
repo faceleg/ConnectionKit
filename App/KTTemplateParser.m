@@ -10,6 +10,7 @@
 #import "KTHTMLParserMasterCache.h"
 
 #import "SVHTMLContext.h"   // TODO: Shouldn't need this dependency
+#import "SVTemplate.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -186,6 +187,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	{
 		id component = [[self cache] valueForKeyPath:[parameters objectAtIndex:0]];
 		NSString *template = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
+        if ([template isKindOfClass:[SVTemplate class]]) template = [(SVTemplate *)template templateString];
 		
 		if (component && template)
 		{
