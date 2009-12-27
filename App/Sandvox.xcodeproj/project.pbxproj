@@ -386,6 +386,8 @@
 		27A093320D1DECDA00F57801 /* WebViewEditingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */; };
 		27A094760D1F0EA900F57801 /* KTMediaManager+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27A095341097598600F43746 /* PageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A095331097598600F43746 /* PageletTemplate.html */; };
+		27A3578910E6D59D00C99FB3 /* SVTemplate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A3578710E6D59D00C99FB3 /* SVTemplate.h */; };
+		27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A3578810E6D59D00C99FB3 /* SVTemplate.m */; };
 		27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTextBlock.m */; };
 		27A50F290D19443800149038 /* DOM+KTWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50F270D19443800149038 /* DOM+KTWebViewController.m */; };
@@ -1817,6 +1819,8 @@
 		27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WebViewEditingHelperClasses.m; sourceTree = "<group>"; };
 		27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaManager+Internal.h"; sourceTree = "<group>"; };
 		27A095331097598600F43746 /* PageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = PageletTemplate.html; sourceTree = "<group>"; };
+		27A3578710E6D59D00C99FB3 /* SVTemplate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTemplate.h; sourceTree = "<group>"; };
+		27A3578810E6D59D00C99FB3 /* SVTemplate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTemplate.m; sourceTree = "<group>"; };
 		27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWebViewController+Editing.m"; sourceTree = "<group>"; };
 		27A50E880D19282B00149038 /* SVHTMLTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLTextBlock.h; sourceTree = "<group>"; };
 		27A50E890D19282B00149038 /* SVHTMLTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLTextBlock.m; sourceTree = "<group>"; };
@@ -3117,6 +3121,8 @@
 				27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */,
 				3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */,
 				3C682B430D62308D00B4D485 /* SVHTMLTemplateParser.m */,
+				27A3578710E6D59D00C99FB3 /* SVTemplate.h */,
+				27A3578810E6D59D00C99FB3 /* SVTemplate.m */,
 			);
 			name = "Template Parser";
 			sourceTree = "<group>";
@@ -5129,6 +5135,7 @@
 				273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */,
 				277892A010CD5FA3008AA683 /* SVTextField.h in Headers */,
 				276F8AB210D572780094AA73 /* SVDOMController.h in Headers */,
+				27A3578910E6D59D00C99FB3 /* SVTemplate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6506,6 +6513,7 @@
 				CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */,
 				CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */,
 				276F8AB310D572780094AA73 /* SVDOMController.m in Sources */,
+				27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
