@@ -12,6 +12,7 @@
 #import "SVBody.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
+#import "SVTemplate.h"
 #import "SVTextField.h"
 
 #import "NSSortDescriptor+Karelia.h"
@@ -214,11 +215,11 @@
 {
     //  All SVContentObject subclasses must implement this to suit themselves
     
-    NSString *template = ([self isCallout] ?
-                          [[self class] calloutHTMLTemplate] :  // will call pagelet template internally
-                          [[self class] pageletHTMLTemplate]);
+    SVTemplate *template = ([self isCallout] ?
+                            [[self class] calloutHTMLTemplate] :  // will call pagelet template internally
+                            [[self class] pageletHTMLTemplate]);
     
-    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
                                          component:self];
     
     NSString *result = [parser parseTemplate];
@@ -227,31 +228,23 @@
     return result;
 }
 
-+ (NSString *)pageletHTMLTemplate;
++ (SVTemplate *)pageletHTMLTemplate;
 {
-    static NSString *result;
+    static SVTemplate *result;
     if (!result)
     {
-        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"PageletTemplate"
-                                                                 ofType:@"html"];
-        result = [[NSString alloc] initWithContentsOfFile:templatePath
-                                                 encoding:NSUTF8StringEncoding
-                                                    error:nil];
+        result = [[SVTemplate templateNamed:@"PageletTemplate.html"] retain];
     }
     
     return result;
 }
 
-+ (NSString *)calloutHTMLTemplate;
++ (SVTemplate *)calloutHTMLTemplate;
 {
-    static NSString *result;
+    static SVTemplate *result;
     if (!result)
     {
-        NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"CalloutTemplate"
-                                                                 ofType:@"html"];
-        result = [[NSString alloc] initWithContentsOfFile:templatePath
-                                                 encoding:NSUTF8StringEncoding
-                                                    error:nil];
+        result = [[SVTemplate templateNamed:@"CalloutTemplate.html"] retain];
     }
     
     return result;

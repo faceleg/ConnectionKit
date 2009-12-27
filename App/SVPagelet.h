@@ -9,7 +9,7 @@
 #import "SVGraphic.h"
 
 @class SVTextField, SVBody;
-@class KTPage, SVSidebar;
+@class KTPage, SVSidebar, SVTemplate;
 
 
 @interface SVPagelet : SVGraphic  
@@ -45,8 +45,8 @@
 
 #pragma mark HTML
 - (NSString *)HTMLString;
-+ (NSString *)pageletHTMLTemplate;
-+ (NSString *)calloutHTMLTemplate;
++ (SVTemplate *)pageletHTMLTemplate;
++ (SVTemplate *)calloutHTMLTemplate;
 
 @end
 
