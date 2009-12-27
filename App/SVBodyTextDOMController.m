@@ -151,7 +151,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self didUpdate];
 }
 
-- (BOOL)insertGraphic:(SVGraphic *)pagelet;
+- (BOOL)insertElement:(SVBodyElement *)element;
 {
     BOOL result = NO;
     
@@ -160,7 +160,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [webView delete:self];
     
     
-    // Figure out the body element to insert next to
+    // Figure out the body element to insert next tok
     DOMRange *selection = [webView selectedDOMRange];
     OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
     
@@ -171,7 +171,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         NSUInteger index = [[[self content] arrangedObjects] indexOfObject:bodyElement];
         if (index != NSNotFound)
         {
-            [[self content] insertObject:pagelet atArrangedObjectIndex:index];
+            [[self content] insertObject:element atArrangedObjectIndex:index];
             result = YES;
         }
     }
@@ -182,7 +182,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (BOOL)insertPagelet:(SVPagelet *)pagelet
 {
-    return [self insertGraphic:pagelet];
+    return [self insertElement:pagelet];
 }
 
 #pragma mark Editability

@@ -25,7 +25,7 @@
 #pragma mark Content
 @property(nonatomic, retain, readonly) NSArrayController *content;
 
-- (BOOL)insertGraphic:(SVGraphic *)pagelet;
+- (BOOL)insertElement:(SVBodyElement *)pagelet;
 - (BOOL)insertPagelet:(SVPagelet *)pagelet;
 
 #pragma mark Subcontrollers
