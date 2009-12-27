@@ -90,12 +90,6 @@
 
 @dynamic showBorder;
 
-- (BOOL)isCallout;
-{
-    BOOL result = ([self enclosingBody] != nil);
-    return result;
-}
-
 #pragma mark Sidebar
 
 @dynamic sidebars;
@@ -228,18 +222,18 @@
     return result;
 }
 
+@dynamic sortKey;
+
 #pragma mark HTML
 
 - (NSString *)HTMLString
 {
     //  All SVContentObject subclasses must implement this to suit themselves
     
-    SVTemplate *template = ([self isCallout] ?
-                            [[self class] calloutHTMLTemplate] :  // will call pagelet template internally
-                            [[self class] pageletHTMLTemplate]);
+    SVTemplate *template = [[self class] template];
     
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                         component:self];
+                                                                        component:self];
     
     NSString *result = [parser parseTemplate];
     [parser release];
@@ -247,7 +241,7 @@
     return result;
 }
 
-+ (SVTemplate *)pageletHTMLTemplate;
++ (SVTemplate *)template;
 {
     static SVTemplate *result;
     if (!result)
@@ -258,34 +252,9 @@
     return result;
 }
 
-+ (SVTemplate *)calloutHTMLTemplate;
-{
-    static SVTemplate *result;
-    if (!result)
-    {
-        result = [[SVTemplate templateNamed:@"CalloutTemplate.html"] retain];
-    }
-    
-    return result;
-}
-
-- (NSString *)editingElementID
-{
-    // Sidebar pagelets can use default, callouts need to generate their own. #59325
-    if ([self isCallout])
-    {
-        return [NSString stringWithFormat:@"%p", self];
-    }
-    else
-    {
-        return [super editingElementID];
-    }
-}
-
-- (BOOL)shouldPublishEditingElementID
-{
-    return (![self isCallout]);
-}
+@dynamic elementID;
+- (NSString *)editingElementID { return [self elementID]; }
+- (BOOL)shouldPublishEditingElementID { return YES; }
 
 @end
 

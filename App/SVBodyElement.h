@@ -12,7 +12,7 @@
 @class SVBody;
 
 
-@interface SVBodyElement :  SVContentObject  
+@interface SVBodyElement : SVContentObject  
 
 @property (nonatomic, retain) SVBody *enclosingBody;
 

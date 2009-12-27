@@ -12,7 +12,7 @@
 @class KTPage, SVSidebar, SVTemplate;
 
 
-@interface SVPagelet : SVGraphic  
+@interface SVPagelet : SVContentObject  
 
 + (SVPagelet *)insertNewPageletIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
@@ -35,7 +35,6 @@
 
 #pragma mark Layout/Styling
 @property(nonatomic, copy) NSNumber *showBorder;
-- (BOOL)isCallout;  // name is hangover from 1.x. Not KVO-compliant. Yet.
 
 
 #pragma mark Sidebar
@@ -45,11 +44,16 @@
 - (void)moveBeforePagelet:(SVPagelet *)pagelet;
 - (void)moveAfterPagelet:(SVPagelet *)pagelet;
 
+// Shouldn't really have any need to set this yourself. Use a proper array controller instead please.
+@property(nonatomic, copy) NSNumber *sortKey;
+
 
 #pragma mark HTML
 - (NSString *)HTMLString;
-+ (SVTemplate *)pageletHTMLTemplate;
-+ (SVTemplate *)calloutHTMLTemplate;
++ (SVTemplate *)template;
+
+@property(nonatomic, retain, readonly) NSString *elementID;
+
 
 @end
 
