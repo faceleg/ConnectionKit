@@ -463,7 +463,10 @@
 - (NSString *)evaluateForeachLoopWithArray:(NSArray *)components iterationsCount:(NSUInteger)specifiedNumberIterations keyPath:(NSString *)keyPath scaner:(NSScanner *)inScanner
 {
     // Send the loop parameters to the HTML context to keep track of. Iterating will automatically pop it from the stack
-    [[SVHTMLContext currentContext] beginIteratingWithCount:specifiedNumberIterations];
+    if (specifiedNumberIterations > 0)
+    {
+        [[SVHTMLContext currentContext] beginIteratingWithCount:specifiedNumberIterations];
+    }
     
     
     return [super evaluateForeachLoopWithArray:components
