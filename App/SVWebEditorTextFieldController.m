@@ -8,6 +8,8 @@
 
 #import "SVWebEditorTextFieldController.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVWebEditorTextFieldController
 
@@ -116,6 +118,23 @@
 - (void)setHTMLElement:(DOMHTMLElement *)element
 {
     [super setHTMLElement:element];
+    
+    // Figure out the text element. Doing so by inspecting the DOM feels a little hacky to me, so would like to revisit.
+    DOMHTMLElement *firstChild = [element firstChildOfClass:[DOMHTMLElement class]];
+    if ([[firstChild tagName] isEqualToString:@"SPAN"] &&
+        [[firstChild className] hasPrefix:@"in"])
+    {
+        [self setTextHTMLElement:firstChild];
+    }
+    else
+    {
+        [self setTextHTMLElement:element];
+    }
+}
+
+- (void)setTextHTMLElement:(DOMHTMLElement *)element
+{
+    [super setTextHTMLElement:element];
     
     // Once attached to our DOM node, give it the placeholder text if needed
     if ([[self HTMLString] length] == 0 && [self placeholderString])
