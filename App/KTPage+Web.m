@@ -139,17 +139,22 @@
 	
 	
 	// Always include the global sandvox CSS.
-	if ([[SVHTMLContext currentContext] isPublishing])
+	if ([[SVHTMLContext currentContext] isEditable])
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
 		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] URLStringForResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
 	}
-    else
+    else if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingQuickLookPreview)
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] quicklookDataForFile:@"Contents/Resources/sandvox.css"];
 		[stylesheetLines addObject:[self stylesheetLink:globalCSSFile title:nil media:nil]];
 	}
-	
+	else
+    {
+		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
+		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] URLStringForResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
+	}
+        
     
 	// Ask the page and its components for extra general-purpose CSS files required
 	NSMutableSet *pluginCSSFiles = [NSMutableSet set];
