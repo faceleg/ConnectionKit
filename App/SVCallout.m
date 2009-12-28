@@ -8,6 +8,7 @@
 
 #import "SVCallout.h"
 
+#import "SVCalloutDOMController.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVPagelet.h"
 
@@ -46,5 +47,9 @@
     
     return result;
 }
+
+#pragma mark Editing
+
++ (Class)DOMControllerClass { return [SVCalloutDOMController class]; }
 
 @end
