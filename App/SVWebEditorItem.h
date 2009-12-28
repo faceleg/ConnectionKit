@@ -22,9 +22,6 @@
     SVWebEditorItem *_parentController;
 }
 
-- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
-- (BOOL)isEditable;
-
 @property(nonatomic, assign, readonly) SVWebEditorView *webEditor;  // NOT KVO-compliant
 
 
@@ -33,6 +30,14 @@
 @property(nonatomic, assign) SVWebEditorItem *parentWebEditorItem;  // don't call setter directly
 - (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
 - (void)removeFromParentWebEditorItem;
+
+
+#pragma mark Selection
+
+- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
+- (BOOL)isEditable;
+
+- (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
 
 
 #pragma mark Searching the Tree

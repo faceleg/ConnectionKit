@@ -36,13 +36,6 @@
 
 #pragma mark Accessors
 
-- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
-{
-    return YES;
-}
-
-- (BOOL)isEditable { return NO; }
-
 - (SVWebEditorView *)webEditor
 {
     return [[self parentWebEditorItem] webEditor];
@@ -104,6 +97,29 @@
 {
     [descendants addObjectsFromArray:[self childWebEditorItems]];
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:descendants];
+}
+
+#pragma mark Selection
+
+- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
+{
+    return YES;
+}
+
+- (BOOL)isEditable { return NO; }
+
+- (NSArray *)selectableAncestors;
+{
+    NSMutableArray *result = [NSMutableArray array];
+    
+    SVWebEditorItem *aParentItem = [self parentWebEditorItem];
+    while (aParentItem)
+    {
+        if ([aParentItem isSelectable]) [result addObject:aParentItem];
+        aParentItem = [aParentItem parentWebEditorItem];
+    }
+    
+    return result;
 }
 
 #pragma mark Searching the Tree
