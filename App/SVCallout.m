@@ -8,6 +8,7 @@
 
 #import "SVCallout.h"
 
+#import "SVHTMLTemplateParser.h"
 #import "SVPagelet.h"
 
 
@@ -22,6 +23,18 @@
 @dynamic wrap;
 
 #pragma mark HTML
+
+- (NSString *)HTMLString
+{
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
+                                    initWithTemplate:[[[self class] calloutHTMLTemplate] templateString]
+                                    component:self];
+    
+    NSString *result = [parser parseTemplate];
+    
+    [parser release];
+    return result;
+}
 
 + (SVTemplate *)calloutHTMLTemplate;
 {

@@ -10,6 +10,7 @@
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
+#import "SVCallout.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
 
@@ -160,7 +161,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [webView delete:self];
     
     
-    // Figure out the body element to insert next tok
+    // Figure out the body element to insert next to
     DOMRange *selection = [webView selectedDOMRange];
     OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
     
@@ -182,7 +183,13 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (BOOL)insertPagelet:(SVPagelet *)pagelet
 {
-    return [self insertElement:pagelet];
+    // Create a callout
+    SVCallout *callout = [NSEntityDescription insertNewObjectForEntityForName:@"Callout"
+                                                       inManagedObjectContext:[pagelet managedObjectContext]];
+    
+    [callout setPagelets:[NSSet setWithObject:pagelet]];
+    
+    return [self insertElement:callout];
 }
 
 #pragma mark Editability
