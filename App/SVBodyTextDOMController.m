@@ -93,6 +93,14 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [super dealloc];
 }
 
+#pragma mark DOM Node
+
+- (void)setHTMLElement:(DOMHTMLElement *)element
+{
+    [super setHTMLElement:element];
+    [self setTextHTMLElement:element];
+}
+
 #pragma mark Content
 
 @synthesize content = _content;
