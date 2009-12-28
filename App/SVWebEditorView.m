@@ -56,7 +56,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 
 // Getting Item Information
-- (NSArray *)ancestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
+- (NSArray *)selectableAncestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
 
 
 // Event handling
@@ -404,7 +404,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     NSArray *parentItems = nil;
     if (selectedItem)
     {
-        parentItems = [self ancestorsForItem:selectedItem includeItem:NO];
+        parentItems = [self selectableAncestorsForItem:selectedItem includeItem:NO];
     }
     else
     {
@@ -414,7 +414,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
             SVWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
             if (parent)
             {
-                parentItems = [self ancestorsForItem:parent includeItem:YES];
+                parentItems = [self selectableAncestorsForItem:parent includeItem:YES];
             }
         }
     }
@@ -647,27 +647,15 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (NSArray *)ancestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
+- (NSArray *)selectableAncestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
 {
     OBPRECONDITION(item);
     
-    NSArray *result = (includeItem ? [NSArray arrayWithObject:item] : nil);
-    
-    SVWebEditorItem *parent = item;
-    while (parent)
+    NSArray *result = [item selectableAncestors];
+    if (includeItem)
     {
-        parent = [parent parentWebEditorItem];
-        if (parent)
-        {
-            if (result)
-            {
-                result = [result arrayByAddingObject:parent];
-            }
-            else
-            {
-                result = [NSArray arrayWithObject:parent];
-            }
-        }
+        OBASSERT(result);
+        result = [result arrayByAddingObject:item];
     }
     
     return result;
@@ -1220,6 +1208,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 @implementation SVMainWebEditorItem
 
 - (DOMHTMLElement *)HTMLElement { return nil; }
+- (BOOL)isSelectable { return NO; }
 
 @synthesize webEditor = _webEditor;
 
