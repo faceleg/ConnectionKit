@@ -187,6 +187,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVCallout *callout = [NSEntityDescription insertNewObjectForEntityForName:@"Callout"
                                                        inManagedObjectContext:[pagelet managedObjectContext]];
     
+    [pagelet setSortKey:[NSNumber numberWithInteger:0]];
     [callout setPagelets:[NSSet setWithObject:pagelet]];
     
     return [self insertElement:callout];
