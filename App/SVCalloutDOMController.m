@@ -7,9 +7,30 @@
 //
 
 #import "SVCalloutDOMController.h"
+#import "SVCallout.h"
+
+#import "SVPagelet.h"
 
 
 @implementation SVCalloutDOMController
+
+- (id)initWithContentObject:(SVContentObject *)contentObject inDOMDocument:(DOMDocument *)document
+{
+    [super initWithContentObject:contentObject inDOMDocument:document];
+    
+    // Create subcontrollers for each of our pagelets
+    SVCallout *callout = [self representedObject];
+    for (SVPagelet *aPagelet in [callout pagelets])
+    {
+        SVDOMController *pageletController = [[[[aPagelet class] DOMControllerClass] alloc] initWithContentObject:aPagelet inDOMDocument:document];
+        
+        [self addChildWebEditorItem:pageletController];
+        [pageletController release];
+    }
+    
+    
+    return self;
+}
 
 - (BOOL)isSelectable { return NO; }
 
