@@ -44,9 +44,18 @@
 - (void)dealloc
 {
     [_HTMLString release];
+    [_textElement release];
     
-        
     [super dealloc];
+}
+
+#pragma mark DOM Node
+
+@synthesize textHTMLElement = _textElement;
+- (DOMHTMLElement *)textHTMLElement
+{
+    [self HTMLElement]; // make sure it's loaded
+    return _textElement;
 }
 
 #pragma mark Contents
@@ -69,26 +78,26 @@
 
 - (NSString *)string
 {
-    NSString *result = [[self HTMLElement] innerText];
+    NSString *result = [[self textHTMLElement] innerText];
     return result;
 }
 
 - (void)setString:(NSString *)string
 {
-    [[self HTMLElement] setInnerText:string];
+    [[self textHTMLElement] setInnerText:string];
 }
 
 #pragma mark Attributes
 
 - (BOOL)isEditable
 {
-    BOOL result = [[self HTMLElement] isContentEditable];
+    BOOL result = [[self textHTMLElement] isContentEditable];
     return result;
 }
 
 - (void)setEditable:(BOOL)flag
 {
-    [[self HTMLElement] setContentEditable:(flag ? @"true" : nil)];
+    [[self textHTMLElement] setContentEditable:(flag ? @"true" : nil)];
 }
 
 // Note that it's only a property for controlling editing by the user, it does not affect the existing HTML or stop programmatic editing of the HTML.
@@ -121,7 +130,7 @@
     
     
     // Copy HTML across to ourself
-    [self setHTMLString:[[self HTMLElement] innerHTML] needsUpdate:NO];
+    [self setHTMLString:[[self textHTMLElement] innerHTML] needsUpdate:NO];
     
     
     // Notify delegate/others
@@ -154,7 +163,7 @@
 
 - (void)update
 {
-    [[self HTMLElement] setInnerHTML:[self HTMLString]];
+    [[self textHTMLElement] setInnerHTML:[self HTMLString]];
 }
 
 #pragma mark SVWebEditorText

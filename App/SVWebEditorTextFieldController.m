@@ -109,7 +109,7 @@
     // Display new placeholder if appropriate
     if ([[self HTMLString] length] == 0)
     {
-        [[self HTMLElement] setInnerText:placeholder];
+        [[self textHTMLElement] setInnerText:placeholder];
     }
 }
 
@@ -120,17 +120,15 @@
     // Once attached to our DOM node, give it the placeholder text if needed
     if ([[self HTMLString] length] == 0 && [self placeholderString])
     {
-        [[self HTMLElement] setInnerText:[self placeholderString]];
+        [[self textHTMLElement] setInnerText:[self placeholderString]];
     }
 }
-
-- (DOMElement *)DOMElement { return [self HTMLElement]; }
 
 #pragma mark Debugging
 
 - (NSString *)blurb
 {
-    return [[self HTMLElement] innerText];
+    return [[self textHTMLElement] innerText];
 }
 
 @end

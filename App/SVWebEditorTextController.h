@@ -20,6 +20,8 @@
 @interface SVWebEditorTextController : SVDOMController <SVWebEditorText, KSEditor>
 {
   @private
+    DOMHTMLElement  *_textElement;
+    
     NSString    *_HTMLString;
     BOOL        _isRichText;
     BOOL        _isFieldEditor;
@@ -33,6 +35,10 @@
     NSUInteger  _undoCoalescingActionIdentifier;
     DOMRange    *_undoCoalescingSelection;
 }
+
+
+#pragma mark DOM Node
+@property(nonatomic, retain) DOMHTMLElement *textHTMLElement;
 
 
 #pragma mark Properties

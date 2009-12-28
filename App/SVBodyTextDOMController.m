@@ -63,8 +63,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     
     // Observe DOM changes. Each SVBodyParagraphDOMAdapter will take care of its own section of the DOM
-    [[self HTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[self HTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    [[self textHTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[self textHTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     
     // Observe content changes
@@ -81,8 +81,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)dealloc
 {
     // Stop observation
-    [[self HTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[self HTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
+    [[self textHTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
+    [[self textHTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
     [[self content] removeObserver:self forKeyPath:@"arrangedObjects"];
     
@@ -102,7 +102,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self willUpdate];
     
     // Walk the content array. Shuffle up DOM nodes to match if needed
-    DOMHTMLElement *domNode = [[self HTMLElement] firstChildOfClass:[DOMHTMLElement class]];
+    DOMHTMLElement *domNode = [[self textHTMLElement] firstChildOfClass:[DOMHTMLElement class]];
     
     for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
     {
@@ -113,7 +113,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
             if ([controller HTMLElement] != domNode)
             {
-                [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
+                [[self textHTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
                 domNode = [controller HTMLElement];
             }
         
@@ -130,7 +130,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             [controller setHTMLContext:[self HTMLContext]];
             [controller setRepresentedObject:aModelElement];
             
-            [[self HTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
+            [[self textHTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
             
             [self addChildWebEditorItem:controller];
             [controller release];
@@ -286,7 +286,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)handleEvent:(DOMMutationEvent *)event
 {
     // We're only interested in nodes being added or removed from our own node
-    if ([event relatedNode] != [self HTMLElement]) return;
+    if ([event relatedNode] != [self textHTMLElement]) return;
     
     
     // Nor do we care mid-update
