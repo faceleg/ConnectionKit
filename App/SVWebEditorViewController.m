@@ -738,6 +738,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 }
             }
         }
+        else if (action == @selector(insertFooter:))
+        {
+            //  Can insert site title if there isn't already one
+            result = ([[[[[self page] master] footer] text] length] == 0);
+        }
     }
               
     
