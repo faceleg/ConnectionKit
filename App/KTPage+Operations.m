@@ -16,11 +16,6 @@
 #import "NSSet+KTExtensions.h"
 
 
-@interface NSObject ( RichTextElementDelegateHack )
-- (NSString *)richTextHTML;
-@end
-
-
 @interface NSObject ( HTMLElementDelegateHack )
 - (NSString *)html;
 @end
