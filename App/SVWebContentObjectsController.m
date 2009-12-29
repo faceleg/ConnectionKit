@@ -13,6 +13,7 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVSidebar.h"
+#import "SVTextField.h"
 
 
 @implementation SVWebContentObjectsController
@@ -46,15 +47,21 @@
 {
     [super willRemoveObject:object];
     
-    // For now I'm assuming all content is a pagelet
-    // Remove pagelet from sidebar. Delete if appropriate
-    SVPagelet *pagelet = object;
-    
-    [[[self page] sidebar] removePageletsObject:pagelet];
-    
-    if ([[pagelet sidebars] count] == 0)
+    if ([object isKindOfClass:[SVPagelet class]])
     {
-        [[pagelet managedObjectContext] deleteObject:pagelet];
+        // Remove pagelet from sidebar. Delete if appropriate
+        SVPagelet *pagelet = object;
+        
+        [[[self page] sidebar] removePageletsObject:pagelet];
+        
+        if ([[pagelet sidebars] count] == 0)
+        {
+            [[pagelet managedObjectContext] deleteObject:pagelet];
+        }
+    }
+    else if ([object isKindOfClass:[SVTextField class]])
+    {
+        [[[self page] managedObjectContext] deleteObject:object];
     }
 }
 
