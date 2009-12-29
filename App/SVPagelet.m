@@ -170,6 +170,46 @@
 
 @dynamic callout;
 
+#pragma mark Validation
+
+- (BOOL)validatePlacement:(NSError **)error
+{
+    // Pagelets should always have a sidebar OR callout.
+    if (![self callout] && [[self sidebars] count] == 0)
+    {
+        if (error)
+        {
+            NSDictionary *info = [NSDictionary dictionaryWithObject:@"Pagelet is required to be in a callout or a sidebar" forKey:NSLocalizedDescriptionKey];
+            *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                         code:NSValidationMissingMandatoryPropertyError
+                                     userInfo:info];
+        }
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (BOOL)validateForInsert:(NSError **)error
+{
+    BOOL result = [super validateForInsert:error];
+    if (result)
+    {
+        result = [self validatePlacement:error];
+    }
+    return result;
+}
+
+- (BOOL)validateForUpdate:(NSError **)error
+{
+    BOOL result = [super validateForUpdate:error];
+    if (result)
+    {
+        result = [self validatePlacement:error];
+    }
+    return result;
+}
+
 #pragma mark Sorting
 
 + (NSArray *)pageletSortDescriptors
