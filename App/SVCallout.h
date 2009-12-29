@@ -12,6 +12,9 @@
 #import "SVTemplate.h"
 
 
+@class SVPagelet;
+
+
 @interface SVCallout : SVBodyElement
 
 @property(nonatomic, copy) NSSet *pagelets;   // To sort, use SVPagelet class method
@@ -23,4 +26,12 @@
 #pragma mark HTML
 + (SVTemplate *)calloutHTMLTemplate;
 
+@end
+
+
+@interface SVCallout (CoreDataGeneratedAccessors)
+- (void)addPageletsObject:(SVPagelet *)value;
+- (void)removePageletsObject:(SVPagelet *)value;
+- (void)addPagelets:(NSSet *)value;
+- (void)removePagelets:(NSSet *)value;
 @end
