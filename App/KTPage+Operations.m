@@ -16,11 +16,6 @@
 #import "NSSet+KTExtensions.h"
 
 
-@interface NSObject ( HTMLElementDelegateHack )
-- (NSString *)html;
-@end
-
-
 @implementation KTPage ( Operations )
 
 - (void)setValue:(id)value forKey:(NSString *)key recursive:(BOOL)recursive
