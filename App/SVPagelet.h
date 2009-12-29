@@ -9,7 +9,7 @@
 #import "SVGraphic.h"
 
 @class SVTextField, SVBody;
-@class KTPage, SVSidebar, SVTemplate;
+@class KTPage, SVSidebar, SVCallout, SVTemplate;
 
 
 @interface SVPagelet : SVContentObject  
@@ -46,6 +46,10 @@
 
 // Shouldn't really have any need to set this yourself. Use a proper array controller instead please.
 @property(nonatomic, copy) NSNumber *sortKey;
+
+
+#pragma mark Callout
+@property(nonatomic, readonly) SVCallout *callout;
 
 
 #pragma mark HTML

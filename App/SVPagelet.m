@@ -166,6 +166,10 @@
     }
 }
 
+#pragma mark Callout
+
+@dynamic callout;
+
 #pragma mark Sorting
 
 + (NSArray *)pageletSortDescriptors
