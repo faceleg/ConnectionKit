@@ -706,7 +706,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (result)
     {
         SEL action = [menuItem action];
-        if (action == @selector(insertPageletTitle:))
+        
+        if (action == @selector(insertSiteTitle:))
+        {
+            //  Can insert site title if there isn't already one
+            result = ([[[[[self page] master] siteTitle] text] length] == 0);
+        }
+        else if (action == @selector(insertPageletTitle:))
         {
             // To insert a pagelet title, the selection just needs to contain at least one title-less pagelet. #56871
             result = NO;
