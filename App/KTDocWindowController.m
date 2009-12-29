@@ -643,7 +643,11 @@ from representedObject */
     
     
     // Insert menu
-    if (itemAction == @selector(insertPageletTitle:))
+    if (itemAction == @selector(insertSiteTitle:) ||
+        itemAction == @selector(insertSiteSubtitle:) ||
+        itemAction == @selector(insertPageTitle:) ||
+        itemAction == @selector(insertPageletTitle:) ||
+        itemAction == @selector(insertFooter:))
     {
         return [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
     }
