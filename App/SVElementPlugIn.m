@@ -9,8 +9,12 @@
 #import "SVElementPlugIn.h"
 
 #import "KTAbstractHTMLPlugin.h"
+#import "SVElementPlugInContainer.h"
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
+#import "KTSite.h"
+
+#import "NSManagedObject+KTExtensions.h"
 
 
 @interface SVAbstractElementPlugIn ()
@@ -18,20 +22,41 @@
 @end
 
 
+@interface SVAbstractElementPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
+- (KTPage *)page;
+- (KTSite *)site;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVAbstractElementPlugIn
 
 #pragma mark Init
 
-+ (id <SVElementPlugIn>)elementPlugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
++ (id <SVElementPlugIn>)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
 {
-    return [[[self alloc] initWithPropertiesStorage:propertyStorage] autorelease];
+    return [[[self alloc] initWithArguments:propertyStorage] autorelease];
 }
 
-- (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
+- (id)initWithArguments:(NSDictionary *)storage;
 {
     self = [self init];
-    _propertiesStorage = [storage retain];
+    
+    _propertiesStorage = [[storage objectForKey:@"PropertiesStorage"] retain];
+    _container = [[storage objectForKey:@"Container"] retain];
+    if (!_container) _container = self;
+    
     return self;
+}
+
+- (void)dealloc
+{
+    [_propertiesStorage release];
+    if (_container != self) [_container release];
+    
+    [super dealloc];
 }
 
 #pragma mark Content
@@ -65,6 +90,7 @@
 }
 
 @synthesize propertiesStorage = _propertiesStorage;
+@synthesize elementPlugInContainer = _container;
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
@@ -76,9 +102,29 @@
 
 - (KTMediaManager *)mediaManager { return [[self delegateOwner] mediaManager]; }
 
+@end
+
+
+#pragma mark -
+
+
+@implementation SVAbstractElementPlugIn (SVElementPlugInContainer)
+
 - (KTPage *)page
 {
     return [[[[[[self delegateOwner] enclosingBody] pagelet] sidebars] anyObject] page];
 }
 
+- (KTSite *)site;
+{
+    KTSite *result = [[self page] site];
+    return result;
+}
+
+- (NSString *)siteObjectIDURIRepresentationString;  // unique per site. used by Badge plug-in
+{
+    return [[self site] URIRepresentationString];
+}
+
 @end
+

@@ -97,7 +97,8 @@
             // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
             if (!_plugIn)
             {
-                _plugIn = [[plugInFactory elementPlugInWithPropertiesStorage:[NSMutableDictionary dictionary]] retain];
+                NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
+                _plugIn = [[plugInFactory elementPlugInWithArguments:arguments] retain];
                 OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
                 
                 [_plugIn setDelegateOwner:self];

@@ -18,7 +18,7 @@
 
 
 @protocol SVElementPlugInFactory
-+ (id <SVElementPlugIn>)elementPlugInWithPropertiesStorage:(NSMutableDictionary *)propertyStorage;
++ (id <SVElementPlugIn>)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
 @end
 
 
@@ -26,15 +26,19 @@
 
 
 @class KTMediaManager, KTPage;
+@protocol SVElementPlugInContainer;
+
+
 @interface SVAbstractElementPlugIn : NSObject <SVElementPlugIn, SVElementPlugInFactory>
 {
   @private
-    NSMutableDictionary *_propertiesStorage;
+    NSMutableDictionary             *_propertiesStorage;
+    id <SVElementPlugInContainer>   _container;
     
     id  _delegateOwner;
 }
 
-- (id)initWithPropertiesStorage:(NSMutableDictionary *)storage;
+- (id)initWithArguments:(NSDictionary *)storage;
 
 
 // Default implementation generates a <span> or <div> (with an appropriate id) that cotnains the result of -innerHTMLString. There is generally NO NEED to override this, and if you do, you MUST return HTML with an enclosing element of the specified ID.
@@ -46,6 +50,7 @@
 
 
 @property(nonatomic, retain, readonly) NSMutableDictionary *propertiesStorage;
+@property(nonatomic, retain, readonly) id <SVElementPlugInContainer> elementPlugInContainer;
 
 // Convenience method to return the bundle this class was loaded from
 @property(nonatomic, readonly) NSBundle *bundle;
@@ -54,6 +59,5 @@
 // Legacy I'd like to get rid of
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 @property(nonatomic, readonly) KTMediaManager *mediaManager;
-@property(nonatomic, readonly) KTPage *page;
 
 @end

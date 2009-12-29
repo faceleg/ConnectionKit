@@ -35,6 +35,7 @@
 
 // Plugins (abstract superclass of all plugins)
 #import "SVElementPlugIn.h"
+#import "SVElementPlugInContainer.h"
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 
