@@ -23,7 +23,7 @@
 // More specialised than -newObject
 - (SVPagelet *)newPagelet;
 
-// Provides extra cotnextual information on top of -managedObjectContext
+// Provides extra contextual information on top of -managedObjectContext
 @property(nonatomic, retain) KTPage *page;
 
 @end
