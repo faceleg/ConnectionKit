@@ -9,6 +9,7 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVBodyParagraph.h"
+#import "SVCallout.h"
 #import "SVPlugInGraphic.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
@@ -571,6 +572,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)_insertPageletInSidebar:(SVPagelet *)pagelet;
 {
+    // Make sure the pagelet isn't placed anywhere undesireable.
+    // So if you're inserting a pagelet that is already in a callout, remove it from the callout and then delete that if necessary
+    SVCallout *callout = [pagelet callout];
+    [callout removePageletsObject:pagelet];
+    if ([[callout pagelets] count] == 0)
+    {
+        [[callout managedObjectContext] deleteObject:callout];
+    }
+    
+    
     // Place at end of the sidebar
     KTPage *page = [self page];
     SVSidebar *sidebar = [page sidebar];
@@ -835,6 +846,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             {
                 SVPagelet *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
                 SVPagelet *pagelet = [aPageletItem representedObject];
+                
+                // Pagelets being dragged from outside the sidebar need to be inserted first
+                if (![[pagelet sidebars] containsObject:[[self page] sidebar]])
+                {
+                    [self _insertPageletInSidebar:pagelet];
+                }
+                
+                // Move the pagelet to the right index
                 [pagelet moveBeforePagelet:anchorPagelet];
             }
         }
