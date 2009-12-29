@@ -18,6 +18,7 @@
 - (NSString *)HTMLString
 {
     SUBCLASSMUSTIMPLEMENT;
+    [self doesNotRecognizeSelector:_cmd];
     return nil;
 }
 
