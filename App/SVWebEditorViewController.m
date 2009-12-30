@@ -615,17 +615,24 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)insertElement:(id)sender;
 {
-    // Create a new element of the requested type and insert at the end of the pagelet
-    SVBody *body = [(SVPagelet *)[[[[self page] sidebar] pagelets] anyObject] body];
-    
+    // Create element
     SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
-                                                             inManagedObjectContext:[body managedObjectContext]];
+                                                             inManagedObjectContext:[[self page] managedObjectContext]];
     
     [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
     [element setWrap:SVContentObjectWrapNone];
     [element awakeFromBundleAsNewlyCreatedObject:YES];
     
-    [body addElement:element];
+    
+    //  Is the user editing some body text? If so, insert the element as near there as possible. If not, insert into the sidebar inside a pagelet
+    DOMRange *selection = [[self webEditor] selectedDOMRange];
+    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
+        
+    if (![text insertElement:element])
+    {
+        NSBeep();
+        // TODO: Create enclosing pagelet and Insert in sidebar
+    }
 }
 
 #pragma mark Special Insertion

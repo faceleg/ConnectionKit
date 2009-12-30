@@ -14,7 +14,7 @@
 #import "KSKeyValueBinding.h"
 
 
-@class SVPagelet;
+@class SVPagelet, SVBodyElement;
 
 
 @interface SVWebEditorTextController : SVDOMController <SVWebEditorText, KSEditor>
@@ -67,6 +67,7 @@
 #pragma mark Graphics
 // The default implementation just returns NO since it doesn't know how to handle pagelets. Subclasses should override to return YES and handle the pagelet if they can.
 - (BOOL)insertPagelet:(SVPagelet *)pagelet;
+- (BOOL)insertElement:(SVBodyElement *)element;
 
 
 #pragma mark Undo

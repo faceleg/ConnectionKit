@@ -158,6 +158,7 @@
 #pragma mark Graphics
 
 - (BOOL)insertPagelet:(SVPagelet *)pagelet; { return NO; }
+- (BOOL)insertElement:(SVBodyElement *)element; { return NO; }
 
 #pragma mark Updating
 
