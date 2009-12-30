@@ -9,6 +9,7 @@
 #import "SVElementPlugIn.h"
 
 #import "KTAbstractHTMLPlugin.h"
+#import "SVDOMController.h"
 #import "SVElementPlugInContainer.h"
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
@@ -114,6 +115,11 @@
     
     [self setValue:serializedValue forKey:key];
 }
+
+#pragma mark UI
+
++ (Class)inspectorViewControllerClass; { return nil; }
++ (Class)DOMControllerClass; { return [SVDOMController class]; }
 
 #pragma mark Other
 

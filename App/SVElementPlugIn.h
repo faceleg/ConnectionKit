@@ -59,11 +59,25 @@
 /*
  Override these methods if the plug-in needs to handle internal settings of an unusual type (typically if the result of -valueForKey: does not conform to the <NSCoding> protocol).
  The serialized object must be a non-container Plist compliant object i.e. exclusively NSString, NSNumber, NSDate, NSData.
- The default implementation of -serializedValueForKey: calls -valueForKey: to retrieve the value for the key. Then does nothing for NSString, NSNumber, NSDate and uses <NSCoding> encoding for others.
+ The default implementation of -serializedValueForKey: calls -valueForKey: to retrieve the value for the key, then does nothing for NSString, NSNumber, NSDate and uses <NSCoding> encoding for others.
  The default implementation of -setSerializedValue:forKey calls -setValue:forKey: after decoding the serialized value if necessary.
  */
 - (id)serializedValueForKey:(NSString *)key;
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+
+
+#pragma mark UI
+
+// If your plug-in wants an inspector, override to return an SVInspectorViewController subclass. Default implementation returns nil.
++ (Class)inspectorViewControllerClass;
+
+// Return a subclass of SVDOMController. Default implementation returns SVDOMController.
++ (Class)DOMControllerClass;
+
+
+#pragma mark Registration
+// Plug-ins normally get registered automatically from searching the bundles, but you could perhaps register addiitional classes manually
+//+ (void)registerClass:(Class)plugInClass;
 
 
 #pragma mark Other
