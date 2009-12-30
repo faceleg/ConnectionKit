@@ -630,8 +630,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
     if (![text insertElement:element])
     {
-        NSBeep();
-        // TODO: Create enclosing pagelet and Insert in sidebar
+        SVPagelet *pagelet = [_selectableObjectsController newPagelet];
+        [[pagelet body] addElement:element];
+        
+        [self _insertPageletInSidebar:pagelet];
+        [pagelet release];
     }
 }
 
