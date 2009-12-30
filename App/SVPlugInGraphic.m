@@ -32,7 +32,7 @@
 - (void)awakeFromFetch
 {
 	[super awakeFromFetch];
-	[self awakeFromBundleAsNewlyCreatedObject:NO];
+    [self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
 /*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.
@@ -98,12 +98,20 @@
             // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
             if (!_plugIn)
             {
+                // Create plug-in object
                 NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
                 _plugIn = [[plugInFactory elementPlugInWithArguments:arguments] retain];
                 OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
                 
                 [_plugIn setDelegateOwner:self];
                 
+                // Restore plug-in's properties
+                NSDictionary *plugInProperties = [self extensibleProperties];
+                for (NSString *aKey in plugInProperties)
+                {
+                    id serializedValue = [plugInProperties objectForKey:aKey];
+                    [[self plugIn] setSerializedValue:serializedValue forKey:aKey];
+                }
                 
                 // Let the delegate know that it's awoken
                 if ([_plugIn respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
