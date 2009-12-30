@@ -9,6 +9,7 @@
 #import "SVPlugInGraphic.h"
 
 #import "KTAbstractPluginDelegate.h"
+#import "SVDOMController.h"
 #import "SVElementPlugIn.h"
 #import "KTElementPlugin.h"
 
@@ -291,6 +292,19 @@
     OBPRECONDITION(document);
     
     DOMElement *result = [document getElementById:[[self plugIn] elementID]];
+    return result;
+}
+
+- (Class)DOMControllerClass
+{
+    // Ask the plug-in what it would like, but don't let it chose something wacky
+    Class result = [[[self plugIn] class] DOMControllerClass];
+    if (![result isSubclassOfClass:[SVDOMController class]])
+    {
+        // TODO: Log a warning
+        result = [super DOMControllerClass];
+    }
+    
     return result;
 }
 
