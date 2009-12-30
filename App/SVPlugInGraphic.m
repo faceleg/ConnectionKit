@@ -81,9 +81,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
                     value = [[value mutableCopyWithZone:[value zone]] autorelease];
                 }
 				
-                // Store the value in extensible properties and plug-in
+                // Send the value to the plug-in. Our KVO will persist it too if appropriate
                 [[self plugIn] setSerializedValue:value forKey:key];
-                [self setValue:value forUndefinedKey:key];
             }
         }        
 	}
