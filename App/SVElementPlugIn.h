@@ -59,6 +59,11 @@
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
 
 
+#pragma mark The Wider World
+
+- (id)page;   // TODO: define a SVPage protocol
+
+
 #pragma mark UI
 
 // If your plug-in wants an inspector, override to return an SVInspectorViewController subclass. Default implementation returns nil.

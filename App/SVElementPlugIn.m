@@ -13,6 +13,7 @@
 #import "SVElementPlugInContainer.h"
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVSidebar.h"
 #import "KTSite.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -24,7 +25,6 @@
 
 
 @interface SVElementPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
-- (KTPage *)page;
 - (KTSite *)site;
 @end
 
@@ -125,6 +125,24 @@
 
 @synthesize elementPlugInContainer = _container;
 
+- (id)page
+{
+    SVBody *body = [[self delegateOwner] enclosingBody];
+    
+    id result = nil;
+    if ([[[body entity] name] isEqualToString:@"PageBody"])
+    {
+        result = [body valueForKey:@"page"];
+    }
+    else if ([[[body entity] name] isEqualToString:@"PageletBody"])
+    {
+        SVSidebar *aSidebar = [[(SVPagelet *)[body valueForKey:@"pagelet"] sidebars] anyObject];
+        result = [aSidebar page];
+    }
+    
+    return result;
+}
+
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
 #pragma mark Legacy
@@ -142,11 +160,6 @@
 
 
 @implementation SVElementPlugIn (SVElementPlugInContainer)
-
-- (KTPage *)page
-{
-    return [[[[[[self delegateOwner] enclosingBody] pagelet] sidebars] anyObject] page];
-}
 
 - (KTSite *)site;
 {
