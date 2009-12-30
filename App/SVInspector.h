@@ -21,6 +21,7 @@
     SVInspectorViewController   *_pageInspector;
     SVInspectorViewController   *_collectionInspector;
     SVInspectorViewController   *_wrapInspector;
+    SVInspectorViewController   *_plugInInspector;
 }
 
 @property(nonatomic, retain) id <KSCollectionController> inspectedPagesController;

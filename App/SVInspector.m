@@ -8,7 +8,7 @@
 
 #import "SVInspector.h"
 #import "SVInspectorViewController.h"
-//#import "SVWrapInspector.h"
+#import "SVPlugInInspector.h"
 
 #import "KTDocWindowController.h"
 
@@ -97,12 +97,19 @@
     [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
     
     
+    // Plug-in
+    _plugInInspector = [[SVPlugInInspector alloc] initWithNibName:@"PlugInInspector" bundle:nil];
+    [_plugInInspector setTitle:NSLocalizedString(@"Plug-in", @"Plug-in Inspector")];
+    [_plugInInspector setIcon:[NSImage imageNamed:@"pageplugin"]];
+    
+    
     //  Finish up
     NSArray *result = [NSArray arrayWithObjects:
                        _documentInspector,
                        _pageInspector,
                        _collectionInspector,
                        _wrapInspector,
+                       _plugInInspector,
                        nil];
     
     return result;

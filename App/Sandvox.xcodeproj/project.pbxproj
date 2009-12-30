@@ -262,6 +262,9 @@
 		273D705A10E8ECB4003F5BA8 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
 		273D705B10E8ECB4003F5BA8 /* SVCalloutDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */; };
 		273D730310EA7A9C003F5BA8 /* SVElementPlugInContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273D764310EC134F003F5BA8 /* PlugInInspector.xib */; };
+		273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */; };
+		273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */; };
 		273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */; };
 		273DCF9F10CBD5D3003CCE97 /* SVWebContentObjectsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */; };
 		273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */; };
@@ -1682,6 +1685,9 @@
 		273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCalloutDOMController.h; sourceTree = "<group>"; };
 		273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCalloutDOMController.m; sourceTree = "<group>"; };
 		273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVElementPlugInContainer.h; sourceTree = "<group>"; };
+		273D764310EC134F003F5BA8 /* PlugInInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = PlugInInspector.xib; sourceTree = "<group>"; };
+		273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInInspector.h; sourceTree = "<group>"; };
+		273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInInspector.m; sourceTree = "<group>"; };
 		273D7DB30D070BC100057448 /* KTAbstractPage+Paths.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTAbstractPage+Paths.m"; sourceTree = "<group>"; };
 		273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebContentObjectsController.h; sourceTree = "<group>"; };
 		273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentObjectsController.m; sourceTree = "<group>"; };
@@ -2776,6 +2782,9 @@
 				272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */,
 				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
 				273DD20710CC74AA003CCE97 /* CollectionInspector.xib */,
+				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
+				273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */,
+				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -5129,6 +5138,7 @@
 				273D6F5110E7C9DF003F5BA8 /* SVCallout.h in Headers */,
 				273D705A10E8ECB4003F5BA8 /* SVCalloutDOMController.h in Headers */,
 				273D730310EA7A9C003F5BA8 /* SVElementPlugInContainer.h in Headers */,
+				273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5801,6 +5811,7 @@
 				273DD22210CC90B4003CCE97 /* WrapInspector.png in Resources */,
 				273DD23110CC9466003CCE97 /* Wrap Inspector tab icon.opacity in Resources */,
 				27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */,
+				273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6498,6 +6509,7 @@
 				27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */,
 				273D6F5210E7C9DF003F5BA8 /* SVCallout.m in Sources */,
 				273D705B10E8ECB4003F5BA8 /* SVCalloutDOMController.m in Sources */,
+				273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
