@@ -76,7 +76,7 @@
 
 
 #pragma mark Registration
-// Plug-ins normally get registered automatically from searching the bundles, but you could perhaps register addiitional classes manually
+// Plug-ins normally get registered automatically from searching the bundles, but you could perhaps register additional classes manually
 //+ (void)registerClass:(Class)plugInClass;
 
 
