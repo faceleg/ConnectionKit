@@ -29,7 +29,7 @@
 @protocol SVElementPlugInContainer;
 
 
-@interface SVAbstractElementPlugIn : NSObject <SVElementPlugIn, SVElementPlugInFactory>
+@interface SVElementPlugIn : NSObject <SVElementPlugIn, SVElementPlugInFactory>
 {
   @private
     NSMutableDictionary             *_propertiesStorage;

@@ -17,12 +17,12 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
-@interface SVAbstractElementPlugIn ()
+@interface SVElementPlugIn ()
 @property(nonatomic, retain) id delegateOwner;
 @end
 
 
-@interface SVAbstractElementPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
+@interface SVElementPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
 - (KTPage *)page;
 - (KTSite *)site;
 @end
@@ -31,7 +31,7 @@
 #pragma mark -
 
 
-@implementation SVAbstractElementPlugIn
+@implementation SVElementPlugIn
 
 #pragma mark Init
 
@@ -108,7 +108,7 @@
 #pragma mark -
 
 
-@implementation SVAbstractElementPlugIn (SVElementPlugInContainer)
+@implementation SVElementPlugIn (SVElementPlugInContainer)
 
 - (KTPage *)page
 {
