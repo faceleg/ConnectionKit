@@ -22,7 +22,7 @@
     SVCallout *callout = [self representedObject];
     for (SVPagelet *aPagelet in [callout pagelets])
     {
-        SVDOMController *pageletController = [[[[aPagelet class] DOMControllerClass] alloc] initWithContentObject:aPagelet inDOMDocument:document];
+        SVDOMController *pageletController = [[[aPagelet DOMControllerClass] alloc] initWithContentObject:aPagelet inDOMDocument:document];
         
         [self addChildWebEditorItem:pageletController];
         [pageletController release];

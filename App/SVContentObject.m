@@ -44,7 +44,7 @@
     return result;
 }
 
-+ (Class)DOMControllerClass;
+- (Class)DOMControllerClass;
 {
     return [SVDOMController class];
 }

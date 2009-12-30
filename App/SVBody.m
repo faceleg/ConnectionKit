@@ -135,6 +135,6 @@
 
 #pragma mark Editing
 
-+ (Class)DOMControllerClass; { return [SVBodyTextDOMController class]; }
+- (Class)DOMControllerClass; { return [SVBodyTextDOMController class]; }
 
 @end

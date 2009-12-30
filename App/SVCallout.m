@@ -50,6 +50,6 @@
 
 #pragma mark Editing
 
-+ (Class)DOMControllerClass { return [SVCalloutDOMController class]; }
+- (Class)DOMControllerClass { return [SVCalloutDOMController class]; }
 
 @end

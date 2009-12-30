@@ -245,7 +245,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 {
-    Class result = [[element class] DOMControllerClass];
+    Class result = [element DOMControllerClass];
     
     return result;
 }

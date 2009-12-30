@@ -37,6 +37,6 @@
 
 //  A subclass of SVDOMController that the WebEditor will create and maintain in order to edit the object. The default is a vanila SVDOMController.
 //  I appreciate this slightly crosses the MVC divide, but the important thing is that the receiver never knows about any _specific_ controller, just the class involved.
-+ (Class)DOMControllerClass;
+- (Class)DOMControllerClass;
 
 @end

@@ -36,7 +36,7 @@
     return [NSSet setWithObject:@"textHTMLString"];
 }
 
-+ (Class)DOMControllerClass;
+- (Class)DOMControllerClass;
 {
     return [SVWebEditorTextFieldController class];
 }
