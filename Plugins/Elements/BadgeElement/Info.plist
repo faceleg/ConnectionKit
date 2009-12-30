@@ -34,8 +34,6 @@
 	<dict>
 		<key>badgeTypeTag</key>
 		<integer>1</integer>
-		<key>showBorder</key>
-		<false/>
 	</dict>
 	<key>KTPluginName</key>
 	<string>Badge</string>
