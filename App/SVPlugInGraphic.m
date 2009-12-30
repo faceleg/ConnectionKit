@@ -56,7 +56,6 @@
         if (nil != initialProperties)
         {
             // TODO: deal with localization of initial properties
-            NSMutableDictionary *storage = [NSMutableDictionary dictionary];    // yes, I'm faking it for now
             NSEnumerator *theEnum = [initialProperties keyEnumerator];
             id key;
             
@@ -76,8 +75,10 @@
                 {
                     value = [[value mutableCopyWithZone:[value zone]] autorelease];
                 }
-				/// we can't use setWrappedValue:forKey: here as key is likely not a modeled property of self
-				[storage setValue:value forKey:key];
+				
+                // Store the value in extensible properties and plug-in
+                [[self plugIn] setSerializedValue:value forKey:key];
+                [self setValue:value forUndefinedKey:key];
             }
         }        
 	}
