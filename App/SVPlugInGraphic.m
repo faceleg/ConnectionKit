@@ -14,7 +14,11 @@
 #import "KTElementPlugin.h"
 
 #import "NSManagedObject+KTExtensions.h"
+#import "NSObject+Karelia.h"
 #import "NSString+Karelia.h"
+
+
+static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
 
 
 @implementation SVPlugInGraphic
@@ -39,6 +43,7 @@
  */
 - (void)willTurnIntoFault
 {
+    [_plugIn removeObserver:self forKeyPaths:[[_plugIn class] plugInKeys]];
     [_plugIn setDelegateOwner:nil];
 	[_plugIn release];	_plugIn = nil;
 }
@@ -108,11 +113,18 @@
                 
                 // Restore plug-in's properties
                 NSDictionary *plugInProperties = [self extensibleProperties];
+                SVElementPlugIn *plugIn = [self plugIn];
                 for (NSString *aKey in plugInProperties)
                 {
                     id serializedValue = [plugInProperties objectForKey:aKey];
-                    [[self plugIn] setSerializedValue:serializedValue forKey:aKey];
+                    [plugIn setSerializedValue:serializedValue forKey:aKey];
                 }
+                
+                // Observe the plug-in's properties so they can be synced back to the MOC
+                [plugIn addObserver:self
+                        forKeyPaths:[[plugIn class] plugInKeys]
+                            options:0
+                            context:sPlugInPropertiesObservationContext];
                 
                 // Let the delegate know that it's awoken
                 if ([_plugIn respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
@@ -172,6 +184,20 @@
 	}
 	
 	return result;
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sPlugInPropertiesObservationContext)
+    {
+        // Copy serialized value to MOC
+        [self setValue:[[self plugIn] serializedValueForKey:keyPath]
+       forUndefinedKey:keyPath];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 #pragma mark Placement
