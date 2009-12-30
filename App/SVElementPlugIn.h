@@ -9,16 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-@protocol SVElementPlugIn <NSObject>
-
-- (NSString *)HTMLString;
-@property(nonatomic, readonly) NSString *elementID;
-
-@end
-
-
+@class SVElementPlugIn;
 @protocol SVElementPlugInFactory
-+ (id <SVElementPlugIn>)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
++ (SVElementPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
 @end
 
 
@@ -29,7 +22,7 @@
 @protocol SVElementPlugInContainer;
 
 
-@interface SVElementPlugIn : NSObject <SVElementPlugIn, SVElementPlugInFactory>
+@interface SVElementPlugIn : NSObject <SVElementPlugInFactory>
 {
   @private
     id <SVElementPlugInContainer>   _container;

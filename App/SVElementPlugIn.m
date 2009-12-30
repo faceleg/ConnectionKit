@@ -36,7 +36,7 @@
 
 #pragma mark Init
 
-+ (id <SVElementPlugIn>)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
++ (SVElementPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
 {
     return [[[self alloc] initWithArguments:propertyStorage] autorelease];
 }

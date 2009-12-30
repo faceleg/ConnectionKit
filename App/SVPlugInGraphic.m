@@ -94,7 +94,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Plug-in
 
-- (id <SVElementPlugIn>)plugIn
+- (SVElementPlugIn *)plugIn
 {
 	if (!_plugIn) 
 	{
