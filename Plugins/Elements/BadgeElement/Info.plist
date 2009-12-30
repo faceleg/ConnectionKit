@@ -34,8 +34,6 @@
 	<dict>
 		<key>badgeTypeTag</key>
 		<integer>1</integer>
-		<key>prefersBottom</key>
-		<true/>
 		<key>showBorder</key>
 		<false/>
 	</dict>
