@@ -136,6 +136,15 @@
 
 @dynamic plugInIdentifier;
 
+#pragma mark Plug-in settings storage
+
+- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key
+{
+    NSSet *keys = [[[self plugIn] class] plugInKeys];
+    BOOL result = [keys containsObject:key];
+    return result;
+}
+
 /*	Whenever setting a value in the extensible properties inform our delegate if they're interested
  */
 - (void)setValue:(id)value forUndefinedKey:(NSString *)key
