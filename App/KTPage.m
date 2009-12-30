@@ -18,6 +18,7 @@
 #import "KTDocument.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
+#import "SVTextField.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
@@ -239,10 +240,10 @@
 	}
 	if (nil != title)
 	{
-		NSString *titleHTML = [self titleHTMLString];
+		NSString *titleHTML = [[self title] textHTMLString];
 		if (nil == titleHTML || [titleHTML isEqualToString:@""])
 		{
-			[self setTitleText:title];
+			[self setTitleWithString:title];
 		}
 	}
 	if ([defaults boolForKey:@"SetDateFromSourceMaterial"])
