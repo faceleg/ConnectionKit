@@ -145,26 +145,6 @@
     return result;
 }
 
-/*	Whenever setting a value in the extensible properties inform our delegate if they're interested
- */
-- (void)setValue:(id)value forUndefinedKey:(NSString *)key
-{
-	OBPRECONDITION(key);
-    
-    // Let our delegate know if possible
-	id delegate = [self plugIn];
-	if (delegate && [delegate respondsToSelector:@selector(plugin:didSetValue:forPluginKey:oldValue:)])
-	{
-		id oldValue = [self valueForUndefinedKey:key];
-		[super setValue:value forUndefinedKey:key];
-		[delegate plugin:(id)self didSetValue:value forPluginKey:key oldValue:oldValue];
-	}
-	else
-	{
-		[super setValue:value forUndefinedKey:key];
-	}
-}
-
 /*	Whenever validating something, we give our delegate first crack at it if they wish
  */
 - (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
