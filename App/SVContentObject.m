@@ -13,6 +13,9 @@
 
 @implementation SVContentObject
 
+// Turn off extensible property support by default
+- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key; { return NO; }
+
 #pragma mark HTML
 
 - (NSString *)HTMLString
