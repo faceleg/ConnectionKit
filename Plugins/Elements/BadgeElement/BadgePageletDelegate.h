@@ -39,11 +39,20 @@
 @class WebView;
 @interface BadgePageletDelegate : SVElementPlugIn
 {
-	NSString *myBadgeAltString;
-	NSString *myBadgeTitleString;
+  @private
+    int     _badgeTypeTag;
+    BOOL    _anonymous;
+    BOOL    _openLinkInNewWindow;
+    
+	NSString    *_badgeAltString;
+	NSString    *_badgeTitleString;
 }
 
-- (IBAction) badgeClicked:(id)sender;
+@property(nonatomic) int badgeTypeTag;
+@property(nonatomic) BOOL anonymous;
+@property(nonatomic) BOOL openLinkInNewWindow;
+
+- (IBAction)badgeClicked:(id)sender;
 
 @end
 

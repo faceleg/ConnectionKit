@@ -42,6 +42,28 @@ static NSArray *sAltStrings = nil;
 
 @implementation BadgePageletDelegate
 
+#pragma mark Dealloc
+
+- (void)dealloc
+{
+	[self setBadgeAltString:nil];
+	[self setBadgeTitleString:nil];
+	[super dealloc];
+}
+
+#pragma mark Basic properties
+
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:@"badgeTypeTag", @"anonymous", @"openLinkInNewWindow", nil];
+}
+
+@synthesize badgeTypeTag = _badgeTypeTag;
+@synthesize anonymous = _anonymous;
+@synthesize openLinkInNewWindow = _openLinkInNewWindow;
+
+#pragma mark Other
+
 + (NSArray *)sharedBadgeNames
 {
 	if (nil == sBadgeNames)
@@ -79,15 +101,15 @@ static NSArray *sAltStrings = nil;
 - (void)setBadgeAltString:(NSString *)aBadgeAltString
 {
     [aBadgeAltString retain];
-    [myBadgeAltString release];
-    myBadgeAltString = aBadgeAltString;
+    [_badgeAltString release];
+    _badgeAltString = aBadgeAltString;
 }
 
 - (void)setBadgeTitleString:(NSString *)aBadgeTitleString
 {
     [aBadgeTitleString retain];
-    [myBadgeTitleString release];
-    myBadgeTitleString = aBadgeTitleString;
+    [_badgeTitleString release];
+    _badgeTitleString = aBadgeTitleString;
 }
 
 - (NSString *) badgePreludeString
@@ -129,24 +151,24 @@ static NSArray *sAltStrings = nil;
 
 - (NSString *) badgeAltString
 {
-	if (nil == myBadgeAltString)
+	if (nil == _badgeAltString)
 	{
 		NSString *blurb = [self generateBlurbVariant:0];
 		NSString *altString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
 		[self setBadgeAltString:altString];
 	}
-	return myBadgeAltString;		// don't want to calculate all the time.  Same for a document?
+	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
 }
 
 - (NSString *) badgeTitleString
 {
-	if (nil == myBadgeTitleString)
+	if (nil == _badgeTitleString)
 	{
 		NSString *blurb = [self generateBlurbVariant:1];
 		NSString *titleString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
 		[self setBadgeTitleString:titleString];
 	}
-	return myBadgeTitleString;		// don't want to calculate all the time.  Same for a document?
+	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
 }
 
 
@@ -156,7 +178,7 @@ static NSArray *sAltStrings = nil;
 - (NSString *)currentBadgeName
 {
 	NSString *result = nil;
-	unsigned int tag = [[[self propertiesStorage] valueForKey:@"badgeTypeTag"] intValue];
+	unsigned int tag = [self badgeTypeTag];
 	if (tag >= 1 && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
 	{
 		result = [[BadgePageletDelegate sharedBadgeNames] objectAtIndex:tag-1];
@@ -186,15 +208,7 @@ static NSArray *sAltStrings = nil;
 
 - (IBAction)badgeClicked:(id)sender
 {
-	[[self propertiesStorage] setInteger:[sender tag] forKey:@"badgeTypeTag"];
+	[self setBadgeTypeTag:[sender tag]];
 }
-
-- (void)dealloc
-{
-	[self setBadgeAltString:nil];
-	[self setBadgeTitleString:nil];
-	[super dealloc];
-}
-
 
 @end
