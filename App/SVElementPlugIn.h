@@ -32,7 +32,6 @@
 @interface SVElementPlugIn : NSObject <SVElementPlugIn, SVElementPlugInFactory>
 {
   @private
-    NSMutableDictionary             *_propertiesStorage;
     id <SVElementPlugInContainer>   _container;
     
     id  _delegateOwner;
@@ -49,7 +48,26 @@
 - (NSString *)innerHTMLString;
 
 
-@property(nonatomic, retain, readonly) NSMutableDictionary *propertiesStorage;
+#pragma mark Storage
+
+/*
+ Returns the list of KVC keys representing the internal settings of the plug-in. At the moment you must override it in all plug-ins that have some kind of storage, but at some point I'd like to make it automatically read the list in from bundle's Info.plist.
+ This list of keys is used for automatic serialization of these internal settings.
+ */
++ (NSSet *)plugInKeys;
+
+/*
+ Override these methods if the plug-in needs to handle internal settings of an unusual type (typically if the result of -valueForKey: does not conform to the <NSCoding> protocol).
+ The serialized object must be a non-container Plist compliant object i.e. exclusively NSString, NSNumber, NSDate, NSData.
+ The default implementation of -serializedValueForKey: calls -valueForKey: to retrieve the value for the key. Then does nothing for NSString, NSNumber, NSDate and uses <NSCoding> encoding for others.
+ The default implementation of -setSerializedValue:forKey calls -setValue:forKey: after decoding the serialized value if necessary.
+ */
+- (id)serializedValueForKey:(NSString *)key;
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+
+
+#pragma mark Other
+
 @property(nonatomic, retain, readonly) id <SVElementPlugInContainer> elementPlugInContainer;
 
 // Convenience method to return the bundle this class was loaded from

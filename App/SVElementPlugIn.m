@@ -44,7 +44,6 @@
 {
     self = [self init];
     
-    _propertiesStorage = [[storage objectForKey:@"PropertiesStorage"] retain];
     _container = [[storage objectForKey:@"Container"] retain];
     if (!_container) _container = self;
     
@@ -53,7 +52,6 @@
 
 - (void)dealloc
 {
-    [_propertiesStorage release];
     if (_container != self) [_container release];
     
     [super dealloc];
@@ -89,7 +87,36 @@
     return result;
 }
 
-@synthesize propertiesStorage = _propertiesStorage;
+#pragma mark Storage
+
++ (NSSet *)plugInKeys; { return nil; }
+
+- (id)serializedValueForKey:(NSString *)key;
+{
+    id result = [self valueForKey:key];
+    
+    if (![result isKindOfClass:[NSString class]] &&
+        ![result isKindOfClass:[NSNumber class]] &&
+        ![result isKindOfClass:[NSDate class]])
+    {
+        result = [NSKeyedArchiver archivedDataWithRootObject:result];
+    }
+    
+    return result;
+}
+
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+{
+    if ([serializedValue isKindOfClass:[NSData class]])
+    {
+        serializedValue = [NSKeyedUnarchiver unarchiveObjectWithData:serializedValue];
+    }
+    
+    [self setValue:serializedValue forKey:key];
+}
+
+#pragma mark Other
+
 @synthesize elementPlugInContainer = _container;
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
