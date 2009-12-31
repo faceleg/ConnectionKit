@@ -35,6 +35,7 @@
 //
 
 #import "BadgePageletDelegate.h"
+#import "SandvoxBadgeInspector.h"
 
 
 static NSArray *sBadgeNames = nil;
@@ -205,6 +206,10 @@ static NSArray *sAltStrings = nil;
 		[aSet addObject:path];
 	}
 }
+
+#pragma mark Inspector
+
++ (Class)inspectorViewControllerClass { return [SandvoxBadgeInspector class]; }
 
 - (IBAction)badgeClicked:(id)sender
 {

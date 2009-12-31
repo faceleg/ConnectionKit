@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		273D776510EC3983003F5BA8 /* SandvoxBadgeInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D776410EC3983003F5BA8 /* SandvoxBadgeInspector.m */; };
 		3CA9FEA70D63BE8800815310 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEA50D63BE8800815310 /* Localizable.strings */; };
 		3CA9FEB30D63BEDB00815310 /* BadgePagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEB10D63BEDB00815310 /* BadgePagelet.nib */; };
 		3CA9FEC50D63BF2400815310 /* sandvox_bucket.png in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FEBB0D63BF2400815310 /* sandvox_bucket.png */; };
@@ -29,6 +30,8 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		273D776310EC3983003F5BA8 /* SandvoxBadgeInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxBadgeInspector.h; sourceTree = "<group>"; };
+		273D776410EC3983003F5BA8 /* SandvoxBadgeInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SandvoxBadgeInspector.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* BadgeElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BadgeElement_Prefix.pch; sourceTree = "<group>"; };
 		3CA9FE9C0D63BE4400815310 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3CA9FE9E0D63BE5300815310 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -163,6 +166,8 @@
 			children = (
 				3CA9FEF00D63BFD400815310 /* BadgePageletDelegate.h */,
 				3CA9FEF10D63BFD400815310 /* BadgePageletDelegate.m */,
+				273D776310EC3983003F5BA8 /* SandvoxBadgeInspector.h */,
+				273D776410EC3983003F5BA8 /* SandvoxBadgeInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -326,6 +331,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CA9FEF20D63BFD400815310 /* BadgePageletDelegate.m in Sources */,
+				273D776510EC3983003F5BA8 /* SandvoxBadgeInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
