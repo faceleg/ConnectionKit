@@ -204,7 +204,7 @@
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
 		270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */; };
 		270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */; };
-		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; };
+		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
 		2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */; };
@@ -220,7 +220,7 @@
 		27168E630DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = 27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */; };
 		2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2716F2D20CE61A8000DE635E /* KTMissingMediaArrayController.h */; settings = {ATTRIBUTES = (); }; };
 		2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716F2D30CE61A8000DE635E /* KTMissingMediaArrayController.m */; };
-		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; };
+		27196F631090A9D40096B612 /* SVInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F611090A9D40096B612 /* SVInspector.h */; settings = {ATTRIBUTES = (); }; };
 		27196F641090A9D40096B612 /* SVInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F621090A9D40096B612 /* SVInspector.m */; };
 		27196F801090AEDC0096B612 /* KSDocumentController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27196F7E1090AEDC0096B612 /* KSDocumentController.h */; };
 		27196F811090AEDC0096B612 /* KSDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27196F7F1090AEDC0096B612 /* KSDocumentController.m */; };
@@ -302,7 +302,7 @@
 		2759CC9C1039711300E2C046 /* SVWebEditorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */; };
 		2759CC9F103976D800E2C046 /* SVWebContentAreaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */; };
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
-		2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD051039AC6000E2C046 /* KSTabViewController.h */; };
+		2759CD071039AC6000E2C046 /* KSTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2759CD051039AC6000E2C046 /* KSTabViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2759CD081039AC6000E2C046 /* KSTabViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CD061039AC6000E2C046 /* KSTabViewController.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
@@ -335,7 +335,7 @@
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */; };
-		2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782914410912B30008D0A64 /* SVInspectorViewController.h */; };
+		2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782914410912B30008D0A64 /* SVInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2782914710912B30008D0A64 /* SVInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782914510912B30008D0A64 /* SVInspectorViewController.m */; };
 		2782918F10912D5D008D0A64 /* DocumentInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2782918E10912D5D008D0A64 /* DocumentInspector.xib */; };
 		2782919110912E14008D0A64 /* PageInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2782919010912E14008D0A64 /* PageInspector.xib */; };
@@ -385,7 +385,7 @@
 		279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */; };
 		279D27EA103A112A0099A7DD /* NSTabView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 279D27E8103A112A0099A7DD /* NSTabView+Karelia.m */; };
 		279E79100F48566000BAB391 /* KSPluginInstallerController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */; };
-		279F5EB510A73E0A00F6511F /* KSInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279F5EB410A73E0A00F6511F /* KSInspectorViewController.h */; };
+		279F5EB510A73E0A00F6511F /* KSInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 279F5EB410A73E0A00F6511F /* KSInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		279F5EB710A73E0A00F6511F /* KSInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 279F5EB610A73E0A00F6511F /* KSInspectorViewController.m */; };
 		279FF2BE0EF27699009F6A16 /* KTPublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 279FF2BC0EF27699009F6A16 /* KTPublishingEngine.h */; };
 		279FF2BF0EF27699009F6A16 /* KTPublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 279FF2BD0EF27699009F6A16 /* KTPublishingEngine.m */; };
@@ -462,7 +462,7 @@
 		27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEC0EC30B6F000E85DD /* KSException.nib */; };
 		27E4CFF90EC30B6F000E85DD /* KSCrash.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEE0EC30B6F000E85DD /* KSCrash.nib */; };
 		27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */; };
-		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; };
+		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */; };
 		27EF1BCF0DC1F9BF00976C66 /* SVSiteOutlineViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };

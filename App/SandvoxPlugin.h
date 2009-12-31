@@ -39,6 +39,8 @@
 #import "KTAbstractElement.h"
 #import "KTAbstractPluginDelegate.h"
 
+#import "SVInspectorViewController.h"
+
 // Page composition
 #import "KTAbstractPage.h"
 #import "KTPage.h"

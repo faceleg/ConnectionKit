@@ -66,8 +66,8 @@ change context:(void *)context
 - (void)setSelectedInspector:(SVInspectorViewController *)inspector
 {
     // Remove old inspector
-    [[inspector view] removeFromSuperview];
-    [inspector setInspectedObjectsController:nil];
+    [[_selectedInspector view] removeFromSuperview];
+    [_selectedInspector setInspectedObjectsController:nil];
     
     // Store new
     [inspector retain];
