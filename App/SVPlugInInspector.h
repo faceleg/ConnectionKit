@@ -9,8 +9,11 @@
 #import "SVInspectorViewController.h"
 
 
-@interface SVPlugInInspector : SVInspectorViewController {
-
+@interface SVPlugInInspector : SVInspectorViewController
+{
+    SVInspectorViewController   *_selectedInspector;
 }
+
+@property(nonatomic, retain) SVInspectorViewController *selectedInspector;
 
 @end
