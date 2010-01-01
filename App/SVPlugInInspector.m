@@ -49,10 +49,14 @@ change context:(void *)context
         SVInspectorViewController *inspector = nil;
         if (!NSIsControllerMarker(controllerClass))
         {
-            inspector = [[[controllerClass alloc] init] autorelease];
+            // Make an Inspector.
+            NSBundle *bundle = [NSBundle bundleForClass:controllerClass];
+            inspector = [[controllerClass alloc] initWithNibName:nil    // subclass will override -nibName
+                                                          bundle:bundle];
         }
         
         [self setSelectedInspector:inspector];
+        [inspector release];
     }
     else
     {
