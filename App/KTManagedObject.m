@@ -148,8 +148,26 @@
  */
 - (NSDictionary *)unarchiveExtensibleProperties:(NSData *)propertiesData
 {
-	NSDictionary *result = [super unarchiveExtensibleProperties:propertiesData];
+    // Try to unarchive the properties to begin with. Under very, very rare circumstances (I'm thinking file corruption or similar), the data may not be decodeable. If so, reset back to no extensible properties, and log a warning.
+    NSDictionary *result = nil;
+    @try
+    {
+        result = [super unarchiveExtensibleProperties:propertiesData];
+    }
+    @catch (NSException *exception)
+    {
+        if ([[exception name] isEqualToString:NSInvalidArchiveOperationException] ||
+            [[exception name] isEqualToString:NSInvalidArgumentException])
+        {
+            NSLog(@"Could not unarchive extensible properties for object:\n%@", self);
+        }
+        else
+        {
+            @throw exception;
+        }
+    }
 	
+    
 	// Go through all dictionary entries and swap any KTArchivedManagedObjects for the real thing
 	NSEnumerator *keysEnumerator= [[NSDictionary dictionaryWithDictionary:result] keyEnumerator];
 	NSString *aKey;
