@@ -10,8 +10,8 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SandvoxBadgeInspector : SVInspectorViewController {
+@interface SandvoxBadgeInspector : SVInspectorViewController
 
-}
+- (IBAction)badgeClicked:(id)sender;
 
 @end

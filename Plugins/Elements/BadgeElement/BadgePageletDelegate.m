@@ -211,9 +211,4 @@ static NSArray *sAltStrings = nil;
 
 + (Class)inspectorViewControllerClass { return [SandvoxBadgeInspector class]; }
 
-- (IBAction)badgeClicked:(id)sender
-{
-	[self setBadgeTypeTag:[sender tag]];
-}
-
 @end

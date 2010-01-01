@@ -52,7 +52,5 @@
 @property(nonatomic) BOOL anonymous;
 @property(nonatomic) BOOL openLinkInNewWindow;
 
-- (IBAction)badgeClicked:(id)sender;
-
 @end
 

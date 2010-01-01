@@ -13,4 +13,9 @@
 
 - (NSString *)nibName { return @"BadgePagelet"; }
 
+- (IBAction)badgeClicked:(id)sender
+{
+	[self setBadgeTypeTag:[sender tag]];
+}
+
 @end
