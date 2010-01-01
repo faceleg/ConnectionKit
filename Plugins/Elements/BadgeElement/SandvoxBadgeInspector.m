@@ -11,10 +11,6 @@
 
 @implementation SandvoxBadgeInspector
 
-- (id)init
-{
-    return [self initWithNibName:@"BadgePagelet"
-                          bundle:[NSBundle bundleForClass:[self class]]];
-}
+- (NSString *)nibName { return @"BadgePagelet"; }
 
 @end
