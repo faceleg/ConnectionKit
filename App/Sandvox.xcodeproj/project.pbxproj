@@ -229,6 +229,7 @@
 		27196FA41090BBC90096B612 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27196FA31090BBC90096B612 /* Inspector.xib */; };
 		271B48601051C2F4008B698C /* SVWebEditorView.h in Headers */ = {isa = PBXBuildFile; fileRef = 271B485E1051C2F4008B698C /* SVWebEditorView.h */; };
 		271B48611051C2F4008B698C /* SVWebEditorView.m in Sources */ = {isa = PBXBuildFile; fileRef = 271B485F1051C2F4008B698C /* SVWebEditorView.m */; };
+		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
@@ -1652,6 +1653,7 @@
 		27196FA31090BBC90096B612 /* Inspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = Inspector.xib; sourceTree = "<group>"; };
 		271B485E1051C2F4008B698C /* SVWebEditorView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorView.h; sourceTree = "<group>"; };
 		271B485F1051C2F4008B698C /* SVWebEditorView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorView.m; sourceTree = "<group>"; };
+		271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageProtocol.h; sourceTree = "<group>"; };
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
@@ -2761,6 +2763,7 @@
 				272DA588108E6F42007A99D5 /* SVElementPlugIn.h */,
 				272DA589108E6F42007A99D5 /* SVElementPlugIn.m */,
 				273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */,
+				271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */,
 			);
 			name = "2.0 Plug-in System";
 			sourceTree = "<group>";
@@ -5139,6 +5142,7 @@
 				273D705A10E8ECB4003F5BA8 /* SVCalloutDOMController.h in Headers */,
 				273D730310EA7A9C003F5BA8 /* SVElementPlugInContainer.h in Headers */,
 				273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */,
+				271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

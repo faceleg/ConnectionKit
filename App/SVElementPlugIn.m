@@ -9,6 +9,7 @@
 #import "SVElementPlugIn.h"
 
 #import "KTAbstractHTMLPlugin.h"
+#import "KTAbstractPage.h"
 #import "SVDOMController.h"
 #import "SVElementPlugInContainer.h"
 #import "SVGraphic.h"
@@ -120,11 +121,11 @@
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
-- (id)page
+- (KTAbstractPage *)page
 {
     SVBody *body = [[self delegateOwner] enclosingBody];
     
-    id result = nil;
+    KTAbstractPage *result = nil;
     if ([[[body entity] name] isEqualToString:@"PageBody"])
     {
         result = [body valueForKey:@"page"];

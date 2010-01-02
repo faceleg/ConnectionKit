@@ -19,7 +19,7 @@
 
 
 @class KTMediaManager, KTPage;
-@protocol SVElementPlugInContainer;
+@protocol SVPage, SVElementPlugInContainer;
 
 
 @interface SVElementPlugIn : NSObject <SVElementPlugInFactory>
@@ -63,7 +63,7 @@
 
 @property(nonatomic, readonly) NSBundle *bundle;    // the object representing the plug-in's bundle
 
-- (id)page;   // TODO: define a SVPage protocol
+- (id <SVPage>)page;   // TODO: define a SVPage protocol
 
 
 #pragma mark UI

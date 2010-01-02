@@ -18,6 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SVPageProtocol.h"
 #import "KTAbstractElement.h"
 #import "KTWebPathsProtocol.h"
 
@@ -35,7 +36,7 @@ KTCollectionPathStyle;
 @class SVHTMLTemplateParser;
 
 
-@interface KTAbstractPage : KTAbstractElement
+@interface KTAbstractPage : KTAbstractElement <SVPage>
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
