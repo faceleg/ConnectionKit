@@ -4317,6 +4317,8 @@
 		CE01A6210EAFD63600BDF264 /* AppKit */ = {
 			isa = PBXGroup;
 			children = (
+				CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */,
+				CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */,
 				CE043A6810C7363600F76F97 /* KSRecentDocument.h */,
 				CE043A6910C7363600F76F97 /* KSRecentDocument.m */,
 				279218DB10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h */,
@@ -4483,8 +4485,6 @@
 				CE01A6A10EAFD63600BDF264 /* NSHTTPCookieStorage+Karelia.m */,
 				CE01A69A0EAFD63600BDF264 /* NSError+Karelia.h */,
 				CE01A69B0EAFD63600BDF264 /* NSError+Karelia.m */,
-				CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */,
-				CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */,
 				CE01A68C0EAFD63600BDF264 /* NSArray+Karelia.h */,
 				CE01A68D0EAFD63600BDF264 /* NSArray+Karelia.m */,
 				CE01A67B0EAFD63600BDF264 /* KSThreadProxy.h */,
