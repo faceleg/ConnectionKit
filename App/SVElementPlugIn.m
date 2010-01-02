@@ -116,14 +116,9 @@
     [self setValue:serializedValue forKey:key];
 }
 
-#pragma mark UI
+#pragma mark The Wider World
 
-+ (Class)inspectorViewControllerClass; { return nil; }
-+ (Class)DOMControllerClass; { return [SVDOMController class]; }
-
-#pragma mark Other
-
-@synthesize elementPlugInContainer = _container;
+- (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
 - (id)page
 {
@@ -143,7 +138,14 @@
     return result;
 }
 
-- (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
+#pragma mark UI
+
++ (Class)inspectorViewControllerClass; { return nil; }
++ (Class)DOMControllerClass; { return [SVDOMController class]; }
+
+#pragma mark Other
+
+@synthesize elementPlugInContainer = _container;
 
 #pragma mark Legacy
 

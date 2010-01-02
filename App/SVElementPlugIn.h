@@ -61,6 +61,8 @@
 
 #pragma mark The Wider World
 
+@property(nonatomic, readonly) NSBundle *bundle;    // the object representing the plug-in's bundle
+
 - (id)page;   // TODO: define a SVPage protocol
 
 
@@ -81,10 +83,6 @@
 #pragma mark Other
 
 @property(nonatomic, retain, readonly) id <SVElementPlugInContainer> elementPlugInContainer;
-
-// Convenience method to return the bundle this class was loaded from
-@property(nonatomic, readonly) NSBundle *bundle;
-
 
 // Legacy I'd like to get rid of
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
