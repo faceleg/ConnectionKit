@@ -38,14 +38,3 @@
 - (NSString *)cssClassName;
 
 @end
-
-
-@interface KTAbstractElement (Inspector)
- 
-// Inspector
-- (id)inspectorObject;
-- (NSBundle *)inspectorNibBundle;
-- (NSString *)inspectorNibName;
-- (id)inspectorNibOwner;
-
-@end
