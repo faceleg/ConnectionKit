@@ -65,13 +65,3 @@
 - (BOOL)isCancelled;
 
 @end
-
-
-#import "KTAbstractElement.h"
-@interface KTAbstractElement (KTDataMigratorAdditions)
-
-- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
-                    fromPlugin:(NSManagedObject *)oldPlugin
-                         error:(NSError **)error;
-
-@end

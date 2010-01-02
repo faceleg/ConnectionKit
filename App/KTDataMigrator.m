@@ -1044,33 +1044,3 @@
 }
 
 @end
-
-
-#pragma mark -
-
-
-@implementation KTAbstractElement (KTDataMigratorAdditions)
-
-- (BOOL)importPluginProperties:(NSDictionary *)oldPluginProperties
-                    fromPlugin:(NSManagedObject *)oldPlugin
-                         error:(NSError **)error
-{
-    BOOL result = NO;
-    
-    id delegate = [self delegate];
-    if (delegate && [delegate respondsToSelector:@selector(importPluginProperties:fromPlugin:error:)])
-    {
-        result = [delegate importPluginProperties:oldPluginProperties fromPlugin:oldPlugin error:error];
-    }
-    else
-    {
-        [self setValuesForKeysWithDictionary:oldPluginProperties];
-        result = YES;
-    }
-    
-    
-    return result;
-}
-
-@end
-
