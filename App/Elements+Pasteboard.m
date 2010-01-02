@@ -19,11 +19,6 @@
 #import "NSObject+Karelia.h"
 
 
-@interface KTAbstractElement (PasteboardPrivate)
-+ (NSSet *)keysToIgnoreForPasteboardRepresentation;
-@end
-
-
 @interface KTPluginIDPasteboardRepresentation : NSObject <NSCoding>
 {
 	NSString *myPluginID;
