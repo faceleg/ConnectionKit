@@ -75,25 +75,25 @@
 - (NSArray *)defaultInspectorViewControllers;
 {
     //  Document
-    _documentInspector = [[SVInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
+    _documentInspector = [[KSInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
     [_documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
     
     
     // Page
-    _pageInspector = [[SVInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
+    _pageInspector = [[KSInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
     [_pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
     [_pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
     
     
     // Collection
-    _collectionInspector = [[SVInspectorViewController alloc] initWithNibName:@"CollectionInspector" bundle:nil];
+    _collectionInspector = [[KSInspectorViewController alloc] initWithNibName:@"CollectionInspector" bundle:nil];
     [_collectionInspector setTitle:NSLocalizedString(@"Collection", @"Collection Inspector")];
     [_collectionInspector setIcon:[NSImage imageNamed:@"toolbar_collection"]];
     
     
     // Wrap
-    _wrapInspector = [[SVInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
+    _wrapInspector = [[KSInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
     [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
     
