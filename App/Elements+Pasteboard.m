@@ -84,7 +84,7 @@
 #pragma mark -
 
 
-@implementation KTAbstractElement (Pasteboard)
+@implementation KTAbstractPage (Pasteboard)
 
 + (NSSet *)keysToIgnoreForPasteboardRepresentation
 {

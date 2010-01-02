@@ -11,7 +11,7 @@
 #import "KTPasteboardArchiving.h"
 
 
-@interface KTAbstractElement (Pasteboard) <KTPasteboardArchiving>
+@interface KTAbstractPage (Pasteboard) <KTPasteboardArchiving>
 @end
 
 
