@@ -14,7 +14,7 @@
 @class KTDocument;
 
 
-@interface SVInspectorViewController : KSInspectorViewController <KSInspectorViewController>
+@interface SVInspectorViewController : KSInspectorViewController
 {
 }
 

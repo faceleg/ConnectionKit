@@ -8,6 +8,8 @@
 
 #import "SVPlugInInspector.h"
 
+#import "KSCollectionController.h"
+
 
 static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspectorInspectedObjectsObservation";
 
