@@ -31,9 +31,6 @@
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
 
 
-// Accessors
-- (NSString *)uniqueID; // for convenience
-
 @end
 
 

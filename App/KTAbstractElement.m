@@ -61,12 +61,6 @@
 	return nil;
 }
 
-- (NSString *)uniqueID 
-{
-	NSString *result = [self wrappedValueForKey:@"uniqueID"];
-	return result;
-}
-
 #pragma mark Media
 
 - (KTMediaManager *)mediaManager
