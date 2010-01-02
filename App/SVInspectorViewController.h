@@ -6,16 +6,35 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "KSInspectorViewController.h"
 
-#import "KSInspectorTabsController.h"
-
-
-@class KTDocument;
+#import <Cocoa/Cocoa.h>
 
 
-@interface SVInspectorViewController : KSInspectorViewController
+@interface SVInspectorViewController : NSViewController
 {
+  @private
+    NSArrayController   *_inspectedObjectsController;
+    // FIXME: Space for extra ivars for compatibility
 }
+
+//  DON'T try to override any initializer instance methods; Plug-in system makes no guarantee about which it will use.
+
+
+#pragma mark Inspected Objects
+
+- (NSArray *)inspectedObjects;  // NOT KVO-compliant yet
+
+// Bind to File's Owner inspectedObjectsController.selection.<key>
+// Should have no reason to start introspecting or editing the controller's other properties; Plug-in system will do that for you.
+- (NSArrayController *)inspectedObjectsController;
+
+@end
+
+
+@interface SVInspectorViewController (Documentation)
+
+- (NSString *)nibName;      // you MUST override to locate the correct nib
+- (NSBundle *)nibBundle;    // can override for custom bundle, but default should be fine
+
 
 @end

@@ -11,4 +11,23 @@
 
 @implementation SVInspectorViewController
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    _inspectedObjectsController = [[NSArrayController alloc] init];
+    [_inspectedObjectsController setAvoidsEmptySelection:NO];
+    [_inspectedObjectsController setClearsFilterPredicateOnInsertion:NO];
+    [_inspectedObjectsController setSelectsInsertedObjects:NO];
+    
+    return self;
+}
+
+- (NSArray *)inspectedObjects; { return [[self inspectedObjectsController] selectedObjects]; }
+
+- (NSArrayController *)inspectedObjectsController;
+{
+    return _inspectedObjectsController;
+}
+
 @end
