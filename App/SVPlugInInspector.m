@@ -9,6 +9,9 @@
 #import "SVPlugInInspector.h"
 
 #import "KSCollectionController.h"
+#import "SVInspectorViewController.h"
+
+#import "NSArrayController+Karelia.h"
 
 
 static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspectorInspectedObjectsObservation";
@@ -49,12 +52,18 @@ change context:(void *)context
         }
         
         SVInspectorViewController *inspector = nil;
-        if (!NSIsControllerMarker(controllerClass))
+        if (controllerClass && !NSIsControllerMarker(controllerClass))
         {
             // Make an Inspector.
             NSBundle *bundle = [NSBundle bundleForClass:controllerClass];
             inspector = [[controllerClass alloc] initWithNibName:nil    // subclass will override -nibName
                                                           bundle:bundle];
+            
+            // Give it the right content/selection
+            NSArrayController *controller = [inspector inspectedObjectsController];
+            NSArray *plugIns = [[self inspectedObjects] valueForKey:@"plugIn"];
+            [controller setContent:plugIns];
+            [controller selectAll];
         }
         
         [self setSelectedInspector:inspector];
@@ -73,30 +82,21 @@ change context:(void *)context
 {
     // Remove old inspector
     [[_selectedInspector view] removeFromSuperview];
-    [_selectedInspector setInspectedObjectsController:nil];
+    [[_selectedInspector inspectedObjectsController] setContent:nil];
     
     // Store new
     [inspector retain];
     [_selectedInspector release]; _selectedInspector = inspector;
     
     // Setup new
-    [inspector setInspectedObjectsController:[self inspectedObjectsController]];
-    
     [[inspector view] setFrame:[[self view] frame]];
     [[self view] addSubview:[inspector view]];
 }
 
 - (CGFloat)viewHeight
 {
-    CGFloat result = ([self selectedInspector] ? [[self selectedInspector] viewHeight] : [super viewHeight]);
+    CGFloat result = ([self selectedInspector] ? [[[self selectedInspector] view] frame].size.height : [super viewHeight]);
     return result;
-}
-
-- (void)setInspectedObjectsController:(id <KSCollectionController>)controller
-{
-    [super setInspectedObjectsController:controller];
-    
-    [[self selectedInspector] setInspectedObjectsController:controller];
 }
 
 @end
