@@ -6,10 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVInspectorViewController.h"
+#import "KSInspectorViewController.h"
 
 
-@interface SVPlugInInspector : SVInspectorViewController
+@class SVInspectorViewController;
+
+
+@interface SVPlugInInspector : KSInspectorViewController
 {
     SVInspectorViewController   *_selectedInspector;
 }
