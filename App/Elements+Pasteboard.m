@@ -34,7 +34,7 @@
 
 @implementation KTPluginIDPasteboardRepresentation
 
-- (id)initWithPlugin:(KTAbstractElement *)plugin
+- (id)initWithPlugin:(KTAbstractPage *)plugin
 {
 	[super init];
 	

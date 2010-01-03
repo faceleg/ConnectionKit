@@ -21,7 +21,7 @@
 @implementation KTNamedSettingsScaledImageContainer
 
 + (id)imageWithScalingSettingsNamed:(NSString *)settingsName
-						  forPlugin:(KTAbstractElement *)plugin
+						  forPlugin:(KTAbstractPage *)plugin
 						sourceMedia:(KTMediaContainer *)sourceMedia
 {
 	// Create the media container first

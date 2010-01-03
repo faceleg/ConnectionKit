@@ -102,6 +102,12 @@
     [self setSidebar:sidebar];
 }
 
+#pragma mark Identifier
+
+@dynamic uniqueID;
+
+- (NSString *)identifier { return [self uniqueID]; }
+
 #pragma mark Accessors
 
 @dynamic parentPage;
@@ -139,8 +145,6 @@
 }
 
 @dynamic sidebar;
-
-- (NSString *)identifier { return [self uniqueID]; }
 
 #pragma mark Title
 

@@ -43,6 +43,11 @@ KTCollectionPathStyle;
 
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
 
+
+#pragma mark Identifier
+@property(nonatomic, copy, readonly) NSString *uniqueID;
+
+
 #pragma mark Relationships
 @property(nonatomic, retain, readonly) KTPage *parentPage;
 - (BOOL)isCollection;
