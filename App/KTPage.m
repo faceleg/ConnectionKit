@@ -264,6 +264,12 @@
 	}
 }
 
+- (void)awakeFromFetch
+{
+	[super awakeFromFetch];
+	[self awakeFromBundleAsNewlyCreatedObject:NO];
+}
+
 #pragma mark Properties
 
 @dynamic showSidebar;

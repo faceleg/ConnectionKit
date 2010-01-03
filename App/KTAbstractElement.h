@@ -27,7 +27,6 @@
 #pragma mark awake
 
 // Plugin awake
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject; // we want to be able to pass a flag here for special circumstances
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
 
 

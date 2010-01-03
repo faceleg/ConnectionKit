@@ -40,12 +40,6 @@
 	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
 }
 
-- (void)awakeFromFetch
-{
-	[super awakeFromFetch];
-	[self awakeFromBundleAsNewlyCreatedObject:NO];
-}
-
 /*!	Called after all the other awake messages, to populate from a drag.  Handles calling the delegate.
 */
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
