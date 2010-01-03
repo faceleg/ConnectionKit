@@ -52,15 +52,6 @@
 {
 }
 
-#pragma mark -
-#pragma mark Accessors
-
-- (KTPage *)page
-{
-	[self subclassResponsibility:_cmd];
-	return nil;
-}
-
 #pragma mark Media
 
 - (KTMediaManager *)mediaManager
