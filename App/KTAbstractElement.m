@@ -30,16 +30,6 @@
 
 @implementation KTAbstractElement
 
-#pragma mark -
-#pragma mark Core Data
-
-- (void)awakeFromInsert
-{
-	[super awakeFromInsert];
-	
-	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
-}
-
 #pragma mark Media
 
 - (KTMediaManager *)mediaManager
