@@ -9,7 +9,6 @@
 #import "NSManagedObjectModel+KTExtensions.h"
 
 #import "KT.h"
-#import "KTAbstractElement.h"
 
 #import "NSException+Karelia.h"
 
@@ -127,22 +126,6 @@ static NSManagedObjectModel *sKTComponentsModel;
 - (BOOL)hasEntityNamed:(NSString *)aString
 {
 	return (nil != [[self entitiesByName] objectForKey:aString]) ? YES : NO;
-}
-
-+ (BOOL)componentsFrameworkModelContainsEntityNamed:(NSString *)aString
-{
-	if ( nil == sKTComponentsModel )
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[KTAbstractElement class]];
-		NSString *modelPath = [bundle pathForResource:@"KTComponents" ofType:@"mom"];
-		sKTComponentsModel = [[NSManagedObjectModel modelWithPath:modelPath] retain];
-		if ( nil == sKTComponentsModel )
-		{
-			[NSException raise:kKareliaGeneralException format:@"unable to construct model at path: %@", modelPath];
-		}
-	}
-	
-	return [sKTComponentsModel hasEntityNamed:aString];
 }
 
 - (void)prettyPrintDescription

@@ -22,8 +22,6 @@
 
 @interface NSManagedObjectModel ( KTExtensions )
 
-+ (BOOL)componentsFrameworkModelContainsEntityNamed:(NSString *)aString;
-
 /*! returns an autoreleased model from "KTComponents<_aVersion>.mom"
  passing in nil for aVersion yields default model
  */
