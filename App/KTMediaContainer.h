@@ -49,6 +49,6 @@ typedef enum {
 - (KTMediaFile *)sourceMediaFile;
 
 - (KTMediaContainer *)imageWithScalingSettingsNamed:(NSString *)settingsName
-										  forPlugin:(KTAbstractElement *)plugin;
+										  forPlugin:(KTAbstractPage *)plugin;
 
 @end

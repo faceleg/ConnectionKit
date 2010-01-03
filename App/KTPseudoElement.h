@@ -25,10 +25,8 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTAbstractElement.h"				// our container will be one of these
 
-
-@class DOMNode;
+@class KTAbstractElement, DOMNode;
 
 
 @interface KTPseudoElement : NSObject

@@ -301,7 +301,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	if (!result)
 	{
 		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
-		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
+		NSBundle *componentsBundle = [NSBundle mainBundle];
         OBASSERT(componentsBundle);
 		
         NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];

@@ -8,7 +8,6 @@
 
 #import "SVSiteOutlineViewController.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTElementPlugin.h"
 #import "KTMaster.h"
 #import "KTMediaContainer.h"

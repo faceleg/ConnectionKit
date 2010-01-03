@@ -8,7 +8,6 @@
 
 #import "KTPublishingEngine.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"

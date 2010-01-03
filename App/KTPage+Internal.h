@@ -8,7 +8,6 @@
 
 
 #import "KTPage.h"
-#import "KTAbstractElement+Internal.h"
 
 
 @class KTAbstractHTMLPlugin;

@@ -9,7 +9,6 @@
 #import "KTSiteOutlineView.h"
 
 #import "KT.h"
-#import "KTAbstractElement+Internal.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
 #import "KTPulsatingOverlay.h"

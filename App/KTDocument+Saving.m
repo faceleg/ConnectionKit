@@ -9,7 +9,6 @@
 #import "KTDocument.h"
 #import "NSDocument+KTExtensions.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTDesign.h"
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"

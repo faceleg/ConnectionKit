@@ -8,7 +8,6 @@
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTSite.h"
 #import "KTManagedObject.h"
 #import "KTPage.h"

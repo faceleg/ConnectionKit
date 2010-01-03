@@ -8,7 +8,6 @@
 
 #import "KTAbstractPluginDelegate.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"

@@ -8,7 +8,6 @@
 
 #import "KTPage.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTAbstractIndex.h"
 #import "KTArchivePage.h"
 #import "SVHTMLContext.h"

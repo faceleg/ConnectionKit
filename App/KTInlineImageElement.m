@@ -8,7 +8,6 @@
 
 #import "KTInlineImageElement.h"
 
-#import "KTAbstractElement+Internal.h"
 #import "KTDesign.h"
 #import "KTImageView.h"
 #import "KTMaster.h"

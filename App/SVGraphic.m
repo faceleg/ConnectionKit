@@ -8,7 +8,6 @@
 
 #import "SVGraphic.h"
 
-#import "KTAbstractElement.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVBody.h"
 

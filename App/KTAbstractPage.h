@@ -17,9 +17,8 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "KTManagedObject.h"
 #import "SVPageProtocol.h"
-#import "KTAbstractElement.h"
 #import "KTWebPathsProtocol.h"
 
 
@@ -36,7 +35,7 @@ KTCollectionPathStyle;
 @class SVHTMLTemplateParser;
 
 
-@interface KTAbstractPage : KTAbstractElement <SVPage>
+@interface KTAbstractPage : KTManagedObject <SVPage>
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
@@ -140,6 +139,7 @@ KTCollectionPathStyle;
 @end
 
 
+@class KTDocument;
 @protocol KTExtensiblePluginPropertiesArchiving
 + (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document;
 - (NSString *)archiveIdentifier;
