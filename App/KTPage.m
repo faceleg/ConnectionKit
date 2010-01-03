@@ -230,7 +230,6 @@
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	[super awakeFromDragWithDictionary:aDictionary];
     NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
     if ( nil == title )
 	{

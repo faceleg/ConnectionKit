@@ -40,12 +40,6 @@
 	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
 }
 
-/*!	Called after all the other awake messages, to populate from a drag.  Handles calling the delegate.
-*/
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
-{
-}
-
 #pragma mark Media
 
 - (KTMediaManager *)mediaManager

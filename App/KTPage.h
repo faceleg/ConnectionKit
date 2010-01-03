@@ -37,6 +37,7 @@
 
 // Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
+- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
 
 
 #pragma mark Properties

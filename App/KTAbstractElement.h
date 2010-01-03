@@ -24,10 +24,6 @@
 @class KTDocument;
 @interface KTAbstractElement : KTManagedObject 
 
-#pragma mark awake
-
-// Plugin awake
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
 
 
 @end
