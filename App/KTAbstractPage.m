@@ -244,6 +244,27 @@
     return result;
 }
 
+#pragma mark Operations
+
+/*	As the title suggests, performs the selector upon either self or the delegate. Delegate takes preference.
+ *	At present the recursive flag is only used by pages.
+ */
+- (void)makeSelfOrDelegatePerformSelector:(SEL)selector
+							   withObject:(void *)anObject
+								 withPage:(KTPage *)page
+								recursive:(BOOL)recursive
+{
+	if ([self isDeleted])
+	{
+		return; // stop these calls if we're not really there any more
+	}
+	
+	if ([self respondsToSelector:selector])
+	{
+		[self performSelector:selector withObject:(id)anObject withObject:page];
+	}
+}
+
 #pragma mark -
 #pragma mark Staleness
 
