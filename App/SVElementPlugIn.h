@@ -66,6 +66,12 @@
 - (id <SVPage>)page;   // TODO: define a SVPage protocol
 
 
+#pragma mark Undo Management
+// TODO: Should these be methods on some kind of SVPlugInHost or SVPlugInManager object?
+- (void)disableUndoRegistration;
+- (void)enableUndoRegistration;
+
+
 #pragma mark UI
 
 // If your plug-in wants an inspector, override to return an SVInspectorViewController subclass. Default implementation returns nil.

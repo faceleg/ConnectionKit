@@ -139,6 +139,28 @@
     return result;
 }
 
+#pragma mark Undo Management
+
+- (void)disableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager enableUndoRegistration];
+}
+
 #pragma mark UI
 
 + (Class)inspectorViewControllerClass; { return nil; }
