@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractElement.h"
+#import "KTAbstractPage.h"
 
 
 typedef enum {

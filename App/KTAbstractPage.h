@@ -138,3 +138,9 @@ KTCollectionPathStyle;
 - (NSString *)previewPath;
 
 @end
+
+
+@protocol KTExtensiblePluginPropertiesArchiving
++ (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document;
+- (NSString *)archiveIdentifier;
+@end
