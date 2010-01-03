@@ -140,6 +140,8 @@
 
 @dynamic sidebar;
 
+- (NSString *)identifier { return [self uniqueID]; }
+
 #pragma mark Title
 
 @dynamic title;

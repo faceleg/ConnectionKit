@@ -7,6 +7,7 @@
 //
 
 #import "SVElementPlugIn.h"
+#import "SVPageProtocol.h"
 
 #import "KTAbstractHTMLPlugin.h"
 #import "KTAbstractPage.h"
@@ -199,3 +200,17 @@
 
 @end
 
+
+#pragma mark -
+
+
+@implementation SVElementPlugIn (SVPage)
+
+- (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
+{
+    KTAbstractPage *result = [KTAbstractPage pageWithUniqueID:identifier
+                                       inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
+    return result;
+}
+
+@end
