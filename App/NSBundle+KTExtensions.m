@@ -10,7 +10,6 @@
 #import "Debug.h"
 #import "NSImage+Karelia.h"
 #import "NSApplication+Karelia.h"
-#import "KTAbstractElement.h"		// just for class reference for bundle
 #import "KSAppDelegate.h"
 
 @implementation NSBundle ( KTExtensions )
@@ -118,22 +117,17 @@
 - (NSString *)overridingPathForResource:(NSString *)name ofType:(NSString *)ext;
 {
 	NSString *path = [NSApplication applicationSupportPath];
-	NSBundle *ktComponentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
 	NSString *bundleDescription = nil;
 	if (self == [NSBundle mainBundle])
 	{
 		bundleDescription = @"application";
-	}
-	else if (self == ktComponentsBundle)
-	{
-		bundleDescription = @"KTComponents";
 	}
 	else
 	{
 		bundleDescription = @"plugin";
 	}
 
-	if (self != [NSBundle mainBundle] && self != ktComponentsBundle)
+	if (self != [NSBundle mainBundle])
 	{
 		path = [path stringByAppendingPathComponent:[self bundleIdentifier]];
 	}
