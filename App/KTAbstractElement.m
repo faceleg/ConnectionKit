@@ -50,22 +50,6 @@
 }
 
 #pragma mark -
-#pragma mark Support
-
-- (NSString *)spotlightHTML
-{
-	NSString *result = nil;
-	
-	// TODO: Figure a nice way to get reasonable plain text out of our body
-	if ( nil == result )
-	{
-		result = @"";
-	}
-		
-	return result;
-}
-
-#pragma mark -
 #pragma mark HTML
 
 - (NSString *)elementTemplate;	// instance method too for key paths to work in tiger
@@ -75,19 +59,6 @@
 	if (!result)
 	{
 		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTElementTemplate" ofType:@"html"];
-		result = [[NSString alloc] initWithContentsOfFile:templatePath];
-	}
-	
-	return result;
-}
-
-- (NSString *)commentsTemplate	// instance method too for key paths to work in tiger
-{
-	static NSString *result;
-	
-	if (!result)
-	{
-		NSString *templatePath = [[NSBundle mainBundle] pathForResource:@"KTCommentsTemplate" ofType:@"html"];
 		result = [[NSString alloc] initWithContentsOfFile:templatePath];
 	}
 	
