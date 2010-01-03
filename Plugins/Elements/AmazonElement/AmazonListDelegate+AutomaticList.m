@@ -158,12 +158,9 @@
 	{
 		// Store the list type, but do NOT make it an undoable operation since this would register a second undo
 		// command for the process of loading a list.
-		NSManagedObjectContext *moc = [[self delegateOwner] managedObjectContext];
-		[moc processPendingChanges];
-		[[moc undoManager] disableUndoRegistration];
+		[self disableUndoRegistration];
 		[[self propertiesStorage] setInteger:[list listType] forKey:@"automaticListType"];
-		[moc processPendingChanges];
-		[[moc undoManager] enableUndoRegistration];
+		[self enableUndoRegistration];
 	}
 }
 
