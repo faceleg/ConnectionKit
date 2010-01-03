@@ -2748,6 +2748,7 @@
 		27196F5D1090A8590096B612 /* 2.0 Plug-in System */ = {
 			isa = PBXGroup;
 			children = (
+				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
 				272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */,
 				272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */,
 				272DA588108E6F42007A99D5 /* SVElementPlugIn.h */,
@@ -4136,7 +4137,6 @@
 			isa = PBXGroup;
 			children = (
 				3C202D1407DFC06100DE4994 /* KT.h */,
-				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
 				3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */,
 				CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */,
 				3CD6B0EE0BFA380600B9287E /* ThirdParty.h */,
