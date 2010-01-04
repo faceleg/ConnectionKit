@@ -20,7 +20,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTAbstractElement, KTDocument, KTSite, KTManagedObject, KTAbstractPage, KTPage;
+@class KTAbstractElement, KTDocument, KTSite, KTAbstractPage, KTPage;
 
 @interface NSManagedObjectContext (KTExtensions)
 
@@ -68,13 +68,8 @@
 // return context's Site
 - (KTSite *)site;
 
-// returns KTManagedObject in context matching criteria 
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray;
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
-
-// returns KTManagedObject, searching entities Root, Page, Pagelet, Element, and Media
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
-- (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
+// returns object in context matching criteria 
+- (NSManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
 
 - (KTPage *)root;   // returns context's Root
 - (void)deletePage:(KTAbstractPage *)page;  // Please ALWAYS call this for pages as it posts a notification first

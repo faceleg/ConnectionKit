@@ -9,7 +9,6 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KTSite.h"
-#import "KTManagedObject.h"
 #import "KTPage.h"
 #import "NSDocumentController+KTExtensions.h"
 #import "NSFetchRequest+KTExtensions.h"
@@ -155,31 +154,12 @@
     return nil;
 }
 
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityNames:(NSArray *)aNamesArray
-{
-	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
-	OBASSERTSTRING((nil != aNamesArray), @"aNamesArray cannot be nil");
-	
-	NSEnumerator *e = [aNamesArray objectEnumerator];
-	NSString *entityName;
-	while ( entityName = [e nextObject] )
-	{
-		NSManagedObject *matchingObject = [self objectWithUniqueID:aUniqueID entityName:entityName];
-		if ( nil != matchingObject )
-		{
-			return (KTManagedObject *)matchingObject;
-		}
-	}
-	
-	return nil;
-}
-
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName
+- (NSManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName
 {
 	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
 	OBASSERTSTRING((nil != anEntityName), @"anEntityName cannot be nil");
 	
-	KTManagedObject *result = nil;
+	NSManagedObject *result = nil;
     
     NSString *searchID = [aUniqueID copy];
 	
@@ -205,32 +185,6 @@
 
 	[searchID release];
 	
-	return result;
-}
-
-- (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID
-{
-	OBASSERTSTRING((nil != aUniqueID), @"aUniqueID cannot be nil");
-	
-	// we have to search in Root, Page, Pagelet, Element, and Media
-	NSArray *entityNames = [NSArray arrayWithObjects:
-		@"Page", 
-		nil];
-	
-	return (KTManagedObject *)[self objectWithUniqueID:aUniqueID entityNames:entityNames];
-}
-
-- (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID
-{
-	OBASSERT(pluginID);		OBASSERT([pluginID length] > 0);
-	
-	static NSArray *entityNames;
-	if (!entityNames)
-	{
-		entityNames = [[NSArray alloc] initWithObjects:@"Page", nil];
-	}
-	
-	KTAbstractElement *result = (KTAbstractElement *)[self objectWithUniqueID:pluginID entityNames:entityNames];
 	return result;
 }
 
