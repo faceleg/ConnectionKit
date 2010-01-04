@@ -67,8 +67,8 @@
 
 /*!	Recursive method
 */
-- (void) appendMapOfPage:(KTPage *)aPage
-		  relativeToPage:(KTPage *)thisPage
+- (void) appendMapOfPage:(id <SVPage>)aPage
+		  relativeToPage:(id <SVPage>)thisPage
 				toBuffer:(NSMutableString *)string
 			 wantCompact:(BOOL)aWantCompact
 			  topSection:(BOOL)isTopSection
@@ -99,7 +99,7 @@
 		
 		if (aPage == thisPage)	// not likely but maybe possible
 		{
-			NSString *title = [[aPage titleText] stringByEscapingHTMLEntities];	/// HTML was leaving extra formatting; we want it less dramatic
+			NSString *title = [[aPage titleString] stringByEscapingHTMLEntities];	/// HTML was leaving extra formatting; we want it less dramatic
             if (title)
             {
                 [string appendString:title];
@@ -117,7 +117,7 @@
 //			{
 			NSString *href = [[aPage URL] stringRelativeToURL:[thisPage URL]];
             OBASSERT(href);
-            NSString *title = [[aPage titleText] stringByEscapingHTMLEntities];
+            NSString *title = [[aPage titleString] stringByEscapingHTMLEntities];
             
 			if (title)
 			{
@@ -182,14 +182,14 @@
                     }
                     if (aChildPage == thisPage)	// not likely but maybe possible
                     {
-                        NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
+                        NSString *title = [[aChildPage titleString] stringByEscapingHTMLEntities];
                         OBASSERT([title lowercaseString]);
                         [string appendFormat:@"%@\n", title];
                     }
                     else
                     {
                         NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
-                        NSString *title = [[aChildPage titleText] stringByEscapingHTMLEntities];
+                        NSString *title = [[aChildPage titleString] stringByEscapingHTMLEntities];
                         if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
                     }
                     // need separator?	
@@ -243,7 +243,7 @@
 		[string appendString:(sections ? @"<h3>" : @"<p>")];
 		if (root == thisPage)	// not likely but maybe possible
 		{
-			NSString *title = [[root titleText] stringByEscapingHTMLEntities];
+			NSString *title = [[root titleString] stringByEscapingHTMLEntities];
             if (title)
             {
                 [string appendString:title];
@@ -254,7 +254,7 @@
 			NSString *path = [[root URL] stringRelativeToURL:[thisPage URL]];
             if (!path) path = @"";  // Happens for a site with no -siteURL set yet
             
-            NSString *title = [[root titleText] stringByEscapingHTMLEntities];
+            NSString *title = [[root titleString] stringByEscapingHTMLEntities];
             
             [string appendFormat:@"<a href=\"%@\">%@</a>", path, title];
 		}
