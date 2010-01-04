@@ -30,9 +30,6 @@
 // Document
 #import "KTSite.h"
 
-// Core Data
-#import "KTManagedObject.h"
-
 // Plugins (abstract superclass of all plugins)
 #import "SVElementPlugIn.h"
 #import "SVElementPlugInContainer.h"
