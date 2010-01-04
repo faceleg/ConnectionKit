@@ -218,10 +218,7 @@
 			// for now, we're going to specialize support for known entities
 			// in the model that we want to be inheritied.
 			KTSite *site = [self site];
-//				[site lockPSCAndMOC];
 			[site setPrimitiveValue:result forKey:aKey];
-//				[self refreshObjectInAllOtherContexts:(KTManagedObject *)site];
-//				[site unlockPSCAndMOC];
 		}
 	}
 	return result;
