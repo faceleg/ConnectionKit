@@ -75,7 +75,7 @@
 	if (oldArchivePage)
 	{
 		NSArray *pages = [oldArchivePage sortedPages];
-		if (!pages || [pages count] == 0) [[self managedObjectContext] deleteObject:oldArchivePage];
+		if (!pages || [pages count] == 0) [[self managedObjectContext] deletePage:oldArchivePage];
 	}
 	
 	

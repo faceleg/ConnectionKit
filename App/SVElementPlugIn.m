@@ -21,6 +21,9 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
+NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
+
+
 @interface SVElementPlugIn ()
 @property(nonatomic, retain) id delegateOwner;
 @end

@@ -76,8 +76,8 @@
 - (KTManagedObject *)objectWithUniqueID:(NSString *)aUniqueID;
 - (KTAbstractElement *)pluginWithUniqueID:(NSString *)pluginID;
 
-// returns context's Root
-- (KTPage *)root;
+- (KTPage *)root;   // returns context's Root
+- (void)deletePage:(KTAbstractPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
 
 - (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page;
 

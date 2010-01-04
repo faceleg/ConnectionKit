@@ -18,3 +18,7 @@
 @interface SVElementPlugIn (SVPage)
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 @end
+
+
+// Posted when the page is to be deleted. Notification object is the page itself.
+extern NSString *SVPageWillBeDeletedNotification;

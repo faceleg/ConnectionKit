@@ -169,7 +169,7 @@
 		NSArray *archivePages = [archive sortedPages];
 		if ([archivePages count] == 0)
 		{
-			[[self managedObjectContext] deleteObject:archive];
+			[[self managedObjectContext] deletePage:archive];
 		}
 	}
 }
@@ -194,7 +194,7 @@
 			NSArray *archivePages = [archive sortedPages];
 			if ([archivePages count] == 0)
 			{
-				[[self managedObjectContext] deleteObject:archive];
+				[[self managedObjectContext] deletePage:archive];
 			}
 		}
 	}
