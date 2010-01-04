@@ -1065,13 +1065,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 	}
 }
 
-- (void)webView:(WebView *)sender didDrawRect:(NSRect)dirtyRect
-{
-    NSView *drawingView = [NSView focusView];
-    NSRect dirtyDrawingRect = [drawingView convertRect:dirtyRect fromView:sender];
-    [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
-}
-
 #pragma mark WebEditingDelegate
 
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
