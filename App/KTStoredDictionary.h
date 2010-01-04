@@ -17,9 +17,10 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTManagedObject.h"
+#import <CoreData/CoreData.h>
 
-@interface KTStoredDictionary : KTManagedObject
+
+@interface KTStoredDictionary : NSManagedObject
 {
 	// a StoredDictionary is a to-many relationship of entries
 	// to either KeyValueAsData or KeyValueAsString objects

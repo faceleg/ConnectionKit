@@ -17,10 +17,10 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTManagedObject.h"
+#import <CoreData/CoreData.h>
 
 
-@interface KTStoredArray : KTManagedObject
+@interface KTStoredArray : NSManagedObject
 {
 	// a StoredArray is a to-many relationship of items
 	// to either OrderedValueAsData or OrderedValueAsString objects
