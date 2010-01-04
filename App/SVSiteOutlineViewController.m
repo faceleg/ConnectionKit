@@ -671,11 +671,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		KTPage *page = item;
 		if (page == [self rootPage])
 		{
-			result = [[page master] siteTitleText];
+			result = [[[page master] siteTitle] text];
 		}
 		else
 		{
-			result = [page titleText];
+			result = [[page title] text];
 		}
 	}
 	else

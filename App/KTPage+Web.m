@@ -15,6 +15,7 @@
 #import "KTElementPlugin.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTMaster+Internal.h"
+#import "SVTextField.h"
 
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+QuickLook.h"
@@ -259,7 +260,7 @@
 	NSMutableString *buf = [NSMutableString string];
 	
 	BOOL needsSeparator = NO;
-	NSString *titleText = [self titleText];
+	NSString *titleText = [[self title] text];
 	if ( nil != titleText && ![titleText isEqualToString:@""])
 	{
 		[buf appendString:titleText];
@@ -267,7 +268,7 @@
 	}
 	
 	
-	NSString *siteTitleText = [[[self master] siteTitleHTMLString] stringByConvertingHTMLToPlainText];
+	NSString *siteTitleText = [[[[self master] siteTitle] textHTMLString] stringByConvertingHTMLToPlainText];
 	if ( (nil != siteTitleText) && ![siteTitleText isEqualToString:@""] && ![siteTitleText isEqualToString:titleText] )
 	{
 		if (needsSeparator)

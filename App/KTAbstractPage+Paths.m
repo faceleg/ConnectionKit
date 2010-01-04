@@ -88,7 +88,7 @@
 	
 	
 	// Get the preferred filename by converting to lowercase, spaces to _, & removing everything else
-    NSString *result = [[self titleText] legalizedWebPublishingFileName];
+    NSString *result = [[[self title] text] legalizedWebPublishingFileName];
     if (!result || [result isEqualToString:@""])
     {
         result = [self uniqueID];

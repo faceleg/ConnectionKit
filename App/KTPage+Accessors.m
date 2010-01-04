@@ -52,7 +52,7 @@
  */
 - (void)setTitleHTMLString:(NSString *)value
 {
-	NSString *oldTitleText = [self titleText];
+	NSString *oldTitleText = [[self title] text];
     
     [super setTitleHTMLString:value];
 	
@@ -76,7 +76,7 @@
     NSString *menuTitle = [self menuTitle];
     if ([menuTitle length] == 0 || [menuTitle isEqualToString:oldTitleText])
     {
-        [self setMenuTitle:[self titleText]];
+        [self setMenuTitle:[[self title] text]];
     }
     
     

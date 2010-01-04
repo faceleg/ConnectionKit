@@ -234,7 +234,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 			KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[self document] managedObjectContext]];
 			if ( nil != target )
 			{
-				NSString *titleText = [target titleText];
+				NSString *titleText = [[target title] text];
 				if ( (nil != titleText) && ![titleText isEqualToString:@""] )
 				{
 					[oLinkLocalPageField setStringValue:titleText];
@@ -295,7 +295,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 				[info setValue:[theLinkString lastPathComponent] forKey:@"KTLocalLink"]; // mark as local link so we preserve it
 				NSString *uid = [theLinkString substringFromIndex:NSMaxRange(wherePageID)];
 				KTPage *targetPage = [KTPage pageWithUniqueID:uid inManagedObjectContext:[[self document] managedObjectContext]];
-				theLinkString = [targetPage titleText];
+				theLinkString = [[targetPage title] text];
 				localLink = YES;
 			}
             
