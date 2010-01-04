@@ -1164,7 +1164,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 			// Yikes, calling this invokes webViewDidChangeSelection, which calls setContextElementInformation
             [[[self webViewController] webView] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
 			// So restore it to what we had
-			[self contextElementInformation:info];
+			[self setContextElementInformation:info];
 		}
 		else if ( nil != node )
 		{
