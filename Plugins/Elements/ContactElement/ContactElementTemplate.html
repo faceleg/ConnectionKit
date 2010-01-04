@@ -108,8 +108,7 @@ function dofocus[[=uniqueID]](anInput) {
 [[if aField.type==1]]
 			<!-- text field -->
 			<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
-				type="text"
-				[[if aField.identifier=="email"]]style="color:#888"[[endif10]]
+				[[if aField.identifier=="email"]]type="email" style="color:#888"[[else10]]type="text"[[endif10]]
 				class="fullWidth"
 				name="[[=&aField.inputName]]"
 				[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
@@ -181,9 +180,8 @@ function dofocus[[=uniqueID]](anInput) {
 	[[if aField.type==1]]
 	<!-- text field -->
 	<input id="contact[[=uniqueID]]-[[=_&aField.inputName]]"
-		type="text"
 		class="fullWidth"
-		[[if aField.identifier=="email"]]style="color:#888"[[endif10]]
+		[[if aField.identifier=="email"]]type="email" style="color:#888"[[endif10]]type="text"[[endif10]]
 		name="[[=&aField.inputName]]"
 		[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
 		[[if aField.identifier=="email"]]onfocus="dofocus[[=uniqueID]](this)" onblur="doblur[[=uniqueID]](this)"[[endif10]]
