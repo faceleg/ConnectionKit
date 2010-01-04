@@ -24,5 +24,12 @@
 //  Adds the capability to store KTAbstractPage and KTMediaContainer objects in the extensible properties.
 
 
+@class KTDocument;
+@protocol KTExtensiblePluginPropertiesArchiving
++ (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document;
+- (NSString *)archiveIdentifier;
+@end
+
+
 @interface SVExtensibleManagedObject : KSExtensibleManagedObject
 @end

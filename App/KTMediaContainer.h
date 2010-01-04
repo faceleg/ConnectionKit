@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractPage.h"
+#import "SVExtensibleManagedObject.h"
 
 
 typedef enum {
@@ -29,7 +29,7 @@ typedef enum {
 } KTMediaScalingOperation;
 
 
-@class KTMediaManager, KTMediaFile, KTImageScalingSettings, BDAlias;
+@class KTMediaManager, KTMediaFile, KTImageScalingSettings, BDAlias, KTAbstractPage;
 
 @interface KTMediaContainer : NSManagedObject <KTExtensiblePluginPropertiesArchiving>
 

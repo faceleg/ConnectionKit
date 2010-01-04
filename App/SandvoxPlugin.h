@@ -38,7 +38,6 @@
 #import "SVInspectorViewController.h"
 
 // Page composition
-#import "KTAbstractPage.h"
 #import "SVPageProtocol.h"
 #import "KTMaster.h"
 
