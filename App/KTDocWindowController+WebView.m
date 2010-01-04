@@ -1083,7 +1083,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 
 - (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
 {
-	NSDictionary *info = [self contextElementInformation];
+	NSMutableDictionary *info = [self contextElementInformation];
 	if (info)
 	{
 		// set up a link to the local page
@@ -1124,7 +1124,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	[oLinkOpenInNewWindowSwitch setState:NSOffState];
 	
 	// populate with context information
-	NSDictionary *info = [[self contextElementInformation] retain];
+	NSMutableDictionary *info = [[self contextElementInformation] retain];
 	if (info)
 	{
 		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
@@ -1160,7 +1160,11 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
             
             // Since we're editing a link, select it
             [selectedRange selectNode:possibleAnchor];
+			
+			// Yikes, calling this invokes webViewDidChangeSelection, which calls setContextElementInformation
             [[[self webViewController] webView] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
+			// So restore it to what we had
+			[self contextElementInformation:info];
 		}
 		else if ( nil != node )
 		{

@@ -375,9 +375,6 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		return;
 	}
 	
-	
-	
-	
 	// Change our -currentTextEditingBlock if needed
 	WebView *theWebview = [notification object];
 	DOMRange *selectedDOMRange = [theWebview selectedDOMRange];
