@@ -25,6 +25,7 @@
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
+#import "NSURL+Karelia.h"
 
 
 @interface KTAbstractPage (PathsPrivate)
@@ -299,7 +300,7 @@
 	if (customPath)
 	{
 		NSURL *siteURL = [[[self documentInfo] hostProperties] siteURL];
-		result = [NSURL URLWithString:customPath relativeToURL:siteURL];
+		result = [NSURL URLWithUnescapedString:customPath relativeToURL:siteURL];
 	}
 	else
 	{
