@@ -908,9 +908,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     OBPRECONDITION(sender == [self webEditor]);
     
-    // TODO: Can we do this without a cast?
-    NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
-    BOOL result = [(NSArrayController *)[self selectedObjectsController] setSelectedObjects:objects];
+    // HACK: Ignore these messages while loading as we'll sort out selection once the load is done
+    BOOL result = YES;
+    if (![self isUpdating])
+    {
+        NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
+        result = [_selectableObjectsController setSelectedObjects:objects];
+    }
+    
     return result;
 }
 
