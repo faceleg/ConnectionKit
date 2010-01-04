@@ -21,17 +21,4 @@
 
 
 @interface KTManagedObject : KSExtensibleManagedObject
-{
-}
-
-#pragma mark Migration Methods
-
-/*! returns predicate to find an object in a different context considered "equal"
-	in attribute value(s).
-*/
-- (NSPredicate *)predicateForSimilarObject;
-
-/*! returns first matching object in aContext using predicateForSimilarObject */
-- (KTManagedObject *)similarObjectInContext:(NSManagedObjectContext *)context;
-
 @end
