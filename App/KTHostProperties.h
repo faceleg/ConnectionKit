@@ -17,11 +17,10 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
-#import "KTManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 
 
-@interface KTHostProperties : KTManagedObject
+@interface KTHostProperties : KSExtensibleManagedObject
 
 - (BOOL)remoteSiteURLIsValid;
 - (NSString *)globalBaseURLUsingHome:(BOOL)inHome allowNull:(BOOL)allowNull;
