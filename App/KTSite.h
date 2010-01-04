@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 
 
 typedef enum {
@@ -29,7 +29,7 @@ typedef enum {
 
 @class KTDocument, KTPage, KTHostProperties;
 
-@interface KTSite : KTManagedObject
+@interface KTSite : KSExtensibleManagedObject
 {
     KTDocument  *_document; // weak ref
 }
