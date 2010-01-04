@@ -190,7 +190,7 @@ initial syntax coloring.
 		{
 			// reload from model
 			NSString *source = [myHTMLSourceObject valueForKeyPath:myHTMLSourceKeyPath];
-			DJW((@"load source from %@ = %@", myHTMLSourceKeyPath, source));
+//			DJW((@"load source from %@ = %@", myHTMLSourceKeyPath, source));
 			if (nil == source) source = @"";
 			source = [source stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
 			source = [source trim];
@@ -257,7 +257,7 @@ initial syntax coloring.
         
         // Store the HTML
         [myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
-		DJW((@"saved source to %@ = %@", myHTMLSourceKeyPath, str));
+//		DJW((@"saved source to %@ = %@", myHTMLSourceKeyPath, str));
 
 		
         // Re-enable undo registration
