@@ -1050,6 +1050,17 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebUIDelegatePrivate
 
+- (BOOL)webView:(WebView *)sender validateUserInterfaceItem:(id < NSValidatedUserInterfaceItem >)item defaultValidation:(BOOL)defaultValidation
+{
+    //  On the whole, let WebKit get on with it. But, if WebKit can't handle the message, and we can, override to do so
+    if (!defaultValidation && [self respondsToSelector:[item action]])
+    {
+        return [self validateUserInterfaceItem:item];
+    }
+    
+    return defaultValidation;
+}
+
 /*  Log javacript to the standard console; it may be helpful for us or for people who put javascript into their stuff.
  *  Hint originally from: http://lists.apple.com/archives/webkitsdk-dev/2006/Apr/msg00018.html
  */
