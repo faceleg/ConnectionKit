@@ -168,6 +168,16 @@
 	return result;
 }
 
+- (NSString *)titleHTMLString
+{
+    return [[self title] textHTMLString];
+}
+
+- (NSString *)titleString;
+{
+	return [[self title] text];
+}
+
 #pragma mark -
 #pragma mark HTML
 
@@ -334,11 +344,6 @@
 
 #pragma mark Title
 
-- (NSString *)titleHTMLString
-{
-    return [[self title] textHTMLString];
-}
-
 + (NSSet *)keyPathsForValuesAffectingTitleHTMLString
 {
     return [NSSet setWithObject:@"title.textHTMLString"];
@@ -346,7 +351,7 @@
 
 - (NSString *)titleText	// get title, but without attributes
 {
-	return [[self title] text];
+	return [self titleString];
 }
 
 - (void)setTitleText:(NSString *)value

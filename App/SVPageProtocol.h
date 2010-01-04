@@ -11,7 +11,12 @@
 
 
 @protocol SVPage <NSObject>
+
 - (NSString *)identifier;
+
+- (NSString *)titleString;
+- (NSString *)titleHTMLString;
+
 @end
 
 
