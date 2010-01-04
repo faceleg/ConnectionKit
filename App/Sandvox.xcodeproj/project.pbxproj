@@ -544,7 +544,7 @@
 		3C682B160D622F3100B4D485 /* KTPage+Operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B150D622F3100B4D485 /* KTPage+Operations.m */; };
 		3C682B1A0D622F4A00B4D485 /* KTPage+Web.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B190D622F4A00B4D485 /* KTPage+Web.m */; };
 		3C682B1D0D622F6400B4D485 /* KTPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B1C0D622F6400B4D485 /* KTPage.m */; };
-		3C682B260D622FC700B4D485 /* KTManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B250D622FC700B4D485 /* KTManagedObject.m */; };
+		3C682B260D622FC700B4D485 /* SVExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B250D622FC700B4D485 /* SVExtensibleManagedObject.m */; };
 		3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B340D62302F00B4D485 /* KTAbstractIndex.m */; };
 		3C682B380D62303C00B4D485 /* KTAbstractPluginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B370D62303C00B4D485 /* KTAbstractPluginDelegate.m */; };
 		3C682B3B0D62305700B4D485 /* KTPseudoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B3A0D62305700B4D485 /* KTPseudoElement.m */; };
@@ -569,7 +569,7 @@
 		3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTSite.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BC10D6234EE00B4D485 /* KTManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B240D622FC100B4D485 /* KTManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BC10D6234EE00B4D485 /* SVExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B240D622FC100B4D485 /* SVExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B330D62302A00B4D485 /* KTAbstractIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC70D6234FB00B4D485 /* KTAbstractPluginDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B360D62303700B4D485 /* KTAbstractPluginDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2065,8 +2065,8 @@
 		3C682B190D622F4A00B4D485 /* KTPage+Web.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Web.m"; sourceTree = "<group>"; };
 		3C682B1B0D622F5F00B4D485 /* KTPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPage.h; sourceTree = "<group>"; };
 		3C682B1C0D622F6400B4D485 /* KTPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPage.m; sourceTree = "<group>"; };
-		3C682B240D622FC100B4D485 /* KTManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTManagedObject.h; sourceTree = "<group>"; };
-		3C682B250D622FC700B4D485 /* KTManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTManagedObject.m; sourceTree = "<group>"; };
+		3C682B240D622FC100B4D485 /* SVExtensibleManagedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVExtensibleManagedObject.h; sourceTree = "<group>"; };
+		3C682B250D622FC700B4D485 /* SVExtensibleManagedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVExtensibleManagedObject.m; sourceTree = "<group>"; };
 		3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataSourceProtocol.h; sourceTree = "<group>"; };
 		3C682B300D62301900B4D485 /* KTDraggingInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDraggingInfo.h; sourceTree = "<group>"; };
 		3C682B310D62301E00B4D485 /* KTDraggingInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDraggingInfo.m; sourceTree = "<group>"; };
@@ -4003,8 +4003,8 @@
 		3C5A736E0BF7B67300776464 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				3C682B240D622FC100B4D485 /* KTManagedObject.h */,
-				3C682B250D622FC700B4D485 /* KTManagedObject.m */,
+				3C682B240D622FC100B4D485 /* SVExtensibleManagedObject.h */,
+				3C682B250D622FC700B4D485 /* SVExtensibleManagedObject.m */,
 				27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */,
 				27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */,
 			);
@@ -4871,7 +4871,7 @@
 				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
 				3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */,
 				3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */,
-				3C682BC10D6234EE00B4D485 /* KTManagedObject.h in Headers */,
+				3C682BC10D6234EE00B4D485 /* SVExtensibleManagedObject.h in Headers */,
 				3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */,
 				3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */,
 				3C682BC70D6234FB00B4D485 /* KTAbstractPluginDelegate.h in Headers */,
@@ -6237,7 +6237,7 @@
 				3C682B160D622F3100B4D485 /* KTPage+Operations.m in Sources */,
 				3C682B1A0D622F4A00B4D485 /* KTPage+Web.m in Sources */,
 				3C682B1D0D622F6400B4D485 /* KTPage.m in Sources */,
-				3C682B260D622FC700B4D485 /* KTManagedObject.m in Sources */,
+				3C682B260D622FC700B4D485 /* SVExtensibleManagedObject.m in Sources */,
 				3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */,
 				3C682B380D62303C00B4D485 /* KTAbstractPluginDelegate.m in Sources */,
 				3C682B3B0D62305700B4D485 /* KTPseudoElement.m in Sources */,

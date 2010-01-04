@@ -1,5 +1,5 @@
 //
-//  KTManagedObject.h
+//  SVExtensibleManagedObject.h
 //  Sandvox
 //
 //  Copyright 2005-2009 Karelia Software. All rights reserved.
@@ -17,8 +17,12 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
+
 #import "KSExtensibleManagedObject.h"
 
 
-@interface KTManagedObject : KSExtensibleManagedObject
+//  Adds the capability to store KTAbstractPage and KTMediaContainer objects in the extensible properties.
+
+
+@interface SVExtensibleManagedObject : KSExtensibleManagedObject
 @end

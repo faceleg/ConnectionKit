@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KTManagedObject.h"
+#import "SVExtensibleManagedObject.h"
 #import "SVPageProtocol.h"
 #import "KTWebPathsProtocol.h"
 
@@ -35,7 +35,7 @@ KTCollectionPathStyle;
 @class SVHTMLTemplateParser;
 
 
-@interface KTAbstractPage : KTManagedObject <SVPage>
+@interface KTAbstractPage : SVExtensibleManagedObject <SVPage>
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;

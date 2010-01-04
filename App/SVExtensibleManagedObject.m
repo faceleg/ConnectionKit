@@ -1,12 +1,12 @@
 //
-//  KTManagedObject.m
+//  SVExtensibleManagedObject.m
 //  KTComponents
 //
 //  Created by Terrence Talbot on 6/22/05.
 //  Copyright 2005-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTManagedObject.h"
+#import "SVExtensibleManagedObject.h"
 
 #import "KTAbstractPage.h"
 #import "KTDocument.h"
@@ -22,7 +22,7 @@
 #import "Debug.h"
 
 
-@implementation KTManagedObject
+@implementation SVExtensibleManagedObject
 
 #pragma mark -
 #pragma mark Plugin Properties

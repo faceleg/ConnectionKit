@@ -20,14 +20,14 @@
 #import <Cocoa/Cocoa.h>
 #import "KT.h"
 #import "SVHTMLTemplateParser.h"
-#import "KTManagedObject.h"
+#import "SVExtensibleManagedObject.h"
 
 
 @class KTDesign, SVTextField;
 @class KTMediaContainer;
 
 
-@interface KTMaster : KTManagedObject 
+@interface KTMaster : SVExtensibleManagedObject 
 
 #pragma mark Text
 
