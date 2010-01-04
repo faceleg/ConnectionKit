@@ -39,7 +39,7 @@
 
 // Page composition
 #import "KTAbstractPage.h"
-#import "KTPage.h"
+#import "SVPageProtocol.h"
 #import "KTMaster.h"
 
 // Template parsing
