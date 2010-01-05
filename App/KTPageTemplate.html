@@ -44,6 +44,14 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
+
+		<script type="text/javascript" src="[[resourcepath "jquery.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "jquery.dimensions.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "jquery.positionBy.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "jquery.bgiframe.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "jquery.jdMenu.js]]"></script>
+		<link rel="stylesheet" href="[[resourcepath "jquery.jdMenu.css]]" type="text/css" />
+
 		[[if parser.includeStyling]][[=stylesheetsHTMLString]][[endif]]
 <!--
 Photo credits for this website's design: <[[=&master.designDirectoryURL]]Credits.rtf>

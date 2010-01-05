@@ -951,6 +951,14 @@
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2E80E40DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */; };
 		CE2E80E50DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */; };
+		CE35963C10F3CF340009F2CA /* jquery.bgiframe.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963410F3CF340009F2CA /* jquery.bgiframe.js */; };
+		CE35963D10F3CF340009F2CA /* jquery.dimensions.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963510F3CF340009F2CA /* jquery.dimensions.js */; };
+		CE35963E10F3CF340009F2CA /* jquery.jdMenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE35963610F3CF340009F2CA /* jquery.jdMenu.css */; };
+		CE35963F10F3CF340009F2CA /* jquery.jdMenu.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963710F3CF340009F2CA /* jquery.jdMenu.js */; };
+		CE35964010F3CF340009F2CA /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963810F3CF340009F2CA /* jquery.js */; };
+		CE35964110F3CF340009F2CA /* jquery.positionBy.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963910F3CF340009F2CA /* jquery.positionBy.js */; };
+		CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */; };
+		CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE3BBAC9097EE82A00BF3E5F /* toolbar_media.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
@@ -2516,6 +2524,16 @@
 		CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTExtensions.m"; sourceTree = "<group>"; };
 		CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAsyncOffscreenWebViewController.h; sourceTree = "<group>"; };
 		CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAsyncOffscreenWebViewController.m; sourceTree = "<group>"; };
+		CE35963210F3CF340009F2CA /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
+		CE35963310F3CF340009F2CA /* jdMenu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = jdMenu.html; sourceTree = "<group>"; };
+		CE35963410F3CF340009F2CA /* jquery.bgiframe.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.bgiframe.js; sourceTree = "<group>"; };
+		CE35963510F3CF340009F2CA /* jquery.dimensions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.dimensions.js; sourceTree = "<group>"; };
+		CE35963610F3CF340009F2CA /* jquery.jdMenu.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = jquery.jdMenu.css; sourceTree = "<group>"; };
+		CE35963710F3CF340009F2CA /* jquery.jdMenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.jdMenu.js; sourceTree = "<group>"; };
+		CE35963810F3CF340009F2CA /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
+		CE35963910F3CF340009F2CA /* jquery.positionBy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.positionBy.js; sourceTree = "<group>"; };
+		CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebSourceViewController.h; sourceTree = "<group>"; };
+		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE39C9A40D36BFF700364557 /* CyberDuck.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = CyberDuck.icns; sourceTree = "<group>"; };
 		CE39C9A70D36C7C300364557 /* Transmit.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Transmit.icns; sourceTree = "<group>"; };
@@ -3006,6 +3024,8 @@
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
 				273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */,
 				273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */,
+				CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */,
+				CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -3622,6 +3642,7 @@
 		3C202F0107E0122F00DE4994 /* HTML,text,js */ = {
 			isa = PBXGroup;
 			children = (
+				CE35963110F3CF340009F2CA /* jdmenu */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE2622A60A35E7C2009467ED /* preview.mp4 */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
@@ -4654,6 +4675,21 @@
 			path = "Image Position";
 			sourceTree = "<group>";
 		};
+		CE35963110F3CF340009F2CA /* jdmenu */ = {
+			isa = PBXGroup;
+			children = (
+				CE35963210F3CF340009F2CA /* ChangeLog.txt */,
+				CE35963310F3CF340009F2CA /* jdMenu.html */,
+				CE35963410F3CF340009F2CA /* jquery.bgiframe.js */,
+				CE35963510F3CF340009F2CA /* jquery.dimensions.js */,
+				CE35963610F3CF340009F2CA /* jquery.jdMenu.css */,
+				CE35963710F3CF340009F2CA /* jquery.jdMenu.js */,
+				CE35963810F3CF340009F2CA /* jquery.js */,
+				CE35963910F3CF340009F2CA /* jquery.positionBy.js */,
+			);
+			path = jdmenu;
+			sourceTree = "<group>";
+		};
 		CE6FFB78088EEFD100AD0154 /* DesignPicker */ = {
 			isa = PBXGroup;
 			children = (
@@ -5118,6 +5154,7 @@
 				273D730310EA7A9C003F5BA8 /* SVElementPlugInContainer.h in Headers */,
 				273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */,
 				271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */,
+				CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -5617,6 +5654,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE35963C10F3CF340009F2CA /* jquery.bgiframe.js in Resources */,
+				CE35963D10F3CF340009F2CA /* jquery.dimensions.js in Resources */,
+				CE35963F10F3CF340009F2CA /* jquery.jdMenu.js in Resources */,
+				CE35964010F3CF340009F2CA /* jquery.js in Resources */,
+				CE35964110F3CF340009F2CA /* jquery.positionBy.js in Resources */,
 				3C202E9507E00F5700DE4994 /* document.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
@@ -5790,6 +5832,7 @@
 				273DD23110CC9466003CCE97 /* Wrap Inspector tab icon.opacity in Resources */,
 				27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */,
 				273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */,
+				CE35963E10F3CF340009F2CA /* jquery.jdMenu.css in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6486,6 +6529,7 @@
 				273D6F5210E7C9DF003F5BA8 /* SVCallout.m in Sources */,
 				273D705B10E8ECB4003F5BA8 /* SVCalloutDOMController.m in Sources */,
 				273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */,
+				CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

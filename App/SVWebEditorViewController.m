@@ -34,7 +34,7 @@
 #import "KSPlugin.h"
 #import "KSSilencingConfirmSheet.h"
 
-
+NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewControllerWillUpdateNotification";
 static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependenciesObservationContext";
 
 
@@ -131,6 +131,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)update;
 {
+	[[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];
+
 	// Tear down old dependencies
     for (KSObjectKeyPathPair *aDependency in _pageDependencies)
     {
@@ -392,7 +394,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)updateIfNeeded
 {
     if (!_willUpdate) return;   // don't you waste my time sucker!
-    
+    	
     if ([self needsUpdate])
     {
         [self update];

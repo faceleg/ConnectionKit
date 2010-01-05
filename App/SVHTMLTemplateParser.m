@@ -499,12 +499,25 @@
 	NSArray *params = [inRestOfTag componentsSeparatedByWhitespace];
 	if ([params count] != 1)
 	{
-		NSLog(@"resourcepath: usage [[resourcepath resource.keyPath]]");
+		NSLog(@"resourcepath: usage [[resourcepath resource.keyPath]] or [[resourcepath \"string]]");
 	}
 	else
     {
         // Where is the resource file on disk?
-        NSString *resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
+		NSString *resourceFilePath = nil;
+		if ([inRestOfTag hasPrefix:@"\""])
+		{
+			inRestOfTag = [inRestOfTag substringFromIndex:1];
+			resourceFilePath = [[NSBundle mainBundle] pathForResource:[inRestOfTag stringByDeletingPathExtension] ofType:[inRestOfTag pathExtension]];
+			if (!resourceFilePath)
+			{
+				NSLog(@"resourcePath: not finding resource %@", inRestOfTag);
+			}
+		}
+        else
+		{
+			resourceFilePath = [[self cache] valueForKeyPath:[params objectAtIndex:0]];
+		}
         if (resourceFilePath)
         {
             result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLContext currentContext] currentPage]];

@@ -10,12 +10,11 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVWebEditorView.h"
 
-
+extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
 @class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
-
 
 @interface SVWebEditorViewController : KSWebViewController <SVWebEditorDataSource, SVWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {

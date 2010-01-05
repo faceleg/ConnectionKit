@@ -7,7 +7,7 @@
 //
 
 #import "SVWebContentAreaController.h"
-
+#import "SVWebSourceViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
 
@@ -27,7 +27,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     [self insertViewController:_webEditorViewController atIndex:0];
     
     
-    _sourceViewController = [[NSViewController alloc] initWithNibName:@"HTMLSourceView"
+    _sourceViewController = [[SVWebSourceViewController alloc] initWithNibName:@"HTMLSourceView"
                                                                bundle:nil];
     [self addViewController:_sourceViewController];
     
