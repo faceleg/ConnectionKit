@@ -401,6 +401,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else
     {
+        [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];   // -update also posts this
+        
         [[[self webEditor] mainItem] updateIfNeeded];
         _willUpdate = NO;
     }
