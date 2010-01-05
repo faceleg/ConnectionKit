@@ -237,7 +237,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // Set the Favicon
         NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-        KTMediaContainer *faviconMedia = [[root mediaManager] mediaContainerWithPath:faviconPath];
+        KTMediaContainer *faviconMedia = [[self mediaManager] mediaContainerWithPath:faviconPath];
         [master setValue:[faviconMedia identifier] forKey:@"faviconMediaIdentifier"];
         
         
