@@ -1205,7 +1205,16 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
+    // Does the text view want to take command?
     BOOL result = [_focusedText doCommandBySelector:command];
+    
+    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
+    if (!result && [self respondsToSelector:command])
+    {
+        [self doCommandBySelector:command];
+        result = YES;
+    }
+    
     return result;
 }
 
