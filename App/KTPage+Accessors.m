@@ -72,14 +72,6 @@
 	}
     
     
-    // Update title in site menu to match
-    NSString *menuTitle = [self menuTitle];
-    if ([menuTitle length] == 0 || [menuTitle isEqualToString:oldTitleText])
-    {
-        [self setMenuTitle:[[self title] text]];
-    }
-    
-    
     // Update archive page titles to match
     [[self valueForKey:@"archivePages"] makeObjectsPerformSelector:@selector(updateTitle)];
 }
@@ -202,7 +194,18 @@
 	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
 }
 
-@dynamic menuTitle;
+- (NSString *)menuTitle;
+{
+    NSString *result = [self customMenuTitle];
+    if (![result length])
+    {
+        result = [[self title] text];
+    }
+    
+    return result;
+}
+
+@dynamic customMenuTitle;
 
 #pragma mark -
 #pragma mark Timestamp

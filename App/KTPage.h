@@ -70,7 +70,9 @@
 
 // Site menu
 @property(nonatomic) BOOL includeInSiteMenu;
-@property(nonatomic, copy) NSString *menuTitle;
+
+@property(nonatomic, copy, readonly) NSString *menuTitle;   // derived from .customMenuTitle or .title
+@property(nonatomic, copy) NSString *customMenuTitle;
 
 
 #pragma mark Timestamp
