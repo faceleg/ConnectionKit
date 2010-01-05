@@ -8,10 +8,12 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class SVWebEditorViewController;
 
 @interface SVWebSourceViewController : NSViewController {
 
 	IBOutlet NSTextView *oSourceView;
 }
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 @end

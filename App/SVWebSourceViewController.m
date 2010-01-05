@@ -8,11 +8,12 @@
 
 #import "SVWebSourceViewController.h"
 #import "SVWebEditorViewController.h"
-
+#import "SVWebEditorHTMLContext.h"
+#import "KTPage.h"
 
 @implementation SVWebSourceViewController
 
-- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if ( self != nil )
@@ -20,7 +21,7 @@
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(webEditorViewControllerWillUpdate:)
 													 name:sSVWebEditorViewControllerWillUpdateNotification
-												   object:nil];
+												   object:aWebEditorViewController];		// only match updates from that controller
 	}
 	return self;
 }
@@ -28,6 +29,22 @@
 - (void) webEditorViewControllerWillUpdate:(NSNotification *)aNotification
 {
 	NSLog(@"webEditorViewControllerWillUpdate %@", [aNotification object]);
+	
+	SVWebEditorViewController *editorController = [aNotification object];
+	KTPage *page = [editorController page];
+	
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    [context setCurrentPage:page];
+    [context setGenerationPurpose:kGeneratingPreview];
+	/*[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];*/
+
+	
+	[SVHTMLContext pushContext:context];    // will pop after loading
+	NSString *pageHTML = [page HTMLString];
+    [SVHTMLContext popContext];
+	
+	NSTextStorage *textStorage = [oSourceView textStorage];
+	[textStorage replaceCharactersInRange:NSMakeRange(0, [textStorage length]) withString:pageHTML];
 }
 
 @end

@@ -28,7 +28,8 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     
     _sourceViewController = [[SVWebSourceViewController alloc] initWithNibName:@"HTMLSourceView"
-                                                               bundle:nil];
+                                                               bundle:nil
+													   webEditorViewController:_webEditorViewController];
     [self addViewController:_sourceViewController];
     
     
