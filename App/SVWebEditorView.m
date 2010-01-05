@@ -570,7 +570,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     return result;
 }
 
-- (void)delete:(id)sender;
+- (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
     NSArray *items = [self selectedItems];
     if ([items count] > 0)
@@ -582,8 +582,23 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     }
     else
     {
-        [self forwardCommandBySelector:_cmd];
+        [self forwardCommandBySelector:action];
     }
+}
+
+- (void)delete:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteForward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
+}
+
+- (void)deleteBackward:(id)sender;
+{
+    [self delete:sender forwardingSelector:_cmd];
 }
 
 #pragma mark Getting Item Information
