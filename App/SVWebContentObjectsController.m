@@ -10,6 +10,7 @@
 
 #import "SVBody.h"
 #import "SVBodyParagraph.h"
+#import "SVCallout.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVSidebar.h"
@@ -49,12 +50,19 @@
     
     if ([object isKindOfClass:[SVPagelet class]])
     {
-        // Remove pagelet from sidebar. Delete if appropriate
+        // Remove pagelet from sidebar/callout. Delete if appropriate
         SVPagelet *pagelet = object;
         
         [[[self page] sidebar] removePageletsObject:pagelet];
         
-        if ([[pagelet sidebars] count] == 0)
+        SVCallout *callout = [pagelet callout];
+        [callout removePageletsObject:pagelet];
+        if ([[callout pagelets] count] == 0)
+        {
+            [[[self page] managedObjectContext] deleteObject:callout];
+        }
+        
+        if ([[pagelet sidebars] count] == 0 && ![pagelet callout])
         {
             [[pagelet managedObjectContext] deleteObject:pagelet];
         }
