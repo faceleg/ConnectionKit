@@ -1167,23 +1167,25 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (result)
     {
         id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
-        
-        // Let the text object decide
-        NSPasteboard *pasteboard = nil;
-        if ([webView respondsToSelector:@selector(_insertionPasteboard)])
+        if (text)
         {
-            pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
+            // Let the text object decide
+            NSPasteboard *pasteboard = nil;
+            if ([webView respondsToSelector:@selector(_insertionPasteboard)])
+            {
+                pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
+            }
+            
+            result = [text webEditorTextShouldInsertText:string
+                                       replacingDOMRange:range
+                                             givenAction:action
+                                              pasteboard:pasteboard];
         }
-        
-        result = [text webEditorTextShouldInsertText:string
-                                   replacingDOMRange:range
-                                         givenAction:action
-                                          pasteboard:pasteboard];
-        
-        if (result)
-        {
-            [self willEditTextInDOMRange:range];
-        }
+    }
+    
+    if (result)
+    {
+        [self willEditTextInDOMRange:range];
     }
     
     return result;
