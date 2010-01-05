@@ -64,6 +64,13 @@
 	[self invalidateSortedChildrenCache];
 }
 
+- (BOOL)isChronologicallySorted;
+{
+    KTCollectionSortType sorting = [self collectionSortOrder];
+    BOOL result = (sorting == KTCollectionSortLatestAtBottom || sorting == KTCollectionSortLatestAtTop);
+    return result;
+}
+
 /*!	simple wrapper; defined for convenience of calling it.  Not optional property, so this should be OK.
 */
 - (BOOL)isCollection	

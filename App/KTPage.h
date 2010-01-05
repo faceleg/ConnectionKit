@@ -113,8 +113,8 @@
 
 @interface KTPage (Children)
 // Basic Accessors
-- (KTCollectionSortType)collectionSortOrder;
-- (void)setCollectionSortOrder:(KTCollectionSortType)sorting;
+@property(nonatomic) KTCollectionSortType collectionSortOrder;
+- (BOOL)isChronologicallySorted;
 
 - (BOOL)isCollection;
 
