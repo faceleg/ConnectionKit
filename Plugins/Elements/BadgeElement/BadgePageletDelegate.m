@@ -41,6 +41,11 @@
 static NSArray *sBadgeNames = nil;
 static NSArray *sAltStrings = nil;
 
+@interface BadgePageletDelegate ()
+- (void)setBadgeAltString:(NSString *)aBadgeAltString;
+- (void)setBadgeTitleString:(NSString *)aBadgeTitleString;
+@end
+
 @implementation BadgePageletDelegate
 
 #pragma mark Dealloc
@@ -180,7 +185,7 @@ static NSArray *sAltStrings = nil;
 {
 	NSString *result = nil;
 	unsigned int tag = [self badgeTypeTag];
-	if (tag >= 1 && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
+	if (tag > BADGE_TEXT && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
 	{
 		result = [[BadgePageletDelegate sharedBadgeNames] objectAtIndex:tag-1];
 	}

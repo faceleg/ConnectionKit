@@ -36,6 +36,9 @@
 
 #import "SandvoxPlugin.h"
 
+enum { BADGE_TEXT = 0 };
+// Zero is the text only version, non-zero ones are various graphical ones but there isn't any need to enumerate the differences in code....
+
 @class WebView;
 @interface BadgePageletDelegate : SVElementPlugIn
 {
