@@ -48,6 +48,7 @@
     // Event Handling
     NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
     BOOL    _isProcessingEvent;
+    BOOL    _isForwardingCommandToWebView;
 }
 
 
@@ -105,7 +106,7 @@
 - (IBAction)copy:(id)sender;
 - (BOOL)copySelectedItemsToGeneralPasteboard;
 // - (IBAction)paste:(id)sender;
-- (IBAction)delete:(id)sender;
+- (IBAction)delete:(id)sender;  // deletes the selected items. If there are none, deletes selected text
 
 
 #pragma mark Drawing

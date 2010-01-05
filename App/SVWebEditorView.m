@@ -61,6 +61,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
+- (void)forwardCommandBySelector:(SEL)action;
 
 
 // Undo
@@ -571,9 +572,17 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
 
 - (void)delete:(id)sender;
 {
-    if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]])
+    NSArray *items = [self selectedItems];
+    if ([items count] > 0)
     {
-        NSBeep();
+        if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]])
+        {
+            NSBeep();
+        }
+    }
+    else
+    {
+        [self forwardCommandBySelector:_cmd];
     }
 }
 
@@ -788,6 +797,18 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
         [targetView performSelector:selector withObject:theEvent];
         _isProcessingEvent = NO;
     }
+}
+
+- (void)forwardCommandBySelector:(SEL)action;
+{
+    OBPRECONDITION(!_isForwardingCommandToWebView);
+    _isForwardingCommandToWebView = YES;
+    
+    WebFrame *frame = [[self webView] selectedFrame];
+    NSView *view = [[frame frameView] documentView];
+    [view doCommandBySelector:action];
+    
+    _isForwardingCommandToWebView = NO;
 }
 
 #pragma mark Tracking the Mouse
@@ -1205,14 +1226,20 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView doCommandBySelector:(SEL)command
 {
-    // Does the text view want to take command?
-    BOOL result = [_focusedText doCommandBySelector:command];
+    BOOL result = NO;
     
-    // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
-    if (!result && [self respondsToSelector:command])
+    // _isForwardingCommandToWebView indicates that the command is already being processed by the Web Editor, so it's now up to the WebView to handle. Otherwise it's easy to get stuck in an infinite loop.
+    if (!_isForwardingCommandToWebView)
     {
-        [self doCommandBySelector:command];
-        result = YES;
+        // Does the text view want to take command?
+        result = [_focusedText doCommandBySelector:command];
+        
+        // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
+        if (!result && [self respondsToSelector:command])
+        {
+            [self doCommandBySelector:command];
+            result = YES;
+        }
     }
     
     return result;
