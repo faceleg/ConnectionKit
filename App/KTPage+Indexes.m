@@ -167,7 +167,10 @@
  */
 - (NSArray *)navigablePages;
 {
-	NSArray *result = [self childrenWithSorting:[self collectionSortOrder] inIndex:YES];
+	// How to sort the pages? Generally this is the same as usual, but for chronological collections, the arrows need to always be the same. #32341
+    KTCollectionSortType sorting = ([self isChronologicallySorted] ? KTCollectionSortLatestAtBottom : [self collectionSortOrder]);
+    
+    NSArray *result = [self childrenWithSorting:sorting inIndex:YES];
 	return result;
 }
 
