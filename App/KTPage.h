@@ -68,7 +68,9 @@
 - (BOOL)includeInIndexAndPublish;
 - (BOOL)excludedFromSiteMap;
 
-// Site menu
+
+#pragma mark Site Menu
+
 @property(nonatomic) BOOL includeInSiteMenu;
 
 @property(nonatomic, copy, readonly) NSString *menuTitle;   // derived from .customMenuTitle or .title

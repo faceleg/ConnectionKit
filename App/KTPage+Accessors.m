@@ -181,7 +181,6 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Site Menu
 
 - (BOOL)includeInSiteMenu { return [self wrappedBoolForKey:@"includeInSiteMenu"]; }
