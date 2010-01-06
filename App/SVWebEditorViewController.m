@@ -76,6 +76,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)dealloc
 {
     [self setWebEditor:nil];   // needed to tear down data source
+    [self setDelegate:nil];
     
     [_page release];
     [_textAreas release];
@@ -767,6 +768,23 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
+- (void)setDelegate:(id <SVWebEditorViewControllerDelegate>)delegate;
+{
+    if (_delegate)
+    {
+        [[NSNotificationCenter defaultCenter] removeObserver:_delegate name:sSVWebEditorViewControllerWillUpdateNotification object:self];
+    }
+    
+    _delegate = delegate;
+    
+    if ([delegate respondsToSelector:@selector(webEditorViewControllerWillUpdate:)])
+    {
+        [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                                 selector:@selector(webEditorViewControllerWillUpdate:)
+                                                     name:sSVWebEditorViewControllerWillUpdateNotification
+                                                   object:self];
+    }
+}
 
 #pragma mark -
 
