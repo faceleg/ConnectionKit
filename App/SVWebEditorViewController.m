@@ -151,8 +151,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	/*[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];*/
     
     [SVHTMLContext pushContext:context];    // will pop after loading
-	NSString *pageHTML = [[self page] HTMLString];
+	[[self page] writeHTML];
     [SVHTMLContext popContext];
+    NSString *pageHTML = [context markupString];
     
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
