@@ -126,6 +126,35 @@
     [self writeHTMLString:html];
 }
 
+- (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+{
+    [self writeHTMLString:@"<"];
+    [self writeHTMLString:tagName];
+    
+    if (idName) 
+    {
+        [self writeHTMLString:@" id=\""];
+        [self writeText:idName];
+        [self writeHTMLString:@"\""];
+    }
+    
+    if (className)
+    {
+        [self writeHTMLString:@" class=\""];
+        [self writeText:className];
+        [self writeHTMLString:@"\""];
+    }
+    
+    [self writeHTMLString:@">"];
+}
+
+- (void)closeTag:(NSString *)tagName;
+{
+    [self writeHTMLString:@"</"];
+    [self writeHTMLString:tagName];
+    [self writeHTMLString:@">"];
+}
+
 #pragma mark Properties
 
 @synthesize baseURL = _baseURL;

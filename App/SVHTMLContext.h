@@ -54,6 +54,9 @@ typedef enum {
 - (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 
+- (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+- (void)closeTag:(NSString *)tagName;
+
 
 #pragma mark Properties
 
