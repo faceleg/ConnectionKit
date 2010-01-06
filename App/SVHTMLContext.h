@@ -31,6 +31,7 @@ typedef enum {
 	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
     BOOL                    _isXHTML;
+    NSStringEncoding        _stringEncoding;
     
     NSMutableArray  *_iteratorsStack;
     
@@ -60,6 +61,7 @@ typedef enum {
 @property(nonatomic) BOOL includeStyling;
 @property(nonatomic) BOOL liveDataFeeds;
 @property(nonatomic, getter=isXHTML) BOOL XHTML;
+@property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
 
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable; // YES if HTML is intended to be edited directly in a Web Editor

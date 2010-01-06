@@ -90,6 +90,7 @@
     [super init];
     
     _includeStyling = YES;
+    [self setEncoding:NSUTF8StringEncoding];
     _iteratorsStack = [[NSMutableArray alloc] init];
     _textBlocks = [[NSMutableArray alloc] init];
     
@@ -131,6 +132,7 @@
 @synthesize includeStyling = _includeStyling;
 @synthesize liveDataFeeds = _liveDataFeeds;
 @synthesize XHTML = _isXHTML;
+@synthesize encoding = _stringEncoding;
 
 @synthesize generationPurpose = _generationPurpose;
 
