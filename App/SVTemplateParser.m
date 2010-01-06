@@ -1,12 +1,12 @@
 //
-//  KTTemplateParser.m
+//  SVTemplateParser.m
 //  Marvel
 //
 //  Created by Mike on 19/05/2008.
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTTemplateParser.h"
+#import "SVTemplateParser.h"
 #import "KTHTMLParserMasterCache.h"
 
 #import "SVTemplate.h"
@@ -22,10 +22,10 @@
 #import "Debug.h"
 
 
-@interface KTTemplateParser ()
+@interface SVTemplateParser ()
 
 // Child parsers
-- (void)setParentParser:(KTTemplateParser *)parser;
+- (void)setParentParser:(SVTemplateParser *)parser;
 
 // Parsing
 - (void)finishParsing;
@@ -42,7 +42,7 @@
 #pragma mark -
 
 
-@implementation KTTemplateParser
+@implementation SVTemplateParser
 
 static NSString *kComponentTagStartDelim = @"[[";
 static NSString *kComponentTagEndDelim = @"]]";
@@ -159,7 +159,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     OBPRECONDITION(component);
     
 	
-	KTTemplateParser *result = [[[self class] alloc] initWithTemplate:template component:component];
+	SVTemplateParser *result = [[[self class] alloc] initWithTemplate:template component:component];
 	
 	[result setParentParser:self];
 	[result setDelegate:[self delegate]];
@@ -190,7 +190,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		
 		if (component && template)
 		{
-			KTTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
+			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
 			result = [parser parseTemplate];
 			[parser release];
 		}
@@ -201,7 +201,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (id)parentParser { return myParentParser; }
 
-- (void)setParentParser:(KTTemplateParser *)parser { myParentParser = parser; }
+- (void)setParentParser:(SVTemplateParser *)parser { myParentParser = parser; }
 
 #pragma mark -
 #pragma mark Delegate
@@ -222,7 +222,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
  */
 + (NSString *)parseTemplate:(NSString *)aTemplate component:(id)component
 {
-	KTTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
+	SVTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
 	NSString *result = [parser parseTemplate];
 	[parser release];
 	

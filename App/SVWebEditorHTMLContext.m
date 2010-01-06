@@ -8,7 +8,7 @@
 
 #import "SVWebEditorHTMLContext.h"
 
-#import "KTTemplateParser.h"
+#import "SVTemplateParser.h"
 
 #import "KSObjectKeyPathPair.h"
 
@@ -45,7 +45,7 @@
     OBASSERT(_objectKeyPathPairs);
     
     // Ignore parser properties
-    if (![[pair object] isKindOfClass:[KTTemplateParser class]])
+    if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
         [_objectKeyPathPairs addObject:pair];
     }

@@ -10,7 +10,7 @@
 #import "KTHTMLParserCache.h"
 
 
-@class KTTemplateParser;
+@class SVTemplateParser;
 
 
 @interface KTHTMLParserMasterCache : KTHTMLParserCache

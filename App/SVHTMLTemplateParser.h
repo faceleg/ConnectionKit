@@ -18,7 +18,7 @@
 //
 
 
-#import "KTTemplateParser.h"
+#import "SVTemplateParser.h"
 
 #import "SVHTMLContext.h"
 
@@ -29,7 +29,7 @@
 @protocol SVHTMLTemplateParserDelegate;
 
 
-@interface SVHTMLTemplateParser : KTTemplateParser
+@interface SVHTMLTemplateParser : SVTemplateParser
 
 - (id)initWithPage:(KTAbstractPage *)page;	// Convenience method that parses the whole page
 

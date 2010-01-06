@@ -42,7 +42,7 @@
 #import "KTMaster.h"
 
 // Template parsing
-#import "KTTemplateParser.h"
+#import "SVTemplateParser.h"
 #import "SVHTMLTemplateParser.h"
 
 //  Media

@@ -174,7 +174,7 @@
     return result;
 }
 
-/*	We have to implement kCompareNotEmptyOrEditing as KTTemplateParser has no concept of editing.
+/*	We have to implement kCompareNotEmptyOrEditing as SVTemplateParser has no concept of editing.
  */
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue
 {

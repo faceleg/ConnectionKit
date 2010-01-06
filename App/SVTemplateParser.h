@@ -23,7 +23,7 @@
 
 @class KTHTMLParserMasterCache;
 @protocol KTTemplateParserDelegate;
-@interface KTTemplateParser : NSObject
+@interface SVTemplateParser : NSObject
 {
 	@private
 	
@@ -32,7 +32,7 @@
 	id						myComponent;
 	KTHTMLParserMasterCache	*myCache;
 	id						myDelegate;
-	KTTemplateParser		*myParentParser;	// Weak ref
+	SVTemplateParser		*myParentParser;	// Weak ref
 	
 	NSMutableDictionary	*myOverriddenKeys;
 	
@@ -93,9 +93,9 @@ keyPath:(NSString *)keyPath;
 
 @protocol KTTemplateParserDelegate
 @optional
-- (void)parserDidStartTemplate:(KTTemplateParser *)parser;
-- (NSString *)parser:(KTTemplateParser *)parser didEndTemplate:(NSString *)result;
-- (void)parser:(KTTemplateParser *)parser willParseSubcomponentAtIndex:(unsigned)index;
+- (void)parserDidStartTemplate:(SVTemplateParser *)parser;
+- (NSString *)parser:(SVTemplateParser *)parser didEndTemplate:(NSString *)result;
+- (void)parser:(SVTemplateParser *)parser willParseSubcomponentAtIndex:(unsigned)index;
 @end
 
 
