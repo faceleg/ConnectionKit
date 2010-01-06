@@ -8,6 +8,8 @@
 
 #import "SVMutableStringHTMLContext.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVMutableStringHTMLContext
 
@@ -30,6 +32,19 @@
 }
 
 @synthesize mutableString = _mutableString;
+
+- (NSString *)markupString;
+{
+    NSString *result = [[[self mutableString] copy] autorelease];
+    
+    if (![self isXHTML])	// convert /> to > for HTML 4.0.1 compatibility
+	{
+		result = [result stringByReplacing:@"/>" with:@">"];
+	}
+	
+	
+	return result;
+}
 
 - (void)writeHTMLString:(NSString *)html
 {

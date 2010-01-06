@@ -23,4 +23,7 @@
 
 @property(nonatomic, retain, readonly) NSMutableString *mutableString;
 
+//  Generally preferable to accessing the mutable string, as it may perform additional processing
+- (NSString *)markupString;
+
 @end
