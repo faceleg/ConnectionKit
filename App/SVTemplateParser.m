@@ -372,14 +372,11 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 						
 						//                    LOG((@"keyPath = %@", keyPath));
 						
-						// do we already have an instance in the page's cache?
+						// Fetch the value. It may well return nil, signifying the method does its own writing to the context
 						id element = [[self cache] valueForKeyPath:keyPath];
-											if ( nil == element ) {
-							//LOG((@"%@ [[=%@]] element not found", inContext, keyPath));
-							LOG((@"[[=%@]] element not found", keyPath));
-							continue;
-						}
-						else
+                        
+                        
+						if (element)
 						{
 							NSString *toAppend = [element templateParserStringValue];
 							
