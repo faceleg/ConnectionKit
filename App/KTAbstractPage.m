@@ -12,6 +12,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVMutableStringHTMLContext.h"
 #import "SVSidebar.h"
 #import "SVTextField.h"
 
@@ -213,30 +214,29 @@
 	return result;
 }
 
-/*!	Return the HTML.
-*/
-- (NSString *)HTMLString;
+- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
 {
-	// Fallback to show problem
-	NSString *result = @"[PAGE, UNABLE TO GET CONTENT HTML]";
-	
-	
 	// Build the HTML
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
-	result = [parser parseTemplate];
-	[parser release];
-	
-	
-	// Now that we have page contents in unicode, clean up to the desired character encoding.
-	result = [result stringByEscapingCharactersOutOfCharset:[[self master] valueForKey:@"charset"]];
+    [[SVHTMLContext currentContext] setXHTML:[self isXHTML]];
+    [[SVHTMLContext currentContext] setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
     
-	if (![self isXHTML])	// convert /> to > for HTML 4.0.1 compatibility
-	{
-		result = [result stringByReplacing:@"/>" with:@">"];
-	}
-	
-	
-	return result;
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
+    [parser parseIntoHTMLContext:[SVHTMLContext currentContext]];
+    [parser release];
+}
+
+- (NSString *)HTMLString;   // creates a temporary HTML context and calls -writeHTML
+{
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    [context setCurrentPage:self];
+    
+    [context push];
+    [self writeHTML];
+    [context pop];
+    
+    NSString *result = [context markupString];
+    [context release];
+    return result;
 }
 
 - (BOOL)isXHTML

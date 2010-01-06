@@ -89,24 +89,6 @@
 }
 
 #pragma mark -
-#pragma mark Parsing
-
-- (NSString *)parseTemplateWithContext:(SVHTMLContext *)context;
-{
-    if (context)
-    {
-        [SVHTMLContext pushContext:context];
-        NSString *result = [self parseTemplate];
-        [SVHTMLContext popContext];
-        return result;
-    }
-    else
-    {
-        return [self parseTemplate];
-    }
-}
-
-#pragma mark -
 #pragma mark Delegate
 
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object
@@ -141,6 +123,14 @@
 #pragma mark -
 #pragma mark Parsing
 
+- (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
+{
+    [context push];
+    BOOL result = [self parseIntoContext:context];
+    [context pop];
+    return result;
+}
+
 /*	We make a couple of extra tweakes for HTML parsing
  */
 - (BOOL)prepareToParse
@@ -156,22 +146,6 @@
 	}
 	
 	return result;
-}
-
-/*	We wrap child parsers in a special <div> so the webview controller can later identify them.
- */
-- (NSString *)parseTemplate
-{
-	NSString *result = [super parseTemplate];
-	
-    // We only need neat formatting when publishing
-    KTHTMLGenerationPurpose purpose = [[SVHTMLContext currentContext] generationPurpose];
-    if (purpose != kGeneratingPreview && purpose != kGeneratingQuickLookPreview)
-    {
-        result = [result stringByRemovingMultipleNewlines];
-    }
-    
-    return result;
 }
 
 /*	We have to implement kCompareNotEmptyOrEditing as SVTemplateParser has no concept of editing.
@@ -460,7 +434,7 @@
 	return result;
 }
 
-- (NSString *)evaluateForeachLoopWithArray:(NSArray *)components iterationsCount:(NSUInteger)specifiedNumberIterations keyPath:(NSString *)keyPath scaner:(NSScanner *)inScanner
+- (BOOL)evaluateForeachLoopWithArray:(NSArray *)components iterationsCount:(NSUInteger)specifiedNumberIterations keyPath:(NSString *)keyPath scaner:(NSScanner *)inScanner
 {
     // Send the loop parameters to the HTML context to keep track of. Iterating will automatically pop it from the stack
     if (specifiedNumberIterations > 0)
@@ -475,7 +449,7 @@
                                         scaner:inScanner];
 }
 
-- (NSString *)doForeachIterationWithObject:(id)object
+- (BOOL)doForeachIterationWithObject:(id)object
                                   template:(NSString *)template
                                    keyPath:(NSString *)keyPath;
 {

@@ -33,15 +33,7 @@
 	SVWebEditorViewController *editorController = [aNotification object];
 	KTPage *page = [editorController page];
 	
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
-    [context setCurrentPage:page];
-    [context setGenerationPurpose:kGeneratingPreview];
-	/*[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];*/
-
-	
-	[SVHTMLContext pushContext:context];    // will pop after loading
 	NSString *pageHTML = [page HTMLString];
-    [SVHTMLContext popContext];
 	
 	NSTextStorage *textStorage = [oSourceView textStorage];
 	[textStorage replaceCharactersInRange:NSMakeRange(0, [textStorage length]) withString:pageHTML];

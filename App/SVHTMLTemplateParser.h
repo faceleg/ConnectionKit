@@ -38,7 +38,7 @@
 
 #pragma mark Parse
 //  Convenience method to do parsing while pushing and popping a context on the stack
-- (NSString *)parseTemplateWithContext:(SVHTMLContext *)context;
+- (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 
 
 // Functions

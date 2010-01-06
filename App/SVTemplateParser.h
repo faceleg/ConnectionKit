@@ -21,7 +21,8 @@
 #import "NSString+Karelia.h"    // for ComparisonType
 
 
-@class KTHTMLParserMasterCache;
+@class SVTemplateContext, KTHTMLParserMasterCache;
+
 @protocol KTTemplateParserDelegate;
 @interface SVTemplateParser : NSObject
 {
@@ -34,6 +35,7 @@
 	id						myDelegate;
 	SVTemplateParser		*myParentParser;	// Weak ref
 	
+    SVTemplateContext   *_context;  // weak ref, only used mid-parse
 	NSMutableDictionary	*myOverriddenKeys;
 	
 	NSUInteger  _ifFunctionDepth;
@@ -60,7 +62,7 @@
 
 // Parsing
 + (NSString *)parseTemplate:(NSString *)aTemplate component:(id)component;
-- (NSString *)parseTemplate;
+- (BOOL)parseIntoContext:(SVTemplateContext *)context;
 - (BOOL)prepareToParse;
 
 - (NSString *)componentLocalizedString:(NSString *)tag;
@@ -73,16 +75,19 @@
 
 
 // Foreach loops
-- (NSString *)evaluateForeachLoopWithArray:(NSArray *)components
-                           iterationsCount:(NSUInteger)specifiedNumberIterations
-                                   keyPath:(NSString *)keyPath
-                                    scaner:(NSScanner *)inScanner;
-- (NSString *)doForeachIterationWithObject:(id)object
+- (BOOL)evaluateForeachLoopWithArray:(NSArray *)components
+                     iterationsCount:(NSUInteger)specifiedNumberIterations
+                             keyPath:(NSString *)keyPath
+                              scaner:(NSScanner *)inScanner;
+- (BOOL)doForeachIterationWithObject:(id)object
 template:(NSString *)stuffToRepeat
 keyPath:(NSString *)keyPath;
 
 
-// Support
+#pragma mark Support
+
+@property(nonatomic, readonly) SVTemplateContext *context;
+
 @property(nonatomic, retain, readonly) KTHTMLParserMasterCache *cache;
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
 + (NSDictionary *)parametersDictionaryWithString:(NSString *)parametersString;

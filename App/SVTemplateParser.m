@@ -10,6 +10,7 @@
 #import "KTHTMLParserMasterCache.h"
 
 #import "SVTemplate.h"
+#import "SVTemplateContext.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -29,8 +30,8 @@
 
 // Parsing
 - (void)finishParsing;
-- (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner;
-- (NSString *)HTMLStringByScanning:(NSScanner *)inScanner;
+- (BOOL)startHTMLStringByScanning:(NSScanner *)inScanner;
+- (BOOL)HTMLStringByScanning:(NSScanner *)inScanner;
 + (NSCharacterSet *)keyPathIndicatorCharacters;
 
 // Support
@@ -79,6 +80,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)dealloc
 {
+    OBASSERT(!_context);
+    
 	[myTemplate release];
 	[myComponent release];
 	[myCache release];
@@ -150,7 +153,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 #pragma mark -
 #pragma mark Child Parsers
 
-/*	Creates a new parser with the same basic properties as ourself, and the specifed template/componet
+/*	Creates a new parser with the same basic properties as ourself, and the specifed template/component
  *	IMPORTANT:	Follows the standard "new rule" so, the return object is NOT autoreleased.
  */
 - (id)newChildParserWithTemplate:(NSString *)template component:(id)component
@@ -229,13 +232,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	return result;
 }
 
-- (NSString *)parseTemplate
+- (BOOL)parseIntoContext:(SVTemplateContext *)context;
 {
-	NSString *result = nil;
+	BOOL result = NO;
 	@try
 	{
-		BOOL readyToParse = [self prepareToParse];
-		if (readyToParse)
+		result = [self prepareToParse];
+		if (result)
 		{
 			NSString *template = [self template];
 			if (template)
@@ -251,7 +254,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 				// Parse!
 				NSScanner *scanner = [NSScanner scannerWithString:template];
 				[scanner setCharactersToBeSkipped:nil];
+                _context = context;
 				result = [self startHTMLStringByScanning:scanner];
+                _context = nil;
 			}
 		}
 	}
@@ -315,23 +320,22 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	[self setCache:nil];
 }
 
-- (NSString *)startHTMLStringByScanning:(NSScanner *)inScanner
+- (BOOL)startHTMLStringByScanning:(NSScanner *)inScanner;
 {
 	[inScanner setScanLocation:0];		// start at the front
 	_ifFunctionDepth = 0;
 	return [self HTMLStringByScanning:inScanner];
 }
 
-- (NSString *)HTMLStringByScanning:(NSScanner *)inScanner
+- (BOOL)HTMLStringByScanning:(NSScanner *)inScanner;
 {
-	NSMutableString *htmlString = [NSMutableString string];
 	while ( ![inScanner isAtEnd] ) {
         NSString *tag;
         NSString *beforeText;
         
 		// find [[ ... keep what was before it.
         if ( [inScanner scanUpToString:kComponentTagStartDelim intoString:&beforeText] ) {
-            [htmlString appendString:beforeText];
+            [_context writeString:beforeText];
         }
         
 		// Get the [[
@@ -413,25 +417,25 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 								}
 							}
 							OBASSERT(toAppend);
-							[htmlString appendString:toAppend];
+							[_context writeString:toAppend];
 						}
 					}
 					else if ([tag hasPrefix:kStringIndicator])
 					{
 						NSString *toAppend = [self componentLocalizedString:tag];
-						if (toAppend) [htmlString appendString:toAppend];
+						if (toAppend) [_context writeString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetStringIndicator])
 					{
 						NSString *toAppend = [self componentTargetLocalizedString:tag];
 						OBASSERT(toAppend);
-						[htmlString appendString:toAppend];
+						[_context writeString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
 					{
 						NSString *toAppend = [self mainBundleLocalizedString:tag];
 						OBASSERT(toAppend);
-						[htmlString appendString:toAppend];
+						[_context writeString:toAppend];
 					}
 					else	// not for echoing.  Do something.
 					{
@@ -456,28 +460,14 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 						
 						if ([self respondsToSelector:firstWordSel])
 						{
-							NSString *htmlFragment = [self performSelector:firstWordSel withObject:inRestOfTag withObject:inScanner];
+                            // The method can either return a string, or write the string to [self context] and return nil
+							NSString *htmlFragment = [self performSelector:firstWordSel
+                                                                withObject:inRestOfTag
+                                                                withObject:inScanner];
 							
-							/*
-							 NSMethodSignature *sig = [[self class] instanceMethodSignatureForSelector:firstWordSel];
-							 NSInvocation *inv = [NSInvocation invocationWithMethodSignature: sig];
-							 [inv setSelector: firstWordSel];
-							 [inv setTarget: self];
-							 [inv setArgument:(void *)&inRestOfTag atIndex: 2];
-							 [inv setArgument:(void *)&inScanner atIndex: 3];
-							 //[inv setArgument:(void *)&inContext atIndex: 4];
-							 
-							 [inv invoke];
-							 NSString *invokeResultString;
-							 [inv getReturnValue:&invokeResultString];
-							 */
-							if ( nil != htmlFragment )
+							if (htmlFragment)
 							{
-								[htmlString appendString:htmlFragment];
-							}
-							else
-							{
-								LOG((@"[[%@ %@]] Invocation unexpectedly returned nil string!", keyword, inRestOfTag));
+								[_context writeString:htmlFragment];
 							}
 						}
 						else
@@ -490,7 +480,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
             }
         }
     }
-    return [NSString stringWithString:htmlString];    
+    
+    return YES;
 }
 
 /*	These 3 methods are subclassed by KTStalenessHTMLParser, so be sure to update that too if appropriate
@@ -614,14 +605,14 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	id rightValue = [self parseValue:right];
 	BOOL compareResult = [self compareIfStatement:comparisonType leftValue:leftValue rightValue:rightValue];
 	
-	// Now parse whatever piece we are supposed to use
+	// Now parse whatever piece we are supposed to use, and write it to the context
 	NSScanner *ifScanner = [NSScanner scannerWithString:compareResult ? stuffIfTrue : stuffIfFalse];
 	[ifScanner setCharactersToBeSkipped:nil];
 	
-	NSString *result = [self HTMLStringByScanning:ifScanner];
+	[self HTMLStringByScanning:ifScanner];
 	
 	_ifFunctionDepth--;
-	return result;
+	return nil;
 }
 
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue
@@ -729,14 +720,14 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     if (iterationsCount == 0) iterationsCount = [arrayToRepeat count];
     
     
-	NSString *result = [self evaluateForeachLoopWithArray:arrayToRepeat
-                                          iterationsCount:iterationsCount
-                                                  keyPath:[params objectAtIndex:1]
-                                                   scaner:inScanner];
-    return result;
+	[self evaluateForeachLoopWithArray:arrayToRepeat
+                       iterationsCount:iterationsCount
+                               keyPath:[params objectAtIndex:1]
+                                scaner:inScanner];
+    return nil;
 }
 
-- (NSString *)evaluateForeachLoopWithArray:(NSArray *)components
+- (BOOL)evaluateForeachLoopWithArray:(NSArray *)components
                            iterationsCount:(NSUInteger)iterationsCount
                                    keyPath:(NSString *)keyPath
                                     scaner:(NSScanner *)inScanner;
@@ -754,7 +745,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	
 	
-	NSMutableString *result = [NSMutableString string];
+	BOOL result = YES;
 	NSString *stuffToRepeat;
 	if ( [inScanner scanUpToRealString:endForEachDelim intoString:&stuffToRepeat]
 		&&
@@ -768,9 +759,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
         NSUInteger iteration = 0;
 		while (nil != (object = [theEnum nextObject]) )
 		{
-			[result appendString:[self doForeachIterationWithObject:object
-                                                           template:stuffToRepeat
-                                                            keyPath:keyPath]];
+			result = [self doForeachIterationWithObject:object
+                                               template:stuffToRepeat
+                                                keyPath:keyPath];
 			
             
             // Increment
@@ -784,7 +775,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	else
 	{
 		NSLog(@"forEach: missing %@ tag", endForEachDelim);
-		[result setString:@""];
+		result = NO;
 	}
     
     
@@ -795,7 +786,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	return result;
 }
 
-- (NSString *)doForeachIterationWithObject:(id)object
+- (BOOL)doForeachIterationWithObject:(id)object
                                   template:(NSString *)stuffToRepeat
                                    keyPath:(NSString *)keyPath;
 {
@@ -808,18 +799,17 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     NSScanner *eachScanner = [NSScanner scannerWithString:stuffToRepeat];
     [eachScanner setCharactersToBeSkipped:nil];
     
-    NSString *result = [self HTMLStringByScanning:eachScanner];
+    // Write the inner HTML to the context
+    [self HTMLStringByScanning:eachScanner];
     
     // And then remove the override
     [[self cache] removeOverrideForKey:keyPath];
     
     
     // Tidy up
-    [result retain];
     [innerPool release];
-    [result autorelease];
     
-    return result;
+    return nil;
 }
 
 - (NSString *)endforeachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner

@@ -816,7 +816,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [context setCurrentPage:[[self site] root]];
     
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
-	NSString *thumbnailHTML = [parser parseTemplateWithContext:context];
+	NSString *thumbnailHTML = [parser parseIntoHTMLContext:context];
     [context release];
 	[parser release];
     
@@ -1017,7 +1017,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     [context setCurrentPage:[[self site] root]];
     
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
-    NSString *result = [parser parseTemplateWithContext:context];
+    NSString *result = [parser parseIntoHTMLContext:context];
     [context release];
     [parser release];
     
