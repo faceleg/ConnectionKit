@@ -131,6 +131,11 @@
     return result;
 }
 
+- (BOOL)parse;
+{
+    return [self parseIntoContext:[SVHTMLContext currentContext]];
+}
+
 /*	We make a couple of extra tweakes for HTML parsing
  */
 - (BOOL)prepareToParse

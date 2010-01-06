@@ -37,8 +37,12 @@
 
 
 #pragma mark Parse
+
 //  Convenience method to do parsing while pushing and popping a context on the stack
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
+
+// Convenience method that grabs the current HTML context and parses into that
+- (BOOL)parse;
 
 
 // Functions
