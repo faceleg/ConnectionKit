@@ -233,7 +233,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 {
     if (context == sWebViewLoadingObservationContext)
     {
-        if (![[self webEditorViewController] isUpdating])
+        if ([self viewType] == KTStandardWebView && ![[self webEditorViewController] isUpdating])
         {
             // The webview is done loading! swap 'em
             [self setSelectedViewController:[self webEditorViewController]];
