@@ -124,13 +124,15 @@
 
 #pragma mark HTML
 
-- (NSString *)HTMLString;
+- (void)writeHTML
 {
     //  Piece together each of our elements to generate the HTML
     NSArray *elements = [self orderedElements];
-    NSString *result = [[elements valueForKey:@"HTMLString"] componentsJoinedByString:@"\n"];
-    
-    return result;
+    for (SVBodyElement *anElement in elements)
+    {
+        [anElement writeHTML];
+        [[SVHTMLContext currentContext] writeHTMLString:@"\n"];
+    }
 }
 
 #pragma mark Editing

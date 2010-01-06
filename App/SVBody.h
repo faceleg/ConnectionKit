@@ -23,8 +23,5 @@
 - (void)addElement:(SVBodyElement *)element;    // convenience
 - (NSSet *)graphics;
 
-#pragma mark HTML
-
-- (NSString *)HTMLString;
 
 @end
