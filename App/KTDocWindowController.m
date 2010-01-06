@@ -200,11 +200,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 @synthesize pagesController = _pagesController;
-- (void)setPagesController:(NSArrayController *)controller
-{
-    [controller retain];
-    [_pagesController release]; _pagesController = controller;
-}
 
 #pragma mark -
 #pragma mark Window Title
