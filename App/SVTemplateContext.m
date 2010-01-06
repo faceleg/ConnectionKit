@@ -11,4 +11,10 @@
 
 @implementation SVTemplateContext
 
+- (void)writeString:(NSString *)string;
+{
+    SUBCLASSMUSTIMPLEMENT;
+    [self doesNotRecognizeSelector:_cmd];
+}
+
 @end

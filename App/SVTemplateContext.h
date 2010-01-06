@@ -9,8 +9,10 @@
 #import <Foundation/Foundation.h>
 
 
-@interface SVTemplateContext : NSObject {
+@interface SVTemplateContext : NSObject
 
-}
+#pragma mark Primitive Methods
+// You MUST implement this in a concrete subclass
+- (void)writeString:(NSString *)string;
 
 @end
