@@ -8,6 +8,7 @@
 
 #import "SVInspector.h"
 #import "SVInspectorViewController.h"
+#import "SVPageInspector.h"
 #import "SVPlugInInspector.h"
 
 #import "KTDocWindowController.h"
@@ -81,7 +82,7 @@
     
     
     // Page
-    _pageInspector = [[KSInspectorViewController alloc] initWithNibName:@"PageInspector" bundle:nil];
+    _pageInspector = [[SVPageInspector alloc] initWithNibName:@"PageInspector" bundle:nil];
     [_pageInspector setTitle:NSLocalizedString(@"Page", @"Page Inspector")];
     [_pageInspector setIcon:[NSImage imageNamed:@"toolbar_new_page"]];
     

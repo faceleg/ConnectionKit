@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">SVInspectorViewController</string>
+				<string key="NSClassName">SVPageInspector</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -43,13 +43,13 @@
 				<int key="NSvFlags">266</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSTextField" id="38790790">
+					<object class="NSTextField" id="501325893">
 						<reference key="NSNextResponder" ref="58454268"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{70, 196}, {101, 19}}</string>
 						<reference key="NSSuperview" ref="58454268"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="328236705">
+						<object class="NSTextFieldCell" key="NSCell" id="823151314">
 							<int key="NSCellFlags">-1804468671</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents"/>
@@ -58,7 +58,7 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">3100</int>
 							</object>
-							<reference key="NSControlView" ref="38790790"/>
+							<reference key="NSControlView" ref="501325893"/>
 							<bool key="NSDrawsBackground">YES</bool>
 							<object class="NSColor" key="NSBackgroundColor" id="833147279">
 								<int key="NSColorSpace">6</int>
@@ -73,7 +73,7 @@
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">textColor</string>
-								<object class="NSColor" key="NSColor" id="548714121">
+								<object class="NSColor" key="NSColor" id="187480916">
 									<int key="NSColorSpace">3</int>
 									<bytes key="NSWhite">MAA</bytes>
 								</object>
@@ -203,7 +203,7 @@
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">controlTextColor</string>
-								<reference key="NSColor" ref="548714121"/>
+								<reference key="NSColor" ref="187480916"/>
 							</object>
 						</object>
 					</object>
@@ -578,18 +578,18 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<int key="NSPeriodicInterval">25</int>
 						</object>
 					</object>
-					<object class="NSTextField" id="424934323">
+					<object class="NSTextField" id="110241704">
 						<reference key="NSNextResponder" ref="58454268"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{172, 198}, {71, 14}}</string>
 						<reference key="NSSuperview" ref="58454268"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="451651839">
+						<object class="NSTextFieldCell" key="NSCell" id="318886300">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272761856</int>
 							<string key="NSContents">in site menu</string>
 							<reference key="NSSupport" ref="26"/>
-							<reference key="NSControlView" ref="424934323"/>
+							<reference key="NSControlView" ref="110241704"/>
 							<reference key="NSBackgroundColor" ref="991363190"/>
 							<reference key="NSTextColor" ref="422175849"/>
 						</object>
@@ -795,10 +795,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.customMenuTitle</string>
-						<reference key="source" ref="38790790"/>
+						<reference key="source" ref="501325893"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="38790790"/>
+							<reference key="NSSource" ref="501325893"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.customMenuTitle</string>
 							<string key="NSBinding">value</string>
@@ -811,10 +811,10 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: inspectedObjectsController.selection.includeInSiteMenu</string>
-						<reference key="source" ref="38790790"/>
+						<reference key="source" ref="501325893"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="38790790"/>
+							<reference key="NSSource" ref="501325893"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">enabled: inspectedObjectsController.selection.includeInSiteMenu</string>
 							<string key="NSBinding">enabled</string>
@@ -823,6 +823,14 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">137</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oMenuTitleField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="501325893"/>
+					</object>
+					<int key="connectionID">138</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -876,8 +884,8 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 							<reference ref="895513245"/>
 							<reference ref="205583924"/>
 							<reference ref="121420516"/>
-							<reference ref="38790790"/>
-							<reference ref="424934323"/>
+							<reference ref="501325893"/>
+							<reference ref="110241704"/>
 						</object>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Page</string>
@@ -1147,31 +1155,31 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">130</int>
-						<reference key="object" ref="38790790"/>
+						<reference key="object" ref="501325893"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="328236705"/>
+							<reference ref="823151314"/>
 						</object>
 						<reference key="parent" ref="58454268"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">131</int>
-						<reference key="object" ref="328236705"/>
-						<reference key="parent" ref="38790790"/>
+						<reference key="object" ref="823151314"/>
+						<reference key="parent" ref="501325893"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">132</int>
-						<reference key="object" ref="424934323"/>
+						<reference key="object" ref="110241704"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="451651839"/>
+							<reference ref="318886300"/>
 						</object>
 						<reference key="parent" ref="58454268"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">133</int>
-						<reference key="object" ref="451651839"/>
-						<reference key="parent" ref="424934323"/>
+						<reference key="object" ref="318886300"/>
+						<reference key="parent" ref="110241704"/>
 					</object>
 				</object>
 			</object>
@@ -1312,11 +1320,19 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">137</int>
+			<int key="maxID">138</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">KSInspectorViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/KSInspectorViewController.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">KTPlaceholderBindingTextField</string>
 					<string key="superclassName">NSTextField</string>
@@ -1469,11 +1485,15 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">SVInspectorViewController</string>
-					<string key="superclassName">NSViewController</string>
+					<string key="className">SVPageInspector</string>
+					<string key="superclassName">KSInspectorViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">oMenuTitleField</string>
+						<string key="NS.object.0">KTPlaceholderBindingTextField</string>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SVInspectorViewController.h</string>
+						<string key="minorKey">SVPageInspector.h</string>
 					</object>
 				</object>
 			</object>
