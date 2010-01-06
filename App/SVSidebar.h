@@ -20,7 +20,7 @@
 
 
 #pragma mark HTML
-- (NSString *)pageletsHTMLString;
+- (void)writePageletsHTML;
 
 @end
 

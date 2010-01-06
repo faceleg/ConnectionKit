@@ -30,13 +30,14 @@
 
 #pragma mark HTML
 
-- (NSString *)pageletsHTMLString;
+- (void)writePageletsHTML;
 {
     NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[self pagelets]];
-    NSArray *pageletsHTML = [pagelets valueForKey:@"HTMLString"];
-    NSString *result = [pageletsHTML componentsJoinedByString:@"\n"];
-    
-    return result;
+    for (SVPagelet *aPagelet in pagelets)
+    {
+        [[SVHTMLContext currentContext] writeHTMLString:[aPagelet HTMLString]];
+        [[SVHTMLContext currentContext] writeHTMLString:@"\n"];
+    }
 }
 
 @end
