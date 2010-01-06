@@ -1015,14 +1015,16 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
     OBASSERT([NSThread currentThread] == [self thread]);
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] init];
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingQuickLookPreview];
     [context setCurrentPage:[[self site] root]];
     
-    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
-    NSString *result = [parser parseIntoHTMLContext:context];
+    [context push];
+    [[[self site] root] writeHTML];
+    [context pop];
+    
+    NSString *result = [context markupString];
     [context release];
-    [parser release];
     
     return result;
 }
