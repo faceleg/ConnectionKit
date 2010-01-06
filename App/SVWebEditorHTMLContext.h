@@ -6,11 +6,11 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLContext.h"
+#import "SVMutableStringHTMLContext.h"
 
 
 @class KSObjectKeyPathPair;
-@interface SVWebEditorHTMLContext : SVHTMLContext
+@interface SVWebEditorHTMLContext : SVMutableStringHTMLContext
 {
     NSMutableSet    *_objectKeyPathPairs;
 }
