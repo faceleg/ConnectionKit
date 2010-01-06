@@ -177,8 +177,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
  */
 - (NSString *)parsecomponentWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	NSString *result = @"";
-	
 	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
 	
 	if (!parameters || [parameters count] != 2)
@@ -194,12 +192,12 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		if (component && template)
 		{
 			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
-			result = [parser parseTemplate];
+			[parser parseIntoContext:_context];
 			[parser release];
 		}
 	}
 	
-	return result;
+	return nil;
 }
 
 - (id)parentParser { return myParentParser; }
