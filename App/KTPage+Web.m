@@ -368,9 +368,11 @@
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
 		int i=1;	// 1-based iteration
 		int last = [pagesInSiteMenu count];
+		
+		KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
 		for (KTPage *toplink in pagesInSiteMenu)
 		{
-			if (toplink)// == self.parser.currentPage)				// NOT SURE -- HOW AM I GETTING THE PARSER HERE?
+			if (toplink == currentParserPage)
 			{
 				[result appendFormat:@"<li class='%d %@%@ currentPage'>\n", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""];
 				[result appendString:@"[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]"];	// ??????
@@ -379,13 +381,21 @@
 			else
 			{
 				BOOL isCurrentParent = NO;
-				// [[if parser.currentPage.includeInSiteMenu]][[else3]][[if toplink==parser.currentPage.parentPage]][[if parser.currentPage.parentPage.index]] currentParent[[endif5]][[endif4]][[endif3]]
-				
+				if (!currentParserPage.includeInSiteMenu && toplink == currentParserPage.parentPage && currentParserPage.parentPage.index)
+				{
+					isCurrentParent = YES;
+				}
 				
 				[result appendFormat:@"<li class='%d %@%@%@'>\n", i, (i%2)?@"o":@"e", (i==last)? @" last" : @"", isCurrentParent ? @" currentParent" : @""];
 				
-				[result appendFormat:@"<a [[target toplink]]href='[[path toplink]]' title='[[=&toplink.titleText]]'>"];
+				NSString *targetString = @"";	// targetStringForPage:targetPage		TODO
+				
+				[result appendFormat:@"<a %@href='[[path toplink]]' title=''>", targetString, [toplink.titleText stringByEscapingHTMLEntities]];		// need to escape single-quotes
+				// perser pathToObject:
+				
 				[result appendFormat:@"[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>"];
+				// parser textblockForKeyPath:.....
+				
 				[result appendString:@"</li>\n"];
 			}
 			i++;

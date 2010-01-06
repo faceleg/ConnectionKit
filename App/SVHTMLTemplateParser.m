@@ -177,6 +177,14 @@
 - (NSString *)targetStringForPage:(id) aDestPage
 {
 	BOOL openInNewWindow = NO;
+	
+	/* Logic from 1.x branch:
+	 id targetPageDelegate = [aDestPage delegate];
+	 if (targetPageDelegate && [targetPageDelegate respondsToSelector:@selector(openInNewWindow)])
+	 {
+	 openInNewWindow = [[targetPageDelegate valueForKey:@"openInNewWindow"] boolValue];
+	 }
+	 */
 	if (openInNewWindow)
 	{
 		return @"target=\"_BLANK\" ";
