@@ -25,8 +25,6 @@
 // TODO: Generate nothing when publishing
 - (NSString *)textblockWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
-	NSString *result = @"";
-	
 	NSDictionary *parameters = [[self class] parametersDictionaryWithString:inRestOfTag];
 	
 	// To actually generate a block of text all we need is a key path
@@ -76,15 +74,14 @@
 													    hyperlink:hyperlink];
 		
 		// Generate HTML
-		result = [textBlock HTMLString];
-		if (!result) result = @"";
+		[textBlock writeHTML];
 	}
 	else
 	{
 		NSLog(@"textblock: usage [[textblock (object:keyPath) property:keyPath (flags:\"some flags\") tag:HTMLTag]]");
 	}
 	
-	return result;
+	return nil;
 }
 
 - (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
@@ -122,7 +119,7 @@
     SVHTMLContext *fakeContext = [[SVHTMLContext alloc] init];
     [fakeContext setCurrentPage:[[SVHTMLContext currentContext] currentPage]];
     [fakeContext push];
-	if ([[result innerHTMLString] length] > 0)
+	if (YES)
     {
         // Inform delegate
         [fakeContext pop];  // pop early so -didParseTextBlock: goes to the origina context

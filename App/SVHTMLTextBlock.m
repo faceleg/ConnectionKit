@@ -11,6 +11,7 @@
 #import "SVHTMLTemplateParser+Private.h"
 
 #import "KTDesign.h"
+#import "SVMutableStringHTMLContext.h"
 #import "KTMaster+Internal.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
@@ -216,7 +217,13 @@
 	NSString *graphicalTextCode = [self graphicalTextCode];
     if (graphicalTextCode)
     {
-        NSString *innerHTML = [self innerHTMLString];
+        NSMutableString *innerHTML = [[NSMutableString alloc] init];
+        SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithMutableString:innerHTML];
+        [context push];
+        [self writeInnerHTML];
+        [context pop];
+        [context release];
+        
         if (innerHTML && ![innerHTML isEqualToString:@""])
         {
             KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
@@ -278,49 +285,51 @@
 
 #pragma mark HTML
 
-- (NSString *)innerHTMLString
+- (void)writeInnerHTML;
 {
 	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
     if ([result isKindOfClass:[SVBody class]])
     {
-        result = [(SVBody *)result HTMLString];
+        [(SVBody *)result writeHTML];
     }
     else if ([result isKindOfClass:[SVTextField class]])
     {
-        result = [(SVTextField *)result textHTMLString];
+        [[SVHTMLContext currentContext] writeHTMLString:[(SVTextField *)result textHTMLString]];
     }
-    
-    
-    // Tidy up
-	if (!result) result = @"";
-	result = [self processHTML:result];
-    
-	return result;
+    else
+    {
+        result = [self processHTML:result];
+        if (result) [[SVHTMLContext currentContext] writeHTMLString:result];
+    }
 }
 
 /*	Includes the editable tag(s) + innerHTML
  */
-- (NSString *)HTMLString
+- (void)writeHTML;
 {
-	// Ignore empty text
-	NSString *innerHTML = [self innerHTMLString];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
 	
-	
-	// Construct the actual HTML
-	NSMutableString *buffer = [NSMutableString stringWithFormat:@"<%@", [self tagName]];
+    // Construct the actual HTML
+    [context writeHTMLString:@"<"];
+    [context writeHTMLString:[self tagName]];
 	
 	
 	// Open the main tag
 	// In some situations we generate both the main tag, and a <span class="in">
     if ([[SVHTMLContext currentContext] isEditable])
     {
-        [buffer appendFormat:@" id=\"%@\"", [self DOMNodeID]];
+        [context writeHTMLString:@" id=\""];
+        [context writeHTMLString:[self DOMNodeID]];
+        [context writeHTMLString:@"\""];
     }
     
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self tagName] isEqualToString:@"span"]);
 	if (!generateSpanIn)
 	{
-		[buffer appendFormat:@" class=\"%@\"", [self CSSClassName]];
+		[context writeHTMLString:@" class=\""];
+        [context writeHTMLString:[self CSSClassName]];
+        [context writeHTMLString:@"\""];
 	}
 	
 	
@@ -332,31 +341,39 @@
 		{
 			if ([[SVHTMLContext currentContext] isEditable])    // id has already been supplied
 			{
-				[buffer appendFormat:@" class=\"replaced\" style=\"%@\"", graphicalTextStyle];
+				[context writeHTMLString:@" class=\"replaced\" style=\""];
+                [context writeHTMLString:graphicalTextStyle];
+                [context writeHTMLString:@"\""];
 			}
 			else
 			{
-				[buffer appendFormat:@" id=\"%@\" class=\"replaced\"", [self graphicalTextCSSID]];
+				[context writeHTMLString:@" id=\""];
+                [context writeHTMLString:[self graphicalTextCSSID]];
+                [context writeHTMLString:@"\" class=\"replaced\""];
 			}
 		}
 	}
 	
 	
 	// Close off the main tag
-	[buffer appendString:@">"];
+	[context writeHTMLString:@">"];
 	
 	
 	
 	// Place a hyperlink if required
 	if ([self hyperlinkString])
 	{
-		[buffer appendFormat:@"<a %@href=\"%@\">", [self targetString], [self hyperlinkString]];
+		[context writeHTMLString:@"<a "];
+        [context writeHTMLString:[self targetString]];
+        [context writeHTMLString:@"href=\""];
+        [context writeHTMLString:[self hyperlinkString]];
+        [context writeHTMLString:@"\">"];
 	}
 	
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
-		[buffer appendString:@"<span"];
+		[context writeHTMLString:@"<span"];
         
         NSString *CSSClassName = @"in";
         if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
@@ -364,26 +381,23 @@
 			CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
-        [buffer appendFormat:@" class=\"%@\">", CSSClassName];
+        [context writeHTMLString:@" class=\""];
+        [context writeHTMLString:CSSClassName];
+        [context writeHTMLString:@"\">"];
 	}
 	
 	
 	// Stick in the main HTML
-	[buffer appendString:innerHTML];
+	[self writeInnerHTML];
 	
 	
 	// End all tags
 	if (generateSpanIn)
 	{
-		[buffer appendString:@"</span>"];
+		[context writeHTMLString:@"</span>"];
 	}
-	if ([self hyperlinkString]) [buffer appendString:@"</a>"];
-	[buffer appendFormat:@"</%@>", [self tagName]];
-	
-	
-	// Tidy up
-	NSString *result = [NSString stringWithString:buffer];
-	return result;
+	if ([self hyperlinkString]) [context writeHTMLString:@"</a>"];
+	[context closeTag:[self tagName]];
 }
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.
