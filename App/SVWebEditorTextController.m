@@ -97,7 +97,15 @@
 
 - (void)setEditable:(BOOL)flag
 {
-    [[self textHTMLElement] setContentEditable:(flag ? @"true" : nil)];
+    // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
+    if (flag)
+    {
+        [[self textHTMLElement] setContentEditable:@"true"];
+    }
+    else
+    {
+        [[self textHTMLElement] removeAttribute:@"contentEditable"];
+    }
 }
 
 // Note that it's only a property for controlling editing by the user, it does not affect the existing HTML or stop programmatic editing of the HTML.
