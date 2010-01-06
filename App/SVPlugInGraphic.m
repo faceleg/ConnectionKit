@@ -304,9 +304,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (NSString *)editingElementID { return [[self plugIn] elementID]; }
 - (BOOL)shouldPublishEditingElementID { return YES; }
 
-- (NSString *)HTMLString;
+- (void)writeHTML
 {
-    return [[self plugIn] HTMLString];
+    return [[self plugIn] writeHTML];
 }
 
 - (DOMElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
