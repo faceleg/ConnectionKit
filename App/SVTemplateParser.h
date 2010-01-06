@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "NSString+Karelia.h"
+#import "NSString+Karelia.h"    // for ComparisonType
 
 
 @class KTHTMLParserMasterCache;
