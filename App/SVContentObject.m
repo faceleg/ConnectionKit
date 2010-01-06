@@ -18,6 +18,11 @@
 
 #pragma mark HTML
 
+- (void)writeHTML;          // default calls -HTMLString and writes that to the current HTML context
+{
+    [[SVHTMLContext currentContext] writeHTMLString:[self HTMLString]];
+}
+
 - (NSString *)HTMLString
 {
     SUBCLASSMUSTIMPLEMENT;

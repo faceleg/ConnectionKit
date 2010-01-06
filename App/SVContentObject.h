@@ -19,9 +19,10 @@
 @interface SVContentObject : KSExtensibleManagedObject
 
 #pragma mark Basic HTML
+//  To implement HTML support, your object needs to write some HTML to the current HTML context. This is done by calling -writeHTML. For most objects you should override this method, but for simpler cases, it's enough to override -HTMLString and return a suitable value there.
 
-//  Raises an exception, so you must override in your subclass
-- (NSString *)HTMLString;
+- (void)writeHTML;          // default calls -HTMLString and writes that to the current HTML context
+- (NSString *)HTMLString;   // default raises an exception
 
 
 #pragma mark Editing Support
