@@ -42,6 +42,8 @@
 		result = [result stringByReplacing:@"/>" with:@">"];
 	}
 	
+	result = [result stringByEscapingCharactersOutOfEncoding:[self encoding]];
+    
 	
 	return result;
 }
