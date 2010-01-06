@@ -130,6 +130,7 @@
 @synthesize baseURL = _baseURL;
 @synthesize includeStyling = _includeStyling;
 @synthesize liveDataFeeds = _liveDataFeeds;
+@synthesize XHTML = _isXHTML;
 
 @synthesize generationPurpose = _generationPurpose;
 

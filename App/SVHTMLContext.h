@@ -30,6 +30,7 @@ typedef enum {
 	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
+    BOOL                    _isXHTML;
     
     NSMutableArray  *_iteratorsStack;
     
@@ -58,6 +59,7 @@ typedef enum {
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL includeStyling;
 @property(nonatomic) BOOL liveDataFeeds;
+@property(nonatomic, getter=isXHTML) BOOL XHTML;
 
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable; // YES if HTML is intended to be edited directly in a Web Editor
