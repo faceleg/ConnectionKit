@@ -9,6 +9,7 @@
 #import "SVContentObject.h"
 
 #import "SVDOMController.h"
+#import "SVHTMLContext.h"
 
 
 @implementation SVContentObject
