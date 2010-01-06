@@ -25,16 +25,14 @@
 
 #pragma mark HTML
 
-- (NSString *)HTMLString
+- (void)writeHTML
 {
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
                                     initWithTemplate:[[[self class] calloutHTMLTemplate] templateString]
                                     component:self];
     
-    NSString *result = [parser parseTemplate];
-    
+    [parser parse];
     [parser release];
-    return result;
 }
 
 + (SVTemplate *)calloutHTMLTemplate;

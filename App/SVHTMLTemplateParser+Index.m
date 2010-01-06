@@ -49,7 +49,7 @@
             NSArray *indexPages = [[self cache] valueForKeyPath:[parameters objectAtIndex:1]];
             [parser overrideKey:@"pages" withValue:indexPages];
             
-            result = [parser parseTemplate];
+            [parser parse];
             [parser release];
         }
 	}
@@ -59,7 +59,7 @@
 		
 	}
 	
-	return result;
+	return nil;
 }
 
 #pragma mark -
