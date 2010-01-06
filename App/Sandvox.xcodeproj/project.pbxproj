@@ -2807,6 +2807,15 @@
 			name = Inspector;
 			sourceTree = "<group>";
 		};
+		2719AAB210F4161400598AE3 /* Source View */ = {
+			isa = PBXGroup;
+			children = (
+				CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */,
+				CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */,
+			);
+			name = "Source View";
+			sourceTree = "<group>";
+		};
 		271B497B105468AA008B698C /* View */ = {
 			isa = PBXGroup;
 			children = (
@@ -3030,8 +3039,6 @@
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
 				273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */,
 				273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */,
-				CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */,
-				CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -3575,6 +3582,7 @@
 			children = (
 				275A641510501D2900AE6E2A /* General */,
 				27BDAA6A10C88E49008C8199 /* Web Editor */,
+				2719AAB210F4161400598AE3 /* Source View */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
 			);
 			name = "Web Content Area";
