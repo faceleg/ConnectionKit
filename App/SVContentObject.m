@@ -31,6 +31,16 @@
     return nil;
 }
 
++ (void)writeContentObjects:(NSArray *)objects; // calls -writeHTML for each object
+{
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    for (SVContentObject *anObject in objects)
+    {
+        [anObject writeHTML];
+        [context writeHTMLString:@"\n"];
+    }
+}
+
 #pragma mark Editing Support
 
 - (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document;

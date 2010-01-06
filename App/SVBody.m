@@ -127,12 +127,7 @@
 - (void)writeHTML
 {
     //  Piece together each of our elements to generate the HTML
-    NSArray *elements = [self orderedElements];
-    for (SVBodyElement *anElement in elements)
-    {
-        [anElement writeHTML];
-        [[SVHTMLContext currentContext] writeHTMLString:@"\n"];
-    }
+    [[self class] writeContentObjects:[self orderedElements]];
 }
 
 #pragma mark Editing

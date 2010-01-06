@@ -24,6 +24,8 @@
 - (void)writeHTML;          // default calls -HTMLString and writes that to the current HTML context
 - (NSString *)HTMLString;   // default raises an exception
 
++ (void)writeContentObjects:(NSArray *)objects; // calls -writeHTML for each object
+
 
 #pragma mark Editing Support
 
