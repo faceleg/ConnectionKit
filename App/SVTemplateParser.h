@@ -60,14 +60,20 @@
 - (id)parentParser;
 - (id)newChildParserWithTemplate:(NSString *)templateString component:(id)component;
 
-// Parsing
-+ (NSString *)parseTemplate:(NSString *)aTemplate component:(id)component;
+
+#pragma mark Parsing
+
++ (NSString *)parseTemplate:(NSString *)aTemplate
+                  component:(id)component
+                intoContext:(SVTemplateContext *)context;
+
 - (BOOL)parseIntoContext:(SVTemplateContext *)context;
 - (BOOL)prepareToParse;
 
 - (NSString *)componentLocalizedString:(NSString *)tag;
 - (NSString *)componentTargetLocalizedString:(NSString *)tag;
 - (NSString *)mainBundleLocalizedString:(NSString *)tag;
+
 
 // If function
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue;
