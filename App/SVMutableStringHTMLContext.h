@@ -14,7 +14,13 @@
 
 @interface SVMutableStringHTMLContext : SVHTMLContext
 {
-
+  @private
+    NSMutableString *_mutableString;
 }
+
+- (id)initWithMutableString:(NSMutableString *)string;  // designated initializer
+- (id)init; // Uses an empty NSMutableString
+
+@property(nonatomic, retain, readonly) NSMutableString *mutableString;
 
 @end
