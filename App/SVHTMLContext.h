@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "SVTemplateContext.h"
 
 
 // publishing mode
@@ -20,7 +20,9 @@ typedef enum {
 
 
 @class KTAbstractPage, SVHTMLTextBlock;
-@interface SVHTMLContext : NSObject
+
+
+@interface SVHTMLContext : SVTemplateContext
 {
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;
