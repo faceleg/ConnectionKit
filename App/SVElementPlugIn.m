@@ -65,13 +65,12 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark Content
 
-- (NSString *)HTMLString;
+- (void)writeHTML;
 {
-    NSString *result = [NSString stringWithFormat:
-                        @"<div id=\"%@\">%@</div>",
-                        [self elementID],
-                        [self innerHTMLString]];
-    return result;
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    [context openTag:@"div" idName:[self elementID] className:nil];
+    [self writeInnerHTML];
+    [context closeTag:@"div"];
 }
 
 - (NSString *)elementID
@@ -80,17 +79,15 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     return result;
 }
 
-- (NSString *)innerHTMLString;
+- (void)writeInnerHTML;
 {
     // Parse our built-in template
     NSString *template = [[[self delegateOwner] plugin] templateHTMLAsString];
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
                                                                         component:self];
     
-    NSString *result = [parser parseTemplate];
+    [parser parse];
     [parser release];
-    
-    return result;
 }
 
 #pragma mark Storage
