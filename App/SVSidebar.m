@@ -35,7 +35,7 @@
     NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[self pagelets]];
     for (SVPagelet *aPagelet in pagelets)
     {
-        [[SVHTMLContext currentContext] writeHTMLString:[aPagelet HTMLString]];
+        [aPagelet writeHTML];
         [[SVHTMLContext currentContext] writeHTMLString:@"\n"];
     }
 }

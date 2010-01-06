@@ -270,7 +270,7 @@
 
 #pragma mark HTML
 
-- (NSString *)HTMLString
+- (void)writeHTML
 {
     //  All SVContentObject subclasses must implement this to suit themselves
     
@@ -279,10 +279,8 @@
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
                                                                         component:self];
     
-    NSString *result = [parser parseTemplate];
+    [parser parse];
     [parser release];
-    
-    return result;
 }
 
 + (SVTemplate *)template;

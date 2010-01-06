@@ -53,7 +53,6 @@
 
 
 #pragma mark HTML
-- (NSString *)HTMLString;
 + (SVTemplate *)template;
 
 @property(nonatomic, retain, readonly) NSString *elementID;
