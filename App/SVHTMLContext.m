@@ -14,6 +14,7 @@
 #import "BDAlias+QuickLook.h"
 
 #import "NSIndexPath+Karelia.h"
+#import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
 
@@ -103,6 +104,25 @@
     [_textBlocks release];
     
     [super dealloc];
+}
+
+#pragma mark Writing
+
+- (void)writeString:(NSString *)string;
+{
+    [self writeHTMLString:string];
+}
+
+- (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
+{
+    SUBCLASSMUSTIMPLEMENT;
+    [self doesNotRecognizeSelector:_cmd];
+}
+
+- (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
+{
+    NSString *html = [string stringByEscapingHTMLEntities];
+    [self writeHTMLString:html];
 }
 
 #pragma mark Properties

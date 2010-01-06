@@ -47,6 +47,12 @@ typedef enum {
 - (void)pop;    // only pops if receiver is the current context
 
 
+#pragma mark Writing
+
+- (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
+- (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
+
+
 #pragma mark Properties
 
 @property(nonatomic, copy) NSURL *baseURL;
