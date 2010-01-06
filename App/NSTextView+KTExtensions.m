@@ -23,9 +23,6 @@
 -(NSDictionary*)	defaultTextAttributes;
 
 
--(void) recolorRange: (NSRange) range;
-
-
 -(void)	recolorSyntaxTimer: (NSTimer*) sender;
 
 -(void)	colorOneLineComment: (NSString*) startCh inString: (NSMutableAttributedString*) s

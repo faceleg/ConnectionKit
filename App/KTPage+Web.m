@@ -9,6 +9,7 @@
 #import "KTPage+Internal.h"
 
 #import "KT.h"
+#import "KTSite.h"
 #import "SVApplicationController.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
@@ -345,5 +346,80 @@
 	}
 	return result;
 }
+
+- (NSString *)sitemenu
+{
+	NSMutableString *result = [NSMutableString string];
+	if (self.site.pagesInSiteMenu)
+	{
+		[result appendString:@"<div id='sitemenu'>\n"];
+		
+		[result appendString:@"<h2 class='hidden'>"];
+		[result appendString:
+		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
+		[result appendString:@"<a rel='nofollow' href='#page-content'>"];
+		[result appendString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
+		[result appendString:@"</a></h2>\n"];
+		
+		[result appendString:@"<div id='sitemenu-content'>\n"];
+		[result appendString:@"<ul>\n"];
+		
+		KTSite *site = self.site;
+		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
+		int i=1;	// 1-based iteration
+		int last = [pagesInSiteMenu count];
+		for (KTPage *toplink in pagesInSiteMenu)
+		{
+			if (toplink)// == self.parser.currentPage)				// NOT SURE -- HOW AM I GETTING THE PARSER HERE?
+			{
+				[result appendFormat:@"<li class='%d %@%@ currentPage'>\n", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""];
+				[result appendString:@"[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]"];	// ??????
+				[result appendString:@"</li>\n"];
+			}
+			else
+			{
+				BOOL isCurrentParent = NO;
+				// [[if parser.currentPage.includeInSiteMenu]][[else3]][[if toplink==parser.currentPage.parentPage]][[if parser.currentPage.parentPage.index]] currentParent[[endif5]][[endif4]][[endif3]]
+				
+				
+				[result appendFormat:@"<li class='%d %@%@%@'>\n", i, (i%2)?@"o":@"e", (i==last)? @" last" : @"", isCurrentParent ? @" currentParent" : @""];
+				
+				[result appendFormat:@"<a [[target toplink]]href='[[path toplink]]' title='[[=&toplink.titleText]]'>"];
+				[result appendFormat:@"[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>"];
+				[result appendString:@"</li>\n"];
+			}
+			i++;
+		}		
+		
+		[result appendString:@"</ul>"];
+		[result appendString:@"</div> <!-- sitemenu-content -->"];		
+		[result appendString:@"</div> <!-- sitemenu -->\n"];
+	}
+	return [NSString stringWithString:result];
+}
+/*
+ Based on this template markup:
+ [[if site.pagesInSiteMenu]]
+	 <div id='sitemenu'>
+		 <h2 class='hidden'>[[`skipNavigationTitleHTML]]<a rel='nofollow' href='#page-content'>[[`skipNavigationLinkHTML]]</a></h2>
+		 <div id='sitemenu-content'>
+			 <ul>
+				 [[forEach site.pagesInSiteMenu toplink]]
+					 [[if toplink==parser.currentPage]]
+						 <li class='[[i]] [[eo]][[last]] currentPage'>
+							[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]
+						 </li>
+					 [[else2]]
+						 <li class='[[i]] [[eo]][[last]][[if parser.currentPage.includeInSiteMenu]][[else3]][[if toplink==parser.currentPage.parentPage]][[if parser.currentPage.parentPage.index]] currentParent[[endif5]][[endif4]][[endif3]]'>
+							 <a [[target toplink]]href='[[path toplink]]' title='[[=&toplink.titleText]]'>
+							 [[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>
+						 </li>
+					 [[endif2]]
+				 [[endForEach]]
+			 </ul>
+		 </div> <!-- sitemenu-content -->
+	 </div> <!-- sitemenu -->
+ [[endif]]
+*/ 
 
 @end

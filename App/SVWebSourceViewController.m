@@ -10,14 +10,18 @@
 #import "SVWebEditorViewController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KTPage.h"
+#import "NSTextView+KTExtensions.h"
 
 @implementation SVWebSourceViewController
+
+@synthesize webEditorViewController = _webEditorViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
 	if ( self != nil )
 	{
+		self.webEditorViewController = aWebEditorViewController;
 		[[NSNotificationCenter defaultCenter] addObserver:self
 												 selector:@selector(webEditorViewControllerWillUpdate:)
 													 name:sSVWebEditorViewControllerWillUpdateNotification
@@ -26,17 +30,39 @@
 	return self;
 }
 
-- (void) webEditorViewControllerWillUpdate:(NSNotification *)aNotification
+- (void) dealloc
 {
-	NSLog(@"webEditorViewControllerWillUpdate %@", [aNotification object]);
-	
-	SVWebEditorViewController *editorController = [aNotification object];
-	KTPage *page = [editorController page];
-	
-	NSString *pageHTML = [page HTMLString];
-	
-	NSTextStorage *textStorage = [oSourceView textStorage];
-	[textStorage replaceCharactersInRange:NSMakeRange(0, [textStorage length]) withString:pageHTML];
+	self.webEditorViewController = nil;
+	[super dealloc];
 }
+
+
+
+
+- (void) webEditorViewControllerWillUpdate:(NSNotification *)aNotification
+{	
+	if ([[self view] window] || nil == aNotification)		// only do something if we are attached to a window or this is a forced notification
+	{
+		KTPage *page = [self.webEditorViewController page];
+		
+		NSString *pageHTML = [page HTMLString];
+		
+		NSTextStorage *textStorage = [oSourceView textStorage];
+		NSRange fullRange = NSMakeRange(0, [textStorage length]);
+		[textStorage replaceCharactersInRange:fullRange withString:pageHTML];
+		[oSourceView recolorRange:fullRange];
+	}
+}
+
+- (void)loadView;
+{
+	[super loadView];
+}
+
+- (void)viewWillAppear:(BOOL)animated;
+{
+	[self webEditorViewControllerWillUpdate:nil];
+}
+
 
 @end

@@ -13,7 +13,11 @@
 @interface SVWebSourceViewController : NSViewController {
 
 	IBOutlet NSTextView *oSourceView;
+	
+	SVWebEditorViewController *_webEditorViewController;
 }
+
+@property (retain) SVWebEditorViewController *webEditorViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 @end
