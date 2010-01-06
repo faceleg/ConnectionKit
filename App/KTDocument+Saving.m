@@ -17,6 +17,7 @@
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
+#import "SVMutableStringHTMLContext.h"
 #import "SVTextField.h"
 
 #import "NSApplication+Karelia.h"
@@ -810,15 +811,17 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     // Put together the HTML for the thumbnail
-    SVHTMLContext *context = [[SVHTMLContext alloc] init];
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingPreview];
     [context setLiveDataFeeds:NO];
     [context setCurrentPage:[[self site] root]];
     
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:[[self site] root]];
-	NSString *thumbnailHTML = [parser parseIntoHTMLContext:context];
+    [context push];
+    [[[self site] root] writeHTML];
+    [context pop];
+	
+    NSString *thumbnailHTML = [context markupString];
     [context release];
-	[parser release];
     
 	
     // Load into webview
