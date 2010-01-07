@@ -53,7 +53,7 @@ typedef enum {
 
 #pragma mark Writing
 
-- (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
+- (void)writeHTMLString:(NSString *)html;
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 
 - (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
@@ -62,6 +62,8 @@ typedef enum {
                idName:(NSString *)idName
             className:(NSString *)className;
 - (void)writeEndTag:(NSString *)tagName;    //  </tagName>                                                        decreases indentation level
+
+- (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
 
 
 #pragma mark Indentation

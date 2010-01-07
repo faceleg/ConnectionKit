@@ -48,7 +48,7 @@
 	return result;
 }
 
-- (void)writeHTMLString:(NSString *)html
+- (void)writeString:(NSString *)html
 {
     [[self mutableString] appendString:html];
 }

@@ -109,15 +109,9 @@
 
 #pragma mark Writing
 
-- (void)writeString:(NSString *)string;
-{
-    [self writeHTMLString:string];
-}
-
 - (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
 {
-    SUBCLASSMUSTIMPLEMENT;
-    [self doesNotRecognizeSelector:_cmd];
+    [self writeString:html];
 }
 
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
