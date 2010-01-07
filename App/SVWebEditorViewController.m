@@ -205,13 +205,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @synthesize updating = _isUpdating;
 
-- (SVWebEditorTextController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock
-                                             isSelectable:(BOOL *)outIsSelectable; 
-{
-    OBPRECONDITION(outIsSelectable);
-    
+- (SVWebEditorTextController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock; 
+{    
     SVWebEditorTextController *result = nil;
-    *outIsSelectable = NO;
     
     
     // Locate the corresponding HTML element
@@ -247,9 +243,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
               toObject:value
            withKeyPath:@"textHTMLString"
                options:nil];
-        
-        // Make top-level text fields selectable. The way I determine this is admittedly hacky at the moment
-        *outIsSelectable = ([[aTextBlock HTMLSourceObject] isKindOfClass:[KTAbstractPage class]]);
     }
     else if ([value isKindOfClass:[SVBody class]])
     {
@@ -273,9 +266,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
               toObject:[aTextBlock HTMLSourceObject]
            withKeyPath:[aTextBlock HTMLSourceKeyPath]
                options:nil];
-        
-        // Make top-level text fields selectable. The way I determine this is admittedly hacky at the moment
-        *outIsSelectable = ([[aTextBlock HTMLSourceObject] isKindOfClass:[KTAbstractPage class]]);
     }
     
     return [result autorelease];
@@ -312,9 +302,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (SVHTMLTextBlock *aTextBlock in parsedTextBlocks)
     {
-        BOOL isSelectable = NO;
-        SVWebEditorTextController *controller = [self makeControllerForTextBlock:aTextBlock
-                                                                    isSelectable:&isSelectable];
+        SVWebEditorTextController *controller = [self makeControllerForTextBlock:aTextBlock];
         
         [textAreas addObject:controller];
         [[self webEditor] insertItem:controller];
