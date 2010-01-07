@@ -235,7 +235,7 @@
                 if (graphicalTextSettings)
                 {
                     // Generate the image
-                    KTMediaManager *mediaManager = [page mediaManager];
+                    KTMediaManager *mediaManager = [[[page site] document] mediaManager];
                     result = [mediaManager graphicalTextWithString:[innerHTML stringByConvertingHTMLToPlainText]
                                                             design:design
                                               imageReplacementCode:graphicalTextCode
