@@ -9,7 +9,7 @@
 #import "SVDOMController.h"
 
 #import "SVContentObject.h"
-#import "SVHTMLContext.h"
+#import "SVMutableStringHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -51,15 +51,19 @@
 
 - (void)createHTMLElement
 {
-    // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)
-    SVHTMLContext *context = [self HTMLContext];
+    // Gather the HTML
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithContext:[self HTMLContext]];
+    
     [context push];
     [self writeRepresentedObjectHTML];
     [context pop];
     
     NSString *htmlString = [context markupString];
     OBASSERT(htmlString);
+    [context release];
     
+    
+    // Create DOM objects from HTML
     DOMDocumentFragment *fragment = [[self HTMLDocument]
                                      createDocumentFragmentWithMarkupString:htmlString
                                      baseURL:[[self HTMLContext] baseURL]];
