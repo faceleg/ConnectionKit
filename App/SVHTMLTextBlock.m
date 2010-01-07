@@ -311,26 +311,18 @@
     
 	
     // Construct the actual HTML
-    [context writeHTMLString:@"<"];
-    [context writeHTMLString:[self tagName]];
+    [context openTag:[self tagName]];
 	
 	
 	// Open the main tag
 	// In some situations we generate both the main tag, and a <span class="in">
     if ([[SVHTMLContext currentContext] isEditable])
     {
-        [context writeHTMLString:@" id=\""];
-        [context writeHTMLString:[self DOMNodeID]];
-        [context writeHTMLString:@"\""];
+        [context writeAttribute:@"id" value:[self DOMNodeID]];
     }
     
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self tagName] isEqualToString:@"span"]);
-	if (!generateSpanIn)
-	{
-		[context writeHTMLString:@" class=\""];
-        [context writeHTMLString:[self CSSClassName]];
-        [context writeHTMLString:@"\""];
-	}
+	if (!generateSpanIn) [context writeAttribute:@"class" value:[self CSSClassName]];
 	
 	
 	// TODO: Add in graphical text styling if there is any
@@ -341,49 +333,42 @@
 		{
 			if ([[SVHTMLContext currentContext] isEditable])    // id has already been supplied
 			{
-				[context writeHTMLString:@" class=\"replaced\" style=\""];
-                [context writeHTMLString:graphicalTextStyle];
-                [context writeHTMLString:@"\""];
+                [context writeAttribute:@"class" value:@"replaced"];
+                [context writeAttribute:@"style" value:graphicalTextStyle];
 			}
 			else
 			{
-				[context writeHTMLString:@" id=\""];
-                [context writeHTMLString:[self graphicalTextCSSID]];
-                [context writeHTMLString:@"\" class=\"replaced\""];
+                [context writeAttribute:@"id" value:[self graphicalTextCSSID]];
+                [context writeAttribute:@"class" value:@"replaced"];
 			}
 		}
 	}
 	
 	
 	// Close off the main tag
-	[context writeHTMLString:@">"];
+	[context closeStartTag];
 	
 	
 	
 	// Place a hyperlink if required
 	if ([self hyperlinkString])
 	{
-		[context writeHTMLString:@"<a "];
-        [context writeHTMLString:[self targetString]];
-        [context writeHTMLString:@"href=\""];
-        [context writeHTMLString:[self hyperlinkString]];
-        [context writeHTMLString:@"\">"];
+		[context openTag:@"a "];
+        [context writeString:[self targetString]];
+        [context writeAttribute:@"href" value:[self hyperlinkString]];
+        [context closeStartTag];
 	}
 	
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
-		[context writeHTMLString:@"<span"];
-        
         NSString *CSSClassName = @"in";
         if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
 		{
 			CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
-        [context writeHTMLString:@" class=\""];
-        [context writeHTMLString:CSSClassName];
-        [context writeHTMLString:@"\">"];
+        [context writeStartTag:@"span" idName:nil className:CSSClassName];
 	}
 	
 	
@@ -391,12 +376,9 @@
 	[self writeInnerHTML];
 	
 	
-	// End all tags
-	if (generateSpanIn)
-	{
-		[context writeHTMLString:@"</span>"];
-	}
-	if ([self hyperlinkString]) [context writeHTMLString:@"</a>"];
+	// Write end tags
+	if (generateSpanIn) [context writeEndTag:@"span"];
+	if ([self hyperlinkString]) [context writeEndTag:@"a"];
 	[context writeEndTag:[self tagName]];
 }
 
