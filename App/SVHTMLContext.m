@@ -133,31 +133,9 @@
 - (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 {
     [self openTag:tagName];
-    
-    if (idName) 
-    {
-        [self writeHTMLString:@" id=\""];
-        [self writeText:idName];
-        [self writeHTMLString:@"\""];
-    }
-    
-    if (className)
-    {
-        [self writeHTMLString:@" class=\""];
-        [self writeText:className];
-        [self writeHTMLString:@"\""];
-    }
-    
+    if (idName) [self writeAttribute:@"id" value:idName];
+    if (className) [self writeAttribute:@"class" value:className];
     [self closeStartTag];
-}
-
-- (void)writeEndTag:(NSString *)tagName;
-{
-    [self writeHTMLString:@"</"];
-    [self writeHTMLString:tagName];
-    [self writeHTMLString:@">"];
-    
-    [self outdent];
 }
 
 - (void)openTag:(NSString *)tagName;        //  <tagName
@@ -182,6 +160,25 @@
     {
         [self writeString:@">"];
     }
+}
+
+- (void)writeEndTag:(NSString *)tagName;
+{
+    [self writeString:@"</"];
+    [self writeString:tagName];
+    [self writeString:@">"];
+    
+    [self outdent];
+}
+
+- (void)writeAttribute:(NSString *)attribute
+                 value:(NSString *)value;
+{
+    [self writeString:@" "];
+    [self writeString:attribute];
+    [self writeString:@"=\""];
+    [self writeText:value];
+    [self writeString:@"\""];
 }
 
 #pragma mark Indentation

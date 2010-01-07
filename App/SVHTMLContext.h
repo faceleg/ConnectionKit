@@ -64,11 +64,14 @@ typedef enum {
 - (void)writeStartTag:(NSString *)tagName   //  <tagName id="idName" class="className">     increases indentation level
                idName:(NSString *)idName
             className:(NSString *)className;
-- (void)writeEndTag:(NSString *)tagName;    //  </tagName>                                                        decreases indentation level
 
 - (void)openTag:(NSString *)tagName;        //  <tagName
 - (void)closeStartTag;                      //  >                                                                           increases indentation level
 - (void)closeEmptyElementTag;               //   />    OR    >    depending on -isXHTML
+- (void)writeEndTag:(NSString *)tagName;    //  </tagName>                                                        decreases indentation level
+
+- (void)writeAttribute:(NSString *)attribute//   attribute="value"
+                 value:(NSString *)value;
 
 
 /*  Primitives
