@@ -764,24 +764,29 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 // paste some raw HTML
 - (IBAction)pasteLink:(id)sender
 {
-	NSArray *urls = nil;
-	NSArray *titles = nil;
-	[KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
+	NSArray *locations = [KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
 	
-	if ([urls count])
+	if ([locations count])
 	{
 		// Figure out the URL and title to paste
-		NSURL *URL = [urls objectAtIndex:0];
+		NSURL *URL = [[locations objectAtIndex:0] URL];
+		NSString *title = [[locations objectAtIndex:0] title];
 		
-		NSString *title = [titles firstObjectKS];
-		if (KSISNULL(title) || [title isEmptyString]) {
-			title = [URL host];		// As a fallback, use the hostname as title when nothing better is available
-		}
+		NSString *urlString = [URL absoluteString];
+		
+		NSString *undoActionName = [[self windowController] createLink:urlString desiredText:title openLinkInNewWindow:NO];
+		
+		// update webview to reflect node changes
+		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+															object:[self webView]];	
+		[[self windowController] setContextElementInformation:nil];
+		
+		[[[self webView] undoManager] setActionName:undoActionName];
 		
 		
-		// Do the paste
-		NSString *linkHTML = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", [URL absoluteString], title];
-		[[self webView] replaceSelectionWithMarkupString:linkHTML];
+		// OLD METHOD -- PASTE BLINDLY OVER EXISTING TEXT
+		//NSString *linkHTML = [NSString stringWithFormat:@"<a href=\"%@\">%@</a>", [URL absoluteString], title];
+		//[[self webView] replaceSelectionWithMarkupString:linkHTML];
 	}
 }
 
@@ -910,9 +915,8 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
     // "Paste Link"
 	else if (action == @selector(pasteLink:))
 	{
-		NSArray *URLs = nil;
-		[KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
-		BOOL result = (URLs != nil && [URLs count] > 0);
+		NSArray *locations = [KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
+		BOOL result = (locations != nil && [locations count] > 0);
 		return result;
 	}
     
