@@ -808,7 +808,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     // Tidy up
     [innerPool release];
     
-    return nil;
+    return YES;
 }
 
 - (NSString *)endforeachWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
