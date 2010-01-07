@@ -123,6 +123,11 @@
     
     // Figure out the text element. Doing so by inspecting the DOM feels a little hacky to me, so would like to revisit.
     DOMHTMLElement *firstChild = [element firstChildOfClass:[DOMHTMLElement class]];
+    if ([[firstChild tagName] isEqualToString:@"A"])
+    {
+        element = firstChild;
+        firstChild = [element firstChildOfClass:[DOMHTMLElement class]];
+    }
     if ([[firstChild tagName] isEqualToString:@"SPAN"] &&
         [[firstChild className] hasPrefix:@"in"])
     {
