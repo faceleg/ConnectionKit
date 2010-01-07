@@ -37,7 +37,7 @@
     for (SVContentObject *anObject in objects)
     {
         [anObject writeHTML];
-        [context writeHTMLString:@"\n"];
+        [context writeNewline];
     }
 }
 
