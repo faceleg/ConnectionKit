@@ -467,9 +467,8 @@
                                    keyPath:(NSString *)keyPath;
 {
     // Increment the iteration after each run
-    NSString *result = [super doForeachIterationWithObject:object template:template keyPath:keyPath];
+    BOOL result = [super doForeachIterationWithObject:object template:template keyPath:keyPath];
     [[SVHTMLContext currentContext] nextIteration];
-    
     return result;
 }
     
