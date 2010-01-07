@@ -105,7 +105,6 @@ keyPath:(NSString *)keyPath;
 @protocol KTTemplateParserDelegate
 @optional
 - (void)parserDidStartTemplate:(SVTemplateParser *)parser;
-- (NSString *)parser:(SVTemplateParser *)parser didEndTemplate:(NSString *)result;
 - (void)parser:(SVTemplateParser *)parser willParseSubcomponentAtIndex:(unsigned)index;
 @end
 
