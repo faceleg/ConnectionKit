@@ -338,7 +338,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     for (id anObject in selectedObjects)
     {
         id newItem = [[[self webEditor] mainItem] descendantItemWithRepresentedObject:anObject];
-        if (newItem) [newSelection addObject:newItem];
+        if ([newItem isSelectable]) [newSelection addObject:newItem];
     }
     
     [[self webEditor] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
