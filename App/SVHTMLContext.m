@@ -132,8 +132,7 @@
 
 - (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 {
-    [self writeHTMLString:@"<"];
-    [self writeHTMLString:tagName];
+    [self openTag:tagName];
     
     if (idName) 
     {
@@ -149,9 +148,7 @@
         [self writeHTMLString:@"\""];
     }
     
-    [self writeHTMLString:@">"];
-    
-    [self indent];
+    [self closeStartTag];
 }
 
 - (void)writeEndTag:(NSString *)tagName;
@@ -161,6 +158,30 @@
     [self writeHTMLString:@">"];
     
     [self outdent];
+}
+
+- (void)openTag:(NSString *)tagName;        //  <tagName
+{
+    [self writeString:@"<"];
+    [self writeString:tagName];
+}
+
+- (void)closeStartTag;
+{
+    [self writeString:@">"];
+    [self indent];
+}
+
+- (void)closeEmptyElementTag;               //   />    OR    >    depending on -isXHTML
+{
+    if ([self isXHTML])
+    {
+        [self writeString:@" />"];
+    }
+    else
+    {
+        [self writeString:@">"];
+    }
 }
 
 #pragma mark Indentation
