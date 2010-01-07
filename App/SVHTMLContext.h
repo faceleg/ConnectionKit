@@ -61,6 +61,7 @@ typedef enum {
 
 /*  Each of these methods writes a specific part of HTML. An example should be given in the comments to the right
  */
+
 - (void)writeStartTag:(NSString *)tagName   //  <tagName id="idName" class="className">     increases indentation level
                idName:(NSString *)idName
             className:(NSString *)className;
