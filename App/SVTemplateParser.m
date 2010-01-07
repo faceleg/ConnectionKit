@@ -113,6 +113,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	myCache = cache;
 }
 
+@synthesize context = _context;
+
 #pragma mark -
 #pragma mark KVC Overriding
 
