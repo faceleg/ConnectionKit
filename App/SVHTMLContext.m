@@ -155,6 +155,8 @@
     [self writeHTMLString:@">"];
 }
 
+#pragma mark Indentation
+
 @synthesize indentationLevel = _indentation;
 
 - (void)indent;
