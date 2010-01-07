@@ -43,6 +43,47 @@
 
 @implementation SVHTMLContext
 
+#pragma mark Init & Dealloc
+
+- (id)init;
+{
+    [super init];
+    
+    _includeStyling = YES;
+    [self setEncoding:NSUTF8StringEncoding];
+    _iteratorsStack = [[NSMutableArray alloc] init];
+    _textBlocks = [[NSMutableArray alloc] init];
+    
+    return self;
+}
+
+- (id)initWithContext:(SVHTMLContext *)context;
+{
+    self = [self init];
+    
+    // Copy across properties
+    [self setIndentationLevel:[context indentationLevel]];
+    [self setCurrentPage:[context currentPage]];
+    [self setBaseURL:[context baseURL]];
+    [self setIncludeStyling:[context includeStyling]];
+    [self setLiveDataFeeds:[context liveDataFeeds]];
+    [self setXHTML:[context isXHTML]];
+    [self setEncoding:[context encoding]];
+    [self setGenerationPurpose:[context generationPurpose]];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_baseURL release];
+    [_currentPage release];
+    [_iteratorsStack release];
+    [_textBlocks release];
+    
+    [super dealloc];
+}
+
 #pragma mark Stack
 
 + (SVHTMLContext *)currentContext
@@ -81,30 +122,6 @@
 - (void)pop;
 {
     if ([SVHTMLContext currentContext] == self) [SVHTMLContext popContext];
-}
-
-#pragma mark Init & Dealloc
-
-- (id)init
-{
-    [super init];
-    
-    _includeStyling = YES;
-    [self setEncoding:NSUTF8StringEncoding];
-    _iteratorsStack = [[NSMutableArray alloc] init];
-    _textBlocks = [[NSMutableArray alloc] init];
-    
-    return self;
-}
-
-- (void)dealloc
-{
-    [_baseURL release];
-    [_currentPage release];
-    [_iteratorsStack release];
-    [_textBlocks release];
-    
-    [super dealloc];
 }
 
 #pragma mark Writing

@@ -40,7 +40,12 @@ typedef enum {
     NSMutableArray  *_textBlocks;
 }
 
-#pragma mark Stack
+#pragma mark Creating a Context
+- (id)init;
+- (id)initWithContext:(SVHTMLContext *)context; // new context gains all settings of old one
+
+
+#pragma mark Managing the Context Stack
 
 + (SVHTMLContext *)currentContext;
 + (void)pushContext:(SVHTMLContext *)context;
