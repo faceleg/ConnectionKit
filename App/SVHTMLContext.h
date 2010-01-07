@@ -56,6 +56,8 @@ typedef enum {
 - (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 
+- (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
+
 - (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 - (void)closeTag:(NSString *)tagName;
 

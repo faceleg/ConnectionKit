@@ -126,6 +126,16 @@
     [self writeHTMLString:html];
 }
 
+- (void)writeNewline;   // writes a newline character and the tabs to match -indentationLevel
+{
+    [self writeString:@"\n"];
+    
+    for (int i = 0; i < [self indentationLevel]; i++)
+    {
+        [self writeString:@"\t"];
+    }
+}
+
 - (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 {
     [self writeHTMLString:@"<"];
