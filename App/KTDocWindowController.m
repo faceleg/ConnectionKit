@@ -996,7 +996,7 @@ from representedObject */
 	if (!myMasterCodeInjectionController)
 	{
 		myMasterCodeInjectionController =
-			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[[self siteOutlineViewController] content] master:YES];
+			[[KTCodeInjectionController alloc] initWithPagesController:[[self siteOutlineViewController] content] master:YES];
 		
 		[[self document] addWindowController:myMasterCodeInjectionController];
 	}
@@ -1014,7 +1014,7 @@ from representedObject */
 	if (!myPageCodeInjectionController)
 	{
 		myPageCodeInjectionController =
-			[[KTCodeInjectionController alloc] initWithSiteOutlineController:[[self siteOutlineViewController] content] master:NO];
+			[[KTCodeInjectionController alloc] initWithPagesController:[[self siteOutlineViewController] content] master:NO];
 		
 		[[self document] addWindowController:myPageCodeInjectionController];
 	}

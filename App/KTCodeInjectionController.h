@@ -10,7 +10,8 @@
 #import "KSSingletonWindowController.h"
 
 
-@class KTPage, SVPagesController, BWSplitView, KSPlaceholderTextView;
+@class SVPagesController, BWSplitView, KSPlaceholderTextView;
+@protocol KSCollectionController;
 
 
 @interface KTCodeInjectionController : KSSingletonWindowController 
@@ -30,14 +31,14 @@
 	IBOutlet NSTextField				*oBodyTagTextField;
 	
 @private
-	SVPagesController	*mySiteOutlineController;	// Weak ref
-	BOOL	myIsMaster;
+	id <KSCollectionController> _pagesController;	// weak ref
+	BOOL                        _isMaster;
 	
 	NSTimer	*myTextEditingTimer;
 }
 
-- (id)initWithSiteOutlineController:(SVPagesController *)siteOutline
-							 master:(BOOL)isMaster;
+- (id)initWithPagesController:(id <KSCollectionController>)controller
+                       master:(BOOL)isMaster;
 
 - (BOOL)isMaster;
 

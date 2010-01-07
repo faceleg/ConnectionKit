@@ -23,8 +23,8 @@
 
 @implementation KTCodeInjectionController
 
-- (id)initWithSiteOutlineController:(SVPagesController *)siteOutline
-							 master:(BOOL)isMaster;
+- (id)initWithPagesController:(id <KSCollectionController>)controller
+                       master:(BOOL)isMaster;
 {
 	if ( !(gIsPro || (nil == gRegistrationString)) )	// don't allow this to be created if we're not pro
 	{
@@ -33,8 +33,8 @@
 		return nil;
 	}
 	
-	mySiteOutlineController = siteOutline;
-	myIsMaster = isMaster;
+	_pagesController = controller;
+	_isMaster = isMaster;
 	
 	[super initWithWindowNibName:@"CodeInjection"];
 	
@@ -72,32 +72,32 @@
 	}
 	
 	[oPreludeTextView bind:NSValueBinding
-				  toObject:mySiteOutlineController
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.beforeHTML"]
 				   options:nil];
 	
 	[oEarlyHeadTextView bind:NSValueBinding
-					toObject:mySiteOutlineController
+					toObject:_pagesController
 				 withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.earlyHead"]
 				     options:nil];
 	
 	[oHeadTextView bind:NSValueBinding
-				  toObject:mySiteOutlineController
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.headArea"]
 				   options:nil];
 	
 	[oBodyStartTextView bind:NSValueBinding
-				    toObject:mySiteOutlineController
+				    toObject:_pagesController
 			     withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagStart"]
 				     options:nil];
 	
 	[oBodyEndTextView bind:NSValueBinding
-				  toObject:mySiteOutlineController
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTagEnd"]
 				   options:nil];
 	
 	[oBodyTagTextField bind:NSValueBinding
-				  toObject:mySiteOutlineController
+				  toObject:_pagesController
 			   withKeyPath:[baseKeyPath stringByAppendingString:@".codeInjection.bodyTag"]
 				   options:nil];
 }
@@ -226,7 +226,7 @@
 	[super showWindow:sender];
 }
 
-- (BOOL)isMaster { return myIsMaster; }
+- (BOOL)isMaster { return _isMaster; }
 
 - (IBAction)showHelp:(id)sender
 {
