@@ -31,7 +31,7 @@
               inDOMDocument:(DOMDocument *)document;
 
 // Uses the receiver's HTML context to call -HTMLString from the represented object
-- (NSString *)representedObjectHTMLString;
+- (void)writeRepresentedObjectHTML;
 @property(nonatomic, retain) SVHTMLContext *HTMLContext;
 
 

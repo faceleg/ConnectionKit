@@ -52,7 +52,12 @@
 - (void)createHTMLElement
 {
     // Try to create HTML corresponding to our content (should be a Pagelet or plug-in)
-    NSString *htmlString = [self representedObjectHTMLString];
+    SVHTMLContext *context = [self HTMLContext];
+    [context push];
+    [self writeRepresentedObjectHTML];
+    [context pop];
+    
+    NSString *htmlString = [context markupString];
     OBASSERT(htmlString);
     
     DOMDocumentFragment *fragment = [[self HTMLDocument]
@@ -63,15 +68,9 @@
     [self setHTMLElement:element];
 }
 
-- (NSString *)representedObjectHTMLString;
+- (void)writeRepresentedObjectHTML;
 {
-    SVHTMLContext *context = [self HTMLContext];
-    
-    [context push];
-    NSString *result = [[self representedObject] HTMLString];
-    [context pop];
-    
-    return result;
+    [[self representedObject] writeHTML];
 }
 
 @synthesize HTMLContext = _context;
