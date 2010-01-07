@@ -155,6 +155,18 @@
     [self writeHTMLString:@">"];
 }
 
+@synthesize indentationLevel = _indentation;
+
+- (void)indent;
+{
+    [self setIndentationLevel:[self indentationLevel] + 1];
+}
+
+- (void)outdent;
+{
+    [self setIndentationLevel:[self indentationLevel] - 1];
+}
+
 #pragma mark Properties
 
 @synthesize baseURL = _baseURL;

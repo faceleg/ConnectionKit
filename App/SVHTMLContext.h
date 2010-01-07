@@ -24,6 +24,8 @@ typedef enum {
 
 @interface SVHTMLContext : SVTemplateContext
 {
+    NSUInteger  _indentation;
+    
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;
     
@@ -56,6 +58,12 @@ typedef enum {
 
 - (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 - (void)closeTag:(NSString *)tagName;
+
+
+// Setting the indentation level does not write to the context in any way. It is up to methods that actually do some writing to respect the indent level. e.g. starting a new line should indent that line to match.
+@property(nonatomic) NSUInteger indentationLevel;
+- (void)indent;
+- (void)outdent;
 
 
 #pragma mark Properties
