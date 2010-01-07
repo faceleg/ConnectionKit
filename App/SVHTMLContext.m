@@ -180,7 +180,48 @@
 
 #pragma mark URLs/Paths
 
-- (NSString *)URLStringForResourceFile:(NSURL *)resourceURL;
+- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
+{
+    OBPRECONDITION(URL);
+    
+    NSString *result;
+    
+    switch ([self generationPurpose])
+    {
+        case kGeneratingQuickLookPreview:
+            result = [URL absoluteString];
+            break;
+        default:
+            result = [URL stringRelativeToURL:[self baseURL]];
+            break;
+    }
+    
+    return result;
+}
+
+- (NSString *)relativeURLStringOfPage:(KTAbstractPage *)page;   // will generate a relative URL string when possible
+{
+    OBPRECONDITION(page);
+    
+    NSString *result;
+    
+    switch ([self generationPurpose])
+    {
+        case kGeneratingPreview:
+            result = [page previewPath];
+            break;
+        case kGeneratingQuickLookPreview:
+            result= @"javascript:void(0)";
+            break;
+        default:
+            result = [self relativeURLStringOfURL:[page URL]];
+            break;
+    }
+    
+    return result;
+}
+
+- (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
 {
     NSString *result;
 	switch ([self generationPurpose])

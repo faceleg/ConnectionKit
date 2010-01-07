@@ -84,7 +84,10 @@ typedef enum {
 
 
 #pragma mark URLs/Paths
-- (NSString *)URLStringForResourceFile:(NSURL *)resourceURL;
+// These methods try to generate as simple a URL string when possible. e.g. relative path, or page ID
+- (NSString *)relativeURLStringOfURL:(NSURL *)URL;
+- (NSString *)relativeURLStringOfPage:(KTAbstractPage *)page;   
+- (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
 
 
 #pragma mark Content
