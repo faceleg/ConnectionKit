@@ -144,7 +144,7 @@
 	if ([[SVHTMLContext currentContext] isEditable])
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] URLStringForResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
+		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
 	}
     else if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingQuickLookPreview)
 	{
@@ -154,7 +154,7 @@
 	else
     {
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] URLStringForResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
+		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
 	}
         
     
@@ -170,7 +170,7 @@
 	while (aCSSFile = [pluginCSSEnumerator nextObject])
 	{
 		NSURL *CSSURL = [NSURL fileURLWithPath:aCSSFile];
-        [stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] URLStringForResourceFile:CSSURL] title:nil media:nil]];
+        [stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:CSSURL] title:nil media:nil]];
 	}
 	
 	
@@ -390,7 +390,7 @@
 				
 				NSString *targetString = @"";	// targetStringForPage:targetPage		TODO
 				
-				[result appendFormat:@"<a %@href='[[path toplink]]' title=''>", targetString, [toplink.titleText stringByEscapingHTMLEntities]];		// need to escape single-quotes
+				[result appendFormat:@"<a %@href='[[path toplink]]' title=''>", targetString, [[toplink titleText] stringByEscapingHTMLEntities]];		// need to escape single-quotes
 				// perser pathToObject:
 				
 				[result appendFormat:@"[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>"];
