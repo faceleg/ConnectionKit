@@ -58,8 +58,10 @@ typedef enum {
 
 - (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
 
-- (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
-- (void)closeTag:(NSString *)tagName;
+- (void)writeStartTag:(NSString *)tagName   //  <tagName id="idName" class="className">     increases indentation level
+               idName:(NSString *)idName
+            className:(NSString *)className;
+- (void)writeEndTag:(NSString *)tagName;    //  </tagName>                                                        decreases indentation level
 
 
 #pragma mark Indentation

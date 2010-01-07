@@ -397,7 +397,7 @@
 		[context writeHTMLString:@"</span>"];
 	}
 	if ([self hyperlinkString]) [context writeHTMLString:@"</a>"];
-	[context closeTag:[self tagName]];
+	[context writeEndTag:[self tagName]];
 }
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.

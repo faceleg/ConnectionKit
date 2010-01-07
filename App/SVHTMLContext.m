@@ -136,7 +136,7 @@
     }
 }
 
-- (void)openTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+- (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 {
     [self writeHTMLString:@"<"];
     [self writeHTMLString:tagName];
@@ -156,13 +156,17 @@
     }
     
     [self writeHTMLString:@">"];
+    
+    [self indent];
 }
 
-- (void)closeTag:(NSString *)tagName;
+- (void)writeEndTag:(NSString *)tagName;
 {
     [self writeHTMLString:@"</"];
     [self writeHTMLString:tagName];
     [self writeHTMLString:@">"];
+    
+    [self outdent];
 }
 
 #pragma mark Indentation

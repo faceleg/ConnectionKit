@@ -68,9 +68,9 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 - (void)writeHTML;
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
-    [context openTag:@"div" idName:[self elementID] className:nil];
+    [context writeStartTag:@"div" idName:[self elementID] className:nil];
     [self writeInnerHTML];
-    [context closeTag:@"div"];
+    [context writeEndTag:@"div"];
 }
 
 - (NSString *)elementID
