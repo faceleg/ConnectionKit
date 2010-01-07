@@ -518,7 +518,7 @@
  */
 - (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTAbstractPage *)page
 {
-	NSString *result = [[SVHTMLContext currentContext] URLStringForResourceFile:resourceURL];
+	NSString *result = [[SVHTMLContext currentContext] relativeURLStringOfResourceFile:resourceURL];
     
 	// Tell the delegate
 	[self didEncounterResourceFile:resourceURL];
@@ -562,31 +562,11 @@
     
     if ([anObject isKindOfClass:[KTAbstractPage class]])
     {
-        switch ([[SVHTMLContext currentContext] generationPurpose])
-        {
-            case kGeneratingPreview:
-                result = [(KTAbstractPage *)anObject previewPath];
-                break;
-            case kGeneratingQuickLookPreview:
-                result= @"javascript:void(0)";
-                break;
-            default:
-                result = [[(KTAbstractPage *)anObject URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
-                break;
-        }
+        result = [[SVHTMLContext currentContext] relativeURLStringOfPage:anObject];
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {
-        switch ([[SVHTMLContext currentContext] generationPurpose])
-        {
-            case kGeneratingPreview:
-            case kGeneratingQuickLookPreview:
-                result = [(NSURL *)anObject absoluteString];
-                break;
-            default:
-                result = [(NSURL *)anObject stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
-                break;
-        }
+        result = [[SVHTMLContext currentContext] relativeURLStringOfURL:anObject];
     }
         
 	return [result stringByEscapingHTMLEntities];
