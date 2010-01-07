@@ -24,6 +24,8 @@
     [super dealloc];
 }
 
+- (BOOL)isSelectable { return [self isEditable]; }
+
 #pragma mark Bindings/NSEditor
 
 + (void)initialize
