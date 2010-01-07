@@ -223,15 +223,15 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 /*	Convenience method for doing a simple parse
  */
-+ (NSString *)parseTemplate:(NSString *)aTemplate
-                  component:(id)component
-                intoContext:(SVTemplateContext *)context;
++ (BOOL)parseTemplate:(NSString *)aTemplate
+            component:(id)component
+          intoContext:(SVTemplateContext *)context;
 {
 	SVTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
-	NSString *result = [parser parseIntoContext:context];
+	BOOL result = [parser parseIntoContext:context];
 	[parser release];
-	
-	return result;
+    
+    return result;
 }
 
 - (BOOL)parseIntoContext:(SVTemplateContext *)context;

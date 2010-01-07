@@ -63,9 +63,9 @@
 
 #pragma mark Parsing
 
-+ (NSString *)parseTemplate:(NSString *)aTemplate
-                  component:(id)component
-                intoContext:(SVTemplateContext *)context;
++ (BOOL)parseTemplate:(NSString *)aTemplate
+            component:(id)component
+          intoContext:(SVTemplateContext *)context;
 
 - (BOOL)parseIntoContext:(SVTemplateContext *)context;
 - (BOOL)prepareToParse;
