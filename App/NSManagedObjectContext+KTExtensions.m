@@ -254,16 +254,13 @@
                                                         object:page];
     
     // Repeat for any children that are going the same way
-    if ([page isKindOfClass:[KTPage class]])
+    for (KTPage *aPage in [page childPages])
     {
-        for (KTPage *aPage in [(KTPage *)page childPages])
-        {
-            [self willDeletePage:aPage];
-        }
-        for (KTAbstractPage *aPage in [(KTPage *)page archivePages])
-        {
-            [self willDeletePage:aPage];
-        }
+        [self willDeletePage:aPage];
+    }
+    for (KTAbstractPage *aPage in [page archivePages])
+    {
+        [self willDeletePage:aPage];
     }
 }
 

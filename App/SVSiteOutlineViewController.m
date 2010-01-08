@@ -593,7 +593,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		KTPage *page = (item) ? item : [self rootPage];
 		OBASSERT(page);
 		
-		result = [[page valueForKey:@"sortedChildren"] count];
+		result = [[page sortedChildren] count];
 		
 		// Root is a special case where we have to add 1 to the total
 		if (!item) result += 1;
@@ -610,7 +610,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		result = NO;
 	}
-	else if ( [item isKindOfClass:[KTPage class]] && ([(KTPage *)item isCollection] || [(KTPage *)item index]) )
+	else if ([(KTPage *)item isCollection] || [(KTPage *)item index])
 	{
 		result = YES;
 	}

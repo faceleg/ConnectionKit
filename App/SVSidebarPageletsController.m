@@ -50,16 +50,13 @@
     if ([[[page sidebar] pagelets] containsObject:pagelet])
     {
         // Remove from descendants first
-        if ([page isKindOfClass:[KTPage class]])
+        for (KTPage *aPage in [page childPages])
         {
-            for (KTPage *aPage in [(KTPage *)page childPages])
-            {
-                [self removePagelet:pagelet fromPageAndDescendants:aPage];
-            }
-            for (KTAbstractPage *anArchivePage in [page archivePages])
-            {
-                [self removePagelet:pagelet fromPageAndDescendants:anArchivePage];
-            }
+            [self removePagelet:pagelet fromPageAndDescendants:aPage];
+        }
+        for (KTAbstractPage *anArchivePage in [page archivePages])
+        {
+            [self removePagelet:pagelet fromPageAndDescendants:anArchivePage];
         }
         
         // Remove from the receiver
