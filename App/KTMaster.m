@@ -187,7 +187,9 @@
 	NSError *error = nil;
 	NSArray *existingDesigns = [moc objectsWithEntityName:@"DesignPublishingInfo" predicate:predicate error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];	
 	}
 	NSManagedObject *result = [existingDesigns lastObject];
 	

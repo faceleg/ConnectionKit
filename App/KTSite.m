@@ -177,7 +177,9 @@
 	NSError *error = nil;
 	NSArray *unsortedResult = [[self managedObjectContext] executeFetchRequest:request error:&error];
 	if (error) {
-		[[NSAlert alertWithError:error] runModal];
+		NSAlert *alert = [NSAlert alertWithError:error];
+		[alert setIcon:[NSApp applicationIconImage]];
+		[alert runModal];	
 		return nil;
 	}
 	
@@ -185,7 +187,7 @@
     // We have an odd bug where occasionally, a page will have a parent, but the parent will not recognise it as a child.
     // To fix, we need to delete such pages.
     static NSPredicate *orphansPredicate;
-    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == NIL"] retain];
+    if (!orphansPredicate) orphansPredicate = [[NSPredicate predicateWithFormat:@"indexPath == nil"] retain];
     
     NSArray *orphanedPages = [unsortedResult filteredArrayUsingPredicate:orphansPredicate];
     if ([orphanedPages count] > 0)

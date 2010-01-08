@@ -476,6 +476,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 									   alternateButton:nil 
 										   otherButton:nil
 							 informativeTextWithFormat:@""];
+		[alert setIcon:[NSApp applicationIconImage]];
 		(void)[alert runModal];
 		
 	}
