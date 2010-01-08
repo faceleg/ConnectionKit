@@ -109,13 +109,15 @@
 
 - (NSString *)identifier { return [self uniqueID]; }
 
-#pragma mark Accessors
+#pragma mark Child Pages
+
+/*	All this stuff is only relevant to KTPage, but it makes it so much more convenient to declare them at the KTAbstractPage level.
+ */
+- (NSSet *)childPages { return nil; }
+- (NSSet *)archivePages { return nil; }
+- (BOOL)isCollection { return NO; }
 
 @dynamic parentPage;
-
-/*	Only KTPages can be collections
- */
-- (BOOL)isCollection { return NO; }
 
 - (BOOL)isRoot
 {
@@ -136,6 +138,8 @@
 	}
 	return [parent isDescendantOfPage:aPotentialAncestor];
 }
+
+#pragma mark Other Relationships
 
 - (KTSite *)site { return [self wrappedValueForKey:@"site"]; }
 

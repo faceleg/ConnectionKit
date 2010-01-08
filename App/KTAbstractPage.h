@@ -48,14 +48,19 @@ KTCollectionPathStyle;
 @property(nonatomic, copy, readonly) NSString *uniqueID;
 
 
-#pragma mark Relationships
-@property(nonatomic, retain, readonly) KTPage *parentPage;
+#pragma mark Child Pages
+
+@property(nonatomic, copy, readonly) NSSet *childPages;
+@property(nonatomic, copy, readonly) NSSet *archivePages;
 - (BOOL)isCollection;
-- (BOOL)isRoot;
+
+@property(nonatomic, retain, readonly) KTPage *parentPage;
 - (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
+- (BOOL)isRoot;
 
+
+#pragma mark Other Relationships
 - (KTSite *)site;
-
 - (KTMaster *)master;
 
 @property(nonatomic, retain, readonly) SVSidebar *sidebar;
