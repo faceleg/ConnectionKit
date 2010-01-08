@@ -124,6 +124,13 @@
 #pragma mark Unsorted Children
 
 @dynamic childPages;
+- (NSSet *)childPages
+{
+    [self willAccessValueForKey:@"childPages"];
+    NSSet *result = [self primitiveValueForKey:@"childPages"];
+    [self didAccessValueForKey:@"childPages"];
+    return result;
+}
 
 /*	Adds the specified page to the receiver's children relationship.
  *
