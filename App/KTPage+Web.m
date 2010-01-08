@@ -83,7 +83,7 @@
 	
 	if (title)
 	{
-		[result appendFormat:@" title=\"%@\"", [title stringByEscapingHTMLEntities]];
+		[result appendFormat:@" title=\"%@\"", [title stringByEscapingHTMLEntitiesWithQuot:YES]];
 	}
 	
 	if (media)
