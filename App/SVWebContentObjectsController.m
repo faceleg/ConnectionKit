@@ -61,6 +61,7 @@
         if (page)
         {
             _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithSidebar:[page sidebar]];
+            [self synchronizeSidebarPageletsController];
         }
     }
 }
