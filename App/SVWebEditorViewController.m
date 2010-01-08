@@ -786,7 +786,32 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
-    [_selectableObjectsController remove:self];
+    // Are there any sidebar pagelets requiring special treatment?
+    NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
+    NSSet *sidebarPagelets = [[[self page] sidebar] pagelets];
+    BOOL selectionContainsSidebarPagelet = NO;
+    
+    for (id anObject in selectedObjects)
+    {
+        if ([sidebarPagelets containsObject:anObject])  // tells us it's an SVPagelet object in the sidebar
+        {
+            selectionContainsSidebarPagelet = YES;
+            SVPagelet *sidebarPagelet = anObject;
+            if ([_selectableObjectsController sidebarPageletAppearsOnAncestorPage:sidebarPagelet])
+            {
+                break;
+            }
+        }
+    }
+    
+    
+    // Go ahead and do the deletion
+    if (!selectionContainsSidebarPagelet)
+    {
+        [_selectableObjectsController remove:self];
+    }
+    
+    
     return YES;
 }
 
