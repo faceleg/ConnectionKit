@@ -12,12 +12,14 @@
 #import "KSArrayController.h"
 
 
-@class KTPage, SVPagelet;
+@class KTPage, SVPagelet, SVSidebarPageletsController;
 
 
 @interface SVWebContentObjectsController : KSArrayController
 {
-    KTPage  *_page;
+  @private
+    KTPage                      *_page;
+    SVSidebarPageletsController *_sidebarPageletsController;
 }
 
 // More specialised than -newObject

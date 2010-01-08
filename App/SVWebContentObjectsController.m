@@ -14,7 +14,14 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVSidebar.h"
+#import "SVSidebarPageletsController.h"
 #import "SVTextField.h"
+
+
+@interface SVWebContentObjectsController ()
+@property(nonatomic, retain, readonly) SVSidebarPageletsController *sidebarPageletsController;
+- (void)synchronizeSidebarPageletsController;
+@end
 
 
 @implementation SVWebContentObjectsController
@@ -43,6 +50,25 @@
 }
 
 @synthesize page = _page;
+- (void)setPage:(KTPage *)page
+{
+    if (page != _page)
+    {
+        [_page release]; _page = [page retain];
+        
+        // Generate new sidebar controller
+        [_sidebarPageletsController release]; _sidebarPageletsController = nil;
+        if (page)
+        {
+            _sidebarPageletsController = [[SVSidebarPageletsController alloc] initWithSidebar:[page sidebar]];
+        }
+    }
+}
+
+- (void)didChangeSelection
+{
+    [self synchronizeSidebarPageletsController];
+}
 
 - (void)willRemoveObject:(id)object;
 {
@@ -71,6 +97,25 @@
     {
         [[[self page] managedObjectContext] deleteObject:object];
     }
+}
+
+#pragma mark Sidebar Pagelets
+
+@synthesize sidebarPageletsController = _sidebarPageletsController;
+
+- (void)synchronizeSidebarPageletsController
+{
+    NSArrayController *controller = [self sidebarPageletsController];
+    [controller setSelectedObjects:[self selectedObjects]];
+}
+
+#pragma mark Support
+
+- (BOOL)setSelectedObjects:(NSArray *)objects
+{
+    BOOL result = [super setSelectedObjects:objects];
+    if (result) [self didChangeSelection];
+    return result;
 }
 
 @end
