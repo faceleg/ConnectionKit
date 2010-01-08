@@ -482,6 +482,7 @@
 		27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */; };
 		27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */; };
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F71A7210F7641D0029AE3A /* LinkInspector.xib */; };
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
 		27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */; settings = {ATTRIBUTES = (); }; };
 		27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */; };
@@ -1965,6 +1966,7 @@
 		27F0F3A30D0F46AC00B7555A /* KTExternalMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExternalMediaFile.m; sourceTree = "<group>"; };
 		27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorItem.h; sourceTree = "<group>"; };
 		27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorItem.m; sourceTree = "<group>"; };
+		27F71A7210F7641D0029AE3A /* LinkInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkInspector.xib; sourceTree = "<group>"; };
 		27F790D8106BABA6007DF81B /* KSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDragging.h; sourceTree = "<group>"; };
 		27F855FE0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExtensiblePluginPropertiesArchivedObject.h; sourceTree = "<group>"; };
 		27F855FF0D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExtensiblePluginPropertiesArchivedObject.m; sourceTree = "<group>"; };
@@ -2811,6 +2813,7 @@
 				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
 				27AF0E2610F40B42000A6B15 /* SVPageInspector.h */,
 				27AF0E2710F40B42000A6B15 /* SVPageInspector.m */,
+				27F71A7210F7641D0029AE3A /* LinkInspector.xib */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -5862,6 +5865,7 @@
 				27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */,
 				273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */,
 				CE35963E10F3CF340009F2CA /* jquery.jdMenu.css in Resources */,
+				27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

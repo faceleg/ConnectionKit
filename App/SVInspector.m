@@ -98,6 +98,10 @@
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
     [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
     
+    // Links
+    id linkInspector = [[KSInspectorViewController alloc] initWithNibName:@"LinkInspector" bundle:nil];
+    [linkInspector setTitle:NSLocalizedString(@"Link", @"Link Inspector")];
+    [linkInspector setIcon:[NSImage imageNamed:@"follow"]];
     
     // Plug-in
     _plugInInspector = [[SVPlugInInspector alloc] initWithNibName:@"PlugInInspector" bundle:nil];
@@ -111,6 +115,7 @@
                        _pageInspector,
                        _collectionInspector,
                        _wrapInspector,
+                       linkInspector,
                        _plugInInspector,
                        nil];
     
