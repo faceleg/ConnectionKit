@@ -329,7 +329,7 @@
             [aPage recursivelyInvalidateURL:YES];
 		}
 		
-		NSSet *archives = [self valueForKey:@"archivePages"];
+		NSSet *archives = [self archivePages];
 		pageEnumerator = [archives objectEnumerator];
 		while (aPage = [pageEnumerator nextObject])
 		{

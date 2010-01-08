@@ -73,7 +73,7 @@
     
     
     // Update archive page titles to match
-    [[self valueForKey:@"archivePages"] makeObjectsPerformSelector:@selector(updateTitle)];
+    [[self archivePages] makeObjectsPerformSelector:@selector(updateTitle)];
 }
 
 - (BOOL)shouldUpdateFileNameWhenTitleChanges

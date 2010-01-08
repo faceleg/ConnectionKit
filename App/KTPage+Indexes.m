@@ -630,7 +630,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	}
 	else
 	{
-		NSSet *archivePages = [self valueForKey:@"archivePages"];
+		NSSet *archivePages = [self archivePages];
 		[[self managedObjectContext] deleteObjectsInCollection:archivePages];
 	}
 }
@@ -645,7 +645,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	if (![self collectionGenerateArchives]) return nil;
 	
 	
-	NSArray *archives = [[self valueForKey:@"archivePages"] allObjects];
+	NSArray *archives = [[self archivePages] allObjects];
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"archiveStartDate <= %@ AND archiveEndDate > %@", timestamp, timestamp];
 	KTArchivePage *result = [[archives filteredArrayUsingPredicate:predicate] firstObjectKS];
 	
@@ -686,7 +686,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
     }
     
     
-    NSArray *result = [[[self valueForKey:@"archivePages"] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
+    NSArray *result = [[[self archivePages] allObjects] sortedArrayUsingDescriptors:sortDescriptors];
     return result;
 }
 

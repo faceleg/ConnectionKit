@@ -56,7 +56,7 @@
             {
                 [self removePagelet:pagelet fromPageAndDescendants:aPage];
             }
-            for (KTAbstractPage *anArchivePage in [page valueForKey:@"archivePages"])
+            for (KTAbstractPage *anArchivePage in [page archivePages])
             {
                 [self removePagelet:pagelet fromPageAndDescendants:anArchivePage];
             }

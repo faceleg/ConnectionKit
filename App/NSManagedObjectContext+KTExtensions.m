@@ -260,7 +260,7 @@
         {
             [self willDeletePage:aPage];
         }
-        for (KTAbstractPage *aPage in [(KTPage *)page valueForKey:@"archivePages"])
+        for (KTAbstractPage *aPage in [(KTPage *)page archivePages])
         {
             [self willDeletePage:aPage];
         }
