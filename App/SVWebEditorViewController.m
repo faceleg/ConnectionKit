@@ -786,59 +786,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
-    // Are there any sidebar pagelets requiring special treatment?
-    NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
-    NSSet *sidebarPagelets = [[[self page] sidebar] pagelets];
-    BOOL selectionContainsSidebarPagelet = NO;
-    BOOL selectionContainsInheritedSidebarPagelet = NO;
-    
-    for (id anObject in selectedObjects)
-    {
-        if ([sidebarPagelets containsObject:anObject])  // tells us it's an SVPagelet object in the sidebar
-        {
-            selectionContainsSidebarPagelet = YES;
-            SVPagelet *sidebarPagelet = anObject;
-            if ([_selectableObjectsController sidebarPageletAppearsOnAncestorPage:sidebarPagelet])
-            {
-                selectionContainsInheritedSidebarPagelet = YES;
-                break;
-            }
-        }
-    }
-    
-    
-    // So dependening on the content, go ahead with the deletion, or warn the user
-    if (selectionContainsSidebarPagelet)
-    {
-        NSAlert *alert = [[NSAlert alloc] init];
-        
-        if (selectionContainsInheritedSidebarPagelet)
-        {
-            [alert setMessageText:NSLocalizedString(@"Do you want to delete the selected pagelet from the sidebar of every page, or just the selected page and its children?", "alert message")];
-        }
-        else
-        {
-            [alert setMessageText:NSLocalizedString(@"Are you sure you want to delete this pagelet?", "alert message")];
-        }
-        
-        if (selectionContainsInheritedSidebarPagelet)
-        {
-            [alert addButtonWithTitle:NSLocalizedString(@"Delete from Page & Children", "")];
-        }
-        [alert addButtonWithTitle:NSLocalizedString(@"Delete from Every Page", @"alert button")];
-        [alert addButtonWithTitle:NSLocalizedString(@"Cancel", @"alert button")];
-        
-        [alert beginSheetModalForWindow:[[self webEditor] window]
-                          modalDelegate:nil didEndSelector:nil
-                            contextInfo:NULL];
-        [alert release];
-    }
-    else
-    {
-        [_selectableObjectsController remove:self];
-    }
-    
-    
+    [_selectableObjectsController remove:self];
     return YES;
 }
 
