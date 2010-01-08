@@ -337,11 +337,11 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
-	result = (nil != [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
-									   configuration:nil
-												 URL:storeURL
-											 options:nil
-											   error:outError]);
+	result = ([storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+                                             configuration:nil
+                                                       URL:storeURL
+                                                   options:nil
+                                                     error:outError] != nil);
 	
 	// Also configure media manager's store
 	if (result)
