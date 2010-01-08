@@ -78,20 +78,27 @@
     if ([object isKindOfClass:[SVPagelet class]])
     {
         // Remove pagelet from sidebar/callout. Delete if appropriate
-        SVPagelet *pagelet = object;
-        
-        [[[self page] sidebar] removePageletsObject:pagelet];
-        
-        SVCallout *callout = [pagelet callout];
-        [callout removePageletsObject:pagelet];
-        if ([[callout pagelets] count] == 0)
+        // If it is in the sidebar, the corresponding controller can take care of the matter. Otherwise, it's up to us
+        if ([[[self sidebarPageletsController] arrangedObjects] containsObject:object])
         {
-            [[[self page] managedObjectContext] deleteObject:callout];
+            [[self sidebarPageletsController] removeObject:object];
         }
-        
-        if ([[pagelet sidebars] count] == 0 && ![pagelet callout])
+        else
         {
-            [[pagelet managedObjectContext] deleteObject:pagelet];
+            SVPagelet *pagelet = object;
+            
+            // Remove from callout, and delete that if it's now empty
+            SVCallout *callout = [pagelet callout];
+            [callout removePageletsObject:pagelet];
+            if ([[callout pagelets] count] == 0)
+            {
+                [[callout managedObjectContext] deleteObject:callout];
+            }
+            
+            if ([[pagelet sidebars] count] == 0)
+            {
+                [[pagelet managedObjectContext] deleteObject:pagelet];
+            }
         }
     }
     else if ([object isKindOfClass:[SVTextField class]])
