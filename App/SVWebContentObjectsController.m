@@ -109,6 +109,25 @@
 
 #pragma mark Sidebar Pagelets
 
+- (BOOL)sidebarPageletAppearsOnAncestorPage:(SVPagelet *)pagelet;
+{
+    BOOL result = NO;
+    
+    // Search up the tree from our page to see if any of them contain the pagelet
+    KTPage *page = [[self page] parentPage];
+    while (page)
+    {
+        if ([[[page sidebar] pagelets] containsObject:pagelet])
+        {
+            result = YES;
+            break;
+        }
+        page = [page parentPage];
+    }
+    
+    return result;
+}
+
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 
 - (void)synchronizeSidebarPageletsController

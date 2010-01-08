@@ -24,6 +24,7 @@
 
 // More specialised than -newObject
 - (SVPagelet *)newPagelet;
+- (BOOL)sidebarPageletAppearsOnAncestorPage:(SVPagelet *)pagelet;
 
 // Provides extra contextual information on top of -managedObjectContext
 @property(nonatomic, retain) KTPage *page;
