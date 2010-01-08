@@ -204,6 +204,8 @@
 		270ABF9D0D76E85500C80911 /* KTAbstractPage.m in Sources */ = {isa = PBXBuildFile; fileRef = 270ABF9B0D76E85500C80911 /* KTAbstractPage.m */; };
 		270B67CE0F10E66900F6E076 /* KTPageDetailsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */; };
 		270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */; };
+		270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */; };
+		270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
@@ -1636,6 +1638,8 @@
 		270ABF9B0D76E85500C80911 /* KTAbstractPage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPage.m; sourceTree = "<group>"; };
 		270B67CC0F10E66900F6E076 /* KTPageDetailsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPageDetailsController.h; sourceTree = "<group>"; };
 		270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsController.m; sourceTree = "<group>"; };
+		270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebarPageletsController.h; sourceTree = "<group>"; };
+		270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebarPageletsController.m; sourceTree = "<group>"; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
@@ -2777,6 +2781,15 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		270E44B810F77D1D00EF1FA0 /* Model Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */,
+				270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */,
+			);
+			name = "Model Controllers";
+			sourceTree = "<group>";
+		};
 		27196F5D1090A8590096B612 /* 2.0 Plug-in System */ = {
 			isa = PBXGroup;
 			children = (
@@ -3365,6 +3378,7 @@
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Documents */,
 				275E067A0DDA0F1A0072567F /* Model */,
+				270E44B810F77D1D00EF1FA0 /* Model Controllers */,
 				2786BE970CAD10530086F9E0 /* Media */,
 				27DF88CE0D85785D00AEF4B5 /* Main Document Window */,
 				3C0B1D53104798F5002EE098 /* Design Chooser */,
@@ -5187,6 +5201,7 @@
 				27AF0E2810F40B42000A6B15 /* SVPageInspector.h in Headers */,
 				27B52E6E10F49B730086DEE4 /* SVTemplateContext.h in Headers */,
 				27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */,
+				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6566,6 +6581,7 @@
 				27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */,
 				27B52E7010F49B730086DEE4 /* SVTemplateContext.m in Sources */,
 				27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */,
+				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
