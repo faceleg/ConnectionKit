@@ -390,7 +390,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     SVWebEditorView *webEditor = [self webEditor];
     
-    DOMElement *link = [[webEditor HTMLDocument] createElement:@"A"];
+    DOMHTMLAnchorElement *link = (id)[[webEditor HTMLDocument] createElement:@"A"];
+    [link setHref:@"http://example.com"];
+    
     DOMRange *selection = [webEditor selectedDOMRange];
     [selection surroundContents:link];
         
