@@ -701,6 +701,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 }
 
+#pragma mark Links
+
+- (void)showLinkPanel:(id)sender
+{
+    
+}
+
 #pragma mark UI Validation
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem;

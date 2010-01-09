@@ -10,7 +10,6 @@
 
 #import "KT.h"
 #import "SVApplicationController.h"
-#import "KSBorderlessWindow.h"
 #import "KTDesign.h"
 #import "KTDocWebViewController.h"
 #import "KTWebViewComponent.h"
@@ -21,8 +20,11 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTPseudoElement.h"
-#import "KSSilencingConfirmSheet.h"
 #import "KTSummaryWebViewTextBlock.h"
+
+#import "KSBorderlessWindow.h"
+#import "KSDocumentController.h"
+#import "KSSilencingConfirmSheet.h"
 #import "KSTextField.h"
 
 #import "NSArray+Karelia.h"
@@ -257,120 +259,14 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	[self performSelector:@selector(showLinkPanel:) withObject:sender afterDelay:0.0];
 }
 
-- (IBAction)showLinkPanel:(id)sender
+- (void)showLinkPanel:(id)sender
 {
-	BOOL localLink = NO;		// override if it's a local link
-	NSString *theLinkString = nil;
-	
-	[oLinkOpenInNewWindowSwitch setState:NSOffState];
-	
-	// populate with context information
-	NSDictionary *info = [[self contextElementInformation] retain];
-	if (info)
-	{
-		DOMNode *node = [info objectForKey:WebElementDOMNodeKey];
-		DOMRange *selectedRange = [[[[self webContentAreaController] webEditorViewController] webEditor] selectedDOMRange];
-		
-        
-		// Hunt down the anchor to edit
-		DOMNode *possibleAnchor = [selectedRange commonAncestorContainer];
-        if (![possibleAnchor isKindOfClass:[DOMHTMLAnchorElement class]])
-        {
-            possibleAnchor = [possibleAnchor parentNode];
-        }
-        
-		
-		if ([possibleAnchor isKindOfClass:[DOMHTMLAnchorElement class]] && [(DOMHTMLAnchorElement *)possibleAnchor href])
-		{
-			theLinkString = [(DOMHTMLAnchorElement *)possibleAnchor href];
-			if ([theLinkString hasPrefix:@"applewebdata:"])
-			{
-				theLinkString = [theLinkString lastPathComponent];
-				// some absolute page link.	 Restore the leading slash
-				theLinkString = [@"/" stringByAppendingString:theLinkString];
-			}
-			NSRange wherePageID = [theLinkString rangeOfString:kKTPageIDDesignator];
-			if (NSNotFound != wherePageID.location)
-			{
-				[info setValue:[theLinkString lastPathComponent] forKey:@"KTLocalLink"]; // mark as local link so we preserve it
-				NSString *uid = [theLinkString substringFromIndex:NSMaxRange(wherePageID)];
-				KTPage *targetPage = [KTPage pageWithUniqueID:uid inManagedObjectContext:[[self document] managedObjectContext]];
-				theLinkString = [[targetPage title] text];
-				localLink = YES;
-			}
-            
-            // Since we're editing a link, select it
-            [selectedRange selectNode:possibleAnchor];
-            [[[[self webContentAreaController] webEditorViewController] webEditor] setSelectedDOMRange:selectedRange affinity:NSSelectionAffinityDownstream];
-		}
-		else if ( nil != node )
-		{
-			// examine selectedRange for an e-mail address
-			NSString *string = [selectedRange toString];
-			if ( [string isValidEmailAddress] )
-			{
-				theLinkString = [NSString stringWithFormat:@"mailto:%@", string];
-			}
-			else
-			{
-				// Try to populate from frontmost Safari URL
-				NSURL *safariURL = nil;
-				NSString *safariTitle = nil;	// someday, we could populate the link title as well!
-				[NSAppleScript getWebBrowserURL:&safariURL title:&safariTitle source:nil];
-				if (safariURL)
-				{
-					theLinkString = [safariURL absoluteString];
-				}
-			}
-		}
-		
-		[oLinkView setConnected:(nil != theLinkString)];
-		
-		if (nil == theLinkString)
-		{
-			theLinkString = @"";
-		}
-		if (localLink)
-		{
-			[oLinkLocalPageField setStringValue:theLinkString];
-			[oLinkDestinationField setStringValue:@""];
-		}
-		else
-		{
-			[oLinkLocalPageField setStringValue:@""];
-			[oLinkDestinationField setStringValue:theLinkString];	// we were unescaping this -- wrong!
-		}
-		[oLinkLocalPageField setHidden:!localLink];
-		[oLinkDestinationField setHidden:localLink];
-		
-		// set oLinkOpenInNewWindowSwitch
-		if ( nil != [info objectForKey:WebElementDOMNodeKey] )
-		{
-			DOMNode *parentNode = [(DOMNode *)[info objectForKey:WebElementDOMNodeKey] parentNode];
-			if ( [parentNode isKindOfClass:[DOMHTMLAnchorElement class]] )
-			{
-				NSString *target = [(DOMHTMLAnchorElement *)parentNode target];
-				if ( [target isEqualToString:@"_blank"] )
-				{
-					[oLinkOpenInNewWindowSwitch setState:NSOnState];
-				}
-			}
-		}
-		
-		// set top left corner of window to top of selectedTextRect in screen coordinates
-		NSPoint topLeftCorner = [self linkPanelTopLeftPointForSelectionRect:mySelectionRect];
-		NSPoint convertedWindowOrigin = [[self window] convertBaseToScreen:topLeftCorner];
-		[oLinkPanel setFrameTopLeftPoint:convertedWindowOrigin];
-		
-		// make it a child window, set focus on the link, and display
-		[[self window] addChildWindow:oLinkPanel ordered:NSWindowAbove];
-		[oLinkPanel makeKeyAndOrderFront:nil]; // we do makeKey so that textfield gets focus
-	}
-	else
-	{
-		NSLog(@"Unable to show link panel; reselect text in Web View.");
-	}
-	[info release];
+	// Ask Web Editor Controller to handle the command
+    [[[self webContentAreaController] webEditorViewController] showLinkPanel:sender];
+    
+    
+    // TODO: Open the Link Inspector
+    [[NSDocumentController sharedDocumentController] showInspectors:sender];
 }
 
 - (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange
