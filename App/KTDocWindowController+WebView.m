@@ -259,16 +259,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	[self performSelector:@selector(showLinkPanel:) withObject:sender afterDelay:0.0];
 }
 
-- (void)orderFrontLinkPanel:(id)sender
-{
-	// Ask Web Editor Controller to handle the command
-    [[[self webContentAreaController] webEditorViewController] orderFrontLinkPanel:sender];
-    
-    
-    // TODO: Open the Link Inspector
-    [[NSDocumentController sharedDocumentController] showInspectors:sender];
-}
-
 - (NSString *)removeLinkWithDOMRange:(DOMRange *)selectedRange
 {
 	// Find all the links in the selection

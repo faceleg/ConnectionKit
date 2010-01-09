@@ -103,7 +103,7 @@
 			<key>paletteLabel</key>
 			<string>PALETTE_CREATE_EDIT_LINK</string>
 			<key>target</key>
-			<string>windowcontroller</string>
+			<string>firstResponder</string>
 		</dict>
 		<dict>
 			<key>action</key>
