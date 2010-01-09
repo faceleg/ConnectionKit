@@ -17,8 +17,7 @@
 
 @implementation SVBodyParagraph 
 
-@dynamic tagName;
-@dynamic inlineGraphics;
+#pragma mark HTML
 
 - (void)writeHTML;
 {
@@ -40,8 +39,6 @@
     [self setArchiveString:[element innerHTML]];
 }
 
-@dynamic archiveString;
-
 - (void)writeInnerHTML;
 {
     [[SVHTMLContext currentContext] writeHTMLString:[self archiveString]];
@@ -61,5 +58,12 @@
 {
     return [SVBodyParagraphDOMAdapter class];
 }
+
+#pragma mark Raw Properties
+
+@dynamic tagName;
+@dynamic archiveString;
+@dynamic links;
+@dynamic inlineGraphics;
 
 @end
