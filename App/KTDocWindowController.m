@@ -356,7 +356,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 			sourceKeyPath = @"html";	// raw HTML
 			if (nil == sourceObject)	// no appropriate pagelet selected, try page
 			{
-				sourceObject = [[[self siteOutlineViewController] content] selectedPage];
+				sourceObject = [[[[self siteOutlineViewController] content] selectedObjects] lastObject];
 				if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
 				{
 					sourceObject = nil;		// no, don't try to edit a non-rich text
