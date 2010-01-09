@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="288"/>
+			<integer value="169"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2079,14 +2079,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">showLinkPanel:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="156517136"/>
-					</object>
-					<int key="connectionID">690</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">duplicate:</string>
 						<reference key="source" ref="464856506"/>
 						<reference key="destination" ref="628921015"/>
@@ -2868,6 +2860,14 @@
 						<reference key="destination" ref="358988902"/>
 					</object>
 					<int key="connectionID">1270</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">orderFrontLinkPanel:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="156517136"/>
+					</object>
+					<int key="connectionID">1271</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -4693,7 +4693,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{835, 533}, {150, 153}}</string>
+					<string>{{330, 533}, {150, 153}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4739,7 +4739,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{791, 243}, {255, 443}}</string>
+					<string>{{286, 243}, {255, 443}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4767,7 +4767,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{658, 686}, {525, 20}}</string>
+					<string>{{153, 686}, {525, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4780,7 +4780,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{568, 383}, {294, 303}}</string>
+					<string>{{503, 383}, {294, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4974,7 +4974,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1270</int>
+			<int key="maxID">1271</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5691,7 +5691,6 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addCollection:</string>
-							<string>addPagelet:</string>
 							<string>chooseDesign:</string>
 							<string>clearLinkDestination:</string>
 							<string>duplicate:</string>
@@ -5703,6 +5702,7 @@
 							<string>exportSiteAgain:</string>
 							<string>finishLinkPanel:</string>
 							<string>group:</string>
+							<string>orderFrontLinkPanel:</string>
 							<string>paste:</string>
 							<string>pastePagelets:</string>
 							<string>pastePages:</string>
@@ -5711,8 +5711,8 @@
 							<string>publishSiteChanges:</string>
 							<string>publishSiteFromToolbar:</string>
 							<string>showChooseDesignSheet:</string>
-							<string>showLinkPanel:</string>
 							<string>submitSiteToDirectory:</string>
+							<string>toggleSmallPageIcons:</string>
 							<string>updateWebView:</string>
 							<string>visitPublishedPage:</string>
 							<string>visitPublishedSite:</string>
@@ -5775,7 +5775,7 @@
 							<string>KTLinkSourceView</string>
 							<string>NSTextField</string>
 							<string>KSBorderlessWindow</string>
-							<string>NSArrayController</string>
+							<string>SVPagesController</string>
 							<string>SVSiteOutlineViewController</string>
 							<string>SVWebContentAreaController</string>
 						</object>
@@ -6124,13 +6124,6 @@
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTTemplateParser.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSObject+KTExtensions.h</string>
 					</object>
 				</object>
@@ -6139,6 +6132,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="601315492">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSOutlineView+KTExtensions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVTemplateParser.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6432,6 +6432,18 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">SVPagesController</string>
+					<string key="superclassName">NSArrayController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">addCollection:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVPagesController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">SVSiteOutlineViewController</string>
 					<string key="superclassName">NSViewController</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -6507,11 +6519,15 @@
 							<string>insertPageTitle:</string>
 							<string>insertPagelet:</string>
 							<string>insertPageletInSidebar:</string>
+							<string>insertPageletTitle:</string>
 							<string>insertSiteSubtitle:</string>
 							<string>insertSiteTitle:</string>
+							<string>orderFrontLinkPanel:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

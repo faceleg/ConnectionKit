@@ -703,7 +703,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Links
 
-- (void)showLinkPanel:(id)sender
+- (void)orderFrontLinkPanel:(id)sender
 {
     
 }

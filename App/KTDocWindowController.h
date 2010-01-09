@@ -144,7 +144,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 - (void)linkPanelDidLoad;
 
-- (IBAction)showLinkPanel:(id)sender;
+- (IBAction)orderFrontLinkPanel:(id)sender;
 - (IBAction)finishLinkPanel:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 

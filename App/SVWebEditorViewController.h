@@ -95,7 +95,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
 #pragma mark Links
-- (IBAction)showLinkPanel:(id)sender;
+- (IBAction)orderFrontLinkPanel:(id)sender;
 
 
 #pragma mark Delegate
