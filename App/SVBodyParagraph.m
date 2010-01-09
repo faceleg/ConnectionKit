@@ -34,13 +34,6 @@
     [context writeEndTag:[self tagName]];
 }
 
-- (void)readHTMLFromElement:(DOMHTMLElement *)element;
-{
-    //  Use the element to update our tagName, inner HTML, and inline graphics
-    [self setTagName:[element tagName]];
-    [self setArchiveString:[element innerHTML]];
-}
-
 - (void)writeInnerHTML;
 {
     //  The inner HTML is made up by combining our archive string, links, and inline graphics. Do this by writing a chunk of archive string, followed by link/graphic tag, and so on.
@@ -71,6 +64,13 @@
 - (Class)DOMControllerClass;
 {
     return [SVBodyParagraphDOMAdapter class];
+}
+
+- (void)readHTMLFromElement:(DOMHTMLElement *)element;
+{
+    //  Use the element to update our tagName, inner HTML, and inline graphics
+    [self setTagName:[element tagName]];
+    [self setArchiveString:[element innerHTML]];
 }
 
 #pragma mark Raw Properties
