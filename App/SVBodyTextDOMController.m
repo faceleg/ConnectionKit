@@ -388,7 +388,12 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)orderFrontLinkPanel:(id)sender;
 {
+    SVWebEditorView *webEditor = [self webEditor];
     
+    DOMElement *link = [[webEditor HTMLDocument] createElement:@"A"];
+    DOMRange *selection = [webEditor selectedDOMRange];
+    [selection surroundContents:link];
+        
 }
 
 #pragma mark KVO
