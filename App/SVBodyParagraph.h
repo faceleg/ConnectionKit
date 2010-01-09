@@ -24,8 +24,12 @@
 // External code should rarely need to modify these
 @property(nonatomic, copy) NSString *tagName;
 @property(nonatomic, copy) NSString *archiveString;
-@property(nonatomic, copy) NSSet *links;
 @property(nonatomic, copy) NSSet* inlineGraphics;
+
+
+#pragma mark Links
+@property(nonatomic, copy) NSSet *links;
+- (NSArray *)orderedLinks;
 
 
 @end

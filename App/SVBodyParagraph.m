@@ -12,6 +12,7 @@
 #import "SVPlugInGraphic.h"
 #import "SVHTMLContext.h"
 
+#import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -63,7 +64,34 @@
 
 @dynamic tagName;
 @dynamic archiveString;
-@dynamic links;
 @dynamic inlineGraphics;
+
+#pragma mark  Links
+
+@dynamic links;
+
+- (NSArray *)orderedLinks;
+{
+    // Build sort descriptors if needed
+    static NSArray *sortDescriptors;
+    if (!sortDescriptors)
+    {
+        // Links should never overlap, but they can theoretically be stacked inside one another. Therefore sort by location first, and length next
+        NSSortDescriptor *locationSorting = [[NSSortDescriptor alloc] initWithKey:@"location"
+                                             
+                                                                 ascending:YES];
+        NSSortDescriptor *lengthSorting = [[NSSortDescriptor alloc] initWithKey:@"length"
+                                                                      ascending:NO];
+        
+        sortDescriptors = [[NSArray alloc] initWithObjects:locationSorting, lengthSorting, nil];
+        [locationSorting release];
+        [lengthSorting release];
+    }
+    
+    
+    // Fetch and sort our links
+    NSArray *result = [[self links] KS_sortedArrayUsingDescriptors:sortDescriptors];
+    return result;
+}
 
 @end
