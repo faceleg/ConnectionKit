@@ -34,7 +34,7 @@
     [context writeEndTag:[self tagName]];
 }
 
-- (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
+- (void)readHTMLFromElement:(DOMHTMLElement *)element;
 {
     //  Use the element to update our tagName, inner HTML, and inline graphics
     [self setTagName:[element tagName]];

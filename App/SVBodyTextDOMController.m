@@ -314,7 +314,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         
         // Create paragraph
         SVBodyParagraph *paragraph = [[self content] newObject];
-        [paragraph setHTMLStringFromElement:insertedNode];
+        [paragraph readHTMLFromElement:insertedNode];
         
         
         // Create a matching controller

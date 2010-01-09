@@ -117,7 +117,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
             _isUpdatingModel = YES;
             
             SVBodyParagraph *paragraph = [self representedObject];
-            [paragraph setHTMLStringFromElement:[self HTMLElement]];
+            [paragraph readHTMLFromElement:[self HTMLElement]];
             
             _isUpdatingModel = NO;;
         }

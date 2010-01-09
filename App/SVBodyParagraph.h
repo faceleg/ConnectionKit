@@ -14,10 +14,9 @@
 @interface SVBodyParagraph :  SVBodyElement  
 
 #pragma mark HTML
-
-- (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
-
+- (void)writeHTML;
 - (void)writeInnerHTML;
+- (void)readHTMLFromElement:(DOMHTMLElement *)element;
 
 
 #pragma mark Raw Properties
