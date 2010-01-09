@@ -64,7 +64,7 @@
     {
         NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
         DOMRange *editingRange = [[self webView] editableDOMRangeForPoint:point];
-        dropNode = [[editingRange startContainer] containingContentEditableElement];
+        dropNode = [[editingRange startContainer] enclosingContentEditableElement];
         
         [self removeDragCaretFromDOMNodes]; // if WebView is accepting drop, can't use our custom caret
     }

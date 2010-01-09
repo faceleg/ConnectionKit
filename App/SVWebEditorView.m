@@ -385,7 +385,7 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     if (updateWebView && selectedItem)
     {
         DOMElement *domElement = [selectedItem HTMLElement];
-        if ([domElement containingContentEditableElement])
+        if ([domElement enclosingContentEditableElement])
         {
             [[self window] makeFirstResponder:[domElement documentView]];
             

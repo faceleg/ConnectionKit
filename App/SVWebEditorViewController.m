@@ -422,7 +422,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (SVWebEditorTextController *)textAreaForDOMNode:(DOMNode *)node;
 {
     SVWebEditorTextController *result = nil;
-    DOMHTMLElement *editableElement = [node containingContentEditableElement];
+    DOMHTMLElement *editableElement = [node enclosingContentEditableElement];
     
     if (editableElement)
     {
