@@ -100,7 +100,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)toggleSmallPageIcons:(id)sender;
 
 - (IBAction)windowHelp:(id)sender;
-- (IBAction)addPagelet:(id)sender;
 - (IBAction)addCollection:(id)sender;
 - (IBAction)group:(id)sender;
 

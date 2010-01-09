@@ -668,12 +668,7 @@ from representedObject */
     {
         return YES;
     }
-    else if (itemAction == @selector(addPagelet:))
-    {
-		KTPage *selectedPage = [[[self siteOutlineViewController] content] selectedPage];
-		return ([selectedPage sidebarChangeable]);
-    }
-	else if (itemAction == @selector(addCollection:))
+    else if (itemAction == @selector(addCollection:))
     {
         return YES;
     }	
