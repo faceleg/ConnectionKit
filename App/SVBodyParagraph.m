@@ -91,8 +91,7 @@
     {
         // Links should never overlap, but they can theoretically be stacked inside one another. Therefore sort by location first, and length next
         NSSortDescriptor *locationSorting = [[NSSortDescriptor alloc] initWithKey:@"location"
-                                             
-                                                                 ascending:YES];
+                                                                        ascending:YES];
         NSSortDescriptor *lengthSorting = [[NSSortDescriptor alloc] initWithKey:@"length"
                                                                       ascending:NO];
         
