@@ -80,7 +80,7 @@
 //  
 //      -   reference to the MOC so as to process changes when suits us, and access from there to undo manager
 //
-//      -   cooperation of the undo manager. NSTextView does its undo coalescing by inspecting the undo stack to see if the last op registered was by itself. We don't have that access, but can request that somebody else (*cough* the document) supply a suitable NSUndoManager subclass which gives an identifer for the item on top of the stack.
+//      -   cooperation of the undo manager. NSTextView does its undo coalescing by inspecting the undo stack to see if the last op registered was by itself. We don't have that access, but can request that somebody else (*cough* the document) supply a suitable NSUndoManager subclass which gives an identifier for the item on top of the stack.
 
 
 @end
