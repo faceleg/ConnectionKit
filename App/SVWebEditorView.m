@@ -1233,7 +1233,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     // HACK to remove the focus ring that WebKit likes to put in. #59448
-    [[self documentView] performSelector:@selector(clearFocus)];
+    //[[self documentView] performSelector:@selector(clearFocus)];
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
