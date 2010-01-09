@@ -9,6 +9,7 @@
 #import "SVBodyParagraph.h"
 #import "SVBodyParagraphDOMAdapter.h"
 
+#import "SVLink.h"
 #import "SVPlugInGraphic.h"
 #import "SVHTMLContext.h"
 
@@ -42,7 +43,19 @@
 
 - (void)writeInnerHTML;
 {
-    [[SVHTMLContext currentContext] writeHTMLString:[self archiveString]];
+    //  The inner HTML is made up by combining our archive string, links, and inline graphics. Do this by writing a chunk of archive string, followed by link/graphic tag, and so on.
+    
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    NSString *archive = [self archiveString];
+    NSArray *links = [self orderedLinks];
+    
+    for (SVLink *aLink in links)
+    {
+        [context writeStartTag:@"a" idName:nil className:nil];
+        [context writeEndTag:@"a"];
+    }
+    
+    [context writeHTMLString:archive];
 }
 
 - (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document
