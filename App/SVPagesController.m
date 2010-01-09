@@ -109,7 +109,7 @@
             
             if ([aKey isEqualToString:@"bodyText"]) // special case
             {
-                [[[[firstChild body] orderedElements] lastObject] setInnerHTMLArchiveString:aProperty];
+                [[[[firstChild body] orderedElements] lastObject] setArchiveString:aProperty];
             }
             else
             {
@@ -128,7 +128,7 @@
             NSString *intro = NSLocalizedString(@"This is a new weblog. You can replace this text with an introduction to your blog, or just delete it if you wish. To add an entry to the weblog, add a new page using the \\U201CPages\\U201D button in the toolbar. For more information on blogging with Sandvox, please have a look through our <a href=\"help:Blogging_with_Sandvox\">help guide</a>.",
                                                 "Introductory text for Weblogs");
             
-            [[[[collection body] orderedElements] lastObject] setInnerHTMLArchiveString:intro];
+            [[[[collection body] orderedElements] lastObject] setArchiveString:intro];
         }
     }
 }

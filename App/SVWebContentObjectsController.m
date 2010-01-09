@@ -42,7 +42,7 @@
     SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
                                                                inManagedObjectContext:moc];
     [paragraph setTagName:@"p"];
-    [paragraph setInnerHTMLArchiveString:@"Test"];
+    [paragraph setArchiveString:@"Test"];
     [[result body] addElement:paragraph];
     
     

@@ -16,7 +16,7 @@
 #pragma mark Properties
 
 @property (nonatomic, retain) NSString * tagName;
-@property(nonatomic, copy) NSString *innerHTMLArchiveString;
+@property(nonatomic, copy) NSString *archiveString;
 @property (nonatomic, retain) NSSet* inlineGraphics;
 
 
@@ -27,7 +27,7 @@
 
 - (NSString *)innerHTMLString;
 
-+ (NSString *)innerHTMLStringWithArchive:(NSString *)innerHTMLArchiveString
++ (NSString *)innerHTMLStringWithArchive:(NSString *)archiveString
                     inlineContentObjects:(NSSet *)contentObjects;
 
 @end

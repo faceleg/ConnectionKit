@@ -48,14 +48,14 @@
 {
     //  Use the element to update our tagName, inner HTML, and inline graphics
     [self setTagName:[element tagName]];
-    [self setInnerHTMLArchiveString:[element innerHTML]];
+    [self setArchiveString:[element innerHTML]];
 }
 
-@dynamic innerHTMLArchiveString;
+@dynamic archiveString;
 
 - (NSString *)innerHTMLString;
 {
-    NSString *result = [[self class] innerHTMLStringWithArchive:[self innerHTMLArchiveString]
+    NSString *result = [[self class] innerHTMLStringWithArchive:[self archiveString]
                                            inlineContentObjects:[self inlineGraphics]];
     
     return result;
