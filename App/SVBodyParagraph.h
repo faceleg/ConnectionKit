@@ -22,13 +22,13 @@
 
 #pragma mark HTML
 
-- (NSString *)HTMLString;
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 
 - (NSString *)innerHTMLString;
 
 + (NSString *)innerHTMLStringWithArchive:(NSString *)archiveString
                     inlineContentObjects:(NSSet *)contentObjects;
+
 
 @end
 

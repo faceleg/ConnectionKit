@@ -20,28 +20,17 @@
 @dynamic tagName;
 @dynamic inlineGraphics;
 
-- (NSString *)HTMLString;
+- (void)writeHTML;
 {
-    NSString *result;
-    if ([[SVHTMLContext currentContext] isEditable])
-    {
-        result = [NSString stringWithFormat:
-                  @"<%@ id=\"%@\">%@</%@>",
-                  [self tagName],
-                  [self editingElementID],
-                  [self innerHTMLString],
-                  [self tagName]];
-    }
-    else
-    {
-        result = [NSString stringWithFormat:
-                  @"<%@>%@</%@>",
-                  [self tagName],
-                  [self innerHTMLString],
-                  [self tagName]];
-    }
+    SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    return result;
+    [context writeStartTag:[self tagName]
+                    idName:([context isEditable] ? [self editingElementID] : nil)
+                 className:nil];
+    
+    [context writeHTMLString:[self innerHTMLString]];
+    
+    [context writeEndTag:[self tagName]];
 }
 
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
