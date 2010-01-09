@@ -94,10 +94,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (IBAction)insertFooter:(id)sender;
 
 
-#pragma mark Links
-- (IBAction)orderFrontLinkPanel:(id)sender;
-
-
 #pragma mark Delegate
 @property(nonatomic, assign) id <SVWebEditorViewControllerDelegate> delegate;
 
