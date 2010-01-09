@@ -28,7 +28,7 @@
                     idName:([context isEditable] ? [self editingElementID] : nil)
                  className:nil];
     
-    [context writeHTMLString:[self innerHTMLString]];
+    [self writeInnerHTML];
     
     [context writeEndTag:[self tagName]];
 }
@@ -42,18 +42,9 @@
 
 @dynamic archiveString;
 
-- (NSString *)innerHTMLString;
+- (void)writeInnerHTML;
 {
-    NSString *result = [[self class] innerHTMLStringWithArchive:[self archiveString]
-                                           inlineContentObjects:[self inlineGraphics]];
-    
-    return result;
-}
-
-+ (NSString *)innerHTMLStringWithArchive:(NSString *)innerHTMLArchiveString
-                    inlineContentObjects:(NSSet *)contentObjects;
-{
-    return innerHTMLArchiveString;
+    [[SVHTMLContext currentContext] writeHTMLString:[self archiveString]];
 }
 
 - (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document

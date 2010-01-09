@@ -24,10 +24,7 @@
 
 - (void)setHTMLStringFromElement:(DOMHTMLElement *)element;
 
-- (NSString *)innerHTMLString;
-
-+ (NSString *)innerHTMLStringWithArchive:(NSString *)archiveString
-                    inlineContentObjects:(NSSet *)contentObjects;
+- (void)writeInnerHTML;
 
 
 @end
