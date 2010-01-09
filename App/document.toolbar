@@ -91,7 +91,7 @@
 		</dict>
 		<dict>
 			<key>action</key>
-			<string>showLinkPanel:</string>
+			<string>orderFrontLinkPanel:</string>
 			<key>help</key>
 			<string>TOOLTIP_CREATE_LINK</string>
 			<key>identifier</key>
