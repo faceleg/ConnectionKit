@@ -371,6 +371,26 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
 }
 
+- (BOOL)doCommandBySelector:(SEL)selector
+{
+    BOOL result = [super doCommandBySelector:selector];
+    
+    if (selector == @selector(orderFrontLinkPanel:))
+    {
+        [self orderFrontLinkPanel:nil];
+        result = YES;
+    }
+    
+    return result;
+}
+
+#pragma mark Links
+
+- (void)orderFrontLinkPanel:(id)sender;
+{
+    
+}
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context

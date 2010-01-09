@@ -46,4 +46,10 @@
 - (void)willUpdate;
 - (void)didUpdate;
 
+
+#pragma mark Links
+
+- (IBAction)orderFrontLinkPanel:(id)sender;
+
+
 @end
