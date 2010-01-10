@@ -184,6 +184,8 @@
     {
         [self writeString:@">"];
     }
+    
+    [_openElements removeLastObject];
 }
 
 - (void)writeEndTag;
