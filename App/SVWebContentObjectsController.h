@@ -29,4 +29,7 @@
 // Provides extra contextual information on top of -managedObjectContext
 @property(nonatomic, retain) KTPage *page;
 
+
+- (BOOL)selectObjectByInsertingIfNeeded:(id)object;
+
 @end
