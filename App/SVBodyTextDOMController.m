@@ -375,18 +375,20 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     BOOL result = [super doCommandBySelector:selector];
     
-    if (selector == @selector(orderFrontLinkPanel:))
+    if (selector == @selector(orderFrontLinkPanel:) ||
+        selector == @selector(clearLinkDestination:))
     {
-        [self orderFrontLinkPanel:nil];
+        [self performSelector:selector withObject:nil];
         result = YES;
     }
+    
     
     return result;
 }
 
 #pragma mark Links
 
-- (void)orderFrontLinkPanel:(id)sender;
+- (IBAction)orderFrontLinkPanel:(id)sender;
 {
     SVWebEditorView *webEditor = [self webEditor];
     
@@ -398,6 +400,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Need to let paragraph's controller know an actual editing change was made
     [self didChangeText];
+}
+
+- (IBAction)clearLinkDestination:(id)sender;
+{
+    
 }
 
 #pragma mark KVO

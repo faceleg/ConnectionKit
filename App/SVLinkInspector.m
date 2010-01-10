@@ -11,6 +11,8 @@
 
 @implementation SVLinkInspector
 
+@synthesize inspectedWindow = _inspectedWindow;
+
 - (IBAction)clearLinkDestination:(id)sender;
 {
 	//[oLinkLocalPageField setStringValue:@""];
@@ -18,8 +20,8 @@
 	//[oLinkLocalPageField setHidden:YES];
 	//[oLinkDestinationField setHidden:NO];
 	//[oLinkView setConnected:NO];
-	//NSMutableDictionary *info = [self contextElementInformation];
-	//[info removeObjectForKey:@"KTLocalLink"];
+    
+    [[[self inspectedWindow] firstResponder] doCommandBySelector:@selector(clearLinkDestination:)];
 }
 
 

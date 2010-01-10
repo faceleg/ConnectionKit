@@ -72,6 +72,9 @@
     // Objects
     [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
     [_plugInInspector setInspectedObjectsController:[[window windowController] objectsController]];
+    
+    // Link Inspector
+    [_linkInspector setInspectedWindow:window];
 }
 
 - (NSArray *)defaultInspectorViewControllers;

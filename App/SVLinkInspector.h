@@ -11,8 +11,11 @@
 
 @interface SVLinkInspector : KSInspectorViewController
 {
-
+  @private
+    NSWindow    *_inspectedWindow;
 }
+
+@property(nonatomic, retain) NSWindow *inspectedWindow;
 
 - (IBAction)clearLinkDestination:(id)sender;
 
