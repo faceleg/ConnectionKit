@@ -13,10 +13,6 @@
 
 @implementation SVLink 
 
-@dynamic length;
-@dynamic URLString;
-@dynamic location;
-@dynamic paragraph;
 @dynamic page;
 
 @end

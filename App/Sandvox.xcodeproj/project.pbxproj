@@ -210,6 +210,8 @@
 		270E474D10F8B6B800EF1FA0 /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E474B10F8B6B800EF1FA0 /* SVLink.m */; };
 		270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */; };
 		270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */; };
+		270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */; };
+		270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
@@ -1648,6 +1650,8 @@
 		270E474B10F8B6B800EF1FA0 /* SVLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLink.m; sourceTree = "<group>"; };
 		270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphHTMLContext.h; sourceTree = "<group>"; };
 		270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphHTMLContext.m; sourceTree = "<group>"; };
+		270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVStringAttribute.h; sourceTree = "<group>"; };
+		270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVStringAttribute.m; sourceTree = "<group>"; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
@@ -3239,6 +3243,8 @@
 		278F798F10B4485C00BDBAF7 /* Body Text */ = {
 			isa = PBXGroup;
 			children = (
+				270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */,
+				270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */,
 				270E474A10F8B6B800EF1FA0 /* SVLink.h */,
 				270E474B10F8B6B800EF1FA0 /* SVLink.m */,
 				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
@@ -5216,6 +5222,7 @@
 				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
 				270E474C10F8B6B800EF1FA0 /* SVLink.h in Headers */,
 				270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */,
+				270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6598,6 +6605,7 @@
 				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
 				270E474D10F8B6B800EF1FA0 /* SVLink.m in Sources */,
 				270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */,
+				270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

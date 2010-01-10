@@ -6,21 +6,17 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "SVStringAttribute.h"
 
 
 @class KTAbstractPage;
 @class SVBodyParagraph;
 
 
-@interface SVLink :  NSManagedObject  
+@interface SVLink : SVStringAttribute  
 {
 }
 
-@property (nonatomic, retain) NSNumber * length;
-@property (nonatomic, retain) NSString * URLString;
-@property (nonatomic, retain) NSNumber * location;
-@property (nonatomic, retain) SVBodyParagraph * paragraph;
 @property (nonatomic, retain) KTAbstractPage * page;
 
 @end
