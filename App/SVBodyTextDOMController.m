@@ -395,7 +395,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     DOMRange *selection = [webEditor selectedDOMRange];
     [selection surroundContents:link];
-        
+    
+    // Need to let paragraph's controller know an actual editing change was made
+    [self didChangeText];
 }
 
 #pragma mark KVO
