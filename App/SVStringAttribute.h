@@ -19,9 +19,9 @@
 //  Default implementation writes nothing but the usual string content, so you can call super if that behaviour is desired.
 - (void)writeHTML;
 
-@property (nonatomic, retain) NSNumber * length;
-@property (nonatomic, retain) NSNumber * location;
 - (NSRange)range;
+@property(nonatomic, retain) NSNumber *length;
+@property(nonatomic, retain) NSNumber *location;
 
 @property (nonatomic, retain) SVBodyParagraph * paragraph;
 

@@ -22,14 +22,15 @@
 
 #pragma mark Range
 
-@dynamic length;
-@dynamic location;
 - (NSRange)range;
 {
     NSRange result = NSMakeRange([[self location] unsignedIntegerValue],
                                  [[self length] unsignedIntegerValue]);
     return result;
 }
+
+@dynamic length;
+@dynamic location;
 
 #pragma mark Paragraph
 
