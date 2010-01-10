@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="1000">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1001">
-				<string key="NSClassName">KSInspectorViewController</string>
+				<string key="NSClassName">SVLinkInspector</string>
 			</object>
 			<object class="NSCustomObject" id="1003">
 				<string key="NSClassName">FirstResponder</string>
@@ -43,22 +43,22 @@
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSButton" id="1014891057">
+					<object class="NSButton" id="997542442">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">265</int>
 						<string key="NSFrame">{{200, 147}, {14, 14}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="363212296">
+						<object class="NSButtonCell" key="NSCell" id="142344049">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">134217728</int>
 							<string key="NSContents">Button</string>
-							<object class="NSFont" key="NSSupport" id="954235058">
+							<object class="NSFont" key="NSSupport" id="591072393">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">13</double>
 								<int key="NSfFlags">1044</int>
 							</object>
-							<reference key="NSControlView" ref="1014891057"/>
+							<reference key="NSControlView" ref="997542442"/>
 							<int key="NSButtonFlags">-2042347265</int>
 							<int key="NSButtonFlags2">6</int>
 							<object class="NSCustomResource" key="NSNormalImage">
@@ -226,7 +226,7 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Box</string>
-							<reference key="NSSupport" ref="954235058"/>
+							<reference key="NSSupport" ref="591072393"/>
 							<object class="NSColor" key="NSBackgroundColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -262,6 +262,14 @@
 						<reference key="destination" ref="1005"/>
 					</object>
 					<int key="connectionID">29</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">clearLinkDestination:</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="997542442"/>
+					</object>
+					<int key="connectionID">42</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -303,7 +311,7 @@
 							<reference ref="552070882"/>
 							<reference ref="816311256"/>
 							<reference ref="695373859"/>
-							<reference ref="1014891057"/>
+							<reference ref="997542442"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -392,17 +400,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">38</int>
-						<reference key="object" ref="1014891057"/>
+						<reference key="object" ref="997542442"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="363212296"/>
+							<reference ref="142344049"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">39</int>
-						<reference key="object" ref="363212296"/>
-						<reference key="parent" ref="1014891057"/>
+						<reference key="object" ref="142344049"/>
+						<reference key="parent" ref="997542442"/>
 					</object>
 				</object>
 			</object>
@@ -475,7 +483,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">41</int>
+			<int key="maxID">42</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -638,6 +646,18 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSTabViewController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVLinkInspector</string>
+					<string key="superclassName">KSInspectorViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">clearLinkDestination:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVLinkInspector.h</string>
 					</object>
 				</object>
 			</object>
