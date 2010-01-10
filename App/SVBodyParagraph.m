@@ -72,7 +72,7 @@
     [self setTagName:[element tagName]];
     
     // Easiest way to archive string, is to use a context -- see, they do all sorts!
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithParagraph:self];
+    SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithParagraph:self];
     [context writeContentsOfDOMNode:element];
     
     NSString *string = [context markupString];
