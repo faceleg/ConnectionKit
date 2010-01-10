@@ -11,7 +11,7 @@
 
 #import "SVLink.h"
 #import "SVPlugInGraphic.h"
-#import "SVHTMLContext.h"
+#import "SVMutableStringHTMLContext.h"
 
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
@@ -70,7 +70,15 @@
 {
     //  Use the element to update our tagName, inner HTML, and inline graphics
     [self setTagName:[element tagName]];
-    [self setArchiveString:[element innerHTML]];
+    
+    // Easiest way to archive string, is to use a context -- see, they do all sorts!
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    [context writeContentsOfDOMNode:element];
+    
+    NSString *string = [context markupString];
+    [self setArchiveString:string];
+    
+    [context release];
 }
 
 #pragma mark Raw Properties
