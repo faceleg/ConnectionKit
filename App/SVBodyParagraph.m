@@ -40,7 +40,7 @@
     
     SVHTMLContext *context = [SVHTMLContext currentContext];
     NSString *archive = [self archiveString];
-    NSArray *links = [self orderedLinks];
+    NSArray *links = [self orderedAttributes];
     
     for (SVLink *aLink in links)
     {
@@ -85,13 +85,12 @@
 
 @dynamic tagName;
 @dynamic archiveString;
-@dynamic inlineGraphics;
 
-#pragma mark  Links
+#pragma mark  Attributes
 
-@dynamic links;
+@dynamic attributes;
 
-- (NSArray *)orderedLinks;
+- (NSArray *)orderedAttributes;
 {
     // Build sort descriptors if needed
     static NSArray *sortDescriptors;
@@ -110,7 +109,7 @@
     
     
     // Fetch and sort our links
-    NSArray *result = [[self links] KS_sortedArrayUsingDescriptors:sortDescriptors];
+    NSArray *result = [[self attributes] KS_sortedArrayUsingDescriptors:sortDescriptors];
     return result;
 }
 

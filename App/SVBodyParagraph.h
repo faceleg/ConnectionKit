@@ -26,22 +26,10 @@
 @property(nonatomic, copy) NSSet* inlineGraphics;
 
 
-#pragma mark Links
-@property(nonatomic, copy) NSSet *links;
-- (NSArray *)orderedLinks;
+#pragma mark Attributes
+@property(nonatomic, copy) NSSet *attributes;
+- (NSArray *)orderedAttributes;
 
-
-@end
-
-
-#pragma mark -
-
-
-@interface SVBodyParagraph (CoreDataGeneratedAccessors)
-- (void)addInlineGraphicsObject:(SVPlugInGraphic *)value;
-- (void)removeInlineGraphicsObject:(SVPlugInGraphic *)value;
-- (void)addInlineGraphics:(NSSet *)value;
-- (void)removeInlineGraphics:(NSSet *)value;
 
 @end
 
