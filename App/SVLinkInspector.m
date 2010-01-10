@@ -9,12 +9,55 @@
 #import "SVLinkInspector.h"
 
 #import "KTDocument.h"
+#import "KTDocWindowController.h"
 #import "KTPage.h"
 
 
 @implementation SVLinkInspector
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webViewDidChangeSelection:) name:WebViewDidChangeSelectionNotification object:nil];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewDidChangeSelectionNotification object:nil];
+    
+    [super dealloc];
+}
+
+#pragma mark Inspection
+
 @synthesize inspectedWindow = _inspectedWindow;
+@synthesize inspectedLink = _inspectedLink;
+
+- (void)webViewDidChangeSelection:(NSNotification *)notification
+{
+    // Ignore any webview that isn't the one we're interested in
+    WebView *webView = [[[[[self inspectedWindow] windowController] webContentAreaController] webEditorViewController] webView];
+    if ([notification object] != webView) return;
+    
+    
+    // If there is link selected, we can find it by searching out from the selecte DOM range
+    DOMRange *selection = [webView selectedDOMRange];
+    
+    DOMNode *aNode = [selection commonAncestorContainer];
+    while (aNode)
+    {
+        if ([aNode isKindOfClass:[DOMHTMLAnchorElement class]]) break;
+        
+        aNode = [aNode parentNode];
+    }
+    
+    [self setInspectedLink:(DOMHTMLAnchorElement *)aNode];
+}
+
+#pragma mark Link View
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {

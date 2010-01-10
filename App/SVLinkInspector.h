@@ -10,14 +10,18 @@
 
 #import "KTLinkSourceView.h"
 
+#import <WebKit/WebKit.h>
+
 
 @interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
 {
   @private
-    NSWindow    *_inspectedWindow;
+    NSWindow                *_inspectedWindow;
+    DOMHTMLAnchorElement    *_inspectedLink;
 }
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
+@property(nonatomic, retain) DOMHTMLAnchorElement *inspectedLink;
 
 - (IBAction)clearLinkDestination:(id)sender;
 
