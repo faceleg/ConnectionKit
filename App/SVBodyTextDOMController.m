@@ -13,6 +13,7 @@
 #import "SVCallout.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
+#import "SVWebContentObjectsController.h"
 
 #import "NSDictionary+Karelia.h"
 #import "DOMNode+Karelia.h"
@@ -408,6 +409,21 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVWebEditorView *webEditor = [self webEditor];
     
     [[webEditor selectedDOMRange] removeAnchorElements];
+}
+
+- (void)webEditorTextDidChangeSelection:(NSNotification *)notification
+{
+    [super webEditorTextDidChangeSelection:notification];
+    
+    
+    // Does the selection contain a link? If so, make it the selected object
+    SVWebEditorView *webEditor = [self webEditor];
+    DOMHTMLAnchorElement *link = [[webEditor selectedDOMRange] editableAnchorElement];
+    if (link)
+    {
+        SVWebContentObjectsController *controller = [[webEditor dataSource] performSelector:@selector(primitiveSelectedObjectsController)];
+        [controller selectObjectByInsertingIfNeeded:link];
+    }
 }
 
 #pragma mark KVO
