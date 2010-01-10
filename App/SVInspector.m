@@ -71,6 +71,7 @@
     
     // Objects
     [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
+    [_linkInspector setInspectedObjectsController:[[window windowController] objectsController]];
     [_plugInInspector setInspectedObjectsController:[[window windowController] objectsController]];
     
     // Link Inspector
