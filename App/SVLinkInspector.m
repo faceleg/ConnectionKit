@@ -12,6 +12,8 @@
 #import "KTDocWindowController.h"
 #import "KTPage.h"
 
+#import "DOMRange+Karelia.h"
+
 
 @implementation SVLinkInspector
 
@@ -45,16 +47,8 @@
     
     // If there is link selected, we can find it by searching out from the selecte DOM range
     DOMRange *selection = [webView selectedDOMRange];
-    
-    DOMNode *aNode = [selection commonAncestorContainer];
-    while (aNode)
-    {
-        if ([aNode isKindOfClass:[DOMHTMLAnchorElement class]]) break;
-        
-        aNode = [aNode parentNode];
-    }
-    
-    [self setInspectedLink:(DOMHTMLAnchorElement *)aNode];
+    DOMHTMLAnchorElement *link = [selection editableAnchorElement];
+    [self setInspectedLink:link];
 }
 
 #pragma mark Link View
