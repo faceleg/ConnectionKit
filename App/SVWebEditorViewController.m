@@ -39,11 +39,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 
 @interface SVWebEditorViewController ()
+
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
 
 @property(nonatomic, retain, readwrite) SVHTMLContext *HTMLContext;
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
 
+@property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
 
 // Pagelets
 @property(nonatomic, copy, readwrite) NSArray *sidebarPageletItems;
@@ -400,7 +402,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Content
 
-@synthesize selectedObjectsController = _selectableObjectsController;
+@synthesize primitiveSelectedObjectsController = _selectableObjectsController;
+- (id <KSCollectionController>)selectedObjectsController
+{
+    return [self primitiveSelectedObjectsController];
+}
 
 @synthesize HTMLContext = _context;
 
