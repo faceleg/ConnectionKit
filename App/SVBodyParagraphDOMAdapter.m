@@ -9,6 +9,7 @@
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVBodyParagraph.h"
+#import "SVMutableStringHTMLContext.h"
 
 
 static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObservationContext";
@@ -58,7 +59,14 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     NSString *tagName = [paragraph tagName];
     
     DOMHTMLElement *htmlElement = (DOMHTMLElement *)[[self HTMLDocument] createElement:tagName];
-    [htmlElement setInnerHTML:[paragraph innerHTMLString]];
+    
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    [context push];
+    [paragraph writeInnerHTML];
+    [context pop];
+    
+    [htmlElement setInnerHTML:[context markupString]];
+    [context release];
     
     [self setHTMLElement:htmlElement];
 }
