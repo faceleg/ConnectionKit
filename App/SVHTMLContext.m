@@ -230,12 +230,25 @@
 
 - (void)writeDOMElement:(DOMElement *)element;
 {
+    // Open tag
     [self openTag:[[element tagName] lowercaseString]];
-    // TODO: Write element attributes
+    
+    // Write attributes
+    DOMNamedNodeMap *attributes = [element attributes];
+    NSUInteger index;
+    for (index = 0; index < [attributes length]; index++)
+    {
+        DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+        [self writeAttribute:[anAttribute name] value:[anAttribute value]];
+    }
+    
+    // Close tag
     [self closeStartTag];
     
+    // Write contents
     [self writeContentsOfDOMNode:element];
     
+    // Write end tag
     [self writeEndTag];
 }
 
