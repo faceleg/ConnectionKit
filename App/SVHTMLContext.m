@@ -209,6 +209,36 @@
     [self writeString:@"\""];
 }
 
+#pragma mark Writing from the DOM
+
+- (void)writeContentsOfDOMNode:(DOMNode *)node;
+{
+    DOMNodeList *children = [node childNodes];
+    for (int i = 0; i < [children length]; i++)
+    {
+        DOMNode *aNode = [children item:i];
+        if ([aNode isKindOfClass:[DOMElement class]])
+        {
+            [self writeDOMElement:(DOMElement *)aNode];
+        }
+        else
+        {
+            [self writeText:[aNode textContent]];
+        }
+    }
+}
+
+- (void)writeDOMElement:(DOMElement *)element;
+{
+    [self openTag:[[element tagName] lowercaseString]];
+    // TODO: Write element attributes
+    [self closeStartTag];
+    
+    [self writeContentsOfDOMNode:element];
+    
+    [self writeEndTag];
+}
+
 #pragma mark Indentation
 
 @synthesize indentationLevel = _indentation;
