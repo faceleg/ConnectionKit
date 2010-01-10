@@ -9,6 +9,7 @@
 #import "SVLinkInspector.h"
 
 #import "KTDocument.h"
+#import "KTPage.h"
 
 
 @implementation SVLinkInspector
@@ -31,37 +32,27 @@
 
 - (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
 {
-	
-    
-    /*
-    NSDictionary *info = [self contextElementInformation];
-	if (info)
-	{
-		// set up a link to the local page
-		NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
-		if ( (pageID != nil) && ![pageID isEqualToString:@""] )
-		{
-			KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[self document] managedObjectContext]];
-			if ( nil != target )
-			{
-				NSString *titleText = [[target title] text];
-				if ( (nil != titleText) && ![titleText isEqualToString:@""] )
-				{
-					[oLinkLocalPageField setStringValue:titleText];
-					[oLinkDestinationField setStringValue:@""];
-					[oLinkLocalPageField setHidden:NO];
-					[oLinkDestinationField setHidden:YES];
-					
-					[info setValue:[NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID] forKey:@"KTLocalLink"];
-					[oLinkView setConnected:YES];
-					
-				}
-			}
-		}
-	}
-	//	NO, DON'T CLOSE THE LINK PANEL WHEN YOU DRAG.	[oLinkPanel orderOut:self];
-     
-     */
+	// set up a link to the local page
+    NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
+    if ( (pageID != nil) && ![pageID isEqualToString:@""] )
+    {
+        KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[[[self inspectedWindow] windowController] document] managedObjectContext]];
+        if ( nil != target )
+        {
+            NSString *titleText = [[target title] text];
+            if ( (nil != titleText) && ![titleText isEqualToString:@""] )
+            {
+                //[oLinkLocalPageField setStringValue:titleText];
+                //[oLinkDestinationField setStringValue:@""];
+                //[oLinkLocalPageField setHidden:NO];
+                //[oLinkDestinationField setHidden:YES];
+                
+                //[info setValue:[NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID] forKey:@"KTLocalLink"];
+                [link setConnected:YES];
+                
+            }
+        }
+    }
 }
 
 - (IBAction)clearLinkDestination:(id)sender;
