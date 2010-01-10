@@ -51,6 +51,7 @@
     
     _includeStyling = YES;
     [self setEncoding:NSUTF8StringEncoding];
+    _openElements = [[NSMutableArray alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
     _textBlocks = [[NSMutableArray alloc] init];
     
@@ -124,7 +125,7 @@
     if ([SVHTMLContext currentContext] == self) [SVHTMLContext popContext];
 }
 
-#pragma mark Writing
+#pragma mark High-level Writing
 
 - (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
 {
@@ -147,6 +148,10 @@
     }
 }
 
+- (void)writeString:(NSString *)string; { [super writeString:string]; }
+
+#pragma mark Writing Tags
+
 - (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 {
     [self openTag:tagName];
@@ -159,6 +164,8 @@
 {
     [self writeString:@"<"];
     [self writeString:tagName];
+    
+    [_openElements addObject:tagName];
 }
 
 - (void)closeStartTag;
@@ -179,11 +186,13 @@
     }
 }
 
-- (void)writeEndTag:(NSString *)tagName;
+- (void)writeEndTag;
 {
     [self writeString:@"</"];
-    [self writeString:tagName];
+    [self writeString:[_openElements lastObject]];
     [self writeString:@">"];
+    
+    [_openElements removeLastObject];
     
     [self outdent];
 }

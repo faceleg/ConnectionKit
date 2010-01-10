@@ -35,6 +35,7 @@ typedef enum {
     BOOL                    _isXHTML;
     NSStringEncoding        _stringEncoding;
     
+    NSMutableArray  *_openElements;
     NSMutableArray  *_iteratorsStack;
     
     NSMutableArray  *_textBlocks;
@@ -56,33 +57,43 @@ typedef enum {
 - (void)pop;    // only pops if receiver is the current context
 
 
-#pragma mark Writing
+#pragma mark Basic Writing
 
 - (void)writeHTMLString:(NSString *)html;
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 
 - (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
 
+- (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
 
-/*  Each of these methods writes a specific part of HTML. An example should be given in the comments to the right
- */
 
-- (void)writeStartTag:(NSString *)tagName   //  <tagName id="idName" class="className">     increases indentation level
+#pragma mark Writing Tags
+
+//  <tagName id="idName" class="className">
+//  Calls -openTag: and -writeAttribute:value: appropriately for you
+- (void)writeStartTag:(NSString *)tagName   
                idName:(NSString *)idName
             className:(NSString *)className;
 
-- (void)openTag:(NSString *)tagName;        //  <tagName
-- (void)closeStartTag;                      //  >                                                                           increases indentation level
-- (void)closeEmptyElementTag;               //   />    OR    >    depending on -isXHTML
-- (void)writeEndTag:(NSString *)tagName;    //  </tagName>                                                        decreases indentation level
+//  <tagName
+//  Records the tag on a stack for if you want to call -writeEndTag later
+- (void)openTag:(NSString *)tagName;
 
-- (void)writeAttribute:(NSString *)attribute//   attribute="value"
+//  >
+//  Increases indentation level ready for if you want to do a -writeNewline
+- (void)closeStartTag;     
+
+//   />    OR    >
+//  Which is used depends on -isXHTML
+- (void)closeEmptyElementTag;             
+
+//  </tagName>
+//  The start tag must have been written by -openTag: or one of the higher-level methods that calls through to it, otherwise won't know what to write
+- (void)writeEndTag;
+
+//   attribute="value"
+- (void)writeAttribute:(NSString *)attribute
                  value:(NSString *)value;
-
-
-/*  Primitives
- */
-- (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
 
 
 #pragma mark Indentation

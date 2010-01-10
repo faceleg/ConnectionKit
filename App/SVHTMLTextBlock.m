@@ -377,9 +377,9 @@
 	
 	
 	// Write end tags
-	if (generateSpanIn) [context writeEndTag:@"span"];
-	if ([self hyperlinkString]) [context writeEndTag:@"a"];
-	[context writeEndTag:[self tagName]];
+	if (generateSpanIn) [context writeEndTag];
+	if ([self hyperlinkString]) [context writeEndTag];
+	[context writeEndTag];
 }
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.

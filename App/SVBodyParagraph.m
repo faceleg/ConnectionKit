@@ -31,7 +31,7 @@
     
     [self writeInnerHTML];
     
-    [context writeEndTag:[self tagName]];
+    [context writeEndTag];
 }
 
 - (void)writeInnerHTML;
@@ -45,7 +45,7 @@
     for (SVLink *aLink in links)
     {
         [context writeStartTag:@"a" idName:nil className:nil];
-        [context writeEndTag:@"a"];
+        [context writeEndTag];
     }
     
     [context writeHTMLString:archive];
