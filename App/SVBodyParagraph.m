@@ -10,8 +10,8 @@
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVLink.h"
+#import "SVParagraphHTMLContext.h"
 #import "SVPlugInGraphic.h"
-#import "SVMutableStringHTMLContext.h"
 
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
@@ -72,7 +72,7 @@
     [self setTagName:[element tagName]];
     
     // Easiest way to archive string, is to use a context -- see, they do all sorts!
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithParagraph:self];
     [context writeContentsOfDOMNode:element];
     
     NSString *string = [context markupString];
