@@ -1232,6 +1232,10 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     
     
+    // Let focused text know its selection has changed
+    [[self focusedText] webEditorTextDidChangeSelection:notification];
+    
+    
     // HACK to remove the focus ring that WebKit likes to put in. #59448
     //[[self documentView] performSelector:@selector(clearFocus)];
 }

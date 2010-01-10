@@ -35,4 +35,6 @@
 // Return YES if you will handle the selector yourself. Return NO to have the Web Editor do its own thing
 - (BOOL)doCommandBySelector:(SEL)selector;
 
+- (void)webEditorTextDidChangeSelection:(NSNotification *)notification;
+
 @end

@@ -314,6 +314,8 @@
 	return result;
 }
 
+- (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
+
 #pragma mark Undo
 
 - (void)breakUndoCoalescing;
