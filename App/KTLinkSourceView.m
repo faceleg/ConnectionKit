@@ -9,6 +9,10 @@
 #import "KTLinkSourceView.h"
 #import "KTLinkConnector.h"
 
+
+NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
+
+
 @implementation KTLinkSourceView
 
 - (id)initWithFrame:(NSRect)frame {
@@ -114,7 +118,7 @@ static NSImage *sTargetSetImage = nil;
 
 
 
-- (void)setDelegate:(id)aDelegate
+- (void)setDelegate:(id <KTLinkSourceViewDelegate>)aDelegate;
 {
 	myFlags.begin = [aDelegate respondsToSelector:@selector(linkSourceDidBeginDrag:)] ? YES : NO;
 	myFlags.end = [aDelegate respondsToSelector:@selector(linkSourceDidEndDrag:withPasteboard:)] ? YES : NO;
@@ -122,7 +126,7 @@ static NSImage *sTargetSetImage = nil;
 	delegate = aDelegate;
 }
 
-- (id)delegate
+- (id <KTLinkSourceViewDelegate>)delegate;
 {
 	return delegate;
 }

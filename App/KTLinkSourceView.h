@@ -20,9 +20,12 @@
 #import <Cocoa/Cocoa.h>
 
 
+@protocol KTLinkSourceViewDelegate;
+
+
 @interface KTLinkSourceView : NSView 
 {
-	IBOutlet id					delegate; // not retained
+	IBOutlet id <KTLinkSourceViewDelegate> delegate; // not retained
 	
 	struct __ktDelegateFlags {
 		unsigned begin: 1;
@@ -36,14 +39,18 @@
 
 - (void)setConnected:(BOOL)isConnected;
 
-- (void)setDelegate:(id)delegate;
-- (id)delegate;
+- (void)setDelegate:(id <KTLinkSourceViewDelegate>)delegate;
+- (id <KTLinkSourceViewDelegate>)delegate;
 
 @end
 
 
-@interface NSObject (KTLinkSourceViewDelegate)
+@protocol KTLinkSourceViewDelegate <NSObject>
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link;
 - (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard;
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link;
 @end
+
+
+extern NSString *kKTLocalLinkPboardType;
+

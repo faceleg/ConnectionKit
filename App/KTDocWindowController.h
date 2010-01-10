@@ -157,7 +157,6 @@ extern NSString *gInfoWindowAutoSaveName;
 @end
 
 
-extern NSString *kKTLocalLinkPboardType;
 extern NSString *KTSelectedDOMRangeKey;
 
 @interface KTDocWindowController ( Accessors )

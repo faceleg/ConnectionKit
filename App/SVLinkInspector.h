@@ -8,8 +8,10 @@
 
 #import "KSInspectorViewController.h"
 
+#import "KTLinkSourceView.h"
 
-@interface SVLinkInspector : KSInspectorViewController
+
+@interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
 {
   @private
     NSWindow    *_inspectedWindow;

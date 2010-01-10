@@ -13,6 +13,7 @@
 #import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
+#import "KTLinkSourceView.h"
 #import "KTMaster+Internal.h"
 #import "KTPage.h"
 
@@ -37,9 +38,6 @@
 #define SMALL_ICON_CELL_HEIGHT	17.00
 #define LARGE_ICON_ROOT_SPACING	24.00
 #define SMALL_ICON_ROOT_SPACING 16.00
-
-
-NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 
 
 @interface SVSiteOutlineViewController ()
