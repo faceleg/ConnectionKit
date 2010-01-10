@@ -16,6 +16,7 @@
 
 #import "NSDictionary+Karelia.h"
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 
 #import "KSOrderedManagedObjectControllers.h"
 
@@ -404,7 +405,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (IBAction)clearLinkDestination:(id)sender;
 {
+    SVWebEditorView *webEditor = [self webEditor];
     
+    [[webEditor selectedDOMRange] removeAnchorElements];
 }
 
 #pragma mark KVO
