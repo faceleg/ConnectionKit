@@ -26,6 +26,7 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSObject+Karelia.h"
+#import "SVHTMLContext.h"
 
 #import <WebKit/WebKit.h>
 
@@ -349,20 +350,25 @@
 
 - (NSString *)sitemenu
 {
-	NSMutableString *result = [NSMutableString string];
+	
 	if (self.site.pagesInSiteMenu)
 	{
-		[result appendString:@"<div id='sitemenu'>\n"];
+		SVHTMLContext *context = [SVHTMLContext currentContext];
+		[context writeStartTag:@"div" idName:@"sitemenu" className:nil];
 		
-		[result appendString:@"<h2 class='hidden'>"];
-		[result appendString:
+		[context writeStartTag:@"h2" idName:nil className:@"hidden"];
+		
+		[context writeString:
 		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
-		[result appendString:@"<a rel='nofollow' href='#page-content'>"];
-		[result appendString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
-		[result appendString:@"</a></h2>\n"];
 		
-		[result appendString:@"<div id='sitemenu-content'>\n"];
-		[result appendString:@"<ul>\n"];
+		[context writeAnchorTagHref:@"#page-content" title:nil target:nil rel:@"nofollow"];
+		[context writeString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
+		
+		[context writeEndTag];	// a
+		[context writeEndTag];	// h2
+
+		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];
+		[context writeStartTag:@"ul" idName:nil className:nil];
 		
 		KTSite *site = self.site;
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
@@ -374,9 +380,10 @@
 		{
 			if (toplink == currentParserPage)
 			{
-				[result appendFormat:@"<li class='%d %@%@ currentPage'>\n", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""];
-				[result appendString:@"[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]"];	// ??????
-				[result appendString:@"</li>\n"];
+				[context writeStartTag:@"li" idName:nil className:
+					[NSString stringWithFormat:@"%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
+				[context writeString:@"[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]"];	// ??????
+				[context writeEndTag];	// li
 			}
 			else
 			{
@@ -386,26 +393,31 @@
 					isCurrentParent = YES;
 				}
 				
-				[result appendFormat:@"<li class='%d %@%@%@'>\n", i, (i%2)?@"o":@"e", (i==last)? @" last" : @"", isCurrentParent ? @" currentParent" : @""];
+				[context writeStartTag:@"li" idName:nil className:
+				 [NSString stringWithFormat:@"%d %@%@%@",
+				  i,
+				  (i%2)?@"o":@"e",
+				  (i==last)? @" last" : @"",
+				  isCurrentParent ? @" currentParent" : @""]];
+
+				[context writeAnchorTagHref:@"[[path toplink]]" title:@"[toplink titleText]" target:nil rel:nil];
+					// TODO: Fix titleText:  .... pathToObject:
+					// TODO: targetStringForPage:targetPage
 				
-				NSString *targetString = @"";	// targetStringForPage:targetPage		TODO
-				
-				[result appendFormat:@"<a %@href='[[path toplink]]' title=''>", targetString, [[toplink titleText] stringByEscapingHTMLEntities]];		// need to escape single-quotes
-				// perser pathToObject:
-				
-				[result appendFormat:@"[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>"];
-				// parser textblockForKeyPath:.....
-				
-				[result appendString:@"</li>\n"];
+				[context writeText:@"[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]"];
+				// TODO: parser textblockForKeyPath:.....
+				[context writeEndTag];	// a
+
+				[context writeEndTag];	// li
 			}
 			i++;
 		}		
 		
-		[result appendString:@"</ul>"];
-		[result appendString:@"</div> <!-- sitemenu-content -->"];		
-		[result appendString:@"</div> <!-- sitemenu -->\n"];
+		[context writeEndTag];	// ul
+		[context writeEndTag];	// div
+		[context writeEndTag];	// div
 	}
-	return [NSString stringWithString:result];
+	return nil;
 }
 /*
  Based on this template markup:

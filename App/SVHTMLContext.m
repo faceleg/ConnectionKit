@@ -132,6 +132,16 @@
     [self writeString:html];
 }
 
+- (void)writeHTMLFormat:(NSString *)format , ...
+{
+	va_list argList;
+	va_start(argList, format);
+	NSString *aString = [[[NSString alloc] initWithFormat:format arguments:argList] autorelease];
+	va_end(argList);
+	
+    [self writeHTMLString:aString];
+}
+
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 {
     NSString *html = [string stringByEscapingHTMLEntities];
@@ -151,14 +161,6 @@
 - (void)writeString:(NSString *)string; { [super writeString:string]; }
 
 #pragma mark Writing Tags
-
-- (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
-{
-    [self openTag:tagName];
-    if (idName) [self writeAttribute:@"id" value:idName];
-    if (className) [self writeAttribute:@"class" value:className];
-    [self closeStartTag];
-}
 
 - (void)openTag:(NSString *)tagName;        //  <tagName
 {
@@ -205,9 +207,31 @@
     [self writeString:@" "];
     [self writeString:attribute];
     [self writeString:@"=\""];
-    [self writeText:value];
+    [self writeHTMLString:[value stringByEscapingHTMLEntitiesWithQuot:YES]];	// make sure to escape the quote mark
     [self writeString:@"\""];
 }
+
+#pragma mark High-level tags
+
+- (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+{
+    [self openTag:tagName];
+    if (idName) [self writeAttribute:@"id" value:idName];
+    if (className) [self writeAttribute:@"class" value:className];
+    [self closeStartTag];
+}
+
+// TODO: disable indentation & newlines when we are in an anchor tag, somehow.
+
+- (void)writeAnchorTagHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+{
+    [self openTag:@"a"];
+    if (targetString) [self writeAttribute:@"target" value:targetString];
+	if (titleString) [self writeAttribute:@"title" value:titleString];
+   if (relString) [self writeAttribute:@"rel" value:relString];
+}
+
+
 
 #pragma mark Indentation
 

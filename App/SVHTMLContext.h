@@ -68,6 +68,8 @@ typedef enum {
 - (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
 
 
+- (void)writeHTMLFormat:(NSString *)format , ...;
+
 #pragma mark Writing Tags
 
 //  <tagName id="idName" class="className">
@@ -75,6 +77,9 @@ typedef enum {
 - (void)writeStartTag:(NSString *)tagName   
                idName:(NSString *)idName
             className:(NSString *)className;
+
+//<a href="...." target="..." rel="nofollow">
+- (void)writeAnchorTagHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 //  <tagName
 //  Records the tag on a stack for if you want to call -writeEndTag later
