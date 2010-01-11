@@ -20,7 +20,16 @@
 #pragma mark Inspection
 
 @synthesize inspectedWindow = _inspectedWindow;
-@synthesize inspectedLink = _inspectedLink;
+
+- (DOMHTMLAnchorElement *)inspectedLink
+{
+    DOMHTMLAnchorElement *result = nil;
+    
+    NSArray *selection = [self inspectedObjects];
+    if ([selection count] == 1) result = [selection objectAtIndex:0];
+    
+    return result;
+}
 
 #pragma mark Link View
 
@@ -55,7 +64,16 @@
                 //[oLinkLocalPageField setHidden:NO];
                 //[oLinkDestinationField setHidden:YES];
                 
-                //[info setValue:[NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID] forKey:@"KTLocalLink"];
+                NSString *href = [NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID];
+                if ([self inspectedLink])
+                {
+                    [[self inspectedLink] setHref:href];
+                }
+                else
+                {
+                }
+                
+                
                 [link setConnected:YES];
                 
             }

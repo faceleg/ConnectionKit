@@ -21,7 +21,7 @@
 }
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
-@property(nonatomic, retain) DOMHTMLAnchorElement *inspectedLink;
+@property(nonatomic, readonly) DOMHTMLAnchorElement *inspectedLink;
 
 - (IBAction)clearLinkDestination:(id)sender;
 
