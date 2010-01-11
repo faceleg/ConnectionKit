@@ -13,6 +13,7 @@
 #import "SVCallout.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
+#import "SVLinkInspector.h"
 #import "SVUnmodeledLink.h"
 #import "SVWebContentObjectsController.h"
 
@@ -405,11 +406,18 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self didChangeText];
 }
 
-- (IBAction)clearLinkDestination:(id)sender;
+- (void)changeLinkDestination:(SVLinkInspector *)sender;
 {
     SVWebEditorView *webEditor = [self webEditor];
     
-    [[webEditor selectedDOMRange] removeAnchorElements];
+    if (![sender linkDestinationURLString])
+    {
+        [[webEditor selectedDOMRange] removeAnchorElements];
+    }
+    else
+    {
+        NSLog(@"Should change link URL to: %@", [sender linkDestinationURLString]);
+    }
 }
 
 @synthesize selectedLink = _selectedLink;

@@ -120,7 +120,14 @@
 
 - (IBAction)setLinkURL:(id)sender;
 {
+    NSString *URLString = [oLinkField stringValue];
+    OBASSERT(!_linkDestination);
+    _linkDestination = URLString;
+    OBASSERT([[self linkDestinationURLString] isEqualToString:URLString]);
     
+    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLinkDestination:) with:self];
+    
+    _linkDestination =  nil;
 }
 
 - (IBAction)clearLinkDestination:(id)sender;
@@ -131,7 +138,10 @@
 	//[oLinkDestinationField setHidden:NO];
 	//[oLinkView setConnected:NO];
     
-    [[[self inspectedWindow] firstResponder] doCommandBySelector:@selector(clearLinkDestination:)];
+    OBASSERT(![self linkDestinationURLString]);
+    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLinkDestination:) with:self];
 }
+
+- (NSString *)linkDestinationURLString; { return _linkDestination; }
 
 @end

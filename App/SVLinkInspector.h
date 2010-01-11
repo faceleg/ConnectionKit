@@ -22,6 +22,8 @@
     NSWindow                *_inspectedWindow;
     DOMHTMLAnchorElement    *_inspectedLink;
     NSObjectController      *_inspectedTextControllerController;
+    
+    NSString *_linkDestination; // weak, temporary ref
 }
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
@@ -31,4 +33,12 @@
 - (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 
+- (NSString *)linkDestinationURLString;
+
+@end
+
+
+// When changing the URL, this message is sent up the responder chain. A suitable object should handle it by asking the sender for the appropriate link properties. For now, this is best done by sending it a -linkDestinationURLString: method.
+@interface NSObject (SVLinkInspectorResponderMethod)
+- (void)changeLinkDestination:(SVLinkInspector *)sender;
 @end

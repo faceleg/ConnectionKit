@@ -12,6 +12,7 @@
 #import "SVSelectionBorder.h"
 
 #import "SVDocWindow.h"
+#import "SVLinkInspector.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
@@ -828,6 +829,15 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     [view doCommandBySelector:action];
     
     _isForwardingCommandToWebView = NO;
+}
+
+- (void)changeLinkDestination:(SVLinkInspector *)sender;
+{
+    //  Pass on to focused text
+    if ([[self focusedText] respondsToSelector:_cmd])
+    {
+        [[self focusedText] performSelector:_cmd withObject:sender];
+    }
 }
 
 #pragma mark Tracking the Mouse
