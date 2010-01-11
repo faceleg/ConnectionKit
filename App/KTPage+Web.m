@@ -27,6 +27,7 @@
 #import "NSURL+Karelia.h"
 #import "NSObject+Karelia.h"
 #import "SVHTMLContext.h"
+#import "SVHTMLTextBlock.h"
 
 #import <WebKit/WebKit.h>
 
@@ -354,20 +355,25 @@
 	if (self.site.pagesInSiteMenu)
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
+		[context writeNewline];
 		[context writeStartTag:@"div" idName:@"sitemenu" className:nil];
-		
+		[context writeNewline];
 		[context writeStartTag:@"h2" idName:nil className:@"hidden"];
-		
+		[context writeNewline];
+
 		[context writeString:
 		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
-		
+		[context writeNewline];
+
 		[context writeAnchorTagHref:@"#page-content" title:nil target:nil rel:@"nofollow"];
 		[context writeString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
 		
 		[context writeEndTag];	// a
-		[context writeEndTag];	// h2
+		[context writeEndTagWithNewline:YES];	// h2
 
+		[context writeNewline];
 		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];
+		[context writeNewline];
 		[context writeStartTag:@"ul" idName:nil className:nil];
 		
 		KTSite *site = self.site;
@@ -378,12 +384,11 @@
 		KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
 		for (KTPage *toplink in pagesInSiteMenu)
 		{
+			[context writeNewline];
 			if (toplink == currentParserPage)
 			{
 				[context writeStartTag:@"li" idName:nil className:
 					[NSString stringWithFormat:@"%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
-				[context writeString:@"[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]"];	// ??????
-				[context writeEndTag];	// li
 			}
 			else
 			{
@@ -403,19 +408,36 @@
 				[context writeAnchorTagHref:@"[[path toplink]]" title:@"[toplink titleText]" target:nil rel:nil];
 					// TODO: Fix titleText:  .... pathToObject:
 					// TODO: targetStringForPage:targetPage
-				
-				[context writeText:@"[[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]"];
-				// TODO: parser textblockForKeyPath:.....
-				[context writeEndTag];	// a
-
-				[context writeEndTag];	// li
 			}
+			
+			// Build a text block
+			SVHTMLTextBlock *textBlock = [[[SVHTMLTextBlock alloc] init] autorelease];
+			
+			[textBlock setEditable:NO];
+			[textBlock setFieldEditor:NO];
+			[textBlock setRichText:NO];
+			[textBlock setImportsGraphics:NO];
+			[textBlock setTagName:@"span"];
+			[textBlock setGraphicalTextCode:@"m"];		// Actually we are probably throwing away graphical text menus
+
+			[textBlock setHTMLSourceObject:currentParserPage];
+			[textBlock setHTMLSourceKeyPath:@"menuTitle"];
+
+			[textBlock writeHTML];
+				
+			if (toplink != currentParserPage)
+			{
+				[context writeEndTagWithNewline:YES];	// a
+			}
+			[context writeEndTag];	// li
 			i++;
 		}		
 		
-		[context writeEndTag];	// ul
-		[context writeEndTag];	// div
-		[context writeEndTag];	// div
+		[context writeEndTagWithNewline:YES];	// ul
+		[context writeEndTagWithNewline:YES];	// div
+		[context writeHTMLString:@"<!-- sitemenu-content -->"];
+		[context writeEndTagWithNewline:YES];	// div
+		[context writeHTMLString:@"<!-- sitemenu -->"];
 	}
 	return nil;
 }

@@ -190,15 +190,26 @@
     [_openElements removeLastObject];
 }
 
-- (void)writeEndTag;
+// Outdent *before* emitting end tag, so we get the right thing.
+- (void)writeEndTagWithNewline:(BOOL)aNewline;
 {
+	[self outdent];
+
+	if (aNewline)
+	{
+		[self writeNewline];
+	}
     [self writeString:@"</"];
     [self writeString:[_openElements lastObject]];
     [self writeString:@">"];
     
     [_openElements removeLastObject];
     
-    [self outdent];
+}
+
+- (void)writeEndTag;
+{
+	[self writeEndTagWithNewline:NO];
 }
 
 - (void)writeAttribute:(NSString *)attribute
@@ -225,10 +236,11 @@
 
 - (void)writeAnchorTagHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 {
-    [self openTag:@"a"];
-    if (targetString) [self writeAttribute:@"target" value:targetString];
+	[self openTag:@"a"];
+	if (targetString) [self writeAttribute:@"target" value:targetString];
 	if (titleString) [self writeAttribute:@"title" value:titleString];
-   if (relString) [self writeAttribute:@"rel" value:relString];
+	if (relString) [self writeAttribute:@"rel" value:relString];
+	[self closeStartTag];
 }
 
 
