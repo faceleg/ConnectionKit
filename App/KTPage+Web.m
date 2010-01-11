@@ -404,9 +404,10 @@
 				  (i%2)?@"o":@"e",
 				  (i==last)? @" last" : @"",
 				  isCurrentParent ? @" currentParent" : @""]];
-
-				[context writeAnchorTagHref:@"[[path toplink]]" title:@"[toplink titleText]" target:nil rel:nil];
-					// TODO: Fix titleText:  .... pathToObject:
+			
+				NSString *urlString = [context relativeURLStringOfPage:toplink];
+				
+				[context writeAnchorTagHref:urlString title:[toplink titleText] target:nil rel:nil];
 					// TODO: targetStringForPage:targetPage
 			}
 			
@@ -420,7 +421,7 @@
 			[textBlock setTagName:@"span"];
 			[textBlock setGraphicalTextCode:@"m"];		// Actually we are probably throwing away graphical text menus
 
-			[textBlock setHTMLSourceObject:currentParserPage];
+			[textBlock setHTMLSourceObject:toplink];
 			[textBlock setHTMLSourceKeyPath:@"menuTitle"];
 
 			[textBlock writeHTML];
