@@ -416,8 +416,15 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
     else
     {
-        NSLog(@"Should change link URL to: %@", [sender linkDestinationURLString]);
+        DOMHTMLAnchorElement *link = (id)[[webEditor HTMLDocument] createElement:@"A"];
+        [link setHref:[sender linkDestinationURLString]];
+        
+        DOMRange *selection = [webEditor selectedDOMRange];
+        [selection surroundContents:link];
     }
+    
+    // Need to let paragraph's controller know an actual editing change was made
+    [self didChangeText];
 }
 
 @synthesize selectedLink = _selectedLink;
