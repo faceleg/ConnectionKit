@@ -9,6 +9,9 @@
 #import "KTURLFormatter.h"
 
 
+#import "NSURL+Karelia.h"
+
+
 @implementation KTURLFormatter
 
 - (NSString *)stringForObjectValue:(id)anObject
@@ -23,7 +26,7 @@
         }
         else
         {
-            result = NO;
+            result = nil;
         }
     }
     
@@ -35,9 +38,9 @@
     BOOL result = YES;
     NSURL *URL = nil;
     
-    if (string && ![string isEqualToString:@""])
+    if ([string length] > 0)
     {
-        URL = [NSURL URLWithString:string];
+        URL = [NSURL URLWithUnescapedString:string fallbackScheme:@"http"];
         if (!URL)
         {
             result = NO;
@@ -45,11 +48,9 @@
         }
     }
     
-    if (result && anObject)
-    {
-        *anObject = URL;
-    }
-        
+    
+    // Finish up
+    if (result && anObject) *anObject = URL;
     return result;
 }
 
