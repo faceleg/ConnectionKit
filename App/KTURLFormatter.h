@@ -10,8 +10,7 @@
 
 
 @interface KTURLFormatter : NSFormatter
-{
 
-}
+- (NSURL *)URLFromString:(NSString *)string;    // convenience
 
 @end

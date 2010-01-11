@@ -54,4 +54,14 @@
     return result;
 }
 
+- (NSURL *)URLFromString:(NSString *)string;
+{
+    NSURL *result = nil;
+    
+    NSURL *URL;
+    if ([self getObjectValue:&URL forString:string errorDescription:NULL]) result = URL;
+    
+    return result;
+}
+
 @end
