@@ -971,25 +971,6 @@
 
 @implementation DOMHTMLElement ( KTExtensions )
 
--(BOOL) hasVisibleContents
-{
-	BOOL result = ![[[self textContent] trim] isEqualToString:@""];
-	if (!result)
-	{
-		// Looks like no text, but make sure there aren't other useful tags in there
-		NSString *outerHTML = [self outerHTML];
-		BOOL hasEmbed = NSNotFound != [outerHTML rangeOfString:@"<embed" options:NSCaseInsensitiveSearch].location;
-		BOOL hasImage = NSNotFound != [outerHTML rangeOfString:@"<img" options:NSCaseInsensitiveSearch].location;
-		BOOL hasObject = NSNotFound != [outerHTML rangeOfString:@"<object" options:NSCaseInsensitiveSearch].location;
-		BOOL hasScript = NSNotFound != [outerHTML rangeOfString:@"<script" options:NSCaseInsensitiveSearch].location;
-		BOOL hasIframe = NSNotFound != [outerHTML rangeOfString:@"<iframe" options:NSCaseInsensitiveSearch].location;
-		
-		result = hasEmbed || hasImage || hasObject || hasScript || hasIframe;
-	}
-	return result;
-}
-
-
 /*!	General case  .... look in child nodes and process there.  We call this when we want to recurse
 */
 

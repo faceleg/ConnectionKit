@@ -92,12 +92,6 @@
 @end
 
 
-@interface DOMHTMLElement ( KTExtensions )
-
--(BOOL) hasVisibleContents;
-
-@end
-
 
 #pragma mark -
 
