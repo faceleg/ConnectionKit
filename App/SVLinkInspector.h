@@ -15,6 +15,9 @@
 
 @interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
 {
+    IBOutlet KTLinkSourceView   *oLinkSourceView;
+    IBOutlet NSTextField        *oLinkField;
+    
   @private
     NSWindow                *_inspectedWindow;
     DOMHTMLAnchorElement    *_inspectedLink;

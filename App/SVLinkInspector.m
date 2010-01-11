@@ -40,6 +40,14 @@
     
     return _inspectedTextControllerController;
 }
+
+- (void)refresh
+{
+    [super refresh];
+    
+    
+}
+
 #pragma mark Link View
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
@@ -100,6 +108,5 @@
     
     [[[self inspectedWindow] firstResponder] doCommandBySelector:@selector(clearLinkDestination:)];
 }
-
 
 @end
