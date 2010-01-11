@@ -50,6 +50,6 @@
 #pragma mark Links
 
 - (IBAction)orderFrontLinkPanel:(id)sender;
-
+- (BOOL)canMakeLink;
 
 @end

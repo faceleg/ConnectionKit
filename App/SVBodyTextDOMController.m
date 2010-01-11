@@ -411,6 +411,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [[webEditor selectedDOMRange] removeAnchorElements];
 }
 
+- (BOOL)canMakeLink;
+{
+    return YES;
+}
+
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification
 {
     [super webEditorTextDidChangeSelection:notification];
