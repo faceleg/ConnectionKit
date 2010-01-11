@@ -301,7 +301,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 		urlString = [[self bundle] objectForInfoDictionaryKey:@"URL"];
 	}
 
-	return (nil != urlString) ? [NSURL URLWithUnescapedString:urlString] : nil;
+	return (nil != urlString) ? [KSURLFormatter URLFromString:urlString] : nil;
 }
 
 /*!	Return path for placeholder image, if it exists

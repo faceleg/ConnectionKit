@@ -691,7 +691,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *account = [[self properties] valueForKey:@"userName"];
 			
 			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [NSURL URLWithUnescapedString:urlString];
+				NSURL *url = [KSURLFormatter URLFromString:urlString];
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
@@ -745,7 +745,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			NSString *account = [[self properties] valueForKey:@"userName"];
 			
 			if ([urlString rangeOfString:account].location != NSNotFound) {
-				NSURL *url = [NSURL URLWithUnescapedString:urlString];
+				NSURL *url = [KSURLFormatter URLFromString:urlString];
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
@@ -914,7 +914,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	if ([[self properties] valueForKey:@"homePageURL"] != nil)
 	{
-		NSURL *url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"homePageURL"]];	// BETA: This used to be in a @try block. Are certain URL strings failing?
+		NSURL *url = [KSURLFormatter URLFromString:[[self properties] valueForKey:@"homePageURL"]];	// BETA: This used to be in a @try block. Are certain URL strings failing?
 		
 		if (url) {
 			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
@@ -930,7 +930,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 {
 	if ([[self properties] valueForKey:@"setupURL"] != nil)
 	{
-		NSURL *url = [NSURL URLWithUnescapedString:[[self properties] valueForKey:@"setupURL"]];		// BETA: This used to be in a @try block. Are certain URL strings failing?
+		NSURL *url = [KSURLFormatter URLFromString:[[self properties] valueForKey:@"setupURL"]];		// BETA: This used to be in a @try block. Are certain URL strings failing?
 		
 		if (url != nil) {
 			[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];
@@ -1134,7 +1134,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	NSString *fullURLString = [self testFileRemoteURL];
 	NSLog(@"remote URL = %@", fullURLString);
 	NSURLRequest *theRequest
-		=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:fullURLString]
+		=	[NSURLRequest requestWithURL:[KSURLFormatter URLFromString:fullURLString]
 							 cachePolicy:NSURLRequestReloadIgnoringCacheData
 						 timeoutInterval:20.0];
 	// create the connection with the request and start loading the data
@@ -1978,7 +1978,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 			[newString replaceOccurrencesOfString:@"?" withString:@"userID" options:0 range:NSMakeRange(0, [newString length])];
 			testURL = newString;		// use this instead for the test
 		}
-		NSURL *url = [NSURL URLWithUnescapedString:testURL];
+		NSURL *url = [KSURLFormatter URLFromString:testURL];
 
 		errorString
 			= NSLocalizedString(@"Illegal characters found in URL. A URL must look something like http://www.domain.com/path/", @"validation error message for illegal URL");
@@ -2266,7 +2266,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSString *urlString = [NSString stringWithFormat:@"%@reachable.plist?timeout=%d&url=%@", homeBaseURL, [[defaults objectForKey:@"LocalHostVerifyTimeout"] intValue], [testURL stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]];
 
 				NSURLRequest *theRequest
-				=	[NSURLRequest requestWithURL:[NSURL URLWithUnescapedString:urlString]
+				=	[NSURLRequest requestWithURL:[KSURLFormatter URLFromString:urlString]
 									 cachePolicy:NSURLRequestReloadIgnoringCacheData
 								 timeoutInterval:20.0];
 				// create the connection with the request and start loading the data

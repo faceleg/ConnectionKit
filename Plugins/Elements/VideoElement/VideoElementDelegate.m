@@ -649,7 +649,7 @@ After deflating starting at byte 8, you get:
 		NSString *movieURLString = [[self delegateOwner] valueForKey:@"remoteURL"];
 		if (movieURLString && ![movieURLString isEmptyString])
 		{
-			NSURL *movieURL = [NSURL URLWithUnescapedString:movieURLString];
+			NSURL *movieURL = [KSURLFormatter URLFromString:movieURLString];
 			if (movieURL)
 			{
 				movieAttributes = [NSDictionary dictionaryWithObjectsAndKeys: 

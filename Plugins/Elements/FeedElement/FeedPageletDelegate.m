@@ -130,7 +130,7 @@
 - (NSString *)host		// server wants URL in http:// format
 {
 	NSString *urlString = [[self delegateOwner] valueForKey:@"url"];
-	NSURL *asURL = [NSURL URLWithUnescapedString:urlString];
+	NSURL *asURL = [KSURLFormatter URLFromString:urlString];
 	NSString *host = [asURL host];
 	if (nil == host)
 	{

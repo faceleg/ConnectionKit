@@ -382,7 +382,7 @@
 		}
 		
 		NSString *URLString = [(DOMText *)[aDiv firstChild] data];     // The URL string WebKit hands us MUST be encoded
-        NSURL *URL = [NSURL URLWithUnescapedString:URLString];   // again in order for NSURL to accept it
+        NSURL *URL = [KSURLFormatter URLFromString:URLString];   // again in order for NSURL to accept it
 		if (!URL || ![URL isFileURL])
 		{
 			return NO;
