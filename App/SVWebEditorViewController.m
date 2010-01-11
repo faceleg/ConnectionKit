@@ -408,6 +408,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return [self primitiveSelectedObjectsController];
 }
 
+- (SVWebEditorTextController *)focusedTextController
+{
+    return (SVWebEditorTextController *)[[self webEditor] focusedText];
+}
+
++ (NSSet *)keyPathsForValuesAffectingFocusedTextController
+{
+    return [NSSet setWithObject:@"webEditor.focusedText"];
+}
+
 @synthesize HTMLContext = _context;
 
 @synthesize page = _page;
