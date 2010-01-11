@@ -25,14 +25,6 @@
 static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObservationContext";
 
 
-@interface SVBodyTextDOMController ()
-@property(nonatomic, retain, readwrite) DOMHTMLAnchorElement *selectedLink;
-@end
-
-
-#pragma mark -
-
-
 @implementation SVBodyTextDOMController
 
 #pragma mark Init & Dealloc
@@ -421,7 +413,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 @synthesize selectedLink = _selectedLink;
 
-- (BOOL)canMakeLink;
+- (BOOL)canEditLinks;
 {
     return YES;
 }
@@ -434,7 +426,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     // Does the selection contain a link? If so, make it the selected object
     SVWebEditorView *webEditor = [self webEditor];
     DOMHTMLAnchorElement *link = [[webEditor selectedDOMRange] editableAnchorElement];
-    [self setSelectedLink:link];
+    if (link)
+    {
+        SVWebContentObjectsController *controller = [[webEditor dataSource] performSelector:@selector(primitiveSelectedObjectsController)];
+        [controller selectObjectByInsertingIfNeeded:link];
+    }
 }
 
 #pragma mark KVO
