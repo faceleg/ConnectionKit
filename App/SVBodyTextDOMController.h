@@ -17,6 +17,8 @@
     NSArrayController   *_content;
         
     BOOL    _isUpdating;    
+    
+    DOMHTMLAnchorElement    *_selectedLink;
 }
 
 - (id)initWithContentObject:(SVContentObject *)body inDOMDocument:(DOMDocument *)document;
@@ -50,6 +52,8 @@
 #pragma mark Links
 
 - (IBAction)orderFrontLinkPanel:(id)sender;
+@property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
 - (BOOL)canMakeLink;
+
 
 @end
