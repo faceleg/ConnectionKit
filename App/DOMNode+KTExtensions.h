@@ -31,8 +31,6 @@
 + (BOOL)isHTMLElementFromDOMNodeClass:(NSString *)aClass;
 + (BOOL)isSummaryFromDOMNodeClass:(NSString *)aClass;
 
-- (NSString *)cleanedInnerHTML;
-- (NSString *)cleanedOuterHTML;
 
 #pragma mark parent elements
 
@@ -116,7 +114,6 @@
 @interface DOMElement ( KTExtensions )
 
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
-- (NSString *)cleanedOuterHTMLWithInnards:(BOOL)aFlag;
 - (DOMElement *)removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs;
 
 - (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;

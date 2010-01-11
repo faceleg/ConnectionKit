@@ -73,7 +73,7 @@
     
     // Easiest way to archive string, is to use a context -- see, they do all sorts!
     SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithParagraph:self];
-    [context writeContentsOfDOMNode:element];
+    [element writeInnerHTMLToContext:context];
     
     NSString *string = [context markupString];
     [self setArchiveString:string];

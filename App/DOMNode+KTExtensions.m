@@ -24,11 +24,6 @@
 #import "Debug.h"
 
 
-static NSSet *sTagsWithNewlineOnOpen  = nil;
-static NSSet *sTagsThatCanBeSelfClosed  = nil;
-static NSSet *sTagsWithNewlineOnClose = nil;
-
-
 @interface DOMNode (KTExtensionsPrivate)
 - (DOMNode *)unlink;
 - (void)combineAdjacentRedundantNodes;
@@ -261,31 +256,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 }
 
 #pragma mark inner/outer HTML
-
-- (NSString *)cleanedInnerHTML
-{
-	NSMutableString *output = [NSMutableString string];
-	if ([self hasChildNodes])
-	{
-		DOMNodeList *childNodes = [self childNodes];
-		int i, length = [childNodes length];
-		for (i = 0 ; i < length ; i++)
-		{
-			[output appendString:[[childNodes item:i] cleanedOuterHTML]];			// <----- RECURSION POINT
-		}
-	}
-	return output;
-}
-
-/*!	Fallback -- should NOT be called.  If it is, we need to implement something.
-*/
-- (NSString *)cleanedOuterHTML
-{
-	[self notImplemented:_cmd];
-	return nil;
-}
-
-
 
 - (void)makePlainTextWithSingleLine:(BOOL)aSingleLine
 {
@@ -732,19 +702,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 #pragma mark -
 
 
-@implementation DOMAttr ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	NSString *result = [NSString stringWithFormat:@"%@=\"%@\"", [[self name] lowercaseString], [[self value] stringByEscapingHTMLEntities] ];	// escape entities properly
-	return result;
-}
-@end
-
-
-#pragma mark -
-
-
 @implementation DOMElement ( KTExtensions )
 
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
@@ -983,77 +940,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 }
 
 
-- (NSString *)cleanedOuterHTML
-{
-	return [self cleanedOuterHTMLWithInnards:YES];
-}
-
-- (NSString *)cleanedOuterHTMLWithInnards:(BOOL)aFlag
-{
-	NSMutableString *output = [NSMutableString string];
-	NSString *tagName = [[self tagName] lowercaseString];
-	[output appendFormat:@"<%@", tagName];
-	if ([self hasAttributes])
-	{
-		[output appendFormat:@" "];
-		DOMNamedNodeMap *attrMap = [self attributes];
-		int i;
-		int length = [attrMap length];
-		for ( i = 0 ; i < length ; i++ )
-		{
-			DOMNode *oneAttr = [attrMap item:i];
-			[output appendString:[oneAttr cleanedOuterHTML] ];
-			[output appendString:@" "];
-		}
-		// delete last space
-		[output deleteCharactersInRange:NSMakeRange([output length] - 1, 1)];
-	}
-	
-	if (nil == sTagsThatCanBeSelfClosed)
-	{
-		sTagsThatCanBeSelfClosed = [[NSSet alloc] initWithObjects:@"img", @"br", @"hr", @"p", @"meta", @"link", @"base", @"param", nil];
-	}
-	
-	if ([self hasChildNodes] || ![sTagsThatCanBeSelfClosed containsObject:tagName])
-	{
-		[output appendString:@">"];		// close the node first
-		
-		if (nil == sTagsWithNewlineOnOpen)
-		{
-			sTagsWithNewlineOnOpen = [[NSSet alloc] initWithObjects:@"head", @"body", @"ul", @"ol", @"table", @"tr", nil];
-		}
-		if ([sTagsWithNewlineOnOpen containsObject:tagName])
-		{
-			[output appendString:@"\n"];
-		}
-		if (aFlag)
-		{
-			if ([self hasChildNodes])
-			{
-				[output appendString:[self cleanedInnerHTML]];		// <----- RECURSION POINT
-			}
-			[output appendFormat:@"</%@>", tagName];
-		}
-	}
-	else	// no children, self-close tag.
-	{
-		[output appendString:@" />"];
-	}
-	
-	if (aFlag)	// only deal with newline if we're doing the innards too
-	{
-		if (nil == sTagsWithNewlineOnClose)
-		{
-			sTagsWithNewlineOnClose = [[NSSet alloc] initWithObjects:@"ul", @"ol", @"table", @"li", @"p", @"h1", @"h2", @"h3", @"h4", @"blockquote", @"br", @"pre", @"td", @"tr", @"div", @"hr", nil];
-		}
-		if ([sTagsWithNewlineOnClose containsObject:tagName])
-		{
-			[output appendString:@"\n"];
-		}
-	}
-	return output;
-}
-
 /*	Run through our child nodes, converting the source of any images to use the
  *	media:// URL scheme.
  *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
@@ -1082,90 +968,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 #pragma mark -
 
-
-@implementation DOMComment  ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	NSString *comment = [self data];
-	comment = [comment stringByReplacing:@"--" with:@"- -"];	// don't allow any double-dashes!
-	return [NSString stringWithFormat:@"<!-- %@ -->", comment];
-}
-
-@end
-
-
-@implementation DOMCDATASection ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	return [NSString stringWithFormat:@"<![CDATA[%@]]>", [self data]];
-}
-
-@end
-
-
-@implementation DOMText ( KTExtensions )
-
-- (NSString *)cleanedOuterHTML
-{
-	NSString *text = [self data];
-	
-	// Hack -- instead of escaping the whole thing, look for comment blocks, which SHOULD NOT BE IN HERE
-	// This code based on replaceAllTextBetweenString:andString:fromDictionary:
-	
-	NSString *startDelim = @"<!--";
-	NSString *endDelim = @"-->";
-	
-	NSRange range = NSMakeRange(0,[text length]);	// We'll increment this
-	NSMutableString *buf = [NSMutableString string];
-		
-	// Now loop through; looking.
-	while (range.length != 0)
-	{
-		NSRange foundRange = [text rangeFromString:startDelim toString:endDelim options:0 range:range];
-		if (foundRange.location != NSNotFound)
-		{
-			// First, append what was the search range and the found range -- before match -- to output
-		{
-			NSRange beforeRange = NSMakeRange(range.location, foundRange.location - range.location);
-			NSString *before = [text substringWithRange:beforeRange];
-			[buf appendString:[before stringByEscapingHTMLEntities]];
-		}
-			// Now, figure out what was between those two strings
-			{
-				NSRange betweenRange = NSMakeRange(foundRange.location, foundRange.length);
-				NSString *between = [text substringWithRange:betweenRange];
-				[buf appendString:between];		// not escaped
-			}
-			// Now, update things and move on.
-			range.length = NSMaxRange(range) - NSMaxRange(foundRange);
-			range.location = NSMaxRange(foundRange);
-		}
-		else
-		{
-			NSString *after = [text substringWithRange:range];
-			[buf appendString:[after stringByEscapingHTMLEntities]];
-			// Now, update to be past the range, to finish up.
-			range.location = NSMaxRange(range);
-			range.length = 0;
-		}
-	}
-	
-/// Fixed in r18043 so we don't need it here, this should take out problem I was having with two spaces in a comment
-//#warning PATCH here to deal with WEBKIT BUG -- 10636   http://bugs.webkit.org/show_bug.cgi?id=10636
-//	if ([self respondsToSelector:@selector(isContentEditable)] && [(DOMHTMLElement *)self isContentEditable])
-//	{
-//		NSString *twoSpaces = @"  ";
-//		NSString *nbsp = [NSString stringWithUTF8String:"\xc2\xa0"]; // non-breaking-space
-//		NSString *replacePattern = [NSString stringWithUTF8String:"\xc2\xa0 "]; // {non-breaking-space, ' '}
-//		[buf replaceOccurrencesOfString:nbsp withString:@" " options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
-//		[buf replaceOccurrencesOfString:twoSpaces withString:replacePattern options:NSBackwardsSearch range:NSMakeRange(0, [buf length])];
-//	}
-	return [NSString stringWithString:buf];
-}
-
-@end
 
 @implementation DOMHTMLElement ( KTExtensions )
 

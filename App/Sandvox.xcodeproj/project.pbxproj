@@ -214,6 +214,7 @@
 		270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */; };
 		270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */; };
 		270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */; };
+		270E4D2D10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4D2C10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
@@ -1656,6 +1657,7 @@
 		270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVStringAttribute.m; sourceTree = "<group>"; };
 		270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkInspector.h; sourceTree = "<group>"; };
 		270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkInspector.m; sourceTree = "<group>"; };
+		270E4D2C10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLContext+DOM.m"; sourceTree = "<group>"; };
 		270E82E510A4484D007E7848 /* KSInspectorTabsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsController.h; sourceTree = "<group>"; };
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
@@ -3162,6 +3164,7 @@
 				27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */,
 				27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */,
 				27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */,
+				270E4D2C10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -6614,6 +6617,7 @@
 				270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */,
 				270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */,
 				270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */,
+				270E4D2D10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

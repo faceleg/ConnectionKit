@@ -209,49 +209,6 @@
     [self writeString:@"\""];
 }
 
-#pragma mark Writing from the DOM
-
-- (void)writeContentsOfDOMNode:(DOMNode *)node;
-{
-    DOMNodeList *children = [node childNodes];
-    for (int i = 0; i < [children length]; i++)
-    {
-        DOMNode *aNode = [children item:i];
-        if ([aNode isKindOfClass:[DOMElement class]])
-        {
-            [self writeDOMElement:(DOMElement *)aNode];
-        }
-        else
-        {
-            [self writeText:[aNode textContent]];
-        }
-    }
-}
-
-- (void)writeDOMElement:(DOMElement *)element;
-{
-    // Open tag
-    [self openTag:[[element tagName] lowercaseString]];
-    
-    // Write attributes
-    DOMNamedNodeMap *attributes = [element attributes];
-    NSUInteger index;
-    for (index = 0; index < [attributes length]; index++)
-    {
-        DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
-        [self writeAttribute:[anAttribute name] value:[anAttribute value]];
-    }
-    
-    // Close tag
-    [self closeStartTag];
-    
-    // Write contents
-    [self writeContentsOfDOMNode:element];
-    
-    // Write end tag
-    [self writeEndTag];
-}
-
 #pragma mark Indentation
 
 @synthesize indentationLevel = _indentation;

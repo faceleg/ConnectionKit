@@ -96,15 +96,6 @@ typedef enum {
                  value:(NSString *)value;
 
 
-#pragma mark Writing from the DOM
-
-// Walks through the element, recursively writing the child nodes. This way the context has more of an idea what's going on than calling -innerHTML and writing that.
-- (void)writeContentsOfDOMNode:(DOMNode *)node;
-
-//  Writes an start tag, then the contents of the elemenet, and then a end tag
-- (void)writeDOMElement:(DOMElement *)element;
-
-
 #pragma mark Indentation
 
 // Setting the indentation level does not write to the context in any way. It is up to methods that actually do some writing to respect the indent level. e.g. starting a new line should indent that line to match.
@@ -160,3 +151,22 @@ typedef enum {
 @property(nonatomic, retain) KTAbstractPage *currentPage;
 
 @end
+
+
+#pragma mark -
+
+
+@interface DOMNode (SVHTMLContext)
+- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (void)writeInnerHTMLToContext:(SVHTMLContext *)context;
+
+- (void)writeCleanedInnerHTMLToContext:(SVHTMLContext *)context;
+@end
+
+
+@interface DOMElement (SVHTMLContext)
+- (void)openTagInContext:(SVHTMLContext *)context;
+
+- (void)writeCleanedHTMLToContext:(SVHTMLContext *)context innards:(BOOL)writeInnards;
+@end
+
