@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
 #import "KTPage.h"
-#import "KTURLFormatter.h"
+#import "KSURLFormatter.h"
 
 #import "DOMRange+Karelia.h"
 
@@ -69,7 +69,7 @@
     [oLinkField setBackgroundColor:(editable ? [NSColor textBackgroundColor] : [NSColor controlHighlightColor])];
     if (editable)
     {
-        if (!_URLFormatter) _URLFormatter = [[KTURLFormatter alloc] init];
+        if (!_URLFormatter) _URLFormatter = [[KSURLFormatter alloc] init];
         [oLinkField setFormatter:_URLFormatter];
     }
     else
