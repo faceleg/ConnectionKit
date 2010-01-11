@@ -1963,8 +1963,15 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	if ([sUrlKeySet containsObject:key])
 	{
 		newValue = [newValue trim];
-		newValue = [[NSURL URLWithUnescapedString:newValue fallbackScheme:@"http"] absoluteString];
-		NSString *testURL = newValue;
+		
+        KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
+        NSURL *newValueURL = [formatter URLFromString:newValue];
+        [formatter release];
+        
+        if (newValueURL) newValue = [newValueURL absoluteString];
+		
+        
+        NSString *testURL = newValue;
 		// special case: with stemURL, we temporarily convert "?" into "userid" to make it seem valid
 		if ([key isEqualToString:@"stemURL"])
 		{
