@@ -7,6 +7,7 @@
 //
 
 #import "SVTemplateContext.h"
+#import <WebKit/DOMCore.h>
 
 
 // publishing mode
