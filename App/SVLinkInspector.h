@@ -19,6 +19,8 @@
     IBOutlet NSTextField        *oLinkField;
     
   @private
+    NSFormatter *_URLFormatter;
+    
     NSWindow                *_inspectedWindow;
     DOMHTMLAnchorElement    *_inspectedLink;
     NSObjectController      *_inspectedTextControllerController;
