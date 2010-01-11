@@ -28,6 +28,7 @@
 @property(nonatomic, readonly) DOMHTMLAnchorElement *inspectedLink;
 - (NSObjectController *)inspectedTextControllerController;
 
+- (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 
 @end

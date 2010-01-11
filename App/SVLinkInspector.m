@@ -17,6 +17,12 @@
 
 @implementation SVLinkInspector
 
+- (void)loadView
+{
+    [super loadView];
+    [self refresh];
+}
+
 #pragma mark Inspection
 
 @synthesize inspectedWindow = _inspectedWindow;
@@ -46,9 +52,23 @@
     [super refresh];
     
     
+    // Make the link field editable if there is nothing entered, or the URL is typed in
+    BOOL editable = YES;
+    NSArray *selection = [self inspectedObjects];
+    if ([selection count] == 1)
+    {
+        id link = [selection objectAtIndex:0];
+        if ([link respondsToSelector:@selector(isLocalLink)])
+        {
+            editable = ![link boolForKey:@"localLink"];
+        }
+    }
+    
+    [oLinkField setEditable:editable];
+    [oLinkField setBackgroundColor:(editable ? [NSColor textBackgroundColor] : [NSColor controlHighlightColor])];
 }
 
-#pragma mark Link View
+#pragma mark Link Actions
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
@@ -96,6 +116,11 @@
             }
         }
     }
+}
+
+- (IBAction)setLinkURL:(id)sender;
+{
+    
 }
 
 - (IBAction)clearLinkDestination:(id)sender;
