@@ -41,10 +41,30 @@
     if ([string length] > 0)
     {
         URL = [NSURL URLWithUnescapedString:string fallbackScheme:@"http"];
-        if (!URL)
+        
+        
+        // Does the URL have no useful resource specified? If so, generate nil URL
+        if (URL)
         {
-            result = NO;
-            if (error) *error = nil;
+            NSString *resource = [URL resourceSpecifier];
+            if ([resource length] == 0 ||
+                [resource isEqualToString:@"/"] ||
+                [resource isEqualToString:@"//"])
+            {
+                URL = nil;
+            }
+        }
+        
+        // URLs should also really have a host and a path
+        if (URL)
+        {
+            NSString *host = [URL host];
+			NSString *path = [URL path];
+			if ((!host && !path) ||
+				(host && NSNotFound == [host rangeOfString:@"."].location))
+			{
+				URL = nil;
+            }
         }
     }
     
