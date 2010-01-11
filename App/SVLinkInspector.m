@@ -31,6 +31,15 @@
     return result;
 }
 
+- (NSObjectController *)inspectedTextControllerController;
+{
+    if (!_inspectedTextControllerController)
+    {
+        _inspectedTextControllerController = [[NSObjectController alloc] init];
+    }
+    
+    return _inspectedTextControllerController;
+}
 #pragma mark Link View
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link

@@ -18,10 +18,12 @@
   @private
     NSWindow                *_inspectedWindow;
     DOMHTMLAnchorElement    *_inspectedLink;
+    NSObjectController      *_inspectedTextControllerController;
 }
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
 @property(nonatomic, readonly) DOMHTMLAnchorElement *inspectedLink;
+- (NSObjectController *)inspectedTextControllerController;
 
 - (IBAction)clearLinkDestination:(id)sender;
 
