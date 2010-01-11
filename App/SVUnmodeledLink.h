@@ -23,6 +23,8 @@
 - (id)initWithAnchorElement:(DOMHTMLAnchorElement *)anchor;
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *anchorElement;
 
+@property(nonatomic, readonly, getter=isLocalLink) BOOL localLink;
+
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
 - (void)setTargetDescription:(NSString *)desc;   // sets anchor's href
 

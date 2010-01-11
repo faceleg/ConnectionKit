@@ -34,13 +34,19 @@
 @synthesize anchorElement = _anchor;
 @synthesize managedObjectContext = _moc;
 
+- (BOOL)isLocalLink
+{
+    BOOL result = [[[self anchorElement] href] hasPrefix:kKTPageIDDesignator];
+    return result;
+}
+
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
 {
     // Is there a link selected? If so, copy across its href or page name as appropriate
     NSString *result = [[self anchorElement] href];
         
     // Is it a link to a page?
-    if ([result hasPrefix:kKTPageIDDesignator])
+    if ([self isLocalLink])
     {
         NSString *pageID = [result substringFromIndex:[kKTPageIDDesignator length]];
         KTPage *target = [KTPage pageWithUniqueID:pageID
