@@ -230,6 +230,8 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     // Ignore identical text as it would send unwanted editing messages to the text in question
     if (text == _focusedText) return;
     
+    [self willChangeValueForKey:@"focusedText"];
+    
     // Let the old text know it's done
     [[self focusedText] webEditorTextDidEndEditing:notification];
     [[self webViewUndoManager] removeAllActions];
@@ -237,6 +239,8 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     // Store the new text
     [text webEditorTextWillGainFocus];
     [_focusedText release], _focusedText = [text retain];
+    
+    [self didChangeValueForKey:@"focusedText"];
 }
 
 #pragma mark Selected Items
