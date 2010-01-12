@@ -397,6 +397,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)changeLinkDestinationTo:(NSString *)linkURLString;
 {
     SVWebEditorView *webEditor = [self webEditor];
+    DOMRange *selection = [webEditor selectedDOMRange];
     
     if (!linkURLString)
     {
@@ -408,7 +409,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         [link setHref:linkURLString];
         
         // Changing link affects selection. But if the selection is collapsed the user almost certainly wants to affect surrounding word/link
-        DOMRange *selection = [webEditor selectedDOMRange];
         if ([selection collapsed])
         {
             [[webEditor webView] selectWord:self];
@@ -416,6 +416,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         }
         
         [selection surroundContents:link];
+        
+        // Make the link the selected object
+        [selection selectNode:link];
+        [webEditor setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
     }
     
     // Need to let paragraph's controller know an actual editing change was made
