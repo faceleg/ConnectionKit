@@ -8,6 +8,7 @@
 
 #import "SVWebEditorViewController.h"
 
+#import "SVApplicationController.h"
 #import "SVBodyParagraph.h"
 #import "SVCallout.h"
 #import "SVPlugInGraphic.h"
@@ -72,6 +73,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
+    // Keep our links property in sync with the defaults
+    [self bind:@"liveEditableAndSelectableLinks"
+      toObject:[NSUserDefaultsController sharedUserDefaultsController]
+   withKeyPath:[@"values." stringByAppendingString:kLiveEditableAndSelectableLinksDefaultsKey]
+       options:nil];
+    
     return self;
 }
     
@@ -128,6 +135,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [editor setDelegate:self];
     [editor setDataSource:self];
     [editor setAllowsUndo:NO];  // will be managing this entirely ourselves
+    
+    // Other behaviour
+    [editor setEditableLinksLive:[self liveEditableAndSelectableLinks]];
 }
 
 #pragma mark Updating
@@ -576,6 +586,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     return [[self webEditor] convertRect:result fromView:[element documentView]];
+}
+
+#pragma mark Links
+
+@synthesize liveEditableAndSelectableLinks = _liveLinks;
+- (void)setLiveEditableAndSelectableLinks:(BOOL)liveLinks
+{
+    _liveLinks = liveLinks;
+    [[self webEditor] setEditableLinksLive:liveLinks];
 }
 
 #pragma mark Element Insertion
