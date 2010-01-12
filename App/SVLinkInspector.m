@@ -41,16 +41,6 @@
     return result;
 }
 
-- (NSObjectController *)inspectedTextControllerController;
-{
-    if (!_inspectedTextControllerController)
-    {
-        _inspectedTextControllerController = [[NSObjectController alloc] init];
-    }
-    
-    return _inspectedTextControllerController;
-}
-
 - (void)refresh
 {
     [super refresh];

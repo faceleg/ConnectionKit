@@ -73,18 +73,6 @@
     [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
     [_linkInspector setInspectedObjectsController:[[window windowController] objectsController]];
     [_plugInInspector setInspectedObjectsController:[[window windowController] objectsController]];
-    
-    // Link Inspector
-    [_linkInspector setInspectedWindow:window];
-    if (window)
-    {
-        [[_linkInspector inspectedTextControllerController] bind:NSContentBinding toObject:window withKeyPath:@"windowController.webContentAreaController.selectedViewController.focusedTextController" options:nil];
-    }
-    else
-    {
-        [[_linkInspector inspectedTextControllerController] unbind:NSContentBinding];
-        [[_linkInspector inspectedTextControllerController] setContent:nil];
-    }
 }
 
 - (NSArray *)defaultInspectorViewControllers;

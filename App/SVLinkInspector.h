@@ -23,7 +23,6 @@
     
     NSWindow                *_inspectedWindow;
     DOMHTMLAnchorElement    *_inspectedLink;
-    NSObjectController      *_inspectedTextControllerController;
     
     NSString *_linkDestination; // weak, temporary ref
 }
@@ -32,7 +31,6 @@
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
 @property(nonatomic, readonly) DOMHTMLAnchorElement *inspectedLink;
-- (NSObjectController *)inspectedTextControllerController;
 
 - (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
