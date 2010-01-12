@@ -392,39 +392,42 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Links
 
-- (IBAction)orderFrontLinkPanel:(id)sender;
+- (void)changeLinkDestinationTo:(NSString *)linkURLString;
 {
     SVWebEditorView *webEditor = [self webEditor];
     
-    DOMHTMLAnchorElement *link = (id)[[webEditor HTMLDocument] createElement:@"A"];
-    [link setHref:@"http://example.com"];
-    
-    DOMRange *selection = [webEditor selectedDOMRange];
-    [selection surroundContents:link];
-    
-    // Need to let paragraph's controller know an actual editing change was made
-    [self didChangeText];
-}
-
-- (void)changeLinkDestination:(SVLinkInspector *)sender;
-{
-    SVWebEditorView *webEditor = [self webEditor];
-    
-    if (![sender linkDestinationURLString])
+    if (!linkURLString)
     {
         [[webEditor selectedDOMRange] removeAnchorElements];
     }
     else
     {
         DOMHTMLAnchorElement *link = (id)[[webEditor HTMLDocument] createElement:@"A"];
-        [link setHref:[sender linkDestinationURLString]];
+        [link setHref:linkURLString];
         
+        // Changing link affects selection. But if the selection is collapsed the user almost certainly wants to affect surrounding word/link
         DOMRange *selection = [webEditor selectedDOMRange];
+        if ([selection collapsed])
+        {
+            [[webEditor webView] selectWord:self];
+            selection = [webEditor selectedDOMRange];
+        }
+        
         [selection surroundContents:link];
     }
     
     // Need to let paragraph's controller know an actual editing change was made
     [self didChangeText];
+}
+
+- (IBAction)orderFrontLinkPanel:(id)sender;
+{
+    [self changeLinkDestinationTo:@"http://example.com"];
+}
+
+- (void)changeLinkDestination:(SVLinkInspector *)sender;
+{
+    [self changeLinkDestinationTo:[sender linkDestinationURLString]];
 }
 
 @synthesize selectedLink = _selectedLink;
