@@ -365,7 +365,7 @@
 		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
 		[context writeNewline];
 
-		[context writeAnchorTagHref:@"#page-content" title:nil target:nil rel:@"nofollow"];
+		[context writeAnchorStartTagWithHref:@"#page-content" title:nil target:nil rel:@"nofollow"];
 		[context writeString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
 		
 		[context writeEndTag];	// a
@@ -407,7 +407,7 @@
 			
 				NSString *urlString = [context relativeURLStringOfPage:toplink];
 				
-				[context writeAnchorTagHref:urlString title:[toplink titleText] target:nil rel:nil];
+				[context writeAnchorStartTagWithHref:urlString title:[toplink titleText] target:nil rel:nil];
 					// TODO: targetStringForPage:targetPage
 			}
 			

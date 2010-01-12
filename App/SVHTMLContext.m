@@ -160,7 +160,28 @@
 
 - (void)writeString:(NSString *)string; { [super writeString:string]; }
 
-#pragma mark Writing Tags
+#pragma mark Higher-level Tag Writing
+
+- (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+{
+    [self openTag:tagName];
+    if (idName) [self writeAttribute:@"id" value:idName];
+    if (className) [self writeAttribute:@"class" value:className];
+    [self closeStartTag];
+}
+
+// TODO: disable indentation & newlines when we are in an anchor tag, somehow.
+
+- (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+{
+	[self openTag:@"a"];
+	if (targetString) [self writeAttribute:@"target" value:targetString];
+	if (titleString) [self writeAttribute:@"title" value:titleString];
+	if (relString) [self writeAttribute:@"rel" value:relString];
+	[self closeStartTag];
+}
+
+#pragma mark Low-level Tag Writing
 
 - (void)openTag:(NSString *)tagName;        //  <tagName
 {
@@ -221,29 +242,6 @@
     [self writeHTMLString:[value stringByEscapingHTMLEntitiesWithQuot:YES]];	// make sure to escape the quote mark
     [self writeString:@"\""];
 }
-
-#pragma mark High-level tags
-
-- (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
-{
-    [self openTag:tagName];
-    if (idName) [self writeAttribute:@"id" value:idName];
-    if (className) [self writeAttribute:@"class" value:className];
-    [self closeStartTag];
-}
-
-// TODO: disable indentation & newlines when we are in an anchor tag, somehow.
-
-- (void)writeAnchorTagHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
-{
-	[self openTag:@"a"];
-	if (targetString) [self writeAttribute:@"target" value:targetString];
-	if (titleString) [self writeAttribute:@"title" value:titleString];
-	if (relString) [self writeAttribute:@"rel" value:relString];
-	[self closeStartTag];
-}
-
-
 
 #pragma mark Indentation
 
