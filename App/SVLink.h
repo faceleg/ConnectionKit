@@ -6,28 +6,31 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-//  A thin wrapper around SVHTMLAnchorElement for the benfit of the Inspector
+//  Immutable object, rather like NSFont, that encapsulates a link.
 
 
 #import <Cocoa/Cocoa.h>
-#import <WebKit/WebKit.h>
 
 
-@interface SVLink : NSObject
+@class KTAbstractPage;
+
+
+@interface SVLink : NSObject <NSCopying>
 {
   @private
-    DOMHTMLAnchorElement    *_anchor;
-    NSManagedObjectContext  *_moc;
+    NSString        *_URLString;
+    KTAbstractPage  *_page;
 }
 
-- (id)initWithAnchorElement:(DOMHTMLAnchorElement *)anchor;
-@property(nonatomic, retain, readonly) DOMHTMLAnchorElement *anchorElement;
+#pragma mark Creating a link
+- (id)initWithURLString:(NSString *)urlString;
+- (id)initWithPage:(KTAbstractPage *)page;
 
-@property(nonatomic, readonly, getter=isLocalLink) BOOL localLink;
+
+#pragma mark Link Properties
+@property(nonatomic, copy, readonly) NSString *URLString;   // should always be non-nil
+@property(nonatomic, retain, readonly) KTAbstractPage *page;// non-nil only if created from a page
 
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
-- (void)setTargetDescription:(NSString *)desc;   // sets anchor's href
-
-@property(nonatomic, retain) NSManagedObjectContext *managedObjectContext;
 
 @end

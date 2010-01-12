@@ -9,8 +9,10 @@
 #import "SVBodyTextDOMController.h"
 #import "SVBodyParagraphDOMAdapter.h"
 
+#import "KT.h"
 #import "SVBodyParagraph.h"
 #import "SVCallout.h"
+#import "KTAbstractPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
 #import "SVLinkManager.h"
@@ -449,25 +451,29 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVLink *link = nil;
     if (anchorElement)
     {
+        // Is it a page link?
         NSString *linkURLString = [anchorElement href];
         if ([linkURLString hasPrefix:kKTPageIDDesignator])
         {
+            NSString *pageID = [linkURLString substringFromIndex:[kKTPageIDDesignator length]];
+            KTAbstractPage *target = [KTAbstractPage pageWithUniqueID:pageID
+                                               inManagedObjectContext:[[self representedObject] managedObjectContext]];
             
+            if (target)
+            {
+                link = [[SVLink alloc] initWithPage:target];
+            }
         }
-        else
+        
+        // Not a page link? Fallback to regular link
+        if (!link)
         {
             link = [[SVLink alloc] initWithURLString:linkURLString];
         }
     }
     
     [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
-    
-    return;
-    if (anchorElement)
-    {
-        SVWebContentObjectsController *controller = [[webEditor dataSource] performSelector:@selector(primitiveSelectedObjectsController)];
-        [controller selectObjectByInsertingIfNeeded:link];
-    }
+    [link release];
 }
 
 #pragma mark KVO

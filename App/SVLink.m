@@ -14,61 +14,59 @@
 
 @implementation SVLink
 
-- (id)initWithAnchorElement:(DOMHTMLAnchorElement *)anchor;
+#pragma mark Creating a Link
+
+- (id)initWithURLString:(NSString *)urlString;
 {
-    OBPRECONDITION(anchor);
-    
-    self = [self init];
-    _anchor = [anchor retain];
+    [self init];
+    _URLString = [urlString copy];
+    return self;
+}
+
+- (id)initWithPage:(KTAbstractPage *)page;
+{
+    [self initWithURLString:[kKTPageIDDesignator stringByAppendingString:[page uniqueID]]];
+    _page = [page retain];
     return self;
 }
 
 - (void)dealloc
 {
-    [_anchor release];
-    [_moc release];
+    [_URLString release];
+    [_page release];
     
     [super dealloc];
 }
 
-@synthesize anchorElement = _anchor;
-@synthesize managedObjectContext = _moc;
+#pragma mark Copying
 
-- (BOOL)isLocalLink
+- (id)copyWithZone:(NSZone *)zone
 {
-    BOOL result = [[[self anchorElement] href] hasPrefix:kKTPageIDDesignator];
-    return result;
+    return [self retain];   // immutable object
 }
+
+#pragma mark Link Properties
+
+@synthesize URLString = _URLString;
+@synthesize page = _page;
 
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
 {
     // Is there a link selected? If so, copy across its href or page name as appropriate
-    NSString *result = [[self anchorElement] href];
+    NSString *result = [self URLString];
         
     // Is it a link to a page?
-    if ([self isLocalLink])
+    if ([self page])
     {
-        NSString *pageID = [result substringFromIndex:[kKTPageIDDesignator length]];
-        KTPage *target = [KTPage pageWithUniqueID:pageID
-                           inManagedObjectContext:[self managedObjectContext]];
-        
-        if (target)
+        result = [[[self page] title] text];
+        if ([result length] == 0) 
         {
-            result = [[target title] text];
-            if ([result length] == 0) 
-            {
-                result = NSLocalizedString(@"(Empty title)",
-                                           @"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.");
-            }
+            result = NSLocalizedString(@"(Empty title)",
+                                       @"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.");
         }
     }
     
     return result;
-}
-
-- (void)setTargetDescription:(NSString *)desc
-{
-    [[self anchorElement] setHref:desc];
 }
 
 @end
