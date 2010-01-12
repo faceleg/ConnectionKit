@@ -356,7 +356,7 @@
 
 
 	[context writeNewline];
-	[context writeStartTag:@"ul" idName:nil className:(isTop ? @"jd_menu" : nil)];
+	[context writeStartTag:@"ul" idName:nil className:(isTop ? @"jd_menu jd_menu_vertical" : nil)];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
