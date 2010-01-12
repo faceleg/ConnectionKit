@@ -28,6 +28,8 @@
     NSString *_linkDestination; // weak, temporary ref
 }
 
+#pragma mark Other
+
 @property(nonatomic, retain) NSWindow *inspectedWindow;
 @property(nonatomic, readonly) DOMHTMLAnchorElement *inspectedLink;
 - (NSObjectController *)inspectedTextControllerController;

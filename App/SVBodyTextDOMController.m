@@ -13,7 +13,7 @@
 #import "SVCallout.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
-#import "SVLinkInspector.h"
+#import "SVLinkManager.h"
 #import "SVUnmodeledLink.h"
 #import "SVWebContentObjectsController.h"
 
@@ -425,7 +425,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self changeLinkDestinationTo:@"http://example.com"];
 }
 
-- (void)changeLinkDestination:(SVLinkInspector *)sender;
+- (void)changeLinkDestination:(id)sender;
 {
     [self changeLinkDestinationTo:[sender linkDestinationURLString]];
 }
@@ -445,10 +445,18 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     // Does the selection contain a link? If so, make it the selected object
     SVWebEditorView *webEditor = [self webEditor];
     DOMHTMLAnchorElement *anchorElement = [[webEditor selectedDOMRange] editableAnchorElement];
+    
+    SVUnmodeledLink *link = nil;
     if (anchorElement)
     {
-        SVUnmodeledLink *link = [[SVUnmodeledLink alloc] initWithAnchorElement:anchorElement];
-        
+        link = [[SVUnmodeledLink alloc] initWithAnchorElement:anchorElement];
+    }
+    
+    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
+    
+    return;
+    if (anchorElement)
+    {
         SVWebContentObjectsController *controller = [[webEditor dataSource] performSelector:@selector(primitiveSelectedObjectsController)];
         [controller selectObjectByInsertingIfNeeded:link];
     }

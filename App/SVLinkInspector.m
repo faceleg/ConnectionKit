@@ -7,6 +7,7 @@
 //
 
 #import "SVLinkInspector.h"
+#import "SVLinkManager.h"
 
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
@@ -17,6 +18,8 @@
 
 
 @implementation SVLinkInspector
+
+#pragma mark View
 
 - (void)loadView
 {
@@ -76,6 +79,12 @@
     {
         [oLinkField setFormatter:nil];
     }
+}
+
+- (SVLinkManager *)sharedLinkManager
+{
+    // Exposed only here for the benefit of bindings
+    return [SVLinkManager sharedLinkManager];
 }
 
 #pragma mark Link Actions
