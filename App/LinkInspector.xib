@@ -251,7 +251,7 @@
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 			</object>
-			<object class="NSUserDefaultsController" id="444634114">
+			<object class="NSUserDefaultsController" id="1010885171">
 				<object class="NSMutableArray" key="NSDeclaredKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
 					<string>liveEditableAndSelectableLinks</string>
@@ -315,10 +315,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">hidden: values.LiveEditableAndSelectableLinks</string>
 						<reference key="source" ref="1061431300"/>
-						<reference key="destination" ref="444634114"/>
+						<reference key="destination" ref="1010885171"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="1061431300"/>
-							<reference key="NSDestination" ref="444634114"/>
+							<reference key="NSDestination" ref="1010885171"/>
 							<string key="NSLabel">hidden: values.LiveEditableAndSelectableLinks</string>
 							<string key="NSBinding">hidden</string>
 							<string key="NSKeyPath">values.LiveEditableAndSelectableLinks</string>
@@ -331,10 +331,10 @@
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: values.LiveEditableAndSelectableLinks</string>
 						<reference key="source" ref="751625205"/>
-						<reference key="destination" ref="444634114"/>
+						<reference key="destination" ref="1010885171"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="751625205"/>
-							<reference key="NSDestination" ref="444634114"/>
+							<reference key="NSDestination" ref="1010885171"/>
 							<string key="NSLabel">value: values.LiveEditableAndSelectableLinks</string>
 							<string key="NSBinding">value</string>
 							<string key="NSKeyPath">values.LiveEditableAndSelectableLinks</string>
@@ -342,26 +342,6 @@
 						</object>
 					</object>
 					<int key="connectionID">120</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: sharedLinkManager.selectedLink.targetDescription</string>
-						<reference key="source" ref="552070882"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="552070882"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: sharedLinkManager.selectedLink.targetDescription</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">sharedLinkManager.selectedLink.targetDescription</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSConditionallySetsEditable</string>
-								<boolean value="NO" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">123</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -522,7 +502,7 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">114</int>
-						<reference key="object" ref="444634114"/>
+						<reference key="object" ref="1010885171"/>
 						<reference key="parent" ref="0"/>
 					</object>
 				</object>
@@ -728,10 +708,10 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">changeLinkDestination:</string>
+						<string key="NS.key.0">changeLink:</string>
 						<string key="NS.object.0">SVLinkInspector</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="367170750">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="520507440">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVLinkInspector.h</string>
 					</object>
@@ -797,7 +777,7 @@
 							<string>KTLinkSourceView</string>
 						</object>
 					</object>
-					<reference key="sourceIdentifier" ref="367170750"/>
+					<reference key="sourceIdentifier" ref="520507440"/>
 				</object>
 			</object>
 			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.2+">

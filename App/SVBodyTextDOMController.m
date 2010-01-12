@@ -427,9 +427,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self changeLinkDestinationTo:@"http://example.com"];
 }
 
-- (void)changeLink:(id)sender;
+- (void)changeLink:(SVLinkManager *)sender;
 {
-    [self changeLinkDestinationTo:[sender linkDestinationURLString]];
+    [self changeLinkDestinationTo:[[sender selectedLink] URLString]];
 }
 
 @synthesize selectedLink = _selectedLink;

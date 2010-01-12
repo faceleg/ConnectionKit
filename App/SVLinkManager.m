@@ -45,4 +45,12 @@
 @synthesize selectedLink = _selectedLink;
 @synthesize editable = _editable;
 
+#pragma mark Modifying the Link
+
+- (void)modifyLinkTo:(SVLink *)link;    // sends -changeLink: up the responder chain
+{
+    [self setSelectedLink:link];
+    [NSApp sendAction:@selector(changeLink:) to:nil from:self];
+}
+
 @end

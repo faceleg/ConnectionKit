@@ -8,6 +8,7 @@
 
 #import "SVLinkInspector.h"
 #import "SVLinkManager.h"
+#import "SVLink.h"
 
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
@@ -129,14 +130,9 @@
 
 - (IBAction)setLinkURL:(id)sender;
 {
-    NSString *URLString = [oLinkField stringValue];
-    OBASSERT(!_linkDestination);
-    _linkDestination = URLString;
-    OBASSERT([[self linkDestinationURLString] isEqualToString:URLString]);
-    
-    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLink:) with:self];
-    
-    _linkDestination =  nil;
+    SVLink *link = [[SVLink alloc] initWithURLString:[oLinkField stringValue]];
+    [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+    [link release];
 }
 
 - (IBAction)clearLinkDestination:(id)sender;
@@ -147,10 +143,7 @@
 	//[oLinkDestinationField setHidden:NO];
 	//[oLinkView setConnected:NO];
     
-    OBASSERT(![self linkDestinationURLString]);
-    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLink:) with:self];
+    [[SVLinkManager sharedLinkManager] modifyLinkTo:nil];
 }
-
-- (NSString *)linkDestinationURLString; { return _linkDestination; }
 
 @end
