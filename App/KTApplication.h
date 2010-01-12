@@ -9,6 +9,10 @@
 #import <Cocoa/Cocoa.h>
 #import "KSApplication.h"
 
+
+extern NSString *KTApplicationDidSendFlagsChangedEvent; // used by Web Editor to track change when it's not first responder
+
+
 @interface KTApplication : KSApplication
 
 

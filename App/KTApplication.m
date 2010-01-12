@@ -18,11 +18,24 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
  */
 
+
 #import "KTApplication.h"
+
+
+NSString *KTApplicationDidSendFlagsChangedEvent = @"KTApplicationDidSendFlagsChangedEvent";
 
 
 @implementation KTApplication
 
+- (void)sendEvent:(NSEvent *)theEvent
+{
+    [super sendEvent:theEvent];
+    
+    if ([theEvent type] == NSFlagsChanged)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:KTApplicationDidSendFlagsChangedEvent object:self];
+    }
+}
 
 @end
 
