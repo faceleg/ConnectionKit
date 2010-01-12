@@ -134,7 +134,7 @@
     _linkDestination = URLString;
     OBASSERT([[self linkDestinationURLString] isEqualToString:URLString]);
     
-    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLinkDestination:) with:self];
+    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLink:) with:self];
     
     _linkDestination =  nil;
 }
@@ -148,7 +148,7 @@
 	//[oLinkView setConnected:NO];
     
     OBASSERT(![self linkDestinationURLString]);
-    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLinkDestination:) with:self];
+    [[[self inspectedWindow] firstResponder] tryToPerform:@selector(changeLink:) with:self];
 }
 
 - (NSString *)linkDestinationURLString; { return _linkDestination; }

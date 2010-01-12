@@ -425,7 +425,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self changeLinkDestinationTo:@"http://example.com"];
 }
 
-- (void)changeLinkDestination:(id)sender;
+- (void)changeLink:(id)sender;
 {
     [self changeLinkDestinationTo:[sender linkDestinationURLString]];
 }
@@ -449,7 +449,15 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVLink *link = nil;
     if (anchorElement)
     {
-        link = [[SVLink alloc] initWithAnchorElement:anchorElement];
+        NSString *linkURLString = [anchorElement href];
+        if ([linkURLString hasPrefix:kKTPageIDDesignator])
+        {
+            
+        }
+        else
+        {
+            link = [[SVLink alloc] initWithURLString:linkURLString];
+        }
     }
     
     [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];

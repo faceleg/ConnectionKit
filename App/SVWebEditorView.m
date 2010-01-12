@@ -857,7 +857,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     _isForwardingCommandToWebView = NO;
 }
 
-- (void)changeLinkDestination:(SVLinkInspector *)sender;
+- (void)changeLink:(SVLinkInspector *)sender;
 {
     //  Pass on to focused text
     if ([[self focusedText] respondsToSelector:_cmd])
