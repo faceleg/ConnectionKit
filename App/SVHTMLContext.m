@@ -175,6 +175,7 @@
 - (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 {
 	[self openTag:@"a"];
+	if (href) [self writeAttribute:@"href" value:href];
 	if (targetString) [self writeAttribute:@"target" value:targetString];
 	if (titleString) [self writeAttribute:@"title" value:titleString];
 	if (relString) [self writeAttribute:@"rel" value:relString];

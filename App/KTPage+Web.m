@@ -349,6 +349,84 @@
 	return result;
 }
 
+- (void)outputMenuForArrayOfDuples:(NSArray *)anArray
+{
+	SVHTMLContext *context = [SVHTMLContext currentContext];
+	KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
+
+
+	[context writeNewline];
+	[context writeStartTag:@"ul" idName:nil className:nil];
+
+	int i=1;	// 1-based iteration
+	int last = [anArray count];
+
+	for (NSDictionary *duple in anArray)
+	{
+		KTPage *page = [duple objectForKey:@"page"];
+		NSArray *children = [duple objectForKey:@"children"];
+
+		[context writeNewline];
+		if (page == currentParserPage)
+		{
+			[context writeStartTag:@"li" idName:nil className:
+			 [NSString stringWithFormat:@"%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
+		}
+		else
+		{
+			BOOL isCurrentParent = NO;
+			if (!currentParserPage.includeInSiteMenu && page == currentParserPage.parentPage && currentParserPage.parentPage.index)
+			{
+				isCurrentParent = YES;
+			}
+			
+			[context writeStartTag:@"li" idName:nil className:
+			 [NSString stringWithFormat:@"%d %@%@%@",
+			  i,
+			  (i%2)?@"o":@"e",
+			  (i==last)? @" last" : @"",
+			  isCurrentParent ? @" currentParent" : @""]];
+			
+			NSString *urlString = [context relativeURLStringOfPage:page];
+			
+			[context writeAnchorStartTagWithHref:urlString title:[page titleString] target:nil rel:nil];
+			// TODO: targetStringForPage:targetPage
+		}
+		
+		// Build a text block
+		SVHTMLTextBlock *textBlock = [[[SVHTMLTextBlock alloc] init] autorelease];
+		
+		[textBlock setEditable:NO];
+		[textBlock setFieldEditor:NO];
+		[textBlock setRichText:NO];
+		[textBlock setImportsGraphics:NO];
+		[textBlock setTagName:@"span"];
+		[textBlock setGraphicalTextCode:@"m"];		// Actually we are probably throwing away graphical text menus
+		
+		[textBlock setHTMLSourceObject:page];
+		[textBlock setHTMLSourceKeyPath:@"menuTitle"];
+		
+		[textBlock writeHTML];
+		
+		if (page != currentParserPage)
+		{
+			[context writeEndTagWithNewline:NO];	// a
+		}
+		
+		if ([children count])
+		{
+			[self outputMenuForArrayOfDuples:children];
+			[context writeEndTagWithNewline:YES];	// li
+	}
+		else
+		{
+			[context writeEndTag];	// li
+		}
+		i++;
+	}
+	[context writeEndTagWithNewline:YES];	// ul
+}
+
 - (NSString *)sitemenu
 {
 	
@@ -373,68 +451,52 @@
 
 		[context writeNewline];
 		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];
-		[context writeNewline];
-		[context writeStartTag:@"ul" idName:nil className:nil];
 		
 		KTSite *site = self.site;
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
-		int i=1;	// 1-based iteration
-		int last = [pagesInSiteMenu count];
 		
-		KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
-		for (KTPage *toplink in pagesInSiteMenu)
+		// OK, now to build up the hiearchical site menu.
+		// Array of dictionaries keyed with "page" and "children" array
+		NSMutableArray *tree = [NSMutableArray array];
+		NSMutableDictionary *childrenLookup = [NSMutableDictionary dictionary];
+		// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
+		for (KTPage *siteMenuPage in pagesInSiteMenu)
 		{
-			[context writeNewline];
-			if (toplink == currentParserPage)
+			BOOL wasSubPage = NO;
+			KTPage *parent = siteMenuPage;
+			do 
 			{
-				[context writeStartTag:@"li" idName:nil className:
-					[NSString stringWithFormat:@"%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
-			}
-			else
-			{
-				BOOL isCurrentParent = NO;
-				if (!currentParserPage.includeInSiteMenu && toplink == currentParserPage.parentPage && currentParserPage.parentPage.index)
+				NSMutableArray *childrenToAddTo = [childrenLookup objectForKey:[NSString stringWithFormat:@"%p", parent]];
+				if (childrenToAddTo)
 				{
-					isCurrentParent = YES;
+					NSMutableArray *children = [NSMutableArray array];
+					[childrenToAddTo addObject:[NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil]];
+					parent = nil;	// stop looking
+					wasSubPage = YES;
 				}
-				
-				[context writeStartTag:@"li" idName:nil className:
-				 [NSString stringWithFormat:@"%d %@%@%@",
-				  i,
-				  (i%2)?@"o":@"e",
-				  (i==last)? @" last" : @"",
-				  isCurrentParent ? @" currentParent" : @""]];
-			
-				NSString *urlString = [context relativeURLStringOfPage:toplink];
-				
-				[context writeAnchorStartTagWithHref:urlString title:[toplink titleText] target:nil rel:nil];
-					// TODO: targetStringForPage:targetPage
+				else
+				{
+					parent = [siteMenuPage parentPage];
+
+				}
 			}
-			
-			// Build a text block
-			SVHTMLTextBlock *textBlock = [[[SVHTMLTextBlock alloc] init] autorelease];
-			
-			[textBlock setEditable:NO];
-			[textBlock setFieldEditor:NO];
-			[textBlock setRichText:NO];
-			[textBlock setImportsGraphics:NO];
-			[textBlock setTagName:@"span"];
-			[textBlock setGraphicalTextCode:@"m"];		// Actually we are probably throwing away graphical text menus
+			while (nil != parent && ![parent isRoot]);
 
-			[textBlock setHTMLSourceObject:toplink];
-			[textBlock setHTMLSourceKeyPath:@"menuTitle"];
-
-			[textBlock writeHTML];
-				
-			if (toplink != currentParserPage)
+			if (!wasSubPage)
 			{
-				[context writeEndTagWithNewline:YES];	// a
+				NSMutableArray *children = [NSMutableArray array];
+				NSDictionary *nodeDict = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil];
+				[tree addObject:nodeDict];
+				[childrenLookup setObject:children forKey:[NSString stringWithFormat:@"%p", siteMenuPage]];		// quick lookup from page to children
 			}
-			[context writeEndTag];	// li
-			i++;
-		}		
+		}
 		
-		[context writeEndTagWithNewline:YES];	// ul
+		[self outputMenuForArrayOfDuples:tree];
+
+		
+		
+				
+		
 		[context writeEndTagWithNewline:YES];	// div
 		[context writeHTMLString:@"<!-- sitemenu-content -->"];
 		[context writeEndTagWithNewline:YES];	// div
