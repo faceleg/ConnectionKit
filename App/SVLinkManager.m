@@ -16,6 +16,7 @@
 @interface SVLinkManager ()
 @property(nonatomic, retain, readwrite) SVLink *selectedLink;
 @property(nonatomic, readwrite, getter=isEditable) BOOL editable;
+- (void)refreshLinkInspectors;
 @end
 
 
@@ -46,15 +47,20 @@
     [self setEditable:editable];
     
     // Tell all open link Inspectors
-    NSArray *inspectors = [[KSDocumentController sharedDocumentController] inspectors];
-    for (SVInspector *anInspector in inspectors)
-    {
-        [[anInspector linkInspector] setInspectedLink:link];
-    }
+    [self refreshLinkInspectors];
 }
 
 @synthesize selectedLink = _selectedLink;
 @synthesize editable = _editable;
+
+- (void)refreshLinkInspectors;
+{
+    NSArray *inspectors = [[KSDocumentController sharedDocumentController] inspectors];
+    for (SVInspector *anInspector in inspectors)
+    {
+        [[anInspector linkInspector] setInspectedLink:[self selectedLink]];
+    }
+}
 
 #pragma mark Modifying the Link
 
@@ -62,6 +68,9 @@
 {
     [self setSelectedLink:link];
     [NSApp sendAction:@selector(changeLink:) to:nil from:self];
+    
+    // Notify Inspectors of the change
+    [self refreshLinkInspectors];
 }
 
 @end
