@@ -401,7 +401,19 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     if (!linkURLString)
     {
-        [[webEditor selectedDOMRange] removeAnchorElements];
+        DOMHTMLAnchorElement *anchor = [selection editableAnchorElement];
+        if (anchor)
+        {
+            // Figure out selection before editing the DOM
+            DOMNode *remainder = [anchor unlink];
+            [selection selectNode:remainder];
+            [webEditor setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
+        }
+        else
+        {
+            // Fallback way
+            [[webEditor selectedDOMRange] removeAnchorElements];
+        }
     }
     else
     {
