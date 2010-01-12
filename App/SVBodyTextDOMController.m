@@ -434,11 +434,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 @synthesize selectedLink = _selectedLink;
 
-- (BOOL)canEditLinks;
-{
-    return YES;
-}
-
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification
 {
     [super webEditorTextDidChangeSelection:notification];
