@@ -384,7 +384,7 @@
 		2792197E10BC631D00E590D5 /* KSDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2792197C10BC631D00E590D5 /* KSDOMController.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
-		2797B4BE0EF6E65E00F91398 /* KSURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */; };
+		2797B4BE0EF6E65E00F91398 /* KSURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2797B4BF0EF6E65E00F91398 /* KSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */; };
 		2797B71E0EF91E2B00F91398 /* KTExportEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B71C0EF91E2B00F91398 /* KTExportEngine.h */; };
 		2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B71D0EF91E2B00F91398 /* KTExportEngine.m */; };
