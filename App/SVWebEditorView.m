@@ -11,6 +11,7 @@
 #import "SVWebEditorItem.h"
 #import "SVSelectionBorder.h"
 
+#import "KTApplication.h"
 #import "SVDocWindow.h"
 #import "SVLinkInspector.h"
 
@@ -134,6 +135,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                                  selector:@selector(windowDidChangeFirstResponder:)
                                                      name:SVDocWindowDidChangeFirstResponderNotification
                                                    object:[self window]];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:self
+                                                 selector:@selector(didSendFlagsChangedEvent:)
+                                                     name:KTApplicationDidSendFlagsChangedEvent
+                                                   object:[KTApplication sharedApplication]];
     }
 }
 
@@ -144,6 +150,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:SVDocWindowDidChangeFirstResponderNotification
                                                       object:[self window]];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                        name:KTApplicationDidSendFlagsChangedEvent
+                                                      object:[KTApplication sharedApplication]];
     }
 }
 
@@ -958,6 +968,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // We're not personally interested in scroll events, let content have a crack at them.
     [self forwardMouseEvent:theEvent selector:_cmd];
+}
+
+- (void)didSendFlagsChangedEvent:(NSNotification *)notification
+{
+    // WebKit doesn't seem to notice a flags changed event for editable links. We can force it to here
+    if ([[self documentView] respondsToSelector:@selector(_updateMouseoverWithFakeEvent)])
+    {
+        [[self documentView] performSelector:@selector(_updateMouseoverWithFakeEvent)];
+    }
 }
 
 #pragma mark Changing the First Responder
