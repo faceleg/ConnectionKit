@@ -446,7 +446,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Does the selection contain a link? If so, make it the selected object
     SVWebEditorView *webEditor = [self webEditor];
-    DOMHTMLAnchorElement *anchorElement = [[webEditor selectedDOMRange] editableAnchorElement];
+    DOMRange *selection = [webEditor selectedDOMRange];
+    DOMHTMLAnchorElement *anchorElement = [selection editableAnchorElement];
     
     SVLink *link = nil;
     if (anchorElement)
@@ -472,7 +473,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         }
     }
     
-    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
+    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:(selection != nil)];
     [link release];
 }
 
