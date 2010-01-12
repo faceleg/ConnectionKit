@@ -94,6 +94,8 @@
 - (void)willEditTextInDOMRange:(DOMRange *)range;
 - (void)didChangeTextInDOMRange:(DOMRange *)range notification:(NSNotification *)notification;
 
+- (void)setEditableLinksLive:(BOOL)liveLinks;   // no getter for now
+
 
 #pragma mark Undo Support
 // It is the responsibility of SVWebEditorTextBlocks to use these methods to control undo support as they modify the DOM

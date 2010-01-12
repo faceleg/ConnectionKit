@@ -19,10 +19,20 @@
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "NSEvent+Karelia.h"
+#import "NSObject+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
+
+
+typedef enum {  // this copied from WebPreferences+Private.h
+    WebKitEditableLinkDefaultBehavior,
+    WebKitEditableLinkAlwaysLive,
+    WebKitEditableLinkOnlyLiveWithShiftKey,
+    WebKitEditableLinkLiveWhenNotFocused,
+    WebKitEditableLinkNeverLive
+} WebKitEditableLinkBehavior;
 
 
 @interface SVMainWebEditorItem : SVWebEditorItem
@@ -525,6 +535,12 @@ NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlayS
     id <SVWebEditorText> text = [[self dataSource] webEditor:self
                                             textBlockForDOMRange:range];
     [text webEditorTextDidChange:notification];
+}
+
+- (void)setEditableLinksLive:(BOOL)liveLinks;   // no getter for now
+{
+    WebKitEditableLinkBehavior behaviour = (liveLinks ? WebKitEditableLinkAlwaysLive :WebKitEditableLinkOnlyLiveWithShiftKey);
+    [[[self webView] preferences] setInteger:behaviour forKey:@"editableLinkBehavior"];
 }
 
 #pragma mark Undo Support
