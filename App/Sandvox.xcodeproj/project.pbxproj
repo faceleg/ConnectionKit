@@ -206,8 +206,8 @@
 		270B67CF0F10E66900F6E076 /* KTPageDetailsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */; };
 		270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */; };
 		270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */; };
-		270E474C10F8B6B800EF1FA0 /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E474A10F8B6B800EF1FA0 /* SVLink.h */; };
-		270E474D10F8B6B800EF1FA0 /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E474B10F8B6B800EF1FA0 /* SVLink.m */; };
+		270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */; };
+		270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */; };
 		270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */; };
 		270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */; };
 		270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */; };
@@ -1653,8 +1653,8 @@
 		270B67CD0F10E66900F6E076 /* KTPageDetailsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPageDetailsController.m; sourceTree = "<group>"; };
 		270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebarPageletsController.h; sourceTree = "<group>"; };
 		270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebarPageletsController.m; sourceTree = "<group>"; };
-		270E474A10F8B6B800EF1FA0 /* SVLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLink.h; sourceTree = "<group>"; };
-		270E474B10F8B6B800EF1FA0 /* SVLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLink.m; sourceTree = "<group>"; };
+		270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphLink.h; sourceTree = "<group>"; };
+		270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphLink.m; sourceTree = "<group>"; };
 		270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphHTMLContext.h; sourceTree = "<group>"; };
 		270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphHTMLContext.m; sourceTree = "<group>"; };
 		270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVStringAttribute.h; sourceTree = "<group>"; };
@@ -3260,8 +3260,8 @@
 			children = (
 				270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */,
 				270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */,
-				270E474A10F8B6B800EF1FA0 /* SVLink.h */,
-				270E474B10F8B6B800EF1FA0 /* SVLink.m */,
+				270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */,
+				270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */,
 				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
 				27C064BF10825F4800795D66 /* SVGraphic.h */,
 				27C064C010825F4800795D66 /* SVGraphic.m */,
@@ -5249,7 +5249,7 @@
 				27B52E6E10F49B730086DEE4 /* SVTemplateContext.h in Headers */,
 				27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */,
 				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
-				270E474C10F8B6B800EF1FA0 /* SVLink.h in Headers */,
+				270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */,
 				270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */,
 				270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */,
 				270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */,
@@ -6635,7 +6635,7 @@
 				27B52E7010F49B730086DEE4 /* SVTemplateContext.m in Sources */,
 				27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */,
 				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
-				270E474D10F8B6B800EF1FA0 /* SVLink.m in Sources */,
+				270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */,
 				270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */,
 				270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */,
 				270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */,

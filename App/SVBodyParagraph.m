@@ -9,7 +9,7 @@
 #import "SVBodyParagraph.h"
 #import "SVBodyParagraphDOMAdapter.h"
 
-#import "SVLink.h"
+#import "SVParagraphLink.h"
 #import "SVParagraphHTMLContext.h"
 #import "SVPlugInGraphic.h"
 
@@ -42,7 +42,7 @@
     NSString *archive = [self archiveString];
     NSArray *links = [self orderedAttributes];
     
-    for (SVLink *aLink in links)
+    for (SVParagraphLink *aLink in links)
     {
         [context writeStartTag:@"a" idName:nil className:nil];
         [context writeEndTag];
