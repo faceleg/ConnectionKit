@@ -61,6 +61,7 @@ typedef enum {
 #pragma mark Basic Writing
 
 - (void)writeHTMLString:(NSString *)html;
+- (void)writeHTMLFormat:(NSString *)format , ...;
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 
 - (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
@@ -68,7 +69,6 @@ typedef enum {
 - (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
 
 
-- (void)writeHTMLFormat:(NSString *)format , ...;
 
 
 #pragma mark Higher-level Tag Writing

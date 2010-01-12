@@ -127,7 +127,7 @@
 
 #pragma mark High-level Writing
 
-- (void)writeHTMLString:(NSString *)html;   // primitive method you MUST override
+- (void)writeHTMLString:(NSString *)html;
 {
     [self writeString:html];
 }
@@ -142,7 +142,7 @@
     [self writeHTMLString:aString];
 }
 
-- (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
+- (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString:
 {
     NSString *html = [string stringByEscapingHTMLEntities];
     [self writeHTMLString:html];
