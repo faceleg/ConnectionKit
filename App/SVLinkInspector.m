@@ -55,15 +55,11 @@
     return [SVLinkManager sharedLinkManager];
 }
 
-#pragma mark Inspection
-
-@synthesize inspectedWindow = _inspectedWindow;
-
-#pragma mark Link Actions
+#pragma mark UI Actions
 
 - (id)userInfoForLinkSource:(KTLinkSourceView *)link
 {
-	return [[[[self inspectedWindow] windowController] document] site];
+	return [[[[NSApp mainWindow] windowController] document] site];
 }
 
 - (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
@@ -81,7 +77,7 @@
     NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
     if ( (pageID != nil) && ![pageID isEqualToString:@""] )
     {
-        KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[[[self inspectedWindow] windowController] document] managedObjectContext]];
+        KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[[[NSApp mainWindow] windowController] document] managedObjectContext]];
         if ( nil != target )
         {
             NSString *titleText = [[target title] text];

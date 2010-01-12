@@ -23,8 +23,6 @@
     
   @private
     NSFormatter *_URLFormatter;
-    
-    NSWindow                *_inspectedWindow;
 }
 
 
@@ -32,11 +30,7 @@
 - (void)setInspectedLink:(SVLink *)link;    // don't call directly, invoked as a side-effect of -[SVLinkManager setSelectedLink:editable:]
 
 
-#pragma mark Other
-
-@property(nonatomic, retain) NSWindow *inspectedWindow;
-
-
+#pragma mark UI Actions
 - (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 
