@@ -32,16 +32,6 @@
 
 @synthesize inspectedWindow = _inspectedWindow;
 
-- (DOMHTMLAnchorElement *)inspectedLink
-{
-    DOMHTMLAnchorElement *result = nil;
-    
-    NSArray *selection = [self inspectedObjects];
-    if ([selection count] == 1) result = [selection objectAtIndex:0];
-    
-    return result;
-}
-
 - (void)refresh
 {
     [super refresh];
@@ -110,16 +100,6 @@
                 //[oLinkDestinationField setStringValue:@""];
                 //[oLinkLocalPageField setHidden:NO];
                 //[oLinkDestinationField setHidden:YES];
-                
-                NSString *href = [NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID];
-                if ([self inspectedLink])
-                {
-                    [[self inspectedLink] setHref:href];
-                }
-                else
-                {
-                }
-                
                 
                 [link setConnected:YES];
                 

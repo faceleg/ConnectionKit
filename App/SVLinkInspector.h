@@ -22,13 +22,11 @@
     NSFormatter *_URLFormatter;
     
     NSWindow                *_inspectedWindow;
-    DOMHTMLAnchorElement    *_inspectedLink;
 }
 
 #pragma mark Other
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
-@property(nonatomic, readonly) DOMHTMLAnchorElement *inspectedLink;
 
 - (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
