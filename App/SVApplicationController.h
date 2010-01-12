@@ -22,7 +22,11 @@
 #import "KSLicensedAppDelegate.h"
 #import "KSPluginInstallerController.h"
 
+
 extern BOOL gWantToCatchSystemExceptions;
+
+extern NSString *kLiveEditableAndSelectableLinksDefaultsKey;
+
 
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
 

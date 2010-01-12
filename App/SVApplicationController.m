@@ -110,6 +110,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
+
+NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectableLinks";
+
+
 @interface NSArray ( TableDataSource )
 - (id)tableView:(NSTableView *)aTableVieRw objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
 - (int)numberOfRowsInTableView:(NSTableView *)inTableView;
@@ -473,6 +477,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 		[NSNumber numberWithBool:NO], @"JSKitDisableAvatars",
 		[NSNumber numberWithBool:NO], @"JSKitDisableThreading",
 		[NSNumber numberWithBool:NO], @"JSKitConfirmModeratorViaEmail",
+                                         
+        // "Make all links active" checkbox in the Inspector
+        [NSNumber numberWithBool:NO], kLiveEditableAndSelectableLinksDefaultsKey,
 
 		nil];
 	
