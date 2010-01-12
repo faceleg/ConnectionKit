@@ -14,7 +14,7 @@
 #import "SVPagelet.h"
 #import "SVBody.h"
 #import "SVLinkManager.h"
-#import "SVUnmodeledLink.h"
+#import "SVLink.h"
 #import "SVWebContentObjectsController.h"
 
 #import "NSDictionary+Karelia.h"
@@ -446,10 +446,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVWebEditorView *webEditor = [self webEditor];
     DOMHTMLAnchorElement *anchorElement = [[webEditor selectedDOMRange] editableAnchorElement];
     
-    SVUnmodeledLink *link = nil;
+    SVLink *link = nil;
     if (anchorElement)
     {
-        link = [[SVUnmodeledLink alloc] initWithAnchorElement:anchorElement];
+        link = [[SVLink alloc] initWithAnchorElement:anchorElement];
     }
     
     [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];

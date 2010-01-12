@@ -461,8 +461,8 @@
 		27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */; };
 		27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */; };
 		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
-		27E24AC610FB9591004EFE9F /* SVUnmodeledLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVUnmodeledLink.h */; };
-		27E24AC710FB9591004EFE9F /* SVUnmodeledLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24AC510FB9591004EFE9F /* SVUnmodeledLink.m */; };
+		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
+		27E24AC710FB9591004EFE9F /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24AC510FB9591004EFE9F /* SVLink.m */; };
 		27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24EEB10FCB218004EFE9F /* SVLinkManager.h */; };
 		27E24EEE10FCB218004EFE9F /* SVLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24EEC10FCB218004EFE9F /* SVLinkManager.m */; };
 		27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */; settings = {ATTRIBUTES = (); }; };
@@ -1920,8 +1920,8 @@
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
-		27E24AC410FB9591004EFE9F /* SVUnmodeledLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVUnmodeledLink.h; sourceTree = "<group>"; };
-		27E24AC510FB9591004EFE9F /* SVUnmodeledLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVUnmodeledLink.m; sourceTree = "<group>"; };
+		27E24AC410FB9591004EFE9F /* SVLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLink.h; sourceTree = "<group>"; };
+		27E24AC510FB9591004EFE9F /* SVLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLink.m; sourceTree = "<group>"; };
 		27E24EEB10FCB218004EFE9F /* SVLinkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkManager.h; sourceTree = "<group>"; };
 		27E24EEC10FCB218004EFE9F /* SVLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkManager.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
@@ -3390,8 +3390,8 @@
 		27E24EEA10FCB1F4004EFE9F /* Links */ = {
 			isa = PBXGroup;
 			children = (
-				27E24AC410FB9591004EFE9F /* SVUnmodeledLink.h */,
-				27E24AC510FB9591004EFE9F /* SVUnmodeledLink.m */,
+				27E24AC410FB9591004EFE9F /* SVLink.h */,
+				27E24AC510FB9591004EFE9F /* SVLink.m */,
 				27E24EEB10FCB218004EFE9F /* SVLinkManager.h */,
 				27E24EEC10FCB218004EFE9F /* SVLinkManager.m */,
 			);
@@ -5253,7 +5253,7 @@
 				270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */,
 				270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */,
 				270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */,
-				27E24AC610FB9591004EFE9F /* SVUnmodeledLink.h in Headers */,
+				27E24AC610FB9591004EFE9F /* SVLink.h in Headers */,
 				27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -6640,7 +6640,7 @@
 				270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */,
 				270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */,
 				270E4D2D10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m in Sources */,
-				27E24AC710FB9591004EFE9F /* SVUnmodeledLink.m in Sources */,
+				27E24AC710FB9591004EFE9F /* SVLink.m in Sources */,
 				27E24EEE10FCB218004EFE9F /* SVLinkManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

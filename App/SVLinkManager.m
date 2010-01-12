@@ -10,7 +10,7 @@
 
 
 @interface SVLinkManager ()
-@property(nonatomic, retain, readwrite) SVUnmodeledLink *selectedLink;
+@property(nonatomic, retain, readwrite) SVLink *selectedLink;
 @property(nonatomic, readwrite, getter=isEditable) BOOL editable;
 @end
 
@@ -36,7 +36,7 @@
 
 #pragma mark Selected Link
 
-- (void)setSelectedLink:(SVUnmodeledLink *)link editable:(BOOL)editable;
+- (void)setSelectedLink:(SVLink *)link editable:(BOOL)editable;
 {
     [self setSelectedLink:link];
     [self setEditable:editable];

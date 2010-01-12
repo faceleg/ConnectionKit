@@ -9,13 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVUnmodeledLink;
+@class SVLink;
 
 
 @interface SVLinkManager : NSObject
 {
   @private
-    SVUnmodeledLink *_selectedLink;
+    SVLink *_selectedLink;
     BOOL            _editable;
 }
 
@@ -25,8 +25,8 @@
 #pragma mark Selected Link
 
 // Any UI object working with links should send SVLinkManager a -setSelectedLink:editable: message each time its selection changes
-- (void)setSelectedLink:(SVUnmodeledLink *)link editable:(BOOL)editable;
-@property(nonatomic, retain, readonly) SVUnmodeledLink *selectedLink;
+- (void)setSelectedLink:(SVLink *)link editable:(BOOL)editable;
+@property(nonatomic, retain, readonly) SVLink *selectedLink;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable;
 
 
