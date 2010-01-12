@@ -452,7 +452,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     if (anchorElement)
     {
         // Is it a page link?
-        NSString *linkURLString = [anchorElement href];
+        NSString *linkURLString = [anchorElement getAttribute:@"href"]; // -href will give the URL a scheme etc. if there's no base URL
         if ([linkURLString hasPrefix:kKTPageIDDesignator])
         {
             NSString *pageID = [linkURLString substringFromIndex:[kKTPageIDDesignator length]];
