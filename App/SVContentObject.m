@@ -68,4 +68,11 @@
     return [SVDOMController class];
 }
 
+#pragma mark Inspection
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+    return NSNotApplicableMarker;
+}
+
 @end
