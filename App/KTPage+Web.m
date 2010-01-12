@@ -349,14 +349,14 @@
 	return result;
 }
 
-- (void)outputMenuForArrayOfDuples:(NSArray *)anArray
+- (void)outputMenuForArrayOfDuples:(NSArray *)anArray isTop:(BOOL)isTop
 {
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
 
 
 	[context writeNewline];
-	[context writeStartTag:@"ul" idName:nil className:nil];
+	[context writeStartTag:@"ul" idName:nil className:(isTop ? @"jd_menu" : nil)];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
@@ -415,7 +415,7 @@
 		
 		if ([children count])
 		{
-			[self outputMenuForArrayOfDuples:children];
+			[self outputMenuForArrayOfDuples:children isTop:NO];
 			[context writeEndTagWithNewline:YES];	// li
 	}
 		else
@@ -491,7 +491,7 @@
 			}
 		}
 		
-		[self outputMenuForArrayOfDuples:tree];
+		[self outputMenuForArrayOfDuples:tree isTop:YES];
 
 		
 		
