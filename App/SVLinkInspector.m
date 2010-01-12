@@ -20,6 +20,14 @@
 
 @implementation SVLinkInspector
 
+- (void)loadView
+{
+    [super loadView];
+        
+    // Initial setup
+    [self setInspectedLink:[[SVLinkManager sharedLinkManager] selectedLink]];
+}
+
 #pragma mark Link
 
 - (void)setInspectedLink:(SVLink *)link;
