@@ -32,6 +32,8 @@
         [oLinkField setBackgroundColor:[NSColor controlHighlightColor]];
         [oLinkField setFormatter:nil];
         
+        [oLinkSourceView setConnected:YES];
+        
         NSString *title = [[[link page] title] text];
         if (!title) title = @"";
         [oLinkField setStringValue:title];
@@ -42,6 +44,8 @@
         if (!_URLFormatter) _URLFormatter = [[KSURLFormatter alloc] init];
         [oLinkField setFormatter:_URLFormatter];
         [oLinkField setBackgroundColor:[NSColor textBackgroundColor]];
+        
+        [oLinkSourceView setConnected:NO];
         
         NSString *title = [link URLString];
         if (!title) title = @"";
@@ -75,22 +79,13 @@
 {
 	// set up a link to the local page
     NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
-    if ( (pageID != nil) && ![pageID isEqualToString:@""] )
+    if (pageID)
     {
         KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[[[NSApp mainWindow] windowController] document] managedObjectContext]];
-        if ( nil != target )
+        if (target)
         {
-            NSString *titleText = [[target title] text];
-            if ( (nil != titleText) && ![titleText isEqualToString:@""] )
-            {
-                //[oLinkLocalPageField setStringValue:titleText];
-                //[oLinkDestinationField setStringValue:@""];
-                //[oLinkLocalPageField setHidden:NO];
-                //[oLinkDestinationField setHidden:YES];
-                
-                [link setConnected:YES];
-                
-            }
+            SVLink *link = [[SVLink alloc] initWithPage:target];
+            [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
         }
     }
 }
