@@ -45,6 +45,8 @@
     [_collectionInspector setInspectedObjectsController:controller];
 }
 
+@synthesize linkInspector = _linkInspector;
+
 - (void)setInspectedWindow:(NSWindow *)window
 {
     if ([self inspectedWindow])

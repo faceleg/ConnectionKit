@@ -20,53 +20,44 @@
 
 @implementation SVLinkInspector
 
-#pragma mark View
+#pragma mark Link
 
-- (void)loadView
+- (void)setInspectedLink:(SVLink *)link;
 {
-    [super loadView];
-    [self refresh];
+    // Make the link field editable if there is nothing entered, or the URL is typed in
+    if ([link page])
+    {
+        // Configure for a local link
+        [oLinkField setEditable:NO];
+        [oLinkField setBackgroundColor:[NSColor controlHighlightColor]];
+        [oLinkField setFormatter:nil];
+        
+        NSString *title = [[[link page] title] text];
+        if (!title) title = @"";
+        [oLinkField setStringValue:title];
+    }
+    else
+    {
+        // Configure for a generic link
+        if (!_URLFormatter) _URLFormatter = [[KSURLFormatter alloc] init];
+        [oLinkField setFormatter:_URLFormatter];
+        [oLinkField setBackgroundColor:[NSColor textBackgroundColor]];
+        
+        NSString *title = [link URLString];
+        if (!title) title = @"";
+        [oLinkField setStringValue:title];
+    }
+}
+
+- (SVLinkManager *)linkManager
+{
+    // Exposed only here for the benefit of bindings
+    return [SVLinkManager sharedLinkManager];
 }
 
 #pragma mark Inspection
 
 @synthesize inspectedWindow = _inspectedWindow;
-
-- (void)refresh
-{
-    [super refresh];
-    
-    
-    // Make the link field editable if there is nothing entered, or the URL is typed in
-    BOOL editable = YES;
-    NSArray *selection = [self inspectedObjects];
-    if ([selection count] == 1)
-    {
-        id link = [selection objectAtIndex:0];
-        if ([link respondsToSelector:@selector(isLocalLink)])
-        {
-            editable = ![link boolForKey:@"localLink"];
-        }
-    }
-    
-    [oLinkField setEditable:editable];
-    [oLinkField setBackgroundColor:(editable ? [NSColor textBackgroundColor] : [NSColor controlHighlightColor])];
-    if (editable)
-    {
-        if (!_URLFormatter) _URLFormatter = [[KSURLFormatter alloc] init];
-        [oLinkField setFormatter:_URLFormatter];
-    }
-    else
-    {
-        [oLinkField setFormatter:nil];
-    }
-}
-
-- (SVLinkManager *)sharedLinkManager
-{
-    // Exposed only here for the benefit of bindings
-    return [SVLinkManager sharedLinkManager];
-}
 
 #pragma mark Link Actions
 

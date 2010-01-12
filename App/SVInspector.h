@@ -27,4 +27,6 @@
 
 @property(nonatomic, retain) id <KSCollectionController> inspectedPagesController;
 
+@property(nonatomic, retain, readonly) SVLinkInspector *linkInspector;
+
 @end

@@ -13,6 +13,9 @@
 #import <WebKit/WebKit.h>
 
 
+@class SVLink;
+
+
 @interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
 {
     IBOutlet KTLinkSourceView   *oLinkSourceView;
@@ -24,9 +27,15 @@
     NSWindow                *_inspectedWindow;
 }
 
+
+#pragma mark Link
+- (void)setInspectedLink:(SVLink *)link;    // don't call directly, invoked as a side-effect of -[SVLinkManager setSelectedLink:editable:]
+
+
 #pragma mark Other
 
 @property(nonatomic, retain) NSWindow *inspectedWindow;
+
 
 - (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;

@@ -8,6 +8,10 @@
 
 #import "SVLinkManager.h"
 
+#import "KSDocumentController.h"
+#import "SVInspector.h"
+#import "SVLinkInspector.h"
+
 
 @interface SVLinkManager ()
 @property(nonatomic, retain, readwrite) SVLink *selectedLink;
@@ -40,6 +44,13 @@
 {
     [self setSelectedLink:link];
     [self setEditable:editable];
+    
+    // Tell all open link Inspectors
+    NSArray *inspectors = [[KSDocumentController sharedDocumentController] inspectors];
+    for (SVInspector *anInspector in inspectors)
+    {
+        [[anInspector linkInspector] setInspectedLink:link];
+    }
 }
 
 @synthesize selectedLink = _selectedLink;
