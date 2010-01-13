@@ -7,10 +7,13 @@
 //
 
 #import "SVLinkManager.h"
+#import "SVLink.h"
 
 #import "KSDocumentController.h"
 #import "SVInspector.h"
 #import "SVLinkInspector.h"
+
+#import "NSAppleScript+Karelia.h"
 
 
 @interface SVLinkManager ()
@@ -81,6 +84,23 @@
     
     SVInspector *inspector = [[[KSDocumentController sharedDocumentController] inspectors] lastObject];
     [[inspector inspectorTabsController] setSelectedViewController:[inspector linkInspector]];
+}
+
+- (SVLink *)guessLink;  // looks at the user's workspace to guess what they want. Nil if no match is found
+{
+    SVLink *result = nil;
+    
+    // Try to populate from frontmost Safari URL
+    NSURL *safariURL = nil;
+    NSString *safariTitle = nil;	// someday, we could populate the link title as well!
+    [NSAppleScript getWebBrowserURL:&safariURL title:&safariTitle source:nil];
+    if (safariURL)
+    {
+        result = [[SVLink alloc] initWithURLString:[safariURL absoluteString]
+                                   openInNewWindow:NO];
+    }
+    
+    return [result autorelease];
 }
 
 @end

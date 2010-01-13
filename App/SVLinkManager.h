@@ -36,6 +36,7 @@
 
 #pragma mark Link Inspector
 - (IBAction)orderFrontLinkPanel:(id)sender; // Sets the current Inspector to view links
+- (SVLink *)guessLink;  // looks at the user's workspace to guess what they want. Nil if no match is found
 
 
 @end
