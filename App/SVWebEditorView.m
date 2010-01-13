@@ -641,18 +641,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Getting Item Information
 
-/*  What item would be selected if you click at that point?
- */
 - (SVWebEditorItem *)selectableItemAtPoint:(NSPoint)point;
 {
+    //  To answer the question: what item (if any) would be selected if you clicked at that point?
+    
+    
     SVWebEditorItem *result = nil;
     
+    // If the element is a link of some kind, and we have live links turned on, ignore the possibility of selection
     NSDictionary *element = [[self webView] elementAtPoint:point];
-    
-    DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
-    if (domNode)
+    if (![self liveEditableAndSelectableLinks] || ![element objectForKey:WebElementLinkURLKey])
     {
-        result = [self selectableItemForDOMNode:domNode];
+        // Use the DOM node to find the item
+        DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
+        if (domNode)
+        {
+            result = [self selectableItemForDOMNode:domNode];
+        }
     }
     
     return result;
