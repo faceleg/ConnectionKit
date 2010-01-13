@@ -79,7 +79,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			<div id="page">
 				<div id="page-top" class="[[if master.logoImage]]has-logo[[else]]no-logo[[endif]]">
 					<div id="title">
-[[if isRoot]]
+[[if parser.currentPage==documentInfo.root]][[comment Can't use isRoot as that returns wrong result when parsing an archive of the home page]]
 [[if master.logoImage]]
 						<span id="logo-container"><img id="logo"
 							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
