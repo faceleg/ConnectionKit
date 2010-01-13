@@ -34,6 +34,10 @@
 - (void)modifyLinkTo:(SVLink *)link;    // sends -changeLink: up the responder chain
 
 
+#pragma mark Link Inspector
+- (IBAction)orderFrontLinkPanel:(id)sender; // Sets the current Inspector to view links
+
+
 @end
 
 

@@ -453,6 +453,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
     
     [self changeLinkDestinationTo:theLinkString];
+    
+    
+    // Show the panel
+    [[SVLinkManager sharedLinkManager] orderFrontLinkPanel:self];
 }
 
 - (void)changeLink:(SVLinkManager *)sender;

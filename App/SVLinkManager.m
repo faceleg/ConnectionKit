@@ -73,4 +73,14 @@
     [self refreshLinkInspectors];
 }
 
+#pragma mark Link Inspector
+
+- (IBAction)orderFrontLinkPanel:(id)sender; // Sets the current Inspector to view links
+{
+    [[KSDocumentController sharedDocumentController] showInspectors:self];
+    
+    SVInspector *inspector = [[[KSDocumentController sharedDocumentController] inspectors] lastObject];
+    [[inspector inspectorTabsController] setSelectedViewController:[inspector linkInspector]];
+}
+
 @end
