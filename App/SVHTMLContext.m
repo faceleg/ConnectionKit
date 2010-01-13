@@ -182,6 +182,11 @@
 	[self closeStartTag];
 }
 
+- (void)writeAnchorStartTagFromLink:(SVLink *)link;
+{
+    [self writeAnchorStartTagWithHref:[link URLString] title:nil target:nil rel:nil];
+}
+
 #pragma mark Low-level Tag Writing
 
 - (void)openTag:(NSString *)tagName;        //  <tagName
