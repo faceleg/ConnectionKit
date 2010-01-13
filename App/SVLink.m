@@ -9,6 +9,7 @@
 #import "SVLink.h"
 
 #import "KT.h"
+#import "SVHTMLContext.h"
 #import "KTPage.h"
 
 
@@ -74,6 +75,13 @@
     }
     
     return result;
+}
+
+#pragma mark HTML
+
+- (void)writeStartTagToContext:(SVHTMLContext *)context;
+{
+    [context writeAnchorStartTagWithHref:[self URLString] title:nil target:nil rel:nil];
 }
 
 @end

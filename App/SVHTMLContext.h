@@ -82,9 +82,6 @@ typedef enum {
 //  <a href="...." target="..." rel="nofollow">
 - (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
-// Writes an anchor tag using the link's URL etc.
-- (void)writeAnchorStartTagFromLink:(SVLink *)link;
-
 
 #pragma mark Low-level Tag Writing
 

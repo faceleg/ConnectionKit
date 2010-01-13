@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTAbstractPage;
+@class KTAbstractPage, SVHTMLContext;
 
 
 @interface SVLink : NSObject <NSCopying>
@@ -36,6 +36,10 @@
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
 
 #pragma mark Deriving a new Link
+
+
+#pragma mark HTML
+- (void)writeStartTagToContext:(SVHTMLContext *)context;
 
 
 @end
