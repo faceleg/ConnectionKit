@@ -8,6 +8,7 @@
 #import <Foundation/Foundation.h>
 #import "KSPlugin.h"
 
+enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 
 @class KTImageScalingSettings;
 
@@ -38,6 +39,7 @@
 - (NSString *)contributor;		// externally visible author's name, shows up in design chooser
 - (NSURL *)URL;
 - (int)textWidth;
+- (int)hierMenuType;
 - (NSDictionary *)imageReplacementTags;	// returns a dictionary, key is the tag (h3, #sitemenu li, etc.), value is URL to pull apart with options for renderer.
 - (NSString *)sidebarBorderable;
 - (NSString *)calloutBorderable;

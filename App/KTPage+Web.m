@@ -349,14 +349,25 @@
 	return result;
 }
 
-- (void)outputMenuForArrayOfDuples:(NSArray *)anArray isTop:(BOOL)isTop
+- (void)outputMenuForArrayOfDuples:(NSArray *)anArray isTreeTop:(BOOL)isTreeTop
 {
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
 
 
 	[context writeNewline];
-	[context writeStartTag:@"ul" idName:nil className:(isTop ? @"jd_menu jd_menu_vertical" : nil)];
+	
+	NSString *className = nil;
+	if (isTreeTop)
+	{
+		className = @"jd_menu";
+		int hierMenuType = [[[self master] design] hierMenuType];
+		if (HIER_MENU_VERTICAL == hierMenuType)
+		{
+			className = [className stringByAppendingString:@" jd_vertical"];
+		}
+	}
+	[context writeStartTag:@"ul" idName:nil className:className];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
@@ -415,7 +426,7 @@
 		
 		if ([children count])
 		{
-			[self outputMenuForArrayOfDuples:children isTop:NO];
+			[self outputMenuForArrayOfDuples:children isTreeTop:NO];
 			[context writeEndTagWithNewline:YES];	// li
 	}
 		else
@@ -429,7 +440,6 @@
 
 - (NSString *)sitemenu
 {
-	
 	if (self.site.pagesInSiteMenu)
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
@@ -455,47 +465,56 @@
 		KTSite *site = self.site;
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
 		
-		// OK, now to build up the hiearchical site menu.
-		// Array of dictionaries keyed with "page" and "children" array
+		int hierMenuType = [[[self master] design] hierMenuType];
 		NSMutableArray *tree = [NSMutableArray array];
-		NSMutableDictionary *childrenLookup = [NSMutableDictionary dictionary];
-		// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
-		for (KTPage *siteMenuPage in pagesInSiteMenu)
+		if (HIER_MENU_NONE == hierMenuType || [[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
 		{
-			BOOL wasSubPage = NO;
-			KTPage *parent = siteMenuPage;
-			do 
+			for (KTPage *siteMenuPage in pagesInSiteMenu)
 			{
-				NSMutableArray *childrenToAddTo = [childrenLookup objectForKey:[NSString stringWithFormat:@"%p", parent]];
-				if (childrenToAddTo)
+				NSDictionary *duple = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", nil];
+				[tree addObject:duple];
+			}
+			[self outputMenuForArrayOfDuples:tree isTreeTop:NO];
+		}
+		else
+		{
+			// now to build up the hiearchical site menu.
+			// Array of dictionaries keyed with "page" and "children" array
+			NSMutableDictionary *childrenLookup = [NSMutableDictionary dictionary];
+			// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
+			for (KTPage *siteMenuPage in pagesInSiteMenu)
+			{
+				BOOL wasSubPage = NO;
+				KTPage *parent = siteMenuPage;
+				do 
+				{
+					NSMutableArray *childrenToAddTo = [childrenLookup objectForKey:[NSString stringWithFormat:@"%p", parent]];
+					if (childrenToAddTo)
+					{
+						NSMutableArray *children = [NSMutableArray array];
+						[childrenToAddTo addObject:[NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil]];
+						parent = nil;	// stop looking
+						wasSubPage = YES;
+					}
+					else
+					{
+						parent = [siteMenuPage parentPage];
+
+					}
+				}
+				while (nil != parent && ![parent isRoot]);
+
+				if (!wasSubPage)
 				{
 					NSMutableArray *children = [NSMutableArray array];
-					[childrenToAddTo addObject:[NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil]];
-					parent = nil;	// stop looking
-					wasSubPage = YES;
+					NSDictionary *nodeDict = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil];
+					[tree addObject:nodeDict];
+					[childrenLookup setObject:children forKey:[NSString stringWithFormat:@"%p", siteMenuPage]];		// quick lookup from page to children
 				}
-				else
-				{
-					parent = [siteMenuPage parentPage];
-
-				}
-			}
-			while (nil != parent && ![parent isRoot]);
-
-			if (!wasSubPage)
-			{
-				NSMutableArray *children = [NSMutableArray array];
-				NSDictionary *nodeDict = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil];
-				[tree addObject:nodeDict];
-				[childrenLookup setObject:children forKey:[NSString stringWithFormat:@"%p", siteMenuPage]];		// quick lookup from page to children
-			}
+			}	// end for
+			[self outputMenuForArrayOfDuples:tree isTreeTop:YES];
 		}
 		
-		[self outputMenuForArrayOfDuples:tree isTop:YES];
-
-		
-		
-				
 		
 		[context writeEndTagWithNewline:YES];	// div
 		[context writeHTMLString:@"<!-- sitemenu-content -->"];

@@ -408,6 +408,16 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	return result;
 }
 
+- (int)hierMenuType;
+{
+	NSNumber *hierMenuTypeNumber = [[self bundle] objectForInfoDictionaryKey:@"HierMenuType"];
+	if (hierMenuTypeNumber)
+	{
+		return [hierMenuTypeNumber intValue];
+	}
+	return HIER_MENU_HORIZONTAL;		// default if not specified.  We may want to do HIER_MENU_NONE once designs are set up
+}
+
 - (BOOL)isFamilyPrototype
 {
 	BOOL result = NO;
