@@ -90,17 +90,25 @@
 {
     SVLink *result = nil;
     
-    // Try to populate from frontmost Safari URL
-    NSURL *safariURL = nil;
-    NSString *safariTitle = nil;	// someday, we could populate the link title as well!
-    [NSAppleScript getWebBrowserURL:&safariURL title:&safariTitle source:nil];
-    if (safariURL)
+    
+    // Is there something suitable on the pasteboard?
+    NSURL *URL = [WebView URLFromPasteboard:[NSPasteboard generalPasteboard]];
+    if (!URL)
     {
-        result = [[SVLink alloc] initWithURLString:[safariURL absoluteString]
-                                   openInNewWindow:NO];
+        // Try to populate from frontmost Safari URL
+        NSString *safariTitle = nil;	// someday, we could populate the link title as well!
+        [NSAppleScript getWebBrowserURL:&URL title:&safariTitle source:nil];
     }
     
-    return [result autorelease];
+    if (URL)
+    {
+        result = [[SVLink alloc] initWithURLString:[URL absoluteString]
+                                   openInNewWindow:NO];
+        [result autorelease];
+    }
+    
+    
+    return result;
 }
 
 @end
