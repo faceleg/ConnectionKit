@@ -137,25 +137,6 @@ extern NSString *gInfoWindowAutoSaveName;
 
 @end
 
-@interface KTDocWindowController ( WebView )
-
-- (NSWindow *)linkPanel;
-- (void)closeLinkPanel;
-
-- (void)linkPanelDidLoad;
-
-- (IBAction)finishLinkPanel:(id)sender;
-- (IBAction)clearLinkDestination:(id)sender;
-
-- (id)itemForDOMNodeID:(NSString *)anID;
-
-- (NSMutableDictionary *)contextElementInformation;
-- (void)setContextElementInformation:(NSMutableDictionary *)aContextElementInformation;
-
-- (BOOL)isEditableElement:(DOMHTMLElement *)aDOMHTMLElement;
-
-@end
-
 
 extern NSString *KTSelectedDOMRangeKey;
 

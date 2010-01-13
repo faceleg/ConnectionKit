@@ -948,7 +948,6 @@
 		CE16DD090D871EA20077C779 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
 		CE16DD0A0D871EA60077C779 /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE16DD0B0D871EA90077C779 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
-		CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */; };
 		CE1D2FD50BD82CA100927C96 /* liveoak.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB490BCEC566001BF9F7 /* liveoak.png */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
 		CE2232BC0869F47200341BAF /* bigtop.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B20869F47200341BAF /* bigtop.png */; };
@@ -2656,7 +2655,6 @@
 		CEB32CD50806E6ED00A92187 /* favicon.ico */ = {isa = PBXFileReference; lastKnownFileType = image.ico; path = favicon.ico; sourceTree = "<group>"; };
 		CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindowController.h; sourceTree = "<group>"; };
 		CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindowController.m; sourceTree = "<group>"; };
-		CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+WebView.m"; sourceTree = "<group>"; };
 		CEB4C3D6108EB40C000C6E13 /* QuestionMark.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = QuestionMark.pdf; sourceTree = "<group>"; };
 		CEB53A800899A9AD006B0019 /* KTDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesign.h; sourceTree = "<group>"; };
 		CEB53A810899A9AD006B0019 /* KTDesign.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesign.m; sourceTree = "<group>"; };
@@ -3377,7 +3375,6 @@
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
 				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
-				CEB34BCC082977530073A7A4 /* KTDocWindowController+WebView.m */,
 				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
 				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
 				2756671D0F0167C700878A05 /* KTDocWindowController+Publishing.m */,
@@ -6321,7 +6318,6 @@
 				3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */,
 				3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */,
 				3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */,
-				CE1AD93D0A7E91E40083C01E /* KTDocWindowController+WebView.m in Sources */,
 				CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */,
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
 				CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */,

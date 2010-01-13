@@ -90,7 +90,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     // release ivars
-	[self setContextElementInformation:nil];
     [self setToolbars:nil];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
@@ -107,10 +106,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // Finish setting up controllers
 	[[self siteOutlineViewController] setRootPage:[[[self document] site] root]];
     [[self siteOutlineViewController] setContent:[self pagesController]];
-	
-	
-	// Now let the webview and the site outline initialize themselves.
-	[self linkPanelDidLoad];
 	
 	
 	// Early on, window-related stuff
