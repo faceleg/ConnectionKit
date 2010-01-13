@@ -19,6 +19,7 @@
 #import "SVLink.h"
 #import "SVWebContentObjectsController.h"
 
+#import "NSAppleScript+Karelia.h"
 #import "NSDictionary+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
@@ -440,7 +441,18 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (IBAction)orderFrontLinkPanel:(id)sender;
 {
-    [self changeLinkDestinationTo:@"http://example.com"];
+    NSString *theLinkString = @"http://example.com";
+    
+    // Try to populate from frontmost Safari URL
+    NSURL *safariURL = nil;
+    NSString *safariTitle = nil;	// someday, we could populate the link title as well!
+    [NSAppleScript getWebBrowserURL:&safariURL title:&safariTitle source:nil];
+    if (safariURL)
+    {
+        theLinkString = [safariURL absoluteString];
+    }
+    
+    [self changeLinkDestinationTo:theLinkString];
 }
 
 - (void)changeLink:(SVLinkManager *)sender;
