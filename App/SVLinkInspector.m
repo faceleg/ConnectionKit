@@ -59,6 +59,8 @@
         if (!title) title = @"";
         [oLinkField setStringValue:title];
     }
+    
+    [oOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
 }
 
 - (SVLinkManager *)linkManager
