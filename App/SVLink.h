@@ -20,17 +20,22 @@
   @private
     NSString        *_URLString;
     KTAbstractPage  *_page;
+    BOOL            _openInNewWindow;
 }
 
 #pragma mark Creating a link
-- (id)initWithURLString:(NSString *)urlString;
-- (id)initWithPage:(KTAbstractPage *)page;
+- (id)initWithURLString:(NSString *)urlString openInNewWindow:(BOOL)openInNewWindow;
+- (id)initWithPage:(KTAbstractPage *)page openInNewWindow:(BOOL)openInNewWindow;
 
 
 #pragma mark Link Properties
 @property(nonatomic, copy, readonly) NSString *URLString;   // should always be non-nil
 @property(nonatomic, retain, readonly) KTAbstractPage *page;// non-nil only if created from a page
+@property(nonatomic, readonly) BOOL openInNewWindow;
 
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
+
+#pragma mark Deriving a new Link
+
 
 @end

@@ -16,17 +16,23 @@
 
 #pragma mark Creating a Link
 
-- (id)initWithURLString:(NSString *)urlString;
+- (id)initWithURLString:(NSString *)urlString openInNewWindow:(BOOL)openInNewWindow;
 {
     [self init];
+    
     _URLString = [urlString copy];
+    _openInNewWindow = openInNewWindow;
+    
     return self;
 }
 
-- (id)initWithPage:(KTAbstractPage *)page;
+- (id)initWithPage:(KTAbstractPage *)page openInNewWindow:(BOOL)openInNewWindow;
 {
-    [self initWithURLString:[kKTPageIDDesignator stringByAppendingString:[page uniqueID]]];
+    [self initWithURLString:[kKTPageIDDesignator stringByAppendingString:[page uniqueID]]
+            openInNewWindow:openInNewWindow];
+    
     _page = [page retain];
+    
     return self;
 }
 
@@ -49,6 +55,7 @@
 
 @synthesize URLString = _URLString;
 @synthesize page = _page;
+@synthesize openInNewWindow = _openInNewWindow;
 
 - (NSString *)targetDescription;    // normally anchor's href, but for page targets, the page title
 {

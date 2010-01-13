@@ -100,7 +100,8 @@
 
 - (IBAction)setLinkURL:(id)sender;
 {
-    SVLink *link = [[SVLink alloc] initWithURLString:[oLinkField stringValue]];
+    SVLink *link = [[SVLink alloc] initWithURLString:[oLinkField stringValue]
+                                     openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
     [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
     [link release];
 }

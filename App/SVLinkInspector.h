@@ -20,6 +20,7 @@
 {
     IBOutlet KTLinkSourceView   *oLinkSourceView;
     IBOutlet NSTextField        *oLinkField;
+    IBOutlet NSButton           *oOpenInNewWindowCheckbox;
     
   @private
     NSFormatter *_URLFormatter;

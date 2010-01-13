@@ -473,14 +473,16 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             
             if (target)
             {
-                link = [[SVLink alloc] initWithPage:target];
+                link = [[SVLink alloc] initWithPage:target
+                                    openInNewWindow:[[anchorElement target] isEqualToString:@"_blank"]];
             }
         }
         
         // Not a page link? Fallback to regular link
         if (!link)
         {
-            link = [[SVLink alloc] initWithURLString:linkURLString];
+            link = [[SVLink alloc] initWithURLString:linkURLString
+                                     openInNewWindow:[[anchorElement target] isEqualToString:@"_blank"]];
         }
     }
     
