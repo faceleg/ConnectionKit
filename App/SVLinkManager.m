@@ -80,6 +80,22 @@
 
 - (IBAction)orderFrontLinkPanel:(id)sender; // Sets the current Inspector to view links
 {
+    // Try to create create an example link if there isn't one already present
+    if (![self selectedLink] && [self isEditable])
+    {
+        SVLink *link = [self guessLink];
+        if (!link)
+        {
+            link = [[SVLink alloc] initWithURLString:@"http://example.com"
+                                     openInNewWindow:YES];
+            [link autorelease];
+        }
+        
+        [self modifyLinkTo:link];
+    }
+    
+    
+    // Show the Inspector
     [[KSDocumentController sharedDocumentController] showInspectors:self];
     
     SVInspector *inspector = [[[KSDocumentController sharedDocumentController] inspectors] lastObject];

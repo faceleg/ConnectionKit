@@ -51,7 +51,6 @@
 
 #pragma mark Links
 
-- (IBAction)orderFrontLinkPanel:(id)sender;
 @property(nonatomic, retain, readonly) DOMHTMLAnchorElement *selectedLink;
 
 

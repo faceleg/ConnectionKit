@@ -380,15 +380,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (BOOL)doCommandBySelector:(SEL)selector
 {
     BOOL result = [super doCommandBySelector:selector];
-    
-    if (selector == @selector(orderFrontLinkPanel:) ||
-        selector == @selector(clearLinkDestination:))
-    {
-        [self performSelector:selector withObject:nil];
-        result = YES;
-    }
-    
-    
     return result;
 }
 
@@ -436,21 +427,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Need to let paragraph's controller know an actual editing change was made
     [self didChangeText];
-}
-
-- (IBAction)orderFrontLinkPanel:(id)sender;
-{
-    // Figure out the URL to use
-    NSString *theLinkString = @"http://example.com";
-    SVLink *guessedLink = [[SVLinkManager sharedLinkManager] guessLink];
-    if ([guessedLink URLString]) theLinkString = [guessedLink URLString];
-    
-    OBASSERT([theLinkString length] > 0);
-    [self changeLinkDestinationTo:theLinkString];
-    
-    
-    // Show the panel
-    [[SVLinkManager sharedLinkManager] orderFrontLinkPanel:self];
 }
 
 - (void)changeLink:(SVLinkManager *)sender;

@@ -92,13 +92,5 @@
     }
 }
 
-#pragma mark Actions
-
-- (void)orderFrontLinkPanel:(id)sender
-{
-    //  One day WebKit might offer its own implementation of this. What we want though is Sandvox-specific link handling behaviour. To do this, simulate how WebKit normally handles text editing action messages and give the delegate a chance to respond. From there, the Web Editor should happily take command, letting individual text controllers decide what to do.
-    [[self editingDelegate] webView:self doCommandBySelector:_cmd];
-}
-
 @end
 
