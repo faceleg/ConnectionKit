@@ -256,7 +256,7 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 }
 
-/*  The process of creating a link is very simple: Crate the DOM nodes and then insert them using -replaceSelectionWithNode:
+/*  The process of creating a link is very simple: Create the DOM nodes and then insert them using -replaceSelectionWithNode:
  *  WebKit will manage the undo/redo stuff for us.
  */
 - (NSString *)createLink:(NSString *)link openLinkInNewWindow:(BOOL)openLinkInNewWindow
@@ -288,24 +288,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	
 	return nil;
 }	
-
-- (IBAction)clearLinkDestination:(id)sender;
-{
-	[oLinkLocalPageField setStringValue:@""];
-	[oLinkDestinationField setStringValue:@""];
-	[oLinkLocalPageField setHidden:YES];
-	[oLinkDestinationField setHidden:NO];
-	[oLinkView setConnected:NO];
-	NSMutableDictionary *info = [self contextElementInformation];
-	[info removeObjectForKey:@"KTLocalLink"];
-}
-
-
-- (void)closeLinkPanel
-{
-	[[self window] removeChildWindow:oLinkPanel];
-	[oLinkPanel close];
-}
 
 - (IBAction)finishLinkPanel:(id)sender
 {
@@ -445,15 +427,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	}
 	
 	return linkPanelOrigin; // in flipped coordinates
-}
-
-- (void)windowDidEscape:(NSWindow *)aWindow
-{
-	if ( aWindow == oLinkPanel )
-	{
-		// escape was pressed, close link panel without accepting changes
-		[self closeLinkPanel];
-	}
 }
 
 // these methods share a bunch of code with the link panel link creation and should be refactored
