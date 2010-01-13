@@ -22,6 +22,7 @@ TO DO:
 
 #import "KTDocWindowController.h"
 
+#import "SVApplicationController.h"
 #import "KT.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
@@ -185,11 +186,17 @@ TO DO:
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [menu addItemWithTitle:NSLocalizedString(@"Choose File…", "New page popup button menu item title")
+    [menu addItemWithTitle:NSLocalizedString(@"External URL", "New page popup button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
-    [menu addItemWithTitle:NSLocalizedString(@"External URL", "New page popup button menu item title")
+    if ([[NSApp delegate] isPro])
+    {
+        [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page popup button menu item title")
+                        action:@selector(addPage:) keyEquivalent:@""];
+    }
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page popup button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
