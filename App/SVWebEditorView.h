@@ -39,6 +39,7 @@
     DOMRange        *_DOMRangeOfNextEdit;
     BOOL            _mouseUpMayBeginEditing;
     NSUndoManager   *_undoManager;
+    BOOL            _liveLinks;
     
     // Drag & Drop
     BOOL        _isDragging;
@@ -94,7 +95,7 @@
 - (void)willEditTextInDOMRange:(DOMRange *)range;
 - (void)didChangeTextInDOMRange:(DOMRange *)range notification:(NSNotification *)notification;
 
-- (void)setEditableLinksLive:(BOOL)liveLinks;   // no getter for now
+@property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
 
 
 #pragma mark Undo Support

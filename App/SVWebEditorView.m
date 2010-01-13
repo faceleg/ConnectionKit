@@ -113,6 +113,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self addSubview:_webView];
     
     
+    // Behaviour
+    [self setLiveEditableAndSelectableLinks:YES];
+    
+    
     // Tracking area
     NSTrackingAreaOptions options = (NSTrackingMouseMoved | NSTrackingActiveInKeyWindow | NSTrackingInVisibleRect);
     NSTrackingArea *trackingArea = [[NSTrackingArea alloc] initWithRect:NSZeroRect
@@ -547,8 +551,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [text webEditorTextDidChange:notification];
 }
 
-- (void)setEditableLinksLive:(BOOL)liveLinks;   // no getter for now
+@synthesize liveEditableAndSelectableLinks = _liveLinks;
+- (void)setLiveEditableAndSelectableLinks:(BOOL)liveLinks;
 {
+    _liveLinks = liveLinks;
+    
     WebKitEditableLinkBehavior behaviour = (liveLinks ? WebKitEditableLinkAlwaysLive :WebKitEditableLinkOnlyLiveWithShiftKey);
     [[[self webView] preferences] setInteger:behaviour forKey:@"editableLinkBehavior"];
 }
@@ -641,6 +648,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     SVWebEditorItem *result = nil;
     
     NSDictionary *element = [[self webView] elementAtPoint:point];
+    
     DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
     if (domNode)
     {

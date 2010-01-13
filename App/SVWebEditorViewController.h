@@ -40,9 +40,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     
     NSSet   *_pageDependencies;
     
-    // Links
-    BOOL    _liveLinks;
-    
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
 }
@@ -97,10 +94,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (IBAction)insertPageTitle:(id)sender;
 - (IBAction)insertPageletTitle:(id)sender;
 - (IBAction)insertFooter:(id)sender;
-
-
-#pragma mark Links
-@property(nonatomic) BOOL liveEditableAndSelectableLinks;
 
 
 #pragma mark Delegate
