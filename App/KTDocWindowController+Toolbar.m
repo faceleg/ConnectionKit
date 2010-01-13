@@ -25,6 +25,7 @@ TO DO:
 #import "KT.h"
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
+#import "SVLinkManager.h"
 #import "KTToolbars.h"
 
 #import "NSImage+KTExtensions.h"
@@ -233,21 +234,6 @@ TO DO:
             [result setPaletteLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"paletteLabel"] value:@"" table:nil]];
             [result setToolTip:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"help"] value:@"" table:nil]];
 
-            // target
-			NSString *target = [[itemInfo valueForKey:@"target"] lowercaseString];
-            if ( [target isEqualToString:@"windowcontroller"] ) 
-			{
-                [result setTarget:self];
-            }
-            else if ( [target isEqualToString:@"document"] ) 
-			{
-                [result setTarget:[self document]];
-            }
-            else
-			{
-                [result setTarget:nil];
-            }
-			
             // action
             if ( (nil != [itemInfo valueForKey:@"action"]) && ![[itemInfo valueForKey:@"action"] isEqualToString:@""] ) 
 			{
@@ -258,7 +244,26 @@ TO DO:
                 [result setAction:nil];
             }
 
-			NSString *imageName = [itemInfo valueForKey:@"image"];
+			// target
+			NSString *target = [[itemInfo valueForKey:@"target"] lowercaseString];
+            if ( [target isEqualToString:@"windowcontroller"] ) 
+			{
+                [result setTarget:self];
+            }
+            else if ( [target isEqualToString:@"document"] ) 
+			{
+                [result setTarget:[self document]];
+            }
+            else if ([result action] == @selector(orderFrontLinkPanel:))
+            {
+                [result setTarget:[SVLinkManager sharedLinkManager]];
+            }
+            else
+			{
+                [result setTarget:nil];
+            }
+			
+            NSString *imageName = [itemInfo valueForKey:@"image"];
             // are we a view or an image?
             // views can still have images, so we check whether it's a view first
             if ([[itemInfo valueForKey:@"view"] length] > 0) 
