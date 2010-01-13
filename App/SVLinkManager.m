@@ -76,7 +76,7 @@
     [self refreshLinkInspectors];
 }
 
-#pragma mark Link Inspector
+#pragma mark UI
 
 - (IBAction)orderFrontLinkPanel:(id)sender; // Sets the current Inspector to view links
 {
@@ -100,6 +100,18 @@
     
     SVInspector *inspector = [[[KSDocumentController sharedDocumentController] inspectors] lastObject];
     [[inspector inspectorTabsController] setSelectedViewController:[inspector linkInspector]];
+}
+
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    BOOL result = YES;
+    
+    if ([anItem action] == @selector(orderFrontLinkPanel:))
+    {
+        result = [self isEditable];
+    }
+    
+    return result;
 }
 
 - (SVLink *)guessLink;  // looks at the user's workspace to guess what they want. Nil if no match is found

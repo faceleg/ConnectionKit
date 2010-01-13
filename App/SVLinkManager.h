@@ -12,7 +12,7 @@
 @class SVLink;
 
 
-@interface SVLinkManager : NSObject
+@interface SVLinkManager : NSObject <NSUserInterfaceValidations>
 {
   @private
     SVLink *_selectedLink;
@@ -34,7 +34,7 @@
 - (void)modifyLinkTo:(SVLink *)link;    // sends -changeLink: up the responder chain
 
 
-#pragma mark Link Inspector
+#pragma mark UI
 - (IBAction)orderFrontLinkPanel:(id)sender; // Sets the current Inspector to view links
 - (SVLink *)guessLink;  // looks at the user's workspace to guess what they want. Nil if no match is found
 
