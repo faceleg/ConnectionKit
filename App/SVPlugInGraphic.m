@@ -306,7 +306,15 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)writeHTML
 {
-    return [[self plugIn] writeHTML];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    [context openTag:@"div"];
+    [context writeAttribute:@"style" value:@"float:right;"];
+    [context closeStartTag];
+    
+    [[self plugIn] writeHTML];
+    
+    [context writeEndTag];
 }
 
 - (DOMElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
