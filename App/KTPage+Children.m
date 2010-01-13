@@ -123,12 +123,12 @@
 #pragma mark -
 #pragma mark Unsorted Children
 
-@dynamic childPages;
-- (NSSet *)childPages
+@dynamic childItems;
+- (NSSet *)childItems
 {
-    [self willAccessValueForKey:@"childPages"];
-    NSSet *result = [self primitiveValueForKey:@"childPages"];
-    [self didAccessValueForKey:@"childPages"];
+    [self willAccessValueForKey:@"childItems"];
+    NSSet *result = [self primitiveValueForKey:@"childItems"];
+    [self didAccessValueForKey:@"childItems"];
     return result;
 }
 
@@ -173,7 +173,7 @@
 - (void)removePage:(KTPage *)aPage
 {
 	// Remove the page and update the page cache
-	[[self mutableSetValueForKey:@"childPages"] removeObject:aPage];
+	[[self mutableSetValueForKey:@"childItems"] removeObject:aPage];
 	[self invalidateSortedChildrenCache];
 	
 	// Delete the corresponding archive page if unused now
@@ -194,7 +194,7 @@
  */
 - (void)removePages:(NSSet *)pages
 {
-	[[self mutableSetValueForKey:@"childPages"] minusSet:pages];
+	[[self mutableSetValueForKey:@"childItems"] minusSet:pages];
 	[self invalidateSortedChildrenCache];
 	
 	// Delete / mark stale the corresponding archive pages if unused now
@@ -264,12 +264,12 @@
 {
 	// Clear the cache
 	[self willChangeValueForKey:@"sortedChildren"];
-	[[self childPages] makeObjectsPerformSelector:@selector(willChangeValuesForKeys:)
+	[[self childItems] makeObjectsPerformSelector:@selector(willChangeValuesForKeys:)
 									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
 	
 	[self setPrimitiveValue:nil forKey:@"sortedChildren"];
 	
-	[[self childPages] makeObjectsPerformSelector:@selector(didChangeValuesForKeys:)
+	[[self childItems] makeObjectsPerformSelector:@selector(didChangeValuesForKeys:)
 									 withObject:[KTPage sortedChildrenDependentChildrenKeys]];
 	[self didChangeValueForKey:@"sortedChildren"];
 	
@@ -293,7 +293,7 @@
 */
 - (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType inIndex:(BOOL)ignoreDrafts
 {
-	NSArray *result = [[self childPages] allObjects];
+	NSArray *result = [[self childItems] allObjects];
 	
 	
 	// Filter out drafts if requested
@@ -397,7 +397,7 @@
 
 - (BOOL)hasChildren
 {
-	NSSet *children = [self childPages];
+	NSSet *children = [self childItems];
 	BOOL result = ([children count] > 0);
 	return result;
 }
@@ -410,7 +410,7 @@
 	}
 	else
 	{
-		NSEnumerator *e = [[self childPages] objectEnumerator];
+		NSEnumerator *e = [[self childItems] objectEnumerator];
 		KTPage *child;
 		while ( child = [e nextObject] )
 		{
@@ -447,7 +447,7 @@
         // BUGSID: 30402. NSNotFound really shouldn't happen, but if so we need to track it down.
         if (index == NSNotFound)
         {
-            if ([[parent childPages] containsObject:self])
+            if ([[parent childItems] containsObject:self])
             {
                 OBASSERT_NOT_REACHED("parent's -sortedChildren must be out of date");
             }
@@ -485,7 +485,7 @@
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(KTCollectionSortType)aSortType
 {
-    NSSet *values = [self childPages];
+    NSSet *values = [self childItems];
 	
 	if (0 == [values count])
 	{
@@ -536,7 +536,7 @@
 	NSMutableArray *titlesArray = [NSMutableArray array];
 	[titlesArray addObject:sortableTitle];
 	
-    NSSet *children = [self childPages];
+    NSSet *children = [self childItems];
 	
 	NSEnumerator *e = [children objectEnumerator];
 	KTPage *child;

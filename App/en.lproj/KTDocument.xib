@@ -22,7 +22,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1793"/>
-			<integer value="1649"/>
+			<integer value="1726"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -731,6 +731,7 @@
 					<string>baseExampleURLString</string>
 					<string>canPreview</string>
 					<string>isCollection</string>
+					<string>customPathExtension</string>
 				</object>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1444,23 +1445,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedObject: selection.customFileExtension</string>
-						<reference key="source" ref="408006662"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="408006662"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">selectedObject: selection.customFileExtension</string>
-							<string key="NSBinding">selectedObject</string>
-							<string key="NSKeyPath">selection.customFileExtension</string>
-							<reference key="NSPreviousConnector" ref="847482695"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1921</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">managedObjectContext: document.managedObjectContext</string>
 						<reference key="source" ref="601368962"/>
 						<reference key="destination" ref="496514088"/>
@@ -1498,6 +1482,23 @@
 						<reference key="destination" ref="529729890"/>
 					</object>
 					<int key="connectionID">1928</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedObject: selection.customPathExtension</string>
+						<reference key="source" ref="408006662"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="408006662"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">selectedObject: selection.customPathExtension</string>
+							<string key="NSBinding">selectedObject</string>
+							<string key="NSKeyPath">selection.customPathExtension</string>
+							<reference key="NSPreviousConnector" ref="847482695"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1929</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2198,7 +2199,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1928</int>
+			<int key="maxID">1929</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2302,9 +2303,7 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addCollection:</string>
-							<string>addPagelet:</string>
 							<string>chooseDesign:</string>
-							<string>clearLinkDestination:</string>
 							<string>duplicate:</string>
 							<string>duplicatePagelets:</string>
 							<string>duplicateSelectedPages:</string>
@@ -2312,7 +2311,6 @@
 							<string>editRawHTMLInSelectedBlock:</string>
 							<string>exportSite:</string>
 							<string>exportSiteAgain:</string>
-							<string>finishLinkPanel:</string>
 							<string>group:</string>
 							<string>paste:</string>
 							<string>pastePagelets:</string>
@@ -2322,7 +2320,6 @@
 							<string>publishSiteChanges:</string>
 							<string>publishSiteFromToolbar:</string>
 							<string>showChooseDesignSheet:</string>
-							<string>showLinkPanel:</string>
 							<string>submitSiteToDirectory:</string>
 							<string>toggleSmallPageIcons:</string>
 							<string>updateWebView:</string>
@@ -2348,11 +2345,7 @@
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
 							<string>NSToolbarItem</string>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2413,7 +2406,7 @@
 						<string key="NS.key.0">delegate</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="302851981">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTLinkSourceView.h</string>
 					</object>
@@ -2633,20 +2626,9 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="302851981"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTPage.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTTemplateParser.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2661,6 +2643,24 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="143247885">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">NSOutlineView+KTExtensions.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">changeLink:</string>
+						<string key="NS.object.0">SVLinkManager</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1051338742">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVLinkManager.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVTemplateParser.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -2788,6 +2788,15 @@
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVDocWindow.h</string>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVLinkManager</string>
+					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">orderFrontLinkPanel:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<reference key="sourceIdentifier" ref="1051338742"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVPagesController</string>

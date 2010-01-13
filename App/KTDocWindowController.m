@@ -277,7 +277,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)addPage:(id)sender;
 {
-    [[[self siteOutlineViewController] content] add:sender];
+    [[self pagesController] add:sender];
 }
 
 /*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.

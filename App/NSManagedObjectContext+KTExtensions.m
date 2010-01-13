@@ -254,7 +254,7 @@
                                                         object:page];
     
     // Repeat for any children that are going the same way
-    for (KTPage *aPage in [page childPages])
+    for (KTPage *aPage in [page childItems])
     {
         [self willDeletePage:aPage];
     }

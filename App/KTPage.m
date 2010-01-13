@@ -207,7 +207,7 @@
 	{
 		KTPage *parent = [self parentPage];
 		// Set includeInSiteMenu if this page's parent is root, and not too many siblings
-		if (nil != parent && [parent isRoot] && [[parent childPages] count] < 7)
+		if (nil != parent && [parent isRoot] && [[parent childItems] count] < 7)
 		{
 			[self setIncludeInSiteMenu:YES];
 		}
@@ -308,6 +308,41 @@
 #pragma mark -
 #pragma mark Paths
 
+/*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
+ */
+- (NSString *)pathExtension
+{
+	NSString *result = [self customPathExtension];
+	
+	if (!result) result = [super pathExtension];
+	
+    OBPOSTCONDITION(result);
+    return result;
+}
+
+/*	Implemented just to stop anyone accidentally calling it.
+ */
+- (void)setPathExtension:(NSString *)extension
+{
+	[NSException raise:NSInternalInconsistencyException
+			    format:@"-%@ is not supported. Please use -setCustomFileExtension instead.", NSStringFromSelector(_cmd)];
+}
+
++ (NSSet *)keyPathsForValuesAffectingPathExtension
+{
+    return [NSSet setWithObjects:@"customFileExtension", @"defaultFileExtension", nil];
+}
+
+/*	A custom file extension of nil signifies that the value should be taken from the user defaults.
+ */
+- (NSString *)customPathExtension { return [self wrappedValueForKey:@"customFileExtension"]; }
+
+- (void)setCustomPathExtension:(NSString *)extension
+{
+	[self setWrappedValue:extension forKey:@"customFileExtension"];
+	[self recursivelyInvalidateURL:NO];
+}
+
 /*	KTAbstractPage doesn't support recursive operations, so we do instead
  */
 - (void)recursivelyInvalidateURL:(BOOL)recursive
@@ -317,14 +352,14 @@
 	// Children should be affected last since they depend on parents' path
 	if (recursive)
 	{
-		NSSet *children = [self childPages];
+		NSSet *children = [self childItems];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pageEnumerator nextObject])
 		{
 			OBASSERT(![self isDescendantOfPage:aPage]); // lots of assertions for #44139
             OBASSERT(aPage != self);
-            OBASSERT(![[aPage childPages] containsObject:self]);
+            OBASSERT(![[aPage childItems] containsObject:self]);
             
             [aPage recursivelyInvalidateURL:YES];
 		}

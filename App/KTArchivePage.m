@@ -54,7 +54,7 @@
 
 - (NSArray *)sortedPages
 {
-	NSMutableArray *result = [NSMutableArray arrayWithArray:[[[self parentPage] childPages] allObjects]];
+	NSMutableArray *result = [NSMutableArray arrayWithArray:[[[self parentPage] childItems] allObjects]];
 	
 	// Filter to only pages in our date range
 	NSDate *startDate = [self valueForKey:@"archiveStartDate"];

@@ -149,21 +149,21 @@ TO DO:
     NSToolbarItem *result = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
     
     
-    // construct popup button
+    // construct pulldown button
     NSImage *image = [NSImage imageNamed:imageName];
     image = [image imageWithCompositedAddBadge];
     
-    RYZImagePopUpButton *popUpButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
-    NSPopUpButtonCell *cell = [popUpButton cell];
+    RYZImagePopUpButton *pulldownButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
+    NSPopUpButtonCell *cell = [pulldownButton cell];
     
     [cell setUsesItemFromMenu:NO];
-    [popUpButton setIconImage:image];
-    [popUpButton setShowsMenuWhenIconClicked:YES];
-    [[popUpButton cell] setToolbar:[[self window] toolbar]];
+    [pulldownButton setIconImage:image];
+    [pulldownButton setShowsMenuWhenIconClicked:YES];
+    [[pulldownButton cell] setToolbar:[[self window] toolbar]];
     
-    [result setView:popUpButton];
-    [result setMinSize:[[popUpButton cell] minimumSize]];
-    [result setMaxSize:[[popUpButton cell] maximumSize]];
+    [result setView:pulldownButton];
+    [result setMinSize:[[pulldownButton cell] minimumSize]];
+    [result setMaxSize:[[pulldownButton cell] maximumSize]];
     
     
     // Generate the menu
@@ -171,7 +171,7 @@ TO DO:
     
     [cell addItemWithTitle:@"New"]; // pull-down buttons don't use the first item in their menu when displayed
     
-    [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page popup button menu item title")
+    [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page pulldown button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
@@ -186,17 +186,19 @@ TO DO:
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [menu addItemWithTitle:NSLocalizedString(@"External URL", "New page popup button menu item title")
+    [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
     if ([[NSApp delegate] isPro])
     {
-        [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page popup button menu item title")
+        [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
                         action:@selector(addPage:) keyEquivalent:@""];
     }
     
-    [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page popup button menu item title")
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page pulldown button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     

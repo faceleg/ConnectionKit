@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "SVExtensibleManagedObject.h"
+#import "SVSiteItem.h"
 #import "SVPageProtocol.h"
 #import "KTWebPathsProtocol.h"
 
@@ -35,7 +35,7 @@ KTCollectionPathStyle;
 @class SVHTMLTemplateParser;
 
 
-@interface KTAbstractPage : SVExtensibleManagedObject <SVPage>
+@interface KTAbstractPage : SVSiteItem <SVPage>
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;
@@ -50,11 +50,10 @@ KTCollectionPathStyle;
 
 #pragma mark Child Pages
 
-@property(nonatomic, copy, readonly) NSSet *childPages;
+@property(nonatomic, copy, readonly) NSSet *childItems;
 @property(nonatomic, copy, readonly) NSSet *archivePages;
 - (BOOL)isCollection;
 
-@property(nonatomic, retain, readonly) KTPage *parentPage;
 - (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
 - (BOOL)isRoot;
 
@@ -117,9 +116,6 @@ KTCollectionPathStyle;
 #pragma mark Path Extension
 // TODO: Rename other methods to follow this scheme
 @property(nonatomic, copy, readonly) NSString *pathExtension;
-
-- (NSString *)customFileExtension;
-- (void)setCustomFileExtension:(NSString *)extension;
 
 - (BOOL)fileExtensionIsEditable;
 - (void)setFileExtensionIsEditable:(BOOL)editable;

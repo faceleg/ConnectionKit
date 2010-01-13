@@ -656,7 +656,7 @@
  */
 - (BOOL)migrateChildrenFromPage:(NSManagedObject *)oldParentPage toPage:(KTPage *)newParentPage error:(NSError **)error
 {
-    NSSet *oldChildPages = [oldParentPage valueForKey:@"childPages"];
+    NSSet *oldChildPages = [oldParentPage valueForKey:@"childItems"];
     NSArray *sortedOldChildren = [[oldChildPages allObjects] sortedArrayUsingDescriptors:[NSSortDescriptor orderingSortDescriptors]];
     
     NSEnumerator *childrenEnumerator = [sortedOldChildren objectEnumerator];

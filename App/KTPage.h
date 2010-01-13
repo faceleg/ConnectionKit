@@ -44,6 +44,10 @@
 @property(nonatomic, copy) NSNumber *showSidebar;
 
 
+#pragma mark Paths
+@property(nonatomic, copy) NSString *customPathExtension;
+
+
 #pragma mark Debugging
 - (NSString *)shortDescription;
 
@@ -125,7 +129,7 @@
 - (void)moveToIndex:(unsigned)index;
 
 // Unsorted Children
-@property(nonatomic, copy, readonly) NSSet *childPages;
+@property(nonatomic, copy, readonly) NSSet *childItems;
 - (void)addPage:(KTPage *)page;
 - (void)removePage:(KTPage *)page;
 - (void)removePages:(NSSet *)pages;

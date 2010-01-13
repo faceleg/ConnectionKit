@@ -247,7 +247,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
 		[self iconForPage:page];
-		NSEnumerator *pagesEnumerator = [[page childPages] objectEnumerator];
+		NSEnumerator *pagesEnumerator = [[page childItems] objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pagesEnumerator nextObject])
 		{

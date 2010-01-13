@@ -50,7 +50,7 @@
     if ([[[page sidebar] pagelets] containsObject:pagelet])
     {
         // Remove from descendants first
-        for (KTPage *aPage in [page childPages])
+        for (KTPage *aPage in [page childItems])
         {
             [self removePagelet:pagelet fromPageAndDescendants:aPage];
         }

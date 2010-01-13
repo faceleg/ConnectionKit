@@ -99,7 +99,7 @@
 	
     
 	// Build a list of the file names already taken
-	NSSet *siblingFileNames = [[[self parentPage] childPages] valueForKey:@"fileName"];
+	NSSet *siblingFileNames = [[[self parentPage] childItems] valueForKey:@"fileName"];
 	NSSet *archiveFileNames = [[self parentPage] valueForKeyPath:@"archivePages.fileName"];
 	NSMutableSet *unavailableFileNames = [NSMutableSet setWithCapacity:([siblingFileNames count] + [archiveFileNames count])];
 	[unavailableFileNames unionSet:siblingFileNames];
@@ -125,45 +125,8 @@
  */
 - (NSString *)pathExtension
 {
-	NSString *result = [self customFileExtension];
-	
-	if (!result)
-	{
-		result = [self defaultFileExtension];
-	}
-	
-	return result;
+	return [self defaultFileExtension];
 }
-
-/*	Implemented just to stop anyone accidentally calling it.
- */
-- (void)setFileExtension:(NSString *)extension
-{
-	[NSException raise:NSInternalInconsistencyException
-			    format:@"-%@ is not supported. Please use -setCustomFileExtension instead.", NSStringFromSelector(_cmd)];
-}
-
-
-+ (NSSet *)keyPathsForValuesAffectingPathExtension
-{
-    return [NSSet setWithObjects:@"customFileExtension", @"defaultFileExtension", nil];
-}
-
-/*	A custom file extension of nil signifies that the value should be taken from the user defaults.
- */
-- (NSString *)customFileExtension { return [self wrappedValueForKey:@"customFileExtension"]; }
-
-- (void)setCustomFileExtension:(NSString *)extension
-{
-	[self setWrappedValue:extension forKey:@"customFileExtension"];
-	[self recursivelyInvalidateURL:NO];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingFileExtension
-{
-    return [NSSet setWithObject:@"customFileExtension"];
-}
-
 
 /*	Super-simple accessor that determines the editing UI available to the user in the Page Details area.
  *	By default, set to true. The File Download and External Link plugins use this to disable editing.
