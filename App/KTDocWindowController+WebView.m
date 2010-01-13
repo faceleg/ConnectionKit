@@ -210,50 +210,6 @@ class has pagelet, ID like k-###	(the k- is to be recognized elsewhere)
 	[[oLinkControlsBox window] setDelegate:self];
 }
 
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link
-{
-	return [[self document] site];
-}
-
-- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
-{
-	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	[pboard declareTypes:[NSArray arrayWithObject:kKTLocalLinkPboardType] owner:self];
-	[pboard setString:@"LocalLink" forType:kKTLocalLinkPboardType];
-	
-	return pboard;
-}
-
-- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
-{
-	NSDictionary *info = [self contextElementInformation];
-	if (info)
-	{
-		// set up a link to the local page
-		NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
-		if ( (pageID != nil) && ![pageID isEqualToString:@""] )
-		{
-			KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[self document] managedObjectContext]];
-			if ( nil != target )
-			{
-				NSString *titleText = [[target title] text];
-				if ( (nil != titleText) && ![titleText isEqualToString:@""] )
-				{
-					[oLinkLocalPageField setStringValue:titleText];
-					[oLinkDestinationField setStringValue:@""];
-					[oLinkLocalPageField setHidden:NO];
-					[oLinkDestinationField setHidden:YES];
-					
-					[info setValue:[NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, pageID] forKey:@"KTLocalLink"];
-					[oLinkView setConnected:YES];
-					
-				}
-			}
-		}
-	}
-	//	NO, DON'T CLOSE THE LINK PANEL WHEN YOU DRAG.	[oLinkPanel orderOut:self];
-}
-
 - (IBAction)performShowLinkPanel:(id)sender
 {
 	[self performSelector:@selector(showLinkPanel:) withObject:sender afterDelay:0.0];
