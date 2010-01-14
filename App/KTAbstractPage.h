@@ -107,8 +107,7 @@ KTCollectionPathStyle;
 @interface KTAbstractPage (Paths) <KTWebPaths>
 
 // File Name
-- (NSString *)fileName;
-- (void)setFileName:(NSString *)fileName;
+@property(nonatomic, copy, readwrite) NSString *fileName;
 - (NSString *)suggestedFileName;
 
 

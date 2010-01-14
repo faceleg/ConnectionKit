@@ -34,6 +34,10 @@
 @property(nonatomic) BOOL includeInIndex;
 
 
+#pragma mark Paths
+@property(nonatomic, copy, readonly) NSString *fileName;    // nil by default, for subclasses to override
+
+
 #pragma mark Publishing
 @property(nonatomic, copy) NSString *publishedPath;
 - (BOOL)includeInIndexAndPublish;

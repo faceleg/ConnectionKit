@@ -90,6 +90,10 @@
 	[[self parentPage] invalidatePagesInIndexCache];
 }
 
+#pragma mark Paths
+
+- (NSString *)fileName { return nil; }
+
 #pragma mark Publishing
 
 @dynamic publishedPath;
