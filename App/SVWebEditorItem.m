@@ -85,6 +85,10 @@
     {
         [parent->_childControllers release]; parent->_childControllers = children;
     }
+    else
+    {
+        [children release];
+    }
 }
 
 - (NSEnumerator *)enumerator;
