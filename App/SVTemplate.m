@@ -21,6 +21,7 @@
     {
         result = [[self alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path
                                                                 isDirectory:NO]];
+        [result autorelease];
     }
     
     return result;
