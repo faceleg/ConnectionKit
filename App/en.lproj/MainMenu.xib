@@ -925,7 +925,7 @@
 											</object>
 											<object class="NSMenuItem" id="318837517">
 												<reference key="NSMenu" ref="690280364"/>
-												<string key="NSTitle">External URL</string>
+												<string key="NSTitle">External Link</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
 												<object class="NSCustomResource" key="NSImage">
@@ -2961,36 +2961,36 @@
 					<int key="connectionID">1288</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addPage:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="318837517"/>
-					</object>
-					<int key="connectionID">1289</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addPage:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="646545510"/>
-					</object>
-					<int key="connectionID">1290</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">addPage:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="850770381"/>
-					</object>
-					<int key="connectionID">1291</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oNewPageMenu</string>
 						<reference key="source" ref="205882656"/>
 						<reference key="destination" ref="690280364"/>
 					</object>
 					<int key="connectionID">1294</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addExternalLinkPage:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="318837517"/>
+					</object>
+					<int key="connectionID">1295</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addRawTextPage:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="646545510"/>
+					</object>
+					<int key="connectionID">1296</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">addFilePage:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="850770381"/>
+					</object>
+					<int key="connectionID">1297</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -5177,7 +5177,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1294</int>
+			<int key="maxID">1297</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5896,6 +5896,10 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>addCollection:</string>
+							<string>addExternalLinkPage:</string>
+							<string>addFilePage:</string>
+							<string>addPage:</string>
+							<string>addRawTextPage:</string>
 							<string>chooseDesign:</string>
 							<string>duplicate:</string>
 							<string>duplicatePagelets:</string>
@@ -5922,6 +5926,10 @@
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>

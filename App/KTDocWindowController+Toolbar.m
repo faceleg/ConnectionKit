@@ -174,19 +174,19 @@ TO DO:
     [menu addItem:[NSMenuItem separatorItem]];
     
     [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
-                    action:@selector(addPage:)
+                    action:@selector(addExternalLinkPage:)
              keyEquivalent:@""];
     
     if ([[NSApp delegate] isPro])
     {
         [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
-                        action:@selector(addPage:) keyEquivalent:@""];
+                        action:@selector(addRawTextPage:) keyEquivalent:@""];
     }
     
     [menu addItem:[NSMenuItem separatorItem]];
     
     [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page pulldown button menu item title")
-                    action:@selector(addPage:)
+                    action:@selector(addFilePage:)
              keyEquivalent:@""];
     
     

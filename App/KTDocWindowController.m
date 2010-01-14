@@ -275,11 +275,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark IBActions
 
-- (IBAction)addPage:(id)sender;
-{
-    [[self pagesController] add:sender];
-}
-
 /*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.
  *  BUT, do I actually want to always pass this on to the web editor? Might there be times when a different controller is desired?
  */
@@ -409,7 +404,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
 }
 
-#pragma mark -
 #pragma mark Other
 
 - (IBAction)toggleSmallPageIcons:(id)sender
@@ -420,15 +414,28 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Page Actions
 
-/*! adds a new collection to site outline, obtaining the information of a dictionary
-from representedObject */
+- (IBAction)addPage:(id)sender;             // your basic page
+{
+    
+}
 
-// TODO: Perhaps a lot more of this logic ought to be moved to KTPage+Operations.m
-
-
-- (IBAction)addCollection:(id)sender
+- (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
 {
     [[self pagesController] addCollection:sender];
+}
+
+- (IBAction)addExternalLinkPage:(id)sender; // external link
+{
+}
+
+- (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
+{
+    
+}
+
+- (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
+{
+    
 }
 
 /*! inserts aPage at the current selection */
