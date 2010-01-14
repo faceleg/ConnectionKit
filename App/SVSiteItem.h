@@ -6,6 +6,11 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
+//  Everything you see in the Site Outline should be a subclass of SVSiteItem. It:
+//  -   Holds a reference to the parent page.
+//  -   Returns NSNotApplicableMarker instead of throwing an exception for unknown keys
+
+
 #import "SVExtensibleManagedObject.h"
 
 
