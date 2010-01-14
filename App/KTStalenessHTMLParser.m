@@ -30,11 +30,12 @@
 - (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
+							      className:(NSString *)className
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
 	SVHTMLTextBlock *result =
-		[super textblockForKeyPath:keypath ofObject:object flags:flags HTMLTag:tag graphicalTextCode:GTCode hyperlink:hyperlink];
+	[super textblockForKeyPath:keypath ofObject:object flags:flags HTMLTag:tag class:className graphicalTextCode:GTCode hyperlink:hyperlink];
 	
 	
 	if ([result isRichText])

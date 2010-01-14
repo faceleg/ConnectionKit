@@ -322,8 +322,10 @@
     }
     
 	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self tagName] isEqualToString:@"span"]);
-	if (!generateSpanIn) [context writeAttribute:@"class" value:[self CSSClassName]];
-	
+	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 
+	{
+		[context writeAttribute:@"class" value:[self CSSClassName]];
+	}
 	
 	// TODO: Add in graphical text styling if there is any
 	//if ([[self parser] includeStyling])

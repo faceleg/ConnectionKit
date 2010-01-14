@@ -53,8 +53,10 @@
 		
 		// HTML tag
 		NSString *tag = [parameters objectForKey:@"tag"];
-		if (tag && ![tag isKindOfClass:[NSString class]]) tag = nil;
+		if (tag && ![tag isKindOfClass:[NSString class]]) tag = nil;	// not sure why we have this
 		
+		// class for the tag generated
+		NSString *className = [parameters objectForKey:@"class"];
 		
 		// Flags
 		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
@@ -70,6 +72,7 @@
 													     ofObject:object
 														    flags:flags
 													      HTMLTag:tag
+														className:className
 											    graphicalTextCode:[parameters objectForKey:@"graphicalTextCode"]
 													    hyperlink:hyperlink];
 		
@@ -87,6 +90,7 @@
 - (SVHTMLTextBlock *)textblockForKeyPath:(NSString *)keypath ofObject:(id)object
 									  flags:(NSArray *)flags
 								    HTMLTag:(NSString *)tag
+								  className:(NSString *)className
 						  graphicalTextCode:(NSString *)GTCode
 								  hyperlink:(KTAbstractPage *)hyperlink
 {
@@ -101,6 +105,10 @@
 	[result setRichText:richText];	// Presumably there must be some cases where this is not desired.
 	[result setImportsGraphics:[flags containsObject:@"imageable"]];
 	if (tag) [result setTagName:tag];
+	if (className)
+	{
+		[result setCustomCSSClassName:className];
+	}
 	[result setGraphicalTextCode:GTCode];
 	
 	if (hyperlink)
