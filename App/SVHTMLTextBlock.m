@@ -224,7 +224,7 @@
         [context pop];
         [context release];
         
-        if (innerHTML && ![innerHTML isEqualToString:@""])
+        if ([innerHTML length] > 0)
         {
             KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
             KTMaster *master = [page master];
@@ -243,6 +243,7 @@
                 }
             }
         }
+        [innerHTML release];
 	}
     
 	return result;
