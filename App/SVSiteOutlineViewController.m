@@ -588,7 +588,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	if (item != [self rootPage])
 	{
 		// Due to the slightly odd layout of the site outline, must figure the right page
-		KTPage *page = (item) ? item : [self rootPage];
+		KTPage *item = (item) ? item : [self rootPage];
 		OBASSERT(page);
 		
 		result = [[page sortedChildren] count];
@@ -718,16 +718,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (void)outlineView:(NSOutlineView *)outlineView
     willDisplayCell:(KTImageTextCell *)cell
      forTableColumn:(NSTableColumn *)tableColumn
-               item:(id)item
+               item:(SVSiteItem *)item
 {
 	// Ignore any uninteresting columns/rows
 	if (!item || ![[tableColumn identifier] isEqualToString:@"displayName"]) {
 		return;
 	}
 	
-	
-	KTPage *page = (KTPage *)item;
-	
+		
 	// Set the cell's appearance
 	if ([cell isKindOfClass:[KTImageTextCell class]])	// Fail gracefully if not the image kind of cell
 	{

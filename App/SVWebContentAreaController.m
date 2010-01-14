@@ -91,10 +91,19 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
             break;
             
         case 1:
+        {
             // Start the load here. Once it's finished (or takes too long) we'll switch to the appropriate view
-            [[self webEditorViewController] setPage:[pages objectAtIndex:0]];
+            id item = [pages objectAtIndex:0];
+            if ([item isKindOfClass:[KTPage class]])
+            {
+                [[self webEditorViewController] setPage:item];
+            }
+            else
+            {
+                [[self webEditorViewController] setPage:nil];
+            }
             break;
-            
+        }
         default:
             [[_placeholderViewController progressIndicator] stopAnimation:self];
             [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
