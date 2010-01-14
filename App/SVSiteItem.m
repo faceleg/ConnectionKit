@@ -29,4 +29,8 @@
     return result;
 }
 
+- (short)childIndex { return [self wrappedIntegerForKey:@"childIndex"]; }
+
+- (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }
+
 @end

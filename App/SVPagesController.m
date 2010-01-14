@@ -157,7 +157,7 @@
         KTPage *firstChild = [self newObjectAllowingCollections:NO];
         
         // Insert at right place.
-        [collection addPage:firstChild];
+        [collection addChildItem:firstChild];
         [firstChild release];
         
         // Initial properties
@@ -215,7 +215,7 @@
     
     
     // Attach to parent & other relationships
-    [parent addPage:object];	// Must use this method to correctly maintain ordering
+    [parent addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
     // Finally, do the actual controller-level insertion

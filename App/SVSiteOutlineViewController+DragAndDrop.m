@@ -690,7 +690,7 @@
 			if (page != draggedItemParent)
 			{
 				[draggedItemParent removePage:draggedItem];
-				[page addPage:draggedItem];
+				[page addChildItem:draggedItem];
 			}
 			
 			[draggedItem moveToIndex:dropRow];
@@ -706,7 +706,7 @@
 		{
 			[aPage retain];
 			[[aPage parentPage] removePage:aPage];
-			[page addPage:aPage];
+			[page addChildItem:aPage];
 			[aPage release];
 		}
 	}

@@ -79,7 +79,7 @@
 	// How the page is connected to its parent depends on the class type. KTPage needs special handling for the cache.
 	if ([result isKindOfClass:[KTPage class]])
 	{
-		[aParent addPage:(KTPage *)result];
+		[aParent addChildItem:(KTPage *)result];
 	}
 	else
 	{

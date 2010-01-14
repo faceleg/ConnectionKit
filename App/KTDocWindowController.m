@@ -449,7 +449,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection
 {
 	// add component to parent
-	[aCollection addPage:aPage];
+	[aCollection addChildItem:aPage];
 	
 	[[[self siteOutlineViewController] content] setSelectedObjects:[NSArray arrayWithObject:aPage]];
 	
@@ -563,13 +563,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[collection setBool:NO forKey:@"includeTimestamp"];
 	
 	// insert the new collection
-	[parentCollection addPage:collection];
+	[parentCollection addChildItem:collection];
 	
 	// add our selectedPages back to the new collection
 	for ( i=0; i < [selectedPages count]; i++ )
 	{
 		KTPage *page = [selectedPages objectAtIndex:i];
-		[collection addPage:page];
+		[collection addChildItem:page];
 	}            
 	
 	[[[self siteOutlineViewController] content] setSelectedObjects:[NSSet setWithObject:collection]];
@@ -914,7 +914,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                     if (newPage)
                     {
                         // Insert the page where indicated
-                        [aCollection addPage:newPage];
+                        [aCollection addChildItem:newPage];
                         if (anIndex != NSOutlineViewDropOnItemIndex && [aCollection collectionSortOrder] == KTCollectionUnsorted)
                         {
                             [newPage moveToIndex:anIndex];

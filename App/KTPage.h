@@ -130,7 +130,7 @@
 
 // Unsorted Children
 @property(nonatomic, copy, readonly) NSSet *childItems;
-- (void)addPage:(KTPage *)page;
+- (void)addChildItem:(SVSiteItem *)page;
 - (void)removePage:(KTPage *)page;
 - (void)removePages:(NSSet *)pages;
 

@@ -106,7 +106,7 @@
 	// Attach to parent & other relationships
 	[result setMaster:[parent master]];
 	[result setSite:[parent valueForKeyPath:@"site"]];
-	[parent addPage:result];	// Must use this method to correctly maintain ordering
+	[parent addChildItem:result];	// Must use this method to correctly maintain ordering
 	
 	return result;
 }

@@ -21,9 +21,6 @@
 
 @interface KTPage (ChildrenPrivate)
 
-- (short)childIndex;
-- (void)setChildIndex:(short)index;
-
 - (void)invalidateSortedChildrenCache;
 + (void)setCollectionIndexForPages:(NSArray *)pages;
 
@@ -116,10 +113,6 @@
 	}
 }
 
-- (short)childIndex { return [self wrappedIntegerForKey:@"childIndex"]; }
-
-- (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }
-
 #pragma mark -
 #pragma mark Unsorted Children
 
@@ -137,9 +130,9 @@
  *	If the receiver is sorted manually this method behaves like -[NSArray addObject:] and the page is
  *	placed at the end of the list.
  */
-- (void)addPage:(KTPage *)page
+- (void)addChildItem:(SVSiteItem *)item
 {
-	OBPRECONDITION(page);
+	OBPRECONDITION(item);
 	
 	// To have a child page we must be a collection
 	[self setBool:YES forKey:@"isCollection"];
@@ -149,21 +142,25 @@
 	if ([self collectionSortOrder] == KTCollectionUnsorted)
 	{
 		unsigned index = [[[self sortedChildren] lastObject] childIndex] + 1;
-		[page setChildIndex:index];
+		[item setChildIndex:index];
 	}
 	
 	
 	// Attach the page to ourself and update the page cache
-	[page setValue:self forKey:@"parentPage"];
+	[item setValue:self forKey:@"parentPage"];
 	[self invalidateSortedChildrenCache];
 	
 	
 	// As it has a new parent, the page's path must have changed.
-	[page recursivelyInvalidateURL:YES];
-	
-	
-	// Create an archive to conatain the page if needed
-	[self archivePageForTimestamp:[page timestampDate] createIfNotFound:YES];
+    if ([item isKindOfClass:[KTPage class]])
+    {
+        KTPage *page = (KTPage *)item;
+        
+        [page recursivelyInvalidateURL:YES];
+        
+        // Create an archive to contain the page if needed
+        [self archivePageForTimestamp:[page timestampDate] createIfNotFound:YES];
+    }
 }
 
 
