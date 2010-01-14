@@ -27,6 +27,9 @@
 #pragma mark -
 #pragma mark Plugin Properties
 
+// Disable support for extensible properties
+- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key { return NO; }
+
 /*	During a Save As operation, KTExtensiblePluginPropertiesArchivedObject cannot be unarchived. We want to hang
  *	on to them, but not present them to the user.
  */

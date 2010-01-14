@@ -22,6 +22,7 @@
 
 
 //  Adds the capability to store KTAbstractPage and KTMediaContainer objects in the extensible properties.
+//  Turns off all extensible properties by default, so subclasses need to reenable those that they want.
 
 
 @class KTDocument;
