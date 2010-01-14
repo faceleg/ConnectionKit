@@ -10,7 +10,10 @@
 
 #import "KTElementPlugin.h"
 #import "KTAbstractIndex.h"
+#import "SVExternalLink.h"
 #import "KTIndexPlugin.h"
+#import "SVLink.h"
+#import "SVLinkManager.h"
 #import "KTPage+Internal.h"
 #import "SVSidebar.h"
 
@@ -31,6 +34,12 @@
  */
 
 
+@interface SVPagesController ()
+- (id)newObjectAllowingCollections:(BOOL)allowCollections;
+- (void)configurePageAsCollection:(KTPage *)collection;
+@end
+
+
 #pragma mark -
 
 
@@ -38,12 +47,77 @@
 
 #pragma mark Managing Objects
 
-- (IBAction)addCollection:(id)sender;
+@dynamic entityName;
+
+@synthesize collectionPreset = _presetDict;
+@synthesize fileURL = _fileURL;
+
+- (id)newObject
+{
+    return [self newObjectAllowingCollections:YES];
+}
+
+- (id)newObjectAllowingCollections:(BOOL)allowCollections
+{
+    id result = [super newObject];
+    
+    if ([[self entityName] isEqualToString:@"Page"])
+    {
+        // Figure out the predecessor (which page to inherit properties from)
+        KTPage *parent = [[self selectedObjects] lastObject];
+        if (![parent isCollection]) parent = [parent parentPage];
+        if (!parent) parent = [[self managedObjectContext] root];
+    
+        KTPage *predecessor = parent;
+        NSArray *children = [parent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
+        if ([children count] > 0)
+        {
+            predecessor = [children firstObjectKS];
+        }
+        
+        
+        // Match the basic page properties up to the selection
+        [result setMaster:[parent master]];
+        [result setSite:[parent valueForKeyPath:@"site"]];
+        
+        [result setAllowComments:[predecessor allowComments]];
+        [result setIncludeTimestamp:[predecessor includeTimestamp]];
+        
+        
+        // Keeping it old school. Let the page know it's being inserted
+        [result awakeFromBundleAsNewlyCreatedObject:YES];
+        
+        
+        // Give it standard pagelets
+        [[result sidebar] addPagelets:[[parent sidebar] pagelets]];
+        
+        
+        // Make the page into a collection if it was requested
+        if ([self collectionPreset] && allowCollections) 
+        {
+            [self configurePageAsCollection:result];
+        }
+    }
+    else if ([[self entityName] isEqualToString:@"ExternalLink"])
+    {
+        // Guess the link URL
+        SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
+        if (link) [result setLinkURLString:[link URLString]];
+    }
+    else if ([[self entityName] isEqualToString:@"File"])
+    {
+        // TODO: Import specified file or generate raw text
+    }
+    
+    return result;
+}
+
+- (void)configurePageAsCollection:(KTPage *)collection;
 {
     //  Create a collection. Populate according to the index plug-in (-representedObject) if applicable.
     
     
-    NSDictionary *presetDict = [sender representedObject];
+    NSDictionary *presetDict = [self collectionPreset];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 	KTIndexPlugin *indexPlugin = identifier ? [KTIndexPlugin pluginWithIdentifier:identifier] : nil;
 	
@@ -51,7 +125,6 @@
     
     
     // Create the basic collection
-    KTPage *collection = [self newObject];
     [collection setBool:YES forKey:@"isCollection"]; // Duh!
     
     
@@ -72,11 +145,6 @@
     [collection setValuesForKeysWithDictionary:pageSettings];
         
     
-    // Insert the new collection
-    [self addObject:collection];
-    [collection release];
-    
-    
     // Generate a first child page if desired
     NSString *firstChildIdentifier = [presetDict valueForKeyPath:@"KTFirstChildSettings.pluginIdentifier"];
     if (firstChildIdentifier && [firstChildIdentifier isKindOfClass:[NSString class]])
@@ -86,14 +154,10 @@
         [firstChildProperties removeObjectForKey:@"pluginIdentifier"];
         
         // Create first child
-        KTPage *firstChild = [self newObject];
+        KTPage *firstChild = [self newObjectAllowingCollections:NO];
         
-        // Insert at right place. DON'T want this one to be selected
-        BOOL insertSelected = [self selectsInsertedObjects];
-        [self setSelectsInsertedObjects:NO];
-        [self addPage:firstChild asChildOfPage:collection];
-        [self setSelectsInsertedObjects:insertSelected];
-        
+        // Insert at right place.
+        [collection addPage:firstChild];
         [firstChild release];
         
         // Initial properties
@@ -141,45 +205,21 @@
     if (!parent) parent = [[self managedObjectContext] root];
     
     
-    [self addPage:page asChildOfPage:parent];
+    [self addObject:page asChildOfPage:parent];
 }
 
-- (void)addPage:(KTPage *)page asChildOfPage:(KTPage *)parent;
+- (void)addObject:(id)object asChildOfPage:(KTPage *)parent;
 {
-    OBPRECONDITION(page);
+    OBPRECONDITION(object);
     OBPRECONDITION(parent);
     
     
-    // Figure out the predecessor (which page to inherit properties from)
-    KTPage *predecessor = parent;
-	NSArray *children = [parent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
-	if ([children count] > 0)
-	{
-		predecessor = [children firstObjectKS];
-	}
-	
-	
     // Attach to parent & other relationships
-	[page setMaster:[parent master]];
-	[page setSite:[parent valueForKeyPath:@"site"]];
-	[parent addPage:page];	// Must use this method to correctly maintain ordering
+    [parent addPage:object];	// Must use this method to correctly maintain ordering
 	
 	
-    // Load properties from parent/sibling
-	[page setAllowComments:[predecessor allowComments]];
-	[page setIncludeTimestamp:[predecessor includeTimestamp]];
-	
-	
-	// Keeping it old school. Let the page know it's being inserted
-    [page awakeFromBundleAsNewlyCreatedObject:YES];
-    
-    
-    // Give it standard pagelets
-    [[page sidebar] addPagelets:[[parent sidebar] pagelets]];
-    
-    
     // Finally, do the actual controller-level insertion
-    [super addObject:page];
+    [super addObject:object];
 }
 
 #pragma mark Accessors

@@ -9,18 +9,25 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTPage, KTDocument, KTDocWindowController;
+@class KTPage;
 
 
 @interface SVPagesController : NSArrayController
 {
   @private
+    NSDictionary    *_presetDict;
+    NSURL           *_fileURL;
 }
 
-// Use -add: to create a regular page. -addCollection: for collections
-- (IBAction)addCollection:(id)sender;
+// To create a new page/item:
+//  1.  Set .entityName to what you want. Should be Page, ExternalLink, or File.
+//  2.  Optionally, specify any additional info through -setCollectionPreset: or -setFileURL:
+//  3.  Call -add:
+@property(nonatomic, copy) NSString *entityName;
+@property(nonatomic, copy) NSDictionary *collectionPreset;
+@property(nonatomic, copy) NSURL *fileURL;
 
-- (void)addPage:(KTPage *)page asChildOfPage:(KTPage *)parent;
+- (void)addObject:(id)object asChildOfPage:(KTPage *)parent;
 
 - (NSString *)childrenKeyPath;	// A hangover from NSTreeController
 

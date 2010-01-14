@@ -416,26 +416,33 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)addPage:(id)sender;             // your basic page
 {
-    
+    [[self pagesController] setEntityName:@"Page"];
+    [[self pagesController] add:self];
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
 {
-    [[self pagesController] addCollection:sender];
+    [[self pagesController] setEntityName:@"Page"];
+    [[self pagesController] setCollectionPreset:[sender representedObject]];
+    [[self pagesController] add:self];
 }
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link
 {
+    [[self pagesController] setEntityName:@"ExternalLink"];
+    [[self pagesController] add:self];
 }
 
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
-    
+    [[self pagesController] setEntityName:@"File"];
+    [[self pagesController] add:self];
 }
 
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 {
-    
+    [[self pagesController] setEntityName:@"File"];
+    [[self pagesController] add:self];
 }
 
 /*! inserts aPage at the current selection */
