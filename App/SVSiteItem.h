@@ -14,7 +14,7 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTPage, KTMediaContainer;
+@class KTPage, KTMediaContainer, KTCodeInjection;
 
 
 @interface SVSiteItem : SVExtensibleManagedObject  
@@ -56,6 +56,7 @@
 @property(nonatomic, readonly) BOOL isCollection;
 @property(nonatomic, retain, readonly) KTMediaContainer *customSiteOutlineIcon;
 
+- (KTCodeInjection *)codeInjection;
 
 @end
 

@@ -98,7 +98,6 @@
 
 // Site Outline
 @property(nonatomic, retain) KTMediaContainer *customSiteOutlineIcon;
-- (KTCodeInjection *)codeInjection;
 
 @end
 
