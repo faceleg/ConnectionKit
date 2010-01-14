@@ -96,6 +96,7 @@
         {
             SVLink *link = [[SVLink alloc] initWithPage:target];
             [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+            [link release];
         }
     }
 }
