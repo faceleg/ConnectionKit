@@ -90,8 +90,9 @@
 	[[self parentPage] invalidatePagesInIndexCache];
 }
 
-#pragma mark Paths
+#pragma mark URL
 
+- (NSURL *)URL { return nil; }
 - (NSString *)fileName { return nil; }
 
 #pragma mark Publishing

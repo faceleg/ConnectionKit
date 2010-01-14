@@ -16,10 +16,20 @@
 @dynamic openInNewWindow;
 @dynamic linkURLString;
 
+- (NSURL *)URL
+{
+    NSURL *result = [NSURL URLWithString:[self linkURLString]];
+    return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingURL
+{
+    return [NSSet setWithObject:@"linkURLString"];
+}
+
 - (NSString *)fileName
 {
-    NSURL *URL = [NSURL URLWithString:[self linkURLString]];
-    return [[URL lastPathComponent] stringByDeletingPathExtension];
+    return [[[self URL] lastPathComponent] stringByDeletingPathExtension];
 }
 
 @end
