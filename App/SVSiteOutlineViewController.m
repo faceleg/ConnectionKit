@@ -608,7 +608,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		result = NO;
 	}
-	else if ([(KTPage *)item isCollection] || [(KTPage *)item index])
+	else if ([item isCollection])
 	{
 		result = YES;
 	}
