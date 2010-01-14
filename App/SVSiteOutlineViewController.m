@@ -343,7 +343,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         
         // Having prescreened the parameters, pass them onto the right support methods for processing
-        OBASSERT([object isKindOfClass:[KTPage class]]);
+        OBASSERT([object isKindOfClass:[SVSiteItem class]]);
         if ([keyPath isEqualToString:@"sortedChildren"])
         {
             [self observeValueForSortedChildrenOfPage:object change:change context:context];
