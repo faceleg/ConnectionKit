@@ -246,12 +246,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		
         
 		// Cache the icon ready for display later. Include child pages (but only 1 layer deep)
-		[self iconForPage:page];
+		[self iconForItem:page];
 		NSEnumerator *pagesEnumerator = [[page childItems] objectEnumerator];
 		KTPage *aPage;
 		while (aPage = [pagesEnumerator nextObject])
 		{
-			[self iconForPage:aPage];
+			[self iconForItem:aPage];
 		}
         
         
@@ -378,7 +378,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	// Do the reload
 	NSArray *oldSelection = [[self outlineView] selectedItems];
-	[self reloadPage:page reloadChildren:YES];
+	[self reloadItem:page reloadChildren:YES];
 	
 	
 	
@@ -439,7 +439,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 /*	!!IMPORTANT!!
  *	Please use this method rather than directly calling the outline view since it handles reloading root.
  */
-- (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)reloadChildren
+- (void)reloadItem:(KTPage *)anItem reloadChildren:(BOOL)reloadChildren
 {
 	NSOutlineView *siteOutline = [self outlineView];
 	
@@ -736,7 +736,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[cell setControlSize:controlSize];
 	
 		// Icon
-		NSImage *pageIcon = [self iconForPage:item];
+		NSImage *pageIcon = [self iconForItem:item];
 		[cell setImage:pageIcon];
 		[cell setMaxImageSize:([self displaySmallPageIcons] ? 16.0 : 32.0)];
 		
@@ -864,7 +864,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 			{
 				if ([item index])
 				{
-					NSString *indexType = [[[(KTPage *)item index] plugin] pluginName];
+					NSString *indexType = [[[item index] plugin] pluginName];
 					if ( nil != indexType )
 					{
 						result = [result stringByAppendingFormat:@"\n%@%@", indexTypeLabel, indexType];

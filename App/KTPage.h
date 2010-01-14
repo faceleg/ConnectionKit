@@ -105,9 +105,7 @@
 - (NSString *)keywordsList;
 
 // Site Outline
-- (KTMediaContainer *)customSiteOutlineIcon;
-- (void)setCustomSiteOutlineIcon:(KTMediaContainer *)icon;
-
+@property(nonatomic, retain) KTMediaContainer *customSiteOutlineIcon;
 - (KTCodeInjection *)codeInjection;
 
 @end

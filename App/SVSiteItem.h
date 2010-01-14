@@ -9,7 +9,8 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTPage;
+@class KTPage, KTMediaContainer;
+
 
 @interface SVSiteItem : SVExtensibleManagedObject  
 
@@ -20,12 +21,21 @@
 
 #pragma mark Tree
 
+@property(nonatomic, copy, readonly) NSSet *childItems;
+
 //  .parentPage is marked as optional in the xcdatamodel file so subentities can choose their own rules. SVSiteItem programmatically makes .parentPage required. Override -validateParentPage:error: in a subclass to turn this off again.
 @property(nonatomic, retain) KTPage *parentPage;
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 
 // Don't bother setting this manually, get KTPage or controller to do it
 @property(nonatomic) short childIndex;
+
+
+#pragma mark Site Outline
+
+@property(nonatomic, readonly) BOOL isCollection;
+@property(nonatomic, retain, readonly) KTMediaContainer *customSiteOutlineIcon;
+
 
 @end
 

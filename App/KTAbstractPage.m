@@ -113,7 +113,6 @@
 
 /*	All this stuff is only relevant to KTPage, but it makes it so much more convenient to declare them at the KTAbstractPage level.
  */
-- (NSSet *)childItems { return nil; }
 - (NSSet *)archivePages { return nil; }
 - (BOOL)isCollection { return NO; }
 

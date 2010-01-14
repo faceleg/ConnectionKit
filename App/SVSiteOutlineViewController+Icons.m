@@ -14,6 +14,7 @@
 #import "KTPage.h"
 #import "KTMediaFile.h"
 #import "KTDocument.h"
+#import "SVSiteItem.h"
 
 #import "NSArray+Karelia.h"
 #import "NSDictionary+Karelia.h"
@@ -35,7 +36,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 - (NSImage *)favicon;
 - (NSImage *)cachedFavicon;
 
-- (NSImage *)bundleIconForPage:(KTPage *)page;
+- (NSImage *)bundleIconForItem:(SVSiteItem *)item;
 
 - (NSImage *)customIconForPage:(KTPage *)page;
 + (NSImage *)maskedIconOfFile:(NSString *)path size:(float)iconSize;
@@ -57,28 +58,28 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 #pragma mark -
 #pragma mark General
 
-- (NSImage *)iconForPage:(KTPage *)page
+- (NSImage *)iconForItem:(SVSiteItem *)item;
 {
-	OBPRECONDITION(page);
+	OBPRECONDITION(item);
 	NSImage *result = nil;
 	
 	// The home page always appears as some kind of favicon
-	if (page == [self rootPage])
+	if (item == [self rootPage])
 	{
 		result = [self favicon];
 	}
 	else
 	{
 		// Custom icon if available
-		KTMediaContainer *customIcon = [page customSiteOutlineIcon];
+		KTMediaContainer *customIcon = [item customSiteOutlineIcon];
 		if (customIcon && ![[NSUserDefaults standardUserDefaults] boolForKey:KTDisableCustomSiteOutlineIcons])
 		{
-			result = [self customIconForPage:page];
+			result = [self customIconForPage:(KTPage *)item];
 		}
 		// Fallback to the plugin's bundle icon
 		else
 		{
-			result = [self bundleIconForPage:page];
+			result = [self bundleIconForItem:item];
 		}
 	}
 	
@@ -164,14 +165,14 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 /*	Support method for displaying the default bundle's icon for a page.
  *	If the page has an index, returns the index icon. Otherwise, the page plugin's icon.
  */
-- (NSImage *)bundleIconForPage:(KTPage *)page
+- (NSImage *)bundleIconForItem:(SVSiteItem *)item;
 {
-	OBPRECONDITION(page);
+	OBPRECONDITION(item);
 	
 	KTAbstractHTMLPlugin *plugin;
-	if ([page isCollection] && [page index])
+	if ([item isCollection] && [(KTPage *)item index])
 	{
-		plugin = [[page index] plugin];
+		plugin = [[(KTPage *)item index] plugin];
 	}
 	else
 	{
@@ -197,7 +198,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
 	if (!result)
 	{
-		result = [self bundleIconForPage:page];
+		result = [self bundleIconForItem:page];
 		
 		NSString *iconSourcePath = [[[page customSiteOutlineIcon] file] currentPath];
 		if (iconSourcePath)

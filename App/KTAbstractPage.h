@@ -50,7 +50,6 @@ KTCollectionPathStyle;
 
 #pragma mark Child Pages
 
-@property(nonatomic, copy, readonly) NSSet *childItems;
 @property(nonatomic, copy, readonly) NSSet *archivePages;
 - (BOOL)isCollection;
 

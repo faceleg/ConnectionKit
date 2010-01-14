@@ -13,7 +13,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 
-@class KTPage;
+@class SVSiteItem, KTPage;
 
 
 @interface SVSiteOutlineViewController : NSViewController <NSUserInterfaceValidations>
@@ -51,7 +51,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 #pragma mark Public Functions
 - (void)reloadSiteOutline;
-- (void)reloadPage:(KTPage *)anItem reloadChildren:(BOOL)aFlag;
+- (void)reloadItem:(SVSiteItem *)anItem reloadChildren:(BOOL)aFlag;
 
 
 #pragma mark Actions
@@ -72,7 +72,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 @interface SVSiteOutlineViewController (Icons)
-- (NSImage *)iconForPage:(KTPage *)page;
+- (NSImage *)iconForItem:(SVSiteItem *)page;
 
 - (void)invalidateIconCaches;
 - (void)setCachedFavicon:(NSImage *)icon;

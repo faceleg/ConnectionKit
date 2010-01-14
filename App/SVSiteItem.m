@@ -30,6 +30,8 @@
 
 #pragma mark Tree
 
+- (NSSet *)childItems { return nil; }
+
 @dynamic parentPage;
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 {
@@ -49,5 +51,10 @@
 - (short)childIndex { return [self wrappedIntegerForKey:@"childIndex"]; }
 
 - (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }
+
+#pragma mark Site Outline
+
+- (BOOL)isCollection { return NO; }
+- (KTMediaContainer *)customSiteOutlineIcon { return nil; }
 
 @end
