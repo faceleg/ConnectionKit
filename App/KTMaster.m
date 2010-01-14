@@ -542,6 +542,13 @@
     }
 }
 
+- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key
+{
+    BOOL result = [super canStoreExtensiblePropertyForKey:key];
+    if ([key isEqualToString:@"placeholderImage"]) result = YES;
+    return result;
+}
+
 #pragma mark -
 #pragma mark Comments
 
