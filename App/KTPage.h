@@ -65,7 +65,7 @@
 // Title
 @property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;
 
-// Draft
+#pragma mark Drafts
 - (void)setIsDraft:(BOOL)flag;
 - (BOOL)pageOrParentDraft;
 - (void)setPageOrParentDraft:(BOOL)inDraft;

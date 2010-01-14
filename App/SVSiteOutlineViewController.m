@@ -580,21 +580,20 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Datasource
 
-- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(id)item
+- (int)outlineView:(NSOutlineView *)outlineView numberOfChildrenOfItem:(SVSiteItem *)item
 {
-	OBPRECONDITION(!item || [item isKindOfClass:[KTPage class]]);
 	int result = 0;
 	
 	if (item != [self rootPage])
 	{
 		// Due to the slightly odd layout of the site outline, must figure the right page
-		KTPage *item = (item) ? item : [self rootPage];
-		OBASSERT(page);
+		if (!item) item = [self rootPage];
+		OBASSERT(item);
 		
-		result = [[page sortedChildren] count];
+		result = [[item sortedChildren] count];
 		
 		// Root is a special case where we have to add 1 to the total
-		if (!item) result += 1;
+		if (item = [self rootPage]) result += 1;
 	}
 	
 	return result;
@@ -747,10 +746,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[cell setDraft:isDraft];
 		
 		// Code Injection
-		[cell setHasCodeInjection:[[page codeInjection] hasCodeInjection]];
-		if (page == [self rootPage] && ![cell hasCodeInjection])
+		[cell setHasCodeInjection:[[item codeInjection] hasCodeInjection]];
+		if (item == [self rootPage] && ![cell hasCodeInjection])
 		{
-			[cell setHasCodeInjection:[[[page master] codeInjection] hasCodeInjection]];
+			[cell setHasCodeInjection:[[[item master] codeInjection] hasCodeInjection]];
 		}
 		
 		// Home page is drawn slightly differently
@@ -977,14 +976,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
  */
 - (void)outlineViewItemWillCollapse:(NSNotification *)notification
 {
-	KTPage *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
+	SVSiteItem *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
 	BOOL shouldSelectCollapsingItem = YES;
 	NSEnumerator *selectionEnumerator = [[[self content] selectedObjects] objectEnumerator];
-	KTPage *aPage;
+	SVSiteItem *anItem;
 	
-	while (aPage = [selectionEnumerator nextObject])
+	while (anItem = [selectionEnumerator nextObject])
 	{
-		if (![aPage isDescendantOfPage:collapsingItem])
+		if (![anItem isDescendantOfPage:collapsingItem])
 		{
 			shouldSelectCollapsingItem = NO;
 			break;
