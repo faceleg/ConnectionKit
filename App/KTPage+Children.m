@@ -371,28 +371,16 @@
 
 /*	Every page bar root should have a parent.
  */
-- (BOOL)validateParent:(KTPage **)aPage error:(NSError **)outError
+- (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 {
-	BOOL result = YES;
-	if (![[[self entity] name] isEqualToString:@"Root"])
-	{
-		result = (aPage != nil);
-		if (!result)
-		{
-			// Something went wrong. We need to generate an error object
-			NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				self, NSValidationObjectErrorKey,
-				@"parentPage", NSValidationKeyErrorKey,
-				NSLocalizedString(@"Page without a parent","Validation error"), NSLocalizedDescriptionKey, nil];
-			
-			if (outError)
-			{
-				*outError = [NSError errorWithDomain:@"KTPage" code:0 userInfo:userInfo];
-			}
-		}
-	}
-	
-	return result;
+	if ([[[self entity] name] isEqualToString:@"Root"])
+    {
+        return YES;
+    }
+    else
+    {
+        return [super validateParentPage:page error:outError];
+    }
 }
 
 - (BOOL)hasChildren

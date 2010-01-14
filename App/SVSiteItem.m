@@ -10,8 +10,23 @@
 
 #import "KTPage.h"
 
+
 @implementation SVSiteItem 
 
 @dynamic parentPage;
+- (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
+{
+    BOOL result = (*page != nil);
+    if (!result && outError)
+    {
+        NSDictionary *info = [NSDictionary dictionaryWithObject:@"parentPage is a required property" forKey:NSLocalizedDescriptionKey];
+        
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                        code:NSValidationMissingMandatoryPropertyError
+                                    userInfo:info];
+    }
+    
+    return result;
+}
 
 @end
