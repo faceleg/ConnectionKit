@@ -30,10 +30,13 @@ TO DO:
 #import "KTToolbars.h"
 
 #import "NSImage+KTExtensions.h"
-#import "NSImage+Karelia.h"
-#import "NSToolbar+Karelia.h"
+
+#import "KSPullDownToolbarItem.h"
 #import "RYZImagePopUpButton.h"
 #import "RYZImagePopUpButtonCell.h"
+
+#import "NSImage+Karelia.h"
+#import "NSToolbar+Karelia.h"
 
 #import "Debug.h"
 
@@ -146,31 +149,20 @@ TO DO:
 - (NSToolbarItem *)makeNewPageToolbarItemWithIdentifier:(NSString *)identifier
                                               imageName:(NSString *)imageName;
 {
-    NSToolbarItem *result = [[NSToolbarItem alloc] initWithItemIdentifier:identifier];
+    KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
     
     
     // construct pulldown button
     NSImage *image = [NSImage imageNamed:imageName];
     image = [image imageWithCompositedAddBadge];
+    [result setImage:image];
     
-    RYZImagePopUpButton *pulldownButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
-    NSPopUpButtonCell *cell = [pulldownButton cell];
-    
-    [cell setUsesItemFromMenu:NO];
-    [pulldownButton setIconImage:image];
-    [pulldownButton setShowsMenuWhenIconClicked:YES];
-    [[pulldownButton cell] setToolbar:[[self window] toolbar]];
-    
-    [result setView:pulldownButton];
-    [result setMinSize:[[pulldownButton cell] minimumSize]];
-    [result setMaxSize:[[pulldownButton cell] maximumSize]];
-    
+        
     
     // Generate the menu
-    NSMenu *menu = [cell menu];
-    
-    [cell addItemWithTitle:@"New"]; // pull-down buttons don't use the first item in their menu when displayed
-    
+    NSPopUpButton *pulldownButton = [result popUpButton];
+    NSMenu *menu = [pulldownButton menu];
+        
     [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page pulldown button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];

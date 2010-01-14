@@ -291,6 +291,8 @@
 		2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3710FE8DE6007428BB /* SVSiteItem.m */; };
 		2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3810FE8DE6007428BB /* SVExternalLink.h */; };
 		2747DA3D10FE8DE6007428BB /* SVExternalLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3910FE8DE6007428BB /* SVExternalLink.m */; };
+		2747DAD510FF5B6F007428BB /* KSPullDownToolbarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DAD310FF5B6F007428BB /* KSPullDownToolbarItem.h */; };
+		2747DAD610FF5B6F007428BB /* KSPullDownToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DAD410FF5B6F007428BB /* KSPullDownToolbarItem.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -1744,6 +1746,8 @@
 		2747DA3710FE8DE6007428BB /* SVSiteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteItem.m; sourceTree = "<group>"; };
 		2747DA3810FE8DE6007428BB /* SVExternalLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVExternalLink.h; sourceTree = "<group>"; };
 		2747DA3910FE8DE6007428BB /* SVExternalLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVExternalLink.m; sourceTree = "<group>"; };
+		2747DAD310FF5B6F007428BB /* KSPullDownToolbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPullDownToolbarItem.h; sourceTree = "<group>"; };
+		2747DAD410FF5B6F007428BB /* KSPullDownToolbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPullDownToolbarItem.m; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
@@ -4570,6 +4574,8 @@
 				27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */,
 				273DCFEF10CBDC10003CCE97 /* KSArrayController.h */,
 				273DCFF010CBDC10003CCE97 /* KSArrayController.m */,
+				2747DAD310FF5B6F007428BB /* KSPullDownToolbarItem.h */,
+				2747DAD410FF5B6F007428BB /* KSPullDownToolbarItem.m */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -5266,6 +5272,7 @@
 				27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */,
 				2747DA3A10FE8DE6007428BB /* SVSiteItem.h in Headers */,
 				2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */,
+				2747DAD510FF5B6F007428BB /* KSPullDownToolbarItem.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6654,6 +6661,7 @@
 				27E24EEE10FCB218004EFE9F /* SVLinkManager.m in Sources */,
 				2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */,
 				2747DA3D10FE8DE6007428BB /* SVExternalLink.m in Sources */,
+				2747DAD610FF5B6F007428BB /* KSPullDownToolbarItem.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
