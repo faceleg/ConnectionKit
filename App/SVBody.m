@@ -113,7 +113,7 @@
 - (NSSet *)graphics;
 {
     // Just those elements that are graphics
-    NSMutableSet *result = [[NSMutableSet alloc] init];
+    NSMutableSet *result = [NSMutableSet set];
     for (SVBodyElement *anElement in [self elements])
     {
         if ([anElement isKindOfClass:[SVGraphic class]]) [result addObject:anElement];
