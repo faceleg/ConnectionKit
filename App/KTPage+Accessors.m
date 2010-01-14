@@ -52,9 +52,7 @@
  */
 - (void)setTitleHTMLString:(NSString *)value
 {
-	NSString *oldTitleText = [[self title] text];
-    
-    [super setTitleHTMLString:value];
+	[super setTitleHTMLString:value];
 	
 	
 	// If the page hasn't been published yet, update the filename to match
