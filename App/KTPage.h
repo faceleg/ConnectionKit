@@ -65,14 +65,6 @@
 // Title
 @property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;
 
-#pragma mark Drafts
-- (void)setIsDraft:(BOOL)flag;
-- (BOOL)pageOrParentDraft;
-- (void)setPageOrParentDraft:(BOOL)inDraft;
-- (BOOL)includeInIndexAndPublish;
-- (BOOL)excludedFromSiteMap;
-
-
 #pragma mark Site Menu
 
 @property(nonatomic) BOOL includeInSiteMenu;
@@ -149,9 +141,6 @@
 // Simple Accessors
 - (KTCollectionSummaryType)collectionSummaryType;
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type;
-
-- (BOOL)includeInIndex;
-- (void)setIncludeInIndex:(BOOL)flag;
 
 // Index
 - (KTAbstractIndex *)index;

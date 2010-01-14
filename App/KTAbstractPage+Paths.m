@@ -419,16 +419,6 @@
 	return result;
 }
 
-- (NSString *)publishedPath { return [self wrappedValueForKey:@"publishedPath"]; }
-
-- (void)setPublishedPath:(NSString *)path
-{
-	[self setWrappedValue:path forKey:@"publishedPath"];
-	
-	// Our status in the index could depend on this key
-	[[self parentPage] invalidatePagesInIndexCache];
-}
-
 #pragma mark -
 #pragma mark Preview
 

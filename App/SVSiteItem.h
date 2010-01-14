@@ -24,6 +24,21 @@
 @property(nonatomic, copy) NSDate *lastModificationDate;
 
 
+#pragma mark Drafts and Indexes
+
+@property(nonatomic, copy) NSNumber *isDraft;
+- (BOOL)pageOrParentDraft;
+- (void)setPageOrParentDraft:(BOOL)inDraft;
+- (BOOL)excludedFromSiteMap;
+
+@property(nonatomic) BOOL includeInIndex;
+
+
+#pragma mark Publishing
+@property(nonatomic, copy) NSString *publishedPath;
+- (BOOL)includeInIndexAndPublish;
+
+
 #pragma mark Tree
 
 @property(nonatomic, copy, readonly) NSSet *childItems;

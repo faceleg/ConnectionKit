@@ -86,7 +86,6 @@
     [self setWrappedBool:autoUpdate forKey:@"shouldUpdateFileNameWhenTitleChanges"];
 }
 
-#pragma mark -
 #pragma mark Relationships
 
 - (KTPage *)page
@@ -94,16 +93,15 @@
 	return self;			// the containing page of this object is the page itself
 }
 
-#pragma mark -
 #pragma mark Drafts
 
-- (void)setIsDraft:(BOOL)flag;
+- (void)setIsDraft:(NSNumber *)flag;
 {
 	// Mark our old archive page (if there is one) stale
 	KTArchivePage *oldArchivePage = [[self parentPage] archivePageForTimestamp:[self timestampDate] createIfNotFound:!flag];
 	
 	
-	[self setWrappedBool:flag forKey:@"isDraft"];
+	[super setIsDraft:flag];
 	
 	
 	// Delete the old archive page if it has nothing on it now
@@ -122,63 +120,6 @@
 	
 	// And the index
 	[[self parentPage] invalidatePagesInIndexCache];
-}
-
-- (BOOL)pageOrParentDraft
-{
-	BOOL result = [self boolForKey:@"isDraft"];
-	if (!result && [self parentPage] != nil)
-	{
-		result = [[self parentPage] pageOrParentDraft];
-	}
-	return result;
-}
-
-- (void)setPageOrParentDraft:(BOOL)inDraft	// setter for binding, actually store into isDraft
-{
-	[self setIsDraft:inDraft];
-	if (!inDraft)
-	{
-		// turning off draft -- also mark the family stale since it's no longer a draft
-		//[self markStale:kStaleFamily];
-	}
-}
-
-// Derived accessor to determine if page should be included in the index AND it has been published or not draft
-// In other words, if it's a draft, don't include -- but if it's a draft that is already published, keep it
-
-- (BOOL)includeInIndexAndPublish
-{
-	BOOL result = [self includeInIndex];
-	if (result)
-	{
-		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		NSString *serverPath = [self publishedPath];
-		if (nil == serverPath && [self boolForKey:@"isDraft"])		// Ask if page ITSELF is a draft.  Do not inherit here.
-		{
-			result = NO;	// DON'T include if if hasn't been published before, and if it's draft
-		}
-	}
-	return result;
-}
-
-// Derived accessor of whether page should be excluded from a site map because flag is set, or it's an unpublished draft.
-
-- (BOOL)excludedFromSiteMap
-{
-	BOOL result = ![self boolForKey:@"includeInSiteMap"];		// exclude from site map?
-	if (!result)
-	{
-		// Not excluded by the flag, see if we should exclude it becuase it's an unpublished draft.
-		NSString *serverPath = [self publishedPath];
-		
-		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		if (nil == serverPath && [self pageOrParentDraft])
-		{
-			result = YES;	// DON'T include if if hasn't been published before, and if it's draft
-		}
-	}
-	return result;
 }
 
 #pragma mark Site Menu

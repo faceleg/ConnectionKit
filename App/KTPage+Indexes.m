@@ -60,15 +60,13 @@
 	[self invalidatePagesInIndexCache];
 }
 
-- (BOOL)includeInIndex { return [self wrappedBoolForKey:@"includeInIndex"]; }
-
 - (void)setIncludeInIndex:(BOOL)flag
 {
 	// Mark our old archive page (if there is one) stale
 	KTArchivePage *oldArchivePage = [[self parentPage] archivePageForTimestamp:[self timestampDate] createIfNotFound:flag];
 	
 	
-	[self setWrappedBool:flag forKey:@"includeInIndex"];
+	[super setIncludeInIndex:flag];
 	
 	
 	// Delete the old archive page if it has nothing on it now
@@ -77,10 +75,6 @@
 		NSArray *pages = [oldArchivePage sortedPages];
 		if (!pages || [pages count] == 0) [[self managedObjectContext] deletePage:oldArchivePage];
 	}
-	
-	
-	// We must update the parent's list of pages
-	[[self parentPage] invalidatePagesInIndexCache];
 }
 
 #pragma mark -
