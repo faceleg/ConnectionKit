@@ -176,6 +176,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
+        plugin = nil;
 		//plugin = [page plugin];
 	}
 	
