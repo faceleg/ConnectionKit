@@ -83,9 +83,6 @@
 
 #pragma mark Timestamp
 
-@property(nonatomic, copy) NSDate *creationDate;
-@property(nonatomic, copy) NSDate *lastModificationDate;
-
 - (NSString *)timestamp;
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
 - (NSDate *)timestampDate;

@@ -12,8 +12,13 @@
 @class KTPage;
 
 @interface SVSiteItem : SVExtensibleManagedObject  
-{
-}
+
+#pragma mark Dates
+@property(nonatomic, copy) NSDate *creationDate;
+@property(nonatomic, copy) NSDate *lastModificationDate;
+
+
+#pragma mark Tree
 
 //  .parentPage is marked as optional in the xcdatamodel file so subentities can choose their own rules. SVSiteItem programmatically makes .parentPage required. Override -validateParentPage:error: in a subclass to turn this off again.
 @property(nonatomic, retain) KTPage *parentPage;

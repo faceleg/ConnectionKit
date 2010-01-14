@@ -13,6 +13,23 @@
 
 @implementation SVSiteItem 
 
+#pragma mark Dates
+
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    // attributes
+	NSDate *now = [NSDate date];
+	[self setPrimitiveValue:now forKey:@"creationDate"];
+	[self setPrimitiveValue:now forKey:@"lastModificationDate"];
+}
+
+@dynamic creationDate;
+@dynamic lastModificationDate;
+
+#pragma mark Tree
+
 @dynamic parentPage;
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 {

@@ -178,11 +178,6 @@
     [body addElement:paragraph];
     
     
-	// attributes
-	NSDate *now = [NSDate date];
-	[self setPrimitiveValue:now forKey:@"creationDate"];
-	[self setPrimitiveValue:now forKey:@"lastModificationDate"];
-	
 	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];
     if ([maxTitles isKindOfClass:[NSNumber class]])
     {

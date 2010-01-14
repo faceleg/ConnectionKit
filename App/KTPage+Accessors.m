@@ -209,9 +209,6 @@
 #pragma mark -
 #pragma mark Timestamp
 
-@dynamic creationDate;
-@dynamic lastModificationDate;
-
 - (NSString *)timestamp
 {
 	NSDateFormatterStyle style = [[self master] timestampFormat];
