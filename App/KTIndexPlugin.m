@@ -32,23 +32,9 @@
 }
 
 
-// Special version of above, but it looks for KTPresets and adds those items to the menu
-
-+ (void)addPresetPluginsToMenu:(NSMenu *)aMenu
-						target:(id)aTarget
-						action:(SEL)anAction
-					 pullsDown:(BOOL)isPullDown
-					 showIcons:(BOOL)showIcons
-					smallIcons:(BOOL)smallIcons
-					 smallText:(BOOL)smallText
-			 allowNewPageTypes:(BOOL)allowNewPageTypes
++ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu index:(NSUInteger)index;
 {
-    if ( isPullDown ) {
-        // if it's a pulldown, we need to add an empty menu item at the top of the menu
-        [aMenu addItem:[[[NSMenuItem alloc] initWithTitle:@"" action:NULL keyEquivalent:@""] autorelease]];
-    }
-	
-	// First go through and get the localized names of each bundle, and put into a dict keyed by name
+    // First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
 	
     NSDictionary *plugins = [KSPlugin pluginsWithFileExtension:kKTIndexExtension];
@@ -65,27 +51,24 @@
 		
 		while (nil != (presetDict = [presetEnum nextObject]) )
 		{
-			if (allowNewPageTypes || nil == [presetDict objectForKey:@"KTPreferredPageBundleIdentifier"])	// do not add presets that specify a preset bundle identifier to this list, like the Raw HTML index
-			{
-				int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
-				id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
-				if (nil != priorityID)
-				{
-					priority = [priorityID intValue];
-				} 
-				if (priority > 0	// don't add zero-priority items to menu!
-					&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
-				{
-					NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
-					NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
-					
-					NSMutableDictionary *newPreset = [NSMutableDictionary dictionaryWithDictionary:presetDict];
-					[newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
-					
-					[dictOfPresets setObject:[NSDictionary dictionaryWithDictionary:newPreset]
-									  forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
-				}
-			}
+            int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
+            id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
+            if (nil != priorityID)
+            {
+                priority = [priorityID intValue];
+            } 
+            if (priority > 0	// don't add zero-priority items to menu!
+                && (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
+            {
+                NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
+                NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
+                
+                NSMutableDictionary *newPreset = [NSMutableDictionary dictionaryWithDictionary:presetDict];
+                [newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
+                
+                [dictOfPresets setObject:[NSDictionary dictionaryWithDictionary:newPreset]
+                                  forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
+            }
 		}
 	}
 	
@@ -118,40 +101,25 @@
 		} 
 		
 		
-		// set up the image
-		if (showIcons)
-		{
-			NSImage *image = [plugin pluginIcon];
-			float imageHeight = image ? [image size].height : 0.0;
+        NSImage *image = [plugin pluginIcon];
+        float imageHeight = image ? [image size].height : 0.0;
 #ifdef DEBUG
-			if (nil == image)
-			{
-				NSLog(@"nil pluginIcon for %@", presetTitle);
-			}
+        if (nil == image)
+        {
+            NSLog(@"nil pluginIcon for %@", presetTitle);
+        }
 #endif
-			if (image)
-			{
-				
-				[image setDataRetained:YES];	// allow image to be scaled.
-				[image setScalesWhenResized:YES];
-				// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
-				[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
-				[menuItem setImage:image];
-				[style setMinimumLineHeight:imageHeight];
-			}
-			NSFont *titleFont = [NSFont menuFontOfSize:(smallText ? [NSFont smallSystemFontSize] : [NSFont systemFontSize])];
-			NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-										titleFont, NSFontAttributeName,
-										style, NSParagraphStyleAttributeName,
-										[NSNumber numberWithFloat:(((imageHeight-[NSFont smallSystemFontSize])/2.0)+2.0)], NSBaselineOffsetAttributeName,
-										nil];
-			NSAttributedString *titleString = [[[NSAttributedString alloc] initWithString:presetTitle attributes:attributes] autorelease];
-			[menuItem setAttributedTitle:titleString];
-		}
-		else
-		{
-			[menuItem setTitle:presetTitle];
-		}
+        if (image)
+        {
+            
+            [image setDataRetained:YES];	// allow image to be scaled.
+            [image setScalesWhenResized:YES];
+            [image setSize:NSMakeSize(32.0f, 32.0f)];
+            [menuItem setImage:image];
+            [style setMinimumLineHeight:imageHeight];
+        }
+        
+        [menuItem setTitle:presetTitle];
 		
 		if (9 == priority && nil == gRegistrationString)
 		{
@@ -160,10 +128,9 @@
 		
 		// set target/action
 		[menuItem setRepresentedObject:presetDict];
-		[menuItem setAction:anAction];
-		[menuItem setTarget:aTarget];
+		[menuItem setAction:@selector(addCollection:)];
 		
-		[aMenu addItem:menuItem];
+		[aMenu insertItem:menuItem atIndex:index];  index++;
 	}
 }
 

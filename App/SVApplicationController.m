@@ -915,11 +915,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 						  pullsDown:NO
 						  showIcons:YES smallIcons:NO smallText:NO];
 		
-		[KTIndexPlugin addPresetPluginsToMenu:oAddCollectionMenu
-									   target:nil
-									   action:@selector(addCollection:)
-									pullsDown:NO
-									showIcons:YES smallIcons:NO smallText:NO allowNewPageTypes:YES];
+		[KTIndexPlugin populateMenuWithCollectionPresets:oNewPageMenu index:2];
 		
         [progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 		//[self buildSampleSitesMenu];

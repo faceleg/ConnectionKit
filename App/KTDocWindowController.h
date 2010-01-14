@@ -130,12 +130,19 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)duplicateViaContextualMenu:(id)sender;
 @end
 
+
+#pragma mark -
+
+
 @interface KTDocWindowController ( Toolbar )
 
 - (void)makeDocumentToolbar;
 - (void)updateToolbar;
 
 @end
+
+
+#pragma mark -
 
 
 extern NSString *KTSelectedDOMRangeKey;

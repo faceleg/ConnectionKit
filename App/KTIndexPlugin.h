@@ -11,16 +11,9 @@
 
 
 @interface KTIndexPlugin : KTAbstractHTMLPlugin
-{
-}
 
-+ (void)addPresetPluginsToMenu:(NSMenu *)aMenu
-						target:(id)aTarget
-						action:(SEL)anAction
-					 pullsDown:(BOOL)isPullDown
-					 showIcons:(BOOL)showIcons
-					smallIcons:(BOOL)smallIcons
-					 smallText:(BOOL)smallText
-			 allowNewPageTypes:(BOOL)allowNewPageTypes;
+// Inserts one item per known collection preset into aMenu at the specified index.
++ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu index:(NSUInteger)index;
+
 
 @end

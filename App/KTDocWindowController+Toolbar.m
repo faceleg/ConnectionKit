@@ -169,12 +169,7 @@ TO DO:
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [KTIndexPlugin addPresetPluginsToMenu:menu
-                                   target:[self pagesController]
-                                   action:@selector(addCollection:)
-                                pullsDown:NO
-                                showIcons:YES smallIcons:NO
-                                smallText:YES allowNewPageTypes:YES];
+    [KTIndexPlugin populateMenuWithCollectionPresets:menu index:3];
     
     [menu addItem:[NSMenuItem separatorItem]];
     
@@ -332,7 +327,7 @@ TO DO:
                     [addCollectionPopUpButton setShowsMenuWhenIconClicked:YES];
                     [[addCollectionPopUpButton cell] setToolbar:[[self window] toolbar]];
 					
-                    [KTIndexPlugin addPresetPluginsToMenu:[addCollectionPopUpButton menu]
+                    [KTIndexPlugin populateMenuWithCollectionPresets:[addCollectionPopUpButton menu]
 												   target:self
 												   action:@selector(addCollection:)
 												pullsDown:YES
@@ -344,7 +339,7 @@ TO DO:
 			
 					// Create menu for text-only view
 					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					[KTIndexPlugin addPresetPluginsToMenu:menu
+					[KTIndexPlugin populateMenuWithCollectionPresets:menu
 												   target:self
 												   action:@selector(addCollection:)
 												pullsDown:NO
