@@ -8,7 +8,7 @@
 
 #import "SVGraphic.h"
 
-@class SVTextField, SVBody;
+@class SVTitleBox, SVBody;
 @class KTPage, SVSidebar, SVCallout, SVTemplate;
 
 
@@ -25,7 +25,7 @@
 
 
 #pragma mark Title
-@property(nonatomic, retain) SVTextField *title;
+@property(nonatomic, retain) SVTitleBox *title;
 - (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
 + (NSString *)placeholderTitleText;
 

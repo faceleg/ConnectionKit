@@ -15,7 +15,7 @@
 #import "SVPagelet.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 
 @interface SVWebContentObjectsController ()
@@ -101,7 +101,7 @@
             }
         }
     }
-    else if ([object isKindOfClass:[SVTextField class]])
+    else if ([object isKindOfClass:[SVTitleBox class]])
     {
         [[[self page] managedObjectContext] deleteObject:object];
     }

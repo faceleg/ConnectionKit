@@ -13,7 +13,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
 #import "SVTemplate.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
@@ -68,7 +68,7 @@
 
 - (void)setTitleWithString:(NSString *)title;
 {
-    SVTextField *text = [self title];
+    SVTitleBox *text = [self title];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletTitle" inManagedObjectContext:[self managedObjectContext]];

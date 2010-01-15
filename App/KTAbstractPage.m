@@ -14,7 +14,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVMutableStringHTMLContext.h"
 #import "SVSidebar.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -156,7 +156,7 @@
 
 - (void)setTitleWithString:(NSString *)title;
 {
-    SVTextField *text = [self title];
+    SVTitleBox *text = [self title];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];

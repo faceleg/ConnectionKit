@@ -23,7 +23,7 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTDesign, SVTextField;
+@class KTDesign, SVTitleBox;
 @class KTMediaContainer;
 
 
@@ -31,13 +31,13 @@
 
 #pragma mark Text
 
-@property(nonatomic, retain) SVTextField *siteTitle;
+@property(nonatomic, retain) SVTitleBox *siteTitle;
 - (void)setSiteTitleWithString:(NSString *)title;   // creates Title object if needed
 
-@property(nonatomic, retain) SVTextField *siteSubtitle;
+@property(nonatomic, retain) SVTitleBox *siteSubtitle;
 - (void)setSiteSubtitleWithString:(NSString *)title;   // creates Title object if needed
 
-@property(nonatomic, retain) SVTextField *footer;
+@property(nonatomic, retain) SVTitleBox *footer;
 - (void)setFooterWithString:(NSString *)text;   // creates Title object if needed
 - (NSString *)defaultCopyrightHTML;
 

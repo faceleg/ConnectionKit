@@ -21,7 +21,7 @@
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorTextFieldController.h"
@@ -238,7 +238,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Use the right sort of text area
     id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
     
-    if ([value isKindOfClass:[SVTextField class]])
+    if ([value isKindOfClass:[SVTitleBox class]])
     {
         // Copy basic properties from text block
         result = [[SVWebEditorTextFieldController alloc] initWithContentObject:value inDOMDocument:domDoc];

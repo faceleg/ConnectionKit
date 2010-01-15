@@ -16,7 +16,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVBody.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 #import "KTMediaManager+Internal.h"
 #import "KTScaledImageContainer.h"
@@ -293,9 +293,9 @@
     {
         [(SVBody *)result writeHTML];
     }
-    else if ([result isKindOfClass:[SVTextField class]])
+    else if ([result isKindOfClass:[SVTitleBox class]])
     {
-        [[SVHTMLContext currentContext] writeHTMLString:[(SVTextField *)result textHTMLString]];
+        [[SVHTMLContext currentContext] writeHTMLString:[(SVTitleBox *)result textHTMLString]];
     }
     else
     {

@@ -346,8 +346,8 @@
 		277560360CA5228B00D8A412 /* KSObjectKeyPathPair.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */; settings = {ATTRIBUTES = (); }; };
 		277560370CA5228B00D8A412 /* KSObjectKeyPathPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */; };
 		2775612E0CA718C200D8A412 /* KTWebViewComponentProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */; settings = {ATTRIBUTES = (); }; };
-		277892A010CD5FA3008AA683 /* SVTextField.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTextField.h */; };
-		277892A110CD5FA3008AA683 /* SVTextField.m in Sources */ = {isa = PBXBuildFile; fileRef = 2778929F10CD5FA3008AA683 /* SVTextField.m */; };
+		277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTitleBox.h */; };
+		277892A110CD5FA3008AA683 /* SVTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2778929F10CD5FA3008AA683 /* SVTitleBox.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */; };
@@ -1801,8 +1801,8 @@
 		277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSObjectKeyPathPair.h; sourceTree = "<group>"; };
 		277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSObjectKeyPathPair.m; sourceTree = "<group>"; };
 		2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponentProtocol.h; sourceTree = "<group>"; };
-		2778929E10CD5FA3008AA683 /* SVTextField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextField.h; sourceTree = "<group>"; };
-		2778929F10CD5FA3008AA683 /* SVTextField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextField.m; sourceTree = "<group>"; };
+		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
+		2778929F10CD5FA3008AA683 /* SVTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTitleBox.m; sourceTree = "<group>"; };
 		277EE9200CFD8CFF005617FE /* KTStalenessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessManager.h; sourceTree = "<group>"; };
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
@@ -3140,8 +3140,8 @@
 		2778929D10CD5F76008AA683 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				2778929E10CD5FA3008AA683 /* SVTextField.h */,
-				2778929F10CD5FA3008AA683 /* SVTextField.m */,
+				2778929E10CD5FA3008AA683 /* SVTitleBox.h */,
+				2778929F10CD5FA3008AA683 /* SVTitleBox.m */,
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				272F1F4F10C2CBE600BBB836 /* SVContentObject.h */,
 				272F1F5010C2CBE600BBB836 /* SVContentObject.m */,
@@ -5251,7 +5251,7 @@
 				CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */,
 				273DCF9F10CBD5D3003CCE97 /* SVWebContentObjectsController.h in Headers */,
 				273DCFF110CBDC10003CCE97 /* KSArrayController.h in Headers */,
-				277892A010CD5FA3008AA683 /* SVTextField.h in Headers */,
+				277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */,
 				276F8AB210D572780094AA73 /* SVDOMController.h in Headers */,
 				27A3578910E6D59D00C99FB3 /* SVTemplate.h in Headers */,
 				273D6F5110E7C9DF003F5BA8 /* SVCallout.h in Headers */,
@@ -6639,7 +6639,7 @@
 				CE043A6B10C7363600F76F97 /* KSRecentDocument.m in Sources */,
 				273DCFA010CBD5D3003CCE97 /* SVWebContentObjectsController.m in Sources */,
 				273DCFF210CBDC10003CCE97 /* KSArrayController.m in Sources */,
-				277892A110CD5FA3008AA683 /* SVTextField.m in Sources */,
+				277892A110CD5FA3008AA683 /* SVTitleBox.m in Sources */,
 				CEC4C55810CEED7E00AEE22D /* SVDesignChooserImageBrowserView.m in Sources */,
 				CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */,
 				276F8AB310D572780094AA73 /* SVDOMController.m in Sources */,

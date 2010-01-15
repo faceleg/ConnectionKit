@@ -15,7 +15,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
@@ -103,7 +103,7 @@
 
 - (void)setSiteTitleWithString:(NSString *)title;
 {
-    SVTextField *text = [self siteTitle];
+    SVTitleBox *text = [self siteTitle];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"SiteTitle" inManagedObjectContext:[self managedObjectContext]];
@@ -118,7 +118,7 @@
 
 - (void)setSiteSubtitleWithString:(NSString *)title;
 {
-    SVTextField *text = [self siteSubtitle];
+    SVTitleBox *text = [self siteSubtitle];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
@@ -133,7 +133,7 @@
 
 - (void)setFooterWithString:(NSString *)title;
 {
-    SVTextField *text = [self footer];
+    SVTitleBox *text = [self footer];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];

@@ -1,5 +1,5 @@
 //
-//  SVTextField.h
+//  SVTitleBox.h
 //  Sandvox
 //
 //  Created by Mike on 07/12/2009.
@@ -10,7 +10,7 @@
 #import "SVContentObject.h"
 
 
-@interface SVTextField : SVContentObject  
+@interface SVTitleBox : SVContentObject  
 
 @property(nonatomic, copy) NSString *textHTMLString;
 @property(nonatomic, copy) NSString *text;

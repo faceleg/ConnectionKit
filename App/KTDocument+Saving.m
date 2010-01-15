@@ -18,7 +18,7 @@
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
 #import "SVMutableStringHTMLContext.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"

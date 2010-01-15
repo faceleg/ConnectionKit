@@ -18,7 +18,7 @@
 #import "KTDocument.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"

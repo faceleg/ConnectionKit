@@ -1,19 +1,19 @@
 // 
-//  SVTextField.m
+//  SVTitleBox.m
 //  Sandvox
 //
 //  Created by Mike on 07/12/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVTextField.h"
+#import "SVTitleBox.h"
 #import "SVWebEditorTextFieldController.h"
 
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
 
 
-@implementation SVTextField 
+@implementation SVTitleBox 
 
 #pragma mark Content
 
