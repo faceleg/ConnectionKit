@@ -202,16 +202,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 
 @synthesize webEditorViewController = _webEditorViewController;
 
-- (void)switchToLoadingPlaceholderViewIfNeeded
-{
-    // This method will be called fractionally after the webview has done its first layout, and (hopefully!) before that layout has actually been drawn. Therefore, if the webview is still loading by this point, it was an intermediate load and not suitable for display to the user, so switch over to the placeholder.
-    if ([[self webEditorViewController] isUpdating]) 
-    {
-        [self setSelectedViewController:_placeholderViewController];
-        [[_placeholderViewController progressIndicator] startAnimation:self];
-    }
-}
-
 - (void)didSelectViewController;
 {
     [super didSelectViewController];
@@ -232,16 +222,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 }
 
 #pragma mark Web Editor View Controller Delegate
-
-- (void)siteItemViewControllerDidUnwantedLayout:(NSViewController <SVSiteItemViewController> *)sender;
-{
-    // Being a little bit cunning to make sure we sneak in before views can be drawn
-    [[NSRunLoop currentRunLoop] performSelector:@selector(switchToLoadingPlaceholderViewIfNeeded)
-                                         target:self
-                                       argument:nil
-                                          order:(NSDisplayWindowRunLoopOrdering - 1)
-                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
-}
 
 - (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
 {
@@ -272,13 +252,21 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 {
     if (context == sWebContentReadyToAppearObservationContext)
     {
-        if ([self viewType] == KTStandardWebView && [object viewIsReadyToAppear])
+        if (object == [self viewControllerForViewType:[self viewType]])
         {
-            // The webview is done loading! swap 'em
-            [self setSelectedViewController:object];
-            
-            // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
-            [[[self webEditorViewController] webView] setHostWindow:nil];
+            if ([object viewIsReadyToAppear])
+            {
+                // The webview is done loading! swap 'em
+                [self setSelectedViewController:object];
+                
+                // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
+                [[[self webEditorViewController] webView] setHostWindow:nil];
+            }
+            else
+            {
+                [self setSelectedViewController:_placeholderViewController];
+                [[_placeholderViewController progressIndicator] startAnimation:self];
+            }
         }
     }
     else

@@ -143,6 +143,25 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 + (NSSet *)keyPathsForValuesAffectingViewIsReadyToAppear { return [NSSet setWithObject:@"updating"]; }
 
+- (void)webViewDidFirstLayout
+{
+    // Being a little bit cunning to make sure we sneak in before views can be drawn
+    [[NSRunLoop currentRunLoop] performSelector:@selector(switchToLoadingPlaceholderViewIfNeeded)
+                                         target:self
+                                       argument:nil
+                                          order:(NSDisplayWindowRunLoopOrdering - 1)
+                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+}
+
+- (void)switchToLoadingPlaceholderViewIfNeeded
+{
+    // This method will be called fractionally after the webview has done its first layout, and (hopefully!) before that layout has actually been drawn. Therefore, if the webview is still loading by this point, it was an intermediate load and not suitable for display to the user, so switch over to the placeholder.
+    if ([self isUpdating]) 
+    {
+        
+    }
+}
+
 #pragma mark Updating
 
 - (void)update;
@@ -955,7 +974,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
 {
     OBPRECONDITION(sender == [self webEditor]);
-    [[self delegate] siteItemViewControllerDidUnwantedLayout:self];
+    [self webViewDidFirstLayout];
 }
 
 - (BOOL)webEditor:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;

@@ -29,9 +29,6 @@
 
 @protocol SVSiteItemViewControllerDelegate
 
-// Send this if your view has performed a layout (but not drawn yet) that you don't want the user to see. The delegate should take responsibility for moving you off offscreen and display a progress indicator
-- (void)siteItemViewControllerDidUnwantedLayout:(NSViewController <SVSiteItemViewController> *)sender;
-
 // The SVSiteItemViewController should call this upon its delegate if it's time to display the source view
 - (void)siteItemViewControllerShowSourceView:(NSViewController <SVSiteItemViewController> *)sender;
 
