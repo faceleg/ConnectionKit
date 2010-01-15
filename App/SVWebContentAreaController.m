@@ -14,7 +14,7 @@
 #import "SVSiteItemViewController.h"
 
 
-static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLoadingObservationContext";
+static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewControllerIsReadyToAppear";
 
 
 @implementation SVWebContentAreaController
@@ -45,9 +45,9 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     
     // Delegation/observation
     [_webEditorViewController addObserver:self
-                               forKeyPath:@"updating"
+                               forKeyPath:@"viewIsReadyToAppear"
                                   options:0
-                                  context:sWebViewLoadingObservationContext];
+                                  context:sWebContentReadyToAppearObservationContext];
     
     
     return self;
@@ -62,7 +62,8 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 - (void)dealloc
 {
     // Tear down delegation/observation
-    [_webEditorViewController removeObserver:self forKeyPath:@"updating"];
+    // TODO: stop observation on other item controllers
+    [_webEditorViewController removeObserver:self forKeyPath:@"viewIsReadyToAppear"];
     
     
     [_webEditorViewController release];
@@ -100,7 +101,6 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
             
             // Start the load here. Once it's finished (or takes too long) we'll switch to the appropriate view
             [viewController loadSiteItem:[pages objectAtIndex:0]];
-            [self setSelectedViewController:viewController];
             
             break;
         }
@@ -174,6 +174,12 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
                 viewController = [[viewControllerClass alloc] init];
                 [self addViewController:viewController];
                 [viewController release];
+
+                [viewController setDelegate:self];
+                [viewController addObserver:self
+                                 forKeyPath:@"viewIsReadyToAppear"
+                                    options:0
+                                    context:sWebContentReadyToAppearObservationContext];
             }
             
             result = viewController;
@@ -226,7 +232,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 #pragma mark Web Editor View Controller Delegate
 
-- (void)webEditorViewControllerDidFirstLayout:(SVWebEditorViewController *)sender;
+- (void)siteItemViewControllerDidUnwantedLayout:(NSViewController <SVSiteItemViewController> *)sender;
 {
     // Being a little bit cunning to make sure we sneak in before views can be drawn
     [[NSRunLoop currentRunLoop] performSelector:@selector(switchToLoadingPlaceholderViewIfNeeded)
@@ -238,7 +244,7 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
 
 - (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;
 {
-    // Take advantag of our binding and set that to the desired page. It will then trigger a change in our selected pages (probably)
+    // Take advantage of our binding and set that to the desired page. It will then trigger a change in our selected pages (probably)
     if (page)
     {
         NSDictionary *bindingInfo = [self infoForBinding:@"selectedPages"];
@@ -263,12 +269,12 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
                         change:(NSDictionary *)change
                        context:(void *)context
 {
-    if (context == sWebViewLoadingObservationContext)
+    if (context == sWebContentReadyToAppearObservationContext)
     {
-        if ([self viewType] == KTStandardWebView && ![[self webEditorViewController] isUpdating])
+        if ([self viewType] == KTStandardWebView && [object viewIsReadyToAppear])
         {
             // The webview is done loading! swap 'em
-            [self setSelectedViewController:[self webEditorViewController]];
+            [self setSelectedViewController:object];
             
             // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
             [[[self webEditorViewController] webView] setHostWindow:nil];

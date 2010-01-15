@@ -137,6 +137,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [editor setAllowsUndo:NO];  // will be managing this entirely ourselves
 }
 
+#pragma mark Presentation
+
+- (BOOL)viewIsReadyToAppear { return ![self isUpdating]; }
+
++ (NSSet *)keyPathsForValuesAffectingViewIsReadyToAppear { return [NSSet setWithObject:@"updating"]; }
+
 #pragma mark Updating
 
 - (void)update;
@@ -949,7 +955,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
 {
     OBPRECONDITION(sender == [self webEditor]);
-    [[self delegate] webEditorViewControllerDidFirstLayout:self];
+    [[self delegate] siteItemViewControllerDidUnwantedLayout:self];
 }
 
 - (BOOL)webEditor:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;

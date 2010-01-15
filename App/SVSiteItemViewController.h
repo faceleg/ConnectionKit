@@ -14,8 +14,13 @@
 
 
 @protocol SVSiteItemViewController
+
+// Owning view controller will try to avoid placing the receiver onscreen if this returns NO. MUST be KVO-compliant
+@property(nonatomic, readonly) BOOL viewIsReadyToAppear;
+
 - (void)loadSiteItem:(SVSiteItem *)item;
 - (void)setDelegate:(id <SVSiteItemViewControllerDelegate>)delegate;
+
 @end
 
 
@@ -24,7 +29,10 @@
 
 @protocol SVSiteItemViewControllerDelegate
 
+// Send this if your view has performed a layout (but not drawn yet) that you don't want the user to see. The delegate should take responsibility for moving you off offscreen and display a progress indicator
+- (void)siteItemViewControllerDidUnwantedLayout:(NSViewController <SVSiteItemViewController> *)sender;
+
 // The SVSiteItemViewController should call this upon its delegate if it's time to display the source view
-- (void)siteItemViewControllerShowSourceView:(NSViewController <SVSiteItemViewController> *)viewController;
+- (void)siteItemViewControllerShowSourceView:(NSViewController <SVSiteItemViewController> *)sender;
 
 @end
