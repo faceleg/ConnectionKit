@@ -834,19 +834,16 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 			if ([item isCollection])
 			{
 				NSString *sortingDescription = @"";
-				KTCollectionSortType sorting = [item collectionSortOrder];
+				SVCollectionSortOrder sorting = [[item collectionSortOrder] integerValue];
 				switch (sorting)
 				{
-					case KTCollectionSortAlpha:
+					case SVCollectionSortAlphabetically:
 						sortingDescription = NSLocalizedString(@"Alphabetical", "tooltip Collection sorting");
 						break;
-					case KTCollectionSortReverseAlpha:
-						sortingDescription = NSLocalizedString(@"Reverse alphabetical", "tooltip Collection sorting");
-						break;
-					case KTCollectionSortLatestAtBottom:
+					case SVCollectionSortByDateCreated:
 						sortingDescription = NSLocalizedString(@"Latest at bottom", "tooltip Collection sorting");
 						break;
-					case KTCollectionSortLatestAtTop:
+					case SVCollectionSortByDateModified:
 						sortingDescription = NSLocalizedString(@"Latest at top", "tooltip Collection sorting");
 						break;
 					default:

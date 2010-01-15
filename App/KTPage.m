@@ -112,7 +112,7 @@
 {
 	// Figure out nearest sibling/parent
     KTPage *predecessor = aParent;
-	NSArray *children = [aParent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
+	NSArray *children = [aParent childrenWithSorting:SVCollectionSortByDateModified inIndex:NO];
 	if ([children count] > 0)
 	{
 		predecessor = [children firstObjectKS];

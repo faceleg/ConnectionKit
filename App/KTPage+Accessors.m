@@ -63,8 +63,8 @@
 	
 	
 	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
-	KTCollectionSortType sorting = [[self parentPage] collectionSortOrder];
-	if (sorting == KTCollectionSortAlpha || sorting == KTCollectionSortReverseAlpha)
+	SVCollectionSortOrder sorting = [[[self parentPage] collectionSortOrder] integerValue];
+	if (sorting == SVCollectionSortAlphabetically)
 	{
 		[[self parentPage] invalidateSortedChildrenCache];
 	}
@@ -302,7 +302,7 @@
 			result = [[self sortedChildren] firstObjectKS];
 			break;
 		case KTSummarizeMostRecent:
-			result = [[self childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO] firstObjectKS];
+			result = [[self childrenWithSorting:SVCollectionSortByDateModified inIndex:NO] firstObjectKS];
 			break;
 		default:
 			result = self;

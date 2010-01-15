@@ -35,16 +35,6 @@ typedef enum {
 
 // Description Forthcoming
 typedef enum {
-    KTCollectionSortUnspecified = -1,		// used internally
-	KTCollectionUnsorted = 0, 
-    KTCollectionSortAlpha,
-    KTCollectionSortLatestAtBottom,
-	KTCollectionSortLatestAtTop,		// = 3 ... default
-	KTCollectionSortReverseAlpha,
-} KTCollectionSortType;
-
-// Description Forthcoming
-typedef enum {
 	KTSummarizeAutomatic = 1,
 	KTSummarizeMostRecent,
 	KTSummarizeRecentList,

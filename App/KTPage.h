@@ -23,14 +23,24 @@
 #import "NSManagedObject+KTExtensions.h"
 
 
+typedef enum {
+	SVCollectionSortManually,   // default as of 2.0
+    SVCollectionSortAlphabetically,
+    SVCollectionSortByDateCreated,
+	SVCollectionSortByDateModified,
+    SVCollectionSortOrderUnspecified = -1,		// used internally
+} SVCollectionSortOrder;
+
+
 @class KTDesign;
 @class KTArchivePage, KTAbstractIndex, KTMaster, KTCodeInjection;
 @class WebView;
 @class KTMediaContainer;
 
+
 @interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
 {
-	@private
+  @private
     // these ivars are only set if the page is root
 	BOOL myIsNewPage;		// accessor is in category
 }
@@ -106,25 +116,39 @@
 
 
 @interface KTPage (Children)
-// Basic Accessors
-@property(nonatomic) KTCollectionSortType collectionSortOrder;
-- (BOOL)isChronologicallySorted;
 
-- (BOOL)isCollection;
-
-- (void)moveToIndex:(unsigned)index;
-
-// Unsorted Children
+#pragma mark Children
 @property(nonatomic, copy, readonly) NSSet *childItems;
 - (void)addChildItem:(SVSiteItem *)page;
 - (void)removePage:(KTPage *)page;
 - (void)removePages:(NSSet *)pages;
 
-// Sorted Children
-- (NSArray *)sortedChildren;
-- (NSArray *)childrenWithSorting:(KTCollectionSortType)sortType inIndex:(BOOL)ignoreDrafts;
 
-// Hierarchy Queries
+#pragma mark Sorting Properties
+
+@property(nonatomic, copy) NSNumber *collectionSortOrder;  // SVCollectionSortOrder or nil
+- (BOOL)isSortedChronologically;
+
+@property(nonatomic, copy) NSNumber *collectionSortAscending;    // BOOL
+
+
+#pragma mark Sorted Children
+- (NSArray *)sortedChildren;
+- (void)moveToIndex:(unsigned)index;
+
+
+#pragma mark Sorting Support
+- (NSArray *)childrenWithSorting:(SVCollectionSortOrder)sortType
+                       ascending:(BOOL)ascending
+                         inIndex:(BOOL)ignoreDrafts;
+
++ (NSArray *)unsortedPagesSortDescriptors;
++ (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
++ (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
+
+
+#pragma mark Hierarchy Queries
 - (KTPage *)parentOrRoot;
 - (BOOL)hasChildren;
 
@@ -169,7 +193,7 @@
 - (NSString *)customSummaryHTML;
 - (void)setCustomSummaryHTML:(NSString *)HTML;
 
-- (NSString *)titleListHTMLWithSorting:(KTCollectionSortType)sortType;
+- (NSString *)titleListHTMLWithSorting:(SVCollectionSortOrder)sortType;
 
 // Archive
 - (BOOL)collectionGenerateArchives;

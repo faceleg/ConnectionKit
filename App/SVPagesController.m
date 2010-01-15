@@ -69,12 +69,15 @@
         if (!parent) parent = [[self managedObjectContext] root];
     
         KTPage *predecessor = parent;
-        NSArray *children = [parent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
+        NSArray *children = [parent childrenWithSorting:SVCollectionSortByDateCreated
+                                              ascending:NO
+                                                inIndex:NO];
+        
         for (SVSiteItem *aChild in children)
         {
             if ([aChild isKindOfClass:[KTPage class]])
             {
-                predecessor = aChild;
+                predecessor = (KTPage *)aChild;
                 break;
             }
         }

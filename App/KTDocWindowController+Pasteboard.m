@@ -390,7 +390,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     KTPage *result = [KTPage pageWithPasteboardRepresentation:archive parent:parent];
     
     // For unordered collections, the duplicate should appear just after the original
-    if ([parent collectionSortOrder] == KTCollectionUnsorted)
+    if ([parent collectionSortOrder] == SVCollectionSortManually)
     {
         unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:page] + 1;
         [result moveToIndex:index];

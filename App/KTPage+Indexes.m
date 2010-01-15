@@ -162,9 +162,10 @@
 - (NSArray *)navigablePages;
 {
 	// How to sort the pages? Generally this is the same as usual, but for chronological collections, the arrows need to always be the same. #32341
-    KTCollectionSortType sorting = ([self isChronologicallySorted] ? KTCollectionSortLatestAtBottom : [self collectionSortOrder]);
+    SVCollectionSortOrder sorting = [[self collectionSortOrder] integerValue];
+    BOOL ascending = [self isSortedChronologically] ? NO : [[self collectionSortAscending] boolValue];
     
-    NSArray *result = [self childrenWithSorting:sorting inIndex:YES];
+    NSArray *result = [self childrenWithSorting:sorting ascending:ascending inIndex:YES];
 	return result;
 }
 
@@ -549,7 +550,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 
 /*	Constructs the HTML for a title list-style summary using the specified ordering
  */
-- (NSString *)titleListHTMLWithSorting:(KTCollectionSortType)sortType;
+- (NSString *)titleListHTMLWithSorting:(SVCollectionSortOrder)sortType;
 {
 	NSMutableString *result = [NSMutableString stringWithString:@"<ul>\n"];
 	

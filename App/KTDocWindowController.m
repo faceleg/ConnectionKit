@@ -558,7 +558,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	Class indexToAllocate = [collectionBundle principalClassIncludingOtherLoadedBundles:YES];
 	KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
 	[collection setIndex:theIndex];
-	[collection setInteger:KTCollectionUnsorted forKey:@"collectionSortOrder"];				
+	[collection setInteger:SVCollectionSortManually forKey:@"collectionSortOrder"];				
 	[collection setBool:YES forKey:@"isCollection"];
 	[collection setBool:NO forKey:@"includeTimestamp"];
 	
@@ -915,7 +915,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                     {
                         // Insert the page where indicated
                         [aCollection addChildItem:newPage];
-                        if (anIndex != NSOutlineViewDropOnItemIndex && [aCollection collectionSortOrder] == KTCollectionUnsorted)
+                        if (anIndex != NSOutlineViewDropOnItemIndex && [aCollection collectionSortOrder] == SVCollectionSortManually)
                         {
                             [newPage moveToIndex:anIndex];
                         }

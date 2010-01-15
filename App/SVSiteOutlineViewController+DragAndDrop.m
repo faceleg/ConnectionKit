@@ -145,7 +145,7 @@
 		proposedParent = item;
 	}
 	int proposedParentSortOrder = [proposedParent integerForKey:@"collectionSortOrder"];
-	// KTCollectionSortAlpha, KTCollectionSortLatestAtBottom, KTCollectionSortLatestAtTop, or KTCollectionUnsorted
+	// SVCollectionSortAlphabetically, SVCollectionSortByDateCreated, SVCollectionSortByDateModified, or SVCollectionSortManually
 	
 	BOOL cameFromProgram = (nil != [info draggingSource]);
 	if (cameFromProgram)
@@ -214,17 +214,16 @@
 					// if we've made it this far through the rules, we need to look at KTCollectionSortType
 					switch ( proposedParentSortOrder )
 					{
-						case KTCollectionUnsorted:
+						case SVCollectionSortManually:
 						{
 							// drop anywhere into an unsorted collection
 							//LOG((@"allowing drop into unsorted collection"));
 							return NSDragOperationMove;
 							break;
 						}
-						case KTCollectionSortAlpha:
-						case KTCollectionSortReverseAlpha:
-						case KTCollectionSortLatestAtTop:
-						case KTCollectionSortLatestAtBottom:
+						case SVCollectionSortAlphabetically:
+						case SVCollectionSortByDateModified:
+						case SVCollectionSortByDateCreated:
 						{
 							// only allow drop at proposedOrdering
 							int childIndex = [proposedParent proposedOrderingForProposedChild:firstDraggedItem
@@ -298,7 +297,7 @@
 				
 				switch ( proposedParentSortOrder )
 				{
-					case KTCollectionUnsorted:
+					case SVCollectionSortManually:
 					{
 						// drop anywhere into an unsorted collection
 						//LOG((@"allowing drop into unsorted collection"));
@@ -306,8 +305,7 @@
 						break;
 					}
 					
-					case KTCollectionSortAlpha:
-					case KTCollectionSortReverseAlpha:
+					case SVCollectionSortAlphabetically:
 					{
 						// we're going to be sorting on titles, so get a suitable title
 						NSString *title = nil;
@@ -347,7 +345,7 @@
 						}						
 						break;
 					}
-					case KTCollectionSortLatestAtTop:
+					case SVCollectionSortByDateModified:
 					{
 						// if we sort latest at top, we can only add to top
 						if ( dropIndex == 0 )
@@ -360,7 +358,7 @@
 						}
 						break;
 					}
-					case KTCollectionSortLatestAtBottom:
+					case SVCollectionSortByDateCreated:
 					{
 						if ( (unsigned)dropIndex == [[proposedParent sortedChildren] count] )
 						{
@@ -468,15 +466,14 @@
 			
 			switch ( proposedParentSortOrder )
 			{
-				case KTCollectionUnsorted:
+				case SVCollectionSortManually:
 				{
 					// drop anywhere into an unsorted collection
 					//LOG((@"allowing drop into unsorted collection"));
 					return NSDragOperationCopy;
 					break;
 				}
-				case KTCollectionSortAlpha:
-				case KTCollectionSortReverseAlpha:
+				case SVCollectionSortAlphabetically:
 				{
 					// we're going to be sorting on titles, so get a suitable title
 					NSMutableDictionary *sourceInfoDictionary = [NSMutableDictionary dictionary];
@@ -526,7 +523,7 @@
 					}						
 					break;
 				}
-				case KTCollectionSortLatestAtTop:
+				case SVCollectionSortByDateModified:
 				{
 					// if we sort latest at top, we can only add to top
 					if ( dropIndex == 0 )
@@ -539,7 +536,7 @@
 					}
 					break;
 				}
-				case KTCollectionSortLatestAtBottom:
+				case SVCollectionSortByDateCreated:
 				{
 					if ( (unsigned)dropIndex == [[proposedParent sortedChildren] count] )
 					{
@@ -678,7 +675,7 @@
 	
 	// The behavior is different depending on the drag destination.
 	// Drops into the middle of an unsorted collection need to also have their indexes set.
-	if (dropRow > -1 && [page collectionSortOrder] == KTCollectionUnsorted)
+	if (dropRow > -1 && [page collectionSortOrder] == SVCollectionSortManually)
 	{
 		NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
 		KTPage *draggedItem;

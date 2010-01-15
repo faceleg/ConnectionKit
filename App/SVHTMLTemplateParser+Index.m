@@ -118,10 +118,10 @@
 			break;
 		
 		case KTSummarizeRecentList:
-			result = [page titleListHTMLWithSorting:KTCollectionSortLatestAtTop];
+			result = [page titleListHTMLWithSorting:SVCollectionSortByDateModified];
 			break;
 		case KTSummarizeAlphabeticalList:
-			result = [page titleListHTMLWithSorting:KTCollectionSortAlpha];
+			result = [page titleListHTMLWithSorting:SVCollectionSortAlphabetically];
 			break;
 		
 		case KTSummarizeFirstItem:
@@ -135,7 +135,7 @@
 		case KTSummarizeMostRecent:
 		{
 			result = @"";
-			NSArray *children = [page childrenWithSorting:KTCollectionSortLatestAtTop inIndex:YES];
+			NSArray *children = [page childrenWithSorting:SVCollectionSortByDateModified inIndex:YES];
 			KTPage *recentChild = [children firstObjectKS];
 			if (recentChild) result = [self summaryForContentOfPage:recentChild truncation:truncation];
 			break;

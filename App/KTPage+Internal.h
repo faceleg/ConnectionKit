@@ -26,7 +26,9 @@
 - (BOOL)isDescendantOfPage:(KTPage *)aPotentialAncestor;
 
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
-							   sortType:(KTCollectionSortType)aSortType;
+							   sortType:(SVCollectionSortOrder)aSortType
+                              ascending:(BOOL)ascending;
+
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
 @property(nonatomic, retain) KTMaster *master;
