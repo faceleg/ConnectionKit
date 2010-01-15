@@ -542,13 +542,6 @@
     }
 }
 
-- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key
-{
-    BOOL result = [super canStoreExtensiblePropertyForKey:key];
-    if ([key isEqualToString:@"placeholderImage"]) result = YES;
-    return result;
-}
-
 #pragma mark -
 #pragma mark Comments
 
@@ -653,6 +646,22 @@
 {
 	[self setValue:aString forUndefinedKey:@"JSKitModeratorEmail"];
 }
+
+#pragma mark Support
+
+- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key
+{
+    BOOL result = [super canStoreExtensiblePropertyForKey:key];
+    
+    if ([key isEqualToString:@"placeholderImage"] ||
+        [key isEqualToString:@"commentsProvider"])
+    {
+        result = YES;
+    }
+    
+    return result;
+}
+
 
 @end
 
