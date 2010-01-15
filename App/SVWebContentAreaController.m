@@ -96,24 +96,11 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
         case 1:
         {
             // Figure out the right view controller to load
-            SVSiteItem *item = [pages objectAtIndex:0];
-            Class viewControllerClass = [item viewControllerClass];
-            
-            NSViewController <SVSiteItemViewController> *viewController = nil;
-            for (viewController in [self viewControllers])
-            {
-                if ([viewController isKindOfClass:viewControllerClass]) break;
-            }
-            if (!viewController)
-            {
-                // No suitable view controller was found, so create one
-                viewController = [[viewControllerClass alloc] init];
-                [self addViewController:viewController];
-                [viewController release];
-            }
+            NSViewController <SVSiteItemViewController> *viewController = (id)[self viewControllerForViewType:[self viewType]];
             
             // Start the load here. Once it's finished (or takes too long) we'll switch to the appropriate view
-            [viewController loadSiteItem:item];
+            [viewController loadSiteItem:[pages objectAtIndex:0]];
+            [self setSelectedViewController:viewController];
             
             break;
         }
@@ -171,9 +158,27 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
     switch (viewType)
     {
         case KTStandardWebView:
-            result = [self webEditorViewController];
-            break;
+        {
+            // Figure out the right view controller
+            SVSiteItem *item = [[self selectedPages] objectAtIndex:0];
+            Class viewControllerClass = [item viewControllerClass];
             
+            NSViewController <SVSiteItemViewController> *viewController = nil;
+            for (viewController in [self viewControllers])
+            {
+                if ([viewController isKindOfClass:viewControllerClass]) break;
+            }
+            if (!viewController)
+            {
+                // No suitable view controller was found, so create one
+                viewController = [[viewControllerClass alloc] init];
+                [self addViewController:viewController];
+                [viewController release];
+            }
+            
+            result = viewController;
+            break;
+        }
         case KTSourceCodeView:
         case KTPreviewSourceCodeView:
             result = _sourceViewController;

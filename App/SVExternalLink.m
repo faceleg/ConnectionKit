@@ -8,6 +8,8 @@
 
 #import "SVExternalLink.h"
 
+#import "SVURLPreviewViewController.h"
+
 #import "NSURL+Karelia.h"
 
 
@@ -30,6 +32,13 @@
 - (NSString *)fileName
 {
     return [[[self URL] lastPathComponent] stringByDeletingPathExtension];
+}
+
+#pragma mark UI
+
+- (Class <SVWebContentViewController>)viewControllerClass;
+{
+    return [SVURLPreviewViewController class];
 }
 
 @end

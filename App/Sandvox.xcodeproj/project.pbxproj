@@ -294,6 +294,8 @@
 		2747DAD510FF5B6F007428BB /* KSPullDownToolbarItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DAD310FF5B6F007428BB /* KSPullDownToolbarItem.h */; };
 		2747DAD610FF5B6F007428BB /* KSPullDownToolbarItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DAD410FF5B6F007428BB /* KSPullDownToolbarItem.m */; };
 		2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF4911008D54007428BB /* SVSiteItemViewController.h */; };
+		2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF8011009B59007428BB /* SVURLPreviewViewController.h */; };
+		2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DF8111009B59007428BB /* SVURLPreviewViewController.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -1750,6 +1752,8 @@
 		2747DAD310FF5B6F007428BB /* KSPullDownToolbarItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPullDownToolbarItem.h; sourceTree = "<group>"; };
 		2747DAD410FF5B6F007428BB /* KSPullDownToolbarItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPullDownToolbarItem.m; sourceTree = "<group>"; };
 		2747DF4911008D54007428BB /* SVSiteItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItemViewController.h; sourceTree = "<group>"; };
+		2747DF8011009B59007428BB /* SVURLPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVURLPreviewViewController.h; sourceTree = "<group>"; };
+		2747DF8111009B59007428BB /* SVURLPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLPreviewViewController.m; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
@@ -3117,6 +3121,8 @@
 				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
 				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
 				2747DF4911008D54007428BB /* SVSiteItemViewController.h */,
+				2747DF8011009B59007428BB /* SVURLPreviewViewController.h */,
+				2747DF8111009B59007428BB /* SVURLPreviewViewController.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -5277,6 +5283,7 @@
 				2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */,
 				2747DAD510FF5B6F007428BB /* KSPullDownToolbarItem.h in Headers */,
 				2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */,
+				2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6666,6 +6673,7 @@
 				2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */,
 				2747DA3D10FE8DE6007428BB /* SVExternalLink.m in Sources */,
 				2747DAD610FF5B6F007428BB /* KSPullDownToolbarItem.m in Sources */,
+				2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
