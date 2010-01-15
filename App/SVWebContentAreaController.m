@@ -99,8 +99,9 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             // Figure out the right view controller to load
             NSViewController <SVSiteItemViewController> *viewController = (id)[self viewControllerForViewType:[self viewType]];
             
-            // Start the load here. Once it's finished (or takes too long) we'll switch to the appropriate view
+            // Start the load here. Present the view if it's ready; if not wait until it is (or takes too long)
             [viewController loadSiteItem:[pages objectAtIndex:0]];
+            if ([viewController viewIsReadyToAppear]) [self setSelectedViewController:viewController];
             
             break;
         }
