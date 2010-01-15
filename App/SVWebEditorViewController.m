@@ -799,6 +799,22 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark -
 
+#pragma mark SVSiteItemViewController
+
+- (void)loadSiteItem:(SVSiteItem *)item;
+{
+    if ([item isKindOfClass:[KTPage class]])
+    {
+        [self setPage:(KTPage *)item];
+    }
+    else
+    {
+        [self setPage:nil];
+    }
+}
+
+#pragma mark -
+
 #pragma mark WebEditorViewDataSource
 
 - (id <SVWebEditorText>)webEditor:(SVWebEditorView *)sender

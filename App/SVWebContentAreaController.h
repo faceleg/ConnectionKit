@@ -8,6 +8,7 @@
 
 #import "KSTabViewController.h"
 
+#import "SVSiteItemViewController.h"
 #import "SVWebEditorViewController.h"
 #import "KSInspector.h"
 
@@ -29,7 +30,7 @@ typedef enum {
 @class SVLoadingPlaceholderViewController;
 
 
-@interface SVWebContentAreaController : KSTabViewController <KSInspection, SVWebEditorViewControllerDelegate>
+@interface SVWebContentAreaController : KSTabViewController <KSInspection, SVSiteItemViewControllerDelegate, SVWebEditorViewControllerDelegate>
 {
   @private
     SVWebEditorViewController           *_webEditorViewController;

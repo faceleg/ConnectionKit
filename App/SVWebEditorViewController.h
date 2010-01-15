@@ -7,16 +7,22 @@
 //
 
 #import "KSWebViewController.h"
+
+#import "SVSiteItemViewController.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVWebEditorView.h"
 
+
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
+
+
 @class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
 @class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
-@interface SVWebEditorViewController : KSWebViewController <SVWebEditorDataSource, SVWebEditorDelegate, SVHTMLTemplateParserDelegate>
+
+@interface SVWebEditorViewController : KSWebViewController <SVSiteItemViewController, SVWebEditorDataSource, SVWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {
     // View
     SVWebEditorView *_webEditorView;
@@ -106,7 +112,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark -
 
 
-@protocol SVWebEditorViewControllerDelegate <NSObject>
+@protocol SVWebEditorViewControllerDelegate <SVSiteItemViewControllerDelegate, NSObject>
 
 - (void)webEditorViewControllerDidFirstLayout:(SVWebEditorViewController *)sender;
 

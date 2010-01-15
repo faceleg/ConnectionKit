@@ -9,6 +9,7 @@
 #import "SVSiteItem.h"
 
 #import "KTPage.h"
+#import "SVWebEditorViewController.h"
 
 
 @implementation SVSiteItem 
@@ -148,11 +149,16 @@
 
 - (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }
 
-#pragma mark Site Outline
+#pragma mark UI
 
 - (BOOL)isCollection { return NO; }
 - (KTMediaContainer *)customSiteOutlineIcon { return nil; }
 - (KTCodeInjection *)codeInjection; { return nil; }
+
+- (Class <SVWebContentViewController>)viewControllerClass
+{
+    return [SVWebEditorViewController class];
+}
     
 #pragma mark Inspection
 

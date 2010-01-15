@@ -15,6 +15,7 @@
 
 
 @class KTPage, KTMediaContainer, KTCodeInjection;
+@protocol SVWebContentViewController;
 
 
 @interface SVSiteItem : SVExtensibleManagedObject  
@@ -56,12 +57,15 @@
 @property(nonatomic) short childIndex;
 
 
-#pragma mark Site Outline
+#pragma mark UI
 
 @property(nonatomic, readonly) BOOL isCollection;
 @property(nonatomic, retain, readonly) KTMediaContainer *customSiteOutlineIcon;
 
 - (KTCodeInjection *)codeInjection;
+
+// Subclasses should provide a reasonable choice. The default is SVWebEditorViewController. Must be KVO-compliant
+@property(nonatomic, readonly) Class <SVWebContentViewController> viewControllerClass;
 
 @end
 

@@ -10,6 +10,9 @@
 #import "SVWebSourceViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
+#import "SVSiteItem.h"
+#import "SVSiteItemViewController.h"
+
 
 static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLoadingObservationContext";
 
@@ -92,16 +95,26 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
             
         case 1:
         {
+            // Figure out the right view controller to load
+            SVSiteItem *item = [pages objectAtIndex:0];
+            Class viewControllerClass = [item viewControllerClass];
+            
+            NSViewController <SVSiteItemViewController> *viewController = nil;
+            for (viewController in [self viewControllers])
+            {
+                if ([viewController isKindOfClass:viewControllerClass]) break;
+            }
+            if (!viewController)
+            {
+                // No suitable view controller was found, so create one
+                viewController = [[viewControllerClass alloc] init];
+                [self addViewController:viewController];
+                [viewController release];
+            }
+            
             // Start the load here. Once it's finished (or takes too long) we'll switch to the appropriate view
-            id item = [pages objectAtIndex:0];
-            if ([item isKindOfClass:[KTPage class]])
-            {
-                [[self webEditorViewController] setPage:item];
-            }
-            else
-            {
-                [[self webEditorViewController] setPage:nil];
-            }
+            [viewController loadSiteItem:item];
+            
             break;
         }
         default:
@@ -231,6 +244,11 @@ static NSString *sWebViewLoadingObservationContext = @"SVWebViewLoadControllerLo
             [object setValue:[NSArray arrayWithObject:page] forKeyPath:keyPath];
         }
     }
+}
+
+- (void)siteItemViewControllerShowSourceView:(NSViewController <SVSiteItemViewController> *)viewController
+{
+    [self setViewType:KTSourceCodeView];
 }
 
 #pragma mark KVO
