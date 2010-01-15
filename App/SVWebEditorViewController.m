@@ -41,6 +41,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @interface SVWebEditorViewController ()
 
+@property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
+
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
 
 @property(nonatomic, retain, readwrite) SVHTMLContext *HTMLContext;
@@ -139,9 +141,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Presentation
 
-- (BOOL)viewIsReadyToAppear { return ![self isUpdating]; }
-
-+ (NSSet *)keyPathsForValuesAffectingViewIsReadyToAppear { return [NSSet setWithObject:@"updating"]; }
+@synthesize viewIsReadyToAppear = _readyToAppear;
 
 - (void)webViewDidFirstLayout
 {
@@ -158,7 +158,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // This method will be called fractionally after the webview has done its first layout, and (hopefully!) before that layout has actually been drawn. Therefore, if the webview is still loading by this point, it was an intermediate load and not suitable for display to the user, so switch over to the placeholder.
     if ([self isUpdating]) 
     {
-        
+        [self setViewIsReadyToAppear:NO];
     }
 }
 
@@ -200,6 +200,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
     [self setUpdating:YES];
+    [self setViewIsReadyToAppear:YES];
     _visibleRect = [[[self webEditor] documentView] visibleRect];
     
     

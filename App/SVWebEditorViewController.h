@@ -26,6 +26,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 {
     // View
     SVWebEditorView *_webEditorView;
+    BOOL            _readyToAppear;
     
     // Model
     KTPage                      *_page;
