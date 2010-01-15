@@ -70,9 +70,13 @@
     
         KTPage *predecessor = parent;
         NSArray *children = [parent childrenWithSorting:KTCollectionSortLatestAtTop inIndex:NO];
-        if ([children count] > 0)
+        for (SVSiteItem *aChild in children)
         {
-            predecessor = [children firstObjectKS];
+            if ([aChild isKindOfClass:[KTPage class]])
+            {
+                predecessor = aChild;
+                break;
+            }
         }
         
         
