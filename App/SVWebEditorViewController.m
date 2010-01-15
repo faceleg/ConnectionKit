@@ -200,7 +200,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
     [self setUpdating:YES];
-    [self setViewIsReadyToAppear:YES];
     _visibleRect = [[[self webEditor] documentView] visibleRect];
     
     
@@ -392,6 +391,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Mark as loaded
     [self setUpdating:NO];
+    [self setViewIsReadyToAppear:YES];
 }
 
 - (void)scheduleUpdate
