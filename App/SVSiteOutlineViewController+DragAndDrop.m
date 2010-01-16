@@ -48,14 +48,16 @@
 @end
 
 
+#pragma mark -
+
+
 @implementation SVSiteOutlineViewController (DragAndDrop)
 
-#pragma mark -
 #pragma mark Drag
 
-- (unsigned int)draggingSourceOperationMaskForLocal:(BOOL)isLocal
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {
-    if ( isLocal ) 
+    if (isLocal) 
 	{
         return NSDragOperationMove;
     }
@@ -71,8 +73,11 @@
  */
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
-	[pboard declareTypes:[NSArray arrayWithObjects:kKTOutlineDraggingPboardType, kKTPagesPboardType, nil] owner:self];
-	
+	[pboard declareTypes:[NSArray array] owner:self];
+	return YES;
+    
+    
+    
 	NSMutableArray *allRows = [NSMutableArray arrayWithCapacity:[items count]];
 	
 	// copy parent row numbers to pboard
