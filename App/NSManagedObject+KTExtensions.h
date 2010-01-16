@@ -67,4 +67,9 @@
 - (id)transientValueForKey:(NSString *)key persistentArchivedDataKey:(NSString *)dataKey;
 - (void)setTransientValue:(id)value forKey:(NSString *)key persistentArchivedDataKey:(NSString *)dataKey;
 
+
+#pragma mark Serialization
+- (id)propertyListRepresentation;               // calls [self serializedValueForKey:] with each non-transient attribute
+- (id)serializedValueForKey:(NSString *)key;    // MUST return a plist object. Override to handle invalid types
+
 @end

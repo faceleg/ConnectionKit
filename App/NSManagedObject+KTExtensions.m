@@ -8,9 +8,12 @@
 
 #import "NSManagedObject+KTExtensions.h"
 
-#import "Debug.h"
-#import "NSString+Karelia.h"
+#import "NSEntityDescription+KTExtensions.h"
 #import "NSString+KTExtensions.h"
+
+#import "NSString+Karelia.h"
+
+#import "Debug.h"
 
 
 @interface NSManagedObject (KTExtensionsPrivate)
@@ -526,6 +529,28 @@
 	[self setValue:data forKey:dataKey];
 	
 	//[self unlockPSCAndMOC];
+}
+
+#pragma mark Serialization
+
+- (id)propertyListRepresentation;               // calls [self serializedValueForKey:] with each non-transient attribute
+{
+    NSDictionary *attributes = [[self entity] propertiesByNameOfClass:[NSAttributeDescription class]
+                                           includeTransientProperties:NO];
+    
+    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:[attributes count]];
+    for (NSString *aKey in attributes)
+    {
+        id serializedValue = [self serializedValueForKey:aKey];
+        if (serializedValue) [result setObject:serializedValue forKey:aKey];
+    }
+    
+    return result;
+}
+
+- (id)serializedValueForKey:(NSString *)key
+{
+    return [self valueForKey:key];
 }
 
 @end
