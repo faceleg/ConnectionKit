@@ -42,6 +42,7 @@
 - (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
+- (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
 - (NSArray *)itemsForRows:(NSArray *)anArray;
 - (BOOL)item:(id)anItem isDescendantOfItem:(id)anotherItem;
 - (BOOL)items:(NSArray *)items containsParentOfItem:(id)item;
@@ -65,12 +66,6 @@
     return NSDragOperationCopy;
 }
 
-/*! writes the row number for each selected row to the pboard (as an NSString)
- allRows is an array of every selected row's number
- parentRows, a subset of allRows, lists the rows at the top of the selection
- tree, i.e., those rows not contained within another selected item.
- in theory, just moving the parentRows should bring along everything
- */
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
 	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
@@ -83,67 +78,81 @@
     
     
 	return YES;
-    
-    
-    
-    
-    
-	NSMutableArray *allRows = [NSMutableArray arrayWithCapacity:[items count]];
-	
-	// copy parent row numbers to pboard
-	NSMutableArray *parentRows = [NSMutableArray arrayWithCapacity:[items count]];
-	NSMutableDictionary *pboardData = [NSMutableDictionary dictionary];
-	
-	NSEnumerator *e = [items objectEnumerator];
-	id item;
-	while ( item = [e nextObject] )
-	{
-		[allRows addObject:[NSString stringWithFormat:@"%i", [[self outlineView] rowForItem:item]]];
-		if ( ![self items:items containsParentOfItem:item] )
-		{
-			[parentRows addObject:[NSString stringWithFormat:@"%i", [[self outlineView] rowForItem:item]]];
-		}
-	}
-	
-	// once we know allRows, we can check for root
-	if ( 0 == [[allRows objectAtIndex:0] intValue] )
-	{
-		// the rootFolder (item at row 0) should not be draggable
-		return NO;
-	}
-	
-	[pboardData setObject:allRows forKey:@"allRows"];
-	[pboardData setObject:parentRows forKey:@"parentRows"];
-	[pboard setPropertyList:pboardData forType:kKTOutlineDraggingPboardType];
-	
-	//  package up the selected page(s)
-	//  NB: we package any children within the parents
-	NSMutableArray *archivedPages = [NSMutableArray arrayWithCapacity:[parentRows count]];
-	NSArray *parentObjects = [self itemsForRows:parentRows];
-	e = [parentObjects objectEnumerator];
-	KTPage *aPage;
-	while (aPage = [e nextObject])
-	{
-		[archivedPages addObject:[aPage pasteboardRepresentation]];
-	}
-	
-	
-	// now, pop it on the pasteboard
-	NSData *copyData = [NSKeyedArchiver archivedDataWithRootObject:[NSArray arrayWithArray:archivedPages]];
-	[pboard setData:copyData forType:kKTPagesPboardType];
-	
-	return YES;
 }
 
-#pragma mark -
 #pragma mark Drop
+
+- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)info
+               proposedSiteItem:(SVSiteItem *)item
+             proposedChildIndex:(NSInteger)index;
+{
+    //  Rather like the Outline View datasource method, but has already taken into account the layout of root
+    
+    
+    // Only a collection can be dropped on/into
+    if ([item isCollection])
+    {
+        if (index != NSOutlineViewDropOnItemIndex)
+        {
+            // They're trying to drop at a specific index - is this allowable?
+            if (![item isCollection] ||
+                [[(KTPage *)item collectionSortOrder] integerValue] != SVCollectionSortManually)
+            {
+                [self setDropSiteItem:item dropChildIndex:NSOutlineViewDropOnItemIndex];
+            }
+        }
+    }
+    else
+    {
+        // Drop into parent
+        [self setDropSiteItem:[item parentPage] dropChildIndex:NSOutlineViewDropOnItemIndex];
+    }
+    
+    
+    return NSDragOperationCopy;
+}
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView
 				  validateDrop:(id <NSDraggingInfo>)info
 				  proposedItem:(id)item
-			proposedChildIndex:(int)anIndex
+			proposedChildIndex:(NSInteger)anIndex
 {
-	//LOG((@"validateDrop: %@ proposedItem: %@ proposedChildIndex: %i", info, [item fileName], anIndex));
+    // THE RULES:
+    //  You can always drop *on* a collection
+    //  You can only drop *at* a specific index if the containing collection is manually sorted
+    
+    
+    SVSiteItem *siteItem = item;
+    NSInteger index = anIndex;
+    
+    // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
+    if (!item)
+    {
+        siteItem = [self rootPage];
+        if (anIndex != NSOutlineViewDropOnItemIndex) 
+        {
+            if (anIndex >= 1)
+            {
+                index--;
+            }
+            else
+            {
+                // Disallow dropping before the root page, consider it to be a drop onto root
+                index = NSOutlineViewDropOnItemIndex;
+                [outlineView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
+            }
+        }
+    }
+    
+    
+    
+    return [self validateDrop:info proposedSiteItem:siteItem proposedChildIndex:index];
+    
+    
+    
+    
+    
+    
 	NSPasteboard *pboard = [info draggingPasteboard];
 	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
 	NSArray *allRows = [pboardData objectForKey:@"allRows"];
@@ -817,6 +826,22 @@
 	return result;
 }
 			
+- (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
+{
+    //  Like the NSOutlineView method, but accounts for root
+    OBPRECONDITION(item);
+    
+    
+    if (item == [self rootPage] && index != NSOutlineViewDropOnItemIndex)
+    {
+        [[self outlineView] setDropItem:nil dropChildIndex:(index + 1)];
+    }
+    else
+    {
+        [[self outlineView] setDropItem:item dropChildIndex:index];
+    }
+}
+
 #pragma mark -
 #pragma mark Support
 
