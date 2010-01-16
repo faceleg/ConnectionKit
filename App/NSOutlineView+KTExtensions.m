@@ -12,6 +12,8 @@
 
 @implementation NSOutlineView (KTExtensions)
 
+#pragma mark Items
+
 - (int)numberOfChildrenOfItem:(id)item;
 {
 	int result = [[self dataSource] outlineView:self numberOfChildrenOfItem:item];
@@ -24,7 +26,46 @@
 	return result;
 }
 
-#pragma mark -
+- (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
+{
+	// We can bail early in certain circumstances
+	if (!rowIndexes || [rowIndexes count] <= 0)
+	{
+		return nil;
+	}
+	
+	
+	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[rowIndexes count]];
+	
+	unsigned index = [rowIndexes firstIndex];
+	[buffer addObject:[self itemAtRow:index]];
+	
+	while ((index = [rowIndexes indexGreaterThanIndex:index]) != NSNotFound)
+	{
+		[buffer addObject:[self itemAtRow:index]];
+	}
+	
+	return [[buffer copy] autorelease];
+}
+
+- (NSIndexSet *)rowsForItems:(NSArray *)items;
+{
+	NSMutableIndexSet *buffer = [[NSMutableIndexSet alloc] init];
+	NSEnumerator *itemsEnumerator = [items objectEnumerator];
+	id anItem;		int aRow;
+	
+	while (anItem = [itemsEnumerator nextObject])
+	{
+		aRow = [self rowForItem:anItem];
+		[buffer addIndex:aRow];
+	}
+	
+	// Tidy up
+	NSIndexSet *result = [[buffer copy] autorelease];
+	[buffer release];
+	return result;
+}
+
 #pragma mark Selection
 
 - (void)expandSelectedRow
@@ -176,46 +217,6 @@
 - (id)itemAboveFirstSelectedRow
 {
     return [self itemAtRow:[[self selectedRowIndexes] firstIndex]-1];
-}
-
-- (NSArray *)itemsAtRows:(NSIndexSet *)rowIndexes
-{
-	// We can bail early in certain circumstances
-	if (!rowIndexes || [rowIndexes count] <= 0)
-	{
-		return nil;
-	}
-	
-	
-	NSMutableArray *buffer = [NSMutableArray arrayWithCapacity:[rowIndexes count]];
-	
-	unsigned index = [rowIndexes firstIndex];
-	[buffer addObject:[self itemAtRow:index]];
-	
-	while ((index = [rowIndexes indexGreaterThanIndex:index]) != NSNotFound)
-	{
-		[buffer addObject:[self itemAtRow:index]];
-	}
-	
-	return [[buffer copy] autorelease];
-}
-
-- (NSIndexSet *)rowsForItems:(NSArray *)items;
-{
-	NSMutableIndexSet *buffer = [[NSMutableIndexSet alloc] init];
-	NSEnumerator *itemsEnumerator = [items objectEnumerator];
-	id anItem;		int aRow;
-	
-	while (anItem = [itemsEnumerator nextObject])
-	{
-		aRow = [self rowForItem:anItem];
-		[buffer addIndex:aRow];
-	}
-	
-	// Tidy up
-	NSIndexSet *result = [[buffer copy] autorelease];
-	[buffer release];
-	return result;
 }
 
 #pragma mark -
