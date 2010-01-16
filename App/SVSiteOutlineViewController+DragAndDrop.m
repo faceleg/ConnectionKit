@@ -91,7 +91,7 @@
     [_draggedItems release]; _draggedItems = items;
 }
 
-#pragma mark Drop
+#pragma mark Validating a Drop
 
 - (NSDragOperation)validateNonLinkDrop:(id <NSDraggingInfo>)info
                     proposedCollection:(KTPage *)collection
@@ -197,10 +197,10 @@
     //  4.  When moving an existing page, can't drop it as a descendant of itself
     
     
-    SVSiteItem *siteItem = item;
-    NSInteger index = anIndex;
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
+    SVSiteItem *siteItem = item;
+    NSInteger index = anIndex;
     if (!siteItem)
     {
         if (anIndex == 0) return NSDragOperationNone;   // rule 3.
@@ -226,25 +226,17 @@
     return NSDragOperationNone;
 }
 
-- (BOOL)outlineView:(NSOutlineView *)outlineView acceptDrop:(id <NSDraggingInfo>)info item:(id)item childIndex:(int)anIndex
+#pragma mark Accepting a Drop
+
+- (BOOL)acceptNonLinkDrop:(id <NSDraggingInfo>)info
+               collection:(KTPage *)collection
+               childIndex:(int)index;
 {
-	// Remember, links are special
+    OBPRECONDITION(collection);
+    
+    
+    // The new page must be a child of something
     NSPasteboard *pboard = [info draggingPasteboard];
-	if ([[pboard types] containsObject:kKTLocalLinkPboardType])
-	{
-        [pboard setString:[(KTPage *)item uniqueID] forType:kKTLocalLinkPboardType];
-        return YES;
-    }
-    
-    
-    
-    
-    
-    
-	
-	// The new page must be a child of something
-	KTPage *proposedParent = item;
-	if (!proposedParent) proposedParent = [self rootPage];
 	
 	BOOL cameFromProgram = nil != [info draggingSource];
 	
@@ -255,7 +247,7 @@
 			// drag is internal to document
 			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
 			{
-				BOOL result = [self acceptInternalDrop:pboard ontoPage:proposedParent childIndex:anIndex];
+				BOOL result = [self acceptInternalDrop:pboard ontoPage:collection childIndex:index];
 				return result;
 			}
 			else if ( NO )
@@ -271,7 +263,7 @@
 			if (pboardData)
 			{
 				NSArray *archivedPages = [NSKeyedUnarchiver unarchiveObjectWithData:pboardData];
-				return [self acceptArchivedPagesDrop:archivedPages ontoPage:proposedParent childIndex:anIndex];
+				return [self acceptArchivedPagesDrop:archivedPages ontoPage:collection childIndex:index];
 			}
 		}
 	}
@@ -279,24 +271,66 @@
 	{
 		// hide the pulsating window
 		// Get the page and update the pboard with it ... a way to send the info back to the origin of the drag!
-		[pboard setString:[(KTPage *)item uniqueID] forType:kKTLocalLinkPboardType];
+		[pboard setString:[collection uniqueID] forType:kKTLocalLinkPboardType];
 		return YES;
 	}
 	
 	// this should be a drag in from outside the application, or an internal drag not covered above.
 	// we want to find a drag source for it and let it do its thing
-	int dropIndex = anIndex;
-	id dropItem = item;
+	int dropIndex = index;
+	id dropItem = collection;
 	if ( nil == dropItem )
 	{
 		dropItem = [self rootPage];
-		dropIndex = anIndex-1;
+		dropIndex = index-1;
 	}
 	//LOG((@"accepting drop from external source on %@ at index %i", [dropItem fileName], dropIndex));
 	BOOL result = [[self windowController] addPagesViaDragToCollection:dropItem atIndex:dropIndex draggingInfo:info];
 	return result;
 }
 
+- (BOOL)outlineView:(NSOutlineView *)outlineView
+         acceptDrop:(id <NSDraggingInfo>)info
+               item:(id)item
+         childIndex:(int)anIndex
+{
+	// Remember, links are special
+    NSPasteboard *pboard = [info draggingPasteboard];
+	if ([[pboard types] containsObject:kKTLocalLinkPboardType])
+	{
+        [pboard setString:[(KTPage *)item uniqueID] forType:kKTLocalLinkPboardType];
+        return YES;
+    }
+    
+    
+    // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
+    SVSiteItem *siteItem = item;
+    NSInteger index = anIndex;
+    if (!siteItem)
+    {
+        if (anIndex == 0) return NO;   // rule 3.
+        
+        siteItem = [self rootPage];
+        if (index != NSOutlineViewDropOnItemIndex) 
+        {
+            index--;    // we've already weeded out the case of index being 0
+        }
+    }
+    OBASSERT(siteItem);
+    
+    
+    // Rule 1. Only a collection can be dropped on/into.
+    if ([siteItem isCollection])
+    {
+        return [self acceptNonLinkDrop:info
+                            collection:[siteItem pageRepresentation]
+                            childIndex:index];
+    }
+    
+    
+    return NO;
+}
+	
 
 /*	Called when rearranging pages within the Site Outline
  */
