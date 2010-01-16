@@ -85,29 +85,22 @@
 #pragma mark Drop
 
 - (NSDragOperation)validateNonLinkDrop:(id <NSDraggingInfo>)info
-                      proposedSiteItem:(SVSiteItem *)item
+                    proposedCollection:(KTPage *)collection
                     proposedChildIndex:(NSInteger)index;
 {
     //  Rather like the Outline View datasource method, but has already taken into account the layout of root
     
     
-    OBPRECONDITION(item);
+    OBPRECONDITION(collection);
+    OBPRECONDITION([collection isCollection]);
     
     
-    if ([item isCollection])
+    // Rule 2.
+    if (index != NSOutlineViewDropOnItemIndex &&
+        [[collection collectionSortOrder] integerValue] != SVCollectionSortManually)
     {
-        // Rule 2.
-        if (index != NSOutlineViewDropOnItemIndex &&
-            [[(KTPage *)item collectionSortOrder] integerValue] != SVCollectionSortManually)
-        {
-            index = NSOutlineViewDropOnItemIndex;
-            [self setDropSiteItem:item dropChildIndex:index];
-        }
-    }
-    else
-    {
-        // Rule 1. Only a collection can be dropped on/into.
-        return NSDragOperationNone;
+        index = NSOutlineViewDropOnItemIndex;
+        [self setDropSiteItem:collection dropChildIndex:index];
     }
     
     
@@ -189,10 +182,20 @@
             index--;    // we've already weeded out the case of index being 0
         }
     }
+    OBASSERT(siteItem);
     
     
+    // Rule 1. Only a collection can be dropped on/into.
+    if ([siteItem isCollection])
+    {
+        return [self validateNonLinkDrop:info
+                      proposedCollection:[siteItem pageRepresentation]
+                      proposedChildIndex:index];
+    }
     
-    return [self validateNonLinkDrop:info proposedSiteItem:siteItem proposedChildIndex:index];
+    
+    return NSDragOperationNone;
+    
     
     
     
