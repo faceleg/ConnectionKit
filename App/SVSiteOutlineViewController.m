@@ -593,7 +593,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		result = [[item sortedChildren] count];
 		
 		// Root is a special case where we have to add 1 to the total
-		if (item = [self rootPage]) result += 1;
+		if (item == [self rootPage]) result += 1;
 	}
 	
 	return result;
