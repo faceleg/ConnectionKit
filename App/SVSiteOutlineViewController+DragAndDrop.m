@@ -42,7 +42,6 @@
 - (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
-- (KTDocWindowController *)windowController;
 - (NSArray *)itemsForRows:(NSArray *)anArray;
 - (BOOL)item:(id)anItem isDescendantOfItem:(id)anotherItem;
 - (BOOL)items:(NSArray *)items containsParentOfItem:(id)item;
@@ -805,8 +804,6 @@
 			
 #pragma mark -
 #pragma mark Support
-
-- (KTDocWindowController *)windowController { return [[self content] windowController]; }
 
 - (NSArray *)itemsForRows:(NSArray *)anArray
 {
