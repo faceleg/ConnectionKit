@@ -267,13 +267,6 @@
 			}
 		}
 	}
-	else if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kKTLocalLinkPboardType]] )
-	{
-		// hide the pulsating window
-		// Get the page and update the pboard with it ... a way to send the info back to the origin of the drag!
-		[pboard setString:[collection uniqueID] forType:kKTLocalLinkPboardType];
-		return YES;
-	}
 	
 	// this should be a drag in from outside the application, or an internal drag not covered above.
 	// we want to find a drag source for it and let it do its thing
