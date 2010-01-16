@@ -349,7 +349,7 @@
 		KTPage *aPage;
 		while (aPage = [pageEnumerator nextObject])
 		{
-			OBASSERT(![self isDescendantOfPage:aPage]); // lots of assertions for #44139
+			OBASSERT(![self isDescendantOfCollection:aPage]); // lots of assertions for #44139
             OBASSERT(aPage != self);
             OBASSERT(![[aPage childItems] containsObject:self]);
             

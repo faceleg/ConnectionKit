@@ -149,6 +149,34 @@
     return result;
 }
 
+- (BOOL)isDescendantOfCollection:(KTPage *)aPotentialAncestor;
+{
+	if (aPotentialAncestor == self) return YES;
+    
+    KTPage *parent = [self parentPage];
+	if (nil == parent)		// we are at the root node, so it can't be descended from the given node
+	{
+		return NO;
+	}
+	if (aPotentialAncestor == parent)
+	{
+		return YES;
+	}
+	return [parent isDescendantOfCollection:aPotentialAncestor];
+}
+
+- (BOOL)isDescendantOfItem:(SVSiteItem *)aPotentialAncestor;
+{
+    BOOL result = NO;
+    
+    if ([aPotentialAncestor isCollection])
+    {
+        result = [self isDescendantOfCollection:(KTPage *)aPotentialAncestor];
+    }
+    
+    return result;
+}
+
 - (short)childIndex { return [self wrappedIntegerForKey:@"childIndex"]; }
 
 - (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }

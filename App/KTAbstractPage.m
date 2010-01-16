@@ -124,20 +124,6 @@
 	return result;
 }
 
-- (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
-{
-	KTPage *parent = [self parentPage];
-	if (nil == parent)		// we are at the root node, so it can't be descended from the given node
-	{
-		return NO;
-	}
-	if (aPotentialAncestor == parent)
-	{
-		return YES;
-	}
-	return [parent isDescendantOfPage:aPotentialAncestor];
-}
-
 #pragma mark Other Relationships
 
 - (KTSite *)site { return [self wrappedValueForKey:@"site"]; }

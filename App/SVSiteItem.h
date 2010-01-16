@@ -57,6 +57,9 @@
 @property(nonatomic, retain) KTPage *parentPage;
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 
+- (BOOL)isDescendantOfCollection:(KTPage *)collection;
+- (BOOL)isDescendantOfItem:(SVSiteItem *)aPotentialAncestor;
+
 // Don't bother setting this manually, get KTPage or controller to do it
 @property(nonatomic) short childIndex;
 

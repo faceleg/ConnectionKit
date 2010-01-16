@@ -23,7 +23,7 @@
 
 // Hierarchy
 - (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
-- (BOOL)isDescendantOfPage:(KTPage *)aPotentialAncestor;
+- (BOOL)isDescendantOfCollection:(KTPage *)aPotentialAncestor;
 
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(SVCollectionSortOrder)aSortType

@@ -53,7 +53,6 @@ KTCollectionPathStyle;
 @property(nonatomic, copy, readonly) NSSet *archivePages;
 - (BOOL)isCollection;
 
-- (BOOL)isDescendantOfPage:(KTAbstractPage *)aPotentialAncestor;
 - (BOOL)isRoot;
 
 
