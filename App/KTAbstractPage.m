@@ -329,12 +329,14 @@
  */
 - (NSData *)publishedDataDigest
 {
-    return [self valueForUndefinedKey:@"publishedDataDigest"]; 
+    return [self extensiblePropertyForKey:@"publishedDataDigest"]; 
 }
 
 - (void)setPublishedDataDigest:(NSData *)digest
 {
-    [self setValue:digest forUndefinedKey:@"publishedDataDigest"];
+    [self willChangeValueForKey:@"publishedDataDigest"];
+    [self setExtensibleProperty:digest forKey:@"publishedDataDigest"];
+    [self didChangeValueForKey:@"publishedDataDigest"];
 }
 
 @end

@@ -190,8 +190,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     if (context == sPlugInPropertiesObservationContext)
     {
         // Copy serialized value to MOC
-        [self setValue:[[self plugIn] serializedValueForKey:keyPath]
-       forUndefinedKey:keyPath];
+        [self setExtensibleProperty:[[self plugIn] serializedValueForKey:keyPath]
+                             forKey:keyPath];
     }
     else
     {
