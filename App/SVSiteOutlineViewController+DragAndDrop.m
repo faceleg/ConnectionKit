@@ -104,6 +104,13 @@
     }
     
     
+    
+    // Is the aim to move a page within the Site Outline?
+    if ([info draggingSource] == [self outlineView])
+    {
+        return NSDragOperationMove;
+    }
+    
         
     return NSDragOperationCopy;
 }
