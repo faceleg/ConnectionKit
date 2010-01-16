@@ -94,34 +94,24 @@
     OBPRECONDITION(item);
     
     
-    // Only a collection can be dropped on/into
-    if (![item isCollection])
-    {
-        return NSDragOperationNone;
-    }
-    
-    return NSDragOperationMove;
-    
-    
     if ([item isCollection])
     {
-        if (index != NSOutlineViewDropOnItemIndex)
+        // Rule 2.
+        if (index != NSOutlineViewDropOnItemIndex &&
+            [[(KTPage *)item collectionSortOrder] integerValue] != SVCollectionSortManually)
         {
-            // They're trying to drop at a specific index - is this allowable?
-            if (![item isCollection] ||
-                [[(KTPage *)item collectionSortOrder] integerValue] != SVCollectionSortManually)
-            {
-                [self setDropSiteItem:item dropChildIndex:NSOutlineViewDropOnItemIndex];
-            }
+            index = NSOutlineViewDropOnItemIndex;
+            [self setDropSiteItem:item dropChildIndex:index];
         }
     }
     else
     {
-        // Drop into parent
-        [self setDropSiteItem:[item parentPage] dropChildIndex:NSOutlineViewDropOnItemIndex];
+        // Rule 1. Only a collection can be dropped on/into.
+        return NSDragOperationNone;
     }
     
     
+        
     return NSDragOperationCopy;
 }
 
@@ -179,9 +169,10 @@
 	
     
     // THE RULES:
-    //  1.  You can always drop *on* a collection
-    //  2.  You can only drop *at* a specific index if the containing collection is manually sorted
+    //  1.  The drop item can only be a collection
+    //  2.  You can only drop at a specific index if the collection is manually sorted
     //  3.  You can't drop above the root page
+    //  4.  When moving an existing page, can't drop it as a descendant of itself
     
     
     SVSiteItem *siteItem = item;
@@ -190,7 +181,7 @@
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
     if (!siteItem)
     {
-        if (anIndex == 0) return NSDragOperationNone;   // 3.
+        if (anIndex == 0) return NSDragOperationNone;   // rule 3.
         
         siteItem = [self rootPage];
         if (index != NSOutlineViewDropOnItemIndex) 
@@ -708,7 +699,7 @@
 	NSArray *draggedItems = [[self outlineView] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
 	
 	
-	// The behavior is different depending on the drag destination.
+	// The behaviour is different depending on the drag destination.
 	// Drops into the middle of an unsorted collection need to also have their indexes set.
 	if (dropRow > -1 && [page collectionSortOrder] == SVCollectionSortManually)
 	{
@@ -749,7 +740,7 @@
 	
 	// Record the Undo operation
     // For reasons I cannot fathom, on Tiger this upsets the undo manager if you are dragging a freshly created page. Turning it off keeps things reasonably happy, but if you hit undo the page is deleted immediately, and hitting undo again raises an exception. It's definitely not ideal, but the best compromise I can find for now. (case 41296)
-	//[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects withing the outline")];
+	//[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects within the outline")];
 	
 	return YES;
 }
@@ -825,7 +816,7 @@
 	}
 	
 	[[[[self rootPage] managedObjectContext] undoManager] setActionName:NSLocalizedString(@"Drag",
-																   @"action name for dragging source objects withing the outline")];
+																   @"action name for dragging source objects within the outline")];
 	
 	[progressPanel endSheet];
     [progressPanel release];
