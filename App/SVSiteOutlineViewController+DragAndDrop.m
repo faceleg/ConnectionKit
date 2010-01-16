@@ -94,24 +94,6 @@
     OBPRECONDITION(item);
     
     
-    // There's 2 basic types of drop: creating a link, and everything else. Links are special because they create nothing. Instead it's a feedback mechanism to the source view
-    
-    NSPasteboard *pboard = [info draggingPasteboard];
-    if ([[pboard types] containsObject:kKTLocalLinkPboardType])
-	{
-        if (index == NSOutlineViewDropOnItemIndex)
-        {
-            NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardType];
-            return [self validateLinkDrop:pboardString onProposedItem:item];
-        }
-        else
-        {
-            return NSDragOperationNone;
-        }
-    }
-        
-	
-    
     // Only a collection can be dropped into
     if (index != NSOutlineViewDropOnItemIndex && ![item isCollection])
     {
@@ -178,6 +160,24 @@
 				  proposedItem:(id)item
 			proposedChildIndex:(NSInteger)anIndex
 {
+    // There's 2 basic types of drop: creating a link, and everything else. Links are special because they create nothing. Instead it's a feedback mechanism to the source view
+    
+    NSPasteboard *pboard = [info draggingPasteboard];
+    if ([[pboard types] containsObject:kKTLocalLinkPboardType])
+	{
+        if (item && anIndex == NSOutlineViewDropOnItemIndex)
+        {
+            NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardType];
+            return [self validateLinkDrop:pboardString onProposedItem:item];
+        }
+        else
+        {
+            return NSDragOperationNone;
+        }
+    }
+    
+	
+    
     // THE RULES:
     //  You can always drop *on* a collection
     //  You can only drop *at* a specific index if the containing collection is manually sorted
@@ -215,7 +215,6 @@
     
     
     
-	NSPasteboard *pboard = [info draggingPasteboard];
 	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
 	NSArray *allRows = [pboardData objectForKey:@"allRows"];
 	
