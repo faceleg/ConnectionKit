@@ -829,14 +829,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)loadSiteItem:(SVSiteItem *)item;
 {
-    if ([item isKindOfClass:[KTPage class]])
-    {
-        [self setPage:(KTPage *)item];
-    }
-    else
-    {
-        [self setPage:nil];
-    }
+    [self setPage:[item pageRepresentation]];
 }
 
 #pragma mark -

@@ -96,6 +96,10 @@
 - (NSURL *)URL { return nil; }
 - (NSString *)fileName { return nil; }
 
+#pragma mark Editing
+
+- (KTPage *)pageRepresentation { return nil; }
+
 #pragma mark Publishing
 
 @dynamic publishedPath;

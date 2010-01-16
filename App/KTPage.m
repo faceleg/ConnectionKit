@@ -400,7 +400,10 @@
 
 - (NSString *)archiveIdentifier { return [self uniqueID]; }
 
-#pragma mark -
+#pragma mark Editing
+
+- (KTPage *)pageRepresentation { return self; }
+
 #pragma mark Debugging
 
 // More human-readable description

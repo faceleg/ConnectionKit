@@ -40,6 +40,10 @@
 @property(nonatomic, copy, readonly) NSString *fileName;    // nil by default, for subclasses to override
 
 
+#pragma mark Editing
+- (KTPage *)pageRepresentation; // default returns nil. KTPage returns self so Web Editor View Controller can handle
+
+
 #pragma mark Publishing
 @property(nonatomic, copy) NSString *publishedPath;
 - (BOOL)includeInIndexAndPublish;
