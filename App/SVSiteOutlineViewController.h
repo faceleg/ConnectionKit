@@ -37,6 +37,9 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 	
 	NSMutableArray		*_customIconGenerationQueue;
 	KTPage				*_generatingCustomIcon;			// Used in KTSiteOutlineDataSource+Icons.m
+    
+    // Drag & Drop
+    NSArray *_draggedItems;
 }
 
 @property(nonatomic, retain) IBOutlet NSOutlineView *outlineView;
@@ -80,3 +83,6 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @end
 
 
+@interface SVSiteOutlineViewController (DragAndDrop)
+@property(nonatomic, copy) NSArray *lastItemsWrittenToPasteboard;   // call with nil to clean out
+@end

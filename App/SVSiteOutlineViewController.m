@@ -96,11 +96,15 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	// Dump view
     [self setOutlineView:nil];
     
+    
     // Dump the pages list
+    [_draggedItems release];
+    
 	[self resetPageObservation];       // This will also remove home page observation
     OBASSERT([_pages count] == 0);
 	[_pages release];
 	
+    
 	[_cachedFavicon release];
 	[_cachedPluginIcons release];
 	[_cachedCustomPageIcons release];
@@ -831,7 +835,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	while (anItem = [selectionEnumerator nextObject])
 	{
-		if (![anItem isDescendantOfPage:collapsingItem])
+		if (![anItem isDescendantOfCollection:collapsingItem])
 		{
 			shouldSelectCollapsingItem = NO;
 			break;

@@ -73,6 +73,8 @@
 	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
     
     NSArray *pages = items; // TODO: Only write the highest-level pages
+    [self setLastItemsWrittenToPasteboard:pages];
+    
     NSArray *serializedPages = [pages valueForKey:@"propertyListRepresentation"];
     [pboard setPropertyList:serializedPages forType:kKTPagesPboardType];
     
@@ -80,6 +82,13 @@
     
     
 	return YES;
+}
+
+- (NSArray *)lastItemsWrittenToPasteboard { return _draggedItems; }
+- (void)setLastItemsWrittenToPasteboard:(NSArray *)items
+{
+    items = [items copy];
+    [_draggedItems release]; _draggedItems = items;
 }
 
 #pragma mark Drop
@@ -108,6 +117,15 @@
     // Is the aim to move a page within the Site Outline?
     if ([info draggingSource] == [self outlineView])
     {
+        NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
+        
+        // Rule 4. Don't allow a collection to become a descendant of itself
+        for (SVSiteItem *aDraggedItem in draggedItems)
+        {
+            if ([collection isDescendantOfItem:aDraggedItem]) return NSDragOperationNone;
+        }
+        
+        
         return NSDragOperationMove;
     }
     
