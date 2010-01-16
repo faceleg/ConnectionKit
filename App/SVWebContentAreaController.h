@@ -57,7 +57,11 @@ typedef enum {
 
 
 #pragma mark View Controllers
+
 @property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
+
+- (void)selectSiteItemViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *)controller;
+- (void)presentLoadingViewController;
 
 
 #pragma mark Delegate

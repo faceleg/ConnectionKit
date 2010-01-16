@@ -101,7 +101,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             
             // Start the load here. Present the view if it's ready; if not wait until it is (or takes too long)
             [viewController loadSiteItem:[pages objectAtIndex:0]];
-            if ([viewController viewIsReadyToAppear]) [self setSelectedViewController:viewController];
+            [self selectSiteItemViewControllerWhenReady:viewController];
             
             break;
         }
@@ -202,12 +202,40 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 
 @synthesize webEditorViewController = _webEditorViewController;
 
+- (void)selectSiteItemViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *)controller;
+{
+    //  Either the view's ready to appear, or we need to wait until it really is
+    
+    if ([controller viewIsReadyToAppear])
+    {
+        [self setSelectedViewController:controller];
+    }
+    else
+    {
+        [self performSelector:@selector(siteViewControllerSelectionMayHaveTimedOut) withObject:nil afterDelay:0.25];
+    }
+}
+
+- (void)presentLoadingViewController;
+{
+    [self setSelectedViewController:_placeholderViewController];
+    [[_placeholderViewController progressIndicator] startAnimation:self];
+}
+
 - (void)didSelectViewController;
 {
     [super didSelectViewController];
     
     // Inform delegate of change to title
     [[self delegate] webContentAreaControllerDidChangeTitle:self];
+}
+
+- (void)siteViewControllerSelectionMayHaveTimedOut
+{
+    if ([self selectedViewController] != [self viewControllerForViewType:[self viewType]])
+    {
+        [self presentLoadingViewController];
+    }
 }
 
 #pragma mark Delegate
@@ -264,8 +292,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             }
             else
             {
-                [self setSelectedViewController:_placeholderViewController];
-                [[_placeholderViewController progressIndicator] startAnimation:self];
+                [self presentLoadingViewController];
             }
         }
     }
