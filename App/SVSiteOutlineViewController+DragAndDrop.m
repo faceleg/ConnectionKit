@@ -192,12 +192,12 @@
     NSInteger index = anIndex;
     
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
-    if (!item)
+    if (!siteItem)
     {
         siteItem = [self rootPage];
-        if (anIndex != NSOutlineViewDropOnItemIndex) 
+        if (index != NSOutlineViewDropOnItemIndex) 
         {
-            if (anIndex >= 1)
+            if (index >= 1)
             {
                 index--;
             }
@@ -205,9 +205,10 @@
             {
                 // Disallow dropping before the root page, consider it to be a drop onto root
                 index = NSOutlineViewDropOnItemIndex;
-                [outlineView setDropItem:nil dropChildIndex:NSOutlineViewDropOnItemIndex];
             }
         }
+        
+        [outlineView setDropItem:siteItem dropChildIndex:NSOutlineViewDropOnItemIndex];
     }
     
     
