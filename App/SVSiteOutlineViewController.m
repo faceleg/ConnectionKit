@@ -142,7 +142,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
                                  [[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
     
-	[dragTypes addObject:kKTOutlineDraggingPboardType];
+	[dragTypes addObject:kKTPagesPboardType];
 	[dragTypes addObject:kKTLocalLinkPboardType];
 	[outlineView registerForDraggedTypes:dragTypes];
 	[outlineView setVerticalMotionCanBeginDrag:YES];
