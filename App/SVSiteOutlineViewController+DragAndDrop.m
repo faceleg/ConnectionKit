@@ -84,9 +84,9 @@
 
 #pragma mark Drop
 
-- (NSDragOperation)validateDrop:(id <NSDraggingInfo>)info
-               proposedSiteItem:(SVSiteItem *)item
-             proposedChildIndex:(NSInteger)index;
+- (NSDragOperation)validateNonLinkDrop:(id <NSDraggingInfo>)info
+                      proposedSiteItem:(SVSiteItem *)item
+                    proposedChildIndex:(NSInteger)index;
 {
     //  Rather like the Outline View datasource method, but has already taken into account the layout of root
     
@@ -94,13 +94,13 @@
     OBPRECONDITION(item);
     
     
-    // Only a collection can be dropped into
-    if (index != NSOutlineViewDropOnItemIndex && ![item isCollection])
+    // Only a collection can be dropped on/into
+    if (![item isCollection])
     {
         return NSDragOperationNone;
     }
     
-    
+    return NSDragOperationMove;
     
     
     if ([item isCollection])
@@ -179,8 +179,9 @@
 	
     
     // THE RULES:
-    //  You can always drop *on* a collection
-    //  You can only drop *at* a specific index if the containing collection is manually sorted
+    //  1.  You can always drop *on* a collection
+    //  2.  You can only drop *at* a specific index if the containing collection is manually sorted
+    //  3.  You can't drop above the root page
     
     
     SVSiteItem *siteItem = item;
@@ -189,26 +190,18 @@
     // Correct for the root page. i.e. a drop with a nil item is actually a drop onto/in the root page, and the index needs to be bumped slightly
     if (!siteItem)
     {
+        if (anIndex == 0) return NSDragOperationNone;   // 3.
+        
         siteItem = [self rootPage];
         if (index != NSOutlineViewDropOnItemIndex) 
         {
-            if (index >= 1)
-            {
-                index--;
-            }
-            else
-            {
-                // Disallow dropping before the root page, consider it to be a drop onto root
-                index = NSOutlineViewDropOnItemIndex;
-            }
+            index--;    // we've already weeded out the case of index being 0
         }
-        
-        [outlineView setDropItem:siteItem dropChildIndex:NSOutlineViewDropOnItemIndex];
     }
     
     
     
-    return [self validateDrop:info proposedSiteItem:siteItem proposedChildIndex:index];
+    return [self validateNonLinkDrop:info proposedSiteItem:siteItem proposedChildIndex:index];
     
     
     
