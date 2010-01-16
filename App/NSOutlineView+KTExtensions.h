@@ -29,8 +29,6 @@
 - (NSArray *)itemsAtRows:(NSIndexSet *)rowsIndexes;
 - (NSIndexSet *)rowsForItems:(NSArray *)items;
 
-- (id)parentOfItem:(id)item;
-
 #pragma mark Selection
 - (void)expandSelectedRow;
 - (int)makeItemVisible:(id)item;

@@ -24,23 +24,6 @@
 	return result;
 }
 
-/*	A similar method is available on Leopard. Ours:
- *		A) Supports Tiger
- *		B) Uses the data source to do the dirty work, which should be generally better
- */
-- (id)parentOfItem:(id)item
-{
-	id result = nil;
-	
-	id datasource = [self dataSource];
-	if (datasource && [datasource respondsToSelector:@selector(outlineView:parentOfItem:)])
-	{
-		result = [datasource outlineView:self parentOfItem:item];
-	}
-	
-	return result;
-}
-
 #pragma mark -
 #pragma mark Selection
 
