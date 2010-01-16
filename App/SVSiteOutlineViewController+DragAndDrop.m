@@ -115,7 +115,8 @@
     
     
     // Is the aim to move a page within the Site Outline?
-    if ([info draggingSource] == [self outlineView])
+    if ([info draggingSource] == [self outlineView] &&
+        [info draggingSourceOperationMask] & NSDragOperationMove)
     {
         NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
         
@@ -130,7 +131,10 @@
     }
     
         
-    return NSDragOperationCopy;
+    // Pretend we're going to do the preferred operation
+    if ([info draggingSourceOperationMask] & NSDragOperationCopy) return NSDragOperationCopy;
+    if ([info draggingSourceOperationMask] & NSDragOperationMove) return NSDragOperationMove;
+    return NSDragOperationNone;
 }
 
 - (NSDragOperation)validateLinkDrop:(NSString *)pboardString onProposedItem:(SVSiteItem *)item;
