@@ -15,6 +15,7 @@
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTDocWindowController.h"
+#import "KTLinkSourceView.h"
 #import "KTPage+Internal.h"
 #import "KTPulsatingOverlay.h"
 #import "KTElementPlugin.h"
@@ -39,6 +40,8 @@
 
 
 @interface SVSiteOutlineViewController (DragAndDropPrivate)
+
+- (NSDragOperation)validateLinkDrop:(NSString *)link proposedItem:(SVSiteItem *)proposedItem;
 - (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
@@ -89,7 +92,36 @@
     //  Rather like the Outline View datasource method, but has already taken into account the layout of root
     
     
-    // Only a collection can be dropped on/into
+    OBPRECONDITION(item);
+    
+    
+    // There's 2 basic types of drop: creating a link, and everything else. Links are special because they create nothing. Instead it's a feedback mechanism to the source view
+    
+    NSPasteboard *pboard = [info draggingPasteboard];
+    if ([[pboard types] containsObject:kKTLocalLinkPboardType])
+	{
+        if (index == NSOutlineViewDropOnItemIndex)
+        {
+            NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardType];
+            return [self validateLinkDrop:pboardString proposedItem:item];
+        }
+        else
+        {
+            return NSDragOperationNone;
+        }
+    }
+        
+	
+    
+    // Only a collection can be dropped into
+    if (index != NSOutlineViewDropOnItemIndex && ![item isCollection])
+    {
+        return NSDragOperationNone;
+    }
+    
+    
+    
+    
     if ([item isCollection])
     {
         if (index != NSOutlineViewDropOnItemIndex)
@@ -110,6 +142,40 @@
     
     
     return NSDragOperationCopy;
+}
+
+- (NSDragOperation)validateLinkDrop:(NSString *)pboardString proposedItem:(SVSiteItem *)item;
+{
+    // If our input string is a collection, then return NO if it's not a collection.
+    if ([pboardString isEqualToString:@"KTCollection"] && ![item isCollection])
+    {
+        [[KTPulsatingOverlay sharedOverlay] hide];
+        return NSDragOperationNone;
+    }
+    //set up a pulsating window
+    if (item)
+    {
+        NSInteger row = [[self outlineView] rowForItem:item];
+        NSRect rowRect = [[self outlineView] rectOfRow:row];
+        //covert the origin to window coords
+        rowRect.origin = [[[self view] window] convertBaseToScreen:[[self outlineView] convertPoint:rowRect.origin toView:nil]];
+        rowRect.origin.y -= NSHeight(rowRect); //handle it because it is flipped.
+        if (!NSEqualSizes(rowRect.size, NSZeroSize))
+        {
+            [[KTPulsatingOverlay sharedOverlay] displayWithFrame:rowRect];
+        }
+        else
+        {
+            [[KTPulsatingOverlay sharedOverlay] hide];
+        }
+        
+        return NSDragOperationLink;
+    }
+    else
+    {
+        [[KTPulsatingOverlay sharedOverlay] hide];
+        return NSDragOperationNone;
+    }
 }
 
 - (NSDragOperation)outlineView:(NSOutlineView *)outlineView
@@ -405,48 +471,7 @@
 		}			
 	}
 	
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"kKTLocalLinkPboardType"]])
-	{
-		if ( NSOutlineViewDropOnItemIndex == anIndex )
-		{
-			// If our input string is a collection, then return NO if it's not a collection.
-			NSString *pboardString = [pboard stringForType:@"kKTLocalLinkPboardType"];
-			if ([pboardString isEqualToString:@"KTCollection"] && ![item isCollection])
-			{
-				[[KTPulsatingOverlay sharedOverlay] hide];
-				return NSDragOperationNone;
-			}
-			//set up a pulsating window
-			if (item)
-			{
-				int row = [outlineView rowForItem:item];
-				NSRect rowRect = [outlineView rectOfRow:row];
-				//covert the origin to window coords
-				rowRect.origin = [[outlineView window] convertBaseToScreen:[outlineView convertPoint:rowRect.origin toView:nil]];
-				rowRect.origin.y -= NSHeight(rowRect); //handle it because it is flipped.
-				if (!NSEqualSizes(rowRect.size, NSZeroSize))
-				{
-					[[KTPulsatingOverlay sharedOverlay] displayWithFrame:rowRect];
-				}
-				else
-				{
-					[[KTPulsatingOverlay sharedOverlay] hide];
-				}
-				
-				return NSDragOperationLink;
-			}
-			else
-			{
-				[[KTPulsatingOverlay sharedOverlay] hide];
-				return NSDragOperationNone;
-			}
-		}
-		else
-		{
-			[[KTPulsatingOverlay sharedOverlay] hide];
-			return NSDragOperationNone;
-		}
-	}
+	
 	
 	// Fall through -- external drag, or internal drag not handled above.
 	
