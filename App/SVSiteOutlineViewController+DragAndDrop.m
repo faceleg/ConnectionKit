@@ -73,8 +73,18 @@
  */
 - (BOOL)outlineView:(NSOutlineView *)outlineView writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pboard
 {
-	[pboard declareTypes:[NSArray array] owner:self];
+	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
+    
+    NSArray *pages = items; // TODO: Only write the highest-level pages
+    NSArray *serializedPages = [pages valueForKey:@"propertyListRepresentation"];
+    [pboard setPropertyList:serializedPages forType:kKTPagesPboardType];
+    
+    
+    
+    
 	return YES;
+    
+    
     
     
     
