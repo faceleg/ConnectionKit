@@ -17,7 +17,6 @@
 #import "KTDocWindowController.h"
 #import "KTLinkSourceView.h"
 #import "KTPage+Internal.h"
-#import "KTPulsatingOverlay.h"
 #import "KTElementPlugin.h"
 
 #import "NSArray+Karelia.h"
@@ -41,7 +40,7 @@
 
 @interface SVSiteOutlineViewController (DragAndDropPrivate)
 
-- (NSDragOperation)validateLinkDrop:(NSString *)link proposedItem:(SVSiteItem *)proposedItem;
+- (NSDragOperation)validateLinkDrop:(NSString *)link onProposedItem:(SVSiteItem *)proposedItem;
 - (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
@@ -103,7 +102,7 @@
         if (index == NSOutlineViewDropOnItemIndex)
         {
             NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardType];
-            return [self validateLinkDrop:pboardString proposedItem:item];
+            return [self validateLinkDrop:pboardString onProposedItem:item];
         }
         else
         {
@@ -144,12 +143,11 @@
     return NSDragOperationCopy;
 }
 
-- (NSDragOperation)validateLinkDrop:(NSString *)pboardString proposedItem:(SVSiteItem *)item;
+- (NSDragOperation)validateLinkDrop:(NSString *)pboardString onProposedItem:(SVSiteItem *)item;
 {
     // If our input string is a collection, then return NO if it's not a collection.
     if ([pboardString isEqualToString:@"KTCollection"] && ![item isCollection])
     {
-        [[KTPulsatingOverlay sharedOverlay] hide];
         return NSDragOperationNone;
     }
     //set up a pulsating window
@@ -162,18 +160,15 @@
         rowRect.origin.y -= NSHeight(rowRect); //handle it because it is flipped.
         if (!NSEqualSizes(rowRect.size, NSZeroSize))
         {
-            [[KTPulsatingOverlay sharedOverlay] displayWithFrame:rowRect];
         }
         else
         {
-            [[KTPulsatingOverlay sharedOverlay] hide];
         }
         
         return NSDragOperationLink;
     }
     else
     {
-        [[KTPulsatingOverlay sharedOverlay] hide];
         return NSDragOperationNone;
     }
 }
@@ -674,7 +669,6 @@
 	else if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"kKTLocalLinkPboardType"]] )
 	{
 		// hide the pulsating window
-		[[KTPulsatingOverlay sharedOverlay] hide];
 		// Get the page and update the pboard with it ... a way to send the info back to the origin of the drag!
 		[pboard setString:[(KTPage *)item uniqueID] forType:@"kKTLocalLinkPboardType"];
 		return YES;
