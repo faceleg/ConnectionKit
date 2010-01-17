@@ -289,19 +289,27 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     [self drawTitleWithFrame:cellFrame inView:controlView];
 }
 
-- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+- (NSRect)titleDrawingRectForBounds:(NSRect)cellFrame
 {
+    //  The title rect encompasses the full height of the cell. This narrows it down to the height of the text, centered in that rectangle
+    
+    
     // What rect is the title to be drawn in?
     NSRect titleRect = [self titleRectForBounds:cellFrame];
-    
     
     // Center vertically within that (taken from KSVerticallyAlignedTextCell).
     NSSize textSize = [super cellSizeForBounds:titleRect];
 	CGFloat verticalInset = (cellFrame.size.height - textSize.height) / 2;
-	NSRect centeredRect = NSInsetRect(titleRect, 0.0, verticalInset);
+	NSRect result = NSInsetRect(titleRect, 0.0, verticalInset);
 	
     
-	// Draw the text
+    return result;
+}
+
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+{
+    // What rect is the title to be drawn in?
+    NSRect centeredRect = [self titleDrawingRectForBounds:cellFrame];
     [super drawInteriorWithFrame:centeredRect inView:controlView];
 }
 
@@ -313,7 +321,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
              delegate:(id)anObject
                 event:(NSEvent *)theEvent
 {
-    [super editWithFrame:[self titleRectForBounds:cellFrame]
+    [super editWithFrame:[self titleDrawingRectForBounds:cellFrame]
                   inView:controlView
                   editor:textObj
                 delegate:anObject
@@ -327,7 +335,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
                   start:(int)selStart
                  length:(int)selLength
 {
-    [super selectWithFrame:[self titleRectForBounds:cellFrame]
+    [super selectWithFrame:[self titleDrawingRectForBounds:cellFrame]
                     inView:controlView
                     editor:textObj
                   delegate:anObject
