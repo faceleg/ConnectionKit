@@ -81,8 +81,3 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (void)setCachedFavicon:(NSImage *)icon;
 
 @end
-
-
-@interface SVSiteOutlineViewController (DragAndDrop)
-@property(nonatomic, copy) NSArray *lastItemsWrittenToPasteboard;   // call with nil to clean out
-@end
