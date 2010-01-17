@@ -134,7 +134,7 @@ typedef enum {
 
 #pragma mark Sorted Children
 - (NSArray *)sortedChildren;
-- (void)moveToIndex:(unsigned)index;
+- (void)moveChild:(SVSiteItem *)child toIndex:(NSUInteger)index;
 
 
 #pragma mark Sorting Support

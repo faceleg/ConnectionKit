@@ -197,23 +197,21 @@
 }
 
 /*	-collectionIndex and -setCollectionIndex are private methods that -sortedChildren uses internally.
- *	The public API for this is the -moveToIndex: method which calls -setCollectionIndex on all affected siblings
+ *	The public API for this is the -moveChild:toIndex: method which calls -setCollectionIndex on all affected siblings
  *	and updates the parent's -sortedChildren cache.
  *
  *	Calling this method upon a page with no parent, or within a sorted collection will raise an exception.
  */
 
-- (void)moveToIndex:(unsigned)index
-{
-	KTPage *parent = [self parentPage];
-	
-	NSAssert1(parent, @"-%@ called upon page with not in a collection", NSStringFromSelector(_cmd));
-	NSAssert1(([parent collectionSortOrder] == SVCollectionSortManually),
+- (void)moveChild:(SVSiteItem *)child toIndex:(NSUInteger)index;
+{	
+	NSAssert1(self, @"-%@ called upon page with not in a collection", NSStringFromSelector(_cmd));
+	NSAssert1(([[self collectionSortOrder] integerValue] == SVCollectionSortManually),
               @"-%@ called upon page in a sorted collection", NSStringFromSelector(_cmd));
 	
 	// Change our index and that of any affected siblings
-	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[parent sortedChildren]];
-	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:self];
+	NSMutableArray *newSortedChildren = [NSMutableArray arrayWithArray:[self sortedChildren]];
+	unsigned whereSelfInParent = [newSortedChildren indexOfObjectIdenticalTo:child];
 	
 	// Check that we were actually found.  Mystery case 34642.  
 	if (whereSelfInParent != NSNotFound && index <= [newSortedChildren count])
@@ -222,11 +220,15 @@
 		[KTPage setCollectionIndexForPages:newSortedChildren];
 		
 		// Invalidate our parent's sortedChildren cache
-		[parent invalidateSortedChildrenCache];
+		[self invalidateSortedChildrenCache];
 	}
 	else
 	{
-		NSLog(@"moveToIndex: trying to move from %d to %d in an array of %d elements", whereSelfInParent, index, [newSortedChildren count]);
+		NSLog(@"%@ trying to move from %d to %d in an array of %d elements",
+              NSStringFromSelector(_cmd),
+              whereSelfInParent,
+              index,
+              [newSortedChildren count]);
 	}
 }
 

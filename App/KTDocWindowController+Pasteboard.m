@@ -393,7 +393,7 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
     if ([parent collectionSortOrder] == SVCollectionSortManually)
     {
         unsigned index = [[parent sortedChildren] indexOfObjectIdenticalTo:page] + 1;
-        [result moveToIndex:index];
+        [parent moveChild:result toIndex:index];
     }
     
     return result;
