@@ -83,6 +83,9 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
  */
 - (NSRect)titleRectForBounds:(NSRect)theRect
 {
+    // Start with the default size
+    theRect = [super titleRectForBounds:theRect];
+    
 	// Calculate the area to the left of the image
 	NSRect nonImageRect;	NSRect otherRect;
 	NSDivideRect(theRect,
@@ -96,12 +99,10 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	if ([self isDraft]) iconsWidth += 8.0;
 	if ([self hasCodeInjection]) iconsWidth += [self codeInjectionIconWidth];
 	
-	NSRect almostResult;
-	NSDivideRect(nonImageRect, &otherRect, &almostResult, iconsWidth, NSMaxXEdge);
+	NSRect result;
+	NSDivideRect(nonImageRect, &otherRect, &result, iconsWidth, NSMaxXEdge);
 	
 	
-	// We have to inset by a pixel for proper text drawing. Not sure why.
-	NSRect result = NSInsetRect(almostResult, 1.0, 1.0);
 	return result;
 }
 
@@ -309,7 +310,15 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	
 	
     // Draw text
-    return [super drawInteriorWithFrame:[self titleRectForBounds:cellFrame] inView:controlView];
+    [self drawTitleWithFrame:cellFrame inView:controlView];
+}
+
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+{
+    // Where does the title actually occupy?
+    NSRect titleRect = [self titleRectForBounds:cellFrame];
+    
+    return [super drawInteriorWithFrame:titleRect inView:controlView];
 }
 
 - (NSSize)cellSize

@@ -43,4 +43,9 @@
 - (void)setHasCodeInjection:(BOOL)flag;
 - (NSRect)codeInjectionIconRectForBounds:(NSRect)cellFrame;
 
+
+#pragma mark Drawing
+- (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
+
+
 @end
