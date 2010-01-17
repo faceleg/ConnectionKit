@@ -315,10 +315,18 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 - (void)drawTitleWithFrame:(NSRect)cellFrame inView:(NSView *)controlView;
 {
-    // Where does the title actually occupy?
+    // What rect is the title to be drawn in?
     NSRect titleRect = [self titleRectForBounds:cellFrame];
     
-    return [super drawInteriorWithFrame:titleRect inView:controlView];
+    
+    // Center vertically within that (taken from KSVerticallyAlignedTextCell).
+    NSSize textSize = [super cellSizeForBounds:titleRect];
+	CGFloat verticalInset = (cellFrame.size.height - textSize.height) / 2;
+	NSRect centeredRect = NSInsetRect(titleRect, 0.0, verticalInset);
+	
+    
+	// Draw the text
+    [super drawInteriorWithFrame:centeredRect inView:controlView];
 }
 
 - (NSSize)cellSize
