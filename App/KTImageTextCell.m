@@ -123,35 +123,27 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	return result;
 }
 
-- (void)editWithFrame:(NSRect)aRect
+- (void)editWithFrame:(NSRect)cellFrame
                inView:(NSView *)controlView
                editor:(NSText *)textObj
              delegate:(id)anObject
                 event:(NSEvent *)theEvent
 {
-    NSRect textFrame, imageFrame;
-
-    NSDivideRect(aRect, &imageFrame, &textFrame, myPadding + [myImage size].width, NSMinXEdge);
-
-    [super editWithFrame:textFrame
+    [super editWithFrame:[self titleRectForBounds:cellFrame]
                   inView:controlView
                   editor:textObj
                 delegate:anObject
                    event:theEvent];
 }
 
-- (void)selectWithFrame:(NSRect)aRect
+- (void)selectWithFrame:(NSRect)cellFrame
                  inView:(NSView *)controlView
                  editor:(NSText *)textObj
                delegate:(id)anObject
                   start:(int)selStart
                  length:(int)selLength
 {
-    NSRect textFrame, imageFrame;
-
-    NSDivideRect(aRect, &imageFrame, &textFrame, myPadding + [myImage size].width, NSMinXEdge);
-
-    [super selectWithFrame:textFrame
+    [super selectWithFrame:[self titleRectForBounds:cellFrame]
                     inView:controlView
                     editor:textObj
                   delegate:anObject
