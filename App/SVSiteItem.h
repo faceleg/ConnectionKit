@@ -20,6 +20,10 @@
 
 @interface SVSiteItem : SVExtensibleManagedObject  
 
+#pragma mark Title
+@property(nonatomic, copy) NSString *title; // implemented as @dynamic
+
+
 #pragma mark Dates
 @property(nonatomic, copy) NSDate *creationDate;
 @property(nonatomic, copy) NSDate *lastModificationDate;

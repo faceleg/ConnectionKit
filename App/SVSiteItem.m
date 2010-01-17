@@ -14,6 +14,10 @@
 
 @implementation SVSiteItem 
 
+#pragma mark Title
+
+@dynamic title;
+
 #pragma mark Dates
 
 - (void)awakeFromInsert
