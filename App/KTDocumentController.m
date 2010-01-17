@@ -102,47 +102,6 @@
 }
 
 #pragma mark -
-#pragma mark Document Closing
-
-/*  Normally, if there are 2 or more edited docs open, NSDocumentController asks the user what they want to do.
- *  We override this method to jump straight to asking each individual doc to close.
- */
-- (void)reviewUnsavedDocumentsWithAlertTitle:(NSString *)title
-                                 cancellable:(BOOL)cancellable
-                                    delegate:(id)delegate
-                        didReviewAllSelector:(SEL)didReviewAllSelector
-                                 contextInfo:(void *)contextInfo
-{
-    // Act as if the user had chosen "Review..."
-    if (delegate)
-    {
-        BOOL result = NO;
-        
-        NSInvocation *callback = [NSInvocation invocationWithMethodSignature:[delegate methodSignatureForSelector:didReviewAllSelector]];
-        [callback setTarget:delegate];
-        [callback setSelector:didReviewAllSelector];
-        [callback setArgument:&self atIndex:2];                         // documentController:
-        [callback setArgument:&result atIndex:3];                       // didReviewAll:
-        if (contextInfo) [callback setArgument:&contextInfo atIndex:4]; // contextInfo:
-        
-        [callback invoke];
-    }
-    
-    [self closeAllDocumentsWithDelegate:self didCloseAllSelector:@selector(documentController:didCloseAll:contextInfo:) contextInfo:NULL];
-}
-
-/*  The user tried to quit, and in response, all documents tried to close themselves. If that was successful and there are now no edited
- *  documents open, we can quit.
- */
-- (void)documentController:(NSDocumentController *)docController didCloseAll:(BOOL)didCloseAll contextInfo:(void *)contextInfo
-{
-    if (didCloseAll && ![self hasEditedDocuments])
-    {
-        [NSApp terminate:self];
-    }
-}
-
-#pragma mark -
 #pragma mark Other
 
 - (Class)documentClassForType:(NSString *)documentTypeName
