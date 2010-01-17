@@ -144,6 +144,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
 	[imageTextCell setEditable:YES];
 	[imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
+    [imageTextCell setPlaceholderString:NSLocalizedString(@"(Empty title)",
+								   @"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.")];
 	[tableColumn setDataCell:imageTextCell];
 	
 	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
@@ -686,19 +688,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		{
 			result = [item title];
 		}
+        
+        if (!result) result = @"";
 	}
 	else
 	{
 		id result = [NSString stringWithFormat:@"%i:%i", [[self outlineView] rowForItem:item], [[item wrappedValueForKey:@"childIndex"] intValue]];
 		return result;
-	}
-	
-	
-	// If there is no title, display a placeholder
-	if (!result || [result isEqualToString:@""])
-	{
-		result = NSLocalizedString(@"(Empty title)",
-								   @"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.");
 	}
 	
 	
