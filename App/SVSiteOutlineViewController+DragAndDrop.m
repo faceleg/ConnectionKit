@@ -41,7 +41,8 @@
 @interface SVSiteOutlineViewController (DragAndDropPrivate)
 
 - (NSDragOperation)validateLinkDrop:(NSString *)link onProposedItem:(SVSiteItem *)proposedItem;
-- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex;
+
+- (BOOL)moveSiteItems:(NSArray *)items intoCollection:(KTPage *)collection childIndex:(NSInteger)index;
 - (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
 - (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
@@ -233,6 +234,19 @@
                childIndex:(int)index;
 {
     OBPRECONDITION(collection);
+    OBPRECONDITION([collection isCollection]);
+    
+    
+    // Is the aim to move a page within the Site Outline?
+    if ([info draggingSource] == [self outlineView] &&
+        [info draggingSourceOperationMask] & NSDragOperationMove)
+    {
+        NSArray *draggedItems = [self lastItemsWrittenToPasteboard];
+        return [self moveSiteItems:draggedItems intoCollection:collection childIndex:index];
+    }
+    
+    
+    return NO;
     
     
     // The new page must be a child of something
@@ -247,7 +261,7 @@
 			// drag is internal to document
 			if ([pboard availableTypeFromArray:[NSArray arrayWithObject:kKTOutlineDraggingPboardType]])
 			{
-				BOOL result = [self acceptInternalDrop:pboard ontoPage:collection childIndex:index];
+				BOOL result = [self moveSiteItems:pboard intoCollection:collection childIndex:index];
 				return result;
 			}
 			else if ( NO )
@@ -327,74 +341,37 @@
 
 /*	Called when rearranging pages within the Site Outline
  */
-- (BOOL)acceptInternalDrop:(NSPasteboard *)pboard ontoPage:(KTPage *)page childIndex:(int)anIndex
-{
-	NSDictionary *pboardData = [pboard propertyListForType:kKTOutlineDraggingPboardType];
+- (BOOL)moveSiteItems:(NSArray *)items intoCollection:(KTPage *)collection childIndex:(NSInteger)index;
+{	
+	OBPRECONDITION(collection);
+    OBPRECONDITION([collection isCollection]);
+    
 	
-	// remember all selected rows
-	NSArray *allRows = [pboardData objectForKey:@"allRows"];
-	NSArray *selectedItems = [[self outlineView] itemsAtRows:[NSIndexSet indexSetWithArray:allRows]];
+    // Insert each item in turn. By running in reverse we can keep reusing the same index
+    NSEnumerator *itemsEnumerator = [items reverseObjectEnumerator];	
+    SVSiteItem *anItem;
+    while (anItem = [itemsEnumerator nextObject])
+    {
+        [anItem retain];
+        
+        KTPage *parent = [anItem parentPage];
+        if (collection != parent)   // no point removing and re-adding a page
+        {
+            [parent removeChildItem:anItem];
+            [collection addChildItem:anItem];
+        }
+        
+        // Position item too if requested
+        if (index != NSOutlineViewDropOnItemIndex &&
+            [[collection collectionSortOrder] integerValue] == SVCollectionSortManually)
+        {
+            [collection moveChild:anItem toIndex:index];
+        }
+        
+        [anItem release];
+    }
 	
-	
-	// we use parentRows here as moving the parent rows should move all the children as well
-	NSArray *parentRows = [pboardData objectForKey:@"parentRows"];
-	
-	// Adjust dropRow to account for "home"
-	int dropRow;
-	if (page == [self rootPage]) {
-		dropRow = anIndex-1;
-	}
-	else {
-		dropRow = anIndex;
-	}
-	
-	
-	NSArray *draggedItems = [[self outlineView] itemsAtRows:[NSIndexSet indexSetWithArray:parentRows]];
-	
-	
-	// The behaviour is different depending on the drag destination.
-	// Drops into the middle of an unsorted collection need to also have their indexes set.
-	if (dropRow > -1 && [page collectionSortOrder] == SVCollectionSortManually)
-	{
-		NSEnumerator *e = [draggedItems reverseObjectEnumerator];	// By running in reverse we can keep inserting pages at the same index
-		KTPage *draggedItem;
-		while (draggedItem = [e nextObject])
-		{
-			[draggedItem retain];
-			
-			KTPage *draggedItemParent = [draggedItem parentPage];
-			if (page != draggedItemParent)
-			{
-				[draggedItemParent removePage:draggedItem];
-				[page addChildItem:draggedItem];
-			}
-			
-			[draggedItem moveToIndex:dropRow];
-			
-			[draggedItem release];
-		}
-	}
-	else
-	{
-		NSEnumerator *e = [draggedItems objectEnumerator];
-		KTPage *aPage;
-		while (aPage = [e nextObject])
-		{
-			[aPage retain];
-			[[aPage parentPage] removePage:aPage];
-			[page addChildItem:aPage];
-			[aPage release];
-		}
-	}
-	
-	// select what was selected during the drag
-	NSIndexSet *selectedRows = [[self outlineView] rowsForItems:selectedItems];
-	[[self outlineView] selectRowIndexes:selectedRows byExtendingSelection:NO];
-	
-	// Record the Undo operation
-    // For reasons I cannot fathom, on Tiger this upsets the undo manager if you are dragging a freshly created page. Turning it off keeps things reasonably happy, but if you hit undo the page is deleted immediately, and hitting undo again raises an exception. It's definitely not ideal, but the best compromise I can find for now. (case 41296)
-	//[[[self document] undoManager] setActionName:NSLocalizedString(@"Drag", "action name for dragging source objects within the outline")];
-	
+    
 	return YES;
 }
 
