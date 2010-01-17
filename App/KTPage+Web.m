@@ -263,16 +263,16 @@
 	NSMutableString *buf = [NSMutableString string];
 	
 	BOOL needsSeparator = NO;
-	NSString *titleText = [[self titleBox] text];
-	if ( nil != titleText && ![titleText isEqualToString:@""])
+	NSString *title = [[self titleBox] text];
+	if ( nil != title && ![title isEqualToString:@""])
 	{
-		[buf appendString:titleText];
+		[buf appendString:title];
 		needsSeparator = YES;
 	}
 	
 	
 	NSString *siteTitleText = [[[[self master] siteTitle] textHTMLString] stringByConvertingHTMLToPlainText];
-	if ( (nil != siteTitleText) && ![siteTitleText isEqualToString:@""] && ![siteTitleText isEqualToString:titleText] )
+	if ( (nil != siteTitleText) && ![siteTitleText isEqualToString:@""] && ![siteTitleText isEqualToString:title] )
 	{
 		if (needsSeparator)
 		{

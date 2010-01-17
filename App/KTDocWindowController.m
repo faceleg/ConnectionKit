@@ -470,7 +470,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	else
 	{
-		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because page inserted but not in site menu", NSStringFromSelector(_cmd), [aCollection titleText]));
+		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because page inserted but not in site menu", NSStringFromSelector(_cmd), [aCollection title]));
 		//[aCollection markStale:kStaleFamily];
 	}
 	

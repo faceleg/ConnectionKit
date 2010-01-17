@@ -63,12 +63,12 @@
 - (NSString *)innerHTMLString
 {
 	NSString *contentFormat = [self innerEditingHTML];
-	NSString *titleText = [[[self targetPage] titleBox] text];
-	if (nil == titleText)
+	NSString *title = [[[self targetPage] titleBox] text];
+	if (nil == title)
 	{
-		titleText = @"";		// better than nil, which crashes!
+		title = @"";		// better than nil, which crashes!
 	}
-	NSString *result = [contentFormat stringByReplacing:@"@@" with:titleText];
+	NSString *result = [contentFormat stringByReplacing:@"@@" with:title];
 	return result;
 }
 

@@ -300,7 +300,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	if (!keyPaths)
 	{
-		keyPaths = [[NSSet alloc] initWithObjects:@"titleText",
+		keyPaths = [[NSSet alloc] initWithObjects:@"title",
 					@"isStale",
 					@"codeInjection.hasCodeInjection",
 					@"isDraft",
@@ -667,16 +667,17 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
 	NSString *result = nil;
 	
-	if ([[tableColumn identifier] isEqualToString:@"displayName"] && [item isKindOfClass:[KTPage class]])
+	if ([[tableColumn identifier] isEqualToString:@"displayName"])
 	{
-		KTPage *page = item;
-		if (page == [self rootPage])
+        OBASSERT([item isKindOfClass:[SVSiteItem class]]);
+        
+		if (item == [self rootPage])
 		{
-			result = [[[page master] siteTitle] text];
+			result = [[[[self rootPage] master] siteTitle] text];
 		}
 		else
 		{
-			result = [[page titleBox] text];
+			result = [item title];
 		}
 	}
 	else

@@ -376,7 +376,7 @@
 	
 	if (!result)
 	{
-		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"titleText"
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title"
                                                                            ascending:ascending
                                                                             selector:@selector(caseInsensitiveCompare:)];
 		result = [[NSArray alloc] initWithObject:orderingDescriptor];

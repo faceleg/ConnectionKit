@@ -305,7 +305,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingTitleHTMLString
 {
-    return [NSSet setWithObject:@"title.textHTMLString"];
+    return [NSSet setWithObject:@"titleBox.textHTMLString"];
 }
 
 - (NSString *)titleText	// get title, but without attributes
@@ -315,12 +315,12 @@
 
 - (void)setTitleText:(NSString *)value
 {
-	[self setTitleWithString:value];
+	[self setTitle:value];
 }
 
 + (NSSet *)keyPathsForValuesAffectingTitleText
 {
-    return [NSSet setWithObject:@"title.textHTMLString"];
+    return [NSSet setWithObject:@"title"];
 }
 
 @end

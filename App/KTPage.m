@@ -39,7 +39,7 @@
 #pragma mark -
 #pragma mark Class Methods
 
-/*!	Make sure that changes to titleHTML generate updates for new values of titleText, fileName
+/*!	Make sure that changes to titleHTML generate updates for new values of title, fileName
 */
 + (void)initialize
 {
@@ -265,6 +265,10 @@
 
 @dynamic titleBox;
 
+- (NSString *)title
+{
+    return [[self titleBox] text];
+}
 - (void)setTitle:(NSString *)title;
 {
     SVTitleBox *titleBox = [self titleBox];
@@ -275,6 +279,7 @@
     }
     [titleBox setText:title];
 }
++ (NSSet *)keyPathsForValuesAffectingTitle { return [NSSet setWithObject:@"titleBox.text"]; }
 
 // For bindings.  We can edit title if we aren't root;
 - (BOOL)canEditTitle

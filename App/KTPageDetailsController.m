@@ -25,7 +25,7 @@ static NSString *sMetaDescriptionObservationContext = @"-metaDescription observa
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
 static NSString *sFileNameObservationContext = @"-fileName observation context";
 static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLString observation context";
-static NSString *sTitleTextObservationContext = @"-titleText observation context";
+static NSString *sTitleObservationContext = @"-titleText observation context";
 
 enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePageDetailsContext, kMetaDescriptionPageDetailsContext
 };
@@ -123,9 +123,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	
 	
 	[oPagesController addObserver:self
-					   forKeyPath:@"selection.titleText"
+					   forKeyPath:@"selection.title"
 						  options:NSKeyValueObservingOptionNew
-						  context:sTitleTextObservationContext];
+						  context:sTitleObservationContext];
 	[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
 		
 	
@@ -456,7 +456,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[self layoutPageURLComponents];	// base URL changed, so re-layout
 	}
-	else if (context == sTitleTextObservationContext)
+	else if (context == sTitleObservationContext)
 	{
 		[self resetTitlePlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
 	}
