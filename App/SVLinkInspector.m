@@ -42,7 +42,7 @@
         
         [oLinkSourceView setConnected:YES];
         
-        NSString *title = [[[link page] title] text];
+        NSString *title = [[[link page] titleBox] text];
         if (!title) title = @"";
         [oLinkField setStringValue:title];
     }

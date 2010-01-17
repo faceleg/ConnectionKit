@@ -712,7 +712,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)insertPageTitle:(id)sender;
 {
     // Create placeholder if needed
-    if ([[[[self page] title] text] length] <= 0)
+    if ([[[[self page] titleBox] text] length] <= 0)
     {
         [[self page] setTitleWithString:NSLocalizedString(@"Page Title", @"placeholder text")];
     }
@@ -773,7 +773,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         else if (action == @selector(insertPageTitle:))
         {
             //  Can insert site title if there isn't already one
-            result = ([[[[self page] title] text] length] == 0);
+            result = ([[[[self page] titleBox] text] length] == 0);
         }
         else if (action == @selector(insertPageletTitle:))
         {

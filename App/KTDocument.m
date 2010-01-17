@@ -740,7 +740,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		// Get title of page/pagelet we are editing
 		if ([aSourceObject respondsToSelector:@selector(titleText)])
 		{
-			NSString *itsTitle = [[((KTAbstractPage *)aSourceObject) title] text];
+			NSString *itsTitle = [[((KTAbstractPage *)aSourceObject) titleBox] text];
 			if (nil != itsTitle && ![itsTitle isEqualToString:@""])
 			{
 				title = itsTitle;

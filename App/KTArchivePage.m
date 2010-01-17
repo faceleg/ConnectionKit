@@ -107,7 +107,7 @@
                               NSLocalizedString(@"Archive", "Part of an archive's page title"),
                               dateDescription];
     
-    NSString *collectionTitle = [[[self parentPage] title] text];
+    NSString *collectionTitle = [[[self parentPage] titleBox] text];
     if (collectionTitle && ![collectionTitle isEqualToString:@""])
     {
         archiveTitle = [NSString stringWithFormat:@"%@ %@", collectionTitle, archiveTitle];

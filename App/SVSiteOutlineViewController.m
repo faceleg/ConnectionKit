@@ -676,7 +676,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		}
 		else
 		{
-			result = [[page title] text];
+			result = [[page titleBox] text];
 		}
 	}
 	else

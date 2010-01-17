@@ -263,7 +263,7 @@
 	NSMutableString *buf = [NSMutableString string];
 	
 	BOOL needsSeparator = NO;
-	NSString *titleText = [[self title] text];
+	NSString *titleText = [[self titleBox] text];
 	if ( nil != titleText && ![titleText isEqualToString:@""])
 	{
 		[buf appendString:titleText];

@@ -63,7 +63,7 @@
 - (NSString *)innerHTMLString
 {
 	NSString *contentFormat = [self innerEditingHTML];
-	NSString *titleText = [[[self targetPage] title] text];
+	NSString *titleText = [[[self targetPage] titleBox] text];
 	if (nil == titleText)
 	{
 		titleText = @"";		// better than nil, which crashes!

@@ -137,7 +137,7 @@
     NSString *result = [self customMenuTitle];
     if (![result length])
     {
-        result = [[self title] text];
+        result = [[self titleBox] text];
     }
     
     return result;

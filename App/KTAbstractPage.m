@@ -138,15 +138,15 @@
 
 #pragma mark Title
 
-@dynamic title;
+@dynamic titleBox;
 
 - (void)setTitleWithString:(NSString *)title;
 {
-    SVTitleBox *text = [self title];
+    SVTitleBox *text = [self titleBox];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];
-        [self setTitle:text];
+        [self setTitleBox:text];
     }
     [text setText:title];
 }
@@ -160,12 +160,12 @@
 
 - (NSString *)titleHTMLString
 {
-    return [[self title] textHTMLString];
+    return [[self titleBox] textHTMLString];
 }
 
 - (NSString *)titleString;
 {
-	return [[self title] text];
+	return [[self titleBox] text];
 }
 
 #pragma mark -

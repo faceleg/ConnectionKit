@@ -231,7 +231,7 @@
 	}
 	if (nil != title)
 	{
-		NSString *titleHTML = [[self title] textHTMLString];
+		NSString *titleHTML = [[self titleBox] textHTMLString];
 		if (nil == titleHTML || [titleHTML isEqualToString:@""])
 		{
 			[self setTitleWithString:title];

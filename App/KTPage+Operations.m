@@ -107,7 +107,7 @@
 {
 	if ([self boolForKey:@"isStale"])
 	{
-		LOG((@"adding to stale set: %@", [[self title] text]));
+		LOG((@"adding to stale set: %@", [[self titleBox] text]));
 		[aSet addObject:self];
 	}
 }
