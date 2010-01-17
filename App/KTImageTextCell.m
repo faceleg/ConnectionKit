@@ -308,47 +308,8 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	}
 	
 	
-	// if drawing on top of a gradient, make the text color white
-	if ([self isHighlighted] )
-	{
-		NSMutableAttributedString *newAttrString = [[[self attributedStringValue] mutableCopy] autorelease];
-		[newAttrString addAttribute:@"NSColor" value:[NSColor whiteColor] range:NSMakeRange(0, [newAttrString length])];
-		[self setAttributedStringValue:newAttrString];
-	}
-	
-	//if ( [self type] == NSTextCellType )
-	NSAttributedString *attributedString = [self attributedStringValue];
-	NSSize stringSize = [attributedString size];
-	NSRect textRect = [self titleRectForBounds:cellFrame];
-	NSRect stringBoundingRect = [attributedString boundingRectWithSize:textRect.size options:(NSStringDrawingUsesFontLeading & NSStringDrawingOneShot)];
-	
-	// look at lineBreakMode and stringSize to calculate drawRect
-	NSDictionary *stringAttributes = [attributedString attributesAtIndex:0 effectiveRange:NULL];
-	NSParagraphStyle *style = [stringAttributes valueForKey:NSParagraphStyleAttributeName];
-	if ( (nil != style)
-		 && (!([style lineBreakMode] == NSLineBreakByWordWrapping) || (([style lineBreakMode] == NSLineBreakByWordWrapping) && stringSize.width <= cellFrame.size.width))
-		 && (!([style lineBreakMode] == NSLineBreakByCharWrapping) || (([style lineBreakMode] == NSLineBreakByCharWrapping) && stringSize.width <= cellFrame.size.width)) )
-	{
-		// we're not wrapping, center vertically on single line
-		textRect.origin.y += cellFrame.size.height/2.0-stringBoundingRect.size.height/2.0;
-		textRect.size.height = stringBoundingRect.size.height;
-	}
-	else
-	{
-		// we're wrapping, center it vertically on multiple lines
-		int numberOfLinesNeeded = ceil(stringSize.width/cellFrame.size.width);
-		int numberOfLinesPossible = floor(cellFrame.size.height/stringSize.height);
-		int numberOfLines = (numberOfLinesNeeded > numberOfLinesPossible) ? numberOfLinesPossible : numberOfLinesNeeded;
-		if ( numberOfLines < 1 )
-		{
-			numberOfLines = 1;
-		}
-		textRect.origin.y += (cellFrame.size.height/2.0-(stringBoundingRect.size.height*numberOfLines)/2.0);
-		textRect.size.height = stringBoundingRect.size.height * numberOfLines;
-	}
-	
-	// draw the string
-	[attributedString drawInRect:textRect];
+    // Draw text
+    return [super drawInteriorWithFrame:[self titleRectForBounds:cellFrame] inView:controlView];
 }
 
 - (NSSize)cellSize
