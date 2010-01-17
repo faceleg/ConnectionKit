@@ -799,7 +799,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
 {
-	return NO;
+	BOOL result = (item != [self rootPage]);
+    return result;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
