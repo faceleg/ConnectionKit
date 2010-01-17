@@ -67,7 +67,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     [super dealloc];
 }
 
-#pragma mark -
+#pragma mark NSCopying
 
 - copyWithZone:(NSZone *)zone
 {
@@ -77,6 +77,16 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	//cell->myStaleness = myStaleness;
 
     return cell;
+}
+
+#pragma mark Layout
+
+- (NSSize)cellSize
+{
+	// expand cellSize my width of myImage + padding
+    NSSize cellSize = [super cellSize];
+    cellSize.width += (myImage ? [myImage size].width : 0) + myPadding;
+    return cellSize;
 }
 
 /*	The rect to fit the text in
@@ -123,35 +133,9 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 	return result;
 }
 
-- (void)editWithFrame:(NSRect)cellFrame
-               inView:(NSView *)controlView
-               editor:(NSText *)textObj
-             delegate:(id)anObject
-                event:(NSEvent *)theEvent
-{
-    [super editWithFrame:[self titleRectForBounds:cellFrame]
-                  inView:controlView
-                  editor:textObj
-                delegate:anObject
-                   event:theEvent];
-}
+#pragma mark Drawing
 
-- (void)selectWithFrame:(NSRect)cellFrame
-                 inView:(NSView *)controlView
-                 editor:(NSText *)textObj
-               delegate:(id)anObject
-                  start:(int)selStart
-                 length:(int)selLength
-{
-    [super selectWithFrame:[self titleRectForBounds:cellFrame]
-                    inView:controlView
-                    editor:textObj
-                  delegate:anObject
-                     start:selStart
-                    length:selLength];
-}
-
-- (void)drawDraftMarkersFrorFrame:(NSRect)cellFrame		// assumes focused
+- (void)drawDraftMarkersWithFrame:(NSRect)cellFrame		// assumes focused
 {
 	if (myIsDraft)
 	{
@@ -262,7 +246,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 - (void)drawWithFrame:(NSRect)cellFrame
                inView:(NSView *)controlView
 {
-	[self drawDraftMarkersFrorFrame:cellFrame];	// draw draft markers FIRST - will this work?
+	[self drawDraftMarkersWithFrame:cellFrame];	// draw draft markers FIRST - will this work?
 	[super drawWithFrame:cellFrame inView:controlView];
 }
 
@@ -321,12 +305,34 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
     [super drawInteriorWithFrame:centeredRect inView:controlView];
 }
 
-- (NSSize)cellSize
+#pragma mark Editing
+
+- (void)editWithFrame:(NSRect)cellFrame
+               inView:(NSView *)controlView
+               editor:(NSText *)textObj
+             delegate:(id)anObject
+                event:(NSEvent *)theEvent
 {
-	// expand cellSize my width of myImage + padding
-    NSSize cellSize = [super cellSize];
-    cellSize.width += (myImage ? [myImage size].width : 0) + myPadding;
-    return cellSize;
+    [super editWithFrame:[self titleRectForBounds:cellFrame]
+                  inView:controlView
+                  editor:textObj
+                delegate:anObject
+                   event:theEvent];
+}
+
+- (void)selectWithFrame:(NSRect)cellFrame
+                 inView:(NSView *)controlView
+                 editor:(NSText *)textObj
+               delegate:(id)anObject
+                  start:(int)selStart
+                 length:(int)selLength
+{
+    [super selectWithFrame:[self titleRectForBounds:cellFrame]
+                    inView:controlView
+                    editor:textObj
+                  delegate:anObject
+                     start:selStart
+                    length:selLength];
 }
 
 #pragma mark -
