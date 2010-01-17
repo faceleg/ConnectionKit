@@ -716,7 +716,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)aNewValue forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	; // we don't accept editing of page title via the site outline
+	[item setTitle:aNewValue];
 }
 
 
