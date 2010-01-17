@@ -45,9 +45,15 @@ typedef enum {
 	BOOL myIsNewPage;		// accessor is in category
 }
 
-// Awake
+#pragma mark Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
+
+
+#pragma mark Title
+@property(nonatomic, retain) SVTitleBox *titleBox;
+- (void)setTitle:(NSString *)title;   // inherited from SVSiteItem, creates TitleBox object if needed
+- (BOOL)canEditTitle;
 
 
 #pragma mark Properties

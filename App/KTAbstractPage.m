@@ -136,38 +136,6 @@
 
 @dynamic sidebar;
 
-#pragma mark Title
-
-@dynamic titleBox;
-
-- (void)setTitleWithString:(NSString *)title;
-{
-    SVTitleBox *text = [self titleBox];
-    if (!text)
-    {
-        text = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];
-        [self setTitleBox:text];
-    }
-    [text setText:title];
-}
-
-// For bindings.  We can edit title if we aren't root;
-- (BOOL)canEditTitle
-{
-	BOOL result = ![self isRoot];
-	return result;
-}
-
-- (NSString *)titleHTMLString
-{
-    return [[self titleBox] textHTMLString];
-}
-
-- (NSString *)titleString;
-{
-	return [[self titleBox] text];
-}
-
 #pragma mark -
 #pragma mark HTML
 

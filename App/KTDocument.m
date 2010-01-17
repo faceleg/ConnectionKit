@@ -231,7 +231,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                                                     language:language
                                                                                     fallback:
                                               NSLocalizedStringWithDefaultValue(@"defaultRootPageTitleText", nil, [NSBundle mainBundle], @"Home Page", @"Title of initial home page")];
-        [root setTitleWithString:defaultRootPageTitleText];
+        [root setTitle:defaultRootPageTitleText];
         
         
         // Set the Favicon

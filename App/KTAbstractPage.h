@@ -63,11 +63,6 @@ KTCollectionPathStyle;
 @property(nonatomic, retain, readonly) SVSidebar *sidebar;
 
 
-#pragma mark Title
-@property(nonatomic, retain) SVTitleBox *titleBox;
-- (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
-- (BOOL)canEditTitle;
-
 #pragma mark Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 

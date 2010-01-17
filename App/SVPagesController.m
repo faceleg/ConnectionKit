@@ -146,7 +146,7 @@
     NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetUntitled"];
     NSString *presetTitle = [indexBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
     
-    [collection setTitleWithString:presetTitle];
+    [collection setTitle:presetTitle];
     
     NSDictionary *pageSettings = [presetDict objectForKey:@"KTPageSettings"];
     [collection setValuesForKeysWithDictionary:pageSettings];

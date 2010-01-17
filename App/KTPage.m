@@ -234,7 +234,7 @@
 		NSString *titleHTML = [[self titleBox] textHTMLString];
 		if (nil == titleHTML || [titleHTML isEqualToString:@""])
 		{
-			[self setTitleWithString:title];
+			[self setTitle:title];
 		}
 	}
 	if ([defaults boolForKey:@"SetDateFromSourceMaterial"])
@@ -259,6 +259,38 @@
 {
 	[super awakeFromFetch];
 	[self awakeFromBundleAsNewlyCreatedObject:NO];
+}
+
+#pragma mark Title
+
+@dynamic titleBox;
+
+- (void)setTitle:(NSString *)title;
+{
+    SVTitleBox *titleBox = [self titleBox];
+    if (!titleBox)
+    {
+        titleBox = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setTitleBox:titleBox];
+    }
+    [titleBox setText:title];
+}
+
+// For bindings.  We can edit title if we aren't root;
+- (BOOL)canEditTitle
+{
+	BOOL result = ![self isRoot];
+	return result;
+}
+
+- (NSString *)titleHTMLString
+{
+    return [[self titleBox] textHTMLString];
+}
+
+- (NSString *)titleString;
+{
+	return [[self titleBox] text];
 }
 
 #pragma mark Properties
