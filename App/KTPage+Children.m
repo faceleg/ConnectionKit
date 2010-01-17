@@ -99,22 +99,26 @@
 /*	This method is remarkably simple since when you remove a page there is actually no need to update
  *	the childrens' -collectionIndex. They are ultimately still in the right overall order.
  */
-- (void)removePage:(KTPage *)aPage
+- (void)removeChildItem:(SVSiteItem *)item
 {
 	// Remove the page and update the page cache
-	[[self mutableSetValueForKey:@"childItems"] removeObject:aPage];
+	[[self mutableSetValueForKey:@"childItems"] removeObject:item];
 	[self invalidateSortedChildrenCache];
 	
 	// Delete the corresponding archive page if unused now
-	KTArchivePage *archive = [self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:NO];
-	if (archive)
-	{
-		NSArray *archivePages = [archive sortedPages];
-		if ([archivePages count] == 0)
-		{
-			[[self managedObjectContext] deletePage:archive];
-		}
-	}
+    if ([item isKindOfClass:[KTPage class]])
+    {
+        KTArchivePage *archive = [self archivePageForTimestamp:[(KTPage *)item timestampDate]
+                                              createIfNotFound:NO];
+        if (archive)
+        {
+            NSArray *archivePages = [archive sortedPages];
+            if ([archivePages count] == 0)
+            {
+                [[self managedObjectContext] deletePage:archive];
+            }
+        }
+    }
 }
 
 

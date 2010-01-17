@@ -542,7 +542,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	for ( i=0; i < [selectedPages count]; i++ )
 	{
 		KTPage *page = [selectedPages objectAtIndex:i];
-		[[page parentPage] removePage:page];
+		[[page parentPage] removeChildItem:page];
 	}
 	
 	
