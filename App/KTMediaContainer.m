@@ -9,7 +9,6 @@
 #import "KTMediaContainer.h"
 
 #import "KTScaledImageContainer.h"
-#import "KTSimpleScaledImageContainer.h"
 #import "KTNamedSettingsScaledImageContainer.h"
 #import "KTGraphicalTextMediaContainer.h"
 
@@ -29,9 +28,6 @@
 
 
 @interface KTMediaContainer ()
-
-- (KTSimpleScaledImageContainer *)existingImageWithProperties:(NSDictionary *)properties;
-- (KTSimpleScaledImageContainer *)_imageWithProperties:(NSDictionary *)properties;
 
 - (KTNamedSettingsScaledImageContainer *)existingImageWithName:(NSString *)name pluginID:(NSString *)ID;
 - (KTNamedSettingsScaledImageContainer *)_imageWithScalingSettingsNamed:(NSString *)settingsName
@@ -252,116 +248,6 @@
 }
 
 #pragma mark -
-#pragma mark Scaled Images
-
-- (KTMediaContainer *)scaledImageWithProperties:(NSDictionary *)properties;
-{
-	// Look for an existing scaled image
-	KTMediaContainer *result = [self existingImageWithProperties:properties];
-	
-	// If none is found, create a new one
-	if (!result)
-	{
-		result = [self _imageWithProperties:properties];
-	}
-	
-    
-	OBPOSTCONDITION(result);
-    OBPOSTCONDITION([result managedObjectContext]);
-    
-	return result;
-}
-
-- (KTMediaContainer *)imageWithScalingSettings:(KTImageScalingSettings *)settings
-{
-	NSDictionary *properties = [NSDictionary dictionaryWithObject:settings forKey:@"scalingBehavior"];
-	KTMediaContainer *result = [self scaledImageWithProperties:properties];
-	return result;
-}
-
-- (KTMediaContainer *)imageWithScaleFactor:(float)scaleFactor
-{
-	KTImageScalingSettings *settings = [KTImageScalingSettings settingsWithScaleFactor:scaleFactor];
-	
-	KTMediaContainer *result = [self imageWithScalingSettings:settings];
-													
-	return result;
-}
-
-- (KTMediaContainer *)imageToFitSize:(NSSize)size
-{
-	KTImageScalingSettings *settings =
-		[KTImageScalingSettings settingsWithBehavior:KTScaleToSize size:size];
-	
-	KTMediaContainer *result = [self imageWithScalingSettings:settings];
-													
-	return result;
-}
-
-- (KTMediaContainer *)imageCroppedToSize:(NSSize)size alignment:(NSImageAlignment)alignment
-{
-	KTImageScalingSettings *settings = [KTImageScalingSettings cropToSize:size alignment:alignment];
-	
-	KTMediaContainer *result = [self imageWithScalingSettings:settings];
-	return result;
-}
-
-- (KTMediaContainer *)imageStretchedToSize:(NSSize)size
-{
-	KTImageScalingSettings *settings =
-		[KTImageScalingSettings settingsWithBehavior:KTStretchToSize size:size];
-	
-	KTMediaContainer *result = [self imageWithScalingSettings:settings];
-													
-	return result;
-}
-
-#pragma mark support
-
-- (KTSimpleScaledImageContainer *)existingImageWithProperties:(NSDictionary *)properties
-{
-	OBPRECONDITION(properties);
-	
-	KTSimpleScaledImageContainer *result = nil;
-	
-	NSSet *existingScaledImages = [self valueForKey:@"scaledImages"];
-	NSEnumerator *scaledImagesEnumerator = [existingScaledImages objectEnumerator];
-	KTScaledImageContainer *aScaledImage;
-	while (aScaledImage = [scaledImagesEnumerator nextObject])
-	{
-		if ([aScaledImage isKindOfClass:[KTSimpleScaledImageContainer class]] &&
-			[properties isEqualToDictionary:[aScaledImage latestProperties]])
-		{
-			result = (KTSimpleScaledImageContainer *)aScaledImage;
-			break;
-		}
-	}
-	
-	return result;
-}
-
-/*	Does the hard work of creating new media containers.
- *	The result is a MediaContainer paired with an appropriate MediaFile.
- */
-- (KTSimpleScaledImageContainer *)_imageWithProperties:(NSDictionary *)properties
-{
-	OBPRECONDITION(properties);
-    OBPRECONDITION([properties objectForKey:@"scalingBehavior"]);
-    
-    
-    // Create the media container first
-	KTSimpleScaledImageContainer *result =
-		[NSEntityDescription insertNewObjectForEntityForName:@"SimpleScaledImageContainer"
-									  inManagedObjectContext:[self managedObjectContext]];
-	
-	[result setValue:self forKey:@"sourceMedia"];
-	[result setValuesForKeysWithDictionary:properties];
-	
-	// Finish
-	return result;
-}
-
-#pragma mark -
 #pragma mark Named Settings
 
 - (KTMediaContainer *)imageWithScalingSettingsNamed:(NSString *)settingsName
@@ -388,7 +274,7 @@
 	KTScaledImageContainer *aScaledImage;
 	while (aScaledImage = [scaledImagesEnumerator nextObject])
 	{
-		if ([aScaledImage isKindOfClass:[KTSimpleScaledImageContainer class]] &&
+		if ([aScaledImage isKindOfClass:[KTNamedSettingsScaledImageContainer class]] &&
 			[[aScaledImage valueForKey:@"pluginID"] isEqualToString:ID] &&
 			[[aScaledImage valueForKey:@"scalingSettingsName"] isEqualToString:name])
 		{
