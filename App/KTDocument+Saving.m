@@ -302,10 +302,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 /*	The low level NSDocument method responsible for actually getting a document onto disk
  */
-- (BOOL)writeToURL:(NSURL *)inURL 
-			ofType:(NSString *)inType 
-  forSaveOperation:(NSSaveOperationType)saveOperation originalContentsURL:(NSURL *)inOriginalContentsURL
-			 error:(NSError **)outError 
+ - (BOOL)writeToURL:(NSURL *)inURL 
+             ofType:(NSString *)inType 
+   forSaveOperation:(NSSaveOperationType)saveOperation
+originalContentsURL:(NSURL *)inOriginalContentsURL
+              error:(NSError **)outError
 {
 	OBPRECONDITION([NSThread currentThread] == [self thread]);
     
