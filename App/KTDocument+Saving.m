@@ -113,9 +113,20 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	OBPRECONDITION([absoluteURL isFileURL]);
 	
 	
+    // Let anyone interested know
 	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
     
     
+    // Record display properties
+    NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+    [managedObjectContext processPendingChanges];
+    [[managedObjectContext undoManager] disableUndoRegistration];
+    [self copyDocumentDisplayPropertiesToModel];
+    [managedObjectContext processPendingChanges];
+    [[managedObjectContext undoManager] enableUndoRegistration];
+    
+    
+    // Normal save behaviour
     BOOL result = [super saveToURL:absoluteURL ofType:typeName forSaveOperation:saveOperation error:outError];
     OBASSERT(result || !outError || (nil != *outError)); // make sure we didn't return NO with an empty error
     
@@ -447,17 +458,9 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     }
     
     
-    // Record display properties
-    [managedObjectContext processPendingChanges];
-    [[managedObjectContext undoManager] disableUndoRegistration];
-    [self copyDocumentDisplayPropertiesToModel];
-    [managedObjectContext processPendingChanges];
-    [[managedObjectContext undoManager] enableUndoRegistration];
-    
-    
     // Move external media in-document if the user requests it
-    KTSite *docInfo = [self site];
-    if ([docInfo copyMediaOriginals] != [[docInfo committedValueForKey:@"copyMediaOriginals"] intValue])
+    KTSite *site = [self site];
+    if ([site copyMediaOriginals] != [[site committedValueForKey:@"copyMediaOriginals"] intValue])
     {
         [[self mediaManager] moveApplicableExternalMediaInDocument];
     }
