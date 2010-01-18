@@ -352,7 +352,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         // Write out Quick Look preview
         if (result && quickLookPreviewHTML)
         {
-            NSURL *previewURL = [[KTDocument quickLookURLForDocumentURL:inURL] URLByAppendingPathComponent:@"preview.html" isDirectory:NO];
+            NSURL *previewURL = [[KTDocument quickLookURLForDocumentURL:inURL] URLByAppendingPathComponent:@"Preview.html" isDirectory:NO];
             result = [quickLookPreviewHTML writeToURL:previewURL
                                            atomically:NO
                                              encoding:NSUTF8StringEncoding
@@ -901,7 +901,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSImage *thumbnail = [[self proxyForThread:nil] _quickLookThumbnail];
     if (thumbnail)
     {
-        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"thumbnail.png" isDirectory:NO];
+        NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];
         OBASSERT(thumbnailURL);	// shouldn't be nil, right?
         
         result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:error];
