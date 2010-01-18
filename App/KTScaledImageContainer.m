@@ -8,7 +8,6 @@
 
 #import "KTScaledImageContainer.h"
 #import "KTMediaManager.h"
-#import "KTScaledImageProperties.h"
 
 #import "KTDocument.h"
 
