@@ -1032,44 +1032,4 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return result;
 }
 
-#pragma mark -
-#pragma mark Backup
-
-- (NSURL *)backupURL
-{
-	NSURL *result = nil;
-	
-    NSURL *originalURLWithoutFileName = [[self fileURL] URLByDeletingLastPathComponent];
-    
-    NSString *fileName = [[[self fileURL] lastPathComponent] stringByDeletingPathExtension];
-    NSString *fileExtension = [[self fileURL] pathExtension];
-    
-    NSString *backupFileName = NSLocalizedString(@"Backup of ", "Prefix for backup copy of document");
-    OBASSERT(fileName);
-    backupFileName = [backupFileName stringByAppendingString:fileName];
-    OBASSERT(fileExtension);
-    backupFileName = [backupFileName stringByAppendingPathExtension:fileExtension];
-    result = [originalURLWithoutFileName URLByAppendingPathComponent:backupFileName isDirectory:NO];
-	
-	return result;
-}
-
-/*  A) Recursively creates required directories
- *  B) Copies the doc to the location
- */
-- (BOOL)backupToURL:(NSURL *)URL error:(NSError **)error
-{
-    BOOL result = [[NSFileManager defaultManager] createDirectoryAtPath:[[URL path] stringByDeletingLastPathComponent]
-                                            withIntermediateDirectories:YES
-                                                             attributes:nil
-                                                                  error:error];
-    
-    if (result)
-    {
-        result = [self copyDocumentToURL:URL recycleExistingFiles:YES error:error];
-    }
-    
-    return result;
-}
-
 @end
