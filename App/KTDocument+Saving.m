@@ -77,7 +77,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation
 					  error:(NSError **)outError;
 
-- (BOOL)writeMOCToURL:(NSURL *)inURL 
+- (BOOL)writeDatastoreToURL:(NSURL *)inURL 
 			   ofType:(NSString *)inType 
 	 forSaveOperation:(NSSaveOperationType)inSaveOperation
   originalContentsURL:(NSURL *)inOriginalContentsURL
@@ -341,7 +341,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Save the context
-		result = [self writeMOCToURL:inURL
+		result = [self writeDatastoreToURL:inURL
                               ofType:inType
                     forSaveOperation:saveOperation
                  originalContentsURL:inOriginalContentsURL
@@ -470,7 +470,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	return YES;
 }
 
-- (BOOL)writeMOCToURL:(NSURL *)inURL 
+- (BOOL)writeDatastoreToURL:(NSURL *)inURL 
 			   ofType:(NSString *)inType 
 	 forSaveOperation:(NSSaveOperationType)inSaveOperation
   originalContentsURL:(NSURL *)inOriginalContentsURL
