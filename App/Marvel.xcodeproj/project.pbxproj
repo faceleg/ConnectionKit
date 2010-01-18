@@ -890,6 +890,7 @@
 		CE494D7B0896B5CE005FBD81 /* TinyAdd.png in Resources */ = {isa = PBXBuildFile; fileRef = CE494D7A0896B5CE005FBD81 /* TinyAdd.png */; };
 		CE4F7DB60891A95B00556D47 /* KTDesignPickerBackground.m in Sources */ = {isa = PBXBuildFile; fileRef = CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */; };
 		CE4F81010891B55600556D47 /* designSelectedClickGloss.png in Resources */ = {isa = PBXBuildFile; fileRef = CE4F81000891B55600556D47 /* designSelectedClickGloss.png */; };
+		CE51013811038F060082043E /* upload_warning.png in Resources */ = {isa = PBXBuildFile; fileRef = CE51013711038F060082043E /* upload_warning.png */; };
 		CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE510FCC090EA74C00547CFF /* KTTranscriptController.m */; };
 		CE5CA31A0D15B90B0021E9B3 /* toolbar_html.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3190D15B90B0021E9B3 /* toolbar_html.tiff */; };
 		CE5CA3470D15BE580021E9B3 /* GenericFileServerIcon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE5CA3460D15BE580021E9B3 /* GenericFileServerIcon.icns */; };
@@ -2478,6 +2479,7 @@
 		CE4F7DB30891A95B00556D47 /* KTDesignPickerBackground.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPickerBackground.h; sourceTree = "<group>"; };
 		CE4F7DB40891A95B00556D47 /* KTDesignPickerBackground.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPickerBackground.m; sourceTree = "<group>"; };
 		CE4F81000891B55600556D47 /* designSelectedClickGloss.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = designSelectedClickGloss.png; sourceTree = "<group>"; };
+		CE51013711038F060082043E /* upload_warning.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = upload_warning.png; sourceTree = "<group>"; };
 		CE510FCB090EA74C00547CFF /* KTTranscriptController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTTranscriptController.h; sourceTree = "<group>"; };
 		CE510FCC090EA74C00547CFF /* KTTranscriptController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTTranscriptController.m; sourceTree = "<group>"; };
 		CE55B0E30AD19B650091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; name = zh_CN; path = zh_CN.lproj/Credits.html; sourceTree = "<group>"; };
@@ -3276,6 +3278,7 @@
 		2A37F4B8FDCFA73011CA2CEA /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CE51013711038F060082043E /* upload_warning.png */,
 				CE22E5E40D7C73C00055D8E9 /* Graphics */,
 				3C382D600E98170600113137 /* dsa_pub.pem */,
 				8D15AC360486D014006FF6A4 /* Info.plist */,
@@ -5690,6 +5693,7 @@
 				CE452BED109CE7DA00EFF3EC /* io0317.tla in Resources */,
 				CE452BEE109CE7DA00EFF3EC /* io0401.tla in Resources */,
 				CE452BEF109CE7DA00EFF3EC /* io1031.tla in Resources */,
+				CE51013811038F060082043E /* upload_warning.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
