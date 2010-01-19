@@ -483,8 +483,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	return YES;
 }
 
-- (BOOL)writeDatastoreToURL:(NSURL *)inURL 
-                     ofType:(NSString *)inType 
+- (BOOL)writeDatastoreToURL:(NSURL *)inURL  // TODO: this should be the URL of the datastore, not the document
+                     ofType:(NSString *)inType
            forSaveOperation:(NSSaveOperationType)inSaveOperation
         originalContentsURL:(NSURL *)inOriginalContentsURL
                       error:(NSError **)outError;
@@ -497,40 +497,36 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSError *error = nil;
 	
 	
-	if (result)
+	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	
+	
+    
+    // Handle the user choosing "Save As" for an EXISTING document
+    if (inSaveOperation == NSSaveAsOperation && [self fileURL])
     {
-        NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-	
-	
-        
-        // Handle the user choosing "Save As" for an EXISTING document
-        if (inSaveOperation == NSSaveAsOperation && [self fileURL])
+        result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
+        if (!result)
         {
-            result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
-            if (!result)
+            if (outError)
             {
-                if (outError)
-                {
-                    *outError = error;
-                }
-                return NO; // bail out and display outError
+                *outError = error;
             }
-            else
-            {
-                result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
-                                                  error:&error];
-            }
+            return NO; // bail out and display outError
         }
-        
-        if (result)	// keep going if OK
+        else
         {
-            result = [managedObjectContext save:&error];
-        }
-        if (result)
-        {
-            result = [[[self mediaManager] managedObjectContext] save:&error];
+            result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
+                                              error:&error];
         }
     }
+    
+    
+    // Time to actually save the context
+    if (result)
+    {
+        result = [managedObjectContext save:&error];
+    }
+
     
     // Return, making sure to supply appropriate error info
     if (!result && outError) *outError = error;

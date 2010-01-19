@@ -343,19 +343,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                    options:nil
                                                      error:outError] != nil);
 	
-	// Also configure media manager's store
-	if (result)
-	{
-		NSPersistentStoreCoordinator *mediaPSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-		result = (nil != [mediaPSC addPersistentStoreWithType:NSXMLStoreType
-												configuration:nil
-														  URL:[KTMediaManager mediaStoreURLForDocumentURL:URL]
-													  options:nil
-														error:outError]);
-	}
 	
-	
-	return result;
+    return result;
 }
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType

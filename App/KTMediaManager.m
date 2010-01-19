@@ -58,6 +58,8 @@ NSString *KTMediaLogDomain = @"Media";
 	myDocument = document;	// Weak ref
 	
 	
+    return self;
+    
 	// Set up our MOC
 	myMOC = [[NSManagedObjectContext alloc] init];
     [myMOC setMergePolicy:NSOverwriteMergePolicy];
@@ -114,7 +116,7 @@ NSString *KTMediaLogDomain = @"Media";
 
 /*	The Media Manager has its own private managed object context
  */
-- (NSManagedObjectContext *)managedObjectContext { return myMOC; }
+- (NSManagedObjectContext *)managedObjectContext { return [[self document] managedObjectContext]; }
 
 + (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)docURL
 {

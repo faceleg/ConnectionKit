@@ -83,7 +83,7 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTMediaManager *result = [(KTMediaPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator] mediaManager];
+	KTMediaManager *result = [[[[[self managedObjectContext] root] site] document] mediaManager];
 	OBPOSTCONDITION(result);
 	return result;
 }
