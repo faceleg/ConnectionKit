@@ -43,7 +43,6 @@
 	id result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
 	
 	[result setValue:[path lastPathComponent] forKey:@"filename"];
-	[result setValue:[self mediaFileDigestFromContentsOfFile:path] forKey:@"digest"];
 	
 	return result;
 }
@@ -233,37 +232,30 @@
 
 #define DIGESTDATALENGTH 8192
 
-+ (NSString *)mediaFileDigestFromData:(NSData *)data
++ (NSData *)mediaFileDigestFromData:(NSData *)data
 {
     unsigned int length = [data length];
 	unsigned int lengthToDigest = MIN(length, (unsigned int)DIGESTDATALENGTH);
 	NSData *firstPart = [data subdataWithRange:NSMakeRange(0,lengthToDigest)];
-	NSString *digest = [firstPart sha1DigestString];
-	NSString *result = [NSString stringWithFormat:@"%@-%x", digest, length];
+	NSData *result = [firstPart SHA1HashDigest];
 	return result;
 }
 
-+ (NSString *)mediaFileDigestFromContentsOfFile:(NSString *)path
++ (NSData *)mediaFileDigestFromContentsOfFile:(NSString *)path
 {
-    NSString *result = @"";
+    NSData *result = nil;
 	id fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
 	if (fileHandle)
 	{
 		NSData *data = [fileHandle readDataOfLength:DIGESTDATALENGTH];
-		NSString *digest = [data sha1DigestString];
+		result = [data SHA1HashDigest];
 		
 		[fileHandle closeFile];
-		
-		// Get file length
-		NSDictionary *attr = [[NSFileManager defaultManager] fileAttributesAtPath:path traverseLink:YES];
-		NSNumber *fileSizeNum = [attr objectForKey:NSFileSize];
-		long long fileSize = [fileSizeNum longLongValue];
-		result = [NSString stringWithFormat:@"%@-%llx", digest, fileSize];
 	}
 	return result;
 }
 
-- (NSString *)digest { return [self wrappedValueForKey:@"digest"]; }
+@dynamic cachedDigest;
 
 #pragma mark -
 #pragma mark Errors

@@ -14,10 +14,11 @@
 
 
 @interface KTInDocumentMediaFile : KTMediaFile
-+ (NSString *)mediaFileDigestFromData:(NSData *)data;
-+ (NSString *)mediaFileDigestFromContentsOfFile:(NSString *)path;
-- (NSString *)digest;
 
 @property(nonatomic, copy) NSString *preferredFilename;
+
++ (NSData *)mediaFileDigestFromData:(NSData *)data;
++ (NSData *)mediaFileDigestFromContentsOfFile:(NSString *)path;
+@property(nonatomic, copy) NSData *cachedDigest;
 
 @end
