@@ -17,4 +17,7 @@
 + (NSString *)mediaFileDigestFromData:(NSData *)data;
 + (NSString *)mediaFileDigestFromContentsOfFile:(NSString *)path;
 - (NSString *)digest;
+
+@property(nonatomic, copy) NSString *preferredFilename;
+
 @end

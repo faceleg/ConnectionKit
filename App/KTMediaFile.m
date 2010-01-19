@@ -136,7 +136,7 @@
 	return nil;
 }
 
-- (NSString *)preferredFileName
+- (NSString *)preferredFilename
 {
 	SUBCLASSMUSTIMPLEMENT;
 	return nil;
@@ -154,15 +154,7 @@
 	if (!result || [result isDeleted])
 	{
 		// Find a unique path to upload to
-		NSString *sourceFilename = nil;
-		if ([self isKindOfClass:[KTInDocumentMediaFile class]])
-        {
-			sourceFilename = [self valueForKey:@"sourceFilename"];
-		}
-		else
-        {
-			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
-		}
+		NSString *sourceFilename = [self preferredFilename];
 		
 		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
         NSString *pathExtension = [[sourceFilename pathExtension] lowercaseString];
@@ -254,15 +246,7 @@
                 // If not, create our own
                 if (!result)
                 {
-                    NSString *sourceFilename = nil;
-                    if ([self isKindOfClass:[KTInDocumentMediaFile class]])
-                    {
-                        sourceFilename = [self valueForKey:@"sourceFilename"];
-                    }
-                    else
-                    {
-                        sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
-                    }
+                    NSString *sourceFilename = [self preferredFilename];
                     
                     // Case 40782. A nil sourceFilename gives a path of "_Media" wreaking havoc when publishing
                     if (sourceFilename || [sourceFilename isEqualToString:@""]) 

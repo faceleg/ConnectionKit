@@ -24,7 +24,8 @@
 
 + (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 
-- (NSString *)preferredFileName;
+// Basically the same as -[NSFileWrapper preferredFilename]. It's designed for management of files within the package; not for upload purposes.
+- (NSString *)preferredFilename;
 
 // Scaling
 - (NSURL *)URLForImageScaledToSize:(NSSize)size

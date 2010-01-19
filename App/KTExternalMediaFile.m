@@ -117,7 +117,7 @@
 	return result;
 }
 
-- (NSString *)preferredFileName
+- (NSString *)preferredFilename
 {
 	NSString *result = [[[self valueForKeyPath:@"alias.lastKnownPath"] lastPathComponent] stringByDeletingPathExtension];
 	return result;

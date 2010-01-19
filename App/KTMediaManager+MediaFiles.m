@@ -246,7 +246,7 @@
 		result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
 											inManagedObjectContext:[self managedObjectContext]];
 		
-		[result setValue:preferredFilename forKey:@"sourceFilename"];
+		[result setPreferredFilename:preferredFilename];
 	}
 	
 	
@@ -381,8 +381,8 @@
     KTLog(KTMediaLogDomain, KTLogDebug, @"Creating temporary in-document MediaFile from path:\n%@", path);
 	
 	// Figure out the filename and copy the file there
-	NSString *sourceFilename = [path lastPathComponent];
-	NSString *destinationFilename = [self uniqueInDocumentFilename:sourceFilename];
+	NSString *preferredFilename = [path lastPathComponent];
+	NSString *destinationFilename = [self uniqueInDocumentFilename:preferredFilename];
 	NSString *destinationPath = [[self temporaryMediaPath] stringByAppendingPathComponent:destinationFilename];
 	
 	[self prepareTemporaryMediaDirectoryForFileNamed:destinationFilename];
@@ -393,7 +393,7 @@
                                             inManagedObjectContext:[self managedObjectContext]];
 		
         // Store the file's source filename
-        [result setValue:sourceFilename forKey:@"sourceFilename"];
+        [result setPreferredFilename:preferredFilename];
     }
     else
     {

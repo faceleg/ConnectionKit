@@ -207,10 +207,21 @@
 	return result;
 }
 
-- (NSString *)preferredFileName
+@dynamic preferredFilename;
+- (BOOL)validatePreferredFilename:(NSString **)filename error:(NSError **)outError
 {
-	NSString *result = [[[self valueForKey:@"sourceFilename"] lastPathComponent] stringByDeletingPathExtension];
-	return result;
+    //  Make sure it really is just a filename and not a path
+    BOOL result = [[*filename pathComponents] count] == 1;
+    if (!result && outError)
+    {
+        NSDictionary *info = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"perferredFilename \"%@\" is a path; not a filename", *filename]
+                                                         forKey:NSLocalizedDescriptionKey];
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                        code:NSValidationStringPatternMatchingError
+                                    userInfo:info];
+    }
+    
+    return result;
 }
 
 /*  Little hack to make missing media sheet work
