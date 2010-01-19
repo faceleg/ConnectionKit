@@ -518,6 +518,19 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
 }
 
+- (IBAction)rename:(id)sender;
+{
+    if ([self canRename])
+    {
+        [[[self view] window] makeFirstResponder:[self outlineView]];
+        
+        [[self outlineView] editColumn:0
+                                   row:[[self outlineView] selectedRow]
+                             withEvent:nil
+                                select:YES];
+    }
+}
+
 - (void)delete:(id)sender
 {
     /// Old code did a -processPendingChanges here but haven't a clue why. Mike.
@@ -565,6 +578,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 - (BOOL)canCopy
 {
     BOOL result = ([[[self content] selectedObjects] count] > 0);
+    return result;
+}
+
+- (BOOL)canRename;
+{
+    // Can only edit if there is a single item selected, and its not root
+    NSIndexSet *selection = [[self outlineView] selectedRowIndexes];
+    BOOL result = ([selection count] == 1 && ![selection containsIndex:0]);
     return result;
 }
 
@@ -1310,7 +1331,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
 {
-    BOOL result = NO;
+    BOOL result = YES;
     SEL action = [anItem action];
     
     if (action == @selector(cut:))
@@ -1320,6 +1341,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     else if (action == @selector(copy:))
     {
         result = [self canCopy];
+    }
+    else if (action == @selector(rename:))
+    {
+        result = [self canRename];
     }
     else if (action == @selector(delete:))
     {

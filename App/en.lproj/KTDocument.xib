@@ -22,7 +22,7 @@
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<integer value="1793"/>
-			<integer value="1726"/>
+			<integer value="1648"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -289,6 +289,16 @@
 															<object class="NSMutableArray" key="NSMenuItems">
 																<bool key="EncodedWithXMLCoder">YES</bool>
 																<reference ref="152884801"/>
+																<object class="NSMenuItem" id="548919124">
+																	<reference key="NSMenu" ref="272058959"/>
+																	<string key="NSTitle">Rename Page…</string>
+																	<string key="NSKeyEquiv"/>
+																	<int key="NSMnemonicLoc">2147483647</int>
+																	<reference key="NSOnImage" ref="439133155"/>
+																	<reference key="NSMixedImage" ref="598599151"/>
+																	<string key="NSAction">_popUpItemAction:</string>
+																	<reference key="NSTarget" ref="839119408"/>
+																</object>
 																<object class="NSMenuItem" id="102138947">
 																	<reference key="NSMenu" ref="272058959"/>
 																	<string key="NSTitle">Delete Page</string>
@@ -325,6 +335,7 @@
 																</object>
 															</object>
 														</object>
+														<int key="NSSelectedIndex">1</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -1501,6 +1512,14 @@
 					</object>
 					<int key="connectionID">1929</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">rename:</string>
+						<reference key="source" ref="363902086"/>
+						<reference key="destination" ref="548919124"/>
+					</object>
+					<int key="connectionID">1931</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1685,6 +1704,7 @@
 							<reference ref="102138947"/>
 							<reference ref="529729890"/>
 							<reference ref="970451841"/>
+							<reference ref="548919124"/>
 						</object>
 						<reference key="parent" ref="839119408"/>
 					</object>
@@ -1973,6 +1993,11 @@
 						<reference key="object" ref="970451841"/>
 						<reference key="parent" ref="272058959"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1930</int>
+						<reference key="object" ref="548919124"/>
+						<reference key="parent" ref="272058959"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2069,6 +2094,7 @@
 					<string>1926.IBPluginDependency</string>
 					<string>1926.ImportedFromIB2</string>
 					<string>1927.IBPluginDependency</string>
+					<string>1930.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2110,7 +2136,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
-					<string>{{390, 477}, {149, 64}}</string>
+					<string>{{390, 460}, {149, 81}}</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
@@ -2182,6 +2208,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -2200,7 +2227,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1929</int>
+			<int key="maxID">1931</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2825,9 +2852,11 @@
 							<string>copy:</string>
 							<string>cut:</string>
 							<string>delete:</string>
+							<string>rename:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
