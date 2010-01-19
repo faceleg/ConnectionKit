@@ -78,10 +78,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 					  error:(NSError **)outError;
 
 - (BOOL)writeDatastoreToURL:(NSURL *)inURL 
-			   ofType:(NSString *)inType 
-	 forSaveOperation:(NSSaveOperationType)inSaveOperation
-  originalContentsURL:(NSURL *)inOriginalContentsURL
-				error:(NSError **)outError;
+                     ofType:(NSString *)inType 
+           forSaveOperation:(NSSaveOperationType)inSaveOperation
+        originalContentsURL:(NSURL *)inOriginalContentsURL
+                      error:(NSError **)outError;
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
@@ -353,17 +353,30 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         if (result && quickLookPreviewHTML)
         {
             NSURL *previewURL = [[KTDocument quickLookURLForDocumentURL:inURL] URLByAppendingPathComponent:@"Preview.html" isDirectory:NO];
-            result = [quickLookPreviewHTML writeToURL:previewURL
-                                           atomically:NO
-                                             encoding:NSUTF8StringEncoding
-                                                error:outError];
+            
+            // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
+            // It might be nice to warn the user one day though.
+            NSError *qlPreviewError;
+            if (![quickLookPreviewHTML writeToURL:previewURL
+                                       atomically:NO
+                                         encoding:NSUTF8StringEncoding
+                                            error:&qlPreviewError])
+            {
+                NSLog(@"Error saving Quick Look preview: %@",
+                      [[qlPreviewError debugDescription] condenseWhiteSpace]);
+            }
         }
     }
     
     
     if (result && _quickLookThumbnailWebView)
     {
-        [self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:outError];
+        NSError *qlThumbnailError;
+        if (![self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:&qlThumbnailError])
+        {
+            NSLog(@"Error saving Quick Look thumbnail: %@",
+                  [[qlThumbnailError debugDescription] condenseWhiteSpace]);
+        }
 	}
 	
 	
@@ -471,10 +484,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 }
 
 - (BOOL)writeDatastoreToURL:(NSURL *)inURL 
-			   ofType:(NSString *)inType 
-	 forSaveOperation:(NSSaveOperationType)inSaveOperation
-  originalContentsURL:(NSURL *)inOriginalContentsURL
-				error:(NSError **)outError;
+                     ofType:(NSString *)inType 
+           forSaveOperation:(NSSaveOperationType)inSaveOperation
+        originalContentsURL:(NSURL *)inOriginalContentsURL
+                      error:(NSError **)outError;
 
 {
 	OBASSERT([NSThread currentThread] == [self thread]);
@@ -904,7 +917,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSURL *thumbnailURL = [[KTDocument quickLookURLForDocumentURL:docURL] URLByAppendingPathComponent:@"Thumbnail.png" isDirectory:NO];
         OBASSERT(thumbnailURL);	// shouldn't be nil, right?
         
-        result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:NSAtomicWrite error:error];
+        result = [[thumbnail PNGRepresentation] writeToURL:thumbnailURL options:0 error:error];
         OBASSERT(result || !error || *error != nil); // make sure we don't return NO with an empty error
     }        
         
