@@ -107,14 +107,13 @@
     return nil;
 }
 
-#pragma mark -
-#pragma mark Paths
+#pragma mark Location
 
 /*	The path where the underlying filesystem object is being kept.
  */
 - (NSString *)currentPath
 {
-	NSString *result = [self _currentPath];
+	NSString *result = [[self fileURL] path];
     if (!result)
     {
         result = [[NSBundle mainBundle] pathForImageResource:@"qmark"];
@@ -123,7 +122,7 @@
 	return result;
 }
 
-- (NSString *)_currentPath
+- (NSURL *)fileURL;
 {
 	SUBCLASSMUSTIMPLEMENT;
 	return nil;
@@ -399,7 +398,7 @@
     NSNumber *imageWidth = nil;
     NSNumber *imageHeight = nil;
     
-    NSString *imagePath = [self _currentPath];
+    NSString *imagePath = [[self fileURL] path];
     if (imagePath)
     {
         NSURL *imageURL = [NSURL fileURLWithPath:imagePath];

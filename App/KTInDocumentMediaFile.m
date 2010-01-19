@@ -17,6 +17,7 @@
 #import "NSData+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSURL+Karelia.h"
 
 #import "BDAlias.h"
 #import <Connection/KTLog.h>
@@ -158,19 +159,19 @@
 #pragma mark -
 #pragma mark Accessors
 
-- (NSString *)_currentPath
+- (NSURL *)fileURL;
 {
-	NSString *result = nil;
+	NSURL *result = nil;
 		
 	// Figure out proper values for these two
 	if ([self isTemporaryObject])
 	{
-		result = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]];
+		result = [NSURL fileURLWithPath:[[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]]];
 	}
 	else
 	{
 		KTDocument *doc = [[self mediaManager] document];
-        result = [[[doc mediaDirectoryURL] path] stringByAppendingPathComponent:[self filename]];
+        result = [[doc mediaDirectoryURL] URLByAppendingPathComponent:[self filename] isDirectory:NO];
 	}
 	
     return result;

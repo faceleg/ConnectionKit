@@ -32,9 +32,9 @@
 - (NSString *)filenameExtension;
 
 
-// Paths
-- (NSString *)currentPath;	// Where the file is currently being stored.
-- (NSString *)_currentPath;
+// Location
+- (NSURL *)fileURL; // the file at that URL may not exist any more. Might be nil if the Media knows it can't be found
+- (NSString *)currentPath;	// just like -fileURL, but will never return nil. Falls back to a placeholder image instead
 - (NSString *)quickLookPseudoTag;
 
 - (KTMediaFileUpload *)defaultUpload;

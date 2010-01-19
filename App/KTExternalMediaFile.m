@@ -88,17 +88,17 @@
 	[self setValue:[alias aliasData] forKey:@"aliasData"];
 }
 
-- (NSString *)_currentPath;
+- (NSURL *)fileURL;
 {
-	NSString *result = [[self alias] fullPath];
+	NSString *path = [[self alias] fullPath];
 	
 	// Ignore files which are in the Trash
-	if (result && [result rangeOfString:@".Trash"].location != NSNotFound)
+	if (path && [path rangeOfString:@".Trash"].location == NSNotFound)
 	{
-		result = nil;
+		return [NSURL fileURLWithPath:path];
 	}
     
-    return result;
+    return nil;
 }
 
 - (NSString *)filename
