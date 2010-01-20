@@ -102,6 +102,8 @@
 
 #pragma mark Editing
 
+- (SVExternalLink *)externalLinkRepresentation { return nil; }	// used to determine if it's an external link, for page details.
+
 - (KTPage *)pageRepresentation { return nil; }
 
 #pragma mark Publishing

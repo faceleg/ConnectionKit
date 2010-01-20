@@ -10,7 +10,7 @@
 #import "SVSiteItem.h"
 
 
-@interface SVExternalLink :  SVSiteItem  
+@interface SVExternalLink : SVSiteItem  
 {
 }
 

@@ -34,6 +34,11 @@
     return [[[self URL] lastPathComponent] stringByDeletingPathExtension];
 }
 
+- (SVExternalLink *)externalLinkRepresentation
+{
+	return self;
+}
+
 #pragma mark UI
 
 - (Class <SVWebContentViewController>)viewControllerClass;

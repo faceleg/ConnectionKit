@@ -15,6 +15,7 @@
 #import "NSImage+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "SVPagesController.h"
+#import "SVSiteItem.h"
 
 #import "NTBoxView.h"
 
@@ -26,6 +27,8 @@ static NSString *sWindowTitleObservationContext = @"-windowTitle observation con
 static NSString *sFileNameObservationContext = @"-fileName observation context";
 static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLString observation context";
 static NSString *sTitleObservationContext = @"-titleText observation context";
+static NSString *sSelectedObjectsObservationContext = @"-selectedObjects observation context";
+
 
 enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePageDetailsContext, kMetaDescriptionPageDetailsContext
 };
@@ -128,6 +131,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						  context:sTitleObservationContext];
 	[self resetTitlePlaceholderToComboTitleText:[oPagesController valueForKeyPath:@"selection.comboTitleText"]];
 		
+	[oPagesController addObserver:self
+					   forKeyPath:@"selectedObjects"
+						  options:NSKeyValueObservingOptionNew
+						  context:sSelectedObjectsObservationContext];
+	
+	
 	
 	/// turn off undo within the cell to avoid exception
 	/// -[NSBigMutableString substringWithRange:] called with out-of-bounds range
@@ -313,6 +322,32 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
+- (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects
+{
+	if (NSIsControllerMarker(selObjects))
+	{
+		NSLog(@"Controller marker:  %@", selObjects);
+	}
+	else
+	{
+		// Start with unknown, break and set to mixed if we find different types
+		// We "or" these together ... 1 | 2 = 3
+		enum { kUnknownType = 0, kLinkType = 1, kPageType = 2, kMixedType = 3 };
+		int type = kUnknownType;
+		for (SVSiteItem *item in selObjects)
+		{
+			SVExternalLink *thisLink = [item externalLinkRepresentation];
+			BOOL isLink = (nil != thisLink);
+			type |= (isLink ? kLinkType : kPageType);
+			if (kMixedType == type)
+			{
+				break;		// mixed type, no need to keep checking
+			}
+		}
+		NSLog(@"Selection type: %d", type);
+	}
+}
+
 - (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText
 {
 	NSDictionary *infoForBinding;
@@ -466,6 +501,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	else if (context == sTitleObservationContext)
 	{
 		[self resetTitlePlaceholderToComboTitleText:[object valueForKeyPath:@"selection.comboTitleText"]];	// go ahead and get the combo title
+	}
+	else if (context == sSelectedObjectsObservationContext)
+	{
+		[self updateFieldsBasedOnSelectedSiteOutlineObjects:[object selectedObjects]];
 	}
 	else
 	{
