@@ -350,118 +350,12 @@
 	return [self pasteboardRepresentation];
 }
 
-#pragma mark -
-#pragma mark Images
-
-- (NSSize)dimensions
-{
-	NSSize result = NSZeroSize;
-	
-	NSNumber *width = [self wrappedValueForKey:@"width"];
-	NSNumber *height = [self wrappedValueForKey:@"height"];
-	
-	if (width && height)
-	{
-		result = NSMakeSize([width floatValue], [height floatValue]);
-	}
-	
-	return result;
-}
-
-/*  Attempts to read image dimensions in from disk and store them.
- */
-- (void)cacheImageDimensions
-{
-    NSNumber *imageWidth = nil;
-    NSNumber *imageHeight = nil;
-    
-    NSString *imagePath = [[self fileURL] path];
-    if (imagePath)
-    {
-        NSURL *imageURL = [NSURL fileURLWithPath:imagePath];
-        OBASSERT(imageURL);
-        
-        CIImage *image = [[CIImage alloc] initWithContentsOfURL:imageURL];
-        if (image)
-        {
-            CGSize imageSize = [image extent].size;
-            imageWidth = [NSNumber numberWithFloat:imageSize.width];
-            imageHeight = [NSNumber numberWithFloat:imageSize.height];
-            [image release];
-        }
-        else
-        {
-            // BUGSID:31429. Fallback to NSImage which can sometimes handle awkward PICT images etc.
-            NSImage *image = [[NSImage alloc] initWithContentsOfURL:imageURL];
-            if (image)
-            {
-                NSSize imageSize = [image size];
-                imageWidth = [NSNumber numberWithFloat:imageSize.width];
-                imageHeight = [NSNumber numberWithFloat:imageSize.height];
-                [image release];
-            }
-        }
-    }
-    
-    [self setValue:imageWidth forKey:@"width"];
-    [self setValue:imageHeight forKey:@"height"];
-}
-
-- (void)cacheImageDimensionsIfNeeded
-{
-    NSNumber *width = [self valueForKey:@"width"];
-    NSNumber *height = [self valueForKey:@"height"];
-    
-    if (!width ||
-        !height ||
-        ![self validateValue:(id *)&width forKey:@"width" error:NULL]
-		||
-        ![self validateValue:(id *)&height forKey:@"height" error:NULL]
-		)
-    {
-        [self cacheImageDimensions];
-    }
-}
-
 /*	Used by the Missing Media sheet. Assumes that the underlying filesystem object no longer exists so attempts
  *	to retrieve a 128x128 pixel version from the scaled images.
  */
 - (NSString *)bestExistingThumbnail
 {
 	return nil;     // Cheating for the moment and assuming no thumbnails
-}
-
-#pragma mark -
-#pragma mark Alpha
-
-- (NSNumber *)hasAlphaComponent { return [self wrappedValueForKey:@"hasAlphaComponent"]; }
-
-- (void)setHasAlphaComponent:(NSNumber *)flag
-{
-    [self setWrappedValue:flag forKey:@"hasAlphaComponent"];
-}
-
-- (void)cacheHasAlphaComponent
-{
-    NSNumber *result = nil;
-    
-    NSString *path = [self currentPath];
-    if (path)
-    {
-        NSImage *image = [[NSImage alloc] initWithContentsOfFile:path];
-        if (image)
-        {
-            result = [NSNumber numberWithBool:[image hasAlphaComponent]];
-            [image release];
-        }
-    }
-    
-    [self setHasAlphaComponent:result];
-}
-
-- (void)cacheHasAlphaComponentIfNeeded;
-{
-    if (![self hasAlphaComponent]) [self cacheHasAlphaComponent];
 }
 
 #pragma mark -
@@ -678,6 +572,8 @@
     OBPRECONDITION(settings);
     
     
+    /*
+    
     // CropToSize operations are already pretty much sorted
     KTMediaScalingOperation behavior = [settings behavior];
     if (behavior == KTCropToSize)
@@ -722,7 +618,7 @@
     {
         settings = [KTImageScalingSettings settingsWithScaleFactor:1.0];
     }
-    
+    */
 	
     OBPOSTCONDITION(settings);
 	return settings;
