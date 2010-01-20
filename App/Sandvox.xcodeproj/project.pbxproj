@@ -572,8 +572,6 @@
 		3C682B260D622FC700B4D485 /* SVExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B250D622FC700B4D485 /* SVExtensibleManagedObject.m */; };
 		3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B340D62302F00B4D485 /* KTAbstractIndex.m */; };
 		3C682B380D62303C00B4D485 /* KTAbstractPluginDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B370D62303C00B4D485 /* KTAbstractPluginDelegate.m */; };
-		3C682B3B0D62305700B4D485 /* KTPseudoElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B3A0D62305700B4D485 /* KTPseudoElement.m */; };
-		3C682B3E0D62306300B4D485 /* KTInlineImageElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B3D0D62306300B4D485 /* KTInlineImageElement.m */; };
 		3C682B440D62308D00B4D485 /* SVHTMLTemplateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B430D62308D00B4D485 /* SVHTMLTemplateParser.m */; };
 		3C682B470D62317E00B4D485 /* KTRTFDImporter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B460D62317E00B4D485 /* KTRTFDImporter.m */; };
 		3C682B4A0D6231CB00B4D485 /* KTOffScreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682B490D6231CB00B4D485 /* KTOffScreenWebViewController.m */; };
@@ -598,8 +596,6 @@
 		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B330D62302A00B4D485 /* KTAbstractIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC70D6234FB00B4D485 /* KTAbstractPluginDelegate.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B360D62303700B4D485 /* KTAbstractPluginDelegate.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BC80D6234FE00B4D485 /* KTPseudoElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B390D62305200B4D485 /* KTPseudoElement.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BC90D62350000B4D485 /* KTInlineImageElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B3C0D62305F00B4D485 /* KTInlineImageElement.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B450D62317600B4D485 /* KTRTFDImporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCD0D62351000B4D485 /* KTOffScreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B480D6231C500B4D485 /* KTOffScreenWebViewController.h */; settings = {ATTRIBUTES = (); }; };
@@ -2129,10 +2125,6 @@
 		3C682B340D62302F00B4D485 /* KTAbstractIndex.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractIndex.m; sourceTree = "<group>"; };
 		3C682B360D62303700B4D485 /* KTAbstractPluginDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPluginDelegate.h; sourceTree = "<group>"; };
 		3C682B370D62303C00B4D485 /* KTAbstractPluginDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractPluginDelegate.m; sourceTree = "<group>"; };
-		3C682B390D62305200B4D485 /* KTPseudoElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPseudoElement.h; sourceTree = "<group>"; };
-		3C682B3A0D62305700B4D485 /* KTPseudoElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPseudoElement.m; sourceTree = "<group>"; };
-		3C682B3C0D62305F00B4D485 /* KTInlineImageElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTInlineImageElement.h; sourceTree = "<group>"; };
-		3C682B3D0D62306300B4D485 /* KTInlineImageElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTInlineImageElement.m; sourceTree = "<group>"; };
 		3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLTemplateParser.h; sourceTree = "<group>"; };
 		3C682B430D62308D00B4D485 /* SVHTMLTemplateParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLTemplateParser.m; sourceTree = "<group>"; };
 		3C682B450D62317600B4D485 /* KTRTFDImporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRTFDImporter.h; sourceTree = "<group>"; };
@@ -4208,10 +4200,6 @@
 		3C5A738F0BF7B96800776464 /* PseudoElements */ = {
 			isa = PBXGroup;
 			children = (
-				3C682B390D62305200B4D485 /* KTPseudoElement.h */,
-				3C682B3A0D62305700B4D485 /* KTPseudoElement.m */,
-				3C682B3C0D62305F00B4D485 /* KTInlineImageElement.h */,
-				3C682B3D0D62306300B4D485 /* KTInlineImageElement.m */,
 			);
 			name = PseudoElements;
 			sourceTree = "<group>";
@@ -4997,8 +4985,6 @@
 				3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */,
 				3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */,
 				3C682BC70D6234FB00B4D485 /* KTAbstractPluginDelegate.h in Headers */,
-				3C682BC80D6234FE00B4D485 /* KTPseudoElement.h in Headers */,
-				3C682BC90D62350000B4D485 /* KTInlineImageElement.h in Headers */,
 				3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */,
 				3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */,
 				3C682BCD0D62351000B4D485 /* KTOffScreenWebViewController.h in Headers */,
@@ -6380,8 +6366,6 @@
 				3C682B260D622FC700B4D485 /* SVExtensibleManagedObject.m in Sources */,
 				3C682B350D62302F00B4D485 /* KTAbstractIndex.m in Sources */,
 				3C682B380D62303C00B4D485 /* KTAbstractPluginDelegate.m in Sources */,
-				3C682B3B0D62305700B4D485 /* KTPseudoElement.m in Sources */,
-				3C682B3E0D62306300B4D485 /* KTInlineImageElement.m in Sources */,
 				3C682B440D62308D00B4D485 /* SVHTMLTemplateParser.m in Sources */,
 				3C682B470D62317E00B4D485 /* KTRTFDImporter.m in Sources */,
 				3C682B4A0D6231CB00B4D485 /* KTOffScreenWebViewController.m in Sources */,

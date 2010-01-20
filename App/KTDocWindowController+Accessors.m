@@ -9,7 +9,6 @@
 #import "KTDocWindowController.h"
 
 #import "KTDocWebViewController.h"
-#import "KTInlineImageElement.h"
 #import "KTPage.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 

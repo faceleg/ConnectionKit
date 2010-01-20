@@ -20,7 +20,6 @@
 #import "KTHostProperties.h"
 #import "SVHTMLTextBlock.h"
 #import "KTIndexPlugin.h"
-#import "KTInlineImageElement.h"
 #import "KTMediaManager+Internal.h"
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"

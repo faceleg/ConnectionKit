@@ -15,7 +15,6 @@
 @class KTWebViewComponent;
 @class SVHTMLTextBlock, KTWebViewUndoManagerProxy;
 @class SVHTMLTemplateParser;
-@class KTInlineImageElement;
 @class CIFilter;
 @class KTDocument;
 @class KTDocWindowController;
@@ -166,8 +165,6 @@
 - (SVHTMLTextBlock *)currentTextEditingBlock;
 - (BOOL)commitEditing;
 
-- (KTInlineImageElement *)inlineImageElementForNode:(DOMHTMLImageElement *)node
-										  container:(KTAbstractElement *)container;
 
 // Links
 - (BOOL)validateCreateLinkItem:(id <NSValidatedUserInterfaceItem>)item title:(NSString **)title;
