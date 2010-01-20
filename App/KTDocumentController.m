@@ -283,7 +283,6 @@
 	[super addDocument:document];
     
     [[SVWelcomeController sharedController] hideWindow:self];
-	[self synchronizeOpenDocumentsUserDefault];
 }
 
 /*	When a document is removed we don't want to reopen on launch, unless the close was part of the app quitting
@@ -299,10 +298,7 @@
         {
             [self showDocumentPlaceholderWindow:self];
         }
-        
-        // Record open doc list
-        [self synchronizeOpenDocumentsUserDefault];
-	}
+    }
 }
 
 #pragma mark -
@@ -331,6 +327,11 @@
 		if (noteDocument)
 		{
 			[super noteNewRecentDocument:aDocument];
+            
+            if (![NSApp isTerminating])
+            {
+                [self synchronizeOpenDocumentsUserDefault];
+            }
 		}
 	}
 }
