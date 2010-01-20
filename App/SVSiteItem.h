@@ -61,6 +61,8 @@
 @property(nonatomic, retain) KTPage *parentPage;
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 
+- (KTPage *)rootPage;   // searches up the tree till it finds a page with no parent
+
 - (BOOL)isDescendantOfCollection:(KTPage *)collection;
 - (BOOL)isDescendantOfItem:(SVSiteItem *)aPotentialAncestor;
 

@@ -120,7 +120,7 @@
 
 - (BOOL)isRoot
 {
-	BOOL result = ((id)self == [[self site] root]);
+	BOOL result = ((id)self == [[self site] rootPage]);
 	return result;
 }
 

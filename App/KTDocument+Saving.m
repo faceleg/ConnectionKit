@@ -668,7 +668,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 			// set ALL of our metadata for this store
 			
 			//  kMDItemAuthors
-			NSString *author = [[[[self site] root] master] valueForKey:@"author"];
+			NSString *author = [[[[self site] rootPage] master] valueForKey:@"author"];
 			if ( (nil == author) || [author isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemAuthors];
@@ -698,7 +698,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 			
 			//  kMDItemTextContent (free-text account of content)
 			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[[self site] root] master] siteSubtitle] textHTMLString];
+			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] textHTMLString];
 			if ( nil == subtitle )
 			{
 				subtitle = @"";
@@ -750,7 +750,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 			[localPool release];
 			
 			//  kMDItemTitle
-			NSString *siteTitle = [[[[[self site] root] master] siteTitle] textHTMLString];        
+			NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] textHTMLString];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )
 			{
 				[metadata removeObjectForKey:(NSString *)kMDItemTitle];
@@ -827,10 +827,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingPreview];
     [context setLiveDataFeeds:NO];
-    [context setCurrentPage:[[self site] root]];
+    [context setCurrentPage:[[self site] rootPage]];
     
     [context push];
-    [[[self site] root] writeHTML];
+    [[[self site] rootPage] writeHTML];
     [context pop];
 	
     NSString *thumbnailHTML = [context markupString];
@@ -850,7 +850,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
 	// Create the webview's offscreen window
-	unsigned designViewport = [[[[[self site] root] master] design] viewport];	// Ensures we don't clip anything important
+	unsigned designViewport = [[[[[self site] rootPage] master] design] viewport];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
 	NSWindow *window = [[NSWindow alloc]
@@ -1030,10 +1030,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setGenerationPurpose:kGeneratingQuickLookPreview];
-    [context setCurrentPage:[[self site] root]];
+    [context setCurrentPage:[[self site] rootPage]];
     
     [context push];
-    [[[self site] root] writeHTML];
+    [[[self site] rootPage] writeHTML];
     [context pop];
     
     NSString *result = [context markupString];

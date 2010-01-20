@@ -55,8 +55,22 @@
 #pragma mark -
 #pragma mark Pages
 
-- (KTPage *)root { return [self wrappedValueForKey:@"root"]; }
+- (KTPage *)rootPage
+{
+    [self willAccessValueForKey:@"rootPage"];
+    KTPage *result = [self primitiveValueForKey:@"rootPage"];
+    if (!result)
+    {
+        result = [[[self pages] anyObject] rootPage];
+        [self setPrimitiveValue:result forKey:@"rootPage"];
+    }
+    
+    [self didAccessValueForKey:@"rootPage"];
+    
+    return result;
+}
 
+@dynamic pages;
 - (KTPage *)pageWithPreviewURLPath:(NSString *)path
 {
 	KTPage *result = nil;
@@ -73,7 +87,7 @@
 		}
 		else if ([path hasSuffix:@"/"])
 		{
-			result = [self root];
+			result = [self rootPage];
 		}
 	}
 	return result;
@@ -298,7 +312,7 @@
 {
 	NSMutableArray *array = [NSMutableArray array];
 	int siteMenuCounter = 0;
-	[self appendGoogleMapOfPage:[self root] toArray:array siteMenuCounter:&siteMenuCounter level:1];
+	[self appendGoogleMapOfPage:[self rootPage] toArray:array siteMenuCounter:&siteMenuCounter level:1];
     
 	NSMutableString *result = [NSMutableString string];
 	[result appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"];

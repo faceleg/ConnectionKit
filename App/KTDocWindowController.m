@@ -104,7 +104,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
     
     // Finish setting up controllers
-	[[self siteOutlineViewController] setRootPage:[[[self document] site] root]];
+	[[self siteOutlineViewController] setRootPage:[[[self document] site] rootPage]];
     [[self siteOutlineViewController] setContent:[self pagesController]];
 	
 	
@@ -491,14 +491,14 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	
 	// It is not possible to make a group containing root
-	OBASSERTSTRING(![selectedPages containsObject:[[[self document] site] root]], @"Can't create a group containing root");
+	OBASSERTSTRING(![selectedPages containsObject:[[[self document] site] rootPage]], @"Can't create a group containing root");
 	
 	
 	KTPage *firstSelectedPage = [selectedPages objectAtIndex:0];
 	
 	// our group's parent will be the original parent of firstSelectedPage
 	KTPage *parentCollection = [(KTPage *)firstSelectedPage parentPage];
-	if ( (nil == parentCollection) || (nil == [[parentCollection site] root]) )
+	if ( (nil == parentCollection) || (nil == [[parentCollection site] rootPage]) )
 	{
 		NSLog(@"Unable to create group: could not determine parent collection.");
 		return;
@@ -690,13 +690,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // Other
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
         return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] rootPage])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
 	
@@ -735,7 +735,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         id context = [menuItem representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
 		
-		if ( ![selection containsObject:[[[self document] site] root]] )
+		if ( ![selection containsObject:[[[self document] site] rootPage]] )
 		{
 			return YES;
 		}
@@ -800,17 +800,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
     else if ( [toolbarItem action] == @selector(groupAsCollection:) )
     {
-        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( [toolbarItem action] == @selector(group:) )
     {
-        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] root]] );
+        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( [toolbarItem action] == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
         return ( (1==[selectedItems count])
-				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] root])
+				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] rootPage])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
     // Validate the -publishSiteFromToolbar: item here because -flagsChanged: doesn't catch all edge cases

@@ -271,7 +271,7 @@
                 [hostProperties setValue:nil forKey:@"localHosting"];
             }
             
-            [[[[self document] site] root] recursivelyInvalidateURL:YES];
+            [[[[self document] site] rootPage] recursivelyInvalidateURL:YES];
         }
         
         [savePanel setDelegate:nil];
@@ -294,7 +294,7 @@
 
 - (IBAction)visitPublishedSite:(id)sender
 {
-	NSURL *siteURL = [[[[self document] site] root] URL];
+	NSURL *siteURL = [[[[self document] site] rootPage] URL];
 	if (siteURL)
 	{
 		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:siteURL];
@@ -312,7 +312,7 @@
 
 - (IBAction)submitSiteToDirectory:(id)sender;
 {
-	NSURL *siteURL = [[[[self document] site] root] URL];
+	NSURL *siteURL = [[[[self document] site] rootPage] URL];
 	NSURL *submissionURL = [NSURL URLWithBaseURL:[NSURL URLWithString:@"http://www.sandvoxsites.com/submit_from_app.php"]
                                       parameters:[NSDictionary dictionaryWithObjectsAndKeys:
                                                   [siteURL absoluteString], @"url",

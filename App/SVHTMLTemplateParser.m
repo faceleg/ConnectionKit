@@ -370,7 +370,7 @@
 	
 		[[page managedObjectContext] makeAllPluginsPerformSelector:@selector(addSitewideTextToEndBody:forPage:)
 														withObject:string
-														  withPage:[[page site] root]];
+														  withPage:[[page site] rootPage]];
 		
 
 		[page makeComponentsPerformSelector:@selector(addLevelTextToEndBody:forPage:) withObject:string withPage:page recursive:NO];

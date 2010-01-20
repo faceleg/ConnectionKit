@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "KSExtensibleManagedObject.h"
+#import "SVExtensibleManagedObject.h"
 
 
 typedef enum {
@@ -29,7 +29,7 @@ typedef enum {
 
 @class KTDocument, KTPage, KTHostProperties;
 
-@interface KTSite : KSExtensibleManagedObject
+@interface KTSite : SVExtensibleManagedObject
 {
     KTDocument  *_document; // weak ref
 }
@@ -38,7 +38,8 @@ typedef enum {
 @property(nonatomic, assign) KTDocument *document;
 
 // Pages
-- (KTPage *)root;
+- (KTPage *)rootPage;
+@property(nonatomic, retain, readonly) NSSet *pages;
 - (KTPage *)pageWithPreviewURLPath:(NSString *)path;
 
 

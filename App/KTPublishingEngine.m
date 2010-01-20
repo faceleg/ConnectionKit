@@ -169,7 +169,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
         [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-                   withObject:[[self site] root]
+                   withObject:[[self site] rootPage]
                    afterDelay:KTParsingInterval];
     }
 }
@@ -466,7 +466,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Pages are finished, move onto the next
         
         // Upload banner image and design
-        KTMaster *master = [[[self site] root] master];
+        KTMaster *master = [[[self site] rootPage] master];
 		NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
         KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
         if (bannerImage)
@@ -774,7 +774,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)uploadDesignIfNeeded
 {
-    KTDesign *design = [[[[self site] root] master] design];
+    KTDesign *design = [[[[self site] rootPage] master] design];
     
     
     // Create the design directory
@@ -815,7 +815,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Load up the CSS from the design
-    KTMaster *master = [[[self site] root] master];     OBASSERT(master);
+    KTMaster *master = [[[self site] rootPage] master];     OBASSERT(master);
     KTDesign *design = [master design];     if (!design) NSLog(@"No design found");
     NSString *mainCSSPath = [[design bundle] pathForResource:@"main" ofType:@"css"];
     

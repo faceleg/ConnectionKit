@@ -232,21 +232,6 @@
 	return nil;
 }
 
-- (KTPage *)root
-{
-	NSError *localError = nil;
-	NSArray *fetchedObjects = [self objectsWithEntityName:@"Root"
-												predicate:nil
-													error:&localError];
-		
-	if ( (nil != fetchedObjects) && ([fetchedObjects count] == 1)  )
-	{
-		return [fetchedObjects objectAtIndex:0];
-	}
-        
-	return nil;
-}
-
 - (void)willDeletePage:(KTAbstractPage *)page;
 {
     // Let plug-ins know

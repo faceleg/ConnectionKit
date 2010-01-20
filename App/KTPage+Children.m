@@ -418,6 +418,18 @@
 
 #pragma mark Page Hierarchy Queries
 
+- (BOOL)isRootPage; // like NSTreeNode, the root page is defined to be one with no parent. This is just a convenience around that
+{
+    BOOL result = ([self parentPage] == nil);
+    return result;
+}
+
+- (KTPage *)rootPage;   // searches up the tree till it finds a page with no parent
+{
+    KTPage *result = ([self isRootPage] ? self : [[self parentPage] rootPage]);
+    return result;
+}
+
 - (KTPage *)parentOrRoot
 {
 	KTPage *result = [self parentPage];
@@ -432,7 +444,7 @@
  */
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
 {
-	if ([[[self entity] name] isEqualToString:@"Root"])
+	if ([self isRoot])
     {
         return YES;
     }

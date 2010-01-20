@@ -76,7 +76,7 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTMediaManager *result = [[[[[self managedObjectContext] root] site] document] mediaManager];
+	KTMediaManager *result = [[[[self managedObjectContext] site] document] mediaManager];
 	OBPOSTCONDITION(result);
 	return result;
 }

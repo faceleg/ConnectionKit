@@ -153,6 +153,12 @@
     return result;
 }
 
+- (KTPage *)rootPage;   // searches up the tree till it finds a page with no parent
+{
+    KTPage *result = [[self parentPage] rootPage];
+    return result;
+}
+
 - (BOOL)isDescendantOfCollection:(KTPage *)aPotentialAncestor;
 {
 	if (aPotentialAncestor == self) return YES;

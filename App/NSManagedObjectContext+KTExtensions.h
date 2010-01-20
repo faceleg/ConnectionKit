@@ -71,7 +71,6 @@
 // returns object in context matching criteria 
 - (NSManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
 
-- (KTPage *)root;   // returns context's Root
 - (void)deletePage:(KTAbstractPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
 
 - (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page;

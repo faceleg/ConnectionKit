@@ -103,7 +103,7 @@
         
         
         // ping JS-Kit
-        KTMaster *master = [[[self site] root] master];
+        KTMaster *master = [[[self site] rootPage] master];
         if ( nil != master )
         {
             if ( [master wantsJSKit] && (nil != [master JSKitModeratorEmail]) )
@@ -281,7 +281,7 @@
 - (void)uploadDesignIfNeeded
 {
     // When publishing changes, only upload the design if its published version is different to the current one
-    KTMaster *master = [[[self site] root] master];
+    KTMaster *master = [[[self site] rootPage] master];
     KTDesign *design = [master design];
     if (![self onlyPublishChanges] ||
         ![[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
@@ -295,7 +295,7 @@
     BOOL result = YES;
     
     NSData *digest = [mainCSSData SHA1HashDigest];
-    NSData *publishedDigest = [[[[self site] root] master] publishedDesignCSSDigest];
+    NSData *publishedDigest = [[[[self site] rootPage] master] publishedDesignCSSDigest];
     
     if ([self onlyPublishChanges] && publishedDigest && [publishedDigest isEqualToData:digest])
     {

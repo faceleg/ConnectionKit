@@ -114,7 +114,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// If there isn't a cached icon, try to create it
 	if (!result)
 	{
-		KTMediaContainer *faviconSource = [[[[[self content] managedObjectContext] root] master] favicon];
+		KTMediaContainer *faviconSource = [[[self rootPage] master] favicon];
 		NSString *faviconSourcePath = [[faviconSource file] currentPath];
 		
 		// If there is no favicon chosen, default to 32favicon

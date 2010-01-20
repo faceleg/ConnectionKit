@@ -722,7 +722,7 @@
     
     // Migrate simple properties from Root to the Master
     KTSite *newDocInfo = [[self migratedDocument] site];
-    KTPage *newRoot = [newDocInfo root];
+    KTPage *newRoot = [newDocInfo rootPage];
     KTMaster *newMaster = [newRoot master];
     
     [self migrateMatchingAttributesFromObject:oldRoot toObject:newMaster];

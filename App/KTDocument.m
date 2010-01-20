@@ -199,9 +199,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // make a new root
         // POSSIBLE PROBLEM -- THIS WON'T WORK WITH EXTERALLY LOADED BUNDLES...
-        KTPage *root = [self makeRootPage];
+        KTPage *root = [self makeRootPage]; // no need to assign it; -makeRootPage effectively does that
         OBASSERTSTRING((nil != root), @"root page is nil!");
-        [[self site] setValue:root forKey:@"root"];
         
         
         // Create the site Master object
@@ -261,7 +260,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (KTPage *)makeRootPage
 {
-    id result = [NSEntityDescription insertNewObjectForEntityForName:@"Root" 
+    id result = [NSEntityDescription insertNewObjectForEntityForName:@"Page" 
                                               inManagedObjectContext:[self managedObjectContext]];
 	OBASSERT(result);
 	
@@ -769,14 +768,14 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSArray *designs = [[self managedObjectContext] allObjectsWithEntityName:@"DesignPublishingInfo" error:NULL];
 		[designs setValue:nil forKey:@"versionLastPublished"];
         
-        [[[[self site] root] master] setPublishedDesignCSSDigest:nil];
+        [[[[self site] rootPage] master] setPublishedDesignCSSDigest:nil];
 		
 		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
 		[media setBool:YES forKey:@"isStale"];
         
         
         // All page and sitemap URLs are now invalid
-        [[[self site] root] recursivelyInvalidateURL:YES];
+        [[[self site] rootPage] recursivelyInvalidateURL:YES];
         [self willChangeValueForKey:@"publishedSitemapURL"];
         [self didChangeValueForKey:@"publishedSitemapURL"];
 		
@@ -790,7 +789,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSString *hostCharset = [hostProperties valueForKey:@"encoding"];
 		if ((nil != hostCharset) && ![hostCharset isEqualToString:@""])
 		{
-			NSString *rootCharset = [[[[self site] root] master] valueForKey:@"charset"];
+			NSString *rootCharset = [[[[self site] rootPage] master] valueForKey:@"charset"];
 			if (![[hostCharset lowercaseString] isEqualToString:[rootCharset lowercaseString]])
 			{
 				[self performSelector:@selector(warnThatHostUsesCharset:) withObject:hostCharset afterDelay:0.0];
