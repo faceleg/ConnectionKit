@@ -921,10 +921,6 @@
 		CE01A8180EAFD63600BDF264 /* NTSUTaskController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7150EAFD63600BDF264 /* NTSUTaskController.m */; };
 		CE01A81B0EAFD63600BDF264 /* RoundedBox.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7180EAFD63600BDF264 /* RoundedBox.h */; };
 		CE01A81C0EAFD63600BDF264 /* RoundedBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7190EAFD63600BDF264 /* RoundedBox.m */; };
-		CE01A81D0EAFD63600BDF264 /* RYZImagePopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A71A0EAFD63600BDF264 /* RYZImagePopUpButton.h */; };
-		CE01A81E0EAFD63600BDF264 /* RYZImagePopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A71B0EAFD63600BDF264 /* RYZImagePopUpButton.m */; };
-		CE01A81F0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A71C0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h */; };
-		CE01A8200EAFD63600BDF264 /* RYZImagePopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A71D0EAFD63600BDF264 /* RYZImagePopUpButtonCell.m */; };
 		CE01A8210EAFD63600BDF264 /* DOM+Debugging.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A71F0EAFD63600BDF264 /* DOM+Debugging.h */; };
 		CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */; };
 		CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */; };
@@ -2499,10 +2495,6 @@
 		CE01A7150EAFD63600BDF264 /* NTSUTaskController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NTSUTaskController.m; sourceTree = "<group>"; };
 		CE01A7180EAFD63600BDF264 /* RoundedBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RoundedBox.h; sourceTree = "<group>"; };
 		CE01A7190EAFD63600BDF264 /* RoundedBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RoundedBox.m; sourceTree = "<group>"; };
-		CE01A71A0EAFD63600BDF264 /* RYZImagePopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYZImagePopUpButton.h; sourceTree = "<group>"; };
-		CE01A71B0EAFD63600BDF264 /* RYZImagePopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYZImagePopUpButton.m; sourceTree = "<group>"; };
-		CE01A71C0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = RYZImagePopUpButtonCell.h; sourceTree = "<group>"; };
-		CE01A71D0EAFD63600BDF264 /* RYZImagePopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = RYZImagePopUpButtonCell.m; sourceTree = "<group>"; };
 		CE01A71F0EAFD63600BDF264 /* DOM+Debugging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+Debugging.h"; sourceTree = "<group>"; };
 		CE01A7200EAFD63600BDF264 /* DOM+Debugging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+Debugging.m"; sourceTree = "<group>"; };
 		CE01A7210EAFD63600BDF264 /* DOMNode+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNode+Karelia.h"; sourceTree = "<group>"; };
@@ -4692,10 +4684,6 @@
 				CE01A7150EAFD63600BDF264 /* NTSUTaskController.m */,
 				CE01A7180EAFD63600BDF264 /* RoundedBox.h */,
 				CE01A7190EAFD63600BDF264 /* RoundedBox.m */,
-				CE01A71A0EAFD63600BDF264 /* RYZImagePopUpButton.h */,
-				CE01A71B0EAFD63600BDF264 /* RYZImagePopUpButton.m */,
-				CE01A71C0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h */,
-				CE01A71D0EAFD63600BDF264 /* RYZImagePopUpButtonCell.m */,
 				CE9B4B400F5E0C780052134C /* UKDockProgressIndicator.h */,
 				CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */,
 			);
@@ -5167,8 +5155,6 @@
 				CE01A8150EAFD63600BDF264 /* NTBoxView.h in Headers */,
 				CE01A8170EAFD63600BDF264 /* NTSUTaskController.h in Headers */,
 				CE01A81B0EAFD63600BDF264 /* RoundedBox.h in Headers */,
-				CE01A81D0EAFD63600BDF264 /* RYZImagePopUpButton.h in Headers */,
-				CE01A81F0EAFD63600BDF264 /* RYZImagePopUpButtonCell.h in Headers */,
 				CE01A8210EAFD63600BDF264 /* DOM+Debugging.h in Headers */,
 				CE01A8230EAFD63600BDF264 /* DOMNode+Karelia.h in Headers */,
 				CE01A8250EAFD63600BDF264 /* KSWebViewWindowController.h in Headers */,
@@ -6551,8 +6537,6 @@
 				CE01A8160EAFD63600BDF264 /* NTBoxView.m in Sources */,
 				CE01A8180EAFD63600BDF264 /* NTSUTaskController.m in Sources */,
 				CE01A81C0EAFD63600BDF264 /* RoundedBox.m in Sources */,
-				CE01A81E0EAFD63600BDF264 /* RYZImagePopUpButton.m in Sources */,
-				CE01A8200EAFD63600BDF264 /* RYZImagePopUpButtonCell.m in Sources */,
 				CE01A8220EAFD63600BDF264 /* DOM+Debugging.m in Sources */,
 				CE01A8240EAFD63600BDF264 /* DOMNode+Karelia.m in Sources */,
 				CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */,

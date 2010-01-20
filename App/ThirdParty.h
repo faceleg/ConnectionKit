@@ -15,8 +15,6 @@
 #import "NTSUTaskController.h"
 
 #import "RoundedBox.h"
-#import "RYZImagePopUpButton.h"
-#import "RYZImagePopUpButtonCell.h"
 
 // via Apple sample code
 #import "DNDArrayController.h"
