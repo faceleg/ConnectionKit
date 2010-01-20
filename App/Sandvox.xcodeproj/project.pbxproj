@@ -3386,6 +3386,7 @@
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
+				3C202E9307E00F5700DE4994 /* document.toolbar */,
 				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
 				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
@@ -3711,7 +3712,6 @@
 		3C202E9207E00F3F00DE4994 /* Toolbars */ = {
 			isa = PBXGroup;
 			children = (
-				3C202E9307E00F5700DE4994 /* document.toolbar */,
 				3C202E9407E00F5700DE4994 /* KTToolbars.h */,
 			);
 			name = Toolbars;

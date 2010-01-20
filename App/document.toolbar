@@ -21,8 +21,6 @@
 	<key>item array</key>
 	<array>
 		<dict>
-			<key>action</key>
-			<string>addPage:</string>
 			<key>help</key>
 			<string>TOOLTIP_ADD_PAGE</string>
 			<key>identifier</key>

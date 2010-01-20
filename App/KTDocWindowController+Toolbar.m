@@ -190,17 +190,6 @@ TO DO:
              keyEquivalent:@""];
     
     
-    
-    
-    
-    // Create menu for text-only version
-    NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
-    [mItem setSubmenu:menu];
-    [mItem setTitle:[result label]];
-    [result setMenuFormRepresentation:mItem];
-    
-    
-    
     return [result autorelease];
 }
 
