@@ -150,7 +150,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 }
 
 #pragma mark -
-#pragma mark Meta Description
+#pragma mark Countdown fields
 
 /*  This code manages the meta description field in the Page Details panel. It's a tad complicated,
  *  so here's how it works:
@@ -233,96 +233,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 }
 
-#define META_DESCRIPTION_WARNING_ZONE 10
-#define MAX_META_DESCRIPTION_LENGTH 156
-
-- (NSColor *)metaDescriptionCharCountColor;
-{
-	int charCount = [[self metaDescriptionCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
-	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
-	
-	if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice HUD color
-	{
-		;
-	}
-	else if (remaining >= 0 )							// get closer to black-red
-	{
-		float howRed = (float) remaining / META_DESCRIPTION_WARNING_ZONE;
-		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default black
-	}
-	else		// overflow: pure red.
-	{
-		result = [NSColor redColor];
-	}	
-	return result;
-}
-
-+ (NSSet *)keyPathsForValuesAffectingMetaDescriptionCharCountColor
-{
-    return [NSSet setWithObject:@"metaDescriptionCountdown"];
-}
-
-- (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
-{
-	NSDictionary *infoForBinding;
-	NSDictionary *bindingOptions;
-	NSString *bindingKeyPath;
-	id observedObject;
-	
-	// The Meta description field ... re-bind the null placeholder.
-	
-	infoForBinding	= [oMetaDescriptionField infoForBinding:NSValueBinding];
-	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
-	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
-	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
-	
-	if ([[observedObject selectedObjects] count] > 1)
-	{
-		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-		
-		// Move the multiple values placeholder to the null value, so that we see that when the values are empty
-		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
-
-		[oMetaDescriptionField unbind:NSValueBinding];
-		[oMetaDescriptionField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
-	}
-}
-
-- (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText
-{
-	NSDictionary *infoForBinding;
-	NSDictionary *bindingOptions;
-	NSString *bindingKeyPath;
-	id observedObject;
-	
-	// The Window Title field ... re-bind the null placeholder.
-	
-	infoForBinding	= [oWindowTitleField infoForBinding:NSValueBinding];
-	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
-	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
-	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
-
-	NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
-
-	if (NSMultipleValuesMarker == comboTitleText)
-	{
-		// Try copying over the multiple values string to the null placeholder...
-		// I think that is so we see the multiple mark when the values are empty (unset)
-		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
-	}
-	else if (!NSIsControllerMarker(comboTitleText))
-	{		
-		if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])	// why this check?
-		{
-			// For some reason it seems like you need to set the Null placeholder even with multiple bindings!
-			[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
-		}
-	}
-	[oWindowTitleField unbind:NSValueBinding];
-	[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
-}
-
 /*	Called in response to a change of selection.windowTitle or the user typing
  *	We update our own countdown property in response
  */
@@ -374,6 +284,95 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	NSColor *windowColor = [self fileNameCharCountColor];
 	[self.attachedWindow setBackgroundColor:windowColor];
+}
+
+
+- (void) resetDescriptionPlaceholder:(NSString *)metaDescriptionText;
+{
+	NSDictionary *infoForBinding;
+	NSDictionary *bindingOptions;
+	NSString *bindingKeyPath;
+	id observedObject;
+	
+	// The Meta description field ... re-bind the null placeholder.
+	
+	infoForBinding	= [oMetaDescriptionField infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	if ([[observedObject selectedObjects] count] > 1)
+	{
+		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+		
+		// Move the multiple values placeholder to the null value, so that we see that when the values are empty
+		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
+		
+		[oMetaDescriptionField unbind:NSValueBinding];
+		[oMetaDescriptionField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+	}
+}
+
+- (void) resetTitlePlaceholderToComboTitleText:(NSString *)comboTitleText
+{
+	NSDictionary *infoForBinding;
+	NSDictionary *bindingOptions;
+	NSString *bindingKeyPath;
+	id observedObject;
+	
+	// The Window Title field ... re-bind the null placeholder.
+	
+	infoForBinding	= [oWindowTitleField infoForBinding:NSValueBinding];
+	bindingOptions	= [[[infoForBinding valueForKey:NSOptionsKey] retain] autorelease];
+	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
+	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
+	
+	NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
+	
+	if (NSMultipleValuesMarker == comboTitleText)
+	{
+		// Try copying over the multiple values string to the null placeholder...
+		// I think that is so we see the multiple mark when the values are empty (unset)
+		[newBindingOptions setObject:[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] forKey:NSNullPlaceholderBindingOption];
+	}
+	else if (!NSIsControllerMarker(comboTitleText))
+	{		
+		if (![[bindingOptions objectForKey:NSMultipleValuesPlaceholderBindingOption] isEqualToString:comboTitleText])	// why this check?
+		{
+			// For some reason it seems like you need to set the Null placeholder even with multiple bindings!
+			[newBindingOptions setObject:comboTitleText forKey:NSNullPlaceholderBindingOption];
+		}
+	}
+	[oWindowTitleField unbind:NSValueBinding];
+	[oWindowTitleField bind:NSValueBinding toObject:observedObject withKeyPath:bindingKeyPath options:newBindingOptions];
+}
+
+#pragma mark -
+#pragma mark Countdown colors
+
+#define META_DESCRIPTION_WARNING_ZONE 10
+#define MAX_META_DESCRIPTION_LENGTH 156
+
+- (NSColor *)metaDescriptionCharCountColor;
+{
+	int charCount = [[self metaDescriptionCountdown] intValue];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
+	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
+	
+	if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice HUD color
+	{
+		;
+	}
+	else if (remaining >= 0 )							// get closer to black-red
+	{
+		float howRed = (float) remaining / META_DESCRIPTION_WARNING_ZONE;
+		result = [[NSColor colorWithCalibratedRed:0.4 green:0.0 blue:0.0 alpha:1.0] blendedColorWithFraction:howRed ofColor:result];		// blend with default black
+	}
+	else		// overflow: pure red.
+	{
+		result = [NSColor redColor];
+	}	
+	return result;
 }
 
 
@@ -435,6 +434,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
     return [NSSet setWithObject:@"fileNameCountdown"];
 }
 
++ (NSSet *)keyPathsForValuesAffectingMetaDescriptionCharCountColor
+{
+    return [NSSet setWithObject:@"metaDescriptionCountdown"];
+}
+
+#pragma mark -
+#pragma mark KVO
+
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
@@ -465,6 +472,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
 	}
 }
+
+#pragma mark -
+#pragma mark URL view layout
+
 
 /*
  Algorithm 
@@ -607,6 +618,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[self updateWidthForActiveTextField:self.activeTextField];
 	}
 }
+
+#pragma mark -
+#pragma mark Text editing notifications
+
 /*	Sent when the user is typing in the meta description box.
  */
 - (void)controlTextDidChange:(NSNotification *)notification
@@ -627,11 +642,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	[self layoutPageURLComponents];
 	[self updateWidthForActiveTextField:textField];
-}
-
-- (IBAction) pageDetailsHelp:(id)sender;
-{
-	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
 }
 
 // Special responders to the subclass of the text field
@@ -774,6 +784,15 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (void)controlTextDidEndEditing:(NSNotification *)notification;
 {
 	[self controlTextDidResignFirstResponder:notification];
+}
+
+#pragma mark -
+#pragma mark Are we going to have a help button for page details? Probably not...
+
+
+- (IBAction) pageDetailsHelp:(id)sender;
+{
+	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
 }
 
 
