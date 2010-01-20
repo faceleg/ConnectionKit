@@ -714,7 +714,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Create placeholder if needed
     if ([[[[self page] titleBox] text] length] <= 0)
     {
-        [[self page] setTitleWithString:NSLocalizedString(@"Page Title", @"placeholder text")];
+        [[self page] setTitle:NSLocalizedString(@"Page Title", @"placeholder text")];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
