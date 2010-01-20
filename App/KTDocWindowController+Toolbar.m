@@ -32,8 +32,6 @@ TO DO:
 #import "NSImage+KTExtensions.h"
 
 #import "KSPullDownToolbarItem.h"
-#import "RYZImagePopUpButton.h"
-#import "RYZImagePopUpButtonCell.h"
 
 #import "NSImage+Karelia.h"
 #import "NSToolbar+Karelia.h"
@@ -45,13 +43,13 @@ TO DO:
 
 - (NSToolbar *)toolbarNamed:(NSString *)toolbarName;
 
-- (void)buildAddPageletToolbarItem:(NSToolbarItem *)toolbarItem imageName:(NSString *)imageName;
+- (NSToolbarItem *)makeAddPageletToolbarItemWithIdentifier:(NSString *)identifier;
 
 @end
 
 // NB: there's about two-thirds the work here to make this a separate controller
 //  it needs a way to define views that aren't app specific, should all be doable via xml
-//  for "standard" controls, like an RYZImagePopUpButton
+//  for "standard" controls, like a pulldown button item
 
 @implementation KTDocWindowController (Toolbar)
 
@@ -211,7 +209,10 @@ TO DO:
                 result = [self makeNewPageToolbarItemWithIdentifier:itemIdentifier
                                                           imageName:[itemInfo valueForKey:@"image"]];
             }
-            
+            else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"]) 
+            {
+                result = [self makeAddPageletToolbarItemWithIdentifier:itemIdentifier];
+            }
             
             // cosmetics
 			
@@ -252,94 +253,8 @@ TO DO:
             // are we a view or an image?
             // views can still have images, so we check whether it's a view first
             if ([[itemInfo valueForKey:@"view"] length] > 0) 
-			{
-				// we're a view, walk through the possibilities
-                    // FIXME: much of this should be reduceable to an xml specification
-                if ( [[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPagePopUpButton"] ) 
-				{
-                    // construct Add Page popup
-                    NSImage *image = [NSImage imageNamed:imageName];
-                    [image normalizeSize];
-					[image setDataRetained:YES];	// allow image to be scaled.
-					image = [image imageWithCompositedAddBadge];
-
-					RYZImagePopUpButton *addPagePopUpButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
-                    [[addPagePopUpButton cell] setUsesItemFromMenu:NO];
-                    [addPagePopUpButton setIconImage:image];
-                    [addPagePopUpButton setShowsMenuWhenIconClicked:YES];
-                    [[addPagePopUpButton cell] setToolbar:[[self window] toolbar]];
-                    
-					[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
-										 toMenu:[addPagePopUpButton menu]
-										 target:self
-										 action:@selector(addPage:)
-									  pullsDown:YES
-									  showIcons:YES
-									 smallIcons:NO 
-									  smallText:YES];
-                    [result setView:addPagePopUpButton];
-                    [result setMinSize:[[addPagePopUpButton cell] minimumSize]];
-                    [result setMaxSize:[[addPagePopUpButton cell] maximumSize]];
-					
-					// Create menu for text-only view
-					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					
-					[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
-										 toMenu:menu
-										 target:self
-										 action:@selector(addPage:)
-									  pullsDown:NO
-									  showIcons:NO
-									 smallIcons:NO
-									  smallText:YES];
-					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
-					[mItem setSubmenu: menu];
-					[mItem setTitle: [result label]];
-					[result setMenuFormRepresentation:mItem];
-					
-                }
-                else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"]) 
-				{
-					[self buildAddPageletToolbarItem:result imageName:imageName];
-				}
-                else if ( [[itemInfo valueForKey:@"view"] isEqualToString:@"myAddCollectionPopUpButton"] ) 
-				{
-                    // construct Add Page popup
-                    NSImage *image = [NSImage imageNamed:imageName];
-                    [image normalizeSize];
-					[image setDataRetained:YES];	// allow image to be scaled.
-					image = [image imageWithCompositedAddBadge];
-					
-                    RYZImagePopUpButton *addCollectionPopUpButton = [[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES];
-                    [[addCollectionPopUpButton cell] setUsesItemFromMenu:NO];
-                    [addCollectionPopUpButton setIconImage:image];
-                    [addCollectionPopUpButton setShowsMenuWhenIconClicked:YES];
-                    [[addCollectionPopUpButton cell] setToolbar:[[self window] toolbar]];
-					
-                    [KTIndexPlugin populateMenuWithCollectionPresets:[addCollectionPopUpButton menu]
-												   target:self
-												   action:@selector(addCollection:)
-												pullsDown:YES
-												showIcons:YES smallIcons:NO
-												smallText:YES allowNewPageTypes:YES];
-                    [result setView:addCollectionPopUpButton];
-                    [result setMinSize:[[addCollectionPopUpButton cell] minimumSize]];
-                    [result setMaxSize:[[addCollectionPopUpButton cell] maximumSize]];
-			
-					// Create menu for text-only view
-					NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-					[KTIndexPlugin populateMenuWithCollectionPresets:menu
-												   target:self
-												   action:@selector(addCollection:)
-												pullsDown:NO
-												showIcons:NO smallIcons:NO
-												smallText:YES allowNewPageTypes:YES];
-					NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
-					[mItem setSubmenu: menu];
-					[mItem setTitle: [result label]];
-					[result setMenuFormRepresentation:mItem];
-				}
-            }
+            {
+			}
             else if ( (nil != imageName) && ![imageName isEqualToString:@""] ) 
 			{
 				NSImage *theImage = nil;
@@ -363,56 +278,32 @@ TO DO:
 
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
  */
-- (void)buildAddPageletToolbarItem:(NSToolbarItem *)toolbarItem imageName:(NSString *)imageName
+- (NSToolbarItem *)makeAddPageletToolbarItemWithIdentifier:(NSString *)identifier;
 {
-	// Preapre the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
-	NSImage *image = [NSImage imageNamed:imageName];
-	[image normalizeSize];
-	[image setDataRetained:YES];	// allow image to be scaled.
-	
-	
-	// Build the basic popup button
-	RYZImagePopUpButton *button = [[[RYZImagePopUpButton alloc] initWithFrame:NSMakeRect(0, 0, [image size].width, [image size].height) pullsDown:YES] autorelease];
-	[[button cell] setUsesItemFromMenu:NO];
-	[button setIconImage:image];
-	[button setShowsMenuWhenIconClicked:YES];
-	[[button cell] setToolbar:[[self window] toolbar]];
-	
-	
-	// Disable the button for pages that don't support it.
-	OBASSERTSTRING([self siteOutlineViewController], @"Could not bind Pagelets popup button as there is no Site Outline controller");
-	NSDictionary *options = [NSDictionary dictionaryWithObject:[NSNumber numberWithBool:NO]
-														forKey:NSMultipleValuesPlaceholderBindingOption];
-	
-	
+	KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
+    
+    
+    // Preapre the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
+	NSImage *image = [NSImage imageNamed:@"toolbar_add_pagelet"];
+    [result setImage:image];
+    
+    
+    // Generate the menu
+    NSPopUpButton *pulldownButton = [result popUpButton];
+    NSMenu *menu = [pulldownButton menu];
+    
+    	
 	// Add the proper menu items
 	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-						 toMenu:[button menu]
+						 toMenu:menu
 						 target:self
 						 action:@selector(insertElement:)
 					  pullsDown:YES
 					  showIcons:YES smallIcons:NO smallText:YES];
 	
 	
-	// Control sizing
-	[toolbarItem setView:button];
-	[toolbarItem setMinSize:[[button cell] minimumSize]];
-	[toolbarItem setMaxSize:[[button cell] maximumSize]];
-
-
-	// Create menu for text-only view
-	NSMenu *menu = [[[NSMenu alloc] init] autorelease];
-	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-						 toMenu:menu
-						 target:self
-						 action:@selector(insertElement:)
-					  pullsDown:NO
-					  showIcons:NO smallIcons:NO
-					  smallText:YES];
-	NSMenuItem *mItem=[[[NSMenuItem alloc] init] autorelease];
-	[mItem setSubmenu: menu];
-	[mItem setTitle: [toolbarItem label]];
-	[toolbarItem setMenuFormRepresentation:mItem];
+    
+    return [result autorelease];
 }
 
 
