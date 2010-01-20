@@ -27,7 +27,6 @@
 
 // Accessors
 - (KTMediaManager *)mediaManager;
-- (NSString *)fileType;
 - (NSString *)filename;
 - (NSString *)filenameExtension;
 

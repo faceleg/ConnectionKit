@@ -47,14 +47,6 @@
     {
         result = [super insertNewMediaFileWithPath:path inManagedObjectContext:moc];
         [result setAlias:alias];
-    
-        
-        // As a last resort, try to set the UTI from the last known path
-        if (![result fileType])
-        {
-            if (!UTI) UTI = [NSString UTIForFileAtPath:[alias lastKnownPath]];
-            [result setValue:UTI forKey:@"fileType"];
-        }
     }
     
 	return result;

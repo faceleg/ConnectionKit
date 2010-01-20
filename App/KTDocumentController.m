@@ -141,17 +141,17 @@
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
 {
 	NSString *requestedPath = [absoluteURL path];
-    NSString *fileType = [self typeForContentsOfURL:absoluteURL error:outError];
+    NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];
 	
 	// are we opening a KTDocument?
-	if (fileType && ([fileType isEqualToString:kKTDocumentType] || [fileType isEqualToString:kKTDocumentUTI_ORIGINAL]))
+	if (type && ([type isEqualToString:kKTDocumentType] || [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
 	{		
 		// check compatibility with KTModelVersion
 		NSDictionary *metadata = nil;
 		@try
 		{
 			NSURL *datastoreURL = [KTDocument datastoreURLForDocumentURL:absoluteURL
-                                                                    type:([fileType isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
+                                                                    type:([type isEqualToString:kKTDocumentUTI_ORIGINAL] ? kKTDocumentUTI_ORIGINAL : kKTDocumentUTI)];
             
 			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
                                                                                   URL:datastoreURL
