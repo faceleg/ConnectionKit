@@ -56,14 +56,14 @@
 
 + (id)insertNewMediaFileWithPath:(NSString *)path inManagedObjectContext:(NSManagedObjectContext *)moc;
 {
-	KTMediaFile *result = [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
-											  inManagedObjectContext:moc];
-	
-    // FIXME: This should be done in -awakeFromInsert
-	[result setValue:[NSString UUIDString] forKey:@"uniqueID"];
-	
-	
-	return result;
+	return [NSEntityDescription insertNewObjectForEntityForName:[self entityName]
+                                         inManagedObjectContext:moc];
+}
+
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    [self setPrimitiveValue:[NSString UUIDString] forKey:@"uniqueID"];
 }
 
 #pragma mark -
