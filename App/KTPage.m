@@ -160,8 +160,7 @@
 	
     
     // Placeholder text
-    [self setPrimitiveValue:NSLocalizedString(@"Page Title", "placeholder text")
-                     forKey:@"titleHTMLString"];
+    [self setTitle:NSLocalizedString(@"Untitled", "placeholder text")];
 	
     
     // Body text. Give it a starting paragraph
@@ -287,6 +286,8 @@
 	BOOL result = ![self isRoot];
 	return result;
 }
+
+@dynamic showTitle;
 
 - (NSString *)titleHTMLString
 {

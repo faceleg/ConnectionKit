@@ -51,9 +51,9 @@ typedef enum {
 
 
 #pragma mark Title
-@property(nonatomic, retain) SVTitleBox *titleBox;
-- (void)setTitle:(NSString *)title;   // inherited from SVSiteItem, creates TitleBox object if needed
+@property(nonatomic, retain) SVTitleBox *titleBox;  // you can use inherited .title property for ease of use too
 - (BOOL)canEditTitle;
+@property(nonatomic, copy) NSNumber *showTitle; // BOOL
 
 
 #pragma mark Properties
