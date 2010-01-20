@@ -13,7 +13,6 @@
 #import "KTImageScalingURLProtocol.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaContainer.h"
-#import "KTMediaFile+Internal.h"
 #import "KTPage+Internal.h"
 
 #import "NSURL+Karelia.h"

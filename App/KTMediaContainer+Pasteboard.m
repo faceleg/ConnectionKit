@@ -8,7 +8,8 @@
 
 #import "KTMediaContainer+Pasteboard.h"
 
-#import "KTMediaFile+Internal.h"
+#import "KTInDocumentMediaFile.h"
+#import "KTExternalMediaFile.h"
 #import "KTPasteboardArchiving.h"
 
 #import "BDAlias.h"

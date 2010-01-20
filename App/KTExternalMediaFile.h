@@ -18,3 +18,8 @@
 - (void)setAlias:(BDAlias *)alias;
 
 @end
+
+
+@interface KTExternalMediaFile (Internal) <KTPasteboardArchiving>
++ (id)insertNewMediaFileWithAlias:(BDAlias *)alias inManagedObjectContext:(NSManagedObjectContext *)moc;
+@end

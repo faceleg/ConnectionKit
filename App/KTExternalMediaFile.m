@@ -7,7 +7,6 @@
 //
 
 #import "KTExternalMediaFile.h"
-#import "KTMediaFile+Internal.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"

@@ -6,7 +6,6 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTMediaFile+Internal.h"
 #import "KTInDocumentMediaFile.h"
 #import "KTExternalMediaFile.h"
 

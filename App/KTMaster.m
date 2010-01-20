@@ -19,7 +19,6 @@
 
 #import "KTMediaManager.h"
 #import "KTMediaContainer.h"
-#import "KTMediaFile+Internal.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"

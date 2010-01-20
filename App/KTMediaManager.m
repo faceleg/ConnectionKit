@@ -369,7 +369,6 @@ NSString *KTMediaLogDomain = @"Media";
 #pragma mark -
 
 
-#import "KTMediaFile+Internal.h"
 @interface KTMediaManager (MediaContainerSecretsIKnow)
 - (KTMediaContainer *)insertNewMediaContainer;
 @end

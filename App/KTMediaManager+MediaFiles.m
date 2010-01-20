@@ -7,7 +7,6 @@
 //
 
 #import "KTMediaManager+Internal.h"
-#import "KTMediaFile+Internal.h"
 #import "KTMediaFileEqualityTester.h"
 
 #import "KT.h"

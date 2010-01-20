@@ -453,7 +453,6 @@
 		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
 		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27CAB4720D36E12400F90A1B /* Media.xcdatamodel */; };
-		27CD65380CE1F32E00919E41 /* KTMediaFile+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
 		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1915,7 +1914,6 @@
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CAB4720D36E12400F90A1B /* Media.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = wrapper.xcdatamodel; path = Media.xcdatamodel; sourceTree = "<group>"; };
-		27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaFile+Internal.h"; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
 		27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+Text.m"; sourceTree = "<group>"; };
@@ -2926,7 +2924,6 @@
 		272EEA6B0DDA560C0012005E /* 1 - MediaFiles */ = {
 			isa = PBXGroup;
 			children = (
-				27CD65360CE1F32E00919E41 /* KTMediaFile+Internal.h */,
 				27F0F3A20D0F46AC00B7555A /* KTExternalMediaFile.h */,
 				27F0F3A30D0F46AC00B7555A /* KTExternalMediaFile.m */,
 				2786BE980CAD10780086F9E0 /* KTInDocumentMediaFile.h */,
@@ -4983,7 +4980,6 @@
 				275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */,
 				27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */,
 				27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */,
-				27CD65380CE1F32E00919E41 /* KTMediaFile+Internal.h in Headers */,
 				2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */,
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
