@@ -216,6 +216,8 @@
 	[self setValue:[alias aliasData] forKey:@"aliasData"];
 }
 
+@dynamic shouldCopyFileIntoDocument;
+
 @dynamic preferredFilename;
 - (BOOL)validatePreferredFilename:(NSString **)filename error:(NSError **)outError
 {
@@ -311,7 +313,7 @@
     [super willSave];
     
     // Reserve the filename we'll be using
-    if (![self filename])
+    if (![self filename] && [[self shouldCopyFileIntoDocument] boolValue])
     {
         NSString *filename = [[[self mediaManager] document] reserveFilenameForObject:self preferredFilename:[self preferredFilename]];
         [self setPrimitiveValue:filename forKey:@"filename"];

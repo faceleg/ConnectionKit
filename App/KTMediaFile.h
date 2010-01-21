@@ -70,6 +70,7 @@
 @property(nonatomic, copy, readonly) NSString *filename;
 
 @property(nonatomic, retain, readonly) BDAlias *alias;
+@property(nonatomic, copy) NSNumber *shouldCopyFileIntoDocument;
 @property(nonatomic, copy) NSString *preferredFilename;
 
 
