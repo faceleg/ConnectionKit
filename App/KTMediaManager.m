@@ -76,7 +76,6 @@ NSString *KTMediaLogDomain = @"Media";
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
     
     [myMediaContainerIdentifiersCache release];
-    [myMOC release];
 	
 	[super dealloc];
 }
