@@ -144,9 +144,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	KTImageTextCell *imageTextCell = [[[KTImageTextCell alloc] init] autorelease];
 	[imageTextCell setEditable:YES];
 	[imageTextCell setLineBreakMode:NSLineBreakByTruncatingTail];
-    [imageTextCell setPlaceholderString:NSLocalizedString(@"(Empty title)",
-								   @"Indication in site outline that the page has an empty title. Distinct from untitled, which is for newly created pages.")];
-	[tableColumn setDataCell:imageTextCell];
+    [tableColumn setDataCell:imageTextCell];
 	
 	[outlineView setIntercellSpacing:NSMakeSize(3.0, 1.0)];
 	
