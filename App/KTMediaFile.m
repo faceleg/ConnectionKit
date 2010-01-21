@@ -34,6 +34,8 @@
 
 @interface KTMediaFile ()  
 
+@property(nonatomic, copy, readwrite) NSString *filename;
+
 - (NSURL *)fileURLFromAlias;
 - (NSURL *)savedFileURL;
 - (NSURL *)deletedFileURL;
@@ -75,6 +77,9 @@
     {
         _data = [data copy];
         [self setPreferredFilename:preferredFilename];
+        
+        // FIXME: filename should be generated as a unique value
+        [self setFilename:preferredFilename];
     }
     
     return self;
@@ -90,6 +95,9 @@
         // Cheat for now and load into memort. TODO: Only do this if the file is small
         _data = [[NSData alloc] initWithContentsOfURL:URL];
         [self setPreferredFilename:[URL lastPathComponent]];
+        
+        // FIXME: filename should be generated as a unique value
+        [self setFilename:[URL lastPathComponent]];
     }
     
     return self;

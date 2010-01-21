@@ -401,7 +401,12 @@
  */
 - (void)moveApplicableExternalMediaInDocument
 {
-	NSArray *externalMediaFiles = [self externalMediaFiles];
+	// Not doing that for now
+    return;
+    
+    
+    
+    NSArray *externalMediaFiles = [self externalMediaFiles];
 	NSEnumerator *mediaFileEnumerator = [externalMediaFiles objectEnumerator];
 	KTMediaFile *aMediaFile;
 	
