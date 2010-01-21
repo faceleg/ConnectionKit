@@ -1052,19 +1052,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Consult both cache and file system to see if the name is taken
     filename = [filename lowercaseString];
     BOOL result = ([_reservedFilenames objectForKey:filename] != nil);
-    if (result)
+    if (!result)
     {
         result = [[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
     }
     
     // The document also reserves some special cases itself
-    if (result)
+    if (!result)
     {
         if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
             [filename hasPrefix:@"datastore."] || [filename isEqualToString:@"datastore"] ||
             [filename isEqualToString:@"quicklook"])
         {
-            result = NO;
+            result = YES;
         }
     }
     
@@ -1075,9 +1075,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                      preferredFilename:(NSString *)preferredFilename;
 {
     NSString *result = preferredFilename;
-    while ([self isFilenameReserved:preferredFilename])
+    
+    NSUInteger count = 1;
+    while ([self isFilenameReserved:result])
     {
-        // FIXME: Adjust the filename is some fashion
+        // Adjust the filename ready to try again
+        count++;
+		NSString *numberedName = [NSString stringWithFormat:
+                               @"%@-%u",
+                               [preferredFilename stringByDeletingPathExtension],
+                               count];
+        
+		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
     }
     
     // Reserve the filename
