@@ -191,6 +191,11 @@ NSString *KTMediaLogDomain = @"Media";
 - (NSSet *)missingMediaFiles
 {
 	NSMutableSet *result = [NSMutableSet set];
+    return result;
+    
+    
+    
+    
 	
 	NSEnumerator *mediaFileEnumerator = [[self externalMediaFiles] objectEnumerator];
 	KTMediaFile *aMediaFile;
