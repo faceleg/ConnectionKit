@@ -97,11 +97,6 @@
     return [[[self alias] lastKnownPath] lastPathComponent];
 }
 
-- (NSString *)filenameExtension
-{
-    return [[[self alias] lastKnownPath] pathExtension];
-}
-
 - (NSString *)quickLookPseudoTag
 {
 	NSString *result = [[self alias] quickLookPseudoTag];

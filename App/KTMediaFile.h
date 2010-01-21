@@ -27,8 +27,7 @@
 
 // Accessors
 - (KTMediaManager *)mediaManager;
-- (NSString *)filename;
-- (NSString *)filenameExtension;
+@property(nonatomic, copy, readonly) NSString *filename;
 
 
 // Location

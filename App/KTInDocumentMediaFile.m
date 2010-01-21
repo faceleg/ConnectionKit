@@ -178,28 +178,7 @@
     return result;
 }
 
-- (NSString *)filename
-{
-	NSString *result = [self wrappedValueForKey:@"filename"];
-	return result;
-}
-
-- (void)setFilename:(NSString *)filename
-{
-	if ([self filename])
-	{
-		[NSException raise:NSInvalidArgumentException format:@"-[KTInDocumentMediaFile filename] is immutable"];
-	}
-	else
-	{
-		[self setWrappedValue:filename forKey:@"filename"];
-	}
-}
-
-- (NSString *)filenameExtension
-{
-    return [[self filename] pathExtension];
-}
+@dynamic filename;
 
 - (NSString *)quickLookPseudoTag
 {

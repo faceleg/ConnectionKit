@@ -86,12 +86,6 @@
     return nil;
 }
 
-- (NSString *)filenameExtension
-{
-    SUBCLASSMUSTIMPLEMENT;
-    return nil;
-}
-
 #pragma mark Location
 
 /*	The path where the underlying filesystem object is being kept.

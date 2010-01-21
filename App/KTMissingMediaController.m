@@ -234,7 +234,7 @@
 	[panel setTreatsFilePackagesAsDirectories:YES];
 
 	
-	NSString *fileExtension = [mediaFile filenameExtension];
+	NSString *fileExtension = [[mediaFile filename] pathExtension];
 	int returnCode = [panel runModalForTypes:[NSArray arrayWithObject:fileExtension]];
 	
 	if (returnCode == NSOKButton && [mediaFile isKindOfClass:[KTExternalMediaFile class]])
