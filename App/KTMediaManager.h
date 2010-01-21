@@ -28,7 +28,8 @@ extern NSString *KTMediaLogDomain;
 
 @interface KTMediaManager : NSObject
 {
-	KTDocument				*myDocument;    // Weak ref
+	KTDocument  *_document;    // weak ref
+    NSString    *_deletedMediaDirectoryName;
     
     NSMutableDictionary *myMediaContainerIdentifiersCache;
 }
@@ -42,7 +43,7 @@ extern NSString *KTMediaLogDomain;
 - (KTDocument *)document;
 - (NSManagedObjectContext *)managedObjectContext;
 - (NSString *)mediaPath;
-- (NSString *)temporaryMediaPath;
+- (NSURL *)deletedMediaDirectory;
 
 @end
 

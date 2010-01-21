@@ -177,7 +177,8 @@
 
 - (NSURL *)deletedFileURL;
 {
-    NSURL *result = [NSURL fileURLWithPath:[[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]]];
+    NSURL *result = [[[self mediaManager] deletedMediaDirectory] URLByAppendingPathComponent:[self filename]
+                                                                                 isDirectory:NO];
     return result;
 }
 
@@ -261,19 +262,9 @@
 		  ([NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename]));
 	
 	
-	// Only bother if there is actually a file to move
-	NSString *sourcePath = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:filename];
-	if (![fileManager fileExistsAtPath:sourcePath])
-	{
-		KTLog(KTMediaLogDomain,
-			  KTLogInfo,
-			  ([NSString stringWithFormat:@"No file to move at:\n%@", [sourcePath stringByAbbreviatingWithTildeInPath]]));
-        
-		return;
-	}
+	NSString *sourcePath = [[self fileURLFromAlias] path];
 	
-	
-	// Make sure the destination is available
+    // Make sure the destination is available
 	NSString *destinationPath = [[self savedFileURL] path];
 	if ([fileManager fileExistsAtPath:destinationPath])
 	{
@@ -323,7 +314,7 @@
 	{
 		NSString *filename = [self committedValueForKey:@"filename"];
 		NSString *sourcePath = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:filename];
-		NSString *destinationPath = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:filename];
+		NSString *destinationPath = [[self deletedFileURL] path];
 		
 		KTLog(KTMediaLogDomain, KTLogDebug,
 			  ([NSString stringWithFormat:@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename]));

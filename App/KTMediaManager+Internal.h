@@ -51,8 +51,6 @@
 - (KTMediaFile *)mediaFileWithImage:(NSImage *)image;
 - (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
 
-- (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename;
-
 @end
 
 

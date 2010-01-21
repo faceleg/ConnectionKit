@@ -54,8 +54,8 @@ NSString *KTMediaLogDomain = @"Media";
 {
 	[super init];
 	
-	myDocument = document;	// Weak ref
-	
+	_document = document;	// Weak ref
+	_deletedMediaDirectoryName = [[[NSProcessInfo processInfo] globallyUniqueString] copy];
 	
     return self;
     
@@ -100,7 +100,7 @@ NSString *KTMediaLogDomain = @"Media";
 	return result;
 }
 
-- (KTDocument *)document { return myDocument; }
+- (KTDocument *)document { return _document; }
 
 /*	The Media Manager has its own private managed object context
  */
@@ -147,19 +147,20 @@ NSString *KTMediaLogDomain = @"Media";
  *
  *	This method returns the path to that directory, creating it if necessary.
  */
-- (NSString *)temporaryMediaPath;
-{
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
-    
-	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
-	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[[self document] site] siteID]];
+- (NSURL *)deletedMediaDirectory;
+{	
+    NSURL *sandvoxSupportDirectory = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]
+                                                isDirectory:YES];
+    NSURL *allDeletedMediaDirectory = [sandvoxSupportDirectory URLByAppendingPathComponent:@"Deleted Media"
+                                                                               isDirectory:YES];
+	NSURL *result = [allDeletedMediaDirectory URLByAppendingPathComponent:_deletedMediaDirectoryName
+                                                              isDirectory:YES];
 	
 	// Create the directory if needs be
-	if (![fileManager fileExistsAtPath:result])
-	{
-		[fileManager createDirectoryPath:result attributes:nil];
-	}
+	[[NSFileManager defaultManager] createDirectoryAtPath:[result path]
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:NULL];
     
 	OBPOSTCONDITION(result);
 	return result;
@@ -338,7 +339,7 @@ NSString *KTMediaLogDomain = @"Media";
 - (void)deleteTemporaryMediaFiles
 {
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]);
-	NSString *tempMedia = [self temporaryMediaPath];
+	NSString *tempMedia = [[self deletedMediaDirectory] path];
 	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
 }
 
