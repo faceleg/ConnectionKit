@@ -195,11 +195,6 @@
 	return result;
 }
 
-- (NSData *)data;
-{
-    return _data;
-}
-
 #pragma mark Location Support
 
 @dynamic filename;
@@ -244,6 +239,20 @@
     return result;
 }
 
+#pragma mark Contents Cache
+
+- (NSData *)contents;
+{
+    return _data;
+}
+
+- (NSDictionary *)fileAttributes; { return nil; }
+
+- (BOOL)areContentsCached;
+{
+    return (_data != nil);
+}
+
 #pragma mark File Management
 
 /*	Called when a MediaFile is saved for the first time. i.e. it becomes peristent and the underlying file needs to move into the doc.
@@ -255,7 +264,21 @@
 	if (!doc) return;	// Safety check for handling store migration
 	
 	
-	// Simple debug log of what's about to go down		(see, I'm streetwise. No, really!)
+	
+    // Write our data out to the file
+    if ([self areContentsCached])
+    {
+        [[NSFileManager defaultManager] createFileAtPath:[[self savedFileURL] path]
+                                                contents:[self contents]
+                                              attributes:[self fileAttributes]];
+        
+        return;
+    }
+    
+    
+    
+    
+    // Simple debug log of what's about to go down		(see, I'm streetwise. No, really!)
 	NSString *filename = [self filename];
 	KTLog(KTMediaLogDomain,
 		  KTLogDebug,

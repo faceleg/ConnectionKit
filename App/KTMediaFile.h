@@ -55,8 +55,13 @@
 //  You should have no need under normal usage to specifically use -alias.
 
 - (NSURL *)fileURL;
-- (NSData *)data;
 - (NSString *)currentPath;	// just like -fileURL, but will never return nil. Falls back to a placeholder image instead
+
+
+#pragma mark Contents Cache
+- (NSData *)contents;   // could return nil if the file is too big, or a directory
+- (NSDictionary *)fileAttributes;
+- (BOOL)areContentsCached;
 
 
 #pragma mark Location Support
