@@ -19,7 +19,6 @@
 
 
 @interface SVWebContentObjectsController ()
-@property(nonatomic, retain, readonly) SVSidebarPageletsController *sidebarPageletsController;
 - (void)synchronizeSidebarPageletsController;
 @end
 

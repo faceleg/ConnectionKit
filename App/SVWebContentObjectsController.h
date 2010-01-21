@@ -32,4 +32,8 @@
 
 - (BOOL)selectObjectByInsertingIfNeeded:(id)object;
 
+
+#pragma mark  SPI
+@property(nonatomic, retain, readonly) SVSidebarPageletsController *sidebarPageletsController;
+
 @end
