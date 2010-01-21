@@ -291,6 +291,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[_site release];
     
     [myMediaManager release];
+    [_reservedFilenames release];
 	
 	// release context
 	[_managedObjectContext release];
