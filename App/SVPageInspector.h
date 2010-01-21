@@ -15,6 +15,10 @@
 @interface SVPageInspector : KSInspectorViewController
 {
     IBOutlet KTPlaceholderBindingTextField  *oMenuTitleField;
+    
+    IBOutlet NSButton *showTimestampCheckbox;
 }
+
+- (IBAction)selectTimestampType:(NSPopUpButton *)sender;
 
 @end
