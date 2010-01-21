@@ -34,6 +34,8 @@
 #import "KSCollectionController.h"
 #import "KSPlugin.h"
 #import "KSSilencingConfirmSheet.h"
+#import "KSTabViewController.h"
+
 
 NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewControllerWillUpdateNotification";
 static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependenciesObservationContext";
@@ -160,6 +162,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         [self setViewIsReadyToAppear:NO];
     }
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    
+    // Once we move offsreen, we're no longer suitable to be shown
+    [self setViewIsReadyToAppear:NO];
 }
 
 #pragma mark Updating
