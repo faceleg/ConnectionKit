@@ -147,11 +147,6 @@
 	return [self hasTemporaryObjectID];
 }
 
-- (BOOL)isTemporaryObject
-{
-	return [self hasTemporaryObjectID];
-}
-
 - (BOOL)isNewlyCreatedObject
 {
     return [self hasTemporaryObjectID];

@@ -550,7 +550,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
 		NSString *path = [aMediaFile currentPath];
-		if ([aMediaFile isTemporaryObject])
+		if ([aMediaFile hasTemporaryObjectID])
 		{
 			[pathsToMove addObjectIgnoringNil:path];
 		}

@@ -165,7 +165,7 @@
 	NSURL *result = nil;
 		
 	// Figure out proper values for these two
-	if ([self isTemporaryObject])
+	if ([self isInserted])
 	{
 		result = [NSURL fileURLWithPath:[[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]]];
 	}
