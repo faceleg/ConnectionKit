@@ -165,10 +165,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
 		tmpValue = [self wrappedInheritedValueForKey:@"displaySmallPageIcons"];
 		[self setDisplaySmallPageIcons:(tmpValue) ? [tmpValue boolValue] : NO];
-		
-		
-        // Create media manager
-        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
     }
 	
     return self;
@@ -183,6 +179,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (self)
     {
+		// Create media manager
+        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
+        
+        
         // Make a new site to store document properties
         NSManagedObjectContext *context = [self managedObjectContext];
         
@@ -255,6 +255,19 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
 	
 	
+    return self;
+}
+
+- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+    if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
+    {
+        // Create media manager. MUST be done after reading so unique filenames can be registered
+        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
+        
+        
+    }
+    
     return self;
 }
 
