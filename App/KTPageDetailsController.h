@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 
 
+enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, kMixedSiteItemType = 3 };
+
 @class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
 
@@ -45,6 +47,7 @@
 	NSTextField	*_activeTextField;
 	MAAttachedWindow *_attachedWindow;
 
+	int _whatKindOfItemsAreSelected;
 	
 }
 
@@ -57,5 +60,7 @@
 
 @property (retain) NSTextField *activeTextField;
 @property (retain) MAAttachedWindow *attachedWindow;
+
+@property (assign) int whatKindOfItemsAreSelected;
 
 @end

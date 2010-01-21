@@ -777,6 +777,7 @@
 					<string>externalLinkRepresentation</string>
 					<string>externalLinkRepresentation.linkURLString</string>
 					<string>pageRepresentation</string>
+					<string>externalLinkRepresentation.URL</string>
 				</object>
 				<string key="NSObjectClassName">KTPage</string>
 				<bool key="NSEditable">YES</bool>
@@ -1716,43 +1717,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.externalLinkRepresentation.linkURLString</string>
-						<reference key="source" ref="899980468"/>
-						<reference key="destination" ref="601368962"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="899980468"/>
-							<reference key="NSDestination" ref="601368962"/>
-							<string key="NSLabel">value: selection.externalLinkRepresentation.linkURLString</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.externalLinkRepresentation.linkURLString</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSConditionallySetsHidden</string>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSRaisesForNotApplicableKeys</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="YES"/>
-									<string>MULTIPLE</string>
-									<string>NO SEL</string>
-									<string>NOT APP</string>
-									<string>NULL</string>
-									<boolean value="NO"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">1993</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">hidden: selection.pageRepresentation</string>
 						<reference key="source" ref="408006662"/>
 						<reference key="destination" ref="601368962"/>
@@ -1787,6 +1751,43 @@
 						</object>
 					</object>
 					<int key="connectionID">2005</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.externalLinkRepresentation.URL</string>
+						<reference key="source" ref="899980468"/>
+						<reference key="destination" ref="601368962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="899980468"/>
+							<reference key="NSDestination" ref="601368962"/>
+							<string key="NSLabel">value: selection.externalLinkRepresentation.URL</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.externalLinkRepresentation.URL</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSConditionallySetsHidden</string>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSRaisesForNotApplicableKeys</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<boolean value="YES"/>
+									<string>MULTIPLE</string>
+									<string>NO SEL</string>
+									<string>NOT APP</string>
+									<string>NULL</string>
+									<boolean value="NO"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">2006</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2540,7 +2541,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2005</int>
+			<int key="maxID">2006</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">

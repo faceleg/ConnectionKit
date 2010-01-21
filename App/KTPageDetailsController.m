@@ -54,6 +54,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 @synthesize activeTextField = _activeTextField;
 @synthesize attachedWindow = _attachedWindow;
+@synthesize whatKindOfItemsAreSelected = _whatKindOfItemsAreSelected;
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -92,8 +93,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)awakeFromNib
 {
-	// Hmmm ... but this makes it into an NSURL, but we need to bind to linkURLString I think.
-	//[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
+	[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
 	
 	// Detail panel needs the right appearance
 	
@@ -139,7 +139,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					   forKeyPath:@"selectedObjects"
 						  options:NSKeyValueObservingOptionNew
 						  context:sSelectedObjectsObservationContext];
-	
+	[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
 	
 	
 	/// turn off undo within the cell to avoid exception
@@ -336,19 +336,20 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		// Start with unknown, break and set to mixed if we find different types
 		// We "or" these together ... 1 | 2 = 3
-		enum { kUnknownType = 0, kLinkType = 1, kPageType = 2, kMixedType = 3 };
-		int type = kUnknownType;
+		int type = kUnknownSiteItemType;
 		for (SVSiteItem *item in selObjects)
 		{
 			SVExternalLink *thisLink = [item externalLinkRepresentation];
 			BOOL isLink = (nil != thisLink);
-			type |= (isLink ? kLinkType : kPageType);
-			if (kMixedType == type)
+			type |= (isLink ? kLinkSiteItemType : kPageSiteItemType);
+			if (kMixedSiteItemType == type)
 			{
 				break;		// mixed type, no need to keep checking
 			}
 		}
 		NSLog(@"Selection type: %d", type);
+		self.whatKindOfItemsAreSelected = type;
+		[self layoutPageURLComponents];
 	}
 }
 
@@ -533,6 +534,22 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) layoutPageURLComponents;
 {
+	// Only visible for page types
+	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename
+	
+	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oBaseURLField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oSlashIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oExtensionPopup setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oCollectionFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+
+	[oExternalURLField setHidden:(kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
+
+	[oOtherFileNameField setHidden:YES];	// FOR NOW
+	
 	NSArray *itemsToLayOut = nil;
 	int *theExtraX = nil;
 	int *theMarginsAfter = nil;
@@ -670,6 +687,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  */
 - (void)controlTextDidChange:(NSNotification *)notification
 {
+	NSLog(@"%s",__FUNCTION__);
+
 	NSTextField *textField = (NSTextField *) [notification object];
 	NSString *newValue = [textField stringValue]; // Do NOT try to modify this string!
 	if (textField == oWindowTitleField)
@@ -698,7 +717,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	
 	// Can't think of a better way to do this...
 	
-	NSString *bindingName = @"";
+	NSString *bindingName = nil;
 	NSString *explanation = @"";
 	int tagForHelp = kUnknownPageDetailsContext;
 	if (field == oPageFileNameField)
@@ -719,82 +738,85 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		bindingName = @"windowTitleCountdown";
 		explanation = NSLocalizedString(@"More than 65 characters will be truncated",@"brief indication of maximum length of text");
 	}
-	[oAttachedWindowHelpButton setTag:tagForHelp];
-		
-	[self updateWidthForActiveTextField:field];
-	self.activeTextField = field;
-	
-	if (!self.attachedWindow)
+	if (bindingName)
 	{
-		// We are cheating here .. there is only ONE active text field, help button, etc. ... 
-		// We fade out the window when we leave the field, but we immediately put these fields
-		// into a new attached window.  I think nobody is going to notice that though.
-		[oAttachedWindowTextField unbind:NSValueBinding];
-		NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
-		NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
-		[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];
-
-		[oAttachedWindowTextField setStringValue:placeholder];		// SHOULD NOT SEE.  RESERVES ENOUGH WIDTH THOUGH....
-		[oAttachedWindowExplanation setStringValue:explanation];
-
-		const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
-		float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
+		[oAttachedWindowHelpButton setTag:tagForHelp];
+			
+		[self updateWidthForActiveTextField:field];
+		self.activeTextField = field;
 		
-		int height = [oAttachedWindowView frame].size.height;	// also size of question mark
-		const int buttonSize = 14;
-		const int textHeight = 14;
-		const int secondLineY = 15;
-		int windowWidth = MAX(rightSide+8+height,
-			ceilf([[oAttachedWindowExplanation attributedStringValue] size].width) + widthExtra );
-		
-		[oAttachedWindowView setFrame:NSMakeRect(0,0,windowWidth,height)];	// set view first, then subviews		
-		[oAttachedWindowTextField setFrame:NSMakeRect(0,secondLineY,rightSide, textHeight)];
-		[oAttachedWindowHelpButton setFrame:NSMakeRect(windowWidth-buttonSize,secondLineY,buttonSize,buttonSize)];
-		[oAttachedWindowExplanation setFrame:NSMakeRect(0,0,windowWidth,textHeight)];
-        NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMidY([field frame]) );
-		arrowTip = [view convertPoint:arrowTip toView:nil];
-		
-        self.attachedWindow = [[MAAttachedWindow alloc] initWithView:oAttachedWindowView 
-                                                attachedToPoint:arrowTip 
-                                                       inWindow:[view window] 
-                                                         onSide:MAPositionLeft 
-                                                     atDistance:10.0];
-		self.attachedWindow.delegate = self;
-		self.attachedWindow.alphaValue = 0.0;
-		[self.attachedWindow setReleasedWhenClosed:YES];
-
-        [self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
-        [oAttachedWindowTextField setTextColor:[NSColor whiteColor]];
-        [oAttachedWindowExplanation setTextColor:[NSColor whiteColor]];
-		[[oAttachedWindowHelpButton image] setTemplate:YES];
-		
-		static NSImage *sTintedHelpButtonImage = nil;
-		if (!sTintedHelpButtonImage)
+		if (!self.attachedWindow)
 		{
-			sTintedHelpButtonImage = [[[oAttachedWindowHelpButton image] tintedImageWithColor:[NSColor lightGrayColor]] retain];
+			// We are cheating here .. there is only ONE active text field, help button, etc. ... 
+			// We fade out the window when we leave the field, but we immediately put these fields
+			// into a new attached window.  I think nobody is going to notice that though.
+			[oAttachedWindowTextField unbind:NSValueBinding];
+			NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
+			NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
+			[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];
+
+			[oAttachedWindowTextField setStringValue:placeholder];		// SHOULD NOT SEE.  RESERVES ENOUGH WIDTH THOUGH....
+			[oAttachedWindowExplanation setStringValue:explanation];
+
+			const int widthExtra = 4;	// NSTextField uses a few more pixels than the string width
+			float rightSide = ceilf([[oAttachedWindowTextField attributedStringValue] size].width) + widthExtra;
+			
+			int height = [oAttachedWindowView frame].size.height;	// also size of question mark
+			const int buttonSize = 14;
+			const int textHeight = 14;
+			const int secondLineY = 15;
+			int windowWidth = MAX(rightSide+8+height,
+				ceilf([[oAttachedWindowExplanation attributedStringValue] size].width) + widthExtra );
+			
+			[oAttachedWindowView setFrame:NSMakeRect(0,0,windowWidth,height)];	// set view first, then subviews		
+			[oAttachedWindowTextField setFrame:NSMakeRect(0,secondLineY,rightSide, textHeight)];
+			[oAttachedWindowHelpButton setFrame:NSMakeRect(windowWidth-buttonSize,secondLineY,buttonSize,buttonSize)];
+			[oAttachedWindowExplanation setFrame:NSMakeRect(0,0,windowWidth,textHeight)];
+			NSPoint arrowTip = NSMakePoint([field frame].origin.x + 10, NSMidY([field frame]) );
+			arrowTip = [view convertPoint:arrowTip toView:nil];
+			
+			self.attachedWindow = [[MAAttachedWindow alloc] initWithView:oAttachedWindowView 
+													attachedToPoint:arrowTip 
+														   inWindow:[view window] 
+															 onSide:MAPositionLeft 
+														 atDistance:10.0];
+			self.attachedWindow.delegate = self;
+			self.attachedWindow.alphaValue = 0.0;
+			[self.attachedWindow setReleasedWhenClosed:YES];
+
+			[self.attachedWindow setBorderColor:[NSColor colorWithCalibratedWhite:1.0 alpha:0.8]];
+			[oAttachedWindowTextField setTextColor:[NSColor whiteColor]];
+			[oAttachedWindowExplanation setTextColor:[NSColor whiteColor]];
+			[[oAttachedWindowHelpButton image] setTemplate:YES];
+			
+			static NSImage *sTintedHelpButtonImage = nil;
+			if (!sTintedHelpButtonImage)
+			{
+				sTintedHelpButtonImage = [[[oAttachedWindowHelpButton image] tintedImageWithColor:[NSColor lightGrayColor]] retain];
+			}
+			[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
+
+			[self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.667]];
+			[self.attachedWindow setViewMargin:6];
+			[self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
+			[self.attachedWindow setBorderWidth:0];
+			[self.attachedWindow setHasArrow:YES];
+			[self.attachedWindow setDrawsRoundCornerBesideArrow:NO];
+			[self.attachedWindow setArrowBaseWidth:15];
+			[self.attachedWindow setArrowHeight:8];
+			[self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
+
+			[[view window] addChildWindow:self.attachedWindow ordered:NSWindowAbove];
+
+			// Set up the animation for this window so we will get delegate methods
+			CAAnimation *anim = [CABasicAnimation animation];
+			// [anim setDuration:3.0];
+			[anim setValue:self.attachedWindow forKey:@"myOwnerWindow"];
+			[anim setDelegate:self];
+			[self.attachedWindow setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
+
+			[self.attachedWindow.animator setAlphaValue:1.0];	// animate open
 		}
-		[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
-
-        [self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.667]];
-        [self.attachedWindow setViewMargin:6];
-        [self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
-        [self.attachedWindow setBorderWidth:0];
-        [self.attachedWindow setHasArrow:YES];
-        [self.attachedWindow setDrawsRoundCornerBesideArrow:NO];
-        [self.attachedWindow setArrowBaseWidth:15];
-        [self.attachedWindow setArrowHeight:8];
-        [self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
-
-        [[view window] addChildWindow:self.attachedWindow ordered:NSWindowAbove];
-
-		// Set up the animation for this window so we will get delegate methods
-		CAAnimation *anim = [CABasicAnimation animation];
-		// [anim setDuration:3.0];
-		[anim setValue:self.attachedWindow forKey:@"myOwnerWindow"];
-		[anim setDelegate:self];
-		[self.attachedWindow setAnimations:[NSDictionary dictionaryWithObject:anim forKey:@"alphaValue"]];
-
-		[self.attachedWindow.animator setAlphaValue:1.0];	// animate open
 	}
 }
 
