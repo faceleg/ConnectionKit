@@ -11,7 +11,7 @@
 
 #import "KT.h"
 #import "KTDocument.h"
-#import "KTExternalMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTMediaContainer.h"
 #import "KTSite.h"
 
@@ -193,7 +193,7 @@ NSString *KTMediaLogDomain = @"Media";
 	NSMutableSet *result = [NSMutableSet set];
 	
 	NSEnumerator *mediaFileEnumerator = [[self externalMediaFiles] objectEnumerator];
-	KTExternalMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	
 	while (aMediaFile = [mediaFileEnumerator nextObject])
 	{
@@ -232,7 +232,7 @@ NSString *KTMediaLogDomain = @"Media";
     
 	// Garbage collect AbstractMediaFiles
 	NSArray *mediaFilesForDeletion = [self mediaFilesForDeletion];
-	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting %u unwanted AbstractMediaFile(s)", [mediaFilesForDeletion count]);
+	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting %u unwanted MediaFile(s)", [mediaFilesForDeletion count]);
 	
 	NSEnumerator *mediaFilesEnumerator = [mediaFilesForDeletion objectEnumerator];
 	KTMediaFile *aMediaFile;
@@ -408,7 +408,7 @@ typedef enum {
 					result = [self insertNewMediaContainer];
 					[result setSourceAlias:alias];
 					
-					KTMediaFile *mediaFile = [KTExternalMediaFile insertNewMediaFileWithAlias:alias
+					KTMediaFile *mediaFile = [KTMediaFile insertNewMediaFileWithAlias:alias
 																	   inManagedObjectContext:[self managedObjectContext]];
 					[result setValue:mediaFile forKey:@"file"];
 				}

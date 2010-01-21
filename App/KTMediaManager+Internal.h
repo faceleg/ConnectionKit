@@ -9,8 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import "KTMediaManager.h"
 
-#import "KTInDocumentMediaFile.h"
-#import "KTExternalMediaFile.h"
+#import "KTMediaFile.h"
 
 
 @class KTDesign, KTGraphicalTextMediaContainer;
@@ -48,8 +47,8 @@
 // MediaFile creation/re-use
 - (KTMediaFile *)mediaFileWithPath:(NSString *)path;
 - (KTMediaFile *)mediaFileWithPath:(NSString *)path preferExternalFile:(BOOL)preferExternal;
-- (KTInDocumentMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
-- (KTInDocumentMediaFile *)mediaFileWithImage:(NSImage *)image;
+- (KTMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
+- (KTMediaFile *)mediaFileWithImage:(NSImage *)image;
 - (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
 
 - (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename;

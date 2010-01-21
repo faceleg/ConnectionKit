@@ -6,25 +6,26 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTInDocumentMediaFile.h"
-#import "KTExternalMediaFile.h"
+#import "KTMediaFile.h"
 
-#import "KTSite.h"
+#import "KTDocument.h"
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
 #import "KTMediaManager.h"
 #import "KTMediaFileUpload.h"
+#import "KTSite.h"
 
 #import "NSManagedObject+KTExtensions.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 
+#import "NSData+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
-#import "BDAlias.h"
+#import "BDAlias+QuickLook.h"
+
+#import <Connection/KTLog.h>
 #import <QTKit/QTKit.h>
 
 #import "Debug.h"
@@ -32,9 +33,17 @@
 
 
 @interface KTMediaFile ()  
+
+- (NSURL *)fileURLFromAlias;
+- (NSURL *)savedFileURL;
+- (NSURL *)deletedFileURL;
+
+@property(nonatomic, copy) NSData *cachedDigest;
+
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
 - (NSString *)uniqueUploadPath:(NSString *)preferredPath;
 - (KTMediaFileUpload *)_anyUploadMatchingPredicate:(NSPredicate *)predicate;
+
 @end
 
 
@@ -43,7 +52,6 @@
 
 @implementation KTMediaFile
 
-#pragma mark -
 #pragma mark Init
 
 + (void)initialize
@@ -64,12 +72,10 @@
     [self setPrimitiveValue:[NSString UUIDString] forKey:@"uniqueID"];
 }
 
-#pragma mark -
 #pragma mark Core Data
 
-+ (NSString *)entityName { return @"AbstractMediaFile"; }
++ (NSString *)entityName { return @"MediaFile"; }
 
-#pragma mark -
 #pragma mark Accessors
 
 - (KTMediaManager *)mediaManager
@@ -79,9 +85,57 @@
 	return result;
 }
 
-@dynamic filename;  // up to sucblasses to implement
-
 #pragma mark Location
+
+- (NSURL *)fileURL;
+{
+	if ([self filename])
+    {
+        // Figure out proper values for these two
+        if ([self isInserted])
+        {
+            return [self deletedFileURL];
+        }
+        else
+        {
+            return [self savedFileURL];
+        }
+    }
+    else
+    {
+        return [self fileURLFromAlias];
+    }
+}
+
+- (NSURL *)fileURLFromAlias;
+{
+    // Get best path we can out of the alias
+    NSString *path = [[self alias] fullPath];
+	if (!path) path = [[self alias] lastKnownPath];
+    
+    // Ignore files which are in the Trash
+	if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
+    
+    
+    if (path) return [NSURL fileURLWithPath:path];
+    return nil;
+}
+
+- (NSURL *)savedFileURL;
+{
+    NSURL *storeURL = [[[self objectID] persistentStore] URL];
+    NSURL *docURL = [KTDocument documentURLForDatastoreURL:storeURL];
+    
+    NSURL *result = [docURL URLByAppendingPathComponent:[self filename]
+                                            isDirectory:NO];
+    return result;
+}
+
+- (NSURL *)deletedFileURL;
+{
+    NSURL *result = [NSURL fileURLWithPath:[[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]]];
+    return result;
+}
 
 /*	The path where the underlying filesystem object is being kept.
  */
@@ -96,27 +150,203 @@
 	return result;
 }
 
-- (NSURL *)fileURL;
+#pragma mark Location Support
+
+@dynamic filename;
+
+- (BDAlias *)alias
 {
-	SUBCLASSMUSTIMPLEMENT;
-	return nil;
+	BDAlias *result = [self wrappedValueForKey:@"alias"];
+	
+	if (!result)
+	{
+		NSData *aliasData = [self valueForKey:@"aliasData"];
+		if (aliasData)
+		{
+			result = [BDAlias aliasWithData:aliasData];
+			[self setPrimitiveValue:result forKey:@"alias"];
+		}
+	}
+	
+	return result;
 }
+
+- (void)setAlias:(BDAlias *)alias
+{
+	[self setWrappedValue:alias forKey:@"alias"];
+	[self setValue:[alias aliasData] forKey:@"aliasData"];
+}
+
+@dynamic preferredFilename;
+- (BOOL)validatePreferredFilename:(NSString **)filename error:(NSError **)outError
+{
+    //  Make sure it really is just a filename and not a path
+    BOOL result = [[*filename pathComponents] count] == 1;
+    if (!result && outError)
+    {
+        NSDictionary *info = [NSDictionary dictionaryWithObject:[NSString stringWithFormat:@"perferredFilename \"%@\" is a path; not a filename", *filename]
+                                                         forKey:NSLocalizedDescriptionKey];
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                        code:NSValidationStringPatternMatchingError
+                                    userInfo:info];
+    }
+    
+    return result;
+}
+
+#pragma mark File Management
+
+/*	Called when a MediaFile is saved for the first time. i.e. it becomes peristent and the underlying file needs to move into the doc.
+ */
+- (void)moveIntoDocument
+{
+	NSFileManager *fileManager = [NSFileManager defaultManager];
+	KTDocument *doc = [[self mediaManager] document];
+	if (!doc) return;	// Safety check for handling store migration
+	
+	
+	// Simple debug log of what's about to go down		(see, I'm streetwise. No, really!)
+	NSString *filename = [self filename];
+	KTLog(KTMediaLogDomain,
+		  KTLogDebug,
+		  ([NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename]));
+	
+	
+	// Only bother if there is actually a file to move
+	NSString *sourcePath = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:filename];
+	if (![fileManager fileExistsAtPath:sourcePath])
+	{
+		KTLog(KTMediaLogDomain,
+			  KTLogInfo,
+			  ([NSString stringWithFormat:@"No file to move at:\n%@", [sourcePath stringByAbbreviatingWithTildeInPath]]));
+        
+		return;
+	}
+	
+	
+	// Make sure the destination is available
+	NSString *destinationPath = [[self savedFileURL] path];
+	if ([fileManager fileExistsAtPath:destinationPath])
+	{
+		KTLog(KTMediaLogDomain,
+			  KTLogWarn,
+			  ([NSString stringWithFormat:@"%@\nalready exists; overwriting it.", [destinationPath stringByAbbreviatingWithTildeInPath]]));
+		
+		[fileManager removeFileAtPath:destinationPath handler:self];
+	}
+	
+    
+	// Make the move
+	if (![fileManager movePath:sourcePath toPath:destinationPath handler:self])
+	{
+		KTLog(KTMediaLogDomain,
+			  KTLogError,
+			  @"-[%@ %@] failed moving from %@ to %@",
+			  NSStringFromClass([self class]),
+			  NSStringFromSelector(_cmd),
+			  [sourcePath stringByAbbreviatingWithTildeInPath],
+			  [destinationPath stringByAbbreviatingWithTildeInPath]);
+	}
+}
+
+- (void)didSave
+{
+    [super didSave];
+    
+    
+	// Both -insertedObjects and KTLog seems to be pretty memory intensive during data migration, so give them a local pool
+	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+	
+	
+	// If we have just been saved then move our underlying file into the document
+	if ([self isInserted])
+	{
+		// During Save As operations, the files on disk are handled for us, so don't do this
+        //if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
+        {
+            [self moveIntoDocument];
+        }
+	}
+	
+	
+	// If we have been deleted from the context, move our underlying file back out to the temp dir
+	if ([self isDeleted])
+	{
+		NSString *filename = [self committedValueForKey:@"filename"];
+		NSString *sourcePath = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:filename];
+		NSString *destinationPath = [[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:filename];
+		
+		KTLog(KTMediaLogDomain, KTLogDebug,
+			  ([NSString stringWithFormat:@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename]));
+		
+		if ([[NSFileManager defaultManager] fileExistsAtPath:sourcePath])
+		{
+			[[self mediaManager] prepareTemporaryMediaDirectoryForFileNamed:filename];
+			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
+				[NSException raise:NSInternalInconsistencyException
+							format:@"Unable to move deleted MediaFile %@ to the temp media directory", filename];
+			}
+		}
+		else
+		{
+			NSString *message = [NSString stringWithFormat:@"No file could be found at\n%@\nDeleting the MediaFile object it anyway",
+                                 [sourcePath stringByAbbreviatingWithTildeInPath]];
+			KTLog(KTMediaLogDomain, KTLogWarn, message);
+		}
+	}
+	
+	
+	[pool release];
+}
+
+#pragma mark Digest
+
+#define DIGESTDATALENGTH 8192
+
++ (NSData *)mediaFileDigestFromData:(NSData *)data
+{
+    unsigned int length = [data length];
+	unsigned int lengthToDigest = MIN(length, (unsigned int)DIGESTDATALENGTH);
+	NSData *firstPart = [data subdataWithRange:NSMakeRange(0,lengthToDigest)];
+	NSData *result = [firstPart SHA1HashDigest];
+	return result;
+}
+
++ (NSData *)mediaFileDigestFromContentsOfFile:(NSString *)path
+{
+    NSData *result = nil;
+	id fileHandle = [NSFileHandle fileHandleForReadingAtPath:path];
+	if (fileHandle)
+	{
+		NSData *data = [fileHandle readDataOfLength:DIGESTDATALENGTH];
+		result = [data SHA1HashDigest];
+		
+		[fileHandle closeFile];
+	}
+	return result;
+}
+
+@dynamic cachedDigest;
+
+#pragma mark Quick Look
 
 /*	Subclasses implement this to return a <!svxData> pseudo-tag for Quick Look previews
  */
 - (NSString *)quickLookPseudoTag
 {
-	SUBCLASSMUSTIMPLEMENT;
-	return nil;
+    if ([self filename])
+    {
+        NSString *result = [NSString stringWithFormat:@"<!svxdata indocumentmedia:%@>",
+                            [self filename]];
+        return result;
+    }
+    else
+    {
+        NSString *result = [[self alias] quickLookPseudoTag];
+        return result;
+    }
 }
 
-- (NSString *)preferredFilename
-{
-	SUBCLASSMUSTIMPLEMENT;
-	return nil;
-}
-
-#pragma mark -
 #pragma mark Uploading
 
 - (KTMediaFileUpload *)defaultUpload
@@ -324,7 +554,6 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Pasteboard
 
 - (id <NSCoding>)pasteboardRepresentation
@@ -346,7 +575,6 @@
 	return nil;     // Cheating for the moment and assuming no thumbnails
 }
 
-#pragma mark -
 #pragma mark Scaling
 
 - (NSURL *)URLForImageScaledToSize:(NSSize)size mode:(KSImageScalingMode)scalingMode sharpening:(float)sharpening fileType:(NSString *)UTI
@@ -447,8 +675,6 @@
     return result;
 }
 
-#pragma mark canonical
-
 /*	Takes some properties and makes them suitable for the media system to search and generate images with.
  *  Returns scaleFactor = 1.0 if the settings will result in no change to the image.
  */ 
@@ -459,7 +685,7 @@
     
     NSMutableDictionary *buffer = [properties mutableCopy];
 	
-	
+	/*
 	// Figure the canonical scaling specification
 	KTImageScalingSettings *specifiedScalingSettings = [properties objectForKey:@"scalingBehavior"];
     OBASSERT(specifiedScalingSettings);
@@ -545,7 +771,8 @@
         [buffer setObject:[NSNumber numberWithInt:0] forKey:@"sharpeningFactor"];
     }
 	
-	
+	*/
+    
 	// Tidy up
 	NSDictionary *result = [[buffer copy] autorelease];
     [buffer release];

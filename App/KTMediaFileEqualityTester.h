@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTInDocumentMediaFile;
+@class KTMediaFile;
 
 
 @interface KTMediaFileEqualityTester : NSObject
@@ -20,5 +20,5 @@
 }
 
 - (id)initWithPossibleMatches:(NSSet *)mediaFiles forPath:(NSString *)path;
-- (KTInDocumentMediaFile *)firstMatch;
+- (KTMediaFile *)firstMatch;
 @end

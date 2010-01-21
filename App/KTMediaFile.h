@@ -20,20 +20,45 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class KTMediaManager, KTPage, KTMediaFileUpload;
+@class KTMediaManager, KTPage, BDAlias, KTMediaFileUpload;
 @interface KTMediaFile : NSManagedObject
 
 + (NSString *)entityName;
 
 // Accessors
 - (KTMediaManager *)mediaManager;
-@property(nonatomic, copy, readonly) NSString *filename;    // default is @dynamic
 
 
-// Location
-- (NSURL *)fileURL; // the file at that URL may not exist any more. Might be nil if the Media knows it can't be found
+#pragma mark Location
+
+//  Sandvox needs to handle media across a pretty broad set of locations. A file could be:
+//  A)  Outside the document, under the user's control, so referenced by an alias
+//  B)  Inside the document package
+//  C)  In a temporary location on disk, outside the doc package, having been deleted from the document
+//  D)  In-memory
+//
+//  In general you should get hold of a file in the manner that best suits you.
+//  -   If you prefer data, ask for that. If it fails, it may be that the data is too big to reasonably load into memory, so fallback to -fileURL.
+//  -   If you prefer a real file, use -fileURL. If that fails because the file is not found, it might be in-memory, so fallback to that.
+//  You should have no need under normal usage to specifically use -alias.
+
+- (NSURL *)fileURL;
+//- (NSData *)data;
 - (NSString *)currentPath;	// just like -fileURL, but will never return nil. Falls back to a placeholder image instead
+
+
+#pragma mark Location Support
+
+@property(nonatomic, copy, readonly) NSString *filename;
+@property(nonatomic, retain, readonly) BDAlias *alias;
+@property(nonatomic, copy) NSString *preferredFilename;
+
+
+#pragma mark Quick Look
 - (NSString *)quickLookPseudoTag;
+
+
+#pragma mark Publishing
 
 - (KTMediaFileUpload *)defaultUpload;
 - (KTMediaFileUpload *)uploadForPath:(NSString *)path;

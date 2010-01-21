@@ -7,13 +7,13 @@
 //
 
 #import "KTMediaFileEqualityTester.h"
-#import "KTInDocumentMediaFile.h"
+#import "KTMediaFile.h"
 
 #import "NSObject+Karelia.h"
 
 
 @interface KTMediaFileEqualityTester ()
-- (NSFileHandle *)fileHandleForMediaFile:(KTInDocumentMediaFile *)mediaFile;
+- (NSFileHandle *)fileHandleForMediaFile:(KTMediaFile *)mediaFile;
 @end
 
 
@@ -53,7 +53,7 @@
 
 /*	Gets the file handle corresponding to a particular media file
  */
-- (NSFileHandle *)fileHandleForMediaFile:(KTInDocumentMediaFile *)mediaFile
+- (NSFileHandle *)fileHandleForMediaFile:(KTMediaFile *)mediaFile
 {
 	NSFileHandle *result = [myFileHandles objectForKey:mediaFile];
 	
@@ -68,7 +68,7 @@
 
 /*	Once it's established that a MediaFile is not a match, this method dumps it.
  */
-- (void)eliminateMediaFile:(KTInDocumentMediaFile *)mediaFile
+- (void)eliminateMediaFile:(KTMediaFile *)mediaFile
 {
 	[myFileHandles removeObjectForKey:mediaFile];
 	[myPossibleMatches removeObject:mediaFile];
@@ -79,7 +79,7 @@
 
 /*	Run through the possible matches using their file handle to figure the result.
  */
-- (KTInDocumentMediaFile *)firstMatch
+- (KTMediaFile *)firstMatch
 {
 	NSFileHandle *comparisonFileHandle = [NSFileHandle fileHandleForReadingAtPath:myComparisonPath];
 	
@@ -99,7 +99,7 @@
 		// Compare this chunk to our possible matches
 		NSSet *possibleMatches = [self possibleMatches];
 		NSEnumerator *matchEnumerator = [possibleMatches objectEnumerator];
-		KTInDocumentMediaFile *aPossibleMatch;
+		KTMediaFile *aPossibleMatch;
 		
 		while (aPossibleMatch = [matchEnumerator nextObject])
 		{
@@ -121,7 +121,7 @@
 	
 	
 	// The result must be any of the remaining files or nil if none was found.
-	KTInDocumentMediaFile *result = [[self possibleMatches] anyObject];
+	KTMediaFile *result = [[self possibleMatches] anyObject];
 	return result;
 }
 

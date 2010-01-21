@@ -9,7 +9,6 @@
 #import "KTMissingMediaController.h"
 
 #import "KTMediaFile.h"
-#import "KTExternalMediaFile.h"
 #import "KTMediaManager+Internal.h"
 
 #import "NSArray+Karelia.h"
@@ -116,7 +115,7 @@
 
 /*	Try to locate similar missing media
  */
-- (void)offerToLocateSimilarMissingMedia:(KTExternalMediaFile *)originalMediaFile newPath:(NSString *)newPath;
+- (void)offerToLocateSimilarMissingMedia:(KTMediaFile *)originalMediaFile newPath:(NSString *)newPath;
 {
 	NSMutableSet *mediaToMigrate = [NSMutableSet setWithObject:originalMediaFile];
 	
@@ -137,10 +136,10 @@
 	// Look for other missing media with the same path prefix and that exist in the possible new location
 	NSMutableSet *similarMissingMedia = [NSMutableSet set];
 	NSEnumerator *missingMediaEnumerator = [[self missingMedia] objectEnumerator];
-	KTExternalMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	while (aMediaFile = [missingMediaEnumerator nextObject])
 	{
-		if ([aMediaFile isKindOfClass:[KTExternalMediaFile class]])
+		if ([aMediaFile isKindOfClass:[KTMediaFile class]])
         {
             NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
             NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];
@@ -237,9 +236,9 @@
 	NSString *fileExtension = [[mediaFile filename] pathExtension];
 	int returnCode = [panel runModalForTypes:[NSArray arrayWithObject:fileExtension]];
 	
-	if (returnCode == NSOKButton && [mediaFile isKindOfClass:[KTExternalMediaFile class]])
+	if (returnCode == NSOKButton)
 	{
-		[self offerToLocateSimilarMissingMedia:(KTExternalMediaFile *)mediaFile newPath:[panel filename]];
+		[self offerToLocateSimilarMissingMedia:mediaFile newPath:[panel filename]];
 	}
 }
 

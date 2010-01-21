@@ -8,8 +8,7 @@
 
 #import "KTMediaContainer+Pasteboard.h"
 
-#import "KTInDocumentMediaFile.h"
-#import "KTExternalMediaFile.h"
+#import "KTMediaFile.h"
 #import "KTPasteboardArchiving.h"
 
 #import "BDAlias.h"
@@ -31,21 +30,7 @@
 @end
 
 
-@implementation KTInDocumentMediaFile (Pasteboard)
-
-- (id <NSCoding>)pasteboardRepresentation
-{
-	NSString *path = [self currentPath];
-    OBASSERT(path);
-    BDAlias *alias = [BDAlias aliasWithPath:path];
-	OBASSERT(alias);
-	return [[[KTMediaContainerPasteboardRepresentation alloc] initWithAlias:alias] autorelease];
-}
-
-@end
-
-
-@implementation KTExternalMediaFile (Pasteboard)
+@implementation KTMediaFile (Pasteboard)
 
 - (id <NSCoding>)pasteboardRepresentation
 {

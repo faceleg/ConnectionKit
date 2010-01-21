@@ -34,11 +34,11 @@
 - (KTMediaFile *)mediaFileWithPath:(NSString *)path external:(BOOL)isExternal;
 
 - (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest;
-- (KTInDocumentMediaFile *)inDocumentMediaFileForPath:(NSString *)path;
-- (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
+- (KTMediaFile *)inDocumentMediaFileForPath:(NSString *)path;
+- (KTMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path;
 
 // Conversion
-- (KTInDocumentMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTExternalMediaFile *)original;
+- (KTMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTMediaFile *)original;
 
 @end
 
@@ -53,12 +53,12 @@
 
 /*	Searches for an external media file whose alias matches the supplied path.
  */
-- (KTExternalMediaFile *)anyExternalMediaFileMatchingPath:(NSString *)path
+- (KTMediaFile *)anyExternalMediaFileMatchingPath:(NSString *)path
 {
-	KTExternalMediaFile *result = nil;
+	KTMediaFile *result = nil;
 	
 	NSEnumerator *mediaEnumerator = [[self externalMediaFiles] objectEnumerator];
-	KTExternalMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	while (aMediaFile = [mediaEnumerator nextObject])
 	{
 		BDAlias *anAlias = [aMediaFile alias];
@@ -76,7 +76,7 @@
 - (NSArray *)externalMediaFiles
 {
 	NSError *error = nil;
-	NSArray *result = [[self managedObjectContext] allObjectsWithEntityName:@"ExternalMediaFile" error:&error];
+	NSArray *result = [[self managedObjectContext] allObjectsWithEntityName:@"MediaFile" error:&error];
 	if (error) {
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert setIcon:[NSApp applicationIconImage]];
@@ -87,7 +87,7 @@
 }
 
 /*	NSManagedObjectContext gives us a nice list of inserted (temporary) objects. We just have to narrow it down to those of
- *	the KTInDocumentMediaFile class.
+ *	the KTMediaFile class.
  */
 - (NSSet *)temporaryMediaFiles
 {
@@ -97,7 +97,7 @@
 	id anInsertedObject;
 	while (anInsertedObject = [insertedObjectsEnumerator nextObject])
 	{
-		if ([anInsertedObject isKindOfClass:[KTInDocumentMediaFile class]])	// Ignore external media
+		if ([anInsertedObject isKindOfClass:[KTMediaFile class]])	// Ignore external media
 		{
 			[result addObject:anInsertedObject];
 		}
@@ -193,7 +193,7 @@
 		if (!result)
 		{
 			KTLog(KTMediaLogDomain, KTLogDebug, @"Creating external MediaFile for path:\n%@", path);
-			result = [KTExternalMediaFile insertNewMediaFileWithPath:path inManagedObjectContext:[self managedObjectContext]];
+			result = [KTMediaFile insertNewMediaFileWithPath:path inManagedObjectContext:[self managedObjectContext]];
 		}
 	}
 	else
@@ -204,15 +204,15 @@
 	return result;
 }
 
-- (KTInDocumentMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)preferredFilename
+- (KTMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)preferredFilename
 {
-	KTInDocumentMediaFile *result = nil;
+	KTMediaFile *result = nil;
 	
 	// See if there is already a MediaFile with the same data
-	NSArray *similarMediaFiles = [self inDocumentMediaFilesWithDigest:[KTInDocumentMediaFile mediaFileDigestFromData:data]];
+	NSArray *similarMediaFiles = [self inDocumentMediaFilesWithDigest:[KTMediaFile mediaFileDigestFromData:data]];
 	
 	NSEnumerator *mediaFilesEnumerator = [similarMediaFiles objectEnumerator];
-	KTInDocumentMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
 		NSData *possibleMatch = [NSData dataWithContentsOfFile:[aMediaFile currentPath]];
@@ -242,7 +242,7 @@
 		}
 		
 		// Then add the object to the DB
-		result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
+		result = [KTMediaFile insertNewMediaFileWithPath:destinationPath
 											inManagedObjectContext:[self managedObjectContext]];
 		
 		[result setPreferredFilename:preferredFilename];
@@ -252,7 +252,7 @@
 	return result;
 }
 
-- (KTInDocumentMediaFile *)mediaFileWithImage:(NSImage *)image
+- (KTMediaFile *)mediaFileWithImage:(NSImage *)image
 {
 	OBPRECONDITION(image);
 	OBPRECONDITION([[image representations] count] > 0);
@@ -265,7 +265,7 @@
 	NSString *filename = [@"pastedImage" stringByAppendingPathExtension:extension];
 	NSData *imageData = [image representationForUTI:imageUTI];
 	
-	KTInDocumentMediaFile *result = [self mediaFileWithData:imageData preferredFilename:filename];
+	KTMediaFile *result = [self mediaFileWithData:imageData preferredFilename:filename];
 	return result;
 }
 
@@ -309,19 +309,19 @@
 
 /*	Look to see if there is an existing equivalent media file. If so, return that. Otherwise create a new one.
  */
-- (KTInDocumentMediaFile *)inDocumentMediaFileForPath:(NSString *)path
+- (KTMediaFile *)inDocumentMediaFileForPath:(NSString *)path
 {
 	OBPRECONDITION(path);
     
-    KTInDocumentMediaFile *result = nil;
+    KTMediaFile *result = nil;
 	
 	
 	// Search the DB for matching digests. This gives us a rough set of results.
-	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[KTInDocumentMediaFile mediaFileDigestFromContentsOfFile:path]];
+	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[KTMediaFile mediaFileDigestFromContentsOfFile:path]];
 	if ([similarMedia count] > 0)
 	{
 		NSEnumerator *matchEnumerator = [similarMedia objectEnumerator];
-		KTInDocumentMediaFile *aMediaFile;
+		KTMediaFile *aMediaFile;
 		while (aMediaFile = [matchEnumerator nextObject])
 		{
 			if ([[NSFileManager defaultManager] contentsEqualAtPath:path andPath:[aMediaFile currentPath]])
@@ -374,9 +374,9 @@
 /*	Creates a brand new entry in the DB for the media at the path.
  *	The path itself is copied to app support as a temporary store; it is moved internally at save-time.
  */
-- (KTInDocumentMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
+- (KTMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 {
-	KTInDocumentMediaFile *result = nil;
+	KTMediaFile *result = nil;
     
     
     KTLog(KTMediaLogDomain, KTLogDebug, @"Creating temporary in-document MediaFile from path:\n%@", path);
@@ -390,7 +390,7 @@
 	if ([[NSFileManager defaultManager] copyPath:path toPath:destinationPath handler:self])
     {
         // Add the file to the DB.
-        result = [KTInDocumentMediaFile insertNewMediaFileWithPath:destinationPath
+        result = [KTMediaFile insertNewMediaFileWithPath:destinationPath
                                             inManagedObjectContext:[self managedObjectContext]];
 		
         // Store the file's source filename
@@ -417,7 +417,7 @@
 {
 	NSArray *externalMediaFiles = [self externalMediaFiles];
 	NSEnumerator *mediaFileEnumerator = [externalMediaFiles objectEnumerator];
-	KTExternalMediaFile *aMediaFile;
+	KTMediaFile *aMediaFile;
 	
 	while (aMediaFile = [mediaFileEnumerator nextObject])
 	{
@@ -430,11 +430,11 @@
 
 /*  Attempts to move a given file into the document. Returns nil if this fails (e.g. the file can't be located).
  */
-- (KTInDocumentMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTExternalMediaFile *)original
+- (KTMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTMediaFile *)original
 {
 	OBPRECONDITION(original);
 	
-	KTInDocumentMediaFile *result = nil;
+	KTMediaFile *result = nil;
     
     
 	// Get the replacement file.
