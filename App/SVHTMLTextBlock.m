@@ -272,13 +272,13 @@
 	KTMediaFile *mediaFile = [image file];
 	if (mediaFile)
 	{			
-		[mediaFile cacheImageDimensionsIfNeeded];
+		//[mediaFile cacheImageDimensionsIfNeeded];
         
         result = [NSString stringWithFormat:
 			@"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%ipx; height:%ipx;",
 			[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
-			[mediaFile integerForKey:@"width"],
-			[mediaFile integerForKey:@"height"]];
+                  100,//[mediaFile integerForKey:@"width"],
+                  100];//[mediaFile integerForKey:@"height"]];
 	}
 	
 	return result;
