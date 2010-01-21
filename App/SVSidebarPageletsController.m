@@ -14,6 +14,7 @@
 
 
 @interface SVSidebarPageletsController ()
+- (void)_addPagelet:(SVPagelet *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
 - (void)_removePagelet:(SVPagelet *)pagelet fromPageAndDescendants:(KTAbstractPage *)page;
 @end
 
@@ -58,7 +59,35 @@
     SVPagelet *lastPagelet = [[self arrangedObjects] lastObject];
     [pagelet moveAfterPagelet:lastPagelet];
     
+    
+    // Also add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
+    [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[[self sidebar] page]];
+    
+    
 	[super addObject:pagelet];
+}
+
+- (void)_addPagelet:(SVPagelet *)pagelet
+toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
+{
+    NSSet *inheritablePagelets = [[page sidebar] pagelets];
+    
+    for (SVSiteItem *aSiteItem in [page childItems])
+    {
+        // We only care about actual pages
+        KTPage *aPage = [aSiteItem pageRepresentation];
+        if (!aPage) continue;
+        
+        
+        // It's reasonable to add the pagelet if one of more pagelets from the parent also appear
+        SVSidebar *sidebar = [aPage sidebar];
+        if ([[sidebar pagelets] intersectsSet:inheritablePagelets] ||
+            [inheritablePagelets count] < 1)
+        {
+            [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:aPage];
+            [sidebar addPageletsObject:pagelet];
+        }
+    }
 }
 
 - (void)willRemoveObject:(id)object
