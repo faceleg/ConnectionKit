@@ -54,8 +54,11 @@
 #pragma mark -
 #pragma mark File Management
 
-- (void)willSave
+- (void)didSave
 {
+    [super didSave];
+    
+    
 	// Both -insertedObjects and KTLog seems to be pretty memory intensive during data migration, so give them a local pool
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
