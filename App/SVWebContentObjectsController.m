@@ -150,12 +150,14 @@
 
 - (BOOL)selectObjectByInsertingIfNeeded:(id)object;
 {
-    [self setSelectedObjects:[NSArray arrayWithObject:object]];
+    BOOL result = [self setSelectedObjects:[NSArray arrayWithObject:object]];
     if ([[self selectedObjects] count] == 0)
     {
         [self addObject:object];
-        if (![self selectsInsertedObjects]) [self selectObjectByInsertingIfNeeded:object];
+        if (![self selectsInsertedObjects]) result = [self selectObjectByInsertingIfNeeded:object];
     }
+    
+    return result;
 }
 
 @end
