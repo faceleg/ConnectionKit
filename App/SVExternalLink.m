@@ -24,6 +24,11 @@
     return result;
 }
 
+- (void)setURL:(NSURL *)url
+{
+    [self setLinkURLString:[url absoluteString]];
+}
+
 + (NSSet *)keyPathsForValuesAffectingURL
 {
     return [NSSet setWithObject:@"linkURLString"];

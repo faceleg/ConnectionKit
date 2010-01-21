@@ -14,8 +14,10 @@
 {
 }
 
-@property (nonatomic, retain) NSNumber * openInNewWindow;
-@property (nonatomic, retain) NSString * linkURLString;
+@property(nonatomic, retain) NSNumber *openInNewWindow;
+
+@property(nonatomic, retain) NSString *linkURLString;
+@property(nonatomic, copy) NSURL *URL;  // wrapper around .linkURLString
 
 @end
 
