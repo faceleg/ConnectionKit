@@ -4,7 +4,7 @@
 
 COPY_PHASE_STRIP = NO
 DEBUG_INFORMATION_FORMAT = dwarf
-FRAMEWORK_SEARCH_PATHS = $(SRCROOT)/../../Shared/ThirdParty/BWToolkit $(SRCROOT)/../../Shared/ThirdParty/Sparkle $(SRCROOT)/../../Shared/ThirdParty/Growl
+FRAMEWORK_SEARCH_PATHS = "$(SRCROOT)/../../Shared/ThirdParty/BWToolkit" "$(SRCROOT)/../../Shared/ThirdParty/Sparkle" "$(SRCROOT)/../../Shared/ThirdParty/Growl" "$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks"
 GCC_DYNAMIC_NO_PIC = NO
 GCC_ENABLE_FIX_AND_CONTINUE = YES
 GCC_ENABLE_OBJC_EXCEPTIONS = YES
