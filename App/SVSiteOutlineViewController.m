@@ -217,6 +217,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 @synthesize rootPage = _rootPage;
 - (void)setRootPage:(KTPage *)page
 {
+    [[self rootPage] removeObserver:self forKeyPath:@"master.siteTitle.text"];
     [[self rootPage] removeObserver:self forKeyPath:@"master.favicon"];
     [[self rootPage] removeObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection"];
     
@@ -224,6 +225,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [_rootPage release];
     _rootPage = page;
     
+    [[self rootPage] addObserver:self forKeyPath:@"master.siteTitle.text" options:0 context:NULL];
     [[self rootPage] addObserver:self forKeyPath:@"master.favicon" options:0 context:NULL];
     [[self rootPage] addObserver:self forKeyPath:@"master.codeInjection.hasCodeInjection" options:0 context:NULL];
 }
