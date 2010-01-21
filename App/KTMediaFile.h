@@ -66,7 +66,9 @@
 
 #pragma mark Location Support
 
+// Media Files start out life with no filename. They acquire one upon the first time they are due to be copied into the doc package
 @property(nonatomic, copy, readonly) NSString *filename;
+
 @property(nonatomic, retain, readonly) BDAlias *alias;
 @property(nonatomic, copy) NSString *preferredFilename;
 

@@ -77,9 +77,6 @@
     {
         _data = [data copy];
         [self setPreferredFilename:preferredFilename];
-        
-        // FIXME: filename should be generated as a unique value
-        [self setFilename:preferredFilename];
     }
     
     return self;
@@ -95,9 +92,6 @@
         // Cheat for now and load into memort. TODO: Only do this if the file is small
         _data = [[NSData alloc] initWithContentsOfURL:URL];
         [self setPreferredFilename:[URL lastPathComponent]];
-        
-        // FIXME: filename should be generated as a unique value
-        [self setFilename:[URL lastPathComponent]];
     }
     
     return self;
@@ -310,6 +304,18 @@
 			  [sourcePath stringByAbbreviatingWithTildeInPath],
 			  [destinationPath stringByAbbreviatingWithTildeInPath]);
 	}
+}
+
+- (void)willSave
+{
+    [super willSave];
+    
+    // Reserve the filename we'll be using
+    if (![self filename])
+    {
+        NSString *filename = [[[self mediaManager] document] reserveFilenameForObject:self preferredFilename:[self preferredFilename]];
+        [self setPrimitiveValue:filename forKey:@"filename"];
+    }
 }
 
 - (void)didSave
