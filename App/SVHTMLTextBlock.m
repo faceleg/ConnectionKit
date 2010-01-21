@@ -19,8 +19,6 @@
 #import "SVTitleBox.h"
 
 #import "KTMediaManager+Internal.h"
-#import "KTScaledImageContainer.h"
-#import "KTGraphicalTextMediaContainer.h"
 #import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 
@@ -470,7 +468,7 @@
 						else
 						{
 							KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
-                            KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[(KTScaledImageContainer *)mediaContainer latestProperties]];
+                            KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[mediaContainer latestProperties]];
 							aMediaPath = [[upload URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
 							
 							// TODO: Tell the parser's delegate

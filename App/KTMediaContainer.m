@@ -8,8 +8,6 @@
 
 #import "KTMediaContainer.h"
 
-#import "KTScaledImageContainer.h"
-#import "KTNamedSettingsScaledImageContainer.h"
 #import "KTGraphicalTextMediaContainer.h"
 
 #import "KTMediaManager.h"
@@ -24,18 +22,6 @@
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSSet+Karelia.h"
-
-
-@interface KTMediaContainer ()
-
-- (KTNamedSettingsScaledImageContainer *)existingImageWithName:(NSString *)name pluginID:(NSString *)ID;
-- (KTNamedSettingsScaledImageContainer *)_imageWithScalingSettingsNamed:(NSString *)settingsName
-															  forPlugin:(KTAbstractElement *)plugin;
-
-@end
-
-
-#pragma mark -
 
 
 @implementation KTMediaContainer
@@ -236,53 +222,5 @@
 }
 
 - (KTMediaFile *)file { return [self wrappedValueForKey:@"file"]; }
-
-/*  Compatibility method for scaled image containers. We just return our file, but subclasses
- *  search up their hierarchy looking for the topmost file
- */
-- (KTMediaFile *)sourceMediaFile
-{
-    KTMediaFile *result = [self file];
-    return result;
-}
-
-#pragma mark -
-#pragma mark Named Settings
-
-- (KTMediaContainer *)imageWithScalingSettingsNamed:(NSString *)settingsName
-										  forPlugin:(KTAbstractPage *)plugin;
-{
-	// Look for an existing scaled image of the name
-	KTMediaContainer *result = [self existingImageWithName:settingsName pluginID:[plugin uniqueID]];
-	if (!result)
-	{
-		result = [KTNamedSettingsScaledImageContainer imageWithScalingSettingsNamed:settingsName
-																		  forPlugin:plugin
-																		sourceMedia:self];
-	}
-	
-	return result;
-}
-
-- (KTNamedSettingsScaledImageContainer *)existingImageWithName:(NSString *)name pluginID:(NSString *)ID;
-{
-	KTNamedSettingsScaledImageContainer *result = nil;
-	
-	NSSet *existingScaledImages = [self valueForKey:@"scaledImages"];
-	NSEnumerator *scaledImagesEnumerator = [existingScaledImages objectEnumerator];
-	KTScaledImageContainer *aScaledImage;
-	while (aScaledImage = [scaledImagesEnumerator nextObject])
-	{
-		if ([aScaledImage isKindOfClass:[KTNamedSettingsScaledImageContainer class]] &&
-			[[aScaledImage valueForKey:@"pluginID"] isEqualToString:ID] &&
-			[[aScaledImage valueForKey:@"scalingSettingsName"] isEqualToString:name])
-		{
-			result = (KTNamedSettingsScaledImageContainer *)aScaledImage;
-			break;
-		}
-	}
-	
-	return result;
-}
 
 @end

@@ -336,8 +336,6 @@
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
 		277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 277026730E1E645200407CD1 /* KTCommentsTemplate.html */; };
-		2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
-		2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */; };
 		2774DFAB0F16D87C0085A4D8 /* KTImageScalingURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */; };
 		2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */; };
 		2774E39A0F16D9EF0085A4D8 /* SVHTMLTemplateParser+Media.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774E3990F16D9EF0085A4D8 /* SVHTMLTemplateParser+Media.m */; };
@@ -361,8 +359,6 @@
 		2786BEE70CAD24980086F9E0 /* KTMediaManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786BEE50CAD24980086F9E0 /* KTMediaManager.m */; };
 		2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */; };
 		2786F25F0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */; };
-		278B95B30D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */; settings = {ATTRIBUTES = (); }; };
-		278B95B40D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */; };
 		278EC6F30C97136500A212EC /* KTHTMLParserCache.h in Headers */ = {isa = PBXBuildFile; fileRef = 278EC6F10C97136500A212EC /* KTHTMLParserCache.h */; settings = {ATTRIBUTES = (); }; };
 		278EC6F40C97136500A212EC /* KTHTMLParserCache.m in Sources */ = {isa = PBXBuildFile; fileRef = 278EC6F20C97136500A212EC /* KTHTMLParserCache.m */; };
 		278ECEA20D25C4F90012BA6B /* KTPasteboardArchiving.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ECEA10D25C4F90012BA6B /* KTPasteboardArchiving.h */; settings = {ATTRIBUTES = (); }; };
@@ -1780,8 +1776,6 @@
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		277026730E1E645200407CD1 /* KTCommentsTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCommentsTemplate.html; sourceTree = "<group>"; };
-		2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTScaledImageContainer.h; sourceTree = "<group>"; };
-		2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTScaledImageContainer.m; sourceTree = "<group>"; };
 		2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageScalingURLProtocol.h; sourceTree = "<group>"; };
 		2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingURLProtocol.m; sourceTree = "<group>"; };
 		2774E3990F16D9EF0085A4D8 /* SVHTMLTemplateParser+Media.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+Media.m"; sourceTree = "<group>"; };
@@ -1808,8 +1802,6 @@
 		2786BEE50CAD24980086F9E0 /* KTMediaManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaManager.m; sourceTree = "<group>"; };
 		2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTGraphicalTextMediaContainer.h; sourceTree = "<group>"; };
 		2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTGraphicalTextMediaContainer.m; sourceTree = "<group>"; };
-		278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTNamedSettingsScaledImageContainer.h; sourceTree = "<group>"; };
-		278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTNamedSettingsScaledImageContainer.m; sourceTree = "<group>"; };
 		278EC6F10C97136500A212EC /* KTHTMLParserCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLParserCache.h; sourceTree = "<group>"; };
 		278EC6F20C97136500A212EC /* KTHTMLParserCache.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLParserCache.m; sourceTree = "<group>"; };
 		278ECBAE0D247BD60012BA6B /* KTCalloutContainerTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCalloutContainerTemplate.html; sourceTree = "<group>"; };
@@ -2935,10 +2927,6 @@
 				2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */,
 				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
 				275167880CBCE40000C91DFA /* KTMediaContainer.m */,
-				278B95B10D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h */,
-				278B95B20D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m */,
-				2773C6690D10503E008C9CE0 /* KTScaledImageContainer.h */,
-				2773C66A0D10503E008C9CE0 /* KTScaledImageContainer.m */,
 				272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */,
 			);
 			name = "3 - MediaContainers";
@@ -4958,7 +4946,6 @@
 				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
 				272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */,
 				27F0F3A40D0F46AC00B7555A /* KTExternalMediaFile.h in Headers */,
-				2773C66B0D10503E008C9CE0 /* KTScaledImageContainer.h in Headers */,
 				27F856000D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.h in Headers */,
 				27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */,
 				27E2ED940D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h in Headers */,
@@ -4968,7 +4955,6 @@
 				278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */,
 				3C39822C0D2C3EC800432A0C /* SVPagesController.h in Headers */,
 				27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */,
-				278B95B30D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.h in Headers */,
 				27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */,
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
 				27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */,
@@ -6330,7 +6316,6 @@
 				273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */,
 				272C18960D0C131B00734495 /* KTMediaFileUpload.m in Sources */,
 				27F0F3A50D0F46AC00B7555A /* KTExternalMediaFile.m in Sources */,
-				2773C66C0D10503E008C9CE0 /* KTScaledImageContainer.m in Sources */,
 				27F856010D12E6EF00A375ED /* KTExtensiblePluginPropertiesArchivedObject.m in Sources */,
 				27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */,
 				27A50F290D19443800149038 /* DOM+KTWebViewController.m in Sources */,
@@ -6341,7 +6326,6 @@
 				3C39822D0D2C3EC800432A0C /* SVPagesController.m in Sources */,
 				27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */,
 				27CAB4730D36E12400F90A1B /* Media.xcdatamodel in Sources */,
-				278B95B40D382AEF00E5053A /* KTNamedSettingsScaledImageContainer.m in Sources */,
 				272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */,
 				272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */,
 				27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */,
