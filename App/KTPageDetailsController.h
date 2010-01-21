@@ -20,9 +20,14 @@
 	IBOutlet NSTextField			*oBaseURLField;
 	IBOutlet NSTextField			*oPageFileNameField;
 	IBOutlet NSTextField			*oDotSeparator;
+
 	IBOutlet NSTextField			*oSlashIndexDotSeparator;
 	IBOutlet KSPopUpButton			*oExtensionPopup;
 	IBOutlet NSTextField			*oCollectionFileNameField;
+
+	IBOutlet NSTextField			*oExternalURLField;
+	IBOutlet NSTextField			*oOtherFileNameField;
+
 	IBOutlet NSButton				*oFollowButton;
 
 	IBOutlet SVPagesController *oPagesController;
@@ -39,6 +44,7 @@
 	
 	NSTextField	*_activeTextField;
 	MAAttachedWindow *_attachedWindow;
+
 	
 }
 

@@ -16,6 +16,7 @@
 #import "NSWorkspace+Karelia.h"
 #import "SVPagesController.h"
 #import "SVSiteItem.h"
+#import "KSURLFormatter.h"
 
 #import "NTBoxView.h"
 
@@ -91,6 +92,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)awakeFromNib
 {
+	// Hmmm ... but this makes it into an NSURL, but we need to bind to linkURLString I think.
+	//[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
+	
 	// Detail panel needs the right appearance
 	
 	[[self view] setPostsFrameChangedNotifications:YES];
@@ -473,6 +477,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
     return [NSSet setWithObject:@"metaDescriptionCountdown"];
 }
+
 
 #pragma mark -
 #pragma mark KVO
