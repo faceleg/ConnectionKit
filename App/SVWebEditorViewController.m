@@ -636,15 +636,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Place at end of the sidebar
-    KTPage *page = [self page];
-    SVSidebar *sidebar = [page sidebar];
-    SVPagelet *lastPagelet = [[SVPagelet arrayBySortingPagelets:[sidebar pagelets]] lastObject];
-    [pagelet moveAfterPagelet:lastPagelet];
-    
-	[sidebar addPageletsObject:pagelet];
+    [[_selectableObjectsController sidebarPageletsController] addObject:pagelet];
 }
 
-- (void)insertPagelet:(id)sender;
+- (IBAction)insertPagelet:(id)sender;
 {
     // Is the user editing some body text? If so, insert the pagelet as near there as possible. If not, insert into the sidebar
     DOMRange *selection = [[self webEditor] selectedDOMRange];
@@ -666,7 +661,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [pagelet release];
 }
 
-- (void)insertElement:(id)sender;
+- (IBAction)insertElement:(id)sender;
 {
     // Create element
     SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
