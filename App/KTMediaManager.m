@@ -56,6 +56,15 @@ NSString *KTMediaLogDomain = @"Media";
 	
 	_document = document;	// Weak ref
 	_deletedMediaDirectoryName = [[[NSProcessInfo processInfo] globallyUniqueString] copy];
+    
+    
+    // Reserve all the media filenames already in use
+    NSArray *media = [self externalMediaFiles]; // FIXME: fetch the correct set of objects
+    for (KTMediaFile *aMediaFile in media)
+    {
+        NSString *filename = [aMediaFile filename];
+        if (filename) [document replaceObjectForFilename:filename withObject:aMediaFile];
+    }
 	
     return self;
     
