@@ -707,18 +707,19 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSLog(@"%s",__FUNCTION__);
 
 	NSTextField *textField = (NSTextField *) [notification object];
-	NSString *newValue = [textField stringValue]; // Do NOT try to modify this string!
+    // This VERY important: Do NOT ask a cell for its -stringValue unless you actually need it. If the cell has a formatter, calling -stringValue will invoke that, and format the entered text, even though the user probably wasn't ready for it.
+    
 	if (textField == oWindowTitleField)
 	{
-		[self windowTitleDidChangeToValue:newValue];
+		[self windowTitleDidChangeToValue:[textField stringValue]];
 	}
 	else if (textField == oMetaDescriptionField)
 	{
-		[self metaDescriptionDidChangeToValue:newValue];
+		[self metaDescriptionDidChangeToValue:[textField stringValue]];
 	}
 	else if (textField == oPageFileNameField)
 	{
-		[self fileNameDidChangeToValue:newValue];
+		[self fileNameDidChangeToValue:[textField stringValue]];
 	}
 	[self layoutPageURLComponents];
 	[self updateWidthForActiveTextField:textField];
