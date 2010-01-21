@@ -27,7 +27,7 @@
 
 // Accessors
 - (KTMediaManager *)mediaManager;
-@property(nonatomic, copy, readonly) NSString *filename;
+@property(nonatomic, copy, readonly) NSString *filename;    // default is @dynamic
 
 
 // Location

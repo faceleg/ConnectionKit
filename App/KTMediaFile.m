@@ -80,11 +80,7 @@
 	return result;
 }
 
-- (NSString *)filename
-{
-    SUBCLASSMUSTIMPLEMENT;
-    return nil;
-}
+@dynamic filename;  // up to sucblasses to implement
 
 #pragma mark Location
 
