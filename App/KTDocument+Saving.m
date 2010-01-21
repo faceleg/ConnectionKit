@@ -1042,4 +1042,55 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+#pragma mark Filename Reservation
+
+- (BOOL)isFilenameReserved:(NSString *)filename;
+{
+    OBPRECONDITION(filename);
+    
+    
+    // Consult both cache and file system to see if the name is taken
+    filename = [filename lowercaseString];
+    BOOL result = ([_reservedFilenames objectForKey:filename] != nil);
+    if (result)
+    {
+        result = [[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
+    }
+    
+    // The document also reserves some special cases itself
+    if (result)
+    {
+        if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
+            [filename hasPrefix:@"datastore."] || [filename isEqualToString:@"datastore"] ||
+            [filename isEqualToString:@"quicklook"])
+        {
+            result = NO;
+        }
+    }
+    
+    return result;
+}
+
+- (NSString *)reserveFilenameForObject:(id)object
+                     preferredFilename:(NSString *)preferredFilename;
+{
+    NSString *result = preferredFilename;
+    while ([self isFilenameReserved:preferredFilename])
+    {
+        // FIXME: Adjust the filename is some fashion
+    }
+    
+    // Reserve the filename
+    [self replaceObjectForFilename:result withObject:object];
+    
+    return result;
+}
+
+- (void)replaceObjectForFilename:(NSString *)filename withObject:(id)object;
+{
+    // Reserve the filename
+    if (!_reservedFilenames) _reservedFilenames = [[NSMutableDictionary alloc] init];
+    [_reservedFilenames setObject:object forKey:[filename lowercaseString]];
+}
+
 @end

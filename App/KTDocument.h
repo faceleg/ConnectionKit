@@ -65,6 +65,8 @@ extern NSString *KTDocumentWillSaveNotification;
     
     WebView             *_quickLookThumbnailWebView;
     NSLock              *_quickLookThumbnailLock;
+    
+    NSMutableDictionary *_reservedFilenames;
 }
 
 
@@ -146,6 +148,18 @@ extern NSString *KTDocumentWillSaveNotification;
 @interface KTDocument (Saving)
 
 - (BOOL)isSaving;
+
+
+#pragma mark Filename reservation
+
+- (BOOL)isFilenameReserved:(NSString *)filename;
+
+// Generates a unique filename (which is returned), and assigns the object to it
+- (NSString *)reserveFilenameForObject:(id)object
+                     preferredFilename:(NSString *)preferredFilename;
+
+// Only use this if you're damn sure the filename is correct.
+- (void)replaceObjectForFilename:(NSString *)filename withObject:(id)object;
 
 @end
 
