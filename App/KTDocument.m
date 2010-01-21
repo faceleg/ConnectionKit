@@ -503,30 +503,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
-/*	Temporary media is stored in:
- *	
- *		Application Support -> Sandvox -> Temporary Media Files -> Document ID -> a file
- *
- *	This method returns the path to that directory, creating it if necessary.
- */
-- (NSString *)temporaryMediaPath;
-{
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *sandvoxSupportDirectory = [NSApplication applicationSupportPath];
-
-	NSString *mediaFilesDirectory = [sandvoxSupportDirectory stringByAppendingPathComponent:@"Temporary Media Files"];
-	NSString *result = [mediaFilesDirectory stringByAppendingPathComponent:[[self site] siteID]];
-	
-	// Create the directory if needs be
-	if (![fileManager fileExistsAtPath:result])
-	{
-		[fileManager createDirectoryPath:result attributes:nil];
-	}
-		
-	OBPOSTCONDITION(result);
-	return result;
-}
-
 - (NSString *)siteDirectoryPath;
 {
 	NSURL *docURL = [self fileURL];
