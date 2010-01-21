@@ -11,6 +11,9 @@
 #import "KSTabViewController.h"
 
 
+static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewViewControllerURLObservation";
+
+
 @interface SVURLPreviewViewController ()
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 @end
@@ -21,6 +24,11 @@
 
 @implementation SVURLPreviewViewController
 
+- (void)dealloc
+{
+    [self setSiteItem:nil];
+    [super dealloc];
+}
 
 #pragma mark View
 
@@ -51,9 +59,39 @@
 
 - (void)loadSiteItem:(SVSiteItem *)item
 {
-    NSURL *URL = [item URL];
-    [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
+    [self setSiteItem:item];
 }
+
+@synthesize siteItem = _siteItem;
+- (void)setSiteItem:(SVSiteItem *)item
+{
+    // teardown
+    [_siteItem removeObserver:self forKeyPath:@"URL"];
+    
+    item = [item retain];
+    [_siteItem release]; _siteItem = item;
+    
+    // observe new
+    [item addObserver:self
+           forKeyPath:@"URL" 
+              options:NSKeyValueObservingOptionInitial
+              context:sURLPreviewViewControllerURLObservationContext];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sURLPreviewViewControllerURLObservationContext)
+    {
+        NSURL *URL = [object URL];
+        [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
+}
+
+#pragma mark Delegate
 
 @synthesize delegate = _delegate;
 

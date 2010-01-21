@@ -13,10 +13,12 @@
 @interface SVURLPreviewViewController : KSWebViewController <SVSiteItemViewController>
 {
   @private
+    SVSiteItem  *_siteItem;
     id <SVSiteItemViewControllerDelegate>   _delegate;
     BOOL    _readyToAppear;
 }
 
+@property(nonatomic, retain) SVSiteItem *siteItem;
 @property(nonatomic, assign) id <SVSiteItemViewControllerDelegate> delegate;
 
 @end
