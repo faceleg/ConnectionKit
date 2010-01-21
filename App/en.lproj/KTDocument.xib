@@ -1701,14 +1701,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oOtherFileNameField</string>
-						<reference key="source" ref="408607898"/>
-						<reference key="destination" ref="234131018"/>
-					</object>
-					<int key="connectionID">1963</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">oExternalURLField</string>
 						<reference key="source" ref="408607898"/>
 						<reference key="destination" ref="899980468"/>
@@ -1788,6 +1780,30 @@
 						</object>
 					</object>
 					<int key="connectionID">2006</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oWindowTitlePrompt</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="680529185"/>
+					</object>
+					<int key="connectionID">2007</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oMetaDescriptionPrompt</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="360802322"/>
+					</object>
+					<int key="connectionID">2009</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oOtherFileNameField</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="234131018"/>
+					</object>
+					<int key="connectionID">2010</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2541,7 +2557,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2006</int>
+			<int key="maxID">2010</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2795,11 +2811,13 @@
 							<string>oExternalURLField</string>
 							<string>oFollowButton</string>
 							<string>oMetaDescriptionField</string>
+							<string>oMetaDescriptionPrompt</string>
 							<string>oOtherFileNameField</string>
 							<string>oPageFileNameField</string>
 							<string>oPagesController</string>
 							<string>oSlashIndexDotSeparator</string>
 							<string>oWindowTitleField</string>
+							<string>oWindowTitlePrompt</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2816,7 +2834,9 @@
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
+							<string>NSTextField</string>
 							<string>SVPagesController</string>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 						</object>

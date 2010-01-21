@@ -19,6 +19,10 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, k
 	IBOutlet NSTextField			*oWindowTitleField;
 	IBOutlet NSTextField			*oMetaDescriptionField;
 
+	IBOutlet NSTextField			*oWindowTitlePrompt;
+	IBOutlet NSTextField			*oMetaDescriptionPrompt;
+
+	
 	IBOutlet NSTextField			*oBaseURLField;
 	IBOutlet NSTextField			*oPageFileNameField;
 	IBOutlet NSTextField			*oDotSeparator;

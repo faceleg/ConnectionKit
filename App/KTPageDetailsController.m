@@ -539,6 +539,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	
 	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitlePrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionPrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	
 	[oBaseURLField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
@@ -550,104 +553,118 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	[oOtherFileNameField setHidden:YES];	// FOR NOW
 	
-	NSArray *itemsToLayOut = nil;
-	int *theExtraX = nil;
-	int *theMarginsAfter = nil;
-	
-	NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-	int pageExtraX [] = {4,4,6,8,0};
-	int pageMarginsAfter[] = {0,0,0,8,0};
-	
-	NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-	int collectionExtraX [] = {4,4,6,8,0};
-	int collectionMarginsAfter[] = {0,0,0,8,0};
-	
-	NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-	int markerExtraX [] = {200,4,6,8,0};
-	int markerMarginsAfter[] = {0,0,0,8,0};
-	
-	id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
-	
-	if (NSIsControllerMarker(isCollectionMarker))
+	if (kLinkSiteItemType == self.whatKindOfItemsAreSelected)
 	{
-		itemsToLayOut = markerItemsToLayOut;
-		theExtraX = markerExtraX;
-		theMarginsAfter = markerMarginsAfter;
-	}
-	else if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
-	{
-		BOOL isCollection = [isCollectionMarker boolValue];
-		if (isCollection)
-		{
-			itemsToLayOut = collectionItemsToLayOut;
-			theExtraX = collectionExtraX;
-			theMarginsAfter = collectionMarginsAfter;
-		}
-		else
-		{
-			itemsToLayOut = pageItemsToLayOut;
-			theExtraX = pageExtraX;
-			theMarginsAfter = pageMarginsAfter;
-		}
-	}
-	int widths[5] = { -1 }; // filled in below
-	int i = 0;
-	// Collect up the widths that these items *want* to be
-	for (NSView *fld in itemsToLayOut)
-	{
-		// Editable File Name
-		NSRect frame = [fld frame];
+		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+		const int rightMargin = 20;
+		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
 		
-		if ([fld isKindOfClass:[NSTextField class]])
-		{
-			NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
-			int width = ceilf([text size].width);
-			width += theExtraX[i];
-			width += theMarginsAfter[i];
-			frame.size.width = width;
-		}
-		widths[i++] = frame.size.width;
-	}
-	
-	int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
-	const int rightMargin = 20;
-	int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
-	
-	// Calculate a new width for base URL
-	int availableForBaseURL = availableForAll -
-		(theExtraX[0]
-		 + widths[1]
-		 + widths[2]
-		 + widths[3]
-		 + widths[4] );
-	if (widths[0] > availableForBaseURL)
-	{
-		widths[0] = availableForBaseURL;	// truncate base URL
-	}
-	// Now set the new frames
-	i = 0;
-	for (NSView *fld2 in itemsToLayOut)
-	{
-		// Editable File Name
-		NSRect frame = [fld2 frame];
+		NSRect frame = [oExternalURLField frame];
 		frame.origin.x = newLeft;
-		frame.size.width = widths[i];
-		[fld2 setFrame:frame];
-		newLeft = NSMaxX(frame);
-		if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
-		{							// (which we left wide enough so it wouldn't get clipped)
-			newLeft -= 4;
-		}
-		if (fld2 == oCollectionFileNameField)	// special case -- move file name over to left to adjoin previous field
-		{							// (which we left wide enough so it wouldn't get clipped)
-			newLeft -= 5;
-		}
-		if (fld2 == oPageFileNameField)	// to help align the dot with the "index ." when a collection is selected
+		frame.size.width = availableForAll;
+		[oExternalURLField setFrame:frame];
+	}
+	else if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
+	{
+		NSArray *itemsToLayOut = nil;
+		int *theExtraX = nil;
+		int *theMarginsAfter = nil;
+		
+		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
+		int pageExtraX [] = {4,4,6,8,0};
+		int pageMarginsAfter[] = {0,0,0,8,0};
+		
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
+		int collectionExtraX [] = {4,4,6,8,0};
+		int collectionMarginsAfter[] = {0,0,0,8,0};
+		
+		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
+		int markerExtraX [] = {200,4,6,8,0};
+		int markerMarginsAfter[] = {0,0,0,8,0};
+		
+		id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
+		
+		if (NSIsControllerMarker(isCollectionMarker))
 		{
-			newLeft -= 1;
+			itemsToLayOut = markerItemsToLayOut;
+			theExtraX = markerExtraX;
+			theMarginsAfter = markerMarginsAfter;
 		}
-		newLeft += theMarginsAfter[i];
-		i++;
+		else if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
+		{
+			BOOL isCollection = [isCollectionMarker boolValue];
+			if (isCollection)
+			{
+				itemsToLayOut = collectionItemsToLayOut;
+				theExtraX = collectionExtraX;
+				theMarginsAfter = collectionMarginsAfter;
+			}
+			else
+			{
+				itemsToLayOut = pageItemsToLayOut;
+				theExtraX = pageExtraX;
+				theMarginsAfter = pageMarginsAfter;
+			}
+		}
+		int widths[5] = { -1 }; // filled in below
+		int i = 0;
+		// Collect up the widths that these items *want* to be
+		for (NSView *fld in itemsToLayOut)
+		{
+			// Editable File Name
+			NSRect frame = [fld frame];
+			
+			if ([fld isKindOfClass:[NSTextField class]])
+			{
+				NSAttributedString *text = [((NSTextField *)fld) attributedStringValue];
+				int width = ceilf([text size].width);
+				width += theExtraX[i];
+				width += theMarginsAfter[i];
+				frame.size.width = width;
+			}
+			widths[i++] = frame.size.width;
+		}
+		
+		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
+		const int rightMargin = 20;
+		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
+		
+		// Calculate a new width for base URL
+		int availableForBaseURL = availableForAll -
+			(theExtraX[0]
+			 + widths[1]
+			 + widths[2]
+			 + widths[3]
+			 + widths[4] );
+		if (widths[0] > availableForBaseURL)
+		{
+			widths[0] = availableForBaseURL;	// truncate base URL
+		}
+		// Now set the new frames
+		i = 0;
+		for (NSView *fld2 in itemsToLayOut)
+		{
+			// Editable File Name
+			NSRect frame = [fld2 frame];
+			frame.origin.x = newLeft;
+			frame.size.width = widths[i];
+			[fld2 setFrame:frame];
+			newLeft = NSMaxX(frame);
+			if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
+			{							// (which we left wide enough so it wouldn't get clipped)
+				newLeft -= 4;
+			}
+			if (fld2 == oCollectionFileNameField)	// special case -- move file name over to left to adjoin previous field
+			{							// (which we left wide enough so it wouldn't get clipped)
+				newLeft -= 5;
+			}
+			if (fld2 == oPageFileNameField)	// to help align the dot with the "index ." when a collection is selected
+			{
+				newLeft -= 1;
+			}
+			newLeft += theMarginsAfter[i];
+			i++;
+		}
 	}
 }
 
