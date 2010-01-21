@@ -53,7 +53,7 @@
 
 - (KTMediaManager *)mediaManager
 {
-	return myMediaManager;
+	return _mediaManager;
 }
 
 #pragma mark -

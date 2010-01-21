@@ -45,7 +45,7 @@ extern NSString *KTDocumentWillSaveNotification;
     NSManagedObjectContext	*_managedObjectContext;
 	KTSite                  *_site;                   // accessor in category method
 	
-	KTMediaManager				*myMediaManager;
+	KTMediaManager				*_mediaManager;
 		
 	KTHTMLInspectorController	*myHTMLInspectorController;
 	

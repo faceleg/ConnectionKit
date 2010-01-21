@@ -180,7 +180,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     if (self)
     {
 		// Create media manager
-        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
+        _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
         
         
         // Make a new site to store document properties
@@ -263,7 +263,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
     {
         // Create media manager. MUST be done after reading so unique filenames can be registered
-        myMediaManager = [[KTMediaManager alloc] initWithDocument:self];
+        _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
         
         
     }
@@ -290,7 +290,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	[_site release];
     
-    [myMediaManager release];
+    [_mediaManager release];
     [_reservedFilenames release];
 	
 	// release context
