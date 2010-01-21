@@ -208,7 +208,7 @@
 {
 	KTMediaFile *result = nil;
 	
-	// See if there is already a MediaFile with the same data
+	/*/ See if there is already a MediaFile with the same data
 	NSArray *similarMediaFiles = [self inDocumentMediaFilesWithDigest:[KTMediaFile mediaFileDigestFromData:data]];
 	
 	NSEnumerator *mediaFilesEnumerator = [similarMediaFiles objectEnumerator];
@@ -222,30 +222,13 @@
 			break;
 		}
 	}
-	
+	*/
+    
 	// No existing match was found so create a new MediaFile
 	if (!result)
 	{
-		// Write out the file
-		NSString *filename = [self uniqueInDocumentFilename:preferredFilename];
-		NSString *destinationPath = [[self temporaryMediaPath] stringByAppendingPathComponent:filename];
-		
-		KTLog(KTMediaLogDomain, KTLogDebug,
-              ([NSString stringWithFormat:@"Creating temporary in-document MediaFile from data named '%@'", filename]));
-		
-		NSError *error = nil;
-		[data writeToFile:destinationPath options:0 error:&error];
-		if (error) {
-			NSAlert *alert = [NSAlert alertWithError:error];
-			[alert setIcon:[NSApp applicationIconImage]];
-			[alert runModal];	
-		}
-		
-		// Then add the object to the DB
-		result = [KTMediaFile insertNewMediaFileWithPath:destinationPath
-											inManagedObjectContext:[self managedObjectContext]];
-		
-		[result setPreferredFilename:preferredFilename];
+		result = [[KTMediaFile alloc] initWithData:data preferredFilename:preferredFilename insertIntoManagedObjectContext:[self managedObjectContext]];
+        [result autorelease];
 	}
 	
 	
@@ -376,7 +359,10 @@
  */
 - (KTMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 {
-	KTMediaFile *result = nil;
+	KTMediaFile *result = [[KTMediaFile alloc] initWithURL:[NSURL fileURLWithPath:path]
+                            insertIntoManagedObjectContext:[self managedObjectContext]];
+    [result autorelease];
+    return result;
     
     
     KTLog(KTMediaLogDomain, KTLogDebug, @"Creating temporary in-document MediaFile from path:\n%@", path);

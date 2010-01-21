@@ -21,11 +21,23 @@
 
 
 @class KTMediaManager, KTPage, BDAlias, KTMediaFileUpload;
+
+
 @interface KTMediaFile : NSManagedObject
+{
+  @private
+    NSData  *_data;
+}
 
-+ (NSString *)entityName;
+#pragma mark Raw Init
 
-// Accessors
+- (id)initWithData:(NSData *)data preferredFilename:(NSString *)preferredFilename insertIntoManagedObjectContext:(NSManagedObjectContext *)moc;
+
+// Uses an alias to track the file, and also loads it into memory if small enough
+- (id)initWithURL:(NSURL *)URL insertIntoManagedObjectContext:(NSManagedObjectContext *)moc;
+
+
+#pragma mark Media Manager
 - (KTMediaManager *)mediaManager;
 
 
@@ -43,7 +55,7 @@
 //  You should have no need under normal usage to specifically use -alias.
 
 - (NSURL *)fileURL;
-//- (NSData *)data;
+- (NSData *)data;
 - (NSString *)currentPath;	// just like -fileURL, but will never return nil. Falls back to a placeholder image instead
 
 
