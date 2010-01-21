@@ -44,6 +44,15 @@
 
 @synthesize sidebar = _sidebar;
 
+- (void)addObject:(id)pagelet
+{
+    // Place at end of the sidebar
+    SVPagelet *lastPagelet = [[self arrangedObjects] lastObject];
+    [pagelet moveAfterPagelet:lastPagelet];
+    
+	[super addObject:pagelet];
+}
+
 - (void)removePagelet:(SVPagelet *)pagelet fromPageAndDescendants:(KTAbstractPage *)page;
 {
     // No point going any further unless the page actually contains the pagelet! This can save recursing enourmous chunks of the site outline
