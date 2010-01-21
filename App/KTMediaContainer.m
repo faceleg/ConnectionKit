@@ -13,7 +13,6 @@
 #import "KTGraphicalTextMediaContainer.h"
 
 #import "KTMediaManager.h"
-#import "KTMediaPersistentStoreCoordinator.h"
 
 #import "KTImageScalingSettings.h"
 #import "BDAlias.h"
@@ -188,7 +187,7 @@
 
 - (KTMediaManager *)mediaManager
 {
-	KTMediaManager *result = [(KTMediaPersistentStoreCoordinator *)[[self managedObjectContext] persistentStoreCoordinator] mediaManager];
+	KTMediaManager *result = [[[self managedObjectContext] persistentStoreCoordinator] mediaManager];
 	OBPOSTCONDITION(result);
 	return result;
 }

@@ -13,7 +13,6 @@
 #import "KTDocument.h"
 #import "KTExternalMediaFile.h"
 #import "KTMediaContainer.h"
-#import "KTMediaPersistentStoreCoordinator.h"
 #import "KTSite.h"
 
 #import "NSApplication+Karelia.h"
@@ -60,17 +59,7 @@ NSString *KTMediaLogDomain = @"Media";
 	
     return self;
     
-	// Set up our MOC
-	myMOC = [[NSManagedObjectContext alloc] init];
-    [myMOC setMergePolicy:NSOverwriteMergePolicy];
 	
-    KTMediaPersistentStoreCoordinator *mediaPSC = [[KTMediaPersistentStoreCoordinator alloc] initWithManagedObjectModel:
-												   [[self class] managedObjectModel]];
-	
-	[mediaPSC setMediaManager:self];
-	[myMOC setPersistentStoreCoordinator:mediaPSC];
-	[mediaPSC release];
-    
     
     // We don't want to make undo/redo available to the user, but do want it to record the doc changed status
     [[NSNotificationCenter defaultCenter] addObserver:self

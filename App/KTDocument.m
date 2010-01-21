@@ -472,6 +472,15 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
++ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
+{
+    OBPRECONDITION(datastoreURL);
+    OBPRECONDITION([[datastoreURL lastPathComponent] isEqualToString:@"datastore"]);
+    
+    NSURL *result = [datastoreURL URLByDeletingLastPathComponent];
+    return result;
+}
+
 /*	Returns /path/to/document/Site
  */
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL
@@ -491,29 +500,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
-	return result;
-}
-
-/*! Returns /path/to/document/Site/_Media
- */
-+ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL
-{
-	OBASSERT(inURL);
-	
-	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-- (NSURL *)mediaDirectoryURL;
-{
-	/// This could be calculated from [self fileURL], but that doesn't work when making the very first save
-	NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
-	NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-	NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
-	
-    NSURL *result = [[self class] mediaURLForDocumentURL:docURL];
 	return result;
 }
 

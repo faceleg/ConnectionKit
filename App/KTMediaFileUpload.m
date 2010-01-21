@@ -11,7 +11,6 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTPage.h"
-#import "KTMediaPersistentStoreCoordinator.h"
 #import "KTMediaFile.h"
 
 #import "NSError+Karelia.h"
@@ -27,9 +26,9 @@
  */
 - (NSURL *)URL;
 {
-	KTMediaPersistentStoreCoordinator *PSC = (id)[[self managedObjectContext] persistentStoreCoordinator];
+	NSPersistentStoreCoordinator *PSC = nil;//(id)[[self managedObjectContext] persistentStoreCoordinator];
 	OBASSERT(PSC);
-	OBASSERT([PSC isKindOfClass:[KTMediaPersistentStoreCoordinator class]]);
+	//OBASSERT([PSC isKindOfClass:[KTMediaPersistentStoreCoordinator class]]);
 	
 	KTDocument *document = [[PSC mediaManager] document];
 	KTHostProperties *hostProperties = [[document site] hostProperties];

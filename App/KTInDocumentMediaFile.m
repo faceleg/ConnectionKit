@@ -11,7 +11,6 @@
 #import "KTDocument.h"
 #import "KTMediaManager.h"
 #import "KTMediaManager+Internal.h"
-#import "KTMediaPersistentStoreCoordinator.h"
 
 #import "NSData+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
@@ -25,6 +24,8 @@
 
 
 @interface KTInDocumentMediaFile ()
+- (NSURL *)insertedFileURL;
+- (NSURL *)savedFileURL;
 - (void)moveIntoDocument;
 @end
 
@@ -67,7 +68,7 @@
 	if ([self isInserted])
 	{
 		// During Save As operations, the files on disk are handled for us, so don't do this
-        if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
+        //if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
         {
             [self moveIntoDocument];
         }
@@ -133,7 +134,7 @@
 	
 	
 	// Make sure the destination is available
-	NSString *destinationPath = [[[doc mediaDirectoryURL] path] stringByAppendingPathComponent:filename];
+	NSString *destinationPath = [[self savedFileURL] path];
 	if ([fileManager fileExistsAtPath:destinationPath])
 	{
 		KTLog(KTMediaLogDomain,
@@ -161,20 +162,31 @@
 #pragma mark Accessors
 
 - (NSURL *)fileURL;
-{
-	NSURL *result = nil;
-		
+{		
 	// Figure out proper values for these two
 	if ([self isInserted])
 	{
-		result = [NSURL fileURLWithPath:[[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]]];
+		return [self insertedFileURL];
 	}
 	else
 	{
-		KTDocument *doc = [[self mediaManager] document];
-        result = [[doc mediaDirectoryURL] URLByAppendingPathComponent:[self filename] isDirectory:NO];
+		return [self savedFileURL];
 	}
-	
+}
+
+- (NSURL *)insertedFileURL;
+{
+    NSURL *result = [NSURL fileURLWithPath:[[[self mediaManager] temporaryMediaPath] stringByAppendingPathComponent:[self filename]]];
+    return result;
+}
+
+- (NSURL *)savedFileURL;
+{
+    NSURL *storeURL = [[[self objectID] persistentStore] URL];
+    NSURL *docURL = [KTDocument documentURLForDatastoreURL:storeURL];
+    
+    NSURL *result = [docURL URLByAppendingPathComponent:[self filename]
+                                            isDirectory:NO];
     return result;
 }
 

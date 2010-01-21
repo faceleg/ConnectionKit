@@ -81,13 +81,14 @@ extern NSString *KTDocumentWillSaveNotification;
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
 
-// Document URLs etc.
+#pragma mark Document URLs etc.
+
 + (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
++ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
+
 + (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
-+ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
 
-- (NSURL *)mediaDirectoryURL;
 - (NSString *)temporaryMediaPath;
 - (NSString *)siteDirectoryPath;
 

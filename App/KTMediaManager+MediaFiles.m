@@ -346,6 +346,8 @@
  */
 - (BOOL)prepareTemporaryMediaDirectoryForFileNamed:(NSString *)filename
 {
+    OBPRECONDITION(filename);
+    
 	// See if there's already a file there
 	NSString *proposedPath = [[self temporaryMediaPath] stringByAppendingPathComponent:filename];
 	BOOL result = !([[NSFileManager defaultManager] fileExistsAtPath:proposedPath]);

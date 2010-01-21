@@ -13,7 +13,6 @@
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
 #import "KTMediaManager.h"
-#import "KTMediaPersistentStoreCoordinator.h"
 #import "KTMediaFileUpload.h"
 
 #import "NSManagedObject+KTExtensions.h"
