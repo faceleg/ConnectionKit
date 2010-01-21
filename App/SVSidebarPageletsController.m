@@ -111,9 +111,10 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
     if ([[[page sidebar] pagelets] containsObject:pagelet])
     {
         // Remove from descendants first
-        for (KTPage *aPage in [page childItems])
+        for (SVSiteItem *aSiteItem in [page childItems])
         {
-            [self _removePagelet:pagelet fromPageAndDescendants:aPage];
+            KTPage *pageRep = [aSiteItem pageRepresentation];
+            if (pageRep) [self _removePagelet:pagelet fromPageAndDescendants:pageRep];
         }
         for (KTAbstractPage *anArchivePage in [page archivePages])
         {
