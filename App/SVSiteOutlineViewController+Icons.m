@@ -115,16 +115,21 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	if (!result)
 	{
 		KTMediaContainer *faviconSource = [[[self rootPage] master] favicon];
-		NSString *faviconSourcePath = [[faviconSource file] currentPath];
-		
-		// If there is no favicon chosen, default to 32favicon
-		if (!faviconSourcePath)
-		{
-			faviconSourcePath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-		}
+		NSURL *faviconURL = [[faviconSource file] fileURL];
 		
 		// Create the thumbnail
-		result = [[NSImage alloc] initWithContentsOfFile:faviconSourcePath ofMaximumSize:[self maximumIconSize]];
+		result = [[NSImage alloc] initWithContentsOfURL:faviconURL
+                                          ofMaximumSize:[self maximumIconSize]];
+		
+		// If there is no favicon chosen, default to 32favicon
+		if (!result)
+		{
+			NSString *path = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
+            result = [[NSImage alloc] initWithContentsOfFile:path
+                                               ofMaximumSize:[self maximumIconSize]];
+		}
+        
+        // Store
 		[self setCachedFavicon:result];
 		[result release];
 	}
