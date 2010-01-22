@@ -275,63 +275,6 @@
 
 #pragma mark File Management
 
-/*	Called when a MediaFile is saved for the first time. i.e. it becomes peristent and the underlying file needs to move into the doc.
- */
-- (void)moveIntoDocument
-{
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	KTDocument *doc = [[self mediaManager] document];
-	if (!doc) return;	// Safety check for handling store migration
-	
-	
-	
-    // Write our data out to the file
-    if ([self areContentsCached])
-    {
-        [[NSFileManager defaultManager] createFileAtPath:[[self savedFileURL] path]
-                                                contents:[self fileContents]
-                                              attributes:[self fileAttributes]];
-        
-        return;
-    }
-    
-    
-    
-    
-    // Simple debug log of what's about to go down		(see, I'm streetwise. No, really!)
-	NSString *filename = [self filename];
-	KTLog(KTMediaLogDomain,
-		  KTLogDebug,
-		  ([NSString stringWithFormat:@"Moving temporary MediaFile %@ into the document", filename]));
-	
-	
-	NSString *sourcePath = [[self fileURLFromAlias] path];
-	
-    // Make sure the destination is available
-	NSString *destinationPath = [[self savedFileURL] path];
-	if ([fileManager fileExistsAtPath:destinationPath])
-	{
-		KTLog(KTMediaLogDomain,
-			  KTLogWarn,
-			  ([NSString stringWithFormat:@"%@\nalready exists; overwriting it.", [destinationPath stringByAbbreviatingWithTildeInPath]]));
-		
-		[fileManager removeFileAtPath:destinationPath handler:self];
-	}
-	
-    
-	// Make the move
-	if (![fileManager movePath:sourcePath toPath:destinationPath handler:self])
-	{
-		KTLog(KTMediaLogDomain,
-			  KTLogError,
-			  @"-[%@ %@] failed moving from %@ to %@",
-			  NSStringFromClass([self class]),
-			  NSStringFromSelector(_cmd),
-			  [sourcePath stringByAbbreviatingWithTildeInPath],
-			  [destinationPath stringByAbbreviatingWithTildeInPath]);
-	}
-}
-
 - (void)willSave
 {
     [super willSave];
@@ -361,56 +304,6 @@
         }
     }
     return result;
-}
-
-- (void)didSave
-{
-    [super didSave];
-    
-    
-	// Both -insertedObjects and KTLog seems to be pretty memory intensive during data migration, so give them a local pool
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-	
-	// If we have just been saved then move our underlying file into the document
-	if ([self isInserted])
-	{
-		// During Save As operations, the files on disk are handled for us, so don't do this
-        //if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
-        {
-            //[self moveIntoDocument];
-        }
-	}
-	
-	
-	// If we have been deleted from the context, move our underlying file back out to the temp dir
-	if ([self isDeleted])
-	{
-		NSString *filename = [self committedValueForKey:@"filename"];
-		NSString *sourcePath = [[[self mediaManager] mediaPath] stringByAppendingPathComponent:filename];
-		NSString *destinationPath = [[self deletedFileURL] path];
-		
-		KTLog(KTMediaLogDomain, KTLogDebug,
-			  ([NSString stringWithFormat:@"The in-document MediaFile %@ has been deleted. Moving it to the temp media directory", filename]));
-		
-		if ([[NSFileManager defaultManager] fileExistsAtPath:sourcePath])
-		{
-			[[self mediaManager] prepareTemporaryMediaDirectoryForFileNamed:filename];
-			if (![[NSFileManager defaultManager] movePath:sourcePath toPath:destinationPath handler:self]) {
-				[NSException raise:NSInternalInconsistencyException
-							format:@"Unable to move deleted MediaFile %@ to the temp media directory", filename];
-			}
-		}
-		else
-		{
-			NSString *message = [NSString stringWithFormat:@"No file could be found at\n%@\nDeleting the MediaFile object it anyway",
-                                 [sourcePath stringByAbbreviatingWithTildeInPath]];
-			KTLog(KTMediaLogDomain, KTLogWarn, message);
-		}
-	}
-	
-	
-	[pool release];
 }
 
 #pragma mark Digest
