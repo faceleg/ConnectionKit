@@ -411,6 +411,25 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // The correct undo manager is stored at initialisation time and can't be changed
 }
 
+#pragma mark Managing Document Windows
+
+- (NSString *)displayName
+{
+    NSString *result = [super displayName];
+    
+    // For a new document, we want to guess from the site title
+    if (![self fileURL])
+    {
+        NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] text];
+        if ([siteTitle length] > 0)
+        {
+            result = siteTitle;
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark -
 #pragma mark Document Content Management
 
