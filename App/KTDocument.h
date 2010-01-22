@@ -66,7 +66,7 @@ extern NSString *KTDocumentWillSaveNotification;
     WebView             *_quickLookThumbnailWebView;
     NSLock              *_quickLookThumbnailLock;
     
-    NSMutableDictionary *_media;
+    NSMutableDictionary *_mediaWrappers;
     NSMutableSet        *_reservedFilenames;
 }
 
@@ -92,10 +92,17 @@ extern NSString *KTDocumentWillSaveNotification;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
 
 
+#pragma mark Media Wrappers
+- (BOOL)isKeyReserved:(NSString *)filename;
+- (NSString *)keyForMediaWrapper:(SVMediaWrapper *)media;
+- (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
+
+
+#pragma mark Actions
 - (IBAction)setupHost:(id)sender;
 
 
-// Editing
+#pragma mark Editing
 
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 - (BOOL)mayAddScreenshotsToAttachments;
@@ -147,12 +154,6 @@ extern NSString *KTDocumentWillSaveNotification;
 
 - (BOOL)isSaving;
 
-
-#pragma mark Filename reservation
-
-- (BOOL)isMediaFilenameReserved:(NSString *)filename;
-- (NSString *)keyForMedia:(SVMediaWrapper *)media;
-- (void)addMedia:(SVMediaWrapper *)media;  // like -addFileWrapper:
 
 @end
 

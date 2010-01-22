@@ -335,13 +335,13 @@
     // Reserve the filename we'll be using
     if (![self filename] && [[self shouldCopyFileIntoDocument] boolValue])
     {
-        SVMediaWrapper *media = [[SVMediaWrapper alloc] initWithMediaFile:self];
-        [media setPreferredFilename:[self preferredFilename]];
+        SVMediaWrapper *wrapper = [[SVMediaWrapper alloc] initWithMediaFile:self];
+        [wrapper setPreferredFilename:[self preferredFilename]];
         
         KTDocument *document = [[self mediaManager] document];
-        [document addMedia:media];
-        NSString *filename = [document keyForMedia:media];
-        [media release];
+        [document addMediaWrapper:wrapper];
+        NSString *filename = [document keyForMediaWrapper:wrapper];
+        [wrapper release];
         
         [self setFilename:filename];    // don't worry, Core Data is smart enough not to register a dedicated undo action for this.
     }

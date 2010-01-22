@@ -8,6 +8,8 @@
 
 #import "SVMediaWrapper.h"
 
+#import "KTMediaFile.h"
+
 #import "NSURL+Karelia.h"
 
 
@@ -44,8 +46,8 @@
 - (id)initWithMediaFile:(KTMediaFile *)mediaFile;
 {
     OBPRECONDITION(mediaFile);
-    OBPRECONDITION(![mediaFile isInserted]);
-    OBPRECONDITION([[mediaFile objectID] persistentStore]);
+    //OBPRECONDITION(![mediaFile isInserted]);                              // FIXME: relaxed these during development
+    //OBPRECONDITION([[mediaFile objectID] persistentStore]);
     
     [self init];
     
@@ -87,7 +89,35 @@
 
 @synthesize preferredFilename = _preferredFilename;
 
+- (NSData *)fileContents;
+{
+    NSData *result = [[self mediaFile] contents];
+    return result;
+}
+
 @synthesize shouldCopyIntoDocument = _shouldCopyIntoDocument;
 @synthesize hasBeenCopiedIntoDocument = _committed;
+
+#pragma mark Writing Files
+
+- (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
+{
+    
+    // Try writing out data from memory. It'll fail if there was none
+    NSData *data = [self fileContents];
+    BOOL result = [data writeToURL:URL options:0 error:outError];
+    //if (result) [[NSFileManager defaultManager] setAttributes:[self fileAttributes] ofItemAtPath:<#(NSString *)path#> error:<#(NSError **)error#>];
+    
+    // Fallback to copying the file
+    if (!result)
+    {
+        result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
+                                                         toPath:[URL path]
+                                                          error:outError];
+    }
+    
+    
+    return result;
+}
 
 @end

@@ -43,11 +43,6 @@
 
 // For existing media inside the document package (or that has been deleted)
 - (id)initWithMediaFile:(KTMediaFile *)mediaFile;   // only supports committed media
-- (id)initWithAlias:(BDAlias *)alias;
-
-
-
-
 
 
 #pragma mark Properties
@@ -59,8 +54,14 @@
 
 - (NSURL *)fileURL; // wherever the file was last seen. Like -[NSFileWrapper filename] but beter
 @property(nonatomic, copy) NSString *preferredFilename;
+- (NSData *)fileContents;
 
 @property(nonatomic, readonly) BOOL shouldCopyIntoDocument;
 @property(nonatomic, readonly) BOOL hasBeenCopiedIntoDocument;
 
+
+#pragma mark Writing Files
+- (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
+   
+   
 @end

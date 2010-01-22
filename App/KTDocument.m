@@ -430,7 +430,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Media
 
-- (BOOL)isMediaFilenameReserved:(NSString *)filename;
+- (BOOL)isKeyReserved:(NSString *)filename;
 {
     OBPRECONDITION(filename);
     
@@ -458,9 +458,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-- (NSString *)keyForMedia:(SVMediaWrapper *)media;
+- (NSString *)keyForMediaWrapper:(SVMediaWrapper *)media;
 {
-    NSString *result = [[_media allKeysForObject:media] lastObject];
+    NSString *result = [[_mediaWrappers allKeysForObject:media] lastObject];
     return result;
 }
 
@@ -468,19 +468,19 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
     // Reserve the filename
     if (!_reservedFilenames) _reservedFilenames = [[NSMutableSet alloc] init];
-    if (!_media) _media = [[NSMutableDictionary alloc] init];
+    if (!_mediaWrappers) _mediaWrappers = [[NSMutableDictionary alloc] init];
     
     [_reservedFilenames addObject:[filename lowercaseString]];
-    [_media setObject:media forKey:filename];
+    [_mediaWrappers setObject:media forKey:filename];
 }
 
-- (void)addMedia:(SVMediaWrapper *)media;  // like -addFileWrapper:
+- (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
 {
     NSString *preferredFilename = [media preferredFilename];
     NSString *filename = preferredFilename;
     
     NSUInteger count = 1;
-    while ([self isMediaFilenameReserved:filename])
+    while ([self isKeyReserved:filename])
     {
         // Adjust the filename ready to try again
         count++;

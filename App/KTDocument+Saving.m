@@ -355,6 +355,15 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                  originalContentsURL:inOriginalContentsURL
                                error:outError];
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+        
+        
+        // Move media in & out of the package as required
+        for (NSString *aKey in _mediaWrappers)
+        {
+            SVMediaWrapper *mediaWrapper = [_mediaWrappers objectForKey:aKey];
+            
+        }
+        
 		
         
         // Write out Quick Look preview
