@@ -88,10 +88,7 @@ extern NSString *KTDocumentWillSaveNotification;
 + (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
 + (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
 
-+ (NSURL *)siteURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
-
-- (NSString *)siteDirectoryPath;
 
 
 - (IBAction)setupHost:(id)sender;

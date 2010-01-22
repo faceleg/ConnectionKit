@@ -421,10 +421,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	{
 		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
 		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
-		
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument siteURLForDocumentURL:inURL] path] attributes:nil];
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTMediaManager mediaURLForDocumentURL:inURL] path] attributes:nil];
-		[[NSFileManager defaultManager] createDirectoryAtPath:[[KTDocument quickLookURLForDocumentURL:inURL] path] attributes:nil];
 	}
 	
 	

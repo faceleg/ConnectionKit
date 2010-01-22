@@ -36,13 +36,11 @@ extern NSString *KTMediaLogDomain;
 
 // Basic Accesors
 + (NSString *)defaultMediaStoreType;
-+ (NSURL *)mediaURLForDocumentURL:(NSURL *)inURL;
 + (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)inURL;
 + (NSManagedObjectModel *)managedObjectModel;
 
 - (KTDocument *)document;
 - (NSManagedObjectContext *)managedObjectContext;
-- (NSString *)mediaPath;
 - (NSURL *)deletedMediaDirectory;
 
 @end

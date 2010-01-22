@@ -495,18 +495,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-/*	Returns /path/to/document/Site
- */
-+ (NSURL *)siteURLForDocumentURL:(NSURL *)inURL
-{
-	OBPRECONDITION(inURL);
-	
-	NSURL *result = [inURL URLByAppendingPathComponent:@"Site" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL
 {
 	OBASSERT(inURL);
@@ -514,21 +502,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
-	return result;
-}
-
-- (NSString *)siteDirectoryPath;
-{
-	NSURL *docURL = [self fileURL];
-	
-	if (!docURL)
-	{
-		NSPersistentStoreCoordinator *storeCordinator = [[self managedObjectContext] persistentStoreCoordinator];
-		NSURL *storeURL = [storeCordinator URLForPersistentStore:[[storeCordinator persistentStores] firstObjectKS]];
-		docURL = [storeURL URLByDeletingLastPathComponent];
-	}
-	
-	NSString *result = [[KTDocument siteURLForDocumentURL:docURL] path];
 	return result;
 }
 
