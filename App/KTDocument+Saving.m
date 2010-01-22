@@ -16,6 +16,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
+#import "SVMedia.h"
 #import "KTMediaManager+Internal.h"
 #import "SVMutableStringHTMLContext.h"
 #import "SVTitleBox.h"
@@ -1049,7 +1050,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 #pragma mark Filename Reservation
 
-- (BOOL)isFilenameReserved:(NSString *)filename;
+- (BOOL)isMediaFilenameReserved:(NSString *)filename;
 {
     OBPRECONDITION(filename);
     
@@ -1077,13 +1078,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (NSString *)reserveFilenameForObject:(id)object
-                     preferredFilename:(NSString *)preferredFilename;
+- (NSString *)keyForMedia:(SVMedia *)media;
 {
-    NSString *result = preferredFilename;
+    NSString *result = [[_reservedFilenames allKeysForObject:media] lastObject];
+    return result;
+}
+
+- (void)addMedia:(SVMedia *)media;  // like -addFileWrapper:
+{
+    NSString *preferredFilename = [media preferredFilename];
+    NSString *filename = preferredFilename;
     
     NSUInteger count = 1;
-    while ([self isFilenameReserved:result])
+    while ([self isMediaFilenameReserved:filename])
     {
         // Adjust the filename ready to try again
         count++;
@@ -1092,20 +1099,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                [preferredFilename stringByDeletingPathExtension],
                                count];
         
-		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
+		filename = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
     }
     
     // Reserve the filename
-    [self replaceObjectForFilename:result withObject:object];
-    
-    return result;
+    [self replaceMediaForFilename:filename withMedia:media];
 }
 
-- (void)replaceObjectForFilename:(NSString *)filename withObject:(id)object;
+- (void)replaceMediaForFilename:(NSString *)filename withMedia:(SVMedia *)media;
 {
     // Reserve the filename
     if (!_reservedFilenames) _reservedFilenames = [[NSMutableDictionary alloc] init];
-    [_reservedFilenames setObject:object forKey:[filename lowercaseString]];
+    [_reservedFilenames setObject:media forKey:[filename lowercaseString]];
 }
 
 @end

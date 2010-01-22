@@ -63,7 +63,7 @@ NSString *KTMediaLogDomain = @"Media";
     for (KTMediaFile *aMediaFile in media)
     {
         NSString *filename = [aMediaFile filename];
-        if (filename) [document replaceObjectForFilename:filename withObject:aMediaFile];
+        if (filename) [document replaceMediaForFilename:filename withMedia:aMediaFile];
     }
 	
     return self;

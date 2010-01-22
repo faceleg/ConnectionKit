@@ -28,7 +28,7 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTSite, KTMediaManager;
+@class KTSite, KTMediaManager, SVMedia;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTElementPlugin;
 
@@ -149,14 +149,12 @@ extern NSString *KTDocumentWillSaveNotification;
 
 #pragma mark Filename reservation
 
-- (BOOL)isFilenameReserved:(NSString *)filename;
-
-// Generates a unique filename (which is returned), and assigns the object to it
-- (NSString *)reserveFilenameForObject:(id)object
-                     preferredFilename:(NSString *)preferredFilename;
+- (BOOL)isMediaFilenameReserved:(NSString *)filename;
+- (NSString *)keyForMedia:(SVMedia *)media;
+- (void)addMedia:(SVMedia *)media;  // like -addFileWrapper:
 
 // Only use this if you're damn sure the filename is correct.
-- (void)replaceObjectForFilename:(NSString *)filename withObject:(id)object;
+- (void)replaceMediaForFilename:(NSString *)filename withMedia:(SVMedia *)media;
 
 @end
 
