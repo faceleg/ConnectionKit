@@ -117,7 +117,7 @@
 	unsigned count = 1;
 	
 	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	[fetchRequest setEntity:[[[self class] managedObjectModel] entityWithName:@"InDocumentMediaFile"]];
+	[fetchRequest setEntity:[[KTDocument managedObjectModel] entityWithName:@"InDocumentMediaFile"]];
 	[fetchRequest setFetchLimit:1];
 	[fetchRequest setPredicate:[NSPredicate predicateWithFormat:@"filename LIKE[c] %@", result]];
 	
@@ -147,7 +147,7 @@
     
 	// Fetch first possible match
     NSFetchRequest *fetchRequest =
-    [[[self class] managedObjectModel] fetchRequestFromTemplateWithName:@"MediaFileWithIdentifier"
+    [[KTDocument managedObjectModel] fetchRequestFromTemplateWithName:@"MediaFileWithIdentifier"
                                                    substitutionVariable:identifier forKey:@"IDENTIFIER"];
     [fetchRequest setFetchLimit:1];
     
@@ -274,8 +274,10 @@
 
 - (NSArray *)inDocumentMediaFilesWithDigest:(NSString *)digest
 {
-	// Search the DB for matching digests
-	NSFetchRequest *fetchRequest = [[[self class] managedObjectModel]
+	return nil;
+    
+    // Search the DB for matching digests
+	NSFetchRequest *fetchRequest = [[KTDocument managedObjectModel]
 									fetchRequestFromTemplateWithName:@"MediaFilesWithDigest"
 									substitutionVariable:digest forKey:@"DIGEST"];
 	
