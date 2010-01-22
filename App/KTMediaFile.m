@@ -336,14 +336,9 @@
     if (![self filename] && [[self shouldCopyFileIntoDocument] boolValue])
     {
         SVMediaWrapper *wrapper = [[SVMediaWrapper alloc] initWithMediaFile:self];
-        [wrapper setPreferredFilename:[self preferredFilename]];
-        
         KTDocument *document = [[self mediaManager] document];
         [document addMediaWrapper:wrapper];
-        NSString *filename = [document keyForMediaWrapper:wrapper];
         [wrapper release];
-        
-        [self setFilename:filename];    // don't worry, Core Data is smart enough not to register a dedicated undo action for this.
     }
 }
 
@@ -379,7 +374,7 @@
 		// During Save As operations, the files on disk are handled for us, so don't do this
         //if ([[[self managedObjectContext] persistentStoreCoordinator] isKindOfClass:[KTMediaPersistentStoreCoordinator class]])
         {
-            [self moveIntoDocument];
+            //[self moveIntoDocument];
         }
 	}
 	

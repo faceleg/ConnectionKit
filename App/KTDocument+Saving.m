@@ -16,6 +16,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
+#import "SVMediaWrapper.h"
 #import "KTMediaManager+Internal.h"
 #import "SVMutableStringHTMLContext.h"
 #import "SVTitleBox.h"
@@ -82,6 +83,11 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
            forSaveOperation:(NSSaveOperationType)inSaveOperation
         originalContentsURL:(NSURL *)inOriginalContentsURL
                       error:(NSError **)outError;
+
+    // as well as writing new media, moves old out to the deleted media directory
+- (BOOL)writeMediaToURL:(NSURL *)docURL
+       forSaveOperation:(NSSaveOperationType)saveOp
+                  error:(NSError **)outError;
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
@@ -357,14 +363,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
         
         
-        // Move media in & out of the package as required
-        for (NSString *aKey in _mediaWrappers)
-        {
-            SVMediaWrapper *mediaWrapper = [_mediaWrappers objectForKey:aKey];
-            
-        }
+        [self writeMediaToURL:inURL forSaveOperation:saveOperation error:outError];
         
-		
         
         // Write out Quick Look preview
         if (result && quickLookPreviewHTML)
@@ -547,6 +547,30 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     
     return result;
+}
+
+- (BOOL)writeMediaToURL:(NSURL *)docURL
+       forSaveOperation:(NSSaveOperationType)saveOp
+                  error:(NSError **)outError;
+{
+    // Move media in & out of the package as required
+    for (NSString *aKey in _mediaWrappers)
+    {
+        SVMediaWrapper *mediaWrapper = [_mediaWrappers objectForKey:aKey];
+        if (![mediaWrapper hasBeenCopiedIntoDocument] && [mediaWrapper shouldCopyIntoDocument])
+        {
+            NSURL *mediaURL = [docURL URLByAppendingPathComponent:aKey isDirectory:NO];
+            
+            [mediaWrapper writeToURL:mediaURL
+                       updateFileURL:YES
+                               error:NULL];
+        }
+    }
+    
+    
+    
+    
+    return YES;
 }
 
 /*	Called when performing a "Save As" operation on an existing document

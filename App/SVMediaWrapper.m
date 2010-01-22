@@ -54,7 +54,8 @@
     _fileURL = [[mediaFile fileURL] copy];
     _mediaFile = [mediaFile retain];
     _preferredFilename = [[mediaFile preferredFilename] copy];
-    _committed = [[mediaFile shouldCopyFileIntoDocument] boolValue];
+    _shouldCopyIntoDocument = [[mediaFile shouldCopyFileIntoDocument] boolValue];
+    _committed = ![mediaFile isInserted];
     
     return self;
 }
