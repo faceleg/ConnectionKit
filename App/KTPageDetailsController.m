@@ -102,8 +102,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 											 selector:@selector(backgroundFrameChanged:)
 												 name:NSViewFrameDidChangeNotification
 											   object:[self view]];
-	[self layoutPageURLComponents];
-	
+
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
+	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+
 	// Observe changes to the meta description and fake an initial observation
 	[oPagesController addObserver:self
 					   forKeyPath:@"selection.metaDescription"
@@ -348,7 +350,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			}
 		}
 		self.whatKindOfItemsAreSelected = type;
-		[self layoutPageURLComponents];
+		
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
+		[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
 	}
 }
 
@@ -485,7 +489,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	[self layoutPageURLComponents];	// I think do this for any change. Maybe redundant?
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
+	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+
 	if (context == sMetaDescriptionObservationContext)
 	{
 		[self metaDescriptionDidChangeToValue:[object valueForKeyPath:keyPath]];
@@ -501,7 +507,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else if (context == sBaseExampleURLStringObservationContext)
 	{
-		[self layoutPageURLComponents];	// base URL changed, so re-layout
+		; // base URL changed, so re-layout
 	}
 	else if (context == sTitleObservationContext)
 	{
@@ -700,7 +706,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
-	[self layoutPageURLComponents];
+
 	if (self.activeTextField)
 	{
 		[self updateWidthForActiveTextField:self.activeTextField];
@@ -731,7 +737,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		[self fileNameDidChangeToValue:[textField stringValue]];
 	}
-	[self layoutPageURLComponents];
+
+	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
+	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+
 	[self updateWidthForActiveTextField:textField];
 }
 
