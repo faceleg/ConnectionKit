@@ -44,6 +44,11 @@
 	return self;
 }
 
+- (BOOL) canPreview
+{
+	return (nil != [self URL]);		// Maybe be even smarter about having a real URL?
+}
+
 #pragma mark UI
 
 - (Class <SVWebContentViewController>)viewControllerClass;

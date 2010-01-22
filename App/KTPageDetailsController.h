@@ -36,7 +36,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, k
 
 	IBOutlet NSButton				*oFollowButton;
 
-	IBOutlet SVPagesController *oPagesController;
+	IBOutlet SVPagesController		*oPagesController;
 	
 	IBOutlet NSView					*oAttachedWindowView;
 	IBOutlet NSTextField			*oAttachedWindowTextField;
@@ -56,6 +56,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, k
 }
 
 - (IBAction) pageDetailsHelp:(id)sender;
+- (IBAction) preview:(id)sender;
 
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;

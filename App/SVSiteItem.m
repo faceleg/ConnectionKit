@@ -99,6 +99,7 @@
 
 - (NSURL *)URL { return nil; }
 - (NSString *)fileName { return nil; }
+- (BOOL) canPreview { return NO; }
 
 #pragma mark Editing
 

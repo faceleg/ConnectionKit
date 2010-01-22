@@ -48,6 +48,7 @@
 - (KTPage *)pageRepresentation; // default returns nil. KTPage returns self so Web Editor View Controller can handle
 - (SVExternalLink *)externalLinkRepresentation;	// default returns nil. used to determine if it's an external link, for page details.
 
+- (BOOL) canPreview;
 
 #pragma mark Publishing
 @property(nonatomic, copy) NSString *publishedPath;

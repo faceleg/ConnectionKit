@@ -347,7 +347,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 				break;		// mixed type, no need to keep checking
 			}
 		}
-		NSLog(@"Selection type: %d", type);
 		self.whatKindOfItemsAreSelected = type;
 		[self layoutPageURLComponents];
 	}
@@ -553,16 +552,27 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 	[oOtherFileNameField setHidden:YES];	// FOR NOW
 	
+	// Follow button only enabled when there is one item ?
+	[oFollowButton setHidden: [[oPagesController selectedObjects] count] != 1];
+	
 	if (kLinkSiteItemType == self.whatKindOfItemsAreSelected)
 	{
 		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
-		const int rightMargin = 20;
-		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft;
-		
+		//const int rightMargin = 20;
+		// int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft - [oFollowButton frame].size.width - 8;
 		NSRect frame = [oExternalURLField frame];
 		frame.origin.x = newLeft;
-		frame.size.width = availableForAll;
+		
+		NSAttributedString *text = [oExternalURLField attributedStringValue];
+		int width = ceilf([text size].width);
+		frame.size.width = width + 2;
+		
 		[oExternalURLField setFrame:frame];
+
+		// Move the follow button over
+		frame = [oFollowButton frame];
+		frame.origin.x = NSMaxX([oExternalURLField frame])+8;
+		[oFollowButton setFrame:frame];
 	}
 	else if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
 	{
@@ -681,7 +691,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					   usedRectForTextContainer:[fieldEditor textContainer]];
 	
 	NSRect fieldRect = [textField frame];
-	CGFloat textWidth = textRect.size.width;
+	int textWidth = ceilf(textRect.size.width);
 	textWidth = MAX(textWidth, 7.0);
 	if (textWidth < fieldRect.size.width) fieldRect.size.width = textWidth;
 	[view setShadowRect:fieldRect];
@@ -732,7 +742,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
 	NSTextField *field = [notification object];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
-	
+
+	[self updateWidthForActiveTextField:field];
+	self.activeTextField = field;
+
 	// Can't think of a better way to do this...
 	
 	NSString *bindingName = nil;
@@ -756,12 +769,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		bindingName = @"windowTitleCountdown";
 		explanation = NSLocalizedString(@"More than 65 characters will be truncated",@"brief indication of maximum length of text");
 	}
+	
+
 	if (bindingName)
 	{
 		[oAttachedWindowHelpButton setTag:tagForHelp];
-			
-		[self updateWidthForActiveTextField:field];
-		self.activeTextField = field;
 		
 		if (!self.attachedWindow)
 		{
@@ -878,6 +890,17 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 {
 	NSLog(@"%s -- help variant = %d",__FUNCTION__, [sender tag]);
 }
+
+- (IBAction) preview:(id)sender;
+{
+	NSArray *selectedObjects = [oPagesController selectedObjects];
+	id item = [selectedObjects lastObject];
+	if (item)
+	{
+		[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[item URL]];
+	}
+}
+
 
 
 @end
