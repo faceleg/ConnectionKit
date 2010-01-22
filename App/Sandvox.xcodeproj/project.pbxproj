@@ -217,6 +217,7 @@
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
 		2710C0931109DE9F00A7B997 /* SVMediaWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C0911109DE9F00A7B997 /* SVMediaWrapper.h */; };
 		2710C0941109DE9F00A7B997 /* SVMediaWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710C0921109DE9F00A7B997 /* SVMediaWrapper.m */; };
+		2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C254110A110D00A7B997 /* SVMediaProtocol.h */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
 		2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */; };
 		2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */; };
@@ -1650,6 +1651,7 @@
 		270E82E610A4484E007E7848 /* KSInspectorTabsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabsController.m; sourceTree = "<group>"; };
 		2710C0911109DE9F00A7B997 /* SVMediaWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaWrapper.h; sourceTree = "<group>"; };
 		2710C0921109DE9F00A7B997 /* SVMediaWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaWrapper.m; sourceTree = "<group>"; };
+		2710C254110A110D00A7B997 /* SVMediaProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaProtocol.h; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
 		2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSResponder+Karelia.m"; sourceTree = "<group>"; };
 		2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLoadingPlaceholderViewController.h; sourceTree = "<group>"; };
@@ -2882,6 +2884,7 @@
 				272C18940D0C131B00734495 /* KTMediaFileUpload.m */,
 				2710C0911109DE9F00A7B997 /* SVMediaWrapper.h */,
 				2710C0921109DE9F00A7B997 /* SVMediaWrapper.m */,
+				2710C254110A110D00A7B997 /* SVMediaProtocol.h */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -5210,6 +5213,7 @@
 				2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */,
 				2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */,
 				2710C0931109DE9F00A7B997 /* SVMediaWrapper.h in Headers */,
+				2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

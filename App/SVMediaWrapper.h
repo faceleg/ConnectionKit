@@ -15,12 +15,13 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "SVMediaProtocol.h"
 
 
 @class KTMediaFile, BDAlias;
 
 
-@interface SVMediaWrapper : NSObject
+@interface SVMediaWrapper : NSObject <SVMedia>
 {
   @private
     NSURL   *_fileURL;

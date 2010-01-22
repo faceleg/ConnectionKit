@@ -34,6 +34,8 @@
 
 @interface KTMediaFile ()  
 
+@property(nonatomic, copy, readonly) NSString *identifier;
+
 @property(nonatomic, copy, readwrite) NSString *filename;
 
 - (NSURL *)fileURLFromAlias;
@@ -100,7 +102,7 @@
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
-    [self setPrimitiveValue:[NSString UUIDString] forKey:@"uniqueID"];
+    [self setPrimitiveValue:[NSString UUIDString] forKey:@"identifier"];
 }
 
 #pragma mark Core Data
@@ -122,6 +124,8 @@
 	OBPOSTCONDITION(result);
 	return result;
 }
+
+@dynamic identifier;
 
 #pragma mark Location
 
@@ -257,7 +261,7 @@
 
 #pragma mark Contents Cache
 
-- (NSData *)contents;
+- (NSData *)fileContents;
 {
     return _data;
 }
@@ -285,7 +289,7 @@
     if ([self areContentsCached])
     {
         [[NSFileManager defaultManager] createFileAtPath:[[self savedFileURL] path]
-                                                contents:[self contents]
+                                                contents:[self fileContents]
                                               attributes:[self fileAttributes]];
         
         return;
@@ -691,7 +695,7 @@
 {
 	NSURL *baseURL = [[NSURL alloc] initWithScheme:KTImageScalingURLProtocolScheme
 											  host:[[[[self mediaManager] document] site] siteID]
-											  path:[@"/" stringByAppendingPathComponent:[self valueForKey:@"uniqueID"]]];
+											  path:[@"/" stringByAppendingPathComponent:[self identifier]]];
 	
 	NSMutableDictionary *query = [[NSMutableDictionary alloc] init];
 	

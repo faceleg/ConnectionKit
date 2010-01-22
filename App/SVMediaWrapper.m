@@ -66,6 +66,12 @@
     [super dealloc];
 }
 
+- (NSString *)identifier
+{
+    NSString *result = [[self mediaFile] identifier];
+    return result;
+}
+
 @synthesize mediaFile = _mediaFile;
 
 #pragma mark Accessing Files
@@ -92,7 +98,7 @@
 
 - (NSData *)fileContents;
 {
-    NSData *result = [[self mediaFile] contents];
+    NSData *result = [[self mediaFile] fileContents];
     return result;
 }
 

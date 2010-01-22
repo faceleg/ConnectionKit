@@ -18,12 +18,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SVMediaProtocol.h"
 
 
 @class KTMediaManager, KTPage, BDAlias, KTMediaFileUpload;
 
 
-@interface KTMediaFile : NSManagedObject
+@interface KTMediaFile : NSManagedObject <SVMedia>
 {
   @private
     NSData  *_data;
@@ -59,7 +60,7 @@
 
 
 #pragma mark Contents Cache
-- (NSData *)contents;   // could return nil if the file is too big, or a directory
+- (NSData *)fileContents;   // could return nil if the file is too big, or a directory
 - (NSDictionary *)fileAttributes;
 - (BOOL)areContentsCached;
 
