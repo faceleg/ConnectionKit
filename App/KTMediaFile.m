@@ -192,6 +192,26 @@
 #pragma mark Location Support
 
 @dynamic filename;
+- (NSString *)filename
+{
+    [self willAccessValueForKey:@"filename"];
+    NSString *result = [self primitiveValueForKey:@"filename"];
+    [self didAccessValueForKey:@"filename"];
+    
+    // If there's a sequence of events:
+    //  1.  Insert media
+    //  2.  Other stuff
+    //  3.  Save doc
+    //  4.  Undo
+    //  The undo will return our filename to nil, but we do have one really. So, fallback to the committed value
+    if (!result)
+    {
+        result = [self committedValueForKey:@"filename"];
+    }
+    
+    return result;
+}
+        
 
 - (BDAlias *)alias
 {
@@ -316,7 +336,8 @@
     if (![self filename] && [[self shouldCopyFileIntoDocument] boolValue])
     {
         NSString *filename = [[[self mediaManager] document] reserveFilenameForObject:self preferredFilename:[self preferredFilename]];
-        [self setPrimitiveValue:filename forKey:@"filename"];
+        
+        [self setFilename:filename];    // don't worry, Core Data is smart enough not to register a dedicated undo action for this.
     }
 }
 
