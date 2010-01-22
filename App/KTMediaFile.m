@@ -341,6 +341,23 @@
     }
 }
 
+- (BOOL)validateForInsert:(NSError **)error
+{
+    BOOL result = [super validateForInsert:error];
+    if (result)
+    {
+        // To be valid, external media should have an alias.
+        // We can't test whether filename is valid here (in-document media should have a unqiue filename) since it won't have been generated yet
+        if (![[self shouldCopyFileIntoDocument] boolValue])
+        {
+            result = ([self alias] != nil);
+            // TODO: Generate proper error object
+            if (!result && error) *error = nil;
+        }
+    }
+    return result;
+}
+
 - (void)didSave
 {
     [super didSave];
