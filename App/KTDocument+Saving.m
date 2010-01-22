@@ -336,6 +336,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 	if (result)
 	{
+        // Make sure there's a directory to save Quick Look data into
+        NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
+        [[NSFileManager defaultManager] createDirectoryAtPath:[quickLookDirectory path]
+                                  withIntermediateDirectories:NO
+                                                   attributes:nil
+                                                        error:NULL];
+        
+        
 		// Generate Quick Look preview HTML
         NSString *quickLookPreviewHTML = [self quickLookPreviewHTML];
         
@@ -352,7 +360,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         // Write out Quick Look preview
         if (result && quickLookPreviewHTML)
         {
-            NSURL *previewURL = [[KTDocument quickLookURLForDocumentURL:inURL] URLByAppendingPathComponent:@"Preview.html" isDirectory:NO];
+            NSURL *previewURL = [quickLookDirectory URLByAppendingPathComponent:@"Preview.html"
+                                                                    isDirectory:NO];
             
             // We don't actually care if the preview gets written out successfully or not, since it's not critical to the consistency of the document.
             // It might be nice to warn the user one day though.
