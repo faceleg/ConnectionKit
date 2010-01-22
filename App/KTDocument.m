@@ -56,7 +56,7 @@
 #import "KTIndexPlugin.h"
 #import "SVInspector.h"
 #import "KTMaster+Internal.h"
-#import "SVMedia.h"
+#import "SVMediaWrapper.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVPagelet.h"
@@ -458,13 +458,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-- (NSString *)keyForMedia:(SVMedia *)media;
+- (NSString *)keyForMedia:(SVMediaWrapper *)media;
 {
     NSString *result = [[_media allKeysForObject:media] lastObject];
     return result;
 }
 
-- (void)setMedia:(SVMedia *)media forKey:(NSString *)filename;
+- (void)setMedia:(SVMediaWrapper *)media forKey:(NSString *)filename;
 {
     // Reserve the filename
     if (!_reservedFilenames) _reservedFilenames = [[NSMutableSet alloc] init];
@@ -474,7 +474,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [_media setObject:media forKey:filename];
 }
 
-- (void)addMedia:(SVMedia *)media;  // like -addFileWrapper:
+- (void)addMedia:(SVMediaWrapper *)media;  // like -addFileWrapper:
 {
     NSString *preferredFilename = [media preferredFilename];
     NSString *filename = preferredFilename;
@@ -545,7 +545,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         NSString *filename = [aMediaFile filename];
         if (filename)
         {
-            SVMedia *media = [[SVMedia alloc] initWithMediaFile:aMediaFile];
+            SVMediaWrapper *media = [[SVMediaWrapper alloc] initWithMediaFile:aMediaFile];
             [self setMedia:media forKey:filename];
             [media release];
         }

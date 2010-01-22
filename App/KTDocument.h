@@ -28,7 +28,7 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTSite, KTMediaManager, SVMedia;
+@class KTSite, KTMediaManager, SVMediaWrapper;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTElementPlugin;
 
@@ -151,8 +151,8 @@ extern NSString *KTDocumentWillSaveNotification;
 #pragma mark Filename reservation
 
 - (BOOL)isMediaFilenameReserved:(NSString *)filename;
-- (NSString *)keyForMedia:(SVMedia *)media;
-- (void)addMedia:(SVMedia *)media;  // like -addFileWrapper:
+- (NSString *)keyForMedia:(SVMediaWrapper *)media;
+- (void)addMedia:(SVMediaWrapper *)media;  // like -addFileWrapper:
 
 @end
 

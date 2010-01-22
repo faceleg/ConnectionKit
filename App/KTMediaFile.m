@@ -335,7 +335,7 @@
     // Reserve the filename we'll be using
     if (![self filename] && [[self shouldCopyFileIntoDocument] boolValue])
     {
-        SVMedia *media = [[SVMedia alloc] initWithMediaFile:self];
+        SVMediaWrapper *media = [[SVMediaWrapper alloc] initWithMediaFile:self];
         [media setPreferredFilename:[self preferredFilename]];
         
         KTDocument *document = [[self mediaManager] document];
