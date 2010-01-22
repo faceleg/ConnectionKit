@@ -1067,7 +1067,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
             [filename hasPrefix:@"datastore."] || [filename isEqualToString:@"datastore"] ||
-            [filename isEqualToString:@"quicklook"])
+            [filename isEqualToString:@"quicklook"] ||
+            [filename isEqualToString:@"contents"])
         {
             result = YES;
         }
