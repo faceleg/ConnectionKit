@@ -56,6 +56,7 @@
 #import "KTIndexPlugin.h"
 #import "SVInspector.h"
 #import "KTMaster+Internal.h"
+#import "SVMedia.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVPagelet.h"
@@ -262,9 +263,6 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
     if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
     {
-        // Create media manager. MUST be done after reading so unique filenames can be registered
-        _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
-        
         
     }
     
@@ -430,7 +428,74 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-#pragma mark -
+#pragma mark Media
+
+- (BOOL)isMediaFilenameReserved:(NSString *)filename;
+{
+    OBPRECONDITION(filename);
+    
+    
+    // Consult both cache and file system to see if the name is taken
+    filename = [filename lowercaseString];
+    BOOL result = [_reservedFilenames containsObject:filename];
+    if (!result)
+    {
+        result = [[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
+    }
+    
+    // The document also reserves some special cases itself
+    if (!result)
+    {
+        if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
+            [filename hasPrefix:@"datastore."] || [filename isEqualToString:@"datastore"] ||
+            [filename isEqualToString:@"quicklook"] ||
+            [filename isEqualToString:@"contents"])
+        {
+            result = YES;
+        }
+    }
+    
+    return result;
+}
+
+- (NSString *)keyForMedia:(SVMedia *)media;
+{
+    NSString *result = [[_media allKeysForObject:media] lastObject];
+    return result;
+}
+
+- (void)setMedia:(SVMedia *)media forKey:(NSString *)filename;
+{
+    // Reserve the filename
+    if (!_reservedFilenames) _reservedFilenames = [[NSMutableSet alloc] init];
+    if (!_media) _media = [[NSMutableDictionary alloc] init];
+    
+    [_reservedFilenames addObject:[filename lowercaseString]];
+    [_media setObject:media forKey:filename];
+}
+
+- (void)addMedia:(SVMedia *)media;  // like -addFileWrapper:
+{
+    NSString *preferredFilename = [media preferredFilename];
+    NSString *filename = preferredFilename;
+    
+    NSUInteger count = 1;
+    while ([self isMediaFilenameReserved:filename])
+    {
+        // Adjust the filename ready to try again
+        count++;
+		NSString *numberedName = [NSString stringWithFormat:
+                                  @"%@-%u",
+                                  [preferredFilename stringByDeletingPathExtension],
+                                  count];
+        
+		filename = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
+    }
+    
+    // Reserve the filename
+    [self setMedia:media forKey:filename];
+}
+
 #pragma mark Document Content Management
 
 /*  Supplement the usual read behaviour by logging host properties and loading document display properties
@@ -467,6 +532,25 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 		}
 	}
+    
+    
+    // Create media manager. MUST be done after reading so unique filenames can be registered
+    _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
+    
+    
+    // Reserve all the media filenames already in use
+    NSArray *media = [_mediaManager externalMediaFiles]; // FIXME: fetch the correct set of objects
+    for (KTMediaFile *aMediaFile in media)
+    {
+        NSString *filename = [aMediaFile filename];
+        if (filename)
+        {
+            SVMedia *media = [[SVMedia alloc] initWithMediaFile:aMediaFile];
+            [self setMedia:media forKey:filename];
+            [media release];
+        }
+    }
+    
     
     return result;
 }

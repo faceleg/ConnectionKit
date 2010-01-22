@@ -16,6 +16,7 @@
     [self init];
     
     _mediaFile = [mediaFile retain];
+    _preferredFilename = [[mediaFile preferredFilename] copy];
     
     return self;
 }

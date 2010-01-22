@@ -58,18 +58,6 @@ NSString *KTMediaLogDomain = @"Media";
 	_deletedMediaDirectoryName = [[[NSProcessInfo processInfo] globallyUniqueString] copy];
     
     
-    // Reserve all the media filenames already in use
-    NSArray *media = [self externalMediaFiles]; // FIXME: fetch the correct set of objects
-    for (KTMediaFile *aMediaFile in media)
-    {
-        NSString *filename = [aMediaFile filename];
-        if (filename) [document replaceMediaForFilename:filename withMedia:aMediaFile];
-    }
-	
-    return self;
-    
-	
-    
     // We don't want to make undo/redo available to the user, but do want it to record the doc changed status
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(undoGroupWillClose:)

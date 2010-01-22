@@ -66,7 +66,8 @@ extern NSString *KTDocumentWillSaveNotification;
     WebView             *_quickLookThumbnailWebView;
     NSLock              *_quickLookThumbnailLock;
     
-    NSMutableDictionary *_reservedFilenames;
+    NSMutableDictionary *_media;
+    NSMutableSet        *_reservedFilenames;
 }
 
 
@@ -152,9 +153,6 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)isMediaFilenameReserved:(NSString *)filename;
 - (NSString *)keyForMedia:(SVMedia *)media;
 - (void)addMedia:(SVMedia *)media;  // like -addFileWrapper:
-
-// Only use this if you're damn sure the filename is correct.
-- (void)replaceMediaForFilename:(NSString *)filename withMedia:(SVMedia *)media;
 
 @end
 
