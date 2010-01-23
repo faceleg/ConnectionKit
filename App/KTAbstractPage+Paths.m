@@ -274,26 +274,16 @@
 - (NSString *)baseExampleURLString
 {
 	NSURL *resultURL = nil;
-	// A plugin may have specified a custom path. If so, resolve it against the site URL
-	NSString *customPath = [self customPathRelativeToSite];
-	if (customPath)
-	{
-		NSURL *siteURL = [[[self site] hostProperties] siteURL];
-		resultURL = [NSURL URLWithString:customPath relativeToURL:siteURL];
-		// NOT SURE WHAT DO TO HERE - CHOP OFF THE LAST PATH COMPONENT?
-	}
-	else
-	{
-		if ([self isRoot])
-		{
-			resultURL = [self _baseExampleURL];
-		}
-		else
-		{
-			resultURL = [[self parentPage] _baseExampleURL];
-		}
-	}
-	NSString *result = [resultURL absoluteString];
+	if ([self isRoot])
+    {
+        resultURL = [self _baseExampleURL];
+    }
+    else
+    {
+        resultURL = [[self parentPage] _baseExampleURL];
+    }
+
+    NSString *result = [resultURL absoluteString];
 	NSLog(@"baseExampleURLString = %@", result);
 	return result;
 }
@@ -320,36 +310,26 @@
 {
 	NSURL *result = nil;
 	
-	// A plugin may have specified a custom path. If so, resolve it against the site URL
-	NSString *customPath = [self customPathRelativeToSite];
-	if (customPath)
-	{
-		NSURL *siteURL = [[[self site] hostProperties] siteURL];
-		result = [NSURL URLWithString:customPath relativeToURL:siteURL];
-	}
-	else
-	{
-		if ([self isRoot])
-		{
-			// Root is a sepcial case where we just supply the site URL
-			result = [[[self site] hostProperties] siteURL];
-            
-            // The siteURL may not include index.html, so we have to guarantee it here
-            if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
-            {
-                result = [NSURL URLWithString:[self indexFilename] relativeToURL:result];
-            }
-		}
-		else
-		{
-			// For normal pages, figure out the path relative to parent and resolve it
-			NSString *path = [self pathRelativeToParent];
-			if (path)
-			{
-				result = [NSURL URLWithString:path relativeToURL:[[self parentPage] URL]];
-			}
-		}
-	}
+    if ([self isRoot])
+    {
+        // Root is a sepcial case where we just supply the site URL
+        result = [[[self site] hostProperties] siteURL];
+        
+        // The siteURL may not include index.html, so we have to guarantee it here
+        if ([[NSUserDefaults standardUserDefaults] boolForKey:@"PathsWithIndexPages"])
+        {
+            result = [NSURL URLWithString:[self indexFilename] relativeToURL:result];
+        }
+    }
+    else
+    {
+        // For normal pages, figure out the path relative to parent and resolve it
+        NSString *path = [self pathRelativeToParent];
+        if (path)
+        {
+            result = [NSURL URLWithString:path relativeToURL:[[self parentPage] URL]];
+        }
+    }
 	
 	return result;
 }
@@ -369,17 +349,6 @@
 	[self didChangeValueForKey:@"URL"];
 }
 
-
-/*	This accessor pair is used by plugins like the File Download and External Link to specify a custom path different
- *	to the default behaviour.
- */
-- (NSString *)customPathRelativeToSite { return [self wrappedValueForKey:@"customPathRelativeToSite"]; }
-
-- (void)setCustomPathRelativeToSite:(NSString *)path
-{
-	[self setWrappedValue:path forKey:@"customPathRelativeToSite"];
-	[self recursivelyInvalidateURL:YES];
-}
 
 /*	The index.html file is not included in collection paths unless the user defaults say to.
  *	If you ask this of the home page, will either return an empty string or index.html.
@@ -410,13 +379,7 @@
  */
 - (NSString *)uploadPath
 {
-	NSString *result = nil;
-	
-	if (![self customPathRelativeToSite])
-	{
-		result = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionIndexFilePath];
-	}
-	
+	NSString *result = [self pathRelativeToSiteWithCollectionPathStyle:KTCollectionIndexFilePath];
 	return result;
 }
 
