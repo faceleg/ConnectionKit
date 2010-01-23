@@ -20,6 +20,45 @@ NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIn
 
 @implementation SVMedia
 
+#pragma mark Creating New Media
+
++ (SVMedia *)mediaWithURL:(NSURL *)URL
+               entityName:(NSString *)entityName
+insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                    error:(NSError **)outError;
+{
+    OBPRECONDITION(URL);
+    
+    
+    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
+                                                                                error:outError];
+    
+    SVMedia *result = nil;
+    if (attributes)
+    {
+        result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                               inManagedObjectContext:context];
+        
+        [result setFileAttributes:attributes];
+        [result setPreferredFilename:[URL lastPathComponent]];
+    }
+    
+    return result;
+}
+
++ (SVMedia *)mediaWithContents:(NSData *)data entityName:(NSString *)entityName insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    OBPRECONDITION(data);
+    
+    
+    SVMedia *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                    inManagedObjectContext:context];
+    
+    result->_data = [data copy];
+    
+    return result;
+}
+
 #pragma mark Location
 
 - (NSURL *)fileURL;
@@ -139,11 +178,30 @@ NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIn
     return _data;
 }
 
-- (NSDictionary *)fileAttributes; { return nil; }
+@synthesize fileAttributes = _attributes;
+- (NSDictionary *)fileAttributes
+{
+    // Lazily load from disk
+    if (!_attributes)
+    {
+        NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[[self fileURL] path]
+                                                                                    error:NULL];
+        [self setFileAttributes:attributes];
+    }
+    
+    return _attributes;
+}
 
 - (BOOL)areContentsCached;
 {
     return (_data != nil);
+}
+
+- (void)didTurnIntoFault
+{
+    [super didTurnIntoFault];
+    
+    [_data release]; _data = nil;
 }
 
 #pragma mark File Management

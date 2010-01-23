@@ -17,10 +17,25 @@ extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
 
 @interface SVMedia : NSManagedObject <SVMedia>
 {
-    //@private
+  @private
     NSURL   *_URL;
-    NSData  *_data;
+    
+    NSDictionary    *_attributes;
+    NSData          *_data;
 }
+
+
+#pragma mark Creating New Media
+
+// Will return nil if the URL can't be read
+     + (SVMedia *)mediaWithURL:(NSURL *)URL
+                    entityName:(NSString *)entityName
+insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                         error:(NSError **)outError;
+
+// Must call -setPreferredFilename: after, and ideally -setFileAttributes: too
++ (SVMedia *)mediaWithContents:(NSData *)data entityName:(NSString *)entityName insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
 
 #pragma mark Location
 
@@ -42,7 +57,7 @@ extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
 
 @property(nonatomic, copy, readonly) NSString *filename;
 @property(nonatomic, copy) NSString *preferredFilename;
-- (NSDictionary *)fileAttributes;
+@property(nonatomic, copy) NSDictionary *fileAttributes; // mostly to act as a cache
 
 - (NSData *)fileContents;   // could return nil if the file is too big, or a directory
 - (BOOL)areContentsCached;

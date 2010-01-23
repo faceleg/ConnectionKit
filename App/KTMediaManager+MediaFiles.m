@@ -227,8 +227,11 @@
 	// No existing match was found so create a new MediaFile
 	if (!result)
 	{
-		result = [[KTMediaFile alloc] initWithData:data preferredFilename:preferredFilename insertIntoManagedObjectContext:[self managedObjectContext]];
-        [result autorelease];
+		result = [KTMediaFile mediaWithContents:data
+                                     entityName:[KTMediaFile entityName]
+                 insertIntoManagedObjectContext:[self managedObjectContext]];
+        
+        [result setPreferredFilename:preferredFilename];
 	}
 	
 	
@@ -332,9 +335,11 @@
  */
 - (KTMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 {
-	KTMediaFile *result = [[KTMediaFile alloc] initWithURL:[NSURL fileURLWithPath:path]
-                            insertIntoManagedObjectContext:[self managedObjectContext]];
-    [result autorelease];
+	KTMediaFile *result = [KTMediaFile mediaWithURL:[NSURL fileURLWithPath:path]
+                                         entityName:[KTMediaFile entityName]
+                     insertIntoManagedObjectContext:[self managedObjectContext]
+                                              error:NULL];
+    
     return result;
 }
 

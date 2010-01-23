@@ -25,14 +25,6 @@
 
 @interface KTMediaFile : SVMedia
 
-#pragma mark Raw Init
-
-- (id)initWithData:(NSData *)data preferredFilename:(NSString *)preferredFilename insertIntoManagedObjectContext:(NSManagedObjectContext *)moc;
-
-// Uses an alias to track the file, and also loads it into memory if small enough
-- (id)initWithURL:(NSURL *)URL insertIntoManagedObjectContext:(NSManagedObjectContext *)moc;
-
-
 #pragma mark Media Manager
 - (KTMediaManager *)mediaManager;
 

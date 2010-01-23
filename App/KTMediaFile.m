@@ -34,8 +34,6 @@
 
 @property(nonatomic, copy, readonly) NSString *identifier;
 
-@property(nonatomic, copy, readwrite) NSString *filename;
-
 @property(nonatomic, copy) NSData *cachedDigest;
 
 - (KTMediaFileUpload *)insertUploadToPath:(NSString *)path;
@@ -63,36 +61,6 @@
     return [[[KTDocument managedObjectModel] entitiesByName] objectForKey:@"MediaFile"];
 }
 
-- (id)initWithData:(NSData *)data preferredFilename:(NSString *)preferredFilename insertIntoManagedObjectContext:(NSManagedObjectContext *)moc;
-{
-    OBPRECONDITION(data);
-    OBPRECONDITION([preferredFilename length] > 0);
-    
-    
-    if (self = [self initWithEntity:[[self class] entity] insertIntoManagedObjectContext:moc])
-    {
-        _data = [data copy];
-        [self setPreferredFilename:preferredFilename];
-    }
-    
-    return self;
-}
-
-- (id)initWithURL:(NSURL *)URL insertIntoManagedObjectContext:(NSManagedObjectContext *)moc;
-{
-    OBPRECONDITION(URL);
-    
-    
-    if (self = [self initWithEntity:[[self class] entity] insertIntoManagedObjectContext:moc])
-    {
-        // Cheat for now and load into memort. TODO: Only do this if the file is small
-        _data = [[NSData alloc] initWithContentsOfURL:URL];
-        [self setPreferredFilename:[URL lastPathComponent]];
-    }
-    
-    return self;
-}
-
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
@@ -102,13 +70,6 @@
 #pragma mark Core Data
 
 + (NSString *)entityName { return @"MediaFile"; }
-
-- (void)didTurnIntoFault
-{
-    [super didTurnIntoFault];
-    
-    [_data release]; _data = nil;
-}
 
 #pragma mark Accessors
 
