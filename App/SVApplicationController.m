@@ -403,7 +403,6 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 		// Don't need these unless/until we support multiple formats
 		//		[NSNumber numberWithBool:NO], @"collectionGenerateAtom",
 		//		[NSNumber numberWithBool:YES], @"collectionGenerateRSS",
-		[NSNumber numberWithBool:NO], @"headerImageHidesH1",
 		[NSNumber numberWithBool:YES], @"collectionHyperlinkPageTitles",
 		[NSNumber numberWithBool:NO], @"collectionShowPermanentLink",
 		[NSNumber numberWithBool:YES], @"collectionShowSortingControls",

@@ -15,6 +15,8 @@
 @property(nonatomic, copy) NSString *textHTMLString;
 @property(nonatomic, copy) NSString *text;
 
+@property(nonatomic, copy) NSNumber *hidden;    // BOOL, required
+
 @end
 
 

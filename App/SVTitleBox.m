@@ -36,6 +36,8 @@
     return [NSSet setWithObject:@"textHTMLString"];
 }
 
+@dynamic hidden;
+
 - (Class)DOMControllerClass;
 {
     return [SVWebEditorTextFieldController class];
