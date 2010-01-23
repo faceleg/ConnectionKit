@@ -96,6 +96,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (BOOL)isKeyReserved:(NSString *)filename;
 - (NSString *)keyForMediaWrapper:(SVMediaWrapper *)media;
 - (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
+- (NSString *)reservePreferredFilename:(NSString *)filename;    // returns the filename reserved
 
 
 #pragma mark Actions

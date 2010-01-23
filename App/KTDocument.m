@@ -476,11 +476,18 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
 {
-    NSString *preferredFilename = [media preferredFilename];
-    NSString *filename = preferredFilename;
+    NSString *filename = [self reservePreferredFilename:[media preferredFilename]];
+    
+    // Add the wrapper
+    [self setMedia:media forKey:filename];
+}
+
+- (NSString *)reservePreferredFilename:(NSString *)preferredFilename;    // returns the filename reserved
+{
+    NSString *result = preferredFilename;
     
     NSUInteger count = 1;
-    while ([self isKeyReserved:filename])
+    while ([self isKeyReserved:result])
     {
         // Adjust the filename ready to try again
         count++;
@@ -489,11 +496,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                   [preferredFilename stringByDeletingPathExtension],
                                   count];
         
-		filename = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
+		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
     }
     
-    // Reserve the filename
-    [self setMedia:media forKey:filename];
+    // Reserve it
+    [_reservedFilenames addObject:[result lowercaseString]];
+    
+    return result;
 }
 
 #pragma mark Document Content Management
