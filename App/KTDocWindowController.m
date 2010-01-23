@@ -435,6 +435,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)addRawTextPage:(id)sender;      // Raw HTML page
 {
     [[self pagesController] setEntityName:@"File"];
+    [[self pagesController] setFileURL:nil];    // will make its own file
     [[self pagesController] add:self];
 }
 
