@@ -381,20 +381,17 @@
 	if (recursive)
 	{
 		NSSet *children = [self childItems];
-		NSEnumerator *pageEnumerator = [children objectEnumerator];
-		KTPage *aPage;
-		while (aPage = [pageEnumerator nextObject])
+		for (SVSiteItem *anItem in children)
 		{
-			OBASSERT(![self isDescendantOfCollection:aPage]); // lots of assertions for #44139
-            OBASSERT(aPage != self);
-            OBASSERT(![[aPage childItems] containsObject:self]);
+			OBASSERT(![self isDescendantOfItem:anItem]); // lots of assertions for #44139
+            OBASSERT(anItem != self);
+            OBASSERT(![[anItem childItems] containsObject:self]);
             
-            [aPage recursivelyInvalidateURL:YES];
+            [[anItem pageRepresentation] recursivelyInvalidateURL:YES];
 		}
 		
 		NSSet *archives = [self archivePages];
-		pageEnumerator = [archives objectEnumerator];
-		while (aPage = [pageEnumerator nextObject])
+		for (KTArchivePage *aPage in archives)
 		{
 			OBASSERT(![aPage isKindOfClass:[KTPage class]]);
             [aPage recursivelyInvalidateURL:YES];
