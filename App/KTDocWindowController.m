@@ -440,6 +440,22 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 {
+    // Throw up an open panel
+    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    [openPanel beginSheetForDirectory:nil
+                                 file:nil
+                       modalForWindow:[self window]
+                        modalDelegate:self
+                       didEndSelector:@selector(chooseFilePanelDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)chooseFilePanelDidEnd:(NSSavePanel *)sheet
+                   returnCode:(int)returnCode
+                  contextInfo:(void *)contextInfo;
+{
+    if (returnCode == NSCancelButton) return;
+    
+    
     [[self pagesController] setEntityName:@"File"];
     [[self pagesController] add:self];
 }

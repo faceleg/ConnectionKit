@@ -11,4 +11,6 @@
 
 @implementation SVDownloadSiteItem
 
+@dynamic media;
+
 @end

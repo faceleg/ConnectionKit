@@ -9,6 +9,11 @@
 #import "SVSiteItem.h"
 
 
+@class SVMediaRecord;
+
+
 @interface SVDownloadSiteItem : SVSiteItem
+
+@property(nonatomic, retain) SVMediaRecord *media;
 
 @end
