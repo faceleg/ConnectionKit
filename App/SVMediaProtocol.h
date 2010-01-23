@@ -10,7 +10,6 @@
 
 
 @protocol SVMedia <NSObject>
-- (NSString *)identifier;
 - (NSURL *)fileURL;
 - (NSData *)fileContents;
 @end
