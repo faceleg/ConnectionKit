@@ -57,7 +57,7 @@ extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
 
 #pragma mark Accessing Files
 
-@property(nonatomic, copy, readonly) NSString *filename;
+@property(nonatomic, copy) NSString *filename;  // no-one but the document should have reason to set this
 @property(nonatomic, copy) NSString *preferredFilename;
 @property(nonatomic, copy) NSDictionary *fileAttributes; // mostly to act as a cache
 

@@ -74,36 +74,39 @@ NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIn
 
 - (NSURL *)fileURL;
 {
-	if ([self filename])
+	// If the URL has been fixed, use that!
+    NSURL *result = _URL;
+    
+    if (!result)
     {
-        // Figure out proper values for these two
-        if ([self isInserted])
+        // Just before copying into the document, media is assigned a filename, which won't have been persisted yet
+        if ([self filename] && ![self committedValueForKey:@"filename"])
         {
-            return [self deletedFileURL];
+            // Figure out proper values for these two
+            if ([self isInserted])
+            {
+                return [self deletedFileURL];
+            }
+            else
+            {
+                return [self savedFileURL];
+            }
         }
         else
         {
-            return [self savedFileURL];
+            // Get best path we can out of the alias
+            NSString *path = [[self alias] fullPath];
+            if (!path) path = [[self alias] lastKnownPath];
+            
+            // Ignore files which are in the Trash
+            if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
+            
+            
+            if (path) result = [NSURL fileURLWithPath:path];
         }
     }
-    else
-    {
-        return [self fileURLFromAlias];
-    }
-}
-
-- (NSURL *)fileURLFromAlias;
-{
-    // Get best path we can out of the alias
-    NSString *path = [[self alias] fullPath];
-	if (!path) path = [[self alias] lastKnownPath];
     
-    // Ignore files which are in the Trash
-	if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
-    
-    
-    if (path) return [NSURL fileURLWithPath:path];
-    return nil;
+    return result;
 }
 
 - (NSURL *)savedFileURL;
