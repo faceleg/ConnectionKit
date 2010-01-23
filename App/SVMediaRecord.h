@@ -73,4 +73,8 @@ extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
 @property(nonatomic, copy) NSNumber *shouldCopyFileIntoDocument;
 
 
+#pragma mark Writing Files
+- (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
+
+
 @end

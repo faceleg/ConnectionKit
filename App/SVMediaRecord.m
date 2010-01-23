@@ -245,4 +245,39 @@ NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIn
     return result;
 }
 
+#pragma mark Writing Files
+
+- (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
+{
+    // Try writing out data from memory. It'll fail if there was none
+    NSData *data = [self fileContents];
+    BOOL result = [data writeToURL:URL options:0 error:outError];
+    if (result)
+    {
+        if ([self fileAttributes])
+        {
+            result = [[NSFileManager defaultManager] setAttributes:[self fileAttributes]
+                                                      ofItemAtPath:[URL path]
+                                                             error:outError];
+        }
+    }
+    else
+    {
+        // Fallback to copying the file
+        result = [[NSFileManager defaultManager] copyItemAtPath:[[self fileURL] path]
+                                                         toPath:[URL path]
+                                                          error:outError];
+    }
+    
+    
+    // Update fileURL to match
+    if (updateFileURL && result)
+    {
+        URL = [URL copy];
+        [_URL release]; _URL = URL;
+    }
+    
+    
+    return result;
+}
 @end
