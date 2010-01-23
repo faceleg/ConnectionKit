@@ -8,13 +8,16 @@
 
 #import "SVPagesController.h"
 
+#import "KTPage+Internal.h"
+#import "SVExternalLink.h"
+#import "SVDownloadSiteItem.h"
+
 #import "KTElementPlugin.h"
 #import "KTAbstractIndex.h"
-#import "SVExternalLink.h"
 #import "KTIndexPlugin.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
-#import "KTPage+Internal.h"
+#import "SVMediaRecord.h"
 #import "SVSidebar.h"
 
 #import "NSArray+Karelia.h"
@@ -113,7 +116,18 @@
     }
     else if ([[self entityName] isEqualToString:@"File"])
     {
-        // TODO: Import specified file or generate raw text
+        // Import specified file if possible
+        SVMediaRecord *media = nil;
+        if ([self fileURL])
+        {
+            media = [SVMediaRecord mediaWithURL:[self fileURL] entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+        }
+        if (!media)
+        {
+            // TODO: Create raw file
+        }
+        
+        [(SVDownloadSiteItem *)result setMedia:media];
     }
     
     return result;

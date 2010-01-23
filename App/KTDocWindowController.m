@@ -443,6 +443,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
     // Throw up an open panel
     NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    
     [openPanel beginSheetForDirectory:nil
                                  file:nil
                        modalForWindow:[self window]
@@ -458,6 +459,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
     
     [[self pagesController] setEntityName:@"File"];
+    [[self pagesController] setFileURL:[sheet URL]];
     [[self pagesController] add:self];
 }
 
