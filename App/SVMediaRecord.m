@@ -39,6 +39,7 @@ NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIn
         result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                inManagedObjectContext:context];
         
+        [result setAlias:[BDAlias aliasWithPath:[URL path]]];
         [result setFileAttributes:attributes];
         [result setPreferredFilename:[URL lastPathComponent]];
     }
