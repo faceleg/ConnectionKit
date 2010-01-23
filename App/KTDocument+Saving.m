@@ -554,9 +554,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                   error:(NSError **)outError;
 {
     // Move media in & out of the package as required
-    for (NSString *aKey in _mediaWrappers)
+    for (NSString *aKey in _media)
     {
-        SVMediaWrapper *mediaWrapper = [_mediaWrappers objectForKey:aKey];
+        SVMediaWrapper *mediaWrapper = [_media objectForKey:aKey];
         if (![mediaWrapper hasBeenCopiedIntoDocument] && [mediaWrapper shouldCopyIntoDocument])
         {
             NSURL *mediaURL = [docURL URLByAppendingPathComponent:aKey isDirectory:NO];

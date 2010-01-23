@@ -460,18 +460,18 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (NSString *)keyForMediaWrapper:(SVMediaWrapper *)media;
 {
-    NSString *result = [[_mediaWrappers allKeysForObject:media] lastObject];
+    NSString *result = [[_media allKeysForObject:media] lastObject];
     return result;
 }
 
-- (void)setMedia:(SVMediaWrapper *)media forKey:(NSString *)filename;
+- (void)setMedia:(id <SVMedia>)media forKey:(NSString *)filename;
 {
     // Reserve the filename
     if (!_reservedFilenames) _reservedFilenames = [[NSMutableSet alloc] init];
-    if (!_mediaWrappers) _mediaWrappers = [[NSMutableDictionary alloc] init];
+    if (!_media) _media = [[NSMutableDictionary alloc] init];
     
     [_reservedFilenames addObject:[filename lowercaseString]];
-    [_mediaWrappers setObject:media forKey:filename];
+    [_media setObject:media forKey:filename];
 }
 
 - (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
@@ -538,18 +538,27 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
     
     
-    // Reserve all the media filenames already in use
-    NSArray *media = [_mediaManager externalMediaFiles]; // FIXME: fetch the correct set of objects
-    for (KTMediaFile *aMediaFile in media)
+    // Reserve all the media filenames already in use    
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    
+    [request setEntity:[NSEntityDescription entityForName:@"MediaFile" inManagedObjectContext:context]];
+    NSArray *media = [context executeFetchRequest:request error:NULL];
+    for (SVMediaRecord *aMediaRecord in media)
     {
-        NSString *filename = [aMediaFile filename];
-        if (filename)
-        {
-            SVMediaWrapper *media = [[SVMediaWrapper alloc] initWithMediaFile:aMediaFile];
-            [self setMedia:media forKey:filename];
-            [media release];
-        }
+        NSString *filename = [aMediaRecord filename];
+        if (filename) [self setMedia:aMediaRecord forKey:filename];
     }
+    
+    [request setEntity:[NSEntityDescription entityForName:@"FileMedia" inManagedObjectContext:context]];
+    media = [context executeFetchRequest:request error:NULL];
+    for (SVMediaRecord *aMediaRecord in media)
+    {
+        NSString *filename = [aMediaRecord filename];
+        if (filename) [self setMedia:aMediaRecord forKey:filename];
+    }
+    
+    [request release];
     
     
     return result;

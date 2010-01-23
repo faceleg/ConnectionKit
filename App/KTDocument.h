@@ -66,7 +66,7 @@ extern NSString *KTDocumentWillSaveNotification;
     WebView             *_quickLookThumbnailWebView;
     NSLock              *_quickLookThumbnailLock;
     
-    NSMutableDictionary *_mediaWrappers;
+    NSMutableDictionary *_media;
     NSMutableSet        *_reservedFilenames;
 }
 
