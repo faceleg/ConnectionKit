@@ -56,7 +56,6 @@
 #import "KTIndexPlugin.h"
 #import "SVInspector.h"
 #import "KTMaster+Internal.h"
-#import "SVMediaWrapper.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVPagelet.h"
@@ -152,6 +151,10 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [[self managedObjectContext] setUndoManager:undoManager];
         [undoManager release];
         [super setUndoManager:[[self managedObjectContext] undoManager]];
+        
+        
+        // Other ivars
+        _reservedFilenames = [[NSMutableSet alloc] init];
         
         
         // Init UI accessors
@@ -430,7 +433,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Media
 
-- (BOOL)isKeyReserved:(NSString *)filename;
+- (BOOL)isFilenameReserved:(NSString *)filename;
 {
     OBPRECONDITION(filename);
     
@@ -458,36 +461,12 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-- (NSString *)keyForMediaWrapper:(SVMediaWrapper *)media;
-{
-    NSString *result = [[_media allKeysForObject:media] lastObject];
-    return result;
-}
-
-- (void)setMedia:(id <SVMedia>)media forKey:(NSString *)filename;
-{
-    // Reserve the filename
-    if (!_reservedFilenames) _reservedFilenames = [[NSMutableSet alloc] init];
-    if (!_media) _media = [[NSMutableDictionary alloc] init];
-    
-    [_reservedFilenames addObject:[filename lowercaseString]];
-    [_media setObject:media forKey:filename];
-}
-
-- (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
-{
-    NSString *filename = [self reservePreferredFilename:[media preferredFilename]];
-    
-    // Add the wrapper
-    [self setMedia:media forKey:filename];
-}
-
 - (NSString *)reservePreferredFilename:(NSString *)preferredFilename;    // returns the filename reserved
 {
     NSString *result = preferredFilename;
     
     NSUInteger count = 1;
-    while ([self isKeyReserved:result])
+    while ([self isFilenameReserved:result])
     {
         // Adjust the filename ready to try again
         count++;
@@ -556,7 +535,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     for (SVMediaRecord *aMediaRecord in media)
     {
         NSString *filename = [aMediaRecord filename];
-        if (filename) [self setMedia:aMediaRecord forKey:filename];
+        if (filename) [_reservedFilenames addObject:[filename lowercaseString]];
     }
     
     [request release];

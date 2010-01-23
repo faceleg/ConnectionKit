@@ -8,6 +8,8 @@
 
 #import "SVDownloadSiteItem.h"
 
+#import "SVMediaRecord.h"
+
 
 @implementation SVDownloadSiteItem
 

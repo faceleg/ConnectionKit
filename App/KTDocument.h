@@ -28,7 +28,7 @@ extern NSString *KTDocumentWillCloseNotification;
 extern NSString *KTDocumentWillSaveNotification;
 
 
-@class KTSite, KTMediaManager, SVMediaWrapper;
+@class KTSite, KTMediaManager;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTElementPlugin;
 
@@ -66,7 +66,6 @@ extern NSString *KTDocumentWillSaveNotification;
     WebView             *_quickLookThumbnailWebView;
     NSLock              *_quickLookThumbnailLock;
     
-    NSMutableDictionary *_media;
     NSMutableSet        *_reservedFilenames;
 }
 
@@ -93,9 +92,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 
 #pragma mark Media Wrappers
-- (BOOL)isKeyReserved:(NSString *)filename;
-- (NSString *)keyForMediaWrapper:(SVMediaWrapper *)media;
-- (void)addMediaWrapper:(SVMediaWrapper *)media;  // like -addFileWrapper:
+- (BOOL)isFilenameReserved:(NSString *)filename;
 - (NSString *)reservePreferredFilename:(NSString *)filename;    // returns the filename reserved
 
 
