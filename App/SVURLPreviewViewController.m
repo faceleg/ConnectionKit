@@ -8,6 +8,9 @@
 
 #import "SVURLPreviewViewController.h"
 
+#import "SVMediaProtocol.h"
+#import "SVSiteItem.h"
+
 #import "KSTabViewController.h"
 
 
@@ -67,6 +70,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     // teardown
     [_siteItem removeObserver:self forKeyPath:@"URL"];
+    [_siteItem removeObserver:self forKeyPath:@"mediaRepresentation"];
     
     item = [item retain];
     [_siteItem release]; _siteItem = item;
@@ -76,13 +80,20 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
            forKeyPath:@"URL" 
               options:NSKeyValueObservingOptionInitial
               context:sURLPreviewViewControllerURLObservationContext];
+    [item addObserver:self
+           forKeyPath:@"mediaRepresentation" 
+              options:NSKeyValueObservingOptionInitial
+              context:sURLPreviewViewControllerURLObservationContext];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == sURLPreviewViewControllerURLObservationContext)
     {
-        NSURL *URL = [object URL];
+        // Display best representation
+        NSURL *URL = [[object mediaRepresentation] fileURL];
+        if (!URL) URL = [object URL];
+        
         [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
     }
     else
