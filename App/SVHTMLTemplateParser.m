@@ -97,7 +97,7 @@
 	[[SVHTMLContext currentContext] addDependencyOnObject:object keyPath:keyPath];
 }
 
-- (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload
+- (void)didEncounterMediaFile:(id <SVMedia>)mediaFile upload:(KTMediaFileUpload *)upload
 {
 	id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:@selector(HTMLParser:didParseMediaFile:upload:)])

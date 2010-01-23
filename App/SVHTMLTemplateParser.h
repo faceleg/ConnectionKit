@@ -25,8 +25,8 @@
 
 @class KTDocument, KTHTMLParserMasterCache, SVHTMLContext, KTMediaFileUpload, SVHTMLTextBlock;
 @class KTAbstractPage;
-@class KTMediaContainer, KTMediaFile;
-@protocol SVHTMLTemplateParserDelegate;
+@class KTMediaContainer;
+@protocol SVHTMLTemplateParserDelegate, SVMedia;
 
 
 @interface SVHTMLTemplateParser : SVTemplateParser
@@ -61,9 +61,9 @@
 
 - (NSString *)info:(NSString *)infoString forMedia:(KTMediaContainer *)media scalingProperties:(NSDictionary *)scalingSettings;
 
-- (NSString *)pathToMedia:(KTMediaFile *)media scalingProperties:(NSDictionary *)scalingProps;
-- (NSString *)widthStringForMediaFile:(KTMediaFile *)mediaFile scalingProperties:(NSDictionary *)scalingProps;
-- (NSString *)heightStringForMediaFile:(KTMediaFile *)mediaFile scalingProperties:(NSDictionary *)scalingProps;
+- (NSString *)pathToMedia:(id <SVMedia>)media scalingProperties:(NSDictionary *)scalingProps;
+- (NSString *)widthStringForMediaFile:(id <SVMedia>)mediaFile scalingProperties:(NSDictionary *)scalingProps;
+- (NSString *)heightStringForMediaFile:(id <SVMedia>)mediaFile scalingProperties:(NSDictionary *)scalingProps;
 
 @end
 
@@ -81,6 +81,6 @@
 @protocol SVHTMLTemplateParserDelegate <KTTemplateParserDelegate>
 @optional
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didEncounterResourceFile:(NSURL *)resourcePath;
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(id <SVMedia>)mediaFile upload:(KTMediaFileUpload *)upload;
 @end
 

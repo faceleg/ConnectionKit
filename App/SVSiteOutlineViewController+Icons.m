@@ -12,7 +12,6 @@
 #import "KTMaster.h"
 #import "KTMediaContainer.h"
 #import "KTPage.h"
-#import "KTMediaFile.h"
 #import "KTDocument.h"
 #import "SVSiteItem.h"
 
@@ -205,13 +204,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	if (!result)
 	{
 		result = [self bundleIconForItem:page];
-		
-		NSString *iconSourcePath = [[[page customSiteOutlineIcon] file] currentPath];
-		if (iconSourcePath)
-		{
-			// Begin generating the thumbnail in the background. In the meantime, display the default icon.
-			[self addPageToCustomIconGenerationQueue:page];
-		}
 	}
 	
     OBPOSTCONDITION(result);

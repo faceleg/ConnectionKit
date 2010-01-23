@@ -267,17 +267,8 @@
 	NSString *result = nil;
 	
 	KTMediaContainer *image = [self graphicalTextMedia];
-	KTMediaFile *mediaFile = [image file];
-	if (mediaFile)
-	{			
-		//[mediaFile cacheImageDimensionsIfNeeded];
-        
-        result = [NSString stringWithFormat:
-			@"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%ipx; height:%ipx;",
-			[[NSURL fileURLWithPath:[mediaFile currentPath]] absoluteString],
-                  100,//[mediaFile integerForKey:@"width"],
-                  100];//[mediaFile integerForKey:@"height"]];
-	}
+	// FIXME: Get graphical text working again
+    
 	
 	return result;
 }
@@ -467,12 +458,13 @@
 						}
 						else
 						{
-							KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
+                            // FIXME: Make graphical text work again
+							/*KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
                             KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[mediaContainer latestProperties]];
 							aMediaPath = [[upload URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
 							
 							// TODO: Tell the parser's delegate
-							//[[self parser] didEncounterMediaFile:mediaFile upload:upload];
+							//[[self parser] didEncounterMediaFile:mediaFile upload:upload];*/
 						}
 					}
 					

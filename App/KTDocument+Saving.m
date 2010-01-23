@@ -603,7 +603,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSMutableSet *pathsToMove = [NSMutableSet setWithCapacity:[mediaFiles count]];
 	
 	NSEnumerator *mediaFilesEnumerator = [mediaFiles objectEnumerator];
-	KTMediaFile *aMediaFile;
+	id aMediaFile;
 	while (aMediaFile = [mediaFilesEnumerator nextObject])
 	{
 		NSString *path = [aMediaFile currentPath];

@@ -16,7 +16,7 @@
 
 // Delegate
 - (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock;
-- (void)didEncounterMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;
+- (void)didEncounterMediaFile:(id <SVMedia>)mediaFile upload:(KTMediaFileUpload *)upload;
 - (void)didEncounterResourceFile:(NSURL *)resourceURL;
 
 @end

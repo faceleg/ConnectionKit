@@ -74,7 +74,7 @@
 	NSString *result = nil;
 	
 	// What information is desired?
-	KTMediaFile *mediaFile = [media file];
+	id mediaFile = [media file];
 	if (mediaFile)
 	{
 		if ([infoString isEqualToString:@"path"])
@@ -117,7 +117,7 @@
 	return result;
 }
 
-- (NSString *)pathToMedia:(KTMediaFile *)media scalingProperties:(NSDictionary *)scalingProps
+- (NSString *)pathToMedia:(id <SVMedia>)media scalingProperties:(NSDictionary *)scalingProps
 {
 	switch ([[SVHTMLContext currentContext] generationPurpose])
 	{
@@ -142,7 +142,7 @@
 	}
 }
 
-- (NSString *)widthStringForMediaFile:(KTMediaFile *)mediaFile scalingProperties:(NSDictionary *)scalingProps
+- (NSString *)widthStringForMediaFile:(id <SVMedia>)mediaFile scalingProperties:(NSDictionary *)scalingProps
 {
     NSString *result = nil;
 	
@@ -167,7 +167,7 @@
 	return result;
 }
 
-- (NSString *)heightStringForMediaFile:(KTMediaFile *)mediaFile scalingProperties:(NSDictionary *)scalingProps
+- (NSString *)heightStringForMediaFile:(id <SVMedia>)mediaFile scalingProperties:(NSDictionary *)scalingProps
 {
     NSString *result = nil;
 	
