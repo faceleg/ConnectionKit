@@ -33,8 +33,7 @@ typedef enum {
 
 
 @class KTDesign;
-@class KTArchivePage, KTAbstractIndex, KTMaster, KTCodeInjection;
-@class WebView;
+@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, KTCodeInjection;
 @class KTMediaContainer;
 
 
@@ -51,7 +50,7 @@ typedef enum {
 
 
 #pragma mark Title
-@property(nonatomic, retain) SVTitleBox *titleBox;  // you can use inherited .title property for ease of use too
+@property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
 - (BOOL)canEditTitle;
 
 

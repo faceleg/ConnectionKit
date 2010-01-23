@@ -26,11 +26,6 @@
 #import "Debug.h"
 
 
-@interface KTPage (ChildrenPrivate)
-- (void)invalidateSortedChildrenCache;
-@end
-
-
 @implementation KTPage (Accessors)
 
 #pragma mark -
@@ -47,32 +42,6 @@
 
 #pragma mark -
 #pragma mark Title
-
-/*	Pages may need to be resorted after changing the title. This only affects KTPage, not KTAbstractPage
- */
-- (void)setTitleHTMLString:(NSString *)value
-{
-	[super setTitleHTMLString:value];
-	
-	
-	// If the page hasn't been published yet, update the filename to match
-	if ([self shouldUpdateFileNameWhenTitleChanges])
-	{
-		[self setValue:[self suggestedFileName] forKey:@"fileName"];
-	}
-	
-	
-	// Invalidate our parent's sortedChildren cache if it is alphabetically sorted
-	SVCollectionSortOrder sorting = [[[self parentPage] collectionSortOrder] integerValue];
-	if (sorting == SVCollectionSortAlphabetically)
-	{
-		[[self parentPage] invalidateSortedChildrenCache];
-	}
-    
-    
-    // Update archive page titles to match
-    [[self archivePages] makeObjectsPerformSelector:@selector(updateTitle)];
-}
 
 - (BOOL)shouldUpdateFileNameWhenTitleChanges
 {
