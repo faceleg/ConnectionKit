@@ -84,10 +84,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         originalContentsURL:(NSURL *)inOriginalContentsURL
                       error:(NSError **)outError;
 
-    // as well as writing new media, moves old out to the deleted media directory
-- (BOOL)writeMediaToURL:(NSURL *)docURL
-       forSaveOperation:(NSSaveOperationType)saveOp
-                  error:(NSError **)outError;
+- (BOOL)writeMedia:(NSArray *)media
+             toURL:(NSURL *)docURL
+  forSaveOperation:(NSSaveOperationType)saveOp
+             error:(NSError **)outError;
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
@@ -331,6 +331,25 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     
+    // Build a list of all media to copy into the document
+    NSManagedObjectContext *context = [self managedObjectContext];
+    [context processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+    
+    NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaToCopyIntoDocument"];
+    NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+    
+    for (SVMediaRecord *aMediaRecord in mediaToWriteIntoDocument)
+    {
+        NSString *filename = [self reservePreferredFilename:[aMediaRecord preferredFilename]];
+        [aMediaRecord setFilename:filename];
+    }
+    
+    [context processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
+    
+    
+    
     // Prepare to save the context
     result = [self prepareToWriteToURL:inURL
                                 ofType:inType
@@ -363,7 +382,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
         
         
-        [self writeMediaToURL:inURL forSaveOperation:saveOperation error:outError];
+        // Copy media into document. Don't care if it fails as there's little the user can reasonably do about it
+        [self writeMedia:mediaToWriteIntoDocument
+                   toURL:inURL
+        forSaveOperation:saveOperation
+                   error:NULL];
         
         
         // Write out Quick Look preview
@@ -549,22 +572,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)writeMediaToURL:(NSURL *)docURL
-       forSaveOperation:(NSSaveOperationType)saveOp
-                  error:(NSError **)outError;
+- (BOOL)writeMedia:(NSArray *)media
+             toURL:(NSURL *)docURL
+  forSaveOperation:(NSSaveOperationType)saveOp
+             error:(NSError **)outError;
 {
     // Move media in & out of the package as required
-    for (NSString *aKey in _media)
+    for (SVMediaRecord *aMediaRecord in media)
     {
-        SVMediaWrapper *mediaWrapper = [_media objectForKey:aKey];
-        if (![mediaWrapper hasBeenCopiedIntoDocument] && [mediaWrapper shouldCopyIntoDocument])
-        {
-            NSURL *mediaURL = [docURL URLByAppendingPathComponent:aKey isDirectory:NO];
+        NSURL *mediaURL = [docURL URLByAppendingPathComponent:[aMediaRecord filename] isDirectory:NO];
             
-            [mediaWrapper writeToURL:mediaURL
-                       updateFileURL:YES
-                               error:NULL];
-        }
+        [aMediaRecord writeToURL:mediaURL
+                   updateFileURL:YES
+                           error:NULL];
     }
     
     
