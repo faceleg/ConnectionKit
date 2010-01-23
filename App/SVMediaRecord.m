@@ -6,7 +6,7 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVMedia.h"
+#import "SVMediaRecord.h"
 
 #import "NSManagedObject+KTExtensions.h"
 
@@ -18,14 +18,14 @@
 NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIntoDocument";
 
 
-@implementation SVMedia
+@implementation SVMediaRecord
 
 #pragma mark Creating New Media
 
-+ (SVMedia *)mediaWithURL:(NSURL *)URL
-               entityName:(NSString *)entityName
-insertIntoManagedObjectContext:(NSManagedObjectContext *)context
-                    error:(NSError **)outError;
++ (SVMediaRecord *)mediaWithURL:(NSURL *)URL
+                     entityName:(NSString *)entityName
+ insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                          error:(NSError **)outError;
 {
     OBPRECONDITION(URL);
     
@@ -33,7 +33,7 @@ insertIntoManagedObjectContext:(NSManagedObjectContext *)context
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
                                                                                 error:outError];
     
-    SVMedia *result = nil;
+    SVMediaRecord *result = nil;
     if (attributes)
     {
         result = [NSEntityDescription insertNewObjectForEntityForName:entityName
@@ -46,12 +46,14 @@ insertIntoManagedObjectContext:(NSManagedObjectContext *)context
     return result;
 }
 
-+ (SVMedia *)mediaWithContents:(NSData *)data entityName:(NSString *)entityName insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVMediaRecord *)mediaWithContents:(NSData *)data
+                          entityName:(NSString *)entityName
+      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     OBPRECONDITION(data);
     
     
-    SVMedia *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
+    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                     inManagedObjectContext:context];
     
     result->_data = [data copy];

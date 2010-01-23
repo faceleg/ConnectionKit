@@ -15,7 +15,7 @@ extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
 @class BDAlias;
 
 
-@interface SVMedia : NSManagedObject <SVMedia>
+@interface SVMediaRecord : NSManagedObject <SVMedia>
 {
   @private
     NSURL   *_URL;
@@ -28,13 +28,15 @@ extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
 #pragma mark Creating New Media
 
 // Will return nil if the URL can't be read
-     + (SVMedia *)mediaWithURL:(NSURL *)URL
-                    entityName:(NSString *)entityName
-insertIntoManagedObjectContext:(NSManagedObjectContext *)context
-                         error:(NSError **)outError;
++ (SVMediaRecord *)mediaWithURL:(NSURL *)URL
+                     entityName:(NSString *)entityName
+ insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                          error:(NSError **)outError;
 
 // Must call -setPreferredFilename: after, and ideally -setFileAttributes: too
-+ (SVMedia *)mediaWithContents:(NSData *)data entityName:(NSString *)entityName insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVMediaRecord *)mediaWithContents:(NSData *)data
+                          entityName:(NSString *)entityName
+      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 #pragma mark Location

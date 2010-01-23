@@ -17,13 +17,13 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import "SVMedia.h"
+#import "SVMediaRecord.h"
 
 
 @class KTMediaManager, KTPage, BDAlias, KTMediaFileUpload;
 
 
-@interface KTMediaFile : SVMedia
+@interface KTMediaFile : SVMediaRecord
 
 #pragma mark Media Manager
 - (KTMediaManager *)mediaManager;
