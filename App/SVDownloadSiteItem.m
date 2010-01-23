@@ -13,4 +13,6 @@
 
 @dynamic media;
 
+- (id <SVMedia>)mediaRepresentation; { return [self media]; }
+
 @end

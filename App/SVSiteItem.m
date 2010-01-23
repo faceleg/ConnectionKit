@@ -9,7 +9,7 @@
 #import "SVSiteItem.h"
 
 #import "KTPage.h"
-#import "SVWebEditorViewController.h"
+#import "SVURLPreviewViewController.h"
 
 
 @implementation SVSiteItem 
@@ -103,9 +103,10 @@
 
 #pragma mark Editing
 
-- (SVExternalLink *)externalLinkRepresentation { return nil; }	// used to determine if it's an external link, for page details.
-
+// used to determine if it's an external link, for page details.
+- (SVExternalLink *)externalLinkRepresentation { return nil; }
 - (KTPage *)pageRepresentation { return nil; }
+- (id <SVMedia>)mediaRepresentation; { return nil; }
 
 #pragma mark Publishing
 
@@ -200,11 +201,11 @@
 - (KTMediaContainer *)customSiteOutlineIcon { return nil; }
 - (KTCodeInjection *)codeInjection; { return nil; }
 
-- (Class <SVWebContentViewController>)viewControllerClass
+- (Class <SVWebContentViewController>)viewControllerClass;
 {
-    return [SVWebEditorViewController class];
+    return [SVURLPreviewViewController class];
 }
-    
+
 #pragma mark Inspection
 
 - (id)valueForUndefinedKey:(NSString *)key
