@@ -335,10 +335,10 @@
  */
 - (KTMediaFile *)insertTemporaryMediaFileWithPath:(NSString *)path
 {
-	KTMediaFile *result = [KTMediaFile mediaWithURL:[NSURL fileURLWithPath:path]
-                                         entityName:[KTMediaFile entityName]
-                     insertIntoManagedObjectContext:[self managedObjectContext]
-                                              error:NULL];
+	id result = [KTMediaFile mediaWithURL:[NSURL fileURLWithPath:path]
+                               entityName:[KTMediaFile entityName]
+           insertIntoManagedObjectContext:[self managedObjectContext]
+                                    error:NULL];
     
     return result;
 }

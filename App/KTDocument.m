@@ -542,16 +542,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     
-    [request setEntity:[NSEntityDescription entityForName:@"MediaFile" inManagedObjectContext:context]];
+    [request setEntity:[NSEntityDescription entityForName:@"MediaRecord" inManagedObjectContext:context]];
     NSArray *media = [context executeFetchRequest:request error:NULL];
-    for (SVMediaRecord *aMediaRecord in media)
-    {
-        NSString *filename = [aMediaRecord filename];
-        if (filename) [self setMedia:aMediaRecord forKey:filename];
-    }
-    
-    [request setEntity:[NSEntityDescription entityForName:@"FileMedia" inManagedObjectContext:context]];
-    media = [context executeFetchRequest:request error:NULL];
     for (SVMediaRecord *aMediaRecord in media)
     {
         NSString *filename = [aMediaRecord filename];
