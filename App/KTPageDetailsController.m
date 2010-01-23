@@ -44,6 +44,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (NSColor *)metaDescriptionCharCountColor;
 - (NSColor *)windowTitleCharCountColor;
 - (NSColor *)fileNameCharCountColor;
+- (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 @end
 
 
@@ -328,7 +329,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
-- (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects
+- (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 {
 	if (NSIsControllerMarker(selObjects))
 	{
@@ -542,17 +543,28 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	// Only visible for page types
 	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename
 	
+	NSInteger pageIsCollectionState = NSMixedState;
+	if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
+	{
+		id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
+		if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
+		{
+			pageIsCollectionState = [isCollectionMarker boolValue] ? NSOnState : NSOffState;
+		}
+	}
+	NSLog(@"kind selected = %d, pageIsCollection = %d", self.whatKindOfItemsAreSelected, pageIsCollectionState);
+	
 	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oWindowTitlePrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oMetaDescriptionPrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	
 	[oBaseURLField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oSlashIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
+	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
+	[oSlashIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
 	[oExtensionPopup setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oCollectionFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oCollectionFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
 
 	[oExternalURLField setHidden:(kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
 
@@ -597,30 +609,24 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
 		int markerExtraX [] = {200,4,6,8,0};
 		int markerMarginsAfter[] = {0,0,0,8,0};
-		
-		id isCollectionMarker = [oPagesController valueForKeyPath:@"selection.isCollection"];
-		
-		if (NSIsControllerMarker(isCollectionMarker))
+				
+		switch (pageIsCollectionState)
 		{
-			itemsToLayOut = markerItemsToLayOut;
-			theExtraX = markerExtraX;
-			theMarginsAfter = markerMarginsAfter;
-		}
-		else if ([isCollectionMarker respondsToSelector:@selector(boolValue)])
-		{
-			BOOL isCollection = [isCollectionMarker boolValue];
-			if (isCollection)
-			{
+			case NSMixedState:
+				itemsToLayOut = markerItemsToLayOut;
+				theExtraX = markerExtraX;
+				theMarginsAfter = markerMarginsAfter;
+				break;
+			case NSOnState:
 				itemsToLayOut = collectionItemsToLayOut;
 				theExtraX = collectionExtraX;
 				theMarginsAfter = collectionMarginsAfter;
-			}
-			else
-			{
+				break;
+			case NSOffState:
 				itemsToLayOut = pageItemsToLayOut;
 				theExtraX = pageExtraX;
 				theMarginsAfter = pageMarginsAfter;
-			}
+				break;
 		}
 		int widths[5] = { -1 }; // filled in below
 		int i = 0;
@@ -789,7 +795,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			// We are cheating here .. there is only ONE active text field, help button, etc. ... 
 			// We fade out the window when we leave the field, but we immediately put these fields
 			// into a new attached window.  I think nobody is going to notice that though.
-			[oAttachedWindowTextField unbind:NSValueBinding];
+			[oAttachedWindowTextField unbind:@"displayPatternValue1"];
 			NSString *placeholder = NSLocalizedString(@"%{value1}@ characters", @"pattern for showing characters used");
 			NSDictionary *bindingOptions = [NSDictionary dictionaryWithObjectsAndKeys:placeholder, NSDisplayPatternBindingOption, nil];
 			[oAttachedWindowTextField bind:@"displayPatternValue1" toObject:self withKeyPath:bindingName options:bindingOptions];

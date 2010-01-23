@@ -250,7 +250,7 @@
 		result = [[[self site] hostProperties] siteURL];
 		if (!result)
 		{
-			result = [NSURL URLWithString:@"http://www.EXAMPLE.com/weblog/"];
+			result = [NSURL URLWithString:@"http://www.EXAMPLE.com/"];
 		}
 		// What if this contains an index.html at the end?
 	}
@@ -293,7 +293,9 @@
 			resultURL = [[self parentPage] _baseExampleURL];
 		}
 	}
-	return [resultURL absoluteString];
+	NSString *result = [resultURL absoluteString];
+	NSLog(@"baseExampleURLString = %@", result);
+	return result;
 }
 + (NSSet *)keyPathsForValuesAffectingBaseExampleURLString
 {
