@@ -18,6 +18,14 @@
 NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIntoDocument";
 
 
+@interface SVMediaRecord ()
+@property(nonatomic, retain, readwrite) BDAlias *alias;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVMediaRecord
 
 #pragma mark Creating New Media
