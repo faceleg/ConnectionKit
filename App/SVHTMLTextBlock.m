@@ -251,7 +251,7 @@
 {
     NSString *result = nil;
     
-    NSString *mediaID = [[[self graphicalTextMedia] file] valueForKey:@"uniqueID"];
+    NSString *mediaID = [[[self graphicalTextMedia] file] identifier];
     if (mediaID)
     {
         result = [@"graphical-text-" stringByAppendingString:mediaID];
