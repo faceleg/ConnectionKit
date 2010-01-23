@@ -460,37 +460,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self pagesController] add:self];
 }
 
-/*! inserts aPage at the current selection */
-- (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection
-{
-	// add component to parent
-	[aCollection addChildItem:aPage];
-	
-	[[[self siteOutlineViewController] content] setSelectedObjects:[NSArray arrayWithObject:aPage]];
-	
-	// label undo and perserve the current selection
-    if ( [aPage isCollection] )
-	{
-        [[[self document] undoManager] setActionName:NSLocalizedString(@"Add Collection", "action name for adding a collection")];
-    }
-    else
-	{
-		[[[self document] undoManager] setActionName:NSLocalizedString(@"Add Page", "action name for adding a page")];
-    }
-	
-	if (([aPage boolForKey:@"includeInSiteMenu"])) 
-	{
-		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on root because included in site menu", NSStringFromSelector(_cmd)));
-		//[[aCollection root] markStale:kStaleFamily];
-	}
-	else
-	{
-		////LOG((@"~~~~~~~~~ %@ calls markStale:kStaleFamily on '%@' because page inserted but not in site menu", NSStringFromSelector(_cmd), [aCollection title]));
-		//[aCollection markStale:kStaleFamily];
-	}
-	
-}
-
 /*! group the selection in a new summary */
 - (void)group:(id)sender
 {

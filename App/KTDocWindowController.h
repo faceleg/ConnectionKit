@@ -115,8 +115,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)updateWebView:(id)sender;
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 
-- (void)insertPage:(KTPage *)aPage parent:(KTPage *)aCollection;
-
 @end
 
 @interface KTDocWindowController ( Pasteboard )
