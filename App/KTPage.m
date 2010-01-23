@@ -287,8 +287,6 @@
 	return result;
 }
 
-@dynamic showTitle;
-
 - (NSString *)titleHTMLString
 {
     return [[self titleBox] textHTMLString];

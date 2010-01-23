@@ -95,7 +95,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
 							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span>
 [[endif2]]
-[[if master.headerImageHidesH1]]
+[[if master.siteTitle.hidden]]
 						<h1 class="hidden">[[=master.siteTitleHTMLString]]</h1>
 [[else2]]
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1h placeholder:"Site Title"]][[endif3]]
@@ -108,7 +108,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
 							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span></a>
 [[endif2]]
-[[if master.headerImageHidesH1]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
+[[if master.siteTitle.hidden]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h1>
 [[else2]]
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.rootPage]][[endif3]]
