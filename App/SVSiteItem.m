@@ -198,7 +198,6 @@
 #pragma mark UI
 
 - (BOOL)isCollection { return NO; }
-- (KTMediaContainer *)customSiteOutlineIcon { return nil; }
 - (KTCodeInjection *)codeInjection; { return nil; }
 
 - (Class <SVWebContentViewController>)viewControllerClass;

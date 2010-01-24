@@ -110,9 +110,6 @@ typedef enum {
 - (void)setKeywords:(NSArray *)aStoredArray;
 - (NSString *)keywordsList;
 
-// Site Outline
-@property(nonatomic, retain) KTMediaContainer *customSiteOutlineIcon;
-
 @end
 
 

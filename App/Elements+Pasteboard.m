@@ -120,7 +120,6 @@
 	if ([self isKindOfClass:[KTPage class]])
 	{
 		[buffer setValue:[(KTPage *)self thumbnail] forKey:@"thumbnail"];
-		[buffer setValue:[(KTPage *)self customSiteOutlineIcon] forKey:@"customSiteOutlineIcon"];
 	}
 	
 	

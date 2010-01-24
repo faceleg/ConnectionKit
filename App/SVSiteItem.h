@@ -76,7 +76,6 @@
 #pragma mark UI
 
 @property(nonatomic, readonly) BOOL isCollection;
-@property(nonatomic, retain, readonly) KTMediaContainer *customSiteOutlineIcon;
 
 - (KTCodeInjection *)codeInjection;
 

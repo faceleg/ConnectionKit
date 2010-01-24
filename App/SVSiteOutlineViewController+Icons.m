@@ -70,17 +70,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
-		// Custom icon if available
-		KTMediaContainer *customIcon = [item customSiteOutlineIcon];
-		if (customIcon && ![[NSUserDefaults standardUserDefaults] boolForKey:KTDisableCustomSiteOutlineIcons])
-		{
-			result = [self customIconForPage:(KTPage *)item];
-		}
-		// Fallback to the plugin's bundle icon
-		else
-		{
-			result = [self bundleIconForItem:item];
-		}
+		result = [self bundleIconForItem:item];
 	}
 	
 	

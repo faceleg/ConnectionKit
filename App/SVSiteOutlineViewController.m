@@ -313,7 +313,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 					@"isStale",
 					@"codeInjection.hasCodeInjection",
 					@"isDraft",
-					@"customSiteOutlineIcon",
 					@"index", nil];
 	}
 	

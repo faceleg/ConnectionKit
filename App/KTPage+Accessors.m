@@ -321,39 +321,6 @@
 #pragma mark -
 #pragma mark Site Outline
 
-- (KTMediaContainer *)customSiteOutlineIcon
-{
-	KTMediaContainer *result = [self wrappedValueForKey:@"customSiteOutlineIcon"];
-	
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"customSiteOutlineIconIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"customSiteOutlineIcon"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"customSiteOutlineIcon"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
-}
-
-- (void)setCustomSiteOutlineIcon:(KTMediaContainer *)icon
-{
-	[self willChangeValueForKey:@"customSiteOutlineIcon"];
-	[self setPrimitiveValue:icon forKey:@"customSiteOutlineIcon"];
-	[self setValue:[icon identifier] forKey:@"customSiteOutlineIconIdentifier"];
-	[self didChangeValueForKey:@"customSiteOutlineIcon"];
-}
-
 - (BOOL)shouldMaskCustomSiteOutlinePageIcon:(KTPage *)page
 {
 	BOOL result = YES;
