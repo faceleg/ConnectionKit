@@ -169,17 +169,14 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     if (!result)
     {
         // Just before copying into the document, media is assigned a filename, which won't have been persisted yet
-        if ([self committedValueForKey:@"filename"])
+        NSString *filename = [self committedValueForKey:@"filename"];
+        if (filename)
         {
-            // Figure out proper values for these two
-            if ([self isInserted])
-            {
-                return [self deletedFileURL];
-            }
-            else
-            {
-                return [self savedFileURL];
-            }
+            NSURL *storeURL = [[[self objectID] persistentStore] URL];
+            NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
+            
+            result = [docURL URLByAppendingPathComponent:filename
+                                             isDirectory:NO];
         }
         else
         {

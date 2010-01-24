@@ -83,10 +83,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
         originalContentsURL:(NSURL *)inOriginalContentsURL
                       error:(NSError **)outError;
 
-- (BOOL)writeMedia:(NSArray *)media
-             toURL:(NSURL *)docURL
-  forSaveOperation:(NSSaveOperationType)saveOp
-             error:(NSError **)outError;
+- (BOOL)writeMediaRecord:(SVMediaRecord *)media
+                   toURL:(NSURL *)docURL
+        forSaveOperation:(NSSaveOperationType)saveOp
+                   error:(NSError **)outError;
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
@@ -330,27 +330,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     
-    // Build a list of all media to copy into the document
-    NSManagedObjectContext *context = [self managedObjectContext];
-    [context processPendingChanges];
-    [[self undoManager] disableUndoRegistration];
-    
-    NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaToCopyIntoDocument"];
-    NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
-    
-    for (SVMediaRecord *aMediaRecord in mediaToWriteIntoDocument)
-    {
-        NSString *filename = [self reservePreferredFilename:[aMediaRecord preferredFilename]];
-        [aMediaRecord setFilename:filename];
-    }
-    
-    [context processPendingChanges];
-    [[self undoManager] enableUndoRegistration];
-    
-    
-    
     // Tell deleted media what, if anything, to do
     NSURL *deletedMediaDirectory = [self deletedMediaDirectory];
+    NSManagedObjectContext *context = [self managedObjectContext];
     for (NSManagedObject *anObject in [context deletedObjects])
     {
         if ([anObject isKindOfClass:[SVMediaRecord class]])
@@ -379,6 +361,38 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 	if (result)
 	{
+        // Generate Quick Look preview HTML
+        NSString *quickLookPreviewHTML = [self quickLookPreviewHTML];
+        
+        
+        
+        // Build a list of all media to copy into the document
+        [context processPendingChanges];
+        [[self undoManager] disableUndoRegistration];
+        
+        NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaToCopyIntoDocument"];
+        NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+        
+        for (SVMediaRecord *aMediaRecord in mediaToWriteIntoDocument)
+        {
+            [self writeMediaRecord:aMediaRecord toURL:inURL forSaveOperation:saveOperation error:NULL];
+        }
+        
+        [context processPendingChanges];
+        [[self undoManager] enableUndoRegistration];
+        
+        
+        
+        // Save the context
+		result = [self writeDatastoreToURL:inURL
+                                    ofType:inType
+                          forSaveOperation:saveOperation
+                       originalContentsURL:inOriginalContentsURL
+                                     error:outError];
+		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+        
+        
+        
         // Make sure there's a directory to save Quick Look data into
         NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
         [[NSFileManager defaultManager] createDirectoryAtPath:[quickLookDirectory path]
@@ -387,27 +401,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                         error:NULL];
         
         
-		// Generate Quick Look preview HTML
-        NSString *quickLookPreviewHTML = [self quickLookPreviewHTML];
-        
-        
-        // Save the context
-		result = [self writeDatastoreToURL:inURL
-                              ofType:inType
-                    forSaveOperation:saveOperation
-                 originalContentsURL:inOriginalContentsURL
-                               error:outError];
-		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-        
-        
-        // Copy media into document. Don't care if it fails as there's little the user can reasonably do about it
-        [self writeMedia:mediaToWriteIntoDocument
-                   toURL:inURL
-        forSaveOperation:saveOperation
-                   error:NULL];
-        
-        
-        // Write out Quick Look preview
+		// Write out Quick Look preview
         if (result && quickLookPreviewHTML)
         {
             NSURL *previewURL = [quickLookDirectory URLByAppendingPathComponent:@"Preview.html"
@@ -590,25 +584,29 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)writeMedia:(NSArray *)media
-             toURL:(NSURL *)docURL
-  forSaveOperation:(NSSaveOperationType)saveOp
-             error:(NSError **)outError;
+- (BOOL)writeMediaRecord:(SVMediaRecord *)media
+                   toURL:(NSURL *)docURL
+        forSaveOperation:(NSSaveOperationType)saveOp
+                   error:(NSError **)outError;
 {
-    // Move media in & out of the package as required
-    for (SVMediaRecord *aMediaRecord in media)
+    BOOL result = YES;
+    
+    // Reserve filename first
+    NSString *filename = [self reservePreferredFilename:[media preferredFilename]];
+    
+    // Try write
+    NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
+    if ([media writeToURL:mediaURL updateFileURL:NO error:outError])
+    {    
+        [media setFilename:filename];
+    }
+    else
     {
-        NSURL *mediaURL = [docURL URLByAppendingPathComponent:[aMediaRecord filename] isDirectory:NO];
-            
-        [aMediaRecord writeToURL:mediaURL
-                   updateFileURL:YES
-                           error:NULL];
+        result = NO;
+        [self unreserveFilename:filename];
     }
     
-    
-    
-    
-    return YES;
+    return result;
 }
 
 /*	Called when performing a "Save As" operation on an existing document
