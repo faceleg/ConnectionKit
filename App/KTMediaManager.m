@@ -55,8 +55,7 @@ NSString *KTMediaLogDomain = @"Media";
 	[super init];
 	
 	_document = document;	// Weak ref
-	_deletedMediaDirectoryName = [[[NSProcessInfo processInfo] globallyUniqueString] copy];
-    
+	
     
     // We don't want to make undo/redo available to the user, but do want it to record the doc changed status
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -109,31 +108,6 @@ NSString *KTMediaLogDomain = @"Media";
 	
 	NSURL *result = [docURL URLByAppendingPathComponent:@"media.xml" isDirectory:NO];
 	
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-/*	Temporary media is stored in:
- *	
- *		Application Support -> Sandvox -> Temporary Media Files -> Document ID -> a file
- *
- *	This method returns the path to that directory, creating it if necessary.
- */
-- (NSURL *)deletedMediaDirectory;
-{	
-    NSURL *sandvoxSupportDirectory = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]
-                                                isDirectory:YES];
-    NSURL *allDeletedMediaDirectory = [sandvoxSupportDirectory URLByAppendingPathComponent:@"Deleted Media"
-                                                                               isDirectory:YES];
-	NSURL *result = [allDeletedMediaDirectory URLByAppendingPathComponent:_deletedMediaDirectoryName
-                                                              isDirectory:YES];
-	
-	// Create the directory if needs be
-	[[NSFileManager defaultManager] createDirectoryAtPath:[result path]
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:NULL];
-    
 	OBPOSTCONDITION(result);
 	return result;
 }

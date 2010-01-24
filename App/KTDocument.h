@@ -35,7 +35,7 @@ extern NSString *KTDocumentWillSaveNotification;
 
 @interface KTDocument : NSDocument
 {
-@private
+  @private
 	
 	// Standard document behaviour additions
     NSThread    *_thread;
@@ -66,7 +66,8 @@ extern NSString *KTDocumentWillSaveNotification;
     WebView             *_quickLookThumbnailWebView;
     NSLock              *_quickLookThumbnailLock;
     
-    NSMutableSet        *_reservedFilenames;
+    NSMutableSet    *_reservedFilenames;
+    NSString        *_deletedMediaDirectoryName;
 }
 
 
@@ -91,9 +92,12 @@ extern NSString *KTDocumentWillSaveNotification;
 + (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
 
 
-#pragma mark Media Wrappers
+#pragma mark Media
+
 - (BOOL)isFilenameReserved:(NSString *)filename;
 - (NSString *)reservePreferredFilename:(NSString *)filename;    // returns the filename reserved
+
+- (NSURL *)deletedMediaDirectory;
 
 
 #pragma mark Actions

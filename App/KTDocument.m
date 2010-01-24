@@ -292,6 +292,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     [_mediaManager release];
     [_reservedFilenames release];
+    [_deletedMediaDirectoryName release];
 	
 	// release context
 	[_managedObjectContext release];
@@ -481,6 +482,34 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [_reservedFilenames addObject:[result lowercaseString]];
     
     return result;
+}
+
+- (NSURL *)deletedMediaDirectory;
+{	
+    // Figure out location
+    NSURL *sandvoxSupportDirectory = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]
+                                                isDirectory:YES];
+    
+    NSURL *allDeletedMediaDirectory = [sandvoxSupportDirectory URLByAppendingPathComponent:@"Deleted Media"
+                                                                               isDirectory:YES];
+	
+    if (!_deletedMediaDirectoryName)
+    {
+        _deletedMediaDirectoryName = [[[NSProcessInfo processInfo] globallyUniqueString] copy];
+    }
+    NSURL *result = [allDeletedMediaDirectory URLByAppendingPathComponent:_deletedMediaDirectoryName
+                                                              isDirectory:YES];
+	
+    
+	// Create the directory if needs be
+	[[NSFileManager defaultManager] createDirectoryAtPath:[result path]
+                              withIntermediateDirectories:YES
+                                               attributes:nil
+                                                    error:NULL];
+    
+    
+	OBPOSTCONDITION(result);
+	return result;
 }
 
 #pragma mark Document Content Management
