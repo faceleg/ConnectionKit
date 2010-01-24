@@ -290,7 +290,7 @@ NSString *KTMediaLogDomain = @"Media";
 - (void)deleteTemporaryMediaFiles
 {
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]);
-	NSString *tempMedia = [[self deletedMediaDirectory] path];
+	NSString *tempMedia = [[[self document] deletedMediaDirectory] path];
 	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
 }
 

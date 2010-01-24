@@ -350,7 +350,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Tell deleted media what, if anything, to do
-    NSURL *deletedMediaDirectory = [[self mediaManager] deletedMediaDirectory];
+    NSURL *deletedMediaDirectory = [self deletedMediaDirectory];
     for (NSManagedObject *anObject in [context deletedObjects])
     {
         if ([anObject isKindOfClass:[SVMediaRecord class]])
