@@ -136,7 +136,9 @@
 	KTPage *aPage;
 	while (aPage = [pagesEnumerator nextObject])
 	{
-		KTArchivePage *archive = [self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:NO];
+		if (![aPage isKindOfClass:[KTPage class]]) continue;
+              
+        KTArchivePage *archive = [self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:NO];
 		if (archive)
 		{
 			NSArray *archivePages = [archive sortedPages];
