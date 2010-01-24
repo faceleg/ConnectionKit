@@ -2881,55 +2881,41 @@
 			name = "Page Details";
 			sourceTree = "<group>";
 		};
-		272EEA6A0DDA56030012005E /* General */ = {
+		272EEA6A0DDA56030012005E /* 2.0 */ = {
 			isa = PBXGroup;
 			children = (
-				27DEC7900DDC3EB500D795F3 /* Media System.graffle */,
-				27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */,
-				2786BEE40CAD24980086F9E0 /* KTMediaManager.h */,
-				2786BEE50CAD24980086F9E0 /* KTMediaManager.m */,
-				272C18930D0C131B00734495 /* KTMediaFileUpload.h */,
-				272C18940D0C131B00734495 /* KTMediaFileUpload.m */,
 				2710C254110A110D00A7B997 /* SVMediaProtocol.h */,
-			);
-			name = General;
-			sourceTree = "<group>";
-		};
-		272EEA6B0DDA560C0012005E /* 1 - MediaFiles */ = {
-			isa = PBXGroup;
-			children = (
-				27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */,
-				27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */,
-				27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */,
-				27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */,
-				27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */,
 				276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */,
 				276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */,
 			);
-			name = "1 - MediaFiles";
+			name = 2.0;
 			sourceTree = "<group>";
 		};
-		272EEA6C0DDA561C0012005E /* 2 - Scaled Images */ = {
-			isa = PBXGroup;
-			children = (
-				27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */,
-				27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */,
-				2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */,
-				2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */,
-			);
-			name = "2 - Scaled Images";
-			sourceTree = "<group>";
-		};
-		272EEA6D0DDA562C0012005E /* 3 - MediaContainers */ = {
+		272EEA6B0DDA560C0012005E /* 1.5 */ = {
 			isa = PBXGroup;
 			children = (
 				2786F25C0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h */,
 				2786F25D0D8C41A80073B39C /* KTGraphicalTextMediaContainer.m */,
+				27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */,
+				27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */,
+				2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */,
+				2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */,
 				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
 				275167880CBCE40000C91DFA /* KTMediaContainer.m */,
+				27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */,
+				27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */,
+				27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */,
+				27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */,
+				272C18930D0C131B00734495 /* KTMediaFileUpload.h */,
+				272C18940D0C131B00734495 /* KTMediaFileUpload.m */,
+				27A094740D1F0EA900F57801 /* KTMediaManager+Internal.h */,
 				272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */,
+				27168E610DAA45D200BBC2C6 /* KTMediaManager+MediaFiles.m */,
+				2786BEE40CAD24980086F9E0 /* KTMediaManager.h */,
+				2786BEE50CAD24980086F9E0 /* KTMediaManager.m */,
+				27DEC7900DDC3EB500D795F3 /* Media System.graffle */,
 			);
-			name = "3 - MediaContainers";
+			name = 1.5;
 			sourceTree = "<group>";
 		};
 		2734297F0D1AC59200F76E71 /* 1.5 */ = {
@@ -3198,10 +3184,8 @@
 		2786BE970CAD10530086F9E0 /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				272EEA6A0DDA56030012005E /* General */,
-				272EEA6B0DDA560C0012005E /* 1 - MediaFiles */,
-				272EEA6C0DDA561C0012005E /* 2 - Scaled Images */,
-				272EEA6D0DDA562C0012005E /* 3 - MediaContainers */,
+				272EEA6A0DDA56030012005E /* 2.0 */,
+				272EEA6B0DDA560C0012005E /* 1.5 */,
 				27969F4B0CF6146700C03F45 /* Missing Media */,
 			);
 			name = Media;
