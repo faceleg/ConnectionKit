@@ -161,7 +161,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
         case KTStandardWebView:
         {
             // Figure out the right view controller
-            SVSiteItem *item = [[self selectedPages] objectAtIndex:0];
+            SVSiteItem *item = [[self selectedPages] firstObjectKS];
             Class viewControllerClass = [item viewControllerClass];
             
             NSViewController <SVSiteItemViewController> *viewController = nil;
@@ -169,7 +169,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             {
                 if ([viewController isKindOfClass:viewControllerClass]) break;
             }
-            if (!viewController)
+            if (!viewController && viewControllerClass)
             {
                 // No suitable view controller was found, so create one
                 viewController = [[viewControllerClass alloc] init];
