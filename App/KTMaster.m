@@ -15,6 +15,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
+#import "SVMediaRecord.h"
 #import "SVTitleBox.h"
 
 #import "KTMediaManager.h"
@@ -385,40 +386,14 @@
 #pragma mark -
 #pragma mark Favicon
 
-- (KTMediaContainer *)favicon
-{
-	[self willAccessValueForKey:@"favicon"];
-	KTMediaContainer *result = [self primitiveValueForKey:@"favicon"];
-	[self didAccessValueForKey:@"favicon"];
-	
-	// The media may not have been fetched from the store yet. If so, do it!
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"faviconMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"favicon"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"favicon"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
-}
+@dynamic faviconMedia;
 
-- (void)setFavicon:(KTMediaContainer *)favicon;
+- (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {
-	[self willChangeValueForKey:@"favicon"];
-	[self setPrimitiveValue:favicon forKey:@"favicon"];
-	[self setValue:[favicon identifier] forKey:@"faviconMediaIdentifier"];
-	[self didChangeValueForKey:@"favicon"];
+    if ([self faviconMedia]) [[self managedObjectContext] deleteObject:[self faviconMedia]];
+    
+    SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+    [self setFaviconMedia:media];
 }
 
 /*	If anyone tries to clear the favicon, actually reset it to the default instead
@@ -426,15 +401,6 @@
 - (BOOL)mediaContainerShouldRemoveFile:(KTMediaContainer *)mediaContainer
 {
 	BOOL result = YES;
-	
-	if ([mediaContainer isEqual:[self favicon]])
-	{
-		NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-		KTMediaContainer *defaultFavicon = [[self mediaManager] mediaContainerWithPath:faviconPath];
-		[self setFavicon:defaultFavicon];
-		
-		result = NO;
-	}
 	
 	return result;
 }

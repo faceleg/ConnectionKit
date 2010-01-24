@@ -29,7 +29,7 @@
 	
 	// Which MediaContainer is requested?
 	NSString *mediaKeyPath = [parameters objectForKey:@"media"];
-	KTMediaContainer *media = [[self cache] valueForKeyPath:mediaKeyPath];
+	id media = [[self cache] valueForKeyPath:mediaKeyPath];
 	
 	if (media)
 	{

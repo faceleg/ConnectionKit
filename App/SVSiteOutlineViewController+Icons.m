@@ -13,6 +13,7 @@
 #import "KTMediaContainer.h"
 #import "KTPage.h"
 #import "KTDocument.h"
+#import "SVMediaRecord.h"
 #import "SVSiteItem.h"
 
 #import "NSArray+Karelia.h"
@@ -113,8 +114,8 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// If there isn't a cached icon, try to create it
 	if (!result)
 	{
-		KTMediaContainer *faviconSource = [[[self rootPage] master] favicon];
-		NSURL *faviconURL = [[faviconSource file] fileURL];
+		id <SVMedia> faviconRecord = [[[self rootPage] master] faviconMedia];
+		NSURL *faviconURL = [faviconRecord fileURL];
 		
 		// Create the thumbnail
 		result = [[NSImage alloc] initWithContentsOfURL:faviconURL

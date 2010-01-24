@@ -742,7 +742,7 @@
     
     // Migrate master media - logo, banner & favicon
     KTMediaContainer *favicon = [[[self migratedDocument] mediaManager] mediaContainerWithMediaRefNamed:@"favicon" element:oldRoot];
-    [newMaster setFavicon:favicon];
+    [newMaster setFaviconMedia:favicon];
     
     // Migrate logo
     KTMediaContainer *logo = [[[self migratedDocument] mediaManager] mediaContainerWithMediaRefNamed:@"headerImage" element:oldRoot];

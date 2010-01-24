@@ -24,7 +24,7 @@
 
 
 @class KTDesign, SVTitleBox;
-@class KTMediaContainer;
+@class SVMediaRecord, KTMediaContainer;
 
 
 @interface KTMaster : SVExtensibleManagedObject 
@@ -52,8 +52,9 @@
 - (KTMediaContainer *)logoImage;
 - (void)setLogoImage:(KTMediaContainer *)logo;
 
-- (KTMediaContainer *)favicon;
-- (void)setFavicon:(KTMediaContainer *)favicon;
+@property(nonatomic, retain) SVMediaRecord *faviconMedia;
+- (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+
 
 #pragma mark Timestamp
 @property(nonatomic) NSDateFormatterStyle timestampFormat;
