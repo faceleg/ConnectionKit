@@ -349,6 +349,25 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     
+    // Tell deleted media what, if anything, to do
+    NSURL *deletedMediaDirectory = [[self mediaManager] deletedMediaDirectory];
+    for (NSManagedObject *anObject in [context deletedObjects])
+    {
+        if ([anObject isKindOfClass:[SVMediaRecord class]])
+        {
+            SVMediaRecord *media = (SVMediaRecord *)anObject;
+            
+            // FIXME: Only delete if there's nothing left using the same filename
+            
+            NSString *filename = [media committedValueForKey:@"filename"];  // don't want to risk an out-of date in-memory value
+            NSURL *deletedMediaURL = [deletedMediaDirectory URLByAppendingPathComponent:filename
+                                                                            isDirectory:NO];
+            [media moveToURLWhenDeleted:deletedMediaURL];
+        }
+    }
+    
+    
+    
     // Prepare to save the context
     result = [self prepareToWriteToURL:inURL
                                 ofType:inType
