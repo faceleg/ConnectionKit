@@ -44,12 +44,6 @@
 - (void)setCollectionSummaryType:(KTCollectionSummaryType)type
 {
 	[self setWrappedInteger:type forKey:@"collectionSummaryType"];
-	
-	//  This setting affects the thumbnail, so update it
-	if ([self isCollection])
-	{
-		[self generateCollectionThumbnail];
-	}
 }
 
 - (void)setCollectionMaxIndexItems:(NSNumber *)max
