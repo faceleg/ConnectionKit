@@ -19,6 +19,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 
 @interface SVMediaRecord ()
+- (void)setFileURL:(NSURL *)URL;
 @property(nonatomic, retain, readwrite) BDAlias *alias;
 @end
 
@@ -70,6 +71,94 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+#pragma mark Dealloc
+
+- (void)dealloc
+{
+    [_URL release];
+    
+    [super dealloc];
+}
+
+#pragma mark Updating Media Records
+
+- (BOOL)moveToURL:(NSURL *)URL error:(NSError **)error;
+{
+    if ([[NSFileManager defaultManager] moveItemAtPath:[[self fileURL] path]
+                                                toPath:[URL path]
+                                                 error:error])
+    {
+        [self setFileURL:URL];
+        return YES;
+    }
+    
+    return NO;
+}
+
+- (void)moveToURLWhenDeleted:(NSURL *)URL;
+{
+    [self willMoveToURLWhenDeleted:URL];
+    _moveWhenSaved = YES;
+}
+
+- (void)willMoveToURLWhenDeleted:(NSURL *)URL;
+{
+    OBPRECONDITION(URL);
+    
+    OBASSERT(!_destinationURL); // shouldn't be possible to schedule twice
+    URL = [URL copy];
+    [_destinationURL release]; _destinationURL = URL;
+}
+
+- (void)willSave
+{
+    // Once deleted, there is no way to know our URL, so fix it in position
+    if ([self isDeleted])
+    {
+        [self setFileURL:[self fileURL]];
+    }
+}
+
+- (void)didSave
+{
+    BOOL inserted = [self isInserted];
+    BOOL deleted = [self isDeleted];
+    
+    
+    // Post notification
+    if (deleted)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSVDidDeleteMediaRecordNotification object:self];
+    }
+    
+    
+    // Make the move if requested.
+    // TODO: Be really sure the move isn't from a location outside the document
+    if (_destinationURL && (inserted || deleted))
+    {
+        // In case the deletion is undone, record the original destination. If that's what's happening then we're all done
+        NSURL *oldURL = (inserted) ? nil : [[self fileURL] copy];
+        
+        if (_moveWhenSaved)
+        {
+            [self moveToURL:_destinationURL error:NULL];
+        }
+        else
+        {
+            [self setFileURL:_destinationURL];
+        }
+        
+        [_destinationURL release]; _destinationURL = oldURL;
+    }
+    
+    
+    // After insertion, don't want URL to be fixed as it could be changed by the document moving or something
+    if (inserted)
+    {
+        [self setFileURL:nil];
+    }
+}
+
 #pragma mark Location
 
 - (NSURL *)fileURL;
@@ -80,7 +169,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     if (!result)
     {
         // Just before copying into the document, media is assigned a filename, which won't have been persisted yet
-        if ([self filename] && ![self committedValueForKey:@"filename"])
+        if ([self committedValueForKey:@"filename"])
         {
             // Figure out proper values for these two
             if ([self isInserted])
@@ -107,6 +196,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     }
     
     return result;
+}
+
+- (void)setFileURL:(NSURL *)URL;
+{
+    [URL copy];
+    [_URL release]; _URL = URL;
 }
 
 - (NSURL *)savedFileURL;
@@ -220,14 +315,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark File Management
 
-- (void)didSave
-{
-    if ([self isDeleted])
-    {
-        [[NSNotificationCenter defaultCenter] postNotificationName:kSVDidDeleteMediaRecordNotification object:self];
-    }
-}
-
 - (BOOL)validateForInsert:(NSError **)error
 {
     BOOL result = [super validateForInsert:error];
@@ -273,8 +360,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // Update fileURL to match
     if (updateFileURL && result)
     {
-        URL = [URL copy];
-        [_URL release]; _URL = URL;
+        [self setFileURL:URL];
     }
     
     
