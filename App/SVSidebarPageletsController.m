@@ -44,6 +44,13 @@
     return self;
 }
 
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    self = [super initWithCoder:aDecoder];
+    [self setSortDescriptors:[SVPagelet pageletSortDescriptors]];
+    return self;
+}
+
 - (void)dealloc
 {
     [_sidebar release];
