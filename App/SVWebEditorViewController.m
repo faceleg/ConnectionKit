@@ -321,22 +321,25 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Set up controllers for all sidebar pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    NSArray *sidebarPagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
-    NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] initWithCapacity:[sidebarPagelets count]];
-    
-    for (SVPagelet *aPagelet in sidebarPagelets)
+    if ([[[self page] showSidebar] boolValue])
     {
-        SVDOMController *controller = [[SVDOMController alloc] initWithContentObject:aPagelet
-                                                                       inDOMDocument:domDoc];
-        [controller setHTMLContext:[self HTMLContext]];
+        NSArray *sidebarPagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
+        NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] initWithCapacity:[sidebarPagelets count]];
         
-        [[self webEditor] insertItem:controller];
-        [sidebarPageletItems addObject:controller];
-        [controller release];
+        for (SVPagelet *aPagelet in sidebarPagelets)
+        {
+            SVDOMController *controller = [[SVDOMController alloc] initWithContentObject:aPagelet
+                                                                           inDOMDocument:domDoc];
+            [controller setHTMLContext:[self HTMLContext]];
+            
+            [[self webEditor] insertItem:controller];
+            [sidebarPageletItems addObject:controller];
+            [controller release];
+        }
+        
+        [self setSidebarPageletItems:sidebarPageletItems];
+        [sidebarPageletItems release];
     }
-    
-    [self setSidebarPageletItems:sidebarPageletItems];
-    [sidebarPageletItems release];
     
     
     
