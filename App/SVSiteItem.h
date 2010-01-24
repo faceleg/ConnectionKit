@@ -14,7 +14,7 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTPage, KTMediaContainer, KTCodeInjection, SVExternalLink;
+@class KTPage, KTCodeInjection, SVExternalLink;
 @protocol SVWebContentViewController, SVMedia;
 
 

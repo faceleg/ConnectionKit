@@ -99,13 +99,7 @@ typedef enum {
 - (NSString *)timestampTypeLabel;   // not KVO-compliant yet, but could easily be
 
 
-// Thumbnail
-- (KTMediaContainer *)thumbnail;
-- (void)setThumbnail:(KTMediaContainer *)thumbnail;
-- (void)generateCollectionThumbnail;
-- (KTPage *)pageToUseForCollectionThumbnail;
-
-// Keywords
+#pragma mark Keywords
 - (NSArray *)keywords;
 - (void)setKeywords:(NSArray *)aStoredArray;
 - (NSString *)keywordsList;

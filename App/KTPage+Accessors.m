@@ -14,7 +14,6 @@
 #import "KTDesign.h"
 #import "KTSite.h"
 #import "KTDocumentController.h"
-#import "KTMediaContainer.h"
 
 #import "NSArray+Karelia.h"
 #import "NSDocumentController+KTExtensions.h"
@@ -180,122 +179,6 @@
 	NSString *result = (KTTimestampModificationDate == [self timestampType])
 		? NSLocalizedString(@"(Modification Date)",@"Label to indicate that date shown is modification date")
 		: NSLocalizedString(@"(Creation Date)",@"Label to indicate that date shown is creation date");
-	return result;
-}
-
-#pragma mark -
-#pragma mark Thumbnail
-
-+ (NSSet *)keyPathsForValuesAffectingThumbnail
-{
-    return [NSSet setWithObject:@"collectionSummaryType"];
-}
-
-- (KTMediaContainer *)thumbnail
-{
-	KTMediaContainer *result = [self wrappedValueForKey:@"thumbnail"];
-	
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"thumbnailMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"thumbnail"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"thumbnail"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
-}
-
-- (void)_setThumbnail:(KTMediaContainer *)thumbnail
-{
-	OBPRECONDITION(!thumbnail || [thumbnail isKindOfClass:[KTMediaContainer class]]);
-    
-    [self willChangeValueForKey:@"thumbnail"];
-	[self setPrimitiveValue:thumbnail forKey:@"thumbnail"];
-	[self setValue:[thumbnail identifier] forKey:@"thumbnailMediaIdentifier"];
-	[self didChangeValueForKey:@"thumbnail"];
-	
-	
-	// Propogate the thumbnail to our parent if needed
-	if ([[self parentPage] pageToUseForCollectionThumbnail] == self)
-	{
-		[[self parentPage] _setThumbnail:thumbnail];
-	}
-}
-
-- (void)setThumbnail:(KTMediaContainer *)thumbnail
-{
-	OBPRECONDITION(!thumbnail || [thumbnail isKindOfClass:[KTMediaContainer class]]);
-    
-    [self setCollectionSummaryType:KTSummarizeAutomatic];
-	[self _setThumbnail:thumbnail];
-}
-
-
-/*	Called when a setting has been changed such that the collection's thumbnail needs updating.
- */
-- (void)generateCollectionThumbnail
-{
-	KTCollectionSummaryType summaryType = [self collectionSummaryType];
-	if (summaryType == KTSummarizeFirstItem || summaryType == KTSummarizeMostRecent)
-	{
-		KTPage *thumbnailPage = [self pageToUseForCollectionThumbnail];
-		if (thumbnailPage)
-		{
-			[self _setThumbnail:[thumbnailPage thumbnail]];
-		}
-	}
-}
-
-
-/*	For collections, the thumbnail is often automatically generated from a child page.
- *	This method tells you which page to use.
- */
-- (KTPage *)pageToUseForCollectionThumbnail
-{
-	KTPage *result;
-	
-	switch ([self collectionSummaryType])
-	{
-		case KTSummarizeFirstItem:
-			result = [[self sortedChildren] firstObjectKS];
-			break;
-		case KTSummarizeMostRecent:
-			result = [[self childrenWithSorting:SVCollectionSortByDateModified inIndex:NO] firstObjectKS];
-			break;
-		default:
-			result = self;
-			break;
-	}
-	
-	return result;
-}
-
-- (NSSize)maxThumbnailSize { return NSMakeSize(64.0, 64.0); }
-
-- (BOOL)mediaContainerShouldRemoveFile:(KTMediaContainer *)mediaContainer
-{
-	BOOL result = YES;
-	
-	if (mediaContainer == [self thumbnail])
-	{
-		id delegate = [self delegate];
-		if (delegate && [delegate respondsToSelector:@selector(pageShouldClearThumbnail:)])
-		{
-			result = [delegate pageShouldClearThumbnail:self];
-		}
-	}
-	
 	return result;
 }
 
