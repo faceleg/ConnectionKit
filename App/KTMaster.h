@@ -63,8 +63,6 @@
 #pragma mark Language
 - (NSString *)language;
 
-#pragma mark Placeholder
-- (KTMediaContainer *)placeholderImage;
 
 #pragma mark Comments
 - (KTCommentsProvider)commentsProvider;

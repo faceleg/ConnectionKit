@@ -36,8 +36,6 @@
 
 @interface KTMaster ()
 - (KTMediaManager *)mediaManager;
-
-- (void)generatePlaceholderImage;
 @end
 
 
@@ -87,13 +85,6 @@
 	if (![self timestampFormat])
 	{
 		[self setTimestampFormat:[[NSUserDefaults standardUserDefaults] integerForKey:@"timestampFormat"]];
-	}
-	
-	
-	// Placeholder
-	if (![self placeholderImage])
-	{
-		[self generatePlaceholderImage];
 	}
 }
 
@@ -230,10 +221,6 @@
 	[self didChangeValueForKey:@"design"];
 	
 	[self setValue:[self _designPublishInfoWithIdentifier:identifier] forKey:@"designPublishingInfo"];
-	
-	
-	// Changing design affects placeholder image
-	[self generatePlaceholderImage];
 }
 
 - (void)setDesign:(KTDesign *)design
@@ -469,45 +456,10 @@
 	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
 	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
-	[result addObjectIgnoringNil:[[self placeholderImage] identifier]];
 	
 	return result;
 }
 
-#pragma mark -
-#pragma mark Placeholder Image
-
-- (KTMediaContainer *)placeholderImage
-{
-	return [self valueForUndefinedKey:@"placeholderImage"];
-}
-
-- (void)generatePlaceholderImage
-{
-	// What base image should we use?
-	NSString *imagePath = [[self design] placeholderImagePath];
-	if (!imagePath || [imagePath isEqualToString:@""])
-	{
-		imagePath = [[[KSPlugin pluginWithIdentifier:@"sandvox.ImageElement"] bundle]
-					 pathForImageResource:@"placeholder"];
-	}
-	
-	
-	// Emboss the image
-	NSImage *placeholderImage = [[NSImage alloc] initWithContentsOfFile:imagePath];
-    if (placeholderImage)
-    {
-        [placeholderImage embossPlaceholder];
-        
-        // Create a media container and store it
-        KTMediaContainer *placeholderMedia = [[self mediaManager] mediaContainerWithImage:placeholderImage];
-        [self setValue:placeholderMedia forKey:@"placeholderImage"];
-        
-        [placeholderImage release];
-    }
-}
-
-#pragma mark -
 #pragma mark Comments
 
 // TODO: this is kind of hacky, for Sandvox 2 all should be combined
@@ -618,8 +570,7 @@
 {
     BOOL result = [super canStoreExtensiblePropertyForKey:key];
     
-    if ([key isEqualToString:@"placeholderImage"] ||
-        [key isEqualToString:@"commentsProvider"])
+    if ([key isEqualToString:@"commentsProvider"])
     {
         result = YES;
     }
