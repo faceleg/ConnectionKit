@@ -10,7 +10,7 @@
 #import "SVMediaProtocol.h"
 
 
-extern NSString *kSVMediaWantsCopyingIntoDocumentNotification;
+extern NSString *kSVDidDeleteMediaRecordNotification;
 
 @class BDAlias;
 

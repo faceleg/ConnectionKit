@@ -15,7 +15,7 @@
 #import "BDAlias.h"
 
 
-NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIntoDocument";
+NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 
 @interface SVMediaRecord ()
@@ -220,14 +220,11 @@ NSString *kSVMediaWantsCopyingIntoDocumentNotification = @"SVMediaWantsCopyingIn
 
 #pragma mark File Management
 
-- (void)willSave
+- (void)didSave
 {
-    [super willSave];
-    
-    // Ask the document to figure out the filename we'll be using
-    if (![self filename] && [[self shouldCopyFileIntoDocument] boolValue])
+    if ([self isDeleted])
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:@"SVMediaWantsCopyingIntoDocument" object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kSVDidDeleteMediaRecordNotification object:self];
     }
 }
 
