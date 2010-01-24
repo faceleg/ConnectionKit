@@ -69,4 +69,32 @@
     return result;
 }
 
+- (void)tableView:(NSTableView *)aTableView
+   setObjectValue:(id)anObject
+   forTableColumn:(NSTableColumn *)aTableColumn
+              row:(NSInteger)rowIndex
+{
+    if (![[aTableColumn identifier] isEqualToString:@"showPagelet"]) return;
+    
+    
+    SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
+                          objectAtIndex:rowIndex];
+    
+    NSArray *pages = [self inspectedObjects];
+    if ([anObject boolValue])
+    {
+        for (KTPage *aPage in pages)
+        {
+            [[aPage sidebar] addPageletsObject:pagelet];
+        }
+    }
+    else
+    {
+        for (KTPage *aPage in pages)
+        {
+            [[aPage sidebar] removePageletsObject:pagelet];
+        }
+    }
+}
+
 @end
