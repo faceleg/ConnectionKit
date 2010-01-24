@@ -2877,14 +2877,16 @@
 			name = "Page Details";
 			sourceTree = "<group>";
 		};
-		272EEA6A0DDA56030012005E /* 2.0 */ = {
+		272EEA6A0DDA56030012005E /* Media */ = {
 			isa = PBXGroup;
 			children = (
+				27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */,
+				27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */,
 				2710C254110A110D00A7B997 /* SVMediaProtocol.h */,
 				276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */,
 				276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */,
 			);
-			name = 2.0;
+			name = Media;
 			sourceTree = "<group>";
 		};
 		272EEA6B0DDA560C0012005E /* 1.5 */ = {
@@ -2898,8 +2900,6 @@
 				2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */,
 				275167870CBCE40000C91DFA /* KTMediaContainer.h */,
 				275167880CBCE40000C91DFA /* KTMediaContainer.m */,
-				27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */,
-				27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */,
 				27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */,
 				27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */,
 				272C18930D0C131B00734495 /* KTMediaFileUpload.h */,
@@ -3074,6 +3074,7 @@
 				273864300D50A6A000A8A209 /* Page */,
 				3C5A73710BF7B69300776464 /* Pagelets */,
 				278F798F10B4485C00BDBAF7 /* Body Text */,
+				272EEA6A0DDA56030012005E /* Media */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3180,7 +3181,6 @@
 		2786BE970CAD10530086F9E0 /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				272EEA6A0DDA56030012005E /* 2.0 */,
 				272EEA6B0DDA560C0012005E /* 1.5 */,
 				27969F4B0CF6146700C03F45 /* Missing Media */,
 			);
