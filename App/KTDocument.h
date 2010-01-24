@@ -94,8 +94,9 @@ extern NSString *KTDocumentWillSaveNotification;
 
 #pragma mark Media
 
-- (BOOL)isFilenameReserved:(NSString *)filename;
 - (NSString *)reservePreferredFilename:(NSString *)filename;    // returns the filename reserved
+- (BOOL)isFilenameReserved:(NSString *)filename;
+- (void)unreserveFilename:(NSString *)filename;
 
 - (NSURL *)deletedMediaDirectory;
 

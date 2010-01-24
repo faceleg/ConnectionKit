@@ -433,6 +433,29 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Media
 
+- (NSString *)reservePreferredFilename:(NSString *)preferredFilename;    // returns the filename reserved
+{
+    NSString *result = preferredFilename;
+    
+    NSUInteger count = 1;
+    while ([self isFilenameReserved:result])
+    {
+        // Adjust the filename ready to try again
+        count++;
+		NSString *numberedName = [NSString stringWithFormat:
+                                  @"%@-%u",
+                                  [preferredFilename stringByDeletingPathExtension],
+                                  count];
+        
+		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
+    }
+    
+    // Reserve it
+    [_reservedFilenames addObject:[result lowercaseString]];
+    
+    return result;
+}
+
 - (BOOL)isFilenameReserved:(NSString *)filename;
 {
     OBPRECONDITION(filename);
@@ -461,27 +484,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-- (NSString *)reservePreferredFilename:(NSString *)preferredFilename;    // returns the filename reserved
+- (void)unreserveFilename:(NSString *)filename;
 {
-    NSString *result = preferredFilename;
-    
-    NSUInteger count = 1;
-    while ([self isFilenameReserved:result])
-    {
-        // Adjust the filename ready to try again
-        count++;
-		NSString *numberedName = [NSString stringWithFormat:
-                                  @"%@-%u",
-                                  [preferredFilename stringByDeletingPathExtension],
-                                  count];
-        
-		result = [numberedName stringByAppendingPathExtension:[preferredFilename pathExtension]];
-    }
-    
-    // Reserve it
-    [_reservedFilenames addObject:[result lowercaseString]];
-    
-    return result;
+    [_reservedFilenames removeObject:[filename lowercaseString]];
 }
 
 - (NSURL *)deletedMediaDirectory;
