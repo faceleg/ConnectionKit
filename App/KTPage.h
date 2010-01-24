@@ -99,8 +99,7 @@ typedef enum {
 
 
 #pragma mark Keywords
-- (NSArray *)keywords;
-- (void)setKeywords:(NSArray *)aStoredArray;
+@property(nonatomic, copy) NSArray *keywords;
 - (NSString *)keywordsList;
 
 @end

@@ -185,15 +185,7 @@
 #pragma mark -
 #pragma mark Keywords
 
-- (NSArray *)keywords
-{
-    return [self transientValueForKey:@"keywords" persistentPropertyListKey:@"keywordsData"];
-}
-
-- (void)setKeywords:(NSArray *)keywords
-{	
-	[self setTransientValue:keywords forKey:@"keywords" persistentPropertyListKey:@"keywordsData"];
-}
+@dynamic keywords;
 
 - (NSString *)keywordsList;		// comma separated for meta
 {
