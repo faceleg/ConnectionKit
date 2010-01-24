@@ -36,7 +36,7 @@ typedef enum {
 @class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, KTCodeInjection;
 
 
-@interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>
+@interface KTPage : KTAbstractPage
 {
   @private
     // these ivars are only set if the page is root
