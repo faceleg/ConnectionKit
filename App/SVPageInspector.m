@@ -8,6 +8,10 @@
 
 #import "SVPageInspector.h"
 
+#import "KTPage.h"
+#import "SVPagelet.h"
+#import "SVSidebar.h"
+
 
 @implementation SVPageInspector
 
@@ -25,6 +29,44 @@
 {
     //  When the user selects a timestamp type, want to treat it as if they hit the checkbox too
     if (![showTimestampCheckbox integerValue]) [showTimestampCheckbox performClick:self];
+}
+
+#pragma mark Sidebar Pagelets
+
+- (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
+{
+    id result = nil;
+    
+    if ([[aTableColumn identifier] isEqualToString:@"showPagelet"])
+    {
+        SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
+                              objectAtIndex:rowIndex];
+        
+        // Build up the list of pagelets on all the pages.
+        NSArray *pages = [self inspectedObjects];
+        NSCountedSet *pagelets = [[NSCountedSet alloc] init];
+        for (KTPage *aPage in pages)
+        {
+            [pagelets unionSet:[[aPage sidebar] pagelets]];
+        }
+        
+        // The selection state depends on how many times it appears
+        NSUInteger count = [pagelets countForObject:pagelet];
+        if (count == 0)
+        {
+            result = [NSNumber numberWithInteger:NSOffState];
+        }
+        else if (count == [pages count])
+        {
+            result = [NSNumber numberWithInteger:NSOnState];
+        }       
+        else
+        {
+            result = [NSNumber numberWithInteger:NSMixedState];
+        }
+    }
+    
+    return result;
 }
 
 @end

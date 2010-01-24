@@ -17,6 +17,8 @@
     IBOutlet KTPlaceholderBindingTextField  *oMenuTitleField;
     
     IBOutlet NSButton *showTimestampCheckbox;
+    
+    IBOutlet NSArrayController  *oSidebarPageletsController;
 }
 
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
