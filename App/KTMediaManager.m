@@ -283,18 +283,6 @@ NSString *KTMediaLogDomain = @"Media";
 }
 
 #pragma mark -
-#pragma mark Document close
-
-/*	Simply deletes the temp media folder associated with our document
- */
-- (void)deleteTemporaryMediaFiles
-{
-	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting the temporary media directory for the document at:\n%@", [[self document] fileURL]);
-	NSString *tempMedia = [[[self document] deletedMediaDirectory] path];
-	[[NSFileManager defaultManager] removeFileAtPath:tempMedia handler:self];
-}
-
-#pragma mark -
 #pragma mark Errors
 
 - (BOOL)fileManager:(NSFileManager *)manager shouldProceedAfterError:(NSDictionary *)errorInfo

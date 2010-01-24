@@ -99,6 +99,7 @@ extern NSString *KTDocumentWillSaveNotification;
 - (void)unreserveFilename:(NSString *)filename;
 
 - (NSURL *)deletedMediaDirectory;
+- (BOOL)haveCreatedDeletedMediaDirectory;
 
 
 #pragma mark Actions

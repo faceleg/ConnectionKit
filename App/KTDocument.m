@@ -517,6 +517,11 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return result;
 }
 
+- (BOOL)haveCreatedDeletedMediaDirectory;
+{
+    return (_deletedMediaDirectoryName != nil);
+}
+
 #pragma mark Document Content Management
 
 /*  Supplement the usual read behaviour by logging host properties and loading document display properties
@@ -690,8 +695,13 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 	
 	// Remove temporary media files
-	[[self mediaManager] deleteTemporaryMediaFiles];
+    if ([self haveCreatedDeletedMediaDirectory])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:[[self deletedMediaDirectory] path]
+                                                   error:NULL];
+    }
 	
+    
 	[super close];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentDidClose" object:self];

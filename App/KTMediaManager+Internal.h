@@ -30,7 +30,7 @@
 - (void)moveApplicableExternalMediaInDocument;
 
 - (void)garbageCollect;
-- (void)deleteTemporaryMediaFiles;	// ONLY call when closing the doc
+
 
 @end
 
