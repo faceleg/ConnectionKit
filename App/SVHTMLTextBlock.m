@@ -208,9 +208,9 @@
 	myGraphicalTextCode = code;
 }
 
-- (KTMediaContainer *)graphicalTextMedia
+- (id <SVMedia>)graphicalTextMedia
 {
-	KTMediaContainer *result = nil;
+    id <SVMedia> result = nil;
 	
 	NSString *graphicalTextCode = [self graphicalTextCode];
     if (graphicalTextCode)

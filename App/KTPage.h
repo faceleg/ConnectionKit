@@ -34,7 +34,6 @@ typedef enum {
 
 @class KTDesign;
 @class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, KTCodeInjection;
-@class KTMediaContainer;
 
 
 @interface KTPage : KTAbstractPage	<KTExtensiblePluginPropertiesArchiving>

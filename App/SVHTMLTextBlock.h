@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 
 
-@class KTMediaContainer;
+@protocol SVMedia;
 
 
 @interface SVHTMLTextBlock : NSObject
@@ -73,7 +73,7 @@
 
 - (NSString *)graphicalTextCode;
 - (void)setGraphicalTextCode:(NSString *)code;
-- (KTMediaContainer *)graphicalTextMedia;
+- (id <SVMedia>)graphicalTextMedia;
 - (NSString *)graphicalTextCSSID;
 
 #pragma mark HTML

@@ -16,7 +16,7 @@
 #import "KTPage+Internal.h"
 #import "KTTranscriptController.h"
 
-#import "KTMediaContainer.h"
+#import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 #import "KTImageScalingURLProtocol.h"
 
