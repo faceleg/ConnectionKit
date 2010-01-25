@@ -89,7 +89,9 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     }
     else
     {
-        [[[self webView] mainFrame] loadHTMLString:nil baseURL:nil];
+        [[self webView] close];
+        [self setWebView:nil];
+        [self setView:nil];
     }
 }
 
