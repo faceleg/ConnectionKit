@@ -174,19 +174,7 @@
 
 - (BOOL)validatePlacement:(NSError **)error
 {
-    // Pagelets should always have a sidebar OR callout.
-    if (![self callout] && [[self sidebars] count] == 0)
-    {
-        if (error)
-        {
-            NSDictionary *info = [NSDictionary dictionaryWithObject:@"Pagelet is required to be in a callout or a sidebar" forKey:NSLocalizedDescriptionKey];
-            *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                         code:NSValidationMissingMandatoryPropertyError
-                                     userInfo:info];
-        }
-        return NO;
-    }
-    
+    // Used to insist that pagelets should always have a sidebar OR callout. Now, it should be OK for a pagelet not to appear anywhere since it can be filed away in the Page Inspector, ready to put back on a page.
     return YES;
 }
 
