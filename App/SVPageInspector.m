@@ -93,7 +93,7 @@
     {
         for (KTPage *aPage in pages)
         {
-            [[aPage sidebar] removePageletsObject:pagelet];
+            [oSidebarPageletsController removePagelet:pagelet fromSidebarOfPage:aPage];
         }
     }
 }
