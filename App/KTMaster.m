@@ -33,6 +33,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import <AddressBook/AddressBook.h>
+
 
 @interface KTMaster ()
 - (KTMediaManager *)mediaManager;
@@ -76,10 +78,39 @@
     [self setValue:codeInjection forKey:@"codeInjection"];
     
     
-    // Title boxes
+    
+    // Site Title. Guess from a variery of sources
     SVTitleBox *box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteTitle" inManagedObjectContext:[self managedObjectContext]];
+    
+    ABPerson *person = [[ABAddressBook sharedAddressBook] me];
+    NSString *title = [person valueForProperty:kABOrganizationProperty];
+    if ([title length] <= 0)
+    {
+        NSMutableArray *names = [[NSMutableArray alloc] initWithCapacity:2];
+        NSString *aName = [person valueForProperty:kABFirstNameProperty];
+        if (aName) [names addObject:aName];
+        aName = [person valueForProperty:kABLastNameProperty];
+        if (aName) [names addObject:aName];
+        
+        title = [names componentsJoinedByString:@" "];
+    }
+    
+    if ([title length] <= 0)
+    {
+        title = NSFullUserName();
+    }
+    
+    if ([title length] <= 0)
+    {
+        title = NSLocalizedString(@"My Website", "site title");
+    }
+    
+    [box setText:title];
     [self setSiteTitle:box];
     
+    
+    
+    // Tagline
     box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
     [self setSiteSubtitle:box];
 
