@@ -61,7 +61,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 @interface KTDocument (PropertiesPrivate)
-- (void)copyDocumentDisplayPropertiesToModel;
+- (void)persistUIProperties;
 @end
 
 
@@ -126,7 +126,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
     [managedObjectContext processPendingChanges];
     [[managedObjectContext undoManager] disableUndoRegistration];
-    [self copyDocumentDisplayPropertiesToModel];
+    [self persistUIProperties];
     [managedObjectContext processPendingChanges];
     [[managedObjectContext undoManager] enableUndoRegistration];
     

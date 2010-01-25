@@ -184,13 +184,8 @@
  *	Instead, they are kept within KTDocument and then only written out at save-time. If the user
  *  happens to hit undo and change the property, it is ignored.
  */
-- (void)copyDocumentDisplayPropertiesToModel
+- (void)persistUIProperties
 {
-	// Source Outline width
-	float width = 99;	// TODO: Get the split view position
-	[[self site] setInteger:width forKey:@"sourceOutlineSize"];
-	
-	
 	// Icon size
 	[[self site] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
 	
