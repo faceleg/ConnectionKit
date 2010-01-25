@@ -112,8 +112,11 @@
     
     // Tagline
     box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
+    [box setText:NSLocalizedString(@"Double-click to edit", "placeholder")];
     [self setSiteSubtitle:box];
 
+    
+    // Footer
     box = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
     [box setTextHTMLString:[self defaultCopyrightHTML]];
     [self setFooter:box];
