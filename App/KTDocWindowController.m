@@ -442,7 +442,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 {
     // Throw up an open panel
-    NSOpenPanel *openPanel = [NSOpenPanel openPanel];
+    NSOpenPanel *openPanel = [self makeChooseDialog];
     
     [openPanel beginSheetForDirectory:nil
                                  file:nil
@@ -1061,6 +1061,16 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)updateWebView:(id)sender;
 {
     [[[self webContentAreaController] webEditorViewController] setNeedsUpdate];
+}
+
+#pragma mark Choose Dialog
+
+- (NSOpenPanel *)makeChooseDialog;
+{
+    NSOpenPanel *result = [NSOpenPanel openPanel];
+    [result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
+    
+    return result;
 }
 
 @end

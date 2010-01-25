@@ -115,7 +115,15 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)updateWebView:(id)sender;
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 
+
+#pragma mark Choose Dialog
+- (NSOpenPanel *)makeChooseDialog;
+
 @end
+
+
+#pragma mark -
+
 
 @interface KTDocWindowController ( Pasteboard )
 - (BOOL)canPastePages;
