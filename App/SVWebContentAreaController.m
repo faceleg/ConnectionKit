@@ -219,6 +219,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 @synthesize selectedViewControllerWhenReady = _selectedViewControllerWhenReady;
 - (void)setSelectedViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *) controller;
 {
+    // Store
     [controller retain];
     [_selectedViewControllerWhenReady release]; _selectedViewControllerWhenReady = controller;
     
@@ -231,6 +232,15 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     else
     {
         [self performSelector:@selector(siteViewControllerSelectionMayHaveTimedOut) withObject:nil afterDelay:0.25];
+    }
+}
+
+- (void)willSelectViewController:(NSViewController *)controller
+{
+    id oldSelection = [self selectedViewController];
+    if ([oldSelection conformsToProtocol:@protocol(SVSiteItemViewController)])
+    {
+        [oldSelection loadSiteItem:nil];
     }
 }
 
