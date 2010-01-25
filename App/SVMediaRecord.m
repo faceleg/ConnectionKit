@@ -317,14 +317,10 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     BOOL result = [super validateForInsert:error];
     if (result)
     {
-        // To be valid, external media should have an alias.
-        // We can't test whether filename is valid here (in-document media should have a unqiue filename) since it won't have been generated yet
-        if (![[self shouldCopyFileIntoDocument] boolValue])
-        {
-            result = ([self alias] != nil);
-            // TODO: Generate proper error object
-            if (!result && error) *error = nil;
-        }
+        // When inserting media, it must either refer to an alias, or raw data
+        result = ([self alias] || _data);
+        // TODO: Generate proper error object
+        if (!result && error) *error = nil;
     }
     return result;
 }
