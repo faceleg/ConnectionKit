@@ -175,10 +175,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		[outlineView setDelegate:self];		// -setDelegate: MUST come first to receive all notifications
 		[outlineView setDataSource:self];
-		
-        // Ensure we have a selection (case ID unknown), and that a -selectionDidChange: message got through (Snow Leopard problem)
-		//[outlineView selectRowIndexes:[NSIndexSet indexSetWithIndex:0] byExtendingSelection:NO];
-    }
+	}
 }
 
 #pragma mark Other Accessors
@@ -200,6 +197,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                  forKeyPath:@"selectedObjects"
                     options:NSKeyValueObservingOptionInitial
                     context:sContentSelectionObservationContext];
+    
+    
+    // Restore selection
+    NSArray *selection = [self persistentSelectedItems];
+    if ([selection count] > 0)  [controller setSelectedObjects:selection];
 }
 
 #pragma mark Pages List
