@@ -10,7 +10,6 @@
 #import "KTPage.h"
 
 #import "BDAlias.h"
-#import "KTMediaContainer+Pasteboard.h"
 #import "KTMediaManager.h"
 #import "KTPasteboardArchiving.h"
 
@@ -237,20 +236,7 @@
 	{
 		id anObject = [attributes objectForKey:aKey];
 		
-		if ([anObject isKindOfClass:[KTMediaContainerPasteboardRepresentation class]])
-		{
-			NSString *mediaPath = [[(KTMediaContainerPasteboardRepresentation *)anObject alias] fullPath];
-            if (mediaPath)
-            {
-                KTMediaContainer *mediaContainer = [[result mediaManager] mediaContainerWithPath:mediaPath];
-                [attributes setObject:mediaContainer forKey:aKey];
-            }
-            else
-            {
-                [attributes removeObjectForKey:aKey];
-            }
-		}
-		else if ([anObject isKindOfClass:[KTPluginIDPasteboardRepresentation class]])
+		if ([anObject isKindOfClass:[KTPluginIDPasteboardRepresentation class]])
 		{
 			// TODO: Properly handle plugin IDs
 			[attributes removeObjectForKey:aKey];
