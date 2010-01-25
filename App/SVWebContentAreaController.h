@@ -27,19 +27,21 @@ typedef enum {
 
 
 @protocol SVWebContentAreaControllerDelegate;
-@class SVLoadingPlaceholderViewController;
+@class SVURLPreviewViewController, SVLoadingPlaceholderViewController;
 
 
 @interface SVWebContentAreaController : KSTabViewController <KSInspection, SVSiteItemViewControllerDelegate, SVWebEditorViewControllerDelegate>
 {
   @private
     SVWebEditorViewController           *_webEditorViewController;
+    SVURLPreviewViewController          *_webPreviewController;
     NSViewController                    *_sourceViewController;
     SVLoadingPlaceholderViewController  *_placeholderViewController;
     
     NSArray *_selectedPages;
     
-    KTWebViewViewType   _viewType;
+    NSViewController <SVSiteItemViewController> *_selectedViewControllerWhenReady;
+    KTWebViewViewType                           _viewType;
     
     id <SVWebContentAreaControllerDelegate> _delegate;  // weak ref
 }
@@ -50,17 +52,20 @@ typedef enum {
 
 
 #pragma mark View Type
+
 @property(nonatomic) KTWebViewViewType viewType;
 - (IBAction)selectWebViewViewType:(id)sender;
 
-- (NSViewController *)viewControllerForViewType:(KTWebViewViewType)viewType;
+- (NSViewController <SVSiteItemViewController> *)viewControllerForSiteItem:(SVSiteItem *)item;
 
 
 #pragma mark View Controllers
 
 @property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
 
-- (void)selectSiteItemViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *)controller;
+// If the controller is ready, displays it immediately. If not, the existing view remains on screen until either the new view is ready. If too much time elapses before the new view is ready, a placeholder is swapped in the meantime. Passing nil is fine and will switch to the placeholder view
+@property(nonatomic, retain) NSViewController <SVSiteItemViewController> *selectedViewControllerWhenReady;
+
 - (void)presentLoadingViewController;
 
 

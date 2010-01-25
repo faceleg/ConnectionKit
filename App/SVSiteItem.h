@@ -79,9 +79,6 @@
 
 - (KTCodeInjection *)codeInjection;
 
-// Subclasses should provide a reasonable choice. The default is SVWebEditorViewController. Must be KVO-compliant
-@property(nonatomic, readonly) Class <SVWebContentViewController> viewControllerClass;
-
 @end
 
 

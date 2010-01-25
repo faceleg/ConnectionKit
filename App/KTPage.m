@@ -422,13 +422,6 @@
 	return result;
 }
 
-#pragma mark  UI
-
-- (Class <SVWebContentViewController>)viewControllerClass
-{
-    return [SVWebEditorViewController class];
-}
-
 #pragma mark -
 #pragma mark Archiving
 

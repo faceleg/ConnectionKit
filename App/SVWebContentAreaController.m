@@ -7,6 +7,7 @@
 //
 
 #import "SVWebContentAreaController.h"
+#import "SVURLPreviewViewController.h"
 #import "SVWebSourceViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
@@ -27,8 +28,11 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     // Create controllers
     _webEditorViewController = [[SVWebEditorViewController alloc] init];
     [_webEditorViewController setDelegate:self];
-    [self insertViewController:_webEditorViewController atIndex:0];
+    [self addViewController:_webEditorViewController];
     
+    
+    _webPreviewController = [[SVURLPreviewViewController alloc] init];
+    [self addViewController:_webPreviewController];
     
     _sourceViewController = [[SVWebSourceViewController alloc] initWithNibName:@"HTMLSourceView"
                                                                bundle:nil
@@ -48,6 +52,10 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
                                forKeyPath:@"viewIsReadyToAppear"
                                   options:0
                                   context:sWebContentReadyToAppearObservationContext];
+    [_webPreviewController addObserver:self
+                            forKeyPath:@"viewIsReadyToAppear"
+                               options:0
+                               context:sWebContentReadyToAppearObservationContext];
     
     
     return self;
@@ -62,8 +70,8 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 - (void)dealloc
 {
     // Tear down delegation/observation
-    // TODO: stop observation on other item controllers
     [_webEditorViewController removeObserver:self forKeyPath:@"viewIsReadyToAppear"];
+    [_webPreviewController removeObserver:self forKeyPath:@"viewIsReadyToAppear"];
     
     
     [_webEditorViewController release];
@@ -72,6 +80,41 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     [_selectedPages release];
     
     [super dealloc];
+}
+
+#pragma mark General 
+
+- (void)didChangeSelectionOrViewType
+{
+    // Update subcontrollers
+    NSArray *pages = [self selectedPages];
+    switch ([pages count])
+    {
+        case 0:
+            [[_placeholderViewController progressIndicator] stopAnimation:self];
+            [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Nothing Selected", @"Selection placeholder")];
+            [self setSelectedViewControllerWhenReady:nil];
+            break;
+            
+        case 1:
+        {
+            // Figure out the right view controller to load
+            SVSiteItem *item = [pages objectAtIndex:0];
+            
+            NSViewController <SVSiteItemViewController> *viewController = [self viewControllerForSiteItem:item];
+            
+            // Start the load here. Present the view if it's ready; if not wait until it is (or takes too long)
+            [viewController loadSiteItem:item];
+            [self setSelectedViewControllerWhenReady:viewController];
+            
+            break;
+        }
+        default:
+            [[_placeholderViewController progressIndicator] stopAnimation:self];
+            [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
+            [self setSelectedViewControllerWhenReady:nil];
+            break;
+    }
 }
 
 #pragma mark Pages
@@ -85,32 +128,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     _selectedPages = pages;
     
     
-    // Update subcontrollers
-    switch ([pages count])
-    {
-        case 0:
-            [[_placeholderViewController progressIndicator] stopAnimation:self];
-            [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Nothing Selected", @"Selection placeholder")];
-            [self setSelectedViewController:_placeholderViewController];
-            break;
-            
-        case 1:
-        {
-            // Figure out the right view controller to load
-            NSViewController <SVSiteItemViewController> *viewController = (id)[self viewControllerForViewType:[self viewType]];
-            
-            // Start the load here. Present the view if it's ready; if not wait until it is (or takes too long)
-            [viewController loadSiteItem:[pages objectAtIndex:0]];
-            [self selectSiteItemViewControllerWhenReady:viewController];
-            
-            break;
-        }
-        default:
-            [[_placeholderViewController progressIndicator] stopAnimation:self];
-            [[_placeholderViewController label] setStringValue:NSLocalizedString(@"Multiple Pages Selected", @"Selection placeholder")];
-            [self setSelectedViewController:_placeholderViewController];
-            break;
-    }
+    [self didChangeSelectionOrViewType];
 }
 
 #pragma mark View Type
@@ -122,7 +140,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     
     if ([[self selectedPages] count] == 1)
     {
-        [self setSelectedViewController:[self viewControllerForViewType:type]];
+        [self didChangeSelectionOrViewType];
     }
 }
 
@@ -153,59 +171,59 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     return result;
 }
 
-- (NSViewController *)viewControllerForViewType:(KTWebViewViewType)viewType;
-{
-    NSViewController *result;
-    switch (viewType)
-    {
-        case KTStandardWebView:
-        {
-            // Figure out the right view controller
-            SVSiteItem *item = [[self selectedPages] firstObjectKS];
-            Class viewControllerClass = [item viewControllerClass];
-            
-            NSViewController <SVSiteItemViewController> *viewController = nil;
-            for (viewController in [self viewControllers])
-            {
-                if ([viewController isKindOfClass:viewControllerClass]) break;
-            }
-            if (!viewController && viewControllerClass)
-            {
-                // No suitable view controller was found, so create one
-                viewController = [[viewControllerClass alloc] init];
-                [self addViewController:viewController];
-                [viewController release];
+#pragma mark View controllers
 
-                [viewController setDelegate:self];
-                [viewController addObserver:self
-                                 forKeyPath:@"viewIsReadyToAppear"
-                                    options:0
-                                    context:sWebContentReadyToAppearObservationContext];
+@synthesize webEditorViewController = _webEditorViewController;
+
+- (void)presentLoadingViewController;
+{
+    [self setSelectedViewController:_placeholderViewController];
+    [[_placeholderViewController progressIndicator] startAnimation:self];
+}
+
+- (NSViewController <SVSiteItemViewController> *)viewControllerForSiteItem:(SVSiteItem *)item;
+{
+    NSViewController <SVSiteItemViewController> *result = nil;
+    
+    
+    KTPage *page = [item pageRepresentation];
+    if (page)
+    {
+        switch ([self viewType])
+        {
+            case KTStandardWebView:
+            {
+                // Figure out the right view controller
+                result = [self webEditorViewController];
+                break;
             }
-            
-            result = viewController;
-            break;
+            case KTSourceCodeView:
+            case KTPreviewSourceCodeView:
+                result = _sourceViewController;
+                break;
+                
+            default:
+                result = nil;
         }
-        case KTSourceCodeView:
-        case KTPreviewSourceCodeView:
-            result = _sourceViewController;
-            break;
-            
-        default:
-            result = nil;
+    }
+    else
+    {
+        result = _webPreviewController;
     }
     
     return result;
 }
 
-#pragma mark View controllers
+#pragma mark Selected View Controller
 
-@synthesize webEditorViewController = _webEditorViewController;
-
-- (void)selectSiteItemViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *)controller;
+@synthesize selectedViewControllerWhenReady = _selectedViewControllerWhenReady;
+- (void)setSelectedViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *) controller;
 {
-    //  Either the view's ready to appear, or we need to wait until it really is
+    [controller retain];
+    [_selectedViewControllerWhenReady release]; _selectedViewControllerWhenReady = controller;
     
+    
+    //  Either the view's ready to appear, or we need to wait until it really is
     if ([controller viewIsReadyToAppear])
     {
         [self setSelectedViewController:controller];
@@ -214,12 +232,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     {
         [self performSelector:@selector(siteViewControllerSelectionMayHaveTimedOut) withObject:nil afterDelay:0.25];
     }
-}
-
-- (void)presentLoadingViewController;
-{
-    [self setSelectedViewController:_placeholderViewController];
-    [[_placeholderViewController progressIndicator] startAnimation:self];
 }
 
 - (void)didSelectViewController;
@@ -232,7 +244,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 
 - (void)siteViewControllerSelectionMayHaveTimedOut
 {
-    if ([self selectedViewController] != [self viewControllerForViewType:[self viewType]])
+    if ([self selectedViewController] != [self selectedViewControllerWhenReady])
     {
         [self presentLoadingViewController];
     }
@@ -280,7 +292,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 {
     if (context == sWebContentReadyToAppearObservationContext)
     {
-        if (object == [self viewControllerForViewType:[self viewType]])
+        if (object == [self selectedViewControllerWhenReady])
         {
             if ([object viewIsReadyToAppear])
             {

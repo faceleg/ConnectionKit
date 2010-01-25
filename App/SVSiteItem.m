@@ -200,11 +200,6 @@
 - (BOOL)isCollection { return NO; }
 - (KTCodeInjection *)codeInjection; { return nil; }
 
-- (Class <SVWebContentViewController>)viewControllerClass;
-{
-    return [SVURLPreviewViewController class];
-}
-
 #pragma mark Inspection
 
 - (id)valueForUndefinedKey:(NSString *)key
