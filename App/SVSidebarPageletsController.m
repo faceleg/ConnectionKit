@@ -74,6 +74,12 @@
 	[super addObject:pagelet];
 }
 
+- (void)addPagelet:(SVPagelet *)pagelet toSidebarOfPage:(KTPage *)page;
+{
+    [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:page];
+    [[page sidebar] addPageletsObject:pagelet];
+}
+
 - (void)_addPagelet:(SVPagelet *)pagelet
 toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
 {
@@ -91,8 +97,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
         if ([[sidebar pagelets] intersectsSet:inheritablePagelets] ||
             [inheritablePagelets count] < 1)
         {
-            [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:aPage];
-            [sidebar addPageletsObject:pagelet];
+            [self addPagelet:pagelet toSidebarOfPage:aPage];
         }
     }
 }
