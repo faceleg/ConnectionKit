@@ -9,7 +9,7 @@
 #import "KSInspectorViewController.h"
 
 
-@class KTPlaceholderBindingTextField;
+@class KTPlaceholderBindingTextField, SVSidebarPageletsController;
 
 
 @interface SVPageInspector : KSInspectorViewController
@@ -18,7 +18,7 @@
     
     IBOutlet NSButton *showTimestampCheckbox;
     
-    IBOutlet NSArrayController  *oSidebarPageletsController;
+    IBOutlet SVSidebarPageletsController    *oSidebarPageletsController;
 }
 
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;

@@ -11,6 +11,7 @@
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVSidebar.h"
+#import "SVSidebarPageletsController.h"
 
 
 @implementation SVPageInspector
@@ -85,7 +86,7 @@
     {
         for (KTPage *aPage in pages)
         {
-            [[aPage sidebar] addPageletsObject:pagelet];
+            [oSidebarPageletsController addPagelet:pagelet toSidebarOfPage:aPage];
         }
     }
     else
