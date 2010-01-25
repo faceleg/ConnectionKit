@@ -101,8 +101,8 @@
 // NSLocalizedStringWithDefaultValue(@"navigateMainHTML",		nil, [NSBundle mainBundle], @"Main",		@"text of navigation button"),		@"navigateMainHTML",
 
 
-NSString *KTDocumentDidChangeNotification = @"KTDocumentDidChange";
-NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
+NSString *kKTDocumentDidChangeNotification = @"KTDocumentDidChange";
+NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
 @interface KTDocument ()
@@ -669,7 +669,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (changeType == NSChangeDone || changeType == NSChangeUndone)
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentDidChangeNotification object:self];
+        [[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentDidChangeNotification object:self];
     }
 }
 
@@ -691,7 +691,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
-	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillCloseNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillCloseNotification object:self];
 
 	
 	// Remove temporary media files

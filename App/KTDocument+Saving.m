@@ -48,7 +48,7 @@
 #include <sys/mount.h>
 
 
-NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
+NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 
 /*	These strings are used for generating Quick Look preview sticky-note text
@@ -119,7 +119,7 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
 	
     // Let anyone interested know
-	[[NSNotificationCenter defaultCenter] postNotificationName:KTDocumentWillSaveNotification object:self];
+	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillSaveNotification object:self];
     
     
     // Record display properties

@@ -21,11 +21,11 @@
 #import <WebKit/WebKit.h>
 
 
-extern NSString *KTDocumentDidChangeNotification;
-extern NSString *KTDocumentWillCloseNotification;
+extern NSString *kKTDocumentDidChangeNotification;
+extern NSString *kKTDocumentWillCloseNotification;
 
 
-extern NSString *KTDocumentWillSaveNotification;
+extern NSString *kKTDocumentWillSaveNotification;
 
 
 @class KTSite, KTMediaManager;
