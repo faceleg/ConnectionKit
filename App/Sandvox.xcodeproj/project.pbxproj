@@ -480,7 +480,6 @@
 		27E4CFFA0EC30B6F000E85DD /* KSBugReporterViews.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFF00EC30B6F000E85DD /* KSBugReporterViews.nib */; };
 		27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */; settings = {ATTRIBUTES = (); }; };
 		27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */; };
-		27EF1BCF0DC1F9BF00976C66 /* SVSiteOutlineViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF1BCD0DC1F9BF00976C66 /* SVSiteOutlineViewController.h */; };
 		27EF1BD00DC1F9BF00976C66 /* SVSiteOutlineViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF1BCE0DC1F9BF00976C66 /* SVSiteOutlineViewController.m */; };
 		27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */; settings = {ATTRIBUTES = (); }; };
 		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
@@ -4967,7 +4966,6 @@
 				2786F25E0D8C41A80073B39C /* KTGraphicalTextMediaContainer.h in Headers */,
 				27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */,
 				27E3F8330D9C34B000A64154 /* KTDataMigrationDocument.h in Headers */,
-				27EF1BCF0DC1F9BF00976C66 /* SVSiteOutlineViewController.h in Headers */,
 				27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */,
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
