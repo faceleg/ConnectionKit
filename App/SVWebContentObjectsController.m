@@ -100,13 +100,9 @@
             }
         }
     }
-    else if (object == [[self page] titleBox])
-    {
-        [[self page] setShowTitle:[NSNumber numberWithBool:NO]];
-    }
     else if ([object isKindOfClass:[SVTitleBox class]])
     {
-        [[[self page] managedObjectContext] deleteObject:object];
+        [(SVTitleBox *)object setHidden:[NSNumber numberWithBool:YES]];
     }
 }
 
