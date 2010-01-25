@@ -114,7 +114,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.rootPage]][[endif3]]
 [[endif2]]
 [[endif]]
-						[[if master.siteSubtitle]][[textblock property:master.siteSubtitle flags:"line" tag:p graphicalTextCode:st placeholder:"Site Subtitle"]][[endif]]
+						[[if master.siteSubtitle.hidden]][[else]][[textblock property:master.siteSubtitle flags:"line" tag:p graphicalTextCode:st placeholder:"Site Subtitle"]][[endif]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
 						[[=sitemenu]]
@@ -146,7 +146,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 
 				<div id="page-bottom">
 					<div id="page-bottom-contents">
-						[[if master.footer]][[textblock property:master.footer flags:"block" placeholder:"Footer"]][[endif]]
+						[[if master.footer.hidden]][[else]][[textblock property:master.footer flags:"block" placeholder:"Footer"]][[endif]]
 						<div class="hidden">[[`backToTopTitleHTML]]<a rel="nofollow" href="#title">[[`backToTopLinkHTML]]</a></div>
 					</div>
 				</div> <!-- page-bottom -->

@@ -32,13 +32,9 @@
 #pragma mark Text
 
 @property(nonatomic, retain) SVTitleBox *siteTitle;
-- (void)setSiteTitleWithString:(NSString *)title;   // creates Title object if needed
-
 @property(nonatomic, retain) SVTitleBox *siteSubtitle;
-- (void)setSiteSubtitleWithString:(NSString *)title;   // creates Title object if needed
 
 @property(nonatomic, retain) SVTitleBox *footer;
-- (void)setFooterWithString:(NSString *)text;   // creates Title object if needed
 - (NSString *)defaultCopyrightHTML;
 
 

@@ -284,7 +284,8 @@
     }
     else if ([result isKindOfClass:[SVTitleBox class]])
     {
-        [[SVHTMLContext currentContext] writeHTMLString:[(SVTitleBox *)result textHTMLString]];
+        NSString *html = [(SVTitleBox *)result textHTMLString];
+        if (html) [[SVHTMLContext currentContext] writeHTMLString:html];
     }
     else
     {

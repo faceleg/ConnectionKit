@@ -74,6 +74,18 @@
     KTCodeInjection *codeInjection = [NSEntityDescription insertNewObjectForEntityForName:@"MasterCodeInjection"
                                                                    inManagedObjectContext:[self managedObjectContext]];
     [self setValue:codeInjection forKey:@"codeInjection"];
+    
+    
+    // Title boxes
+    SVTitleBox *box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteTitle" inManagedObjectContext:[self managedObjectContext]];
+    [self setSiteTitle:box];
+    
+    box = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
+    [self setSiteSubtitle:box];
+
+    box = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
+    [box setTextHTMLString:[self defaultCopyrightHTML]];
+    [self setFooter:box];
 }
 
 - (void)awakeFromFetch
@@ -91,47 +103,11 @@
 #pragma mark Site Title
 
 @dynamic siteTitle;
-
-- (void)setSiteTitleWithString:(NSString *)title;
-{
-    SVTitleBox *text = [self siteTitle];
-    if (!text)
-    {
-        text = [NSEntityDescription insertNewObjectForEntityForName:@"SiteTitle" inManagedObjectContext:[self managedObjectContext]];
-        [self setSiteTitle:text];
-    }
-    [text setText:title];
-}
-
-#pragma mark Site Subtitle
-
 @dynamic siteSubtitle;
-
-- (void)setSiteSubtitleWithString:(NSString *)title;
-{
-    SVTitleBox *text = [self siteSubtitle];
-    if (!text)
-    {
-        text = [NSEntityDescription insertNewObjectForEntityForName:@"SiteSubtitle" inManagedObjectContext:[self managedObjectContext]];
-        [self setSiteSubtitle:text];
-    }
-    [text setText:title];
-}
 
 #pragma mark Footer
 
 @dynamic footer;
-
-- (void)setFooterWithString:(NSString *)title;
-{
-    SVTitleBox *text = [self footer];
-    if (!text)
-    {
-        text = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
-        [self setFooter:text];
-    }
-    [text setText:title];
-}
 
 - (NSString *)defaultCopyrightHTML
 {
@@ -622,7 +598,7 @@
 
 - (void)setSiteTitleText:(NSString *)value
 {
-	[self setSiteTitleWithString:value];
+	[[self siteTitle] setText:value];
 }
 
 + (NSSet *)keyPathsForValuesAffectingSiteTitleText
@@ -649,7 +625,7 @@
 
 - (void)setSiteSubtitleText:(NSString *)value
 {
-	[self setSiteSubtitleWithString:value];
+	[[self siteSubtitle] setText:value];
 }
 
 + (NSSet *)keyPathsForValuesAffectingSiteSubtitleText

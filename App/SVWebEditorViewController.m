@@ -697,7 +697,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     KTMaster *master = [[self page] master];
     if ([[[master siteTitle] text] length] <= 0)
     {
-        [master setSiteTitleWithString:NSLocalizedString(@"Site Title", "placeholder text")];
+        [[master siteTitle] setText:NSLocalizedString(@"Site Title", "placeholder text")];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
@@ -710,7 +710,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     KTMaster *master = [[self page] master];
     if ([[[master siteSubtitle] text] length] <= 0)
     {
-        [master setSiteSubtitleWithString:NSLocalizedString(@"Site Subtitle", "placeholder text")];
+        [[master siteSubtitle] setText:NSLocalizedString(@"Site Subtitle", "placeholder text")];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
@@ -751,7 +751,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     KTMaster *master = [[self page] master];
     if ([[[master footer] text] length] <= 0)
     {
-        [master setFooterWithString:[master defaultCopyrightHTML]];
+        [[master footer] setText:[master defaultCopyrightHTML]];
     }
     
     // Begin editing in the webview. This is tricky because the addition may have required a reload
