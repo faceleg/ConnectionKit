@@ -168,6 +168,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     [super viewDidDisappear:animated];
     
+    if (![self isUpdating]) [self loadSiteItem:nil];
+    
     // Once we move offsreen, we're no longer suitable to be shown
     [self setViewIsReadyToAppear:NO];
 }

@@ -235,15 +235,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     }
 }
 
-- (void)willSelectViewController:(NSViewController *)controller
-{
-    id oldSelection = [self selectedViewController];
-    if ([oldSelection conformsToProtocol:@protocol(SVSiteItemViewController)])
-    {
-        [oldSelection loadSiteItem:nil];
-    }
-}
-
 - (void)didSelectViewController;
 {
     [super didSelectViewController];

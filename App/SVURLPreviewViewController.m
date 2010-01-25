@@ -54,6 +54,9 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     [super viewDidDisappear:animated];
     
+    // Did we move because of an in-progress load?
+    if (![[self webView] isLoading]) [self loadSiteItem:nil];
+    
     //  Once the view goes offscreen, it's not ready to be displayed again until after loading has progressed a little
     [self setViewIsReadyToAppear:NO];
 }
