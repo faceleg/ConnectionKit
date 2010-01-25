@@ -76,14 +76,21 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [_siteItem release]; _siteItem = item;
     
     // observe new
-    [item addObserver:self
-           forKeyPath:@"URL" 
-              options:NSKeyValueObservingOptionInitial
-              context:sURLPreviewViewControllerURLObservationContext];
-    [item addObserver:self
-           forKeyPath:@"mediaRepresentation" 
-              options:NSKeyValueObservingOptionInitial
-              context:sURLPreviewViewControllerURLObservationContext];
+    if (item)
+    {
+        [item addObserver:self
+               forKeyPath:@"URL" 
+                  options:NSKeyValueObservingOptionInitial
+                  context:sURLPreviewViewControllerURLObservationContext];
+        [item addObserver:self
+               forKeyPath:@"mediaRepresentation" 
+                  options:NSKeyValueObservingOptionInitial
+                  context:sURLPreviewViewControllerURLObservationContext];
+    }
+    else
+    {
+        [[[self webView] mainFrame] loadHTMLString:nil baseURL:nil];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
