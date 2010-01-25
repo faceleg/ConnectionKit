@@ -15,7 +15,6 @@
 
 @interface SVSidebarPageletsController ()
 - (void)_addPagelet:(SVPagelet *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
-- (void)_removePagelet:(SVPagelet *)pagelet fromPageAndDescendants:(KTAbstractPage *)page;
 @end
 
 
@@ -108,7 +107,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
     SVPagelet *pagelet = object;
                    
     // Recurse down the page tree removing the pagelet from their sidebars.
-    [self _removePagelet:pagelet fromPageAndDescendants:[[self sidebar] page]];
+    [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[[self sidebar] page]];
     
     // Delete the pagelet if it no longer appears on any pages
     if ([[pagelet sidebars] count] == 0 && ![pagelet callout])
@@ -117,7 +116,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
     }
 }
 
-- (void)_removePagelet:(SVPagelet *)pagelet fromPageAndDescendants:(KTAbstractPage *)page;
+- (void)removePagelet:(SVPagelet *)pagelet fromSidebarOfPage:(KTPage *)page;
 {
     // No point going any further unless the page actually contains the pagelet! This can save recursing enourmous chunks of the site outline
     if ([[[page sidebar] pagelets] containsObject:pagelet])
@@ -126,11 +125,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
         for (SVSiteItem *aSiteItem in [page childItems])
         {
             KTPage *pageRep = [aSiteItem pageRepresentation];
-            if (pageRep) [self _removePagelet:pagelet fromPageAndDescendants:pageRep];
-        }
-        for (KTAbstractPage *anArchivePage in [page archivePages])
-        {
-            [self _removePagelet:pagelet fromPageAndDescendants:anArchivePage];
+            if (pageRep) [self removePagelet:pagelet fromSidebarOfPage:pageRep];
         }
         
         // Remove from the receiver

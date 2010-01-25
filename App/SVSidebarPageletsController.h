@@ -27,9 +27,12 @@
 
 
 #pragma mark Recursion
-// When adding or removing a pagelet, generally want to recursively add it to all applicable descendants too. This method will do that. -addObject: etc. do this as part of their implementation, but if you're not in a position to call -addObject: (i.e. a controller that lists all pagelets, not just those on a specific page) you can use this method directly instead.
+// When adding or removing a pagelet, generally want to recursively add it to all applicable descendants too.
+// -addObject: etc. do this as part of their implementation, but if you're not in a position to call -addObject: (i.e. a controller that lists all pagelets, not just those on a specific page) you can use -addPagelet:toSidebarOfPage: directly instead.
+// Similarly, -removePagelet:fromSidebarOfPage: recursively removes the pagelet from all applicable sidebars, but never actually deletes it.
 
 - (void)addPagelet:(SVPagelet *)pagelet toSidebarOfPage:(KTPage *)page;
+- (void)removePagelet:(SVPagelet *)pagelet fromSidebarOfPage:(KTPage *)page;
 
 
 @end
