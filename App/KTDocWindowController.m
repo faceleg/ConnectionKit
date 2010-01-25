@@ -1030,6 +1030,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		[[[self document] site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
 	}
+    
+    // Ask Site Outline View Controller to do the same
+    [[self siteOutlineViewController] persistUIProperties];
 }
 
 #pragma mark -

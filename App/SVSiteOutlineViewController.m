@@ -1366,4 +1366,41 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[self reloadSiteOutline];
 }
 
+#pragma mark Persistence
+
+- (NSArray *)persistentSelectedItems;
+{
+    NSManagedObjectContext *context = [[self content] managedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isSelectedInSiteOutline != 0"];
+    
+    NSArray *result = [context objectsWithEntityName:@"SiteItem"
+                                           predicate:predicate
+                                               error:NULL];
+    
+    return result;
+}
+
+- (void)persistUIProperties;
+{
+    // Remove old selection
+    NSArray *oldSelection = [self persistentSelectedItems];
+    [oldSelection makeObjectsPerformSelector:@selector(setIsSelectedInSiteOutline:)
+                                  withObject:[NSNumber numberWithBool:NO]];
+    
+    NSArray *selection = [[self content] selectedObjects];
+    [selection makeObjectsPerformSelector:@selector(setIsSelectedInSiteOutline:)
+                               withObject:[NSNumber numberWithBool:YES]];
+}
+
 @end
+
+
+#pragma mark -
+
+
+@implementation KTPage (SVSiteOutline)
+
+@dynamic isSelectedInSiteOutline;
+
+@end
+

@@ -7,13 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTPage.h"
 
 
 extern NSString *KTDisableCustomSiteOutlineIcons;
 
 
 
-@class SVSiteItem, KTPage;
+@class SVSiteItem;
 
 
 @interface SVSiteOutlineViewController : NSViewController <NSUserInterfaceValidations>
@@ -73,6 +74,12 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 #pragma mark Options
 @property(nonatomic) BOOL displaySmallPageIcons;
 
+
+#pragma mark Persistence
+- (NSArray *)persistentSelectedItems;
+- (void)persistUIProperties;
+
+
 @end
 
 
@@ -82,4 +89,9 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (void)invalidateIconCaches;
 - (void)setCachedFavicon:(NSImage *)icon;
 
+@end
+
+
+@interface KTPage (SVSiteOutline)
+@property(nonatomic, copy) NSNumber *isSelectedInSiteOutline;
 @end
