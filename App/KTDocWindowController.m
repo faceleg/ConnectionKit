@@ -1018,6 +1018,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self pageCodeInjectionController] showWindow:sender];
 }
 
+#pragma mark Persistence
+
+- (void)persistUIProperties
+{
+    [super persistUIProperties];
+    
+    // Window size
+	NSWindow *window = [self window];
+	if (window)
+	{
+		[[[self document] site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
+	}
+}
+
 #pragma mark -
 #pragma mark Support
 

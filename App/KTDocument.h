@@ -161,3 +161,9 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 @end
 
+
+// Default implementation does nothing, so implement in subclasses to take action, such as passing the message on to other controllers
+@interface NSWindowController (KTDocumentAdditions)
+- (void)persistUIProperties;
+@end
+

@@ -195,12 +195,7 @@
 	[[self site] setBool:[self displaySmallPageIcons] forKey:@"displaySmallPageIcons"];
 	
 	
-	// Window size
-	NSWindow *window = [[[self windowControllers] firstObjectKS] window];
-	if (window)
-	{
-		[[self site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
-	}
+	[[self windowControllers] makeObjectsPerformSelector:@selector(persistUIProperties)];
 }
 
 #pragma mark -

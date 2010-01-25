@@ -1093,7 +1093,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [_quickLookThumbnailLock unlock];
 }
 
-#pragma mark -
 #pragma mark Quick Look preview
 
 /*  Parses the home page to generate a Quick Look preview
@@ -1116,4 +1115,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+@end
+
+
+
+#pragma mark -
+
+
+@implementation NSWindowController (KTDocumentAdditions)
+- (void)persistUIProperties { }
 @end
