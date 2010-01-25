@@ -47,7 +47,6 @@
 
 //  Media
 #import "KTMediaFileUpload.h"
-#import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 #import "KTImageScalingSettings.h"
 
