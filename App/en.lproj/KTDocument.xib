@@ -364,6 +364,26 @@
 											<int key="NSvFlags">290</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
+												<object class="NSButton" id="416662240">
+													<reference key="NSNextResponder" ref="641495171"/>
+													<int key="NSvFlags">268</int>
+													<string key="NSFrame">{{117, 23}, {154, 17}}</string>
+													<reference key="NSSuperview" ref="641495171"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="NSButtonCell" key="NSCell" id="746725616">
+														<int key="NSCellFlags">-2080244224</int>
+														<int key="NSCellFlags2">134348800</int>
+														<string key="NSContents">Choose…</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="416662240"/>
+														<int key="NSButtonFlags">-2038152961</int>
+														<int key="NSButtonFlags2">164</int>
+														<string key="NSAlternateContents"/>
+														<string key="NSKeyEquivalent"/>
+														<int key="NSPeriodicDelay">400</int>
+														<int key="NSPeriodicInterval">75</int>
+													</object>
+												</object>
 												<object class="NSButton" id="597655839">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">265</int>
@@ -633,6 +653,25 @@
 														<object class="NSColor" key="NSTextColor">
 															<int key="NSColorSpace">3</int>
 															<bytes key="NSWhite">MC40OTU5Njc3NDU4AA</bytes>
+														</object>
+													</object>
+												</object>
+												<object class="NSTextField" id="718781323">
+													<reference key="NSNextResponder" ref="641495171"/>
+													<int key="NSvFlags">268</int>
+													<string key="NSFrame">{{14, 25}, {95, 14}}</string>
+													<reference key="NSSuperview" ref="641495171"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="NSTextFieldCell" key="NSCell" id="824802089">
+														<int key="NSCellFlags">68288064</int>
+														<int key="NSCellFlags2">71435264</int>
+														<string key="NSContents">File</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="718781323"/>
+														<reference key="NSBackgroundColor" ref="97692237"/>
+														<object class="NSColor" key="NSTextColor">
+															<int key="NSColorSpace">3</int>
+															<bytes key="NSWhite">MC4yNQA</bytes>
 														</object>
 													</object>
 												</object>
@@ -1598,6 +1637,30 @@
 					</object>
 					<int key="connectionID">2031</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oFilePrompt</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="718781323"/>
+					</object>
+					<int key="connectionID">2034</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oChooseFileButton</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="416662240"/>
+					</object>
+					<int key="connectionID">2037</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">chooseFile:</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="416662240"/>
+					</object>
+					<int key="connectionID">2038</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1817,6 +1880,8 @@
 							<reference ref="234131018"/>
 							<reference ref="408006662"/>
 							<reference ref="987946768"/>
+							<reference ref="718781323"/>
+							<reference ref="416662240"/>
 						</object>
 						<reference key="parent" ref="520114257"/>
 					</object>
@@ -2139,6 +2204,34 @@
 						<reference key="object" ref="648262233"/>
 						<reference key="parent" ref="987946768"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2032</int>
+						<reference key="object" ref="718781323"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="824802089"/>
+						</object>
+						<reference key="parent" ref="641495171"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2033</int>
+						<reference key="object" ref="824802089"/>
+						<reference key="parent" ref="718781323"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2035</int>
+						<reference key="object" ref="416662240"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="746725616"/>
+						</object>
+						<reference key="parent" ref="641495171"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2036</int>
+						<reference key="object" ref="746725616"/>
+						<reference key="parent" ref="416662240"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2246,6 +2339,10 @@
 					<string>2027.IBPluginDependency</string>
 					<string>2029.IBPluginDependency</string>
 					<string>2030.IBPluginDependency</string>
+					<string>2032.IBPluginDependency</string>
+					<string>2033.IBPluginDependency</string>
+					<string>2035.IBPluginDependency</string>
+					<string>2036.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2370,6 +2467,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -2388,7 +2489,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2031</int>
+			<int key="maxID">2038</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2627,11 +2728,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>chooseFile:</string>
 							<string>pageDetailsHelp:</string>
 							<string>preview:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 						</object>
@@ -2645,10 +2748,12 @@
 							<string>oAttachedWindowTextField</string>
 							<string>oAttachedWindowView</string>
 							<string>oBaseURLField</string>
+							<string>oChooseFileButton</string>
 							<string>oCollectionFileNameField</string>
 							<string>oDotSeparator</string>
 							<string>oExtensionPopup</string>
 							<string>oExternalURLField</string>
+							<string>oFilePrompt</string>
 							<string>oFollowButton</string>
 							<string>oIndexDotSeparator</string>
 							<string>oMetaDescriptionField</string>
@@ -2668,9 +2773,11 @@
 							<string>NSTextField</string>
 							<string>NSView</string>
 							<string>NSTextField</string>
+							<string>NSButton</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>KSPopUpButton</string>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
 							<string>NSTextField</string>

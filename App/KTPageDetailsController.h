@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kTextSiteItemType = 2, kPageSiteItemType = 3, kMixedSiteItemType = -1 };
+enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
 @class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
@@ -21,6 +21,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kTextSiteItemType = 2, k
 
 	IBOutlet NSTextField			*oWindowTitlePrompt;
 	IBOutlet NSTextField			*oMetaDescriptionPrompt;
+	IBOutlet NSTextField			*oFilePrompt;
 
 	
 	IBOutlet NSTextField			*oBaseURLField;
@@ -37,6 +38,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kTextSiteItemType = 2, k
 	IBOutlet NSTextField			*oOtherFileNameField;
 
 	IBOutlet NSButton				*oFollowButton;
+	IBOutlet NSButton				*oChooseFileButton;
 
 	IBOutlet SVPagesController		*oPagesController;
 	
@@ -61,6 +63,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kTextSiteItemType = 2, k
 
 - (IBAction) pageDetailsHelp:(id)sender;
 - (IBAction) preview:(id)sender;
+- (IBAction) chooseFile:(id)sender;
 
 // Meta description
 - (NSNumber *)metaDescriptionCountdown;

@@ -338,20 +338,31 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	else
 	{
 		// Start with unknown, break and set to mixed if we find different types
-		// We "or" these together ... 1 | 2 = 3
-		int type = kUnknownSiteItemType;
+		
+		enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
+
+		
+		int combinedType = kUnknownSiteItemType;
 		for (SVSiteItem *item in selObjects)
 		{
 			NSLog(@"site item = %@", [item class]);
-			SVExternalLink *thisLink = [item externalLinkRepresentation];
-			BOOL isLink = (nil != thisLink);
-			type |= (isLink ? kLinkSiteItemType : kPageSiteItemType);
-			if (kMixedSiteItemType == type)
+			int type = kUnknownSiteItemType
+			if (nil != [item externalLinkRepresentation]) type = kLinkSiteItemType;
+			else if (FALSE) type = kTextSiteItemType;
+			else if (FALSE) type = kFileSiteItemType;
+			else if (FALSE) type = kPageSiteItemType;
+			
+			if (kUnknownSiteItemType != combinedType && type != combinedType)
 			{
-				break;		// mixed type, no need to keep checking
+				combinedType = kMixedSiteItemType;
+				break;	// stop looking -- this is a combination of types
+			}
+			else
+			{
+				combinedType = type;	// keep looking, so far collecting a single type.
 			}
 		}
-		self.whatKindOfItemsAreSelected = type;
+		self.whatKindOfItemsAreSelected = combinedType;
 		
 		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
 		[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
@@ -567,6 +578,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oWindowTitlePrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oMetaDescriptionPrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oFilePrompt setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oChooseFileButton setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
 	
 	[oBaseURLField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];

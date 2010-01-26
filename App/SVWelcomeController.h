@@ -1,5 +1,5 @@
 //
-//  KTPlaceholderController.h
+//  SVWelcomeController.h
 //  Marvel
 //
 //  Created by Dan Wood on 10/16/06.
