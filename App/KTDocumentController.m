@@ -90,11 +90,6 @@
     return [super makeUntitledDocumentOfType:typeName error:outError];
 }
     
-- (IBAction)newDocShowHelp:(id)sender
-{
-	[[NSApp delegate] showHelpPage:@"Replacing_the_Home_Page_with_an_alternative_page_type"];		// HELPSTRING
-}
-
 - (BOOL)alertShowHelp:(NSAlert *)alert
 {
 	NSString *helpString = @"Document";		// HELPSTRING
