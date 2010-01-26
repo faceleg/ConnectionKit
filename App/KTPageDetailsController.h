@@ -28,6 +28,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, k
 	IBOutlet NSTextField			*oDotSeparator;
 
 	IBOutlet NSTextField			*oSlashIndexDotSeparator;
+	IBOutlet NSTextField			*oIndexDotSeparator;
 	IBOutlet KSPopUpButton			*oExtensionPopup;
 	IBOutlet NSTextField			*oCollectionFileNameField;
 
@@ -52,6 +53,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, k
 	MAAttachedWindow *_attachedWindow;
 
 	int _whatKindOfItemsAreSelected;
+	
+	BOOL _alreadyHandlingControlTextDidChange;
 	
 }
 

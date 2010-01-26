@@ -540,6 +540,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) layoutPageURLComponents;
 {
+#define IS_ROOT_STATE -99
 	// Only visible for page types
 	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename
 	
@@ -552,8 +553,15 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			pageIsCollectionState = [isCollectionMarker boolValue] ? NSOnState : NSOffState;
 		}
 	}
-	NSLog(@"kind selected = %d, pageIsCollection = %d", self.whatKindOfItemsAreSelected, pageIsCollectionState);
-	
+	// And also check if it's a rooot
+	if (NSOnState == pageIsCollectionState)
+	{
+		id isRootMarker = [oPagesController valueForKeyPath:@"selection.isRoot"];
+		if ([isRootMarker respondsToSelector:@selector(boolValue)] && [isRootMarker boolValue])
+		{
+			pageIsCollectionState =  IS_ROOT_STATE;		// special marker indicating root, and only root, is selected.
+		}
+	}	
 	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oWindowTitlePrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
@@ -563,6 +571,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
 	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
 	[oSlashIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
+	[oIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || IS_ROOT_STATE != pageIsCollectionState)];
+	
 	[oExtensionPopup setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oCollectionFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
 
@@ -599,19 +609,28 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int *theMarginsAfter = nil;
 		
 		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int pageExtraX [] = {4,4,6,8,0};
-		int pageMarginsAfter[] = {0,0,0,8,0};
+		int pageExtraX [] = {4,20,6,8,0};
+		int pageMarginsAfter[] = {0,-8,0,8,0};
 		
 		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int collectionExtraX [] = {4,4,6,8,0};
-		int collectionMarginsAfter[] = {0,0,0,8,0};
+		int collectionExtraX [] = {4,20,6,8,0};
+		int collectionMarginsAfter[] = {0,-7,0,8,0};
 		
 		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
 		int markerExtraX [] = {200,4,6,8,0};
 		int markerMarginsAfter[] = {0,0,0,8,0};
-				
+			
+		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
+		int rootExtraX [] = {0,6,8,0};
+		int rootMarginsAfter[] = {0,0,8,0};
+		
 		switch (pageIsCollectionState)
 		{
+			case IS_ROOT_STATE:
+				itemsToLayOut = rootItemsToLayOut;
+				theExtraX = rootExtraX;
+				theMarginsAfter = rootMarginsAfter;
+				break;
 			case NSMixedState:
 				itemsToLayOut = markerItemsToLayOut;
 				theExtraX = markerExtraX;
@@ -705,7 +724,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSRect fieldRect = [textField frame];
 	int textWidth = ceilf(textRect.size.width);
 	textWidth = MAX(textWidth, 7.0);
-	if (textWidth < fieldRect.size.width) fieldRect.size.width = textWidth;
+	fieldRect.size.width = textWidth;
 	[view setShadowRect:fieldRect];
 	
 }
@@ -726,28 +745,35 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
  */
 - (void)controlTextDidChange:(NSNotification *)notification
 {
-	NSLog(@"%s",__FUNCTION__);
-
-	NSTextField *textField = (NSTextField *) [notification object];
-    // This VERY important: Do NOT ask a cell for its -stringValue unless you actually need it. If the cell has a formatter, calling -stringValue will invoke that, and format the entered text, even though the user probably wasn't ready for it.
-    
-	if (textField == oWindowTitleField)
+	// For some stupid reason, this is getting called twice, all within the text system.
+	// So I set a flag so we don't do anything in the second invocation.
+	if (!_alreadyHandlingControlTextDidChange)
 	{
-		[self windowTitleDidChangeToValue:[textField stringValue]];
-	}
-	else if (textField == oMetaDescriptionField)
-	{
-		[self metaDescriptionDidChangeToValue:[textField stringValue]];
-	}
-	else if (textField == oPageFileNameField)
-	{
-		[self fileNameDidChangeToValue:[textField stringValue]];
-	}
+		_alreadyHandlingControlTextDidChange = YES;
 
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
-	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+		NSTextField *textField = (NSTextField *) [notification object];
+		// This VERY important: Do NOT ask a cell for its -stringValue unless you actually need it. If the cell has a formatter, calling -stringValue will invoke that, and format the entered text, even though the user probably wasn't ready for it.
+		
+		if (textField == oWindowTitleField)
+		{
+			[self windowTitleDidChangeToValue:[textField stringValue]];
+		}
+		else if (textField == oMetaDescriptionField)
+		{
+			[self metaDescriptionDidChangeToValue:[textField stringValue]];
+		}
+		else if (textField == oPageFileNameField)
+		{
+			[self fileNameDidChangeToValue:[textField stringValue]];
+		}
 
-	[self updateWidthForActiveTextField:textField];
+		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
+		[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+
+		[self updateWidthForActiveTextField:textField];
+		
+		_alreadyHandlingControlTextDidChange = NO;
+	}
 }
 
 // Special responders to the subclass of the text field
