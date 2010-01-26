@@ -43,6 +43,7 @@
         SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
                               objectAtIndex:rowIndex];
         
+        
         // Build up the list of pagelets on all the pages.
         NSArray *pages = [self inspectedObjects];
         NSCountedSet *pagelets = [[NSCountedSet alloc] init];
@@ -51,8 +52,11 @@
             [pagelets unionSet:[[aPage sidebar] pagelets]];
         }
         
+        
         // The selection state depends on how many times it appears
         NSUInteger count = [pagelets countForObject:pagelet];
+        [pagelets release];
+        
         if (count == 0)
         {
             result = [NSNumber numberWithInteger:NSOffState];

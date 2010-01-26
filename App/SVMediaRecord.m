@@ -197,7 +197,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (void)setFileURL:(NSURL *)URL;
 {
-    [URL copy];
+    URL = [URL copy];
     [_URL release]; _URL = URL;
 }
 
