@@ -36,6 +36,7 @@
 {
 	NSString *result = @"";
 	
+    /*
 	NSArray *parameters = [inRestOfTag componentsSeparatedByWhitespace];
 	if (parameters && [parameters count] == 2)
 	{
@@ -57,9 +58,9 @@
 	{
 		NSLog(@"target: usage [[index keyPath.to.index pages.to.index]]");
 		
-	}
+	}*/
 	
-	return nil;
+	return result;
 }
 
 #pragma mark -
