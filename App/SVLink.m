@@ -66,7 +66,7 @@
     // Is it a link to a page?
     if ([self page])
     {
-        result = [[[self page] titleBox] text];
+        result = [[self page] title];
         if ([result length] == 0) 
         {
             result = NSLocalizedString(@"(Empty title)",

@@ -18,7 +18,7 @@
 #import "KTDocument.h"
 #import "KTIndexPlugin.h"
 #import "KTMaster.h"
-#import "SVTitleBox.h"
+#import "SVPageTitle.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
@@ -270,7 +270,7 @@
 }
 - (void)setTitle:(NSString *)title;
 {
-    SVTitleBox *titleBox = [self titleBox];
+    SVPageTitle *titleBox = [self titleBox];
     if (!titleBox)
     {
         titleBox = [NSEntityDescription insertNewObjectForEntityForName:@"PageTitle" inManagedObjectContext:[self managedObjectContext]];
