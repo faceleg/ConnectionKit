@@ -503,6 +503,10 @@ NSString *KTDocumentWillSaveNotification = @"KTDocumentWillSave";
     {
         [self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:outError];
 	}
+    
+    
+    // MUST make sure the thumbnail webview has been unloaded, otherwise we'll fail an assertion come the next save. This call does that. #61947
+    [self _quickLookThumbnail];
 	
 	
 	return result;
