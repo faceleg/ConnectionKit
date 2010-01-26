@@ -112,7 +112,7 @@
     {
         // Guess the link URL
         SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
-        if (link) [result setLinkURLString:[link URLString]];
+        if (link) [result setURL:[NSURL URLWithString:[link URLString]]];
     }
     else if ([[self entityName] isEqualToString:@"File"])
     {

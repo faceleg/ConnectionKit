@@ -16,17 +16,28 @@
 @implementation SVExternalLink 
 
 @dynamic openInNewWindow;
+
 @dynamic linkURLString;
 
 - (NSURL *)URL
 {
-    NSURL *result = [NSURL URLWithString:[self linkURLString]];
+    NSString *urlString = [self linkURLString];
+    NSURL *result = nil;
+    if (urlString)
+    {
+        result = [NSURL URLWithString:urlString];
+    }
+    
     return result;
 }
 
 - (void)setURL:(NSURL *)url
 {
     [self setLinkURLString:[url absoluteString]];
+    
+    // Derive title from URL
+    NSString *title = [url guessedTitle];
+    [self setTitle:title];
 }
 
 + (NSSet *)keyPathsForValuesAffectingURL
@@ -44,7 +55,7 @@
 	return self;
 }
 
-- (BOOL) canPreview
+- (BOOL)canPreview
 {
 	return (nil != [self URL]);		// Maybe be even smarter about having a real URL?
 }
