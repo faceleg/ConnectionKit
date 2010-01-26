@@ -34,6 +34,13 @@
 
 #pragma mark Sidebar Pagelets
 
+- (void)refresh
+{
+    [super refresh];
+    
+    [oSidebarPageletsTable setNeedsDisplayInRect:[oSidebarPageletsTable rectOfColumn:[oSidebarPageletsTable columnWithIdentifier:@"showPagelet"]]];
+}
+
 - (id)tableView:(NSTableView *)aTableView objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)rowIndex
 {
     id result = nil;

@@ -19,6 +19,7 @@
     IBOutlet NSButton *showTimestampCheckbox;
     
     IBOutlet SVSidebarPageletsController    *oSidebarPageletsController;
+    IBOutlet NSTableView                    *oSidebarPageletsTable;
 }
 
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
