@@ -785,6 +785,17 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 #pragma mark -
 #pragma mark NSApplication Delegate
 
+- (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag;
+{
+	if (!flag || 0 == [[[NSDocumentController sharedDocumentController] documents] count])	// no visible windows.  However, all visible windows may be minimized..
+	{
+		[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
+	}
+	return NO;
+}
+
+
+
 /*  We want all errors logged in detail for further analysis later if needed
  */
 - (NSError *)application:(NSApplication *)theApplication willPresentError:(NSError *)error
