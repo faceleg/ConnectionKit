@@ -38,8 +38,8 @@
 
 #import "KTDocument.h"
 
-#import "KSAbstractBugReporter.h"
-#import "KSSilencingConfirmSheet.h"
+#import "SVBody.h"
+#import "SVBodyParagraph.h"
 #import "KT.h"
 #import "KTAbstractIndex.h"
 #import "KTElementPlugin.h"
@@ -59,12 +59,15 @@
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVPagelet.h"
-#import "SVBody.h"
-#import "SVBodyParagraph.h"
-#import "KTStalenessManager.h"
+#import "SVSidebar.h"
 #import "KTSummaryWebViewTextBlock.h"
 #import "KTLocalPublishingEngine.h"
 #import "SVWebEditorTextController.h"
+
+#import "NSManagedObjectContext+KTExtensions.h"
+
+#import "KSAbstractBugReporter.h"
+#import "KSSilencingConfirmSheet.h"
 
 #import "NSApplication+Karelia.h"       // Karelia Cocoa additions
 #import "NSArray+Karelia.h"
@@ -73,7 +76,6 @@
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSWindow+Karelia.h"
