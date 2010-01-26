@@ -342,6 +342,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		int type = kUnknownSiteItemType;
 		for (SVSiteItem *item in selObjects)
 		{
+			NSLog(@"site item = %@", [item class]);
 			SVExternalLink *thisLink = [item externalLinkRepresentation];
 			BOOL isLink = (nil != thisLink);
 			type |= (isLink ? kLinkSiteItemType : kPageSiteItemType);

@@ -26,6 +26,12 @@
 #import "KTDocument.h"
 #import "KSRecentDocument.h"
 
+@interface SVWelcomeController ()
+
+- (void)loadRecentDocumentList;
+
+@end
+
 
 
 @implementation SVWelcomeController
@@ -69,9 +75,10 @@
 {
 	NSRect separatorFrame = [oRecentBox frame];
 	
-	NSArray *recentDocs = [oRecentDocsController content];
 	NSRect contentViewRect = [[self window] contentRectForFrameRect:[[self window] frame]];
 	
+	[self loadRecentDocumentList];
+	NSArray *recentDocs = [oRecentDocsController content];
 	
 	if ([recentDocs count])
 	{
@@ -81,6 +88,7 @@
 	{
 		[[self window] setContentSize:NSMakeSize(NSMinX(separatorFrame)-1, NSHeight(contentViewRect))];
 	}
+	[[self window] center];
 	[super showWindow:sender];
 }
 
@@ -128,14 +136,8 @@
 	}
 }
 
-- (void)windowDidLoad
+- (void)loadRecentDocumentList;
 {
-    [super windowDidLoad];
-
-	[oRecentDocumentsTable setDoubleAction:@selector(openSelectedRecentDocument:)];
-	[oRecentDocumentsTable setTarget:self];
-	[oRecentDocumentsTable setIntercellSpacing:NSMakeSize(0,3.0)];	// get the columns closer together
-	
 	NSArray *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
 #if 0
 	// TESTING HARNESS ... I HAVE A BUNCH OF DOCUMENTS IN THERE.
@@ -172,6 +174,16 @@
 	self.recentDocuments = [NSArray arrayWithArray:recentDocuments];
 	
 	[oRecentDocsController setSelectionIndexes:[NSIndexSet indexSet]];
+	
+}
+
+- (void)windowDidLoad
+{
+    [super windowDidLoad];
+
+	[oRecentDocumentsTable setDoubleAction:@selector(openSelectedRecentDocument:)];
+	[oRecentDocumentsTable setTarget:self];
+	[oRecentDocumentsTable setIntercellSpacing:NSMakeSize(0,3.0)];	// get the columns closer together
 
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateLicenseStatus:)
@@ -185,7 +197,6 @@
 	[self updateLicenseStatus:nil];
 	[self updateNetworkStatus:nil];
 
-	[[self window] center];
 	[[self window] setLevel:NSNormalWindowLevel];
 	[[self window] setExcludedFromWindowsMenu:YES];
 

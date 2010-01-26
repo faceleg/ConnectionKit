@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, kMixedSiteItemType = 3 };
+enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kTextSiteItemType = 2, kPageSiteItemType = 3, kMixedSiteItemType = -1 };
 
 @class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
 
