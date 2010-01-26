@@ -124,7 +124,11 @@
         }
         if (!media)
         {
-            // TODO: Create raw file
+            NSData *data = [@"" dataUsingEncoding:NSUTF8StringEncoding];
+            media = [SVMediaRecord mediaWithContents:data entityName:@"FileMedia" insertIntoManagedObjectContext:[self managedObjectContext]];
+            [media setPreferredFilename:@"Untitled.html"];
+            
+            
         }
         
         [(SVDownloadSiteItem *)result setMedia:media];
