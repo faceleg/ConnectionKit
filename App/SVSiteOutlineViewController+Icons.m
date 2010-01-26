@@ -163,19 +163,36 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 {
 	OBPRECONDITION(item);
 	
-	KTAbstractHTMLPlugin *plugin;
+	NSImage *result = nil;
+	
+    
+    KTAbstractHTMLPlugin *plugin = nil;
 	if ([item isCollection] && [(KTPage *)item index])
 	{
 		plugin = [[(KTPage *)item index] plugin];
 	}
-	else
+    else if ([item mediaRepresentation])
+    {
+        result = [NSImage imageNamed:@"download.icns"];
+    }
+    else if ([item externalLinkRepresentation])
+    {
+        result = [NSImage imageNamed:@"External Link icon"];
+        if (!result)
+        {
+            result = [[NSImage alloc] initByReferencingFile:@"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns"];
+            [result setName:@"External Link icon"];
+            [result autorelease];
+        }
+    }
+	
+    if (!plugin)
 	{
         plugin = nil;
 		//plugin = [page plugin];
 	}
 	
 	
-	NSImage *result = nil;
 	if (plugin)
 	{
 		result = [self iconForPlugin:plugin];
