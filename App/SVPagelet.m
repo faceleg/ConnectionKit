@@ -64,15 +64,15 @@
 
 #pragma mark Title
 
-@dynamic title;
+@dynamic titleBox;
 
 - (void)setTitleWithString:(NSString *)title;
 {
-    SVTitleBox *text = [self title];
+    SVTitleBox *text = [self titleBox];
     if (!text)
     {
         text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletTitle" inManagedObjectContext:[self managedObjectContext]];
-        [self setTitle:text];
+        [self setTitleBox:text];
     }
     [text setText:title];
 }
@@ -298,7 +298,7 @@
 
 - (NSString *)titleHTMLString
 {
-    return [[self title] textHTMLString];
+    return [[self titleBox] textHTMLString];
 }
 
 + (NSSet *)keyPathsForValuesAffectingTitleHTMLString
@@ -308,7 +308,7 @@
 
 - (NSString *)titleText	// get title, but without attributes
 {
-	return [[self title] text];
+	return [[self titleBox] text];
 }
 
 - (void)setTitleText:(NSString *)value

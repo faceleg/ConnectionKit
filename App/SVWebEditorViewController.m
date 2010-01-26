@@ -739,7 +739,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if ([anObject isKindOfClass:[SVPagelet class]])
         {
             SVPagelet *pagelet = (SVPagelet *)anObject;
-            if ([[[pagelet title] text] length] <= 0)
+            if ([[[pagelet titleBox] text] length] <= 0)
             {
                 [pagelet setTitleWithString:[[pagelet class] placeholderTitleText]];
             }
@@ -793,7 +793,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             {
                 if ([anObject isKindOfClass:[SVPagelet class]])
                 {
-                    if ([[[(SVPagelet *)anObject title] text] length] == 0)
+                    if ([[[(SVPagelet *)anObject titleBox] text] length] == 0)
                     {
                         result = YES;
                         break;
