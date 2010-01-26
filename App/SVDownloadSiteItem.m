@@ -14,6 +14,14 @@
 @implementation SVDownloadSiteItem
 
 @dynamic media;
+- (void)setMedia:(SVMediaRecord *)media
+{
+    [self willChangeValueForKey:@"media"];
+    [self setPrimitiveValue:media forKey:@"media"];
+    [self didChangeValueForKey:@"media"];
+    
+    [self setTitle:[[media preferredFilename] stringByDeletingPathExtension]];
+}
 
 - (id <SVMedia>)mediaRepresentation; { return [self media]; }
 
