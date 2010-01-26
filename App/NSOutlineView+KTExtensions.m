@@ -79,11 +79,11 @@
 - (int)makeItemVisible:(id)item
 {
 	OBPRECONDITION(item);
-	
+
 	int result = [self rowForItem:item];
 	if (result < 0)
 	{
-		id parent = [self parentOfItem:item];
+		id parent = nil; // [self parentOfItem:item];
 		if (parent)
 		{
 			int parentRow = [self makeItemVisible:parent];

@@ -391,7 +391,7 @@
 												<object class="NSPopUpButton" id="408006662">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">265</int>
-													<string key="NSFrame">{{394, 50}, {72, 17}}</string>
+													<string key="NSFrame">{{416, 50}, {72, 17}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSPopUpButtonCell" key="NSCell" id="738358046">
@@ -477,7 +477,7 @@
 												<object class="NSTextField" id="899980468">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">266</int>
-													<string key="NSFrame">{{554, 52}, {68, 14}}</string>
+													<string key="NSFrame">{{577, 52}, {45, 14}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="737292473">
@@ -493,7 +493,7 @@
 												<object class="NSTextField" id="234131018">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">266</int>
-													<string key="NSFrame">{{471, 52}, {82, 14}}</string>
+													<string key="NSFrame">{{493, 52}, {82, 14}}</string>
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="713346247">
@@ -538,6 +538,30 @@
 														<reference key="NSTextColor" ref="440280181"/>
 													</object>
 												</object>
+												<object class="NSTextField" id="987946768">
+													<reference key="NSNextResponder" ref="641495171"/>
+													<int key="NSvFlags">265</int>
+													<string key="NSFrame">{{369, 52}, {129, 14}}</string>
+													<reference key="NSSuperview" ref="641495171"/>
+													<bool key="NSEnabled">YES</bool>
+													<object class="NSTextFieldCell" key="NSCell" id="648262233">
+														<int key="NSCellFlags">68288064</int>
+														<int key="NSCellFlags2">272761856</int>
+														<string key="NSContents">Multiple Pages Selected</string>
+														<reference key="NSSupport" ref="26"/>
+														<reference key="NSControlView" ref="987946768"/>
+														<object class="NSColor" key="NSBackgroundColor" id="97692237">
+															<int key="NSColorSpace">6</int>
+															<string key="NSCatalogName">System</string>
+															<string key="NSColorName">controlColor</string>
+															<reference key="NSColor" ref="47196996"/>
+														</object>
+														<object class="NSColor" key="NSTextColor">
+															<int key="NSColorSpace">3</int>
+															<bytes key="NSWhite">MC41MDQwMzIyNTQyAA</bytes>
+														</object>
+													</object>
+												</object>
 												<object class="NSTextField" id="204785403">
 													<reference key="NSNextResponder" ref="641495171"/>
 													<int key="NSvFlags">265</int>
@@ -550,12 +574,7 @@
 														<string key="NSContents">index .</string>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSControlView" ref="204785403"/>
-														<object class="NSColor" key="NSBackgroundColor" id="97692237">
-															<int key="NSColorSpace">6</int>
-															<string key="NSCatalogName">System</string>
-															<string key="NSColorName">controlColor</string>
-															<reference key="NSColor" ref="47196996"/>
-														</object>
+														<reference key="NSBackgroundColor" ref="97692237"/>
 														<object class="NSColor" key="NSTextColor">
 															<int key="NSColorSpace">3</int>
 															<bytes key="NSWhite">MC41MDQwMzIyNTQyAA</bytes>
@@ -1571,6 +1590,14 @@
 					</object>
 					<int key="connectionID">2028</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oMultiplePagesField</string>
+						<reference key="source" ref="408607898"/>
+						<reference key="destination" ref="987946768"/>
+					</object>
+					<int key="connectionID">2031</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -1783,12 +1810,13 @@
 							<reference ref="486193302"/>
 							<reference ref="139174513"/>
 							<reference ref="130323050"/>
-							<reference ref="408006662"/>
-							<reference ref="234131018"/>
 							<reference ref="252863020"/>
 							<reference ref="899980468"/>
 							<reference ref="597655839"/>
 							<reference ref="204785403"/>
+							<reference ref="234131018"/>
+							<reference ref="408006662"/>
+							<reference ref="987946768"/>
 						</object>
 						<reference key="parent" ref="520114257"/>
 					</object>
@@ -2097,6 +2125,20 @@
 						<reference key="object" ref="319158873"/>
 						<reference key="parent" ref="204785403"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2029</int>
+						<reference key="object" ref="987946768"/>
+						<object class="NSMutableArray" key="children">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<reference ref="648262233"/>
+						</object>
+						<reference key="parent" ref="641495171"/>
+					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">2030</int>
+						<reference key="object" ref="648262233"/>
+						<reference key="parent" ref="987946768"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -2202,6 +2244,8 @@
 					<string>1958.IBPluginDependency</string>
 					<string>2026.IBPluginDependency</string>
 					<string>2027.IBPluginDependency</string>
+					<string>2029.IBPluginDependency</string>
+					<string>2030.IBPluginDependency</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
@@ -2324,6 +2368,8 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -2342,7 +2388,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">2028</int>
+			<int key="maxID">2031</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -2607,6 +2653,7 @@
 							<string>oIndexDotSeparator</string>
 							<string>oMetaDescriptionField</string>
 							<string>oMetaDescriptionPrompt</string>
+							<string>oMultiplePagesField</string>
 							<string>oOtherFileNameField</string>
 							<string>oPageFileNameField</string>
 							<string>oPagesController</string>
@@ -2626,6 +2673,7 @@
 							<string>KSPopUpButton</string>
 							<string>NSTextField</string>
 							<string>NSButton</string>
+							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>
 							<string>NSTextField</string>

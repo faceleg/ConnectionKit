@@ -31,6 +31,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType = 1, kPageSiteItemType = 2, k
 	IBOutlet NSTextField			*oIndexDotSeparator;
 	IBOutlet KSPopUpButton			*oExtensionPopup;
 	IBOutlet NSTextField			*oCollectionFileNameField;
+	IBOutlet NSTextField			*oMultiplePagesField;
 
 	IBOutlet NSTextField			*oExternalURLField;
 	IBOutlet NSTextField			*oOtherFileNameField;
