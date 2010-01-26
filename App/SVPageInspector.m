@@ -16,6 +16,26 @@
 
 @implementation SVPageInspector
 
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(mocDidChange:)
+                                                 name:NSManagedObjectContextObjectsDidChangeNotification
+                                               object:nil];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [super dealloc];
+}
+
+#pragma mark View
+
 - (void)loadView
 {
     [super loadView];
@@ -33,6 +53,15 @@
 }
 
 #pragma mark Sidebar Pagelets
+
+- (void)mocDidChange:(NSNotification *)notification
+{
+    //  Refresh whenever the context changes. (Inherited behaviour only refreshes when selection changes)
+    if ([notification object] == [(id)[self inspectedObjectsController] managedObjectContext])
+    {
+        [self refresh];
+    }
+}
 
 - (void)refresh
 {
