@@ -93,6 +93,7 @@
         if (aName) [names addObject:aName];
         
         title = [names componentsJoinedByString:@" "];
+        [names release];
     }
     
     if ([title length] <= 0)
