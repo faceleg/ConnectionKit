@@ -13,6 +13,8 @@
 
 #import "KSTabViewController.h"
 
+#import "NSString+Karelia.h"
+
 
 static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewViewControllerURLObservation";
 
@@ -103,10 +105,29 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     if (context == sURLPreviewViewControllerURLObservationContext)
     {
         // Display best representation
-        NSURL *URL = [[object mediaRepresentation] fileURL];
-        if (!URL) URL = [object URL];
-        
-        [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
+        id <SVMedia> media = [object mediaRepresentation];
+        if (media)
+        {
+            NSURL *URL = [[object mediaRepresentation] fileURL];
+            if (!URL)
+            {
+                NSString *filename = [media preferredFilename];
+                NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
+                
+                [[[self webView] mainFrame] loadData:[media fileContents]
+                                            MIMEType:[NSString MIMETypeForUTI:type]
+                                    textEncodingName:nil
+                                             baseURL:[object URL]];
+            }
+            else
+            {
+                [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
+            }
+        }
+        else
+        {
+            [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:[object URL]]];
+        }
     }
     else
     {
