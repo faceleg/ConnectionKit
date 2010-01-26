@@ -47,20 +47,30 @@
     
     if ([[aTableColumn identifier] isEqualToString:@"showPagelet"])
     {
-        SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
-                              objectAtIndex:rowIndex];
-        
-        
         // Build up the list of pagelets on all the pages.
-        NSArray *pages = [self inspectedObjects];
+        NSArray *siteItems = [self inspectedObjects];
         NSCountedSet *pagelets = [[NSCountedSet alloc] init];
-        for (KTPage *aPage in pages)
+        for (SVSiteItem *aSiteItem in siteItems)
         {
-            [pagelets unionSet:[[aPage sidebar] pagelets]];
+            @try    // must account for items which don't support sidebar pagelets
+            {
+                NSSet *itemPagelets = [aSiteItem valueForKeyPath:@"sidebar.pagelets"];
+                if (itemPagelets != NSNotApplicableMarker) [pagelets unionSet:itemPagelets];
+            }
+            @catch (NSException *exception)
+            {
+                if (![[exception name] isEqualToString:NSUndefinedKeyException]) 
+                {
+                    @throw exception;
+                }
+            }
         }
         
         
         // The selection state depends on how many times it appears
+        SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
+                              objectAtIndex:rowIndex];
+        
         NSUInteger count = [pagelets countForObject:pagelet];
         [pagelets release];
         
@@ -68,7 +78,7 @@
         {
             result = [NSNumber numberWithInteger:NSOffState];
         }
-        else if (count == [pages count])
+        else if (count == [siteItems count])
         {
             result = [NSNumber numberWithInteger:NSOnState];
         }       
