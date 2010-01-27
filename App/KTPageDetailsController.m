@@ -22,6 +22,7 @@
 
 #import "NSCharacterSet+Karelia.h"
 #import "NSObject+Karelia.h"
+#import "NSString+Karelia.h"
 
 static NSString *sMetaDescriptionObservationContext = @"-metaDescription observation context";
 static NSString *sWindowTitleObservationContext = @"-windowTitle observation context";
@@ -329,6 +330,28 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
+// Probably belongs elsewhere, maybe even SVMedia itself?
+- (BOOL) mediaIsEditableText:(id <SVMedia>)aMedia
+{
+	NSString *fileName = nil;
+	NSURL *fileURL = [aMedia fileURL];
+	if (fileURL)
+	{
+		fileName = [[fileURL path] lastPathComponent];
+	}
+	else
+	{
+		fileName = [aMedia preferredFileName];
+	}
+	NSString *UTI = [NSString UTIForFilenameExtension:[fileName pathExtension]];
+	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
+				   || [UTI conformsToUTI:(NSString *)kUTTypeHTML] );
+	
+		// Let's try not allowing kUTTypeXML or KUTTypeHTML or other variants of kUTTypeText
+	return result;
+}
+	
+
 - (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
 {
 	if (NSIsControllerMarker(selObjects))
@@ -339,18 +362,24 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	{
 		// Start with unknown, break and set to mixed if we find different types
 		
-		enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
-
-		
 		int combinedType = kUnknownSiteItemType;
 		for (SVSiteItem *item in selObjects)
 		{
+			id <SVMedia> media = nil;
 			NSLog(@"site item = %@", [item class]);
-			int type = kUnknownSiteItemType
-			if (nil != [item externalLinkRepresentation]) type = kLinkSiteItemType;
-			else if (FALSE) type = kTextSiteItemType;
-			else if (FALSE) type = kFileSiteItemType;
-			else if (FALSE) type = kPageSiteItemType;
+			int type = kUnknownSiteItemType;
+			if (nil != [item externalLinkRepresentation]) { type = kLinkSiteItemType; }
+			else if (FALSE) { type = kTextSiteItemType; }
+			else if (nil != (media =[item mediaRepresentation]))
+			{
+				type = kFileSiteItemType;
+				// But now see if it's actually editable text
+				if ([self mediaIsEditableText:media])
+				{
+					type = kTextSiteItemType;
+				}
+			}
+			else if (nil != [item pageRepresentation]) type = kPageSiteItemType;
 			
 			if (kUnknownSiteItemType != combinedType && type != combinedType)
 			{
