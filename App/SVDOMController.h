@@ -42,6 +42,11 @@
 - (void)updateIfNeeded; // recurses down the tree
 
 
+#pragma mark Dispatching Messages
+// Like NSResponder, calls if the receiver responds; if not beeps
+- (void)doCommandBySelector:(SEL)aSelector;
+
+
 @end
 
 
