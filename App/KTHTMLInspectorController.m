@@ -25,9 +25,6 @@
 @interface KTHTMLInspectorController ()
 
 
--(NSDictionary*)	defaultTextAttributes;		// Style attributes dictionary for an NSAttributedString.
--(NSString*)		syntaxDefinitionFilename;   // Defaults to "SyntaxDefinition.plist" in the app bundle's "Resources" directory.
--(NSDictionary*)	syntaxDefinitionDictionary; // Defaults to loading from -syntaxDefinitionFilename.
 -(IBAction)	recolorCompleteFile: (id)sender;
 -(IBAction) recolorCompleteFileDeferred: (id)sender;
 -(void)		recolorRange: (NSRange)range;
