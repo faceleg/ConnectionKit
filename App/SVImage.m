@@ -8,6 +8,7 @@
 
 #import "SVImage.h"
 
+#import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 #import "SVStringAttribute.h"
 
@@ -15,5 +16,14 @@
 
 @dynamic media;
 @dynamic inlineGraphic;
+
+- (void)writeHTML
+{
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    [context writeImageWithIdName:[self editingElementID] className:nil src:@"foo" alt:nil width:nil height:nil];
+}
+
+- (BOOL)shouldPublishEditingElementID; { return NO; }
 
 @end

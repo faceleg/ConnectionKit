@@ -20,7 +20,6 @@
 #pragma mark HTML
 
 @dynamic elementID;
-- (NSString *)editingElementID { return [self elementID]; }
 - (BOOL) shouldPublishEditingElementID { return YES; }
 
 @end
