@@ -97,11 +97,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (IBAction)insertElement:(id)sender;
 - (IBAction)insertFile:(id)sender;
 
-- (IBAction)insertSiteTitle:(id)sender;
-- (IBAction)insertSiteSubtitle:(id)sender;
-- (IBAction)insertPageTitle:(id)sender;
 - (IBAction)insertPageletTitle:(id)sender;
-- (IBAction)insertFooter:(id)sender;
 
 
 #pragma mark Delegate

@@ -707,44 +707,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Special Insertion
 
-- (void)insertSiteTitle:(id)sender;
-{
-    // Create placeholder if needed
-    KTMaster *master = [[self page] master];
-    if ([[[master siteTitle] text] length] <= 0)
-    {
-        [[master siteTitle] setText:NSLocalizedString(@"Site Title", "placeholder text")];
-    }
-    
-    // Begin editing in the webview. This is tricky because the addition may have required a reload
-    
-}
-
-- (void)insertSiteSubtitle:(id)sender;
-{
-    // Create placeholder if needed
-    KTMaster *master = [[self page] master];
-    if ([[[master siteSubtitle] text] length] <= 0)
-    {
-        [[master siteSubtitle] setText:NSLocalizedString(@"Site Subtitle", "placeholder text")];
-    }
-    
-    // Begin editing in the webview. This is tricky because the addition may have required a reload
-    
-}
-
-- (void)insertPageTitle:(id)sender;
-{
-    // Create placeholder if needed
-    if ([[[[self page] titleBox] text] length] <= 0)
-    {
-        [[self page] setTitle:NSLocalizedString(@"Page Title", @"placeholder text")];
-    }
-    
-    // Begin editing in the webview. This is tricky because the addition may have required a reload
-    
-}
-
 - (void)insertPageletTitle:(id)sender;
 {
     // Give the selected pagelets a title if needed
@@ -759,19 +721,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             }
         }
     }
-}
-
-- (void)insertFooter:(id)sender;
-{
-    // Create placeholder if needed
-    KTMaster *master = [[self page] master];
-    if ([[[master footer] text] length] <= 0)
-    {
-        [[master footer] setText:[master defaultCopyrightHTML]];
-    }
-    
-    // Begin editing in the webview. This is tricky because the addition may have required a reload
-    
 }
 
 #pragma mark UI Validation

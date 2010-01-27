@@ -978,41 +978,9 @@
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
-								<object class="NSMenuItem" id="231634069">
-									<reference key="NSMenu" ref="712257728"/>
-									<string key="NSTitle">Site Title</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="444541979">
-									<reference key="NSMenu" ref="712257728"/>
-									<string key="NSTitle">Site Subtitle</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="193925681">
-									<reference key="NSMenu" ref="712257728"/>
-									<string key="NSTitle">Page Title</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
 								<object class="NSMenuItem" id="358988902">
 									<reference key="NSMenu" ref="712257728"/>
 									<string key="NSTitle">Pagelet Title</string>
-									<string key="NSKeyEquiv"/>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
-								</object>
-								<object class="NSMenuItem" id="268821372">
-									<reference key="NSMenu" ref="712257728"/>
-									<string key="NSTitle">Footer</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
@@ -2906,38 +2874,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
-						<string key="label">insertSiteTitle:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="231634069"/>
-					</object>
-					<int key="connectionID">1266</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">insertSiteSubtitle:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="444541979"/>
-					</object>
-					<int key="connectionID">1267</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">insertPageTitle:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="193925681"/>
-					</object>
-					<int key="connectionID">1268</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">insertFooter:</string>
-						<reference key="source" ref="464856506"/>
-						<reference key="destination" ref="268821372"/>
-					</object>
-					<int key="connectionID">1269</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
 						<string key="label">insertPageletTitle:</string>
 						<reference key="source" ref="464856506"/>
 						<reference key="destination" ref="358988902"/>
@@ -4246,10 +4182,6 @@
 						<reference key="object" ref="712257728"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="193925681"/>
-							<reference ref="268821372"/>
-							<reference ref="444541979"/>
-							<reference ref="231634069"/>
 							<reference ref="358988902"/>
 							<reference ref="428536521"/>
 							<reference ref="607508562"/>
@@ -4261,26 +4193,6 @@
 							<reference ref="554509876"/>
 						</object>
 						<reference key="parent" ref="654169190"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1256</int>
-						<reference key="object" ref="193925681"/>
-						<reference key="parent" ref="712257728"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1257</int>
-						<reference key="object" ref="268821372"/>
-						<reference key="parent" ref="712257728"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1258</int>
-						<reference key="object" ref="444541979"/>
-						<reference key="parent" ref="712257728"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">1259</int>
-						<reference key="object" ref="231634069"/>
-						<reference key="parent" ref="712257728"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1260</int>
@@ -4521,10 +4433,6 @@
 					<string>1246.IBPluginDependency</string>
 					<string>1255.IBEditorWindowLastContentRect</string>
 					<string>1255.IBPluginDependency</string>
-					<string>1256.IBPluginDependency</string>
-					<string>1257.IBPluginDependency</string>
-					<string>1258.IBPluginDependency</string>
-					<string>1259.IBPluginDependency</string>
 					<string>1260.IBPluginDependency</string>
 					<string>1261.IBPluginDependency</string>
 					<string>1261.ImportedFromIB2</string>
@@ -4897,11 +4805,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{632, 625}, {173, 233}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{632, 705}, {173, 153}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5634,7 +5538,7 @@
 							<string>NSView</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="596636479">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="200849629">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSPluginInstallerController.h</string>
 					</object>
@@ -5650,7 +5554,7 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">KSPluginTableView</string>
 					<string key="superclassName">NSTableView</string>
-					<reference key="sourceIdentifier" ref="596636479"/>
+					<reference key="sourceIdentifier" ref="200849629"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">KSPluginTableView</string>
@@ -5745,7 +5649,7 @@
 						<string key="NS.key.0">tabView</string>
 						<string key="NS.object.0">NSTabView</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="724801929">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="182933654">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSTabViewController.h</string>
 					</object>
@@ -6059,7 +5963,7 @@
 						<string key="NS.key.0">setupHost:</string>
 						<string key="NS.object.0">id</string>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="726884207">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="63461254">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTDocument.h</string>
 					</object>
@@ -6413,7 +6317,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="489370416">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="618819503">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSDragging.h</string>
 					</object>
@@ -6435,11 +6339,11 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSViewController</string>
-					<reference key="sourceIdentifier" ref="724801929"/>
+					<reference key="sourceIdentifier" ref="182933654"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
-					<reference key="sourceIdentifier" ref="489370416"/>
+					<reference key="sourceIdentifier" ref="618819503"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindow</string>
@@ -6469,7 +6373,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindowController</string>
-					<reference key="sourceIdentifier" ref="726884207"/>
+					<reference key="sourceIdentifier" ref="63461254"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSWindowController</string>
