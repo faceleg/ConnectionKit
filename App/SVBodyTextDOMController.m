@@ -15,6 +15,7 @@
 #import "KTAbstractPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
+#import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVWebContentObjectsController.h"
@@ -205,6 +206,22 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [callout setPagelets:[NSSet setWithObject:pagelet]];
     
     return [self insertElement:callout];
+}
+
+- (IBAction)insertFile:(id)sender;
+{
+    NSWindow *window = [[[self HTMLElement] documentView] window];
+    NSOpenPanel *panel = [[window windowController] makeChooseDialog];
+    
+    [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+{
+    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
+    SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
+                                                   inManagedObjectContext:context];
+    [self insertElement:image];
 }
 
 #pragma mark Editability

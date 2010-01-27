@@ -29,6 +29,7 @@
 
 - (BOOL)insertElement:(SVBodyElement *)pagelet;
 - (BOOL)insertPagelet:(SVPagelet *)pagelet; // wraps pagelet in a callout and calls -insertElement: with that
+- (IBAction)insertFile:(id)sender;
 
 #pragma mark Subcontrollers
 

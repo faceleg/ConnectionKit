@@ -18,7 +18,6 @@
 #import "SVPagelet.h"
 #import "SVBody.h"
 #import "SVBodyTextDOMController.h"
-#import "SVImage.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
@@ -695,22 +694,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)insertFile:(id)sender;
 {
-    NSWindow *window = [[self view] window];
-    NSOpenPanel *panel = [[window windowController] makeChooseDialog];
-    
-    [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-}
-
-- (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-{
     DOMRange *selection = [[self webEditor] selectedDOMRange];
     SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
-    
-    NSManagedObjectContext *context = [[self page] managedObjectContext];
-    SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
-                                                   inManagedObjectContext:context];
-    [text insertElement:image];
-    
+    [text insertFile:sender];
 }
 
 #pragma mark Special Insertion
