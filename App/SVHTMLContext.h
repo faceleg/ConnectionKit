@@ -73,14 +73,22 @@ typedef enum {
 
 #pragma mark Higher-level Tag Writing
 
+//  <a href="...." target="..." rel="nofollow">
+- (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+//  <img src="..." alt="..." width="..." height="..." />
+- (void)writeImageWithIdName:(NSString *)idName
+                   className:(NSString *)className
+                         src:(NSString *)src
+                         alt:(NSString *)alt
+                       width:(NSString *)width
+                      height:(NSString *)height;
+
 //  <tagName id="idName" class="className">
 //  Calls -openTag: and -writeAttribute:value: appropriately for you
 - (void)writeStartTag:(NSString *)tagName   
                idName:(NSString *)idName
             className:(NSString *)className;
-
-//  <a href="...." target="..." rel="nofollow">
-- (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
 
 
 #pragma mark Low-level Tag Writing
