@@ -18,6 +18,7 @@
 #import "SVPagelet.h"
 #import "SVBody.h"
 #import "SVBodyTextDOMController.h"
+#import "SVImage.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
@@ -702,6 +703,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 {
+    DOMRange *selection = [[self webEditor] selectedDOMRange];
+    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
+    
+    NSManagedObjectContext *context = [[self page] managedObjectContext];
+    SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
+                                                   inManagedObjectContext:context];
+    [text insertElement:image];
     
 }
 
