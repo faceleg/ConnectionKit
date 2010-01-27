@@ -21,6 +21,7 @@
     KSInspectorViewController   *_pageInspector;
     KSInspectorViewController   *_collectionInspector;
     KSInspectorViewController   *_wrapInspector;
+    KSInspectorViewController   *_metricsInspector;
     SVLinkInspector             *_linkInspector;
     KSInspectorViewController   *_plugInInspector;
 }

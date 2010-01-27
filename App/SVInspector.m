@@ -73,6 +73,7 @@
     
     // Objects
     [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
+    [_metricsInspector setInspectedObjectsController:[[window windowController] objectsController]];
     [_linkInspector setInspectedObjectsController:[[window windowController] objectsController]];
     [_plugInInspector setInspectedObjectsController:[[window windowController] objectsController]];
 }
@@ -104,9 +105,9 @@
     
     
     // Metrics
-    id metricsInspector = [[KSInspectorViewController alloc] initWithNibName:@"MetricsInspector" bundle:nil];
-    [metricsInspector setTitle:NSLocalizedString(@"Metrics", @"Metrics Inspector")];
-    [metricsInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
+    _metricsInspector = [[KSInspectorViewController alloc] initWithNibName:@"MetricsInspector" bundle:nil];
+    [_metricsInspector setTitle:NSLocalizedString(@"Metrics", @"Metrics Inspector")];
+    [_metricsInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
     
     
     // Links
@@ -126,7 +127,7 @@
                        _pageInspector,
                        _collectionInspector,
                        _wrapInspector,
-                       metricsInspector,
+                       _metricsInspector,
                        _linkInspector,
                        _plugInInspector,
                        nil];
