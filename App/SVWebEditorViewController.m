@@ -692,6 +692,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
+- (IBAction)insertFile:(id)sender;
+{
+    
+}
+
 #pragma mark Special Insertion
 
 - (void)insertSiteTitle:(id)sender;

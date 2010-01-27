@@ -95,6 +95,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertPageletInSidebar:(id)sender;
 - (IBAction)insertElement:(id)sender;
+- (IBAction)insertFile:(id)sender;
 
 - (IBAction)insertSiteTitle:(id)sender;
 - (IBAction)insertSiteSubtitle:(id)sender;
