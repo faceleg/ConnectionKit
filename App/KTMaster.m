@@ -577,9 +577,9 @@
 
 #pragma mark Support
 
-- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
 {
-    BOOL result = [super canStoreExtensiblePropertyForKey:key];
+    BOOL result = [super usesExtensiblePropertiesForUndefinedKey:key];
     
     if ([key isEqualToString:@"commentsProvider"])
     {
