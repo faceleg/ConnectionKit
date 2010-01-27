@@ -9,8 +9,10 @@
 #import "SVImage.h"
 
 #import "SVHTMLContext.h"
+#import "SVImageDOMController.h"
 #import "SVMediaRecord.h"
 #import "SVStringAttribute.h"
+
 
 @implementation SVImage 
 
@@ -31,6 +33,10 @@
                             width:[[self width] description]
                            height:[[self height] description]];
 }
+
+#pragma mark Editing
+
+- (Class)DOMControllerClass { return [SVImageDOMController class]; }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
