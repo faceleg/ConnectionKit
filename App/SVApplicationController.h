@@ -72,9 +72,10 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	
     // ivars	
     BOOL _applicationIsLaunching;
-	
 	BOOL _appIsTerminating;
-	
+	BOOL _appIsExpired;
+	BOOL _checkedExpiration;
+			
 	NSPoint _cascadePoint;
 }
 
@@ -85,6 +86,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 + (void) registerDefaults;
 + (BOOL) coreImageAccelerated;
 + (BOOL) fastEnoughProcessor;
+- (BOOL) appIsExpired;
 
 - (IBAction)orderFrontPreferencesPanel:(id)sender;
 - (IBAction)saveWindowSize:(id)sender;

@@ -37,6 +37,7 @@
 #import "KSApplication.h"
 #import "KSProgressPanel.h"
 #import "KSRegistrationController.h"
+#import "SVApplicationController.h"
 
 #import "Debug.h"
 
@@ -336,6 +337,22 @@
 - (Class)inspectorClass;
 {
     return [SVInspector class];
+}
+
+#pragma mark validation
+
+
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+{
+	OBPRECONDITION(menuItem);
+	OFF((@"KTDocumentController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	
+	if (gLicenseViolation || [[NSApp delegate] appIsExpired])
+	{
+		return NO;	// No, don't let stuff be done if expired.
+	}
+	
+	return [super validateMenuItem:menuItem];
 }
 
 @end

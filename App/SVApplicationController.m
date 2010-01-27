@@ -122,11 +122,14 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 
 @interface SVApplicationController ()
 
+- (BOOL) appIsExpired;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
 #if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
 #endif
+- (void)informAppHasExpired;
+
 
 @end
 
@@ -625,10 +628,11 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	OFF((@"KTAppDelegate validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
 
 	SEL action = [menuItem action];
+
 	
 	if (action == @selector(newDocument:))
 	{
-		return (!gLicenseViolation);
+		return (!gLicenseViolation && ![self appIsExpired]);
 	}
 	else if (action == @selector(editRawHTMLInSelectedBlock:))
 	{
@@ -787,6 +791,12 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 
 - (BOOL)applicationShouldHandleReopen:(NSApplication *)sender hasVisibleWindows:(BOOL)flag;
 {
+	if ([self appIsExpired])
+	{
+		[self informAppHasExpired];
+		return NO;
+	}
+	
 	if (!flag || 0 == [[[NSDocumentController sharedDocumentController] documents] count])	// no visible windows.  However, all visible windows may be minimized..
 	{
 		[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
@@ -849,6 +859,123 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	[KTLogger configure:self];
 }
 
+- (void) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFileManager *fm = [NSFileManager defaultManager];
+
+	[progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents...",
+													"Message while checking documents.")];
+	
+	// figure out if we should create or open document(s)
+	BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
+						   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
+	
+	NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
+	
+	NSMutableArray *filesFound = [NSMutableArray array];
+	NSMutableArray *filesNotFound = [NSMutableArray array];
+	NSMutableArray *filesInTrash = [NSMutableArray array];
+	
+	// figure out what documents, if any, we can and can't find
+	if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
+	{
+		NSEnumerator *enumerator = [lastOpenedPaths objectEnumerator];
+		id aliasData;
+		while ( ( aliasData = [enumerator nextObject] ) )
+		{
+			BDAlias *alias = [BDAlias aliasWithData:aliasData];
+			NSString *path = [alias fullPath];
+			if (nil == path)
+			{
+				NSString *lastKnownPath = [alias lastKnownPath];
+				[filesNotFound addObject:lastKnownPath];
+				LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
+			}
+			
+			// is it in the Trash? ([[NSWorkspace sharedWorkspace] userTrashDirectory])
+			else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
+			{
+				// path contains localized .Trash, let's skip it
+				[filesInTrash addObject:alias];
+				LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
+			}
+			else
+			{
+				[filesFound addObject:alias];
+			}
+		}
+	}
+	// run through the possibilities
+	if ( openLastOpened 
+		&& ([lastOpenedPaths count] > 0) 
+		&& ([[[KTDocumentController sharedDocumentController] documents] count] == 0) )
+	{
+		// open whatever used to be open
+		if ( [filesFound count] > 0 )
+		{
+			NSEnumerator *e = [filesFound objectEnumerator];
+			BDAlias *alias;
+			while ( ( alias = [e nextObject] ) )
+			{
+				NSString *path = [alias fullPath];
+				
+				// check to make sure path is valid
+				if ( ![[NSFileManager defaultManager] fileExistsAtPath:path] )
+				{
+					[filesNotFound addObject:path];
+					continue;
+				}				
+
+				// FIXME ... this is not localized properly. We should have it "Opening %@..." to account for other language styles.
+				NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
+				[progressPanel setMessageText:message];
+				[progressPanel setIcon:[NSImage imageNamed:@"document"]];
+				
+				NSURL *fileURL = [NSURL fileURLWithPath:path];
+				
+				NSError *error = nil;
+				if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
+				{
+					[NSApp presentError:error];
+				}                    }
+		}
+		
+		// put up an alert showing any files not found (files in Trash are ignored)
+		if ( [filesNotFound count] > 0 )
+		{
+			NSString *missingFiles = [NSString string];
+			unsigned int i;
+			for ( i = 0; i < [filesNotFound count]; i++ )
+			{
+				NSString *toAdd = [[filesNotFound objectAtIndex:i] lastPathComponent];
+				toAdd = [fm displayNameAtPath:toAdd];
+				
+				missingFiles = [missingFiles stringByAppendingString:toAdd];
+				if ( i < ([filesNotFound count]-1) )
+				{
+					missingFiles = [missingFiles stringByAppendingString:@", "];
+				}
+				else if ( i == ([filesNotFound count]-1) && i > 0 )	// no period if only one item
+				{
+					missingFiles = [missingFiles stringByAppendingString:@"."];
+				}
+			}
+			
+			[progressPanel performClose:self];	// hide this FIRST
+			
+			NSAlert *alert = [[NSAlert alloc] init];
+			[alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
+			[alert setMessageText:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")];
+			[alert setInformativeText:missingFiles];
+			[alert setAlertStyle:NSWarningAlertStyle];
+			
+			[alert runModal];
+			[alert release];
+		}
+	}
+}
+
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
@@ -865,13 +992,14 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 								   withBinding: NSValueBinding];
 		
 		
-		BOOL sufficient = (NSFoundationVersionNumber >= 567.36 /* NSFoundationVersionNumber10_4_11 */);
+		BOOL sufficient = (NSFoundationVersionNumber > 677.22 /* NSFoundationVersionNumber10_5_6 is 677.22 so we want higher. */);
+		
 		
 		if (!sufficient)
 		{
 			NSRunCriticalAlertPanel(
 									@"",
-									NSLocalizedString(@"You will need to update to Mac OS X 10.4.11 (using the Software Update menu), or install 10.5 \\U201CLeopard\\U201D for this version of Sandvox to function.", @""), 
+									NSLocalizedString(@"You will need to update Mac OS X 10.5.7 \\U201CLeopard\\U201D (or higher) for this version of Sandvox to function.", @""), 
 									NSLocalizedString(@"Quit", @"Quit button"),
 									nil,
 									nil
@@ -883,9 +1011,6 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 		NSLog(@"Running build %@", [NSApplication buildVersion]);
 #endif
 
-#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
-		[self performSelector:@selector(warnOrQuitIfExpiring) withObject:nil afterDelay:2.0];
-#endif
         
 // log SQL statements
 #ifdef DEBUG_SQL
@@ -897,171 +1022,72 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
             [PrivateClass setDebugDefault:YES];
         }
 #endif
-        
-        
-		// put up a splash panel with a progress indicator
-		progressPanel = [[KSProgressPanel alloc] init];
-        [progressPanel setMessageText:NSLocalizedString(@"Initializing...",
-                                                        "Message while initializing launching application.")];
-        [progressPanel setInformativeText:nil];
-        [progressPanel makeKeyAndOrderFront:self];
-
-
-		// load plugins
-        [progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
-        
-        
-		// build menus
-		[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
-							 toMenu:oAddPageMenu
-							 target:nil
-							 action:@selector(addPage:)
-						  pullsDown:NO
-						  showIcons:YES smallIcons:NO smallText:NO];
-		[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-							 toMenu:oAddPageletMenu
-							 target:nil
-							 action:@selector(insertElement:)
-						  pullsDown:NO
-						  showIcons:YES smallIcons:NO smallText:NO];
-		
-		[KTIndexPlugin populateMenuWithCollectionPresets:oNewPageMenu index:2];
-		
-        [progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
-		//[self buildSampleSitesMenu];
-		
-		BOOL firstRun = [defaults boolForKey:@"FirstRun"];
-        if (!firstRun)
-        {
-            [progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents...",
-                                                            "Message while checking documents.")];
-            
-            // figure out if we should create or open document(s)
-            BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
-                                   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
-            
-            NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
-            
-            NSMutableArray *filesFound = [NSMutableArray array];
-            NSMutableArray *filesNotFound = [NSMutableArray array];
-            NSMutableArray *filesInTrash = [NSMutableArray array];
-            
-            // figure out what documents, if any, we can and can't find
-            if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
-            {
-                NSEnumerator *enumerator = [lastOpenedPaths objectEnumerator];
-                id aliasData;
-                while ( ( aliasData = [enumerator nextObject] ) )
-                {
-                    BDAlias *alias = [BDAlias aliasWithData:aliasData];
-                    NSString *path = [alias fullPath];
-					if (nil == path)
-					{
-						NSString *lastKnownPath = [alias lastKnownPath];
-						[filesNotFound addObject:lastKnownPath];
-						LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
-					}
-					
-                    // is it in the Trash? ([[NSWorkspace sharedWorkspace] userTrashDirectory])
-					else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
-                    {
-                        // path contains localized .Trash, let's skip it
-                        [filesInTrash addObject:alias];
-						LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
-                    }
-                    else
-                    {
-                        [filesFound addObject:alias];
-                    }
-                }
-            }
-            // run through the possibilities
-            if ( openLastOpened 
-				 && ([lastOpenedPaths count] > 0) 
-				 && ([[[KTDocumentController sharedDocumentController] documents] count] == 0) )
-            {
-                // open whatever used to be open
-                if ( [filesFound count] > 0 )
-                {
-                    NSEnumerator *e = [filesFound objectEnumerator];
-                    BDAlias *alias;
-                    while ( ( alias = [e nextObject] ) )
-                    {
-                        NSString *path = [alias fullPath];
-                        
-                        // check to make sure path is valid
-                        if ( ![[NSFileManager defaultManager] fileExistsAtPath:path] )
-                        {
-                            [filesNotFound addObject:path];
-                            continue;
-                        }				
-// FIXME ... this is not localized properly. We should have it "Opening %@..." to account for other language styles.
-                        NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
-                        [progressPanel setMessageText:message];
-                        [progressPanel setIcon:[NSImage imageNamed:@"document"]];
-                        
-                        NSURL *fileURL = [NSURL fileURLWithPath:path];
-                        
-                        NSError *error = nil;
-                        if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
-                        {
-                            [NSApp presentError:error];
-                        }                    }
-                }
-                
-                // put up an alert showing any files not found (files in Trash are ignored)
-                if ( [filesNotFound count] > 0 )
-                {
-                    NSString *missingFiles = [NSString string];
-                    unsigned int i;
-                    for ( i = 0; i < [filesNotFound count]; i++ )
-                    {
-						NSString *toAdd = [[filesNotFound objectAtIndex:i] lastPathComponent];
-						toAdd = [fm displayNameAtPath:toAdd];
-						
-                        missingFiles = [missingFiles stringByAppendingString:toAdd];
-                        if ( i < ([filesNotFound count]-1) )
-                        {
-                            missingFiles = [missingFiles stringByAppendingString:@", "];
-                        }
-                        else if ( i == ([filesNotFound count]-1) && i > 0 )	// no period if only one item
-                        {
-                            missingFiles = [missingFiles stringByAppendingString:@"."];
-                        }
-                    }
-
-					[progressPanel performClose:self];	// hide this FIRST
-
-                    NSAlert *alert = [[NSAlert alloc] init];
-                    [alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
-                    [alert setMessageText:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")];
-                    [alert setInformativeText:missingFiles];
-                    [alert setAlertStyle:NSWarningAlertStyle];
-                    
-                    [alert runModal];
-                    [alert release];
-                }
-            }
-            
-			[progressPanel performClose:self];
-        }
-        
-        
-        // If there's no docs open, want to see the placeholder window
-        if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
-        {
-#if 0
-			NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
-			[[NSDocumentController sharedDocumentController] newDocument:nil];
-#else
-            [[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
+        if ([self appIsExpired])
+		{
+			[self informAppHasExpired];
+		}
+		else
+		{
+			// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
+#ifndef DEBUG
+#ifndef APPLE_DESIGN_AWARDS_KEY
+			[self warnExpiring:nil];
 #endif
-        }
-		
-        
-		// QE check AFTER the welcome message
-		[self performSelector:@selector(checkQuartzExtreme) withObject:nil afterDelay:0.0];
+#endif
+			
+			// put up a splash panel with a progress indicator
+			progressPanel = [[KSProgressPanel alloc] init];
+			[progressPanel setMessageText:NSLocalizedString(@"Initializing...",
+															"Message while initializing launching application.")];
+			[progressPanel setInformativeText:nil];
+			[progressPanel makeKeyAndOrderFront:self];
 
+
+			// load plugins
+			[progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
+			
+			
+			// build menus
+			[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
+								 toMenu:oAddPageMenu
+								 target:nil
+								 action:@selector(addPage:)
+							  pullsDown:NO
+							  showIcons:YES smallIcons:NO smallText:NO];
+			[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
+								 toMenu:oAddPageletMenu
+								 target:nil
+								 action:@selector(insertElement:)
+							  pullsDown:NO
+							  showIcons:YES smallIcons:NO smallText:NO];
+			
+			[KTIndexPlugin populateMenuWithCollectionPresets:oNewPageMenu index:2];
+			
+			[progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
+			//[self buildSampleSitesMenu];
+			
+			BOOL firstRun = [defaults boolForKey:@"FirstRun"];
+			if (!firstRun)
+			{
+				[self reopenPreviouslyOpenedDocumentsUsingProgressPanel:progressPanel];
+			}
+			[progressPanel performClose:self];
+			
+			// If there's no docs open, want to see the placeholder window
+			if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
+			{
+	#if 0
+				NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
+				[[NSDocumentController sharedDocumentController] newDocument:nil];
+	#else
+				[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
+	#endif
+			}
+			
+			
+			// QE check AFTER the welcome message
+			[self performSelector:@selector(checkQuartzExtreme) withObject:nil afterDelay:0.0];
+		}
 	}
 	@finally
 	{
@@ -1113,48 +1139,41 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
     _applicationIsLaunching = NO; // we're done
 }
 
-#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
-
-- (void)alertAndQuit
+- (BOOL) appIsExpired;
 {
+	if (!_checkedExpiration)
+	{
+#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
+		/*
+		 unsigned char km[16];
+		 GetKeys((void *)km);
+		 BOOL overrideKeyPressed = ((km[KeyOption>>3] >> (KeyOption & 7)) & 1) ? 1 : 0;
+		 */
+		BOOL overrideKeyPressed = 0 != (GetCurrentEventKeyModifiers() & optionKey);
+		
+		_appIsExpired =
+		( !overrideKeyPressed &&
+		 [[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0);
+#else
+		_appIsExpired = NO;
+#endif
+		_checkedExpiration = YES;
+	}
+	return _appIsExpired;
+}
+
+- (void)informAppHasExpired
+{	
 	NSRunCriticalAlertPanel(
 							NSLocalizedString(@"This version of Sandvox has expired.", @""),
-							NSLocalizedString(@"This version of Sandvox is no longer functional. Please contact Karelia Software for an update.", @""), 
-							NSLocalizedString(@"Quit", @"Button Title"),
+							NSLocalizedString(@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", @""), 
+							NSLocalizedString(@"Check for Updates", @"Button title"),
 							nil,
 							nil
 							);
-	[NSApp terminate:nil];
 	
+	[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
 }
-- (void)warnOrQuitIfExpiring
-{	
-	if ((GetCurrentEventKeyModifiers() & optionKey) &&
-		[[NSDate dateWithString:EXPIRY_TIMESTAMP] timeIntervalSinceNow] < 0)
-	{
-		NSRunCriticalAlertPanel(
-								NSLocalizedString(@"This version of Sandvox has expired.", @""),
-								NSLocalizedString(@"This version of Sandvox is no longer functional. Sandvox will now check for updates; please install the newest version if available.", @""), 
-								NSLocalizedString(@"Check for Updates", @"Button title"),
-								nil,
-								nil
-								);
-		
-		[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
-		
-		
-		// This will allow sparkle time to do its thing.  Then, show the error soon, after user has had a chance to reload.
-		[self performSelector:@selector(alertAndQuit) withObject:nil afterDelay:15 * 60];	// give user enough time to download and install, at least over DSL.
-	}
-	
-	// WARN OF EXPIRING BETA VERSION -- but not if it's apple design awards or development build.
-#ifndef DEBUG
-#ifndef APPLE_DESIGN_AWARDS_KEY
-	[self warnExpiring:nil];
-#endif
-#endif
-}
-#endif
 
 /*
 - (BOOL)iMediaBrowser:(iMediaBrowser *)browser willUseMediaParser:(NSString *)parserClassname forMediaType:(NSString *)media;
@@ -1544,6 +1563,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 
 #pragma mark -
 #pragma mark Support
+
 
 /*! log undo-related notifications */
 - (void)logUndoNotification: (NSNotification *) notification

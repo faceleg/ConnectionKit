@@ -10,7 +10,7 @@ SANDVOX_VERSION = 2.0a1
 PRODUCT_VARIANT = BETA
 
 // expiry for beta
-EXPIRY_TIMESTAMP = '@\"2009-10-31 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2010-10-31 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 

@@ -31,6 +31,7 @@ static NSString *sBaseExampleURLStringObservationContext = @"-baseExampleURLStri
 static NSString *sTitleObservationContext = @"-titleText observation context";
 static NSString *sSelectedObjectsObservationContext = @"-selectedObjects observation context";
 
+#define ATTACHED_WINDOW_TRANSP 0.6
 
 enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePageDetailsContext, kMetaDescriptionPageDetailsContext
 };
@@ -46,6 +47,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (NSColor *)windowTitleCharCountColor;
 - (NSColor *)fileNameCharCountColor;
 - (void) updateFieldsBasedOnSelectedSiteOutlineObjects:(NSArray *)selObjects;
+- (void)updateWidthForActiveTextField:(NSTextField *)textField;
 @end
 
 
@@ -105,8 +107,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 												 name:NSViewFrameDidChangeNotification
 											   object:[self view]];
 
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
-	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+	[self layoutPageURLComponents];
 
 	// Observe changes to the meta description and fake an initial observation
 	[oPagesController addObserver:self
@@ -157,8 +158,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSCharacterSet *illegalCharSetForPageTitles = [[NSCharacterSet legalPageTitleCharacterSet] invertedSet];
 	NSFormatter *formatter = [[[KSValidateCharFormatter alloc]
 							   initWithIllegalCharacterSet:illegalCharSetForPageTitles] autorelease];
-	[oPageFileNameField setFormatter:formatter];
-	[oCollectionFileNameField setFormatter:formatter];
+	[oFileNameField setFormatter:formatter];
 	
 	[oExtensionPopup bind:@"defaultValue"
 					 toObject:oPagesController
@@ -366,10 +366,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		for (SVSiteItem *item in selObjects)
 		{
 			id <SVMedia> media = nil;
-			NSLog(@"site item = %@", [item class]);
 			int type = kUnknownSiteItemType;
 			if (nil != [item externalLinkRepresentation]) { type = kLinkSiteItemType; }
-			else if (FALSE) { type = kTextSiteItemType; }
 			else if (nil != (media =[item mediaRepresentation]))
 			{
 				type = kFileSiteItemType;
@@ -393,8 +391,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 		self.whatKindOfItemsAreSelected = combinedType;
 		
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
-		[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+		[self layoutPageURLComponents];
 	}
 }
 
@@ -441,7 +438,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (NSColor *)metaDescriptionCharCountColor;
 {
 	int charCount = [[self metaDescriptionCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_META_DESCRIPTION_LENGTH - charCount;
 	
 	if (remaining > META_DESCRIPTION_WARNING_ZONE )		// out of warning zone: a nice HUD color
@@ -466,7 +463,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (NSColor *)windowTitleCharCountColor
 {
 	int charCount = [[self windowTitleCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_WINDOW_TITLE_LENGTH - charCount;
 	
 	if (remaining > WINDOW_TITLE_WARNING_ZONE )		// out of warning zone: a nice light gray
@@ -489,7 +486,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 - (NSColor *)fileNameCharCountColor
 {
 	int charCount = [[self fileNameCountdown] intValue];
-	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:0.667];
+	NSColor *result = [NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP];
 	int remaining = MAX_FILE_NAME_LENGTH - charCount;
 	
 	if (remaining > FILE_NAME_WARNING_ZONE )		// out of warning zone: a nice light gray
@@ -531,8 +528,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
-	[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+	if ([keyPath isEqualToString:@"selection.windowTitle"])
+	{
+		DJW((@""));
+		DJW((@"observeValueForKeyPath:... %@ %@ %@", keyPath, [object class], (id)context));
+	}
+	
+	[self layoutPageURLComponents];
 
 	if (context == sMetaDescriptionObservationContext)
 	{
@@ -594,7 +596,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			pageIsCollectionState = [isCollectionMarker boolValue] ? NSOnState : NSOffState;
 		}
 	}
-	// And also check if it's a rooot
+	// And also check if it's a root
 	if (NSOnState == pageIsCollectionState)
 	{
 		id isRootMarker = [oPagesController valueForKeyPath:@"selection.isRoot"];
@@ -602,28 +604,37 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			pageIsCollectionState =  IS_ROOT_STATE;		// special marker indicating root, and only root, is selected.
 		}
-	}	
-	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	}
+	// Prompts
 	[oWindowTitlePrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oMetaDescriptionPrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oFilePrompt setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
+
+	// Additional Lines
+	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oChooseFileButton setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
 	
-	[oBaseURLField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oPageFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
+	// First line, external URL field
+	[oExternalURLField setHidden:(kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
+
+	// First line, complex pieces that make up the URL components
+	BOOL hasLocalPath = (	kPageSiteItemType == self.whatKindOfItemsAreSelected
+						||	kTextSiteItemType == self.whatKindOfItemsAreSelected
+						||	kFileSiteItemType == self.whatKindOfItemsAreSelected);
+	
+	[oBaseURLField setHidden:!hasLocalPath];
+	[oFileNameField setHidden:(!hasLocalPath
+							   || (kPageSiteItemType == self.whatKindOfItemsAreSelected && IS_ROOT_STATE == pageIsCollectionState))];
+
 	[oDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState != pageIsCollectionState)];
-	[oSlashIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
-	[oIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || IS_ROOT_STATE != pageIsCollectionState)];
+	[oSlashSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
+	[oIndexDotSeparator setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOffState == pageIsCollectionState)];
 
 	[oMultiplePagesField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSMixedState != pageIsCollectionState)];
 	
 	[oExtensionPopup setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oCollectionFileNameField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected || NSOnState != pageIsCollectionState)];
 
-	[oExternalURLField setHidden:(kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
-
-	[oOtherFileNameField setHidden:YES];	// FOR NOW
 	
 	// Follow button only enabled when there is one item ?
 	[oFollowButton setHidden: [[oPagesController selectedObjects] count] != 1];
@@ -631,14 +642,15 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	if (kLinkSiteItemType == self.whatKindOfItemsAreSelected)
 	{
 		int newLeft = [oBaseURLField frame].origin.x;		// starting point for left of next item
-		//const int rightMargin = 20;
-		// int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft - [oFollowButton frame].size.width - 8;
+		const int rightMargin = 20;
+		int availableForAll = [[self view] bounds].size.width - rightMargin - newLeft - [oFollowButton frame].size.width - 8;
 		NSRect frame = [oExternalURLField frame];
 		frame.origin.x = newLeft;
 		
 		NSAttributedString *text = [oExternalURLField attributedStringValue];
-		int width = ceilf([text size].width);
-		frame.size.width = width + 2;
+		int width = ceilf([text size].width)  + 2;
+		if (width > availableForAll) width = availableForAll;	// make sure a really long URL will fit
+		frame.size.width = width;
 		
 		[oExternalURLField setFrame:frame];
 
@@ -646,53 +658,71 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		frame = [oFollowButton frame];
 		frame.origin.x = NSMaxX([oExternalURLField frame])+8;
 		[oFollowButton setFrame:frame];
+		NSLog(@"set oFollowButton to %@", NSStringFromRect(frame));
 	}
-	else if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
+	else if (hasLocalPath)
 	{
 		NSArray *itemsToLayOut = nil;
 		int *theExtraX = nil;
 		int *theMarginsAfter = nil;
 		
-		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oPageFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int pageExtraX [] = {4,20,6,8,0};
-		int pageMarginsAfter[] = {0,-8,0,8,0};
+		NSArray *pageItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oDotSeparator,oExtensionPopup,oFollowButton,nil];
+		int pageExtraX [] = {4,5,6,8,0};
+		int pageMarginsAfter[] = {0,-1,0,8,0};
 		
-		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oCollectionFileNameField,oSlashIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
-		int collectionExtraX [] = {4,20,6,8,0};
-		int collectionMarginsAfter[] = {0,-7,0,8,0};
+		NSArray *collectionItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oSlashSeparator, oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
+		int collectionExtraX [] = {4,5,1,6,8,0};
+		int collectionMarginsAfter[] = {0,-1,0,0,8,0};
 		
 		NSArray *markerItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oMultiplePagesField,oDotSeparator,oExtensionPopup,nil];
-		int markerExtraX [] = {4,4,6,8,0};
-		int markerMarginsAfter[] = {0,0,0,8,0};
+		int markerExtraX [] = {4,4,6,8};
+		int markerMarginsAfter[] = {0,0,0,8};
 			
 		NSArray *rootItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oIndexDotSeparator,oExtensionPopup,oFollowButton,nil];
 		int rootExtraX [] = {0,6,8,0};
 		int rootMarginsAfter[] = {0,0,8,0};
 		
-		switch (pageIsCollectionState)
+		NSArray *mediaItemsToLayOut = [NSArray arrayWithObjects:oBaseURLField,oFileNameField,oFollowButton,nil];
+		int mediaExtraX [] = {4,5,1};
+		int mediaMarginsAfter[] = {0,-1,0};
+				
+		if (kPageSiteItemType == self.whatKindOfItemsAreSelected)
 		{
-			case IS_ROOT_STATE:
-				itemsToLayOut = rootItemsToLayOut;
-				theExtraX = rootExtraX;
-				theMarginsAfter = rootMarginsAfter;
-				break;
-			case NSMixedState:
-				itemsToLayOut = markerItemsToLayOut;
-				theExtraX = markerExtraX;
-				theMarginsAfter = markerMarginsAfter;
-				break;
-			case NSOnState:
-				itemsToLayOut = collectionItemsToLayOut;
-				theExtraX = collectionExtraX;
-				theMarginsAfter = collectionMarginsAfter;
-				break;
-			case NSOffState:
-				itemsToLayOut = pageItemsToLayOut;
-				theExtraX = pageExtraX;
-				theMarginsAfter = pageMarginsAfter;
-				break;
+			switch (pageIsCollectionState)
+			{
+				case IS_ROOT_STATE:
+					itemsToLayOut = rootItemsToLayOut;
+					theExtraX = rootExtraX;
+					theMarginsAfter = rootMarginsAfter;
+					break;
+				case NSMixedState:
+					itemsToLayOut = markerItemsToLayOut;
+					theExtraX = markerExtraX;
+					theMarginsAfter = markerMarginsAfter;
+					break;
+				case NSOnState:
+					itemsToLayOut = collectionItemsToLayOut;
+					theExtraX = collectionExtraX;
+					theMarginsAfter = collectionMarginsAfter;
+					break;
+				case NSOffState:
+					itemsToLayOut = pageItemsToLayOut;
+					theExtraX = pageExtraX;
+					theMarginsAfter = pageMarginsAfter;
+					break;
+			}
 		}
-		int widths[5] = { -1 }; // filled in below
+		else
+		{
+			// kTextSiteItemType or kFileSiteItemType
+			itemsToLayOut = mediaItemsToLayOut;
+			theExtraX = mediaExtraX;
+			theMarginsAfter = mediaMarginsAfter;
+			
+			// bindings: baseExampleURLString, fileName.  Are these coming through on media?
+		}
+			
+		int widths[6] = { 0 }; // filled in below. Make sure we have enough items for array above
 		int i = 0;
 		// Collect up the widths that these items *want* to be
 		for (NSView *fld in itemsToLayOut)
@@ -721,8 +751,16 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			 + widths[1]
 			 + widths[2]
 			 + widths[3]
-			 + widths[4] );
-		if (widths[0] > availableForBaseURL)
+			 + widths[4]
+			 + widths[5]);
+#define MINIMUM_BASE_URL 60
+		if (availableForBaseURL < MINIMUM_BASE_URL)	// is file name field getting way long?
+		{
+			widths[0] = MINIMUM_BASE_URL;		// give base URL field a minimum size to show something there
+			int fileNameFieldAdjustment = availableForBaseURL - MINIMUM_BASE_URL;
+			widths[1] += fileNameFieldAdjustment;	// take away from the file name field
+		}
+		else if (widths[0] > availableForBaseURL)	// is base URL field allotment greater than what's available?
 		{
 			widths[0] = availableForBaseURL;	// truncate base URL
 		}
@@ -735,29 +773,32 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			frame.origin.x = newLeft;
 			frame.size.width = widths[i];
 			[fld2 setFrame:frame];
+			// NSLog(@"set %@ to %@", [fld2 class], NSStringFromRect(frame));
+
 			newLeft = NSMaxX(frame);
 			if (fld2 == oBaseURLField)	// special case -- move file name over to left to adjoin previous field
 			{							// (which we left wide enough so it wouldn't get clipped)
 				newLeft -= 4;
 			}
-			if (fld2 == oCollectionFileNameField)	// special case -- move file name over to left to adjoin previous field
+			if (fld2 == oFileNameField)	// special case -- move file name over to left to adjoin previous field
 			{							// (which we left wide enough so it wouldn't get clipped)
-				newLeft -= 5;
-			}
-			if (fld2 == oPageFileNameField)	// to help align the dot with the "index ." when a collection is selected
-			{
 				newLeft -= 1;
 			}
 			newLeft += theMarginsAfter[i];
 			i++;
 		}
 	}
+	// Now that widths have been recalculated, update the width for the active field, for the shadow background
+	[self updateWidthForActiveTextField:self.activeTextField];
+
 }
 
 
 
-- (void)updateWidthForActiveTextField:(NSTextField *)textField
+- (void)updateWidthForActiveTextField:(NSTextField *)textField;
 {
+	if (!textField) return;	// we may have no active text field
+	
 	KSShadowedRectView *view = (KSShadowedRectView *)[self view];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 	
@@ -767,20 +808,19 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 					   usedRectForTextContainer:[fieldEditor textContainer]];
 	
 	NSRect fieldRect = [textField frame];
-	int textWidth = ceilf(textRect.size.width);
-	textWidth = MAX(textWidth, 7.0);
-	fieldRect.size.width = textWidth;
+	float textWidth = textRect.size.width;
+	float fieldWidth = fieldRect.size.width;
+	int width = ceilf(MIN(textWidth, fieldWidth));
+	width = MAX(width, 7);		// make sure it's at least 7 pixels wide
+	//NSLog(@"'%@' widths: text = %.2f, field = %.2f => %d", [textField stringValue], textWidth, fieldWidth, width);
+	fieldRect.size.width = width;
 	[view setShadowRect:fieldRect];
 	
 }
 
 - (void) backgroundFrameChanged:(NSNotification *)notification
 {
-
-	if (self.activeTextField)
-	{
-		[self updateWidthForActiveTextField:self.activeTextField];
-	}
+	[self layoutPageURLComponents];
 }
 
 #pragma mark -
@@ -807,15 +847,13 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		{
 			[self metaDescriptionDidChangeToValue:[textField stringValue]];
 		}
-		else if (textField == oPageFileNameField)
+		else if (textField == oFileNameField)
 		{
 			[self fileNameDidChangeToValue:[textField stringValue]];
 		}
 
-		[NSObject cancelPreviousPerformRequestsWithTarget:self selector:@selector(layoutPageURLComponents) object:nil];
-		[self performSelector:@selector(layoutPageURLComponents) withObject:nil afterDelay:0.0];
+		[self layoutPageURLComponents];
 
-		[self updateWidthForActiveTextField:textField];
 		
 		_alreadyHandlingControlTextDidChange = NO;
 	}
@@ -829,15 +867,15 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSTextField *field = [notification object];
 	OBASSERT([view isKindOfClass:[KSShadowedRectView class]]);
 
-	[self updateWidthForActiveTextField:field];
 	self.activeTextField = field;
+	[self updateWidthForActiveTextField:field];
 
 	// Can't think of a better way to do this...
 	
 	NSString *bindingName = nil;
 	NSString *explanation = @"";
 	int tagForHelp = kUnknownPageDetailsContext;
-	if (field == oPageFileNameField)
+	if (field == oFileNameField)
 	{
 		tagForHelp = kFileNamePageDetailsContext;
 		bindingName = @"fileNameCountdown";
@@ -912,7 +950,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			}
 			[oAttachedWindowHelpButton setAlternateImage:sTintedHelpButtonImage];
 
-			[self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.667]];
+			[self.attachedWindow setBackgroundColor:[NSColor colorWithCalibratedWhite:0.0 alpha:ATTACHED_WINDOW_TRANSP]];
 			[self.attachedWindow setViewMargin:6];
 			[self.attachedWindow setCornerRadius:6];	// set after arrow base width?  before?
 			[self.attachedWindow setBorderWidth:0];
@@ -969,8 +1007,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 }
 
 #pragma mark -
-#pragma mark Are we going to have a help button for page details? Probably not...
+#pragma mark Actions
 
+// We will need to open up the appropriate help topic based on the tag
 
 - (IBAction) pageDetailsHelp:(id)sender;
 {
@@ -987,6 +1026,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
+- (IBAction) chooseFile:(id)sender;
+{
+	NSBeep();
+}
 
 
 @end

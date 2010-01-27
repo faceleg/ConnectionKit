@@ -35,12 +35,14 @@
 @class KTPage;
 @class KTCodeInjectionController;
 @class SVDesignChooserWindowController;
+@class BWAnchoredPopUpButton;
 
 extern NSString *gInfoWindowAutoSaveName;
 
 
 @interface KTDocWindowController : NSWindowController <KSInspection, SVWebContentAreaControllerDelegate>
 {
+	IBOutlet BWAnchoredPopUpButton 	*oActionPopup;
 	//  TOOLBARS
    	NSMutableDictionary				*myToolbars;			// dict of document toolbars
 	

@@ -127,9 +127,10 @@
         NSString *safariTitle = nil;	// someday, we could populate the link title as well!
         [NSAppleScript getWebBrowserURL:&URL title:&safariTitle source:nil];
     }
+	NSString *scheme = [URL scheme];
     
-    if (URL)
-    {
+    if (URL && ([scheme isEqualToString:@"http"] || [scheme isEqualToString:@"https"]) )
+	{
         result = [[SVLink alloc] initWithURLString:[URL absoluteString]
                                    openInNewWindow:NO];
         [result autorelease];

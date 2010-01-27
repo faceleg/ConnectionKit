@@ -284,7 +284,6 @@
     }
 
     NSString *result = [resultURL absoluteString];
-	NSLog(@"baseExampleURLString = %@", result);
 	return result;
 }
 + (NSSet *)keyPathsForValuesAffectingBaseExampleURLString

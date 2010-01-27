@@ -43,7 +43,6 @@
 - (BOOL)isCollection	
 {
 	BOOL result = [[self wrappedValueForKey:@"isCollection"] boolValue];
-	DJW((@"%@ isCollection = %d", [self titleString], result));
 	return result;		// not an optional property, so it's OK to convert to a non-object
 }
 
