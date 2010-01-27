@@ -696,7 +696,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     DOMRange *selection = [[self webEditor] selectedDOMRange];
     SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
-    [text insertFile:sender];
+    if (text)
+    {
+        [text doCommandBySelector:_cmd];
+    }
+    else
+    {
+        // TODO: Insert into sidebar
+    }
 }
 
 #pragma mark Special Insertion
