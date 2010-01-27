@@ -18,6 +18,7 @@
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
+#import "SVMediaRecord.h"
 #import "SVWebContentObjectsController.h"
 
 #import "NSDictionary+Karelia.h"
@@ -218,9 +219,19 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 {
+    if (returnCode == NSCancelButton) return;
+    
+    
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
     SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
                                                    inManagedObjectContext:context];
+    
+    SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
+                                            entityName:@"ImageMedia"
+                        insertIntoManagedObjectContext:context
+                                                 error:NULL];
+    [image setMedia:media];
+    
     [self insertElement:image];
 }
 
