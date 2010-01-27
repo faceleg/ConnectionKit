@@ -102,6 +102,13 @@
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
     [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
     
+    
+    // Metrics
+    id metricsInspector = [[KSInspectorViewController alloc] initWithNibName:@"MetricsInspector" bundle:nil];
+    [metricsInspector setTitle:NSLocalizedString(@"Metrics", @"Metrics Inspector")];
+    [metricsInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];
+    
+    
     // Links
     _linkInspector = [[SVLinkInspector alloc] initWithNibName:@"LinkInspector" bundle:nil];
     [_linkInspector setTitle:NSLocalizedString(@"Link", @"Link Inspector")];
@@ -119,6 +126,7 @@
                        _pageInspector,
                        _collectionInspector,
                        _wrapInspector,
+                       metricsInspector,
                        _linkInspector,
                        _plugInInspector,
                        nil];
