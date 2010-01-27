@@ -25,11 +25,12 @@ TO DO:
 #import "Debug.h"
 #import "KSUtilities.h"
 #import "KT.h"
-#import "KTApplication.h"
+#import "SVApplicationController.h"
 #import "KTBackgroundTabView.h"
 #import "KTDocument.h"
 #import "KTHostProperties.h"
 #import "KTTranscriptController.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"
