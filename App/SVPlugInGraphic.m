@@ -158,7 +158,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Plug-in settings storage
 
-- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key
+- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
 {
     NSSet *keys = [[[self plugIn] class] plugInKeys];
     BOOL result = [keys containsObject:key];
