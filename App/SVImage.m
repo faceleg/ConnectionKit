@@ -21,7 +21,9 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    [context writeImageWithIdName:[self editingElementID] className:nil src:@"foo" alt:nil width:nil height:nil];
+    NSURL *imageURL = [[self media] fileURL];
+    [context writeImageWithIdName:[self editingElementID] className:nil
+                              src:[imageURL relativeString] alt:nil width:nil height:nil];
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
