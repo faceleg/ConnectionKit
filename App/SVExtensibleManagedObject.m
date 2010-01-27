@@ -11,7 +11,4 @@
 
 @implementation SVExtensibleManagedObject
 
-// Disable support for extensible properties
-- (BOOL)canStoreExtensiblePropertyForKey:(NSString *)key { return NO; }
-
 @end
