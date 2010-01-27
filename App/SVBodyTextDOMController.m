@@ -223,16 +223,25 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
-                                                   inManagedObjectContext:context];
-    
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
                                             entityName:@"ImageMedia"
                         insertIntoManagedObjectContext:context
                                                  error:NULL];
-    [image setMedia:media];
     
-    [self insertElement:image];
+    if (media)
+    {
+        SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
+                                                       inManagedObjectContext:context];
+        [image setMedia:media];
+        [image setWidth:[NSNumber numberWithFloat:400]];
+        [image setHeight:[NSNumber numberWithFloat:400]];
+        
+        [self insertElement:image];
+    }
+    else
+    {
+        NSBeep();
+    }
 }
 
 #pragma mark Editability

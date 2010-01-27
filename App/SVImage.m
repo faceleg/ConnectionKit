@@ -15,6 +15,10 @@
 @implementation SVImage 
 
 @dynamic media;
+
+@dynamic width;
+@dynamic height;
+
 @dynamic inlineGraphic;
 
 - (void)writeHTML

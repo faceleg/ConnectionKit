@@ -15,7 +15,12 @@
 @interface SVImage : SVGraphic
 
 @property (nonatomic, retain) SVMediaRecord *media;
+
+@property(nonatomic, copy) NSNumber *width;
+@property(nonatomic, copy) NSNumber *height;
+
 @property (nonatomic, retain) SVStringAttribute *inlineGraphic;
+
 
 @end
 
