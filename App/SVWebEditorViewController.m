@@ -694,6 +694,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)insertFile:(id)sender;
 {
+    NSWindow *window = [[self view] window];
+    NSOpenPanel *panel = [[window windowController] makeChooseDialog];
+    
+    [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+{
     
 }
 
