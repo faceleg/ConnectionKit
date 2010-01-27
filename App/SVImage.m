@@ -27,7 +27,9 @@
     
     NSURL *imageURL = [[self media] fileURL];
     [context writeImageWithIdName:[self editingElementID] className:nil
-                              src:[imageURL relativeString] alt:nil width:nil height:nil];
+                              src:[imageURL relativeString] alt:nil 
+                            width:[[self width] description]
+                           height:[[self height] description]];
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }
