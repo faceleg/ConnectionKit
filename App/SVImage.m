@@ -18,10 +18,60 @@
 
 @dynamic media;
 
+#pragma mark Size
+
 @dynamic width;
+- (void)setWidth:(NSNumber *)width;
+{
+    [self willChangeValueForKey:@"width"];
+    [self setPrimitiveValue:width forKey:@"width"];
+    [self didChangeValueForKey:@"width"];
+    
+    if ([[self constrainProportions] boolValue])
+    {
+        CGSize originalSize = [self originalSize];
+        CGFloat height = originalSize.height * ([width floatValue] / originalSize.width);
+        
+        [self willChangeValueForKey:@"height"];
+        [self setPrimitiveValue:[NSNumber numberWithFloat:height] forKey:@"height"];
+        [self didChangeValueForKey:@"height"];
+    }
+}
+
 @dynamic height;
+- (void)setHeight:(NSNumber *)height;
+{
+    [self willChangeValueForKey:@"height"];
+    [self setPrimitiveValue:height forKey:@"height"];
+    [self didChangeValueForKey:@"height"];
+    
+    if ([[self constrainProportions] boolValue])
+    {
+        CGSize originalSize = [self originalSize];
+        CGFloat width = originalSize.width * ([height floatValue] / originalSize.height);
+        
+        [self willChangeValueForKey:@"width"];
+        [self setPrimitiveValue:[NSNumber numberWithFloat:width] forKey:@"width"];
+        [self didChangeValueForKey:@"width"];
+    }
+}
+
+@dynamic constrainProportions;
+
+- (CGSize)originalSize;
+{
+    CIImage *image = [[CIImage alloc] initWithContentsOfURL:[[self media] fileURL]];
+    CGSize result = [image extent].size;
+    [image release];
+    
+    return result;
+}
+
+#pragma mark Other
 
 @dynamic inlineGraphic;
+
+#pragma mark HTML
 
 - (void)writeHTML
 {

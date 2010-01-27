@@ -18,6 +18,8 @@
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *height;
+@property(nonatomic, copy) NSNumber *constrainProportions;  // BOOL, required
+- (CGSize)originalSize;
 
 @property (nonatomic, retain) SVStringAttribute *inlineGraphic;
 
