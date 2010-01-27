@@ -1315,7 +1315,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (!_isForwardingCommandToWebView)
     {
         // Does the text view want to take command?
-        result = [_focusedText doCommandBySelector:command];
+        result = [_focusedText webEditorTextDoCommandBySelector:command];
         
         // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
         if (!result && [self respondsToSelector:command])

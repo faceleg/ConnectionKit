@@ -405,9 +405,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
 }
 
-- (BOOL)doCommandBySelector:(SEL)selector
+- (BOOL)webEditorTextDoCommandBySelector:(SEL)selector
 {
-    BOOL result = [super doCommandBySelector:selector];
+    BOOL result = [super webEditorTextDoCommandBySelector:selector];
     return result;
 }
 

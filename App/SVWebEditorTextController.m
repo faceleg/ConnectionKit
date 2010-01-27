@@ -285,7 +285,7 @@
     [self didEndEditingTextWithMovement:nil];
 }
 
-- (BOOL)doCommandBySelector:(SEL)selector
+- (BOOL)webEditorTextDoCommandBySelector:(SEL)selector
 {
     BOOL result = NO;
     
