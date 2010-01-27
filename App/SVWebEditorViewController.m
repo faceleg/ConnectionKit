@@ -822,21 +822,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return YES;
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)sender
-           writeItems:(NSArray *)items
-         toPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)webEditor:(SVWebEditorView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
     
-    NSArray *pboardReps = [items valueForKeyPath:@"representedObject.elementID"];
+    NSArray *pboardReps = [items valueForKeyPath:@"representedObject.propertyListRepresentation"];
     if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
     {
+        [pasteboard declareTypes:[NSArray array] owner:self];
         result = YES;
-        
+        /*
         [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
                            owner:self];
         [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:pboardReps]
                     forType:kKTPageletsPboardType];
+                    */
     }
     else
     {
