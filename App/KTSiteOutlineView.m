@@ -125,27 +125,6 @@ NSString *kKTSelectedObjectsClassNameKey = @"KTSelectedObjectsClassName";
 		[menu addItem:duplicateMenuItem];
 		[duplicateMenuItem release];
 		
-		// add Edit Raw HTML...
-		if ( ((nil == gRegistrationString) || gIsPro) 
-			 && [[[[(KTPage *)item plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.HTMLElement"] )
-		{
-			// --
-			[menu addItem:[NSMenuItem separatorItem]];
-			
-			NSString *title = NSLocalizedString(@"Edit Raw HTML...", "Edit Raw HTML... MenuItem");
-			NSMenuItem *editRawHTMLItem = [[NSMenuItem alloc] initWithTitle:title
-																	 action:@selector(editRawHTMLInSelectedBlock:) 
-															  keyEquivalent:@""];
-			if ( nil == gRegistrationString )
-			{
-				[[NSApp delegate] setMenuItemPro:editRawHTMLItem];
-			}
-			[editRawHTMLItem setRepresentedObject:nil];
-			[editRawHTMLItem setTarget:nil];
-			[menu addItem:editRawHTMLItem];
-			[editRawHTMLItem release];
-		}
-		
 		return [menu autorelease];
 	}
     
