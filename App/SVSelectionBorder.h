@@ -11,6 +11,20 @@
 #import <QuartzCore/QuartzCore.h>
 
 
+typedef enum {
+    kSVGraphicNoHandle,
+    kSVGraphicUpperLeftHandle,
+    kSVGraphicUpperMiddleHandle,
+    kSVGraphicUpperRightHandle,
+    kSVGraphicMiddleLeftHandle,
+    kSVGraphicMiddleRightHandle,
+    kSVGraphicLowerLeftHandle,
+    kSVGraphicLowerMiddleHandle,
+    kSVGraphicLowerRightHandle,
+} SVGraphicHandle;
+
+
+
 enum
 {
     kSVSelectionXResizeable     = 1U << 0,
@@ -30,13 +44,22 @@ enum
 
 @property(nonatomic, getter=isEditing) BOOL editing;
 @property(nonatomic) NSSize minSize;
+
+
+#pragma mark Resizing
 @property(nonatomic) unsigned int resizingMask; // bitmask of CAEdgeAntialiasingMask
+- (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
 
 
 #pragma mark Layout
+
 - (NSRect)frameRectForGraphicBounds:(NSRect)bounds;  // adjusts frame to suit -minSize if needed
 - (NSRect)drawingRectForGraphicBounds:(NSRect)bounds;
-- (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view;
+
+- (BOOL)mouse:(NSPoint)mousePoint
+    isInFrame:(NSRect)frameRect
+       inView:(NSView *)view
+       handle:(SVGraphicHandle *)handle;
 
 
 #pragma mark Drawing

@@ -466,26 +466,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return YES;
 }
 
-- (SVSelectionBorder *)selectionBorderAtPoint:(NSPoint)point;
-{
-    SVSelectionBorder *result = nil;
-    
-    // TODO: Re-enable this method
-    /*
-    CGPoint cgPoint = [self convertPointToContent:point];
-    
-    for (SVSelectionBorder *aLayer in [self selectionBorders])
-    {
-        if ([aLayer hitTest:cgPoint])
-        {
-            result = aLayer;
-            break;
-        }
-    }
-    */
-    return result;
-}
-
 @synthesize selectionParentItems = _selectionParentItems;
 - (void)setSelectionParentItems:(NSArray *)items
 {
@@ -729,6 +709,28 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+- (SVWebEditorItem *)selectedItemAtPoint:(NSPoint)point handle:(SVGraphicHandle *)outHandle;
+{
+    // Like -selectableItemAtPoint:, but only looks at selection, and takes graphic handles into account
+    
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+    
+    SVWebEditorItem *result = nil;
+    for (result in [self selectedItems])
+    {
+        [border setResizingMask:[result resizingMask]];
+        
+        NSRect frame = [border frameRectForGraphicBounds:[[result HTMLElement] boundingBox]];
+        if ([border mouse:point isInFrame:frame inView:[self documentView] handle:outHandle])
+        {
+            break;
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Drawing
 
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
@@ -882,6 +884,24 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Tracking the Mouse
 
+- (void)resizeItem:(SVWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event
+{
+    OBPRECONDITION(handle != kSVGraphicNoHandle);
+    
+    
+    while ([event type] != NSLeftMouseUp)
+    {
+        event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
+        [self autoscroll:event];
+        NSPoint handleLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+        handle = [item resizeByMovingHandle:handle toPoint:handleLocation];
+    }
+}
+
+
+
+
+
 /*  Actions we could take from this:
  *      - Deselect everything
  *      - Change selection to new item
@@ -896,10 +916,23 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     
+    // Where's the click?
+    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
+    
+    
+    // Is it a selection handle?
+    SVGraphicHandle handle;
+    SVWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
+    if (item && handle != kSVGraphicNoHandle)
+    {
+        [self resizeItem:item usingHandle:handle withEvent:event];
+        [_mouseDownEvent release]; _mouseDownEvent = nil;
+        return;
+    }
+    
     
     // What was clicked? We want to know top-level object
-    NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
-    SVWebEditorItem *item = [self selectableItemAtPoint:location];
+    if (!item) item = [self selectableItemAtPoint:location];
       
     if (item)
     {

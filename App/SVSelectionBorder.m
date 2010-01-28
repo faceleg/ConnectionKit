@@ -34,7 +34,16 @@
 
 @synthesize editing = _isEditing;
 @synthesize minSize = _minSize;
+
+#pragma mark Resizing
+
 @synthesize resizingMask = _resizingMask;
+
+- (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
+{
+    // FIXME: Implement properly!
+    return YES;
+}
 
 #pragma mark Layout
 
@@ -66,9 +75,34 @@
 
 /*  Mostly a simple question of if frame contains point, but also return yes if the point is in one of our selection handles
  */
-- (BOOL)mouse:(NSPoint)mousePoint isInFrame:(NSRect)frameRect inView:(NSView *)view
+- (BOOL)mouse:(NSPoint)mousePoint
+    isInFrame:(NSRect)frameRect
+       inView:(NSView *)view
+       handle:(SVGraphicHandle *)outHandle;
 {
-    BOOL result = [view mouse:mousePoint inRect:frameRect];
+    BOOL result = NO;
+    
+    // Search through the handles
+    for (SVGraphicHandle handle = kSVGraphicUpperLeftHandle;
+         handle <= kSVGraphicLowerRightHandle;
+         handle++)
+    {
+        result = [self canResizeUsingHandle:handle];
+        if (result)
+        {
+            *outHandle = handle;
+            break;
+        }
+    }
+    
+    
+    // Fallback to the frame
+    if (!result)
+    {
+        result = [view mouse:mousePoint inRect:frameRect];
+        (*outHandle = kSVGraphicNoHandle);
+    }
+    
     return result;
 }
 

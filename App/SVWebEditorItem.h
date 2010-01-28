@@ -9,6 +9,7 @@
 
 
 #import "KSDOMController.h"
+#import "SVSelectionBorder.h"
 
 
 @class SVWebEditorView;
@@ -36,7 +37,7 @@
 
 - (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
 - (BOOL)isEditable;
-- (unsigned int)resizingMask;   // default is 0
+- (unsigned int)resizingMask;
 
 - (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
 
@@ -49,6 +50,11 @@
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
 - (NSEnumerator *)enumerator;
+
+
+#pragma mark Resizing
+- (unsigned int)resizingMask;   // default is 0
+- (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 
 
 #pragma mark Debugging
