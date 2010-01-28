@@ -15,6 +15,7 @@
 #import "KTAbstractPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
+#import "KTDocWindowController.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
