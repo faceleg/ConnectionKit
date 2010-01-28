@@ -115,7 +115,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)showChooseDesignSheet:(id)sender;
 
 - (IBAction)updateWebView:(id)sender;
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
 
 
 #pragma mark Choose Dialog
