@@ -104,7 +104,7 @@
 {
     if ([kKTDocumentUTI_ORIGINAL isEqualToString:documentTypeName])
     {
-        return [KTDataMigrationDocument class];
+        return nil;//[KTDataMigrationDocument class];
     }
     else
     {
