@@ -368,11 +368,6 @@
 	KTPage *page = (KTPage *)[self component];
 	NSMutableString *string = [NSMutableString string];
 	
-		[[page managedObjectContext] makeAllPluginsPerformSelector:@selector(addSitewideTextToEndBody:forPage:)
-														withObject:string
-														  withPage:[[page site] rootPage]];
-		
-
 		[page makeComponentsPerformSelector:@selector(addLevelTextToEndBody:forPage:) withObject:string withPage:page recursive:NO];
 		
 		//[page recursiveComponentPerformSelector:@selector(addPageTextToEndBody:forPage:) withObject:string];

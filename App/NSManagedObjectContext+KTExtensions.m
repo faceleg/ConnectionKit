@@ -289,23 +289,4 @@
 	return [self isEqual:[[self document] managedObjectContext]];
 }
 
-- (void)makeAllPluginsPerformSelector:(SEL)selector withObject:(id)object withPage:(KTPage *)page
-{
-	NSArray *pages = [self allObjectsWithEntityName:@"Page" error:NULL];
-	NSArray *pagelets = [NSArray array];//[self allObjectsWithEntityName:@"OldPagelet" error:NULL];
-	
-	NSMutableArray *plugins = [[NSMutableArray alloc] initWithCapacity:[pages count] + [pagelets count]];
-	[plugins addObjectsFromArray:pages];
-	[plugins addObjectsFromArray:pagelets];
-	
-	NSEnumerator *pluginsEnumerator = [plugins objectEnumerator];
-	KTAbstractElement *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
-	{
-		[aPlugin makeSelfOrDelegatePerformSelector:selector withObject:object withPage:page recursive:NO];
-	}
-	
-	[plugins release];
-}
-
 @end
