@@ -21,72 +21,20 @@
 
 @implementation SVSelectionBorder
 
+#pragma mark Init
+
+- (id)init
+{
+    self = [super init];
+    _resizingMask = /*kCALayerLeftEdge | */kCALayerRightEdge | kCALayerBottomEdge/* | kCALayerTopEdge*/;
+    return self;
+}
+
+#pragma mark Properties
+
 @synthesize editing = _isEditing;
 @synthesize minSize = _minSize;
-
-#pragma mark Drawing
-
-- (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
-{
-    // First draw overall frame. enlarge by 1 pixel to avoid drawing directly over the graphic
-    [[NSColor grayColor] setFill];
-    NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
-                                       1.0,
-                                       NSCompositeSourceOver);
-    
-    // Then draw handles. Pixels are weird, need to draw using a slightly smaller rectangle otherwise edges get cut off
-    if (![self isEditing])
-    {
-        NSRect editingHandlesRect = frameRect;
-        editingHandlesRect.size.width -= 1.0f;
-        editingHandlesRect.size.height -= 1.0f;
-        
-        CGFloat minX = NSMinX(editingHandlesRect);
-        CGFloat midX = NSMidX(editingHandlesRect);
-        CGFloat maxX = NSMaxX(editingHandlesRect);
-        CGFloat minY = NSMinY(editingHandlesRect);
-        CGFloat midY = NSMidY(editingHandlesRect);
-        CGFloat maxY = NSMaxY(editingHandlesRect);
-        
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view enabled:NO];
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view enabled:NO];
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view enabled:NO];
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY) inView:view enabled:NO];
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY) inView:view enabled:YES];
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view enabled:YES];
-        [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view enabled:NO];
-        [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view enabled:YES];
-    }
-}
-
-- (void)drawWithGraphicBounds:(NSRect)frameRect inView:(NSView *)view;
-{
-    [self drawWithFrame:[self frameRectForGraphicBounds:frameRect] inView:view];
-}
-
-- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
-{
-    NSRect rect = [view centerScanRect:NSMakeRect(point.x - 3.0,
-                                                  point.y - 3.0,
-                                                  7.0,
-                                                  7.0)];
-    
-    // Draw middle
-    [[NSColor colorWithCalibratedWhite:1.0 alpha:(enabled ? 1.0 : 0.5)] setFill];
-    NSRectFillUsingOperation(NSInsetRect(rect, 1.0f, 1.0f), NSCompositeSourceOver);
-    
-    // Draw border
-    if (enabled)
-    {
-        [[NSColor blackColor] setFill];
-        NSFrameRect(rect);
-    }
-    else
-    {
-        [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
-        NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
-    }
-}
+@synthesize resizingMask = _resizingMask;
 
 #pragma mark Layout
 
@@ -122,6 +70,98 @@
 {
     BOOL result = [view mouse:mousePoint inRect:frameRect];
     return result;
+}
+
+#pragma mark Drawing
+
+- (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
+{
+    // First draw overall frame. enlarge by 1 pixel to avoid drawing directly over the graphic
+    [[NSColor grayColor] setFill];
+    NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
+                                       1.0,
+                                       NSCompositeSourceOver);
+    
+    
+    // Then draw handles. Pixels are weird, need to draw using a slightly smaller rectangle otherwise edges get cut off
+    if (![self isEditing])
+    {
+        NSRect editingHandlesRect = frameRect;
+        editingHandlesRect.size.width -= 1.0f;
+        editingHandlesRect.size.height -= 1.0f;
+        
+        
+        CGFloat minX = NSMinX(editingHandlesRect);
+        CGFloat midX = NSMidX(editingHandlesRect);
+        CGFloat maxX = NSMaxX(editingHandlesRect);
+        CGFloat minY = NSMinY(editingHandlesRect);
+        CGFloat midY = NSMidY(editingHandlesRect);
+        CGFloat maxY = NSMaxY(editingHandlesRect);
+        
+        
+        unsigned int mask = [self resizingMask];
+        BOOL canResizeLeft = (mask & kCALayerLeftEdge);
+        BOOL canResizeTop = (mask & kCALayerTopEdge);
+        BOOL canResizeRight = (mask & kCALayerRightEdge);
+        BOOL canResizeBottom = (mask & kCALayerBottomEdge);
+        
+        if (canResizeTop || canResizeBottom)
+        {
+            if (mask & kCALayerLeftEdge || mask & kCALayerRightEdge)
+            {
+                [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY)
+                                          inView:view
+                                         enabled:(canResizeTop && canResizeLeft)];
+                
+                [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY)
+                                          inView:view
+                                         enabled:(canResizeTop && canResizeRight)];
+                
+                [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY)
+                                          inView:view
+                                         enabled:(canResizeBottom && canResizeLeft)];
+                
+                [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY)
+                                          inView:view
+                                         enabled:(canResizeBottom && canResizeRight)];
+            }
+            
+            [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view enabled:canResizeTop];
+            [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view enabled:canResizeBottom];
+        }
+        
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view enabled:canResizeLeft];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view enabled:canResizeRight];
+    }
+}
+
+- (void)drawWithGraphicBounds:(NSRect)frameRect inView:(NSView *)view;
+{
+    [self drawWithFrame:[self frameRectForGraphicBounds:frameRect] inView:view];
+}
+
+- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
+{
+    NSRect rect = [view centerScanRect:NSMakeRect(point.x - 3.0,
+                                                  point.y - 3.0,
+                                                  7.0,
+                                                  7.0)];
+    
+    // Draw middle
+    [[NSColor colorWithCalibratedWhite:1.0 alpha:(enabled ? 1.0 : 0.5)] setFill];
+    NSRectFillUsingOperation(NSInsetRect(rect, 1.0f, 1.0f), NSCompositeSourceOver);
+    
+    // Draw border
+    if (enabled)
+    {
+        [[NSColor blackColor] setFill];
+        NSFrameRect(rect);
+    }
+    else
+    {
+        [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
+        NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
+    }
 }
 
 @end
