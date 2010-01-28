@@ -12,6 +12,8 @@
 
 
 @interface SVSelectionBorder ()
+- (BOOL)isPoint:(NSPoint)point withinHandleAtPoint:(NSPoint)handlePoint;
+
 - (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
 @end
 
@@ -42,7 +44,8 @@
 - (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
 {
     // FIXME: Implement properly!
-    return YES;
+    BOOL result = (handle != kSVGraphicNoHandle);
+    return result;
 }
 
 #pragma mark Layout
@@ -80,30 +83,69 @@
        inView:(NSView *)view
        handle:(SVGraphicHandle *)outHandle;
 {
-    BOOL result = NO;
-    
     // Search through the handles
-    for (SVGraphicHandle handle = kSVGraphicUpperLeftHandle;
-         handle <= kSVGraphicLowerRightHandle;
-         handle++)
-    {
-        result = [self canResizeUsingHandle:handle];
-        if (result)
-        {
-            *outHandle = handle;
-            break;
-        }
-    }
-    
+    SVGraphicHandle handle = [self handleAtPoint:mousePoint frameRect:frameRect];
+    BOOL result = [self canResizeUsingHandle:handle];
     
     // Fallback to the frame
     if (!result)
     {
         result = [view mouse:mousePoint inRect:frameRect];
-        (*outHandle = kSVGraphicNoHandle);
+    }
+    
+    if (outHandle) *outHandle = handle;
+    return result;
+}
+
+- (NSInteger)handleAtPoint:(NSPoint)point frameRect:(NSRect)bounds;
+{
+    // Check handles at the corners and on the sides.
+    NSInteger result = kSVGraphicNoHandle;
+    if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMinY(bounds))])
+    {
+        result = kSVGraphicUpperLeftHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMidX(bounds), NSMinY(bounds))])
+    {
+        result = kSVGraphicUpperMiddleHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMaxX(bounds), NSMinY(bounds))])
+    {
+        result = kSVGraphicUpperRightHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMidY(bounds))])
+    {
+        result = kSVGraphicMiddleLeftHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMaxX(bounds), NSMidY(bounds))])
+    {
+        result = kSVGraphicMiddleRightHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMaxY(bounds))])
+    {
+        result = kSVGraphicLowerLeftHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMidX(bounds), NSMaxY(bounds))])
+    {
+        result = kSVGraphicLowerMiddleHandle;
+    }
+    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMaxX(bounds), NSMaxY(bounds))])
+    {
+        result = kSVGraphicLowerRightHandle;
     }
     
     return result;
+}
+
+- (BOOL)isPoint:(NSPoint)point withinHandleAtPoint:(NSPoint)handlePoint;
+{
+    // Check a handle-sized rectangle that's centered on the handle point.
+    NSRect handleBounds = NSMakeRect(handlePoint.x - 3.0,
+                                     handlePoint.y - 3.0,
+                                     7.0,
+                                     7.0);
+    
+    return NSPointInRect(point, handleBounds);
 }
 
 #pragma mark Drawing

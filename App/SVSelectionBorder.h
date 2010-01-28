@@ -61,6 +61,8 @@ enum
        inView:(NSView *)view
        handle:(SVGraphicHandle *)handle;
 
+- (NSInteger)handleAtPoint:(NSPoint)point frameRect:(NSRect)bounds;
+
 
 #pragma mark Drawing
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
