@@ -8,9 +8,11 @@
 
 #import "SVSelectionBorder.h"
 
+#import "NSColor+Karelia.h"
+
 
 @interface SVSelectionBorder ()
-- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view;
+- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
 @end
 
 
@@ -46,14 +48,14 @@
         CGFloat midY = NSMidY(editingHandlesRect);
         CGFloat maxY = NSMaxY(editingHandlesRect);
         
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view];
-        [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view];
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, minY) inView:view enabled:NO];
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, maxY) inView:view enabled:NO];
+        [self drawSelectionHandleAtPoint:NSMakePoint(minX, midY) inView:view enabled:NO];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, minY) inView:view enabled:NO];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, maxY) inView:view enabled:YES];
+        [self drawSelectionHandleAtPoint:NSMakePoint(maxX, midY) inView:view enabled:YES];
+        [self drawSelectionHandleAtPoint:NSMakePoint(midX, minY) inView:view enabled:NO];
+        [self drawSelectionHandleAtPoint:NSMakePoint(midX, maxY) inView:view enabled:YES];
     }
 }
 
@@ -62,16 +64,28 @@
     [self drawWithFrame:[self frameRectForGraphicBounds:frameRect] inView:view];
 }
 
-- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view
+- (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
 {
     NSRect rect = [view centerScanRect:NSMakeRect(point.x - 3.0,
                                                   point.y - 3.0,
                                                   7.0,
                                                   7.0)];
     
-    [[NSColor blackColor] setFill];
-    NSEraseRect(rect);
-    NSFrameRect(rect);
+    // Draw middle
+    [[NSColor colorWithCalibratedWhite:1.0 alpha:(enabled ? 1.0 : 0.5)] setFill];
+    NSRectFillUsingOperation(NSInsetRect(rect, 1.0f, 1.0f), NSCompositeSourceOver);
+    
+    // Draw border
+    if (enabled)
+    {
+        [[NSColor blackColor] setFill];
+        NSFrameRect(rect);
+    }
+    else
+    {
+        [[[NSColor aquaColor] colorWithAlphaComponent:0.5] setFill];
+        NSFrameRectWithWidthUsingOperation(rect, 1.0, NSCompositeSourceOver);
+    }
 }
 
 #pragma mark Layout
