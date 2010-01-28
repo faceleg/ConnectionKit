@@ -555,19 +555,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		}
 	}
 	
-	// "Create Link..." showLinkPanel:
-	else if (itemAction == @selector(showLinkPanel:))
-	{
-		return NO;
-        
-        NSString *title;
-		BOOL result = [[self webViewController] validateCreateLinkItem:menuItem title:&title];
-		[menuItem setTitle:title];
-		return result;
-	}
-    
-    
-    // Insert menu
+	// Insert menu
     if (itemAction == @selector(insertSiteTitle:) ||
         itemAction == @selector(insertSiteSubtitle:) ||
         itemAction == @selector(insertPageTitle:) ||
