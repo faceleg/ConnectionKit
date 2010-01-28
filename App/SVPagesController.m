@@ -243,8 +243,15 @@
     [parent addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
-    // Finally, do the actual controller-level insertion
+    // Do the actual controller-level insertion
     [super addObject:object];
+    
+    
+    // Include in site menu if appropriate
+    if ([parent isRootPage] && [[parent childItems] count] < 7)
+    {
+        [object setIncludeInSiteMenu:YES];
+    }
 }
 
 #pragma mark Accessors
