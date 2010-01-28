@@ -721,8 +721,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         [border setResizingMask:[result resizingMask]];
         
+        NSView *docView = [[result HTMLElement] documentView];
         NSRect frame = [border frameRectForGraphicBounds:[[result HTMLElement] boundingBox]];
-        if ([border mouse:point isInFrame:frame inView:[self documentView] handle:outHandle])
+        
+        if ([border mouse:[docView convertPoint:point fromView:self]
+                isInFrame:frame
+                   inView:docView
+                   handle:outHandle])
         {
             break;
         }
@@ -808,7 +813,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
-        SVWebEditorItem *item = [self selectableItemAtPoint:point];
+        SVWebEditorItem *item = [self selectedItemAtPoint:point handle:NULL];
+        if (!item) item = [self selectableItemAtPoint:point];
+        
         if (item)
         {
             if (![[self selectionParentItems] containsObject:item])
