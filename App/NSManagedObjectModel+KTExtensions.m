@@ -12,7 +12,6 @@
 
 #import "NSException+Karelia.h"
 
-static NSManagedObjectModel *sKTComponentsModel;
 
 @implementation NSManagedObjectModel (KTExtensions)
 
