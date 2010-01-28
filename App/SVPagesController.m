@@ -69,7 +69,7 @@
         // Figure out the predecessor (which page to inherit properties from)
         KTPage *parent = [[self selectedObjects] lastObject];
         if (![parent isCollection]) parent = [parent parentPage];
-        if (!parent) parent = [[self managedObjectContext] root];
+        OBASSERT(parent);
     
         KTPage *predecessor = parent;
         NSArray *children = [parent childrenWithSorting:SVCollectionSortByDateCreated
@@ -227,7 +227,7 @@
     // Figure out where to insert the page. i.e. from our selection, what collection should it be made a child of?
     KTPage *parent = [[self selectedObjects] lastObject];
     if (![parent isCollection]) parent = [parent parentPage];
-    if (!parent) parent = [[self managedObjectContext] root];
+    OBASSERT(parent);
     
     
     [self addObject:page asChildOfPage:parent];
