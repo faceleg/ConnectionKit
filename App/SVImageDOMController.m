@@ -8,6 +8,8 @@
 
 #import "SVImageDOMController.h"
 
+#import <QuartzCore/QuartzCore.h>
+
 
 static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
@@ -47,5 +49,9 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     }
 }
 
+- (unsigned int)resizingMask
+{
+    return kCALayerRightEdge | kCALayerBottomEdge;
+}
 
 @end
