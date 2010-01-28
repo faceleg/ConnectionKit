@@ -43,8 +43,39 @@
 
 - (BOOL)canResizeUsingHandle:(SVGraphicHandle)handle;
 {
-    // FIXME: Implement properly!
-    BOOL result = (handle != kSVGraphicNoHandle);
+    BOOL result = NO;
+    
+    unsigned int mask = [self resizingMask];
+    switch (handle)
+    {
+        case kSVGraphicUpperLeftHandle:
+            result = (mask & kCALayerLeftEdge && mask & kCALayerTopEdge);
+            break;
+        case kSVGraphicUpperMiddleHandle:
+            result = (mask & kCALayerTopEdge);
+            break;
+        case kSVGraphicUpperRightHandle:
+            result = (mask & kCALayerRightEdge && mask & kCALayerTopEdge);
+            break;
+        case kSVGraphicMiddleLeftHandle:
+            result = (mask & kCALayerLeftEdge);
+            break;
+        case kSVGraphicMiddleRightHandle:
+            result = (mask & kCALayerRightEdge);
+            break;
+        case kSVGraphicLowerLeftHandle:
+            result = (mask & kCALayerLeftEdge && mask & kCALayerBottomEdge);
+            break;
+        case kSVGraphicLowerMiddleHandle:
+            result = (mask & kCALayerBottomEdge);
+            break;
+        case kSVGraphicLowerRightHandle:
+            result = (mask & kCALayerRightEdge && mask & kCALayerBottomEdge);
+            break;
+        default:
+            break;
+    }
+    
     return result;
 }
 
