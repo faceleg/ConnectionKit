@@ -36,6 +36,7 @@
 
 - (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
 - (BOOL)isEditable;
+- (unsigned int)resizingMask;   // default is 0
 
 - (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
 

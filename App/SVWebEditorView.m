@@ -779,6 +779,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:drawingRect])
         {
+            [border setResizingMask:[anItem resizingMask]];
             [border drawWithGraphicBounds:frameRect inView:view];
         }
     }

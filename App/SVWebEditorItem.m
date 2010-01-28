@@ -112,6 +112,8 @@
 
 - (BOOL)isEditable { return NO; }
 
+- (unsigned int)resizingMask; { return 0; }
+
 - (NSArray *)selectableAncestors;
 {
     NSMutableArray *result = [NSMutableArray array];
