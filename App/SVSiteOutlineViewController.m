@@ -532,6 +532,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
 }
 
+- (IBAction)duplicate:(id)sender;
+{
+    NSLog(@"dupe:\n%@", [[[self content] selectedObjects] valueForKey:@"propertyListRepresentation"]);
+}
+
 - (void)delete:(id)sender
 {
     /// Old code did a -processPendingChanges here but haven't a clue why. Mike.

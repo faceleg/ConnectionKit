@@ -64,6 +64,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 - (IBAction)cut:(id)sender;
 - (IBAction)copy:(id)sender;
 - (IBAction)rename:(id)sender;  // edits the selected page's title
+- (IBAction)duplicate:(id)sender;
 - (IBAction)delete:(id)sender;
 
 @property(nonatomic, readonly) BOOL canCopy;  // also used by -cut: as it's effectively doing a copy op
