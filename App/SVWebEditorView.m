@@ -713,7 +713,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // Like -selectableItemAtPoint:, but only looks at selection, and takes graphic handles into account
     
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
     SVWebEditorItem *result = nil;

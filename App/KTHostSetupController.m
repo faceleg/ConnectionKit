@@ -2018,8 +2018,12 @@ static NSCharacterSet *sIllegalSubfolderSet;
 		errorString
 			= NSLocalizedString(@"Illegal characters were found in the folder name.  Please limit the folder name to letters, numbers, dashes, and underscores.", @"validation error message for illegal subfolder");
 
-		NSRange whereBad
-			= [newValue rangeOfCharacterFromSet:sIllegalSubfolderSet];
+		NSRange whereBad = NSMakeRange(NSNotFound, 0);
+		if (newValue)
+		{
+			whereBad = [newValue rangeOfCharacterFromSet:sIllegalSubfolderSet];	// be sure not to call this when receiver may be nil
+
+		}
 		result = (NSNotFound == whereBad.location);
 	}
 

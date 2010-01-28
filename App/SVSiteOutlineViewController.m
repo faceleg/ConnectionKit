@@ -544,7 +544,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     if ([self canDelete])
     {
-        NSSet *selection = [[NSSet alloc] initWithArray:[[self content] selectedObjects]];
+        NSSet *selection = [[[NSSet alloc] initWithArray:[[self content] selectedObjects]] autorelease];
         
         // Remove the pages from their parents
         NSSet *parentPages = [selection valueForKey:@"parentPage"];

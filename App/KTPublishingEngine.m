@@ -822,7 +822,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (mainCSSPath)
     {
         NSError *error;
-        mainCSS = [[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error];
+        mainCSS = [[[NSMutableString alloc] initWithContentsOfFile:mainCSSPath usedEncoding:NULL error:&error] autorelease];
         if (!mainCSS)
         {
             NSLog(@"Unable to load CSS from %@, error: %@", mainCSSPath, [[error debugDescription] condenseWhiteSpace]);
@@ -840,7 +840,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSLog(@"main.css file could not be located in design: %@", [[design bundle] bundlePath]);
     }
     
-    if (!mainCSS) mainCSS = [[NSMutableString alloc] init];
+    if (!mainCSS) mainCSS = [[[NSMutableString alloc] init] autorelease];
     
     
     

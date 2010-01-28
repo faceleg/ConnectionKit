@@ -30,7 +30,13 @@ IMEDIA_REVISION = 797
 // GCC_VERSION = com.apple.compilers.llvm.clang.1_0
 
 // LLVM GCC 4.2
-GCC_VERSION = com.apple.compilers.llvmgcc42
+// GCC_VERSION = com.apple.compilers.llvmgcc42
+
+// For testing out the TOT clang installed.  Useful to get new warnings.
+//GCC_VERSION = com.apple.compilers.llvm.clang.1_0
+//RUN_CLANG_STATIC_ANALYZER = YES
+//CC = /opt/bin/clang
+
 
 GCC_C_LANGUAGE_STANDARD = c99
 

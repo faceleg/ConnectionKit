@@ -1080,7 +1080,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSURL *requestURL = [request URL];
 	if ([requestURL hasNetworkLocation] && ![[requestURL scheme] isEqualToString:@"svxmedia"])
 	{
-		result = nil;
 		NSMutableURLRequest *mutableRequest = [[request mutableCopy] autorelease];
 		[mutableRequest setCachePolicy:NSURLRequestReturnCacheDataDontLoad];	// don't load, but return cached value
 		result = mutableRequest;
