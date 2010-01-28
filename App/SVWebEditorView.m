@@ -899,8 +899,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     while ([event type] != NSLeftMouseUp)
     {
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
-        [self autoscroll:event];
-        NSPoint handleLocation = [self convertPoint:[event locationInWindow] fromView:nil];
+        //[self autoscroll:event];
+        NSPoint handleLocation = [[[item HTMLElement] documentView] convertPoint:[event locationInWindow] 
+                                                                        fromView:nil];
         handle = [item resizeByMovingHandle:handle toPoint:handleLocation];
     }
 }
