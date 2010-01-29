@@ -31,8 +31,6 @@
 
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
-@property(nonatomic, retain) KTSite *site;
-
 
 // Index
 - (void)setIndex:(KTAbstractIndex *)anIndex;

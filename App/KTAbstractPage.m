@@ -126,8 +126,6 @@
 
 #pragma mark Other Relationships
 
-- (KTSite *)site { return [self wrappedValueForKey:@"site"]; }
-
 - (KTMaster *)master
 {
     SUBCLASSMUSTIMPLEMENT;

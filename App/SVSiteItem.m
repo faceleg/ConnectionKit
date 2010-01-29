@@ -137,6 +137,10 @@
 	return result;
 }
 
+#pragma mark Site
+
+@dynamic site;
+
 #pragma mark Tree
 
 - (NSSet *)childItems { return nil; }

@@ -14,7 +14,7 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTPage, KTCodeInjection, SVExternalLink;
+@class KTSite, KTPage, KTCodeInjection, SVExternalLink;
 @protocol SVWebContentViewController, SVMedia;
 
 
@@ -54,6 +54,10 @@
 #pragma mark Publishing
 @property(nonatomic, copy) NSString *publishedPath;
 - (BOOL)includeInIndexAndPublish;
+
+
+#pragma mark Site
+@property(nonatomic, retain) KTSite *site;
 
 
 #pragma mark Tree

@@ -57,7 +57,6 @@ KTCollectionPathStyle;
 
 
 #pragma mark Other Relationships
-- (KTSite *)site;
 - (KTMaster *)master;
 
 @property(nonatomic, retain, readonly) SVSidebar *sidebar;

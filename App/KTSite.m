@@ -62,7 +62,7 @@
     KTPage *result = [self primitiveValueForKey:@"rootPage"];
     if (!result)
     {
-        result = [[[self pages] anyObject] rootPage];
+        result = [[[self siteItems] anyObject] rootPage];
         [self setPrimitiveValue:result forKey:@"rootPage"];
     }
     
@@ -71,7 +71,8 @@
     return result;
 }
 
-@dynamic pages;
+@dynamic siteItems;
+
 - (KTPage *)pageWithPreviewURLPath:(NSString *)path
 {
 	KTPage *result = nil;

@@ -239,7 +239,7 @@
     
     
     // Attach to parent & other relationships
-    if ([object isKindOfClass:[KTPage class]]) [object setSite:[parent site]];
+    [object setSite:[parent site]];
     [parent addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	

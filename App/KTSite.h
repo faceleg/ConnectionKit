@@ -37,10 +37,14 @@ typedef enum {
 - (NSString *)siteID;
 @property(nonatomic, assign) KTDocument *document;
 
-// Pages
+
+#pragma mark Site Items
+
 - (KTPage *)rootPage;
-@property(nonatomic, retain, readonly) NSSet *pages;
+@property(nonatomic, retain, readonly) NSSet *siteItems;
 - (KTPage *)pageWithPreviewURLPath:(NSString *)path;
+
+
 
 
 - (KTCopyMediaType)copyMediaOriginals;
@@ -50,6 +54,7 @@ typedef enum {
 - (void)setMetadata:(NSDictionary *)metadata;
 
 - (NSString *)appNameVersion;
+
 
 // UI
 - (NSRect)docWindowContentRect;
