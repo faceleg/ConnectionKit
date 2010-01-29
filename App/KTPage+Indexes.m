@@ -631,7 +631,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	OBPRECONDITION(timestamp);
 	
-	if (![self collectionGenerateArchives]) return nil;
+	if (![[self collectionGenerateArchives] boolValue]) return nil;
 	
 	
 	NSArray *archives = [[self archivePages] allObjects];
