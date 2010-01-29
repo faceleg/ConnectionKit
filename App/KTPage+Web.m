@@ -324,7 +324,7 @@
 	// if wantsJSKit comments, use transitional doc type (or worse, if already known)
 	if ( defaultDocType > KTXHTMLTransitionalDocType )
 	{
-		if ( ![self disableComments] && [self boolForKey:@"allowComments"] && [[self master] wantsJSKit] )
+		if ([[self allowComments] boolValue] && [[self master] wantsJSKit] )
 		{
 			defaultDocType = KTXHTMLTransitionalDocType; // if this changes to KTHTML401DocType, also change isXHTML
 		}

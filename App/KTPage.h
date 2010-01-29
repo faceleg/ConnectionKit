@@ -72,11 +72,13 @@ typedef enum {
 
 @interface KTPage (Accessors)
 
+#pragma mark Comments
 @property(nonatomic, copy) NSNumber *allowComments;
-@property(nonatomic) BOOL disableComments;
 
-// Title
+
+#pragma mark Title
 @property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;
+
 
 #pragma mark Site Menu
 
