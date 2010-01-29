@@ -31,4 +31,13 @@
     [[self titleBox] setTextHTMLString:[propertyList objectForKey:@"titleHTMLString"]];
 }
 
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
+{
+    // Want a fresh ID
+    if (![key isEqualToString:@"uniqueID"])
+    {
+        [super setSerializedValue:serializedValue forKey:key];
+    }
+}
+
 @end
