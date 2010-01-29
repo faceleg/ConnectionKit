@@ -8,7 +8,7 @@
 
 #import "SVWebEditorItem.h"
 
-#import "SVBodyElement.h"
+#import "DOMNode+Karelia.h"
 
 
 @interface SVWebEditorItemEnumerator : NSEnumerator
@@ -126,6 +126,14 @@
     return result;
 }
 
+@synthesize selected = _selected;
+- (void)setSelected:(BOOL)selected
+{
+    _selected = selected;
+    
+    [[[self HTMLElement] documentView] setNeedsDisplayInRect:[self drawingRect]];
+}
+
 #pragma mark Searching the Tree
 
 - (SVWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
@@ -193,6 +201,38 @@
     SUBCLASSMUSTIMPLEMENT;
     [self doesNotRecognizeSelector:_cmd];
     return handle;
+}
+
+#pragma mark Drawing
+
+- (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
+{
+    if ([self isSelected])
+    {
+        SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+        [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+        
+        // Draw if we're in the dirty rect (otherwise drawing can get pretty pricey)
+        DOMElement *element = [self HTMLElement];
+        NSRect frameRect = [view convertRect:[element boundingBox]
+                                    fromView:[element documentView]];
+        
+        NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
+        if ([view needsToDrawRect:drawingRect])
+        {
+            [border setResizingMask:[self resizingMask]];
+            [border drawWithGraphicBounds:frameRect inView:view];
+        }
+    }
+}
+
+- (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
+{
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+    NSRect result = [border drawingRectForGraphicBounds:[[self HTMLElement] boundingBox]];
+    
+    return result;
 }
 
 #pragma mark Debugging

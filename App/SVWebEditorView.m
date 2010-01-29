@@ -384,8 +384,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         for (SVWebEditorItem *anItem in itemsToDeselect)
         {
-            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
-            [docView setNeedsDisplayInRect:drawingRect];
+            [anItem setSelected:NO];
         }
     }
     
@@ -402,8 +401,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Draw new selection
         for (SVWebEditorItem *anItem in itemsToSelect)
         {
-            NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
-            [docView setNeedsDisplayInRect:drawingRect];
+            [anItem setSelected:YES];
         }
     }
     
@@ -781,14 +779,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [border setEditing:NO];
     for (SVWebEditorItem *anItem in [self selectedItems])
     {
-        // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
-        NSRect frameRect = [[anItem HTMLElement] boundingBox];
-        NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
-        if ([view needsToDrawRect:drawingRect])
-        {
-            [border setResizingMask:[anItem resizingMask]];
-            [border drawWithGraphicBounds:frameRect inView:view];
-        }
+        [anItem drawRect:dirtyRect inView:view];
     }
     
     
