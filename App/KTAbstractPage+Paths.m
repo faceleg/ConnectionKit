@@ -128,14 +128,6 @@
 	return [self defaultFileExtension];
 }
 
-/*	Super-simple accessor that determines the editing UI available to the user in the Page Details area.
- *	By default, set to true. The File Download and External Link plugins use this to disable editing.
- */
-- (BOOL)fileExtensionIsEditable { return [self wrappedBoolForKey:@"fileExtensionIsEditable"]; }
-
-- (void)setFileExtensionIsEditable:(BOOL)editable { [self setWrappedBool:editable forKey:@"fileExtensionIsEditable"]; }
-
-
 /*	The value -fileExtension should return if there is no custom extensions set.
  *	Mainly used for bindings.
  */

@@ -109,8 +109,7 @@ KTCollectionPathStyle;
 // TODO: Rename other methods to follow this scheme
 @property(nonatomic, copy, readonly) NSString *pathExtension;
 
-- (BOOL)fileExtensionIsEditable;
-- (void)setFileExtensionIsEditable:(BOOL)editable;
+@property(nonatomic, copy) NSNumber *fileExtensionIsEditable;   // BOOL, non-optional
 
 - (NSString *)defaultFileExtension;
 - (NSArray *)availableFileExtensions;
