@@ -54,6 +54,7 @@ typedef enum {
 
 
 #pragma mark Properties
+@property(nonatomic, retain) KTMaster *master;
 @property(nonatomic, copy) NSNumber *showSidebar;
 
 

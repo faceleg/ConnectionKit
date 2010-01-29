@@ -547,13 +547,23 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         // Serialize
         id plist = [anItem propertyList];
         
+        
+        // Where's it going to be placed?
+        KTPage *parent = [anItem parentPage];
+        
+        
         // Create copy
         SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[anItem entity]
                                          insertIntoManagedObjectContext:[anItem managedObjectContext]];
         [duplicate awakeFromPropertyList:plist];
+        if ([duplicate isKindOfClass:[KTPage class]])
+        {
+            [(KTPage *)duplicate setMaster:[parent master]];
+        }
+        
         
         // Insert copy
-        [[self content] addObject:duplicate asChildOfPage:[anItem parentPage]];
+        [[self content] addObject:duplicate asChildOfPage:parent];
         [duplicate release];
     }
     

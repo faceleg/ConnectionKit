@@ -31,7 +31,6 @@
 
 - (int)proposedOrderingForProposedChildWithTitle:(NSString *)aTitle;
 
-@property(nonatomic, retain) KTMaster *master;
 @property(nonatomic, retain) KTSite *site;
 
 
