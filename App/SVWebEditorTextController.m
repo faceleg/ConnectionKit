@@ -223,7 +223,11 @@
     return result;
 }
 
-- (void)webEditorTextWillGainFocus; { }
+- (void)webEditorTextWillGainFocus;
+{
+    // A bit crude, but we don't want WebKit's usual focus ring
+    [[[self textHTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
+}
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
