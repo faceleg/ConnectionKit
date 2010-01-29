@@ -189,11 +189,13 @@ typedef enum {
 
 - (NSString *)titleListHTMLWithSorting:(SVCollectionSortOrder)sortType;
 
-// Archive
-- (BOOL)collectionGenerateArchives;
-- (void)setCollectionGenerateArchives:(BOOL)generateArchive;
+
+#pragma mark  Archive
+@property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
 - (NSArray *)sortedArchivePages;
+
+
 @end
 
 

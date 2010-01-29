@@ -570,7 +570,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 /*	This is a transient NOT persistent property. When accessed for the first time, we look for any pagelets requesting archive
  *	generation and set the value accordingly.
  */
-- (BOOL)collectionGenerateArchives
+- (NSNumber *)collectionGenerateArchives
 {
 	NSNumber *result = [self wrappedValueForKey:@"collectionGenerateArchives"];
 	
@@ -593,19 +593,19 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 		[self setPrimitiveValue:result forKey:@"collectionGenerateArchives"];
 	}
 	
-	return [result boolValue];
+	return result;
 }
 
-- (void)setCollectionGenerateArchives:(BOOL)generateArchive
+- (void)setCollectionGenerateArchives:(NSNumber *)generateArchive
 {
 	// Ignore requests that will do nothing
 	//BOOL noChange = (generateArchive == [self collectionGenerateArchives]);
-	[self setWrappedBool:generateArchive forKey:@"collectionGenerateArchives"];
+	[self setWrappedValue:generateArchive forKey:@"collectionGenerateArchives"];
 	//if (noChange) return;
 	
 	
 	// Delete or add archive pages as needed
-	if (generateArchive)
+	if ([generateArchive boolValue])
 	{
 		NSArray *children = [self navigablePages];
 		NSEnumerator *pageEnumerator = [children objectEnumerator];
