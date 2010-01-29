@@ -530,17 +530,21 @@
 
 - (id)propertyList;               // calls [self serializedValueForKey:] with each non-transient attribute
 {
+    NSMutableDictionary *result = [NSMutableDictionary dictionary];
+    [self populateSerializedValues:result];    
+    return result;
+}
+
+- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;
+{
     NSDictionary *attributes = [[self entity] propertiesByNameOfClass:[NSAttributeDescription class]
                                            includeTransientProperties:NO];
     
-    NSMutableDictionary *result = [NSMutableDictionary dictionaryWithCapacity:[attributes count]];
     for (NSString *aKey in attributes)
     {
         id serializedValue = [self serializedValueForKey:aKey];
-        if (serializedValue) [result setObject:serializedValue forKey:aKey];
+        if (serializedValue) [propertyList setObject:serializedValue forKey:aKey];
     }
-    
-    return result;
 }
 
 - (id)serializedValueForKey:(NSString *)key

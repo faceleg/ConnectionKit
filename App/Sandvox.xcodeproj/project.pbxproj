@@ -353,6 +353,7 @@
 		277E4F7A11108847005AF346 /* MetricsInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 277E4F7911108847005AF346 /* MetricsInspector.xib */; };
 		277E4FBC11109946005AF346 /* SVImageDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4FBA11109946005AF346 /* SVImageDOMController.h */; };
 		277E4FBD11109946005AF346 /* SVImageDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E4FBB11109946005AF346 /* SVImageDOMController.m */; };
+		277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C58AE7110204EE00F42306 /* KTPage+Serialization.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */; };
@@ -6579,6 +6580,7 @@
 				276A6F75110B5B7B006FD9F7 /* SVDownloadSiteItem.m in Sources */,
 				277E4E8911104CF4005AF346 /* SVImage.m in Sources */,
 				277E4FBD11109946005AF346 /* SVImageDOMController.m in Sources */,
+				277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
