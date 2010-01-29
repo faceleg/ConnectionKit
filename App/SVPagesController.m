@@ -88,7 +88,6 @@
         
         // Match the basic page properties up to the selection
         [result setMaster:[parent master]];
-        [result setSite:[parent valueForKeyPath:@"site"]];
         
         [result setAllowComments:[predecessor allowComments]];
         [result setIncludeTimestamp:[predecessor includeTimestamp]];
@@ -240,6 +239,7 @@
     
     
     // Attach to parent & other relationships
+    if ([object isKindOfClass:[KTPage class]]) [object setSite:[parent site]];
     [parent addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
