@@ -675,43 +675,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	}	
 	
     
-	// Migrate the media store
-	storeURL = [KTMediaManager mediaStoreURLForDocumentURL:URL];
-	storeCoordinator = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-	
-	NSURL *oldMediaStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:originalContentsURL];
-    OBASSERT(oldMediaStoreURL);
-    id oldMediaStore = [storeCoordinator persistentStoreForURL:oldMediaStoreURL];
-    OBASSERT(oldMediaStore);
-    if (![storeCoordinator migratePersistentStore:oldMediaStore
-										    toURL:storeURL
-										  options:nil
-										 withType:[KTMediaManager defaultMediaStoreType]
-										    error:outError])
-	{
-		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return NO;
-	}
-	
-	
-	// Copy/Move media files
-	NSFileManager *fileManager = [NSFileManager defaultManager];
-	NSString *newDocMediaPath = [[KTMediaManager mediaURLForDocumentURL:URL] path];
-	
-	NSEnumerator *pathsEnumerator = [pathsToCopy objectEnumerator];
-	NSString *aPath;	NSString *destinationPath;
-	while (aPath = [pathsEnumerator nextObject])
-	{
-		destinationPath = [newDocMediaPath stringByAppendingPathComponent:[aPath lastPathComponent]];
-		[fileManager copyPath:aPath toPath:destinationPath handler:nil];
-	}
-	
-	pathsEnumerator = [pathsToMove objectEnumerator];
-	while (aPath = [pathsEnumerator nextObject])
-	{
-		destinationPath = [newDocMediaPath stringByAppendingPathComponent:[aPath lastPathComponent]];
-		[fileManager movePath:aPath toPath:destinationPath handler:nil];
-	}
 	return YES;
 }
 
