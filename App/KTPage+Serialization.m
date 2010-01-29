@@ -33,8 +33,19 @@
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
 {
-    // Want a fresh ID
-    if (![key isEqualToString:@"uniqueID"])
+    // Several properties are not applicable for applying to a new page, so ignore them
+    static NSSet *sIgnoredKeys;
+    if (!sIgnoredKeys)
+    {
+        sIgnoredKeys = [[NSSet alloc] initWithObjects:
+                        @"uniqueID",
+                        @"fileName",
+                        @"shouldUpdateFileNameWhenTitleChanges",
+                        @"publishedPath",
+                        nil];
+    }
+    
+    if (![sIgnoredKeys containsObject:key])
     {
         [super setSerializedValue:serializedValue forKey:key];
     }
