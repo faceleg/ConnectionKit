@@ -555,7 +555,7 @@
 
 - (void)awakeFromPropertyList:(id)propertyList;
 {
-    for (NSString *aKey in [[self entity] propertiesByName])
+    for (NSString *aKey in [[self entity] attributesByName])
     {
         [self setSerializedValue:[propertyList objectForKey:aKey] forKey:aKey];
     }
