@@ -780,7 +780,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)outlineView:(NSOutlineView *)outlineView setObjectValue:(id)aNewValue forTableColumn:(NSTableColumn *)tableColumn byItem:(id)item
 {
-	[item setTitle:aNewValue];
+	if (item == [self rootPage])
+    {
+        [[[item master] siteTitle] setText:aNewValue];
+    }
+    else
+    {
+        [item setTitle:aNewValue];
+    }
 }
 
 
@@ -855,12 +862,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[[NSColor colorWithCalibratedWhite:0.60 alpha:1.0] set];
 		[NSBezierPath fillRect:NSMakeRect(lineX, lineY+1, width, height)];
 	}
-}
-
-- (BOOL)outlineView:(NSOutlineView *)outlineView shouldEditTableColumn:(NSTableColumn *)tableColumn item:(id)item
-{
-	BOOL result = (item != [self rootPage]);
-    return result;
 }
 
 - (BOOL)outlineView:(NSOutlineView *)outlineView shouldSelectItem:(id)item
