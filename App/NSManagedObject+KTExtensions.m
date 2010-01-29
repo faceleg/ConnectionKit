@@ -528,7 +528,7 @@
 
 #pragma mark Serialization
 
-- (id)propertyListRepresentation;               // calls [self serializedValueForKey:] with each non-transient attribute
+- (id)propertyList;               // calls [self serializedValueForKey:] with each non-transient attribute
 {
     NSDictionary *attributes = [[self entity] propertiesByNameOfClass:[NSAttributeDescription class]
                                            includeTransientProperties:NO];
@@ -546,6 +546,19 @@
 - (id)serializedValueForKey:(NSString *)key
 {
     return [self valueForKey:key];
+}
+
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key;
+{
+    [self setValue:serializedValue forKey:key];
+}
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    for (NSString *aKey in [[self entity] propertiesByName])
+    {
+        [self setSerializedValue:[propertyList objectForKey:aKey] forKey:aKey];
+    }
 }
 
 @end

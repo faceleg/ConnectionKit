@@ -68,7 +68,9 @@
 
 
 #pragma mark Serialization
-- (id)propertyListRepresentation;               // calls [self serializedValueForKey:] with each non-transient attribute
+- (id)propertyList;               // calls [self serializedValueForKey:] with each non-transient attribute
 - (id)serializedValueForKey:(NSString *)key;    // MUST return a plist object. Override to handle invalid types
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key;
+- (void)awakeFromPropertyList:(id)propertyList;
 
 @end

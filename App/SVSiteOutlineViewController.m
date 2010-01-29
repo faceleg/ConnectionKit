@@ -16,6 +16,7 @@
 #import "KTLinkSourceView.h"
 #import "KTMaster+Internal.h"
 #import "KTPage.h"
+#import "SVPagesController.h"
 #import "KTAbstractHTMLPlugin.h"
 
 #import "KSPlugin.h"
@@ -534,7 +535,20 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)duplicate:(id)sender;
 {
-    NSLog(@"dupe:\n%@", [[[self content] selectedObjects] valueForKey:@"propertyListRepresentation"]);
+    for (SVSiteItem *anItem in [[self content] selectedObjects])
+    {
+        // Serialize
+        id plist = [anItem propertyList];
+        
+        // Create copy
+        SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[anItem entity]
+                                         insertIntoManagedObjectContext:[anItem managedObjectContext]];
+        [duplicate awakeFromPropertyList:plist];
+        
+        // Insert copy
+        [[self content] addObject:duplicate asChildOfPage:[anItem parentPage]];
+        [duplicate release];
+    }
 }
 
 - (void)delete:(id)sender
