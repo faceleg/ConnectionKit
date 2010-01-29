@@ -43,7 +43,7 @@
 	}
 	
 	result = [result stringByEscapingCharactersOutOfEncoding:[self encoding]];
-    
+	result = [result stringByRemovingMultipleNewlines];		// clean out empty lines
 	
 	return result;
 }

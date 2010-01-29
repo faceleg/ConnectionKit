@@ -17,6 +17,7 @@
 #import "SVPagesController.h"
 #import "SVSiteItem.h"
 #import "KSURLFormatter.h"
+#import "SVMediaProtocol.h"
 
 #import "NTBoxView.h"
 
@@ -341,7 +342,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else
 	{
-		fileName = [aMedia preferredFileName];
+		fileName = [aMedia preferredFilename];
 	}
 	NSString *UTI = [NSString UTIForFilenameExtension:[fileName pathExtension]];
 	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
@@ -525,15 +526,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 #pragma mark -
 #pragma mark KVO
 
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if ([keyPath isEqualToString:@"selection.windowTitle"])
-	{
-		DJW((@""));
-		DJW((@"observeValueForKeyPath:... %@ %@ %@", keyPath, [object class], (id)context));
-	}
-	
+{	
 	[self layoutPageURLComponents];
 
 	if (context == sMetaDescriptionObservationContext)

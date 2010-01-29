@@ -180,13 +180,14 @@
     [parser release];
 }
 
-- (NSString *)HTMLString;   // creates a temporary HTML context and calls -writeHTML
+- (NSString *)HTMLStringForViewSource;   // creates a temporary HTML context and calls -writeHTML
 {
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setCurrentPage:self];
-    
+	[context setGenerationPurpose:kGeneratingRemote];
+
     [context push];
-    [self writeHTML];
+	[self writeHTML];
     [context pop];
     
     NSString *result = [context markupString];
