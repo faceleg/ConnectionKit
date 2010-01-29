@@ -535,7 +535,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (IBAction)duplicate:(id)sender;
 {
-    for (SVSiteItem *anItem in [[self content] selectedObjects])
+    // Don't want selection changing mid-duplication
+    BOOL selectInserted = [[self content] selectsInsertedObjects];
+    [[self content] setSelectsInsertedObjects:NO];
+    
+    
+    NSArray *items = [[self content] selectedObjects];
+    NSMutableArray *newItems = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    for (SVSiteItem *anItem in items)
     {
         // Serialize
         id plist = [anItem propertyList];
@@ -549,6 +556,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         [[self content] addObject:duplicate asChildOfPage:[anItem parentPage]];
         [duplicate release];
     }
+    
+    
+    // Select new items
+    [[self content] setSelectsInsertedObjects:selectInserted];
+    [[self content] setSelectedObjects:newItems];
+    [newItems release];
 }
 
 - (void)delete:(id)sender
