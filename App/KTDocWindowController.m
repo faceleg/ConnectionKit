@@ -203,15 +203,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
 {
     SVWebContentAreaController *contentController = [self webContentAreaController];
-    if ([contentController selectedViewController] == [contentController webEditorViewController])
+    
+    NSString *contentTitle = [[contentController selectedViewController] title];
+    if ([contentTitle length] > 0)
     {
-        NSString *contentTitle = [[contentController selectedViewController] title];
-        if ([contentTitle length] > 0)
-        {
-            displayName = [displayName stringByAppendingFormat:
-                           @" — %@",    // yes, that's an em-dash
-                           contentTitle];
-        }
+        displayName = [displayName stringByAppendingFormat:
+                       @" — %@",    // yes, that's an em-dash
+                       contentTitle];
 	}
     
     return displayName;
