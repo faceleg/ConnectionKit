@@ -10,7 +10,6 @@
 
 #import "NSColor+Karelia.h"
 
-
 @interface SVSelectionBorder ()
 - (BOOL)isPoint:(NSPoint)point withinHandleAtPoint:(NSPoint)handlePoint;
 
@@ -85,7 +84,7 @@
 {
     // Make sure the frame meets the requirements of -minFrame.
     NSSize frameSize = frameRect.size;
-    NSSize minSize = [self minSize];
+    NSSize minSize = NSZeroSize;
     
     if (frameSize.width < minSize.width || frameSize.height < minSize.height)
     {

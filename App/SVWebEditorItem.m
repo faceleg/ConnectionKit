@@ -7,6 +7,7 @@
 //
 
 #import "SVWebEditorItem.h"
+#import "SVBlogEntryBorderView.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -209,16 +210,26 @@
 {
     if ([self isSelected])
     {
-        SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-        [border setMinSize:NSMakeSize(5.0f, 5.0f)];
-        
         // Draw if we're in the dirty rect (otherwise drawing can get pretty pricey)
         DOMElement *element = [self HTMLElement];
         NSRect frameRect = [view convertRect:[element boundingBox]
                                     fromView:[element documentView]];
+
+		// special controls for blog stuff. Probably refactor this out to some specific place
+		SVBlogEntryBorderView *blogStuff = [[[SVBlogEntryBorderView alloc] init] autorelease];
+		NSRect controlsDrawingRect = [blogStuff drawingRectForGraphicBounds:frameRect];
+        if ([view needsToDrawRect:controlsDrawingRect])
+        {
+            [blogStuff drawWithGraphicBounds:frameRect inView:view];
+        }
+		
+		// Selection border and handles
+		
+        SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
+        [border setMinSize:NSMakeSize(5.0f, 5.0f)];
         
-        NSRect drawingRect = [border drawingRectForGraphicBounds:frameRect];
-        if ([view needsToDrawRect:drawingRect])
+        NSRect borderDrawingRect = [border drawingRectForGraphicBounds:frameRect];
+        if ([view needsToDrawRect:borderDrawingRect])
         {
             [border setResizingMask:[self resizingMask]];
             [border drawWithGraphicBounds:frameRect inView:view];
