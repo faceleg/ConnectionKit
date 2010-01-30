@@ -48,6 +48,14 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [self setViewIsReadyToAppear:YES];
 }
 
+- (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
+{
+    if (frame == [sender mainFrame])
+    {
+        [self setTitle:title];
+    }
+}
+
 #pragma mark Presentation
 
 @synthesize viewIsReadyToAppear = _readyToAppear;
