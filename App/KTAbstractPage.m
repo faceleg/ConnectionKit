@@ -180,7 +180,7 @@
     [parser release];
 }
 
-- (NSString *)HTMLStringForViewSource;   // creates a temporary HTML context and calls -writeHTML
+- (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
 {
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setCurrentPage:self];

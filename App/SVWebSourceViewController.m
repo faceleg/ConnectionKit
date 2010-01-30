@@ -54,7 +54,7 @@
 	{
 		KTPage *page = [self.webEditorViewController page];
 		
-		NSString *pageHTML = [page HTMLStringForViewSource];
+		NSString *pageHTML = [page markupString];
 		
 		NSTextStorage *textStorage = [oSourceView textStorage];
 		NSRange fullRange = NSMakeRange(0, [textStorage length]);
