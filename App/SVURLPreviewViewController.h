@@ -19,6 +19,8 @@
 }
 
 @property(nonatomic, retain) SVSiteItem *siteItem;
+- (NSURL *)URLToLoad;
+
 @property(nonatomic, assign) id <SVSiteItemViewControllerDelegate> delegate;
 
 @end

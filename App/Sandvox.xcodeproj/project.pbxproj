@@ -397,6 +397,7 @@
 		2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B71D0EF91E2B00F91398 /* KTExportEngine.m */; };
 		2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */; };
 		2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */; };
+		279AB3B711147C18001C830A /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 279AB3B611147C18001C830A /* Download.html */; };
 		279C5881109916F20030F3B7 /* SVSidebar.h in Headers */ = {isa = PBXBuildFile; fileRef = 279C587F109916F20030F3B7 /* SVSidebar.h */; };
 		279C5882109916F20030F3B7 /* SVSidebar.m in Sources */ = {isa = PBXBuildFile; fileRef = 279C5880109916F20030F3B7 /* SVSidebar.m */; };
 		279D27E9103A112A0099A7DD /* NSTabView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */; };
@@ -1833,6 +1834,7 @@
 		2797B71D0EF91E2B00F91398 /* KTExportEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportEngine.m; sourceTree = "<group>"; };
 		2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPlaceholder.h; sourceTree = "<group>"; };
 		2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPlaceholder.m; sourceTree = "<group>"; };
+		279AB3B611147C18001C830A /* Download.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Download.html; sourceTree = "<group>"; };
 		279C587F109916F20030F3B7 /* SVSidebar.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSidebar.h; sourceTree = "<group>"; };
 		279C5880109916F20030F3B7 /* SVSidebar.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebar.m; sourceTree = "<group>"; };
 		279D27E7103A112A0099A7DD /* NSTabView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTabView+Karelia.h"; sourceTree = "<group>"; };
@@ -3068,8 +3070,6 @@
 				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
 				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
 				2747DF4911008D54007428BB /* SVSiteItemViewController.h */,
-				2747DF8011009B59007428BB /* SVURLPreviewViewController.h */,
-				2747DF8111009B59007428BB /* SVURLPreviewViewController.m */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -3277,6 +3277,16 @@
 				27668FC30D63D3070019686C /* KTIndexPlugin.m */,
 			);
 			name = "1.5 Plug-in System";
+			sourceTree = "<group>";
+		};
+		279AB3C211147E1A001C830A /* URL Preview */ = {
+			isa = PBXGroup;
+			children = (
+				279AB3B611147C18001C830A /* Download.html */,
+				2747DF8011009B59007428BB /* SVURLPreviewViewController.h */,
+				2747DF8111009B59007428BB /* SVURLPreviewViewController.m */,
+			);
+			name = "URL Preview";
 			sourceTree = "<group>";
 		};
 		27A832830D92D8CC005FF13D /* Code Injection */ = {
@@ -3630,6 +3640,7 @@
 				275A641510501D2900AE6E2A /* General */,
 				27BDAA6A10C88E49008C8199 /* Web Editor */,
 				2719AAB210F4161400598AE3 /* Source View */,
+				279AB3C211147E1A001C830A /* URL Preview */,
 				2734297F0D1AC59200F76E71 /* 1.5 */,
 			);
 			name = "Web Content Area";
@@ -5897,6 +5908,7 @@
 				27A5E6E911086705007C2E7E /* TB_Text_Tool.tiff in Resources */,
 				27963C1E110F3F4E0050B776 /* download.icns in Resources */,
 				277E4F7A11108847005AF346 /* MetricsInspector.xib in Resources */,
+				279AB3B711147C18001C830A /* Download.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 
 #import "SVMediaProtocol.h"
 #import "SVSiteItem.h"
+#import "SVTemplate.h"
 
 #import "KSTabViewController.h"
 
@@ -48,15 +49,33 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [self setViewIsReadyToAppear:YES];
 }
 
+- (NSString *)HTMLTemplateAndURL:(NSURL **)outURL
+{
+    static SVTemplate *template;
+    static NSURL *URL;
+    if (!template && !URL)
+    {
+        URL = [[NSURL alloc] initFileURLWithPath:[[NSBundle mainBundle] pathForResource:@"Download"
+                                                                                 ofType:@"html"]];
+        template = [[SVTemplate alloc] initWithContentsOfURL:URL];
+    }
+    
+    if (outURL) *outURL = URL;
+    return [template templateString];
+}
+
 - (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
     if (frame == [sender mainFrame])
     {
-        [frame loadAlternateHTMLString:@"FAIL" baseURL:nil forUnreachableURL:nil];
+        NSURL *baseURL = nil;
+        [frame loadAlternateHTMLString:[self HTMLTemplateAndURL:&baseURL]
+                               baseURL:baseURL
+                     forUnreachableURL:[self URLToLoad]];
     }
 }
 
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)errorf orFrame:(WebFrame *)frame
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
 {
     
 }
@@ -121,33 +140,41 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     }
 }
 
+- (NSURL *)URLToLoad;
+{
+    SVSiteItem *item = [self siteItem];
+    id <SVMedia> media = [item mediaRepresentation];
+    
+    if (media)
+    {
+        return [[item mediaRepresentation] fileURL];
+    }
+    else
+    {
+        return [item URL];
+    }
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == sURLPreviewViewControllerURLObservationContext)
     {
         // Display best representation
-        id <SVMedia> media = [object mediaRepresentation];
-        if (media)
+        NSURL *URL = [self URLToLoad];
+        if (URL)
         {
-            NSURL *URL = [[object mediaRepresentation] fileURL];
-            if (!URL)
-            {
-                NSString *filename = [media preferredFilename];
-                NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
-                
-                [[[self webView] mainFrame] loadData:[media fileContents]
-                                            MIMEType:[NSString MIMETypeForUTI:type]
-                                    textEncodingName:nil
-                                             baseURL:[object URL]];
-            }
-            else
-            {
-                [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
-            }
+            [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:URL]];
         }
         else
         {
-            [[[self webView] mainFrame] loadRequest:[NSURLRequest requestWithURL:[object URL]]];
+            id <SVMedia> media = [object mediaRepresentation];
+            NSString *filename = [media preferredFilename];
+            NSString *type = [NSString UTIForFilenameExtension:[filename pathExtension]];
+                
+            [[[self webView] mainFrame] loadData:[media fileContents]
+                                        MIMEType:[NSString MIMETypeForUTI:type]
+                                textEncodingName:nil
+                                         baseURL:[object URL]];
         }
     }
     else
