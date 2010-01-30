@@ -993,6 +993,8 @@
 		CE7231220D85D96F00E9C592 /* favicon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE7231210D85D96F00E9C592 /* favicon.icns */; };
 		CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */; };
 		CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */; };
+		CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */; };
+		CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733AAC1113B952009582EA /* SVBlogSummaryDOMController.m */; };
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
@@ -2593,6 +2595,8 @@
 		CE7231210D85D96F00E9C592 /* favicon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = favicon.icns; sourceTree = "<group>"; };
 		CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogEntryBorderView.h; sourceTree = "<group>"; };
 		CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogEntryBorderView.m; sourceTree = "<group>"; };
+		CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogSummaryDOMController.h; sourceTree = "<group>"; };
+		CE733AAC1113B952009582EA /* SVBlogSummaryDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogSummaryDOMController.m; sourceTree = "<group>"; };
 		CE7779E30AE499C2002E6844 /* SVWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWelcomeController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -2971,6 +2975,8 @@
 		273DCF9410CBD49D003CCE97 /* DOM Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */,
+				CE733AAC1113B952009582EA /* SVBlogSummaryDOMController.m */,
 				2790BDAD1040162000654665 /* SVWebEditorTextController.h */,
 				2790BDAE1040162000654665 /* SVWebEditorTextController.m */,
 				2731ECD210861FF300D8AAA5 /* SVWebEditorTextFieldController.h */,
@@ -5207,6 +5213,7 @@
 				277E4E8811104CF4005AF346 /* SVImage.h in Headers */,
 				277E4FBC11109946005AF346 /* SVImageDOMController.h in Headers */,
 				CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */,
+				CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6589,6 +6596,7 @@
 				277E4FBD11109946005AF346 /* SVImageDOMController.m in Sources */,
 				277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */,
 				CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */,
+				CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

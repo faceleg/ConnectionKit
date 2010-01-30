@@ -7,7 +7,6 @@
 //
 
 #import "SVWebEditorItem.h"
-#import "SVBlogEntryBorderView.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -215,13 +214,6 @@
         NSRect frameRect = [view convertRect:[element boundingBox]
                                     fromView:[element documentView]];
 
-		// special controls for blog stuff. Probably refactor this out to some specific place
-		SVBlogEntryBorderView *blogStuff = [[[SVBlogEntryBorderView alloc] init] autorelease];
-		NSRect controlsDrawingRect = [blogStuff drawingRectForGraphicBounds:frameRect];
-        if ([view needsToDrawRect:controlsDrawingRect])
-        {
-            [blogStuff drawWithGraphicBounds:frameRect inView:view];
-        }
 		
 		// Selection border and handles
 		

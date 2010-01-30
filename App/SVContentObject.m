@@ -10,6 +10,7 @@
 
 #import "SVDOMController.h"
 #import "SVHTMLContext.h"
+#import "SVBlogSummaryDOMController.h"
 
 
 @implementation SVContentObject
@@ -62,7 +63,9 @@
 
 - (Class)DOMControllerClass;
 {
-    return [SVDOMController class];
+    return [SVBlogSummaryDOMController class];
+	
+// FIXME: should really be SVDOMController
 }
 
 #pragma mark Inspection
