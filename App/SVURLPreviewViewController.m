@@ -48,6 +48,19 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [self setViewIsReadyToAppear:YES];
 }
 
+- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
+{
+    if (frame == [sender mainFrame])
+    {
+        [frame loadAlternateHTMLString:@"FAIL" baseURL:nil forUnreachableURL:nil];
+    }
+}
+
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)errorf orFrame:(WebFrame *)frame
+{
+    
+}
+
 - (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
 {
     if (frame == [sender mainFrame])
