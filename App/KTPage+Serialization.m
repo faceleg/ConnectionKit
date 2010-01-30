@@ -22,6 +22,9 @@
     [propertyList setValue:[[self titleBox] textHTMLString]
                     forKey:@"titleHTMLString"];
     
+    // Body
+    [propertyList setValue:[[self body] propertyList] forKey:@"body"];
+    
     // Code Injection
     [propertyList setValue:[[self codeInjection] propertyList]
                     forKey:@"codeInjection"];
