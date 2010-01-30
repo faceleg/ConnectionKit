@@ -83,10 +83,10 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
         originalContentsURL:(NSURL *)inOriginalContentsURL
                       error:(NSError **)outError;
 
-- (BOOL)writeMediaRecord:(SVMediaRecord *)media
-                   toURL:(NSURL *)docURL
-        forSaveOperation:(NSSaveOperationType)saveOp
-                   error:(NSError **)outError;
+- (BOOL)writeMediaRecords:(NSArray *)media
+                    toURL:(NSURL *)docURL
+         forSaveOperation:(NSSaveOperationType)saveOp
+                    error:(NSError **)outError;
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
@@ -367,20 +367,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Build a list of all media to copy into the document
-        [context processPendingChanges];
-        [[self undoManager] disableUndoRegistration];
-        
-        NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaToCopyIntoDocument"];
+        NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaAwaitingCopyIntoDocument"];
         NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
-        
-        for (SVMediaRecord *aMediaRecord in mediaToWriteIntoDocument)
-        {
-            [self writeMediaRecord:aMediaRecord toURL:inURL forSaveOperation:saveOperation error:NULL];
-        }
-        
-        [context processPendingChanges];
-        [[self undoManager] enableUndoRegistration];
-        
+        [self writeMediaRecords:mediaToWriteIntoDocument
+                          toURL:inURL
+               forSaveOperation:saveOperation
+                          error:NULL];
         
         
         // Save the context
@@ -588,27 +580,45 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)writeMediaRecord:(SVMediaRecord *)media
-                   toURL:(NSURL *)docURL
-        forSaveOperation:(NSSaveOperationType)saveOp
-                   error:(NSError **)outError;
+- (BOOL)writeMediaRecords:(NSArray *)media
+                    toURL:(NSURL *)docURL
+         forSaveOperation:(NSSaveOperationType)saveOp
+                    error:(NSError **)outError;
 {
+    OBPRECONDITION(media);
+    
     BOOL result = YES;
     
-    // Reserve filename first
-    NSString *filename = [self reservePreferredFilename:[media preferredFilename]];
     
-    // Try write
-    NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
-    if ([media writeToURL:mediaURL updateFileURL:NO error:outError])
-    {    
-        [media setFilename:filename];
-    }
-    else
+    // Disable undo as this belongs outside the regular stack
+    NSManagedObjectContext *context = [self managedObjectContext];
+    [context processPendingChanges];
+    [[self undoManager] disableUndoRegistration];
+    
+    
+    // Process each file
+    for (SVMediaRecord *aMediaRecord in media)
     {
-        result = NO;
-        [self unreserveFilename:filename];
+        // Reserve filename first
+        NSString *filename = [self reservePreferredFilename:[aMediaRecord preferredFilename]];
+        
+        // Try write
+        NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
+        if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError])
+        {    
+            [aMediaRecord setFilename:filename];
+        }
+        else
+        {
+            result = NO;
+            [self unreserveFilename:filename];
+        }
     }
+    
+    [context processPendingChanges];
+    [[self undoManager] enableUndoRegistration];
+    
+    
     
     return result;
 }
