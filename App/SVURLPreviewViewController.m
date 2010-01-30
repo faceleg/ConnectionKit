@@ -9,8 +9,10 @@
 #import "SVURLPreviewViewController.h"
 
 #import "SVMediaProtocol.h"
+#import "SVMutableStringHTMLContext.h"
 #import "SVSiteItem.h"
 #import "SVTemplate.h"
+#import "SVTemplateParser.h"
 
 #import "KSTabViewController.h"
 
@@ -68,10 +70,20 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     if (frame == [sender mainFrame])
     {
+        // Build HTML
         NSURL *baseURL = nil;
-        [frame loadAlternateHTMLString:[self HTMLTemplateAndURL:&baseURL]
+        NSString *template = [self HTMLTemplateAndURL:&baseURL];
+        
+        SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+        [SVTemplateParser parseTemplate:template component:self intoContext:context];
+        
+        // Load
+        [frame loadAlternateHTMLString:[context markupString]
                                baseURL:baseURL
                      forUnreachableURL:[self URLToLoad]];
+        
+        // Tidy up
+        [context release];
     }
 }
 
@@ -153,6 +165,13 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     {
         return [item URL];
     }
+}
+
+- (NSString *)iconURL
+{
+	NSString *iconPath = [[NSBundle mainBundle] pathForImageResource:@"download"];
+	NSString *result = [[NSURL fileURLWithPath:iconPath] absoluteString];
+	return result;
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
