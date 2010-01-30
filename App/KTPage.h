@@ -81,14 +81,6 @@ typedef enum {
 @property(nonatomic) BOOL shouldUpdateFileNameWhenTitleChanges;
 
 
-#pragma mark Site Menu
-
-@property(nonatomic) BOOL includeInSiteMenu;
-
-@property(nonatomic, copy, readonly) NSString *menuTitle;   // derived from .customMenuTitle or .title
-@property(nonatomic, copy) NSString *customMenuTitle;
-
-
 #pragma mark Timestamp
 
 - (NSString *)timestamp;

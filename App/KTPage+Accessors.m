@@ -79,31 +79,6 @@
 	[[self parentPage] invalidatePagesInIndexCache];
 }
 
-#pragma mark Site Menu
-
-- (BOOL)includeInSiteMenu { return [self wrappedBoolForKey:@"includeInSiteMenu"]; }
-
-/*	In addition to a standard setter, we must also invalidate old site menu
- */
-- (void)setIncludeInSiteMenu:(BOOL)include;
-{
-	[self setWrappedBool:include forKey:@"includeInSiteMenu"];
-	[[self valueForKey:@"site"] invalidatePagesInSiteMenuCache];
-}
-
-- (NSString *)menuTitle;
-{
-    NSString *result = [self customMenuTitle];
-    if (![result length])
-    {
-        result = [[self titleBox] text];
-    }
-    
-    return result;
-}
-
-@dynamic customMenuTitle;
-
 #pragma mark -
 #pragma mark Timestamp
 

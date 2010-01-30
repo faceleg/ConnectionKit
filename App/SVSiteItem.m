@@ -9,7 +9,7 @@
 #import "SVSiteItem.h"
 
 #import "KTPage.h"
-#import "SVURLPreviewViewController.h"
+#import "KTSite.h"
 
 
 @implementation SVSiteItem 
@@ -32,6 +32,31 @@
 
 @dynamic creationDate;
 @dynamic lastModificationDate;
+
+#pragma mark Site Menu
+
+- (BOOL)includeInSiteMenu { return [self wrappedBoolForKey:@"includeInSiteMenu"]; }
+
+/*	In addition to a standard setter, we must also invalidate old site menu
+ */
+- (void)setIncludeInSiteMenu:(BOOL)include;
+{
+	[self setWrappedBool:include forKey:@"includeInSiteMenu"];
+	[[self site] invalidatePagesInSiteMenuCache];
+}
+
+- (NSString *)menuTitle;
+{
+    NSString *result = [self customMenuTitle];
+    if (![result length])
+    {
+        result = [self title];
+    }
+    
+    return result;
+}
+
+@dynamic customMenuTitle;
 
 #pragma mark Drafts and Indexes
 
