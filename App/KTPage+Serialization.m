@@ -21,6 +21,10 @@
     // Title
     [propertyList setValue:[[self titleBox] textHTMLString]
                     forKey:@"titleHTMLString"];
+    
+    // Code Injection
+    [propertyList setValue:[[self codeInjection] propertyList]
+                    forKey:@"codeInjection"];
 }
 
 - (void)awakeFromPropertyList:(id)propertyList
@@ -29,6 +33,9 @@
     
     // Title
     [[self titleBox] setTextHTMLString:[propertyList objectForKey:@"titleHTMLString"]];
+    
+    // Code Injection
+    [[self codeInjection] awakeFromPropertyList:[propertyList objectForKey:@"codeInjection"]];
 }
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
