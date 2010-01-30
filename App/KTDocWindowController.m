@@ -90,6 +90,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
     // release ivars
     [self setToolbars:nil];
+    
+    [_contentTitle release];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
 	[myBuyNowButton release];
@@ -186,16 +188,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (void)setWebContentAreaController:(SVWebContentAreaController *)controller
 {
     [[self webContentAreaController] setDelegate:nil];
+    [self unbind:@"contentTitle"];
     
     [controller retain];
     [_webContentAreaController release],   _webContentAreaController = controller;
     
     [controller setDelegate:self];
+    [self bind:@"contentTitle"
+      toObject:controller
+   withKeyPath:@"selectedViewController.title"
+       options:nil];
 }
 
 @synthesize pagesController = _pagesController;
 
-#pragma mark -
 #pragma mark Window Title
 
 /*  We append the title of our current content to the default. This gives a similar effect to the titlebar in a web browser.
@@ -215,8 +221,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     return displayName;
 }
 
-- (void)webContentAreaControllerDidChangeTitle:(SVWebContentAreaController *)controller;
+@synthesize contentTitle = _contentTitle;
+- (void)setContentTitle:(NSString *)title
 {
+    title = [title copy];
+    [_contentTitle release]; _contentTitle = title;
+    
     [self synchronizeWindowTitleWithDocumentName];
 }
 

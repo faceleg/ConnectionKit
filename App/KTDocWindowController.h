@@ -70,7 +70,9 @@ extern NSString *gInfoWindowAutoSaveName;
 	NSRect							mySelectionRect;
 	
 @private
-	SVWebContentAreaController  *_webContentAreaController;     // Weak ref
+    NSString    *_contentTitle;
+    
+	SVWebContentAreaController  *_webContentAreaController;     // Weak ref — why?
 	SVSiteOutlineViewController *_siteOutlineViewController;
     SVPagesController           *_pagesController;
 		
@@ -84,6 +86,10 @@ extern NSString *gInfoWindowAutoSaveName;
 
 	NSButton *myBuyNowButton;
 }
+
+#pragma mark Window Title
+@property(nonatomic, copy) NSString *contentTitle;
+
 
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;

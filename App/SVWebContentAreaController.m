@@ -235,14 +235,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     }
 }
 
-- (void)didSelectViewController;
-{
-    [super didSelectViewController];
-    
-    // Inform delegate of change to title
-    [[self delegate] webContentAreaControllerDidChangeTitle:self];
-}
-
 - (void)siteViewControllerSelectionMayHaveTimedOut
 {
     if ([self selectedViewController] != [self selectedViewControllerWhenReady])

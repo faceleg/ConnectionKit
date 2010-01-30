@@ -77,6 +77,4 @@ typedef enum {
 
 
 @protocol SVWebContentAreaControllerDelegate
-
-- (void)webContentAreaControllerDidChangeTitle:(SVWebContentAreaController *)controller;
 @end
