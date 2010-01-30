@@ -367,7 +367,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Build a list of all media to copy into the document
-        NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaAwaitingCopyIntoDocument"];
+        NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
+        NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
         NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
         [self writeMediaRecords:mediaToWriteIntoDocument
                           toURL:inURL
@@ -599,8 +600,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Process each file
     for (SVMediaRecord *aMediaRecord in media)
     {
-        // Reserve filename first
-        NSString *filename = [self reservePreferredFilename:[aMediaRecord preferredFilename]];
+        // Reserve filename if needed first.
+        NSString *filename = [aMediaRecord committedValueForKey:@"filename"];
+        if (!filename)
+        {
+            filename = [self reservePreferredFilename:[aMediaRecord preferredFilename]];
+        }
         
         // Try write
         NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
