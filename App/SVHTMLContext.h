@@ -12,11 +12,9 @@
 
 // publishing mode
 typedef enum {
-	kGeneratingPreview = 0,
-	kGeneratingLocal,				// If we are publishing locally, would we want this to be chosen for view source?
-	kGeneratingRemote,
-	kGeneratingRemoteExport,		// How would this be diffferent from Remote? 
-	kGeneratingQuickLookPreview = 10,
+	kSVHTMLGenerationPurposeNormal = -1,    // publishing
+    kSVHTMLGenerationPurposeEditing,        // (previously known as preview)
+    kSVHTMLGenerationPurposeQuickLookPreview = 10,
 } KTHTMLGenerationPurpose;
 
 

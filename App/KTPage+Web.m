@@ -114,11 +114,11 @@
 	{
 		switch ([[SVHTMLContext currentContext] generationPurpose])
 		{
-			case kGeneratingPreview:
+			case kSVHTMLGenerationPurposeEditing:
 				result = [[NSURL fileURLWithPath:localPath] absoluteString];
 				break;
 				
-			case kGeneratingQuickLookPreview:
+			case kSVHTMLGenerationPurposeQuickLookPreview:
 				result = [[design bundle] quicklookDataForFile:filename];
 				break;
 				
@@ -148,7 +148,7 @@
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
 		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
 	}
-    else if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingQuickLookPreview)
+    else if ([[SVHTMLContext currentContext] isEditable])
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] quicklookDataForFile:@"Contents/Resources/sandvox.css"];
 		[stylesheetLines addObject:[self stylesheetLink:globalCSSFile title:nil media:nil]];
@@ -184,7 +184,7 @@
 	
 	
 	// design's print.css but not for Quick Look
-    if ([[SVHTMLContext currentContext] generationPurpose] != kGeneratingQuickLookPreview)
+    if (![[SVHTMLContext currentContext] isEditable])
 	{
 		NSString *printCSS = [self pathToDesignFile:@"print.css"];
 		if (printCSS) [stylesheetLines addObject:[self stylesheetLink:printCSS title:nil media:@"print"]];

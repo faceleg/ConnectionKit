@@ -259,7 +259,6 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	[parser setDelegate:parserDelegate];
 	
     SVHTMLContext *context = [[SVHTMLContext alloc] init];
-    [context setGenerationPurpose:kGeneratingRemote];
     
 	NSString *result = [parser parseIntoHTMLContext:context];
     [context release];

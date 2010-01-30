@@ -322,7 +322,7 @@
 		
 		// Find the right path
         NSString *bannerURLString = nil;
-        if (generationPurpose == kGeneratingPreview)
+        if (generationPurpose == kSVHTMLGenerationPurposeEditing)
         {
             bannerURLString = [[[banner file] URLForImageScalingProperties:scalingProperties] absoluteString];
         }

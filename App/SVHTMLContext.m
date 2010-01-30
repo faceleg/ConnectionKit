@@ -49,6 +49,7 @@
 {
     [super init];
     
+    _generationPurpose = kSVHTMLGenerationPurposeNormal;
     _includeStyling = YES;
     [self setEncoding:NSUTF8StringEncoding];
     _openElements = [[NSMutableArray alloc] init];
@@ -288,7 +289,7 @@
 
 @synthesize generationPurpose = _generationPurpose;
 
-- (BOOL)isEditable { return [self generationPurpose] == kGeneratingPreview; }
+- (BOOL)isEditable { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
 + (NSSet *)keyPathsForValuesAffectingEditable
 {
     return [NSSet setWithObject:@"generationPurpose"];
@@ -296,8 +297,8 @@
 
 - (BOOL)isPublishing
 {
-    BOOL result = ([self generationPurpose] != kGeneratingPreview &&
-                   [self generationPurpose] != kGeneratingQuickLookPreview);
+    BOOL result = ([self generationPurpose] != kSVHTMLGenerationPurposeEditing &&
+                   [self generationPurpose] != kSVHTMLGenerationPurposeQuickLookPreview);
     return result;
 }
 
@@ -311,7 +312,7 @@
     
     switch ([self generationPurpose])
     {
-        case kGeneratingQuickLookPreview:
+        case kSVHTMLGenerationPurposeEditing:
             result = [URL absoluteString];
             break;
         default:
@@ -330,10 +331,10 @@
     
     switch ([self generationPurpose])
     {
-        case kGeneratingPreview:
+        case kSVHTMLGenerationPurposeEditing:
             result = [page previewPath];
             break;
-        case kGeneratingQuickLookPreview:
+        case kSVHTMLGenerationPurposeQuickLookPreview:
             result= @"javascript:void(0)";
             break;
         default:
@@ -349,11 +350,11 @@
     NSString *result;
 	switch ([self generationPurpose])
 	{
-		case kGeneratingPreview:
+		case kSVHTMLGenerationPurposeEditing:
 			result = [resourceURL absoluteString];
 			break;
             
-		case kGeneratingQuickLookPreview:
+		case kSVHTMLGenerationPurposeQuickLookPreview:
 			result = [[BDAlias aliasWithPath:[resourceURL path]] quickLookPseudoTag];
 			break;
 			

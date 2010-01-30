@@ -881,7 +881,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Put together the HTML for the thumbnail
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
-    [context setGenerationPurpose:kGeneratingPreview];
+    [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
     [context setLiveDataFeeds:NO];
     [context setCurrentPage:[[self site] rootPage]];
     
@@ -1083,7 +1083,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT([NSThread currentThread] == [self thread]);
     
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
-    [context setGenerationPurpose:kGeneratingQuickLookPreview];
+    [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
     [context setCurrentPage:[[self site] rootPage]];
     
     [context push];

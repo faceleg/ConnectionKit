@@ -453,7 +453,7 @@
 					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
 					if (mediaContainer)
 					{
-						if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingQuickLookPreview)
+						if ([[SVHTMLContext currentContext] generationPurpose] == kSVHTMLGenerationPurposeEditing)
 						{
 							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
 						}

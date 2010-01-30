@@ -228,7 +228,6 @@
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[self iFrameTemplateHTML]
 														component:[self delegateOwner]];
 	
-	[parser setHTMLGenerationPurpose:kGeneratingRemote];
 	NSString *result = [parser parseTemplate];
 	[parser release];
 	

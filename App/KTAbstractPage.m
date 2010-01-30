@@ -184,8 +184,7 @@
 {
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context setCurrentPage:self];
-	[context setGenerationPurpose:kGeneratingRemote];
-
+	
     [context push];
 	[self writeHTML];
     [context pop];

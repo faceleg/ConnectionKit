@@ -845,7 +845,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Append banner CSS
-    NSString *bannerCSS = [master bannerCSSForPurpose:kGeneratingRemote];
+    NSString *bannerCSS = [master bannerCSSForPurpose:kSVHTMLGenerationPurposeNormal];
     if (bannerCSS) [mainCSS appendString:bannerCSS];
     
     

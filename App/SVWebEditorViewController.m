@@ -194,8 +194,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Build the HTML.
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
     [context setCurrentPage:[self page]];
-    [context setGenerationPurpose:kGeneratingPreview];
-	/*[parser setIncludeStyling:([self viewType] != KTWithoutStylesView)];*/
+    [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
     
     [SVHTMLContext pushContext:context];    // will pop after loading
 	[[self page] writeHTML];

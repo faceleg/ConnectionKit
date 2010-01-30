@@ -121,11 +121,11 @@
 {
 	switch ([[SVHTMLContext currentContext] generationPurpose])
 	{
-		case kGeneratingPreview:
+		case kSVHTMLGenerationPurposeEditing:
 			return [[media URLForImageScalingProperties:scalingProps] absoluteString];
 			break;
 			
-		case kGeneratingQuickLookPreview:
+		case kSVHTMLGenerationPurposeQuickLookPreview:
 			return [media quickLookPseudoTag];
 			break;
 			

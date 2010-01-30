@@ -43,7 +43,7 @@
 - (NSString *)HTMLString
 {
 	NSString *result;
-    if ([[SVHTMLContext currentContext] generationPurpose] == kGeneratingPreview)
+    if ([[SVHTMLContext currentContext] isEditable])
     {
 		result = [NSString stringWithFormat:
                   @"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
