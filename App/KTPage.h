@@ -33,7 +33,7 @@ typedef enum {
 
 
 @class KTDesign;
-@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, KTCodeInjection;
+@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVBody, KTCodeInjection;
 
 
 @interface KTPage : KTAbstractPage
@@ -51,6 +51,10 @@ typedef enum {
 #pragma mark Title
 @property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
 - (BOOL)canEditTitle;
+
+
+#pragma mark Body
+@property(nonatomic, retain, readonly) SVBody *body;
 
 
 #pragma mark Properties
@@ -185,7 +189,7 @@ typedef enum {
 - (NSString *)titleListHTMLWithSorting:(SVCollectionSortOrder)sortType;
 
 
-#pragma mark  Archive
+#pragma mark Archive
 @property(nonatomic, copy) NSNumber *collectionGenerateArchives;    // BOOL, required
 - (KTArchivePage *)archivePageForTimestamp:(NSDate *)timestamp createIfNotFound:(BOOL)flag;
 - (NSArray *)sortedArchivePages;

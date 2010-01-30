@@ -34,9 +34,16 @@
 #import "NSString+Karelia.h"
 
 
-@implementation KTPage
+@interface KTPage ()
+@property(nonatomic, retain, readwrite) SVBody *body;
+@end
+
 
 #pragma mark -
+
+
+@implementation KTPage
+
 #pragma mark Class Methods
 
 /*!	Make sure that changes to titleHTML generate updates for new values of title, fileName
@@ -297,11 +304,16 @@
 	return [[self titleBox] text];
 }
 
+#pragma mark Body
+
+@dynamic body;
+
 #pragma mark Properties
+
+- (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
 
 @dynamic showSidebar;
 
-#pragma mark -
 #pragma mark Dates
 
 /*  When updating one of the plug-in's properties, also update the modification date
@@ -328,12 +340,6 @@
     }
 }
 
-#pragma mark -
-#pragma mark Master
-
-- (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
-
-#pragma mark -
 #pragma mark Paths
 
 /*	If set, returns the custom file extension. Otherwise, takes the value from the defaults
