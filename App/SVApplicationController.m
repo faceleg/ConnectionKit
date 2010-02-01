@@ -672,16 +672,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	}
 	else if (action == @selector(showRegistrationWindow:))	// hide the globe, and make available, if network is down
 	{
-		//if ([KSNetworkNotifier isNetworkAvailable])
-		//{
-		//	NSImage *globe = [NSImage imageNamed:@"globe"];
-		//	[menuItem setImage:globe];
-		//}
-		//else
-		//{
-		//	[menuItem setImage:nil];
-		//}
-		return YES;	// OK regardless
+		return YES;
 	}
 
 	return YES;
@@ -1245,7 +1236,6 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 		// unregistered, label advanced menu as pro
 		[self setMenuItemPro:oAdvancedMenu];
 		[self setMenuItemPro:oPasteAsMarkupMenuItem];
-		//[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
 		
 		[self setMenuItemPro:oEditRawHTMLMenuItem];
 
@@ -1259,7 +1249,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 
 		if (gIsPro || (nil == gRegistrationString))
 		{
-			//[oValidateSourceViewMenuItem setImage:[NSImage imageNamed:@"globe"]];
+			;
 		}
 		else
 		{

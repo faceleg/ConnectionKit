@@ -16,6 +16,8 @@
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
 
+#import "SVBlogSummaryDOMController.h"
+
 
 @implementation SVBodyParagraph 
 
@@ -63,7 +65,7 @@
 
 - (Class)DOMControllerClass;
 {
-    return [SVBodyParagraphDOMAdapter class];
+    return [SVBlogSummaryDOMController class];		// FIXME should be SVBodyParagraphDOMAdapter
 }
 
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;

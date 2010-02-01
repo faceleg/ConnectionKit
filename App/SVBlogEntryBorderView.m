@@ -9,10 +9,13 @@
 #import "SVBlogEntryBorderView.h"
 #import "NSBezierPath+Karelia.h"
 #import "NSColor+Karelia.h"
+#import "NSString+Karelia.h"
+#import "NSAttributedString+Karelia.h"
 
 #define TABWIDTH 20.0
 #define TABHEIGHT 20.0
-#define TABRADIUS	4.0
+#define TABRADIUS	5.0
+#define TABMARGIN 4.0
 
 @implementation SVBlogEntryBorderView
 
@@ -33,11 +36,32 @@
 
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
+	NSFont *font = [NSFont systemFontOfSize:16.0];
+	NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+						  font, NSFontAttributeName,
+						  [NSColor whiteColor], NSForegroundColorAttributeName,
+						  nil];
+	NSRect tabRect;
+	NSBezierPath *path;
 	
-	NSRect ULTabRect = [view centerScanRect:NSMakeRect(NSMinX(frameRect), NSMinY(frameRect), TABWIDTH, TABHEIGHT)];
-	NSBezierPath *path = [NSBezierPath bezierPathWithLeftRoundRectInRect:ULTabRect radius:TABRADIUS];
+	tabRect = [view centerScanRect:NSMakeRect(NSMinX(frameRect), NSMinY(frameRect)+TABMARGIN, TABWIDTH, TABHEIGHT)];
+	path = [NSBezierPath bezierPathWithLeftRoundRectInRect:tabRect radius:TABRADIUS];
 	[[NSColor aquaColor] set];
 	[path fill];
+	NSAttributedString *s = [NSAttributedString stringWithString:[NSString stringWithUnichar:0x270E] attributes:
+							 attr ];
+	NSSize sz = [s size];
+	[s drawAtPoint:NSMakePoint(NSMinX(frameRect)+ ((TABWIDTH-sz.width)/2), NSMinY(frameRect)+TABMARGIN)];
+	
+	tabRect = [view centerScanRect:NSMakeRect(NSMinX(frameRect), NSMaxY(frameRect)-TABHEIGHT-TABMARGIN, TABWIDTH, TABHEIGHT)];
+	path = [NSBezierPath bezierPathWithLeftRoundRectInRect:tabRect radius:TABRADIUS];
+	[[NSColor aquaColor] set];
+	[path fill];
+
+	s = [NSAttributedString stringWithString:[NSString stringWithUnichar:0x2702] attributes:
+							 attr ];
+	sz = [s size];
+	[s drawAtPoint:NSMakePoint(NSMinX(frameRect)+ ((TABWIDTH-sz.width)/2), NSMaxY(frameRect)-TABHEIGHT-TABMARGIN)];
 }
 
 - (void)drawWithGraphicBounds:(NSRect)frameRect inView:(NSView *)view;

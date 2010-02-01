@@ -63,9 +63,9 @@
 
 - (Class)DOMControllerClass;
 {
-    return [SVBlogSummaryDOMController class];
+    return [SVDOMController class];
 	
-// FIXME: should really be SVDOMController
+// FIXME: should really be 
 }
 
 #pragma mark Inspection
