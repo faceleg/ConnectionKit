@@ -41,7 +41,7 @@
         }
 		
     }
-	[super drawRect:dirtyRect inView:view];
+	[super drawRect:dirtyRect inView:view];		// draw the stuff that superclass would draw
 }
 
 
