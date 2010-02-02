@@ -31,7 +31,8 @@ extern NSString *kLiveEditableAndSelectableLinksDefaultsKey;
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB
 
 
-@class KTDocument;
+@class KTDocument, KSProgressPanel;
+
 @interface SVApplicationController : KSLicensedAppDelegate
 {
     // IBOutlets
@@ -77,6 +78,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	BOOL _checkedExpiration;
 			
 	NSPoint _cascadePoint;
+	
+	KSProgressPanel *_progressPanel;
 }
 
 - (NSArray *) additionalPluginDictionaryForInstallerController:(KSPluginInstallerController *)controller;
@@ -106,5 +109,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)reloadDebugTable:(id)sender;
 
 - (IBAction)showPluginWindow:(id)sender;
+
+@property (retain) KSProgressPanel *progressPanel;
 
 @end

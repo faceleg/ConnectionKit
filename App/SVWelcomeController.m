@@ -25,6 +25,10 @@
 #import <QuartzCore/QuartzCore.h>
 #import "KTDocument.h"
 #import "KSRecentDocument.h"
+#import "KSProgressPanel.h"
+#import "BDAlias.h"
+#import "KTDocumentController.h"
+#import "SVApplicationController.h"
 
 @interface SVWelcomeController ()
 
@@ -52,6 +56,146 @@
 	[super dealloc];
 }
 
+- (void) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	NSFileManager *fm = [NSFileManager defaultManager];
+	
+	[progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents...",
+													"Message while checking documents.")];
+	
+	// figure out if we should create or open document(s)
+	BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
+						   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
+	
+	NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
+	
+	NSMutableArray *filesFound = [NSMutableArray array];
+	NSMutableArray *filesNotFound = [NSMutableArray array];
+	NSMutableArray *filesInTrash = [NSMutableArray array];
+	
+	// figure out what documents, if any, we can and can't find
+	if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
+	{
+		NSEnumerator *enumerator = [lastOpenedPaths objectEnumerator];
+		id aliasData;
+		while ( ( aliasData = [enumerator nextObject] ) )
+		{
+			BDAlias *alias = [BDAlias aliasWithData:aliasData];
+			NSString *path = [alias fullPath];
+			if (nil == path)
+			{
+				NSString *lastKnownPath = [alias lastKnownPath];
+				[filesNotFound addObject:lastKnownPath];
+				LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
+			}
+			
+			// is it in the Trash? ([[NSWorkspace sharedWorkspace] userTrashDirectory])
+			else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
+			{
+				// path contains localized .Trash, let's skip it
+				[filesInTrash addObject:alias];
+				LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
+			}
+			else
+			{
+				[filesFound addObject:alias];
+			}
+		}
+	}
+	// run through the possibilities
+	if ( openLastOpened 
+		&& ([lastOpenedPaths count] > 0) 
+		&& ([[[KTDocumentController sharedDocumentController] documents] count] == 0) )
+	{
+		// open whatever used to be open
+		if ( [filesFound count] > 0 )
+		{
+			NSEnumerator *e = [filesFound objectEnumerator];
+			BDAlias *alias;
+			while ( ( alias = [e nextObject] ) )
+			{
+				NSString *path = [alias fullPath];
+				
+				// check to make sure path is valid
+				if ( ![[NSFileManager defaultManager] fileExistsAtPath:path] )
+				{
+					[filesNotFound addObject:path];
+					continue;
+				}				
+				
+				NSString *message = [NSString stringWithFormat:NSLocalizedString(@"Opening %@...", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
+				[progressPanel setMessageText:message];
+				[progressPanel setIcon:[NSImage imageNamed:@"document"]];
+				
+				NSURL *fileURL = [NSURL fileURLWithPath:path];
+				
+				NSError *error = nil;
+				if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
+				{
+					// Make sure window is showing
+					[self showWindow:self];
+					[NSApp presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
+				}                    
+			}
+		}
+		
+		// put up an alert showing any files not found (files in Trash are ignored)
+		if ( [filesNotFound count] > 0 )
+		{
+			NSString *missingFiles = [NSString string];
+			unsigned int i;
+			for ( i = 0; i < [filesNotFound count]; i++ )
+			{
+				NSString *toAdd = [[filesNotFound objectAtIndex:i] lastPathComponent];
+				toAdd = [fm displayNameAtPath:toAdd];
+				
+				missingFiles = [missingFiles stringByAppendingString:toAdd];
+				if ( i < ([filesNotFound count]-1) )
+				{
+					missingFiles = [missingFiles stringByAppendingString:@", "];
+				}
+				else if ( i == ([filesNotFound count]-1) && i > 0 )	// no period if only one item
+				{
+					missingFiles = [missingFiles stringByAppendingString:@"."];
+				}
+			}
+			
+			[progressPanel performClose:self];	// hide this FIRST
+
+			// Make sure window is showing
+			[self showWindow:self];
+
+			NSAlert *alert = [[NSAlert alloc] init];
+			[alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
+			[alert setMessageText:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")];
+			[alert setInformativeText:missingFiles];
+			[alert setAlertStyle:NSWarningAlertStyle];
+			
+			[alert beginSheetModalForWindow:[self window] 
+							  modalDelegate:nil 
+							 didEndSelector:nil
+								contextInfo:nil];
+			[alert release];
+		}
+	}
+}
+
+- (void)showWindowAndBringToFront:(BOOL)bringToFront initial:(BOOL)firstTimeSoReopenSavedDocuments;
+{
+	if (firstTimeSoReopenSavedDocuments)
+	{
+		NSLog(@"firstTimeSoReopenSavedDocuments");
+		[self reopenPreviouslyOpenedDocumentsUsingProgressPanel:[[NSApp delegate] progressPanel]];
+	}
+	else
+	{
+		if (bringToFront || ![[self window] isVisible])
+		{
+			[self showWindow:self];
+		}
+	}
+}
 
 
 - (void) updateLicenseStatus:(NSNotification *)aNotification
@@ -73,21 +217,24 @@
 
 - (IBAction)showWindow:(id)sender;
 {
-	NSRect separatorFrame = [oRecentBox frame];
-	
 	NSRect contentViewRect = [[self window] contentRectForFrameRect:[[self window] frame]];
-	
+	NSRect separatorFrame = [oRecentBox frame];
+
 	[self loadRecentDocumentList];
 	NSArray *recentDocs = [oRecentDocsController content];
 	
+	NSSize size = NSZeroSize;
+	
 	if ([recentDocs count])
 	{
-		[[self window] setContentSize:NSMakeSize(NSMaxX(separatorFrame), NSHeight(contentViewRect))];
+		size = NSMakeSize(NSMaxX(separatorFrame), NSHeight(contentViewRect));
 	}
 	else
 	{
-		[[self window] setContentSize:NSMakeSize(NSMinX(separatorFrame)-1, NSHeight(contentViewRect))];
+		size = NSMakeSize(NSMinX(separatorFrame)-1, NSHeight(contentViewRect));
 	}
+	
+	[[self window] setContentSize:size];
 	[[self window] center];
 	[super showWindow:sender];
 }

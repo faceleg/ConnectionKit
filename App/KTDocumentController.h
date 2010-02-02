@@ -19,6 +19,6 @@
 	IBOutlet NSPopUpButton	*oNewDocHomePageTypePopup;
 }
 
-- (IBAction)showDocumentPlaceholderWindow:(id)sender;
+- (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;
 
 @end

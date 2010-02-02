@@ -42,4 +42,6 @@
 - (IBAction)openScreencast:(id)sender;
 - (IBAction)showHelp:(id)sender;
 
+- (void)showWindowAndBringToFront:(BOOL)bringToFront initial:(BOOL)firstTimeSoReopenSavedDocuments;
+
 @end

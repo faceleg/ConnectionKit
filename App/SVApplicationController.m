@@ -79,6 +79,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <SystemConfiguration/SystemConfiguration.h>
 #import <iMedia/iMedia.h>
 #import <Sparkle/Sparkle.h>
+#import "SVApplicationController.h"
 
 // Triggers to localize for the Comment/trackback stuff
 // NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
@@ -547,6 +548,8 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	[pool release];
 }
 
+@synthesize progressPanel = _progressPanel;
+
 - (id)init
 {
     self = [super init];
@@ -567,7 +570,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 #ifdef OBSERVE_UNDO
     [[NSNotificationCenter defaultCenter] removeObserver:self];
 #endif
-
+	self.progressPanel = nil;
 	[super dealloc];
 }
 
@@ -790,7 +793,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	
 	if (!flag || 0 == [[[NSDocumentController sharedDocumentController] documents] count])	// no visible windows.  However, all visible windows may be minimized..
 	{
-		[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
+		[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:NO];
 	}
 	return NO;
 }
@@ -850,123 +853,6 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	[KTLogger configure:self];
 }
 
-- (void) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	NSFileManager *fm = [NSFileManager defaultManager];
-
-	[progressPanel setMessageText:NSLocalizedString(@"Searching for previously opened documents...",
-													"Message while checking documents.")];
-	
-	// figure out if we should create or open document(s)
-	BOOL openLastOpened = ([defaults boolForKey:@"AutoOpenLastOpenedOnLaunch"] &&
-						   !(GetCurrentEventKeyModifiers() & optionKey));   // Case 39352
-	
-	NSArray *lastOpenedPaths = [defaults arrayForKey:@"KSOpenDocuments"];
-	
-	NSMutableArray *filesFound = [NSMutableArray array];
-	NSMutableArray *filesNotFound = [NSMutableArray array];
-	NSMutableArray *filesInTrash = [NSMutableArray array];
-	
-	// figure out what documents, if any, we can and can't find
-	if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
-	{
-		NSEnumerator *enumerator = [lastOpenedPaths objectEnumerator];
-		id aliasData;
-		while ( ( aliasData = [enumerator nextObject] ) )
-		{
-			BDAlias *alias = [BDAlias aliasWithData:aliasData];
-			NSString *path = [alias fullPath];
-			if (nil == path)
-			{
-				NSString *lastKnownPath = [alias lastKnownPath];
-				[filesNotFound addObject:lastKnownPath];
-				LOG((@"Can't find '%@'", [lastKnownPath stringByAbbreviatingWithTildeInPath]));
-			}
-			
-			// is it in the Trash? ([[NSWorkspace sharedWorkspace] userTrashDirectory])
-			else if ( NSNotFound != [path rangeOfString:@".Trash"].location )
-			{
-				// path contains localized .Trash, let's skip it
-				[filesInTrash addObject:alias];
-				LOG((@"Not opening '%@'; it is in the trash", [path stringByAbbreviatingWithTildeInPath]));
-			}
-			else
-			{
-				[filesFound addObject:alias];
-			}
-		}
-	}
-	// run through the possibilities
-	if ( openLastOpened 
-		&& ([lastOpenedPaths count] > 0) 
-		&& ([[[KTDocumentController sharedDocumentController] documents] count] == 0) )
-	{
-		// open whatever used to be open
-		if ( [filesFound count] > 0 )
-		{
-			NSEnumerator *e = [filesFound objectEnumerator];
-			BDAlias *alias;
-			while ( ( alias = [e nextObject] ) )
-			{
-				NSString *path = [alias fullPath];
-				
-				// check to make sure path is valid
-				if ( ![[NSFileManager defaultManager] fileExistsAtPath:path] )
-				{
-					[filesNotFound addObject:path];
-					continue;
-				}				
-
-				// FIXME ... this is not localized properly. We should have it "Opening %@..." to account for other language styles.
-				NSString *message = [NSString stringWithFormat:@"%@ %@...", NSLocalizedString(@"Opening", "Alert Message"), [fm displayNameAtPath:[path stringByDeletingPathExtension]]];
-				[progressPanel setMessageText:message];
-				[progressPanel setIcon:[NSImage imageNamed:@"document"]];
-				
-				NSURL *fileURL = [NSURL fileURLWithPath:path];
-				
-				NSError *error = nil;
-				if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
-				{
-					[NSApp presentError:error];
-				}                    }
-		}
-		
-		// put up an alert showing any files not found (files in Trash are ignored)
-		if ( [filesNotFound count] > 0 )
-		{
-			NSString *missingFiles = [NSString string];
-			unsigned int i;
-			for ( i = 0; i < [filesNotFound count]; i++ )
-			{
-				NSString *toAdd = [[filesNotFound objectAtIndex:i] lastPathComponent];
-				toAdd = [fm displayNameAtPath:toAdd];
-				
-				missingFiles = [missingFiles stringByAppendingString:toAdd];
-				if ( i < ([filesNotFound count]-1) )
-				{
-					missingFiles = [missingFiles stringByAppendingString:@", "];
-				}
-				else if ( i == ([filesNotFound count]-1) && i > 0 )	// no period if only one item
-				{
-					missingFiles = [missingFiles stringByAppendingString:@"."];
-				}
-			}
-			
-			[progressPanel performClose:self];	// hide this FIRST
-			
-			NSAlert *alert = [[NSAlert alloc] init];
-			[alert addButtonWithTitle:NSLocalizedString(@"OK", @"OK Button")];
-			[alert setMessageText:NSLocalizedString(@"Unable to locate previously opened files.", @"alert: Unable to locate previously opened files.")];
-			[alert setInformativeText:missingFiles];
-			[alert setAlertStyle:NSWarningAlertStyle];
-			
-			[alert runModal];
-			[alert release];
-		}
-	}
-}
-
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 	[super applicationDidFinishLaunching:aNotification];
@@ -974,7 +860,6 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
-	KSProgressPanel *progressPanel = nil;
     @try
 	{
 		// Make an empty string for "No Selection" so that empty/0 numeric text fields are empty!
@@ -1027,15 +912,15 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 #endif
 			
 			// put up a splash panel with a progress indicator
-			progressPanel = [[KSProgressPanel alloc] init];
-			[progressPanel setMessageText:NSLocalizedString(@"Initializing...",
+			_progressPanel = [[KSProgressPanel alloc] init];
+			[_progressPanel setMessageText:NSLocalizedString(@"Initializing...",
 															"Message while initializing launching application.")];
-			[progressPanel setInformativeText:nil];
-			[progressPanel makeKeyAndOrderFront:self];
+			[_progressPanel setInformativeText:nil];
+			[_progressPanel makeKeyAndOrderFront:self];
 
 
 			// load plugins
-			[progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
+			[_progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
 			
 			
 			// build menus
@@ -1054,15 +939,10 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 			
 			[KTIndexPlugin populateMenuWithCollectionPresets:oNewPageMenu index:2];
 			
-			[progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
+			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];
 			
 			BOOL firstRun = [defaults boolForKey:@"FirstRun"];
-			if (!firstRun)
-			{
-				[self reopenPreviouslyOpenedDocumentsUsingProgressPanel:progressPanel];
-			}
-			[progressPanel performClose:self];
 			
 			// If there's no docs open, want to see the placeholder window
 			if ([[[NSDocumentController sharedDocumentController] documents] count] == 0)
@@ -1071,9 +951,10 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 				NSLog(@"BETA: For now, always creating a new document, to make debugging easier");
 				[[NSDocumentController sharedDocumentController] newDocument:nil];
 	#else
-				[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindow:self];
+				[[NSDocumentController sharedDocumentController] showDocumentPlaceholderWindowInitial:!firstRun];	// launching, so try to reopen... unless it's first run.
 	#endif
 			}
+			[_progressPanel performClose:self];
 			
 			
 			// QE check AFTER the welcome message
@@ -1082,8 +963,8 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 	}
 	@finally
 	{
-		[progressPanel performClose:self];
-        [progressPanel release];
+		[_progressPanel performClose:self];
+        self.progressPanel = nil;
 	}
 
 	

@@ -49,7 +49,7 @@
 #pragma mark -
 #pragma mark Document placeholder window
 
-- (IBAction)showDocumentPlaceholderWindow:(id)sender
+- (void)showDocumentPlaceholderWindowInitial:(BOOL)firstTimeSoReopenSavedDocuments;
 {
     if (gLicenseViolation)		// license violation dialog should open, not the new/open
     {
@@ -57,7 +57,7 @@
     }
     else
     {
-		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO];
+		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
     }
 }
 
@@ -292,7 +292,7 @@
 		// Show the placeholder window when there are no docs open
         if ([[self documents] count] == 0)
         {
-            [self showDocumentPlaceholderWindow:self];
+            [self showDocumentPlaceholderWindowInitial:NO];
         }
     }
 }
