@@ -41,22 +41,30 @@
 						  font, NSFontAttributeName,
 						  [NSColor whiteColor], NSForegroundColorAttributeName,
 						  nil];
+	NSGradient *g = [[[NSGradient alloc] initWithColorsAndLocations:
+					  [NSColor colorWithCalibratedHue:0.583333f saturation:0.5f brightness:1.0f alpha:1.0f], 0.0,
+					  [NSColor colorWithCalibratedHue:0.583333f saturation:1.0f brightness:1.0f alpha:1.0f], 0.1,
+					  [NSColor colorWithCalibratedHue:0.583333f saturation:1.0f brightness:1.0f alpha:1.0f], 0.6,
+					  [NSColor colorWithCalibratedHue:0.583333f saturation:0.7f brightness:1.0f alpha:1.0f], 0.6,
+					  [NSColor colorWithCalibratedHue:0.583333f saturation:0.5f brightness:1.0f alpha:1.0f], 1.0, nil] autorelease];
+
 	NSRect tabRect;
 	NSBezierPath *path;
 	
 	tabRect = [view centerScanRect:NSMakeRect(NSMinX(frameRect), NSMinY(frameRect)+TABMARGIN, TABWIDTH, TABHEIGHT)];
 	path = [NSBezierPath bezierPathWithLeftRoundRectInRect:tabRect radius:TABRADIUS];
-	[[NSColor aquaColor] set];
-	[path fill];
+
+	[g drawInBezierPath:path angle:-90.0];
+
 	NSAttributedString *s = [NSAttributedString stringWithString:[NSString stringWithUnichar:0x270E] attributes:
 							 attr ];
 	NSSize sz = [s size];
 	[s drawAtPoint:NSMakePoint(NSMinX(frameRect)+ ((TABWIDTH-sz.width)/2), NSMinY(frameRect)+TABMARGIN)];
 	
 	tabRect = [view centerScanRect:NSMakeRect(NSMinX(frameRect), NSMaxY(frameRect)-TABHEIGHT-TABMARGIN, TABWIDTH, TABHEIGHT)];
-	path = [NSBezierPath bezierPathWithLeftRoundRectInRect:tabRect radius:TABRADIUS];
-	[[NSColor aquaColor] set];
-	[path fill];
+	path = [NSBezierPath bezierPathWithLeftRoundRectInRect:tabRect radius:TABRADIUS];	
+	
+	[g drawInBezierPath:path angle:-90.0];
 
 	s = [NSAttributedString stringWithString:[NSString stringWithUnichar:0x2702] attributes:
 							 attr ];
