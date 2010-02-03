@@ -555,11 +555,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         // Create copy
         SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[anItem entity]
                                          insertIntoManagedObjectContext:[anItem managedObjectContext]];
-        [duplicate awakeFromPropertyList:plist];
         if ([duplicate isKindOfClass:[KTPage class]])
         {
             [(KTPage *)duplicate setMaster:[parent master]];
         }
+        [duplicate awakeFromPropertyList:plist];
         
         
         // Insert copy

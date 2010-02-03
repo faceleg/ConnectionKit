@@ -28,6 +28,10 @@
     // Code Injection
     [propertyList setValue:[[self codeInjection] propertyList]
                     forKey:@"codeInjection"];
+    
+    // Children
+    NSArray *children = [[self sortedChildren] valueForKey:@"propertyList"];
+    [propertyList setValue:children forKey:@"childItems"];
 }
 
 - (void)awakeFromPropertyList:(id)propertyList
@@ -39,6 +43,21 @@
     
     // Code Injection
     [[self codeInjection] awakeFromPropertyList:[propertyList objectForKey:@"codeInjection"]];
+    
+    // Children
+    NSArray *children = [propertyList objectForKey:@"childItems"];
+    for (id aChild in children)
+    {
+        // FIXME: This heavily duplicates codes from -[SVSiteOutlineViewController duplicate:]
+        SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[self entity]
+                                         insertIntoManagedObjectContext:[self managedObjectContext]];
+        if ([duplicate isKindOfClass:[KTPage class]])
+        {
+            [(KTPage *)duplicate setMaster:[self master]];
+        }
+        [duplicate awakeFromPropertyList:aChild];
+        [self addChildItem:duplicate];
+    }
 }
 
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key
