@@ -239,7 +239,7 @@
     
     
     // Attach to parent & other relationships
-    [object setSite:[parent site]];
+    [object setSite:[parent site] recursively:YES];
     [parent addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	

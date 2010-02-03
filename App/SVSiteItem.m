@@ -166,6 +166,12 @@
 
 @dynamic site;
 
+- (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
+{
+    // KTPage adds to this behaviour by recursively calling its descendants too if request
+    [self setSite:site];
+}
+
 #pragma mark Tree
 
 - (NSSet *)childItems { return nil; }

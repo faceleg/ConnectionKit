@@ -310,6 +310,19 @@
 
 #pragma mark Properties
 
+- (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
+{
+    [super setSite:site recursively:recursive];
+    
+    if (recursive)
+    {
+        for (SVSiteItem *anItem in [self childItems])
+        {
+            [anItem setSite:site recursively:recursive];
+        }
+    }
+}
+
 - (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
 
 @dynamic showSidebar;

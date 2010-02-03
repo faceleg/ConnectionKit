@@ -66,6 +66,7 @@
 
 #pragma mark Site
 @property(nonatomic, retain) KTSite *site;
+- (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
 
 
 #pragma mark Tree
