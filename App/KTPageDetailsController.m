@@ -18,6 +18,8 @@
 #import "SVSiteItem.h"
 #import "KSURLFormatter.h"
 #import "SVMediaProtocol.h"
+#import "SVDownloadSiteItem.h"
+#import "SVMediaRecord.h"
 
 #import "NTBoxView.h"
 
@@ -1022,7 +1024,38 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (IBAction) chooseFile:(id)sender;
 {
-	NSBeep();
+	// Display the open panel allowing the user to find the replacement file
+	NSOpenPanel *panel = [NSOpenPanel openPanel];
+	[panel setCanChooseDirectories:NO];
+	[panel setTreatsFilePackagesAsDirectories:YES];
+	[panel setAllowsMultipleSelection:NO];
+	
+	
+	int returnCode = [panel runModal];
+	
+	if (returnCode == NSOKButton && [[panel URLs] count])
+	{
+		SVDownloadSiteItem *downloadPage = [[oPagesController selectedObjects] lastObject];
+		NSManagedObjectContext *context = [downloadPage managedObjectContext];
+		NSURL *url = [[panel URLs] lastObject];		// we have just one
+		NSError *error = nil;
+		SVMediaRecord *record = [SVMediaRecord mediaWithURL:url
+												 entityName:@"FileMedia"
+							 insertIntoManagedObjectContext:context				/// where to we get our MOC?
+													  error:&error];
+		if (error)
+		{
+			[[NSApplication sharedApplication] presentError:error];
+		}
+		else
+		{
+			// Success: delete old media, store new:
+			[context deleteObject:[downloadPage media]];
+			[downloadPage setMedia:record];
+			
+			// TODO: Force the webview to refresh?  Or figure out why it didn't?
+		}
+	}
 }
 
 
