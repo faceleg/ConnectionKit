@@ -17,6 +17,11 @@
     [super writeString:string];
 }
 
+- (void)writeHTMLString:(NSString *)html
+{
+    [self writeText:[html stringByConvertingHTMLToPlainText]];
+}
+
 - (void)writeNewline
 {
     [super writeString:@"\n"];
