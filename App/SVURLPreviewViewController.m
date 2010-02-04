@@ -202,6 +202,11 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     }
 }
 
+- (IBAction)reload:(id)sender
+{
+    [[self webView] reload:sender];
+}
+
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
