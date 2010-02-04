@@ -23,6 +23,13 @@
     [self setTitle:[[media preferredFilename] stringByDeletingPathExtension]];
 }
 
-- (id <SVMedia>)mediaRepresentation; { return [self media]; }
+- (id <SVMedia>)mediaRepresentation;
+{
+    return [self media];
+}
++ (NSSet *)keyPathsForValuesAffectingMediaRepresentation
+{
+    return [NSSet setWithObject:@"media"];
+}
 
 @end
