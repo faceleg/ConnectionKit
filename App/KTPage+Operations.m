@@ -112,7 +112,4 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Spotlight
-
 @end

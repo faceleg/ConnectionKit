@@ -498,6 +498,8 @@
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
 		27FC47EF1030CE7500A4A5E2 /* NSSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
+		27FDEDD6111AF2C6001F4E60 /* SVTextContentHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */; };
+		27FDEDD7111AF2C6001F4E60 /* SVTextContentHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */; };
 		3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */; };
 		3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
 		3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
@@ -1991,6 +1993,8 @@
 		27F790D8106BABA6007DF81B /* KSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDragging.h; sourceTree = "<group>"; };
 		27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "NSSet+Karelia.h"; path = "../../Shared/Foundation/NSSet+Karelia.h"; sourceTree = "<group>"; };
 		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
+		27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextContentHTMLContext.h; sourceTree = "<group>"; };
+		27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextContentHTMLContext.m; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -3132,6 +3136,8 @@
 		277D3CB310A1B9DE00E4944A /* General */ = {
 			isa = PBXGroup;
 			children = (
+				27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */,
+				27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */,
 				27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */,
 				27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */,
 				27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */,
@@ -4888,7 +4894,7 @@
 				CE01A7050EAFD63600BDF264 /* Imported */,
 			);
 			name = Shared;
-			path = ../../../Shared;
+			path = ../../Shared;
 			sourceTree = "<group>";
 		};
 		CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */ = {
@@ -5240,6 +5246,7 @@
 				CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */,
 				CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */,
 				CE75EA95111A550600474753 /* ESCursors.h in Headers */,
+				27FDEDD6111AF2C6001F4E60 /* SVTextContentHTMLContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6625,6 +6632,7 @@
 				CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */,
 				CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */,
 				CE75EA96111A550600474753 /* ESCursors.m in Sources */,
+				27FDEDD7111AF2C6001F4E60 /* SVTextContentHTMLContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

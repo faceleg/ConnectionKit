@@ -17,7 +17,7 @@
 #import "KTPage.h"
 #import "KTMaster+Internal.h"
 #import "KTMediaManager+Internal.h"
-#import "SVMutableStringHTMLContext.h"
+#import "SVTextContentHTMLContext.h"
 #import "SVTitleBox.h"
 
 #import "NSApplication+Karelia.h"
@@ -752,44 +752,36 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 			}
 			[metadata setObject:[NSNumber numberWithUnsignedInt:pageCount] forKey:(NSString *)kMDItemNumberOfPages];
 			
-			//  kMDItemTextContent (free-text account of content)
-			//  for now, we'll make this site subtitle, plus all unique page titles, plus spotlightHTML
-			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] textHTMLString];
-			if ( nil == subtitle )
-			{
-				subtitle = @"";
-			}
-			subtitle = [subtitle stringByConvertingHTMLToPlainText];
-			
-			// add unique page titles
-			NSMutableString *textContent = [NSMutableString stringWithString:subtitle];
-			NSArray *pageTitles = [[self managedObjectContext] objectsForColumnName:@"titleHTMLString" entityName:@"Page"];
-			unsigned int i;
-			for ( i=0; i<[pageTitles count]; i++ )
-			{
-				NSString *pageTitle = [pageTitles objectAtIndex:i];
-				pageTitle = [pageTitle stringByConvertingHTMLToPlainText];
-				if ( nil != pageTitle )
-				{
-					[textContent appendFormat:@" %@", pageTitle];
-				}
-			}
             
-			// spotlightHTML as part of textContent
-			for ( i=0; i<[pages count]; i++ )
-			{
-				KTPage *page = [pages objectAtIndex:i];
-				NSString *spotlightText = [page spotlightHTML];
-				if ( (nil != spotlightText) && ![spotlightText isEqualToString:@""] )
-				{
-					spotlightText = [spotlightText stringByConvertingHTMLToPlainText];
-					[textContent appendFormat:@" %@", spotlightText];
-				}
-			}
-			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
+            
+			//  kMDItemTextContent (free-text account of content)
+			//  for now, we'll make this the tagline, plus all unique page titles, plus spotlightHTML
+            NSMutableString *textContent = [[NSMutableString alloc] init];
+            
+			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+            if (subtitle)
+            {
+                [textContent appendString:subtitle];
+                [textContent appendUnichar:'\n'];
+            }
 			
+            
+            SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithMutableString:textContent];
+            [context push];
+            
+            [[[self site] rootPage] writeContentRecursively:YES];
+            
+            [context pop];
+            [context release];
+            
+            
+			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
+            [textContent release];
+			
+            
 			//  kMDItemKeywords (keywords of all pages)
 			NSMutableSet *keySet = [NSMutableSet set];
+            NSUInteger i;
 			for (i=0; i<[pages count]; i++)
 			{
 				[keySet addObjectsFromArray:[[pages objectAtIndex:i] keywords]];
@@ -805,6 +797,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 			}
 			[localPool release];
 			
+            
 			//  kMDItemTitle
 			NSString *siteTitle = [[[[[self site] rootPage] master] siteTitle] textHTMLString];        
 			if ( (nil == siteTitle) || [siteTitle isEqualToString:@""] )

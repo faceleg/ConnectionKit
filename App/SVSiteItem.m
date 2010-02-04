@@ -8,6 +8,7 @@
 
 #import "SVSiteItem.h"
 
+#import "SVHTMLContext.h"
 #import "KTPage.h"
 #import "KTSite.h"
 
@@ -229,6 +230,15 @@
 - (short)childIndex { return [self wrappedIntegerForKey:@"childIndex"]; }
 
 - (void)setChildIndex:(short)index { [self setWrappedInteger:index forKey:@"childIndex"]; }
+
+#pragma mark Contents
+
+- (void)writeContentRecursively:(BOOL)recursive;
+{
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    [context writeText:[self title]];
+    [context writeNewline];
+}
 
 #pragma mark UI
 

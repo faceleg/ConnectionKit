@@ -249,20 +249,6 @@
 	}
 }
 
-- (NSString *)spotlightHTML
-{
-	NSString *result = nil;
-	
-	// TODO: Figure a nice way to get reasonable plain text out of our body
-	if ( nil == result )
-	{
-		result = @"";
-	}
-    
-	return result;
-}
-
-#pragma mark -
 #pragma mark Staleness
 
 - (BOOL)isStale { return [self wrappedBoolForKey:@"isStale"]; }

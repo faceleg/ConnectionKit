@@ -57,7 +57,6 @@
 - (void)addDesignsToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
 - (void)addStaleToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
 - (void)addRSSCollectionsToArray:(NSMutableArray *)anArray forPage:(KTPage *)aPage;
-- (NSString *)spotlightHTML;
 
 
 @end

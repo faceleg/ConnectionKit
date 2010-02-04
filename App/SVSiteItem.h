@@ -86,6 +86,10 @@
 @property(nonatomic) short childIndex;
 
 
+#pragma mark Contents
+- (void)writeContentRecursively:(BOOL)recursive;// writes to the current HTML context. Ignore things like site title
+
+
 #pragma mark UI
 
 @property(nonatomic, readonly) BOOL isCollection;
