@@ -52,6 +52,7 @@
     if ([self inspectedWindow])
     {
         [self unbind:@"inspectedPagesController"];
+        [self setInspectedPagesController:[[self class] noSelectionController]];
     }
     
     
@@ -72,10 +73,13 @@
     [[[self inspectorTabsController] viewControllers] setValue:document forKey:@"representedObject"];
     
     // Objects
-    [_wrapInspector setInspectedObjectsController:[[window windowController] objectsController]];
-    [_metricsInspector setInspectedObjectsController:[[window windowController] objectsController]];
-    [_linkInspector setInspectedObjectsController:[[window windowController] objectsController]];
-    [_plugInInspector setInspectedObjectsController:[[window windowController] objectsController]];
+    id <KSCollectionController> controller = [[window windowController] objectsController];
+    if (!controller) controller = [[self class] noSelectionController];
+    
+    [_wrapInspector setInspectedObjectsController:controller];
+    [_metricsInspector setInspectedObjectsController:controller];
+    [_linkInspector setInspectedObjectsController:controller];
+    [_plugInInspector setInspectedObjectsController:controller];
 }
 
 - (NSArray *)defaultInspectorViewControllers;
