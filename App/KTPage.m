@@ -308,6 +308,21 @@
 
 @dynamic body;
 
+- (void)writeContentRecursively:(BOOL)recursive
+{
+    [super writeContentRecursively:recursive];
+    
+    [[self body] writeHTML];
+    
+    if (recursive)
+    {
+        for (SVSiteItem *anItem in [self sortedChildren])
+        {
+            [anItem writeContentRecursively:recursive];
+        }
+    }
+}
+
 #pragma mark Properties
 
 - (void)setSite:(KTSite *)site recursively:(BOOL)recursive;
