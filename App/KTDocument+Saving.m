@@ -90,8 +90,11 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
+
 // Metadata
 - (BOOL)setMetadataForStoreAtURL:(NSURL *)aStoreURL error:(NSError **)outError;
+- (NSString *)documentTextContent;
+
 
 // Quick Look
 - (void)startGeneratingQuickLookThumbnail;
@@ -755,28 +758,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             
             
 			//  kMDItemTextContent (free-text account of content)
-			//  for now, we'll make this the tagline, plus all unique page titles, plus spotlightHTML
-            NSMutableString *textContent = [[NSMutableString alloc] init];
-            
-			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
-            if (subtitle)
-            {
-                [textContent appendString:subtitle];
-                [textContent appendUnichar:'\n'];
-            }
-			
-            
-            SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithMutableString:textContent];
-            [context push];
-            
-            [[[self site] rootPage] writeContentRecursively:YES];
-            
-            [context pop];
-            [context release];
-            
-            
-			[metadata setObject:textContent forKey:(NSString *)kMDItemTextContent];
-            [textContent release];
+			[metadata setObject:[self documentTextContent]
+                         forKey:(NSString *)kMDItemTextContent];
 			
             
 			//  kMDItemKeywords (keywords of all pages)
@@ -863,6 +846,40 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	}
 	
 	return result;
+}
+
+- (NSString *)documentTextContent;
+{
+    //  For now, we'll make this the tagline, plus all unique page titles, plus spotlightHTML
+    
+    // Start with Tagline
+    NSMutableString *result = [NSMutableString string];
+    
+    NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+    if (subtitle)
+    {
+        [result appendString:subtitle];
+        [result appendUnichar:'\n'];
+    }
+    
+    
+    // Use an HTML context for reading in content
+    SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithMutableString:result];
+    [context push];
+    
+    
+    // Sidebar pagelets
+    
+    
+    // Page contents
+    [[[self site] rootPage] writeContentRecursively:YES];
+    
+    
+    // Tidy yup
+    [context pop];
+    [context release];
+    
+    return result;
 }
 
 #pragma mark -
