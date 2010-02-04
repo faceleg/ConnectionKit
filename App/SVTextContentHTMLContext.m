@@ -17,6 +17,11 @@
     [super writeString:string];
 }
 
+- (void)writeNewline
+{
+    [super writeString:@"\n"];
+}
+
 // Ignore!
 - (void)writeString:(NSString *)string { }
 
