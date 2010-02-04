@@ -862,6 +862,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         [result appendUnichar:'\n'];
     }
     
+    NSString *footer = [[[[[self site] rootPage] master] footer] text];
+    if (footer)
+    {
+        [result appendString:footer];
+        [result appendUnichar:'\n'];
+    }
+    
     
     // Use an HTML context for reading in content
     SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithMutableString:result];
@@ -881,7 +888,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [[[self site] rootPage] writeContentRecursively:YES];
     
     
-    // Tidy yup
+    // Tidy up
     [context pop];
     [context release];
     
