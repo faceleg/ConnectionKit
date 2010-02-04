@@ -65,7 +65,7 @@
 
 - (Class)DOMControllerClass;
 {
-    return [SVBlogSummaryDOMController class];		// FIXME should be SVBodyParagraphDOMAdapter
+    return [SVBodyParagraphDOMAdapter class];		// we can temporarily try SVBlogSummaryDOMController
 }
 
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;

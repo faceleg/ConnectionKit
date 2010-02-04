@@ -58,6 +58,8 @@
 
 @dynamic constrainProportions;
 
+// TODO: We might want to cache this?
+
 - (CGSize)originalSize;
 {
     CIImage *image = [[CIImage alloc] initWithContentsOfURL:[[self media] fileURL]];

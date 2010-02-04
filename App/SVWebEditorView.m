@@ -925,7 +925,22 @@ typedef enum {  // this copied from WebPreferences+Private.h
     SVWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
     if (item && handle != kSVGraphicNoHandle)
     {
-		[[ESCursors straightCursorForAngle:33 withSize:16.0] push];
+		CGFloat radians = 0.0;
+		switch(handle)
+		{
+			// We might want to consider using angled size cursors  even for middle handles to show that you are resizing both dimensions?
+				
+			case kSVGraphicUpperLeftHandle:		radians = M_PI_4 + M_PI_2;			break;
+			case kSVGraphicUpperMiddleHandle:	radians = M_PI_2;					break;
+			case kSVGraphicUpperRightHandle:	radians = M_PI_4;					break;
+			case kSVGraphicMiddleLeftHandle:	radians = M_PI;						break;
+			case kSVGraphicMiddleRightHandle:	radians = M_PI;						break;
+			case kSVGraphicLowerLeftHandle:		radians = M_PI + M_PI_4;			break;
+			case kSVGraphicLowerMiddleHandle:	radians = M_PI + M_PI_2;			break;
+			case kSVGraphicLowerRightHandle:	radians = M_PI + M_PI_2 + M_PI_4;	break;
+			default: break;
+		}
+		[[ESCursors straightCursorForAngle:radians withSize:16.0] push];
         [self resizeItem:item usingHandle:handle withEvent:event];
         [_mouseDownEvent release]; _mouseDownEvent = nil;
 		[NSCursor pop];

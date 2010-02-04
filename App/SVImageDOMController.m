@@ -54,6 +54,8 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     return kCALayerRightEdge | kCALayerBottomEdge;
 }
 
+#define MINDIMENSION 16.0
+
 - (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point
 {
     BOOL resizingWidth = NO;
@@ -82,8 +84,8 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
         bounds.size.width = point.x - bounds.origin.x;
     }
     
-    // Did the user actually flip the graphic over?
-    if (bounds.size.width <= 0.0f) bounds.size.width = 1.0f;
+    // Did the user actually flip the graphic over?   OR RESIZE TO TOO SMALL?
+    if (bounds.size.width <= MINDIMENSION) bounds.size.width = MINDIMENSION;
     
     
     
@@ -106,12 +108,25 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
         bounds.size.height = point.y - bounds.origin.y;
     }
     
-    // Did the user actually flip the graphic upside down?
-    if (bounds.size.height<=0.0f) bounds.size.height = 1.0f;
+    // Did the user actually flip the graphic upside down?   OR RESIZE TO TOO SMALL?
+    if (bounds.size.height<=MINDIMENSION) bounds.size.height = MINDIMENSION;
     
     
     // Size calculated – now what to store?
     SVImage *image = [self representedObject];
+	CGSize originalSize = [image originalSize];
+	
+#define SNAP 4
+	// Snap to original size if you are very close to it
+	if (resizingWidth && ( abs(bounds.size.width - originalSize.width) < SNAP) )
+	{
+		bounds.size.width = originalSize.width;
+	}
+	if (resizingHeight && ( abs(bounds.size.height - originalSize.height) < SNAP) )
+	{
+		bounds.size.height = originalSize.height;
+	}
+	
     if (resizingWidth)
     {
         if (resizingHeight)
