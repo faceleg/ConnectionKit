@@ -21,6 +21,7 @@
 #import "NSColor+Karelia.h"
 #import "NSEvent+Karelia.h"
 #import "NSObject+Karelia.h"
+#import "ESCursors.h"
 #import "NSWorkspace+Karelia.h"
 
 
@@ -924,8 +925,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     SVWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
     if (item && handle != kSVGraphicNoHandle)
     {
+		[[ESCursors straightCursorForAngle:33 withSize:16.0] push];
         [self resizeItem:item usingHandle:handle withEvent:event];
         [_mouseDownEvent release]; _mouseDownEvent = nil;
+		[NSCursor pop];
         return;
     }
     
