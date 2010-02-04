@@ -224,7 +224,7 @@
         
         if ([innerHTML length] > 0)
         {
-            KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];		OBASSERT(page);
+            KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];
             KTMaster *master = [page master];
             if ([master boolForKey:@"enableImageReplacement"])
             {
