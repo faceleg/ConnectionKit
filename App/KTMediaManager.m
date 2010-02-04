@@ -211,7 +211,7 @@ NSString *KTMediaLogDomain = @"Media";
 	// Get the list of all MediaContainer entities and narrow it down to those that aren't required.
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"scaledImages.@count == 0"];
     NSError *error = nil;
-	NSArray *allMedia = [[self managedObjectContext] objectsWithEntityName:@"MediaContainer" predicate:predicate error:&error];
+	NSArray *allMedia = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"MediaContainer" predicate:predicate error:&error];
 	
     NSEnumerator *mediaEnumerator = [allMedia objectEnumerator];
 	NSManagedObject *aMedia;
@@ -264,7 +264,7 @@ NSString *KTMediaLogDomain = @"Media";
 	// Fetch all objects of that entity
 	NSManagedObjectContext *docMOC = [[self document] managedObjectContext];
 	NSError *error = nil;
-	NSArray *allObjects = [docMOC allObjectsWithEntityName:entityName error:&error];
+	NSArray *allObjects = [docMOC fetchAllObjectsForEntityForName:entityName error:&error];
 	if (error) {
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert setIcon:[NSApp applicationIconImage]];
@@ -322,7 +322,7 @@ typedef enum {
 	{
 		// Locate the media ref for the name
 		NSPredicate *predicate = [NSPredicate predicateWithFormat:@"name == %@ AND owner == %@", oldMediaRefName, oldElement];
-		NSManagedObject *mediaRef = [[[oldElement managedObjectContext] objectsWithEntityName:@"MediaRef" predicate:predicate error:NULL] firstObjectKS];
+		NSManagedObject *mediaRef = [[[oldElement managedObjectContext] fetchAllObjectsForEntityForName:@"MediaRef" predicate:predicate error:NULL] firstObjectKS];
         
 		
 		// Look up the media object

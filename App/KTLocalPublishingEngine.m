@@ -196,7 +196,7 @@
             NSManagedObjectContext *moc = [[self site] managedObjectContext];
             NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", [(KTDesign *)object identifier]];
             
-            NSArray *designPublishingInfo = [moc objectsWithEntityName:@"DesignPublishingInfo"
+            NSArray *designPublishingInfo = [moc fetchAllObjectsForEntityForName:@"DesignPublishingInfo"
                                                              predicate:predicate
                                                                  error:NULL];
             

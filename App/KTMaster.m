@@ -187,7 +187,7 @@
 	// Look to see if there is an existing DesignPublishingInfo object
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
 	NSError *error = nil;
-	NSArray *existingDesigns = [moc objectsWithEntityName:@"DesignPublishingInfo" predicate:predicate error:&error];
+	NSArray *existingDesigns = [moc fetchAllObjectsForEntityForName:@"DesignPublishingInfo" predicate:predicate error:&error];
 	if (error) {
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert setIcon:[NSApp applicationIconImage]];

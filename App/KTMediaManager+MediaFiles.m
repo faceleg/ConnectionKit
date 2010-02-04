@@ -76,7 +76,7 @@
 - (NSArray *)externalMediaFiles
 {
 	NSError *error = nil;
-	NSArray *result = [[self managedObjectContext] allObjectsWithEntityName:@"MediaFile" error:&error];
+	NSArray *result = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"MediaFile" error:&error];
 	if (error) {
 		NSAlert *alert = [NSAlert alertWithError:error];
 		[alert setIcon:[NSApp applicationIconImage]];

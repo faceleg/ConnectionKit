@@ -500,6 +500,8 @@
 		27FC47F01030CE7500A4A5E2 /* NSSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */; };
 		27FDEDD6111AF2C6001F4E60 /* SVTextContentHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */; };
 		27FDEDD7111AF2C6001F4E60 /* SVTextContentHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */; };
+		27FDEF13111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FDEF11111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h */; };
+		27FDEF14111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FDEF12111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m */; };
 		3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */; };
 		3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
 		3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
@@ -1995,6 +1997,8 @@
 		27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSSet+Karelia.m"; path = "../../Shared/Foundation/NSSet+Karelia.m"; sourceTree = "<group>"; };
 		27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextContentHTMLContext.h; sourceTree = "<group>"; };
 		27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextContentHTMLContext.m; sourceTree = "<group>"; };
+		27FDEF11111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSManagedObjectContext+Karelia.h"; sourceTree = "<group>"; };
+		27FDEF12111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSManagedObjectContext+Karelia.m"; sourceTree = "<group>"; };
 		2A37F4B0FDCFA73011CA2CEA /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2A37F4C4FDCFA73011CA2CEA /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		2A37F4C5FDCFA73011CA2CEA /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
@@ -3408,6 +3412,15 @@
 				27E62FF90EC3060A0044ED36 /* AmazonSupport.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		27FDEF10111B4C84001F4E60 /* Core Data */ = {
+			isa = PBXGroup;
+			children = (
+				27FDEF11111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h */,
+				27FDEF12111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m */,
+			);
+			path = "Core Data";
 			sourceTree = "<group>";
 		};
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
@@ -4886,6 +4899,7 @@
 			isa = PBXGroup;
 			children = (
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
+				27FDEF10111B4C84001F4E60 /* Core Data */,
 				CE01A6210EAFD63600BDF264 /* AppKit */,
 				CE01A71E0EAFD63600BDF264 /* WebKit */,
 				2778D38610AC5DE40027C323 /* QTKit */,
@@ -5247,6 +5261,7 @@
 				CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */,
 				CE75EA95111A550600474753 /* ESCursors.h in Headers */,
 				27FDEDD6111AF2C6001F4E60 /* SVTextContentHTMLContext.h in Headers */,
+				27FDEF13111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6633,6 +6648,7 @@
 				CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */,
 				CE75EA96111A550600474753 /* ESCursors.m in Sources */,
 				27FDEDD7111AF2C6001F4E60 /* SVTextContentHTMLContext.m in Sources */,
+				27FDEF14111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

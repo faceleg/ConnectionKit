@@ -18,6 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "NSManagedObjectContext+Karelia.h"
 
 
 @class KTAbstractElement, KTDocument, KTSite, KTAbstractPage, KTPage;
@@ -41,16 +42,6 @@
 							   substitutionVariables:(NSDictionary *)aDictionary
 											   error:(NSError **)anError;
 
-// returns array of objects in context matching criteria
-// (functions as thread-safe executeFetchRequest: method)
-- (NSArray *)objectsWithEntityName:(NSString *)anEntityName
-						 predicate:(NSPredicate *)aPredicate
-							 error:(NSError **)anError;
-
-// returns an array of all objects of anEntityName (by using a nil predicate)
-- (NSArray *)allObjectsWithEntityName:(NSString *)anEntityName
-								error:(NSError **)anError;
-
 // returns object corresponding to NSManagedObjectID's URIRepresentation
 - (NSManagedObject *)objectWithURIRepresentation:(NSURL *)aURL;
 
@@ -61,9 +52,6 @@
 - (NSArray *)objectsForColumnName:(NSString *)aColumnName entityName:(NSString *)anEntityName;
 
 #pragma mark methods Sandvox-specific extensions
-
-// returns corresponding KTDocument via sharedDocumentController
-// (document must be open and on-screen)
 
 // return context's Site
 - (KTSite *)site;

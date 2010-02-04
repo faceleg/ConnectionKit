@@ -47,7 +47,7 @@
  */
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC
 {
-	NSArray *result = [MOC allObjectsWithEntityName:[self entityName] error:NULL];
+	NSArray *result = [MOC fetchAllObjectsForEntityForName:[self entityName] error:NULL];
 	return result;
 }
 

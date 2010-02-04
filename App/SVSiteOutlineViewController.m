@@ -1418,7 +1418,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     NSManagedObjectContext *context = [[self content] managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isSelectedInSiteOutline != 0"];
     
-    NSArray *result = [context objectsWithEntityName:@"SiteItem"
+    NSArray *result = [context fetchAllObjectsForEntityForName:@"SiteItem"
                                            predicate:predicate
                                                error:NULL];
     

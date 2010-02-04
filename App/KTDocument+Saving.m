@@ -637,7 +637,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 {
 	// Build a list of the media files that will require copying/moving to the new doc
 	NSManagedObjectContext *mediaMOC = [[self mediaManager] managedObjectContext];
-	NSArray *mediaFiles = [mediaMOC allObjectsWithEntityName:@"MediaFile" error:NULL];
+	NSArray *mediaFiles = [mediaMOC fetchAllObjectsForEntityForName:@"MediaFile" error:NULL];
 	NSMutableSet *pathsToCopy = [NSMutableSet setWithCapacity:[mediaFiles count]];
 	NSMutableSet *pathsToMove = [NSMutableSet setWithCapacity:[mediaFiles count]];
 	
@@ -747,7 +747,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 			NSAutoreleasePool *localPool = [[NSAutoreleasePool alloc] init];
 			
 			//  kMDItemNumberOfPages
-			NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+			NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
 			unsigned int pageCount = 0;
 			if ( nil != pages )
 			{

@@ -375,7 +375,7 @@
 
 - (NSString *)pageCount
 {
-	NSArray *pages = [[self managedObjectContext] allObjectsWithEntityName:@"Page" error:NULL];
+	NSArray *pages = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"Page" error:NULL];
 	NSString *result = [NSString stringWithFormat:@"%u", [pages count]];
 	return result;
 }

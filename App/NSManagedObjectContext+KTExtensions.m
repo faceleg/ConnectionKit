@@ -86,52 +86,13 @@
 	return fetchedObjects;
 }
 
-- (NSArray *)objectsWithEntityName:(NSString *)anEntityName
-						 predicate:(NSPredicate *)aPredicate
-							 error:(NSError **)anError
-{
-	OBASSERTSTRING((nil != anEntityName), @"anEntityName cannot be nil");
-	// nil predicate means "return all objects of anEntityName"
-	
-	NSArray *fetchedObjects = nil;
-	NSFetchRequest *fetchRequest = [[NSFetchRequest alloc] init];
-	NSError *localError = nil;
-	
-	NSEntityDescription *entity = [NSEntityDescription entityForName:anEntityName
-											  inManagedObjectContext:self];
-	OBASSERTSTRING((nil != entity), @"entity should not be nil");
-	[fetchRequest setEntity:entity];
-	
-	if ( nil != aPredicate )
-	{
-		[fetchRequest setPredicate:aPredicate];
-	}
-	
-	// note to future debuggers: we ALWAYS need to lock the context here to prevent
-	// a "statement is still active" error. if we only lockIfNecessary, it's possible
-	// that this method could be called on the main thread while another thread is
-	// doing the same. DO NOT REMOVE THIS LOCK. DO NOT MAKE IT CONDITIONAL.
-	//[self lockPSCAndSelf];
-	fetchedObjects = [self executeFetchRequest:fetchRequest error:&localError];
-	
-	return fetchedObjects;
-}
-
 #pragma mark convenience methods that message workhorse
-
-- (NSArray *)allObjectsWithEntityName:(NSString *)anEntityName
-								error:(NSError **)anError
-{
-	return [self objectsWithEntityName:anEntityName
-							 predicate:nil
-								 error:anError];
-}
 
 // return array of unique values for aColumnName for all instances of anEntityName
 - (NSArray *)objectsForColumnName:(NSString *)aColumnName entityName:(NSString *)anEntityName
 {
     NSError *localError = nil;
-    NSArray *allInstances = [self allObjectsWithEntityName:anEntityName error:&localError];
+    NSArray *allInstances = [self fetchAllObjectsForEntityForName:anEntityName error:&localError];
     
     if ( [allInstances count] > 0 )
     {
@@ -165,7 +126,7 @@
 	
 	NSError *localError = nil;
 	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"uniqueID == %@", searchID];
-	NSArray *fetchedObjects = [self objectsWithEntityName:anEntityName
+	NSArray *fetchedObjects = [self fetchAllObjectsForEntityForName:anEntityName
 												predicate:predicate
 													error:&localError];
 	
@@ -220,7 +181,7 @@
 - (KTSite *)site
 {
 	NSError *localError = nil;
-	NSArray *fetchedObjects = [self objectsWithEntityName:@"Site"
+	NSArray *fetchedObjects = [self fetchAllObjectsForEntityForName:@"Site"
 												predicate:nil
 													error:&localError];
 	

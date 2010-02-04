@@ -47,7 +47,7 @@
     // Load in the cache if needed
     if (!myMediaContainerIdentifiersCache)
     {
-        NSArray *mediaContainers = [[self managedObjectContext] allObjectsWithEntityName:@"MediaContainer"
+        NSArray *mediaContainers = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"MediaContainer"
                                                                                    error:NULL];
         
         NSArray *mediaContainerIdentifiers = [mediaContainers valueForKey:@"identifier"];
@@ -241,7 +241,7 @@
 							  imageReplacementCode,
 							  size - 0.01, size + 0.01];
 	
-	NSArray *objects = [[self managedObjectContext] objectsWithEntityName:@"GraphicalText" predicate:predicate error:NULL];
+	NSArray *objects = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"GraphicalText" predicate:predicate error:NULL];
 	KTGraphicalTextMediaContainer *result = [objects firstObjectKS];
 	
 	if (!result)
