@@ -869,6 +869,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Sidebar pagelets
+    NSManagedObjectContext *moc = [self managedObjectContext];
+    NSManagedObjectModel *model = [[moc persistentStoreCoordinator] managedObjectModel];
+    NSFetchRequest *request = [model fetchRequestTemplateForName:@"SidebarPagelets"];
+    NSArray *sidebarPagelets = [moc executeFetchRequest:request error:NULL];
+    
+    [SVContentObject writeContentObjects:sidebarPagelets];
     
     
     // Page contents
