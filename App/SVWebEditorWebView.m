@@ -10,6 +10,7 @@
 #import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
+#import "NSResponder+Karelia.h"
 
 
 @implementation SVWebEditorWebView
@@ -31,6 +32,14 @@
     }
     
     return result;
+}
+
+#pragma mark Actions
+
+- (IBAction)reload:(id)sender
+{
+    // Don't want to support this. Someone else will deal with it
+    [self makeNextResponderDoCommandBySelector:_cmd];
 }
 
 #pragma mark Dragging Destination
