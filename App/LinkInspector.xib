@@ -177,13 +177,13 @@
 					<object class="NSTextField" id="1061431300">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{25, 10}, {194, 11}}</string>
+						<string key="NSFrame">{{25, 10}, {197, 11}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="129127421">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272892928</int>
-							<string key="NSContents">Hold down Shift key for opposite behaviour</string>
+							<string key="NSContents">Hold down Shift key over a link to activate it</string>
 							<reference key="NSSupport" ref="22"/>
 							<reference key="NSControlView" ref="1061431300"/>
 							<reference key="NSBackgroundColor" ref="779414817"/>
@@ -197,7 +197,7 @@
 					<object class="NSButton" id="751625205">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{7, 21}, {129, 18}}</string>
+						<string key="NSFrame">{{7, 20}, {129, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="815253543">
@@ -219,7 +219,7 @@
 					<object class="NSBox" id="558607766">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">10</int>
-						<string key="NSFrame">{{10, 45}, {210, 5}}</string>
+						<string key="NSFrame">{{10, 44}, {210, 5}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
@@ -252,11 +252,6 @@
 				<string key="NSClassName">NSView</string>
 			</object>
 			<object class="NSUserDefaultsController" id="729820615">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>liveEditableAndSelectableLinks</string>
-					<string>LiveEditableAndSelectableLinks</string>
-				</object>
 				<bool key="NSSharedInstance">YES</bool>
 			</object>
 		</object>
@@ -540,6 +535,7 @@
 					<string>1.IBPluginDependency</string>
 					<string>1.WindowOrigin</string>
 					<string>1.editorWindowContentRectSynchronizationRect</string>
+					<string>114.IBPluginDependency</string>
 					<string>17.IBPluginDependency</string>
 					<string>18.IBPluginDependency</string>
 					<string>24.IBPluginDependency</string>
@@ -565,6 +561,7 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -811,6 +808,10 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">SVLinkManager</string>
 					<string key="superclassName">NSObject</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">orderFrontLinkPanel:</string>
+						<string key="NS.object.0">id</string>
+					</object>
 					<reference key="sourceIdentifier" ref="525588165"/>
 				</object>
 			</object>
