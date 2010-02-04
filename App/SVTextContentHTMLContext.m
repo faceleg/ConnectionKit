@@ -8,6 +8,8 @@
 
 #import "SVTextContentHTMLContext.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVTextContentHTMLContext
 
