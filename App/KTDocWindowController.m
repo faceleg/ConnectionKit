@@ -988,9 +988,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 }
 
-- (void)updateWebView:(id)sender;
+- (void)reload:(id)sender;
 {
-    [[[self webContentAreaController] webEditorViewController] setNeedsUpdate];
+    NSResponder *controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+    [controller doCommandBySelector:_cmd];
 }
 
 #pragma mark Choose Dialog

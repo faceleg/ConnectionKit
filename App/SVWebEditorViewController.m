@@ -448,6 +448,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
+- (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
+
 #pragma mark Content
 
 @synthesize primitiveSelectedObjectsController = _selectableObjectsController;

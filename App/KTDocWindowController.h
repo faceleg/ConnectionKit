@@ -120,7 +120,7 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)chooseDesign:(id)sender;
 - (IBAction)showChooseDesignSheet:(id)sender;
 
-- (IBAction)updateWebView:(id)sender;
+- (IBAction)reload:(id)sender;
 
 
 #pragma mark Choose Dialog
