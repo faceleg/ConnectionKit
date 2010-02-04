@@ -996,6 +996,8 @@
 		CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */; };
 		CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */; };
 		CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733AAC1113B952009582EA /* SVBlogSummaryDOMController.m */; };
+		CE75EA95111A550600474753 /* ESCursors.h in Headers */ = {isa = PBXBuildFile; fileRef = CE75EA92111A550600474753 /* ESCursors.h */; };
+		CE75EA96111A550600474753 /* ESCursors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE75EA93111A550600474753 /* ESCursors.m */; };
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
@@ -2599,6 +2601,9 @@
 		CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogEntryBorderView.m; sourceTree = "<group>"; };
 		CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogSummaryDOMController.h; sourceTree = "<group>"; };
 		CE733AAC1113B952009582EA /* SVBlogSummaryDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogSummaryDOMController.m; sourceTree = "<group>"; };
+		CE75EA91111A550600474753 /* ArrowDrawing.jpeg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = ArrowDrawing.jpeg; sourceTree = "<group>"; };
+		CE75EA92111A550600474753 /* ESCursors.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ESCursors.h; sourceTree = "<group>"; };
+		CE75EA93111A550600474753 /* ESCursors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ESCursors.m; sourceTree = "<group>"; };
 		CE7779E30AE499C2002E6844 /* SVWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWelcomeController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
@@ -3862,8 +3867,7 @@
 				3C2DA6E3104C7AAE0037D270 /* MGRecessedPopUpButtonCell.h */,
 				3C2DA6E4104C7AAE0037D270 /* MGRecessedPopUpButtonCell.m */,
 			);
-			name = MGScopeBar;
-			path = Imported;
+			path = MGScopeBar;
 			sourceTree = "<group>";
 		};
 		3C42DDA70D64C8B3004F35FD /* Products */ = {
@@ -4763,6 +4767,16 @@
 			path = DesignPicker;
 			sourceTree = "<group>";
 		};
+		CE75EA90111A550600474753 /* ESCursors */ = {
+			isa = PBXGroup;
+			children = (
+				CE75EA91111A550600474753 /* ArrowDrawing.jpeg */,
+				CE75EA92111A550600474753 /* ESCursors.h */,
+				CE75EA93111A550600474753 /* ESCursors.m */,
+			);
+			path = ESCursors;
+			sourceTree = "<group>";
+		};
 		CE7638021083F70600EEA9CF /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4874,7 +4888,7 @@
 				CE01A7050EAFD63600BDF264 /* Imported */,
 			);
 			name = Shared;
-			path = ../../Shared;
+			path = ../../../Shared;
 			sourceTree = "<group>";
 		};
 		CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */ = {
@@ -4883,8 +4897,7 @@
 				CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */,
 				CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */,
 			);
-			name = MAAttachedWindow;
-			path = Imported;
+			path = MAAttachedWindow;
 			sourceTree = "<group>";
 		};
 		CEC69B02108E6F91000E6E84 /* ThirdParty */ = {
@@ -4892,8 +4905,9 @@
 			children = (
 				CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */,
 				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
+				CE75EA90111A550600474753 /* ESCursors */,
 			);
-			name = ThirdParty;
+			path = ThirdParty;
 			sourceTree = "<group>";
 		};
 		CEF12E780D908EB400FCAC70 /* Products */ = {
@@ -5225,6 +5239,7 @@
 				277E4FBC11109946005AF346 /* SVImageDOMController.h in Headers */,
 				CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */,
 				CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */,
+				CE75EA95111A550600474753 /* ESCursors.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6609,6 +6624,7 @@
 				277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */,
 				CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */,
 				CE733AAE1113B952009582EA /* SVBlogSummaryDOMController.m in Sources */,
+				CE75EA96111A550600474753 /* ESCursors.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
