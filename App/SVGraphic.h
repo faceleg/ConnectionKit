@@ -52,6 +52,7 @@
 
 #pragma mark HTML
 @property(nonatomic, retain, readonly) NSString *elementID;
+- (NSString *)className;
 
 @end
 

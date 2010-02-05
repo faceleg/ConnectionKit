@@ -79,20 +79,10 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    NSString *class = nil;
-    if ([self wrapIsFloatLeft] || [self wrapIsFloatRight])
-    {
-        class = @"narrow";
-    }
-    else if ([self wrapIsBlockLeft] || [self wrapIsBlockCenter] || [self wrapIsBlockRight])
-    {
-        class = @"wide";
-    }
-    
     NSURL *imageURL = [[self media] fileURL];
     
     [context writeImageWithIdName:[self editingElementID]
-                        className:class
+                        className:[self className]
                               src:[imageURL relativeString]
                               alt:nil 
                             width:[[self width] description]

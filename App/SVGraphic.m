@@ -120,6 +120,21 @@
 #pragma mark HTML
 
 @dynamic elementID;
-- (BOOL) shouldPublishEditingElementID { return YES; }
+- (BOOL)shouldPublishEditingElementID { return YES; }
+
+- (NSString *)className;
+{
+    NSString *result = nil;
+    if ([self wrapIsFloatLeft] || [self wrapIsFloatRight])
+    {
+        result = @"narrow";
+    }
+    else if ([self wrapIsBlockLeft] || [self wrapIsBlockCenter] || [self wrapIsBlockRight])
+    {
+        result = @"wide";
+    }
+    
+    return result;
+}
 
 @end
