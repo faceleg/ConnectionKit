@@ -125,13 +125,24 @@
 - (NSString *)className;
 {
     NSString *result = nil;
-    if ([self wrapIsFloatLeft] || [self wrapIsFloatRight])
+    
+    switch ([[self wrap] integerValue])
     {
-        result = @"narrow";
-    }
-    else if ([self wrapIsBlockLeft] || [self wrapIsBlockCenter] || [self wrapIsBlockRight])
-    {
-        result = @"wide";
+        case SVGraphicWrapFloatLeft:
+            result = @"narrow left";
+            break;
+        case SVGraphicWrapFloatRight:
+            result = @"narrow right";
+            break;
+        case SVGraphicWrapBlockLeft:
+            result = @"wide left";
+            break;
+        case SVGraphicWrapBlockCenter:
+            result = @"wide center";
+            break;
+        case SVGraphicWrapBlockRight:
+            result = @"wide right";
+            break;
     }
     
     return result;

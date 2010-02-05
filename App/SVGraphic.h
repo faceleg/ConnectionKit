@@ -9,14 +9,25 @@
 #import "SVBodyElement.h"
 
 
-#define SVContentObjectWrapNone [NSNumber numberWithInteger:0]
-#define SVContentObjectWrapFloatLeft [NSNumber numberWithInteger:1]
-#define SVContentObjectWrapFloatRight [NSNumber numberWithInteger:3]
-#define SVContentObjectWrapBlockLeft [NSNumber numberWithInteger:4]
-#define SVContentObjectWrapBlockCenter [NSNumber numberWithInteger:5]
-#define SVContentObjectWrapBlockRight [NSNumber numberWithInteger:6]
+typedef enum {
+    SVGraphicWrapNone,
+    SVGraphicWrapFloatLeft,
+    SVGraphicWrapFloatRight,
+    SVGraphicWrapBlockLeft,
+    SVGraphicWrapBlockCenter,
+    SVGraphicWrapBlockRight,
+} SVGraphicWrap;
+
+
+#define SVContentObjectWrapNone [NSNumber numberWithInteger:SVGraphicWrapNone]
+#define SVContentObjectWrapFloatLeft [NSNumber numberWithInteger:SVGraphicWrapFloatLeft]
+#define SVContentObjectWrapFloatRight [NSNumber numberWithInteger:SVGraphicWrapFloatRight]
+#define SVContentObjectWrapBlockLeft [NSNumber numberWithInteger:SVGraphicWrapBlockLeft]
+#define SVContentObjectWrapBlockCenter [NSNumber numberWithInteger:SVGraphicWrapBlockCenter]
+#define SVContentObjectWrapBlockRight [NSNumber numberWithInteger:SVGraphicWrapBlockRight]
 //typedef NSNumber SVContentObjectWrap;
 #define SVContentObjectWrap NSNumber
+
 
 #pragma mark -
 
