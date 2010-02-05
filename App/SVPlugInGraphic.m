@@ -12,6 +12,7 @@
 #import "SVDOMController.h"
 #import "SVElementPlugIn.h"
 #import "KTElementPlugin.h"
+#import "SVHTMLContext.h"
 
 #import "NSManagedObject+KTExtensions.h"
 #import "NSObject+Karelia.h"
