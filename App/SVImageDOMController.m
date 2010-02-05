@@ -8,6 +8,8 @@
 
 #import "SVImageDOMController.h"
 
+#import "DOMNode+Karelia.h"
+
 #import <QuartzCore/QuartzCore.h>
 
 
@@ -42,15 +44,23 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sImageSizeObservationContext)
     {
+        // mark the current area for drawing
+        DOMHTMLElement *element = [self HTMLElement];
+        [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+        
+        // Push property change into DOM
         if ([keyPath isEqualToString:@"wrap"])
         {
-            [[self HTMLElement] setClassName:[[self representedObject] className]];
+            [element setClassName:[[self representedObject] className]];
         }
         else
         {
-            [[self HTMLElement] setAttribute:keyPath
-                                       value:[[object valueForKeyPath:keyPath] description]];
+            [element setAttribute:keyPath
+                         value:[[object valueForKeyPath:keyPath] description]];
         }
+        
+        // and then mark the resulting area for drawing
+        [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
     }
     else
     {
