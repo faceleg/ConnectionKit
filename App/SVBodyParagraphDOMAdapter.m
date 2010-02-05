@@ -76,13 +76,13 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 - (void)setRepresentedObject:(id)paragraph
 {
     // Stop observation
-    [[self representedObject] removeObserver:self forKeyPath:@"innerHTMLArchiveString"];
+    [[self representedObject] removeObserver:self forKeyPath:@"archiveString"];
     
     [super setRepresentedObject:paragraph];
     
     // Observe paragraph
     [[self representedObject] addObserver:self
-                               forKeyPath:@"innerHTMLArchiveString"
+                               forKeyPath:@"archiveString"
                                   options:0
                                   context:sParagraphInnerHTMLObservationContext];
 }
@@ -108,8 +108,14 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [super update];
     
     // TODO: Should we also supply a valid HTML context?
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithContext:[self HTMLContext]];
+    [context push];
+    
     SVBodyParagraph *paragraph = [self representedObject];
-    [[self HTMLElement] setInnerHTML:[paragraph innerHTMLString]];
+    [paragraph writeInnerHTML];
+    
+    [context pop];
+    [[self HTMLElement] setInnerHTML:[context mutableString]];
 }
 
 #pragma mark Editing
