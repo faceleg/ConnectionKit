@@ -733,25 +733,23 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			if ( detailedErrors != nil ) 
 			{
 				unsigned numErrors = [detailedErrors count];							
-				NSMutableString *errorString = [NSMutableString stringWithFormat:@"%u validation errors have occurred", numErrors];
+				NSMutableString *errorString = [NSMutableString stringWithFormat:@"%u validation errors have occurred.", numErrors];
+				NSMutableString *secondary = [NSMutableString string];
 				if ( numErrors > 3 )
 				{
-					[errorString appendFormat:@".\nThe first 3 are:\n"];
-				}
-				else
-				{
-					[errorString appendFormat:@":\n"];
+					[secondary appendFormat:NSLocalizedString(@"The first 3 are:\n", @"To be followed by 3 error messages")];
 				}
 				
 				unsigned i;
 				for ( i = 0; i < ((numErrors > 3) ? 3 : numErrors); i++ ) 
 				{
-					[errorString appendFormat:@"%@\n", [[detailedErrors objectAtIndex:i] localizedDescription]];
+					[secondary appendFormat:@"%@\n", [[detailedErrors objectAtIndex:i] localizedDescription]];
 				}
 				
 				NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithDictionary:[inError userInfo]];
 				[userInfo setObject:errorString forKey:NSLocalizedDescriptionKey];
-				
+				[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
+
 				result = [NSError errorWithDomain:[inError domain] code:[inError code] userInfo:userInfo];
 			} 
 		}

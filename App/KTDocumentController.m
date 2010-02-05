@@ -136,6 +136,7 @@
 
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
 {
+	NSFileManager *fm = [NSFileManager defaultManager];
 	NSString *requestedPath = [absoluteURL path];
     NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];
 	
@@ -165,13 +166,14 @@
 			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
-			NSString *description = NSLocalizedString(@"Unable to read document metadata.",
-													  "error description: document metadata is unreadable");
+			NSString *description = [NSString stringWithFormat:NSLocalizedString(@"Unable to open “%@”",
+													  "error description: document cannot be opened"), [fm displayNameAtPath:requestedPath]];
 			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			
-			NSString *reason = NSLocalizedString(@"\n\nSandvox was not able to read the document metadata.\n\nPlease contact Karelia Software by sending feedback from the 'Help' menu.",
+			NSString *secondary = NSLocalizedString(@"Sandvox was not able to read the document metadata.\n\nPlease contact Karelia Software by sending feedback from the “Sandvox” menu.",
 												 "error reason: document metadata is unreadable");
-			[userInfo setObject:reason forKey:NSLocalizedFailureReasonErrorKey];
+			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
 			
 			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
 			
@@ -191,15 +193,14 @@
 			
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
-			NSString *description = NSLocalizedString(@"Unable to read document model information.",
-													  "error description: document model version is unknown");
-			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+			NSString *description = [NSString stringWithFormat:NSLocalizedString(
+				@"Unable to open “%@”","error description: document cannot be opened"), [fm displayNameAtPath:requestedPath]];
 			
-			NSString *reason = NSLocalizedString(@"\n\nThis document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Help' menu.",
+			NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
 												 "error reason: document model version is unknown");
-			[userInfo setObject:reason forKey:NSLocalizedFailureReasonErrorKey];
-			
-			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
+			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
+			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			
 			if (outError)
 			{

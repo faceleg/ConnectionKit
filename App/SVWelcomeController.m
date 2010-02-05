@@ -211,7 +211,6 @@
 {
 	if (firstTimeSoReopenSavedDocuments)
 	{
-		NSLog(@"firstTimeSoReopenSavedDocuments");
 		[self reopenPreviouslyOpenedDocumentsUsingProgressPanel:[[NSApp delegate] progressPanel]];
 	}
 	else

@@ -270,9 +270,9 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		// The backup failed, construct an error
 		result = nil;
 		
-		NSString *failureReason = [NSString stringWithFormat:@"Could not remove the existing file at:\n%@", path];
+		NSString *secondary = [NSString stringWithFormat:@"Could not remove the existing file at:\n%@", path];
 		NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:@"Unable to save document", NSLocalizedDescriptionKey,
-																			failureReason, NSLocalizedFailureReasonErrorKey,
+																			secondary, NSLocalizedRecoverySuggestionErrorKey,
 																			path, NSFilePathErrorKey, nil];
 		if (error)
 		{
