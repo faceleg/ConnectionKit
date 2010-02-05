@@ -138,7 +138,14 @@
 {
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSString *requestedPath = [absoluteURL path];
-    NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];
+	// General error description to use if there are problems
+	NSString *errorDescription = [NSString stringWithFormat:
+								  NSLocalizedString(@"Unable to open “%@”",
+													"error description: document cannot be opened"),
+								  [fm displayNameAtPath:requestedPath]];
+	NSError *subError = nil;
+	
+    NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];	// Should we ignore this error?
 	
 	// are we opening a KTDocument?
 	if (type && ([type isEqualToString:kKTDocumentType] || [type isEqualToString:kKTDocumentUTI_ORIGINAL]))
@@ -152,7 +159,7 @@
             
 			metadata = [NSPersistentStoreCoordinator metadataForPersistentStoreOfType:nil
                                                                                   URL:datastoreURL
-                                                                                error:outError];
+                                                                                error:&subError];
 		}
 		@catch (NSException *exception)
 		{
@@ -166,16 +173,14 @@
 			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
-			NSString *description = [NSString stringWithFormat:NSLocalizedString(@"Unable to open “%@”",
-													  "error description: document cannot be opened"), [fm displayNameAtPath:requestedPath]];
-			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:errorDescription forKey:NSLocalizedDescriptionKey];
 			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			
 			NSString *secondary = NSLocalizedString(@"Sandvox was not able to read the document metadata.\n\nPlease contact Karelia Software by sending feedback from the “Sandvox” menu.",
 												 "error reason: document metadata is unreadable");
 			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
-			
 			[userInfo setObject:[absoluteURL path] forKey:NSFilePathErrorKey];
+			[userInfo setObject:subError forKey:NSUnderlyingErrorKey];
 			
 			if (outError)
 			{
@@ -192,13 +197,10 @@
 			NSLog(@"error: ***Can't open %@ : no model version!", requestedPath);
 			
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
-			
-			NSString *description = [NSString stringWithFormat:NSLocalizedString(
-				@"Unable to open “%@”","error description: document cannot be opened"), [fm displayNameAtPath:requestedPath]];
-			
+						
 			NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
 												 "error reason: document model version is unknown");
-			[userInfo setObject:description forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:errorDescription forKey:NSLocalizedDescriptionKey];
 			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
 			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			
@@ -221,7 +223,21 @@
 	// by now, absoluteURL should be a good file, open it
 	id document = [super openDocumentWithContentsOfURL:absoluteURL
 											   display:displayDocument
-												 error:outError];
+												 error:&subError];
+	if (subError && outError)
+	{
+		NSString *reasonOfSubError = [subError localizedFailureReason];
+		NSLog(@"NSLocalizedFailureReasonErrorKey = %@", NSLocalizedFailureReasonErrorKey);
+		if (!reasonOfSubError)	// Note:  above returns nil!
+		{
+			reasonOfSubError = [[subError userInfo] objectForKey:@"reason"];
+		}
+			
+		*outError = [NSError errorWithDomain:[subError domain] code:[subError code]
+					   localizedDescription:errorDescription
+				localizedRecoverySuggestion:reasonOfSubError		// we want to show the reason on the alert
+							underlyingError:subError];
+	}
 	
 	if ([document isKindOfClass:[KTPluginInstaller class]])
 	{
@@ -230,7 +246,6 @@
 					   withObject:nil 
 					   afterDelay:0.0];
 	}
-
 	
 	return document;
 }

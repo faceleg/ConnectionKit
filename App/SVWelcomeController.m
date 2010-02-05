@@ -411,7 +411,7 @@
 	KSRecentDocument *recentDoc = [[oRecentDocsController selectedObjects] lastObject];  // should only be a single object selected anyhow
     NSURL *fileURL = [recentDoc URL];
 
-	NSError *error;
+	NSError *error = nil;
 	if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL
                                                                                 display:YES
                                                                                   error:&error])
