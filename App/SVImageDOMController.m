@@ -26,11 +26,13 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 {
     [[self representedObject] removeObserver:self forKeyPath:@"width"];
     [[self representedObject] removeObserver:self forKeyPath:@"height"];
+    [[self representedObject] removeObserver:self forKeyPath:@"wrap"];
     
     [super setRepresentedObject:image];
     
     [image addObserver:self forKeyPath:@"width" options:0 context:sImageSizeObservationContext];
     [image addObserver:self forKeyPath:@"height" options:0 context:sImageSizeObservationContext];
+    [image addObserver:self forKeyPath:@"wrap" options:0 context:sImageSizeObservationContext];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -40,8 +42,15 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sImageSizeObservationContext)
     {
-        [[self HTMLElement] setAttribute:keyPath
-                                   value:[[object valueForKeyPath:keyPath] description]];
+        if ([keyPath isEqualToString:@"wrap"])
+        {
+            [[self HTMLElement] setClassName:[[self representedObject] className]];
+        }
+        else
+        {
+            [[self HTMLElement] setAttribute:keyPath
+                                       value:[[object valueForKeyPath:keyPath] description]];
+        }
     }
     else
     {
