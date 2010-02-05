@@ -26,13 +26,5 @@
 - (KTElementPlugin *)plugin;
 
 
-@property(nonatomic, copy) SVContentObjectWrap *wrap;
-@property(nonatomic, copy) NSNumber *wrapIsFloatOrBlock;    // setter picks best wrap type
-@property(nonatomic) BOOL wrapIsFloatLeft;
-@property(nonatomic) BOOL wrapIsFloatRight;
-@property(nonatomic) BOOL wrapIsBlockLeft;
-@property(nonatomic) BOOL wrapIsBlockCenter;
-@property(nonatomic) BOOL wrapIsBlockRight;
-
 
 @end
