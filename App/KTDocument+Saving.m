@@ -737,6 +737,28 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 				[metadata setObject:[NSArray arrayWithObject:author] forKey:(NSString *)kMDItemAuthors];
 			}
 			
+			// kMDItemLanguages
+			NSString *language = [[[[self site] rootPage] master] valueForKey:@"language"];
+			if ( (nil == language) || [language isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemLanguages];
+			}
+			else
+			{
+				[metadata setObject:[NSArray arrayWithObject:language] forKey:(NSString *)kMDItemLanguages];
+			}
+			
+			// kMDItemHeadline  -- tagline/subtitle
+			NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
+			if ( (nil == subtitle) || [subtitle isEqualToString:@""] )
+			{
+				[metadata removeObjectForKey:(NSString *)kMDItemHeadline];
+			}
+			else
+			{
+				[metadata setObject:subtitle forKey:(NSString *)kMDItemHeadline];
+			}
+			
 			//  kMDItemCreator (Sandvox is the creator of this site document)
 			[metadata setObject:[NSApplication applicationName] forKey:(NSString *)kMDItemCreator];
             
@@ -852,15 +874,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 {
     //  For now, we'll make this the tagline, plus all unique page titles, plus spotlightHTML
     
-    // Start with Tagline
+    // Start with footer
     NSMutableString *result = [NSMutableString string];
     
-    NSString *subtitle = [[[[[self site] rootPage] master] siteSubtitle] text];
-    if (subtitle)
-    {
-        [result appendString:subtitle];
-        [result appendUnichar:'\n'];
-    }
     
     NSString *footer = [[[[[self site] rootPage] master] footer] text];
     if (footer)
