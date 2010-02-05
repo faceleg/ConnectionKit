@@ -30,7 +30,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super awakeFromInsert];
     
-    [self setPrimitiveValue:[NSString UUIDString] forKey:@"elementID"];
     [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
 }
 
@@ -210,7 +209,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     [context openTag:@"div"];
-    [context writeAttribute:@"style" value:@"float:right;"];
+    if ([self className]) [context writeAttribute:@"class" value:[self className]];
     [context closeStartTag];
     
     [[self plugIn] writeHTML];
