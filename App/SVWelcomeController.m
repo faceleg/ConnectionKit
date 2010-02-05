@@ -73,6 +73,8 @@
 	NSMutableArray *filesFound = [NSMutableArray array];
 	NSMutableArray *filesNotFound = [NSMutableArray array];
 	NSMutableArray *filesInTrash = [NSMutableArray array];
+	NSMutableArray *errorsToPresent = [NSMutableArray array];
+	BOOL atLeastOneDocumentOpened = NO;
 	
 	// figure out what documents, if any, we can and can't find
 	if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
@@ -131,12 +133,29 @@
 				NSURL *fileURL = [NSURL fileURLWithPath:path];
 				
 				NSError *error = nil;
-				if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
+				if ([[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL display:YES error:&error])
 				{
-					// Make sure window is showing
-					[self showWindow:self];
-					[NSApp presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
-				}                    
+					atLeastOneDocumentOpened = YES;
+				}
+				else
+				{
+					[errorsToPresent addObject:error];		// show the error later
+				}                  
+			}
+		}
+		
+		// Now show the errors we need to present
+		for (NSError *error in errorsToPresent)
+		{
+			if (atLeastOneDocumentOpened)
+			{
+				[NSApp presentError:error];		// show error as a standalone alert since we won't be showing welcome
+			}
+			else
+			{
+				// Make sure window is showing
+				[self showWindow:self];
+				[NSApp presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
 			}
 		}
 		
@@ -172,10 +191,17 @@
 			[alert setInformativeText:missingFiles];
 			[alert setAlertStyle:NSWarningAlertStyle];
 			
-			[alert beginSheetModalForWindow:[self window] 
-							  modalDelegate:nil 
-							 didEndSelector:nil
-								contextInfo:nil];
+			if (atLeastOneDocumentOpened)
+			{
+				[alert runModal];		// show error as a standalone alert since we won't be showing welcome
+			}
+			else
+			{
+				[alert beginSheetModalForWindow:[self window] 
+								  modalDelegate:nil 
+								 didEndSelector:nil
+									contextInfo:nil];
+			}
 			[alert release];
 		}
 	}

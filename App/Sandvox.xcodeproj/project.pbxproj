@@ -1016,6 +1016,8 @@
 		CE9B4B430F5E0C780052134C /* UKDockProgressIndicator.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9B4B410F5E0C780052134C /* UKDockProgressIndicator.m */; };
 		CE9C56AE0F55E55D00E46592 /* checkmark.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE9C56AD0F55E55D00E46592 /* checkmark.tiff */; };
 		CE9CAB4D0BCEC566001BF9F7 /* serverlogistics.jpg in Resources */ = {isa = PBXBuildFile; fileRef = CE9CAB4A0BCEC566001BF9F7 /* serverlogistics.jpg */; };
+		CE9E5260111C933B00BEF1C8 /* SVDocumentInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */; };
+		CE9E5261111C933B00BEF1C8 /* SVDocumentInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */; };
 		CEA2349C086B6E02007A4C2D /* Haloscan.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA2349B086B6E02007A4C2D /* Haloscan.png */; };
 		CEA36D1E091AEF430073219B /* Lock.png in Resources */ = {isa = PBXBuildFile; fileRef = CEA36D1D091AEF430073219B /* Lock.png */; };
 		CEA962C30AF6A924008A1367 /* sandvox.css in Resources */ = {isa = PBXBuildFile; fileRef = CEA962C20AF6A924008A1367 /* sandvox.css */; };
@@ -2633,6 +2635,8 @@
 		CE9CAB480BCEC566001BF9F7 /* dreamhost.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = dreamhost.gif; sourceTree = "<group>"; };
 		CE9CAB490BCEC566001BF9F7 /* liveoak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = liveoak.png; sourceTree = "<group>"; };
 		CE9CAB4A0BCEC566001BF9F7 /* serverlogistics.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = serverlogistics.jpg; sourceTree = "<group>"; };
+		CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentInspector.h; sourceTree = "<group>"; };
+		CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentInspector.m; sourceTree = "<group>"; };
 		CEA2349B086B6E02007A4C2D /* Haloscan.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Haloscan.png; sourceTree = "<group>"; };
 		CEA3598E091939330073219B /* amex.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = amex.jpg; sourceTree = "<group>"; };
 		CEA3598F091939330073219B /* discover.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = discover.png; sourceTree = "<group>"; };
@@ -2845,6 +2849,8 @@
 				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
 				273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */,
 				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
+				CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */,
+				CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */,
 				27AF0E2610F40B42000A6B15 /* SVPageInspector.h */,
 				27AF0E2710F40B42000A6B15 /* SVPageInspector.m */,
 				27F71A7210F7641D0029AE3A /* LinkInspector.xib */,
@@ -5262,6 +5268,7 @@
 				CE75EA95111A550600474753 /* ESCursors.h in Headers */,
 				27FDEDD6111AF2C6001F4E60 /* SVTextContentHTMLContext.h in Headers */,
 				27FDEF13111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h in Headers */,
+				CE9E5260111C933B00BEF1C8 /* SVDocumentInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6649,6 +6656,7 @@
 				CE75EA96111A550600474753 /* ESCursors.m in Sources */,
 				27FDEDD7111AF2C6001F4E60 /* SVTextContentHTMLContext.m in Sources */,
 				27FDEF14111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m in Sources */,
+				CE9E5261111C933B00BEF1C8 /* SVDocumentInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
