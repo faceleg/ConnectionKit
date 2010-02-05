@@ -1004,10 +1004,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [_mouseDownEvent release],  _mouseDownEvent = nil;
         
         
-        if (_mouseUpMayBeginEditing && [[self selectedItem] isEditable])
+        // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
+        if (_mouseUpMayBeginEditing && [mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
         {
-            // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
-            if ([mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
+            // Is the item at that location supposed to be for editing?
+            NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
+            NSDictionary *element = [[self webView] elementAtPoint:location];
+            DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+            
+            SVWebEditorItem *item = [[self selectedItem] descendantItemForDOMNode:node];
+            
+            
+            
+            if (item != [self selectedItem])
             {
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
                 // Note that they're posted in reverse order since I'm placing onto the front of the queue.
