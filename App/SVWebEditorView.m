@@ -1016,7 +1016,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
             
             
             
-            if (item != [self selectedItem])
+            if (item != [self selectedItem] ||
+                [item conformsToProtocol:@protocol(SVWebEditorText)] && [item isEditable])
             {
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
                 // Note that they're posted in reverse order since I'm placing onto the front of the queue.
