@@ -93,8 +93,8 @@
 #import "NSURL+Karelia.h"
 
 // CoreData extensions
-#import "NSManagedObject+KTExtensions.h"
-#import "NSManagedObjectContext+KTExtensions.h"
+//#import "NSManagedObject+KTExtensions.h"
+//#import "NSManagedObjectContext+KTExtensions.h"
 
 // AppKit extensions
 #import "NSApplication+Karelia.h"
