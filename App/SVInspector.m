@@ -11,6 +11,7 @@
 #import "SVLinkInspector.h"
 #import "SVPageInspector.h"
 #import "SVPlugInInspector.h"
+#import "SVDocumentInspector.h"
 
 #import "KTDocWindowController.h"
 
@@ -85,7 +86,7 @@
 - (NSArray *)defaultInspectorViewControllers;
 {
     //  Document
-    _documentInspector = [[KSInspectorViewController alloc] initWithNibName:@"DocumentInspector" bundle:nil];
+    _documentInspector = [[SVDocumentInspector alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
     [_documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
     

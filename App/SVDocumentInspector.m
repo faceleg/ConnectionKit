@@ -16,11 +16,30 @@
 
 - (IBAction)configureComments:(id)sender;
 {
-	id doc = [self representedObject];
+	KTDocument *doc = [self representedObject];
 	NSLog(@"configureComments %@", doc);
 	
 }
 
+- (IBAction)configureGoogle:(id)sender;
+{
+	NSBeep();
+}
+
+- (IBAction)chooseFavicon:(id)sender;
+{
+	NSBeep();
+}
+
+- (IBAction)chooseBanner:(id)sender;
+{
+	NSBeep();
+}
+
+- (IBAction)chooseLogo:(id)sender;
+{
+	NSBeep();
+}
 
 
 @end
