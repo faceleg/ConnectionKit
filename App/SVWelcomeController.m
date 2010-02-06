@@ -29,6 +29,7 @@
 #import "BDAlias.h"
 #import "KTDocumentController.h"
 #import "SVApplicationController.h"
+#import "NSError+Karelia.h"
 
 @interface SVWelcomeController ()
 
@@ -54,6 +55,44 @@
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[super dealloc];
+}
+
+- (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
+{
+	NSDictionary *userInfo = [anError userInfo];
+	NSString *path = [userInfo objectForKey:NSFilePathErrorKey];
+	if (nil == path)
+	{
+		NSURL *url = [userInfo objectForKey:NSURLErrorKey];
+		path = [url path];
+	}
+	NSString *prevTitle = [anError localizedDescription];
+	NSString *desc = nil;
+	if (path)
+	{
+		NSFileManager *fm = [NSFileManager defaultManager];
+		desc = [NSString stringWithFormat:NSLocalizedString(@"The document “%@” could not be opened. %@", @"brief description of error."), [fm displayNameAtPath:path], prevTitle];
+	}
+	else
+	{
+		desc = [NSString stringWithFormat:NSLocalizedString(@"The document could not be opened. %@", @"brief description of error."), prevTitle];
+	}
+	NSString *secondary = [anError localizedRecoverySuggestion]; 
+	if (!secondary)
+	{
+		secondary = [anError localizedFailureReason];
+	}
+	if (!secondary)	// Note:  above returns nil!
+	{
+		secondary = [[anError userInfo] objectForKey:@"reason"];
+	}
+								 
+	NSError *result = [NSError errorWithDomain:[anError domain] code:[anError code]
+						  localizedDescription:desc
+			 localizedRecoverySuggestion:secondary		// we want to show the reason on the alert
+						 underlyingError:anError];
+	
+	return result;
 }
 
 - (void) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
@@ -139,6 +178,7 @@
 				}
 				else
 				{
+					error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
 					[errorsToPresent addObject:error];		// show the error later
 				}                  
 			}
@@ -149,13 +189,13 @@
 		{
 			if (atLeastOneDocumentOpened)
 			{
-				[NSApp presentError:error];		// show error as a standalone alert since we won't be showing welcome
+				[[NSDocumentController sharedDocumentController] presentError:error];		// show error as a standalone alert since we won't be showing welcome
 			}
 			else
 			{
 				// Make sure window is showing
 				[self showWindow:self];
-				[NSApp presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
+				[[NSDocumentController sharedDocumentController] presentError:error modalForWindow:[self window] delegate:nil didPresentSelector:nil contextInfo:nil];
 			}
 		}
 		
@@ -392,12 +432,21 @@
     NSError *error;
     if (![[NSDocumentController sharedDocumentController] openUntitledDocumentAndDisplay:YES error:&error])
     {
-        [self presentError:error
+        [[NSDocumentController sharedDocumentController] presentError:error
             modalForWindow:[self window]
                   delegate:nil
         didPresentSelector:nil
                contextInfo:NULL];
     }
+	else	// can't think of why there would be an error, but let's present the error.
+	{
+		[[NSDocumentController sharedDocumentController] presentError:error
+													   modalForWindow:[self window]
+															 delegate:nil
+												   didPresentSelector:nil
+														  contextInfo:NULL];
+		
+	}
 }
 
 - (IBAction)openDocument:(id)sender
@@ -416,7 +465,11 @@
                                                                                 display:YES
                                                                                   error:&error])
     {
-        [self presentError:error
+		if (error)
+		{
+			error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
+		}
+        [[NSDocumentController sharedDocumentController] presentError:error
             modalForWindow:[self window]
                   delegate:nil
         didPresentSelector:nil

@@ -97,6 +97,12 @@
 	return [NSHelpManager gotoHelpAnchor:helpString];
 }
 
+- (NSError *)willPresentError:(NSError *)error
+{
+	NSError *result = [super willPresentError:error];
+	return result;
+}
+
 #pragma mark -
 #pragma mark Other
 
@@ -136,13 +142,8 @@
 
 - (id)openDocumentWithContentsOfURL:(NSURL *)absoluteURL display:(BOOL)displayDocument error:(NSError **)outError
 {
-	NSFileManager *fm = [NSFileManager defaultManager];
 	NSString *requestedPath = [absoluteURL path];
 	// General error description to use if there are problems
-	NSString *errorDescription = [NSString stringWithFormat:
-								  NSLocalizedString(@"Unable to open “%@”",
-													"error description: document cannot be opened"),
-								  [fm displayNameAtPath:requestedPath]];
 	NSError *subError = nil;
 	
     NSString *type = [self typeForContentsOfURL:absoluteURL error:outError];	// Should we ignore this error?
@@ -173,7 +174,8 @@
 			NSLog(@"error: ***Can't open %@ : unable to read metadata!", requestedPath);
 			NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
 			
-			[userInfo setObject:errorDescription forKey:NSLocalizedDescriptionKey];
+			// Description is shown after an "unable to open..." sentence thanks to documentController.
+			[userInfo setObject:NSLocalizedString(@"Metadata error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
 			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			
 			NSString *secondary = NSLocalizedString(@"Sandvox was not able to read the document metadata.\n\nPlease contact Karelia Software by sending feedback from the “Sandvox” menu.",
@@ -200,7 +202,7 @@
 						
 			NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
 												 "error reason: document model version is unknown");
-			[userInfo setObject:errorDescription forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:NSLocalizedString("Document model error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
 			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
 			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			
@@ -216,7 +218,7 @@
 		
 		if (![modelVersion isEqualToString:kKTModelVersion] && NO)
 		{
-			
+				// TODO: What is this for?
 		}
 	}
 	
@@ -227,16 +229,23 @@
 	if (subError && outError)
 	{
 		NSString *reasonOfSubError = [subError localizedFailureReason];
-		NSLog(@"NSLocalizedFailureReasonErrorKey = %@", NSLocalizedFailureReasonErrorKey);
 		if (!reasonOfSubError)	// Note:  above returns nil!
 		{
 			reasonOfSubError = [[subError userInfo] objectForKey:@"reason"];
 		}
-			
-		*outError = [NSError errorWithDomain:[subError domain] code:[subError code]
-					   localizedDescription:errorDescription
-				localizedRecoverySuggestion:reasonOfSubError		// we want to show the reason on the alert
-							underlyingError:subError];
+
+		NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
+		[errorInfo setValue:NSLocalizedString(@"There is a problem with the document.", @"brief description of error.") forKey:NSLocalizedDescriptionKey];
+		[errorInfo setValue:reasonOfSubError forKey:NSLocalizedRecoverySuggestionErrorKey];
+		[errorInfo setValue:subError forKey:NSUnderlyingErrorKey];
+		[errorInfo setObject:requestedPath forKey:NSFilePathErrorKey];
+
+		if (outError)
+		{
+			*outError = [NSError errorWithDomain:[subError domain] 
+											code:[subError code] 
+										userInfo:errorInfo];
+		}
 	}
 	
 	if ([document isKindOfClass:[KTPluginInstaller class]])
