@@ -55,16 +55,12 @@
 		<integer>1</integer>
 		<key>automaticListType</key>
 		<integer>-1</integer>
-		<key>captionHTML</key>
-		<string></string>
 		<key>centeredThumbnailWidths</key>
 		<integer>100</integer>
 		<key>frame</key>
 		<integer>2</integer>
 		<key>layout</key>
 		<integer>1</integer>
-		<key>listCode</key>
-		<string></string>
 		<key>listSource</key>
 		<integer>0</integer>
 		<key>maxNumberProducts</key>
@@ -93,7 +89,7 @@
 	<key>KTTemplateName</key>
 	<string>template</string>
 	<key>NSPrincipalClass</key>
-	<string>AmazonListDelegate</string>
+	<string>AmazonListPlugIn</string>
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>

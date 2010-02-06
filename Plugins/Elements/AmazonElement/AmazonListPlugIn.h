@@ -45,10 +45,28 @@ typedef enum {
 @class AutomaticAmazonListController;
 
 
-@interface AmazonListDelegate : SVElementPlugIn <KTDataSource>
+@interface AmazonListPlugIn : SVElementPlugIn <KTDataSource>
 {
-	@private
-	
+  @private
+    AmazonStoreCountry      _store;
+    AmazonPageletListSource _listSource;
+    APListLayout            _layout;
+    BOOL                    _showProductPreviews;
+    NSInteger               _frame;
+    NSInteger               _centeredThumbnailWidths;
+    
+    NSString                *_automaticListCode;
+    AmazonListType          _automaticListType;
+    AmazonWishListSorting   _automaticListSorting;
+    BOOL                    _showPrices;
+	BOOL                    _showThumbnails;
+    BOOL                    _showNewPricesOnly;
+    BOOL                    _showTitles;
+    NSInteger               _maxNumberProducts;
+    BOOL                    _showComments;
+    BOOL                    _showCreators;
+    
+    
 	NSMutableArray	*myProducts;
 	
 	BOOL	manualListIsBeingArchivedOrUnarchived;
@@ -58,13 +76,35 @@ typedef enum {
 	NSArray			*myAutomaticListProductsToDisplay;
 }
 
+@property(nonatomic) AmazonStoreCountry store;
+@property(nonatomic) AmazonPageletListSource listSource;
+@property(nonatomic) APListLayout layout;
+@property(nonatomic) BOOL showProductPreviews;
+@property(nonatomic) NSInteger frame;
+@property(nonatomic) NSInteger centeredThumbnailWidths;
+
+@property(nonatomic, copy) NSString *automaticListCode;
+@property(nonatomic) AmazonListType automaticListType;
+@property(nonatomic) AmazonWishListSorting automaticListSorting;
+@property(nonatomic) BOOL showPrices;
+@property(nonatomic) BOOL showThumbnails;
+@property(nonatomic) BOOL showNewPricesOnly;
+@property(nonatomic) BOOL showTitles;
+@property(nonatomic) NSInteger maxNumberProducts;
+@property(nonatomic) BOOL showComments;
+@property(nonatomic) BOOL showCreators;
+
+
+#pragma mark Markup
 // For both list types
+- (NSString *)layoutCSSClassName;
 + (NSString *)CSSClassNameForLayout:(APListLayout)layout;
+
 
 @end
 
 
-@interface AmazonListDelegate (ManualList)
+@interface AmazonListPlugIn (ManualList)
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
 		   ofManualListProduct:(APManualListProduct *)product
@@ -88,7 +128,7 @@ typedef enum {
 @end
 
 
-@interface AmazonListDelegate (AutomaticList)
+@interface AmazonListPlugIn (AutomaticList)
 // Automatic lists
 - (APAmazonList *)automaticList;
 - (void)setAutomaticList:(APAmazonList *)list;

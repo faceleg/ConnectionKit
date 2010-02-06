@@ -6,12 +6,12 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "AmazonListDelegate.h"
+#import "AmazonListPlugIn.h"
 
 #import "NSURL+AmazonPagelet.h"
 
 
-@implementation AmazonListDelegate (AutomaticList)
+@implementation AmazonListPlugIn (AutomaticList)
 
 #pragma mark Accessors
 
@@ -126,7 +126,7 @@
 - (void)loadAutomaticList
 {
 	// Don't bother if there is no list code set
-	NSString *listCode = [[self propertiesStorage] valueForKey:@"automaticListCode"];
+	NSString *listCode = [self automaticListCode];
 	if (!listCode || [listCode isEqualToString:@""])
 	{
 		[self setAutomaticList:nil];
@@ -136,9 +136,9 @@
 	
 	// Begin loading
 	APAmazonList *list = [[APAmazonList alloc] initWithID:listCode
-												 listType:[[self propertiesStorage] integerForKey:@"automaticListType"]
-													store:[[self propertiesStorage] integerForKey:@"store"]
-												  sorting:[[self propertiesStorage] integerForKey:@"automaticListSorting"]
+												 listType:[self automaticListType]
+													store:[self store]
+												  sorting:[self automaticListSorting]
 												 delegate:self];
 	
 	[self setAutomaticList:list];
@@ -174,35 +174,40 @@
 	
 	[query setValue:@"on" forKey:@"js"];	// Enable javascript
 	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"store"]] forKey:@"s"];	// Store
-	[query setValue:[[self propertiesStorage] valueForKey:@"automaticListCode"] forKey:@"id"];		// listID
+	[query setValue:[self automaticListCode] forKey:@"id"];		// listID
 	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"automaticListType"]] forKey:@"t"];	// listType
 	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"automaticListSorting"]] forKey:@"o"];	// Sorting
 	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"layout"]] forKey:@"l"];	// layout
-	[query setValue:[NSString stringWithFormat:@"%u", [[self propertiesStorage] integerForKey:@"centeredThumbnailWidths"]] forKey:@"w"];	// Width of centered thubmnails
-	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"frame"]] forKey:@"f"];	// Frame
+	[query setValue:[NSString stringWithFormat:@"%u", [self centeredThumbnailWidths]] forKey:@"w"];	// Width of centered thubmnails
+	[query setValue:[NSString stringWithFormat:@"%i", [self frame]] forKey:@"f"];	// Frame
 	
 	// Number products
-	int maxNoProducts = [[self propertiesStorage] integerForKey:@"maxNumberProducts"];
+	int maxNoProducts = [self maxNumberProducts];
 	if (maxNoProducts > 0) {
 		[query setValue:[NSString stringWithFormat:@"%i", maxNoProducts] forKey:@"m"];
 	}
 	
-	if ([[self propertiesStorage] boolForKey:@"showThumbnails"]) {
+	if ([self showThumbnails])
+    {
 		[query setValue:@"on" forKey:@"th"];
 	}
-	if ([[self propertiesStorage] boolForKey:@"showTitles"]) {
+	if ([self showTitles])
+    {
 		[query setValue:@"on" forKey:@"ti"];
 	}
-	if ([[self propertiesStorage] boolForKey:@"showCreators"]) {
+	if ([self showCreators]) {
 		[query setValue:@"on" forKey:@"cr"];
 	}
-	if ([[self propertiesStorage] boolForKey:@"showComments"]) {
+	if ([self showComments])
+    {
 		[query setValue:@"on" forKey:@"cm"];
 	}
-	if ([[self propertiesStorage] boolForKey:@"showPrices"]) {
+	if ([self showPrices])
+    {
 		[query setValue:@"on" forKey:@"pr"];
 	}
-	if ([[self propertiesStorage] boolForKey:@"showNewPricesOnly"]) {
+	if ([self showNewPricesOnly])
+    {
 		[query setValue:@"on" forKey:@"np"];
 	}
 	if ([[self propertiesStorage] boolForKey:@"showLinkToList"]) {

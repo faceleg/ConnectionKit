@@ -8,7 +8,7 @@
 
 #import "APManualListArrayController.h"
 
-#import "AmazonListDelegate.h"
+#import "AmazonListPlugIn.h"
 #import "APManualListProduct.h"
 
 #import <AmazonSupport/AmazonSupport.h>

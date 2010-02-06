@@ -11,7 +11,7 @@
 #import "SandvoxPlugin.h"
 #import <AmazonSupport/AmazonSupport.h>
 
-#import "AmazonListDelegate.h"
+#import "AmazonListPlugIn.h"
 #import "APAmazonProduct.h"
 #import "APAmazonList.h"
 
@@ -27,7 +27,7 @@
 - (void)stopObservingChangesToListSource;
 - (void)listSourceDidChange:(id)newValue;
 
-- (AmazonListDelegate *)pluginDelegate;
+- (AmazonListPlugIn *)pluginDelegate;
 
 - (void)observeChangesToAutomaticListData;
 - (void)stopObservingChangesToAutomaticListData;
@@ -143,7 +143,7 @@
 #pragma mark -
 #pragma mark Convenience Methods
 
-- (AmazonListDelegate *)pluginDelegate
+- (AmazonListPlugIn *)pluginDelegate
 {
 	return [[pluginController content] delegate];
 }

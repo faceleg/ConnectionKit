@@ -15,7 +15,7 @@
 #import <AmazonSupport/AmazonSupport.h>
 
 
-@class AmazonListDelegate;
+@class AmazonListPlugIn;
 
 @class AmazonItem;
 @class AmazonImage;

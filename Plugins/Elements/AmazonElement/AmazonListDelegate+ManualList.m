@@ -6,19 +6,19 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "AmazonListDelegate.h"
+#import "AmazonListPlugIn.h"
 
 #import "APAmazonProduct.h"
 #import "APManualListProduct.h"
 #import "NSURL+AmazonPagelet.h"
 
 
-@interface AmazonListDelegate (ManualListPrivate)
+@interface AmazonListPlugIn (ManualListPrivate)
 - (NSMutableArray *)_products;
 @end
 
 
-@implementation AmazonListDelegate (ManualList)
+@implementation AmazonListPlugIn (ManualList)
 
 #pragma mark -
 #pragma mark KVO
@@ -236,7 +236,7 @@
 			result = 55;
 			break;
 		case APLayoutCentered:
-			result = [[self propertiesStorage] integerForKey:@"centeredThumbnailWidths"];
+			result = [self centeredThumbnailWidths];
 			break;
 		case APLayoutTwoUp:
 			result = 85;
