@@ -8,6 +8,8 @@
 
 #import "SVDocumentInspector.h"
 
+#import "KTDocument.h"
+
 
 @implementation SVDocumentInspector
 
