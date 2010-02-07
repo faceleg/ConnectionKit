@@ -414,7 +414,7 @@
 /*!	When nodes next to each other are the same, like <b>foo</b><b>bar</b> this combines them.
  *
  // TODO:   I know -normalize does this for text nodes. We should check if it works for <b> elements etc.
- //         Then either remove this method, or rename it to have "nromalize" in the name.
+ //         Then either remove this method, or rename it to have "normalize" in the name.
 */
 - (void)combineAdjacentRedundantNodes
 {
