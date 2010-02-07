@@ -72,7 +72,7 @@
                    [tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
-                   [tagName isEqualToString:@"SPAN"]);
+                   [tagName isEqualToString:@"BR"]);
     
     return result;
 }
