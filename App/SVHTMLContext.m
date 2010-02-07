@@ -265,7 +265,7 @@
     [self writeString:@"\""];
 }
 
-- (BOOL)hasOpenElementWithTagName:(BOOL)tagName;
+- (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
 {
     BOOL result = [_openElements containsObject:tagName];
     return result;

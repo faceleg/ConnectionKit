@@ -113,7 +113,7 @@ typedef enum {
                  value:(NSString *)value;
 
 //  Searches our stack of open elements
-- (BOOL)hasOpenElementWithTagName:(BOOL)tagName;
+- (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
 
 
 #pragma mark Indentation
