@@ -19,7 +19,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation SVHTMLContext (DOM)
 
-- (void)willWriteDOMElement:(DOMElement *)element; { }
+- (DOMNode *)willWriteDOMElement:(DOMElement *)element; { return element; }
 
 @end
 
@@ -34,6 +34,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     [context writeText:[self nodeValue]];
 } 
 
+- (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context { return self; }
+
 @end
 
 
@@ -44,8 +46,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 {
-    [context willWriteDOMElement:self];
-    
     [self openTagInContext:context];
     
     // Close tag
@@ -75,9 +75,9 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context
 {
-    // It's best to iterate using a linked list-like approach in case the iteration also modifies the DOM
+    // It's best to iterate using a Linked List-like approach in case the iteration also modifies the DOM
     DOMNode *aNode = [self firstChild];
-    while (aNode)
+    while (aNode = [aNode willWriteHTMLToContext:context])
     {
         [aNode writeHTMLToContext:context];
         aNode = [aNode nextSibling];
@@ -134,6 +134,11 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			[context writeNewline];
 		}
 	}
+}
+
+- (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context
+{
+    return [context willWriteDOMElement:self];
 }
 
 @end
