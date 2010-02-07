@@ -210,7 +210,7 @@
     [self writeString:@"<"];
     [self writeString:tagName];
     
-    [_openElements addObject:tagName];
+    [_openElements addObject:[tagName uppercaseString]];
 }
 
 - (void)closeStartTag;
@@ -267,7 +267,7 @@
 
 - (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
 {
-    BOOL result = [_openElements containsObject:tagName];
+    BOOL result = [_openElements containsObject:[tagName uppercaseString]];
     return result;
 }
 
