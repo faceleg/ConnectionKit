@@ -265,6 +265,12 @@
     [self writeString:@"\""];
 }
 
+- (BOOL)hasOpenElementWithTagName:(BOOL)tagName;
+{
+    BOOL result = [_openElements containsObject:tagName];
+    return result;
+}
+
 #pragma mark Indentation
 
 @synthesize indentationLevel = _indentation;

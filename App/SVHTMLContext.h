@@ -112,6 +112,9 @@ typedef enum {
 - (void)writeAttribute:(NSString *)attribute
                  value:(NSString *)value;
 
+//  Searches our stack of open elements
+- (BOOL)hasOpenElementWithTagName:(BOOL)tagName;
+
 
 #pragma mark Indentation
 
@@ -171,6 +174,12 @@ typedef enum {
 
 
 #pragma mark -
+
+
+@interface SVHTMLContext (DOM)
+// Does nothing, but subclasses can use for adjusting behaviour
+- (void)willWriteDOMElement:(DOMElement *)element;
+@end
 
 
 @interface DOMNode (SVHTMLContext)

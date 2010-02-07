@@ -17,12 +17,22 @@ static NSSet *sTagsThatCanBeSelfClosed  = nil;
 static NSSet *sTagsWithNewlineOnClose = nil;
 
 
+@implementation SVHTMLContext (DOM)
+
+- (void)willWriteDOMElement:(DOMElement *)element; { }
+
+@end
+
+
+#pragma mark -
+
+
 @implementation DOMNode (SVHTMLContext)
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 {
     [context writeText:[self nodeValue]];
-}
+} 
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context
 {
@@ -51,6 +61,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 {
+    [context willWriteDOMElement:self];
+    
     [self openTagInContext:context];
     
     // Close tag
