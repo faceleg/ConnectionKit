@@ -243,7 +243,7 @@
 		[self writeNewline];
 	}
     [self writeString:@"</"];
-    [self writeString:[_openElements lastObject]];
+    [self writeString:[[_openElements lastObject] lowercaseString]];
     [self writeString:@">"];
     
     [_openElements removeLastObject];
