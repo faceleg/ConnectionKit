@@ -197,7 +197,7 @@
             {
                 result = YES;
                 
-                [node removeAllChildNodes];
+                [[node mutableChildNodesArray] removeAllObjects];
                 DOMText *textNode = [[node ownerDocument] createTextNode:text];
                 [node appendChild:textNode];
             }
