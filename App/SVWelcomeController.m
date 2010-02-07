@@ -433,20 +433,11 @@
     if (![[NSDocumentController sharedDocumentController] openUntitledDocumentAndDisplay:YES error:&error])
     {
         [[NSDocumentController sharedDocumentController] presentError:error
-            modalForWindow:[self window]
-                  delegate:nil
-        didPresentSelector:nil
-               contextInfo:NULL];
+                                                       modalForWindow:[self window]
+                                                             delegate:nil
+                                                   didPresentSelector:nil
+                                                          contextInfo:NULL];
     }
-	else	// can't think of why there would be an error, but let's present the error.
-	{
-		[[NSDocumentController sharedDocumentController] presentError:error
-													   modalForWindow:[self window]
-															 delegate:nil
-												   didPresentSelector:nil
-														  contextInfo:NULL];
-		
-	}
 }
 
 - (IBAction)openDocument:(id)sender
