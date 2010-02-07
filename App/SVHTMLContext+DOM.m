@@ -21,8 +21,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 {
-    SUBCLASSMUSTIMPLEMENT;
-    [self doesNotRecognizeSelector:_cmd];
+    [context writeText:[self nodeValue]];
 }
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context
