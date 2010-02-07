@@ -312,8 +312,28 @@
 {
     [super writeContentRecursively:recursive];
     
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    // Custom window title if specified
+    NSString *windowTitle = [self windowTitle];
+    if (windowTitle)
+    {
+        [context writeText:windowTitle];
+        [context writeNewline];
+    }
+    
+    // Custom meta description if specified
+    NSString *meta = [self metaDescription];
+    if (meta)
+    {
+        [context writeText:meta];
+        [context writeNewline];
+    }
+    
+    // Body
     [[self body] writeHTML];
     
+    // Children
     if (recursive)
     {
         for (SVSiteItem *anItem in [self sortedChildren])
