@@ -24,4 +24,9 @@
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph;
 @property(nonatomic, retain, readonly) SVBodyParagraph *paragraph;
 
+
+#pragma mark Tag Whitelist
++ (BOOL)isTagAllowed:(NSString *)tagName;
+
+
 @end

@@ -9,6 +9,8 @@
 #import "SVParagraphHTMLContext.h"
 #import "SVBodyParagraph.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVParagraphHTMLContext
 
@@ -23,9 +25,38 @@
 
 @synthesize paragraph = _paragraph;
 
-- (void)willWriteDOMElement:(DOMElement *)element
+- (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
+    DOMNode *result = element;
     
+    // Remove any tags not allowed
+    if (![[self class] isTagAllowed:[element tagName]])
+    {
+        // Figure out the preferred next node
+        result = [element firstChild];
+        if (!result) result = [element nextSibling];
+        
+        // Remove non-whitelisted element
+        [element unlink];
+        
+        // Check the new node is OK to write
+        result = [result willWriteHTMLToContext:self];
+    }
+    
+    return result;
+}
+
+#pragma mark Tag Whitelist
+
++ (BOOL)isTagAllowed:(NSString *)tagName;
+{
+    BOOL result = ([tagName isEqualToString:@"A"] ||
+                   [tagName isEqualToString:@"SPAN"] ||
+                   [tagName isEqualToString:@"STRONG"] ||
+                   [tagName isEqualToString:@"EM"] ||
+                   [tagName isEqualToString:@"SPAN"]);
+    
+    return result;
 }
 
 @end
