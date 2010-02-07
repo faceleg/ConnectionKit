@@ -34,23 +34,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     [context writeText:[self nodeValue]];
 } 
 
-- (void)writeInnerHTMLToContext:(SVHTMLContext *)context
-{
-    DOMNodeList *children = [self childNodes];
-    for (int i = 0; i < [children length]; i++)
-    {
-        DOMNode *aNode = [children item:i];
-        if ([aNode isKindOfClass:[DOMElement class]])
-        {
-            [aNode writeHTMLToContext:context];
-        }
-        else
-        {
-            [context writeText:[aNode textContent]];
-        }
-    }
-}
-
 @end
 
 
@@ -87,6 +70,23 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     {
         DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
         [context writeAttribute:[anAttribute name] value:[anAttribute value]];
+    }
+}
+
+- (void)writeInnerHTMLToContext:(SVHTMLContext *)context
+{
+    DOMNodeList *children = [self childNodes];
+    for (int i = 0; i < [children length]; i++)
+    {
+        DOMNode *aNode = [children item:i];
+        if ([aNode isKindOfClass:[DOMElement class]])
+        {
+            [aNode writeHTMLToContext:context];
+        }
+        else
+        {
+            [context writeText:[aNode textContent]];
+        }
     }
 }
 

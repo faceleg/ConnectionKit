@@ -23,4 +23,9 @@
 
 @synthesize paragraph = _paragraph;
 
+- (void)willWriteDOMElement:(DOMElement *)element
+{
+    
+}
+
 @end

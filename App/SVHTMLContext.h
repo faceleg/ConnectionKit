@@ -184,15 +184,16 @@ typedef enum {
 
 @interface DOMNode (SVHTMLContext)
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
-- (void)writeInnerHTMLToContext:(SVHTMLContext *)context;
-
-- (void)writeCleanedInnerHTMLToContext:(SVHTMLContext *)context;
 @end
 
 
 @interface DOMElement (SVHTMLContext)
-- (void)openTagInContext:(SVHTMLContext *)context;
 
+- (void)openTagInContext:(SVHTMLContext *)context;
+- (void)writeInnerHTMLToContext:(SVHTMLContext *)context;
+
+- (void)writeCleanedInnerHTMLToContext:(SVHTMLContext *)context;
 - (void)writeCleanedHTMLToContext:(SVHTMLContext *)context innards:(BOOL)writeInnards;
+
 @end
 
