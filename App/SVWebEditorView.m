@@ -1335,7 +1335,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         NSUndoManager *undoManager = [[self webView] undoManager];
         if (![undoManager isUndoing] && ![undoManager isRedoing])
         {
-            OBASSERT_NOT_REACHED("No DOMRange recorded for edit");
+            NSLog(@"No DOMRange recorded for edit");
+            //OBASSERT_NOT_REACHED("No DOMRange recorded for edit");
         }
     }
 }
