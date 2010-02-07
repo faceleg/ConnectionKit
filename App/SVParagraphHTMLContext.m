@@ -12,6 +12,14 @@
 #import "DOMNode+Karelia.h"
 
 
+@interface SVParagraphHTMLContext ()
+- (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVParagraphHTMLContext
 
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph;
@@ -49,18 +57,25 @@
         }
         else
         {
-            // Figure out the preferred next node
-            result = [element firstChild];
-            if (!result) result = [element nextSibling];
-            
-            // Remove non-whitelisted element
-            [element unlink];
-            
-            // Check the new node is OK to write
-            result = [result willWriteHTMLToContext:self];
+            result = [self unlinkDOMElementBeforeWriting:element];
         }
     }
     
+    return result;
+}
+
+- (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element
+{
+    //  Called when the element hasn't fitted the whitelist. Unlinks it, and returns the correct node to write
+    // Figure out the preferred next node
+    DOMNode *result = [element firstChild];
+    if (!result) result = [element nextSibling];
+    
+    // Remove non-whitelisted element
+    [element unlink];
+    
+    // Check the new node is OK to write
+    result = [result willWriteHTMLToContext:self];
     return result;
 }
 
