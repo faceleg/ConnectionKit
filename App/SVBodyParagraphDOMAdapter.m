@@ -107,7 +107,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 {
     [super update];
     
-    // TODO: Should we also supply a valid HTML context?
+
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithContext:[self HTMLContext]];
     [context push];
     
