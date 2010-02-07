@@ -21,6 +21,13 @@
 
 @implementation SVBodyParagraph 
 
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    [self setPrimitiveValue:@"" forKey:@"archiveString"];
+}
+
 #pragma mark HTML
 
 - (void)writeHTML;
@@ -50,7 +57,8 @@
         [context writeEndTag];
     }
     
-    [context writeHTMLString:archive];
+    // I don't like the if statement here, as ideally archive is never nil. However, after undoin a change, it sometimes is :( — Mike
+    if (archive) [context writeHTMLString:archive];
 }
 
 - (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document
@@ -73,7 +81,7 @@
     //  Use the element to update our tagName, inner HTML, and inline graphics
     [self setTagName:[element tagName]];
     
-    // Easiest way to archive string, is to use a context -- see, they do all sorts!
+    // Easiest way to archive string, is to use a context – see, they do all sorts!
     SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithParagraph:self];
     [element writeInnerHTMLToContext:context];
     
