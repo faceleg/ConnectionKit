@@ -21,6 +21,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element; { return element; }
 
+- (void)willWriteDOMElementEndTag:(DOMElement *)element; { }
+
 @end
 
 
@@ -55,6 +57,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     [self writeInnerHTMLToContext:context];
     
     // Write end tag
+    [context willWriteDOMElementEndTag:self];
     [context writeEndTag];
 }
 
@@ -75,8 +78,14 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context
 {
+    [self writeInnerHTMLStartingWithNode:nil toContext:context];
+}
+
+- (void)writeInnerHTMLStartingWithNode:(DOMNode *)aNode toContext:(SVHTMLContext *)context;
+{
     // It's best to iterate using a Linked List-like approach in case the iteration also modifies the DOM
-    DOMNode *aNode = [self firstChild];
+    if (!aNode) aNode = [self firstChild];
+    
     while (aNode = [aNode willWriteHTMLToContext:context])
     {
         [aNode writeHTMLToContext:context];
