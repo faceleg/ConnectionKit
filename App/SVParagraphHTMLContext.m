@@ -14,6 +14,8 @@
 
 @interface SVParagraphHTMLContext ()
 
+- (DOMNode *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
+
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
 
 - (void)populateSpanElement:(DOMHTMLElement *)span
@@ -50,21 +52,15 @@
         // Convert a bold or italic tag to <strong> or <em>
         if ([tagName isEqualToString:@"B"])
         {
-            result = [[element parentNode] replaceChildNode:element
-                                     withElementWithTagName:@"STRONG"
-                                               moveChildren:YES];
+            result = [self changeElement:element toTagName:@"STRONG"];
         }
         else if ([tagName isEqualToString:@"I"])
         {
-            result = [[element parentNode] replaceChildNode:element
-                                     withElementWithTagName:@"EM"
-                                               moveChildren:YES];
+            result = [self changeElement:element toTagName:@"EM"];
         }
         else if ([tagName isEqualToString:@"FONT"])
         {
-            result = [[element parentNode] replaceChildNode:element
-                                     withElementWithTagName:@"SPAN"
-                                               moveChildren:YES];
+            result = [self changeElement:element toTagName:@"SPAN"];
             
             [self populateSpanElement:(DOMHTMLElement *)result
                       fromFontElement:(DOMHTMLFontElement *)element];
@@ -74,6 +70,17 @@
             result = [self unlinkDOMElementBeforeWriting:element];
         }
     }
+    
+    return result;
+}
+
+- (DOMNode *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
+{
+    //WebView *webView = [[[element ownerDocument] webFrame] webView];
+    
+    DOMNode *result = [[element parentNode] replaceChildNode:element
+                                      withElementWithTagName:tagName
+                                                moveChildren:YES];
     
     return result;
 }
