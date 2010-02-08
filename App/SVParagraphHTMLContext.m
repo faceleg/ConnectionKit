@@ -29,11 +29,10 @@
 
 
 @interface DOMNode (SVParagraphHTMLContext)
-- (BOOL)flattenStylingTreeIntoNode:(DOMNode *)parent beforeChild:(DOMNode *)refNode;
-- (BOOL)isParagraphCharacterStyle;
 - (void)flattenNodesAfterChild:(DOMNode *)aChild;
 
-- (BOOL)hasParagraphContent;    // returns YES if the node or a descendant contains text, <br>, image etc.
+- (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
+- (BOOL)hasParagraphContent;    // returns YES if the receiver is, or *contains* text, <br>, image etc.
 @end
 
 
