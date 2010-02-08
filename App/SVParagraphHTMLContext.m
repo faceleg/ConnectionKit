@@ -32,7 +32,9 @@
 - (void)flattenNodesAfterChild:(DOMNode *)aChild;
 
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
-- (BOOL)hasParagraphContent;    // returns YES if the receiver is, or *contains* text, <br>, image etc.
+
+- (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
+- (BOOL)hasParagraphContent;    // like -isParagraphContent but then searches subtree if needed
 @end
 
 
@@ -231,12 +233,21 @@
     }
 }
 
+- (BOOL)isParagraphContent; { return NO; }
+
 - (BOOL)hasParagraphContent;    // returns YES if the node or a descendant contains text, <br>, image etc.
 {
     // Ask each child in turn
-    for (DOMNode *aNode in [self mutableChildNodesArray])
+    if ([self isParagraphContent])
     {
-        if ([aNode hasParagraphContent]) return YES;
+        return YES;
+    }
+    else
+    {
+        for (DOMNode *aNode in [self mutableChildNodesArray])
+        {
+            if ([aNode hasParagraphContent]) return YES;
+        }
     }
     
     return NO;
@@ -248,16 +259,10 @@
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
-- (BOOL)hasParagraphContent
+- (BOOL)isParagraphContent;
 {
-    if ([SVParagraphHTMLContext isTagParagraphContent:[self tagName]])
-    {
-        return YES;
-    }
-    else
-    {
-        return [super hasParagraphContent];
-    }
+    BOOL result = [SVParagraphHTMLContext isTagParagraphContent:[self tagName]];
+    return result;
 }
 
 @end
@@ -272,5 +277,5 @@
 @end
 
 @implementation DOMCharacterData (SVParagraphHTMLContext)
-- (BOOL)hasParagraphContent; { return YES; }
+- (BOOL)isParagraphContent; { return YES; }
 @end
