@@ -13,7 +13,12 @@
 
 
 @interface SVParagraphHTMLContext ()
+
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
+
+- (void)populateSpanElement:(DOMHTMLElement *)span
+            fromFontElement:(DOMHTMLFontElement *)fontElement;
+
 @end
 
 
@@ -60,6 +65,9 @@
             result = [[element parentNode] replaceChildNode:element
                                      withElementWithTagName:@"SPAN"
                                                moveChildren:YES];
+            
+            [self populateSpanElement:(DOMHTMLElement *)result
+                      fromFontElement:(DOMHTMLFontElement *)element];
         }
         else
         {
@@ -83,6 +91,14 @@
     // Check the new node is OK to write
     result = [result willWriteHTMLToContext:self];
     return result;
+}
+
+- (void)populateSpanElement:(DOMHTMLElement *)span
+            fromFontElement:(DOMHTMLFontElement *)fontElement;
+{
+    [[span style] setProperty:@"font-family" value:[fontElement face] priority:@""];
+    [[span style] setProperty:@"color" value:[fontElement color] priority:@""];
+    // Ignoring size for now, but may have to revisit
 }
 
 #pragma mark Tag Whitelist
