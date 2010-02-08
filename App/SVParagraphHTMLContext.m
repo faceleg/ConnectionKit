@@ -32,10 +32,8 @@
 - (BOOL)flattenStylingTreeIntoNode:(DOMNode *)parent beforeChild:(DOMNode *)refNode;
 - (BOOL)isParagraphCharacterStyle;
 - (void)flattenNodesAfterChild:(DOMNode *)aChild;
-@end
 
-
-@interface DOMElement (SVParagraphHTMLContext)
+- (BOOL)hasParagraphContent;    // returns YES if the node or a descendant contains text, <br>, image etc.
 @end
 
 
@@ -110,7 +108,7 @@
         
     
     // Ditch empty tags which aren't supposed to be
-    if (![result hasChildNodes] && ![tagName isEqualToString:@"BR"])
+    if (![result hasParagraphContent])
     {
         DOMNode *nextNode = [result nextSibling];
         [[result parentNode] removeChild:result];
@@ -227,6 +225,17 @@
     }
 }
 
+- (BOOL)hasParagraphContent;    // returns YES if the node or a descendant contains text, <br>, image etc.
+{
+    // Ask each child in turn
+    for (DOMNode *aNode in [self mutableChildNodesArray])
+    {
+        if ([aNode hasParagraphContent]) return YES;
+    }
+    
+    return NO;
+}
+
 @end
 
 @implementation DOMElement (SVParagraphHTMLContext)
@@ -247,9 +256,13 @@
 
 @implementation DOMHTMLBRElement (SVParagraphHTMLContext)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
+- (BOOL)hasParagraphContent; { return YES; }
 @end
 
 @implementation DOMHTMLAnchorElement (SVParagraphHTMLContext)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
+@implementation DOMCharacterData (SVParagraphHTMLContext)
+- (BOOL)hasParagraphContent; { return YES; }
+@end
