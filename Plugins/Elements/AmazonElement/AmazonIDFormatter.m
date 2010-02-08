@@ -9,6 +9,7 @@
 #import "AmazonIDFormatter.h"
 
 #import "SandvoxPlugin.h"
+#import "KSURLFormatter.h"
 
 
 @implementation AmazonIDFormatter
