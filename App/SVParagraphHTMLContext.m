@@ -122,6 +122,29 @@
     return result;
 }
 
+- (void)willWriteDOMElementEndTag:(DOMElement *)element;
+{
+    [super willWriteDOMElementEndTag:element];
+    
+    
+    // Merge 2 equal elements into 1
+    DOMNode *nextNode = [element nextSibling];
+    while ([nextNode isEqualNode:element compareChildNodes:NO])
+    {
+        DOMNode *startNode = [nextNode firstChild];
+        
+        // Move elements out of sibling and into original
+        [[element mutableChildNodesArray] addObjectsFromArray:[nextNode mutableChildNodesArray]];
+        
+        // Dump the now uneeded node
+        nextNode = [nextNode nextSibling];  // recurse in case the next node after that also fits the criteria
+        [[nextNode parentNode] removeChild:nextNode];
+        
+        // Carry on writing
+        [element writeInnerHTMLStartingWithNode:startNode toContext:self];
+    }
+}
+
 - (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
 {
     //WebView *webView = [[[element ownerDocument] webFrame] webView];
