@@ -75,6 +75,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [[self textHTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
     [[self textHTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(webEditorTextDidChange:) name:WebViewDidChangeNotification object:nil];
+    
     
     // Observe content changes
     [[self content] addObserver:self
@@ -90,6 +92,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)dealloc
 {
     // Stop observation
+    [[NSNotificationCenter defaultCenter] removeObserver:self];
+    
     [[self textHTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
     [[self textHTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
