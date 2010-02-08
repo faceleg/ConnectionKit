@@ -28,6 +28,20 @@
 #pragma mark -
 
 
+@interface DOMNode (SVParagraphHTMLContext)
+- (BOOL)flattenStylingTreeIntoNode:(DOMNode *)parent beforeChild:(DOMNode *)refNode;
+- (BOOL)isParagraphCharacterStyle;
+- (void)flattenNodesAfterChild:(DOMNode *)aChild;
+@end
+
+
+@interface DOMElement (SVParagraphHTMLContext)
+@end
+
+
+#pragma mark -
+
+
 @implementation SVParagraphHTMLContext
 
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph;
@@ -41,23 +55,14 @@
 
 @synthesize paragraph = _paragraph;
 
+#pragma mark Writing
+
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
     DOMNode *result = element;
     NSString *tagName = [element tagName];
     
     
-    
-    // Ditch empty tags which aren't supposed to be
-    if (![element hasChildNodes] && ![tagName isEqualToString:@"BR"])
-    {
-        result = [element nextSibling];
-        [[element parentNode] removeChild:element];
-        return [result willWriteHTMLToContext:self];
-    }
-    
-    
-        
     // Remove any tags not allowed
     if (![[self class] isTagAllowed:[element tagName]])
     {
@@ -86,6 +91,13 @@
     
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
+    if ([result hasChildNodes])
+    {
+        [result flattenNodesAfterChild:[result firstChild]];
+    }
+    
+    
+    /*
     DOMNode *firstChild = [result firstChild];
     if ([firstChild isKindOfClass:[DOMElement class]] &&
         [[(DOMElement *)firstChild tagName] isEqualToString:tagName])
@@ -93,9 +105,19 @@
         [(DOMElement *)firstChild copyInheritedStylingFromElement:(DOMElement *)result];
         [[result parentNode] insertBefore:firstChild refChild:result];
         result = firstChild;
-    }
+    }*/
     
         
+    
+    // Ditch empty tags which aren't supposed to be
+    if (![element hasChildNodes] && ![tagName isEqualToString:@"BR"])
+    {
+        result = [element nextSibling];
+        [[element parentNode] removeChild:element];
+        return [result willWriteHTMLToContext:self];
+    }
+    
+    
     
     return result;
 }
@@ -148,3 +170,76 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation DOMNode (SVParagraphHTMLContext)
+
+- (BOOL)isParagraphCharacterStyle; { return NO; }
+
+- (void)flattenNodesAfterChild:(DOMNode *)aChild;
+{
+    // It doesn't make sense to flatten the *entire* contents of a node, so should always have a child to start from
+    OBPRECONDITION(aChild);
+    
+    
+    // Make a copy of ourself to flatten into
+    DOMNode *clone = nil;
+    DOMNode *refNode = [self nextSibling];
+    
+    
+    // Flatten everything after aChild so it appears alongside ourself somewhere
+    DOMNode *aNode;
+    while (aNode = [aChild nextSibling])
+    {
+        if ([aNode isParagraphCharacterStyle])
+        {
+            clone = nil;    // it's no longer valid to use
+            
+            // Copy across inherited styling, and then flatten the node
+            [(DOMElement *)aNode copyInheritedStylingFromElement:(DOMElement *)self];
+            [[self parentNode] insertBefore:aNode refChild:refNode];
+            
+        }
+        else
+        {
+            // It's a non-styling node, so will need to be placed in a clone of self to gain correct styling
+            if (!clone)
+            {
+                clone = [self cloneNode:NO];
+                [[self parentNode] insertBefore:clone refChild:refNode];
+            }
+            
+            [clone appendChild:aNode];
+        }
+    }
+}
+
+@end
+
+@implementation DOMElement (SVParagraphHTMLContext)
+
+- (BOOL)isParagraphCharacterStyle; { return YES; }
+
+- (void)flattenStylingTree;
+{
+    DOMNode *aNode = [self firstChild];
+    while (aNode)
+    {
+        [aNode flattenStylingTreeIntoNode:[self parentNode] beforeChild:[self nextSibling]];
+    }
+}
+
+@end
+        
+
+@implementation DOMHTMLBRElement (SVParagraphHTMLContext)
+- (BOOL)isParagraphCharacterStyle; { return NO; }
+@end
+
+@implementation DOMHTMLAnchorElement (SVParagraphHTMLContext)
+- (BOOL)isParagraphCharacterStyle; { return NO; }
+@end
+
