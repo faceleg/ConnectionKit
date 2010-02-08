@@ -35,6 +35,8 @@
 
 - (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
 - (BOOL)hasParagraphContent;    // like -isParagraphContent but then searches subtree if needed
+- (void)removeNonParagraphContent;
+
 @end
 
 
@@ -109,7 +111,8 @@
         
     
     // Ditch empty tags which aren't supposed to be
-    if (![result hasParagraphContent])
+    [result removeNonParagraphContent];
+    if (![result hasParagraphContent] && ![result hasChildNodes])
     {
         DOMNode *nextNode = [result nextSibling];
         [[result parentNode] removeChild:result];
@@ -251,6 +254,23 @@
     }
     
     return NO;
+}
+
+- (void)removeNonParagraphContent;
+{
+    DOMNode *aNode = [self firstChild];
+    while (aNode)
+    {
+        DOMNode *nextNode = [aNode nextSibling];
+        
+        [aNode removeNonParagraphContent];
+        if (![aNode hasChildNodes] && ![aNode isParagraphContent])
+        {
+            [self removeChild:aNode];
+        }
+        
+        aNode = nextNode;
+    }
 }
 
 @end
