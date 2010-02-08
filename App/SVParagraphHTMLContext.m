@@ -186,34 +186,21 @@
     
     
     // Make a copy of ourself to flatten into
-    DOMNode *clone = nil;
-    DOMNode *refNode = [self nextSibling];
+    DOMNode *clone = [self cloneNode:NO];
     
     
-    // Flatten everything after aChild so it appears alongside ourself somewhere
+    // Flatten everything after aChild so it appears alongside ourself somewhere. Work backwards so order is maintained
     DOMNode *aNode;
-    while (aNode = [aChild nextSibling])
+    while ((aNode = [self lastChild]) && aNode != aChild)
     {
-        if ([aNode isParagraphCharacterStyle])
-        {
-            clone = nil;    // it's no longer valid to use
-            
-            // Copy across inherited styling, and then flatten the node
-            [(DOMElement *)aNode copyInheritedStylingFromElement:(DOMElement *)self];
-            [[self parentNode] insertBefore:aNode refChild:refNode];
-            
-        }
-        else
-        {
-            // It's a non-styling node, so will need to be placed in a clone of self to gain correct styling
-            if (!clone)
-            {
-                clone = [self cloneNode:NO];
-                [[self parentNode] insertBefore:clone refChild:refNode];
-            }
-            
-            [clone appendChild:aNode];
-        }
+        [clone insertBefore:aNode refChild:[clone firstChild]];
+    }
+    
+    
+    // Place clone correctly
+    if ([clone hasChildNodes])
+    {
+        [[self parentNode] insertBefore:clone refChild:[self nextSibling]];
     }
 }
 
