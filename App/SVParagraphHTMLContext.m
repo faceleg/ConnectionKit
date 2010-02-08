@@ -14,11 +14,11 @@
 
 @interface SVParagraphHTMLContext ()
 
-- (DOMNode *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
 
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
 
-- (void)populateSpanElement:(DOMHTMLElement *)span
+- (void)populateSpanElement:(DOMElement *)span
             fromFontElement:(DOMHTMLFontElement *)fontElement;
 
 @end
@@ -82,12 +82,26 @@
         }
     }
     
+    
+    
+    // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
+    DOMNode *firstChild = [result firstChild];
+    if ([firstChild isKindOfClass:[DOMElement class]])
+    {
+        DOMElement *firstElement = (id)firstChild;
+        if ([[firstElement tagName] isEqualToString:tagName])
+        {
+            [[result parentNode] insertBefore:firstElement refChild:result];
+            result = firstChild;
+        }
+    }
+    
         
     
     return result;
 }
 
-- (DOMNode *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
 {
     //WebView *webView = [[[element ownerDocument] webFrame] webView];
     
@@ -113,7 +127,7 @@
     return result;
 }
 
-- (void)populateSpanElement:(DOMHTMLElement *)span
+- (void)populateSpanElement:(DOMElement *)span
             fromFontElement:(DOMHTMLFontElement *)fontElement;
 {
     [[span style] setProperty:@"font-family" value:[fontElement face] priority:@""];
