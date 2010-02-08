@@ -43,10 +43,21 @@
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
     DOMNode *result = element;
-    
-    
-    // Remove any tags not allowed
     NSString *tagName = [element tagName];
+    
+    
+    
+    // Ditch empty tags which aren't supposed to be
+    if (![element hasChildNodes] && ![tagName isEqualToString:@"BR"])
+    {
+        result = [element nextSibling];
+        [[element parentNode] removeChild:element];
+        return [result willWriteHTMLToContext:self];
+    }
+    
+    
+        
+    // Remove any tags not allowed
     if (![[self class] isTagAllowed:[element tagName]])
     {
         // Convert a bold or italic tag to <strong> or <em>
@@ -70,6 +81,8 @@
             result = [self unlinkDOMElementBeforeWriting:element];
         }
     }
+    
+        
     
     return result;
 }
