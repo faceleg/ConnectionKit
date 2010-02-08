@@ -184,7 +184,14 @@
                    [tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
-                   [tagName isEqualToString:@"BR"]);
+                   [self isTagParagraphContent:tagName]);
+    
+    return result;
+}
+
++ (BOOL)isTagParagraphContent:(NSString *)tagName;
+{
+    BOOL result = ([tagName isEqualToString:@"BR"]);
     
     return result;
 }
@@ -241,12 +248,15 @@
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
-- (void)flattenStylingTree;
+- (BOOL)hasParagraphContent
 {
-    DOMNode *aNode = [self firstChild];
-    while (aNode)
+    if ([SVParagraphHTMLContext isTagParagraphContent:[self tagName]])
     {
-        [aNode flattenStylingTreeIntoNode:[self parentNode] beforeChild:[self nextSibling]];
+        return YES;
+    }
+    else
+    {
+        return [super hasParagraphContent];
     }
 }
 
@@ -255,7 +265,6 @@
 
 @implementation DOMHTMLBRElement (SVParagraphHTMLContext)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
-- (BOOL)hasParagraphContent; { return YES; }
 @end
 
 @implementation DOMHTMLAnchorElement (SVParagraphHTMLContext)

@@ -27,6 +27,7 @@
 
 #pragma mark Tag Whitelist
 + (BOOL)isTagAllowed:(NSString *)tagName;
++ (BOOL)isTagParagraphContent:(NSString *)tagName;
 
 
 @end
