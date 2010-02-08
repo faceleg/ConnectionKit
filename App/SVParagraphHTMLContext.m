@@ -110,11 +110,11 @@
         
     
     // Ditch empty tags which aren't supposed to be
-    if (![element hasChildNodes] && ![tagName isEqualToString:@"BR"])
+    if (![result hasChildNodes] && ![tagName isEqualToString:@"BR"])
     {
-        result = [element nextSibling];
-        [[element parentNode] removeChild:element];
-        return [result willWriteHTMLToContext:self];
+        DOMNode *nextNode = [result nextSibling];
+        [[result parentNode] removeChild:result];
+        return [nextNode willWriteHTMLToContext:self];
     }
     
     
