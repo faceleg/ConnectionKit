@@ -111,11 +111,12 @@
     {
         DOMNode *nextNode = [result nextSibling];
         [[result parentNode] removeChild:result];
-        return [nextNode willWriteHTMLToContext:self];
+        result = nextNode;
     }
     
     
-    
+    // Recursively revalidate the new choice
+    if (result != element) result = [result willWriteHTMLToContext:self];
     return result;
 }
 
@@ -163,8 +164,7 @@
     // Remove non-whitelisted element
     [element unlink];
     
-    // Check the new node is OK to write
-    result = [result willWriteHTMLToContext:self];
+    
     return result;
 }
 
