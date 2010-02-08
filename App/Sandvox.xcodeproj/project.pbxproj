@@ -464,6 +464,8 @@
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
 		27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */; };
 		27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */; };
+		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
+		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
 		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
 		27E24AC710FB9591004EFE9F /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24AC510FB9591004EFE9F /* SVLink.m */; };
@@ -1915,6 +1917,8 @@
 		27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLContext.m; sourceTree = "<group>"; };
 		27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTElementPlugin+DataSourceRegistration.h"; sourceTree = "<group>"; };
 		27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTElementPlugin+DataSourceRegistration.m"; sourceTree = "<group>"; };
+		27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMElement+Karelia.h"; sourceTree = "<group>"; };
+		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = WrapInspector.xib; sourceTree = "<group>"; };
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
@@ -3443,11 +3447,11 @@
 				3C202DA507DFC4BA00DE4994 /* Web Content Area */,
 				272321DB0D48B5A70075F31F /* Page Details */,
 				27196F5F1090A9710096B612 /* Inspector */,
+				3C5A73950BF7BA6800776464 /* HTML Generation */,
 				3C5A73800BF7B8DB00776464 /* DataSource */,
 				3C5A73830BF7B8F200776464 /* Index */,
 				3C5A73860BF7B90900776464 /* Plugin Delegate */,
 				3C5A738F0BF7B96800776464 /* PseudoElements */,
-				3C5A73950BF7BA6800776464 /* HTML Generation */,
 				CEF9D0BE0D862C2000BD9895 /* WebKit Plug-ins */,
 				CEB34AC8082972820073A7A4 /* Other Window Controllers */,
 				27A832830D92D8CC005FF13D /* Code Injection */,
@@ -4713,6 +4717,8 @@
 				CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */,
 				27AED2591088C754005EDA77 /* DOMRange+Karelia.h */,
 				27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */,
+				27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */,
+				27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */,
 			);
 			path = WebKit;
 			sourceTree = "<group>";
@@ -5269,6 +5275,7 @@
 				27FDEDD6111AF2C6001F4E60 /* SVTextContentHTMLContext.h in Headers */,
 				27FDEF13111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h in Headers */,
 				CE9E5260111C933B00BEF1C8 /* SVDocumentInspector.h in Headers */,
+				27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6657,6 +6664,7 @@
 				27FDEDD7111AF2C6001F4E60 /* SVTextContentHTMLContext.m in Sources */,
 				27FDEF14111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m in Sources */,
 				CE9E5261111C933B00BEF1C8 /* SVDocumentInspector.m in Sources */,
+				27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -10,6 +10,7 @@
 #import "SVBodyParagraph.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMElement+Karelia.h"
 
 
 @interface SVParagraphHTMLContext ()
@@ -86,14 +87,12 @@
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
     DOMNode *firstChild = [result firstChild];
-    if ([firstChild isKindOfClass:[DOMElement class]])
+    if ([firstChild isKindOfClass:[DOMElement class]] &&
+        [[(DOMElement *)firstChild tagName] isEqualToString:tagName])
     {
-        DOMElement *firstElement = (id)firstChild;
-        if ([[firstElement tagName] isEqualToString:tagName])
-        {
-            [[result parentNode] insertBefore:firstElement refChild:result];
-            result = firstChild;
-        }
+        [(DOMElement *)firstChild copyInheritedStylingFromElement:(DOMElement *)result];
+        [[result parentNode] insertBefore:firstChild refChild:result];
+        result = firstChild;
     }
     
         
