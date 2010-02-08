@@ -105,7 +105,7 @@
 {
     //WebView *webView = [[[element ownerDocument] webFrame] webView];
     
-    DOMNode *result = [[element parentNode] replaceChildNode:element
+    DOMElement *result = [[element parentNode] replaceChildNode:element
                                       withElementWithTagName:tagName
                                                 moveChildren:YES];
     
