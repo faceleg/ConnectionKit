@@ -55,6 +55,12 @@
                                      withElementWithTagName:@"EM"
                                                moveChildren:YES];
         }
+        else if ([tagName isEqualToString:@"FONT"])
+        {
+            result = [[element parentNode] replaceChildNode:element
+                                     withElementWithTagName:@"SPAN"
+                                               moveChildren:YES];
+        }
         else
         {
             result = [self unlinkDOMElementBeforeWriting:element];
