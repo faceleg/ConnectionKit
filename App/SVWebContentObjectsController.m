@@ -40,7 +40,6 @@
     // Create matching first paragraph
     SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
                                                                inManagedObjectContext:moc];
-    [paragraph setTagName:@"p"];
     [paragraph setArchiveString:@"Test"];
     [[result body] addElement:paragraph];
     

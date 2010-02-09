@@ -175,7 +175,6 @@
     [self setBody:body];
     
     SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[self managedObjectContext]];
-    [paragraph setTagName:@"p"];
     [paragraph setArchiveString:@"Lorem ipsum..."];
     [paragraph setSortKey:[NSNumber numberWithInt:0]];
     [body addElement:paragraph];

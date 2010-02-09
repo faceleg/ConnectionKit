@@ -21,7 +21,6 @@
 
 #pragma mark Raw Properties
 // External code should rarely need to modify these
-@property(nonatomic, copy) NSString *tagName;
 @property(nonatomic, copy) NSString *archiveString;
 
 

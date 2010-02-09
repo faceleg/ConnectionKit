@@ -251,7 +251,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
                                                                inManagedObjectContext:[self managedObjectContext]];
-        [paragraph setTagName:@"p"];
         [paragraph setArchiveString:@"Test paragraph"];
         [paragraph setSortKey:[NSNumber numberWithShort:0]];
         

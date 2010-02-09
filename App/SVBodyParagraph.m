@@ -34,7 +34,7 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    [context writeStartTag:[self tagName]
+    [context writeStartTag:@"P"
                     idName:([context isEditable] ? [self editingElementID] : nil)
                  className:nil];
     
@@ -66,7 +66,7 @@
     // Want to make sure it's also got the right tagname
     DOMHTMLElement *result = [super elementForEditingInDOMDocument:document];
     
-    if (![[result tagName] isEqualToStringCaseInsensitive:[self tagName]]) result = nil;
+    if (![[result tagName] isEqualToString:@"P"]) result = nil;
     
     return result;
 }
@@ -78,9 +78,6 @@
 
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;
 {
-    //  Use the element to update our tagName, inner HTML, and inline graphics
-    [self setTagName:[element tagName]];
-    
     // Easiest way to archive string, is to use a context – see, they do all sorts!
     SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithParagraph:self];
     [element writeInnerHTMLToContext:context];
@@ -93,7 +90,6 @@
 
 #pragma mark Raw Properties
 
-@dynamic tagName;
 @dynamic archiveString;
 
 #pragma mark  Attributes
