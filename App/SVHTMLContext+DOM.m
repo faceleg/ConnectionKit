@@ -38,8 +38,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     return [element nextSibling];
 }
 
-- (DOMNode *)willWriteDOMElement:(DOMElement *)element; { return element; }
-
 - (void)willWriteDOMElementEndTag:(DOMElement *)element; { }
 
 @end
@@ -54,8 +52,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 //  From there, writing recurses down through the element's children.
 - (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 
-- (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context;
-
 @end
 
 
@@ -69,8 +65,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     [context writeText:[self nodeValue]];
     return [self nextSibling];
 } 
-
-- (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context { return self; }
 
 @end
 
@@ -111,7 +105,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     // It's best to iterate using a Linked List-like approach in case the iteration also modifies the DOM
     if (!aNode) aNode = [self firstChild];
     
-    while (aNode = [aNode willWriteHTMLToContext:context])
+    while (aNode)
     {
         aNode = [aNode writeHTMLToContext:context];
     }
@@ -167,11 +161,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 			[context writeNewline];
 		}
 	}
-}
-
-- (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context
-{
-    return [context willWriteDOMElement:self];
 }
 
 @end
