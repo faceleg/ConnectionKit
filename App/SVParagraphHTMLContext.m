@@ -60,42 +60,53 @@
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
-    DOMNode *result = element;
     NSString *tagName = [element tagName];
     
     
-    // Remove any tags not allowed
+    // Remove any tags not allowed. Repeat cycle for the node that takes its place
     if (![[self class] isTagAllowed:[element tagName]])
     {
+        DOMNode *replacement = element;
+    
         // Convert a bold or italic tag to <strong> or <em>
         if ([tagName isEqualToString:@"B"])
         {
-            result = [self changeElement:element toTagName:@"STRONG"];
+            replacement = [self changeElement:element toTagName:@"STRONG"];
         }
         else if ([tagName isEqualToString:@"I"])
         {
-            result = [self changeElement:element toTagName:@"EM"];
+            replacement = [self changeElement:element toTagName:@"EM"];
         }
         else if ([tagName isEqualToString:@"FONT"])
         {
-            result = [self changeElement:element toTagName:@"SPAN"];
+            replacement = [self changeElement:element toTagName:@"SPAN"];
             
-            [self populateSpanElement:(DOMHTMLElement *)result
+            [self populateSpanElement:(DOMHTMLElement *)replacement
                       fromFontElement:(DOMHTMLFontElement *)element];
         }
         else
         {
-            result = [self unlinkDOMElementBeforeWriting:element];
+            replacement = [self unlinkDOMElementBeforeWriting:element];
         }
+        
+        return [replacement willWriteHTMLToContext:self];
     }
     
     
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-    if ([result hasChildNodes])
+    if ([self hasOpenElementWithTagName:[element tagName]])
     {
-        [result flattenNodesAfterChild:[result firstChild]];
+        NSLog(@"ahoy, open!");
     }
+    
+    
+    
+    if ([element hasChildNodes])
+    {
+        //[result flattenNodesAfterChild:[result firstChild]];
+    }
+    
     
     
     /*
@@ -110,6 +121,7 @@
     
         
     
+    /*
     // Ditch empty tags which aren't supposed to be
     [result removeNonParagraphContent];
     if (![result hasParagraphContent] && ![result hasChildNodes])
@@ -118,11 +130,10 @@
         [[result parentNode] removeChild:result];
         result = nextNode;
     }
+    */
     
     
-    // Recursively revalidate the new choice
-    if (result != element) result = [result willWriteHTMLToContext:self];
-    return result;
+    return element;
 }
 
 - (void)willWriteDOMElementEndTag:(DOMElement *)element;
