@@ -52,13 +52,41 @@
     OBPRECONDITION(paragraph);
     
     self = [self init];
+    
     _paragraph = [paragraph retain];
+    _unwrittenDOMElements = [[NSMutableArray alloc] init];
+    
     return self;
+}
+
+- (void)dealloc
+{
+    [_paragraph release];
+    [_unwrittenDOMElements release];
+    
+    [super dealloc];
 }
 
 @synthesize paragraph = _paragraph;
 
 #pragma mark Writing
+
+- (void)writeDOMElement:(DOMElement *)element;
+{
+    //  The element might turn out to be empty, so don't write it just yet
+    
+    if ([element isParagraphContent])
+    {
+        [super writeDOMElement:element];
+    }
+    else
+    {
+        [_unwrittenDOMElements addObject:element];
+        [element writeInnerHTMLToContext:self];
+        [self willWriteDOMElementEndTag:element];
+        [self writeEndTag];
+    }
+}
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
@@ -233,6 +261,40 @@
     [[span style] setProperty:@"font-family" value:[fontElement face] priority:@""];
     [[span style] setProperty:@"color" value:[fontElement color] priority:@""];
     // Ignoring size for now, but may have to revisit
+}
+
+#pragma mark Primitive Writing
+
+- (void)writeString:(NSString *)string
+{
+    // Before actually writing the string, push through any pending Elements
+    if ([_unwrittenDOMElements count] > 0)
+    {
+        NSArray *elements = [_unwrittenDOMElements copy];
+        [_unwrittenDOMElements removeAllObjects];
+        
+        for (DOMElement *anElement in elements)
+        {
+            [anElement openTagInContext:self];
+            [self closeStartTag];
+        }
+    }
+    
+    
+    // Do the writing
+    [super writeString:string];
+}
+
+- (BOOL)hasOpenElementWithTagName:(NSString *)tagName
+{
+    tagName = [tagName uppercaseString];
+    
+    for (DOMElement *anElement in _unwrittenDOMElements)
+    {
+        if ([[anElement tagName] isEqualToString:tagName]) return YES;
+    }
+    
+    return [super hasOpenElementWithTagName:tagName];
 }
 
 #pragma mark Tag Whitelist

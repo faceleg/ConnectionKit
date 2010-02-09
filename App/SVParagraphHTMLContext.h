@@ -19,6 +19,7 @@
 {
   @private
     SVBodyParagraph *_paragraph;
+    NSMutableArray  *_unwrittenDOMElements;
 }
 
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph;
