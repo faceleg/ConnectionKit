@@ -45,6 +45,20 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 #pragma mark -
 
 
+@interface DOMNode (SVHTMLContext)
+
+// All nodes can be written to a context. DOMElement overrides the standard behaviour to call -[SVHTMLContext writeDOMElement:]
+//  From there, writing recurses down through the element's children.
+- (void)writeHTMLToContext:(SVHTMLContext *)context;
+
+- (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context;
+
+@end
+
+
+#pragma mark -
+
+
 @implementation DOMNode (SVHTMLContext)
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
