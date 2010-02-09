@@ -73,6 +73,17 @@
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
+    // Remove any tags not allowed.
+    DOMNode *replacement = [self replaceElementIfNeeded:element];
+    if (replacement != element)
+    {
+        // Pretend to the caller that the element got written (which it didn't) and that the next node to write is the replacement
+        return replacement;
+    }
+    
+    
+    
+    
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
     NSString *tagName = [element tagName];
     if ([self hasOpenElementWithTagName:tagName])
@@ -143,20 +154,6 @@
             return [element nextSibling];
         }
     }
-}
-
-- (DOMNode *)willWriteDOMElement:(DOMElement *)element
-{
-    // Remove any tags not allowed. Repeat cycle for the node that takes its place
-    DOMNode *replacement = [self replaceElementIfNeeded:element];
-    if (replacement != element)
-    {
-        return [replacement willWriteHTMLToContext:self];
-    }
-    
-    
-    
-    return element;
 }
 
 - (void)willWriteDOMElementEndTag:(DOMElement *)element;
