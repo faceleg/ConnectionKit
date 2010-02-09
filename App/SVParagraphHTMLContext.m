@@ -64,7 +64,7 @@
     
     
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
-    if (![[self class] isTagAllowed:[element tagName]])
+    if (![[self class] isTagAllowed:tagName])
     {
         DOMNode *replacement = element;
     
@@ -95,7 +95,7 @@
     
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-    if ([self hasOpenElementWithTagName:[element tagName]])
+    if ([self hasOpenElementWithTagName:tagName])
     {
         NSLog(@"ahoy, open!");
     }
