@@ -73,6 +73,44 @@
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
+    // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
+    NSString *tagName = [element tagName];
+    if ([self hasOpenElementWithTagName:tagName])
+    {
+        // Shuffle up following nodes
+        DOMElement *parent = (DOMElement *)[element parentNode];
+        [parent flattenNodesAfterChild:element];
+        
+        
+        // It make take several moves up the tree till we find the conflicting element
+        while (![[parent tagName] isEqualToString:tagName])
+        {
+            // Move element across to a clone of its parent
+            DOMNode *clone = [parent cloneNode:NO];
+            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+            [clone appendChild:element];
+            parent = (DOMElement *)[parent parentNode];
+        }
+        
+        
+        // Now we're ready to flatten the conflict
+        [element copyInheritedStylingFromElement:parent];
+        [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+        
+        
+        // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+        return nil;
+    }
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
     //  The element might turn out to be empty, so don't write it just yet
     
     if ([element isParagraphContent])
@@ -109,43 +147,11 @@
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
-    NSString *tagName = [element tagName];
-    
-    
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
     DOMNode *replacement = [self replaceElementIfNeeded:element];
     if (replacement != element)
     {
         return [replacement willWriteHTMLToContext:self];
-    }
-    
-    
-    
-    // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-    if ([self hasOpenElementWithTagName:tagName])
-    {
-        // Shuffle up following nodes
-        DOMElement *parent = (DOMElement *)[element parentNode];
-        [parent flattenNodesAfterChild:element];
-        
-        
-        // It make take several moves up the tree till we find the conflicting element
-        while (![[parent tagName] isEqualToString:tagName])
-        {
-            // Move element across to a clone of its parent
-            DOMNode *clone = [parent cloneNode:NO];
-            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-            [clone appendChild:element];
-            parent = (DOMElement *)[parent parentNode];
-        }
-        
-        
-        // Now we're ready to flatten the conflict
-        [element copyInheritedStylingFromElement:parent];
-        [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
-        
-        
-        return nil; // the context will end the current element, and move onto the next, which should be the one we just moved
     }
     
     
