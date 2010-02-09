@@ -15,10 +15,10 @@
 
 @interface SVParagraphHTMLContext ()
 
+- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+
 - (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
-
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
-
 - (void)populateSpanElement:(DOMElement *)span
             fromFontElement:(DOMHTMLFontElement *)fontElement;
 
@@ -36,6 +36,8 @@
 - (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
 - (BOOL)hasParagraphContent;    // like -isParagraphContent but then searches subtree if needed
 - (void)removeNonParagraphContent;
+
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVParagraphHTMLContext *)context;
 
 @end
 
@@ -64,31 +66,9 @@
     
     
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
-    if (![[self class] isTagAllowed:tagName])
+    DOMNode *replacement = [self replaceElementIfNeeded:element];
+    if (replacement != element)
     {
-        DOMNode *replacement = element;
-    
-        // Convert a bold or italic tag to <strong> or <em>
-        if ([tagName isEqualToString:@"B"])
-        {
-            replacement = [self changeElement:element toTagName:@"STRONG"];
-        }
-        else if ([tagName isEqualToString:@"I"])
-        {
-            replacement = [self changeElement:element toTagName:@"EM"];
-        }
-        else if ([tagName isEqualToString:@"FONT"])
-        {
-            replacement = [self changeElement:element toTagName:@"SPAN"];
-            
-            [self populateSpanElement:(DOMHTMLElement *)replacement
-                      fromFontElement:(DOMHTMLFontElement *)element];
-        }
-        else
-        {
-            replacement = [self unlinkDOMElementBeforeWriting:element];
-        }
-        
         return [replacement willWriteHTMLToContext:self];
     }
     
@@ -109,6 +89,7 @@
             DOMNode *clone = [parent cloneNode:NO];
             [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
             [clone appendChild:element];
+            parent = (DOMElement *)[parent parentNode];
         }
         
         
@@ -161,8 +142,10 @@
     [super willWriteDOMElementEndTag:element];
     
     
+    DOMNode *nextNode = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
+    
+    
     // Merge 2 equal elements into 1
-    DOMNode *nextNode = [element nextSibling];
     while ([nextNode isEqualNode:element compareChildNodes:NO])
     {
         DOMNode *startNode = [nextNode firstChild];
@@ -171,12 +154,52 @@
         [[element mutableChildNodesArray] addObjectsFromArray:[nextNode mutableChildNodesArray]];
         
         // Dump the now uneeded node
-        nextNode = [nextNode nextSibling];  // recurse in case the next node after that also fits the criteria
         [[nextNode parentNode] removeChild:nextNode];
         
         // Carry on writing
         [element writeInnerHTMLStartingWithNode:startNode toContext:self];
+        
+        
+        // Recurse in case the next node after that also fits the criteria
+        nextNode = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
     }
+}
+
+- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+{
+    DOMNode *result = element;
+    NSString *tagName = [element tagName];
+    
+    
+    // Remove any tags not allowed. Repeat cycle for the node that takes its place
+    if (![[self class] isTagAllowed:tagName])
+    {
+        // Convert a bold or italic tag to <strong> or <em>
+        if ([tagName isEqualToString:@"B"])
+        {
+            result = [self changeElement:element toTagName:@"STRONG"];
+        }
+        else if ([tagName isEqualToString:@"I"])
+        {
+            result = [self changeElement:element toTagName:@"EM"];
+        }
+        else if ([tagName isEqualToString:@"FONT"])
+        {
+            result = [self changeElement:element toTagName:@"SPAN"];
+            
+            [self populateSpanElement:(DOMHTMLElement *)result
+                      fromFontElement:(DOMHTMLFontElement *)element];
+        }
+        else
+        {
+            result = [self unlinkDOMElementBeforeWriting:element];
+        }
+        
+        
+        result = [result nodeByStrippingNonParagraphNodes:self];
+    }
+    
+    return result;
 }
 
 - (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
@@ -304,6 +327,8 @@
     }
 }
 
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVParagraphHTMLContext *)context; { return self; }
+
 @end
 
 @implementation DOMElement (SVParagraphHTMLContext)
@@ -314,6 +339,11 @@
 {
     BOOL result = [SVParagraphHTMLContext isTagParagraphContent:[self tagName]];
     return result;
+}
+
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVParagraphHTMLContext *)context;
+{
+    return [context replaceElementIfNeeded:self];
 }
 
 @end
