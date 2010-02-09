@@ -150,37 +150,6 @@
     
     
     
-    if ([element hasChildNodes])
-    {
-        //[result flattenNodesAfterChild:[result firstChild]];
-    }
-    
-    
-    
-    /*
-    DOMNode *firstChild = [result firstChild];
-    if ([firstChild isKindOfClass:[DOMElement class]] &&
-        [[(DOMElement *)firstChild tagName] isEqualToString:tagName])
-    {
-        [(DOMElement *)firstChild copyInheritedStylingFromElement:(DOMElement *)result];
-        [[result parentNode] insertBefore:firstChild refChild:result];
-        result = firstChild;
-    }*/
-    
-        
-    
-    /*
-    // Ditch empty tags which aren't supposed to be
-    [result removeNonParagraphContent];
-    if (![result hasParagraphContent] && ![result hasChildNodes])
-    {
-        DOMNode *nextNode = [result nextSibling];
-        [[result parentNode] removeChild:result];
-        result = nextNode;
-    }
-    */
-    
-    
     return element;
 }
 
@@ -236,6 +205,13 @@
             
             [self populateSpanElement:(DOMHTMLElement *)result
                       fromFontElement:(DOMHTMLFontElement *)element];
+        }
+        else if ([[element style] length] > 0)
+        {
+            DOMElement *replacement = [self changeElement:element toTagName:@"SPAN"];
+            [replacement copyInheritedStylingFromElement:element];
+            
+            result = replacement;
         }
         else
         {
