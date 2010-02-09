@@ -75,11 +75,14 @@ static NSArray *sAltStrings = nil;
 	if (nil == sBadgeNames)
 	{
 		sBadgeNames = [[NSArray alloc] initWithObjects:
-			@"sandvox_castle_white", 
-			@"sandvox_castle_top", 
-			@"sandvox_bucket_white",
-			@"sandvox_bucket",
-			@"sandvox_icon_white", nil];
+					   @"sandvox_icon_white",
+					   @"sandvox_castle", 
+					   @"sandvox_castle_white", 
+					   @"sandvox_castle_top", 
+					   @"sandvox_castle_top_white", 
+					   @"sandvox_bucket",
+					   @"sandvox_bucket_white",
+					   nil];
 	}
 	return sBadgeNames;
 }
