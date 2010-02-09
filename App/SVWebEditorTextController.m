@@ -183,6 +183,9 @@
                            pasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = YES;
+    return YES;
+    
+    
     
     // We don't want to allow drops of anything other than basic text styling. How to implement this is tricky. The best I can think of is a whitelist of allowed elements. Anything outside the whitelist we will attempt to rescue a plain text version from the pasteboard to use instead
     NSSet *whitelist = [NSSet setWithObjects:@"SPAN", @"B", @"I", nil];
