@@ -116,21 +116,14 @@
     
     
     
-    
-    
-    
-    
-    
-    
-    //  The element might turn out to be empty, so don't write it just yet
-    
+    //  The element might turn out to be empty...
     if ([element isParagraphContent])
     {
         return [super writeDOMElement:element];
     }
     else
     {
-        // Push onto the stack, ready to write if requested
+        // ..so push onto the stack, ready to write if requested
         [_unwrittenDOMElements addObject:element];
         
         // Write inner HTML
@@ -148,39 +141,34 @@
         }
         else
         {
-            [self willWriteDOMElementEndTag:element];
+            // Close the element, but first, if the next sibling is equal, merge it with this one
+            DOMNode *result = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
+            
+            while ([result isEqualNode:element compareChildNodes:NO])
+            {
+                DOMNode *startNode = [result firstChild];
+                
+                // Move elements out of sibling and into original
+                [[element mutableChildNodesArray] addObjectsFromArray:[result mutableChildNodesArray]];
+                
+                // Dump the now uneeded node
+                [[result parentNode] removeChild:result];
+                
+                // Carry on writing
+                if (startNode) [element writeInnerHTMLStartingWithNode:startNode toContext:self];
+                
+                
+                // Recurse in case the next node after that also fits the criteria
+                result = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
+            }
+            
+            
+            
+            
             [self writeEndTag];
             
-            return [element nextSibling];
+            return result;
         }
-    }
-}
-
-- (void)willWriteDOMElementEndTag:(DOMElement *)element;
-{
-    [super willWriteDOMElementEndTag:element];
-    
-    
-    DOMNode *nextNode = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
-    
-    
-    // Merge 2 equal elements into 1
-    while ([nextNode isEqualNode:element compareChildNodes:NO])
-    {
-        DOMNode *startNode = [nextNode firstChild];
-        
-        // Move elements out of sibling and into original
-        [[element mutableChildNodesArray] addObjectsFromArray:[nextNode mutableChildNodesArray]];
-        
-        // Dump the now uneeded node
-        [[nextNode parentNode] removeChild:nextNode];
-        
-        // Carry on writing
-        [element writeInnerHTMLStartingWithNode:startNode toContext:self];
-        
-        
-        // Recurse in case the next node after that also fits the criteria
-        nextNode = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
     }
 }
 
