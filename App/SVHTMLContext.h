@@ -178,6 +178,8 @@ typedef enum {
 
 @interface SVHTMLContext (DOM)
 
+- (void)writeDOMElement:(DOMElement *)element;
+
 // Called by -writeInnerHTMLToContext: for each element. Return the element if writing is OK. If not, return nil or a different node to parse. Parsing will continue from the node returned using -nextSibling, so make sure it's in a sensible bit of the tree. Returning nil will move parsing on to the parent node's next sibling.
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element;
 
@@ -188,6 +190,8 @@ typedef enum {
 
 
 @interface DOMNode (SVHTMLContext)
+// All nodes can be written to a context. DOMElement overrides the standard behaviour to call -[SVHTMLContext writeDOMElement:]
+//  From there, writing recurses down through the element's children.
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 - (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context;
 @end

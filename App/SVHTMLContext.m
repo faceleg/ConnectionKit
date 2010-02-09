@@ -210,6 +210,7 @@
     [self writeString:@"<"];
     [self writeString:tagName];
     
+    // Must do this AFTER writing the string so subclasses can take early action in a -writeString: override
     [_openElements addObject:[tagName uppercaseString]];
 }
 

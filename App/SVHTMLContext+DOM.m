@@ -19,6 +19,22 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation SVHTMLContext (DOM)
 
+- (void)writeDOMElement:(DOMElement *)element;
+{
+    // Open tag
+    [element openTagInContext:self];
+    
+    // Close tag
+    [self closeStartTag];
+    
+    // Write contents
+    [element writeInnerHTMLToContext:self];
+    
+    // Write end tag
+    [self willWriteDOMElementEndTag:element];
+    [self writeEndTag];
+}
+
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element; { return element; }
 
 - (void)willWriteDOMElementEndTag:(DOMElement *)element; { }
@@ -48,17 +64,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 {
-    [self openTagInContext:context];
-    
-    // Close tag
-    [context closeStartTag];
-    
-    // Write contents
-    [self writeInnerHTMLToContext:context];
-    
-    // Write end tag
-    [context willWriteDOMElementEndTag:self];
-    [context writeEndTag];
+    //  *Elements* are where the clever recursion starts, so switch responsibility back to the context.
+    [context writeDOMElement:self];
 }
 
 - (void)openTagInContext:(SVHTMLContext *)context;
