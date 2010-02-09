@@ -31,14 +31,11 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     [element writeInnerHTMLToContext:self];
     
     // Write end tag
-    [self willWriteDOMElementEndTag:element];
     [self writeEndTag];
     
     
     return [element nextSibling];
 }
-
-- (void)willWriteDOMElementEndTag:(DOMElement *)element; { }
 
 @end
 

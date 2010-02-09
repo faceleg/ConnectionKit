@@ -180,9 +180,6 @@ typedef enum {
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element; // returns the next sibling to write
 
-// As a heads up in case you want to whack in more content
-- (void)willWriteDOMElementEndTag:(DOMElement *)element;
-
 @end
 
 
