@@ -97,7 +97,27 @@
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
     if ([self hasOpenElementWithTagName:tagName])
     {
-        NSLog(@"ahoy, open!");
+        // Shuffle up following nodes
+        DOMElement *parent = (DOMElement *)[element parentNode];
+        [parent flattenNodesAfterChild:element];
+        
+        
+        // It make take several moves up the tree till we find the conflicting element
+        while (![[parent tagName] isEqualToString:tagName])
+        {
+            // Move element across to a clone of its parent
+            DOMNode *clone = [parent cloneNode:NO];
+            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+            [clone appendChild:element];
+        }
+        
+        
+        // Now we're ready to flatten the conflict
+        [element copyInheritedStylingFromElement:parent];
+        [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+        
+        
+        return nil; // the context will end the current element, and move onto the next, which should be the one we just moved
     }
     
     
