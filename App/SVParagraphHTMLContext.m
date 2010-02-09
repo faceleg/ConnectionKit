@@ -71,20 +71,39 @@
 
 #pragma mark Writing
 
-- (void)writeDOMElement:(DOMElement *)element;
+- (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
     //  The element might turn out to be empty, so don't write it just yet
     
     if ([element isParagraphContent])
     {
-        [super writeDOMElement:element];
+        return [super writeDOMElement:element];
     }
     else
     {
+        // Push onto the stack, ready to write if requested
         [_unwrittenDOMElements addObject:element];
+        
+        // Write inner HTML
         [element writeInnerHTMLToContext:self];
-        [self willWriteDOMElementEndTag:element];
-        [self writeEndTag];
+        
+        // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
+        if ([_unwrittenDOMElements lastObject] == element)
+        {
+            DOMNode *result = [element nextSibling];
+            
+            [[element parentNode] removeChild:element];
+            [_unwrittenDOMElements removeLastObject];
+            
+            return result;
+        }
+        else
+        {
+            [self willWriteDOMElementEndTag:element];
+            [self writeEndTag];
+            
+            return [element nextSibling];
+        }
     }
 }
 

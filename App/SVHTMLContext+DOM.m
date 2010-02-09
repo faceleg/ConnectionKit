@@ -19,7 +19,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation SVHTMLContext (DOM)
 
-- (void)writeDOMElement:(DOMElement *)element;
+- (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
     // Open tag
     [element openTagInContext:self];
@@ -33,6 +33,9 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     // Write end tag
     [self willWriteDOMElementEndTag:element];
     [self writeEndTag];
+    
+    
+    return [element nextSibling];
 }
 
 - (DOMNode *)willWriteDOMElement:(DOMElement *)element; { return element; }
@@ -49,7 +52,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 // All nodes can be written to a context. DOMElement overrides the standard behaviour to call -[SVHTMLContext writeDOMElement:]
 //  From there, writing recurses down through the element's children.
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 
 - (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context;
 
@@ -61,9 +64,10 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation DOMNode (SVHTMLContext)
 
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 {
     [context writeText:[self nodeValue]];
+    return [self nextSibling];
 } 
 
 - (DOMNode *)willWriteHTMLToContext:(SVHTMLContext *)context { return self; }
@@ -76,10 +80,10 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation DOMElement (SVHTMLContext)
 
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 {
     //  *Elements* are where the clever recursion starts, so switch responsibility back to the context.
-    [context writeDOMElement:self];
+    return [context writeDOMElement:self];
 }
 
 - (void)openTagInContext:(SVHTMLContext *)context;
@@ -109,8 +113,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     
     while (aNode = [aNode willWriteHTMLToContext:context])
     {
-        [aNode writeHTMLToContext:context];
-        aNode = [aNode nextSibling];
+        aNode = [aNode writeHTMLToContext:context];
     }
 }
 
@@ -179,7 +182,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation DOMText (SVHTMLContext)
 
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 {
 	NSString *text = [self data];
 	
@@ -233,6 +236,8 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     //		[buf replaceOccurrencesOfString:nbsp withString:@" " options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
     //		[buf replaceOccurrencesOfString:twoSpaces withString:replacePattern options:NSBackwardsSearch range:NSMakeRange(0, [buf length])];
     //	}
+    
+    return [self nextSibling];
 }
 
 @end
@@ -243,11 +248,13 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation DOMComment (SVHTMLContext)
 
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 {
 	NSString *comment = [self data];
 	comment = [comment stringByReplacing:@"--" with:@"- -"];	// don't allow any double-dashes!
 	[context writeHTMLString:[NSString stringWithFormat:@"<!-- %@ -->", comment]];
+    
+    return [self nextSibling];
 }
 
 @end
@@ -258,9 +265,10 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 @implementation DOMCDATASection (SVHTMLContext)
 
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
+- (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 {
 	[context writeHTMLString:[NSString stringWithFormat:@"<![CDATA[%@]]>", [self data]]];
+    return [self nextSibling];
 }
 
 @end
