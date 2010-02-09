@@ -128,7 +128,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
 		// Set up default bunch of fields
-		NSString *language = [[[self page] master] language];
+		NSString *language = [[self elementPlugInContainer] languageCode];
 		NSMutableArray *fields = [NSMutableArray array];
 		
 		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
@@ -181,6 +181,14 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[super dealloc];
 }
 
++ (NSSet *)plugInKeys
+{
+	return [NSSet setWithObjects:nil];	
+}
+
++ (Class)inspectorViewControllerClass { return [ContactElementInspectorController class]; }
+
+
 #pragma mark -
 #pragma mark Language
 
@@ -194,7 +202,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
 	}
 	
-	NSString *languageCode = [[[self delegateOwner] page] valueForKeyPath:@"master.language"];
+	NSString *languageCode = [[self elementPlugInContainer] languageCode];
 	
 	NSDictionary *result = [sLocalizations objectForKey:languageCode];
 	

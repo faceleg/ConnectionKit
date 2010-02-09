@@ -40,11 +40,25 @@
 @class NTBoxView;
 
 
-@interface ContactElementInspectorController : NSObject
+@interface ContactElementInspectorController : SVInspectorViewController
 {
 	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
 	IBOutlet NSButton	*oAddLinkButton;
 	IBOutlet NSButton	*oRemoveLinkButton;
+
+	IBOutlet NSTextField			*oSubjects;
+	IBOutlet NSTextField			*oLabel;
+	IBOutlet NSForm					*oCustomLabelsForm;
+	
+	IBOutlet ContactElementFieldsArrayController *oArrayController;
+	
+@private
+	
+	ContactElementField *myEmailField;
+	
+	NSManagedObject *myPluginProperties;
+	NSArray	*myFields;
+	BOOL	myIsArchivingFields;
 }
 
 @end

@@ -198,6 +198,12 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     return [[self site] URIRepresentationString];
 }
 
+- (NSString *)languageCode;	// used by ContactElementDelegate
+{
+	NSString *language = [[[self page] master] language];
+	return language;
+}
+
 @end
 
 
