@@ -61,12 +61,9 @@ typedef enum {
 - (void)writeHTMLString:(NSString *)html;
 - (void)writeHTMLFormat:(NSString *)format , ...;
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
+- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
 
 - (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
-
-- (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
-
-
 
 
 #pragma mark Higher-level Tag Writing
@@ -122,6 +119,10 @@ typedef enum {
 @property(nonatomic) NSInteger indentationLevel;
 - (void)indent;
 - (void)outdent;
+
+
+#pragma mark Primitive
+- (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
 
 
 #pragma mark Properties

@@ -149,6 +149,13 @@
     [self writeHTMLString:html];
 }
 
+- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
+{
+    [self writeString:@"<!--"];
+    [self writeString:[comment stringByEscapingHTMLEntities]];
+    [self writeString:@"-->"];
+}
+
 - (void)writeNewline;   // writes a newline character and the tabs to match -indentationLevel
 {
     [self writeString:@"\n"];
@@ -158,8 +165,6 @@
         [self writeString:@"\t"];
     }
 }
-
-- (void)writeString:(NSString *)string; { [super writeString:string]; }
 
 #pragma mark Higher-level Tag Writing
 
@@ -285,6 +290,10 @@
 {
     [self setIndentationLevel:[self indentationLevel] - 1];
 }
+
+#pragma mark Primitive
+
+- (void)writeString:(NSString *)string; { [super writeString:string]; }
 
 #pragma mark Properties
 
