@@ -233,6 +233,10 @@
 		{
 			reasonOfSubError = [[subError userInfo] objectForKey:@"reason"];
 		}
+		if (!reasonOfSubError)
+		{
+			reasonOfSubError = [NSString stringWithFormat:NSLocalizedString(@"Error type: %@, code %d", @"information for an error"), [subError domain], [subError code]];
+		}
 
 		NSMutableDictionary *errorInfo = [NSMutableDictionary dictionary];
 		[errorInfo setValue:NSLocalizedString(@"There is a problem with the document.", @"brief description of error.") forKey:NSLocalizedDescriptionKey];

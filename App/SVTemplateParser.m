@@ -264,7 +264,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	}
     @catch (NSException *exception)
     {
-        NSLog(@"Exception raised during parsing of component:\n%@\nTemplate:\n%@",
+        NSLog(@"Exception raised during parsing of component:\n%@\n\n%@\nTemplate:\n%@",
+			  exception,	// we want to see what the actual problem was first!
               [self component],
               [self template]);
         
