@@ -22,6 +22,9 @@
 }
 
 
+- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+
+
 #pragma mark Tag Whitelist
 + (BOOL)validateTagName:(NSString *)tagName;
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;

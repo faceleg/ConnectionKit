@@ -1,0 +1,17 @@
+//
+//  SVParagraphHTMLContext.h
+//  Sandvox
+//
+//  Created by Mike on 10/02/2010.
+//  Copyright 2010 Karelia Software. All rights reserved.
+//
+
+#import "SVTitleBoxHTMLContext.h"
+
+
+@interface SVParagraphHTMLContext : SVTitleBoxHTMLContext
+{
+
+}
+
+@end

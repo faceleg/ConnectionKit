@@ -49,7 +49,7 @@
 
 - (id)initWithMutableString:(NSMutableString *)string
 {
-    self = [self initWithMutableString:string];
+    self = [super initWithMutableString:string];
     
     _unwrittenDOMElements = [[NSMutableArray alloc] init];
     
@@ -195,21 +195,6 @@
         }
         else
         {
-            // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
-            if ([tagName isEqualToString:@"P"])
-            {
-                DOMNode *parent = [element parentNode];
-                DOMNode *refNode = element;
-                while (parent)
-                {
-                    [parent flattenNodesAfterChild:refNode];
-                    if ([[(DOMElement *)parent tagName] isEqualToString:@"P"]) break;
-                    refNode = parent; parent = [parent parentNode];
-                }
-            }
-            
-            
-            
             // Everything else gets removed, or replaced with a <span> with appropriate styling
             if ([[element style] length] > 0)
             {
