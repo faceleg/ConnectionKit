@@ -204,17 +204,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 - (NSString *)editingElementID { return [[self plugIn] elementID]; }
 - (BOOL)shouldPublishEditingElementID { return YES; }
 
-- (void)writeHTML
+- (void)writeBody
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    
-    [context openTag:@"div"];
-    if ([self className]) [context writeAttribute:@"class" value:[self className]];
-    [context closeStartTag];
-    
     [[self plugIn] writeHTML];
-    
-    [context writeEndTag];
 }
 
 - (DOMElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
