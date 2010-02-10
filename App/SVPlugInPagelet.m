@@ -201,21 +201,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark HTML
 
-- (NSString *)editingElementID { return [[self plugIn] elementID]; }
-- (BOOL)shouldPublishEditingElementID { return YES; }
-
 - (void)writeBody
 {
     [[self plugIn] writeHTML];
-}
-
-- (DOMElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
-{
-    // Need to use the plug-in's ID rather than our own
-    OBPRECONDITION(document);
-    
-    DOMElement *result = [document getElementById:[[self plugIn] elementID]];
-    return result;
 }
 
 - (Class)DOMControllerClass
