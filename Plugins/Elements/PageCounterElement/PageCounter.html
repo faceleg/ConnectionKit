@@ -1,4 +1,4 @@
-<div class="page_counter" style="text-align: center;" id="pc-[[=uniqueID]]">
+<div class="page_counter" style="text-align: center;" id="pc-[[=elementID]]">
 
 [[if parser.HTMLGenerationPurpose]]
 	<script type="text/javascript" src="http://service.karelia.com/ctr/count.js?u=[[=%&parser.currentPage.URL]]"></script>
@@ -18,7 +18,7 @@ var pcHeight = "[[=delegate.height]]";
 
 function showCount(countStr)
 {
-	var pagelet = document.getElementById("pc-[[=uniqueID]]");
+	var pagelet = document.getElementById("pc-[[=elementID]]");
 	var i, c = countStr.length;
 	for (i = 0; i < c; i++)
 	{
@@ -40,14 +40,14 @@ showCount(svxPageCount);
 var paragraph = document.createElement("p");
 var text = document.createTextNode(svxPageCount);
 paragraph.appendChild(text);
-document.getElementById("pc-[[=uniqueID]]").appendChild(paragraph);
+document.getElementById("pc-[[=elementID]]").appendChild(paragraph);
 </script>
 [[endif]]
 
 [[if delegate.type==0]]
 <script type="text/javascript">
 var commentNode = document.createComment(svxPageCount);
-document.getElementById("pc-[[=uniqueID]]").appendChild(commentNode);
+document.getElementById("pc-[[=elementID]]").appendChild(commentNode);
 </script>
 [[endif]]
 
