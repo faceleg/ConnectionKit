@@ -251,6 +251,11 @@
     // Ignoring size for now, but may have to revisit
 }
 
+#pragma mark High-level Writing
+
+// Comments have no place in text fields! Yes, they get left in the DOM until it's replaced, but you can't see them, so no harm done
+- (void)writeComment:(NSString *)comment; { }
+
 #pragma mark Primitive Writing
 
 - (void)writeString:(NSString *)string
