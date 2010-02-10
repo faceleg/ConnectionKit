@@ -182,7 +182,8 @@
     if (![[self class] isTagAllowed:tagName])
     {
         // Convert a bold or italic tag to <strong> or <em>
-        if ([tagName isEqualToString:@"B"])
+        if ([tagName isEqualToString:@"B"] ||
+            [element isKindOfClass:[DOMHTMLHeadingElement class]])
         {
             result = [self changeElement:element toTagName:@"STRONG"];
         }
