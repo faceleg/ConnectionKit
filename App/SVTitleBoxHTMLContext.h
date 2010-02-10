@@ -18,12 +18,8 @@
 @interface SVTitleBoxHTMLContext : SVMutableStringHTMLContext
 {
   @private
-    SVBodyParagraph *_paragraph;
     NSMutableArray  *_unwrittenDOMElements;
 }
-
-- (id)initWithParagraph:(SVBodyParagraph *)paragraph;
-@property(nonatomic, retain, readonly) SVBodyParagraph *paragraph;
 
 
 #pragma mark Tag Whitelist

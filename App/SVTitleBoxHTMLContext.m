@@ -47,13 +47,10 @@
 
 @implementation SVTitleBoxHTMLContext
 
-- (id)initWithParagraph:(SVBodyParagraph *)paragraph;
+- (id)initWithMutableString:(NSMutableString *)string
 {
-    OBPRECONDITION(paragraph);
+    self = [self initWithMutableString:string];
     
-    self = [self init];
-    
-    _paragraph = [paragraph retain];
     _unwrittenDOMElements = [[NSMutableArray alloc] init];
     
     return self;
@@ -61,13 +58,10 @@
 
 - (void)dealloc
 {
-    [_paragraph release];
     [_unwrittenDOMElements release];
     
     [super dealloc];
 }
-
-@synthesize paragraph = _paragraph;
 
 #pragma mark Writing
 
