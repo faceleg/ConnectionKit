@@ -9,7 +9,7 @@
 #import <CoreData/CoreData.h>
 #import "SVBodyElement.h"
 
-@class SVPlugInGraphic;
+@class SVPlugInPagelet;
 
 @interface SVBodyParagraph :  SVBodyElement  
 

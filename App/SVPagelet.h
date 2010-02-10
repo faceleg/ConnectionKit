@@ -12,9 +12,7 @@
 @class KTPage, SVSidebar, SVCallout, SVTemplate;
 
 
-@interface SVPagelet : SVContentObject  
-
-+ (SVPagelet *)insertNewPageletIntoManagedObjectContext:(NSManagedObjectContext *)context;
+@interface SVPagelet : SVContentObject
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
@@ -28,10 +26,6 @@
 @property(nonatomic, retain) SVTitleBox *titleBox;
 - (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
 + (NSString *)placeholderTitleText;
-
-
-#pragma mark Body Text
-@property(nonatomic, retain, readonly) SVBody *body;
 
 
 #pragma mark Layout/Styling

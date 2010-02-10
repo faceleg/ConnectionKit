@@ -19,31 +19,9 @@
 #import "NSString+Karelia.h"
 
 
-@interface SVPagelet ()
-@property(nonatomic, retain, readwrite) SVBody *body;
-@end
-
-
-#pragma mark -
-
-
 @implementation SVPagelet 
 
 #pragma mark Initialization
-
-+ (SVPagelet *)insertNewPageletIntoManagedObjectContext:(NSManagedObjectContext *)moc;
-{
-	OBPRECONDITION(moc);
-	
-	
-    // Create the pagelet
-	SVPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"Pagelet"
-													  inManagedObjectContext:moc];
-	OBASSERT(result);
-	
-    
-	return result;
-}
 
 - (void)awakeFromInsert
 {
@@ -56,10 +34,6 @@
     
     // Title
     [self setTitleWithString:[[self class] placeholderTitleText]];
-    
-    
-    // Create corresponding body text
-    [self setBody:[SVBody insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
 #pragma mark Title
@@ -81,10 +55,6 @@
 {
     return NSLocalizedString(@"Pagelet", "pagelet title placeholder");
 }
-
-#pragma mark Body Text
-
-@dynamic body;
 
 #pragma mark Layout/Styling
 

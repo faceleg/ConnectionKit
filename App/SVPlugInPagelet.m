@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVPlugInGraphic.h"
+#import "SVPlugInPagelet.h"
 
 #import "KTAbstractPluginDelegate.h"
 #import "SVDOMController.h"
@@ -22,7 +22,7 @@
 static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
 
 
-@implementation SVPlugInGraphic
+@implementation SVPlugInPagelet
 
 #pragma mark Lifecycle
 

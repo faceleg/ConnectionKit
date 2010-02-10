@@ -11,7 +11,7 @@
 #import "SVApplicationController.h"
 #import "SVBodyParagraph.h"
 #import "SVCallout.h"
-#import "SVPlugInGraphic.h"
+#import "SVPlugInPagelet.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
 #import "KTPage.h"
@@ -671,7 +671,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)insertElement:(id)sender;
 {
     // Create element
-    SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInGraphic"    
+    SVPlugInPagelet *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
                                                              inManagedObjectContext:[[self page] managedObjectContext]];
     
     [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
@@ -683,13 +683,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     DOMRange *selection = [[self webEditor] selectedDOMRange];
     SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
         
-    if (![text insertElement:element])
+    if (text)
     {
-        SVPagelet *pagelet = [_selectableObjectsController newPagelet];
-        [[pagelet body] addElement:element];
-        
-        [self _insertPageletInSidebar:pagelet];
-        [pagelet release];
+        // TODO: Insert in text
+    }
+    else
+    {
+        [self _insertPageletInSidebar:element];
     }
 }
 

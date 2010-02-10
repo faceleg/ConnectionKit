@@ -11,7 +11,7 @@
 
 #import "SVParagraphLink.h"
 #import "SVParagraphHTMLContext.h"
-#import "SVPlugInGraphic.h"
+#import "SVPlugInPagelet.h"
 
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"

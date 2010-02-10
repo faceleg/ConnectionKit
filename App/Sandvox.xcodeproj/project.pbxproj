@@ -241,8 +241,8 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
-		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
-		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
+		272B38CD10B18FB60056B4CA /* SVPlugInPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */; };
+		272B38CE10B18FB60056B4CA /* SVPlugInPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
 		272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */; };
 		272C18950D0C131B00734495 /* KTMediaFileUpload.h in Headers */ = {isa = PBXBuildFile; fileRef = 272C18930D0C131B00734495 /* KTMediaFileUpload.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -414,6 +414,8 @@
 		27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTextBlock.m */; };
 		27A5E6E911086705007C2E7E /* TB_Text_Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 27A5E6E811086705007C2E7E /* TB_Text_Tool.tiff */; };
+		27A617141122FA0000004FED /* SVTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A617121122FA0000004FED /* SVTextBox.h */; };
+		27A617151122FA0000004FED /* SVTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A617131122FA0000004FED /* SVTextBox.m */; };
 		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
@@ -1685,8 +1687,8 @@
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
-		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
-		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
+		272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInPagelet.h; sourceTree = "<group>"; };
+		272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInPagelet.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
 		272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorButtonCell.m; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
@@ -1867,6 +1869,8 @@
 		27A50F260D19443800149038 /* DOM+KTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+KTWebViewController.h"; sourceTree = "<group>"; };
 		27A50F270D19443800149038 /* DOM+KTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+KTWebViewController.m"; sourceTree = "<group>"; };
 		27A5E6E811086705007C2E7E /* TB_Text_Tool.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = TB_Text_Tool.tiff; sourceTree = "<group>"; };
+		27A617121122FA0000004FED /* SVTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBox.h; sourceTree = "<group>"; };
+		27A617131122FA0000004FED /* SVTextBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextBox.m; sourceTree = "<group>"; };
 		27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebPathsProtocol.h; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
@@ -2827,8 +2831,8 @@
 			isa = PBXGroup;
 			children = (
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
-				272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */,
-				272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */,
+				272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */,
+				272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */,
 				272DA588108E6F42007A99D5 /* SVElementPlugIn.h */,
 				272DA589108E6F42007A99D5 /* SVElementPlugIn.m */,
 				273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */,
@@ -3257,23 +3261,17 @@
 		278F798F10B4485C00BDBAF7 /* Body Text */ = {
 			isa = PBXGroup;
 			children = (
-				277E4E8611104CF4005AF346 /* SVImage.h */,
-				277E4E8711104CF4005AF346 /* SVImage.m */,
 				270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */,
 				270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */,
 				270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */,
 				270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */,
 				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
-				27C064BF10825F4800795D66 /* SVGraphic.h */,
-				27C064C010825F4800795D66 /* SVGraphic.m */,
 				278F79A010B44A3B00BDBAF7 /* SVBodyElement.h */,
 				278F79A110B44A3B00BDBAF7 /* SVBodyElement.m */,
 				278F799610B44A1B00BDBAF7 /* SVBodyParagraph.h */,
 				278F799710B44A1B00BDBAF7 /* SVBodyParagraph.m */,
 				278F799810B44A1B00BDBAF7 /* SVBody.h */,
 				278F799910B44A1B00BDBAF7 /* SVBody.m */,
-				273D6F4F10E7C9DF003F5BA8 /* SVCallout.h */,
-				273D6F5010E7C9DF003F5BA8 /* SVCallout.m */,
 				270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */,
 				270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */,
 			);
@@ -4142,11 +4140,19 @@
 		3C5A73710BF7B69300776464 /* Pagelets */ = {
 			isa = PBXGroup;
 			children = (
+				27A617121122FA0000004FED /* SVTextBox.h */,
+				27A617131122FA0000004FED /* SVTextBox.m */,
 				279C587F109916F20030F3B7 /* SVSidebar.h */,
 				279C5880109916F20030F3B7 /* SVSidebar.m */,
 				27C0656C10828E9900795D66 /* SVPagelet.h */,
 				27C0656D10828E9900795D66 /* SVPagelet.m */,
 				27A095331097598600F43746 /* PageletTemplate.html */,
+				273D6F4F10E7C9DF003F5BA8 /* SVCallout.h */,
+				273D6F5010E7C9DF003F5BA8 /* SVCallout.m */,
+				27C064BF10825F4800795D66 /* SVGraphic.h */,
+				27C064C010825F4800795D66 /* SVGraphic.m */,
+				277E4E8611104CF4005AF346 /* SVImage.h */,
+				277E4E8711104CF4005AF346 /* SVImage.m */,
 			);
 			name = Pagelets;
 			sourceTree = "<group>";
@@ -5232,7 +5238,7 @@
 				2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */,
 				CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */,
 				27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */,
-				272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */,
+				272B38CD10B18FB60056B4CA /* SVPlugInPagelet.h in Headers */,
 				272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */,
 				278F799C10B44A1B00BDBAF7 /* SVBodyParagraph.h in Headers */,
 				278F799E10B44A1B00BDBAF7 /* SVBody.h in Headers */,
@@ -5283,6 +5289,7 @@
 				CE9E5260111C933B00BEF1C8 /* SVDocumentInspector.h in Headers */,
 				27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */,
 				27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */,
+				27A617141122FA0000004FED /* SVTextBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6621,7 +6628,7 @@
 				2752330C10A8938400120CE8 /* KSInspectorTabCell.m in Sources */,
 				2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */,
 				CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */,
-				272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */,
+				272B38CE10B18FB60056B4CA /* SVPlugInPagelet.m in Sources */,
 				272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */,
 				CED82C7D10B23248004677E4 /* SVDesignChooserImageView.m in Sources */,
 				278F799D10B44A1B00BDBAF7 /* SVBodyParagraph.m in Sources */,
@@ -6673,6 +6680,7 @@
 				CE9E5261111C933B00BEF1C8 /* SVDocumentInspector.m in Sources */,
 				27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */,
 				27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */,
+				27A617151122FA0000004FED /* SVTextBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

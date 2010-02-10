@@ -44,7 +44,7 @@
 
 + (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:@"PageletBody"
+    return [NSEntityDescription insertNewObjectForEntityForName:@"TextBoxBody"
                                          inManagedObjectContext:context];
 }
 

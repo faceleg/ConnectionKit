@@ -12,10 +12,10 @@
 #import "SVBodyParagraph.h"
 #import "SVCallout.h"
 #import "KTPage.h"
-#import "SVPagelet.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTitleBox.h"
+#import "SVTextBox.h"
 
 
 @interface SVWebContentObjectsController ()
@@ -34,7 +34,7 @@
 - (SVPagelet *)newPagelet;
 {
     NSManagedObjectContext *moc = [[self page] managedObjectContext];
-    SVPagelet *result = [SVPagelet insertNewPageletIntoManagedObjectContext:moc];
+    SVTextBox *result = [SVTextBox insertNewTextBoxIntoManagedObjectContext:moc];
 	OBASSERT(result);
     
     // Create matching first paragraph

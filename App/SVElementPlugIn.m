@@ -124,6 +124,9 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 - (KTAbstractPage *)page
 {
+    return [[[[self delegateOwner] sidebars] anyObject] page];
+    
+    
     SVBody *body = [[self delegateOwner] enclosingBody];
     
     KTAbstractPage *result = nil;
@@ -131,7 +134,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     {
         result = [body valueForKey:@"page"];
     }
-    else if ([[[body entity] name] isEqualToString:@"PageletBody"])
+    else if ([[[body entity] name] isEqualToString:@"TextBoxBody"])
     {
         SVSidebar *aSidebar = [[(SVPagelet *)[body valueForKey:@"pagelet"] sidebars] anyObject];
         result = [aSidebar page];
