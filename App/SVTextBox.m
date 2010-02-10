@@ -9,6 +9,8 @@
 #import "SVTextBox.h"
 
 #import "SVBody.h"
+#import "SVHTMLTemplateParser.h"
+#import "SVTemplate.h"
 
 
 @interface SVTextBox ()
@@ -27,7 +29,7 @@
 	
 	
     // Create the pagelet
-	SVPagelet *result = [NSEntityDescription insertNewObjectForEntityForName:@"TextBox"
+	SVTextBox *result = [NSEntityDescription insertNewObjectForEntityForName:@"TextBox"
 													  inManagedObjectContext:moc];
 	OBASSERT(result);
 	
@@ -46,6 +48,24 @@
     
     // Create corresponding body text
     [self setBody:[SVBody insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
+}
+
+#pragma mark HTML
+
+- (void)writeBody;
+{
+    static SVTemplate *sBodyTemplate;
+    if (!sBodyTemplate)
+    {
+        sBodyTemplate = [[SVTemplate templateNamed:@"TextBoxBodyTemplate.html"] retain];
+    }
+    
+    SVHTMLTemplateParser *parser =
+    [[SVHTMLTemplateParser alloc] initWithTemplate:[sBodyTemplate templateString]
+                                         component:self];
+    
+    [parser parse];
+    [parser release];
 }
 
 @end

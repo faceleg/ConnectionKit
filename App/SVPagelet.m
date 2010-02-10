@@ -234,11 +234,18 @@
     
     SVTemplate *template = [[self class] template];
     
-    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                                                        component:self];
+    SVHTMLTemplateParser *parser =
+    [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                         component:self];
     
     [parser parse];
     [parser release];
+}
+
+- (void)writeBody;
+{
+    SUBCLASSMUSTIMPLEMENT;
+    [self doesNotRecognizeSelector:_cmd];
 }
 
 + (SVTemplate *)template;

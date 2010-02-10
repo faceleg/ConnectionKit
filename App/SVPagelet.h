@@ -48,9 +48,11 @@
 
 
 #pragma mark HTML
-+ (SVTemplate *)template;
 
+- (void)writeBody;  // Subclasses MUST override
 @property(nonatomic, retain, readonly) NSString *elementID;
+
++ (SVTemplate *)template;
 
 
 @end
