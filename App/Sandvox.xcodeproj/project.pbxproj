@@ -205,8 +205,8 @@
 		270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */; };
 		270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */; };
 		270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */; };
-		270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */; };
-		270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */; };
+		270E49A510FA326300EF1FA0 /* SVTitleBoxHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E49A310FA326300EF1FA0 /* SVTitleBoxHTMLContext.h */; };
+		270E49A610FA326300EF1FA0 /* SVTitleBoxHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E49A410FA326300EF1FA0 /* SVTitleBoxHTMLContext.m */; };
 		270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */; };
 		270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */; };
 		270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */; };
@@ -1649,8 +1649,8 @@
 		270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebarPageletsController.m; sourceTree = "<group>"; };
 		270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphLink.h; sourceTree = "<group>"; };
 		270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphLink.m; sourceTree = "<group>"; };
-		270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphHTMLContext.h; sourceTree = "<group>"; };
-		270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphHTMLContext.m; sourceTree = "<group>"; };
+		270E49A310FA326300EF1FA0 /* SVTitleBoxHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBoxHTMLContext.h; sourceTree = "<group>"; };
+		270E49A410FA326300EF1FA0 /* SVTitleBoxHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTitleBoxHTMLContext.m; sourceTree = "<group>"; };
 		270E4A1010FA412400EF1FA0 /* SVStringAttribute.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVStringAttribute.h; sourceTree = "<group>"; };
 		270E4A1110FA412400EF1FA0 /* SVStringAttribute.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVStringAttribute.m; sourceTree = "<group>"; };
 		270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkInspector.h; sourceTree = "<group>"; };
@@ -3157,24 +3157,20 @@
 			path = QTKit;
 			sourceTree = "<group>";
 		};
-		277D3CB310A1B9DE00E4944A /* General */ = {
+		277D3CB310A1B9DE00E4944A /* HTML Context */ = {
 			isa = PBXGroup;
 			children = (
+				270E49A310FA326300EF1FA0 /* SVTitleBoxHTMLContext.h */,
+				270E49A410FA326300EF1FA0 /* SVTitleBoxHTMLContext.m */,
 				27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */,
 				27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */,
-				27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */,
-				27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */,
-				27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */,
-				27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */,
-				27A50E880D19282B00149038 /* SVHTMLTextBlock.h */,
-				27A50E890D19282B00149038 /* SVHTMLTextBlock.m */,
 				27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */,
 				27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */,
 				27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */,
 				27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */,
 				270E4D2C10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m */,
 			);
-			name = General;
+			name = "HTML Context";
 			sourceTree = "<group>";
 		};
 		277D3CB410A1B9E900E4944A /* Template Parser */ = {
@@ -3274,8 +3270,6 @@
 				278F799710B44A1B00BDBAF7 /* SVBodyParagraph.m */,
 				278F799810B44A1B00BDBAF7 /* SVBody.h */,
 				278F799910B44A1B00BDBAF7 /* SVBody.m */,
-				270E49A310FA326300EF1FA0 /* SVParagraphHTMLContext.h */,
-				270E49A410FA326300EF1FA0 /* SVParagraphHTMLContext.m */,
 			);
 			name = "Body Text";
 			sourceTree = "<group>";
@@ -3316,6 +3310,19 @@
 				2747DF8111009B59007428BB /* SVURLPreviewViewController.m */,
 			);
 			name = "URL Preview";
+			sourceTree = "<group>";
+		};
+		27A6186E1123471900004FED /* Text Blocks */ = {
+			isa = PBXGroup;
+			children = (
+				27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */,
+				27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */,
+				27ACA30F0D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h */,
+				27ACA3100D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m */,
+				27A50E880D19282B00149038 /* SVHTMLTextBlock.h */,
+				27A50E890D19282B00149038 /* SVHTMLTextBlock.m */,
+			);
+			name = "Text Blocks";
 			sourceTree = "<group>";
 		};
 		27A832830D92D8CC005FF13D /* Code Injection */ = {
@@ -4242,7 +4249,8 @@
 		3C5A73950BF7BA6800776464 /* HTML Generation */ = {
 			isa = PBXGroup;
 			children = (
-				277D3CB310A1B9DE00E4944A /* General */,
+				277D3CB310A1B9DE00E4944A /* HTML Context */,
+				27A6186E1123471900004FED /* Text Blocks */,
 				277D3CB410A1B9E900E4944A /* Template Parser */,
 			);
 			name = "HTML Generation";
@@ -5268,7 +5276,7 @@
 				27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */,
 				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
 				270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */,
-				270E49A510FA326300EF1FA0 /* SVParagraphHTMLContext.h in Headers */,
+				270E49A510FA326300EF1FA0 /* SVTitleBoxHTMLContext.h in Headers */,
 				270E4A1210FA412400EF1FA0 /* SVStringAttribute.h in Headers */,
 				270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */,
 				27E24AC610FB9591004EFE9F /* SVLink.h in Headers */,
@@ -6660,7 +6668,7 @@
 				27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */,
 				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
 				270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */,
-				270E49A610FA326300EF1FA0 /* SVParagraphHTMLContext.m in Sources */,
+				270E49A610FA326300EF1FA0 /* SVTitleBoxHTMLContext.m in Sources */,
 				270E4A1310FA412400EF1FA0 /* SVStringAttribute.m in Sources */,
 				270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */,
 				270E4D2D10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m in Sources */,

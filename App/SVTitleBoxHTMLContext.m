@@ -1,19 +1,19 @@
 //
-//  SVParagraphHTMLContext.m
+//  SVTitleBoxHTMLContext.m
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVParagraphHTMLContext.h"
+#import "SVTitleBoxHTMLContext.h"
 #import "SVBodyParagraph.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMElement+Karelia.h"
 
 
-@interface SVParagraphHTMLContext ()
+@interface SVTitleBoxHTMLContext ()
 
 - (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
 
@@ -28,7 +28,7 @@
 #pragma mark -
 
 
-@interface DOMNode (SVParagraphHTMLContext)
+@interface DOMNode (SVTitleBoxHTMLContext)
 - (void)flattenNodesAfterChild:(DOMNode *)aChild;
 
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
@@ -37,7 +37,7 @@
 - (BOOL)hasParagraphContent;    // like -isParagraphContent but then searches subtree if needed
 - (void)removeNonParagraphContent;
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVParagraphHTMLContext *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context;
 
 @end
 
@@ -45,7 +45,7 @@
 #pragma mark -
 
 
-@implementation SVParagraphHTMLContext
+@implementation SVTitleBoxHTMLContext
 
 - (id)initWithParagraph:(SVBodyParagraph *)paragraph;
 {
@@ -332,7 +332,7 @@
 #pragma mark -
 
 
-@implementation DOMNode (SVParagraphHTMLContext)
+@implementation DOMNode (SVTitleBoxHTMLContext)
 
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 
@@ -398,21 +398,21 @@
     }
 }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVParagraphHTMLContext *)context; { return self; }
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context; { return self; }
 
 @end
 
-@implementation DOMElement (SVParagraphHTMLContext)
+@implementation DOMElement (SVTitleBoxHTMLContext)
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
 - (BOOL)isParagraphContent;
 {
-    BOOL result = [SVParagraphHTMLContext isTagParagraphContent:[self tagName]];
+    BOOL result = [SVTitleBoxHTMLContext isTagParagraphContent:[self tagName]];
     return result;
 }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVParagraphHTMLContext *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context;
 {
     return [context replaceElementIfNeeded:self];
 }
@@ -420,14 +420,14 @@
 @end
         
 
-@implementation DOMHTMLBRElement (SVParagraphHTMLContext)
+@implementation DOMHTMLBRElement (SVTitleBoxHTMLContext)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
-@implementation DOMHTMLAnchorElement (SVParagraphHTMLContext)
+@implementation DOMHTMLAnchorElement (SVTitleBoxHTMLContext)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
-@implementation DOMCharacterData (SVParagraphHTMLContext)
+@implementation DOMCharacterData (SVTitleBoxHTMLContext)
 - (BOOL)isParagraphContent; { return YES; }
 @end

@@ -10,7 +10,7 @@
 #import "SVBodyParagraphDOMAdapter.h"
 
 #import "SVParagraphLink.h"
-#import "SVParagraphHTMLContext.h"
+#import "SVTitleBoxHTMLContext.h"
 #import "SVPlugInPagelet.h"
 
 #import "NSSet+Karelia.h"
@@ -79,7 +79,7 @@
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;
 {
     // Easiest way to archive string, is to use a context – see, they do all sorts!
-    SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithParagraph:self];
+    SVMutableStringHTMLContext *context = [[SVTitleBoxHTMLContext alloc] initWithParagraph:self];
     [element writeInnerHTMLToContext:context];
     
     NSString *string = [context markupString];

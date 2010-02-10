@@ -1,5 +1,5 @@
 //
-//  SVParagraphHTMLContext.h
+//  SVTitleBoxHTMLContext.h
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
@@ -15,7 +15,7 @@
 @class SVBodyParagraph;
 
 
-@interface SVParagraphHTMLContext : SVMutableStringHTMLContext
+@interface SVTitleBoxHTMLContext : SVMutableStringHTMLContext
 {
   @private
     SVBodyParagraph *_paragraph;
