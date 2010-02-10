@@ -7,7 +7,7 @@
 //
 
 #import "SVTitleBox.h"
-#import "SVWebEditorTextFieldController.h"
+#import "SVTextFieldDOMController.h"
 
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
@@ -40,7 +40,7 @@
 
 - (Class)DOMControllerClass;
 {
-    return [SVWebEditorTextFieldController class];
+    return [SVTextFieldDOMController class];
 }
 
 @end

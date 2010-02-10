@@ -1,17 +1,17 @@
 //
-//  SVWebTextField.m
+//  SVTextFieldDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 14/10/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorTextFieldController.h"
+#import "SVTextFieldDOMController.h"
 
 #import "DOMNode+Karelia.h"
 
 
-@implementation SVWebEditorTextFieldController
+@implementation SVTextFieldDOMController
 
 - (void)dealloc
 {

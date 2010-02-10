@@ -12,7 +12,7 @@
 #import "SVWebEditorTextController.h"
 
 
-@interface SVWebEditorTextFieldController : SVWebEditorTextController
+@interface SVTextFieldDOMController : SVWebEditorTextController
 {
   @private
     NSString    *_placeholder;

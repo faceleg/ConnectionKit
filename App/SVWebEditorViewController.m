@@ -24,7 +24,7 @@
 #import "SVTitleBox.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVWebEditorTextFieldController.h"
+#import "SVTextFieldDOMController.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -277,7 +277,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if ([value isKindOfClass:[SVTitleBox class]])
     {
         // Copy basic properties from text block
-        result = [[SVWebEditorTextFieldController alloc] initWithContentObject:value inDOMDocument:domDoc];
+        result = [[SVTextFieldDOMController alloc] initWithContentObject:value inDOMDocument:domDoc];
         [result setHTMLContext:[self HTMLContext]];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
@@ -300,7 +300,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     else
     {
         // Copy basic properties from text block
-        result = [[SVWebEditorTextFieldController alloc] initWithHTMLElement:element];
+        result = [[SVTextFieldDOMController alloc] initWithHTMLElement:element];
         [result setHTMLContext:[self HTMLContext]];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
