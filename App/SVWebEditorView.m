@@ -805,8 +805,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
-        SVWebEditorItem *item = [self selectedItemAtPoint:point handle:NULL];
-        if (!item) item = [self selectableItemAtPoint:point];
+        // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint so as to take hyperlinks into account
+        SVGraphicHandle handle;
+        SVWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
+        
+        if (!item || handle == kSVGraphicNoHandle) item = [self selectableItemAtPoint:point];
         
         if (item)
         {
