@@ -39,14 +39,24 @@
 
 @class WebView;
 
-@interface PageCounterPagelet : KTAbstractPluginDelegate
+@interface PageCounterPagelet : SVElementPlugIn
 {
-	IBOutlet NSPopUpButton *oTheme;
+	int _selectedTheme;
 }
 
+@property (assign) int selectedTheme;
+
+
+
++ (NSArray *)themes;
+
 @end
+
+enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
 
 extern NSString *PCThemeKey;
 extern NSString *PCWidthKey;
 extern NSString *PCHeightKey;
 extern NSString *PCImagesPathKey;
+extern NSString *PCTypeKey;
+extern NSString *PCSampleImageKey;

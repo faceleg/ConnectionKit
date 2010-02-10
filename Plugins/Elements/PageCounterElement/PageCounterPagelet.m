@@ -54,10 +54,10 @@
  
 
 #import "PageCounterPagelet.h"
+#import "PageCounterInspector.h"
 
 #import "SandvoxPlugin.h"
 
-enum { PC_INVISIBLE = 0, PC_TEXT = 1, PC_GRAPHICS = 2 };
 
 NSString *PCThemeKey = @"theme";
 NSString *PCTypeKey = @"type";		
@@ -69,6 +69,8 @@ NSString *PCSampleImageKey = @"sampleImage";
 
 
 @implementation PageCounterPagelet
+
+@synthesize selectedTheme = _selectedTheme;
 
 #pragma mark -
 #pragma mark Initialization
@@ -169,85 +171,25 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return sThemes;
 }
 
-- (void)awakeFromNib
+
+
++ (NSSet *)plugInKeys
 {
-	[oTheme removeAllItems];
-	
-	NSEnumerator *themeEnum = [[[self class] themes] objectEnumerator];
-	NSDictionary *themeDict;
-	BOOL hasDoneGraphicsYet = NO;
-	int tag = 0;
-	
-	while ((themeDict = [themeEnum nextObject]) != nil)
-	{
-		NSString *theme = [themeDict objectForKey:PCThemeKey];
-
-		if ([[themeDict objectForKey:PCTypeKey] intValue] == PC_GRAPHICS)
-		{
-			if (!hasDoneGraphicsYet)
-			{
-				hasDoneGraphicsYet = YES;
-				//[[oTheme menu] addItem:[NSMenuItem separatorItem]];		// PROBLEMS WITH TAG BINDING?
-			}
-			[oTheme addItemWithTitle:@""];	// ADD THE MENU
-
-			NSImage *sampleImage = [themeDict objectForKey:PCSampleImageKey];
-			if (sampleImage)
-			{
-				[[oTheme lastItem] setImage:sampleImage];
-			}
-			[[oTheme lastItem] setTag:tag++];
-		}
-		else
-		{
-			[oTheme addItemWithTitle:theme];	// ADD THE MENU
-/// baseline is wonky here!
-//			[[oTheme lastItem] setAttributedTitle:	// make it bold, small system font
-//				[[[NSAttributedString alloc]
-//					initWithString:theme
-//						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-//										[NSFont boldSystemFontOfSize: [NSFont smallSystemFontSize]],
-//										NSFontAttributeName,
-//										nil]
-//					] autorelease]];
-			[[oTheme lastItem] setTag:tag++];
-		}
-	}
-	int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-	[oTheme setBordered:(index < 2)];
+	return [NSSet setWithObjects:@"selectedTheme", 
+			nil];
+}
++ (Class)inspectorViewControllerClass;
+{
+	return [PageCounterInspector class];
 }
 
-#pragma mark -
-#pragma mark Selected Theme
-
-- (void)setDelegateOwner:(id)newOwner
-{
-	// We keep an eye on "selected theme" so we can add or remove the border from the popup button
-	[[self delegateOwner] removeObserver:self forKeyPath:@"selectedTheme"];
-	[super setDelegateOwner:newOwner];
-	[newOwner addObserver:self forKeyPath:@"selectedTheme" options:0 context:NULL];
-}
-
-- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
-{
-	if ([keyPath isEqualToString:@"selectedTheme"])
-	{
-		// Add or remove the popup button's border as appropriate
-		int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
-		[oTheme setBordered:(index < 2)];
-	}
-	else
-	{
-		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-	}
-}
 
 #pragma mark -
 #pragma mark Accessors
 
 - (NSDictionary *)currentThemeDict
 {
-	int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
+	int index = self.selectedTheme;
 	if (index >= [[[self class] themes] count]) index = 0;
 	NSDictionary *result = [[[self class] themes] objectAtIndex:index];
 	return result;
