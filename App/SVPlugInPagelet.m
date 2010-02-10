@@ -203,7 +203,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)writeBody
 {
+    NSString *bundleID = [[[self plugIn] bundle] bundleIdentifier];
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    [context writeComment:[NSString stringWithFormat:@" %@ ", bundleID]];
     [[self plugIn] writeHTML];
+    [context writeComment:[NSString stringWithFormat:@" /%@ ", bundleID]];
 }
 
 - (Class)DOMControllerClass
