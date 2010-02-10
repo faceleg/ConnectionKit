@@ -8,6 +8,8 @@
 
 #import "SVTextFieldDOMController.h"
 
+#import "SVTitleBoxHTMLContext.h"
+
 #import "DOMNode+Karelia.h"
 
 
@@ -84,11 +86,17 @@
 
 - (void)didChangeText;
 {
+    // Validate the HTML
+    SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] init];
+    [[self textHTMLElement] writeInnerHTMLToContext:context];
+    
+    
+    // Do usual stuff
     [super didChangeText];
     
     
-    // Push change down into the model
-    NSString *editedValue = ([self isRichText] ? [self HTMLString] : [self string]);
+    // Push change down to model
+    NSString *editedValue = [context mutableString];
     if (![editedValue isEqualToString:_uneditedValue])
     {
         NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
@@ -99,6 +107,10 @@
                       forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
         _isCommittingEditing = NO;
     }
+    
+    
+    // Tidy up
+    [context release];
 }
 
 #pragma mark Placeholder
