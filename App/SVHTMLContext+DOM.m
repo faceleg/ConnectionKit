@@ -170,10 +170,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (DOMNode *)writeHTMLToContext:(SVHTMLContext *)context;
 {
-	NSString *comment = [self data];
-	comment = [comment stringByReplacing:@"--" with:@"- -"];	// don't allow any double-dashes!
-	[context writeHTMLString:[NSString stringWithFormat:@"<!-- %@ -->", comment]];
-    
+	[context writeComment:[self data]];
     return [self nextSibling];
 }
 
