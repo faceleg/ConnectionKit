@@ -35,7 +35,7 @@
 //
 
 #import "ContactElementDelegate.h"
-
+#import "ContactElementInspectorController.h"
 #import "ContactElementField.h"
 
 #import "SandvoxPlugin.h"

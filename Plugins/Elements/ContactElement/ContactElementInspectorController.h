@@ -35,7 +35,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
+#import "SandvoxPlugin.h"
 
 @class NTBoxView;
 
@@ -50,11 +50,11 @@
 	IBOutlet NSTextField			*oLabel;
 	IBOutlet NSForm					*oCustomLabelsForm;
 	
-	IBOutlet ContactElementFieldsArrayController *oArrayController;
+//	IBOutlet ContactElementFieldsArrayController *oArrayController;
 	
 @private
 	
-	ContactElementField *myEmailField;
+//	ContactElementField *myEmailField;
 	
 	NSManagedObject *myPluginProperties;
 	NSArray	*myFields;
