@@ -190,6 +190,7 @@
         {
             result = [self changeElement:element toTagName:@"EM"];
         }
+        // Convert a <font> tag to <span> with appropriate styling
         else if ([tagName isEqualToString:@"FONT"])
         {
             result = [self changeElement:element toTagName:@"SPAN"];
@@ -197,18 +198,39 @@
             [self populateSpanElement:(DOMHTMLElement *)result
                       fromFontElement:(DOMHTMLFontElement *)element];
         }
-        else if ([[element style] length] > 0)
-        {
-            DOMElement *replacement = [self changeElement:element toTagName:@"SPAN"];
-            [replacement copyInheritedStylingFromElement:element];
-            
-            result = replacement;
-        }
         else
         {
-            result = [self unlinkDOMElementBeforeWriting:element];
+            // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
+            if ([tagName isEqualToString:@"P"])
+            {
+                DOMNode *parent = [element parentNode];
+                DOMNode *refNode = element;
+                while (parent)
+                {
+                    [parent flattenNodesAfterChild:refNode];
+                    if ([[(DOMElement *)parent tagName] isEqualToString:@"P"]) break;
+                    refNode = parent; parent = [parent parentNode];
+                }
+            }
+            
+            
+            
+            // Everything else gets removed, or replaced with a <span> with appropriate styling
+            if ([[element style] length] > 0)
+            {
+                DOMElement *replacement = [self changeElement:element toTagName:@"SPAN"];
+                [replacement copyInheritedStylingFromElement:element];
+                
+                result = replacement;
+            }
+            else
+            {
+                result = [self unlinkDOMElementBeforeWriting:element];
+            }
+            
+            
+            
         }
-        
         
         result = [result nodeByStrippingNonParagraphNodes:self];
     }
