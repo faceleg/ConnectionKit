@@ -173,7 +173,7 @@
     
     
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
-    if (![[self class] isTagAllowed:tagName])
+    if (![[self class] validateTagName:tagName])
     {
         // Convert a bold or italic tag to <strong> or <em>
         if ([tagName isEqualToString:@"B"] ||
@@ -302,18 +302,17 @@
 
 #pragma mark Tag Whitelist
 
-+ (BOOL)isTagAllowed:(NSString *)tagName;
++ (BOOL)validateTagName:(NSString *)tagName;
 {
-    BOOL result = ([tagName isEqualToString:@"A"] ||
-                   [tagName isEqualToString:@"SPAN"] ||
+    BOOL result = ([tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
-                   [self isTagParagraphContent:tagName]);
+                   [self isElementWithTagNameContent:tagName]);
     
     return result;
 }
 
-+ (BOOL)isTagParagraphContent:(NSString *)tagName;
++ (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 {
     BOOL result = ([tagName isEqualToString:@"BR"]);
     
@@ -402,7 +401,7 @@
 
 - (BOOL)isParagraphContent;
 {
-    BOOL result = [SVTitleBoxHTMLContext isTagParagraphContent:[self tagName]];
+    BOOL result = [SVTitleBoxHTMLContext isElementWithTagNameContent:[self tagName]];
     return result;
 }
 

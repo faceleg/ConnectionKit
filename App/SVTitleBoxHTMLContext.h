@@ -23,8 +23,8 @@
 
 
 #pragma mark Tag Whitelist
-+ (BOOL)isTagAllowed:(NSString *)tagName;
-+ (BOOL)isTagParagraphContent:(NSString *)tagName;
++ (BOOL)validateTagName:(NSString *)tagName;
++ (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 
 
 @end
