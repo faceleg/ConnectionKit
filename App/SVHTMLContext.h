@@ -205,7 +205,7 @@ typedef enum {
 @interface DOMElement (SVHTMLContext)
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context;
-- (void)writeInnerHTMLStartingWithNode:(DOMNode *)aNode toContext:(SVHTMLContext *)context;
+- (void)writeInnerHTMLStartingWithChild:(DOMNode *)aNode toContext:(SVHTMLContext *)context; // if node is nil, nothing gets written
 
 - (void)writeCleanedInnerHTMLToContext:(SVHTMLContext *)context;
 - (void)writeCleanedHTMLToContext:(SVHTMLContext *)context innards:(BOOL)writeInnards;

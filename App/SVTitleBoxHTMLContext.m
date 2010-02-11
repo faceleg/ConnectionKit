@@ -147,7 +147,7 @@
                 [[result parentNode] removeChild:result];
                 
                 // Carry on writing
-                if (startNode) [element writeInnerHTMLStartingWithNode:startNode toContext:self];
+                [element writeInnerHTMLStartingWithChild:startNode toContext:self];
                 
                 
                 // Recurse in case the next node after that also fits the criteria

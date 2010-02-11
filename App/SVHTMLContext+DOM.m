@@ -94,14 +94,12 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context
 {
-    [self writeInnerHTMLStartingWithNode:nil toContext:context];
+    [self writeInnerHTMLStartingWithChild:[self firstChild] toContext:context];
 }
 
-- (void)writeInnerHTMLStartingWithNode:(DOMNode *)aNode toContext:(SVHTMLContext *)context;
+- (void)writeInnerHTMLStartingWithChild:(DOMNode *)aNode toContext:(SVHTMLContext *)context;
 {
     // It's best to iterate using a Linked List-like approach in case the iteration also modifies the DOM
-    if (!aNode) aNode = [self firstChild];
-    
     while (aNode)
     {
         aNode = [aNode writeHTMLToContext:context];
