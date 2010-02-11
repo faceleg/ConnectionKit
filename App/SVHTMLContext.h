@@ -105,12 +105,17 @@ typedef enum {
 - (void)writeEndTag;
 - (void)writeEndTagWithNewline:(BOOL)aNewline;
 
+
+#pragma mark Querying Open Elements Stack
+- (NSString *)lastOpenElementTagName;
+- (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
+
+
+
+#pragma mark Element Attributes
 //   attribute="value"
 - (void)writeAttribute:(NSString *)attribute
                  value:(NSString *)value;
-
-//  Searches our stack of open elements
-- (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
 
 
 #pragma mark Indentation

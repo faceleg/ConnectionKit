@@ -213,7 +213,7 @@
 - (void)openTag:(NSString *)tagName;        //  <tagName
 {
     [self writeString:@"<"];
-    [self writeString:tagName];
+    [self writeString:[tagName lowercaseString]];
     
     // Must do this AFTER writing the string so subclasses can take early action in a -writeString: override
     [_openElements addObject:[tagName uppercaseString]];
@@ -261,6 +261,8 @@
 	[self writeEndTagWithNewline:NO];
 }
 
+#pragma mark Element Attributes
+
 - (void)writeAttribute:(NSString *)attribute
                  value:(NSString *)value;
 {
@@ -269,6 +271,13 @@
     [self writeString:@"=\""];
     [self writeString:[value stringByEscapingHTMLEntitiesWithQuot:YES]];	// make sure to escape the quote mark
     [self writeString:@"\""];
+}
+
+#pragma mark Querying Open Elements Stack
+
+- (NSString *)lastOpenElementTagName;
+{
+    return [_openElements lastObject];
 }
 
 - (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
