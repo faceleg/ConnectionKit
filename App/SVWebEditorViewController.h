@@ -100,6 +100,10 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (IBAction)insertPageletTitle:(id)sender;
 
 
+#pragma mark Action Forwarding
+- (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
+
+
 #pragma mark Delegate
 @property(nonatomic, assign) id <SVWebEditorViewControllerDelegate> delegate;
 

@@ -648,11 +648,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)insertPagelet:(id)sender;
 {
-    // Is the user editing some body text? If so, insert the pagelet as near there as possible. If not, insert into the sidebar
-    DOMRange *selection = [[self webEditor] selectedDOMRange];
-    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
-    
-    if (![text tryToPerform:_cmd with:sender])
+    if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
     {
         [self insertPageletInSidebar:sender];
     }
@@ -720,6 +716,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             }
         }
     }
+}
+
+#pragma mark Action Forwarding
+
+- (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
+{
+    DOMRange *selection = [[self webEditor] selectedDOMRange];
+    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
+    return [text tryToPerform:action with:anObject];
 }
 
 #pragma mark UI Validation
