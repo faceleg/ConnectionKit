@@ -304,8 +304,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     [super didChangeText];
     
-    // Let subcontrollers know the change took place
-    [[self childWebEditorItems] makeObjectsPerformSelector:@selector(enclosingBodyControllerDidChangeText)];
+    // Let subcontrollers know the change took place. Use an old-fashioned iteration since paragraphs may insert paragraphs after themselves during this process.
+    for (int i = 0; i < [[self childWebEditorItems] count]; i++)
+    {
+        [[[self childWebEditorItems] objectAtIndex:i] enclosingBodyControllerDidChangeText];
+    }
 }
 
 @synthesize updating = _isUpdating;
