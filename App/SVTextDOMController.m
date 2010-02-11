@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorTextController.h"
+#import "SVTextDOMController.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 
 
-@interface SVWebEditorTextController ()
+@interface SVTextDOMController ()
 
 - (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM;
 
@@ -30,7 +30,7 @@
 #pragma mark -
 
 
-@implementation SVWebEditorTextController
+@implementation SVTextDOMController
 
 #pragma mark Init & Dealloc
 

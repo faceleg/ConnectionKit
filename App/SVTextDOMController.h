@@ -1,5 +1,5 @@
 //
-//  SVWebEditorTextController.h
+//  SVTextDOMController.h
 //  Marvel
 //
 //  Created by Mike on 22/08/2009.
@@ -17,7 +17,7 @@
 @class SVPagelet, SVBodyElement;
 
 
-@interface SVWebEditorTextController : SVDOMController <SVWebEditorText, KSEditor>
+@interface SVTextDOMController : SVDOMController <SVWebEditorText, KSEditor>
 {
   @private
     DOMHTMLElement  *_textElement;

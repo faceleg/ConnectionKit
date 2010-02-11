@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorTextController.h"
+#import "SVTextDOMController.h"
 
 
 @class SVBody, SVBodyElement, SVGraphic;
 
 
-@interface SVBodyTextDOMController : SVWebEditorTextController <DOMEventListener>
+@interface SVBodyTextDOMController : SVTextDOMController <DOMEventListener>
 {
     NSArrayController   *_content;
         

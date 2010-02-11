@@ -250,9 +250,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @synthesize updating = _isUpdating;
 
-- (SVWebEditorTextController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock; 
+- (SVTextDOMController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock; 
 {    
-    SVWebEditorTextController *result = nil;
+    SVTextDOMController *result = nil;
     
     
     // Locate the corresponding HTML element
@@ -350,7 +350,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (SVHTMLTextBlock *aTextBlock in parsedTextBlocks)
     {
-        SVWebEditorTextController *controller = [self makeControllerForTextBlock:aTextBlock];
+        SVTextDOMController *controller = [self makeControllerForTextBlock:aTextBlock];
         
         [textAreas addObject:controller];
         [[self webEditor] insertItem:controller];
@@ -458,9 +458,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return [self primitiveSelectedObjectsController];
 }
 
-- (SVWebEditorTextController *)focusedTextController
+- (SVTextDOMController *)focusedTextController
 {
-    return (SVWebEditorTextController *)[[self webEditor] focusedText];
+    return (SVTextDOMController *)[[self webEditor] focusedText];
 }
 
 + (NSSet *)keyPathsForValuesAffectingFocusedTextController
@@ -485,9 +485,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @synthesize textAreas = _textAreas;
 
-- (SVWebEditorTextController *)textAreaForDOMNode:(DOMNode *)node;
+- (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 {
-    SVWebEditorTextController *result = nil;
+    SVTextDOMController *result = nil;
     DOMHTMLElement *editableElement = [node enclosingContentEditableElement];
     
     if (editableElement)
@@ -512,7 +512,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-- (SVWebEditorTextController *)textAreaForDOMRange:(DOMRange *)range;
+- (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];
@@ -688,7 +688,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)insertFile:(id)sender;
 {
     DOMRange *selection = [[self webEditor] selectedDOMRange];
-    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
+    SVTextDOMController *text = [self textAreaForDOMRange:selection];
     if (text)
     {
         [text doCommandBySelector:_cmd];
@@ -722,7 +722,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
 {
     DOMRange *selection = [[self webEditor] selectedDOMRange];
-    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
+    SVTextDOMController *text = [self textAreaForDOMRange:selection];
     return [text tryToPerform:action with:anObject];
 }
 

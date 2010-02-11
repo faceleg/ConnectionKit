@@ -62,7 +62,7 @@
 #import "KTSummaryWebViewTextBlock.h"
 #import "SVTextBox.h"
 #import "KTLocalPublishingEngine.h"
-#import "SVWebEditorTextController.h"
+#import "SVTextDOMController.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 

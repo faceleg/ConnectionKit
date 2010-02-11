@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-//  Like NSTextField before it, SVWebEditorTextFieldController takes SVWebEditorTextController and applies it to small chunks of text in the DOM. You can even use NSValueBinding just like a text field. Also, SVWebEditorTextFieldController is designed to be a selectable web editor item, much like how Keynote operates.
+//  Like NSTextField before it, SVWebEditorTextFieldController takes SVTextDOMController and applies it to small chunks of text in the DOM. You can even use NSValueBinding just like a text field. Also, SVWebEditorTextFieldController is designed to be a selectable web editor item, much like how Keynote operates.
 
 
-#import "SVWebEditorTextController.h"
+#import "SVTextDOMController.h"
 
 
-@interface SVTextFieldDOMController : SVWebEditorTextController
+@interface SVTextFieldDOMController : SVTextDOMController
 {
   @private
     NSString    *_placeholder;

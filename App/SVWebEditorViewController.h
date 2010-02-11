@@ -16,7 +16,7 @@
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
-@class KTPage, SVHTMLContext, SVDOMController, SVWebEditorTextController;
+@class KTPage, SVHTMLContext, SVDOMController, SVTextDOMController;
 @class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -71,7 +71,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 // Everything here should be KVO-compliant
 @property(nonatomic, retain) KTPage *page;  // reloads
 @property(nonatomic, retain, readonly) id <KSCollectionController> selectedObjectsController;
-@property(nonatomic, readonly) SVWebEditorTextController *focusedTextController;    // KVO-compliant
+@property(nonatomic, readonly) SVTextDOMController *focusedTextController;    // KVO-compliant
 
 @property(nonatomic, retain, readonly) SVHTMLContext *HTMLContext;
 
@@ -81,8 +81,8 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 // An array of SVTextBlock objects, one per text block created when setting up the page
 @property(nonatomic, copy, readonly) NSArray *textAreas;
 // A series of methods for retrieving the Text Block to go with a bit of the webview
-- (SVWebEditorTextController *)textAreaForDOMNode:(DOMNode *)node;
-- (SVWebEditorTextController *)textAreaForDOMRange:(DOMRange *)range;
+- (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
+- (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
 
 
 #pragma mark Graphics
