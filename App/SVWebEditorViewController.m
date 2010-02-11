@@ -656,33 +656,32 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)insertPageletInSidebar:(id)sender;
 {
-    SVPagelet *pagelet = [_selectableObjectsController newPagelet];
+    // Create element
+    SVPagelet *pagelet;
+    if ([sender representedObject])
+    {
+        SVPlugInPagelet *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
+                                                                 inManagedObjectContext:[[self page] managedObjectContext]];
+        
+        [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
+        [element setWrap:SVContentObjectWrapNone];
+        [element awakeFromBundleAsNewlyCreatedObject:YES];
+        
+        pagelet = element;
+    }
+    else
+    {
+        pagelet = [[_selectableObjectsController newPagelet] autorelease];
+    }
+    
     [self _insertPageletInSidebar:pagelet];
-    [pagelet release];
 }
 
 - (IBAction)insertElement:(id)sender;
 {
-    // Create element
-    SVPlugInPagelet *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
-                                                             inManagedObjectContext:[[self page] managedObjectContext]];
-    
-    [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
-    [element setWrap:SVContentObjectWrapNone];
-    [element awakeFromBundleAsNewlyCreatedObject:YES];
-    
-    
-    //  Is the user editing some body text? If so, insert the element as near there as possible. If not, insert into the sidebar inside a pagelet
-    DOMRange *selection = [[self webEditor] selectedDOMRange];
-    SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
-        
-    if (text)
+    if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
     {
-        // TODO: Insert in text
-    }
-    else
-    {
-        [self _insertPageletInSidebar:element];
+        [self insertPageletInSidebar:sender];
     }
 }
 
