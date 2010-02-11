@@ -34,8 +34,6 @@
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
 
 - (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
-- (BOOL)hasParagraphContent;    // like -isParagraphContent but then searches subtree if needed
-- (void)removeNonParagraphContent;
 
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context;
 
@@ -424,41 +422,6 @@
 }
 
 - (BOOL)isParagraphContent; { return NO; }
-
-- (BOOL)hasParagraphContent;    // returns YES if the node or a descendant contains text, <br>, image etc.
-{
-    // Ask each child in turn
-    if ([self isParagraphContent])
-    {
-        return YES;
-    }
-    else
-    {
-        for (DOMNode *aNode in [self mutableChildNodesArray])
-        {
-            if ([aNode hasParagraphContent]) return YES;
-        }
-    }
-    
-    return NO;
-}
-
-- (void)removeNonParagraphContent;
-{
-    DOMNode *aNode = [self firstChild];
-    while (aNode)
-    {
-        DOMNode *nextNode = [aNode nextSibling];
-        
-        [aNode removeNonParagraphContent];
-        if (![aNode hasChildNodes] && ![aNode isParagraphContent])
-        {
-            [self removeChild:aNode];
-        }
-        
-        aNode = nextNode;
-    }
-}
 
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context; { return self; }
 
