@@ -27,8 +27,8 @@
 #pragma mark Content
 @property(nonatomic, retain, readonly) NSArrayController *content;
 
-- (BOOL)insertElement:(SVBodyElement *)pagelet;
-- (BOOL)insertPagelet:(SVPagelet *)pagelet; // wraps pagelet in a callout and calls -insertElement: with that
+- (IBAction)insertElement:(id)sender;
+- (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertFile:(id)sender;
 
 #pragma mark Subcontrollers

@@ -23,6 +23,7 @@ typedef enum {
 
 @interface SVHTMLContext : SVTemplateContext
 {
+    NSMutableArray  *_openElements;
     NSInteger  _indentation;
     
     NSURL                   *_baseURL;
@@ -34,7 +35,6 @@ typedef enum {
     BOOL                    _isXHTML;
     NSStringEncoding        _stringEncoding;
     
-    NSMutableArray  *_openElements;
     NSMutableArray  *_iteratorsStack;
     
     NSMutableArray  *_textBlocks;

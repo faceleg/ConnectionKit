@@ -173,10 +173,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self didUpdate];
 }
 
-- (BOOL)insertElement:(SVBodyElement *)element;
+- (IBAction)insertElement:(id)sender;
 {
-    BOOL result = NO;
-    
     // First remove any selected text
     WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
     [webView delete:self];
@@ -189,29 +187,13 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     KSDOMController *controller = [self controllerForDOMNode:[selection startContainer]];
     if (controller)
     {
-        SVBodyElement *bodyElement = [controller representedObject];
-        NSUInteger index = [[[self content] arrangedObjects] indexOfObject:bodyElement];
-        if (index != NSNotFound)
-        {
-            [[self content] insertObject:element atArrangedObjectIndex:index];
-            result = YES;
-        }
+        // TODO: Make the insertion
     }
-    
-    
-    return result;
 }
 
-- (BOOL)insertPagelet:(SVPagelet *)pagelet
+- (IBAction)insertPagelet:(id)sender;
 {
-    // Create a callout
-    SVCallout *callout = [NSEntityDescription insertNewObjectForEntityForName:@"Callout"
-                                                       inManagedObjectContext:[pagelet managedObjectContext]];
-    
-    [pagelet setSortKey:[NSNumber numberWithInteger:0]];
-    [callout setPagelets:[NSSet setWithObject:pagelet]];
-    
-    return [self insertElement:callout];
+    // TODO: Make the insertion
 }
 
 - (IBAction)insertFile:(id)sender;
