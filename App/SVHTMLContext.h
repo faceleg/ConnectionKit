@@ -111,7 +111,6 @@ typedef enum {
 - (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
 
 
-
 #pragma mark Element Attributes
 //   attribute="value"
 - (void)writeAttribute:(NSString *)attribute
@@ -185,13 +184,12 @@ typedef enum {
 @interface SVHTMLContext (DOM)
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element; // returns the next sibling to write
+- (void)openTagWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
 
 @end
 
 
 @interface DOMElement (SVHTMLContext)
-
-- (void)openTagInContext:(SVHTMLContext *)context;
 
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context;
 - (void)writeInnerHTMLStartingWithNode:(DOMNode *)aNode toContext:(SVHTMLContext *)context;

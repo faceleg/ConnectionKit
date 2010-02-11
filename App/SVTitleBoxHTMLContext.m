@@ -268,7 +268,7 @@
         
         for (DOMElement *anElement in elements)
         {
-            [anElement openTagInContext:self];
+            [self openTagWithDOMElement:anElement];
             [self closeStartTag];
         }
     }

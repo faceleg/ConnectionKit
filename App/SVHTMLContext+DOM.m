@@ -12,8 +12,8 @@
 #import "NSString+Karelia.h"
 
 
-static NSSet *sTagsWithNewlineOnOpen  = nil;
-static NSSet *sTagsThatCanBeSelfClosed  = nil;
+static NSSet *sTagsWithNewlineOnOpen = nil;
+static NSSet *sTagsThatCanBeSelfClosed = nil;
 static NSSet *sTagsWithNewlineOnClose = nil;
 
 
@@ -22,7 +22,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 - (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
     // Open tag
-    [element openTagInContext:self];
+    [self openTagWithDOMElement:element];
     
     // Close tag
     [self closeStartTag];
@@ -35,6 +35,21 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     
     
     return [element nextSibling];
+}
+
+- (void)openTagWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
+{
+    // Open tag
+    [self openTag:[[element tagName] lowercaseString]];
+    
+    // Write attributes
+    DOMNamedNodeMap *attributes = [element attributes];
+    NSUInteger index;
+    for (index = 0; index < [attributes length]; index++)
+    {
+        DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+        [self writeAttribute:[anAttribute name] value:[anAttribute value]];
+    }
 }
 
 @end
@@ -77,21 +92,6 @@ static NSSet *sTagsWithNewlineOnClose = nil;
     return [context writeDOMElement:self];
 }
 
-- (void)openTagInContext:(SVHTMLContext *)context;
-{
-    // Open tag
-    [context openTag:[[self tagName] lowercaseString]];
-    
-    // Write attributes
-    DOMNamedNodeMap *attributes = [self attributes];
-    NSUInteger index;
-    for (index = 0; index < [attributes length]; index++)
-    {
-        DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
-        [context writeAttribute:[anAttribute name] value:[anAttribute value]];
-    }
-}
-
 - (void)writeInnerHTMLToContext:(SVHTMLContext *)context
 {
     [self writeInnerHTMLStartingWithNode:nil toContext:context];
@@ -110,7 +110,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 
 - (void)writeCleanedHTMLToContext:(SVHTMLContext *)context innards:(BOOL)writeInnards;
 {
-	[self openTagInContext:context];
+	[context openTagWithDOMElement:self];
     
 	
 	if (!sTagsThatCanBeSelfClosed)
