@@ -40,6 +40,8 @@
 
 @implementation ContactElementInspectorController
 
+#pragma mark Init
+
 + (void)initialize
 {
 	// Register value transformers
@@ -71,6 +73,18 @@
 	[transformer setNegatesResult:YES];
 	[transformer release];
 	
+}
+
+#pragma mark View Loading
+
+- (void)loadView
+{
+    // Make sure the address box comes out right
+    [KSEmailAddressComboBox setWillIncludeNames:NO];
+    [KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
+    
+    
+    [super loadView];
 }
 
 - (void)awakeFromNib
