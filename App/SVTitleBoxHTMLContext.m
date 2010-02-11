@@ -309,6 +309,21 @@
     return result;
 }
 
+- (BOOL)validateAttribute:(NSString *)attributeName;
+{
+    BOOL result = YES;
+    
+    // Allow class and style on any element except <br>
+    NSString *tagName = [self lastOpenElementTagName];
+    if (tagName && ![tagName isEqualToString:@"BR"])
+    {
+        result = ([attributeName isEqualToString:@"class"] ||
+                  [attributeName isEqualToString:@"style"]);
+    }
+    
+    return result;
+}
+
 @end
 
 
