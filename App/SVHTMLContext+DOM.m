@@ -40,7 +40,7 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 - (void)openTagWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
 {
     // Open tag
-    [self openTag:[[element tagName] lowercaseString]];
+    [self openTag:[element tagName]];
     
     // Write attributes
     DOMNamedNodeMap *attributes = [element attributes];
