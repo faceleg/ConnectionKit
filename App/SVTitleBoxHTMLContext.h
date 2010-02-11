@@ -26,10 +26,17 @@
 
 
 #pragma mark Tag Whitelist
-
 + (BOOL)validateTagName:(NSString *)tagName;
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 
+
+#pragma mark Attribute Whitelist
 - (BOOL)validateAttribute:(NSString *)attributeName;
+
+
+#pragma mark Styling Whitelist
+- (BOOL)validateStyleProperty:(NSString *)propertyName;
+- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
+
 
 @end

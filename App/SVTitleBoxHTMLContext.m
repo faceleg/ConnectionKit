@@ -261,6 +261,13 @@
         
         if ([self validateAttribute:attributeName])
         {
+            // Validate individual styling
+            if ([attributeName isEqualToString:@"style"])
+            {
+                [self removeUnsupportedCustomStyling:[element style]];
+            }
+            
+            // Now it's OK to persist
             [self writeAttribute:attributeName value:[anAttribute value]];
         }
         else
@@ -337,6 +344,8 @@
     return result;
 }
 
+#pragma mark Attribute Whitelist
+
 - (BOOL)validateAttribute:(NSString *)attributeName;
 {
     BOOL result = NO;
@@ -350,6 +359,31 @@
     }
     
     return result;
+}
+
+#pragma mark Styling Whitelist
+
+- (BOOL)validateStyleProperty:(NSString *)propertyName;
+{
+    BOOL result = ([propertyName isEqualToString:@"font"] ||
+                   [propertyName hasPrefix:@"font-"] ||
+                   [propertyName isEqualToString:@"color"] ||
+                   [propertyName isEqualToString:@"text-decoration"]);
+    
+    return result;
+}
+
+- (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
+{
+    for (int i = 0; i < [style length]; i++)
+    {
+        NSString *propertyName = [style item:i];
+        if (![self validateStyleProperty:propertyName])
+        {
+            [style removeProperty:propertyName];
+            i--;
+        }
+    }
 }
 
 @end
