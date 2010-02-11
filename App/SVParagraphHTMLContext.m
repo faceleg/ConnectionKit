@@ -42,7 +42,7 @@
     }
 }
 
-- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
 {
     NSString *tagName = [element tagName];
     
@@ -61,7 +61,7 @@
     }
     
     
-    return [super replaceElementIfNeeded:element];
+    return [super replaceDOMElementIfNeeded:element];
 }
 
 @end

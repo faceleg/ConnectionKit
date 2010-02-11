@@ -15,12 +15,12 @@
 
 @interface SVTitleBoxHTMLContext ()
 
-- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
 
-- (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
-- (void)populateSpanElement:(DOMElement *)span
-            fromFontElement:(DOMHTMLFontElement *)fontElement;
+- (void)populateSpanElementAttributes:(DOMElement *)span
+                      fromFontElement:(DOMHTMLFontElement *)fontElement;
 
 @end
 
@@ -66,7 +66,7 @@
 - (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
     // Remove any tags not allowed.
-    DOMNode *replacement = [self replaceElementIfNeeded:element];
+    DOMNode *replacement = [self replaceDOMElementIfNeeded:element];
     if (replacement != element)
     {
         // Pretend to the caller that the element got written (which it didn't) and that the next node to write is the replacement
@@ -164,7 +164,7 @@
     }
 }
 
-- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
 {
     DOMNode *result = element;
     NSString *tagName = [element tagName];
@@ -177,18 +177,18 @@
         if ([tagName isEqualToString:@"B"] ||
             [element isKindOfClass:[DOMHTMLHeadingElement class]])
         {
-            result = [self changeElement:element toTagName:@"STRONG"];
+            result = [self changeDOMElement:element toTagName:@"STRONG"];
         }
         else if ([tagName isEqualToString:@"I"])
         {
-            result = [self changeElement:element toTagName:@"EM"];
+            result = [self changeDOMElement:element toTagName:@"EM"];
         }
         // Convert a <font> tag to <span> with appropriate styling
         else if ([tagName isEqualToString:@"FONT"])
         {
-            result = [self changeElement:element toTagName:@"SPAN"];
+            result = [self changeDOMElement:element toTagName:@"SPAN"];
             
-            [self populateSpanElement:(DOMHTMLElement *)result
+            [self populateSpanElementAttributes:(DOMHTMLElement *)result
                       fromFontElement:(DOMHTMLFontElement *)element];
         }
         else
@@ -196,7 +196,7 @@
             // Everything else gets removed, or replaced with a <span> with appropriate styling
             if ([[element style] length] > 0)
             {
-                DOMElement *replacement = [self changeElement:element toTagName:@"SPAN"];
+                DOMElement *replacement = [self changeDOMElement:element toTagName:@"SPAN"];
                 [replacement copyInheritedStylingFromElement:element];
                 
                 result = replacement;
@@ -216,7 +216,7 @@
     return result;
 }
 
-- (DOMElement *)changeElement:(DOMElement *)element toTagName:(NSString *)tagName;
+- (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
 {
     //WebView *webView = [[[element ownerDocument] webFrame] webView];
     
@@ -276,8 +276,8 @@
     }
 }
 
-- (void)populateSpanElement:(DOMElement *)span
-            fromFontElement:(DOMHTMLFontElement *)fontElement;
+- (void)populateSpanElementAttributes:(DOMElement *)span
+                      fromFontElement:(DOMHTMLFontElement *)fontElement;
 {
     [[span style] setProperty:@"font-family" value:[fontElement face] priority:@""];
     [[span style] setProperty:@"color" value:[fontElement color] priority:@""];
@@ -439,7 +439,7 @@
 
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context;
 {
-    return [context replaceElementIfNeeded:self];
+    return [context replaceDOMElementIfNeeded:self];
 }
 
 @end

@@ -22,7 +22,7 @@
 }
 
 
-- (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
 
 
 #pragma mark Tag Whitelist
