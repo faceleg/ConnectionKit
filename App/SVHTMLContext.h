@@ -66,27 +66,7 @@ typedef enum {
 - (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
 
 
-#pragma mark Higher-level Tag Writing
-
-//  <a href="...." target="..." rel="nofollow">
-- (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
-
-//  <img src="..." alt="..." width="..." height="..." />
-- (void)writeImageWithIdName:(NSString *)idName
-                   className:(NSString *)className
-                         src:(NSString *)src
-                         alt:(NSString *)alt
-                       width:(NSString *)width
-                      height:(NSString *)height;
-
-//  <tagName id="idName" class="className">
-//  Calls -openTag: and -writeAttribute:value: appropriately for you
-- (void)writeStartTag:(NSString *)tagName   
-               idName:(NSString *)idName
-            className:(NSString *)className;
-
-
-#pragma mark Low-level Tag Writing
+#pragma mark Elements
 
 //  <tagName
 //  Records the tag on a stack for if you want to call -writeEndTag later
@@ -174,6 +154,39 @@ typedef enum {
 
 // In for compatibility, overrides -baseURL
 @property(nonatomic, retain) KTAbstractPage *currentPage;
+
+@end
+
+
+#pragma mark -
+
+
+@interface SVHTMLContext (HTMLElements)
+
+#pragma mark Links
+
+//  <a href="...." target="..." rel="nofollow">
+- (void)writeAnchorStartTagWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+
+#pragma mark Images
+
+//  <img src="..." alt="..." width="..." height="..." />
+- (void)writeImageWithIdName:(NSString *)idName
+                   className:(NSString *)className
+                         src:(NSString *)src
+                         alt:(NSString *)alt
+                       width:(NSString *)width
+                      height:(NSString *)height;
+
+
+#pragma mark General
+
+//  <tagName id="idName" class="className">
+//  Calls -openTag: and -writeAttribute:value: appropriately for you
+- (void)writeStartTag:(NSString *)tagName   
+               idName:(NSString *)idName
+            className:(NSString *)className;
 
 @end
 

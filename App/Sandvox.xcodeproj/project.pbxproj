@@ -419,6 +419,7 @@
 		27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A617651123005100004FED /* TextBoxBodyTemplate.html */; };
 		27A6187B1123480C00004FED /* SVParagraphHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A618791123480C00004FED /* SVParagraphHTMLContext.h */; };
 		27A6187C1123480C00004FED /* SVParagraphHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6187A1123480C00004FED /* SVParagraphHTMLContext.m */; };
+		27A619BB1124235200004FED /* SVHTMLContext+HTMLElements.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */; };
 		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
 		27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */; };
@@ -1877,6 +1878,7 @@
 		27A617651123005100004FED /* TextBoxBodyTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TextBoxBodyTemplate.html; sourceTree = "<group>"; };
 		27A618791123480C00004FED /* SVParagraphHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphHTMLContext.h; sourceTree = "<group>"; };
 		27A6187A1123480C00004FED /* SVParagraphHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphHTMLContext.m; sourceTree = "<group>"; };
+		27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLContext+HTMLElements.m"; sourceTree = "<group>"; };
 		27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebPathsProtocol.h; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
 		27AA10280CDA065A001D6B9B /* KTMissingMediaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaController.m; sourceTree = "<group>"; };
@@ -3175,6 +3177,7 @@
 				270E4D2C10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m */,
 				27A618791123480C00004FED /* SVParagraphHTMLContext.h */,
 				27A6187A1123480C00004FED /* SVParagraphHTMLContext.m */,
+				27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */,
 			);
 			name = "HTML Context";
 			sourceTree = "<group>";
@@ -6701,6 +6704,7 @@
 				27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */,
 				27A617151122FA0000004FED /* SVTextBox.m in Sources */,
 				27A6187C1123480C00004FED /* SVParagraphHTMLContext.m in Sources */,
+				27A619BB1124235200004FED /* SVHTMLContext+HTMLElements.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
