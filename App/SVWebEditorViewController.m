@@ -651,14 +651,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Is the user editing some body text? If so, insert the pagelet as near there as possible. If not, insert into the sidebar
     DOMRange *selection = [[self webEditor] selectedDOMRange];
     SVWebEditorTextController *text = [self textAreaForDOMRange:selection];
-    SVPagelet *pagelet = [_selectableObjectsController newPagelet];
     
-    if (![text insertPagelet:pagelet])
+    if (![text tryToPerform:_cmd with:sender])
     {
-        [self _insertPageletInSidebar:pagelet];
+        [self insertPageletInSidebar:sender];
     }
-     
-    [pagelet release];
 }
 
 - (IBAction)insertPageletInSidebar:(id)sender;
