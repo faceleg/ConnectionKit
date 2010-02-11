@@ -57,6 +57,14 @@
 */
 
 @interface SVWebEditorItem (SVDOMController)
+
+#pragma mark Updating
 - (void)update;
 - (void)updateIfNeeded; // recurses down the tree
+
+
+#pragma mark Actions
+- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
+
+
 @end

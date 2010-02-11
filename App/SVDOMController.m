@@ -141,12 +141,29 @@
 
 @implementation SVWebEditorItem (SVDOMController)
 
+#pragma mark Updating
+
 - (void)update; { }
 
 - (void)updateIfNeeded; // recurses down the tree
 {
     // The update may well have meant no children need updating any more. If so, no biggie as this recursion should do nothing
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
+}
+
+#pragma mark Actions
+
+- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
+{
+    if ([self respondsToSelector:action])
+    {
+        [self performSelector:action withObject:anObject];
+        return YES;
+    }
+    else
+    {
+        return [[self parentWebEditorItem] tryToPerform:action with:anObject];
+    }
 }
 
 @end
