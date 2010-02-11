@@ -63,7 +63,7 @@
     [super dealloc];
 }
 
-#pragma mark Writing
+#pragma mark Elements
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
@@ -243,6 +243,34 @@
     return result;
 }
 
+#pragma mark Element Attributes
+
+- (void)openTagWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
+{
+    // Open tag
+    [self openTag:[element tagName]];
+    
+    // Write attributes
+    DOMNamedNodeMap *attributes = [element attributes];
+    NSUInteger index;
+    for (index = 0; index < [attributes length]; index++)
+    {
+        // Check each attribute should be written
+        DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+        NSString *attributeName = [anAttribute name];
+        
+        if ([self validateAttribute:attributeName])
+        {
+            [self writeAttribute:attributeName value:[anAttribute value]];
+        }
+        else
+        {
+            [attributes removeNamedItem:attributeName];
+            index--;
+        }
+    }
+}
+
 - (void)populateSpanElement:(DOMElement *)span
             fromFontElement:(DOMHTMLFontElement *)fontElement;
 {
@@ -311,7 +339,7 @@
 
 - (BOOL)validateAttribute:(NSString *)attributeName;
 {
-    BOOL result = YES;
+    BOOL result = NO;
     
     // Allow class and style on any element except <br>
     NSString *tagName = [self lastOpenElementTagName];
