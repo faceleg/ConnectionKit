@@ -404,6 +404,7 @@
     
     // Make a copy of ourself to flatten into
     DOMNode *clone = [self cloneNode:NO];
+    [[self parentNode] insertBefore:clone refChild:[self nextSibling]];
     
     
     // Flatten everything after aChild so it appears alongside ourself somewhere. Work backwards so order is maintained
@@ -411,13 +412,6 @@
     while ((aNode = [self lastChild]) && aNode != aChild)
     {
         [clone insertBefore:aNode refChild:[clone firstChild]];
-    }
-    
-    
-    // Place clone correctly
-    if ([clone hasChildNodes])
-    {
-        [[self parentNode] insertBefore:clone refChild:[self nextSibling]];
     }
 }
 
