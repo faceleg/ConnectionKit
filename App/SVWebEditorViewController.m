@@ -658,7 +658,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // Create element
     SVPagelet *pagelet;
-    if ([sender representedObject])
+    if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
     {
         SVPlugInPagelet *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
                                                                  inManagedObjectContext:[[self page] managedObjectContext]];
