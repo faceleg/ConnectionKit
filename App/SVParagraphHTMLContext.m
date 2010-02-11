@@ -19,6 +19,29 @@
     return result;
 }
 
+- (BOOL)validateAttribute:(NSString *)attributeName;
+{
+    // Super doesn't allow links; we do.
+    if ([[self lastOpenElementTagName] isEqualToString:@"A"])
+    {
+        BOOL result = ([attributeName isEqualToString:@"href"] ||
+                       [attributeName isEqualToString:@"target"] ||
+                       [attributeName isEqualToString:@"style"] ||
+                       [attributeName isEqualToString:@"charset"] ||
+                       [attributeName isEqualToString:@"hreflang"] ||
+                       [attributeName isEqualToString:@"name"] ||
+                       [attributeName isEqualToString:@"title"] ||
+                       [attributeName isEqualToString:@"rel"] ||
+                       [attributeName isEqualToString:@"rev"]);
+        
+        return result;               
+    }
+    else
+    {
+        return [super validateAttribute:attributeName];
+    }
+}
+
 - (DOMNode *)replaceElementIfNeeded:(DOMElement *)element;
 {
     NSString *tagName = [element tagName];
