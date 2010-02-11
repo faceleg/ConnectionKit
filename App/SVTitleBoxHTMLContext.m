@@ -332,7 +332,9 @@
     BOOL result = ([tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
-                   [self isElementWithTagNameContent:tagName]);
+                   [self isElementWithTagNameContent:tagName] ||
+                   [tagName isEqualToString:@"SUP"] ||
+                   [tagName isEqualToString:@"SUB"]);
     
     return result;
 }
