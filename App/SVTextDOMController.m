@@ -37,12 +37,26 @@
 - (id)init
 {
     self = [super init];
+    
+    // Undo
     _undoCoalescingActionIdentifier = NSNotFound;
+    
+    // Editing
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(webEditorTextDidChange:)
+                                                 name:WebViewDidChangeNotification
+                                               object:nil];
+    
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [[NSNotificationCenter defaultCenter] removeObserver:self
+                                                    name:WebViewDidChangeNotification
+                                                  object:nil];
+    
     [_HTMLString release];
     [_textElement release];
     
@@ -229,6 +243,9 @@
 
 - (void)webEditorTextDidChange:(NSNotification *)notification;
 {
+    if ([notification object] != [[[[self HTMLElement] ownerDocument] webFrame] webView]) return;
+    
+    
     _isCoalescingUndo = NO;
     
     // So was this a typing change?
@@ -246,7 +263,7 @@
                 // Go for coalescing
                 _isCoalescingUndo = YES;
                 
-                // Push through any pending changes. (Any MOCs observe this notification and call -processPendingChanges)
+                // Push through any pending changes. (MOCs observe this notification and call -processPendingChanges)
                 [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
                 [undoManager disableUndoRegistration];
             }
