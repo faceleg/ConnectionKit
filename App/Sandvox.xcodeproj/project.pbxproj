@@ -448,6 +448,8 @@
 		27B52E7010F49B730086DEE4 /* SVTemplateContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B52E6F10F49B730086DEE4 /* SVTemplateContext.m */; };
 		27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */; };
 		27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */; };
+		27BA06C81125A46900B9D8F4 /* SVTextBoxRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BA06C61125A46900B9D8F4 /* SVTextBoxRange.h */; };
+		27BA06C91125A46900B9D8F4 /* SVTextBoxRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BA06C71125A46900B9D8F4 /* SVTextBoxRange.m */; };
 		27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */; };
 		27BCCCA30F09609E00B06B35 /* KTRemotePublishingEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */; };
 		27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C059B40E7299850033A715 /* Elements+Pasteboard.h */; };
@@ -1909,6 +1911,8 @@
 		27B52E6F10F49B730086DEE4 /* SVTemplateContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTemplateContext.m; sourceTree = "<group>"; };
 		27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMutableStringHTMLContext.h; sourceTree = "<group>"; };
 		27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMutableStringHTMLContext.m; sourceTree = "<group>"; };
+		27BA06C61125A46900B9D8F4 /* SVTextBoxRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBoxRange.h; sourceTree = "<group>"; };
+		27BA06C71125A46900B9D8F4 /* SVTextBoxRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextBoxRange.m; sourceTree = "<group>"; };
 		27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRemotePublishingEngine.h; sourceTree = "<group>"; };
 		27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTRemotePublishingEngine.m; sourceTree = "<group>"; };
 		27C059B40E7299850033A715 /* Elements+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "Elements+Pasteboard.h"; sourceTree = "<group>"; };
@@ -3141,6 +3145,8 @@
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				272F1F4F10C2CBE600BBB836 /* SVContentObject.h */,
 				272F1F5010C2CBE600BBB836 /* SVContentObject.m */,
+				27BA06C61125A46900B9D8F4 /* SVTextBoxRange.h */,
+				27BA06C71125A46900B9D8F4 /* SVTextBoxRange.m */,
 			);
 			name = Shared;
 			sourceTree = "<group>";
@@ -5311,6 +5317,7 @@
 				27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */,
 				27A617141122FA0000004FED /* SVTextBox.h in Headers */,
 				27A6187B1123480C00004FED /* SVParagraphHTMLContext.h in Headers */,
+				27BA06C81125A46900B9D8F4 /* SVTextBoxRange.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6705,6 +6712,7 @@
 				27A617151122FA0000004FED /* SVTextBox.m in Sources */,
 				27A6187C1123480C00004FED /* SVParagraphHTMLContext.m in Sources */,
 				27A619BB1124235200004FED /* SVHTMLContext+HTMLElements.m in Sources */,
+				27BA06C91125A46900B9D8F4 /* SVTextBoxRange.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
