@@ -104,6 +104,9 @@
         withStartElement:(DOMElement *)startElement
               endElement:(DOMElement *)endElement;
 {
+    BOOL foundStart = NO;
+    
+    
     // Locate the start of the range. OUCH
     DOMTreeWalker *treeWalker = [[startElement ownerDocument]
                                  createTreeWalker:startElement
@@ -132,6 +135,8 @@
                 NSUInteger offset = nodeLength - (index - [self startIndex]);
                 [range setStart:aNode offset:offset];
             }
+            
+            foundStart = YES;
             break;
         }
         
@@ -168,6 +173,13 @@
                 NSUInteger offset = nodeLength - (index - [self endIndex]);
                 [range setEnd:aNode offset:offset];
             }
+            
+            // The start may not have been found; if so, fallback to matching the end
+            if (!foundStart)
+            {
+                [range collapse:NO];
+            }
+            
             break;
         }
         
