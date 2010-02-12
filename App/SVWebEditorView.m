@@ -9,6 +9,7 @@
 #import "SVWebEditorView.h"
 #import "SVWebEditorWebView.h"
 #import "SVWebEditorItem.h"
+#import "SVWebEditorTextRange.h"
 #import "SVSelectionBorder.h"
 
 #import "KTApplication.h"
@@ -237,7 +238,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [parent addChildWebEditorItem:item];
 }
 
-#pragma mark Selected DOM Range
+#pragma mark Text Selection
 
 - (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
 
@@ -246,7 +247,33 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[self webView] setSelectedDOMRange:range affinity:selectionAffinity];
 }
 
-#pragma mark Text Selection
+- (SVWebEditorTextRange *)selectedTextRange;
+{
+    DOMRange *domRange = [self selectedDOMRange];
+    if (!domRange) return nil;
+    
+    
+    SVWebEditorItem *startItem = [[self mainItem] descendantItemForDOMNode:[domRange startContainer]];
+    while (startItem && ![startItem representedObject])
+    {
+        startItem = [startItem parentWebEditorItem];
+    }
+    
+    
+    SVWebEditorItem *endItem = [[self mainItem] descendantItemForDOMNode:[domRange endContainer]];
+    while (endItem && ![endItem representedObject])
+    {
+        endItem = [endItem parentWebEditorItem];
+    }
+    
+    
+    SVWebEditorTextRange *result = [SVWebEditorTextRange rangeWithDOMRange:domRange
+                                                              startElement:[startItem HTMLElement]
+                                                                    object:[startItem representedObject]
+                                                                endElement:[endItem HTMLElement]
+                                                                    object:[endItem representedObject]];
+    return result;
+}
 
 @synthesize focusedText = _focusedText;
 

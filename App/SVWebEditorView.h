@@ -15,7 +15,7 @@
 
 
 @protocol SVWebEditorDataSource, SVWebEditorDelegate;
-@class SVWebEditorItem;
+@class SVWebEditorItem, SVWebEditorTextRange;
 @class SVWebEditorWebView, SVMainWebEditorItem;
 
 
@@ -71,12 +71,16 @@
 - (void)insertItem:(SVWebEditorItem *)item; // inserts the item into the tree in the place that matches the DOM
 
 
-#pragma mark Selection
+#pragma mark Text Selection
 
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
+- (SVWebEditorTextRange *)selectedTextRange;
 
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;    // KVO-compliant
+
+
+#pragma mark Item Selection
 
 @property(nonatomic, copy) NSArray *selectedItems;
 @property(nonatomic, retain, readonly) SVWebEditorItem *selectedItem;
