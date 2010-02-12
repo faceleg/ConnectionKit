@@ -325,8 +325,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
                           updateWebView:(BOOL)updateWebView
                              isUIAction:(BOOL)consultDelegateFirst;
 {
-    NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
-    
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
@@ -511,23 +509,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         result = [[self window] makeFirstResponder:[self webView]];
     }
     return result;
-}
-
-- (void)willEditTextInDOMRange:(DOMRange *)range
-{
-    // Record the range ready for a -didChange notification
-    OBASSERT(!_DOMRangeOfNextEdit);
-    _DOMRangeOfNextEdit = [range retain];
-}
-
-- (void)didChangeTextInDOMRange:(DOMRange *)range notification:(NSNotification *)notification;
-{
-    OBPRECONDITION(range);
-    
-    // Alert the corresponding Text object that it did change
-    id <SVWebEditorText> text = [[self dataSource] webEditor:self
-                                            textBlockForDOMRange:range];
-    [text webEditorTextDidChange:notification];
 }
 
 @synthesize liveEditableAndSelectableLinks = _liveLinks;
@@ -1254,12 +1235,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return YES;
 }
 
-- (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
-{
-    [self willEditTextInDOMRange:range];
-    return YES;
-}
-
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     BOOL result = [self canEditText];
@@ -1279,11 +1254,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                                         replacingDOMRange:range
                                               givenAction:action
                                                pasteboard:pasteboard];
-        
-        if (result)
-        {
-            [self willEditTextInDOMRange:range];
-        }
     }
     
     return result;
@@ -1312,36 +1282,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         }
     }
     
-    if (result)
-    {
-        [self willEditTextInDOMRange:range];
-    }
-    
     return result;
-}
-
-/*  The WebView sends this message whenever its content changes. Unfortunately, there is no way to know what part of the DOM changed, so we are left guessing who to send this message to. The best workaround I can think of is to trap what part of the DOM will be edited and use that.
- */
-- (void)webViewDidChange:(NSNotification *)notification
-{
-    // During undo operations, there's no indication that a change is about to be made, only a -didChange message. I'm going to ignore such messages as I'm not sure clients are interested
-    if (_DOMRangeOfNextEdit)
-    {
-        DOMRange *range = _DOMRangeOfNextEdit;
-        _DOMRangeOfNextEdit = nil;  // I'm trying to force this back to nil asap as it's a bit of a hack
-        
-        [self didChangeTextInDOMRange:range notification:notification];
-        [range release];
-    }
-    else
-    {
-        NSUndoManager *undoManager = [[self webView] undoManager];
-        if (![undoManager isUndoing] && ![undoManager isRedoing])
-        {
-            NSLog(@"No DOMRange recorded for edit");
-            //OBASSERT_NOT_REACHED("No DOMRange recorded for edit");
-        }
-    }
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification

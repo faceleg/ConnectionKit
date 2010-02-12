@@ -43,7 +43,7 @@
     
     // Editing
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(webEditorTextDidChange:)
+                                             selector:@selector(webViewDidChange:)
                                                  name:WebViewDidChangeNotification
                                                object:nil];
     
@@ -241,7 +241,7 @@
     [[[self textHTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
 }
 
-- (void)webEditorTextDidChange:(NSNotification *)notification;
+- (void)webViewDidChange:(NSNotification *)notification;
 {
     if ([notification object] != [[[[self HTMLElement] ownerDocument] webFrame] webView]) return;
     

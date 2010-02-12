@@ -26,9 +26,6 @@
 // Informs the receiver that it is about to gain focus.
 - (void)webEditorTextWillGainFocus;
 
-// Informs the receiver that some portion of it did change through editing. The notification is the same as a WebView will have dished out.
-- (void)webEditorTextDidChange:(NSNotification *)notification;
-
 // Conceptually the same as how NSTextField is informed editing ended by the field editor. The notification is the same as a WebView will have dished out (could well be nil too)
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
 
