@@ -98,6 +98,13 @@
 @synthesize endObject = _endObject;
 @synthesize endIndex = _endIndex;
 
+#pragma mark NSCopying
+
+- (id)copyWithZone:(NSZone *)zone
+{
+    return [self retain];
+}
+
 @end
 
 

@@ -12,7 +12,7 @@
 #import <WebKit/WebKit.h>
 
 
-@interface SVWebEditorTextRange : NSObject
+@interface SVWebEditorTextRange : NSObject <NSCopying>
 {
   @private
     id          _startObject;
