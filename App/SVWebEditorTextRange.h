@@ -24,6 +24,12 @@
 - (id)initWithStartObject:(id)startObject index:(NSUInteger)startIndex
                 endObject:(id)endObject index:(NSUInteger)endIndex;
 
++ (SVWebEditorTextRange *)rangeWithDOMRange:(DOMRange *)domRange
+                               startElement:(DOMElement *)startElement
+                                     object:(id)startObject
+                                 endElement:(DOMElement *)endElement
+                                     object:(id)endObject;
+
 @property(nonatomic, retain, readonly) id startObject;
 @property(nonatomic, readonly) NSUInteger startIndex;
 @property(nonatomic, retain, readonly) id endObject;
