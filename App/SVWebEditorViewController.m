@@ -407,6 +407,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Mark as loaded
     [self setUpdating:NO];
     [self setViewIsReadyToAppear:YES];
+    
+    
+    // Did Update
+    [self didUpdate];
 }
 
 - (void)scheduleUpdate
@@ -428,6 +432,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)setNeedsUpdate;
 {
     _needsUpdate = YES;
+    
+    OBASSERT(!_selectionToRestore);
+    _selectionToRestore = [[[self webEditor] selectedTextRange] copy];
+    
     [self scheduleUpdate];
 }
 
@@ -445,10 +453,23 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         [[[self webEditor] mainItem] updateIfNeeded];
         _willUpdate = NO;
+        
+        [self didUpdate];
     }
 }
 
 - (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
+
+- (void)didUpdate;
+{
+    // Restore selection
+    if (_selectionToRestore)
+    {
+        
+        
+        [_selectionToRestore release]; _selectionToRestore = nil;
+    }
+}
 
 #pragma mark Content
 
@@ -477,6 +498,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         [_page release]; _page = [page retain];
     
+        OBASSERT(!_selectionToRestore);
+        _selectionToRestore = [[[self webEditor] selectedTextRange] copy];
+        
         [self update];
     }
 }

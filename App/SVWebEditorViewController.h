@@ -41,9 +41,10 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     NSArray             *_sidebarPageletItems;
     
     // Loading
-    BOOL    _needsUpdate, _willUpdate;
-    BOOL    _isUpdating;
-    NSRect  _visibleRect;
+    BOOL                    _needsUpdate, _willUpdate;
+    BOOL                    _isUpdating;
+    NSRect                  _visibleRect;
+    SVWebEditorTextRange    *_selectionToRestore;
     
     NSSet   *_pageDependencies;
     
@@ -64,6 +65,8 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
+
+- (void)didUpdate;
 
 
 #pragma mark Content
