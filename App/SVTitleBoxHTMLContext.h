@@ -6,7 +6,11 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-//  A rather specialised HTML Context that writes to a SVBodyParagraph object, splitting it between .archiveString and .links
+//  To get HTML out of the DOM and into the model, the DOM nodes are written to an HTML context. SVHTMLContext does a pretty good job out of the box, but SVTitleBoxHTMLContext has a few extra tricks up its sleeve:
+//
+//  -   Writing element start tags is performed lazily; when you open an element, it is queued up on an internal stack and only actually written when it is time to write some following non-start tag content. If the element turns out to be empty, it can be removed from the DOM, and wiped from the stack without any actual writing ever having taken place.
+//
+//  -   Only a small whitelist of elements, attributes and styling are permitted. Anything failing to make the grade will be removed from the DOM and not actually written to the context.
 
 
 #import "SVMutableStringHTMLContext.h"
