@@ -1,5 +1,5 @@
 //
-//  SVTextBoxRange.h
+//  SVWebEditorTextRange.h
 //  Sandvox
 //
 //  Created by Mike on 12/02/2010.
@@ -12,7 +12,7 @@
 #import <WebKit/WebKit.h>
 
 
-@interface SVTextBoxRange : NSObject
+@interface SVWebEditorTextRange : NSObject
 {
   @private
     id          _startObject;

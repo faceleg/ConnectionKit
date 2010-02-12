@@ -1,15 +1,15 @@
 //
-//  SVTextBoxRange.m
+//  SVWebEditorTextRange.m
 //  Sandvox
 //
 //  Created by Mike on 12/02/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVTextBoxRange.h"
+#import "SVWebEditorTextRange.h"
 
 
-@implementation SVTextBoxRange
+@implementation SVWebEditorTextRange
 
 - (id)initWithStartObject:(id)startObject index:(NSUInteger)startIndex
                 endObject:(id)endObject index:(NSUInteger)endIndex;
