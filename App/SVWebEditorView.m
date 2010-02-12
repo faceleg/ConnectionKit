@@ -275,6 +275,31 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange;
+{
+    DOMRange *domRange = [[self HTMLDocument] createRange];
+    
+    id startObject = [textRange startObject];
+    id endObject = [textRange endObject];
+    
+    if (startObject && endObject)
+    {
+        SVWebEditorItem *startItem = [[self mainItem] descendantItemWithRepresentedObject:startObject];
+        if (startItem)
+        {
+            SVWebEditorItem *endItem = [[self mainItem] descendantItemWithRepresentedObject:endObject];
+            if (endItem)
+            {
+                [textRange populateDOMRange:domRange
+                           withStartElement:[startItem HTMLElement]
+                                 endElement:[endItem HTMLElement]];
+            
+                [self setSelectedDOMRange:domRange affinity:NSSelectionAffinityDownstream];
+            }
+        }
+    }
+}
+
 @synthesize focusedText = _focusedText;
 
 // Notification is optional as it's just a nicety to pass onto text object

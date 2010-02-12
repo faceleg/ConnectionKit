@@ -75,7 +75,9 @@
 
 @property(nonatomic, readonly) DOMRange *selectedDOMRange;
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
+
 - (SVWebEditorTextRange *)selectedTextRange;
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)range;
 
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;    // KVO-compliant
 
