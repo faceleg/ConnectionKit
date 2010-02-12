@@ -35,4 +35,8 @@
 @property(nonatomic, retain, readonly) id endObject;
 @property(nonatomic, readonly) NSUInteger endIndex;
 
+- (void)populateDOMRange:(DOMRange *)range
+        withStartElement:(DOMElement *)startElement
+              endElement:(DOMElement *)endElement;
+
 @end

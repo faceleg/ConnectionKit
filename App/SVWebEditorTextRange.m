@@ -8,6 +8,8 @@
 
 #import "SVWebEditorTextRange.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @interface DOMNode (SVWebEditorTextRange)
 - (NSUInteger)SVWebEditorTextRange_length;
@@ -97,6 +99,81 @@
 @synthesize startIndex = _startIndex;
 @synthesize endObject = _endObject;
 @synthesize endIndex = _endIndex;
+
+- (void)populateDOMRange:(DOMRange *)range
+        withStartElement:(DOMElement *)startElement
+              endElement:(DOMElement *)endElement;
+{
+    // Locate the start of the range. OUCH
+    DOMTreeWalker *treeWalker = [[startElement ownerDocument]
+                                 createTreeWalker:startElement
+                                 whatToShow:DOM_SHOW_ALL
+                                 filter:nil
+                                 expandEntityReferences:NO];
+    
+    DOMNode *aNode = [treeWalker currentNode];
+    NSUInteger index = 0;
+    while (aNode)
+    {
+        NSUInteger nodeLength = [aNode SVWebEditorTextRange_length];
+        index = index + nodeLength;
+        
+        if (index > [self startIndex])
+        {
+            if (index - nodeLength == [self startIndex])
+            {
+                DOMNode *parentNode = [aNode parentNode];
+                NSUInteger offset = [[parentNode mutableChildNodesArray] indexOfObjectIdenticalTo:aNode];
+                [range setStart:parentNode offset:offset];
+            }
+            else
+            {
+                OBASSERT([aNode nodeType] == DOM_TEXT_NODE);
+                NSUInteger offset = nodeLength - (index - [self startIndex]);
+                [range setStart:aNode offset:offset];
+            }
+            break;
+        }
+        
+        aNode = [treeWalker nextNode];
+    }
+    
+    
+    
+    // Locate the end of the range
+    treeWalker = [[endElement ownerDocument]
+                  createTreeWalker:endElement
+                  whatToShow:DOM_SHOW_ALL
+                  filter:nil
+                  expandEntityReferences:NO];
+    
+    aNode = [treeWalker currentNode];
+    index = 0;
+    while (aNode)
+    {
+        NSUInteger nodeLength = [aNode SVWebEditorTextRange_length];
+        index = index + nodeLength;
+        
+        if (index >= [self endIndex])
+        {
+            if (index == [self endIndex])
+            {
+                DOMNode *parentNode = [aNode parentNode];
+                NSUInteger offset = [[parentNode mutableChildNodesArray] indexOfObjectIdenticalTo:aNode];
+                [range setEnd:parentNode offset:(offset + 1)];
+            }
+            else
+            {
+                OBASSERT([aNode nodeType] == DOM_TEXT_NODE);
+                NSUInteger offset = nodeLength - (index - [self endIndex]);
+                [range setEnd:aNode offset:offset];
+            }
+            break;
+        }
+        
+        aNode = [treeWalker nextNode];
+    }
+}
 
 #pragma mark NSCopying
 
