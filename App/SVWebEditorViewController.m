@@ -465,8 +465,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Restore selection
     if (_selectionToRestore)
     {
-        
-        
+        [[self webEditor] setSelectedTextRange:_selectionToRestore];
         [_selectionToRestore release]; _selectionToRestore = nil;
     }
 }
