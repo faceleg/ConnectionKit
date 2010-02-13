@@ -182,7 +182,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark Other Accessors
 
 @synthesize content = _pagesController;
-- (void)setContent:(NSArrayController *)controller
+- (void)setContent:(SVPagesController *)controller
 {
     [_pagesController removeObserver:self forKeyPath:@"selectedObjects"];
     
