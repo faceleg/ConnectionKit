@@ -201,8 +201,6 @@ typedef enum {
 @interface KTPage (Web)
 + (NSString *)pageTemplate;
 
-- (BOOL)shouldPublishHTMLTemplate;
-
 - (NSString *)javascriptURLPath;
 - (NSString *)comboTitleText;
 

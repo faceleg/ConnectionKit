@@ -36,7 +36,6 @@
 
 @implementation KTPage ( Web )
 
-#pragma mark -
 #pragma mark Class Methods
 
 + (NSString *)pageTemplate
@@ -53,25 +52,6 @@
 	return sPageTemplateString;
 }
 
-#pragma mark -
-#pragma mark HTML Generation
-
-/*	Some page types (e.g. File Download) do not want to publish the HTML, it's just for peviewing.
- */
-- (BOOL)shouldPublishHTMLTemplate
-{
-	BOOL result = YES;
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(pageShouldPublishHTMLTemplate:)])
-	{
-		result = [delegate pageShouldPublishHTMLTemplate:self];
-	}
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark CSS
 
 - (NSString *)cssClassName { return @"text-page"; }
