@@ -181,6 +181,7 @@
 
 - (void)update
 {
+    [super update];
     [[self textHTMLElement] setInnerHTML:[self HTMLString]];
 }
 
