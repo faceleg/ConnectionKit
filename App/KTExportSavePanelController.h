@@ -9,7 +9,7 @@
 #import "KSViewController.h"
 
 
-@interface KTExportSavePanelController : KSViewController
+@interface KTExportSavePanelController : NSViewController
 {
     IBOutlet NSTextField    *oSiteURLField;
     

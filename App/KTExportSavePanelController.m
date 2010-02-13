@@ -15,7 +15,7 @@
 
 - (id)initWithSiteURL:(NSURL *)URL documentURL:(NSURL *)docURL;
 {
-    if (self = [self initWithNibNamed:@"KTTransfer" bundle:nil])
+    if (self = [self initWithNibName:@"KTTransfer" bundle:nil])
     {
         _documentURL = [docURL copy];
         
