@@ -72,7 +72,7 @@
 
 - (BOOL)isEditable
 {
-    BOOL result = [[self textHTMLElement] isContentEditable];
+    BOOL result = [[self HTMLElement] isContentEditable];
     return result;
 }
 
@@ -81,11 +81,11 @@
     // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
     if (flag)
     {
-        [[self textHTMLElement] setContentEditable:@"true"];
+        [[self HTMLElement] setContentEditable:@"true"];
     }
     else
     {
-        [[self textHTMLElement] removeAttribute:@"contentEditable"];
+        [[self HTMLElement] removeAttribute:@"contentEditable"];
     }
 }
 
@@ -194,7 +194,7 @@
 - (void)webEditorTextWillGainFocus;
 {
     // A bit crude, but we don't want WebKit's usual focus ring
-    [[[self textHTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
+    [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
 }
 
 - (void)webViewDidChange:(NSNotification *)notification;
