@@ -518,7 +518,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         // Search each text block in turn for a match
         for (result in [self textAreas])
         {
-            if ([result textHTMLElement] == editableElement)
+            if ([result HTMLElement] == editableElement)
             {
                 break;
             }
