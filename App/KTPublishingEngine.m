@@ -513,17 +513,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	
     if ([page isKindOfClass:[KTPage class]])
 	{
-		// This is currently a special case to make sure Download Page media is published
-		// We really ought to generalise this feature if any other plugins actually need it
-		if ([[[[page plugin] bundle] bundleIdentifier] isEqualToString:@"sandvox.DownloadElement"])
-		{
-			KTMediaFileUpload *upload = [[page delegate] performSelector:@selector(mediaFileUpload)];
-			if (upload)
-			{
-				[self uploadMediaIfNeeded:upload];
-			}
-		}
-		
 		// Don't publish drafts or special pages with no direct content
 		if ([(KTPage *)page pageOrParentDraft] || ![(KTPage *)page shouldPublishHTMLTemplate]) return;
 	}
