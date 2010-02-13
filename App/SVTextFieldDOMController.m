@@ -156,7 +156,7 @@
     [super setTextHTMLElement:element];
     
     // Once attached to our DOM node, give it the placeholder text if needed
-    if ([[self HTMLString] length] == 0 && [self placeholderString])
+    if ([self placeholderString] && [[self HTMLString] length] == 0)
     {
         [[self textHTMLElement] setInnerText:[self placeholderString]];
     }
