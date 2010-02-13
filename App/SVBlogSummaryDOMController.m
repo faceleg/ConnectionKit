@@ -9,6 +9,8 @@
 #import "SVBlogSummaryDOMController.h"
 #import "SVBlogEntryBorderView.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVBlogSummaryDOMController
 
