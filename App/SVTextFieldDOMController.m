@@ -13,6 +13,14 @@
 #import "DOMNode+Karelia.h"
 
 
+@interface SVTextFieldDOMController ()
+- (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVTextFieldDOMController
 
 - (void)dealloc
@@ -22,11 +30,86 @@
     
     [_placeholder release];
     [_uneditedValue release];
+    [_HTMLString release];
     
     [super dealloc];
 }
 
+#pragma mark Contents
+
+@synthesize HTMLString = _HTMLString;
+- (void)setHTMLString:(NSString *)html
+{
+    [self setHTMLString:html needsUpdate:YES];
+}
+
+- (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM
+{
+    // Store HTML
+    html = [html copy];
+    [_HTMLString release]; _HTMLString = html;
+    
+    // Update DOM to match
+    if (updateDOM) [self setNeedsUpdate];
+}
+
+- (NSString *)string
+{
+    NSString *result = [[self textHTMLElement] innerText];
+    return result;
+}
+
+- (void)setString:(NSString *)string
+{
+    [[self textHTMLElement] setInnerText:string];
+}
+
+#pragma mark Web Editor Item
+
 - (BOOL)isSelectable { return [self isEditable]; }
+
+#pragma mark Updating
+
+- (void)update
+{
+    [super update];
+    [[self textHTMLElement] setInnerHTML:[self HTMLString]];
+}
+
+#pragma mark Editing
+
+- (void)didChangeText;
+{
+    // Validate the HTML
+    SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] init];
+    [[self textHTMLElement] writeInnerHTMLToContext:context];
+    
+    
+    // Do usual stuff
+    [super didChangeText];
+    
+    
+    // Copy HTML across to ourself
+    [self setHTMLString:[[self textHTMLElement] innerHTML] needsUpdate:NO];
+    
+    
+    // Push change down to model
+    NSString *editedValue = [context mutableString];
+    if (![editedValue isEqualToString:_uneditedValue])
+    {
+        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
+        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+        
+        _isCommittingEditing = YES;
+        [observedObject setValue:editedValue
+                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+        _isCommittingEditing = NO;
+    }
+    
+    
+    // Tidy up
+    [context release];
+}
 
 #pragma mark Bindings/NSEditor
 
@@ -82,35 +165,6 @@
     // It's just like ending editing via the return key
     [self didEndEditingTextWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
     return YES;
-}
-
-- (void)didChangeText;
-{
-    // Validate the HTML
-    SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] init];
-    [[self textHTMLElement] writeInnerHTMLToContext:context];
-    
-    
-    // Do usual stuff
-    [super didChangeText];
-    
-    
-    // Push change down to model
-    NSString *editedValue = [context mutableString];
-    if (![editedValue isEqualToString:_uneditedValue])
-    {
-        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
-        
-        _isCommittingEditing = YES;
-        [observedObject setValue:editedValue
-                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
-        _isCommittingEditing = NO;
-    }
-    
-    
-    // Tidy up
-    [context release];
 }
 
 #pragma mark Placeholder

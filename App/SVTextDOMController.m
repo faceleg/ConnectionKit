@@ -14,9 +14,6 @@
 
 @interface SVTextDOMController ()
 
-- (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM;
-
-
 #pragma mark Undo
 - (void)willChangeTextSuitableForUndoCoalescing;
 
@@ -57,7 +54,6 @@
                                                     name:WebViewDidChangeNotification
                                                   object:nil];
     
-    [_HTMLString release];
     [_textElement release];
     
     [super dealloc];
@@ -70,35 +66,6 @@
 {
     [self HTMLElement]; // make sure it's loaded
     return _textElement;
-}
-
-#pragma mark Contents
-
-@synthesize HTMLString = _HTMLString;
-- (void)setHTMLString:(NSString *)html
-{
-    [self setHTMLString:html needsUpdate:YES];
-}
-
-- (void)setHTMLString:(NSString *)html needsUpdate:(BOOL)updateDOM
-{
-    // Store HTML
-    html = [html copy];
-    [_HTMLString release]; _HTMLString = html;
-    
-    // Update DOM to match
-    if (updateDOM) [self setNeedsUpdate];
-}
-
-- (NSString *)string
-{
-    NSString *result = [[self textHTMLElement] innerText];
-    return result;
-}
-
-- (void)setString:(NSString *)string
-{
-    [[self textHTMLElement] setInnerText:string];
 }
 
 #pragma mark Attributes
@@ -151,10 +118,6 @@
     }
     
     
-    // Copy HTML across to ourself
-    [self setHTMLString:[[self textHTMLElement] innerHTML] needsUpdate:NO];
-    
-    
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
                                                         object:self];
@@ -175,14 +138,6 @@
     {
         [[[self HTMLElement] documentView] selectAll:self];
     }
-}
-
-#pragma mark Updating
-
-- (void)update
-{
-    [super update];
-    [[self textHTMLElement] setInnerHTML:[self HTMLString]];
 }
 
 #pragma mark SVWebEditorText
