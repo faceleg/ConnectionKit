@@ -35,7 +35,7 @@ KTCollectionPathStyle;
 @class SVHTMLTemplateParser;
 
 
-@interface KTAbstractPage : SVSiteItem <SVPage>
+@interface KTAbstractPage : SVSiteItem
 
 + (NSString *)entityName;
 + (NSArray *)allPagesInManagedObjectContext:(NSManagedObjectContext *)MOC;

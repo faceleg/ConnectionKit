@@ -294,7 +294,7 @@
 
 - (NSString *)titleText	// get title, but without attributes
 {
-	return [self titleString];
+	return [self title];
 }
 
 - (void)setTitleText:(NSString *)value
