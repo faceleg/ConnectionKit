@@ -514,7 +514,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if ([page isKindOfClass:[KTPage class]])
 	{
 		// Don't publish drafts or special pages with no direct content
-		if ([(KTPage *)page pageOrParentDraft] || ![(KTPage *)page shouldPublishHTMLTemplate]) return;
+		if ([(KTPage *)page pageOrParentDraft]) return;
 	}
     
     
