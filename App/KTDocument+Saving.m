@@ -1122,7 +1122,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT([NSThread currentThread] == [self thread]);
     
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
-    [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
+    [context setGenerationPurpose:kSVHTMLGenerationPurposeQuickLookPreview];
     [context setCurrentPage:[[self site] rootPage]];
     
     [context push];
