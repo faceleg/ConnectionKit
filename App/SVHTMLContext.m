@@ -49,6 +49,7 @@
 {
     [super init];
     
+    _stream = [stream retain];
     _generationPurpose = kSVHTMLGenerationPurposeNormal;
     _includeStyling = YES;
     [self setEncoding:NSUTF8StringEncoding];
@@ -70,6 +71,7 @@
     [_currentPage release];
     [_iteratorsStack release];
     [_textBlocks release];
+    [_stream release];
     
     [super dealloc];
 }
