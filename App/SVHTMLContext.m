@@ -166,7 +166,7 @@
 - (void)closeStartTag;
 {
     [self writeString:@">"];
-    [self indent];
+    [self increaseIndentationLevel];
 }
 
 - (void)closeEmptyElementTag;               //   />    OR    >    depending on -isXHTML
@@ -186,7 +186,7 @@
 // Outdent *before* emitting end tag, so we get the right thing.
 - (void)writeEndTagWithNewline:(BOOL)aNewline;
 {
-	[self outdent];
+	[self decreaseIndentationLevel];
 
 	if (aNewline)
 	{
@@ -234,12 +234,12 @@
 
 @synthesize indentationLevel = _indentation;
 
-- (void)indent;
+- (void)increaseIndentationLevel;
 {
     [self setIndentationLevel:[self indentationLevel] + 1];
 }
 
-- (void)outdent;
+- (void)decreaseIndentationLevel;
 {
     [self setIndentationLevel:[self indentationLevel] - 1];
 }
