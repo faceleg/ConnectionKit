@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVTemplateContext.h"
+#import <Foundation/Foundation.h>
 #import "KSStringStream.h"
 
 #import <WebKit/DOMCore.h>
@@ -23,10 +23,10 @@ typedef enum {
 @class KTAbstractPage, SVHTMLTextBlock, SVLink;
 
 
-@interface SVHTMLContext : SVTemplateContext <KSStringStream>
+@interface SVHTMLContext : NSObject <KSStringStream>
 {
     NSMutableArray  *_openElements;
-    NSInteger  _indentation;
+    NSInteger       _indentation;
     
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;

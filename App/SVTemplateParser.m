@@ -10,7 +10,8 @@
 #import "KTHTMLParserMasterCache.h"
 
 #import "SVTemplate.h"
-#import "SVTemplateContext.h"
+
+#import "KSStringStream.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
@@ -80,7 +81,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)dealloc
 {
-    OBASSERT(!_context);
+    OBASSERT(!_stream);
     
 	[myTemplate release];
 	[myComponent release];
@@ -113,7 +114,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	myCache = cache;
 }
 
-@synthesize context = _context;
+@synthesize stringStream = _stream;
 
 #pragma mark -
 #pragma mark KVC Overriding
@@ -194,7 +195,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		if (component && template)
 		{
 			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
-			[parser parseIntoContext:_context];
+			[parser parseIntoStream:_stream];
 			[parser release];
 		}
 	}
@@ -225,16 +226,16 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
  */
 + (BOOL)parseTemplate:(NSString *)aTemplate
             component:(id)component
-          intoContext:(SVTemplateContext *)context;
+        writeToStream:(id <KSStringStream>)context;
 {
 	SVTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
-	BOOL result = [parser parseIntoContext:context];
+	BOOL result = [parser parseIntoStream:context];
 	[parser release];
     
     return result;
 }
 
-- (BOOL)parseIntoContext:(SVTemplateContext *)context;
+- (BOOL)parseIntoStream:(id <KSStringStream>)stream;
 {
 	BOOL result = NO;
 	@try
@@ -256,9 +257,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 				// Parse!
 				NSScanner *scanner = [NSScanner scannerWithString:template];
 				[scanner setCharactersToBeSkipped:nil];
-                _context = context;
+                _stream = stream;
 				result = [self startHTMLStringByScanning:scanner];
-                _context = nil;
+                _stream = nil;
 			}
 		}
 	}
@@ -330,7 +331,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
         
 		// find [[ ... keep what was before it.
         if ( [inScanner scanUpToString:kComponentTagStartDelim intoString:&beforeText] ) {
-            [_context writeString:beforeText];
+            [_stream writeString:beforeText];
         }
         
 		// Get the [[
@@ -409,25 +410,25 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 								}
 							}
 							OBASSERT(toAppend);
-							[_context writeString:toAppend];
+							[_stream writeString:toAppend];
 						}
 					}
 					else if ([tag hasPrefix:kStringIndicator])
 					{
 						NSString *toAppend = [self componentLocalizedString:tag];
-						if (toAppend) [_context writeString:toAppend];
+						if (toAppend) [_stream writeString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetStringIndicator])
 					{
 						NSString *toAppend = [self componentTargetLocalizedString:tag];
 						OBASSERT(toAppend);
-						[_context writeString:toAppend];
+						[_stream writeString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
 					{
 						NSString *toAppend = [self mainBundleLocalizedString:tag];
 						OBASSERT(toAppend);
-						[_context writeString:toAppend];
+						[_stream writeString:toAppend];
 					}
 					else	// not for echoing.  Do something.
 					{
@@ -459,7 +460,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							
 							if (htmlFragment)
 							{
-								[_context writeString:htmlFragment];
+								[_stream writeString:htmlFragment];
 							}
 						}
 						else

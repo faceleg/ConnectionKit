@@ -21,7 +21,9 @@
 #import "NSString+Karelia.h"    // for ComparisonType
 
 
-@class SVTemplateContext, KTHTMLParserMasterCache;
+@class KTHTMLParserMasterCache;
+@protocol KSStringStream;
+
 
 @protocol KTTemplateParserDelegate;
 @interface SVTemplateParser : NSObject
@@ -35,7 +37,7 @@
 	id						myDelegate;
 	SVTemplateParser		*myParentParser;	// Weak ref
 	
-    SVTemplateContext   *_context;  // weak ref, only used mid-parse
+    id <KSStringStream> _stream;  // weak ref, only used mid-parse
 	NSMutableDictionary	*myOverriddenKeys;
 	
 	NSUInteger  _ifFunctionDepth;
@@ -65,9 +67,9 @@
 
 + (BOOL)parseTemplate:(NSString *)aTemplate
             component:(id)component
-          intoContext:(SVTemplateContext *)context;
+        writeToStream:(id <KSStringStream>)context;
 
-- (BOOL)parseIntoContext:(SVTemplateContext *)context;
+- (BOOL)parseIntoStream:(id <KSStringStream>)context;
 - (BOOL)prepareToParse;
 
 - (NSString *)componentLocalizedString:(NSString *)tag;
@@ -92,7 +94,7 @@ keyPath:(NSString *)keyPath;
 
 #pragma mark Support
 
-@property(nonatomic, readonly) SVTemplateContext *context;
+@property(nonatomic, readonly) id <KSStringStream> stringStream;
 
 @property(nonatomic, retain, readonly) KTHTMLParserMasterCache *cache;
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;

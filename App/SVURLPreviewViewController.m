@@ -75,7 +75,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
         NSString *template = [self HTMLTemplateAndURL:&baseURL];
         
         SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
-        [SVTemplateParser parseTemplate:template component:self intoContext:context];
+        [SVTemplateParser parseTemplate:template component:self writeToStream:context];
         
         // Load
         [frame loadAlternateHTMLString:[context markupString]

@@ -446,8 +446,6 @@
 		27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
-		27B52E6E10F49B730086DEE4 /* SVTemplateContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B52E6D10F49B730086DEE4 /* SVTemplateContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27B52E7010F49B730086DEE4 /* SVTemplateContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B52E6F10F49B730086DEE4 /* SVTemplateContext.m */; };
 		27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */; };
 		27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */; };
 		27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */; };
@@ -1911,8 +1909,6 @@
 		27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
-		27B52E6D10F49B730086DEE4 /* SVTemplateContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTemplateContext.h; sourceTree = "<group>"; };
-		27B52E6F10F49B730086DEE4 /* SVTemplateContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTemplateContext.m; sourceTree = "<group>"; };
 		27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMutableStringHTMLContext.h; sourceTree = "<group>"; };
 		27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMutableStringHTMLContext.m; sourceTree = "<group>"; };
 		27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextRange.h; sourceTree = "<group>"; };
@@ -3195,8 +3191,6 @@
 		277D3CB410A1B9E900E4944A /* Template Parser */ = {
 			isa = PBXGroup;
 			children = (
-				27B52E6D10F49B730086DEE4 /* SVTemplateContext.h */,
-				27B52E6F10F49B730086DEE4 /* SVTemplateContext.m */,
 				27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */,
 				27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */,
 				2730D66B0DE18ACA004858F5 /* SVTemplateParser.h */,
@@ -5293,7 +5287,6 @@
 				271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */,
 				CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */,
 				27AF0E2810F40B42000A6B15 /* SVPageInspector.h in Headers */,
-				27B52E6E10F49B730086DEE4 /* SVTemplateContext.h in Headers */,
 				27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */,
 				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
 				270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */,
@@ -6688,7 +6681,6 @@
 				273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */,
 				CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */,
 				27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */,
-				27B52E7010F49B730086DEE4 /* SVTemplateContext.m in Sources */,
 				27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */,
 				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
 				270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */,
