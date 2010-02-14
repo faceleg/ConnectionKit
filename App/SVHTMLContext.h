@@ -20,8 +20,10 @@ typedef enum {
 } KTHTMLGenerationPurpose;
 
 
-@class KTAbstractPage, SVHTMLTextBlock, SVLink;
+#pragma mark -
 
+
+@class KTAbstractPage, SVHTMLTextBlock, SVLink;
 
 @interface SVHTMLContext : NSObject <KSStringStream>
 {
@@ -49,17 +51,6 @@ typedef enum {
 #pragma mark Creating a Context
 - (id)initWithStringStream:(id <KSStringStream>)stream; // designated initializer
 - (id)init; // creates a context with no underlying string stream. Handy for iteration & deriving info, but not a lot else
-
-
-#pragma mark Managing the Context Stack
-
-+ (SVHTMLContext *)currentContext;
-+ (void)pushContext:(SVHTMLContext *)context;
-+ (void)popContext;
-
-// Convenience methods for pushing and popping that will just do the right thing when the receiver is nil
-- (void)push;
-- (void)pop;    // only pops if receiver is the current context
 
 
 #pragma mark Basic Writing
@@ -165,6 +156,23 @@ typedef enum {
 @property(nonatomic, retain) KTAbstractPage *currentPage;
 
 @end
+
+
+#pragma mark -
+
+
+@interface SVHTMLContext (CurrentContext)
+
++ (SVHTMLContext *)currentContext;
++ (void)pushContext:(SVHTMLContext *)context;
++ (void)popContext;
+
+// Convenience methods for pushing and popping that will just do the right thing when the receiver is nil
+- (void)push;
+- (void)pop;    // only pops if receiver is the current context
+
+@end
+
 
 
 #pragma mark -
