@@ -30,6 +30,7 @@ typedef enum {
     
     NSMutableArray  *_openElements;
     NSInteger       _indentation;
+    BOOL            _needsToWriteIndentation;
     
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;
@@ -68,7 +69,8 @@ typedef enum {
 - (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
 - (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
 
-- (void)writeNewline;   // writes a newline character and then enough tab characters to meet -indentationLevel
+// Writes a newline character. The next time, -writeString: is called, enough tab characters to meet -indentationLevel before the string actually gets written. This allows you to start a newline and then decrease the indentation level without messing up output.
+- (void)writeNewline;
 
 
 #pragma mark Elements

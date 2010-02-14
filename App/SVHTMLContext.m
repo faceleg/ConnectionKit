@@ -149,11 +149,7 @@
 - (void)writeNewline;   // writes a newline character and the tabs to match -indentationLevel
 {
     [self writeString:@"\n"];
-    
-    for (int i = 0; i < [self indentationLevel]; i++)
-    {
-        [self writeString:@"\t"];
-    }
+    _needsToWriteIndentation = YES;
 }
 
 #pragma mark Elements
@@ -250,7 +246,19 @@
 
 #pragma mark Primitive
 
-- (void)writeString:(NSString *)string; { [[self stringStream] writeString:string]; }
+- (void)writeString:(NSString *)string;
+{
+    if (_needsToWriteIndentation)
+    {
+        _needsToWriteIndentation = NO;  // don't want to get stuck in an infinite loop!
+        for (int i = 0; i < [self indentationLevel]; i++)
+        {
+            [self writeString:@"\t"];
+        }
+    }
+    
+    [[self stringStream] writeString:string];
+}
 
 @synthesize stringStream = _stream;
 
