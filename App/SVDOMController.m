@@ -52,7 +52,8 @@
 - (void)createHTMLElement
 {
     // Gather the HTML
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithContext:[self HTMLContext]];
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    [context copyPropertiesFromContext:[self HTMLContext]];
     
     [context push];
     [self writeRepresentedObjectHTML];

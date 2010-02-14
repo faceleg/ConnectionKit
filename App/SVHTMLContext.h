@@ -25,6 +25,9 @@ typedef enum {
 
 @interface SVHTMLContext : NSObject <KSStringStream>
 {
+  @private
+    id <KSStringStream> _stream;
+    
     NSMutableArray  *_openElements;
     NSInteger       _indentation;
     
@@ -43,8 +46,8 @@ typedef enum {
 }
 
 #pragma mark Creating a Context
-- (id)init;
-- (id)initWithContext:(SVHTMLContext *)context; // new context gains all settings of old one
+- (id)initWithStringStream:(id <KSStringStream>)stream; // designated initializer
+- (id)init; // creates a context with no underlying string stream. Handy for iteration & deriving info, but not a lot else
 
 
 #pragma mark Managing the Context Stack
@@ -108,7 +111,8 @@ typedef enum {
 
 
 #pragma mark Primitive
-- (void)writeString:(NSString *)string;     // primitive method any subclass MUST override
+- (void)writeString:(NSString *)string; // calls -writeString: on our string stream. Override to customize raw writing
+@property(nonatomic, retain, readonly) id <KSStringStream> stringStream;
 
 
 #pragma mark Properties
@@ -124,6 +128,7 @@ typedef enum {
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;
 
+- (void)copyPropertiesFromContext:(SVHTMLContext *)context;
 
 #pragma mark Iterations
 

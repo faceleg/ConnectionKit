@@ -45,7 +45,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)init;
+- (id)initWithStringStream:(id <KSStringStream>)stream; // designated initializer
 {
     [super init];
     
@@ -59,21 +59,9 @@
     return self;
 }
 
-- (id)initWithContext:(SVHTMLContext *)context;
+- (id)init;
 {
-    self = [self init];
-    
-    // Copy across properties
-    [self setIndentationLevel:[context indentationLevel]];
-    [self setCurrentPage:[context currentPage]];
-    [self setBaseURL:[context baseURL]];
-    [self setIncludeStyling:[context includeStyling]];
-    [self setLiveDataFeeds:[context liveDataFeeds]];
-    [self setXHTML:[context isXHTML]];
-    [self setEncoding:[context encoding]];
-    [self setGenerationPurpose:[context generationPurpose]];
-    
-    return self;
+    return [self initWithStringStream:nil];
 }
 
 - (void)dealloc
@@ -260,7 +248,9 @@
 
 #pragma mark Primitive
 
-- (void)writeString:(NSString *)string; { [super writeString:string]; }
+- (void)writeString:(NSString *)string; { [[self stringStream] writeString:string]; }
+
+@synthesize stringStream = _stream;
 
 #pragma mark Properties
 
@@ -288,6 +278,19 @@
 {
     BOOL result = [self generationPurpose] == kSVHTMLGenerationPurposeNormal;
     return result;
+}
+
+- (void)copyPropertiesFromContext:(SVHTMLContext *)context;
+{
+    // Copy across properties
+    [self setIndentationLevel:[context indentationLevel]];
+    [self setCurrentPage:[context currentPage]];
+    [self setBaseURL:[context baseURL]];
+    [self setIncludeStyling:[context includeStyling]];
+    [self setLiveDataFeeds:[context liveDataFeeds]];
+    [self setXHTML:[context isXHTML]];
+    [self setEncoding:[context encoding]];
+    [self setGenerationPurpose:[context generationPurpose]];
 }
 
 #pragma mark URLs/Paths

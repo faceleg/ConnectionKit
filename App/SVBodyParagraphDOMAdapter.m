@@ -108,7 +108,8 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [super update];
     
 
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithContext:[self HTMLContext]];
+    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    [context copyPropertiesFromContext:[self HTMLContext]];
     [context push];
     
     SVBodyParagraph *paragraph = [self representedObject];
