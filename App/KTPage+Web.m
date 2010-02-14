@@ -348,7 +348,7 @@
 		
 		if (page != currentParserPage)
 		{
-			[context writeEndTagWithNewline:NO];	// a
+			[context writeEndTag];	// a
 		}
 		
 		if ([children count])
