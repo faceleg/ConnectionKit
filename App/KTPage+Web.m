@@ -56,29 +56,6 @@
 
 - (NSString *)cssClassName { return @"text-page"; }
 
-/*	Generates a <link> tag to the specified stylesheet. Include a title attribute when possible.
- */
-- (NSString *)stylesheetLink:(NSString *)stylesheetPath title:(NSString *)title media:(NSString *)media
-{
-	NSMutableString *result = [NSMutableString stringWithFormat:@"<link rel=\"stylesheet\" type=\"text/css\" href=\"%@\"",
-                               stylesheetPath];
-	
-	if (title)
-	{
-		[result appendFormat:@" title=\"%@\"", [title stringByEscapingHTMLEntitiesWithQuot:YES]];
-	}
-	
-	if (media)
-	{
-		[result appendFormat:@" media=\"%@\"", media];
-	}
-	
-	[result appendString:@" />"];	// Close the tag
-	
-	// Tidy up
-	return result;
-}
-
 /*	Generates the path to the specified file with the current page's design.
  *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
  */
@@ -117,85 +94,73 @@
 
 /*  Used by KTPageTemplate.html to generate links to the stylesheets needed by this page. Used to be a dedicated [[stylesheet]] parser function
  */
-- (NSString *)stylesheetsHTMLString
+- (void)writeStylesheetLinks
 {
-    NSMutableArray *stylesheetLines = [NSMutableArray array];
-	
-	
-	// Always include the global sandvox CSS.
-	if ([[SVHTMLContext currentContext] isEditable])
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    
+    // Always include the global sandvox CSS.
+	if ([context isEditable])
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
+        
+        [context writeLinkToStylesheet:[context relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]]
+                                 title:nil
+                                 media:nil];
 	}
-    else if ([[SVHTMLContext currentContext] isEditable])
+    else if ([context generationPurpose] == kSVHTMLGenerationPurposeQuickLookPreview)
 	{
 		NSString *globalCSSFile = [[NSBundle mainBundle] quicklookDataForFile:@"Contents/Resources/sandvox.css"];
-		[stylesheetLines addObject:[self stylesheetLink:globalCSSFile title:nil media:nil]];
+		[context writeLinkToStylesheet:globalCSSFile title:nil media:nil];
 	}
 	else
     {
 		NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-		[stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]] title:nil media:nil]];
+		[context writeLinkToStylesheet:[context relativeURLStringOfResourceFile:[NSURL fileURLWithPath:globalCSSFile]]
+                                 title:nil
+                                 media:nil];
 	}
-        
     
-	// Ask the page and its components for extra general-purpose CSS files required
-	NSMutableSet *pluginCSSFiles = [NSMutableSet set];
-	[self makeComponentsPerformSelector:@selector(addCSSFilePathToSet:forPage:)
-							 withObject:pluginCSSFiles
-							   withPage:self
-							  recursive:NO];
-	
-	NSEnumerator *pluginCSSEnumerator = [pluginCSSFiles objectEnumerator];
-	NSString *aCSSFile;
-	while (aCSSFile = [pluginCSSEnumerator nextObject])
-	{
-		NSURL *CSSURL = [NSURL fileURLWithPath:aCSSFile];
-        [stylesheetLines addObject:[self stylesheetLink:[[SVHTMLContext currentContext] relativeURLStringOfResourceFile:CSSURL] title:nil media:nil]];
-	}
-	
-	
+    
 	// Then the base design's CSS file -- the most specific
 	NSString *mainCSS = [self pathToDesignFile:@"main.css"];
-	[stylesheetLines addObject:[self stylesheetLink:mainCSS
-											  title:[[[self master] design] title]
-											  media:nil]];
+	[context writeLinkToStylesheet:mainCSS
+                             title:[[[self master] design] title]
+                             media:nil];
 	
 	
 	// design's print.css but not for Quick Look
-    if (![[SVHTMLContext currentContext] isEditable])
+    if (![context isEditable])
 	{
 		NSString *printCSS = [self pathToDesignFile:@"print.css"];
-		if (printCSS) [stylesheetLines addObject:[self stylesheetLink:printCSS title:nil media:@"print"]];
+		if (printCSS) [context writeLinkToStylesheet:printCSS title:nil media:@"print"];
 	}
 	
 	
-	// If we're in preview mode include additional editing CSS
-	if (![[SVHTMLContext currentContext] isPublishing])
+	// If we're for editing, include additional editing CSS
+	if ([context isEditable])
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"design-time"
 																			 ofType:@"css"];
-		[stylesheetLines addObject:[self stylesheetLink:[[NSURL fileURLWithPath:editingCSSPath] absoluteString] title:nil media:nil]];
+		[context writeLinkToStylesheet:[[NSURL fileURLWithPath:editingCSSPath] absoluteString]
+                                 title:nil
+                                 media:nil];
 	}
 	
     
 	// For preview/quicklook mode, the banner CSS
-	NSString *masterCSS = [[self master] bannerCSSForPurpose:[[SVHTMLContext currentContext] generationPurpose]];
+	NSString *masterCSS = [[self master] bannerCSSForPurpose:[context generationPurpose]];
     if (masterCSS)
     {
         // For Quick Look and previewing the master-specific stylesheet should be inline.
         // When publishing it is lumped into main.css
-        if (![[SVHTMLContext currentContext] isPublishing])
+        if (![context isForPublishing])
         {
-            [stylesheetLines addObject:[NSString stringWithFormat:@"<style type=\"text/css\">\n%@\n</style>", masterCSS]];
+            [context writeStyleStartTagWithType:@"text/css"];
+            [context writeHTMLString:masterCSS];
+            [context writeEndTagWithNewline:YES];
         }
 	}
-    
-	
-	// Tidy up
-	NSString *result = [stylesheetLines componentsJoinedByString:@"\n"];
-	return result;
 }
 
 #pragma mark -
@@ -380,7 +345,7 @@
 			
 			NSString *urlString = [context relativeURLStringOfPage:page];
 			
-			[context writeAnchorStartTagWithHref:urlString title:[page titleString] target:nil rel:nil];
+			[context writeAnchorStartTagWithHref:urlString title:[page title] target:nil rel:nil];
 			// TODO: targetStringForPage:targetPage
 		}
 		
