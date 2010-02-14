@@ -139,8 +139,10 @@
         if (![context isForPublishing])
         {
             [context writeStyleStartTagWithType:@"text/css"];
+            [context writeNewline];
             [context writeHTMLString:masterCSS];
-            [context writeEndTagWithNewline:YES];
+            [context writeNewline];
+            [context writeEndTag];
         }
 	}
 }
@@ -354,15 +356,17 @@
 		if ([children count])
 		{
 			[self outputMenuForArrayOfDuples:children isTreeTop:NO];
-			[context writeEndTagWithNewline:YES];	// li
-	}
+            [context writeNewline];
+			[context writeEndTag];	// li
+        }
 		else
 		{
 			[context writeEndTag];	// li
 		}
 		i++;
 	}
-	[context writeEndTagWithNewline:YES];	// ul
+    [context writeNewline];
+	[context writeEndTag];	// ul
 }
 
 - (NSString *)sitemenu
@@ -384,7 +388,8 @@
 		[context writeString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
 		
 		[context writeEndTag];	// a
-		[context writeEndTagWithNewline:YES];	// h2
+        [context writeNewline];
+		[context writeEndTag];	// h2
 
 		[context writeNewline];
 		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];
@@ -443,10 +448,12 @@
 		}
 		
 		
-		[context writeEndTagWithNewline:YES];	// div
-		[context writeHTMLString:@"<!-- sitemenu-content -->"];
-		[context writeEndTagWithNewline:YES];	// div
-		[context writeHTMLString:@"<!-- sitemenu -->"];
+        [context writeNewline];
+		[context writeEndTag];	// div
+        [context writeComment:@" sitemenu-content "];
+        [context writeNewline];
+		[context writeEndTag];	// div
+		[context writeComment:@" sitemenu "];
 	}
 	return nil;
 }
