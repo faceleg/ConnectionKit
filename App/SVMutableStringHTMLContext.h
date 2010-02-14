@@ -18,8 +18,8 @@
     NSMutableString *_mutableString;
 }
 
-- (id)initWithMutableString:(NSMutableString *)string;  // designated initializer
-- (id)init; // Uses an empty NSMutableString
+- (id)initWithMutableString:(NSMutableString *)string;
+- (id)init; // Calls -initWithMutableString: with empty NSMutableString
 
 @property(nonatomic, retain, readonly) NSMutableString *mutableString;
 

@@ -45,9 +45,9 @@
 
 @implementation SVTitleBoxHTMLContext
 
-- (id)initWithMutableString:(NSMutableString *)string
+- (id)initWithStringStream:(id <KSStringStream>)stream
 {
-    self = [super initWithMutableString:string];
+    self = [super initWithStringStream:stream];
     
     _unwrittenDOMElements = [[NSMutableArray alloc] init];
     

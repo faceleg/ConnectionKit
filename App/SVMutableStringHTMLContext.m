@@ -13,11 +13,11 @@
 
 @implementation SVMutableStringHTMLContext
 
-- (id)initWithMutableString:(NSMutableString *)string;  // designated initializer
+- (id)initWithMutableString:(NSMutableString *)string;
 {
     OBPRECONDITION(string);
     
-    [super init];
+    self = [self initWithStringStream:string];
     _mutableString = [string retain];
     return self;
 }
@@ -46,11 +46,6 @@
 	result = [result stringByRemovingMultipleNewlines];		// clean out empty lines
 	
 	return result;
-}
-
-- (void)writeString:(NSString *)html
-{
-    [[self mutableString] appendString:html];
 }
 
 @end

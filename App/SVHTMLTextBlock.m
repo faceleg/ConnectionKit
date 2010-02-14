@@ -216,7 +216,7 @@
     if (graphicalTextCode)
     {
         NSMutableString *innerHTML = [[NSMutableString alloc] init];
-        SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] initWithMutableString:innerHTML];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:innerHTML];
         [context push];
         [self writeInnerHTML];
         [context pop];

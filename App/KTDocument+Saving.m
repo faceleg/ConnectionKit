@@ -20,6 +20,9 @@
 #import "SVTextContentHTMLContext.h"
 #import "SVTitleBox.h"
 
+#import "KSSilencingConfirmSheet.h"
+#import "KSThreadProxy.h"
+
 #import "NSApplication+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSError+Karelia.h"
@@ -36,9 +39,6 @@
 #import "NSURL+Karelia.h"
 
 #import "CIImage+Karelia.h"
-
-#import "KSSilencingConfirmSheet.h"
-#import "KSThreadProxy.h"
 
 #import "Registration.h"
 #import "Debug.h"
@@ -881,13 +881,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSString *footer = [[[[[self site] rootPage] master] footer] text];
     if (footer)
     {
-        [result appendString:footer];
+        [result writeString:footer];
         [result appendUnichar:'\n'];
     }
     
     
     // Use an HTML context for reading in content
-    SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithMutableString:result];
+    SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithStringStream:result];
     [context push];
     
     
