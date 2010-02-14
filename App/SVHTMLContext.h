@@ -7,6 +7,8 @@
 //
 
 #import "SVTemplateContext.h"
+#import "KSStringStream.h"
+
 #import <WebKit/DOMCore.h>
 
 
@@ -21,7 +23,7 @@ typedef enum {
 @class KTAbstractPage, SVHTMLTextBlock, SVLink;
 
 
-@interface SVHTMLContext : SVTemplateContext
+@interface SVHTMLContext : SVTemplateContext <KSStringStream>
 {
     NSMutableArray  *_openElements;
     NSInteger  _indentation;
