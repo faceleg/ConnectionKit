@@ -161,7 +161,7 @@
 	
 	if (comparisonType == kCompareNotEmptyOrEditing)	// mostly same test; we will "OR" with editing mode
 	{
-		result = (![[SVHTMLContext currentContext] isPublishing] || [self isNotEmpty:leftValue]);
+		result = (![[SVHTMLContext currentContext] isForPublishing] || [self isNotEmpty:leftValue]);
 	}
 	else
 	{
@@ -283,7 +283,7 @@
 		else if ([keyword isEqualToString:@"flags"])
 		{
 			// Only generate these special classes if we are doing the local preview
-			if (![[SVHTMLContext currentContext] isPublishing])
+			if (![[SVHTMLContext currentContext] isForPublishing])
 			{		
 				value = [value lowercaseString];	// convert to lowercase before converting to classes
 				NSArray *flags = [value componentsSeparatedByWhitespace];
@@ -589,7 +589,7 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
-	return [context isPublishing];
+	return [context isForPublishing];
 }
 
 - (BOOL)includeStyling

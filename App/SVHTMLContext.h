@@ -119,7 +119,8 @@ typedef enum {
 
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable; // YES if HTML is intended to be edited directly in a Web Editor
-- (BOOL)isPublishing;
+- (BOOL)isForQuickLookPreview;
+- (BOOL)isForPublishing;
 
 
 #pragma mark Iterations

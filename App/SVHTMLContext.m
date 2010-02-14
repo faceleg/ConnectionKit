@@ -278,10 +278,15 @@
     return [NSSet setWithObject:@"generationPurpose"];
 }
 
-- (BOOL)isPublishing
+- (BOOL)isForQuickLookPreview;
 {
-    BOOL result = ([self generationPurpose] != kSVHTMLGenerationPurposeEditing &&
-                   [self generationPurpose] != kSVHTMLGenerationPurposeQuickLookPreview);
+    BOOL result = [self generationPurpose] == kSVHTMLGenerationPurposeQuickLookPreview;
+    return result;
+}
+
+- (BOOL)isForPublishing
+{
+    BOOL result = [self generationPurpose] == kSVHTMLGenerationPurposeNormal;
     return result;
 }
 
