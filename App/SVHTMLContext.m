@@ -183,26 +183,15 @@
     [_openElements removeLastObject];
 }
 
-// Outdent *before* emitting end tag, so we get the right thing.
-- (void)writeEndTagWithNewline:(BOOL)aNewline;
+- (void)writeEndTag;
 {
 	[self decreaseIndentationLevel];
 
-	if (aNewline)
-	{
-		[self writeNewline];
-	}
-    [self writeString:@"</"];
+	[self writeString:@"</"];
     [self writeString:[[_openElements lastObject] lowercaseString]];
     [self writeString:@">"];
     
     [_openElements removeLastObject];
-    
-}
-
-- (void)writeEndTag;
-{
-	[self writeEndTagWithNewline:NO];
 }
 
 #pragma mark Element Attributes

@@ -90,7 +90,6 @@ typedef enum {
 //  </tagName>
 //  The start tag must have been written by -openTag: or one of the higher-level methods that calls through to it, otherwise won't know what to write
 - (void)writeEndTag;
-- (void)writeEndTagWithNewline:(BOOL)aNewline;
 
 
 #pragma mark Querying Open Elements Stack
