@@ -180,6 +180,19 @@ typedef enum {
                       height:(NSString *)height;
 
 
+#pragma mark Link
+
+- (void)writeLinkWithHref:(NSString *)href
+                     type:(NSString *)type
+                      rel:(NSString *)rel
+                    title:(NSString *)title
+                    media:(NSString *)media;
+
+- (void)writeLinkToStylesheet:(NSString *)href
+                        title:(NSString *)title
+                        media:(NSString *)media;
+
+
 #pragma mark General
 
 //  <tagName id="idName" class="className">

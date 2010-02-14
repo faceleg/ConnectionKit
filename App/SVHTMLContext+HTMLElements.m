@@ -46,6 +46,34 @@
 
 // TODO: disable indentation & newlines when we are in an anchor tag, somehow.
 
+#pragma mark Link
+
+- (void)writeLinkWithHref:(NSString *)href
+                     type:(NSString *)type
+                      rel:(NSString *)rel
+                    title:(NSString *)title
+                    media:(NSString *)media;
+{
+    [self openTag:@"link"];
+    
+    if (rel) [self writeAttribute:@"rel" value:rel];
+    if (type) [self writeAttribute:@"type" value:type];
+    [self writeAttribute:@"href" value:href];
+    if (title) [self writeAttribute:@"title" value:title];
+    if (media) [self writeAttribute:@"media" value:media];
+    
+    [self closeEmptyElementTag];
+}
+
+- (void)writeLinkToStylesheet:(NSString *)href
+                        title:(NSString *)title
+                        media:(NSString *)media;
+{
+    [self writeLinkWithHref:href type:@"text/css" rel:@"stylesheet" title:title media:media];
+}
+
+#pragma mark General
+
 - (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
 {
     [self openTag:tagName];
