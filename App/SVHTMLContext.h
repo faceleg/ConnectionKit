@@ -193,6 +193,9 @@ typedef enum {
                         title:(NSString *)title
                         media:(NSString *)media;
 
+// Default is to write a <link> tag to the stylesheet, EXCEPT when publishing where nothing happens. It is expected that a subclass will override the method to build up main.css for real publishing
+- (void)includeStylesheetAtURL:(NSURL *)stylesheetURL;
+
 
 #pragma mark Style
 

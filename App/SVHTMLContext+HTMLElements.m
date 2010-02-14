@@ -9,6 +9,8 @@
 
 #import "SVHTMLContext.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVHTMLContext (HTMLElements)
 
@@ -70,6 +72,26 @@
                         media:(NSString *)media;
 {
     [self writeLinkWithHref:href type:@"text/css" rel:@"stylesheet" title:title media:media];
+}
+
+- (void)includeStylesheetAtURL:(NSURL *)stylesheetURL;
+{
+    if ([self isEditable])
+    {
+        [self writeLinkToStylesheet:[stylesheetURL absoluteString] title:nil media:nil];
+    }
+    else if ([self isForQuickLookPreview])
+    {
+        NSString *stylesheet = [NSString stringWithContentsOfURL:stylesheetURL
+                                                fallbackEncoding:0
+                                                           error:NULL];
+        if (stylesheet)
+        {
+            [self writeStyleStartTagWithType:@"text/css"];
+            [self writeHTMLString:stylesheet];
+            [self writeEndTag];
+        }
+    }
 }
 
 #pragma mark Style
