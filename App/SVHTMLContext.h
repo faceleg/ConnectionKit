@@ -194,6 +194,11 @@ typedef enum {
                         media:(NSString *)media;
 
 
+#pragma mark Style
+
+- (void)writeStyleStartTagWithType:(NSString *)type;
+
+
 #pragma mark General
 
 //  <tagName id="idName" class="className">

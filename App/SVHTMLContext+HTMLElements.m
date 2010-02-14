@@ -72,6 +72,15 @@
     [self writeLinkWithHref:href type:@"text/css" rel:@"stylesheet" title:title media:media];
 }
 
+#pragma mark Style
+
+- (void)writeStyleStartTagWithType:(NSString *)type;
+{
+    [self openTag:@"style"];
+    if (type) [self writeAttribute:@"type" value:type];
+    [self closeStartTag];
+}
+
 #pragma mark General
 
 - (void)writeStartTag:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
