@@ -167,6 +167,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_webView setEditingDelegate:nil];
     
     [_selectedItems release];
+    OBASSERT(!_selectedTextRangeBeforeLastChange);
     [_webView release];
         
     [super dealloc];
@@ -572,7 +573,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewWillChangeNotification
                                                         object:self];
     
-    [_selectedTextRangeBeforeLastChange release]; _selectedTextRangeBeforeLastChange = [[self selectedTextRange] copy];
+    OBASSERT(!_selectedTextRangeBeforeLastChange);
+    _selectedTextRangeBeforeLastChange = [[self selectedTextRange] copy];
 }
 
 #pragma mark Undo
@@ -1291,6 +1293,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewDidChangeNotification
                                                         object:self];
+    
+    // No longer need to hand on to the selection
+    [_selectedTextRangeBeforeLastChange release]; _selectedTextRangeBeforeLastChange = nil;
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
