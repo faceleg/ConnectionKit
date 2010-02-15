@@ -88,6 +88,10 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
 
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)range
+                    affinity:(NSSelectionAffinity)affinity
+       delayUntilAfterUpdate:(BOOL)delayUntilAfterUpdate;
+
 
 #pragma mark Graphics
 

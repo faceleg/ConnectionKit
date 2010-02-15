@@ -467,7 +467,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Restore selection
     if (_selectionToRestore)
     {
-        [[self webEditor] setSelectedTextRange:_selectionToRestore];
+        [[self webEditor] setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
         [_selectionToRestore release]; _selectionToRestore = nil;
     }
 }
@@ -538,6 +538,20 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];
+}
+
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)range
+                    affinity:(NSSelectionAffinity)affinity
+       delayUntilAfterUpdate:(BOOL)delayUntilAfterUpdate;
+{
+    if (delayUntilAfterUpdate)
+    {
+        [_selectionToRestore release]; _selectionToRestore = [range copy];
+    }
+    else
+    {
+        [[self webEditor] setSelectedTextRange:range affinity:affinity];
+    }
 }
 
 #pragma mark Graphics
