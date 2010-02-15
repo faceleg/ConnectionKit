@@ -37,12 +37,8 @@
     [context openTag:@"P"];
     if ([context isEditable]) [context writeAttribute:@"id" value:[self editingElementID]];
     
-    NSString *textAlign = [self customTextAlign];
-    if (textAlign)
-    {
-        NSString *style = [NSString stringWithFormat:@"text-align:%@;", textAlign];
-        [context writeAttribute:@"style" value:style];
-    }
+    NSString *style = [self styleAttribute];
+    if (style) [context writeAttribute:@"style" value:style];
     
     [context closeStartTag];
     
@@ -86,6 +82,13 @@
 
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;
 {
+    // Clean up style
+    NSString *alignment = [[element style] textAlign];
+    [self setCustomTextAlign:([alignment length] > 0 ? alignment : nil)];
+    
+    [element setAttribute:@"style" value:[self styleAttribute]];
+    
+    
     // Easiest way to archive string, is to use a context – see, they do all sorts!
     SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] init];
     [element writeInnerHTMLToContext:context];
@@ -94,6 +97,19 @@
     [self setArchiveString:string];
     
     [context release];
+}
+
+- (NSString *)styleAttribute;
+{
+    NSString *result = nil;
+    
+    NSString *textAlign = [self customTextAlign];
+    if (textAlign)
+    {
+        result = [NSString stringWithFormat:@"text-align:%@;", textAlign];
+    }
+    
+    return result;
 }
 
 #pragma mark Raw Properties

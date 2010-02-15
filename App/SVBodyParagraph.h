@@ -14,9 +14,12 @@
 @interface SVBodyParagraph :  SVBodyElement  
 
 #pragma mark HTML
+
 - (void)writeHTML;
 - (void)writeInnerHTML;
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;
+
+- (NSString *)styleAttribute;
 
 
 #pragma mark Raw Properties
