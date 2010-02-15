@@ -275,7 +275,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange;
+- (void)setSelectedTextRange:(SVWebEditorTextRange *)textRange affinity:(NSSelectionAffinity)affinity;
 {
     DOMRange *domRange = [[self HTMLDocument] createRange];
     
@@ -294,7 +294,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                            withStartElement:[startItem HTMLElement]
                                  endElement:[endItem HTMLElement]];
             
-                [self setSelectedDOMRange:domRange affinity:NSSelectionAffinityDownstream];
+                [self setSelectedDOMRange:domRange affinity:affinity];
             }
         }
     }
