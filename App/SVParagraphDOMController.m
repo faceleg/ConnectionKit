@@ -129,6 +129,9 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     {
         if ([[NSApp currentEvent] timestamp] == _editTimestamp)
         {
+            [bodyController didChangeText]; // let it know
+            
+            // Persist paragraph contents
             OBPRECONDITION(!_isUpdatingModel);
             _isUpdatingModel = YES;
             
