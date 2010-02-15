@@ -9,6 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVWebEditorView.h"
+#import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
@@ -201,10 +202,13 @@
 
 - (void)webEditorDidChange:(NSNotification *)notification;
 {
-    if ([notification object] != [self webEditor]) return;
+    SVWebEditorView *webEditor = [self webEditor];
+    if ([notification object] != webEditor) return;
     
     
     _isCoalescingUndo = NO;
+    NSUndoManager *undoManager = [webEditor undoManager];
+    
     
     // So was this a typing change?
     BOOL isTypingChange = [_inProgressEventSuitableForUndoCoalescing isEqual:[NSApp currentEvent]];
@@ -213,7 +217,6 @@
     if (isTypingChange)
     {
         // Does it put us into coalescing mode?
-        NSUndoManager *undoManager = [[self webEditor] undoManager];
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
             if ([undoManager lastRegisteredActionIdentifier] == [self undoCoalescingActionIdentifier])
@@ -230,15 +233,18 @@
     
     
     // Handle the edit
+    [[undoManager prepareWithInvocationTarget:[webEditor dataSource]]
+     setSelectedTextRange:[webEditor selectedTextRangeBeforeLastChange]
+     affinity:[[webEditor webView] selectionAffinity]
+     delayUntilAfterUpdate:YES];
+    
     [self didChangeText];
     
     
     // Wait until after -didChangeText so subclass has done its work
     if (isTypingChange)
     {
-        // Process the change so that nothing is scheduled to be added to the undo manager
-        NSUndoManager *undoManager = [[self webEditor] undoManager];
-        
+        // Process the change so that nothing is scheduled to be added to the undo manager        
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
             // Push through any pending changes. (Any MOCs observe this notification and call -processPendingChanges)
