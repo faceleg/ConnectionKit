@@ -100,20 +100,6 @@
 @property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
 
 
-#pragma mark Undo Support
-// It is the responsibility of SVWebEditorTextBlocks to use these methods to control undo support as they modify the DOM
-@property(nonatomic) BOOL allowsUndo;
-- (void)removeAllUndoActions;
-
-
-#pragma mark Cut, Copy & Paste
-- (IBAction)cut:(id)sender;
-- (IBAction)copy:(id)sender;
-- (BOOL)copySelectedItemsToGeneralPasteboard;
-// - (IBAction)paste:(id)sender;
-- (IBAction)delete:(id)sender;  // deletes the selected items. If there are none, deletes selected text
-
-
 #pragma mark Drawing
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
@@ -134,6 +120,28 @@
 
 @property(nonatomic, assign) id <SVWebEditorDataSource> dataSource;
 @property(nonatomic, assign) id <SVWebEditorDelegate> delegate;
+
+@end
+
+
+#pragma mark -
+
+
+@interface SVWebEditorView (EditingSupport)
+
+#pragma mark Cut, Copy & Paste
+- (IBAction)cut:(id)sender;
+- (IBAction)copy:(id)sender;
+- (BOOL)copySelectedItemsToGeneralPasteboard;
+// - (IBAction)paste:(id)sender;
+- (IBAction)delete:(id)sender;  // deletes the selected items. If there are none, deletes selected text
+
+
+#pragma mark Undo
+// It is the responsibility of SVWebEditorTextBlocks to use these methods to control undo support as they modify the DOM
+@property(nonatomic) BOOL allowsUndo;
+- (void)removeAllUndoActions;
+
 
 @end
 
@@ -218,7 +226,7 @@
 // Much like -webView:didReceiveTitle:forFrame:
 - (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 
- - (void)webEditor:(SVWebEditorView *)webEditorView
+     - (void)webEditor:(SVWebEditorView *)webEditorView
 handleNavigationAction:(NSDictionary *)actionInformation
                request:(NSURLRequest *)request;
 

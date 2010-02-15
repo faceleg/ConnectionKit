@@ -67,7 +67,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 // Event handling
 - (void)forwardMouseEvent:(NSEvent *)theEvent selector:(SEL)selector;
-- (void)forwardCommandBySelector:(SEL)action;
 
 
 // Undo
@@ -564,7 +563,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[[self webView] preferences] setInteger:behaviour forKey:@"editableLinkBehavior"];
 }
 
-#pragma mark Undo Support
+#pragma mark Undo
 
 - (NSUndoManager *)webViewUndoManager
 {
@@ -573,74 +572,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         _undoManager = [[NSUndoManager alloc] init];
     }
     return _undoManager;
-}
-
-/*  Covers for private WebKit methods
- */
-
-- (BOOL)allowsUndo { return [(NSTextView *)[self webView] allowsUndo]; }
-- (void)setAllowsUndo:(BOOL)undo { [(NSTextView *)[self webView] setAllowsUndo:undo]; }
-
-- (void)removeAllUndoActions
-{
-    [[self webView] performSelector:@selector(_clearUndoRedoOperations)];
-}
-
-#pragma mark Cut, Copy & Paste
-
-- (void)cut:(id)sender
-{
-    if ([self copySelectedItemsToGeneralPasteboard])
-    {
-        [self delete:sender];
-    }
-}
-
-- (void)copy:(id)sender
-{
-    [self copySelectedItemsToGeneralPasteboard];
-}
-
-- (BOOL)copySelectedItemsToGeneralPasteboard;
-{
-    // Rely on the datasource to serialize items to the pasteboard
-    BOOL result = [[self dataSource] webEditor:self 
-                                        writeItems:[self selectedItems]
-                                      toPasteboard:[NSPasteboard generalPasteboard]];
-    if (!result) NSBeep();
-    
-    return result;
-}
-
-- (void)delete:(id)sender forwardingSelector:(SEL)action;
-{
-    NSArray *items = [self selectedItems];
-    if ([items count] > 0)
-    {
-        if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]])
-        {
-            NSBeep();
-        }
-    }
-    else
-    {
-        [self forwardCommandBySelector:action];
-    }
-}
-
-- (void)delete:(id)sender;
-{
-    [self delete:sender forwardingSelector:_cmd];
-}
-
-- (void)deleteForward:(id)sender;
-{
-    [self delete:sender forwardingSelector:_cmd];
-}
-
-- (void)deleteBackward:(id)sender;
-{
-    [self delete:sender forwardingSelector:_cmd];
 }
 
 #pragma mark Getting Item Information
@@ -886,18 +817,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [targetView performSelector:selector withObject:theEvent];
         _isProcessingEvent = NO;
     }
-}
-
-- (void)forwardCommandBySelector:(SEL)action;
-{
-    OBPRECONDITION(!_isForwardingCommandToWebView);
-    _isForwardingCommandToWebView = YES;
-    
-    WebFrame *frame = [[self webView] selectedFrame];
-    NSView *view = [[frame frameView] documentView];
-    [view doCommandBySelector:action];
-    
-    _isForwardingCommandToWebView = NO;
 }
 
 - (void)changeLink:(SVLinkInspector *)sender;
