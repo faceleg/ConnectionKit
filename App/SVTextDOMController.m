@@ -252,9 +252,8 @@
             if (_isCoalescingUndo) [undoManager enableUndoRegistration];
             
             // Record the action identifier and DOM selection so we know whether to coalesce the next change
-            WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
             [self setUndoCoalescingActionIdentifier:[undoManager lastRegisteredActionIdentifier]
-                                   selectedDOMRange:[[webView selectedDOMRange] copy]];
+                                   selectedDOMRange:[[webEditor selectedDOMRange] copy]];
         }
     }
     
