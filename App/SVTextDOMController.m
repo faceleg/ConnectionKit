@@ -103,6 +103,11 @@
 
 - (void)webViewDidChange; { }
 
+- (void)didChangeText;  // Call this once your subclass has determined a change really took place
+{
+    
+}
+
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 {
     // Notify delegate/others

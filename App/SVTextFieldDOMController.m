@@ -78,7 +78,7 @@
 
 #pragma mark Editing
 
-- (void)webViewDidChange;
+- (void)didChangeText;
 {
     // Validate the HTML
     SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] init];
@@ -86,25 +86,22 @@
     
     
     // Do usual stuff
-    [super webViewDidChange];
+    [super didChangeText];
     
     
     // Copy HTML across to ourself
-    [self setHTMLString:[[self textHTMLElement] innerHTML] needsUpdate:NO];
+    NSString *html = [context markupString];
+    [self setHTMLString:html needsUpdate:NO];
     
     
     // Push change down to model
-    NSString *editedValue = [context mutableString];
-    if (![editedValue isEqualToString:_uneditedValue])
-    {
-        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
-        
-        _isCommittingEditing = YES;
-        [observedObject setValue:editedValue
-                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
-        _isCommittingEditing = NO;
-    }
+    NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
+    id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+    
+    _isCommittingEditing = YES;
+    [observedObject setValue:html
+                  forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+    _isCommittingEditing = NO;
     
     
     // Tidy up
