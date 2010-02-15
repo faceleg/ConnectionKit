@@ -233,7 +233,9 @@
 {
     SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+    
     NSRect result = [border drawingRectForGraphicBounds:[[self HTMLElement] boundingBox]];
+    [border release];
     
     return result;
 }

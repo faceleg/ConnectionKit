@@ -117,6 +117,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     [context pop];
     [[self HTMLElement] setInnerHTML:[context mutableString]];
+    [context release];
 }
 
 #pragma mark Editing

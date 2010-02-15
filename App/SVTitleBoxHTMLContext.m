@@ -304,6 +304,8 @@
             [self openTagWithDOMElement:anElement];
             [self closeStartTag];
         }
+        
+        [elements release];
     }
     
     
