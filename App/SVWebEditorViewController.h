@@ -66,7 +66,8 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
 
-- (void)didUpdate;
+- (void)willUpdate;
+- (void)didUpdate;  // if an asynchronous update, called after the update finishes
 
 
 #pragma mark Content

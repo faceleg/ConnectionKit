@@ -178,8 +178,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)update;
 {
-	[[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];
+	[self willUpdate];
 
+    
 	// Tear down old dependencies
     for (KSObjectKeyPathPair *aDependency in _pageDependencies)
     {
@@ -449,8 +450,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else
     {
-        [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];   // -update also posts this
-        
         [[[self webEditor] mainItem] updateIfNeeded];
         _willUpdate = NO;
         
@@ -459,6 +458,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 - (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
+
+- (void)willUpdate;
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];   // -update also posts this
+    
+}
 
 - (void)didUpdate;
 {
