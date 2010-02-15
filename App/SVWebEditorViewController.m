@@ -540,20 +540,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return [self textAreaForDOMNode:[range startContainer]];
 }
 
-- (void)setSelectedTextRange:(SVWebEditorTextRange *)range
-                    affinity:(NSSelectionAffinity)affinity
-       delayUntilAfterUpdate:(BOOL)delayUntilAfterUpdate;
-{
-    if (delayUntilAfterUpdate)
-    {
-        [_selectionToRestore release]; _selectionToRestore = [range copy];
-    }
-    else
-    {
-        [[self webEditor] setSelectedTextRange:range affinity:affinity];
-    }
-}
-
 #pragma mark Graphics
 
 @synthesize sidebarPageletItems = _sidebarPageletItems;
@@ -760,6 +746,29 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     DOMRange *selection = [[self webEditor] selectedDOMRange];
     SVTextDOMController *text = [self textAreaForDOMRange:selection];
     return [text tryToPerform:action with:anObject];
+}
+
+#pragma mark Undo
+
+- (void)undo_setSelectedTextRange:(SVWebEditorTextRange *)range;
+{
+    [_selectionToRestore release]; _selectionToRestore = [range copy];
+    
+    // Push opposite onto undo stack
+    SVWebEditorView *webEditor = [self webEditor];
+    NSUndoManager *undoManager = [webEditor undoManager];
+    
+    [[undoManager prepareWithInvocationTarget:self]
+     undo_setSelectedTextRange:[webEditor selectedTextRange]];
+}
+
+- (void)textDOMControllerDidChangeText:(SVTextDOMController *)controller;
+{
+    SVWebEditorView *webEditor = [self webEditor];
+    NSUndoManager *undoManager = [webEditor undoManager];
+    
+    [[undoManager prepareWithInvocationTarget:self] 
+     undo_setSelectedTextRange:[webEditor selectedTextRangeBeforeLastChange]];
 }
 
 #pragma mark UI Validation
