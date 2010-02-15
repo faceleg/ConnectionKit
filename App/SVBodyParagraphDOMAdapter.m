@@ -122,7 +122,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 #pragma mark Editing
 
-- (void)enclosingBodyControllerDidChangeText
+- (void)enclosingBodyControllerWebViewDidChange:(SVBodyTextDOMController *)bodyController;
 {
     // Commit any changes caused by the user. Caller will take care of undo coalescing and other behaviour
     if (_editTimestamp)
@@ -167,7 +167,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 
 @implementation KSDOMController (enclosingBodyControllerDidChangeText)
-- (void)enclosingBodyControllerDidChangeText
+- (void)enclosingBodyControllerWebViewDidChange:(SVBodyTextDOMController *)bodyController;
 {
     // I don't care
 }
