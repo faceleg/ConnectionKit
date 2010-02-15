@@ -8,13 +8,13 @@
 
 #import "SVWebEditorView.h"
 #import "SVWebEditorWebView.h"
-#import "SVWebEditorItem.h"
+#import "SVWebEditorMainItem.h"
 #import "SVWebEditorTextRange.h"
-#import "SVSelectionBorder.h"
 
 #import "KTApplication.h"
 #import "SVDocWindow.h"
 #import "SVLinkInspector.h"
+#import "SVSelectionBorder.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
@@ -36,14 +36,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     WebKitEditableLinkLiveWhenNotFocused,
     WebKitEditableLinkNeverLive
 } WebKitEditableLinkBehavior;
-
-
-@interface SVMainWebEditorItem : SVWebEditorItem
-{
-    SVWebEditorView *_webEditor;
-}
-@property(nonatomic, assign) SVWebEditorView *webEditor;
-@end
 
 
 #pragma mark -
@@ -1386,20 +1378,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 }
 
 @end
-
-
-#pragma mark -
-
-
-@implementation SVMainWebEditorItem
-
-- (DOMHTMLElement *)HTMLElement { return nil; }
-- (BOOL)isSelectable { return NO; }
-
-@synthesize webEditor = _webEditor;
-
-@end
-
 
 
 /*  SEP - Somebody Else's Problem
