@@ -1196,6 +1196,15 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebEditingDelegate
 
+#define POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED if (result) [self willChange]
+
+- (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
+{
+    BOOL result = YES;
+    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
+    return result;
+}
+
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
 {
     id <SVWebEditorText> text = [[self dataSource] webEditor:self
@@ -1203,6 +1212,20 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     [self setFocusedText:text notification:nil];
     
     return YES;
+}
+
+- (BOOL)webView:(WebView *)webView shouldChangeTypingStyle:(DOMCSSStyleDeclaration *)currentStyle toStyle:(DOMCSSStyleDeclaration *)proposedStyle
+{
+    BOOL result = YES;
+    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
+    return result;
+}
+
+- (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
+{
+    BOOL result = YES;
+    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
+    return result;
 }
 
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
@@ -1226,6 +1249,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                                                pasteboard:pasteboard];
     }
     
+    
+    // Finish up
+    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
     return result;
 }
 
@@ -1252,6 +1278,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         }
     }
     
+    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
     return result;
 }
 
