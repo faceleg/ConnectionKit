@@ -575,7 +575,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return _undoManager;
 }
 
-/*  Covers for prviate WebKit methods
+/*  Covers for private WebKit methods
  */
 
 - (BOOL)allowsUndo { return [(NSTextView *)[self webView] allowsUndo]; }
