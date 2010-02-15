@@ -347,6 +347,14 @@
 	[[self parent] archivePageForTimestamp:[self editableTimestamp] createIfNotFound:YES];
 }
 
+- (NSDate *) creationOrModificationDate;
+{
+	NSDate *date = (KTTimestampModificationDate == [[self master] integerForKey:@"timestampType"])
+	? [self valueForKey:@"lastModificationDate"]
+	: [self valueForKey:@"creationDate"];
+	return date;
+}
+
 - (NSString *)timestampWithStyle:(NSDateFormatterStyle)aStyle;
 {
 	BOOL showTime = [[[self master] valueForKey:@"timestampShowTime"] boolValue];

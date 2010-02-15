@@ -37,7 +37,7 @@
 [[endif]]
 [[summary item collectionTruncateCharacters &]]	[[comment The & is a minor hack to properly escape the HTML for an RSS feed]]
 			</description>
-			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
+			<pubDate>[[=item.creationOrModificationDate.descriptionRFC822]]</pubDate>
 			<guid>[[=&item.URL]]</guid>
 [[foreach item.feedEnclosures anEnclosure]]
 			<enclosure url="[[mediainfo media:anEnclosure info:path]]" length="[[mediainfo media:anEnclosure info:dataLength]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
