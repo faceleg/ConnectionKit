@@ -434,9 +434,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     _needsUpdate = YES;
     
-    OBASSERT(!_selectionToRestore);
-    _selectionToRestore = [[[self webEditor] selectedTextRange] copy];
-    
     [self scheduleUpdate];
 }
 
@@ -502,9 +499,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         [_page release]; _page = [page retain];
     
-        OBASSERT(!_selectionToRestore);
-        _selectionToRestore = [[[self webEditor] selectedTextRange] copy];
-        
         [self update];
     }
 }
