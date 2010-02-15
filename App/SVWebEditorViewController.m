@@ -82,6 +82,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
 - (void)dealloc
 {
+    [[[self webEditor] undoManager] removeAllActionsWithTarget:self];
+    
     [self setWebEditor:nil];   // needed to tear down data source
     [self setDelegate:nil];
     
