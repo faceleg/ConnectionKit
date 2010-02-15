@@ -15,7 +15,7 @@
 @interface SVTextDOMController ()
 
 #pragma mark Undo
-- (void)willChangeTextSuitableForUndoCoalescing;
+- (void)willMakeTextChangeSuitableForUndoCoalescing;
 
 @property(nonatomic, readonly) NSUInteger undoCoalescingActionIdentifier;
 @property(nonatomic, copy, readonly) DOMRange *undoCoalescingSelectedDOMRange;
@@ -185,7 +185,7 @@
     // Note the event for the benefit of -textDidChange:
     if (action == WebViewInsertActionTyped)
     {
-        [self willChangeTextSuitableForUndoCoalescing];
+        [self willMakeTextChangeSuitableForUndoCoalescing];
     }
     
     return result;
@@ -270,7 +270,7 @@
         WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
         if ([[webView selectedDOMRange] collapsed])
         {
-            [self willChangeTextSuitableForUndoCoalescing];
+            [self willMakeTextChangeSuitableForUndoCoalescing];
         }
     }
 	else if (selector == @selector(insertNewline:) && [self isFieldEditor])
@@ -298,7 +298,7 @@
     [self setUndoCoalescingActionIdentifier:NSNotFound selectedDOMRange:nil];
 }
 
-- (void)willChangeTextSuitableForUndoCoalescing;
+- (void)willMakeTextChangeSuitableForUndoCoalescing;
 {
     // At this point we know the TYPE of change will be suitable for undo calescing, but not whether the specific event is.
     // In practice this means that we want to ignore the change if the insertion point has been moved
