@@ -10,6 +10,7 @@
 
 #import "SVContentObject.h"
 #import "SVMutableStringHTMLContext.h"
+#import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -165,6 +166,15 @@
     {
         return [[self parentWebEditorItem] tryToPerform:action with:anObject];
     }
+}
+
+#pragma mark WebEditorViewController
+
+- (SVWebEditorViewController *)webEditorViewController;
+{
+    SVWebEditorViewController *result = (id)[[self webEditor] dataSource];
+    if (result) OBASSERT([result isKindOfClass:[SVWebEditorViewController class]]);
+    return result;
 }
 
 @end

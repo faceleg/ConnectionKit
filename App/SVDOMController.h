@@ -9,7 +9,7 @@
 #import "SVWebEditorItem.h"
 
 
-@class SVContentObject, SVHTMLContext;
+@class SVContentObject, SVHTMLContext, SVWebEditorViewController;
 
 
 @interface SVDOMController : SVWebEditorItem
@@ -65,6 +65,10 @@
 
 #pragma mark Actions
 - (BOOL)tryToPerform:(SEL)action with:(id)anObject;
+
+
+#pragma mark WebEditorViewController
+- (SVWebEditorViewController *)webEditorViewController;
 
 
 @end
