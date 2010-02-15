@@ -171,7 +171,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (IBAction)insertElement:(id)sender;
 {
-    // First remove any selected text
+    // First remove any selected text. This should make the Web Editor post a kSVWebEditorViewWillChangeNotification
     WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
     [webView delete:self];
     
