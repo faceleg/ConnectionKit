@@ -232,6 +232,7 @@
 		if (!reasonOfSubError)	// Note:  above returns nil!
 		{
 			reasonOfSubError = [[subError userInfo] objectForKey:@"reason"];
+			// I'm not sure why but emperically the "reason" key has been set.
 		}
 		if (!reasonOfSubError)
 		{

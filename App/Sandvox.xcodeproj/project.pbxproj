@@ -418,7 +418,7 @@
 		27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTextBlock.m */; };
 		27A5E6E911086705007C2E7E /* TB_Text_Tool.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 27A5E6E811086705007C2E7E /* TB_Text_Tool.tiff */; };
-		27A6098511282AC0007C301F /* KSStringStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSStringStream.h */; };
+		27A6098511282AC0007C301F /* KSStringStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSStringStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27A6098611282AC0007C301F /* KSStringStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6098411282AC0007C301F /* KSStringStream.m */; };
 		27A617141122FA0000004FED /* SVTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A617121122FA0000004FED /* SVTextBox.h */; };
 		27A617151122FA0000004FED /* SVTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A617131122FA0000004FED /* SVTextBox.m */; };
