@@ -28,6 +28,7 @@
 
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
 NSString *kSVWebEditorViewWillChangeNotification = @"SVWebEditorViewWillChange";
+NSString *kSVWebEditorViewDidChangeNotification = @"SVWebEditorViewDidChange";
 
 
 typedef enum {  // this copied from WebPreferences+Private.h
@@ -1284,6 +1285,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
     return result;
+}
+
+- (void)webViewDidChange:(NSNotification *)notification;
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewDidChangeNotification
+                                                        object:self];
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
