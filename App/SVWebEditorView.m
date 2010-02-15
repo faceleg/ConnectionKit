@@ -27,6 +27,7 @@
 
 
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
+NSString *kSVWebEditorViewWillChangeNotification = @"SVWebEditorViewWillChange";
 
 
 typedef enum {  // this copied from WebPreferences+Private.h
@@ -561,6 +562,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     WebKitEditableLinkBehavior behaviour = (liveLinks ? WebKitEditableLinkAlwaysLive :WebKitEditableLinkOnlyLiveWithShiftKey);
     [[[self webView] preferences] setInteger:behaviour forKey:@"editableLinkBehavior"];
+}
+
+- (void)willChange; // posts kSVWebEditorViewWillChangeNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewWillChangeNotification
+                                                        object:self];
 }
 
 #pragma mark Undo

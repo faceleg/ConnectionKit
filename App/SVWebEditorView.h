@@ -14,6 +14,9 @@
 #import "SVWebEditorTextProtocol.h"
 
 
+extern NSString *kSVWebEditorViewWillChangeNotification;
+
+
 @protocol SVWebEditorDataSource, SVWebEditorDelegate;
 @class SVWebEditorItem, SVWebEditorTextRange;
 @class SVWebEditorWebView, SVMainWebEditorItem;
@@ -98,6 +101,8 @@
 - (BOOL)canEditText;
 
 @property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
+
+- (void)willChange; // posts kSVWebEditorViewWillChangeNotification
 
 
 #pragma mark Drawing
