@@ -85,6 +85,8 @@
 	if (!secondary)	// Note:  above returns nil!
 	{
 		secondary = [[anError userInfo] objectForKey:@"reason"];
+		// I'm not sure why but emperically the "reason" key has been set.
+
 	}
 								 
 	NSError *result = [NSError errorWithDomain:[anError domain] code:[anError code]
