@@ -78,7 +78,7 @@
 
 #pragma mark Editing
 
-- (void)didChangeText;
+- (void)webViewDidChange;
 {
     // Validate the HTML
     SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] init];
@@ -86,7 +86,7 @@
     
     
     // Do usual stuff
-    [super didChangeText];
+    [super webViewDidChange];
     
     
     // Copy HTML across to ourself

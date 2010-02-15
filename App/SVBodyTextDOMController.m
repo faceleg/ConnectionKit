@@ -296,11 +296,14 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Updates
 
-- (void)didChangeText
+- (void)webViewDidChange;
 {
-    [super didChangeText];
+    //  Body Text Controller doesn't track indivdual text changes itself, leaving that up to the paragraphs. So use this point to pass a similar message onto those subcontroller to handle.
     
-    // Let subcontrollers know the change took place. Use an old-fashioned iteration since paragraphs may insert paragraphs after themselves during this process.
+    
+    [super webViewDidChange];
+    
+    // Use an old-fashioned iteration since paragraphs may insert paragraphs after themselves during this process.
     for (int i = 0; i < [[self childWebEditorItems] count]; i++)
     {
         [[[self childWebEditorItems] objectAtIndex:i] enclosingBodyControllerDidChangeText];
@@ -452,7 +455,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
     
     // Need to let paragraph's controller know an actual editing change was made
-    [self didChangeText];
+    [self webViewDidChange];
 }
 
 - (void)changeLink:(SVLinkManager *)sender;

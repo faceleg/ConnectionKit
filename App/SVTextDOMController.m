@@ -101,30 +101,7 @@
 
 @synthesize editing = _isEditing;
 
-- (void)didBeginEditingText;
-{
-    // Mark as editing
-    OBPRECONDITION(_isEditing == NO);
-    _isEditing = YES;
-    
-    // Notify delegate/others
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidBeginEditingNotification
-                                                        object:self];
-}
-
-- (void)didChangeText;
-{
-    // Notify that editing began if this is the case
-    if (![self isEditing])
-    {
-        [self didBeginEditingText];
-    }
-    
-    
-    // Notify delegate/others
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidChangeNotification
-                                                        object:self];
-}
+- (void)webViewDidChange; { }
 
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 {
@@ -238,7 +215,7 @@
      affinity:[[webEditor webView] selectionAffinity]
      delayUntilAfterUpdate:YES];
     
-    [self didChangeText];
+    [self webViewDidChange];
     
     
     // Wait until after -didChangeText so subclass has done its work
