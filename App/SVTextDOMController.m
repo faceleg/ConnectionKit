@@ -8,6 +8,8 @@
 
 #import "SVTextDOMController.h"
 
+#import "SVWebEditorView.h"
+
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 
@@ -40,8 +42,8 @@
     
     // Editing
     [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(webViewDidChange:)
-                                                 name:WebViewDidChangeNotification
+                                             selector:@selector(webEditorDidChange:)
+                                                 name:kSVWebEditorViewDidChangeNotification
                                                object:nil];
     
     
@@ -51,7 +53,7 @@
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:WebViewDidChangeNotification
+                                                    name:kSVWebEditorViewDidChangeNotification
                                                   object:nil];
     
     [_textElement release];
@@ -197,9 +199,9 @@
     [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
 }
 
-- (void)webViewDidChange:(NSNotification *)notification;
+- (void)webEditorDidChange:(NSNotification *)notification;
 {
-    if ([notification object] != [[[[self HTMLElement] ownerDocument] webFrame] webView]) return;
+    if ([notification object] != [self webEditor]) return;
     
     
     _isCoalescingUndo = NO;
