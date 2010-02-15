@@ -292,6 +292,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+@synthesize selectedTextRangeBeforeLastChange = _selectedTextRangeBeforeLastChange;
+
 @synthesize focusedText = _focusedText;
 
 // Notification is optional as it's just a nicety to pass onto text object
@@ -568,6 +570,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewWillChangeNotification
                                                         object:self];
+    
+    [_selectedTextRangeBeforeLastChange release]; _selectedTextRangeBeforeLastChange = [[self selectedTextRange] copy];
 }
 
 #pragma mark Undo
