@@ -79,6 +79,7 @@
     if ([self isEditable])
     {
         [self writeLinkToStylesheet:[stylesheetURL absoluteString] title:nil media:nil];
+        [self writeNewline];
     }
     else if ([self isForQuickLookPreview])
     {

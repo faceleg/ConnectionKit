@@ -109,13 +109,18 @@
 	[context writeLinkToStylesheet:mainCSS
                              title:[[[self master] design] title]
                              media:nil];
+    [context writeNewline];
 	
 	
 	// design's print.css but not for Quick Look
     if (![context isEditable])
 	{
 		NSString *printCSS = [self pathToDesignFile:@"print.css"];
-		if (printCSS) [context writeLinkToStylesheet:printCSS title:nil media:@"print"];
+		if (printCSS)
+        {
+            [context writeLinkToStylesheet:printCSS title:nil media:@"print"];
+            [context writeNewline];
+        }
 	}
 	
 	
@@ -127,6 +132,7 @@
 		[context writeLinkToStylesheet:[[NSURL fileURLWithPath:editingCSSPath] absoluteString]
                                  title:nil
                                  media:nil];
+        [context writeNewline];
 	}
 	
     
