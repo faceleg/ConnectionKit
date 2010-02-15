@@ -215,11 +215,6 @@
     
     
     // Handle the edit
-    [[undoManager prepareWithInvocationTarget:[webEditor dataSource]]
-     setSelectedTextRange:[webEditor selectedTextRangeBeforeLastChange]
-     affinity:[[webEditor webView] selectionAffinity]
-     delayUntilAfterUpdate:YES];
-    
     [self webViewDidChange];
     
     
@@ -229,8 +224,11 @@
         // Process the change so that nothing is scheduled to be added to the undo manager        
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
-            // Push through any pending changes. (Any MOCs observe this notification and call -processPendingChanges)
-            [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
+            // Push through any pending changes. (MOCs observe this notification and call -processPendingChanges)
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:NSUndoManagerCheckpointNotification
+             object:undoManager];
+            
             if (_isCoalescingUndo) [undoManager enableUndoRegistration];
             
             // Record the action identifier and DOM selection so we know whether to coalesce the next change
