@@ -34,9 +34,17 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    [context writeStartTag:@"P"
-                    idName:([context isEditable] ? [self editingElementID] : nil)
-                 className:nil];
+    [context openTag:@"P"];
+    if ([context isEditable]) [context writeAttribute:@"id" value:[self editingElementID]];
+    
+    NSString *textAlign = [self customTextAlign];
+    if (textAlign)
+    {
+        NSString *style = [NSString stringWithFormat:@"text-align:%@;", textAlign];
+        [context writeAttribute:@"style" value:style];
+    }
+    
+    [context closeStartTag];
     
     [self writeInnerHTML];
     
@@ -57,7 +65,7 @@
         [context writeEndTag];
     }
     
-    // I don't like the if statement here, as ideally archive is never nil. However, after undoin a change, it sometimes is :( — Mike
+    // I don't like the if statement here, as ideally archive is never nil. However, after undoing a change, it sometimes is :( — Mike
     if (archive) [context writeHTMLString:archive];
 }
 
@@ -91,7 +99,8 @@
 #pragma mark Raw Properties
 
 @dynamic archiveString;
-
+@dynamic customTextAlign;
+         
 #pragma mark  Attributes
 
 @dynamic attributes;

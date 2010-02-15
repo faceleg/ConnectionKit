@@ -23,6 +23,8 @@
 // External code should rarely need to modify these
 @property(nonatomic, copy) NSString *archiveString;
 
+@property(nonatomic, copy) NSString *customTextAlign;
+
 
 #pragma mark Attributes
 @property(nonatomic, copy) NSSet *attributes;
