@@ -1,12 +1,12 @@
 //
-//  SVBodyParagraphDOMAdapter.m
+//  SVParagraphDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 19/11/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBodyParagraphDOMAdapter.h"
+#import "SVParagraphDOMController.h"
 
 #import "SVBodyParagraph.h"
 #import "SVMutableStringHTMLContext.h"
@@ -15,7 +15,7 @@
 static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObservationContext";
 
 
-@implementation SVBodyParagraphDOMAdapter
+@implementation SVParagraphDOMController
 
 #pragma mark Init & Dealloc
 

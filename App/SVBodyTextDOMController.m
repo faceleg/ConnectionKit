@@ -7,7 +7,7 @@
 //
 
 #import "SVBodyTextDOMController.h"
-#import "SVBodyParagraphDOMAdapter.h"
+#import "SVParagraphDOMController.h"
 
 #import "KT.h"
 #import "SVBodyParagraph.h"
@@ -71,7 +71,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
     
     
-    // Observe DOM changes. Each SVBodyParagraphDOMAdapter will take care of its own section of the DOM
+    // Observe DOM changes. Each SVParagraphDOMController will take care of its own section of the DOM
     [[self textHTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
     [[self textHTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
     
@@ -285,7 +285,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     for (KSDOMController *aController in [self childWebEditorItems])
     {
-        if (![aController isKindOfClass:[SVBodyParagraphDOMAdapter class]])
+        if (![aController isKindOfClass:[SVParagraphDOMController class]])
         {
             [result addObject:aController];
         }

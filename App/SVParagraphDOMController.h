@@ -1,5 +1,5 @@
 //
-//  SVBodyParagraphDOMAdapter.h
+//  SVParagraphDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 19/11/2009.
@@ -14,9 +14,9 @@
 
 @class SVBodyParagraph, SVBodyTextDOMController, SVBodyElement;
 
-@interface SVBodyParagraphDOMAdapter : SVDOMController <DOMEventListener>
+@interface SVParagraphDOMController : SVDOMController <DOMEventListener>
 {
-  @private    
+  @private
     WebView         *_webView;
     NSTimeInterval  _editTimestamp;
     BOOL            _isUpdatingModel;

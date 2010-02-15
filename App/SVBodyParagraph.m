@@ -7,7 +7,7 @@
 //
 
 #import "SVBodyParagraph.h"
-#import "SVBodyParagraphDOMAdapter.h"
+#import "SVParagraphDOMController.h"
 
 #import "SVParagraphLink.h"
 #import "SVParagraphHTMLContext.h"
@@ -73,7 +73,7 @@
 
 - (Class)DOMControllerClass;
 {
-    return [SVBodyParagraphDOMAdapter class];		// we can temporarily try SVBlogSummaryDOMController
+    return [SVParagraphDOMController class];		// we can temporarily try SVBlogSummaryDOMController
 }
 
 - (void)readHTMLFromElement:(DOMHTMLElement *)element;

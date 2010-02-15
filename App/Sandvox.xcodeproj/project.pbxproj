@@ -306,8 +306,8 @@
 		274FA0F111297AFD000E0FDA /* SVWebEditorView+EditingSupport.m in Sources */ = {isa = PBXBuildFile; fileRef = 274FA0F011297AFD000E0FDA /* SVWebEditorView+EditingSupport.m */; };
 		275167890CBCE40000C91DFA /* KTMediaContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 275167870CBCE40000C91DFA /* KTMediaContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2751678A0CBCE40000C91DFA /* KTMediaContainer.m in Sources */ = {isa = PBXBuildFile; fileRef = 275167880CBCE40000C91DFA /* KTMediaContainer.m */; };
-		2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */; };
-		2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */; };
+		2752005D10B5DF4400F96309 /* SVParagraphDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2752005B10B5DF4400F96309 /* SVParagraphDOMController.h */; };
+		2752005E10B5DF4500F96309 /* SVParagraphDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752005C10B5DF4400F96309 /* SVParagraphDOMController.m */; };
 		2752330B10A8938400120CE8 /* KSInspectorTabCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 2752330910A8938400120CE8 /* KSInspectorTabCell.h */; };
 		2752330C10A8938400120CE8 /* KSInspectorTabCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752330A10A8938400120CE8 /* KSInspectorTabCell.m */; };
 		2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */ = {isa = PBXBuildFile; fileRef = 2752332210A8983700120CE8 /* KSInspectorTabsMatrix.h */; };
@@ -1759,8 +1759,8 @@
 		274FA0F011297AFD000E0FDA /* SVWebEditorView+EditingSupport.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVWebEditorView+EditingSupport.m"; sourceTree = "<group>"; };
 		275167870CBCE40000C91DFA /* KTMediaContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaContainer.h; sourceTree = "<group>"; };
 		275167880CBCE40000C91DFA /* KTMediaContainer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaContainer.m; sourceTree = "<group>"; };
-		2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyParagraphDOMAdapter.h; sourceTree = "<group>"; };
-		2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyParagraphDOMAdapter.m; sourceTree = "<group>"; };
+		2752005B10B5DF4400F96309 /* SVParagraphDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphDOMController.h; sourceTree = "<group>"; };
+		2752005C10B5DF4400F96309 /* SVParagraphDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphDOMController.m; sourceTree = "<group>"; };
 		2752330910A8938400120CE8 /* KSInspectorTabCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabCell.h; sourceTree = "<group>"; };
 		2752330A10A8938400120CE8 /* KSInspectorTabCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSInspectorTabCell.m; sourceTree = "<group>"; };
 		2752332210A8983700120CE8 /* KSInspectorTabsMatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSInspectorTabsMatrix.h; sourceTree = "<group>"; };
@@ -3039,8 +3039,8 @@
 				2790BDAE1040162000654665 /* SVTextDOMController.m */,
 				2731ECD210861FF300D8AAA5 /* SVTextFieldDOMController.h */,
 				2731ECD310861FF300D8AAA5 /* SVTextFieldDOMController.m */,
-				2752005B10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h */,
-				2752005C10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.m */,
+				2752005B10B5DF4400F96309 /* SVParagraphDOMController.h */,
+				2752005C10B5DF4400F96309 /* SVParagraphDOMController.m */,
 				2731ECCB10861E1500D8AAA5 /* SVBodyTextDOMController.h */,
 				2731ECCC10861E1500D8AAA5 /* SVBodyTextDOMController.m */,
 				276F8AB010D572780094AA73 /* SVDOMController.h */,
@@ -5281,7 +5281,7 @@
 				278F799C10B44A1B00BDBAF7 /* SVBodyParagraph.h in Headers */,
 				278F799E10B44A1B00BDBAF7 /* SVBody.h in Headers */,
 				278F79A210B44A3B00BDBAF7 /* SVBodyElement.h in Headers */,
-				2752005D10B5DF4400F96309 /* SVBodyParagraphDOMAdapter.h in Headers */,
+				2752005D10B5DF4400F96309 /* SVParagraphDOMController.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
 				279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */,
 				2792197D10BC631D00E590D5 /* KSDOMController.h in Headers */,
@@ -6676,7 +6676,7 @@
 				278F799D10B44A1B00BDBAF7 /* SVBodyParagraph.m in Sources */,
 				278F799F10B44A1B00BDBAF7 /* SVBody.m in Sources */,
 				278F79A310B44A3B00BDBAF7 /* SVBodyElement.m in Sources */,
-				2752005E10B5DF4500F96309 /* SVBodyParagraphDOMAdapter.m in Sources */,
+				2752005E10B5DF4500F96309 /* SVParagraphDOMController.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
 				279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */,
 				2792197E10BC631D00E590D5 /* KSDOMController.m in Sources */,
