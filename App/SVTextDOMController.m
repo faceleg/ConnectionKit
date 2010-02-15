@@ -105,7 +105,13 @@
 
 - (void)didChangeText;  // Call this once your subclass has determined a change really took place
 {
+    SVWebEditorView *webEditor = [self webEditor];
+    NSUndoManager *undoManager = [webEditor undoManager];
     
+    [[undoManager prepareWithInvocationTarget:[self webEditorViewController]] 
+     setSelectedTextRange:[webEditor selectedTextRangeBeforeLastChange]
+     affinity:[[webEditor webView] selectionAffinity]
+     delayUntilAfterUpdate:YES];
 }
 
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
