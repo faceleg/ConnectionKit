@@ -384,6 +384,7 @@
 	{
 		KSRecentDocument *recentDoc = [[[KSRecentDocument alloc] initWithURL:url allURLs:urlSet] autorelease];
 		[recentDocuments addObject:recentDoc];
+		(void) [recentDoc previewImage];	// get the preview started loading
 	}
 	self.recentDocuments = [NSArray arrayWithArray:recentDocuments];
 	
@@ -394,6 +395,9 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
+
+	// ASAP, load the recent document list, to kick off loading previews
+	[self loadRecentDocumentList];
 
 	[oRecentDocumentsTable setDoubleAction:@selector(openSelectedRecentDocument:)];
 	[oRecentDocumentsTable setTarget:self];
