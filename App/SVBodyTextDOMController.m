@@ -41,8 +41,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     // Make an object controller
     KSSetController *elementsController = [[KSSetController alloc] init];
     [elementsController setOrderingSortKey:@"sortKey"];
-    [elementsController setManagedObjectContext:[body managedObjectContext]];
-    [elementsController setEntityName:@"BodyParagraph"];
+    //[elementsController setManagedObjectContext:[body managedObjectContext]];
+    //[elementsController setEntityName:@"BodyParagraph"];
     [elementsController setAutomaticallyRearrangesObjects:YES];
     [elementsController bind:NSContentSetBinding toObject:body withKeyPath:@"elements" options:nil];
     
