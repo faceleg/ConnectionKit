@@ -114,6 +114,16 @@
     [context release];
 }
 
+#pragma mark Alignment
+
+/*  Text fields don't support alignment, so trap such calls. Bwahahaha!!
+ */
+
+- (IBAction)alignCenter:(id)sender; { NSBeep(); }
+- (IBAction)alignJustified:(id)sender; { NSBeep(); }
+- (IBAction)alignLeft:(id)sender; { NSBeep(); }
+- (IBAction)alignRight:(id)sender; { NSBeep(); }
+
 #pragma mark Bindings/NSEditor
 
 + (void)initialize
