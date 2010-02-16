@@ -566,62 +566,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 #pragma mark -
 #pragma mark Archives
 
-/*	This is a transient NOT persistent property. When accessed for the first time, we look for any pagelets requesting archive
- *	generation and set the value accordingly.
- */
-- (NSNumber *)collectionGenerateArchives
-{
-	NSNumber *result = [self wrappedValueForKey:@"collectionGenerateArchives"];
-	
-	if (!result)
-	{
-		result = [NSNumber numberWithBool:NO];
-		/*
-		NSArray *archivePagelets = [[self managedObjectContext] pageletsWithPluginIdentifier:@"sandvox.CollectionArchiveElement"];
-		NSEnumerator *pageletsEnumerator = [archivePagelets objectEnumerator];
-		KTPagelet *aPagelet;
-		while (aPagelet = [pageletsEnumerator nextObject])
-		{
-			if ([[aPagelet valueForKey:@"collection"] isEqual:self])
-			{
-				result = [NSNumber numberWithBool:YES];
-				break;
-			}
-		}*/
-		
-		[self setPrimitiveValue:result forKey:@"collectionGenerateArchives"];
-	}
-	
-	return result;
-}
-
-- (void)setCollectionGenerateArchives:(NSNumber *)generateArchive
-{
-	// Ignore requests that will do nothing
-	//BOOL noChange = (generateArchive == [self collectionGenerateArchives]);
-	[self setWrappedValue:generateArchive forKey:@"collectionGenerateArchives"];
-	//if (noChange) return;
-	
-	
-	// Delete or add archive pages as needed
-	if ([generateArchive boolValue])
-	{
-		NSArray *children = [self navigablePages];
-		NSEnumerator *pageEnumerator = [children objectEnumerator];
-		KTPage *aPage;
-		
-		while (aPage = [pageEnumerator nextObject])
-		{
-			// Create any archives that are required
-			[self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:YES];
-		}
-	}
-	else
-	{
-		NSSet *archivePages = [self archivePages];
-		[[self managedObjectContext] deleteObjectsInCollection:archivePages];
-	}
-}
+@dynamic collectionGenerateArchives;
 
 /*	Searches through our archive pages for one containing the specified date.
  *	If archives are disabled, always returns nil.
