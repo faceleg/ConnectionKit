@@ -41,6 +41,8 @@
 	[task setStandardError:[NSFileHandle fileHandleForWritingAtPath:@"/dev/null"]];
 #endif
 	
+	// Put up a progress panel. Alas, there is no cancel button.  How can we allow escape to cancel this?
+	
     KSProgressPanel *progressPanel = [[KSProgressPanel alloc] init];
 	[progressPanel setMessageText:NSLocalizedString(@"Fetching results…", @"Title of progress dialog")];
 	[progressPanel setInformativeText:nil];
@@ -49,6 +51,7 @@
 
 	[task launch];
 	
+	// Ideally I'd let some events come through like modal events.  Not sure if I want to start up a modal run loop?
 	while ([task isRunning])
 	{
 		[NSThread sleepUntilDate:[NSDate distantPast]];
@@ -61,72 +64,65 @@
 	
 	if (0 == status)
 	{
-		// Scrape page to get status
+		[[oWebView mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
+							  MIMEType:@"text/html"
+					  textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
+		[[self window] setTitle:NSLocalizedString(@"Validator Results", "HTML Validator Window Title")];
+		[[self window] setFrameAutosaveName:@"ValidatorWindow"];
+		[self showWindow:nil];
+		
+		// Scrape page to get status, to show success or failure.
+		// (Do we want to show the success page?  If not, I'll need to show success sheet without loading window)
 		BOOL isValid = NO;
+		NSString *explanation = nil;
 		NSString *resultingPageString = [[[NSString alloc] initWithContentsOfFile:pathOut
 																		 encoding:NSUTF8StringEncoding
 																			error:nil] autorelease];
+		
 		if (nil != resultingPageString)
 		{
 			NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
 			if (NSNotFound != foundValidRange.location)
 			{
 				isValid = YES;
-				NSString *explanation = [resultingPageString substringWithRange:foundValidRange];
-				
-				NSRunInformationalAlertPanelRelativeToWindow(
-															 NSLocalizedString(@"HTML is Valid",@"Title of results alert"),
-															 NSLocalizedString(@"The validator returned the following status message:\n\n%@",@""),
-															 nil,nil,nil, aWindow, explanation);
+				explanation = [resultingPageString substringWithRange:foundValidRange];
 			}
 		}
 		
-		if (!isValid)		// not valid -- load the page, give them a way out!
+		if (isValid)		// not valid -- load the page, give them a way out!
 		{
-			//				[[[self webView] mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
-			//											MIMEType:@"text/html"
-			//									textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
-			[self performSelector:@selector(showValidationResultsAlert) withObject:nil afterDelay:0.0];
+			[self performSelector:@selector(showValidationSuccessAlertMessage:)
+					   withObject:explanation
+					   afterDelay:0.0];
+		}
+		else
+		{
+			
+			[self performSelector:@selector(showValidationResultsAlert)
+					   withObject:nil
+					   afterDelay:0.0];
 		}
 	}
-	else
+	else	// Don't show window; show alert sheet attached to document
 	{
 		[KSSilencingConfirmSheet
 		 alertWithWindow:aWindow
 		 silencingKey:@"shutUpValidateError"
 		 title:NSLocalizedString(@"Unable to Validate",@"Title of alert")
-		 format:NSLocalizedString(@"Unable to post HTML to validator.w3.org:\n%@", @"error message"), path];
+		 format:NSLocalizedString(@"Unable to contact validator.w3.org to perform the validation.", @"error message")];
 	}
 
 }
 
-/*
- if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - open in browser
- {
- NSURL *urlToOpen = [[KTReleaseNotesController sharedController] URLToLoad];
- [[NSWorkspace sharedWorkspace] attemptToOpenWebURL:urlToOpen];
- }
- else
- {
- [[KTReleaseNotesController sharedController] showWindow:nil];
- }
-*/
 
 
-
-- (void)windowDidLoad
+- (void)showValidationSuccessAlertMessage:(NSString *)explanation
 {
-	/*
-	[[oWebView mainFrame] loadRequest:
-	 [NSURLRequest requestWithURL:[self URLToLoad]
-					  cachePolicy:NSURLRequestReloadIgnoringCacheData
-				  timeoutInterval:20.0]];
-    
-	[[self window] setTitle:NSLocalizedString(@"Sandvox Release Notes", "Release Notes Window Title")];
-    [[self window] setFrameAutosaveName:@"ReleaseNotesWindow"]; 
-	 */
+	NSRunInformationalAlertPanelRelativeToWindow(
+		 NSLocalizedString(@"HTML is Valid",@"Title of results alert"),
+		 NSLocalizedString(@"The validator returned the following status message:\n\n%@",@""),
+		 nil,nil,nil, [self window], explanation);
 }
-
 
 
 - (void)showValidationResultsAlert
@@ -135,7 +131,7 @@
      alertWithWindow:[self window]
      silencingKey:@"shutUpNotValidated"
      title:NSLocalizedString(@"Validation Results Loaded",@"Title of alert")
-     format:NSLocalizedString(@"The results from the HTML validator have been loaded into Sandvox's web view. To return to the standard view of your web page, choose the 'Reload Web View' menu.", @"validated message")];
+     format:NSLocalizedString(@"The results from the HTML validator have been loaded into this window.", @"validated message")];
 }
 
 

@@ -30,6 +30,7 @@
 #import "KTToolbars.h"
 #import "KSSilencingConfirmSheet.h"
 #import "SVHTMLValidatorController.h"
+#import "KSNetworkNotifier.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -585,7 +586,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	else if (itemAction == @selector(validateSource:))
 	{
 		id selection = [[[self siteOutlineViewController] content] selectedObjects];
-		return ( !NSIsControllerMarker(selection) && 1 == [selection count] && nil != [[selection lastObject] pageRepresentation] );
+		return ( [KSNetworkNotifier isNetworkAvailable]
+				&& !NSIsControllerMarker(selection)
+				&& 1 == [selection count]
+				&& nil != [[selection lastObject] pageRepresentation] );
 	}
 	
 	// "Use Small Page Icons" toggleSmallPageIcons:
