@@ -16,7 +16,7 @@ IBC_FLATTEN_NIBS = YES
 // NOTE: WE NEED TO MANUALLY SET 'NO' IN CONNECTION AND IMEDIA PROJECTS for localizers
 
 // expiry for beta
-//EXPIRY_TIMESTAMP = '@\"2010-02-14 11:59:59 -0800\"'
+EXPIRY_TIMESTAMP = '@\"2010-04-14 11:59:59 -0800\"'
 
 // Release builds checkout and use these specific revisions
 
