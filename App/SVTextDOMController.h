@@ -17,7 +17,7 @@
 @class SVPagelet, SVBodyElement;
 
 
-@interface SVTextDOMController : SVDOMController <SVWebEditorText, KSEditor>
+@interface SVTextDOMController : SVDOMController <SVWebEditorText>
 {
   @private
     DOMHTMLElement  *_textElement;
