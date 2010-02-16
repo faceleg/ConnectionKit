@@ -272,6 +272,10 @@
         [[[self HTMLElement] documentView] insertLineBreak:self];
 		result = YES;
 	}
+    else
+    {
+        result = [self tryToPerform:selector with:nil];
+    }
 	
 	return result;
 }
