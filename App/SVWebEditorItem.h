@@ -56,8 +56,8 @@
 - (NSEnumerator *)enumerator;
 
 
-#pragma mark Actions
-- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
+#pragma mark NSResponder Aping
+// Nothing to do since we now inherit from NSResponder!
 
 
 #pragma mark Resizing

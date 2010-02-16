@@ -61,6 +61,12 @@
 
 @synthesize parentWebEditorItem = _parentController;
 
+- (void)setParentWebEditorItem:(SVWebEditorItem *)item
+{
+    _parentController = item;
+    [self setNextResponder:item];
+}
+
 - (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
 {
     OBPRECONDITION(controller);
@@ -192,20 +198,7 @@
     return result;
 }
 
-#pragma mark Actions
-
-- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
-{
-    if ([self respondsToSelector:action])
-    {
-        [self performSelector:action withObject:anObject];
-        return YES;
-    }
-    else
-    {
-        return [[self parentWebEditorItem] tryToPerform:action with:anObject];
-    }
-}
+#pragma mark NSResponder Aping
 
 #pragma mark Resizing
 
