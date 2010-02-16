@@ -239,21 +239,12 @@
 }
 
 #pragma mark -
-#pragma mark DRD
+#pragma mark DTD
 
-- (BOOL)isXHTML	// returns true if our page is XHTML of some type, false if old HTML
+- (KTDocType) docType
 {
 	KTDocType defaultDocType = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
-
-	[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
-	BOOL result = (KTHTML401DocType != defaultDocType);
-	return result;
-}
-
-- (NSString *)DTD
-{
-	KTDocType defaultDocType = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
-
+	
 	[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
 	
 	// if wantsJSKit comments, use transitional doc type (or worse, if already known)
@@ -264,9 +255,44 @@
 			defaultDocType = KTXHTMLTransitionalDocType; // if this changes to KTHTML401DocType, also change isXHTML
 		}
 	}
-	
+	return defaultDocType;
+}
+
+- (NSString *) docTypeName
+{
+	KTDocType docType = [self docType];
 	NSString *result = nil;
-	switch (defaultDocType)
+	switch (docType)
+	{
+		case KTHTML401DocType:
+			result = @"HTML 4.01 Transitional";
+			break;
+		case KTXHTMLTransitionalDocType:
+			result = @"XHTML 1.0 Transitional";
+			break;
+		case KTXHTMLStrictDocType:
+			result = @"XHTML 1.0 Strict";
+			break;
+		case KTXHTML11DocType:
+			result = @"XHTML 1.1";
+			break;
+	}
+	return result;
+}
+
+
+- (BOOL)isXHTML	// returns true if our page is XHTML of some type, false if old HTML
+{
+	KTDocType docType = [self docType];
+	BOOL result = (KTHTML401DocType != docType);
+	return result;
+}
+
+- (NSString *)DTD
+{
+	KTDocType docType = [self docType];
+	NSString *result = nil;
+	switch (docType)
 	{
 		case KTHTML401DocType:
 			result = @"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";

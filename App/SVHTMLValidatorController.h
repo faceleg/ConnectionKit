@@ -14,7 +14,7 @@
 
 }
 
-- (void) validateSource:(NSString *)pageSource charset:(NSString *)charset windowForSheet:(NSWindow *)aWindow;
+- (void) validateSource:(NSString *)pageSource charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
 
 
 @end

@@ -1,0 +1,44 @@
+/* "User" stylesheet to override display of Validator.w3.org, to make it more user-friendly */
+
+form#form, p.backtop, p.helpwanted, ul#jumpbar
+{
+	display:none;
+}
+
+abbr[title], acronym[title], span[title], strong[title] {
+	border-bottom: none !important;
+	cursor: none !important;
+}
+
+code.input strong {
+	padding:0 !important;
+}
+
+pre {
+	white-space:pre-line;
+}
+
+h3 {
+	font-family: 'Lucida Grande', sans-serif !important;
+	font-weight:bold !important;
+}
+
+#source ol li
+{
+	line-height:100% !important;
+}
+
+/* our special paragraphs for explaining the impact of invalid HTML */
+
+div#explain-impact p
+{
+	font-size:90% !important;
+	margin: 1em 3em 1em 80px !important;
+	background:transparent !important;
+}
+
+#appicon
+{
+	float:left;
+}
+
