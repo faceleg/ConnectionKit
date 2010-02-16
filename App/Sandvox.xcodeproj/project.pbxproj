@@ -1020,6 +1020,8 @@
 		CE75EA96111A550600474753 /* ESCursors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE75EA93111A550600474753 /* ESCursors.m */; };
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
+		CE8D547C112AFDBD007AC2F0 /* SVHTMLValidatorController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8D547A112AFDBD007AC2F0 /* SVHTMLValidatorController.h */; };
+		CE8D547D112AFDBD007AC2F0 /* SVHTMLValidatorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8D547B112AFDBD007AC2F0 /* SVHTMLValidatorController.m */; };
 		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
 		CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */; };
 		CE91721209D51E530003310B /* target_set.png in Resources */ = {isa = PBXBuildFile; fileRef = CE91721109D51E530003310B /* target_set.png */; };
@@ -2652,6 +2654,8 @@
 		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8BF63910B2095A00418442 /* SVDesignChooserImageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserImageView.h; sourceTree = "<group>"; };
 		CE8BF63A10B2095A00418442 /* SVDesignChooserImageView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserImageView.m; sourceTree = "<group>"; };
+		CE8D547A112AFDBD007AC2F0 /* SVHTMLValidatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLValidatorController.h; sourceTree = "<group>"; };
+		CE8D547B112AFDBD007AC2F0 /* SVHTMLValidatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLValidatorController.m; sourceTree = "<group>"; };
 		CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignFamily.h; sourceTree = "<group>"; };
 		CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignFamily.m; sourceTree = "<group>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
@@ -4916,6 +4920,8 @@
 				3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */,
 				3C27FE00096F198E00702991 /* KTReleaseNotesController.h */,
 				3C27FE01096F198E00702991 /* KTReleaseNotesController.m */,
+				CE8D547A112AFDBD007AC2F0 /* SVHTMLValidatorController.h */,
+				CE8D547B112AFDBD007AC2F0 /* SVHTMLValidatorController.m */,
 				CE510FCB090EA74C00547CFF /* KTTranscriptController.h */,
 				CE510FCC090EA74C00547CFF /* KTTranscriptController.m */,
 				CE7779E30AE499C2002E6844 /* SVWelcomeController.h */,
@@ -5331,6 +5337,7 @@
 				27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */,
 				27A6098511282AC0007C301F /* KSStringStream.h in Headers */,
 				274FA0DD11297971000E0FDA /* SVWebEditorMainItem.h in Headers */,
+				CE8D547C112AFDBD007AC2F0 /* SVHTMLValidatorController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6729,6 +6736,7 @@
 				279BCF361128C1F90000FC77 /* SVHTMLContext+CurrentContext.m in Sources */,
 				274FA0DE11297971000E0FDA /* SVWebEditorMainItem.m in Sources */,
 				274FA0F111297AFD000E0FDA /* SVWebEditorView+EditingSupport.m in Sources */,
+				CE8D547D112AFDBD007AC2F0 /* SVHTMLValidatorController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
