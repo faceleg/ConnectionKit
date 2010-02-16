@@ -293,8 +293,8 @@
 
 - (void)writeString:(NSString *)string
 {
-    // Before actually writing the string, push through any pending Elements
-    if ([_unwrittenDOMElements count] > 0)
+    // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
+    if ([_unwrittenDOMElements count] > 0  && [string length] > 0)
     {
         NSArray *elements = [_unwrittenDOMElements copy];
         [_unwrittenDOMElements removeAllObjects];
