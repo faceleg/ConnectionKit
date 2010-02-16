@@ -64,12 +64,15 @@
 	
 	if (0 == status)
 	{
-		[[oWebView mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
-							  MIMEType:@"text/html"
-					  textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 		[[self window] setTitle:NSLocalizedString(@"Validator Results", "HTML Validator Window Title")];
 		[[self window] setFrameAutosaveName:@"ValidatorWindow"];
 		[self showWindow:nil];
+
+		[[oWebView mainFrame] loadHTMLString:@"<h1>Hello World</h1>" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
+		
+		//		[[oWebView mainFrame] loadData:[NSData dataWithContentsOfFile:pathOut]
+		//							  MIMEType:@"text/html"
+		//					  textEncodingName:@"utf-8" baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 		
 		// Scrape page to get status, to show success or failure.
 		// (Do we want to show the success page?  If not, I'll need to show success sheet without loading window)
@@ -89,19 +92,19 @@
 			}
 		}
 		
-		if (isValid)		// not valid -- load the page, give them a way out!
-		{
-			[self performSelector:@selector(showValidationSuccessAlertMessage:)
-					   withObject:explanation
-					   afterDelay:0.0];
-		}
-		else
-		{
-			
-			[self performSelector:@selector(showValidationResultsAlert)
-					   withObject:nil
-					   afterDelay:0.0];
-		}
+//		if (isValid)		// not valid -- load the page, give them a way out!
+//		{
+//			[self performSelector:@selector(showValidationSuccessAlertMessage:)
+//					   withObject:explanation
+//					   afterDelay:0.0];
+//		}
+//		else
+//		{
+//			
+//			[self performSelector:@selector(showValidationResultsAlert)
+//					   withObject:nil
+//					   afterDelay:0.0];
+//		}
 	}
 	else	// Don't show window; show alert sheet attached to document
 	{

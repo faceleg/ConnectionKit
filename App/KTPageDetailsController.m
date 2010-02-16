@@ -530,6 +530,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {	
+//	NSLog(@"object = %@", object);
+	
 	[self layoutPageURLComponents];
 
 	if (context == sMetaDescriptionObservationContext)
@@ -654,7 +656,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		frame = [oFollowButton frame];
 		frame.origin.x = NSMaxX([oExternalURLField frame])+8;
 		[oFollowButton setFrame:frame];
-		NSLog(@"set oFollowButton to %@", NSStringFromRect(frame));
+//		NSLog(@"set oFollowButton to %@", NSStringFromRect(frame));
 	}
 	else if (hasLocalPath)
 	{
