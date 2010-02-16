@@ -12,7 +12,7 @@
 #import "SVTextDOMController.h"
 
 
-@interface SVTextFieldDOMController : SVTextDOMController
+@interface SVTextFieldDOMController : SVTextDOMController <NSUserInterfaceValidations>
 {
   @private
     NSString    *_HTMLString;

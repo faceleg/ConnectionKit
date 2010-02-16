@@ -124,6 +124,22 @@
 - (IBAction)alignLeft:(id)sender; { NSBeep(); }
 - (IBAction)alignRight:(id)sender; { NSBeep(); }
 
+- (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
+{
+    BOOL result = YES;
+    
+    SEL action = [anItem action];
+    if (action == @selector(alignCenter:) ||
+        action == @selector(alignJustified:) ||
+        action == @selector(alignLeft:) ||
+        action == @selector(alignRight:))
+    {
+        result = NO;
+    }
+    
+    return result;
+}
+
 #pragma mark Bindings/NSEditor
 
 + (void)initialize
