@@ -63,10 +63,6 @@
 - (void)updateIfNeeded; // recurses down the tree
 
 
-#pragma mark Actions
-- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
-
-
 #pragma mark WebEditorViewController
 - (SVWebEditorViewController *)webEditorViewController;
 

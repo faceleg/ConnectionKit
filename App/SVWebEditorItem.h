@@ -56,6 +56,10 @@
 - (NSEnumerator *)enumerator;
 
 
+#pragma mark Actions
+- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
+
+
 #pragma mark Resizing
 - (unsigned int)resizingMask;   // default is 0
 - (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
@@ -65,6 +69,7 @@
 // dirtyRect is expressed in the view's co-ordinate system. view is not necessarily the context being drawn into (but generally is)
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
+
 
 #pragma mark Debugging
 - (NSString *)descriptionWithIndent:(NSUInteger)level;

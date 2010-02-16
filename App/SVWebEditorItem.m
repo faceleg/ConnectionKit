@@ -192,6 +192,21 @@
     return result;
 }
 
+#pragma mark Actions
+
+- (BOOL)tryToPerform:(SEL)action with:(id)anObject;
+{
+    if ([self respondsToSelector:action])
+    {
+        [self performSelector:action withObject:anObject];
+        return YES;
+    }
+    else
+    {
+        return [[self parentWebEditorItem] tryToPerform:action with:anObject];
+    }
+}
+
 #pragma mark Resizing
 
 - (unsigned int)resizingMask; { return 0; }
