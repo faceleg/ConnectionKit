@@ -18,10 +18,8 @@
 + (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-@property (nonatomic, retain, readonly) NSSet *elements;
-- (NSArray *)orderedElements;       // not KVO-compliant
-- (void)addElement:(SVBodyElement *)element;    // convenience
-- (NSSet *)graphics;
+@property(nonatomic, copy) NSString *string;
+@property(nonatomic, copy) NSSet *attachments;
 
 
 @end

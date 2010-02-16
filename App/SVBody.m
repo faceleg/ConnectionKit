@@ -11,6 +11,7 @@
 #import "SVPagelet.h"
 #import "SVBodyElement.h"
 #import "SVBodyTextDOMController.h"
+#import "SVHTMLContext.h"
 
 #import "NSArray+Karelia.h"
 #import "NSError+Karelia.h"
@@ -55,78 +56,21 @@
     // Should we take the opportinity to create a starter paragraph?
 }
 
-#pragma mark Elements
-
-+ (NSArray *)orderedElementsWithElements:(NSSet *)elements
-{
-    static NSArray *sortDescriptors;
-    if (!sortDescriptors)
-    {
-        sortDescriptors = [NSSortDescriptor sortDescriptorArrayWithKey:@"sortKey" ascending:YES];
-        [sortDescriptors retain];
-    }
-    
-    NSArray *result = [elements KS_sortedArrayUsingDescriptors:sortDescriptors];
-    return result;
-}
-
-@dynamic elements;
-- (BOOL)validateElements:(NSSet **)elements error:(NSError **)error
-{
-    //  The set is only valid if it matches up to the ordered version. i.e. want to make sure nothing in the set is orphaned from the link list.
-    BOOL result = YES;
-    
-    NSUInteger expectedCount = [[[self class] orderedElementsWithElements:*elements] count];
-    if ([*elements count] > expectedCount)
-    {
-        result = NO;
-        
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSValidationRelationshipExceedsMaximumCountError
-                                localizedDescription:@"There are more objects in elements than expected, suggesting some elements have been removed from the linked list, but not the relationship."];
-    }
-    else if ([*elements count] < expectedCount)
-    {
-        result = NO;
-        
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSValidationRelationshipLacksMinimumCountError
-                                localizedDescription:@"There are fewer objects in elements than expected, suggesting some elements have been inserted into the linked list, but not the relationship."];
-    }
-    
-    return result;
-}
-
-- (NSArray *)orderedElements;
-{
-    NSArray *result = [[self class] orderedElementsWithElements:[self elements]];
-    return result;
-}
-
-- (void)addElement:(SVBodyElement *)element;
-{
-    SVBodyElement *lastElement = [[self orderedElements] lastObject];
-    [element setSortKey:[NSNumber numberWithShort:[[lastElement sortKey] shortValue] + 1]];
-    [self addElementsObject:element];
-}
-
-- (NSSet *)graphics;
-{
-    // Just those elements that are graphics
-    NSMutableSet *result = [NSMutableSet set];
-    for (SVBodyElement *anElement in [self elements])
-    {
-        if ([anElement isKindOfClass:[SVGraphic class]]) [result addObject:anElement];
-    }
-    
-    return result;
-}
+@dynamic string;
+@dynamic attachments;
 
 #pragma mark HTML
 
 - (void)writeHTML
 {
     //  Piece together each of our elements to generate the HTML
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    [context writeString:[self string]];
+    
+    return;
+    
+    
+    
     [[self class] writeContentObjects:[self orderedElements]];
 }
 

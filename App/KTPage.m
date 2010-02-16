@@ -172,12 +172,8 @@
     
     // Body text. Give it a starting paragraph
     SVBody *body = [SVBody insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
+    [body setString:@"<p>Lorem Ipsum...</p>"];
     [self setBody:body];
-    
-    SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph" inManagedObjectContext:[self managedObjectContext]];
-    [paragraph setArchiveString:@"Lorem ipsum..."];
-    [paragraph setSortKey:[NSNumber numberWithInt:0]];
-    [body addElement:paragraph];
     
     
 	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];

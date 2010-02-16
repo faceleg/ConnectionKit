@@ -249,12 +249,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [textBox setSortKey:[NSNumber numberWithShort:0]];
         [textBox setTitleWithString:@"Test"];
         
-        SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
-                                                               inManagedObjectContext:[self managedObjectContext]];
-        [paragraph setArchiveString:@"Test paragraph"];
-        [paragraph setSortKey:[NSNumber numberWithShort:0]];
-        
-        [[textBox body] addElement:paragraph];
+        [[textBox body] setString:@"<p>Test paragraph</p>"];
         [[root sidebar] addPageletsObject:textBox];
     }
 	
