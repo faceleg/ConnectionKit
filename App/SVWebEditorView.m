@@ -16,13 +16,15 @@
 #import "SVLinkInspector.h"
 #import "SVSelectionBorder.h"
 
+#import "ESCursors.h"
+
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 #import "NSArray+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "NSEvent+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "ESCursors.h"
+#import "NSResponder+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 
 
@@ -1169,12 +1171,27 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (BOOL)webView:(WebView *)sender validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item defaultValidation:(BOOL)defaultValidation
 {
     //  On the whole, let WebKit get on with it. But, if WebKit can't handle the message, and we can, override to do so
-    if (!defaultValidation && [self respondsToSelector:[item action]])
+    BOOL result = defaultValidation;
+    SEL action = [item action];
+    
+    
+    id target = [_focusedText ks_targetForAction:action];
+    if (target)
     {
-        return [self validateUserInterfaceItem:item];
+        if ([target conformsToProtocol:@protocol(NSUserInterfaceValidations)])
+        {
+            result = [target validateUserInterfaceItem:item];
+        }
+    }
+    else
+    {
+        if (!defaultValidation && [self respondsToSelector:action])
+        {
+            return [self validateUserInterfaceItem:item];
+        }
     }
     
-    return defaultValidation;
+    return result;
 }
 
 #pragma mark WebUIDelegatePrivate

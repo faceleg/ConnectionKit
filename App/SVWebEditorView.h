@@ -34,11 +34,11 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL    _isStartingLoad;
     
     // Selection
-    id <SVWebEditorText>    _focusedText;
-    NSArray                 *_selectedItems;
-    NSArray                 *_selectionParentItems;
-    BOOL                    _isChangingSelectedItems;
-    SVWebEditorTextRange    *_selectedTextRangeBeforeLastChange;
+    NSResponder <SVWebEditorText>   *_focusedText;
+    NSArray                         *_selectedItems;
+    NSArray                         *_selectionParentItems;
+    BOOL                            _isChangingSelectedItems;
+    SVWebEditorTextRange            *_selectedTextRangeBeforeLastChange;
     
     // Editing
     BOOL            _mouseUpMayBeginEditing;
