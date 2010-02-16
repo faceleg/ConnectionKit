@@ -423,10 +423,6 @@
 - (void)setLanguage:(NSString *)language
 {
     [self setWrappedValue:language forKey:@"language"];
-    
-    // Also update archive page titles to match
-    NSArray *archivePages = [KTArchivePage allPagesInManagedObjectContext:[self managedObjectContext]];
-    [archivePages makeObjectsPerformSelector:@selector(updateTitle)];
 }
 
 #pragma mark -
