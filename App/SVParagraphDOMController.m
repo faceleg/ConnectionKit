@@ -108,6 +108,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [super update];
     
 
+    // Replace text contents
     SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
     [context copyPropertiesFromContext:[self HTMLContext]];
     [context push];
@@ -118,6 +119,11 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [context pop];
     [[self HTMLElement] setInnerHTML:[context mutableString]];
     [context release];
+    
+    
+    // Paragraph style overrides
+    [[self HTMLElement] setAttribute:@"style"
+                               value:[[self representedObject] styleAttribute]];
 }
 
 #pragma mark Editing
@@ -125,21 +131,28 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 - (void)enclosingBodyControllerWebViewDidChange:(SVBodyTextDOMController *)bodyController;
 {
     // Commit any changes caused by the user. Caller will take care of undo coalescing and other behaviour
-    if (_editTimestamp)
+    BOOL edited = _editTimestamp && [[NSApp currentEvent] timestamp] == _editTimestamp;
+    if (!edited)
     {
-        if ([[NSApp currentEvent] timestamp] == _editTimestamp)
-        {
-            [bodyController didChangeText]; // let it know
-            
-            // Persist paragraph contents
-            OBPRECONDITION(!_isUpdatingModel);
-            _isUpdatingModel = YES;
-            
-            SVBodyParagraph *paragraph = [self representedObject];
-            [paragraph readHTMLFromElement:[self HTMLElement]];
-            
-            _isUpdatingModel = NO;;
-        }
+        NSString *domStyle = [[self HTMLElement] getAttribute:@"style"];
+        if ([domStyle length] == 0) domStyle = nil;
+        NSString *modelStyle = [[self representedObject] styleAttribute];
+        edited = !KSISEQUAL(domStyle, modelStyle);
+    }
+    
+    
+    if (edited)
+    {
+        [bodyController didChangeText]; // let it know
+        
+        // Persist paragraph contents
+        OBPRECONDITION(!_isUpdatingModel);
+        _isUpdatingModel = YES;
+        
+        SVBodyParagraph *paragraph = [self representedObject];
+        [paragraph readHTMLFromElement:[self HTMLElement]];
+        
+        _isUpdatingModel = NO;
         
         _editTimestamp = 0;
     }
