@@ -9,7 +9,7 @@
 #import "SVParagraphDOMController.h"
 
 #import "SVBodyParagraph.h"
-#import "SVMutableStringHTMLContext.h"
+#import "SVParagraphHTMLContext.h"
 
 
 static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObservationContext";
@@ -128,6 +128,28 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 #pragma mark Editing
 
+- (void)persistHTMLElementToModel
+{
+    SVBodyParagraph *paragraph = [self representedObject];
+    
+    // Clean up style
+    NSString *alignment = [[[self HTMLElement] style] textAlign];
+    [paragraph setCustomTextAlign:([alignment length] > 0 ? alignment : nil)];
+    
+    [[self HTMLElement] setAttribute:@"style" value:[paragraph styleAttribute]];
+    
+    
+    // Easiest way to archive string, is to use a context – see, they do all sorts!
+    SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] init];
+    [[self HTMLElement] writeInnerHTMLToContext:context];
+    
+    NSString *string = [context markupString];
+    [paragraph setArchiveString:string];
+    
+    [context release];
+}
+
+
 - (void)enclosingBodyControllerWebViewDidChange:(SVBodyTextDOMController *)bodyController;
 {
     // Commit any changes caused by the user. Caller will take care of undo coalescing and other behaviour
@@ -149,8 +171,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
         OBPRECONDITION(!_isUpdatingModel);
         _isUpdatingModel = YES;
         
-        SVBodyParagraph *paragraph = [self representedObject];
-        [paragraph readHTMLFromElement:[self HTMLElement]];
+        [self persistHTMLElementToModel];
         
         _isUpdatingModel = NO;
         

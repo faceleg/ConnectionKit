@@ -9,8 +9,8 @@
 #import "SVBodyParagraph.h"
 #import "SVParagraphDOMController.h"
 
+#import "SVHTMLContext.h"
 #import "SVParagraphLink.h"
-#import "SVParagraphHTMLContext.h"
 #import "SVPlugInPagelet.h"
 
 #import "NSSet+Karelia.h"
@@ -78,25 +78,6 @@
 - (Class)DOMControllerClass;
 {
     return [SVParagraphDOMController class];		// we can temporarily try SVBlogSummaryDOMController
-}
-
-- (void)readHTMLFromElement:(DOMHTMLElement *)element;
-{
-    // Clean up style
-    NSString *alignment = [[element style] textAlign];
-    [self setCustomTextAlign:([alignment length] > 0 ? alignment : nil)];
-    
-    [element setAttribute:@"style" value:[self styleAttribute]];
-    
-    
-    // Easiest way to archive string, is to use a context – see, they do all sorts!
-    SVMutableStringHTMLContext *context = [[SVParagraphHTMLContext alloc] init];
-    [element writeInnerHTMLToContext:context];
-    
-    NSString *string = [context markupString];
-    [self setArchiveString:string];
-    
-    [context release];
 }
 
 - (NSString *)styleAttribute;

@@ -17,7 +17,6 @@
 
 - (void)writeHTML;
 - (void)writeInnerHTML;
-- (void)readHTMLFromElement:(DOMHTMLElement *)element;
 
 - (NSString *)styleAttribute;
 
