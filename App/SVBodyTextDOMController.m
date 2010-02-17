@@ -20,7 +20,7 @@
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVMediaRecord.h"
-#import "SVParagraphHTMLContext.h"
+#import "SVBodyTextHTMLContext.h"
 #import "SVWebContentObjectsController.h"
 
 #import "NSDictionary+Karelia.h"
@@ -156,6 +156,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
                                    initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
     [controller setHTMLContext:[self HTMLContext]];
     [controller setRepresentedObject:graphic];
+    [self addChildWebEditorItem:controller];
     
     
     // Generate DOM node
@@ -297,7 +298,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     
     NSMutableString *html = [[NSMutableString alloc] init];
-    SVParagraphHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithStringStream:html];
+    SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] initWithStringStream:html];
+    [context setBodyTextDOMController:self];
     
     [[self textHTMLElement] writeInnerHTMLToContext:context];
     [context release];

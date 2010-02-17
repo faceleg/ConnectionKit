@@ -1,15 +1,21 @@
 //
-//  SVParagraphHTMLContext.m
+//  SVBodyTextHTMLContext.m
 //  Sandvox
 //
 //  Created by Mike on 10/02/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVParagraphHTMLContext.h"
+#import "SVBodyTextHTMLContext.h"
 
 
-@implementation SVParagraphHTMLContext
+@implementation SVBodyTextHTMLContext
+
+- (void)dealloc
+{
+    [_DOMController release];
+    [super dealloc];
+}
 
 + (BOOL)validateTagName:(NSString *)tagName
 {
@@ -65,5 +71,7 @@
     
     return [super replaceDOMElementIfNeeded:element];
 }
+
+@synthesize bodyTextDOMController = _DOMController;
 
 @end

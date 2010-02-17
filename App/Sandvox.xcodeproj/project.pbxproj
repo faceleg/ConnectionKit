@@ -423,8 +423,8 @@
 		27A617141122FA0000004FED /* SVTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A617121122FA0000004FED /* SVTextBox.h */; };
 		27A617151122FA0000004FED /* SVTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A617131122FA0000004FED /* SVTextBox.m */; };
 		27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A617651123005100004FED /* TextBoxBodyTemplate.html */; };
-		27A6187B1123480C00004FED /* SVParagraphHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A618791123480C00004FED /* SVParagraphHTMLContext.h */; };
-		27A6187C1123480C00004FED /* SVParagraphHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6187A1123480C00004FED /* SVParagraphHTMLContext.m */; };
+		27A6187B1123480C00004FED /* SVBodyTextHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A618791123480C00004FED /* SVBodyTextHTMLContext.h */; };
+		27A6187C1123480C00004FED /* SVBodyTextHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6187A1123480C00004FED /* SVBodyTextHTMLContext.m */; };
 		27A619BB1124235200004FED /* SVHTMLContext+HTMLElements.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */; };
 		27A82FEC0D915AAB005FF13D /* KTWebPathsProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */; settings = {ATTRIBUTES = (); }; };
@@ -1891,8 +1891,8 @@
 		27A617121122FA0000004FED /* SVTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBox.h; sourceTree = "<group>"; };
 		27A617131122FA0000004FED /* SVTextBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextBox.m; sourceTree = "<group>"; };
 		27A617651123005100004FED /* TextBoxBodyTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TextBoxBodyTemplate.html; sourceTree = "<group>"; };
-		27A618791123480C00004FED /* SVParagraphHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphHTMLContext.h; sourceTree = "<group>"; };
-		27A6187A1123480C00004FED /* SVParagraphHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphHTMLContext.m; sourceTree = "<group>"; };
+		27A618791123480C00004FED /* SVBodyTextHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyTextHTMLContext.h; sourceTree = "<group>"; };
+		27A6187A1123480C00004FED /* SVBodyTextHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyTextHTMLContext.m; sourceTree = "<group>"; };
 		27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLContext+HTMLElements.m"; sourceTree = "<group>"; };
 		27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebPathsProtocol.h; sourceTree = "<group>"; };
 		27AA10270CDA065A001D6B9B /* KTMissingMediaController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaController.h; sourceTree = "<group>"; };
@@ -3198,8 +3198,8 @@
 				27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */,
 				27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */,
 				270E4D2C10FB5AAD00EF1FA0 /* SVHTMLContext+DOM.m */,
-				27A618791123480C00004FED /* SVParagraphHTMLContext.h */,
-				27A6187A1123480C00004FED /* SVParagraphHTMLContext.m */,
+				27A618791123480C00004FED /* SVBodyTextHTMLContext.h */,
+				27A6187A1123480C00004FED /* SVBodyTextHTMLContext.m */,
 				27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */,
 				279BCF351128C1F90000FC77 /* SVHTMLContext+CurrentContext.m */,
 			);
@@ -5336,7 +5336,7 @@
 				27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */,
 				27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */,
 				27A617141122FA0000004FED /* SVTextBox.h in Headers */,
-				27A6187B1123480C00004FED /* SVParagraphHTMLContext.h in Headers */,
+				27A6187B1123480C00004FED /* SVBodyTextHTMLContext.h in Headers */,
 				27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */,
 				27A6098511282AC0007C301F /* KSStringStream.h in Headers */,
 				274FA0DD11297971000E0FDA /* SVWebEditorMainItem.h in Headers */,
@@ -6733,7 +6733,7 @@
 				27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */,
 				27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */,
 				27A617151122FA0000004FED /* SVTextBox.m in Sources */,
-				27A6187C1123480C00004FED /* SVParagraphHTMLContext.m in Sources */,
+				27A6187C1123480C00004FED /* SVBodyTextHTMLContext.m in Sources */,
 				27A619BB1124235200004FED /* SVHTMLContext+HTMLElements.m in Sources */,
 				27BA06C91125A46900B9D8F4 /* SVWebEditorTextRange.m in Sources */,
 				27A6098611282AC0007C301F /* KSStringStream.m in Sources */,
