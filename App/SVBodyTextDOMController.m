@@ -188,15 +188,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     if (media)
     {
-        SVImage *image = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
-                                                       inManagedObjectContext:context];
-        [image setMedia:media];
-        
-        CGSize size = [image originalSize];
-        [image setWidth:[NSNumber numberWithFloat:size.width]];
-        [image setHeight:[NSNumber numberWithFloat:size.height]];
-        [image setConstrainProportions:[NSNumber numberWithBool:YES]];
-        
+        SVImage *image = [SVImage insertNewImageWithMedia:media];
         [self insertGraphic:image];
     }
     else

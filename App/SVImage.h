@@ -14,6 +14,9 @@
 
 @interface SVImage : SVPagelet
 
++ (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
+
+
 @property (nonatomic, retain) SVMediaRecord *media;
 
 @property(nonatomic, copy) NSNumber *width;

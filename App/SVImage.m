@@ -16,6 +16,20 @@
 
 @implementation SVImage 
 
++ (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
+{
+    SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
+                                                   inManagedObjectContext:[media managedObjectContext]];
+    [result setMedia:media];
+    
+    CGSize size = [result originalSize];
+    [result setWidth:[NSNumber numberWithFloat:size.width]];
+    [result setHeight:[NSNumber numberWithFloat:size.height]];
+    [result setConstrainProportions:[NSNumber numberWithBool:YES]];
+    
+    return result;
+}
+
 @dynamic media;
 
 #pragma mark Size
