@@ -9,6 +9,9 @@
 #import "SVTitleBoxHTMLContext.h"
 
 
+@class SVBodyTextDOMController;
+
+
 @interface SVBodyTextHTMLContext : SVTitleBoxHTMLContext
 {
   @private

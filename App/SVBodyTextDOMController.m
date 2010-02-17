@@ -156,15 +156,19 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
                                    initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
     [controller setHTMLContext:[self HTMLContext]];
     [controller setRepresentedObject:graphic];
+    
     [self addChildWebEditorItem:controller];
+    [controller release];
     
     
     // Generate DOM node
-    [controller HTMLElement];
-    [[webEditor webView] replaceSelectionWithNode:[controller HTMLElement]];
+    [webEditor willChange];
     
+    DOMRange *selection = [webEditor selectedDOMRange];
+    [selection insertNode:[controller HTMLElement]];
     
-    [controller release];
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[webEditor webView]];
 }
 
 - (IBAction)insertPagelet:(id)sender;

@@ -8,6 +8,8 @@
 
 #import "SVBodyTextHTMLContext.h"
 
+#import "SVBodyTextDOMController.h"
+
 
 @implementation SVBodyTextHTMLContext
 
@@ -48,6 +50,20 @@
     }
 }
 
+- (DOMNode *)writeDOMElement:(DOMElement *)element
+{
+    NSArray *graphicNodes = [[[self bodyTextDOMController] graphicControllers] valueForKey:@"HTMLElement"];
+    
+    if ([graphicNodes containsObject:element])
+    {
+        return [element nextSibling];
+    }
+    else
+    {
+        return [super writeDOMElement:element];
+    }
+}
+
 - (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
 {
     NSString *tagName = [element tagName];
@@ -71,6 +87,8 @@
     
     return [super replaceDOMElementIfNeeded:element];
 }
+
+#pragma mark Properties
 
 @synthesize bodyTextDOMController = _DOMController;
 
