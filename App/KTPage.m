@@ -12,7 +12,6 @@
 #import "Debug.h"
 #import "KTAbstractIndex.h"
 #import "SVBody.h"
-#import "SVBodyParagraph.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"

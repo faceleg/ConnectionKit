@@ -8,7 +8,6 @@
 
 #import "SVTextAttachment.h"
 
-#import "SVBodyParagraph.h"
 #import "SVHTMLContext.h"
 
 

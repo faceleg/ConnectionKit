@@ -10,7 +10,6 @@
 #import "SVParagraphDOMController.h"
 
 #import "KT.h"
-#import "SVBodyParagraph.h"
 #import "SVBodyTextHTMLContext.h"
 #import "SVCallout.h"
 #import "KTAbstractPage.h"

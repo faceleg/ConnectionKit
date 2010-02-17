@@ -7,7 +7,6 @@
 //
 
 #import "SVTitleBoxHTMLContext.h"
-#import "SVBodyParagraph.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMElement+Karelia.h"

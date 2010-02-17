@@ -16,9 +16,6 @@
 #import "SVMutableStringHTMLContext.h"
 
 
-@class SVBodyParagraph;
-
-
 @interface SVTitleBoxHTMLContext : SVMutableStringHTMLContext
 {
   @private

@@ -10,12 +10,9 @@
 
 
 @class KTAbstractPage;
-@class SVBodyParagraph;
 
 
 @interface SVParagraphLink : SVTextAttachment  
-{
-}
 
 @property (nonatomic, retain) KTAbstractPage * page;
 

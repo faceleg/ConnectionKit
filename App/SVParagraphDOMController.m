@@ -8,7 +8,6 @@
 
 #import "SVParagraphDOMController.h"
 
-#import "SVBodyParagraph.h"
 #import "SVBodyTextHTMLContext.h"
 
 

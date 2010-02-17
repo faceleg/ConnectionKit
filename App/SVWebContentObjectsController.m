@@ -9,7 +9,6 @@
 #import "SVWebContentObjectsController.h"
 
 #import "SVBody.h"
-#import "SVBodyParagraph.h"
 #import "SVCallout.h"
 #import "KTPage.h"
 #import "SVSidebar.h"
@@ -38,10 +37,7 @@
 	OBASSERT(result);
     
     // Create matching first paragraph
-    SVBodyParagraph *paragraph = [NSEntityDescription insertNewObjectForEntityForName:@"BodyParagraph"
-                                                               inManagedObjectContext:moc];
-    [paragraph setArchiveString:@"Test"];
-    [[result body] addElement:paragraph];
+    [[result body] setString:@"<p>Test</p>"];
     
     
     return [result retain]; // it's a -newFoo method

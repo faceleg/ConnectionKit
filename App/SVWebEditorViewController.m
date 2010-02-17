@@ -9,7 +9,6 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVApplicationController.h"
-#import "SVBodyParagraph.h"
 #import "SVCallout.h"
 #import "SVPlugInPagelet.h"
 #import "SVHTMLTextBlock.h"

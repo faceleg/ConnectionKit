@@ -9,7 +9,6 @@
 #import "SVParagraphLink.h"
 
 #import "KTAbstractPage.h"
-#import "SVBodyParagraph.h"
 
 @implementation SVParagraphLink 
 

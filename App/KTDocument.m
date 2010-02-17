@@ -39,7 +39,6 @@
 #import "KTDocument.h"
 
 #import "SVBody.h"
-#import "SVBodyParagraph.h"
 #import "KT.h"
 #import "KTAbstractIndex.h"
 #import "KTElementPlugin.h"
