@@ -40,9 +40,11 @@ enum
     BOOL            _isEditing;
     NSSize          _minSize;
     unsigned int    _resizingMask;
+    NSColor         *_borderColor;
 }
 
 @property(nonatomic, getter=isEditing) BOOL editing;
+@property(nonatomic, copy) NSColor *borderColor;
 @property(nonatomic) NSSize minSize;
 
 

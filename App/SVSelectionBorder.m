@@ -27,13 +27,23 @@
 - (id)init
 {
     self = [super init];
+    
     _resizingMask = /*kCALayerLeftEdge | */kCALayerRightEdge | kCALayerBottomEdge/* | kCALayerTopEdge*/;
+    _borderColor = [[NSColor grayColor] copy];
+    
     return self;
+}
+
+- (void)dealloc
+{
+    [_borderColor release];
+    [super dealloc];
 }
 
 #pragma mark Properties
 
 @synthesize editing = _isEditing;
+@synthesize borderColor = _borderColor;
 @synthesize minSize = _minSize;
 
 #pragma mark Resizing
@@ -183,10 +193,14 @@
 - (void)drawWithFrame:(NSRect)frameRect inView:(NSView *)view;
 {
     // First draw overall frame. enlarge by 1 pixel to avoid drawing directly over the graphic
-    [[NSColor grayColor] setFill];
-    NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
-                                       1.0,
-                                       NSCompositeSourceOver);
+    NSColor *border = [self borderColor];
+    if (border)
+    {
+        [border setFill];
+        NSFrameRectWithWidthUsingOperation([view centerScanRect:NSInsetRect(frameRect, -1.0, -1.0)],
+                                           1.0,
+                                           NSCompositeSourceOver);
+    }
     
     
     // Then draw handles. Pixels are weird, need to draw using a slightly smaller rectangle otherwise edges get cut off
