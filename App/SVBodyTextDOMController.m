@@ -67,7 +67,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)dealloc
 {
     // Release ivars
-    [_content release];
     
     [super dealloc];
 }
@@ -81,8 +80,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 }
 
 #pragma mark Content
-
-@synthesize content = _content;
 
 - (void)update
 {
@@ -111,7 +108,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         else
         {
             // It's a new object, create controller and node to match
-            Class controllerClass = [self controllerClassForBodyElement:aModelElement];
+            Class controllerClass = [aModelElement DOMControllerClass];
             controller = [[controllerClass alloc] initWithHTMLDocument:
                           (DOMHTMLDocument *)[[self HTMLElement] ownerDocument]];
             [controller setHTMLContext:[self HTMLContext]];
@@ -251,13 +248,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     return result;
 }
 
-- (Class)controllerClassForBodyElement:(SVBodyElement *)element;
-{
-    Class result = [element DOMControllerClass];
-    
-    return result;
-}
-
 - (NSArray *)graphicControllers;
 {
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childWebEditorItems] count]];
@@ -337,86 +327,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:([stream length] - 1)]];
     [textAttachment setLength:[NSNumber numberWithShort:1]];
-}
-
-- (void)handleEvent:(DOMMutationEvent *)event
-{
-    // We're only interested in nodes being added or removed from our own node
-    if ([event relatedNode] != [self textHTMLElement]) return;
-    
-    
-    // Nor do we care mid-update
-    if ([self isUpdating]) return;
-    
-    
-    // Add or remove controllers for the new element
-    if ([[event type] isEqualToString:@"DOMNodeInserted"])
-    {
-        // WebKit sometimes likes to keep the HTML neat by inserting both a newline character and HTML element at the same time. Ignore the former
-        DOMHTMLElement *insertedNode = (DOMHTMLElement *)[event target];
-        if (![insertedNode isKindOfClass:[DOMHTMLElement class]])
-        {
-            return;
-        }
-        
-        
-        // Create paragraph
-        SVBodyParagraph *paragraph = [[self content] newObject];
-        [paragraph readHTMLFromElement:insertedNode];
-        
-        
-        // Create a matching controller
-        Class class = [self controllerClassForBodyElement:paragraph];
-        SVDOMController *controller = [[class alloc] initWithHTMLElement:insertedNode];
-        
-        [controller setRepresentedObject:paragraph];
-        [paragraph release];
-        [controller setHTMLContext:[self HTMLContext]];
-        
-        [self addChildWebEditorItem:controller];
-        [controller release];
-        
-        
-        // Insert the paragraph into the model in the same spot as it is in the DOM
-        [self willUpdate];
-         
-        DOMHTMLElement *nextNode = [insertedNode nextSiblingOfClass:[DOMHTMLElement class]];
-        if (nextNode)
-        {
-            KSDOMController * nextController = [self controllerForDOMNode:nextNode];
-            OBASSERT(nextController);
-            
-            NSArrayController *content = [self content];
-            NSUInteger index = [[content arrangedObjects] indexOfObject:[nextController representedObject]];
-            [content insertObject:paragraph atArrangedObjectIndex:index];
-        }
-        else
-        {
-            // shortcut, know we're inserting at the end
-            [[self content] addObject:paragraph];
-        }
-        
-        [self didUpdate];
-    }
-    else if ([[event type] isEqualToString:@"DOMNodeRemoved"])
-    {
-        // Remove paragraph
-        DOMHTMLElement *removedNode = (DOMHTMLElement *)[event target];
-        if ([removedNode isKindOfClass:[DOMHTMLElement class]])
-        {
-            SVWebEditorItem *controller = [self controllerForDOMNode:removedNode];
-            if (controller)
-            {
-                SVBodyElement *element = [controller representedObject];
-                
-                [self willUpdate];
-                [[self content] removeObject:element];
-                [self didUpdate];
-                
-                [controller removeFromParentWebEditorItem];
-            }
-        }
-    }
 }
 
 #pragma mark Links

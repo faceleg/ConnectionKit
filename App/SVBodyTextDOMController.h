@@ -12,10 +12,8 @@
 @class SVBody, SVBodyElement, SVGraphic, SVBodyTextHTMLContext;
 
 
-@interface SVBodyTextDOMController : SVTextDOMController <DOMEventListener>
-{
-    NSArrayController   *_content;
-        
+@interface SVBodyTextDOMController : SVTextDOMController
+{        
     BOOL    _isUpdating;    
     
     DOMHTMLAnchorElement    *_selectedLink;
@@ -25,8 +23,6 @@
 
 
 #pragma mark Content
-@property(nonatomic, retain, readonly) NSArrayController *content;
-
 - (IBAction)insertElement:(id)sender;
 - (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertFile:(id)sender;
@@ -35,8 +31,6 @@
 
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 - (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
-
-- (Class)controllerClassForBodyElement:(SVBodyElement *)element;
 
 // All the selectable items within ourself
 - (NSArray *)graphicControllers;
