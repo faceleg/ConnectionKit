@@ -142,6 +142,13 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     SVWebEditorView *webEditor = [self webEditor];
     
     
+    // Create text attachment for the graphic
+    SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                                     inManagedObjectContext:[graphic managedObjectContext]];
+    [textAttachment setPagelet:graphic];
+    [textAttachment setBody:[self representedObject]];
+    
+    
     // Create controller for graphic
     SVDOMController *controller = [[[graphic DOMControllerClass] alloc]
                                    initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
