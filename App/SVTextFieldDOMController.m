@@ -94,13 +94,13 @@
     [[self textHTMLElement] writeInnerHTMLToContext:context];
     
     
-    // Do usual stuff
-    [super didChangeText];
-    
-    
     // Copy HTML across to ourself
     if (![html isEqualToString:_uneditedValue])
     {
+        // Do usual stuff
+        [super didChangeText];
+        
+        
         [self setHTMLString:html needsUpdate:NO];
         
         
