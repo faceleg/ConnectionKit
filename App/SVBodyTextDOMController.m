@@ -275,7 +275,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     //  Body Text Controller doesn't track indivdual text changes itself, leaving that up to the paragraphs. So use this point to pass a similar message onto those subcontrollers to handle.
     
     
-    [super webViewDidChange];
     
     // Use an old-fashioned iteration since paragraphs may insert paragraphs after themselves during this process.
     for (int i = 0; i < [[self childWebEditorItems] count]; i++)
