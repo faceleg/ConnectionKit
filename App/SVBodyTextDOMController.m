@@ -20,6 +20,7 @@
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVMediaRecord.h"
+#import "SVParagraphHTMLContext.h"
 #import "SVWebContentObjectsController.h"
 
 #import "NSDictionary+Karelia.h"
@@ -270,19 +271,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Updates
 
-- (void)webViewDidChange;
-{
-    //  Body Text Controller doesn't track indivdual text changes itself, leaving that up to the paragraphs. So use this point to pass a similar message onto those subcontrollers to handle.
-    
-    
-    
-    // Use an old-fashioned iteration since paragraphs may insert paragraphs after themselves during this process.
-    for (int i = 0; i < [[self childWebEditorItems] count]; i++)
-    {
-        [[[self childWebEditorItems] objectAtIndex:i] enclosingBodyControllerWebViewDidChange:self];
-    }
-}
-
 @synthesize updating = _isUpdating;
 
 - (void)willUpdate
@@ -298,6 +286,28 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 }
 
 #pragma mark Editing
+
+- (void)didChangeText;
+{
+    //  Body Text Controller doesn't track indivdual text changes itself, leaving that up to the paragraphs. So use this point to pass a similar message onto those subcontrollers to handle.
+    
+    
+    NSMutableString *html = [[NSMutableString alloc] init];
+    SVParagraphHTMLContext *context = [[SVParagraphHTMLContext alloc] initWithStringStream:html];
+    
+    [[self textHTMLElement] writeInnerHTMLToContext:context];
+    [context release];
+    
+    
+    SVBody *body = [self representedObject];
+    if (![html isEqualToString:[body string]])
+    {
+        [super didChangeText];
+        [body setString:html];
+    }
+    
+    [html release];
+}
 
 - (void)handleEvent:(DOMMutationEvent *)event
 {

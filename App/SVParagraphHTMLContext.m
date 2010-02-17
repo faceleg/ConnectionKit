@@ -50,6 +50,8 @@
     // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
     if ([tagName isEqualToString:@"P"])
     {
+        return element;
+        
         DOMNode *parent = [element parentNode];
         DOMNode *refNode = element;
         while (parent)

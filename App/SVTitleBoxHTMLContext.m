@@ -136,7 +136,7 @@
             // Close the element, but first, if the next sibling is equal, merge it with this one
             DOMNode *result = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
             
-            while ([result isEqualNode:element compareChildNodes:NO])
+            while ([result isEqualNode:element compareChildNodes:NO] && ![tagName isEqualToString:@"P"])
             {
                 DOMNode *startNode = [result firstChild];
                 
