@@ -12,7 +12,7 @@
 @class KTPage, SVSidebar, SVCallout, SVTemplate;
 
 
-@interface SVPagelet : SVContentObject
+@interface SVPagelet : SVGraphic
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;

@@ -144,7 +144,9 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     [self didUpdate];
 }
 
-- (IBAction)insertElement:(id)sender;
+#pragma mark Insertion
+
+- (void)insertGraphic:(SVPagelet *)graphic;
 {
     // First remove any selected text. This should make the Web Editor post a kSVWebEditorViewWillChangeNotification
     SVWebEditorView *webEditor = [self webEditor];
@@ -155,11 +157,17 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     DOMRange *selection = [webEditor selectedDOMRange];
     OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
     
-    KSDOMController *controller = [self controllerForDOMNode:[selection startContainer]];
-    if (controller)
-    {
-        // TODO: Make the insertion
-    }
+    
+    
+    // Create controller for graphic
+    SVDOMController *controller = [[[graphic DOMControllerClass] alloc]
+                                   initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
+    [controller setHTMLContext:[self HTMLContext]];
+    [controller setRepresentedObject:graphic];
+    
+    
+    // Generate DOM node
+    [controller HTMLElement];
 }
 
 - (IBAction)insertPagelet:(id)sender;
@@ -197,7 +205,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         [image setHeight:[NSNumber numberWithFloat:size.height]];
         [image setConstrainProportions:[NSNumber numberWithBool:YES]];
         
-        [self insertElement:image];
+        [self insertGraphic:image];
     }
     else
     {

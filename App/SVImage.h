@@ -7,12 +7,12 @@
 //
 
 #import <CoreData/CoreData.h>
-#import "SVGraphic.h"
+#import "SVPagelet.h"
 
 @class SVMediaRecord;
 @class SVStringAttribute;
 
-@interface SVImage : SVGraphic
+@interface SVImage : SVPagelet
 
 @property (nonatomic, retain) SVMediaRecord *media;
 
