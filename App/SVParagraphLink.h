@@ -6,14 +6,14 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVStringAttribute.h"
+#import "SVTextAttachment.h"
 
 
 @class KTAbstractPage;
 @class SVBodyParagraph;
 
 
-@interface SVParagraphLink : SVStringAttribute  
+@interface SVParagraphLink : SVTextAttachment  
 {
 }
 

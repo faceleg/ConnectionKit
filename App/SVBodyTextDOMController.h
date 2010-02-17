@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 
-@class SVBody, SVBodyElement, SVGraphic;
+@class SVBody, SVBodyElement, SVGraphic, SVBodyTextHTMLContext;
 
 
 @interface SVBodyTextDOMController : SVTextDOMController <DOMEventListener>
@@ -40,6 +40,8 @@
 
 // All the selectable items within ourself
 - (NSArray *)graphicControllers;
+- (void)writeGraphicController:(SVDOMController *)controller
+                     toContext:(SVBodyTextHTMLContext *)context;
 
 
 #pragma mark Updates

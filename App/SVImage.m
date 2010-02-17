@@ -11,7 +11,7 @@
 #import "SVHTMLContext.h"
 #import "SVImageDOMController.h"
 #import "SVMediaRecord.h"
-#import "SVStringAttribute.h"
+#import "SVTextAttachment.h"
 
 
 @implementation SVImage 

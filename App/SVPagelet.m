@@ -139,6 +139,7 @@
 #pragma mark Callout
 
 @dynamic callout;
+@dynamic textAttachment;
 
 #pragma mark Validation
 

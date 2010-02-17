@@ -10,7 +10,7 @@
 #import "SVPagelet.h"
 
 @class SVMediaRecord;
-@class SVStringAttribute;
+@class SVTextAttachment;
 
 @interface SVImage : SVPagelet
 
@@ -21,7 +21,7 @@
 @property(nonatomic, copy) NSNumber *constrainProportions;  // BOOL, required
 - (CGSize)originalSize;
 
-@property (nonatomic, retain) SVStringAttribute *inlineGraphic;
+@property (nonatomic, retain) SVTextAttachment *inlineGraphic;
 
 
 @end

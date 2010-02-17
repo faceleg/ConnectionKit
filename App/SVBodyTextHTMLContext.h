@@ -15,9 +15,10 @@
 @interface SVBodyTextHTMLContext : SVTitleBoxHTMLContext
 {
   @private
-    SVBodyTextDOMController *_DOMController;
+    SVBodyTextDOMController             *_DOMController;
 }
 
 @property(nonatomic, retain) SVBodyTextDOMController *bodyTextDOMController;
+
 
 @end

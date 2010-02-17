@@ -9,6 +9,8 @@
 #import "SVBodyTextHTMLContext.h"
 
 #import "SVBodyTextDOMController.h"
+#import "SVPagelet.h"
+#import "SVTextAttachment.h"
 
 
 @implementation SVBodyTextHTMLContext
@@ -52,16 +54,18 @@
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element
 {
-    NSArray *graphicNodes = [[[self bodyTextDOMController] graphicControllers] valueForKey:@"HTMLElement"];
+    NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
     
-    if ([graphicNodes containsObject:element])
+    for (SVDOMController *aController in graphicControllers)
     {
-        return [element nextSibling];
+        if ([aController HTMLElement] == element)
+        {
+            [[self bodyTextDOMController] writeGraphicController:aController toContext:self];
+            return [element nextSibling];
+        }
     }
-    else
-    {
-        return [super writeDOMElement:element];
-    }
+   
+    return [super writeDOMElement:element];
 }
 
 - (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;

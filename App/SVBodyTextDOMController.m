@@ -11,6 +11,7 @@
 
 #import "KT.h"
 #import "SVBodyParagraph.h"
+#import "SVBodyTextHTMLContext.h"
 #import "SVCallout.h"
 #import "KTAbstractPage.h"
 #import "SVPagelet.h"
@@ -20,7 +21,7 @@
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVMediaRecord.h"
-#import "SVBodyTextHTMLContext.h"
+#import "SVTextAttachment.h"
 #import "SVWebContentObjectsController.h"
 
 #import "NSDictionary+Karelia.h"
@@ -317,6 +318,31 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     }
     
     [html release];
+}
+
+- (void)writeGraphicController:(SVDOMController *)controller
+                     toContext:(SVBodyTextHTMLContext *)context;
+{
+    SVPagelet *graphic = [controller representedObject];
+    
+    
+    // Ensure graphic has TextAttachment
+    SVTextAttachment *textAttachment = [graphic textAttachment];
+    if (!textAttachment)
+    {
+        textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                       inManagedObjectContext:[graphic managedObjectContext]];
+        [textAttachment setPagelet:graphic];
+        [textAttachment setBody:[self representedObject]];
+    }
+    
+    
+    // Set attachment location
+    NSMutableString *stream = (NSMutableString *)[context stringStream];
+    [context writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+    
+    [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:([stream length] - 1)]];
+    [textAttachment setLength:[NSNumber numberWithShort:1]];
 }
 
 - (void)handleEvent:(DOMMutationEvent *)event

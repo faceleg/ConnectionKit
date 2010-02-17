@@ -9,7 +9,7 @@
 #import "SVGraphic.h"
 
 @class SVTitleBox, SVBody;
-@class KTPage, SVSidebar, SVCallout, SVTemplate;
+@class KTPage, SVSidebar, SVCallout, SVTextAttachment, SVTemplate;
 
 
 @interface SVPagelet : SVGraphic
@@ -45,6 +45,7 @@
 
 #pragma mark Callout
 @property(nonatomic, readonly) SVCallout *callout;
+@property(nonatomic, retain) SVTextAttachment *textAttachment;
 
 
 #pragma mark HTML

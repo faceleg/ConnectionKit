@@ -1,18 +1,18 @@
 // 
-//  SVStringAttribute.m
+//  SVTextAttachment.m
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVStringAttribute.h"
+#import "SVTextAttachment.h"
 
 #import "SVBodyParagraph.h"
 #import "SVHTMLContext.h"
 
 
-@implementation SVStringAttribute 
+@implementation SVTextAttachment 
 
 - (void)writeHTML;
 {
@@ -21,6 +21,10 @@
 }
 
 #pragma mark Range
+
+@dynamic body;
+@dynamic pagelet;
+
 
 - (NSRange)range;
 {
@@ -31,9 +35,5 @@
 
 @dynamic length;
 @dynamic location;
-
-#pragma mark Paragraph
-
-@dynamic paragraph;
 
 @end
