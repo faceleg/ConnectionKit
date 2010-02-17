@@ -147,12 +147,12 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (IBAction)insertElement:(id)sender;
 {
     // First remove any selected text. This should make the Web Editor post a kSVWebEditorViewWillChangeNotification
-    WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
-    [webView delete:self];
+    SVWebEditorView *webEditor = [self webEditor];
+    [webEditor delete:self];
     
     
     // Figure out the body element to insert next to
-    DOMRange *selection = [webView selectedDOMRange];
+    DOMRange *selection = [webEditor selectedDOMRange];
     OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
     
     KSDOMController *controller = [self controllerForDOMNode:[selection startContainer]];
