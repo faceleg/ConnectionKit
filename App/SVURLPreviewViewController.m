@@ -9,7 +9,7 @@
 #import "SVURLPreviewViewController.h"
 
 #import "SVMediaProtocol.h"
-#import "SVMutableStringHTMLContext.h"
+#import "SVHTMLContext.h"
 #import "SVSiteItem.h"
 #import "SVTemplate.h"
 #import "SVTemplateParser.h"
@@ -73,16 +73,18 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
         // Build HTML
         NSURL *baseURL = nil;
         NSString *template = [self HTMLTemplateAndURL:&baseURL];
+        NSMutableString *markup = [[NSMutableString alloc] init];
         
-        SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:markup];
         [SVTemplateParser parseTemplate:template component:self writeToStream:context];
         
         // Load
-        [frame loadAlternateHTMLString:[context markupString]
+        [frame loadAlternateHTMLString:markup
                                baseURL:baseURL
                      forUnreachableURL:[self URLToLoad]];
         
         // Tidy up
+        [markup release];
         [context release];
     }
 }

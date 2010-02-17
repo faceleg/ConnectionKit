@@ -9,7 +9,7 @@
 #import "SVDOMController.h"
 
 #import "SVContentObject.h"
-#import "SVMutableStringHTMLContext.h"
+#import "SVHTMLContext.h"
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
@@ -53,15 +53,15 @@
 - (void)createHTMLElement
 {
     // Gather the HTML
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:htmlString];
     [context copyPropertiesFromContext:[self HTMLContext]];
     
     [context push];
     [self writeRepresentedObjectHTML];
     [context pop];
     
-    NSString *htmlString = [context markupString];
-    OBASSERT(htmlString);
     [context release];
     
     

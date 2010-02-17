@@ -12,7 +12,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVMutableStringHTMLContext.h"
+#import "SVHTMLContext.h"
 #import "SVSidebar.h"
 #import "SVTitleBox.h"
 
@@ -182,14 +182,15 @@
 
 - (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
 {
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    NSMutableString *result = [NSMutableString string];
+    
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:result];
     [context setCurrentPage:self];
 	
     [context push];
 	[self writeHTML];
     [context pop];
     
-    NSString *result = [context markupString];
     [context release];
     return result;
 }
