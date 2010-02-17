@@ -176,4 +176,13 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     return handle;
 }
 
+#pragma mark Drawing
+
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *result = [super newSelectionBorder];
+    [result setBorderColor:nil];
+    return result;
+}
+
 @end
