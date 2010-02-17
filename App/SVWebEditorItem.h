@@ -70,6 +70,8 @@
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
 
+- (SVSelectionBorder *)newSelectionBorder;
+
 
 #pragma mark Debugging
 - (NSString *)descriptionWithIndent:(NSUInteger)level;

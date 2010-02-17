@@ -225,8 +225,7 @@
 		
 		// Selection border and handles
 		
-        SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
-        [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+        SVSelectionBorder *border = [self newSelectionBorder];
         
         NSRect borderDrawingRect = [border drawingRectForGraphicBounds:frameRect];
         if ([view needsToDrawRect:borderDrawingRect])
@@ -234,18 +233,27 @@
             [border setResizingMask:[self resizingMask]];
             [border drawWithGraphicBounds:frameRect inView:view];
         }
+        
+        [border release];
     }
 }
 
 - (NSRect)drawingRect;  // expressed in our DOM node's document view's coordinates
 {
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+    SVSelectionBorder *border = [self newSelectionBorder];
     
     NSRect result = [border drawingRectForGraphicBounds:[[self HTMLElement] boundingBox]];
     [border release];
     
     return result;
+}
+
+- (SVSelectionBorder *)newSelectionBorder;
+{
+    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
+    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
+    
+    return border;
 }
 
 #pragma mark Debugging
