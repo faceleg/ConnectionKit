@@ -44,15 +44,16 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     self = [super initWithContentObject:body inDOMDocument:document];
     
     
-    // TODO: Create controller for each graphic/attachment
-    NSArray *bodyElements = [[self content] arrangedObjects];
-    for (SVBodyElement *aModelElement in bodyElements)
+    // Create controller for each graphic/attachment
+    NSSet *graphics = [[self representedObject] attachments];
+    for (SVTextAttachment *anAttachment in graphics)
     {
-        Class class = [self controllerClassForBodyElement:aModelElement];
-        SVDOMController *result = [[class alloc] initWithContentObject:aModelElement
-                                                         inDOMDocument:[[self HTMLElement] ownerDocument]];
+        SVPagelet *graphic = [anAttachment pagelet];
+        Class class = [graphic DOMControllerClass];
+        SVDOMController *result = [[class alloc] initWithContentObject:graphic
+                                                         inDOMDocument:document];
         
-        [result setHTMLContext:[self HTMLContext]];
+        [result setHTMLContext:[[self webEditorViewController] HTMLContext]];
         
         [self addChildWebEditorItem:result];
         [result release];
@@ -65,13 +66,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)dealloc
 {
-    // Stop observation
-    [[self textHTMLElement] removeEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[self textHTMLElement] removeEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
-    
-    [[self content] removeObserver:self forKeyPath:@"arrangedObjects"];
-    
-    
     // Release ivars
     [_content release];
     
