@@ -8,6 +8,7 @@
 
 #import "SVBody.h"
 
+#import "SVTextAttachment.h"
 #import "SVPagelet.h"
 #import "SVBodyElement.h"
 #import "SVBodyTextDOMController.h"
@@ -63,15 +64,38 @@
 
 - (void)writeHTML
 {
-    //  Piece together each of our elements to generate the HTML
     SVHTMLContext *context = [SVHTMLContext currentContext];
-    [context writeString:[self string]];
-    
-    return;
     
     
+    //  Piece together each of our elements to generate the HTML
+    NSArray *attachments = [[self attachments] KS_sortedArrayUsingDescriptors:
+                            [NSSortDescriptor sortDescriptorArrayWithKey:@"location"
+                                                               ascending:YES]];
     
-    [[self class] writeContentObjects:[self orderedElements]];
+    NSString *archive = [self string];
+    
+    SVTextAttachment *lastAttachment = nil;
+    NSUInteger archiveIndex = 0;
+    
+    for (SVTextAttachment *anAttachment in attachments)
+    {
+        // What's the range of the text to write?
+        NSRange range = NSMakeRange(archiveIndex, [anAttachment range].location - archiveIndex);
+                                    
+        // Write it
+        NSString *aString = [archive substringWithRange:range];
+        [context writeString:aString];
+        
+        // Write the attachment
+        [[anAttachment pagelet] writeHTML];
+        lastAttachment = anAttachment;
+        
+        NSRange lastAttachmentRange = [lastAttachment range];
+        archiveIndex = lastAttachmentRange.location + lastAttachmentRange.length;
+    }
+        
+    // Write remaining text
+    [context writeString:[archive substringFromIndex:archiveIndex]];
 }
 
 #pragma mark Editing
