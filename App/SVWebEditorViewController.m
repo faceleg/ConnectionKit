@@ -711,15 +711,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)insertFile:(id)sender;
 {
-    DOMRange *selection = [[self webEditor] selectedDOMRange];
-    SVTextDOMController *text = [self textAreaForDOMRange:selection];
-    if (text)
+    if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
     {
-        [text doCommandBySelector:_cmd];
-    }
-    else
-    {
-        // TODO: Insert into sidebar
+        [self insertPageletInSidebar:sender];
     }
 }
 
