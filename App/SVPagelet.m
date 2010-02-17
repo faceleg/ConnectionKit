@@ -141,6 +141,9 @@
 @dynamic callout;
 @dynamic textAttachment;
 
+- (NSNumber *)wrap { return [[self textAttachment] wrap]; }
+- (void)setWrap:(NSNumber *)wrap { [[self textAttachment] setWrap:wrap]; }
+
 #pragma mark Validation
 
 - (BOOL)validatePlacement:(NSError **)error

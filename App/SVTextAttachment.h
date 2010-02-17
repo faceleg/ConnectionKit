@@ -28,6 +28,7 @@
 @property(nonatomic, retain) NSNumber *length;
 @property(nonatomic, retain) NSNumber *location;
 
+@property(nonatomic, copy) NSNumber *wrap;
 
 @end
 

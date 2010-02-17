@@ -35,4 +35,6 @@
 @dynamic length;
 @dynamic location;
 
+@dynamic wrap;
+
 @end
