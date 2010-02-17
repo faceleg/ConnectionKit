@@ -38,25 +38,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (id)initWithContentObject:(SVContentObject *)body inDOMDocument:(DOMDocument *)document;
 {
-    // Make an object controller
-    KSSetController *elementsController = [[KSSetController alloc] init];
-    [elementsController setOrderingSortKey:@"sortKey"];
-    //[elementsController setManagedObjectContext:[body managedObjectContext]];
-    //[elementsController setEntityName:@"BodyParagraph"];
-    [elementsController setAutomaticallyRearrangesObjects:YES];
-    [elementsController bind:NSContentSetBinding toObject:body withKeyPath:@"elements" options:nil];
-    
-    
     // Super
     self = [super initWithContentObject:body inDOMDocument:document];
     
     
-    // Get our content populated first so we don't have to teardown and restup the DOM
-    _content = elementsController;
-    
-    
-    
-    // Match each model element up with its DOM equivalent
+    // TODO: Create controller for each graphic/attachment
     NSArray *bodyElements = [[self content] arrangedObjects];
     for (SVBodyElement *aModelElement in bodyElements)
     {
@@ -69,18 +55,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
         [self addChildWebEditorItem:result];
         [result release];
     }
-    
-    
-    // Observe DOM changes. Each SVParagraphDOMController will take care of its own section of the DOM
-    [[self textHTMLElement] addEventListener:@"DOMNodeInserted" listener:self useCapture:NO];
-    [[self textHTMLElement] addEventListener:@"DOMNodeRemoved" listener:self useCapture:NO];
-    
-    
-    // Observe content changes
-    [[self content] addObserver:self
-                     forKeyPath:@"arrangedObjects"
-                        options:0
-                        context:sBodyElementsObservationContext];
     
     
     // Finish up
@@ -404,12 +378,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
             }
         }
     }
-}
-
-- (BOOL)webEditorTextDoCommandBySelector:(SEL)selector
-{
-    BOOL result = [super webEditorTextDoCommandBySelector:selector];
-    return result;
 }
 
 #pragma mark Links
