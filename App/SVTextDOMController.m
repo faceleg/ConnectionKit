@@ -101,7 +101,7 @@
 
 @synthesize editing = _isEditing;
 
-- (void)webViewDidChange; { }
+- (void)webViewDidChange; { [self didChangeText]; }
 
 - (void)didChangeText;  // Call this once your subclass has determined a change really took place
 {

@@ -87,7 +87,10 @@
 - (void)didChangeText;
 {
     // Validate the HTML
-    SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] init];
+    NSMutableString *html = [[NSMutableString alloc] init];
+    SVTitleBoxHTMLContext *context = [[SVTitleBoxHTMLContext alloc] initWithStringStream:html];
+    [html release];
+    
     [[self textHTMLElement] writeInnerHTMLToContext:context];
     
     
@@ -96,18 +99,20 @@
     
     
     // Copy HTML across to ourself
-    NSString *html = [context markupString];
-    [self setHTMLString:html needsUpdate:NO];
-    
-    
-    // Push change down to model
-    NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
-    id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
-    
-    _isCommittingEditing = YES;
-    [observedObject setValue:html
-                  forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
-    _isCommittingEditing = NO;
+    if (![html isEqualToString:_uneditedValue])
+    {
+        [self setHTMLString:html needsUpdate:NO];
+        
+        
+        // Push change down to model
+        NSDictionary *bindingInfo = [self infoForBinding:NSValueBinding];
+        id observedObject = [bindingInfo objectForKey:NSObservedObjectKey];
+        
+        _isCommittingEditing = YES;
+        [observedObject setValue:html
+                      forKeyPath:[bindingInfo objectForKey:NSObservedKeyPathKey]];
+        _isCommittingEditing = NO;
+    }
     
     
     // Tidy up
