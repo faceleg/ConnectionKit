@@ -91,6 +91,19 @@
 
 - (void)writeHTML
 {
+    // Only write .pagelet <div> etc. if we're not inline
+    if ([[self wrap] isEqualToNumber:SVContentObjectWrapNone])
+    {
+        [self writeBody];
+    }
+    else
+    {
+        [super writeHTML];
+    }
+}
+
+- (void)writeBody
+{
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     NSURL *imageURL = [[self media] fileURL];
