@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBodyElement.h"
+#import "SVContentObject.h"
 
 
 typedef enum {
@@ -48,7 +48,7 @@ typedef enum {
 @class SVBody, KTElementPlugin;
 
 
-@interface SVGraphic : SVBodyElement <SVGraphic>
+@interface SVGraphic : SVContentObject <SVGraphic>
 
 
 #pragma mark Placement
