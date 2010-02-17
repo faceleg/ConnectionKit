@@ -148,15 +148,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)insertGraphic:(SVPagelet *)graphic;
 {
-    // First remove any selected text. This should make the Web Editor post a kSVWebEditorViewWillChangeNotification
     SVWebEditorView *webEditor = [self webEditor];
-    [webEditor delete:self];
-    
-    
-    // Figure out the body element to insert next to
-    DOMRange *selection = [webEditor selectedDOMRange];
-    OBASSERT([selection collapsed]);    // calling -delete: should have collapsed it
-    
     
     
     // Create controller for graphic
@@ -168,6 +160,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     
     // Generate DOM node
     [controller HTMLElement];
+    [[webEditor webView] replaceSelectionWithNode:[controller HTMLElement]];
+    
+    
+    [controller release];
 }
 
 - (IBAction)insertPagelet:(id)sender;
