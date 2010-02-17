@@ -12,18 +12,21 @@
 #import "SVCallout.h"
 #import "SVPlugInPagelet.h"
 #import "SVHTMLTextBlock.h"
+#import "SVImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagelet.h"
 #import "SVBody.h"
 #import "SVBodyTextDOMController.h"
+#import "SVMediaRecord.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
+#import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVTextFieldDOMController.h"
+#import "KTDocWindowController.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
@@ -712,7 +715,32 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
     {
-        [self insertPageletInSidebar:sender];
+        NSWindow *window = [[self view] window];
+        NSOpenPanel *panel = [[window windowController] makeChooseDialog];
+        
+        [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+    }
+}
+
+- (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+{
+    if (returnCode == NSCancelButton) return;
+    
+    
+    NSManagedObjectContext *context = [[self page] managedObjectContext];
+    SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
+                                            entityName:@"ImageMedia"
+                        insertIntoManagedObjectContext:context
+                                                 error:NULL];
+    
+    if (media)
+    {
+        SVImage *image = [SVImage insertNewImageWithMedia:media];
+        [self _insertPageletInSidebar:image];
+    }
+    else
+    {
+        NSBeep();
     }
 }
 
