@@ -59,6 +59,16 @@
 
 @synthesize sidebar = _sidebar;
 
+- (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
+{
+    [super insertObject:object atArrangedObjectIndex:index];
+    
+    
+    // Detach from text attachment
+    SVPagelet *pagelet = object;
+    [pagelet setTextAttachment:nil];
+}
+
 - (void)addObject:(id)pagelet
 {
     // Place at end of the sidebar
