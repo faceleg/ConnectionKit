@@ -8,6 +8,8 @@
 
 #import "SVImageDOMController.h"
 
+#import "SVWebEditorView.h"
+
 #import "DOMNode+Karelia.h"
 
 #import <QuartzCore/QuartzCore.h>
@@ -46,7 +48,10 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     {
         // mark the current area for drawing
         DOMHTMLElement *element = [self HTMLElement];
-        [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+        
+        BOOL liveResize = [[self webEditor] inLiveGraphicResize];
+        if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+        
         
         // Push property change into DOM
         if ([keyPath isEqualToString:@"wrap"])
@@ -59,8 +64,9 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
                          value:[[object valueForKeyPath:keyPath] description]];
         }
         
+        
         // and then mark the resulting area for drawing
-        [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+        if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
     }
     else
     {
