@@ -139,7 +139,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     }
     else if ([[[body entity] name] isEqualToString:@"TextBoxBody"])
     {
-        SVSidebar *aSidebar = [[(SVPagelet *)[body valueForKey:@"pagelet"] sidebars] anyObject];
+        SVSidebar *aSidebar = [[(SVGraphic *)[body valueForKey:@"pagelet"] sidebars] anyObject];
         result = [aSidebar page];
     }
     

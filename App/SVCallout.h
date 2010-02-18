@@ -12,12 +12,12 @@
 #import "SVTemplate.h"
 
 
-@class SVPagelet;
+@class SVGraphic;
 
 
 @interface SVCallout : SVBodyElement
 
-@property(nonatomic, copy) NSSet *pagelets;   // To sort, use SVPagelet class method
+@property(nonatomic, copy) NSSet *pagelets;   // To sort, use SVGraphic class method
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
 
 @property(nonatomic, copy) SVContentObjectWrap *wrap;
@@ -30,8 +30,8 @@
 
 
 @interface SVCallout (CoreDataGeneratedAccessors)
-- (void)addPageletsObject:(SVPagelet *)value;
-- (void)removePageletsObject:(SVPagelet *)value;
+- (void)addPageletsObject:(SVGraphic *)value;
+- (void)removePageletsObject:(SVGraphic *)value;
 - (void)addPagelets:(NSSet *)value;
 - (void)removePagelets:(NSSet *)value;
 @end

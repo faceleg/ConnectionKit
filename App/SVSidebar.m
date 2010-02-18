@@ -10,7 +10,7 @@
 
 #import "KTAbstractPage.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 
 #import "NSSortDescriptor+Karelia.h"
 
@@ -25,19 +25,19 @@
 
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error
 {
-    return [SVPagelet validatePagelets:pagelets error:error];
+    return [SVGraphic validatePagelets:pagelets error:error];
 }
 
 #pragma mark HTML
 
 - (void)writePageletsHTML;
 {
-    NSArray *pagelets = [SVPagelet arrayBySortingPagelets:[self pagelets]];
+    NSArray *pagelets = [SVGraphic arrayBySortingPagelets:[self pagelets]];
     
     // Kinda hacky, have to record a series of dependencies to handle sorting. #59554
     SVHTMLContext *context = [SVHTMLContext currentContext];
     [context addDependencyOnObject:self keyPath:@"pagelets"];
-    for (SVPagelet *aPagelet in pagelets)
+    for (SVGraphic *aPagelet in pagelets)
     {
         [context addDependencyOnObject:aPagelet keyPath:@"sortKey"];
     }

@@ -7,12 +7,12 @@
 //
 
 #import <CoreData/CoreData.h>
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 
 @class SVMediaRecord;
 @class SVTextAttachment;
 
-@interface SVImage : SVPagelet
+@interface SVImage : SVGraphic
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 

@@ -9,7 +9,7 @@
 #import "SVContentObject.h"
 
 @class SVBodyElement;
-@class SVPagelet;
+@class SVGraphic;
 
 
 @interface SVBody : SVContentObject  

@@ -30,7 +30,7 @@
     [super dealloc];
 }
 
-- (SVPagelet *)newPagelet;
+- (SVGraphic *)newPagelet;
 {
     NSManagedObjectContext *moc = [[self page] managedObjectContext];
     SVTextBox *result = [SVTextBox insertNewTextBoxIntoManagedObjectContext:moc];
@@ -69,7 +69,7 @@
 {
     [super willRemoveObject:object];
     
-    if ([object isKindOfClass:[SVPagelet class]])
+    if ([object isKindOfClass:[SVGraphic class]])
     {
         // Remove pagelet from sidebar/callout. Delete if appropriate
         // If it is in the sidebar, the corresponding controller can take care of the matter. Otherwise, it's up to us
@@ -79,7 +79,7 @@
         }
         else
         {
-            SVPagelet *pagelet = object;
+            SVGraphic *pagelet = object;
             
             // Remove from callout, and delete that if it's now empty
             SVCallout *callout = [pagelet callout];
@@ -103,7 +103,7 @@
 
 #pragma mark Sidebar Pagelets
 
-- (BOOL)sidebarPageletAppearsOnAncestorPage:(SVPagelet *)pagelet;
+- (BOOL)sidebarPageletAppearsOnAncestorPage:(SVGraphic *)pagelet;
 {
     BOOL result = NO;
     

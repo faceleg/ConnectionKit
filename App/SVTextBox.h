@@ -7,11 +7,11 @@
 //
 
 #import <CoreData/CoreData.h>
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 
 @class SVBody;
 
-@interface SVTextBox :  SVPagelet  
+@interface SVTextBox :  SVGraphic  
 
 + (SVTextBox *)insertNewTextBoxIntoManagedObjectContext:(NSManagedObjectContext *)context;
 

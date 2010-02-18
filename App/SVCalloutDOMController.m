@@ -9,7 +9,7 @@
 #import "SVCalloutDOMController.h"
 #import "SVCallout.h"
 
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 
 
 @implementation SVCalloutDOMController
@@ -20,7 +20,7 @@
     
     // Create subcontrollers for each of our pagelets
     SVCallout *callout = [self representedObject];
-    for (SVPagelet *aPagelet in [callout pagelets])
+    for (SVGraphic *aPagelet in [callout pagelets])
     {
         SVDOMController *pageletController = [[[aPagelet DOMControllerClass] alloc] initWithContentObject:aPagelet inDOMDocument:document];
         

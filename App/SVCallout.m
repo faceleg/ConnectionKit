@@ -10,7 +10,7 @@
 
 #import "SVCalloutDOMController.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 
 
 @implementation SVCallout
@@ -18,7 +18,7 @@
 @dynamic pagelets;
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
 {
-    return [SVPagelet validatePagelets:pagelets error:error];
+    return [SVGraphic validatePagelets:pagelets error:error];
 }
 
 @dynamic wrap;

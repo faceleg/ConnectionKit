@@ -9,12 +9,12 @@
 #import "SVSidebarPageletsController.h"
 
 #import "KTPage.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 #import "SVSidebar.h"
 
 
 @interface SVSidebarPageletsController ()
-- (void)_addPagelet:(SVPagelet *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
+- (void)_addPagelet:(SVGraphic *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
 @end
 
 
@@ -28,11 +28,11 @@
     self = [self init];
     _sidebar = [sidebar retain];
     
-    [self setObjectClass:[SVPagelet class]];
+    [self setObjectClass:[SVGraphic class]];
     [self setManagedObjectContext:[sidebar managedObjectContext]];
-    [self setEntityName:@"Pagelet"];
+    [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
-    [self setSortDescriptors:[SVPagelet pageletSortDescriptors]];
+    [self setSortDescriptors:[SVGraphic pageletSortDescriptors]];
     
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES],
@@ -46,7 +46,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    [self setSortDescriptors:[SVPagelet pageletSortDescriptors]];
+    [self setSortDescriptors:[SVGraphic pageletSortDescriptors]];
     return self;
 }
 
@@ -65,14 +65,14 @@
     
     
     // Detach from text attachment
-    SVPagelet *pagelet = object;
+    SVGraphic *pagelet = object;
     [pagelet setTextAttachment:nil];
 }
 
 - (void)addObject:(id)pagelet
 {
     // Place at end of the sidebar
-    SVPagelet *lastPagelet = [[self arrangedObjects] lastObject];
+    SVGraphic *lastPagelet = [[self arrangedObjects] lastObject];
     [pagelet moveAfterSidebarPagelet:lastPagelet];
     
     
@@ -83,13 +83,13 @@
 	[super addObject:pagelet];
 }
 
-- (void)addPagelet:(SVPagelet *)pagelet toSidebarOfPage:(KTPage *)page;
+- (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
 {
     [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:page];
     [[page sidebar] addPageletsObject:pagelet];
 }
 
-- (void)_addPagelet:(SVPagelet *)pagelet
+- (void)_addPagelet:(SVGraphic *)pagelet
 toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
 {
     NSSet *inheritablePagelets = [[page sidebar] pagelets];
@@ -113,8 +113,8 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
 
 - (void)willRemoveObject:(id)object
 {
-    OBPRECONDITION([object isKindOfClass:[SVPagelet class]]);
-    SVPagelet *pagelet = object;
+    OBPRECONDITION([object isKindOfClass:[SVGraphic class]]);
+    SVGraphic *pagelet = object;
                    
     // Recurse down the page tree removing the pagelet from their sidebars.
     [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[[self sidebar] page]];
@@ -126,7 +126,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
     }
 }
 
-- (void)removePagelet:(SVPagelet *)pagelet fromSidebarOfPage:(KTPage *)page;
+- (void)removePagelet:(SVGraphic *)pagelet fromSidebarOfPage:(KTPage *)page;
 {
     // No point going any further unless the page actually contains the pagelet! This can save recursing enourmous chunks of the site outline
     if ([[[page sidebar] pagelets] containsObject:pagelet])

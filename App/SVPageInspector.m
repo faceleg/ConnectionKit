@@ -9,7 +9,7 @@
 #import "SVPageInspector.h"
 
 #import "KTPage.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
 
@@ -97,7 +97,7 @@
         
         
         // The selection state depends on how many times it appears
-        SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
+        SVGraphic *pagelet = [[oSidebarPageletsController arrangedObjects]
                               objectAtIndex:rowIndex];
         
         NSUInteger count = [pagelets countForObject:pagelet];
@@ -128,7 +128,7 @@
     if (![[aTableColumn identifier] isEqualToString:@"showPagelet"]) return;
     
     
-    SVPagelet *pagelet = [[oSidebarPageletsController arrangedObjects]
+    SVGraphic *pagelet = [[oSidebarPageletsController arrangedObjects]
                           objectAtIndex:rowIndex];
     
     NSArray *pages = [self inspectedObjects];

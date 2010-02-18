@@ -12,7 +12,7 @@
 #import "KSArrayController.h"
 
 
-@class KTPage, SVPagelet, SVSidebarPageletsController;
+@class KTPage, SVGraphic, SVSidebarPageletsController;
 
 
 @interface SVWebContentObjectsController : KSArrayController
@@ -23,8 +23,8 @@
 }
 
 // More specialised than -newObject
-- (SVPagelet *)newPagelet;
-- (BOOL)sidebarPageletAppearsOnAncestorPage:(SVPagelet *)pagelet;
+- (SVGraphic *)newPagelet;
+- (BOOL)sidebarPageletAppearsOnAncestorPage:(SVGraphic *)pagelet;
 
 // Provides extra contextual information on top of -managedObjectContext
 @property(nonatomic, retain) KTPage *page;

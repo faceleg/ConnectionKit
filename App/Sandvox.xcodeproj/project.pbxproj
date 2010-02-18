@@ -457,8 +457,6 @@
 		27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C059B50E7299850033A715 /* Elements+Pasteboard.m */; };
 		27C064C310825F4800795D66 /* SVGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C064BF10825F4800795D66 /* SVGraphic.h */; };
 		27C064C410825F4800795D66 /* SVGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C064C010825F4800795D66 /* SVGraphic.m */; };
-		27C0657010828E9900795D66 /* SVPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C0656C10828E9900795D66 /* SVPagelet.h */; };
-		27C0657110828E9900795D66 /* SVPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C0656D10828E9900795D66 /* SVPagelet.m */; };
 		27C6FE610F1EBC8C00B58822 /* KTCodeInjection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */; };
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
 		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
@@ -1925,8 +1923,6 @@
 		27C059B50E7299850033A715 /* Elements+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "Elements+Pasteboard.m"; sourceTree = "<group>"; };
 		27C064BF10825F4800795D66 /* SVGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphic.h; sourceTree = "<group>"; };
 		27C064C010825F4800795D66 /* SVGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphic.m; sourceTree = "<group>"; };
-		27C0656C10828E9900795D66 /* SVPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPagelet.h; sourceTree = "<group>"; };
-		27C0656D10828E9900795D66 /* SVPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPagelet.m; sourceTree = "<group>"; };
 		27C58AE7110204EE00F42306 /* KTPage+Serialization.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTPage+Serialization.m"; sourceTree = "<group>"; };
 		27C6FE5F0F1EBC8C00B58822 /* KTCodeInjection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCodeInjection.h; sourceTree = "<group>"; };
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
@@ -4173,8 +4169,6 @@
 				27A617131122FA0000004FED /* SVTextBox.m */,
 				279C587F109916F20030F3B7 /* SVSidebar.h */,
 				279C5880109916F20030F3B7 /* SVSidebar.m */,
-				27C0656C10828E9900795D66 /* SVPagelet.h */,
-				27C0656D10828E9900795D66 /* SVPagelet.m */,
 				27A095331097598600F43746 /* PageletTemplate.html */,
 				273D6F4F10E7C9DF003F5BA8 /* SVCallout.h */,
 				273D6F5010E7C9DF003F5BA8 /* SVCallout.m */,
@@ -5248,7 +5242,6 @@
 				278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */,
 				278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */,
 				27C064C310825F4800795D66 /* SVGraphic.h in Headers */,
-				27C0657010828E9900795D66 /* SVPagelet.h in Headers */,
 				CE4FE30C1085427A00C43E31 /* KSShadowedRectView.h in Headers */,
 				2731ECCD10861E1500D8AAA5 /* SVBodyTextDOMController.h in Headers */,
 				2731ECD410861FF300D8AAA5 /* SVTextFieldDOMController.h in Headers */,
@@ -6643,7 +6636,6 @@
 				278FCE941079F2AD0091A239 /* NSEvent+Karelia.m in Sources */,
 				278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */,
 				27C064C410825F4800795D66 /* SVGraphic.m in Sources */,
-				27C0657110828E9900795D66 /* SVPagelet.m in Sources */,
 				CE4FE30D1085427A00C43E31 /* KSShadowedRectView.m in Sources */,
 				2731ECCE10861E1500D8AAA5 /* SVBodyTextDOMController.m in Sources */,
 				2731ECD510861FF300D8AAA5 /* SVTextFieldDOMController.m in Sources */,

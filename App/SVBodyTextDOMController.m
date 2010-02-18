@@ -13,7 +13,7 @@
 #import "SVBodyTextHTMLContext.h"
 #import "SVCallout.h"
 #import "KTAbstractPage.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 #import "SVBody.h"
 #import "KTDocWindowController.h"
 #import "SVImage.h"
@@ -47,7 +47,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     NSSet *graphics = [[self representedObject] attachments];
     for (SVTextAttachment *anAttachment in graphics)
     {
-        SVPagelet *graphic = [anAttachment pagelet];
+        SVGraphic *graphic = [anAttachment pagelet];
         Class class = [graphic DOMControllerClass];
         SVDOMController *result = [[class alloc] initWithContentObject:graphic
                                                          inDOMDocument:document];
@@ -137,7 +137,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 #pragma mark Insertion
 
-- (void)insertGraphic:(SVPagelet *)graphic;
+- (void)insertGraphic:(SVGraphic *)graphic;
 {
     SVWebEditorView *webEditor = [self webEditor];
     
@@ -305,7 +305,7 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)writeGraphicController:(SVDOMController *)controller
                      toContext:(SVBodyTextHTMLContext *)context;
 {
-    SVPagelet *graphic = [controller representedObject];
+    SVGraphic *graphic = [controller representedObject];
     
     
     // Ensure graphic has TextAttachment

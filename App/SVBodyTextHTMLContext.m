@@ -9,7 +9,7 @@
 #import "SVBodyTextHTMLContext.h"
 
 #import "SVBodyTextDOMController.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 #import "SVTextAttachment.h"
 
 

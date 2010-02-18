@@ -164,7 +164,7 @@
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Pagelet"
+    [request setEntity:[NSEntityDescription entityForName:@"Graphic"
                                    inManagedObjectContext:context]];
     [request setSortDescriptors:[self pageletSortDescriptors]];
     

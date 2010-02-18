@@ -14,7 +14,7 @@
 #import "KSKeyValueBinding.h"
 
 
-@class SVPagelet, SVBodyElement;
+@class SVGraphic, SVBodyElement;
 
 
 @interface SVTextDOMController : SVDOMController <SVWebEditorText>

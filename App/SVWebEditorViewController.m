@@ -15,7 +15,7 @@
 #import "SVImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "SVPagelet.h"
+#import "SVGraphic.h"
 #import "SVBody.h"
 #import "SVBodyTextDOMController.h"
 #import "SVMediaRecord.h"
@@ -329,10 +329,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Set up controllers for all sidebar pagelets. Could we do this better by receiving a list of pagelets from the parser?
     if ([[[self page] showSidebar] boolValue])
     {
-        NSArray *sidebarPagelets = [SVPagelet arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
+        NSArray *sidebarPagelets = [SVGraphic arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
         NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] initWithCapacity:[sidebarPagelets count]];
         
-        for (SVPagelet *aPagelet in sidebarPagelets)
+        for (SVGraphic *aPagelet in sidebarPagelets)
         {
             SVDOMController *controller = [[SVDOMController alloc] initWithContentObject:aPagelet
                                                                            inDOMDocument:domDoc];
@@ -656,7 +656,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Element Insertion
 
-- (void)_insertPageletInSidebar:(SVPagelet *)pagelet;
+- (void)_insertPageletInSidebar:(SVGraphic *)pagelet;
 {
     // Make sure the pagelet isn't placed anywhere undesireable.
     // So if you're inserting a pagelet that is already in a callout, remove it from the callout and then delete that if necessary
@@ -683,7 +683,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)insertPageletInSidebar:(id)sender;
 {
     // Create element
-    SVPagelet *pagelet;
+    SVGraphic *pagelet;
     if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
     {
         SVPlugInPagelet *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
@@ -751,9 +751,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Give the selected pagelets a title if needed
     for (id anObject in [[self selectedObjectsController] selectedObjects])
     {
-        if ([anObject isKindOfClass:[SVPagelet class]])
+        if ([anObject isKindOfClass:[SVGraphic class]])
         {
-            SVPagelet *pagelet = (SVPagelet *)anObject;
+            SVGraphic *pagelet = (SVGraphic *)anObject;
             if ([[[pagelet titleBox] text] length] <= 0)
             {
                 [pagelet setTitleWithString:[[pagelet class] placeholderTitleText]];
@@ -825,9 +825,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             result = NO;
             for (id <NSObject> anObject in [[self selectedObjectsController] selectedObjects])
             {
-                if ([anObject isKindOfClass:[SVPagelet class]])
+                if ([anObject isKindOfClass:[SVGraphic class]])
                 {
-                    if ([[[(SVPagelet *)anObject titleBox] text] length] == 0)
+                    if ([[[(SVGraphic *)anObject titleBox] text] length] == 0)
                     {
                         result = YES;
                         break;
@@ -977,10 +977,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
         else if (dropIndex >= [pageletContentItems count])
         {
-            SVPagelet *lastPagelet = [[pageletContentItems lastObject] representedObject];
+            SVGraphic *lastPagelet = [[pageletContentItems lastObject] representedObject];
             for (SVDOMController *aPageletItem in [sender selectedItems])
             {
-                SVPagelet *pagelet = [aPageletItem representedObject];
+                SVGraphic *pagelet = [aPageletItem representedObject];
                 [pagelet moveAfterSidebarPagelet:lastPagelet];
             }
         }
@@ -988,8 +988,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         {
             for (SVDOMController *aPageletItem in [sender selectedItems])
             {
-                SVPagelet *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
-                SVPagelet *pagelet = [aPageletItem representedObject];
+                SVGraphic *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
+                SVGraphic *pagelet = [aPageletItem representedObject];
                 
                 // Pagelets being dragged from outside the sidebar need to be inserted first
                 if (![[pagelet sidebars] containsObject:[[self page] sidebar]])
