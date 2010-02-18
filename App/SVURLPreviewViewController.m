@@ -13,6 +13,7 @@
 #import "SVSiteItem.h"
 #import "SVTemplate.h"
 #import "SVTemplateParser.h"
+#import "SVExternalLink.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
@@ -99,8 +100,35 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     if (frame == [sender mainFrame])
     {
         [self setTitle:title];
+		SVExternalLink *externalLink = (SVExternalLink *) self.siteItem;
+		[externalLink setWindowTitle:title];
     }
 }
+
+- (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame;
+{
+	if (frame == [sender mainFrame])
+	{
+		DOMDocument *domDoc = [frame DOMDocument];
+		DOMNodeList *metas = [domDoc getElementsByTagName:@"meta"];
+		unsigned i, length = [metas length];
+		for (i = 0; i < length; i++)
+		{
+			DOMHTMLMetaElement *node = (DOMHTMLMetaElement *)[metas item:i];
+			NSString *name = [node name];
+			if ([[name lowercaseString] isEqualToString:@"description"])
+			{
+				NSString *content = [node content];
+				
+				SVExternalLink *externalLink = (SVExternalLink *) self.siteItem;
+				// Store in site item
+				[externalLink setMetaDescription:content];
+				break;	// no point in looping through more meta tags
+			}
+		}
+	}
+}
+
 
 #pragma mark Presentation
 

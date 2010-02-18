@@ -818,6 +818,85 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[[self HTMLInspectorController] showWindow:nil];
 }
 
+/*
+ 
+ I'm bringing this over from 1.6.  We'll want to tailor this appropriately to our new kinds of HTML blocks.
+ I'm starting out by getting it working for editing of a text page.
+ 
+ */
+
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+{
+	[self editSourceObject:nil keyPath:nil isRawHTML:YES];
+	/* 
+	 BOOL result = [[[self windowController] webViewController] commitEditing];
+	 
+	 if (result)
+	 {
+	 BOOL isRawHTML = NO;
+	 KTHTMLTextBlock *textBlock = [self valueForKeyPath:@"windowController.webViewController.currentTextEditingBlock"];
+	 id sourceObject = [textBlock HTMLSourceObject];
+	 
+	 NSString *sourceKeyPath = [textBlock HTMLSourceKeyPath];                   // Account for custom summaries which use
+	 if ([textBlock isKindOfClass:[KTSummaryWebViewTextBlock class]])    // a special key path
+	 {
+	 KTPage *page = sourceObject;
+	 if ([page customSummaryHTML] || ![page summaryHTMLKeyPath])
+	 {
+	 sourceKeyPath = @"customSummaryHTML";
+	 }
+	 }
+	 
+	 
+	 // Fallback for non-text blocks
+	 if (!textBlock)
+	 {
+	 isRawHTML = YES;
+	 sourceKeyPath = @"html";	// raw HTML
+	 KTPagelet *selPagelet = [[self windowController] selectedPagelet];
+	 if (nil != selPagelet)
+	 {
+	 if (![@"sandvox.HTMLElement" isEqualToString:[selPagelet valueForKey:@"pluginIdentifier"]])
+	 {
+	 sourceObject = nil;		// no, don't try to edit a non-rich text
+	 }
+	 else
+	 {
+	 sourceObject = selPagelet;
+	 }
+	 }
+	 
+	 if (nil == sourceObject)	// no appropriate pagelet selected, try page
+	 {
+	 sourceObject = [[[self windowController] siteOutlineController] selectedPage];
+	 if (![@"sandvox.HTMLElement" isEqualToString:[sourceObject valueForKey:@"pluginIdentifier"]])
+	 {
+	 sourceObject = nil;		// no, don't try to edit a non-rich text
+	 }
+	 else
+	 {
+	 }
+	 }
+	 
+	 
+	 }
+	 
+	 if (sourceObject)
+	 {
+	 
+	 [self editSourceObject:sourceObject keyPath:sourceKeyPath isRawHTML:isRawHTML];
+	 }
+	 }
+	 else
+	 {
+	 NSLog(@"Cannot commit editing to edit HTML");
+	 }
+	 
+	 */
+}
+
+
+
 
 #pragma mark -
 #pragma mark Delegate Methods

@@ -1255,7 +1255,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	[[NSDocumentController sharedDocumentController] editRawHTMLInSelectedBlock:sender];
+	[[[NSDocumentController sharedDocumentController] currentDocument] editRawHTMLInSelectedBlock:sender];
 }
 
 - (IBAction) openScreencast:(id)sender

@@ -1010,7 +1010,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (NSOpenPanel *)makeChooseDialog;
 {
     NSOpenPanel *result = [NSOpenPanel openPanel];
-    [result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
+
+	[result setCanChooseDirectories:NO];
+	[result setTreatsFilePackagesAsDirectories:YES];
+	[result setAllowsMultipleSelection:NO];
+
+	[result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
     
     return result;
 }

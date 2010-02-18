@@ -15,6 +15,9 @@
 
 @implementation SVExternalLink 
 
+@synthesize metaDescription = _metaDescription;
+@synthesize windowTitle = _windowTitle;
+
 @dynamic openInNewWindow;
 
 @dynamic linkURLString;

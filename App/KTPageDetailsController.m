@@ -20,6 +20,8 @@
 #import "SVMediaProtocol.h"
 #import "SVDownloadSiteItem.h"
 #import "SVMediaRecord.h"
+#import "KTDocument.h"
+#import "KTDocWindowController.h"
 
 #import "NTBoxView.h"
 
@@ -604,13 +606,17 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		}
 	}
 	// Prompts
-	[oWindowTitlePrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionPrompt setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitlePrompt		setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionPrompt	setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
 	[oFilePrompt setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
 
 	// Additional Lines
-	[oWindowTitleField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
-	[oMetaDescriptionField setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitleField		setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionField	setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitleField		setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionField	setHidden:(kPageSiteItemType != self.whatKindOfItemsAreSelected) && (kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
+	[oWindowTitleField		setEditable:(kPageSiteItemType == self.whatKindOfItemsAreSelected)];
+	[oMetaDescriptionField	setEditable:(kPageSiteItemType == self.whatKindOfItemsAreSelected)];
 	[oChooseFileButton setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
 	
 	// First line, external URL field
@@ -1026,12 +1032,14 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (IBAction) chooseFile:(id)sender;
 {
-	// Display the open panel allowing the user to find the replacement file
-	NSOpenPanel *panel = [NSOpenPanel openPanel];
-	[panel setCanChooseDirectories:NO];
-	[panel setTreatsFilePackagesAsDirectories:YES];
-	[panel setAllowsMultipleSelection:NO];
 	
+	NSArray *selectedObjects = [oPagesController selectedObjects];
+	id item = [selectedObjects lastObject];
+	KTSite *site = [item site];
+	KTDocument *doc = [site document];
+	KTDocWindowController *controller = [[doc windowControllers] lastObject];
+
+	NSOpenPanel *panel = [controller makeChooseDialog];
 	
 	int returnCode = [panel runModal];
 	
@@ -1058,6 +1066,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 			// TODO: Force the webview to refresh?  Or figure out why it didn't?
 		}
 	}
+	 
 }
 
 

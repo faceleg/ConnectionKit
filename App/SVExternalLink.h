@@ -12,7 +12,10 @@
 
 @interface SVExternalLink : SVSiteItem  
 {
+	NSString *_windowTitle;
+	NSString *_metaDescription;
 }
+
 
 @property(nonatomic, retain) NSNumber *openInNewWindow;
 
