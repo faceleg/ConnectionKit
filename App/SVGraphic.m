@@ -35,6 +35,15 @@
     [self setTitle:[[self class] placeholderTitleText]];
 }
 
+#pragma mark Pagelet
+
+- (BOOL)isPagelet;
+{
+    //  We are a pagelet UNLESS embedded inline in text
+    BOOL result = ![[self wrap] isEqualToNumber:SVContentObjectWrapNone];
+    return result;
+}
+
 #pragma mark Title
 
 @dynamic titleBox;
@@ -349,16 +358,21 @@
 
 - (void)writeHTML
 {
-    //  All SVContentObject subclasses must implement this to suit themselves
-    
-    SVTemplate *template = [[self class] template];
-    
-    SVHTMLTemplateParser *parser =
-    [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                         component:self];
-    
-    [parser parse];
-    [parser release];
+    if ([self isPagelet])
+    {
+        SVTemplate *template = [[self class] template];
+        
+        SVHTMLTemplateParser *parser =
+        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                             component:self];
+        
+        [parser parse];
+        [parser release];
+    }
+    else
+    {
+       [self writeBody];
+    }
 }
 
 - (void)writeBody;

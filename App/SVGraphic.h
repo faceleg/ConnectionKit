@@ -51,6 +51,9 @@ typedef enum {
 
 @interface SVGraphic : SVContentObject <SVGraphic>
 
+#pragma mark Pagelet
+- (BOOL)isPagelet;  // whether to generate <div class="pagelet"> etc. HTML
+
 
 #pragma mark Title
 @property(nonatomic, retain) SVTitleBox *titleBox;
