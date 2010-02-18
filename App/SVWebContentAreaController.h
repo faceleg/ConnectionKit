@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "KSTabViewController.h"
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 #import "SVSiteItemViewController.h"
 #import "SVWebEditorViewController.h"
@@ -30,7 +30,7 @@ typedef enum {
 @class SVURLPreviewViewController, SVLoadingPlaceholderViewController;
 
 
-@interface SVWebContentAreaController : KSTabViewController <KSInspection, SVSiteItemViewControllerDelegate, SVWebEditorViewControllerDelegate>
+@interface SVWebContentAreaController : BWTabViewController <KSInspection, SVSiteItemViewControllerDelegate, SVWebEditorViewControllerDelegate>
 {
   @private
     SVWebEditorViewController           *_webEditorViewController;

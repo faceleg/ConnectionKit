@@ -36,7 +36,8 @@
 #import "KSCollectionController.h"
 #import "KSPlugin.h"
 #import "KSSilencingConfirmSheet.h"
-#import "KSTabViewController.h"
+
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
 NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewControllerWillUpdateNotification";

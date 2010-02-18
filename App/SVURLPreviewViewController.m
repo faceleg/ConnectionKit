@@ -14,7 +14,7 @@
 #import "SVTemplate.h"
 #import "SVTemplateParser.h"
 
-#import "KSTabViewController.h"
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 #import "NSString+Karelia.h"
 

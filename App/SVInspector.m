@@ -15,7 +15,7 @@
 
 #import "KTDocWindowController.h"
 
-#import "KSTabViewController.h"
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
 @implementation SVInspector
