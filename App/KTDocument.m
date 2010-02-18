@@ -246,7 +246,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Create a starter pagelet
         SVTextBox *textBox = [SVTextBox insertNewTextBoxIntoManagedObjectContext:[self managedObjectContext]];
         [textBox setSortKey:[NSNumber numberWithShort:0]];
-        [textBox setTitleWithString:@"Test"];
+        [textBox setTitle:@"Test"];
         
         [[textBox body] setString:@"<p>Test paragraph</p>"];
         [[root sidebar] addPageletsObject:textBox];

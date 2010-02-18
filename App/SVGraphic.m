@@ -32,14 +32,14 @@
     
     
     // Title
-    [self setTitleWithString:[[self class] placeholderTitleText]];
+    [self setTitle:[[self class] placeholderTitleText]];
 }
 
 #pragma mark Title
 
 @dynamic titleBox;
 
-- (void)setTitleWithString:(NSString *)title;
+- (void)setTitle:(NSString *)title;
 {
     SVTitleBox *text = [self titleBox];
     if (!text)
@@ -409,7 +409,7 @@
 
 - (void)setTitleText:(NSString *)value
 {
-	[self setTitleWithString:value];
+	[self setTitle:value];
 }
 
 + (NSSet *)keyPathsForValuesAffectingTitleText

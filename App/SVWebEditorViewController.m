@@ -756,7 +756,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             SVGraphic *pagelet = (SVGraphic *)anObject;
             if ([[[pagelet titleBox] text] length] <= 0)
             {
-                [pagelet setTitleWithString:[[pagelet class] placeholderTitleText]];
+                [pagelet setTitle:[[pagelet class] placeholderTitleText]];
             }
         }
     }

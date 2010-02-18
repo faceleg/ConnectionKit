@@ -54,7 +54,7 @@ typedef enum {
 
 #pragma mark Title
 @property(nonatomic, retain) SVTitleBox *titleBox;
-- (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
+- (void)setTitle:(NSString *)title;   // creates Title object if needed
 + (NSString *)placeholderTitleText;
 
 
