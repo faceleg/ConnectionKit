@@ -52,6 +52,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     
     // Event Handling
     NSEvent *_mouseDownEvent;   // have to record all mouse down events in case they turn into a drag op
+    BOOL    _resizingGraphic;
     BOOL    _isProcessingEvent;
     BOOL    _isForwardingCommandToWebView;
 }
@@ -112,6 +113,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // The editor contains a variety of subviews. When it needs the effect of drawing an overlay above them this method is called, telling you the view that is being drawn into, and where.
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view;
 - (void)drawSelectionRect:(NSRect)dirtyRect inView:(NSView *)view;
+
+- (BOOL)inLiveGraphicResize;
 
 
 #pragma mark Getting Item Information

@@ -760,6 +760,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [border release];
 }
 
+- (BOOL)inLiveGraphicResize; { return _resizingGraphic; }
+
 #pragma mark Event Handling
 
 /*  AppKit uses hit-testing to drill down into the view hierarchy and figure out just which view it needs to target with a mouse event. We can exploit this to effectively "hide" some portions of the webview from the standard event handling mechanisms; all such events will come straight to us instead. We have 2 different behaviours depending on current mode:
@@ -851,22 +853,27 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBPRECONDITION(handle != kSVGraphicNoHandle);
     
     
+    // Tell controllers not to draw selected during resize
+    _resizingGraphic = YES;
+    
+    NSArray *selection = [self selectedItems];
+    [selection setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
+    
+    
     while ([event type] != NSLeftMouseUp)
     {
-        // Tell controllers not to draw selected during resize
-        NSArray *selection = [self selectedItems];
-        [selection setValue:[NSNumber numberWithBool:NO] forKey:@"selected"];
-        
         // Handle the event
         event = [[self window] nextEventMatchingMask:(NSLeftMouseDraggedMask | NSLeftMouseUpMask)];
         //[self autoscroll:event];
         NSPoint handleLocation = [[[item HTMLElement] documentView] convertPoint:[event locationInWindow] 
                                                                         fromView:nil];
         handle = [item resizeByMovingHandle:handle toPoint:handleLocation];
-        
-        // Tell controllers they're selected again
-        [selection setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
     }
+    
+    _resizingGraphic = NO;
+    
+    // Tell controllers they're selected again
+    [selection setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
 }
 
 
