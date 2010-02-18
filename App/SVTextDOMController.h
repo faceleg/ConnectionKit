@@ -30,7 +30,7 @@
     
     // Undo
     BOOL        _isCoalescingUndo;
-    NSEvent     *_inProgressEventSuitableForUndoCoalescing;
+    BOOL        _nextChangeIsSuitableForUndoCoalescing;
     NSUInteger  _undoCoalescingActionIdentifier;
     DOMRange    *_undoCoalescingSelection;
 }

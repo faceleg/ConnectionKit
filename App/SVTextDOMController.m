@@ -188,39 +188,16 @@
     if ([notification object] != webEditor) return;
     
     
-    _isCoalescingUndo = NO;
-    NSUndoManager *undoManager = [webEditor undoManager];
-    
-    
-    // So was this a typing change?
-    BOOL isTypingChange = [_inProgressEventSuitableForUndoCoalescing isEqual:[NSApp currentEvent]];
-    [_inProgressEventSuitableForUndoCoalescing release]; _inProgressEventSuitableForUndoCoalescing = nil; // reset event monitor
-    
-    if (isTypingChange)
-    {
-        // Does it put us into coalescing mode?
-        if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
-        {
-            if ([undoManager lastRegisteredActionIdentifier] == [self undoCoalescingActionIdentifier])
-            {
-                // Go for coalescing
-                _isCoalescingUndo = YES;
-                
-                // Push through any pending changes. (MOCs observe this notification and call -processPendingChanges)
-                [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
-                [undoManager disableUndoRegistration];
-            }
-        }
-    }
-    
-    
     // Handle the edit
     [self webViewDidChange];
     
     
     // Wait until after -didChangeText so subclass has done its work
-    if (isTypingChange)
+    NSUndoManager *undoManager = [webEditor undoManager];
+    if (_nextChangeIsSuitableForUndoCoalescing)
     {
+        _nextChangeIsSuitableForUndoCoalescing = NO;
+        
         // Process the change so that nothing is scheduled to be added to the undo manager        
         if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
         {
@@ -228,8 +205,6 @@
             [[NSNotificationCenter defaultCenter]
              postNotificationName:NSUndoManagerCheckpointNotification
              object:undoManager];
-            
-            if (_isCoalescingUndo) [undoManager enableUndoRegistration];
             
             // Record the action identifier and DOM selection so we know whether to coalesce the next change
             [self setUndoCoalescingActionIdentifier:[undoManager lastRegisteredActionIdentifier]
@@ -239,7 +214,11 @@
     
     
     // Tidy up
-    _isCoalescingUndo = NO;
+    if (_isCoalescingUndo)
+    {
+        [undoManager enableUndoRegistration];
+        _isCoalescingUndo = NO;
+    }
 }
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
@@ -291,16 +270,33 @@
 
 - (void)willMakeTextChangeSuitableForUndoCoalescing;
 {
-    // At this point we know the TYPE of change will be suitable for undo calescing, but not whether the specific event is.
+    // At this point we know the TYPE of change will be suitable for undo coalescing, but not whether the specific event is.
     // In practice this means that we want to ignore the change if the insertion point has been moved
-    WebView *webView = [[[[self HTMLElement] ownerDocument] webFrame] webView];
-    if (![[webView selectedDOMRange] isEqualToDOMRange:[self undoCoalescingSelectedDOMRange]])
+    SVWebEditorView *webEditor = [self webEditor];
+    if (![[webEditor selectedDOMRange] isEqualToDOMRange:[self undoCoalescingSelectedDOMRange]])
     {
         [self breakUndoCoalescing];
     }
     
+    
     // Store the event so we can identify the change after it happens
-    [_inProgressEventSuitableForUndoCoalescing release]; _inProgressEventSuitableForUndoCoalescing = [[NSApp currentEvent] retain];
+    _nextChangeIsSuitableForUndoCoalescing = YES;
+    OBASSERT(!_isCoalescingUndo);
+    
+    
+    // Does it put us into coalescing mode?
+    NSUndoManager *undoManager = [webEditor undoManager];
+    if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
+    {
+        if ([undoManager lastRegisteredActionIdentifier] == [self undoCoalescingActionIdentifier])
+        {
+            // Go for coalescing. Push through any pending changes. (MOCs observe this notification and call -processPendingChanges)
+            [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification object:undoManager];
+            
+            [undoManager disableUndoRegistration];
+            _isCoalescingUndo = YES;
+        }
+    }
 }
 
 @synthesize undoCoalescingActionIdentifier = _undoCoalescingActionIdentifier;
