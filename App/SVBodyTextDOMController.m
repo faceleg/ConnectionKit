@@ -30,7 +30,7 @@
 #import "KSOrderedManagedObjectControllers.h"
 
 
-static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObservationContext";
+static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 
 @implementation SVBodyTextDOMController
@@ -41,6 +41,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 {
     // Super
     self = [super initWithContentObject:body inDOMDocument:document];
+    
+    
+    // Keep an eye on model
+    [body addObserver:self forKeyPath:@"string" options:0 context:sBodyTextObservationContext];
     
     
     // Create controller for each graphic/attachment
@@ -65,6 +69,8 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)dealloc
 {
+    [[self representedObject] removeObserver:self forKeyPath:@"string"];
+    
     // Release ivars
     
     [super dealloc];
@@ -83,54 +89,6 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 - (void)update
 {
     [self willUpdate];
-    
-    // Walk the content array. Shuffle up DOM nodes to match if needed
-    DOMHTMLElement *domNode = [[self textHTMLElement] firstChildOfClass:[DOMHTMLElement class]];
-    
-    for (SVBodyElement *aModelElement in [[self content] arrangedObjects])
-    {
-        // Locate the matching controller
-        SVDOMController *controller = [self controllerForBodyElement:aModelElement];
-        if (controller)
-        {
-            // Ensure the node is in the right place. Most of the time it already will be. If it isn't 
-            if ([controller HTMLElement] != domNode)
-            {
-                [[self textHTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
-                domNode = [controller HTMLElement];
-            }
-        
-        
-        
-            domNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
-        }
-        else
-        {
-            // It's a new object, create controller and node to match
-            Class controllerClass = [aModelElement DOMControllerClass];
-            controller = [[controllerClass alloc] initWithHTMLDocument:
-                          (DOMHTMLDocument *)[[self HTMLElement] ownerDocument]];
-            [controller setHTMLContext:[self HTMLContext]];
-            [controller setRepresentedObject:aModelElement];
-            
-            [[self textHTMLElement] insertBefore:[controller HTMLElement] refChild:domNode];
-            
-            [self addChildWebEditorItem:controller];
-            [controller release];
-        }
-    }
-    
-    
-    // All the nodes for deletion should have been pushed to the end, so we can delete them
-    while (domNode)
-    {
-        DOMHTMLElement *nextNode = [domNode nextSiblingOfClass:[DOMHTMLElement class]];
-        
-        [[self controllerForDOMNode:domNode] removeFromParentWebEditorItem];
-        [[domNode parentNode] removeChild:domNode];
-        
-        domNode = nextNode;
-    }
     
     [self didUpdate];
 }
@@ -296,7 +254,10 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
     if (![html isEqualToString:[body string]])
     {
         [super didChangeText];
+        
+        _isUpdating = YES;
         [body setString:html];
+        _isUpdating = NO;
     }
     
     [html release];
@@ -424,11 +385,11 @@ static NSString *sBodyElementsObservationContext = @"SVBodyTextAreaElementsObser
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    if (context == sBodyElementsObservationContext)
+    if (context == sBodyTextObservationContext)
     {
         if (![self isUpdating])
         {
-            [self setNeedsUpdate];
+            [[self webEditorViewController] setNeedsUpdate];
         }
     }
     else
