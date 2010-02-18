@@ -487,7 +487,6 @@
 		27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */; };
 		27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */; settings = {ATTRIBUTES = (); }; };
 		27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */; };
-		27E4CFF20EC30B6F000E85DD /* KSSilencingWarningSheet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE00EC30B6F000E85DD /* KSSilencingWarningSheet.nib */; };
 		27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */; };
 		27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */; };
 		27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */; };
@@ -1962,7 +1961,6 @@
 		27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugin.m; sourceTree = "<group>"; };
 		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
 		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
-		27E4CFE10EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSSilencingWarningSheet.nib; sourceTree = "<group>"; };
 		27E4CFE30EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSRegistration.nib; sourceTree = "<group>"; };
 		27E4CFE50EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
 		27E4CFE70EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
@@ -1971,7 +1969,6 @@
 		27E4CFED0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSException.nib; sourceTree = "<group>"; };
 		27E4CFEF0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSCrash.nib; sourceTree = "<group>"; };
 		27E4CFF10EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4CFFB0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSSilencingWarningSheet.nib; sourceTree = "<group>"; };
 		27E4CFFC0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
 		27E4CFFD0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSRegistration.nib; sourceTree = "<group>"; };
 		27E4CFFE0EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSJoinList.nib; sourceTree = "<group>"; };
@@ -1980,14 +1977,12 @@
 		27E4D0010EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSCrash.nib; sourceTree = "<group>"; };
 		27E4D0020EC30B7A000E85DD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/KSException.nib; sourceTree = "<group>"; };
 		27E4D0030EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4D0040EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSSilencingWarningSheet.nib; sourceTree = "<group>"; };
 		27E4D0050EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSJoinList.nib; sourceTree = "<group>"; };
 		27E4D0060EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
 		27E4D0070EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSException.nib; sourceTree = "<group>"; };
 		27E4D0080EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSFeedback.nib; sourceTree = "<group>"; };
 		27E4D0090EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
 		27E4D00A0EC30B8D000E85DD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/KSCrash.nib; sourceTree = "<group>"; };
-		27E4D00B0EC30B95000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSSilencingWarningSheet.nib; sourceTree = "<group>"; };
 		27E4D00C0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSRegistration.nib; sourceTree = "<group>"; };
 		27E4D00D0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSJoinList.nib; sourceTree = "<group>"; };
 		27E4D00E0EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
@@ -1995,7 +1990,6 @@
 		27E4D0100EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSException.nib; sourceTree = "<group>"; };
 		27E4D0110EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSFeedback.nib; sourceTree = "<group>"; };
 		27E4D0120EC30B96000E85DD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4D0130EC30B9D000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSSilencingWarningSheet.nib; sourceTree = "<group>"; };
 		27E4D0140EC30B9D000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
 		27E4D0150EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSRegistration.nib; sourceTree = "<group>"; };
 		27E4D0160EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSJoinList.nib; sourceTree = "<group>"; };
@@ -2003,7 +1997,6 @@
 		27E4D0180EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSFeedback.nib; sourceTree = "<group>"; };
 		27E4D0190EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSCrash.nib; sourceTree = "<group>"; };
 		27E4D01A0EC30B9E000E85DD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/KSBugReporterViews.nib; sourceTree = "<group>"; };
-		27E4D01B0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSSilencingWarningSheet.nib; sourceTree = "<group>"; };
 		27E4D01C0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSRegistration.nib; sourceTree = "<group>"; };
 		27E4D01D0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
 		27E4D01E0EC30BA4000E85DD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/KSJoinList.nib; sourceTree = "<group>"; };
@@ -4777,7 +4770,6 @@
 		CE22E5B80D7C71A10055D8E9 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				27E4CFE00EC30B6F000E85DD /* KSSilencingWarningSheet.nib */,
 				27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */,
 				27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */,
 				27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */,
@@ -5956,7 +5948,6 @@
 				CE01A9500EAFDF2A00BDF264 /* KSPDFWindow.nib in Resources */,
 				CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */,
 				CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */,
-				27E4CFF20EC30B6F000E85DD /* KSSilencingWarningSheet.nib in Resources */,
 				27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */,
 				27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */,
 				27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */,
@@ -6958,19 +6949,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		27E4CFE00EC30B6F000E85DD /* KSSilencingWarningSheet.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFE10EC30B6F000E85DD /* en */,
-				27E4CFFB0EC30B7A000E85DD /* da */,
-				27E4D0040EC30B8D000E85DD /* de */,
-				27E4D00B0EC30B95000E85DD /* fr */,
-				27E4D0130EC30B9D000E85DD /* zh_CN */,
-				27E4D01B0EC30BA4000E85DD /* zh_TW */,
-			);
-			name = KSSilencingWarningSheet.nib;
-			sourceTree = "<group>";
-		};
 		27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
