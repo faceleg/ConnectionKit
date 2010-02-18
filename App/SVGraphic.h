@@ -45,13 +45,28 @@ typedef enum {
 #pragma mark -
 
 
-@class SVBody, KTElementPlugin;
+@class SVTitleBox;
+@class SVCallout, SVTextAttachment, SVTemplate;
 
 
 @interface SVGraphic : SVContentObject <SVGraphic>
 
 
+#pragma mark Title
+@property(nonatomic, retain) SVTitleBox *titleBox;
+- (void)setTitleWithString:(NSString *)title;   // creates Title object if needed
++ (NSString *)placeholderTitleText;
+
+
+#pragma mark Layout/Styling
+@property(nonatomic, copy) NSNumber *showBorder;
+
+
 #pragma mark Placement
+
+@property(nonatomic, readonly) SVCallout *callout;
+@property(nonatomic, retain) SVTextAttachment *textAttachment;
+
 @property(nonatomic, copy) SVContentObjectWrap *wrap;
 @property(nonatomic, copy) NSNumber *wrapIsFloatOrBlock;    // setter picks best wrap type
 @property(nonatomic) BOOL wrapIsFloatLeft;
@@ -61,9 +76,33 @@ typedef enum {
 @property(nonatomic) BOOL wrapIsBlockRight;
 
 
+#pragma mark Sidebar
+
++ (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
++ (NSArray *)pageletSortDescriptors;
+
+// Checks that a given set of pagelets have unique sort keys
++ (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
+
+// Shouldn't really have any need to set this yourself. Use a proper array controller instead please.
+@property(nonatomic, copy) NSNumber *sortKey;
+
+@property(nonatomic, readonly) NSSet *sidebars;
+
+- (void)moveBeforeSidebarPagelet:(SVGraphic *)pagelet;
+- (void)moveAfterSidebarPagelet:(SVGraphic *)pagelet;
+
+
 #pragma mark HTML
+
+- (void)writeBody;  // Subclasses MUST override
+
 @property(nonatomic, retain, readonly) NSString *elementID;
 - (NSString *)className;
+
++ (SVTemplate *)template;
+
 
 @end
 

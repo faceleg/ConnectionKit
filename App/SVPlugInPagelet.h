@@ -9,7 +9,7 @@
 #import "SVPagelet.h"
 
 
-@class SVElementPlugIn;
+@class SVElementPlugIn, KTElementPlugin;
 
 
 @interface SVPlugInPagelet : SVPagelet

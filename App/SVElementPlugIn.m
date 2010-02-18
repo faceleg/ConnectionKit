@@ -11,6 +11,7 @@
 
 #import "KTAbstractHTMLPlugin.h"
 #import "KTAbstractPage.h"
+#import "SVBody.h"
 #import "SVDOMController.h"
 #import "SVElementPlugInContainer.h"
 #import "SVGraphic.h"

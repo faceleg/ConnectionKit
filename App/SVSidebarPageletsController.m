@@ -73,7 +73,7 @@
 {
     // Place at end of the sidebar
     SVPagelet *lastPagelet = [[self arrangedObjects] lastObject];
-    [pagelet moveAfterPagelet:lastPagelet];
+    [pagelet moveAfterSidebarPagelet:lastPagelet];
     
     
     // Also add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong

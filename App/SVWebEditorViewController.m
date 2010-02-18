@@ -981,7 +981,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             for (SVDOMController *aPageletItem in [sender selectedItems])
             {
                 SVPagelet *pagelet = [aPageletItem representedObject];
-                [pagelet moveAfterPagelet:lastPagelet];
+                [pagelet moveAfterSidebarPagelet:lastPagelet];
             }
         }
         else
@@ -998,7 +998,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 }
                 
                 // Move the pagelet to the right index
-                [pagelet moveBeforePagelet:anchorPagelet];
+                [pagelet moveBeforeSidebarPagelet:anchorPagelet];
             }
         }
     }
