@@ -33,6 +33,8 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 @implementation SVURLPreviewViewController
 
+@synthesize metaDescription = _metaDescription;
+
 - (void)dealloc
 {
     [self setSiteItem:nil];
@@ -100,8 +102,6 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     if (frame == [sender mainFrame])
     {
         [self setTitle:title];
-		SVExternalLink *externalLink = (SVExternalLink *) self.siteItem;
-		[externalLink setWindowTitle:title];
     }
 }
 
@@ -120,9 +120,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 			{
 				NSString *content = [node content];
 				
-				SVExternalLink *externalLink = (SVExternalLink *) self.siteItem;
-				// Store in site item
-				[externalLink setMetaDescription:content];
+				[self setMetaDescription:content];		// this will then get propagated to the page details controller
 				break;	// no point in looping through more meta tags
 			}
 		}

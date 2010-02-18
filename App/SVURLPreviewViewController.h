@@ -16,7 +16,11 @@
     SVSiteItem  *_siteItem;
     id <SVSiteItemViewControllerDelegate>   _delegate;
     BOOL    _readyToAppear;
+	
+	NSString *_metaDescription;
 }
+
+@property (copy) NSString *metaDescription;
 
 @property(nonatomic, retain) SVSiteItem *siteItem;
 - (NSURL *)URLToLoad;

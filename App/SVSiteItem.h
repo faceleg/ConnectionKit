@@ -96,10 +96,6 @@
 
 - (KTCodeInjection *)codeInjection;
 
-#pragma mark meta info - used by both regular pages and external links
-
-@property(nonatomic, copy) NSString *metaDescription;
-@property(nonatomic, copy) NSString *windowTitle;
 
 @end
 

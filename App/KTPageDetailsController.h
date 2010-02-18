@@ -11,7 +11,7 @@
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
-@class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow;
+@class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, KTDocWindowController;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -44,6 +44,8 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	IBOutlet NSTextField			*oAttachedWindowTextField;
 	IBOutlet NSTextField			*oAttachedWindowExplanation;
 	IBOutlet NSButton				*oAttachedWindowHelpButton;
+	
+	IBOutlet KTDocWindowController	*oDocWindowController;	// to communicate with web view
 	
 @private
 	NSNumber	*_metaDescriptionCountdown;

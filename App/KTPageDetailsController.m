@@ -583,6 +583,12 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) layoutPageURLComponents;
 {
+	id *selViewController = [[oDocWindowController webContentAreaController] selectedViewController];
+	NSLog(@"%@", selViewController);
+	
+	
+	
+	
 #define IS_ROOT_STATE -99
 	// Only visible for page types
 	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename

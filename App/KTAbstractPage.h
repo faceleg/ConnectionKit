@@ -83,6 +83,15 @@ KTCollectionPathStyle;
 
 @end
 
+#pragma mark -
+
+
+@interface KTAbstractPage (ForSubclassesToImplement)
+// Meta tags
+@property(nonatomic, copy) NSString *metaDescription;
+@property(nonatomic, copy) NSString *windowTitle;
+@end
+
 
 
 #pragma mark -

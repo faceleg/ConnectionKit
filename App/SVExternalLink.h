@@ -12,8 +12,6 @@
 
 @interface SVExternalLink : SVSiteItem  
 {
-	NSString *_windowTitle;
-	NSString *_metaDescription;
 }
 
 
