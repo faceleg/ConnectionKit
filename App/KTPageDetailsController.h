@@ -59,6 +59,10 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 	
 	BOOL _alreadyHandlingControlTextDidChange;
 	
+	NSDictionary *_initialWindowTitleBindingOptions;
+	NSDictionary *_initialMetaDescriptionBindingOptions;
+
+	
 }
 
 - (IBAction) pageDetailsHelp:(id)sender;
@@ -69,6 +73,9 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 - (NSNumber *)metaDescriptionCountdown;
 - (NSNumber *)windowTitleCountdown;
 - (NSNumber *)fileNameCountdown;
+
+@property (retain) 	NSDictionary *initialWindowTitleBindingOptions;
+@property (retain) 	NSDictionary *initialMetaDescriptionBindingOptions;
 
 @property (retain) NSTextField *activeTextField;
 @property (retain) MAAttachedWindow *attachedWindow;

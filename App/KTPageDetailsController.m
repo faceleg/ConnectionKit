@@ -64,6 +64,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 @synthesize activeTextField = _activeTextField;
 @synthesize attachedWindow = _attachedWindow;
 @synthesize whatKindOfItemsAreSelected = _whatKindOfItemsAreSelected;
+@synthesize initialWindowTitleBindingOptions = _initialWindowTitleBindingOptions;
+@synthesize initialMetaDescriptionBindingOptions = _initialMetaDescriptionBindingOptions;
 
 #pragma mark -
 #pragma mark Init & Dealloc
@@ -78,6 +80,9 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[_metaDescriptionCountdown release];
 	[_windowTitleCountdown release];
 	[_fileNameCountdown release];
+	self.initialWindowTitleBindingOptions = nil;
+	self.initialMetaDescriptionBindingOptions = nil;
+	
 	[super dealloc];
 }
 
@@ -102,6 +107,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void)awakeFromNib
 {
+		// Save these so we can restore them quickly when we are re-binding
+	self.initialWindowTitleBindingOptions = [[oWindowTitleField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
+	self.initialMetaDescriptionBindingOptions = [[oMetaDescriptionField infoForBinding:NSValueBinding] valueForKey:NSOptionsKey];
+	
 	[oExternalURLField setFormatter:[[[KSURLFormatter alloc] init] autorelease]];
 	
 	// Detail panel needs the right appearance
@@ -323,7 +332,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	bindingKeyPath	= [[[infoForBinding valueForKey:NSObservedKeyPathKey] retain] autorelease];
 	observedObject	= [[[infoForBinding valueForKey:NSObservedObjectKey] retain] autorelease];
 	
-	if ([[observedObject selectedObjects] count] > 1)
+	if ([observedObject respondsToSelector:@selector(selectedObjects)] && [[observedObject selectedObjects] count] > 1)
 	{
 		NSMutableDictionary *newBindingOptions = [NSMutableDictionary dictionaryWithDictionary:bindingOptions];
 		
@@ -583,12 +592,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 
 - (void) layoutPageURLComponents;
 {
-	id *selViewController = [[oDocWindowController webContentAreaController] selectedViewController];
-	NSLog(@"%@", selViewController);
-	
-	
-	
-	
 #define IS_ROOT_STATE -99
 	// Only visible for page types
 	// TODO: deal with downloads, where we keep the base URL but have a special field for the whole filename
@@ -625,6 +628,80 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	[oMetaDescriptionField	setEditable:(kPageSiteItemType == self.whatKindOfItemsAreSelected)];
 	[oChooseFileButton setHidden:(kFileSiteItemType != self.whatKindOfItemsAreSelected)];
 	
+	// Kind of hackish.  Re-bind the window title and meta description to the model object if it's a real page, or the controller if it's an external link.
+
+	id selViewController = [[oDocWindowController webContentAreaController] selectedViewController];
+	if ([selViewController isKindOfClass:[SVWebEditorViewController class]])
+	{
+		NSLog(@"Rebinding oWindowTitleField & oMetaDescriptionField for page");
+		[oWindowTitleField unbind:NSValueBinding];
+		[oWindowTitleField bind:NSValueBinding
+					   toObject:oPagesController
+					withKeyPath:@"selection.windowTitle"
+						options:self.initialWindowTitleBindingOptions];
+
+		[oMetaDescriptionField unbind:NSValueBinding];
+		[oMetaDescriptionField bind:NSValueBinding
+					   toObject:oPagesController
+					withKeyPath:@"selection.metaDescription"
+						options:self.initialMetaDescriptionBindingOptions];
+
+		/*
+		 NSObservedKeyPath = "selection.windowTitle";
+		 NSObservedObject = <SVPagesController: 0x1c90cf0>[entity: Page, number of selected objects: 1];
+		 NSOptions =     {
+		 NSAllowsEditingMultipleValuesSelection = 1;
+		 NSAlwaysPresentsApplicationModalAlerts = 0;
+		 NSConditionallySetsEditable = 1;
+		 NSConditionallySetsEnabled = 0;
+		 NSConditionallySetsHidden = 0;
+		 NSContinuouslyUpdatesValue = 0;
+		 NSMultipleValuesPlaceholder = "Multiple pages selected. Titles should be unique.";
+		 NSNoSelectionPlaceholder = "";
+		 NSNotApplicablePlaceholder = "Not Applicable";
+		 NSNullPlaceholder = "Home Page | Karelia Software";
+		 NSRaisesForNotApplicableKeys = 0;
+		 NSValidatesImmediately = 0;
+		 NSValueTransformer = <null>;
+		 NSValueTransformerName = <null>;
+		 };
+		 }
+		 NSObservedKeyPath = "selection.metaDescription";
+		 NSObservedObject = <SVPagesController: 0x1c90cf0>[entity: Page, number of selected objects: 1];
+		 NSOptions =     {
+		 NSAllowsEditingMultipleValuesSelection = 1;
+		 NSAlwaysPresentsApplicationModalAlerts = 0;
+		 NSConditionallySetsEditable = 1;
+		 NSConditionallySetsEnabled = 0;
+		 NSConditionallySetsHidden = 0;
+		 NSContinuouslyUpdatesValue = 0;
+		 NSMultipleValuesPlaceholder = "Multiple pages selected. Descriptions should be unique.";
+		 NSNoSelectionPlaceholder = "";
+		 NSNotApplicablePlaceholder = "Not Applicable";
+		 NSNullPlaceholder = "Summary of this page as it will appear in Google listings.";
+		 NSRaisesForNotApplicableKeys = 0;
+		 NSValidatesImmediately = 0;
+		 NSValueTransformer = <null>;
+		 NSValueTransformerName = <null>;
+		 };
+*/		 
+	}
+	else if ([selViewController isKindOfClass:[SVURLPreviewViewController class]])
+	{
+		NSLog(@"Rebinding oWindowTitleField & oMetaDescriptionField for ExternalLink");
+		[oWindowTitleField unbind:NSValueBinding];
+		[oWindowTitleField bind:NSValueBinding
+					   toObject:selViewController
+					withKeyPath:@"title"
+						options:nil];
+		
+		[oMetaDescriptionField unbind:NSValueBinding];
+		[oMetaDescriptionField bind:NSValueBinding
+						   toObject:selViewController
+						withKeyPath:@"metaDescription"
+							options:nil];
+	}
+		
 	// First line, external URL field
 	[oExternalURLField setHidden:(kLinkSiteItemType != self.whatKindOfItemsAreSelected)];
 
