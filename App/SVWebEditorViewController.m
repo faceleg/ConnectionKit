@@ -776,6 +776,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)undo_setSelectedTextRange:(SVWebEditorTextRange *)range;
 {
+    // Ignore if not already marked for update, since that could potentially reset the selection in the distant future, which is very odd for users. Ideally, this situation won't arrive
+    if (![self needsUpdate]) return;
+    
+    
     [_selectionToRestore release]; _selectionToRestore = [range copy];
     
     // Push opposite onto undo stack
