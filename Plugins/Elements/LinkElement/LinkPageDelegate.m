@@ -93,11 +93,18 @@
 	}
 	
 	KTPage *page = [self delegateOwner];
-	int linkType = [page integerForKey:@"linkType"];
-	BOOL linkTypeIsPageWithinPage = (linkType != kPlainLink && linkType != kNewWindowLink);
-	[page setDisableComments:!linkTypeIsPageWithinPage];
-	[page setSidebarChangeable:linkTypeIsPageWithinPage];
-	[page setFileExtensionIsEditable:linkTypeIsPageWithinPage];
+	if ([page isKindOfClass:[KTPage class]])
+	{
+		int linkType = [page integerForKey:@"linkType"];
+		BOOL linkTypeIsPageWithinPage = (linkType != kPlainLink && linkType != kNewWindowLink);
+		[page setDisableComments:!linkTypeIsPageWithinPage];
+		[page setSidebarChangeable:linkTypeIsPageWithinPage];
+		[page setFileExtensionIsEditable:linkTypeIsPageWithinPage];
+	}
+	else
+	{
+		NSLog(@"Warning: You have a LinkPage that is associated with a %@", [page class]);
+	}
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary

@@ -36,6 +36,10 @@
 
 @implementation KTPagelet
 
+- (void) setDisableComments:(id)something
+{
+	NSLog(@"Yikes! setDisableComments:");
+}
 #pragma mark -
 #pragma mark Initialization
 
