@@ -22,6 +22,7 @@
 #import "SVMediaRecord.h"
 #import "KTDocument.h"
 #import "KTDocWindowController.h"
+#import "SVURLPreviewViewController.h"
 
 #import "NTBoxView.h"
 
@@ -601,7 +602,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	id selViewController = [[oDocWindowController webContentAreaController] selectedViewController];
 	if ([selViewController isKindOfClass:[SVWebEditorViewController class]])
 	{
-		DJW((@"Rebinding oWindowTitleField & oMetaDescriptionField for page"));
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding
 					   toObject:oPagesController
@@ -656,7 +656,6 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else if ([selViewController isKindOfClass:[SVURLPreviewViewController class]])
 	{
-		DJW((@"Rebinding oWindowTitleField & oMetaDescriptionField for ExternalLink"));
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding
 					   toObject:selViewController
