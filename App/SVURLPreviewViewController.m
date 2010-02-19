@@ -92,22 +92,19 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     }
 }
 
-- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame
-{
-    
-}
 
 - (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame
 {
     if (frame == [sender mainFrame])
     {
         [self setTitle:title];
+		[self webView:sender didFinishLoadForFrame:frame];		// frame not loaded yet, but we MIGHT have the meta description by now, so try it early.
     }
 }
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame;
 {
-	if (frame == [sender mainFrame])
+	if (nil == self.metaDescription && frame == [sender mainFrame])	// only check if we don't have our meta description yet
 	{
 		DOMDocument *domDoc = [frame DOMDocument];
 		DOMNodeList *metas = [domDoc getElementsByTagName:@"meta"];
@@ -120,7 +117,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 			{
 				NSString *content = [node content];
 				
-				[self setMetaDescription:content];		// this will then get propagated to the page details controller
+				self.metaDescription = content;		// this will then get propagated to the page details controller
 				break;	// no point in looping through more meta tags
 			}
 		}
@@ -141,6 +138,10 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     
     //  Once the view goes offscreen, it's not ready to be displayed again until after loading has progressed a little
     [self setViewIsReadyToAppear:NO];
+	
+	// clear title, meta description, since they are not applicable anymore
+	self.title = nil;
+	self.metaDescription = nil;
 }
 
 #pragma mark Loading
@@ -206,6 +207,9 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     if (context == sURLPreviewViewControllerURLObservationContext)
     {
+		self.title = nil;
+		self.metaDescription = nil;		// clear out these data ASAP so we don't show old values
+		
         // Display best representation
         NSURL *URL = [self URLToLoad];
         if (URL)
