@@ -354,6 +354,12 @@
 		277E4FBC11109946005AF346 /* SVImageDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4FBA11109946005AF346 /* SVImageDOMController.h */; };
 		277E4FBD11109946005AF346 /* SVImageDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E4FBB11109946005AF346 /* SVImageDOMController.m */; };
 		277E55A011133051005AF346 /* KTPage+Serialization.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C58AE7110204EE00F42306 /* KTPage+Serialization.m */; };
+		277E6EE6112EB4830081389F /* SVDirectoryPublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */; };
+		277E6EE7112EB4830081389F /* SVDirectoryPublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */; };
+		277E6EE8112EB4830081389F /* SVPublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EE2112EB4830081389F /* SVPublishingRecord.h */; };
+		277E6EE9112EB4830081389F /* SVPublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE3112EB4830081389F /* SVPublishingRecord.m */; };
+		277E6EEA112EB4830081389F /* SVFilePublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EE4112EB4830081389F /* SVFilePublishingRecord.h */; };
+		277E6EEB112EB4830081389F /* SVFilePublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE5112EB4830081389F /* SVFilePublishingRecord.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */; };
@@ -1808,6 +1814,12 @@
 		277E4F7911108847005AF346 /* MetricsInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MetricsInspector.xib; sourceTree = "<group>"; };
 		277E4FBA11109946005AF346 /* SVImageDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageDOMController.h; sourceTree = "<group>"; };
 		277E4FBB11109946005AF346 /* SVImageDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageDOMController.m; sourceTree = "<group>"; };
+		277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDirectoryPublishingRecord.h; sourceTree = "<group>"; };
+		277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDirectoryPublishingRecord.m; sourceTree = "<group>"; };
+		277E6EE2112EB4830081389F /* SVPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishingRecord.h; sourceTree = "<group>"; };
+		277E6EE3112EB4830081389F /* SVPublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPublishingRecord.m; sourceTree = "<group>"; };
+		277E6EE4112EB4830081389F /* SVFilePublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFilePublishingRecord.h; sourceTree = "<group>"; };
+		277E6EE5112EB4830081389F /* SVFilePublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFilePublishingRecord.m; sourceTree = "<group>"; };
 		277EE9200CFD8CFF005617FE /* KTStalenessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessManager.h; sourceTree = "<group>"; };
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
@@ -3118,6 +3130,7 @@
 				3C5A73710BF7B69300776464 /* Pagelets */,
 				278F798F10B4485C00BDBAF7 /* Body Text */,
 				272EEA6A0DDA56030012005E /* Media */,
+				277E6EDF112EB46E0081389F /* Publishing */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -3219,6 +3232,19 @@
 				2731ECD310861FF300D8AAA5 /* SVTextFieldDOMController.m */,
 			);
 			name = "Text DOM Controllers";
+			sourceTree = "<group>";
+		};
+		277E6EDF112EB46E0081389F /* Publishing */ = {
+			isa = PBXGroup;
+			children = (
+				277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */,
+				277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */,
+				277E6EE2112EB4830081389F /* SVPublishingRecord.h */,
+				277E6EE3112EB4830081389F /* SVPublishingRecord.m */,
+				277E6EE4112EB4830081389F /* SVFilePublishingRecord.h */,
+				277E6EE5112EB4830081389F /* SVFilePublishingRecord.m */,
+			);
+			name = Publishing;
 			sourceTree = "<group>";
 		};
 		2786962A0C32C46E00430B63 /* Deprecated Classes */ = {
@@ -5320,6 +5346,9 @@
 				27A6098511282AC0007C301F /* KSStringStream.h in Headers */,
 				274FA0DD11297971000E0FDA /* SVWebEditorMainItem.h in Headers */,
 				CE8D547C112AFDBD007AC2F0 /* SVHTMLValidatorController.h in Headers */,
+				277E6EE6112EB4830081389F /* SVDirectoryPublishingRecord.h in Headers */,
+				277E6EE8112EB4830081389F /* SVPublishingRecord.h in Headers */,
+				277E6EEA112EB4830081389F /* SVFilePublishingRecord.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6716,6 +6745,9 @@
 				274FA0F111297AFD000E0FDA /* SVWebEditorView+EditingSupport.m in Sources */,
 				CE8D547D112AFDBD007AC2F0 /* SVHTMLValidatorController.m in Sources */,
 				27D37D4C112C40A00064701B /* SVParagraphDOMController.m in Sources */,
+				277E6EE7112EB4830081389F /* SVDirectoryPublishingRecord.m in Sources */,
+				277E6EE9112EB4830081389F /* SVPublishingRecord.m in Sources */,
+				277E6EEB112EB4830081389F /* SVFilePublishingRecord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
