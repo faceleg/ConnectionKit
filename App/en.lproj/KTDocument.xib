@@ -501,8 +501,8 @@
 													<reference key="NSSuperview" ref="641495171"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="737292473">
-														<int key="NSCellFlags">-1808662975</int>
-														<int key="NSCellFlags2">-1874689024</int>
+														<int key="NSCellFlags">-1809711551</int>
+														<int key="NSCellFlags2">-1874688000</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
 														<reference key="NSControlView" ref="899980468"/>
