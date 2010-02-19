@@ -279,7 +279,7 @@
 			if ( [[[document fileName] pathExtension] isEqualToString:kKTDocumentExtension] 
 				&& ![[document fileName] hasPrefix:[[NSBundle mainBundle] bundlePath]]  )
 			{
-				BDAlias *alias = [BDAlias aliasWithSubPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
+				BDAlias *alias = [BDAlias aliasWithPath:[document fileName] relativeToPath:[NSHomeDirectory() stringByResolvingSymlinksInPath]];
 				if (nil == alias)
 				{
 					// couldn't find relative to home directory, so just do absolute
