@@ -317,7 +317,7 @@
 
 @implementation SVWebEditorTextControllerUndoManager
 
-- (NSUInteger)lastRegisteredActionIdentifier;
+- (unsigned short)lastRegisteredActionIdentifier;
 {
     return _lastRegisteredActionIdentifier;
 }

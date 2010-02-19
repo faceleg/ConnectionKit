@@ -80,16 +80,15 @@
 #pragma mark -
 
 
-// See comments above for why this is necessary. You MUST supply a NSUndoManager subclass that implements this API properly for undo coalescing to work.
+// See comments above for why this is necessary. You MUST supply a NSUndoManager subclass that implements this API properly for undo coalescing to work. Uses unsigned so that it can *never* reach NSNotFound, but will roll back round again instead
 @interface NSUndoManager (SVWebEditorTextControllerUndoCoalescing)
-- (NSUInteger)lastRegisteredActionIdentifier;
+- (unsigned short)lastRegisteredActionIdentifier;
 @end
 
 
 @interface SVWebEditorTextControllerUndoManager : NSUndoManager
 {
-    NSUInteger  _lastRegisteredActionIdentifier;
+    unsigned short _lastRegisteredActionIdentifier;
 }
-- (NSUInteger)lastRegisteredActionIdentifier;
 @end
 
