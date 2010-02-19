@@ -633,7 +633,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	id selViewController = [[oDocWindowController webContentAreaController] selectedViewController];
 	if ([selViewController isKindOfClass:[SVWebEditorViewController class]])
 	{
-		NSLog(@"Rebinding oWindowTitleField & oMetaDescriptionField for page");
+		DJW((@"Rebinding oWindowTitleField & oMetaDescriptionField for page"));
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding
 					   toObject:oPagesController
@@ -688,7 +688,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 	else if ([selViewController isKindOfClass:[SVURLPreviewViewController class]])
 	{
-		NSLog(@"Rebinding oWindowTitleField & oMetaDescriptionField for ExternalLink");
+		DJW((@"Rebinding oWindowTitleField & oMetaDescriptionField for ExternalLink"));
 		[oWindowTitleField unbind:NSValueBinding];
 		[oWindowTitleField bind:NSValueBinding
 					   toObject:selViewController
