@@ -204,7 +204,8 @@
         }
         else if ([object isKindOfClass:[KTMaster class]])
         {
-            [object setPublishedDesignCSSDigest:[transferRecord propertyForKey:@"dataDigest"]];
+            // FIXME: Store digest in matching publishing record
+            //[object setPublishedDesignCSSDigest:[transferRecord propertyForKey:@"dataDigest"]];
         }
         else
         {
@@ -295,7 +296,7 @@
     BOOL result = YES;
     
     NSData *digest = [mainCSSData SHA1HashDigest];
-    NSData *publishedDigest = [[[[self site] rootPage] master] publishedDesignCSSDigest];
+    NSData *publishedDigest = nil;//[[[[self site] rootPage] master] publishedDesignCSSDigest];
     
     if ([self onlyPublishChanges] && publishedDigest && [publishedDigest isEqualToData:digest])
     {

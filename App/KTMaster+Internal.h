@@ -24,9 +24,6 @@
 #pragma mark Banner
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
-#pragma mark CSS
-- (NSData *)publishedDesignCSSDigest;
-- (void)setPublishedDesignCSSDigest:(NSData *)digest;
 
 #pragma mark Site Outline
 - (KTCodeInjection *)codeInjection;

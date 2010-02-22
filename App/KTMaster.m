@@ -426,19 +426,6 @@
 }
 
 #pragma mark -
-#pragma mark CSS
-
-- (NSData *)publishedDesignCSSDigest
-{
-    return [self valueForUndefinedKey:@"publishedDesignCSSDigest"];
-}
-
-- (void)setPublishedDesignCSSDigest:(NSData *)digest
-{
-    [self setValue:digest forUndefinedKey:@"publishedDesignCSSDigest"];
-}
-
-#pragma mark -
 #pragma mark Site Outline
 
 - (KTCodeInjection *)codeInjection
