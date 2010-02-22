@@ -121,20 +121,6 @@
 
 - (BOOL)isEditable { return YES; }
 
-#pragma mark Dispatching Messages
-
-- (void)doCommandBySelector:(SEL)aSelector;
-{
-    if ([self respondsToSelector:aSelector])
-    {
-        [self performSelector:aSelector];
-    }
-    else
-    {
-        NSBeep();
-    }
-}
-
 @end
 
 
