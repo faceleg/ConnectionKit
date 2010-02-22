@@ -846,6 +846,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+- (void)doCommandBySelector:(SEL)aSelector
+{
+    [super doCommandBySelector:aSelector];
+}
+
 #pragma mark Tracking the Mouse
 
 - (void)resizeItem:(SVWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event

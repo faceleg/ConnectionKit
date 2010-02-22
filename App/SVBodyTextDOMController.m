@@ -162,6 +162,55 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
+#pragma mark Placement/Wrap
+
+- (void)placeDOMElementAtBlockLevel:(DOMElement *)element;
+{
+    // Shift the element up in the tree until it is a child of our own element
+    DOMNode *parentNode = [element parentNode];
+    while (parentNode != [self HTMLElement])
+    {
+        DOMNode *refNode = parentNode;
+        parentNode = [parentNode parentNode];
+        [parentNode insertBefore:element refChild:refNode];
+    }
+    
+    // Trigger processing of the change
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[[self webEditor] webView]];
+}
+
+- (IBAction)wrapLeft:(id)sender;
+{
+    SVWebEditorItem *controller = [[self webEditor] selectedItem];
+    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+}
+
+- (IBAction)wrapCenter:(id)sender;
+{
+    SVWebEditorItem *controller = [[self webEditor] selectedItem];
+    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+}
+
+- (IBAction)wrapRight:(id)sender;
+{
+    SVWebEditorItem *controller = [[self webEditor] selectedItem];
+    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+}
+
+- (IBAction)wrapFloatLeft:(id)sender;
+{
+    SVWebEditorItem *controller = [[self webEditor] selectedItem];
+    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+}
+
+- (IBAction)wrapFloatRight:(id)sender;
+{
+    SVWebEditorItem *controller = [[self webEditor] selectedItem];
+    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+}
+
+
 #pragma mark Editability
 
 - (BOOL)isSelectable { return NO; }
@@ -400,3 +449,35 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 @end
 
+
+#pragma mark -
+
+
+@implementation SVWebEditorView (SVBodyTextActions)
+
+- (IBAction)wrapLeft:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+- (IBAction)wrapCenter:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+- (IBAction)wrapRight:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+- (IBAction)wrapFloatLeft:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+- (IBAction)wrapFloatRight:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+@end

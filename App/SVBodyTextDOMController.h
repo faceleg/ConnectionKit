@@ -27,6 +27,15 @@
 - (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertFile:(id)sender;
 
+
+#pragma mark Placement/Wrap
+- (IBAction)wrapLeft:(id)sender;
+- (IBAction)wrapCenter:(id)sender;
+- (IBAction)wrapRight:(id)sender;
+- (IBAction)wrapFloatLeft:(id)sender;
+- (IBAction)wrapFloatRight:(id)sender;
+
+
 #pragma mark Subcontrollers
 
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;

@@ -67,6 +67,9 @@ typedef enum {
 
 #pragma mark Placement
 
+/*  There is generally no need to directly adjust a graphic's wrap setting. In particular, one hazard is that you could cause a block-level object appear inline. i.e. invalid HTML. Instead, use the higher-level DOM Controller API to modify wrap/placement of the selection.
+ */
+
 @property(nonatomic, readonly) SVCallout *callout;
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
 
