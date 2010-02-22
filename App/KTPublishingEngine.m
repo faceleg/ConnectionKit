@@ -895,6 +895,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (digest)
         {
             [result setProperty:master forKey:@"object"];
+            [result setProperty:cssUploadPath forKey:@"path"];
             [result setProperty:digest forKey:@"dataDigest"];
         }
     }
