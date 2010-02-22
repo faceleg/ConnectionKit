@@ -20,7 +20,7 @@
 #import "KSExtensibleManagedObject.h"
 
 
-@class SVDirectoryPublishingRecord;
+@class SVDirectoryPublishingRecord, SVPublishingRecord;
 
 
 @interface KTHostProperties : KSExtensibleManagedObject
@@ -48,6 +48,6 @@
 
 #pragma mark Publishing Records
 @property(nonatomic, retain) SVDirectoryPublishingRecord *rootPublishingRecord;
-
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 
 @end

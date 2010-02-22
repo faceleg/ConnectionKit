@@ -15,8 +15,6 @@
 {
 }
 
-@property (nonatomic, retain) NSSet *contentRecords;
-
 @end
 
 

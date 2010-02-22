@@ -12,6 +12,6 @@
 
 @implementation SVDirectoryPublishingRecord 
 
-@dynamic contentRecords;
+- (BOOL)isDirectory; { return YES; }
 
 @end

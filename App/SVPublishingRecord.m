@@ -10,7 +10,13 @@
 
 #import "SVDirectoryPublishingRecord.h"
 
+#import "NSString+Karelia.h"
+
+
 @implementation SVPublishingRecord 
+
+- (BOOL)isRegularFile; { return NO; }
+- (BOOL)isDirectory; { return NO; }
 
 @dynamic filename;
 - (BOOL)validateFilename:(NSString **)outFilename error:(NSError **)error;
@@ -35,6 +41,19 @@
     }
     
     return YES;
+}
+
+@dynamic contentRecords;
+
+- (SVPublishingRecord *)publishingRecordForFilename:(NSString *)filename;
+{
+    SVPublishingRecord *result = nil;
+    for (result in [self contentRecords])
+    {
+        if ([[result filename] isEqualToStringCaseInsensitive:filename]) break;
+    }
+    
+    return result;
 }
 
 @end

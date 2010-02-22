@@ -10,13 +10,13 @@
 #import "SVPublishingRecord.h"
 
 
-@interface SVFilePublishingRecord :  SVPublishingRecord  
+@interface SVFilePublishingRecord : SVPublishingRecord  
 {
 }
 
-@property (nonatomic, retain) NSDate * date;
-@property (nonatomic, retain) NSData * SHA1Digest;
-@property (nonatomic, retain) NSNumber * length;
+@property(nonatomic, retain) NSDate *date;
+@property(nonatomic, retain) NSData *SHA1Digest;
+@property(nonatomic, retain) NSNumber *length;
 
 @end
 

@@ -8,14 +8,22 @@
 
 #import <CoreData/CoreData.h>
 
+
 @class SVDirectoryPublishingRecord;
 
-@interface SVPublishingRecord :  NSManagedObject  
+
+@interface SVPublishingRecord : NSManagedObject  
 {
 }
 
-@property (nonatomic, retain) NSString * filename;
-@property (nonatomic, retain) SVDirectoryPublishingRecord * parentDirectoryRecord;
+- (BOOL)isRegularFile;
+- (BOOL)isDirectory;
+
+@property (nonatomic, retain) NSString *filename;
+@property (nonatomic, retain) SVDirectoryPublishingRecord *parentDirectoryRecord;
+
+@property (nonatomic, retain) NSSet *contentRecords;
+- (SVPublishingRecord *)publishingRecordForFilename:(NSString *)filename;
 
 @end
 

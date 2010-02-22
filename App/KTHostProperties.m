@@ -496,5 +496,20 @@ to be verified.
 
 @dynamic rootPublishingRecord;
 
+- (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+{
+    NSArray *pathComponents = [path pathComponents];
+    
+    SVPublishingRecord *aRecord = [self rootPublishingRecord];
+    for (int i = 0; i < [pathComponents count]; i++)
+    {
+        NSString *component = [pathComponents objectAtIndex:i];
+        aRecord = [aRecord publishingRecordForFilename:component];
+    }
+    SVPublishingRecord *result = aRecord;
+    
+    return result;
+}
+
 @end
 

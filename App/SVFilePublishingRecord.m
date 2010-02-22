@@ -11,6 +11,8 @@
 
 @implementation SVFilePublishingRecord 
 
+- (BOOL)isRegularFile; { return YES; }
+
 @dynamic date;
 @dynamic SHA1Digest;
 @dynamic length;

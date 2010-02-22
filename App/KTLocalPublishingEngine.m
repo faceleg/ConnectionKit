@@ -14,6 +14,7 @@
 #import "KTHostProperties.h"
 #import "KTMaster+Internal.h"
 #import "KTPage.h"
+#import "SVPublishingRecord.h"
 #import "KTURLCredentialStorage.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
@@ -232,7 +233,8 @@
 	// Don't upload if the page isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
-        NSData *publishedDataDigest = nil;//[page publishedDataDigest];
+        SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:uploadPath];
+        NSData *publishedDataDigest = [record SHA1Digest];
         NSString *publishedPath = [page publishedPath];
         
         if (publishedDataDigest &&
