@@ -293,12 +293,14 @@
     }
 }
 
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData toPath:(NSString *)path digest:(NSData **)outDigest;
 {
     BOOL result = YES;
     
     NSData *digest = [mainCSSData SHA1HashDigest];
-    NSData *publishedDigest = nil;//[[[[self site] rootPage] master] publishedDesignCSSDigest];
+    
+    SVPublishingRecord *record = [[[self site] hostProperties] publishingRecordForPath:path];
+    NSData *publishedDigest = [record SHA1Digest];
     
     if ([self onlyPublishChanges] && publishedDigest && [publishedDigest isEqualToData:digest])
     {

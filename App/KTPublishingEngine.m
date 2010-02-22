@@ -883,11 +883,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *mainCSSData = [[mainCSS unicodeNormalizedString] dataUsingEncoding:NSUTF8StringEncoding
                                                           allowLossyConversion:YES];
     
+    NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
+    NSString *cssUploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"];
+    
     NSData *digest = nil;
-    if ([self shouldUploadMainCSSData:mainCSSData digest:&digest])
+    if ([self shouldUploadMainCSSData:mainCSSData toPath:cssUploadPath digest:&digest])
     {
-        NSString *remoteDesignDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:[design remotePath]];
-        result = [self uploadData:mainCSSData toPath:[remoteDesignDirectoryPath stringByAppendingPathComponent:@"main.css"]];
+        result = [self uploadData:mainCSSData toPath:mainCSSPath];
         
         if (digest)
         {
@@ -902,7 +904,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  KTRemotePublishingEngine overrides this to manage staleness
  */
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData toPath:(NSString *)path digest:(NSData **)outDigest;
 {
     if (outDigest) *outDigest = nil;
     return YES;

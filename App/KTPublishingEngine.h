@@ -125,7 +125,7 @@ typedef enum {
 
 - (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
 - (CKTransferRecord *)uploadMainCSSIfNeeded;
-- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData digest:(NSData **)outDigest;
+- (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData toPath:(NSString *)path digest:(NSData **)outDigest;
 
 // Resources
 - (NSSet *)resourceFiles;
