@@ -75,14 +75,7 @@
 
 - (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
 {
-    if ([key isEqualToString:@"archivesBaseName"])
-    {
-        return YES;
-    }
-    else
-    {
-        return [super usesExtensiblePropertiesForUndefinedKey:key];
-    }
+    return YES;
 }
 
 #pragma mark -
