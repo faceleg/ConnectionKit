@@ -264,20 +264,6 @@
 	}
 }
 
-/*  For 1.5 we are having to fake these methods using extensible properties
- */
-- (NSData *)publishedDataDigest
-{
-    return [self extensiblePropertyForKey:@"publishedDataDigest"]; 
-}
-
-- (void)setPublishedDataDigest:(NSData *)digest
-{
-    [self willChangeValueForKey:@"publishedDataDigest"];
-    [self setExtensibleProperty:digest forKey:@"publishedDataDigest"];
-    [self didChangeValueForKey:@"publishedDataDigest"];
-}
-
 @end
 
 

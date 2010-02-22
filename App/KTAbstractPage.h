@@ -77,9 +77,6 @@ KTCollectionPathStyle;
 - (BOOL)isStale;
 - (void)setIsStale:(BOOL)stale;
 
-- (NSData *)publishedDataDigest;
-- (void)setPublishedDataDigest:(NSData *)digest;
-
 
 @end
 

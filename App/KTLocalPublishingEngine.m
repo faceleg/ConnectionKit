@@ -186,8 +186,8 @@
     {
         if ([object isKindOfClass:[KTAbstractPage class]])
         {
-            // Record the digest and path of the page published
-            [object setPublishedDataDigest:[transferRecord propertyForKey:@"dataDigest"]];
+            // FIXME: Record the digest and path of the page published
+            //[object setPublishedDataDigest:[transferRecord propertyForKey:@"dataDigest"]];
             [object setPublishedPath:[transferRecord propertyForKey:@"path"]];
         }
         else if ([object isKindOfClass:[KTDesign class]])
@@ -232,7 +232,7 @@
 	// Don't upload if the page isn't stale and we've been requested to only publish changes
 	if ([self onlyPublishChanges])
     {
-        NSData *publishedDataDigest = [page publishedDataDigest];
+        NSData *publishedDataDigest = nil;//[page publishedDataDigest];
         NSString *publishedPath = [page publishedPath];
         
         if (publishedDataDigest &&
