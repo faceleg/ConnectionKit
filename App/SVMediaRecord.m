@@ -45,7 +45,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     SVMediaRecord *result = nil;
     if (attributes)
     {
-        BDAlias alias = [BDAlias aliasWithPath:[URL path] error:outError];	// make sure alias can be created first
+        BDAlias *alias = [BDAlias aliasWithPath:[URL path] error:outError];	// make sure alias can be created first
 		if (alias)
 		{
 			result = [NSEntityDescription insertNewObjectForEntityForName:entityName
