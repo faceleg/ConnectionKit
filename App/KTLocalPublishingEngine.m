@@ -177,7 +177,9 @@
 - (void)transferRecordDidFinish:(NSNotification *)notification
 {
     CKTransferRecord *transferRecord = [notification object];
+    
     if ([transferRecord root] != [self rootTransferRecord]) return; // it's not for us
+    if ([transferRecord error]) return; // bail
     
     
     id object = [transferRecord propertyForKey:@"object"];
@@ -188,20 +190,18 @@
     if (path && ![transferRecord isDirectory])
     {
         SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
-    
+        
+        NSData *digest = [transferRecord propertyForKey:@"dataDigest"];
+        [record setSHA1Digest:digest];
     }
     
     
-    
-    if (object &&
-        ![transferRecord error] &&
-        [self status] > KTPublishingEngineStatusNotStarted &&
+    // Any other processing (left over from 1.6 really)
+    if ([self status] > KTPublishingEngineStatusNotStarted &&
         [self status] < KTPublishingEngineStatusFinished)
     {
         if ([object isKindOfClass:[KTAbstractPage class]])
         {
-            // FIXME: Record the digest and path of the page published
-            //[object setPublishedDataDigest:[transferRecord propertyForKey:@"dataDigest"]];
             [object setPublishedPath:path];
         }
         else if ([object isKindOfClass:[KTDesign class]])
@@ -218,8 +218,6 @@
         }
         else if ([object isKindOfClass:[KTMaster class]])
         {
-            // FIXME: Store digest in matching publishing record
-            //[object setPublishedDesignCSSDigest:[transferRecord propertyForKey:@"dataDigest"]];
         }
         else
         {
