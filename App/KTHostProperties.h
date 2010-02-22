@@ -49,5 +49,6 @@
 #pragma mark Publishing Records
 @property(nonatomic, retain) SVDirectoryPublishingRecord *rootPublishingRecord;
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
+- (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
 
 @end

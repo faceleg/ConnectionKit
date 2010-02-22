@@ -498,6 +498,9 @@ to be verified.
 
 - (SVPublishingRecord *)publishingRecordForPath:(NSString *)path;
 {
+    OBPRECONDITION(path);
+    
+    
     NSArray *pathComponents = [path pathComponents];
     
     SVPublishingRecord *aRecord = [self rootPublishingRecord];
@@ -508,6 +511,57 @@ to be verified.
     }
     SVPublishingRecord *result = aRecord;
     
+    return result;
+}
+
+- (SVPublishingRecord *)regularFilePublishingRecordWithPath:(NSString *)path;
+{
+    OBPRECONDITION(path);
+    
+    
+    
+    NSArray *pathComponents = [path pathComponents];
+    
+    // Create intermediate directories
+    SVPublishingRecord *aRecord = [self rootPublishingRecord];
+    for (int i = 0; i < [pathComponents count] - 1; i++)
+    {
+        NSString *aPathComponent = [pathComponents objectAtIndex:i];
+        SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
+        aRecord = [aRecord publishingRecordForFilename:aPathComponent];
+        
+        if (![aRecord isDirectory])
+        {
+            [[aRecord managedObjectContext] deleteObject:aRecord];
+            
+            aRecord = [SVPublishingRecord insertNewDirectoryIntoManagedObjectContext:
+                       [parentRecord managedObjectContext]];
+            
+            [aRecord setFilename:aPathComponent];
+            [aRecord setParentDirectoryRecord:parentRecord];
+        }
+    }
+    
+    
+    // Create final record
+    NSString *filename = [pathComponents lastObject];
+    SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
+    aRecord = [parentRecord publishingRecordForFilename:filename];
+    
+    if (![aRecord isRegularFile])
+    {
+        [[aRecord managedObjectContext] deleteObject:aRecord];
+        
+        aRecord = [SVPublishingRecord insertNewRegularFileIntoManagedObjectContext:
+                   [parentRecord managedObjectContext]];
+        
+        [aRecord setFilename:filename];
+        [aRecord setParentDirectoryRecord:parentRecord];
+    }
+    
+    
+    // Finish up
+    SVPublishingRecord *result = aRecord;
     return result;
 }
 

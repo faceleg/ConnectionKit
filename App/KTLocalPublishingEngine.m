@@ -177,19 +177,32 @@
 - (void)transferRecordDidFinish:(NSNotification *)notification
 {
     CKTransferRecord *transferRecord = [notification object];
+    if ([transferRecord root] != [self rootTransferRecord]) return; // it's not for us
+    
+    
     id object = [transferRecord propertyForKey:@"object"];
+    NSString *path = [transferRecord propertyForKey:@"path"];
+    
+    
+    //  Update publishing records to match
+    if (path && ![transferRecord isDirectory])
+    {
+        SVPublishingRecord *record = [[[self site] hostProperties] regularFilePublishingRecordWithPath:path];
+    
+    }
+    
+    
     
     if (object &&
         ![transferRecord error] &&
         [self status] > KTPublishingEngineStatusNotStarted &&
-        [self status] < KTPublishingEngineStatusFinished &&
-        [transferRecord root] == [self rootTransferRecord])
+        [self status] < KTPublishingEngineStatusFinished)
     {
         if ([object isKindOfClass:[KTAbstractPage class]])
         {
             // FIXME: Record the digest and path of the page published
             //[object setPublishedDataDigest:[transferRecord propertyForKey:@"dataDigest"]];
-            [object setPublishedPath:[transferRecord propertyForKey:@"path"]];
+            [object setPublishedPath:path];
         }
         else if ([object isKindOfClass:[KTDesign class]])
         {
