@@ -12,8 +12,9 @@
 @class SVPublishingRecord;
 
 @interface SVDirectoryPublishingRecord :  SVPublishingRecord  
-{
-}
+
+- (SVPublishingRecord *)directoryPublishingRecordWithFilename:(NSString *)filename;
+- (SVPublishingRecord *)regularFilePublishingRecordWithFilename:(NSString *)filename;
 
 @end
 

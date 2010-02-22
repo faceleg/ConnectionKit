@@ -528,36 +528,14 @@ to be verified.
     {
         NSString *aPathComponent = [pathComponents objectAtIndex:i];
         SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
-        aRecord = [aRecord publishingRecordForFilename:aPathComponent];
-        
-        if (![aRecord isDirectory])
-        {
-            [[aRecord managedObjectContext] deleteObject:aRecord];
-            
-            aRecord = [SVPublishingRecord insertNewDirectoryIntoManagedObjectContext:
-                       [parentRecord managedObjectContext]];
-            
-            [aRecord setFilename:aPathComponent];
-            [aRecord setParentDirectoryRecord:parentRecord];
-        }
+        aRecord = [parentRecord directoryPublishingRecordWithFilename:aPathComponent];
     }
     
     
     // Create final record
     NSString *filename = [pathComponents lastObject];
     SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
-    aRecord = [parentRecord publishingRecordForFilename:filename];
-    
-    if (![aRecord isRegularFile])
-    {
-        [[aRecord managedObjectContext] deleteObject:aRecord];
-        
-        aRecord = [SVPublishingRecord insertNewRegularFileIntoManagedObjectContext:
-                   [parentRecord managedObjectContext]];
-        
-        [aRecord setFilename:filename];
-        [aRecord setParentDirectoryRecord:parentRecord];
-    }
+    aRecord = [parentRecord regularFilePublishingRecordWithFilename:filename];
     
     
     // Finish up

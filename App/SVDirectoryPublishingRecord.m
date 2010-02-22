@@ -14,4 +14,40 @@
 
 - (BOOL)isDirectory; { return YES; }
 
+- (SVPublishingRecord *)directoryPublishingRecordWithFilename:(NSString *)filename;
+{
+    SVPublishingRecord *result = [self publishingRecordForFilename:filename];
+    
+    if (![result isDirectory])
+    {
+        [[result managedObjectContext] deleteObject:result];
+        
+        result = [SVPublishingRecord insertNewDirectoryIntoManagedObjectContext:
+                   [self managedObjectContext]];
+        
+        [result setFilename:filename];
+        [result setParentDirectoryRecord:self];
+    }
+    
+    return result;
+}
+
+- (SVPublishingRecord *)regularFilePublishingRecordWithFilename:(NSString *)filename;
+{
+    SVPublishingRecord *result = [self publishingRecordForFilename:filename];
+    
+    if (![result isRegularFile])
+    {
+        [[result managedObjectContext] deleteObject:result];
+        
+        result = [SVPublishingRecord insertNewRegularFileIntoManagedObjectContext:
+                   [self managedObjectContext]];
+        
+        [result setFilename:filename];
+        [result setParentDirectoryRecord:self];
+    }
+    
+    return result;
+}
+
 @end
