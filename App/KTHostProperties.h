@@ -20,6 +20,9 @@
 #import "KSExtensibleManagedObject.h"
 
 
+@class SVDirectoryPublishingRecord;
+
+
 @interface KTHostProperties : KSExtensibleManagedObject
 
 - (BOOL)remoteSiteURLIsValid;
@@ -41,5 +44,10 @@
 - (NSURL *)URLForResourceFile:(NSString *)filename;
 
 - (NSString *)hostPropertiesReport;
+
+
+#pragma mark Publishing Records
+@property(nonatomic, retain) SVDirectoryPublishingRecord *rootPublishingRecord;
+
 
 @end

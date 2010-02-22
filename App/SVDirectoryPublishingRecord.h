@@ -15,7 +15,7 @@
 {
 }
 
-@property (nonatomic, retain) SVPublishingRecord * contentRecords;
+@property (nonatomic, retain) NSSet *contentRecords;
 
 @end
 

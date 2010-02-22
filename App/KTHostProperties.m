@@ -9,6 +9,7 @@
 #import "KTHostProperties.h"
 
 #import "KTHostSetupController.h"
+#import "SVRootPublishingRecord.h"
 
 #import "NSCharacterSet+Karelia.h"
 #import "NSEntityDescription+KTExtensions.h"
@@ -37,6 +38,11 @@
 	[self setBool:[defaults boolForKey:@"PathsWithIndexPages"] forKey:@"PathsWithIndexPages"];
 	[self setPrimitiveValue:[defaults objectForKey:@"htmlIndexBaseName"] forKey:@"htmlIndexBaseName"];
 	[self setValue:[defaults objectForKey:@"archivesBaseName"] forKey:@"archivesBaseName"];
+    
+    
+    // Root record
+    SVRootPublishingRecord *record = [NSEntityDescription insertNewObjectForEntityForName:@"RootPublishingRecord" inManagedObjectContext:[self managedObjectContext]];
+    [self setRootPublishingRecord:record];
 }
 
 - (void)awakeFromFetch
@@ -472,7 +478,6 @@ to be verified.
 	return result;
 }
 
-#pragma mark -
 #pragma mark Troubleshooting
 
 - (NSString *)hostPropertiesReport
@@ -493,6 +498,10 @@ to be verified.
 	[buffer release];
 	return result;
 }
+
+#pragma mark Publishing Records
+
+@dynamic rootPublishingRecord;
 
 @end
 

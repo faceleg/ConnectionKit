@@ -360,6 +360,8 @@
 		277E6EE9112EB4830081389F /* SVPublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE3112EB4830081389F /* SVPublishingRecord.m */; };
 		277E6EEA112EB4830081389F /* SVFilePublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EE4112EB4830081389F /* SVFilePublishingRecord.h */; };
 		277E6EEB112EB4830081389F /* SVFilePublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EE5112EB4830081389F /* SVFilePublishingRecord.m */; };
+		277E6EF4112EBABC0081389F /* SVRootPublishingRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E6EF2112EBABC0081389F /* SVRootPublishingRecord.h */; };
+		277E6EF5112EBABC0081389F /* SVRootPublishingRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E6EF3112EBABC0081389F /* SVRootPublishingRecord.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */; };
@@ -1820,6 +1822,8 @@
 		277E6EE3112EB4830081389F /* SVPublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPublishingRecord.m; sourceTree = "<group>"; };
 		277E6EE4112EB4830081389F /* SVFilePublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFilePublishingRecord.h; sourceTree = "<group>"; };
 		277E6EE5112EB4830081389F /* SVFilePublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFilePublishingRecord.m; sourceTree = "<group>"; };
+		277E6EF2112EBABC0081389F /* SVRootPublishingRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRootPublishingRecord.h; sourceTree = "<group>"; };
+		277E6EF3112EBABC0081389F /* SVRootPublishingRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRootPublishingRecord.m; sourceTree = "<group>"; };
 		277EE9200CFD8CFF005617FE /* KTStalenessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessManager.h; sourceTree = "<group>"; };
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
@@ -3237,6 +3241,8 @@
 		277E6EDF112EB46E0081389F /* Publishing */ = {
 			isa = PBXGroup;
 			children = (
+				277E6EF2112EBABC0081389F /* SVRootPublishingRecord.h */,
+				277E6EF3112EBABC0081389F /* SVRootPublishingRecord.m */,
 				277E6EE0112EB4830081389F /* SVDirectoryPublishingRecord.h */,
 				277E6EE1112EB4830081389F /* SVDirectoryPublishingRecord.m */,
 				277E6EE2112EB4830081389F /* SVPublishingRecord.h */,
@@ -5349,6 +5355,7 @@
 				277E6EE6112EB4830081389F /* SVDirectoryPublishingRecord.h in Headers */,
 				277E6EE8112EB4830081389F /* SVPublishingRecord.h in Headers */,
 				277E6EEA112EB4830081389F /* SVFilePublishingRecord.h in Headers */,
+				277E6EF4112EBABC0081389F /* SVRootPublishingRecord.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6748,6 +6755,7 @@
 				277E6EE7112EB4830081389F /* SVDirectoryPublishingRecord.m in Sources */,
 				277E6EE9112EB4830081389F /* SVPublishingRecord.m in Sources */,
 				277E6EEB112EB4830081389F /* SVFilePublishingRecord.m in Sources */,
+				277E6EF5112EBABC0081389F /* SVRootPublishingRecord.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -13,6 +13,28 @@
 @implementation SVPublishingRecord 
 
 @dynamic filename;
+- (BOOL)validateFilename:(NSString **)outFilename error:(NSError **)error;
+{
+    if (!*outFilename)
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError userInfo:nil];
+        return NO;
+    }
+    
+    return YES;
+}
+
 @dynamic parentDirectoryRecord;
+- (BOOL)validateParentDirectoryRecord:(SVDirectoryPublishingRecord **)outRecord
+                                error:(NSError **)error;
+{
+    if (!*outRecord)
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError userInfo:nil];
+        return NO;
+    }
+    
+    return YES;
+}
 
 @end
