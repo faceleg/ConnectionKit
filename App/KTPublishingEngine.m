@@ -890,7 +890,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = nil;
     if ([self shouldUploadMainCSSData:mainCSSData toPath:cssUploadPath digest:&digest])
     {
-        result = [self uploadData:mainCSSData toPath:mainCSSPath];
+        result = [self uploadData:mainCSSData toPath:cssUploadPath];
         
         if (digest)
         {
