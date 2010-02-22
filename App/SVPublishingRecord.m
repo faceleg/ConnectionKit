@@ -56,4 +56,8 @@
     return result;
 }
 
+@dynamic date;
+@dynamic SHA1Digest;
+@dynamic length;
+
 @end

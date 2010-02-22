@@ -25,6 +25,10 @@
 @property (nonatomic, retain) NSSet *contentRecords;
 - (SVPublishingRecord *)publishingRecordForFilename:(NSString *)filename;
 
+@property(nonatomic, retain) NSDate *date;
+@property(nonatomic, retain) NSData *SHA1Digest;
+@property(nonatomic, retain) NSNumber *length;
+
 @end
 
 
