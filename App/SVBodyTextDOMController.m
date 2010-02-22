@@ -174,40 +174,71 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         parentNode = [parentNode parentNode];
         [parentNode insertBefore:element refChild:refNode];
     }
-    
-    // Trigger processing of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[[self webEditor] webView]];
 }
 
 - (IBAction)wrapLeft:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+    
+    SVGraphic *graphic = [controller representedObject];
+    [graphic setWrap:SVContentObjectWrapBlockLeft];
+    
+    // Trigger processing of the change
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[[self webEditor] webView]];
 }
 
 - (IBAction)wrapCenter:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+    
+    SVGraphic *graphic = [controller representedObject];
+    [graphic setWrap:SVContentObjectWrapBlockCenter];
+    
+    // Trigger processing of the change
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[[self webEditor] webView]];
 }
 
 - (IBAction)wrapRight:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+    
+    SVGraphic *graphic = [controller representedObject];
+    [graphic setWrap:SVContentObjectWrapBlockRight];
+    
+    // Trigger processing of the change
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[[self webEditor] webView]];
 }
 
 - (IBAction)wrapFloatLeft:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+    
+    SVGraphic *graphic = [controller representedObject];
+    [graphic setWrap:SVContentObjectWrapFloatLeft];
+    
+    // Trigger processing of the change
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[[self webEditor] webView]];
 }
 
 - (IBAction)wrapFloatRight:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
+    
+    SVGraphic *graphic = [controller representedObject];
+    [graphic setWrap:SVContentObjectWrapFloatRight];
+    
+    // Trigger processing of the change
+    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                        object:[[self webEditor] webView]];
 }
 
 
