@@ -357,7 +357,7 @@
 #pragma mark -
 #pragma mark Publishing
 
-- (KTHostProperties *)hostProperties { return [self wrappedValueForKey:@"hostProperties"]; }
+@dynamic hostProperties;
 
 - (NSString *)lastExportDirectoryPath
 {

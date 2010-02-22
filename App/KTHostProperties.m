@@ -506,7 +506,7 @@ to be verified.
     SVPublishingRecord *aRecord = [self rootPublishingRecord];
     for (int i = 0; i < [pathComponents count]; i++)
     {
-        NSString *component = [pathComponents objectAtIndex:i];
+        NSString *component = [pathComponents objectAtIndex:i];        
         aRecord = [aRecord publishingRecordForFilename:component];
     }
     SVPublishingRecord *result = aRecord;
@@ -526,7 +526,7 @@ to be verified.
     SVPublishingRecord *aRecord = [self rootPublishingRecord];
     for (int i = 0; i < [pathComponents count] - 1; i++)
     {
-        NSString *aPathComponent = [pathComponents objectAtIndex:i];
+        NSString *aPathComponent = [pathComponents objectAtIndex:i];        
         SVDirectoryPublishingRecord *parentRecord = (SVDirectoryPublishingRecord *)aRecord;
         aRecord = [parentRecord directoryPublishingRecordWithFilename:aPathComponent];
     }

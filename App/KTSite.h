@@ -70,7 +70,7 @@ typedef enum {
 - (NSString *)googleSiteMapXMLString;
 
 // Publishing
-- (KTHostProperties *)hostProperties;
+@property(nonatomic, retain, readonly) KTHostProperties *hostProperties;
 - (NSString *)lastExportDirectoryPath;
 - (void)setLastExportDirectoryPath:(NSString *)path;
 

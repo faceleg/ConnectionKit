@@ -540,8 +540,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Give subclasses a chance to ignore the upload
+    NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
+	
     NSData *digest = nil;
-    if (![self shouldUploadHTML:HTML encoding:encoding forPage:page toPath:uploadPath digest:&digest])
+    if (![self shouldUploadHTML:HTML encoding:encoding forPage:page toPath:fullUploadPath digest:&digest])
     {
         return;
     }
@@ -549,8 +551,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Upload page data. Store the page and its digest with the record for processing later
-    NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
-	if (fullUploadPath)
+    if (fullUploadPath)
     {
 		CKTransferRecord *transferRecord = [self uploadData:pageData toPath:fullUploadPath];
         OBASSERT(transferRecord);
@@ -559,7 +560,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         {
             [transferRecord setProperty:page forKey:@"object"];
             [transferRecord setProperty:digest forKey:@"dataDigest"];
-            [transferRecord setProperty:uploadPath forKey:@"path"];
+            [transferRecord setProperty:fullUploadPath forKey:@"path"];
         }
 	}
     
