@@ -16,6 +16,9 @@
 {
 }
 
++ (SVPublishingRecord *)insertNewRegularFileIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVPublishingRecord *)insertNewDirectoryIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
 - (BOOL)isRegularFile;
 - (BOOL)isDirectory;
 

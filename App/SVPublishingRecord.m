@@ -15,6 +15,24 @@
 
 @implementation SVPublishingRecord 
 
++ (SVPublishingRecord *)insertNewRegularFileIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVPublishingRecord *result =
+    [NSEntityDescription insertNewObjectForEntityForName:@"FilePublishingRecord"
+                                  inManagedObjectContext:context];
+    
+    return result;
+}
+
++ (SVPublishingRecord *)insertNewDirectoryIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVPublishingRecord *result =
+    [NSEntityDescription insertNewObjectForEntityForName:@"DirectoryPublishingRecord"
+                                  inManagedObjectContext:context];
+    
+    return result;
+}
+
 - (BOOL)isRegularFile; { return NO; }
 - (BOOL)isDirectory; { return NO; }
 
