@@ -461,6 +461,22 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [link release];
 }
 
+#pragma mark Dragging
+
+- (void)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
+                proposedOperation:(NSDragOperation *)proposedOperation;
+{
+    // When dragging graphics within the Web Editor, want to move them rather than do a copy
+    if ([info draggingSource] == [self webEditor])
+    {
+        *proposedOperation = NSDragOperationMove;
+    }
+    else
+    {
+        return [super webEditorTextValidateDrop:info proposedOperation:proposedOperation];
+    }
+}
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
