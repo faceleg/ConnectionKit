@@ -67,7 +67,7 @@ typedef enum {
     BOOL                    _showCreators;
     
     
-	NSMutableArray	*myProducts;
+	NSMutableArray	*_products;
 	
 	BOOL	manualListIsBeingArchivedOrUnarchived;
 	
@@ -123,7 +123,6 @@ typedef enum {
 
 - (void)loadAllManualListProducts;
 - (void)archiveManualListProductsAndRegisterUndoOperation:(BOOL)registerUndo;
-- (void)unarchiveManualListProductsFromPluginProperties;
 
 @end
 

@@ -37,7 +37,7 @@
 		if (store != AmazonStoreUnknown)
 		{
 			// Set our store from the URL
-			[[self propertiesStorage] setInteger:store forKey:@"store"];
+			[self setStore:store];
 			
 			// Attempt to get the list type and ID from the URL
 			[URL getAmazonListType:&listType andID:&listID];
@@ -91,7 +91,7 @@
 	if (listID) {
 		*code = listID;
 	}
-	[[self propertiesStorage] setInteger:listType forKey:@"automaticListType"];
+	[self setAutomaticListType:listType];
 	
 	return YES;
 }
@@ -159,7 +159,7 @@
 		// Store the list type, but do NOT make it an undoable operation since this would register a second undo
 		// command for the process of loading a list.
 		[self disableUndoRegistration];
-		[[self propertiesStorage] setInteger:[list listType] forKey:@"automaticListType"];
+		[self setAutomaticListType:[list listType]];
 		[self enableUndoRegistration];
 	}
 }

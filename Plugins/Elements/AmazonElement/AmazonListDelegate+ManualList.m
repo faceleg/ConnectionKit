@@ -124,11 +124,11 @@
 
 - (NSMutableArray *)_products
 {
-	if (!myProducts) {
-		myProducts = [[NSMutableArray alloc] init];
+	if (!_products) {
+		_products = [[NSMutableArray alloc] init];
 	}
 	
-	return myProducts;
+	return _products;
 }
 
 - (unsigned)numberOfManualProductsWithAProductCode
@@ -165,23 +165,6 @@
 	[[self propertiesStorage] setObject:productsData forKey:@"manualListProducts"];
 	
 	if (!registerUndo) [self enableUndoRegistration];
-	
-	manualListIsBeingArchivedOrUnarchived = NO;
-}
-
-- (void)unarchiveManualListProductsFromPluginProperties
-{
-	manualListIsBeingArchivedOrUnarchived = YES;
-	
-	NSData *productsData = [[self propertiesStorage] objectForKey:@"manualListProducts"];
-	
-	NSArray *products = nil;
-	if (productsData) {
-		products = [NSKeyedUnarchiver unarchiveObjectWithData:productsData];
-	}
-	
-	NSMutableArray *editableProducts = [self mutableArrayValueForKey:@"products"];
-	[editableProducts setArray:products];
 	
 	manualListIsBeingArchivedOrUnarchived = NO;
 }

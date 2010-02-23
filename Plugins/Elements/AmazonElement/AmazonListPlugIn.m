@@ -143,11 +143,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		
 		[self setAutomaticListCode:defaultListCode];
 	}
-	else
-	{
-		// Load manual list products
-		[self unarchiveManualListProductsFromPluginProperties];
-	}
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
@@ -196,12 +191,12 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
                                                                 nil]];
 	
 	// End KVO
-	[myProducts removeObserver:self
-		  fromObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [myProducts count])]
+	[_products removeObserver:self
+		  fromObjectsAtIndexes:[NSIndexSet indexSetWithIndexesInRange:NSMakeRange(0, [_products count])]
 				   forKeyPaths:[NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil]];
 					
 	// Relase iVars
-	[myProducts release];
+	[_products release];
 	[myAutomaticList release];
 	[myAutomaticListProductsToDisplay release];
 	
@@ -209,6 +204,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 }
 
 #pragma mark Properties
+
++ (NSSet *)plugInKeys
+{
+    return [NSSet setWithObjects:@"store", @"listSource", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", nil];
+}
 
 @synthesize store = _store;
 - (void)setStore:(AmazonStoreCountry)newStore
@@ -293,13 +293,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	id changeOldObject = [change objectForKey:NSKeyValueChangeOldKey];
 	
 	
-	if ([keyPath isEqualToString:@"manualListProducts"])
-	{
-		if (!manualListIsBeingArchivedOrUnarchived) {
-			[self unarchiveManualListProductsFromPluginProperties];
-		}
-	}
-	else if ([keyPath isEqualToString:@"layout"])
+	if ([keyPath isEqualToString:@"layout"])
 	{
 		// Save the new layout to the defaults
 		[[NSUserDefaults standardUserDefaults] setObject:changeNewObject
