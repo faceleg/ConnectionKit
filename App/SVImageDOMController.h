@@ -6,12 +6,12 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVDOMController.h"
+#import "SVGraphicDOMController.h"
 
 #import "SVImage.h"
 
 
-@interface SVImageDOMController : SVDOMController
+@interface SVImageDOMController : SVGraphicDOMController
 {
 
 }
