@@ -492,6 +492,22 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
+- (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action;
+{
+    if (action != WebViewInsertActionDropped)
+    {
+        return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+    }
+    
+    
+    [[node mutableChildNodesArray] removeAllObjects];
+    [node appendChild:[[node ownerDocument] createTextNode:@""]];
+    
+    return YES;
+}
+
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
