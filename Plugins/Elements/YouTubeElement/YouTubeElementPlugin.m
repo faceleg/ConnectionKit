@@ -17,13 +17,53 @@
 
 @implementation YouTubeElementPlugin
 
+@synthesize userVideoCode = _userVideoCode;
+@synthesize videoID = _videoID;
+@synthesize color1 = _color1;
+@synthesize color2 = _color2;
+@synthesize videoSize = _videoSize;
+@synthesize videoWidth = _videoWidth;
+@synthesize videoHeight = _videoHeight;
+@synthesize showBorder = _showBorder;
+@synthesize includeRelatedVideos = _includeRelatedVideos;
+@synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
+
 + (Class)inspectorViewControllerClass { return [YouTubeElementInspector class]; }
 + (NSSet *)plugInKeys
 { 
-    return [NSSet setWithObjects:@"userVideoCode", @"videoSize", @"color2", @"color1", @"showBorder", @"includeRelatedVideos", nil];
+    return [NSSet setWithObjects:@"userVideoCode", @"videoSize", @"color2", @"color1", @"showBorder", @"includeRelatedVideos", @"useCustomSecondaryColor", nil];
 }
 
-#pragma mark awake
+#pragma mark lifetime
+
+- (id)initWithArguments:(NSDictionary *)arguments
+{
+    self = [super initWithArguments:arguments];
+    
+    
+    // Observer storage
+    [self addObserver:self
+		  forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", @"showBorder", nil]
+			  options:NSKeyValueObservingOptionNew
+			  context:NULL];
+	
+    return self;
+}
+
+- (void)dealloc
+{
+	// Remove old observations
+	[self removeObserver:self forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", @"showBorder", nil]];
+		
+	// Relase iVars
+	self.userVideoCode = nil;
+	self.videoID = nil;
+	self.color2 = nil;
+	self.color1 = nil;
+		
+	[super dealloc];
+}
+
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
@@ -36,12 +76,12 @@
 		[NSAppleScript getWebBrowserURL:&URL title:NULL source:NULL];
 		if (URL && [URL youTubeVideoID])
 		{
-			[self setValue:[URL absoluteString] forKey:@"userVideoCode"];
+			self.userVideoCode = [URL absoluteString];
 		}
 		
 		// Initial size depends on our location
 		YouTubeVideoSize videoSize = YouTubeVideoSizeDefault;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizePageletWidth : YouTubeVideoSizeDefault;
-		[self setInteger:videoSize forKey:@"videoSize"];
+		self.videoSize = videoSize;
 		
 		// Prepare initial colors
 		[self resetColors];
@@ -71,7 +111,7 @@
 		NSURL *URL = [NSURL URLWithString:URLString];
 		if (URL && [URL youTubeVideoID])
 		{
-			[self setValue:URLString forKey:@"userVideoCode"];
+			self.userVideoCode = URLString;
 		}
 	}
 }
@@ -82,44 +122,47 @@
 #pragma mark -
 #pragma mark Plugin
 
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+- (void)observeValueForKeyPath:(NSString *)keyPath
+					  ofObject:(id)object
+					    change:(NSDictionary *)change
+					   context:(void *)context
 {
 	// When the user sets a video code, figure the ID from it
-	if ([key isEqualToString:@"userVideoCode"])
+	if ([keyPath isEqualToString:@"userVideoCode"])
 	{
 		NSString *videoID = nil;
-		if (value) videoID = [[NSURL URLWithString:value] youTubeVideoID];
+		if (self.userVideoCode) videoID = [[NSURL URLWithString:self.userVideoCode] youTubeVideoID];
 		
-		[plugin setValue:videoID forKey:@"videoID"];
+		self.videoID = videoID;
 	}
 	
 	
 	// Update video width & height to match chosen size
-	else if ([key isEqualToString:@"videoSize"] || [key isEqualToString:@"showBorder"])
+	else if ([keyPath isEqualToString:@"videoSize"] || [keyPath isEqualToString:@"showBorder"])
 	{
-		YouTubeVideoSize videoSize = [plugin integerForKey:@"videoSize"];
+		YouTubeVideoSize videoSize = self.videoSize;
 		unsigned videoWidth = [self videoWidthForSize:videoSize];
-		[plugin setInteger:videoWidth forKey:@"videoWidth"];
-		[plugin setInteger:[self videoHeightForSize:videoSize] forKey:@"videoHeight"];
+		self.videoWidth = videoWidth;
+		self.videoHeight = [self videoHeightForSize:videoSize];
 	}
 	
 	
 	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
 	// a new second colour from it
-	else if ([key isEqualToString:@"color2"] && ![plugin boolForKey:@"useCustomSecondaryColor"])
+	else if ([keyPath isEqualToString:@"color2"] && !self.useCustomSecondaryColor)
 	{
-		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:value];
+		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:self.color2];
 		
 		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us
-		[plugin setValue:lightenedColor forKey:@"color1"];	// mis-interpeting the setter
+		self.color1 = lightenedColor;	// mis-interpeting the setter
 		myAutomaticallyUpdatingSecondaryColorFlag = NO;
 	}
 	
 	
 	// When the user sets their own secondary color mark it so no future changes are made by accident
-	else if ([key isEqualToString:@"color1"] && !myAutomaticallyUpdatingSecondaryColorFlag)
+	else if ([keyPath isEqualToString:@"color1"] && !myAutomaticallyUpdatingSecondaryColorFlag)
 	{
-		[plugin setBool:YES forKey:@"useCustomSecondaryColor"];
+		self.useCustomSecondaryColor = YES;
 	}
 }
 
@@ -250,8 +293,8 @@
 
 - (IBAction)resetColors
 {
-	[self setBool:NO forKey:@"useCustomSecondaryColor"];
-	[self setValue:[[self class] defaultPrimaryColor] forKey:@"color2"];
+	self.useCustomSecondaryColor = NO;
+	self.color2 = [[self class] defaultPrimaryColor];
 }
 
 #pragma mark -

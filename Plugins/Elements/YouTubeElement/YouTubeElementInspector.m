@@ -18,6 +18,7 @@
 
 @implementation YouTubeElementInspector
 
+- (NSString *)nibName { return @"YouTubeElement"; }
 
 - (IBAction)openYouTubeURL:(id)sender
 {

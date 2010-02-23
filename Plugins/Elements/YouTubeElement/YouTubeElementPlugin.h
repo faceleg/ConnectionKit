@@ -21,7 +21,30 @@ typedef enum {
 
 	BOOL myAutomaticallyUpdatingSecondaryColorFlag;
 
+	
+	NSString *_userVideoCode;
+	NSString *_videoID;
+	NSColor *_color2;
+	NSColor *_color1;
+	int _videoSize;
+	int _videoWidth;
+	int _videoHeight;
+	BOOL _showBorder;
+	BOOL _includeRelatedVideos;
+	BOOL _useCustomSecondaryColor;
+	
 }
+
+@property (copy) NSString *userVideoCode;
+@property (copy) NSString *videoID;
+@property (copy) NSColor *color2;
+@property (copy) NSColor *color1;
+@property (assign) int videoSize;
+@property (assign) int videoWidth;
+@property (assign) int videoHeight;
+@property (assign) BOOL showBorder;
+@property (assign) BOOL includeRelatedVideos;
+@property (assign) BOOL useCustomSecondaryColor;
 
 - (unsigned)videoWidthForSize:(YouTubeVideoSize)size;
 - (unsigned)videoHeightForSize:(YouTubeVideoSize)size;

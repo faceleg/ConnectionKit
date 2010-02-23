@@ -60,6 +60,6 @@
 	<key>KTTemplateName</key>
 	<string>YouTubeElementTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>YouTubeElementDelegate</string>
+	<string>YouTubeElementPlugin</string>
 </dict>
 </plist>
