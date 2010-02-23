@@ -6,8 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
-#import "KSStringStream.h"
+#import "KSHTMLOutputStream.h"
 
 #import <WebKit/DOMCore.h>
 
@@ -25,7 +24,7 @@ typedef enum {
 
 @class KTAbstractPage, SVHTMLTextBlock, SVLink;
 
-@interface SVHTMLContext : NSObject <KSStringOutputStream>
+@interface SVHTMLContext : KSHTMLOutputStream
 {
   @private
     id <KSStringOutputStream> _stream;
