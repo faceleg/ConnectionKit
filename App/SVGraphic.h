@@ -11,20 +11,21 @@
 
 typedef enum {
     SVGraphicWrapNone,
-    SVGraphicWrapFloatLeft,
-    SVGraphicWrapFloatRight,
-    SVGraphicWrapBlockLeft,
-    SVGraphicWrapBlockCenter,
-    SVGraphicWrapBlockRight,
+    SVGraphicWrapLeft,
+    SVGraphicWrapCenter,
+    SVGraphicWrapRight,
+    SVGraphicWrapLeftSplit,
+    SVGraphicWrapCenterSplit,
+    SVGraphicWrapRightSplit,
 } SVGraphicWrap;
 
 
 #define SVContentObjectWrapNone [NSNumber numberWithInteger:SVGraphicWrapNone]
-#define SVContentObjectWrapFloatLeft [NSNumber numberWithInteger:SVGraphicWrapFloatLeft]
-#define SVContentObjectWrapFloatRight [NSNumber numberWithInteger:SVGraphicWrapFloatRight]
-#define SVContentObjectWrapBlockLeft [NSNumber numberWithInteger:SVGraphicWrapBlockLeft]
-#define SVContentObjectWrapBlockCenter [NSNumber numberWithInteger:SVGraphicWrapBlockCenter]
-#define SVContentObjectWrapBlockRight [NSNumber numberWithInteger:SVGraphicWrapBlockRight]
+#define SVContentObjectWrapFloatLeft [NSNumber numberWithInteger:SVGraphicWrapLeft]
+#define SVContentObjectWrapFloatRight [NSNumber numberWithInteger:SVGraphicWrapRight]
+#define SVContentObjectWrapBlockLeft [NSNumber numberWithInteger:SVGraphicWrapLeftSplit]
+#define SVContentObjectWrapBlockCenter [NSNumber numberWithInteger:SVGraphicWrapCenterSplit]
+#define SVContentObjectWrapBlockRight [NSNumber numberWithInteger:SVGraphicWrapRightSplit]
 //typedef NSNumber SVContentObjectWrap;
 #define SVContentObjectWrap NSNumber
 

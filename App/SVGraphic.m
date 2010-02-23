@@ -339,19 +339,19 @@
     
     switch ([[self wrap] integerValue])
     {
-        case SVGraphicWrapFloatLeft:
+        case SVGraphicWrapLeft:
             result = @"narrow left";
             break;
-        case SVGraphicWrapFloatRight:
+        case SVGraphicWrapRight:
             result = @"narrow right";
             break;
-        case SVGraphicWrapBlockLeft:
+        case SVGraphicWrapLeftSplit:
             result = @"wide left";
             break;
-        case SVGraphicWrapBlockCenter:
+        case SVGraphicWrapCenterSplit:
             result = @"wide center";
             break;
-        case SVGraphicWrapBlockRight:
+        case SVGraphicWrapRightSplit:
             result = @"wide right";
             break;
     }
