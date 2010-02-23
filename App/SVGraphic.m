@@ -75,8 +75,10 @@
 
 - (NSNumber *)wrap { return [[self textAttachment] wrap]; }
 - (void)setWrap:(NSNumber *)wrap { [[self textAttachment] setWrap:wrap]; }
-
-@dynamic wrap;
++ (NSSet *)keyPathsForValuesAffectingWrap
+{
+    return [NSSet setWithObject:@"textAttachment.wrap"];
+}
 
 - (NSNumber *)wrapIsFloatOrBlock
 {
@@ -354,6 +356,11 @@
     }
     
     return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingClassName
+{
+    return [NSSet setWithObject:@"wrap"];
 }
 
 - (void)writeHTML
