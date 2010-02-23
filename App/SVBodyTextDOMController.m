@@ -467,9 +467,22 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                 proposedOperation:(NSDragOperation *)proposedOperation;
 {
     // When dragging graphics within the Web Editor, want to move them rather than do a copy
-    if ([info draggingSource] == [self webEditor])
+    SVWebEditorView *webEditor = [self webEditor];
+    if ([info draggingSource] == webEditor)
     {
         *proposedOperation = NSDragOperationMove;
+        
+        // Only inline graphics should use drag caret
+        NSArray *items = [webEditor selectedItems];
+        for (SVWebEditorItem *anItem in items)
+        {
+            SVGraphic *graphic = [anItem representedObject];
+            if (![[graphic wrap] isEqualToNumber:SVContentObjectWrapNone])
+            {
+                [webEditor removeDragCaret];
+                break;
+            }
+        }
     }
     else
     {
