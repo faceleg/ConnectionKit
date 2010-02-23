@@ -12,6 +12,7 @@
 #import "SVPageInspector.h"
 #import "SVPlugInInspector.h"
 #import "SVDocumentInspector.h"
+#import "SVWrapInspector.h"
 
 #import "KTDocWindowController.h"
 
@@ -98,7 +99,7 @@
     
     
     // Wrap
-    _wrapInspector = [[KSInspectorViewController alloc] initWithNibName:@"WrapInspector" bundle:nil];
+    _wrapInspector = [[SVWrapInspector alloc] initWithNibName:@"WrapInspector" bundle:nil];
     [_wrapInspector setIdentifier:@"com.karelia.Sandvox.WrapInspector"];
     [_wrapInspector setTitle:NSLocalizedString(@"Wrap", @"Wrap Inspector")];
     [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];

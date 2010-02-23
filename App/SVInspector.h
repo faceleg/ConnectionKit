@@ -9,7 +9,7 @@
 #import "KSInspector.h"
 
 
-@class KSInspectorViewController, SVLinkInspector;
+@class KSInspectorViewController, SVWrapInspector, SVLinkInspector;
 
 
 @interface SVInspector : KSInspector
@@ -20,7 +20,7 @@
     KSInspectorViewController   *_documentInspector;
     KSInspectorViewController   *_pageInspector;
     KSInspectorViewController   *_collectionInspector;
-    KSInspectorViewController   *_wrapInspector;
+    SVWrapInspector             *_wrapInspector;
     KSInspectorViewController   *_metricsInspector;
     SVLinkInspector             *_linkInspector;
     KSInspectorViewController   *_plugInInspector;
