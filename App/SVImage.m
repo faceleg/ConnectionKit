@@ -83,10 +83,6 @@
     return result;
 }
 
-#pragma mark Other
-
-@dynamic inlineGraphic;
-
 #pragma mark HTML
 
 - (void)writeBody

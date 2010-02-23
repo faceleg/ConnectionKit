@@ -24,8 +24,6 @@
 @property(nonatomic, copy) NSNumber *constrainProportions;  // BOOL, required
 - (CGSize)originalSize;
 
-@property (nonatomic, retain) SVTextAttachment *inlineGraphic;
-
 
 @end
 
