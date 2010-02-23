@@ -480,11 +480,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             if (![[graphic wrap] isEqualToNumber:SVContentObjectWrapNone])
             {
                 [webEditor removeDragCaret];
-                break;
+                return YES;
             }
         }
         
-        return YES;
+        return NO;
     }
     else
     {
