@@ -188,8 +188,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
-- (id <SVWebEditorText>)webEditor:(SVWebEditorView *)sender
-                      textBlockForDOMRange:(DOMRange *)range;
+- (SVWebEditorItem <SVWebEditorText> *)webEditor:(SVWebEditorView *)sender
+                            textBlockForDOMRange:(DOMRange *)range;
 
 - (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 

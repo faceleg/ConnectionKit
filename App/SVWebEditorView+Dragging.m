@@ -62,11 +62,21 @@
     DOMNode *dropNode = nil;
     if (op > NSDragOperationNone)
     {
+        // Locate the DOM controller/item for the destination
         NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
         DOMRange *editingRange = [[self webView] editableDOMRangeForPoint:point];
-        dropNode = [[editingRange startContainer] enclosingContentEditableElement];
         
-        [self removeDragCaretFromDOMNodes]; // if WebView is accepting drop, can't use our custom caret
+        SVWebEditorItem <SVWebEditorText> *controller =
+        [[self dataSource] webEditor:self textBlockForDOMRange:editingRange];
+        
+        
+        // Ask the controller if it's sure of the drop
+        [controller webEditorTextValidateDrop:sender proposedOperation:&op];
+        
+              
+        // Controller's HTML element determines where to draw the drop highlight
+        if (op > NSDragOperationNone) dropNode = [controller HTMLElement];
+        [self removeDragCaretFromDOMNodes]; // if not accepting drop, can't use our custom caret
     }
     [self moveDragHighlightToDOMNode:dropNode];
     

@@ -1178,11 +1178,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  */
 - (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo
 {
-    NSUInteger result = WebDragDestinationActionEdit;
+    //NSLog(@"-%@ dragInfo: %@", NSStringFromSelector(_cmd), dragInfo);
     
-    if ([[self dataSource] webEditor:self dataSourceShouldHandleDrop:dragInfo])
+    
+    NSUInteger result = WebDragDestinationActionNone;
+    
+    if (![[self dataSource] webEditor:self dataSourceShouldHandleDrop:dragInfo])
     {
-        result = WebDragDestinationActionNone;
+       result = WebDragDestinationActionEdit;
     }
     
     return result;

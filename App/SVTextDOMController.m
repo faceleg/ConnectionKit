@@ -309,6 +309,14 @@
     [_undoCoalescingSelection release]; _undoCoalescingSelection = selection;
 }
 
+#pragma mark Dragging
+
+- (void)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
+                proposedOperation:(NSDragOperation *)proposedOperation;
+{
+    if ([info draggingSource] == [self webEditor]) *proposedOperation = NSDragOperationNone;
+}
+
 @end
 
 

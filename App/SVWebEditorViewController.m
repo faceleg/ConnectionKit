@@ -886,8 +886,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark WebEditorViewDataSource
 
-- (id <SVWebEditorText>)webEditor:(SVWebEditorView *)sender
-                 textBlockForDOMRange:(DOMRange *)range;
+- (SVWebEditorItem <SVWebEditorText> *)webEditor:(SVWebEditorView *)sender
+                            textBlockForDOMRange:(DOMRange *)range;
 {
     return [self textAreaForDOMRange:range];
 }

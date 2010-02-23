@@ -34,4 +34,11 @@
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification;
 
+
+#pragma mark Dragging
+
+- (void)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
+                proposedOperation:(NSDragOperation *)proposedOperation;
+
+
 @end
