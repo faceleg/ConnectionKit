@@ -18,6 +18,7 @@
 #import "SVGraphic.h"
 #import "SVBody.h"
 #import "SVBodyTextDOMController.h"
+#import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
@@ -904,8 +905,29 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSArray *pboardReps = [items valueForKeyPath:@"representedObject.propertyListRepresentation"];
     if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
     {
-        [pasteboard declareTypes:[NSArray array] owner:self];
+        [pasteboard declareTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
         result = YES;
+        
+        
+        
+        // HTML representation of the items
+        NSMutableString *html = [[NSMutableString alloc] init];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:html];
+        [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
+        [context push];
+        
+        for (SVDOMController *aController in items)
+        {
+            [aController writeRepresentedObjectHTML];
+        }
+        
+        [context pop];
+        [context release];
+        
+        [pasteboard setString:html forType:NSHTMLPboardType];
+        [html release];
+        
+        
         /*
         [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
                            owner:self];
