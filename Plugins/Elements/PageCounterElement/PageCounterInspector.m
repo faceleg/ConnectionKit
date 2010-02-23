@@ -30,29 +30,31 @@
 			if (!hasDoneGraphicsYet)
 			{
 				hasDoneGraphicsYet = YES;
-				//[[oTheme menu] addItem:[NSMenuItem separatorItem]];		// PROBLEMS WITH TAG BINDING?
+				[[oTheme menu] addItem:[NSMenuItem separatorItem]];		// PROBLEMS WITH TAG BINDING?
 			}
-			[oTheme addItemWithTitle:@""];	// ADD THE MENU
-			
-			NSImage *sampleImage = [themeDict objectForKey:PCSampleImageKey];
-			if (sampleImage)
+			else
 			{
-				[[oTheme lastItem] setImage:sampleImage];
+				[oTheme addItemWithTitle:@""];	// ADD THE MENU
+				
+				NSImage *sampleImage = [themeDict objectForKey:PCSampleImageKey];
+				if (sampleImage)
+				{
+					[[oTheme lastItem] setImage:sampleImage];
+				}
+				[[oTheme lastItem] setTag:tag++];
 			}
-			[[oTheme lastItem] setTag:tag++];
 		}
 		else
 		{
 			[oTheme addItemWithTitle:theme];	// ADD THE MENU
-			/// baseline is wonky here!
-			//			[[oTheme lastItem] setAttributedTitle:	// make it bold, small system font
-			//				[[[NSAttributedString alloc]
-			//					initWithString:theme
-			//						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
-			//										[NSFont boldSystemFontOfSize: [NSFont smallSystemFontSize]],
-			//										NSFontAttributeName,
-			//										nil]
-			//					] autorelease]];
+			[[oTheme lastItem] setAttributedTitle:	// make it bold, small system font
+				[[[NSAttributedString alloc]
+					initWithString:theme
+						attributes:[NSDictionary dictionaryWithObjectsAndKeys:
+										[NSFont boldSystemFontOfSize: [NSFont smallSystemFontSize]],
+										NSFontAttributeName,
+										nil]
+					] autorelease]];
 			[[oTheme lastItem] setTag:tag++];
 		}
 	}
@@ -79,7 +81,7 @@
 	if ([keyPath isEqualToString:@"selectedTheme"])
 	{
 		// Add or remove the popup button's border as appropriate
-		int index = [[[self delegateOwner] objectForKey:@"selectedTheme"] unsignedIntValue];
+		int index = [[[[self inspectedObjects] lastObject] objectForKey:@"selectedTheme"] unsignedIntValue];
 		[oTheme setBordered:(index < 2)];
 	}
 	else
