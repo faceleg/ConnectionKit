@@ -579,6 +579,20 @@ typedef enum {  // this copied from WebPreferences+Private.h
     _selectedTextRangeBeforeLastChange = [[self selectedTextRange] copy];
 }
 
+- (NSPasteboard *)insertionPasteboard;
+{
+    NSPasteboard *result = nil;
+    
+    if ([[self webView] respondsToSelector:@selector(_insertionPasteboard)])
+    {
+        result = [[self webView] performSelector:@selector(_insertionPasteboard)];
+    }
+    
+    if (!result) result = _insertionPasteboard;
+    
+    return result;
+}
+
 #pragma mark Undo
 
 - (NSUndoManager *)webViewUndoManager
@@ -1284,11 +1298,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
         
         // Let the text object decide
-        NSPasteboard *pasteboard = nil;
-        if ([webView respondsToSelector:@selector(_insertionPasteboard)])
-        {
-            pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
-        }
+        NSPasteboard *pasteboard = [self insertionPasteboard];
         
         result = [text webEditorTextShouldInsertNode:node
                                         replacingDOMRange:range
@@ -1312,11 +1322,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         if (text)
         {
             // Let the text object decide
-            NSPasteboard *pasteboard = nil;
-            if ([webView respondsToSelector:@selector(_insertionPasteboard)])
-            {
-                pasteboard = [webView performSelector:@selector(_insertionPasteboard)];
-            }
+            NSPasteboard *pasteboard = [self insertionPasteboard];
             
             result = [text webEditorTextShouldInsertText:string
                                        replacingDOMRange:range

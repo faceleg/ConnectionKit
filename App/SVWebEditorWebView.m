@@ -97,7 +97,11 @@
     }
     else
     {
-        return [super performDragOperation:sender];
+        // Store pasteboard temporarily
+        [[self webEditorView] setValue:[sender draggingPasteboard] forKey:@"_insertionPasteboard"];
+        BOOL result = [super performDragOperation:sender];
+        [[self webEditorView] setValue:nil forKey:@"_insertionPasteboard"];
+        return result;
     }
 }
 

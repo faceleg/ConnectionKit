@@ -44,6 +44,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL            _mouseUpMayBeginEditing;
     NSUndoManager   *_undoManager;
     BOOL            _liveLinks;
+    NSPasteboard    *_insertionPasteboard;
     
     // Drag & Drop
     BOOL        _isDragging;
@@ -107,6 +108,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
 
 - (void)willChange; // posts kSVWebEditorViewWillChangeNotification
+
+- (NSPasteboard *)insertionPasteboard;
 
 
 #pragma mark Drawing
