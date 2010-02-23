@@ -129,8 +129,7 @@
 
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
                     replacingDOMRange:(DOMRange *)range
-                          givenAction:(WebViewInsertAction)action
-                           pasteboard:(NSPasteboard *)pasteboard;
+                          givenAction:(WebViewInsertAction)action;
 {
     BOOL result = YES;
     return YES;
@@ -143,6 +142,7 @@
     {
         result = NO;
         
+        NSPasteboard *pasteboard = [[self webEditor] insertionPasteboard];
         if ([[pasteboard types] containsObject:NSStringPboardType])
         {
             NSString *text = [pasteboard stringForType:NSStringPboardType];
@@ -162,8 +162,7 @@
 
 - (BOOL)webEditorTextShouldInsertText:(NSString *)text
                     replacingDOMRange:(DOMRange *)range
-                          givenAction:(WebViewInsertAction)action
-                           pasteboard:(NSPasteboard *)pasteboard;
+                          givenAction:(WebViewInsertAction)action;
 {
     BOOL result = YES;
     

@@ -1298,12 +1298,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
         
         // Let the text object decide
-        NSPasteboard *pasteboard = [self insertionPasteboard];
-        
         result = [text webEditorTextShouldInsertNode:node
-                                        replacingDOMRange:range
-                                              givenAction:action
-                                               pasteboard:pasteboard];
+                                   replacingDOMRange:range
+                                         givenAction:action];
     }
     
     
@@ -1322,12 +1319,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         if (text)
         {
             // Let the text object decide
-            NSPasteboard *pasteboard = [self insertionPasteboard];
-            
             result = [text webEditorTextShouldInsertText:string
                                        replacingDOMRange:range
-                                             givenAction:action
-                                              pasteboard:pasteboard];
+                                             givenAction:action];
         }
     }
     

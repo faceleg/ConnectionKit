@@ -14,13 +14,11 @@
 // These MIGHT be received before editing the DOM
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
                     replacingDOMRange:(DOMRange *)range
-                          givenAction:(WebViewInsertAction)action
-                           pasteboard:(NSPasteboard *)pasteboard;
+                          givenAction:(WebViewInsertAction)action;
 
 - (BOOL)webEditorTextShouldInsertText:(NSString *)text
                     replacingDOMRange:(DOMRange *)range
-                          givenAction:(WebViewInsertAction)action
-                           pasteboard:(NSPasteboard *)pasteboard;
+                          givenAction:(WebViewInsertAction)action;
 
 
 // Informs the receiver that it is about to gain focus.
