@@ -496,16 +496,33 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                     replacingDOMRange:(DOMRange *)range
                           givenAction:(WebViewInsertAction)action;
 {
-    if (action != WebViewInsertActionDropped)
+    // When moving an inline element, want to actually do that move
+    if (action == WebViewInsertActionDropped)
     {
-        return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+        SVWebEditorView *webEditor = [self webEditor];
+        NSPasteboard *pasteboard = [webEditor insertionPasteboard];
+        
+        if (pasteboard && [webEditor isDragging])
+        {
+            // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+            [[node mutableChildNodesArray] removeAllObjects];
+            [node appendChild:[[node ownerDocument] createTextNode:@""]];
+            
+            
+            // Move the dragged items into place
+            NSArray *selection = [[webEditor selectedItems] copy];  // Our modifications may cause selection to change
+            for (SVWebEditorItem *anItem in selection)
+            {
+                [range insertNode:[anItem HTMLElement]];
+            }
+            [selection release];
+        }
     }
     
     
-    [[node mutableChildNodesArray] removeAllObjects];
-    [node appendChild:[[node ownerDocument] createTextNode:@""]];
     
-    return YES;
+    
+    return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
 }
 
 #pragma mark KVO

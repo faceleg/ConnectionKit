@@ -174,6 +174,8 @@
     }
 }
 
+- (BOOL)isDragging; { return _isDragging; }
+
 #pragma mark Drawing
 
 - (void)drawDragCaretInView:(NSView *)view;

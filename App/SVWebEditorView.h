@@ -165,6 +165,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @interface SVWebEditorView (Dragging)
 
+#pragma mark Dragging Source
+- (BOOL)isDragging;
+
+
 #pragma mark Dragging Destination
 
 // Operates in a similar fashion to WebView's drag caret methods, but instead draw a big blue highlight around the node. To remove pass in nil
