@@ -66,6 +66,7 @@
 
 #pragma mark Layout/Styling
 
+@dynamic showBackground;
 @dynamic showBorder;
 
 #pragma mark Placement

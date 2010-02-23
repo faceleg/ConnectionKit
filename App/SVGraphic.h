@@ -62,6 +62,7 @@ typedef enum {
 
 
 #pragma mark Layout/Styling
+@property(nonatomic, copy) NSNumber *showBackground;
 @property(nonatomic, copy) NSNumber *showBorder;
 
 

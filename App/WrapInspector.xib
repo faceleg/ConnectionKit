@@ -43,13 +43,13 @@
 				<int key="NSvFlags">268</int>
 				<object class="NSMutableArray" key="NSSubviews">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<object class="NSTextField" id="982063862">
+					<object class="NSTextField" id="650585784">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 10}, {195, 11}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSTextFieldCell" key="NSCell" id="490891050">
+						<object class="NSTextFieldCell" key="NSCell" id="540859750">
 							<int key="NSCellFlags">68288064</int>
 							<int key="NSCellFlags2">272892928</int>
 							<string key="NSContents">Note: Not all designs respect these settings</string>
@@ -58,7 +58,7 @@
 								<double key="NSSize">9</double>
 								<int key="NSfFlags">3614</int>
 							</object>
-							<reference key="NSControlView" ref="982063862"/>
+							<reference key="NSControlView" ref="650585784"/>
 							<object class="NSColor" key="NSBackgroundColor" id="378728806">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
@@ -77,13 +77,13 @@
 							</object>
 						</object>
 					</object>
-					<object class="NSButton" id="999742425">
+					<object class="NSButton" id="289192844">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
 						<string key="NSFrame">{{7, 47}, {90, 18}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
-						<object class="NSButtonCell" key="NSCell" id="355393274">
+						<object class="NSButtonCell" key="NSCell" id="100308511">
 							<int key="NSCellFlags">-2080244224</int>
 							<int key="NSCellFlags2">131072</int>
 							<string key="NSContents">Background</string>
@@ -92,10 +92,10 @@
 								<double key="NSSize">11</double>
 								<int key="NSfFlags">16</int>
 							</object>
-							<reference key="NSControlView" ref="999742425"/>
+							<reference key="NSControlView" ref="289192844"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
-							<object class="NSCustomResource" key="NSNormalImage" id="851456734">
+							<object class="NSCustomResource" key="NSNormalImage" id="214426624">
 								<string key="NSClassName">NSImage</string>
 								<string key="NSResourceName">NSSwitch</string>
 							</object>
@@ -316,7 +316,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<int key="NSfFlags">1044</int>
 						</object>
 					</object>
-					<object class="NSBox" id="780688447">
+					<object class="NSBox" id="800100298">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">10</int>
 						<string key="NSFrame">{{8, 69}, {210, 5}}</string>
@@ -327,7 +327,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Box</string>
 							<reference key="NSSupport" ref="429042837"/>
-							<object class="NSColor" key="NSBackgroundColor" id="542175069">
+							<object class="NSColor" key="NSBackgroundColor" id="979063873">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">textBackgroundColor</string>
@@ -354,7 +354,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<int key="NSCellFlags2">0</int>
 							<string key="NSContents">Box</string>
 							<reference key="NSSupport" ref="429042837"/>
-							<reference key="NSBackgroundColor" ref="542175069"/>
+							<reference key="NSBackgroundColor" ref="979063873"/>
 							<object class="NSColor" key="NSTextColor">
 								<int key="NSColorSpace">3</int>
 								<bytes key="NSWhite">MCAwLjgwMDAwMDAxMTkAA</bytes>
@@ -548,7 +548,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference key="NSControlView" ref="651179899"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
-							<reference key="NSNormalImage" ref="851456734"/>
+							<reference key="NSNormalImage" ref="214426624"/>
 							<reference key="NSAlternateImage" ref="304523879"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -570,7 +570,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference key="NSControlView" ref="439842699"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
-							<reference key="NSNormalImage" ref="851456734"/>
+							<reference key="NSNormalImage" ref="214426624"/>
 							<reference key="NSAlternateImage" ref="304523879"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -592,7 +592,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference key="NSControlView" ref="505162265"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
-							<reference key="NSNormalImage" ref="851456734"/>
+							<reference key="NSNormalImage" ref="214426624"/>
 							<reference key="NSAlternateImage" ref="304523879"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -614,7 +614,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference key="NSControlView" ref="99513150"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
-							<reference key="NSNormalImage" ref="851456734"/>
+							<reference key="NSNormalImage" ref="214426624"/>
 							<reference key="NSAlternateImage" ref="304523879"/>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -817,6 +817,26 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<int key="connectionID">223</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showBackground</string>
+						<reference key="source" ref="289192844"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="289192844"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showBackground</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showBackground</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSRaisesForNotApplicableKeys</string>
+								<boolean value="NO" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">226</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -862,10 +882,10 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="505162265"/>
 							<reference ref="439842699"/>
 							<reference ref="651179899"/>
-							<reference ref="999742425"/>
-							<reference ref="780688447"/>
+							<reference ref="289192844"/>
+							<reference ref="800100298"/>
 							<reference ref="99513150"/>
-							<reference ref="982063862"/>
+							<reference ref="650585784"/>
 						</object>
 						<reference key="parent" ref="0"/>
 					</object>
@@ -1056,36 +1076,36 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">197</int>
-						<reference key="object" ref="999742425"/>
+						<reference key="object" ref="289192844"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="355393274"/>
+							<reference ref="100308511"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">198</int>
-						<reference key="object" ref="355393274"/>
-						<reference key="parent" ref="999742425"/>
+						<reference key="object" ref="100308511"/>
+						<reference key="parent" ref="289192844"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">199</int>
-						<reference key="object" ref="780688447"/>
+						<reference key="object" ref="800100298"/>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">200</int>
-						<reference key="object" ref="982063862"/>
+						<reference key="object" ref="650585784"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="490891050"/>
+							<reference ref="540859750"/>
 						</object>
 						<reference key="parent" ref="1005"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">201</int>
-						<reference key="object" ref="490891050"/>
-						<reference key="parent" ref="982063862"/>
+						<reference key="object" ref="540859750"/>
+						<reference key="parent" ref="650585784"/>
 					</object>
 				</object>
 			</object>
@@ -1186,7 +1206,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">223</int>
+			<int key="maxID">226</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1390,7 +1410,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVDOMController</string>
 					<string key="superclassName">SVWebEditorItem</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="788589112">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="1004128675">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVDOMController.h</string>
 					</object>
@@ -1422,7 +1442,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebEditorItem</string>
-					<reference key="sourceIdentifier" ref="788589112"/>
+					<reference key="sourceIdentifier" ref="1004128675"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVWebEditorItem</string>
