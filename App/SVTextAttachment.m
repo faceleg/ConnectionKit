@@ -35,6 +35,8 @@
 @dynamic length;
 @dynamic location;
 
+@dynamic placement;
+@dynamic causesWrap;
 @dynamic wrap;
 
 @end

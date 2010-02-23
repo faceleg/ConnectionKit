@@ -28,7 +28,9 @@
 @property(nonatomic, retain) NSNumber *length;
 @property(nonatomic, retain) NSNumber *location;
 
-@property(nonatomic, copy) NSNumber *wrap;
+@property(nonatomic, copy) NSNumber *placement;     // mandatory, SVGraphicPlacement
+@property(nonatomic, copy) NSNumber *causesWrap;    // mandatory, BOOL
+@property(nonatomic, copy) NSNumber *wrap;          // mandatory, SVGraphicWrap
 
 @end
 

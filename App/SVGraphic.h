@@ -10,13 +10,18 @@
 
 
 typedef enum {
+    SVGraphicPlacementInline,
+    SVGraphicPlacementBlock,
+} SVGraphicPlacement;
+
+typedef enum {
     SVGraphicWrapNone,
-    SVGraphicWrapLeft,
-    SVGraphicWrapCenter,
-    SVGraphicWrapRight,
     SVGraphicWrapLeftSplit,
     SVGraphicWrapCenterSplit,
     SVGraphicWrapRightSplit,
+    SVGraphicWrapLeft,
+    SVGraphicWrapCenter,
+    SVGraphicWrapRight,
 } SVGraphicWrap;
 
 
