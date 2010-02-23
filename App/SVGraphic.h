@@ -78,7 +78,9 @@ typedef enum {
  */
 
 @property(nonatomic, readonly) SVCallout *callout;
+
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
+- (BOOL)canBePlacedInline;  // default is NO. Subclasses can override
 
 @property(nonatomic, copy) SVContentObjectWrap *wrap;
 @property(nonatomic, copy) NSNumber *wrapIsFloatOrBlock;    // setter picks best wrap type

@@ -74,6 +74,8 @@
 @dynamic callout;
 @dynamic textAttachment;
 
+- (BOOL)canBePlacedInline; { return NO; }
+
 - (NSNumber *)wrap { return [[self textAttachment] wrap]; }
 - (void)setWrap:(NSNumber *)wrap { [[self textAttachment] setWrap:wrap]; }
 + (NSSet *)keyPathsForValuesAffectingWrap
