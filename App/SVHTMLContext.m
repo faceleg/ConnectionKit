@@ -45,7 +45,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringStream:(id <KSStringStream>)stream; // designated initializer
+- (id)initWithStringStream:(id <KSStringOutputStream>)stream; // designated initializer
 {
     [super init];
     

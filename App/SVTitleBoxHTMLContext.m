@@ -44,7 +44,7 @@
 
 @implementation SVTitleBoxHTMLContext
 
-- (id)initWithStringStream:(id <KSStringStream>)stream
+- (id)initWithStringStream:(id <KSStringOutputStream>)stream
 {
     self = [super initWithStringStream:stream];
     

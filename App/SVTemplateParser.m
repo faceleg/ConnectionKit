@@ -226,7 +226,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
  */
 + (BOOL)parseTemplate:(NSString *)aTemplate
             component:(id)component
-        writeToStream:(id <KSStringStream>)context;
+        writeToStream:(id <KSStringOutputStream>)context;
 {
 	SVTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
 	BOOL result = [parser parseIntoStream:context];
@@ -235,7 +235,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     return result;
 }
 
-- (BOOL)parseIntoStream:(id <KSStringStream>)stream;
+- (BOOL)parseIntoStream:(id <KSStringOutputStream>)stream;
 {
 	BOOL result = NO;
 	@try

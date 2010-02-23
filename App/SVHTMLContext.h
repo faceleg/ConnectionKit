@@ -25,10 +25,10 @@ typedef enum {
 
 @class KTAbstractPage, SVHTMLTextBlock, SVLink;
 
-@interface SVHTMLContext : NSObject <KSStringStream>
+@interface SVHTMLContext : NSObject <KSStringOutputStream>
 {
   @private
-    id <KSStringStream> _stream;
+    id <KSStringOutputStream> _stream;
     
     NSMutableArray  *_openElements;
     NSInteger       _indentation;
@@ -49,7 +49,7 @@ typedef enum {
 }
 
 #pragma mark Creating a Context
-- (id)initWithStringStream:(id <KSStringStream>)stream; // designated initializer
+- (id)initWithStringStream:(id <KSStringOutputStream>)stream; // designated initializer
 - (id)init; // creates a context with no underlying string stream. Handy for iteration & deriving info, but not a lot else
 
 
@@ -104,7 +104,7 @@ typedef enum {
 
 #pragma mark Primitive
 - (void)writeString:(NSString *)string; // calls -writeString: on our string stream. Override to customize raw writing
-@property(nonatomic, retain, readonly) id <KSStringStream> stringStream;
+@property(nonatomic, retain, readonly) id <KSStringOutputStream> stringStream;
 
 
 #pragma mark Properties
