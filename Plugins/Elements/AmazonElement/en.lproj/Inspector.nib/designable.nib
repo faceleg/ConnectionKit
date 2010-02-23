@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <archive type="com.apple.InterfaceBuilder3.Cocoa.XIB" version="7.10">
 	<data>
-		<int key="IBDocument.SystemTarget">1040</int>
+		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10C540</string>
 		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038.25</string>
@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1012"/>
+			<integer value="1039"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -296,7 +296,7 @@
 							<object class="NSTabViewItem" id="85554065">
 								<string key="NSIdentifier">productsOrList</string>
 								<object class="NSView" key="NSView" id="826007103">
-									<reference key="NSNextResponder" ref="766885201"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -553,23 +553,23 @@
 											<reference key="NSContentView" ref="620215038"/>
 											<bytes key="NSScrollAmts">QSAAAEEgAABCRAAAQkQAAA</bytes>
 										</object>
-										<object class="BWAnchoredButtonBar" id="263269240">
+										<object class="BWAnchoredButtonBar" id="226585762">
 											<reference key="NSNextResponder" ref="826007103"/>
 											<int key="NSvFlags">290</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
-												<object class="BWAnchoredButton" id="227301445">
-													<reference key="NSNextResponder" ref="263269240"/>
+												<object class="BWAnchoredButton" id="636920584">
+													<reference key="NSNextResponder" ref="226585762"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrameSize">{26, 24}</string>
-													<reference key="NSSuperview" ref="263269240"/>
+													<reference key="NSSuperview" ref="226585762"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="680919794">
+													<object class="BWAnchoredButtonCell" key="NSCell" id="834469962">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="227301445"/>
+														<reference key="NSControlView" ref="636920584"/>
 														<int key="NSButtonFlags">-2033958657</int>
 														<int key="NSButtonFlags2">163</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -582,18 +582,18 @@
 														<int key="NSPeriodicInterval">25</int>
 													</object>
 												</object>
-												<object class="BWAnchoredButton" id="151876682">
-													<reference key="NSNextResponder" ref="263269240"/>
+												<object class="BWAnchoredButton" id="814300081">
+													<reference key="NSNextResponder" ref="226585762"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrame">{{25, 0}, {26, 24}}</string>
-													<reference key="NSSuperview" ref="263269240"/>
+													<reference key="NSSuperview" ref="226585762"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="389860664">
+													<object class="BWAnchoredButtonCell" key="NSCell" id="741497380">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="151876682"/>
+														<reference key="NSControlView" ref="814300081"/>
 														<int key="NSButtonFlags">-2033958657</int>
 														<int key="NSButtonFlags2">163</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -606,52 +606,52 @@
 														<int key="NSPeriodicInterval">25</int>
 													</object>
 												</object>
-												<object class="BWAnchoredPopUpButton" id="389457707">
-													<reference key="NSNextResponder" ref="263269240"/>
+												<object class="BWAnchoredPopUpButton" id="192617705">
+													<reference key="NSNextResponder" ref="226585762"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrame">{{50, 0}, {32, 24}}</string>
-													<reference key="NSSuperview" ref="263269240"/>
+													<reference key="NSSuperview" ref="226585762"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredPopUpButtonCell" key="NSCell" id="509960898">
+													<object class="BWAnchoredPopUpButtonCell" key="NSCell" id="611379192">
 														<int key="NSCellFlags">-2076049856</int>
 														<int key="NSCellFlags2">134350848</int>
-														<object class="NSFont" key="NSSupport" id="1049053864">
+														<object class="NSFont" key="NSSupport" id="164362707">
 															<string key="NSName">LucidaGrande</string>
 															<double key="NSSize">13</double>
 															<int key="NSfFlags">16</int>
 														</object>
-														<reference key="NSControlView" ref="389457707"/>
+														<reference key="NSControlView" ref="192617705"/>
 														<int key="NSButtonFlags">-2038284033</int>
 														<int key="NSButtonFlags2">163</int>
 														<string key="NSAlternateContents"/>
 														<string key="NSKeyEquivalent"/>
 														<int key="NSPeriodicDelay">400</int>
 														<int key="NSPeriodicInterval">75</int>
-														<object class="NSMenuItem" key="NSMenuItem" id="53692415">
-															<reference key="NSMenu" ref="564085462"/>
+														<object class="NSMenuItem" key="NSMenuItem" id="918897513">
+															<reference key="NSMenu" ref="889906683"/>
 															<bool key="NSIsHidden">YES</bool>
 															<string key="NSTitle"/>
 															<string key="NSKeyEquiv"/>
 															<int key="NSKeyEquivModMask">1048576</int>
 															<int key="NSMnemonicLoc">2147483647</int>
 															<int key="NSState">1</int>
-															<object class="NSCustomResource" key="NSImage" id="934701732">
+															<object class="NSCustomResource" key="NSImage" id="270022431">
 																<string key="NSClassName">NSImage</string>
 																<string key="NSResourceName">NSActionTemplate</string>
 															</object>
 															<reference key="NSOnImage" ref="433729511"/>
 															<reference key="NSMixedImage" ref="112616"/>
 															<string key="NSAction">_popUpItemAction:</string>
-															<reference key="NSTarget" ref="509960898"/>
+															<reference key="NSTarget" ref="611379192"/>
 														</object>
 														<bool key="NSMenuItemRespectAlignment">YES</bool>
-														<object class="NSMenu" key="NSMenu" id="564085462">
+														<object class="NSMenu" key="NSMenu" id="889906683">
 															<string key="NSTitle">OtherViews</string>
 															<object class="NSMutableArray" key="NSMenuItems">
 																<bool key="EncodedWithXMLCoder">YES</bool>
-																<reference ref="53692415"/>
-																<object class="NSMenuItem" id="933312141">
-																	<reference key="NSMenu" ref="564085462"/>
+																<reference ref="918897513"/>
+																<object class="NSMenuItem" id="160690130">
+																	<reference key="NSMenu" ref="889906683"/>
 																	<string key="NSTitle">View Selected Product</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
@@ -659,10 +659,10 @@
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="509960898"/>
+																	<reference key="NSTarget" ref="611379192"/>
 																</object>
-																<object class="NSMenuItem" id="92387800">
-																	<reference key="NSMenu" ref="564085462"/>
+																<object class="NSMenuItem" id="390327720">
+																	<reference key="NSMenu" ref="889906683"/>
 																	<bool key="NSIsDisabled">YES</bool>
 																	<bool key="NSIsSeparator">YES</bool>
 																	<string key="NSTitle"/>
@@ -672,10 +672,10 @@
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="509960898"/>
+																	<reference key="NSTarget" ref="611379192"/>
 																</object>
-																<object class="NSMenuItem" id="776101715">
-																	<reference key="NSMenu" ref="564085462"/>
+																<object class="NSMenuItem" id="867530795">
+																	<reference key="NSMenu" ref="889906683"/>
 																	<string key="NSTitle">Reload Selected Product</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
@@ -683,10 +683,10 @@
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="509960898"/>
+																	<reference key="NSTarget" ref="611379192"/>
 																</object>
-																<object class="NSMenuItem" id="306698385">
-																	<reference key="NSMenu" ref="564085462"/>
+																<object class="NSMenuItem" id="932370723">
+																	<reference key="NSMenu" ref="889906683"/>
 																	<string key="NSTitle">Reload All</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
@@ -694,7 +694,7 @@
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="509960898"/>
+																	<reference key="NSTarget" ref="611379192"/>
 																</object>
 															</object>
 														</object>
@@ -707,10 +707,10 @@
 													</object>
 												</object>
 												<object class="NSTextField" id="834152611">
-													<reference key="NSNextResponder" ref="263269240"/>
+													<reference key="NSNextResponder" ref="226585762"/>
 													<int key="NSvFlags">266</int>
 													<string key="NSFrame">{{87, 6}, {118, 11}}</string>
-													<reference key="NSSuperview" ref="263269240"/>
+													<reference key="NSSuperview" ref="226585762"/>
 													<bool key="NSEnabled">YES</bool>
 													<object class="NSTextFieldCell" key="NSCell" id="321727836">
 														<int key="NSCellFlags">-1808662975</int>
@@ -736,7 +736,6 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 330}}</string>
-									<reference key="NSSuperview" ref="766885201"/>
 								</object>
 								<string key="NSLabel">Products</string>
 								<reference key="NSColor" ref="466156009"/>
@@ -745,7 +744,7 @@
 							<object class="NSTabViewItem" id="975162469">
 								<string key="NSIdentifier">productsOrList</string>
 								<object class="NSView" key="NSView" id="79339765">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="766885201"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1157,50 +1156,50 @@ aXN0bWFuaWEuA</string>
 												<int key="NSArrowPosition">1</int>
 											</object>
 										</object>
-										<object class="BWAnchoredButtonBar" id="406122130">
+										<object class="BWAnchoredButtonBar" id="840191586">
 											<reference key="NSNextResponder" ref="79339765"/>
 											<int key="NSvFlags">290</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
-												<object class="BWAnchoredPopUpButton" id="15257646">
-													<reference key="NSNextResponder" ref="406122130"/>
+												<object class="BWAnchoredPopUpButton" id="89137830">
+													<reference key="NSNextResponder" ref="840191586"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrameSize">{32, 24}</string>
-													<reference key="NSSuperview" ref="406122130"/>
+													<reference key="NSSuperview" ref="840191586"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredPopUpButtonCell" key="NSCell" id="767182451">
+													<object class="BWAnchoredPopUpButtonCell" key="NSCell" id="462079954">
 														<int key="NSCellFlags">-2076049856</int>
 														<int key="NSCellFlags2">134350848</int>
-														<reference key="NSSupport" ref="1049053864"/>
-														<reference key="NSControlView" ref="15257646"/>
+														<reference key="NSSupport" ref="164362707"/>
+														<reference key="NSControlView" ref="89137830"/>
 														<int key="NSButtonFlags">-2038284033</int>
 														<int key="NSButtonFlags2">163</int>
 														<string key="NSAlternateContents"/>
 														<string key="NSKeyEquivalent"/>
 														<int key="NSPeriodicDelay">400</int>
 														<int key="NSPeriodicInterval">75</int>
-														<object class="NSMenuItem" key="NSMenuItem" id="874169487">
-															<reference key="NSMenu" ref="1029011658"/>
+														<object class="NSMenuItem" key="NSMenuItem" id="839701688">
+															<reference key="NSMenu" ref="65778677"/>
 															<bool key="NSIsHidden">YES</bool>
 															<string key="NSTitle"/>
 															<string key="NSKeyEquiv"/>
 															<int key="NSKeyEquivModMask">1048576</int>
 															<int key="NSMnemonicLoc">2147483647</int>
 															<int key="NSState">1</int>
-															<reference key="NSImage" ref="934701732"/>
+															<reference key="NSImage" ref="270022431"/>
 															<reference key="NSOnImage" ref="433729511"/>
 															<reference key="NSMixedImage" ref="112616"/>
 															<string key="NSAction">_popUpItemAction:</string>
-															<reference key="NSTarget" ref="767182451"/>
+															<reference key="NSTarget" ref="462079954"/>
 														</object>
 														<bool key="NSMenuItemRespectAlignment">YES</bool>
-														<object class="NSMenu" key="NSMenu" id="1029011658">
+														<object class="NSMenu" key="NSMenu" id="65778677">
 															<string key="NSTitle">OtherViews</string>
 															<object class="NSMutableArray" key="NSMenuItems">
 																<bool key="EncodedWithXMLCoder">YES</bool>
-																<reference ref="874169487"/>
-																<object class="NSMenuItem" id="164237272">
-																	<reference key="NSMenu" ref="1029011658"/>
+																<reference ref="839701688"/>
+																<object class="NSMenuItem" id="86720630">
+																	<reference key="NSMenu" ref="65778677"/>
 																	<string key="NSTitle">View Selected Product</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
@@ -1208,10 +1207,10 @@ aXN0bWFuaWEuA</string>
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="767182451"/>
+																	<reference key="NSTarget" ref="462079954"/>
 																</object>
-																<object class="NSMenuItem" id="451365529">
-																	<reference key="NSMenu" ref="1029011658"/>
+																<object class="NSMenuItem" id="303541503">
+																	<reference key="NSMenu" ref="65778677"/>
 																	<string key="NSTitle">View Amazon List Page</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
@@ -1219,10 +1218,10 @@ aXN0bWFuaWEuA</string>
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="767182451"/>
+																	<reference key="NSTarget" ref="462079954"/>
 																</object>
-																<object class="NSMenuItem" id="224151991">
-																	<reference key="NSMenu" ref="1029011658"/>
+																<object class="NSMenuItem" id="679623652">
+																	<reference key="NSMenu" ref="65778677"/>
 																	<bool key="NSIsDisabled">YES</bool>
 																	<bool key="NSIsSeparator">YES</bool>
 																	<string key="NSTitle"/>
@@ -1232,10 +1231,10 @@ aXN0bWFuaWEuA</string>
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="767182451"/>
+																	<reference key="NSTarget" ref="462079954"/>
 																</object>
-																<object class="NSMenuItem" id="668101807">
-																	<reference key="NSMenu" ref="1029011658"/>
+																<object class="NSMenuItem" id="54246251">
+																	<reference key="NSMenu" ref="65778677"/>
 																	<string key="NSTitle">Reload List</string>
 																	<string key="NSKeyEquiv"/>
 																	<int key="NSKeyEquivModMask">1048576</int>
@@ -1243,7 +1242,7 @@ aXN0bWFuaWEuA</string>
 																	<reference key="NSOnImage" ref="433729511"/>
 																	<reference key="NSMixedImage" ref="112616"/>
 																	<string key="NSAction">_popUpItemAction:</string>
-																	<reference key="NSTarget" ref="767182451"/>
+																	<reference key="NSTarget" ref="462079954"/>
 																</object>
 															</object>
 														</object>
@@ -1265,6 +1264,7 @@ aXN0bWFuaWEuA</string>
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 330}}</string>
+									<reference key="NSSuperview" ref="766885201"/>
 									<reference key="NSNextKeyView" ref="785667224"/>
 								</object>
 								<string key="NSLabel">List Choice</string>
@@ -1399,7 +1399,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="1001849735">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{59, 170}, {54, 16}}</string>
+											<string key="NSFrame">{{59, 160}, {54, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="786261416">
@@ -1422,7 +1422,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="1015436675">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{69, 150}, {107, 18}}</string>
+											<string key="NSFrame">{{69, 142}, {107, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="17410657">
@@ -1443,7 +1443,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="473600686">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{14, 44}, {215, 16}}</string>
+											<string key="NSFrame">{{14, 41}, {175, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="764394689">
@@ -1486,7 +1486,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSBox" id="490728015">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{17, 64}, {210, 5}}</string>
+											<string key="NSFrame">{{17, 63}, {210, 5}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -1508,7 +1508,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="667387304">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{59, 127}, {116, 16}}</string>
+											<string key="NSFrame">{{59, 117}, {99, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="96923843">
@@ -1549,7 +1549,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSTextField" id="332347875">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{14, 128}, {43, 14}}</string>
+											<string key="NSFrame">{{14, 120}, {43, 14}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="165100479">
@@ -1687,7 +1687,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="939781339">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{59, 224}, {79, 16}}</string>
+											<string key="NSFrame">{{59, 220}, {52, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="946104013">
@@ -1708,7 +1708,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="539513772">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{59, 206}, {79, 16}}</string>
+											<string key="NSFrame">{{59, 200}, {68, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="113552768">
@@ -1729,7 +1729,7 @@ aXN0bWFuaWEuA</string>
 										<object class="NSButton" id="43250206">
 											<reference key="NSNextResponder" ref="922510970"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{59, 188}, {79, 16}}</string>
+											<string key="NSFrame">{{59, 180}, {80, 18}}</string>
 											<reference key="NSSuperview" ref="922510970"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="580932000">
@@ -1755,13 +1755,13 @@ aXN0bWFuaWEuA</string>
 								<reference key="NSTabView" ref="766885201"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="85554065"/>
+						<reference key="NSSelectedTabViewItem" ref="975162469"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="826007103"/>
+							<reference ref="79339765"/>
 						</object>
 					</object>
 				</object>
@@ -1797,75 +1797,6 @@ aXN0bWFuaWEuA</string>
 				<bool key="NSFilterRestrictsInsertion">YES</bool>
 				<bool key="NSClearsFilterPredicateOnInsertion">YES</bool>
 			</object>
-			<object class="NSObjectController" id="119070882">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>delegate.products</string>
-					<string>delegate.store</string>
-					<string>delegate.listSource</string>
-					<string>delegate.listCode</string>
-					<string>delegate.automaticList.products</string>
-					<string>delegate.layout</string>
-					<string>delegate.showCreators</string>
-					<string>delegate.showTitles</string>
-					<string>delegate.showThumbnails</string>
-					<string>delegate.showComments</string>
-					<string>delegate.frame</string>
-					<string>delegate.centeredThumbnailWidths</string>
-					<string>delegate.selectedTabIdentifier</string>
-					<string>delegate.showProductPreviews</string>
-					<string>delegate.showPrices</string>
-					<string>delegate.showNewPricesOnly</string>
-					<string>showLinkToList</string>
-					<string>delegate.showLinkToList</string>
-					<string>delegate.showPricesOptionAvailable</string>
-					<string>delegate.maxNumberProducts</string>
-					<string>delegate.automaticListSorting</string>
-					<string>delegate.automaticListType</string>
-					<string>delegate.automaticListProductsToDisplay</string>
-					<string>automaticListCode</string>
-					<string>delegate.automaticListCode</string>
-					<string>pluginProperties.listSource</string>
-					<string>pluginProperties.store</string>
-					<string>delegate.pluginProperties.store</string>
-					<string>delegate.plugin.pluginProperties.store</string>
-					<string>delegate.delegateOwner.pluginProperties.store</string>
-					<string>pluginProperties.layout</string>
-					<string>pluginProperties.layouthowLinkToList</string>
-					<string>pluginProperties.frame</string>
-					<string>pluginProperties.showThumbnails</string>
-					<string>pluginProperties.showTitles</string>
-					<string>pluginProperties.showCreators</string>
-					<string>pluginProperties.showComments</string>
-					<string>pluginProperties.showPrices</string>
-					<string>pluginProperties.showNewPricesOnly</string>
-					<string>pluginProperties.showLinkToList</string>
-					<string>pluginProperties.showProductPreviews</string>
-					<string>pluginProperties.automaticListCode</string>
-					<string>pluginProperties.centeredThumbnailWidths</string>
-					<string>pluginProperties.automaticListType</string>
-					<string>pluginProperties.maxNumberProducts</string>
-					<string>pluginProperties.automaticListSorting</string>
-					<string>store</string>
-					<string>listSource</string>
-					<string>maxNumberProducts</string>
-					<string>automaticListSorting</string>
-					<string>automaticListType</string>
-					<string>layout</string>
-					<string>frame</string>
-					<string>showThumbnails</string>
-					<string>centeredThumbnailWidths</string>
-					<string>showTitles</string>
-					<string>showCreators</string>
-					<string>showComments</string>
-					<string>showPrices</string>
-					<string>showNewPricesOnly</string>
-					<string>showProductPreviews</string>
-					<string>layouthowLinkToList</string>
-				</object>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-			</object>
 			<object class="NSCustomObject" id="300210200">
 				<string key="NSClassName">AmazonIDFormatter</string>
 			</object>
@@ -1898,22 +1829,6 @@ aXN0bWFuaWEuA</string>
 						<reference key="destination" ref="300210200"/>
 					</object>
 					<int key="connectionID">84</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: selection.delegate.products</string>
-						<reference key="source" ref="295048288"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="295048288"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">contentArray: selection.delegate.products</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">selection.delegate.products</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">85</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2018,14 +1933,6 @@ aXN0bWFuaWEuA</string>
 						<reference key="destination" ref="295048288"/>
 					</object>
 					<int key="connectionID">243</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pluginController</string>
-						<reference key="source" ref="295048288"/>
-						<reference key="destination" ref="119070882"/>
-					</object>
-					<int key="connectionID">244</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -2137,999 +2044,12 @@ aXN0bWFuaWEuA</string>
 					<int key="connectionID">476</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentArray: selection.delegate.automaticListProductsToDisplay</string>
-						<reference key="source" ref="90206983"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="90206983"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">contentArray: selection.delegate.automaticListProductsToDisplay</string>
-							<string key="NSBinding">contentArray</string>
-							<string key="NSKeyPath">selection.delegate.automaticListProductsToDisplay</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">551</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">formatter</string>
 						<reference key="source" ref="128487403"/>
 						<reference key="destination" ref="300210200"/>
 					</object>
 					<int key="connectionID">573</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.store</string>
-						<reference key="source" ref="825689780"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="825689780"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">selectedTag: selection.store</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.store</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSRaisesForNotApplicableKeys</string>
-									<string>NSValidatesImmediately</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<boolean value="NO"/>
-									<boolean value="YES"/>
-								</object>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">658</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.listSource</string>
-						<reference key="source" ref="1045553900"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1045553900"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">selectedTag: selection.listSource</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.listSource</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">659</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.automaticListCode</string>
-						<reference key="source" ref="128487403"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="128487403"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.automaticListCode</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.automaticListCode</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValidatesImmediately</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">660</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.maxNumberProducts</string>
-						<reference key="source" ref="204716297"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="204716297"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.maxNumberProducts</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.maxNumberProducts</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">661</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.maxNumberProducts</string>
-						<reference key="source" ref="35384128"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="35384128"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.maxNumberProducts</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.maxNumberProducts</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">662</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.automaticListSorting</string>
-						<reference key="source" ref="635797893"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="635797893"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">selectedTag: selection.automaticListSorting</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.automaticListSorting</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">663</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.automaticListType</string>
-						<reference key="source" ref="635797893"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="635797893"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.automaticListType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.automaticListType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AutomaticAmazonListTypeIsWishList</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">664</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.layout</string>
-						<reference key="source" ref="205029388"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="205029388"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">selectedTag: selection.layout</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">665</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.frame</string>
-						<reference key="source" ref="126609510"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="126609510"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">selectedTag: selection.frame</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.frame</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">666</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showThumbnails</string>
-						<reference key="source" ref="1050325516"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1050325516"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showThumbnails</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showThumbnails</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">667</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="1050325516"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="406270979">
-							<reference key="NSSource" ref="1050325516"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotBullets</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">668</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="1050325516"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="595294228">
-							<reference key="NSSource" ref="1050325516"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotEnhanced</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="406270979"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">671</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled3: selection.layout</string>
-						<reference key="source" ref="1050325516"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1050325516"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled3: selection.layout</string>
-							<string key="NSBinding">enabled3</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotRandom</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="595294228"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">673</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.centeredThumbnailWidths</string>
-						<reference key="source" ref="316508455"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="316508455"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.centeredThumbnailWidths</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.centeredThumbnailWidths</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValidatesImmediately</string>
-								<boolean value="YES" key="NS.object.0"/>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">674</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.showThumbnails</string>
-						<reference key="source" ref="316508455"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="62137757">
-							<reference key="NSSource" ref="316508455"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.showThumbnails</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.showThumbnails</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">675</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="316508455"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="316508455"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsCentered</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="62137757"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">677</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showTitles</string>
-						<reference key="source" ref="939781339"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="939781339"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showTitles</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showTitles</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">678</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="939781339"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="722778434">
-							<reference key="NSSource" ref="939781339"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotBullets</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">679</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="939781339"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="721902738">
-							<reference key="NSSource" ref="939781339"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotEnhanced</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="722778434"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">682</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled3: selection.layout</string>
-						<reference key="source" ref="939781339"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="939781339"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled3: selection.layout</string>
-							<string key="NSBinding">enabled3</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotRandom</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="721902738"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">684</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showCreators</string>
-						<reference key="source" ref="539513772"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="539513772"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showCreators</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showCreators</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">685</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="539513772"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="541196106">
-							<reference key="NSSource" ref="539513772"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotEnhanced</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">686</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="539513772"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="539513772"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotRandom</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="541196106"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">688</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showComments</string>
-						<reference key="source" ref="43250206"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="43250206"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showComments</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showComments</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">689</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="43250206"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="94029470">
-							<reference key="NSSource" ref="43250206"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotEnhanced</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">690</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="43250206"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="43250206"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotRandom</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="94029470"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">692</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showPrices</string>
-						<reference key="source" ref="1001849735"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1001849735"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showPrices</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showPrices</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">693</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.delegate.showPricesOptionAvailable</string>
-						<reference key="source" ref="1001849735"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1001849735"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.delegate.showPricesOptionAvailable</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.delegate.showPricesOptionAvailable</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">695</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showNewPricesOnly</string>
-						<reference key="source" ref="1015436675"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1015436675"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showNewPricesOnly</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showNewPricesOnly</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">696</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.showPrices</string>
-						<reference key="source" ref="1015436675"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="560436647">
-							<reference key="NSSource" ref="1015436675"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.showPrices</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.showPrices</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">697</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.delegate.showPricesOptionAvailable</string>
-						<reference key="source" ref="1015436675"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="1015436675"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.delegate.showPricesOptionAvailable</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.delegate.showPricesOptionAvailable</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="560436647"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">698</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: selection.listSource</string>
-						<reference key="source" ref="332347875"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="332347875"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">hidden: selection.listSource</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">selection.listSource</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">699</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showLinkToList</string>
-						<reference key="source" ref="667387304"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="667387304"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showLinkToList</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showLinkToList</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">700</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">hidden: selection.listSource</string>
-						<reference key="source" ref="667387304"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="667387304"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">hidden: selection.listSource</string>
-							<string key="NSBinding">hidden</string>
-							<string key="NSKeyPath">selection.listSource</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">701</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.showProductPreviews</string>
-						<reference key="source" ref="473600686"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="473600686"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">value: selection.showProductPreviews</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.showProductPreviews</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">702</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="473600686"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="407233622">
-							<reference key="NSSource" ref="473600686"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotRandom</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">703</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="473600686"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="473600686"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotEnhanced</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="407233622"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">705</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="223168262"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="633542242">
-							<reference key="NSSource" ref="223168262"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotRandom</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">706</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="223168262"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="223168262"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotEnhanced</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="633542242"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">709</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.layout</string>
-						<reference key="source" ref="126609510"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="603683855">
-							<reference key="NSSource" ref="126609510"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled: selection.layout</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">AmazonListLayoutIsNotEnhanced</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">710</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled2: selection.layout</string>
-						<reference key="source" ref="126609510"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector" id="308654266">
-							<reference key="NSSource" ref="126609510"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled2: selection.layout</string>
-							<string key="NSBinding">enabled2</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotBullets</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="603683855"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">713</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled3: selection.layout</string>
-						<reference key="source" ref="126609510"/>
-						<reference key="destination" ref="119070882"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="126609510"/>
-							<reference key="NSDestination" ref="119070882"/>
-							<string key="NSLabel">enabled3: selection.layout</string>
-							<string key="NSBinding">enabled3</string>
-							<string key="NSKeyPath">selection.layout</string>
-							<object class="NSDictionary" key="NSOptions">
-								<bool key="EncodedWithXMLCoder">YES</bool>
-								<object class="NSArray" key="dict.sortedKeys">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<string>NSMultipleValuesPlaceholder</string>
-									<string>NSNoSelectionPlaceholder</string>
-									<string>NSNotApplicablePlaceholder</string>
-									<string>NSNullPlaceholder</string>
-									<string>NSValueTransformerName</string>
-								</object>
-								<object class="NSMutableArray" key="dict.values">
-									<bool key="EncodedWithXMLCoder">YES</bool>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<integer value="-1"/>
-									<string>AmazonListLayoutIsNotRandom</string>
-								</object>
-							</object>
-							<reference key="NSPreviousConnector" ref="308654266"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">715</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
@@ -3265,18 +2185,10 @@ aXN0bWFuaWEuA</string>
 					<int key="connectionID">1010</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
-						<string key="label">pluginController</string>
-						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="119070882"/>
-					</object>
-					<int key="connectionID">1011</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBActionConnection" key="connection">
 						<string key="label">openProductURL:</string>
 						<reference key="source" ref="295048288"/>
-						<reference key="destination" ref="933312141"/>
+						<reference key="destination" ref="160690130"/>
 					</object>
 					<int key="connectionID">1035</int>
 				</object>
@@ -3284,7 +2196,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oManualListRemoveProductButton</string>
 						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="151876682"/>
+						<reference key="destination" ref="814300081"/>
 					</object>
 					<int key="connectionID">1036</int>
 				</object>
@@ -3292,7 +2204,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oManualListAddProductButton</string>
 						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="227301445"/>
+						<reference key="destination" ref="636920584"/>
 					</object>
 					<int key="connectionID">1037</int>
 				</object>
@@ -3308,7 +2220,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">openProductURL:</string>
 						<reference key="source" ref="90206983"/>
-						<reference key="destination" ref="164237272"/>
+						<reference key="destination" ref="86720630"/>
 					</object>
 					<int key="connectionID">1051</int>
 				</object>
@@ -3324,7 +2236,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">reloadSelectedProduct:</string>
 						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="776101715"/>
+						<reference key="destination" ref="867530795"/>
 					</object>
 					<int key="connectionID">1054</int>
 				</object>
@@ -3332,7 +2244,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">reloadAllProducts:</string>
 						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="306698385"/>
+						<reference key="destination" ref="932370723"/>
 					</object>
 					<int key="connectionID">1055</int>
 				</object>
@@ -3340,7 +2252,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">openListURL:</string>
 						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="451365529"/>
+						<reference key="destination" ref="303541503"/>
 					</object>
 					<int key="connectionID">1056</int>
 				</object>
@@ -3348,7 +2260,7 @@ aXN0bWFuaWEuA</string>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">reloadList:</string>
 						<reference key="source" ref="865670079"/>
-						<reference key="destination" ref="668101807"/>
+						<reference key="destination" ref="54246251"/>
 					</object>
 					<int key="connectionID">1057</int>
 				</object>
@@ -3367,6 +2279,1009 @@ aXN0bWFuaWEuA</string>
 						</object>
 					</object>
 					<int key="connectionID">1058</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.store</string>
+						<reference key="source" ref="825689780"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="825689780"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.store</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.store</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSRaisesForNotApplicableKeys</string>
+									<string>NSValidatesImmediately</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<boolean value="NO"/>
+									<boolean value="YES"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1061</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.listSource</string>
+						<reference key="source" ref="1045553900"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1045553900"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.listSource</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.listSource</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1063</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentArray: inspectedObjectsController.selection.products</string>
+						<reference key="source" ref="295048288"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="295048288"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">contentArray: inspectedObjectsController.selection.products</string>
+							<string key="NSBinding">contentArray</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.products</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1066</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentArray: inspectedObjectsController.selection.automaticListProductsToDisplay</string>
+						<reference key="source" ref="90206983"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="90206983"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">contentArray: inspectedObjectsController.selection.automaticListProductsToDisplay</string>
+							<string key="NSBinding">contentArray</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.automaticListProductsToDisplay</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1069</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.automaticListCode</string>
+						<reference key="source" ref="128487403"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="128487403"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.automaticListCode</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.automaticListCode</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValidatesImmediately</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1071</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.maxNumberProducts</string>
+						<reference key="source" ref="204716297"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="204716297"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.maxNumberProducts</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.maxNumberProducts</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1073</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.maxNumberProducts</string>
+						<reference key="source" ref="35384128"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="35384128"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.maxNumberProducts</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.maxNumberProducts</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1075</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.automaticListSorting</string>
+						<reference key="source" ref="635797893"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="635797893"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.automaticListSorting</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.automaticListSorting</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1077</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.automaticListType</string>
+						<reference key="source" ref="635797893"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="635797893"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.automaticListType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.automaticListType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AutomaticAmazonListTypeIsWishList</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1079</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="205029388"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="205029388"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1081</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.frame</string>
+						<reference key="source" ref="126609510"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="126609510"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.frame</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.frame</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1083</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="126609510"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="498994596">
+							<reference key="NSSource" ref="126609510"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotEnhanced</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1087</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="126609510"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="1037829265">
+							<reference key="NSSource" ref="126609510"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotBullets</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="498994596"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1094</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled3: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="126609510"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="126609510"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled3: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled3</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotRandom</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="1037829265"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1095</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showThumbnails</string>
+						<reference key="source" ref="1050325516"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1050325516"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showThumbnails</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showThumbnails</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1097</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="1050325516"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="84247358">
+							<reference key="NSSource" ref="1050325516"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotBullets</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1101</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="1050325516"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="40503189">
+							<reference key="NSSource" ref="1050325516"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotEnhanced</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="84247358"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1106</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled3: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="1050325516"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1050325516"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled3: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled3</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotRandom</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="40503189"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1109</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.showThumbnails</string>
+						<reference key="source" ref="316508455"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="577094398">
+							<reference key="NSSource" ref="316508455"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.showThumbnails</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showThumbnails</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1114</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="316508455"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="316508455"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsCentered</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="577094398"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1115</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.centeredThumbnailWidths</string>
+						<reference key="source" ref="316508455"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="316508455"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.centeredThumbnailWidths</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.centeredThumbnailWidths</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValidatesImmediately</string>
+								<boolean value="YES" key="NS.object.0"/>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1117</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showTitles</string>
+						<reference key="source" ref="939781339"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="939781339"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showTitles</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showTitles</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1119</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="939781339"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="891656106">
+							<reference key="NSSource" ref="939781339"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotBullets</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1123</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="939781339"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="415270493">
+							<reference key="NSSource" ref="939781339"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotEnhanced</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="891656106"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1128</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled3: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="939781339"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="939781339"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled3: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled3</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotRandom</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="415270493"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1131</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="539513772"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="288412938">
+							<reference key="NSSource" ref="539513772"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotEnhanced</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1136</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="539513772"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="539513772"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotRandom</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="288412938"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1137</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showCreators</string>
+						<reference key="source" ref="539513772"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="539513772"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showCreators</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showCreators</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1139</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showComments</string>
+						<reference key="source" ref="43250206"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="43250206"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showComments</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showComments</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1141</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showPrices</string>
+						<reference key="source" ref="1001849735"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1001849735"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showPrices</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showPrices</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1143</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showNewPricesOnly</string>
+						<reference key="source" ref="1015436675"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1015436675"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showNewPricesOnly</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showNewPricesOnly</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1145</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showLinkToList</string>
+						<reference key="source" ref="667387304"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="667387304"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showLinkToList</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showLinkToList</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1147</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: inspectedObjectsController.selection.listSource</string>
+						<reference key="source" ref="667387304"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="667387304"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">hidden: inspectedObjectsController.selection.listSource</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.listSource</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1149</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">hidden: inspectedObjectsController.selection.listSource</string>
+						<reference key="source" ref="332347875"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="332347875"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">hidden: inspectedObjectsController.selection.listSource</string>
+							<string key="NSBinding">hidden</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.listSource</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1151</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.showPrices</string>
+						<reference key="source" ref="1015436675"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="38393269">
+							<reference key="NSSource" ref="1015436675"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.showPrices</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showPrices</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1154</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.showPricesOptionAvailable</string>
+						<reference key="source" ref="1015436675"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1015436675"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.showPricesOptionAvailable</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showPricesOptionAvailable</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="38393269"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1158</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.showPricesOptionAvailable</string>
+						<reference key="source" ref="1001849735"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="1001849735"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.showPricesOptionAvailable</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showPricesOptionAvailable</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1161</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="43250206"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="641853257">
+							<reference key="NSSource" ref="43250206"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotEnhanced</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1164</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="43250206"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="43250206"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotRandom</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="641853257"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1167</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.showProductPreviews</string>
+						<reference key="source" ref="473600686"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="473600686"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.showProductPreviews</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.showProductPreviews</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1169</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="473600686"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="925332522">
+							<reference key="NSSource" ref="473600686"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotRandom</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1172</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="473600686"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="473600686"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotEnhanced</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="925332522"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1175</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="223168262"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector" id="852692350">
+							<reference key="NSSource" ref="223168262"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">AmazonListLayoutIsNotRandom</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1180</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled2: inspectedObjectsController.selection.layout</string>
+						<reference key="source" ref="223168262"/>
+						<reference key="destination" ref="865670079"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="223168262"/>
+							<reference key="NSDestination" ref="865670079"/>
+							<string key="NSLabel">enabled2: inspectedObjectsController.selection.layout</string>
+							<string key="NSBinding">enabled2</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSMultipleValuesPlaceholder</string>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+									<string>NSValueTransformerName</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<integer value="-1"/>
+									<string>AmazonListLayoutIsNotEnhanced</string>
+								</object>
+							</object>
+							<reference key="NSPreviousConnector" ref="852692350"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1181</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3649,7 +3564,7 @@ aXN0bWFuaWEuA</string>
 							<reference ref="35384128"/>
 							<reference ref="351123869"/>
 							<reference ref="635797893"/>
-							<reference ref="406122130"/>
+							<reference ref="840191586"/>
 						</object>
 						<reference key="parent" ref="975162469"/>
 					</object>
@@ -3794,7 +3709,7 @@ aXN0bWFuaWEuA</string>
 							<reference ref="61800352"/>
 							<reference ref="722036667"/>
 							<reference ref="189154592"/>
-							<reference ref="263269240"/>
+							<reference ref="226585762"/>
 						</object>
 						<reference key="parent" ref="85554065"/>
 					</object>
@@ -3915,12 +3830,6 @@ aXN0bWFuaWEuA</string>
 						<reference key="object" ref="295048288"/>
 						<reference key="parent" ref="0"/>
 						<string key="objectName">Manual List Products</string>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">48</int>
-						<reference key="object" ref="119070882"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Plugin Controller</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">83</int>
@@ -4263,79 +4172,79 @@ aXN0bWFuaWEuA</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1012</int>
-						<reference key="object" ref="263269240"/>
+						<reference key="object" ref="226585762"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="227301445"/>
-							<reference ref="151876682"/>
-							<reference ref="389457707"/>
+							<reference ref="636920584"/>
+							<reference ref="814300081"/>
+							<reference ref="192617705"/>
 							<reference ref="834152611"/>
 						</object>
 						<reference key="parent" ref="826007103"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1013</int>
-						<reference key="object" ref="227301445"/>
+						<reference key="object" ref="636920584"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="680919794"/>
+							<reference ref="834469962"/>
 						</object>
-						<reference key="parent" ref="263269240"/>
+						<reference key="parent" ref="226585762"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1014</int>
-						<reference key="object" ref="680919794"/>
-						<reference key="parent" ref="227301445"/>
+						<reference key="object" ref="834469962"/>
+						<reference key="parent" ref="636920584"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1015</int>
-						<reference key="object" ref="151876682"/>
+						<reference key="object" ref="814300081"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="389860664"/>
+							<reference ref="741497380"/>
 						</object>
-						<reference key="parent" ref="263269240"/>
+						<reference key="parent" ref="226585762"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1016</int>
-						<reference key="object" ref="389860664"/>
-						<reference key="parent" ref="151876682"/>
+						<reference key="object" ref="741497380"/>
+						<reference key="parent" ref="814300081"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1023</int>
-						<reference key="object" ref="389457707"/>
+						<reference key="object" ref="192617705"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="509960898"/>
+							<reference ref="611379192"/>
 						</object>
-						<reference key="parent" ref="263269240"/>
+						<reference key="parent" ref="226585762"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1024</int>
-						<reference key="object" ref="509960898"/>
+						<reference key="object" ref="611379192"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="564085462"/>
+							<reference ref="889906683"/>
 						</object>
-						<reference key="parent" ref="389457707"/>
+						<reference key="parent" ref="192617705"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1025</int>
-						<reference key="object" ref="564085462"/>
+						<reference key="object" ref="889906683"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="53692415"/>
-							<reference ref="933312141"/>
-							<reference ref="92387800"/>
-							<reference ref="776101715"/>
-							<reference ref="306698385"/>
+							<reference ref="918897513"/>
+							<reference ref="160690130"/>
+							<reference ref="390327720"/>
+							<reference ref="867530795"/>
+							<reference ref="932370723"/>
 						</object>
-						<reference key="parent" ref="509960898"/>
+						<reference key="parent" ref="611379192"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1026</int>
-						<reference key="object" ref="53692415"/>
-						<reference key="parent" ref="564085462"/>
+						<reference key="object" ref="918897513"/>
+						<reference key="parent" ref="889906683"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">895</int>
@@ -4344,7 +4253,7 @@ aXN0bWFuaWEuA</string>
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="321727836"/>
 						</object>
-						<reference key="parent" ref="263269240"/>
+						<reference key="parent" ref="226585762"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">997</int>
@@ -4353,88 +4262,88 @@ aXN0bWFuaWEuA</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1029</int>
-						<reference key="object" ref="933312141"/>
-						<reference key="parent" ref="564085462"/>
+						<reference key="object" ref="160690130"/>
+						<reference key="parent" ref="889906683"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1030</int>
-						<reference key="object" ref="92387800"/>
-						<reference key="parent" ref="564085462"/>
+						<reference key="object" ref="390327720"/>
+						<reference key="parent" ref="889906683"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1031</int>
-						<reference key="object" ref="776101715"/>
-						<reference key="parent" ref="564085462"/>
+						<reference key="object" ref="867530795"/>
+						<reference key="parent" ref="889906683"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1032</int>
-						<reference key="object" ref="306698385"/>
-						<reference key="parent" ref="564085462"/>
+						<reference key="object" ref="932370723"/>
+						<reference key="parent" ref="889906683"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1039</int>
-						<reference key="object" ref="406122130"/>
+						<reference key="object" ref="840191586"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="15257646"/>
+							<reference ref="89137830"/>
 						</object>
 						<reference key="parent" ref="79339765"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1040</int>
-						<reference key="object" ref="15257646"/>
+						<reference key="object" ref="89137830"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="767182451"/>
+							<reference ref="462079954"/>
 						</object>
-						<reference key="parent" ref="406122130"/>
+						<reference key="parent" ref="840191586"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1041</int>
-						<reference key="object" ref="767182451"/>
+						<reference key="object" ref="462079954"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="1029011658"/>
+							<reference ref="65778677"/>
 						</object>
-						<reference key="parent" ref="15257646"/>
+						<reference key="parent" ref="89137830"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1042</int>
-						<reference key="object" ref="1029011658"/>
+						<reference key="object" ref="65778677"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="874169487"/>
-							<reference ref="164237272"/>
-							<reference ref="451365529"/>
-							<reference ref="224151991"/>
-							<reference ref="668101807"/>
+							<reference ref="839701688"/>
+							<reference ref="86720630"/>
+							<reference ref="303541503"/>
+							<reference ref="679623652"/>
+							<reference ref="54246251"/>
 						</object>
-						<reference key="parent" ref="767182451"/>
+						<reference key="parent" ref="462079954"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1043</int>
-						<reference key="object" ref="874169487"/>
-						<reference key="parent" ref="1029011658"/>
+						<reference key="object" ref="839701688"/>
+						<reference key="parent" ref="65778677"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1046</int>
-						<reference key="object" ref="164237272"/>
-						<reference key="parent" ref="1029011658"/>
+						<reference key="object" ref="86720630"/>
+						<reference key="parent" ref="65778677"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1047</int>
-						<reference key="object" ref="451365529"/>
-						<reference key="parent" ref="1029011658"/>
+						<reference key="object" ref="303541503"/>
+						<reference key="parent" ref="65778677"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1048</int>
-						<reference key="object" ref="224151991"/>
-						<reference key="parent" ref="1029011658"/>
+						<reference key="object" ref="679623652"/>
+						<reference key="parent" ref="65778677"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">1049</int>
-						<reference key="object" ref="668101807"/>
-						<reference key="parent" ref="1029011658"/>
+						<reference key="object" ref="54246251"/>
+						<reference key="parent" ref="65778677"/>
 					</object>
 				</object>
 			</object>
@@ -4599,8 +4508,6 @@ aXN0bWFuaWEuA</string>
 					<string>40.CustomClassName</string>
 					<string>40.IBPluginDependency</string>
 					<string>40.ImportedFromIB2</string>
-					<string>48.IBPluginDependency</string>
-					<string>48.ImportedFromIB2</string>
 					<string>486.IBPluginDependency</string>
 					<string>486.ImportedFromIB2</string>
 					<string>490.IBAttributePlaceholdersKey</string>
@@ -4956,8 +4863,6 @@ cm9kdWN0A</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 					<object class="NSMutableDictionary">
 						<string key="NS.key.0">ToolTip</string>
 						<object class="IBToolTipAttribute" key="NS.object.0">
@@ -5033,7 +4938,7 @@ cm9kdWN0A</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{600, 535}, {230, 400}}</string>
+					<string>{{899, 540}, {230, 400}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5092,7 +4997,7 @@ cm9kdWN0A</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1058</int>
+			<int key="maxID">1181</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5972,10 +5877,6 @@ cm9kdWN0A</string>
 			</object>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
-		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
-			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
-			<integer value="1040" key="NS.object.0"/>
-		</object>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencyDefaults">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>

@@ -207,7 +207,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSSet *)plugInKeys
 {
-    return [NSSet setWithObjects:@"store", @"listSource", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", nil];
+    return [NSSet setWithObjects:@"store", @"listSource", @"layout", @"showProductPreviews", @"frame", @"automaticListCode", @"automaticListType", @"automaticListSorting", @"showPrices", @"showThumbnails", @"showNewPricesOnly", @"showTitles", @"maxNumberProducts", @"showComments", @"showCreators", @"products", @"showLinkToList", nil];
 }
 
 @synthesize store = _store;
@@ -245,6 +245,8 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 @synthesize maxNumberProducts = _maxNumberProducts;
 @synthesize showComments = _showComments;
 @synthesize showCreators = _showCreators;
+@synthesize showLinkToList = _showLinkToList;
+
 @synthesize centeredThumbnailWidths = _centeredThumbnailWidths;
 
 
@@ -425,9 +427,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (BOOL)showPricesOptionAvailable
 {
 	// Not available in all circumstances
-	BOOL result = ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletLoadFromList ||
-				   [[self propertiesStorage] integerForKey:@"layout"] == APLayoutEnhanced ||
-				   [[self propertiesStorage] integerForKey:@"layout"] == APLayoutRandom);
+	BOOL result = ([self listSource] == AmazonPageletLoadFromList ||
+				   [self layout] == APLayoutEnhanced ||
+				   [self layout] == APLayoutRandom);
 				   
 	return result;
 }

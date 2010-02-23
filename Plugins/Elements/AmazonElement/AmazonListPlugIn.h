@@ -65,6 +65,7 @@ typedef enum {
     NSInteger               _maxNumberProducts;
     BOOL                    _showComments;
     BOOL                    _showCreators;
+    BOOL                    _showLinkToList;
     
     
 	NSMutableArray	*_products;
@@ -93,6 +94,7 @@ typedef enum {
 @property(nonatomic) NSInteger maxNumberProducts;
 @property(nonatomic) BOOL showComments;
 @property(nonatomic) BOOL showCreators;
+@property(nonatomic) BOOL showLinkToList;
 
 
 #pragma mark Markup
