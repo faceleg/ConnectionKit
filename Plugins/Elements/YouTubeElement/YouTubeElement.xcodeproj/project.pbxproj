@@ -10,13 +10,14 @@
 		270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */ = {isa = PBXBuildFile; fileRef = 270461D30DAE7FF000D74480 /* youtube-logo.png */; };
 		271696280DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */; };
 		2716969F0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */; };
-		3C42E5A80D65086D004F35FD /* YouTubeElementDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */; };
 		3C42E5B40D650888004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5B00D650888004F35FD /* Localizable.strings */; };
 		3C42E5C60D65091C004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E5C50D65091C004F35FD /* License.rtf */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CE81C30E113460C200CF4B7F /* YouTubeElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81C30D113460C200CF4B7F /* YouTubeElementPlugin.m */; };
+		CE81C313113460DD00CF4B7F /* YouTubeElementInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CE81C312113460DD00CF4B7F /* YouTubeElementInspector.m */; };
+		CE81C3171134667300CF4B7F /* YouTubeElement.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE81C3151134667300CF4B7F /* YouTubeElement.xib */; };
 		CEF120680D9055B700FCAC70 /* YouTube.icns in Resources */ = {isa = PBXBuildFile; fileRef = CEF120670D9055B700FCAC70 /* YouTube.icns */; };
 		CEF1206A0D9055E600FCAC70 /* YouTubeElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */; };
-		CEF120CB0D90563E00FCAC70 /* YouTubeElement.nib in Resources */ = {isa = PBXBuildFile; fileRef = CEF120C90D90563E00FCAC70 /* YouTubeElement.nib */; };
 		CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = CEF120DE0D90567900FCAC70 /* InfoPlist.strings */; };
 /* End PBXBuildFile section */
 
@@ -29,8 +30,6 @@
 		271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeVideoIDFormatter.m; sourceTree = "<group>"; };
 		2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeCocoaExtensions.h; sourceTree = "<group>"; };
 		2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeCocoaExtensions.m; sourceTree = "<group>"; };
-		3C42E5A50D65086D004F35FD /* YouTubeElementDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeElementDelegate.h; sourceTree = "<group>"; };
-		3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeElementDelegate.m; sourceTree = "<group>"; };
 		3C42E5B10D650888004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E5B70D650894004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E5B90D65089E004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -46,24 +45,21 @@
 		3C42E5E60D650A64004F35FD /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
 		8D5B49B6048680CD000E48DA /* YouTube.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = YouTube.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CE81C30C113460C200CF4B7F /* YouTubeElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeElementPlugin.h; sourceTree = "<group>"; };
+		CE81C30D113460C200CF4B7F /* YouTubeElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeElementPlugin.m; sourceTree = "<group>"; };
+		CE81C311113460DD00CF4B7F /* YouTubeElementInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeElementInspector.h; sourceTree = "<group>"; };
+		CE81C312113460DD00CF4B7F /* YouTubeElementInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = YouTubeElementInspector.m; sourceTree = "<group>"; };
+		CE81C3161134667300CF4B7F /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/YouTubeElement.xib; sourceTree = "<group>"; };
 		CEF120670D9055B700FCAC70 /* YouTube.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = YouTube.icns; sourceTree = "<group>"; };
 		CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = YouTubeElementTemplate.html; sourceTree = "<group>"; };
-		CEF120CA0D90563E00FCAC70 /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
-		CEF120CF0D90566500FCAC70 /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
-		CEF120DD0D90566E00FCAC70 /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120DF0D90567900FCAC70 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEF120E10D90568200FCAC70 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEF120E30D90568A00FCAC70 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		CEF120E40D90569100FCAC70 /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEF120E50D90569100FCAC70 /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120E60D9056A100FCAC70 /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEF120E70D9056A100FCAC70 /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120E80D9056A800FCAC70 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEF120E90D9056A800FCAC70 /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120EA0D9056B000FCAC70 /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEF120EB0D9056B000FCAC70 /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120EC0D9056B500FCAC70 /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		CEF120ED0D9056B500FCAC70 /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/YouTubeElement.nib; sourceTree = "<group>"; };
 		CEF120EE0D9056C400FCAC70 /* YouTubeElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = YouTubeElement_Prefix.pch; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
@@ -108,7 +104,7 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				CEF120DE0D90567900FCAC70 /* InfoPlist.strings */,
 				3C42E5B00D650888004F35FD /* Localizable.strings */,
-				CEF120C90D90563E00FCAC70 /* YouTubeElement.nib */,
+				CE81C3151134667300CF4B7F /* YouTubeElement.xib */,
 				CEF120670D9055B700FCAC70 /* YouTube.icns */,
 				270461D30DAE7FF000D74480 /* youtube-logo.png */,
 				CEF120690D9055E600FCAC70 /* YouTubeElementTemplate.html */,
@@ -120,12 +116,14 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C42E5A50D65086D004F35FD /* YouTubeElementDelegate.h */,
-				3C42E5A60D65086D004F35FD /* YouTubeElementDelegate.m */,
 				271696260DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.h */,
 				271696270DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m */,
 				2716969D0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.h */,
 				2716969E0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m */,
+				CE81C30C113460C200CF4B7F /* YouTubeElementPlugin.h */,
+				CE81C30D113460C200CF4B7F /* YouTubeElementPlugin.m */,
+				CE81C311113460DD00CF4B7F /* YouTubeElementInspector.h */,
+				CE81C312113460DD00CF4B7F /* YouTubeElementInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -237,9 +235,9 @@
 				3C42E5C60D65091C004F35FD /* License.rtf in Resources */,
 				CEF120680D9055B700FCAC70 /* YouTube.icns in Resources */,
 				CEF1206A0D9055E600FCAC70 /* YouTubeElementTemplate.html in Resources */,
-				CEF120CB0D90563E00FCAC70 /* YouTubeElement.nib in Resources */,
 				CEF120E00D90567900FCAC70 /* InfoPlist.strings in Resources */,
 				270461D40DAE7FF000D74480 /* youtube-logo.png in Resources */,
+				CE81C3171134667300CF4B7F /* YouTubeElement.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -268,9 +266,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C42E5A80D65086D004F35FD /* YouTubeElementDelegate.m in Sources */,
 				271696280DAB8A7300BBC2C6 /* YouTubeVideoIDFormatter.m in Sources */,
 				2716969F0DABBCD700BBC2C6 /* YouTubeCocoaExtensions.m in Sources */,
+				CE81C30E113460C200CF4B7F /* YouTubeElementPlugin.m in Sources */,
+				CE81C313113460DD00CF4B7F /* YouTubeElementInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -292,19 +291,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		CEF120C90D90563E00FCAC70 /* YouTubeElement.nib */ = {
+		CE81C3151134667300CF4B7F /* YouTubeElement.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				CEF120CA0D90563E00FCAC70 /* en */,
-				CEF120CF0D90566500FCAC70 /* da */,
-				CEF120DD0D90566E00FCAC70 /* de */,
-				CEF120E50D90569100FCAC70 /* fr */,
-				CEF120E70D9056A100FCAC70 /* it */,
-				CEF120E90D9056A800FCAC70 /* ja */,
-				CEF120EB0D9056B000FCAC70 /* zh_CN */,
-				CEF120ED0D9056B500FCAC70 /* zh_TW */,
+				CE81C3161134667300CF4B7F /* en */,
 			);
-			name = YouTubeElement.nib;
+			name = YouTubeElement.xib;
 			sourceTree = "<group>";
 		};
 		CEF120DE0D90567900FCAC70 /* InfoPlist.strings */ = {

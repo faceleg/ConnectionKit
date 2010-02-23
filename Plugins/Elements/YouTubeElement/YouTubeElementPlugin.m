@@ -1,96 +1,32 @@
 //
-//  YouTubeElementDelegate.m
-//  Sandvox SDK
+//  YouTubeElementPlugin.m
+//  YouTubeElement
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
-//
-//  Redistribution and use in source and binary forms, with or without
-//  modification, are permitted provided that the following conditions are met:
-//
-//  *  Redistribution of source code must retain the above copyright notice,
-//     this list of conditions and the follow disclaimer.
-//
-//  *  Redistributions in binary form must reproduce the above copyright notice,
-//     this list of conditions and the following disclaimer in the documentation
-//     and/or other material provided with the distribution.
-//
-//  *  Neither the name of Karelia Software nor the names of its contributors
-//     may be used to endorse or promote products derived from this software
-//     without specific prior written permission.
-//
-//  THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS-IS"
-//  AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE
-//  IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE
-//  ARE DISCLAIMED. IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS BE
-//  LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR 
-//  CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
-//  SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS
-//  INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN
-//  CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-//  ARISING IN ANY WAY OUR OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-//  POSSIBILITY OF SUCH DAMAGE.
-//
-//  Community Note: This code is distrubuted under a modified BSD License.
-//  We encourage you to share your Sandvox Plugins similarly.
+//  Created by Dan Wood on 2/23/10.
+//  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-
-//	LocalizedStringInThisBundle(@"This is a placeholder for the YouTube video at:", "Live data feeds are disabled");
-//	LocalizedStringInThisBundle(@"To see the video in Sandvox, please enable live data feeds in the Preferences.", "Live data feeds are disabled");
-//	LocalizedStringInThisBundle(@"Sorry, but no YouTube video was found for the code you entered.", "User entered an invalid YouTube code");
-//	LocalizedStringInThisBundle(@"Please use the Inspector to specify a YouTube video.", "No video code has been entered yet");
-
-
-#import "YouTubeElementDelegate.h"
-#import "SandvoxPlugin.h"
-
+#import "YouTubeElementPlugin.h"
+#import "YouTubeElementInspector.h"
 #import "YouTubeCocoaExtensions.h"
 
-
-/*
-Services it'd be nice to support eventually:
- 
-MetaCafe
-Vimeo
-Revver
-Viddler
-http://v.youku.com/v_show/id_cf00XOTc3MzgwNA==.html
-video.aol.com
-blip.tv
-Flickr
-
-Brightcove.tv,
-ClipShack,
-Crackle,
-DailyMotion,
-Sony eyeVio,
-Google Video,
-Megavideo,
-Motionbox,
-Spike (ifilm),
-Stage6,
-Veoh,
-Vimeo,
-Yahoo Video,
-LiveLeak,
-LiveVideo,
-SoapBox,
-Break
- */
-
-
-@interface YouTubeElementDelegate ()
+@interface YouTubeElementPlugin ()
 - (KTMediaContainer *)defaultThumbnail;
 @end
 
 
-@implementation YouTubeElementDelegate
+@implementation YouTubeElementPlugin
+
++ (Class)inspectorViewControllerClass { return [YouTubeElementInspector class]; }
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:@"userVideoCode", @"videoSize", @"color2", @"color1", @"showBorder", @"includeRelatedVideos", nil];
+}
 
 #pragma mark awake
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
-	KTAbstractElement *element = [self delegateOwner];
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
 	
 	if (isNewObject)
@@ -100,28 +36,30 @@ Break
 		[NSAppleScript getWebBrowserURL:&URL title:NULL source:NULL];
 		if (URL && [URL youTubeVideoID])
 		{
-			[element setValue:[URL absoluteString] forKey:@"userVideoCode"];
+			[self setValue:[URL absoluteString] forKey:@"userVideoCode"];
 		}
 		
 		// Initial size depends on our location
 		YouTubeVideoSize videoSize = YouTubeVideoSizeDefault;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizePageletWidth : YouTubeVideoSizeDefault;
-		[element setInteger:videoSize forKey:@"videoSize"];
+		[self setInteger:videoSize forKey:@"videoSize"];
 		
 		// Prepare initial colors
-		[self resetColors:self];
+		[self resetColors];
 	}
 	
 	
 	// Pages should have a thumbnail
 	else
 	{
-		if (![(KTPage *)element thumbnail])
+		if (![(KTPage *)self thumbnail])
 		{
-			[(KTPage *)element setThumbnail:[self defaultThumbnail]];
+			[(KTPage *)self setThumbnail:[self defaultThumbnail]];
 		}
 	}
 }
 
+/* ???? WHAT HAPPENS WITH THIS?
+ 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
 {
 	[super awakeFromDragWithDictionary:aDataSourceDictionary];
@@ -133,15 +71,13 @@ Break
 		NSURL *URL = [NSURL URLWithString:URLString];
 		if (URL && [URL youTubeVideoID])
 		{
-			[[self delegateOwner] setValue:URLString forKey:@"userVideoCode"];
+			[self setValue:URLString forKey:@"userVideoCode"];
 		}
 	}
 }
 
-- (IBAction)openYouTubeURL:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://youtube.com/"]];
-}
+*/
+
 
 #pragma mark -
 #pragma mark Plugin
@@ -189,7 +125,7 @@ Break
 
 
 /*	Cut a strict down -- we shouldn't have strict with the 'embed' tag
-*/
+ */
 - (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
 {
 	int *docType = (int *)aDocTypePointer;
@@ -241,7 +177,7 @@ Break
 			result = 200;	// width regardless of border size
 			break;
 		case YouTubeVideoSizeNatural:
-			result = ([[self delegateOwner] boolForKey:@"showBorder"]) ? 347 : 320;
+			result = ([self boolForKey:@"showBorder"]) ? 347 : 320;
 			break;
 		case YouTubeVideoSizeDefault:
 			result = 425;	// Do what YouTube does, fixed width regardless of border
@@ -260,7 +196,7 @@ Break
 {
 	unsigned result = 0;
 	
-	if ([[self delegateOwner] boolForKey:@"showBorder"])
+	if ([self boolForKey:@"showBorder"])
 	{
 		switch (size)
 		{
@@ -312,11 +248,10 @@ Break
 	return [NSColor colorWithCalibratedWhite:0.62 alpha:1.0];
 }
 
-- (IBAction)resetColors:(id)sender
+- (IBAction)resetColors
 {
-	KTAbstractElement *element = [self delegateOwner];
-	[element setBool:NO forKey:@"useCustomSecondaryColor"];
-	[element setValue:[[self class] defaultPrimaryColor] forKey:@"color2"];
+	[self setBool:NO forKey:@"useCustomSecondaryColor"];
+	[self setValue:[[self class] defaultPrimaryColor] forKey:@"color2"];
 }
 
 #pragma mark -
@@ -376,5 +311,6 @@ Break
     return result;
 }
 
-@end
 
+
+@end
