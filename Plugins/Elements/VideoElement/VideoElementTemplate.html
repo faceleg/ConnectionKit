@@ -5,7 +5,7 @@
 	[[if movieSource==1]]
 		[[if remoteURL]]
 			[[if parser.liveDataFeeds]]
-				[[parsecomponent self delegate.videoPreviewTemplate]]
+				[[parsecomponent self videoPreviewTemplate]]
 			[[else4]]
 				<div class="svx-placeholder">[['This is a placeholder for a video. The full video will appear once you publish this website, but to see the video in Sandvox, please enable live data feeds in the preferences.]]</div>
 			[[endif4]]
@@ -13,10 +13,10 @@
 			<div class="svx-placeholder">[['Please use the Inspector to enter the URL of a video.]]</div>
 		[[endif3]]
 	[[else2]]
-		[[parsecomponent self delegate.videoPreviewTemplate]]
+		[[parsecomponent self videoPreviewTemplate]]
 	[[endif2]]
 [[else]]
-	[[parsecomponent self delegate.videoPublishingTemplate]]
+	[[parsecomponent self videoPublishingTemplate]]
 [[endif]]
 	</div>
 

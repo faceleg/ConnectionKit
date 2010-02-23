@@ -1,8 +1,8 @@
 [[if isFlash]]
 		<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 					codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					align="middle">
 				<param name="movie" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]" />
 				<param name="quality" value="autohigh" />
@@ -13,8 +13,8 @@
 				<param name="type" value="application/x-shockwave-flash" />
 				<param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" />
 				<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					align="middle"
 					play="[[if autoplay]]true[[else2]]false[[endif2]]"
 					loop="[[if loop]]true[[else2]]false[[endif2]]"
@@ -26,8 +26,8 @@
 [[else]]
 <!-- Force simple HTML during previews -->
 <object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-		width="[[=delegate.width]]"
-		height="[[=delegate.height]]"
+		width="[[=width]]"
+		height="[[=height]]"
 		codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 	<param name="src" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]" />
 	<param name="autoplay" value="false" />		[[comment autoplay is disabled during previews]]
@@ -38,8 +38,8 @@
 	<param name="type" value="video/quicktime" />
 	<param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
 	<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]"
-		width="[[=delegate.width]]"
-		height="[[=delegate.height]]"
+		width="[[=width]]"
+		height="[[=height]]"
 		scale="tofit"
 		autoplay="false"
 		controller="[[if controller]]true[[else2]]false[[endif2]]"

@@ -1,7 +1,7 @@
 <div class="Index-Pagelet">
 [[if indexedPage]]
 <ul>
-[[foreach indexedPage.navigablePages item delegate.maxItems]]
+[[foreach indexedPage.navigablePages item maxItems]]
 	<li class="[[i]] [[eo]]">
         <a href="[[path item]]">[[=item.titleText]]</a>
         [[if includeSummaries]]<br />[[summary item maxSummaryCharacters]][[endif2]]

@@ -1,5 +1,5 @@
 [[if address]]
-[[foreach delegate.fields aField]]
+[[foreach fields aField]]
 [[if aField.identifier=="email"]]
 [[if aField.type!=0]]
 <script type="text/javascript"><!--
@@ -9,7 +9,7 @@ function verifyAndSubmit[[=uniqueID]](form) {
 	var theResults	= document.getElementById("contact[[=uniqueID]]-results");
 
 	checkEmail = form.e.value;
-	if (checkEmail=='[[=&delegate.contactField.defaultString]]'
+	if (checkEmail=='[[=&contactField.defaultString]]'
 		|| checkEmail.indexOf('@') < 0
 		|| checkEmail.lastIndexOf('.') < (checkEmail.indexOf('@') + 1)
 		|| checkEmail.lastIndexOf('.') >= (checkEmail.length - 2)
@@ -43,7 +43,7 @@ function dofocus[[=uniqueID]](anInput) {
 [[endif2]]
 [[endforeach]]
 
-<form class="contactElement [[if sideLabels]]labelsOnSide[[else2]]labelsOnTop[[endif2]]" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
+<form class="contactElement [[if sideLabels]]labelsOnSide[[else2]]labelsOnTop[[endif2]]" action="[[=mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
 		[[comment - this is an anti-spam measure; these are honeypot fields that if used, invalidate the form.]]
 		<div class="hidden">
 			<label for="contact[[=uniqueID]]-subject">[["Please leave this field empty:]]</label>
@@ -55,7 +55,7 @@ function dofocus[[=uniqueID]](anInput) {
 	
 [[if sideLabels]]
 <table width="100%">
-[[foreach delegate.fields aField]]
+[[foreach fields aField]]
 
 [[if aField.type==0]]
 	<!-- hidden -->
@@ -131,7 +131,7 @@ function dofocus[[=uniqueID]](anInput) {
 </table>
 [[else2]]
 <p>
-[[foreach delegate.fields aField]]
+[[foreach fields aField]]
 
 	[[if aField.type==0]]
 	<!-- hidden -->
@@ -204,11 +204,11 @@ function dofocus[[=uniqueID]](anInput) {
 [[endif2]]
 	<div class="hidden">
 		<!-- CSS URL -->
-		<input type="hidden" name="a" id="contact[[=uniqueID]]-a" value="[[=&delegate.CSSURLs]]" />
+		<input type="hidden" name="a" id="contact[[=uniqueID]]-a" value="[[=&CSSURLs]]" />
 		<!-- Site Title -->
 		<input type="hidden" name="t" id="contact[[=uniqueID]]-t" value="[[=&page.master.siteTitleText]]" />
 		<!-- Verification Code -->
-		<input type="hidden" name="v" id="contact[[=uniqueID]]-v" value="[[=delegate.encodedRecipient]]" />
+		<input type="hidden" name="v" id="contact[[=uniqueID]]-v" value="[[=encodedRecipient]]" />
 	
 		[[if copyToSender]]
 		<!-- Copy to sender -->

@@ -1,7 +1,7 @@
 [[if isFlash]]
 		<script type="text/javascript">
 QT_WriteOBJECT_XHTML (
-  "[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
+  "[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]", "[[=width]]", "[[=height]]", "",
   "classid", "clsid:d27cdb6e-ae6d-11cf-96b8-444553540000",
   "play","[[if autoplay]]true[[else2]]false[[endif2]]",
   "menu","[[if kioskmode]]false[[else2]]true[[endif2]]",
@@ -18,8 +18,8 @@ QT_WriteOBJECT_XHTML (
 		<noscript>
 			<object classid="clsid:d27cdb6e-ae6d-11cf-96b8-444553540000"
 					codebase="http://download.macromedia.com/pub/shockwave/cabs/flash/swflash.cab#version=6,0,0,0"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					align="middle">
 				<param name="movie" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]" />
 				<param name="quality" value="autohigh" />
@@ -30,8 +30,8 @@ QT_WriteOBJECT_XHTML (
 				<param name="type" value="application/x-shockwave-flash" />
 				<param name="pluginspage" value="http://www.macromedia.com/go/getflashplayer" />
 				<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else2]][[=&remoteURL]][[endif2]]"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					align="middle"
 					play="[[if autoplay]]true[[else2]]false[[endif2]]"
 					loop="[[if loop]]true[[else2]]false[[endif2]]"
@@ -60,7 +60,7 @@ else if (window.GeckoActiveXObject)
 if ( WMP7 )
 {
 QT_WriteOBJECT_XHTML (
-  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
+  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=width]]", "[[=height]]", "",
   "classid", "CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6",
   "autostart","[[if autoplay]]true[[else3]]false[[endif3]]",
   "showcontrols","[[if controller]]true[[else3]]false[[endif3]]",
@@ -76,7 +76,7 @@ QT_WriteOBJECT_XHTML (
 else
 {
 QT_WriteOBJECT_XHTML (
-  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
+  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=width]]", "[[=height]]", "",
   "classid", "CLSID:22D6F312-B0F6-11D0-94AB-0080C74C7E95",
   "autostart","[[if autoplay]]true[[else3]]false[[endif3]]",
   "showcontrols","[[if controller]]true[[else3]]false[[endif3]]",
@@ -91,8 +91,8 @@ QT_WriteOBJECT_XHTML (
 		</script>
 		<noscript>
 			<object classid="CLSID:6BF52A52-394A-11D3-B153-00C04F79FAA6"
-				width="[[=delegate.width]]"
-				height="[[=delegate.height]]">
+				width="[[=width]]"
+				height="[[=height]]">
 				<param name="url" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]" />
 				<param name="autostart" value="[[if autoplay]]true[[else3]]false[[endif3]]" />
 				<param name="showcontrols" value="[[if controller]]true[[else3]]false[[endif3]]" />
@@ -103,8 +103,8 @@ QT_WriteOBJECT_XHTML (
 				<param name="pluginspage" value="http://microsoft.com/windows/mediaplayer/en/download/" />
 				<embed SRC="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]"
 				    name="MediaPlayer"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					autostart="[[if autoplay]]true[[else3]]false[[endif3]]"
 					showcontrols="[[if controller]]true[[else3]]false[[endif3]]"
 					enablecontextmenu="[[if kioskmode]]false[[else3]]true[[endif3]]"
@@ -116,7 +116,7 @@ QT_WriteOBJECT_XHTML (
 [[else2]]
 		<script type="text/javascript">
 QT_WriteOBJECT_XHTML (
-  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=delegate.width]]", "[[=delegate.height]]", "",
+  "[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]", "[[=width]]", "[[=height]]", "",
   "autoplay","[[if autoplay]]true[[else3]]false[[endif3]]",
   "controller","[[if controller]]true[[else3]]false[[endif3]]",
   "kioskmode","[[if kioskmode]]true[[else3]]false[[endif3]]",
@@ -127,8 +127,8 @@ QT_WriteOBJECT_XHTML (
 		</script>
 		<noscript>
 			<object classid="clsid:02BF25D5-8C17-4B23-BC80-D3488ABDDC6B"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					codebase="http://www.apple.com/qtactivex/qtplugin.cab">
 				<param name="src" value="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]" />
 				<param name="autoplay" value="[[if autoplay]]true[[else3]]false[[endif3]]" />
@@ -139,8 +139,8 @@ QT_WriteOBJECT_XHTML (
 				<param name="type" value="video/quicktime" />
 				<param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
 				<embed src="[[if movieSource==0]][[mediainfo info:path media:video]][[else3]][[=&remoteURL]][[endif3]]"
-					width="[[=delegate.width]]"
-					height="[[=delegate.height]]"
+					width="[[=width]]"
+					height="[[=height]]"
 					scale="tofit"
 					autoplay="[[if autoplay]]true[[else3]]false[[endif3]]"
 					controller="[[if controller]]true[[else3]]false[[endif3]]"

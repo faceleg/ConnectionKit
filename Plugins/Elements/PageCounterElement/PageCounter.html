@@ -8,13 +8,13 @@
 
 [[comment - A little trick to register our dependence on the selectedTheme key]][[if selectedTheme]] [[endif]]
 
-[[if delegate.type==2]]
+[[if type==2]]
 	<script type="text/javascript">
-var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path page.site.hostProperties.resourcesDirectoryURL]][[else2]][[=delegate.previewResourceDirectory]][[endif2]]";
-var theme = "[[=&delegate.theme]]";
+var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path page.site.hostProperties.resourcesDirectoryURL]][[else2]][[=previewResourceDirectory]][[endif2]]";
+var theme = "[[=&theme]]";
 var countRequest = false;
-var pcWidth = "[[=delegate.width]]";
-var pcHeight = "[[=delegate.height]]";
+var pcWidth = "[[=width]]";
+var pcHeight = "[[=height]]";
 
 function showCount(countStr)
 {
@@ -35,7 +35,7 @@ showCount(svxPageCount);
 	</script>
 [[endif]]
 
-[[if delegate.type==1]]
+[[if type==1]]
 <script type="text/javascript">
 var paragraph = document.createElement("p");
 var text = document.createTextNode(svxPageCount);
@@ -44,7 +44,7 @@ document.getElementById("pc-[[=elementID]]").appendChild(paragraph);
 </script>
 [[endif]]
 
-[[if delegate.type==0]]
+[[if type==0]]
 <script type="text/javascript">
 var commentNode = document.createComment(svxPageCount);
 document.getElementById("pc-[[=elementID]]").appendChild(commentNode);
@@ -53,7 +53,7 @@ document.getElementById("pc-[[=elementID]]").appendChild(commentNode);
 
 <noscript>
 	<!-- tickle pagecounter by loading a small image -->
-	[[if delegate.type]]
+	[[if type]]
 	<p><img src="http://service.karelia.com/ctr/noscript.gif?u=[[=%&parser.currentPage.URL]]" alt="" /></p>
 	[[else]]
 	<div><img src="http://service.karelia.com/ctr/1x1.gif?u=[[=%&parser.currentPage.URL]]" alt="" height="1" width="1" /></div>
