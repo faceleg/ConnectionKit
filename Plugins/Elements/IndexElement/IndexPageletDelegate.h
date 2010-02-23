@@ -39,7 +39,7 @@
 
 @class KTLinkSourceView, IndexPageletLinkSourceView;
 
-@interface IndexPageletDelegate : KTAbstractPluginDelegate
+@interface IndexPageletDelegate : SVElementPlugIn
 {
 	IBOutlet KTLinkSourceView *oLinkView;
 }

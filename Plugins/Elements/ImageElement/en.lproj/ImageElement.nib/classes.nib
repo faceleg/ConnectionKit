@@ -14,7 +14,7 @@
             };
             CLASS = ImageElementDelegate;
             LANGUAGE = ObjC;
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
             CLASS = KSPathInfoField;
@@ -22,7 +22,7 @@
             SUPERCLASS = NSTextField;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             SUPERCLASS = NSObject;
         },

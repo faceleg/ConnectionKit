@@ -58,7 +58,7 @@ typedef enum {
 @class MAImagePopUpButton;
 
 
-@interface RSSBadgeDelegate : KTAbstractPluginDelegate
+@interface RSSBadgeDelegate : SVElementPlugIn
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 	IBOutlet MAImagePopUpButton	*iconTypePopupButton;

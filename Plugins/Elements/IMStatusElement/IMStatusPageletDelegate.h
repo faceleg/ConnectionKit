@@ -41,7 +41,7 @@
 typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
 
 
-@interface IMStatusPageletDelegate : KTAbstractPluginDelegate 
+@interface IMStatusPageletDelegate : SVElementPlugIn 
 {
 	NSMutableArray *myConfigs;
 }

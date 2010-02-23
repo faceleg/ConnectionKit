@@ -6,7 +6,7 @@
             };
             CLASS = DiggPageletDelegate;
             LANGUAGE = ObjC;
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
             ACTIONS =             {
@@ -22,7 +22,7 @@
             SUPERCLASS = NSTextField;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             OUTLETS =             {
                 myDelegateOwner = id;

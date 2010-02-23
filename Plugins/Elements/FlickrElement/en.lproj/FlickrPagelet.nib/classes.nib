@@ -17,7 +17,7 @@
             OUTLETS =             {
                 oFlickrButton = NSButton;
             };
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
             CLASS = KSLabel;
@@ -25,7 +25,7 @@
             SUPERCLASS = NSTextField;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             OUTLETS =             {
                 myDelegateOwner = id;

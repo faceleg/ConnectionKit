@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 @class WebView;
-@interface IFramePageletDelegate : KTAbstractPluginDelegate 
+@interface IFramePageletDelegate : SVElementPlugIn 
 {
 }
 

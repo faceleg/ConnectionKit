@@ -52,7 +52,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>SVElementPlugIn</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>
@@ -92,7 +92,7 @@
 			<key>OUTLETS</key>
 			<dict>
 				<key>pluginDelegate</key>
-				<string>KTAbstractPluginDelegate</string>
+				<string>SVElementPlugIn</string>
 			</dict>
 			<key>SUPERCLASS</key>
 			<string>DNDArrayController</string>
@@ -114,7 +114,7 @@
 				<string>NSTextField</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>SVElementPlugIn</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>

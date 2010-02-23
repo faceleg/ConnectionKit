@@ -19,7 +19,7 @@
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>SVElementPlugIn</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>
@@ -73,7 +73,7 @@
 				<string>KTLinkSourceView</string>
 			</dict>
 			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>SVElementPlugIn</string>
 		</dict>
 	</array>
 	<key>IBVersion</key>

@@ -10,7 +10,7 @@
                 collectionLinkSourceView = KTLinkSourceView;
                 iconTypePopupButton = MAImagePopUpButton;
             };
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
             CLASS = FirstResponder;
@@ -28,7 +28,7 @@
             SUPERCLASS = NSFormatter;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             SUPERCLASS = NSObject;
         },

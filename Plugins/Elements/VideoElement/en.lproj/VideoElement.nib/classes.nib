@@ -13,7 +13,7 @@
             };
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             SUPERCLASS = NSObject;
         },
@@ -28,7 +28,7 @@
             };
             CLASS = VideoElementDelegate;
             LANGUAGE = ObjC;
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         }
     );
     IBVersion = 1;

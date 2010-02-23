@@ -47,7 +47,7 @@ typedef enum {
 } YouTubeVideoSize;
 
 
-@interface YouTubeElementDelegate : KTAbstractPluginDelegate <KTDataSource>
+@interface YouTubeElementDelegate : SVElementPlugIn <KTDataSource>
 {
 	IBOutlet NSSlider	*videoSizeSlider;
 	

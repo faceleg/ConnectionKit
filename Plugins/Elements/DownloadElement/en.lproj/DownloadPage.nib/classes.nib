@@ -6,7 +6,7 @@
             };
             CLASS = DownloadPageDelegate;
             LANGUAGE = ObjC;
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
             CLASS = FirstResponder;
@@ -19,7 +19,7 @@
             SUPERCLASS = NSTextField;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             OUTLETS =             {
                 myDelegateOwner = id;

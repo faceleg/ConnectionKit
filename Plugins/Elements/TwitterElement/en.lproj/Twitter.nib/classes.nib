@@ -15,11 +15,11 @@
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>SUPERCLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>SVElementPlugIn</string>
 		</dict>
 		<dict>
 			<key>CLASS</key>
-			<string>KTAbstractPluginDelegate</string>
+			<string>SVElementPlugIn</string>
 			<key>LANGUAGE</key>
 			<string>ObjC</string>
 			<key>OUTLETS</key>

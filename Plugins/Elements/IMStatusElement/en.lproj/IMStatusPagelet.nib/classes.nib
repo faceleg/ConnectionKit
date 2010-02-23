@@ -8,10 +8,10 @@
                 {
             CLASS = IMStatusPageletDelegate;
             LANGUAGE = ObjC;
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             SUPERCLASS = NSObject;
         }

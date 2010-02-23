@@ -39,7 +39,7 @@
 // NOTE: THIS IS ALMOST THE SAME AS HTMLPAGEDELEGATE --- 
 // TODO: UNIFY THIS SOMEHOW.
 
-@interface HTMLElementDelegate : KTAbstractPluginDelegate <KTDataSource>
+@interface HTMLElementDelegate : SVElementPlugIn <KTDataSource>
 {
 	NSString *myErrorMessage;
 	NSString *myHtmlWithDelay;

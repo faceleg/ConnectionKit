@@ -11,7 +11,7 @@
             SUPERCLASS = NSFormatter;
         },
                 {
-            CLASS = KTAbstractPluginDelegate;
+            CLASS = SVElementPlugIn;
             LANGUAGE = ObjC;
             SUPERCLASS = NSObject;
         },
@@ -35,7 +35,7 @@
                 oVideoSourceButton = NSButton;
                 videoSizeSlider = NSSlider;
             };
-            SUPERCLASS = KTAbstractPluginDelegate;
+            SUPERCLASS = SVElementPlugIn;
         },
                 {
             CLASS = YouTubeVideoIDFormatter;
