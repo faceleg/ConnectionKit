@@ -37,7 +37,7 @@
 
 #pragma mark Dragging
 
-- (void)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
+- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
                 proposedOperation:(NSDragOperation *)proposedOperation;
 
 

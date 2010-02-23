@@ -311,10 +311,11 @@
 
 #pragma mark Dragging
 
-- (void)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
+- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
                 proposedOperation:(NSDragOperation *)proposedOperation;
 {
     if ([info draggingSource] == [self webEditor]) *proposedOperation = NSDragOperationNone;
+    return NO;
 }
 
 @end

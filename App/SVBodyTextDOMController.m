@@ -463,7 +463,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Dragging
 
-- (void)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
+- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
                 proposedOperation:(NSDragOperation *)proposedOperation;
 {
     // When dragging graphics within the Web Editor, want to move them rather than do a copy
@@ -483,6 +483,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                 break;
             }
         }
+        
+        return YES;
     }
     else
     {

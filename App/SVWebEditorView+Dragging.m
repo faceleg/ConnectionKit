@@ -71,7 +71,7 @@
         
         
         // Ask the controller if it's sure of the drop
-        [controller webEditorTextValidateDrop:sender proposedOperation:&op];
+        result = [controller webEditorTextValidateDrop:sender proposedOperation:&op];
         
               
         // Controller's HTML element determines where to draw the drop highlight
