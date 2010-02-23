@@ -791,14 +791,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
      undo_setSelectedTextRange:[webEditor selectedTextRange]];
 }
 
-- (void)textDOMControllerDidChangeText:(SVTextDOMController *)controller;
-{
-    SVWebEditorView *webEditor = [self webEditor];
-    NSUndoManager *undoManager = [webEditor undoManager];
-    
-    [[undoManager prepareWithInvocationTarget:self] 
-     undo_setSelectedTextRange:[webEditor selectedTextRangeBeforeLastChange]];
-}
+- (void)textDOMControllerDidChangeText:(SVTextDOMController *)controller; { }
 
 #pragma mark UI Validation
 
@@ -1120,6 +1113,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // We used to do [listener use] for file: URLs. Why?
     // And again the fallback option for to -use. Why?
+}
+
+- (void)webEditorWillChange:(NSNotification *)notification;
+{
+    SVWebEditorView *webEditor = [self webEditor];
+    NSUndoManager *undoManager = [webEditor undoManager];
+    
+    [[undoManager prepareWithInvocationTarget:self] 
+     undo_setSelectedTextRange:[webEditor selectedTextRange]];
 }
 
 #pragma mark -

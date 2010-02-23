@@ -169,7 +169,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_webView setEditingDelegate:nil];
     
     [_selectedItems release];
-    OBASSERT(!_selectedTextRangeBeforeLastChange);
     [_webView release];
         
     [super dealloc];
@@ -295,8 +294,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         }
     }
 }
-
-@synthesize selectedTextRangeBeforeLastChange = _selectedTextRangeBeforeLastChange;
 
 @synthesize focusedText = _focusedText;
 
@@ -574,9 +571,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewWillChangeNotification
                                                         object:self];
-    
-    OBASSERT(!_selectedTextRangeBeforeLastChange);
-    _selectedTextRangeBeforeLastChange = [[self selectedTextRange] copy];
 }
 
 - (NSPasteboard *)insertionPasteboard;
@@ -1077,6 +1071,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [[NSNotificationCenter defaultCenter] removeObserver:[self delegate]
                                                         name:SVWebEditorViewDidChangeSelectionNotification
                                                       object:self];
+        
+        [[NSNotificationCenter defaultCenter] removeObserver:[self delegate]
+                                                        name:kSVWebEditorViewWillChangeNotification
+                                                      object:self];
     }
     
     _delegate = delegate;
@@ -1086,6 +1084,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [[NSNotificationCenter defaultCenter] addObserver:delegate
                                                  selector:@selector(webEditorViewDidChangeSelection:)
                                                      name:SVWebEditorViewDidChangeSelectionNotification
+                                                   object:self];
+        
+        [[NSNotificationCenter defaultCenter] addObserver:delegate
+                                                 selector:@selector(webEditorWillChange:)
+                                                     name:kSVWebEditorViewWillChangeNotification
                                                    object:self];
     }
 }
@@ -1333,9 +1336,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewDidChangeNotification
                                                         object:self];
-    
-    // No longer need to hand on to the selection
-    [_selectedTextRangeBeforeLastChange release]; _selectedTextRangeBeforeLastChange = nil;
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification

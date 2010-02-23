@@ -38,7 +38,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     NSArray                         *_selectedItems;
     NSArray                         *_selectionParentItems;
     BOOL                            _isChangingSelectedItems;
-    SVWebEditorTextRange            *_selectedTextRangeBeforeLastChange;
     
     // Editing
     BOOL            _mouseUpMayBeginEditing;
@@ -85,7 +84,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 - (SVWebEditorTextRange *)selectedTextRange;
 - (void)setSelectedTextRange:(SVWebEditorTextRange *)range affinity:(NSSelectionAffinity)affinity;
-@property(nonatomic, copy, readonly) SVWebEditorTextRange *selectedTextRangeBeforeLastChange;
 
 @property(nonatomic, retain, readonly) id <SVWebEditorText> focusedText;    // KVO-compliant
 
@@ -247,6 +245,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
      - (void)webEditor:(SVWebEditorView *)webEditorView
 handleNavigationAction:(NSDictionary *)actionInformation
                request:(NSURLRequest *)request;
+
+
+#pragma mark Text Editing
+- (void)webEditorWillChange:(NSNotification *)notification;
 
 @end
 
