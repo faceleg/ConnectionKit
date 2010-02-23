@@ -18,7 +18,7 @@
 @class NTBoxView;
 
 
-@interface APInspectorController : NSObject
+@interface APInspectorController : SVInspectorViewController
 {
 	IBOutlet NSPopUpButton		*storeSelectionPopupButton;
 	IBOutlet NSObjectController	*pluginController;

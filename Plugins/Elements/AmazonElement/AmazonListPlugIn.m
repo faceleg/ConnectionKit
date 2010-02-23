@@ -10,9 +10,9 @@
 
 #import "APManualListProduct.h"
 #import "APAmazonList.h"
+#import "APInspectorController.h"
 
 #import <AmazonSupport/AmazonSupport.h>
-#import "SandvoxPlugin.h"
 
 
 #import "NSURL+AmazonPagelet.h"
@@ -449,6 +449,13 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 			}
 		}
 	}
+}
+
+#pragma mark Inspector
+
++ (Class)inspectorViewControllerClass;
+{
+    return [APInspectorController class];
 }
 
 #pragma mark -
