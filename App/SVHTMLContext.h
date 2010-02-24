@@ -27,19 +27,12 @@ typedef enum {
 @interface SVHTMLContext : KSHTMLOutputStream
 {
   @private
-    id <KSStringOutputStream> _stream;
-    
-    NSMutableArray  *_openElements;
-    NSInteger       _indentation;
-    BOOL            _needsToWriteIndentation;
-    
     NSURL                   *_baseURL;
     KTAbstractPage			*_currentPage;
     
 	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
-    BOOL                    _isXHTML;
     NSStringEncoding        _stringEncoding;
     
     NSMutableArray  *_iteratorsStack;
@@ -47,71 +40,11 @@ typedef enum {
     NSMutableArray  *_textBlocks;
 }
 
-#pragma mark Creating a Context
-- (id)initWithStringStream:(id <KSStringOutputStream>)stream; // designated initializer
-- (id)init; // creates a context with no underlying string stream. Handy for iteration & deriving info, but not a lot else
-
-
-#pragma mark Basic Writing
-
-- (void)writeHTMLString:(NSString *)html;
-- (void)writeHTMLFormat:(NSString *)format , ...;
-- (void)writeText:(NSString *)string;       // escapes the string and calls -writeHTMLString
-- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
-
-// Writes a newline character. The next time, -writeString: is called, enough tab characters to meet -indentationLevel before the string actually gets written. This allows you to start a newline and then decrease the indentation level without messing up output.
-- (void)writeNewline;
-
-
-#pragma mark Elements
-
-//  <tagName
-//  Records the tag on a stack for if you want to call -writeEndTag later
-- (void)openTag:(NSString *)tagName;
-
-//  >
-//  Increases indentation level ready for if you want to do a -writeNewline
-- (void)closeStartTag;     
-
-//   />    OR    >
-//  Which is used depends on -isXHTML
-- (void)closeEmptyElementTag;             
-
-//  </tagName>
-//  The start tag must have been written by -openTag: or one of the higher-level methods that calls through to it, otherwise won't know what to write
-- (void)writeEndTag;
-
-
-#pragma mark Querying Open Elements Stack
-- (NSString *)lastOpenElementTagName;
-- (BOOL)hasOpenElementWithTagName:(NSString *)tagName;
-
-
-#pragma mark Element Attributes
-//   attribute="value"
-- (void)writeAttribute:(NSString *)attribute
-                 value:(NSString *)value;
-
-
-#pragma mark Indentation
-
-// Setting the indentation level does not write to the context in any way. It is up to methods that actually do some writing to respect the indent level. e.g. starting a new line should indent that line to match.
-@property(nonatomic) NSInteger indentationLevel;
-- (void)increaseIndentationLevel;
-- (void)decreaseIndentationLevel;
-
-
-#pragma mark Primitive
-- (void)writeString:(NSString *)string; // calls -writeString: on our string stream. Override to customize raw writing
-@property(nonatomic, retain, readonly) id <KSStringOutputStream> stringStream;
-
-
 #pragma mark Properties
 
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL includeStyling;
 @property(nonatomic) BOOL liveDataFeeds;
-@property(nonatomic, getter=isXHTML) BOOL XHTML;
 @property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
 
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
