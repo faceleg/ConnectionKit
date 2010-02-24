@@ -202,6 +202,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
     [context setCurrentPage:[self page]];
     [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
+    [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"]];
     
     [SVHTMLContext pushContext:context];    // will pop after loading
 	[[self page] writeHTML];
