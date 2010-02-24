@@ -26,12 +26,6 @@
         [oWrapLeftSplitButton setState:[wraps containsObject:SVContentObjectWrapBlockLeft]];
         [oWrapCenterButton setState:[wraps containsObject:SVContentObjectWrapBlockCenter]];
         [oWrapRightSplitButton setState:[wraps containsObject:SVContentObjectWrapBlockRight]];
-        
-        [oWrapLeftButton setEnabled:YES];
-        [oWrapRightButton setEnabled:YES];
-        [oWrapLeftSplitButton setEnabled:YES];
-        [oWrapCenterButton setEnabled:YES];
-        [oWrapRightSplitButton setEnabled:YES];
     }
     @catch (NSException *exception)
     {
@@ -42,12 +36,6 @@
         [oWrapLeftSplitButton setState:NSOffState];
         [oWrapCenterButton setState:NSOffState];
         [oWrapRightSplitButton setState:NSOffState];
-        
-        [oWrapLeftButton setEnabled:NO];
-        [oWrapRightButton setEnabled:NO];
-        [oWrapLeftSplitButton setEnabled:NO];
-        [oWrapCenterButton setEnabled:NO];
-        [oWrapRightSplitButton setEnabled:NO];
     }
 }
 
