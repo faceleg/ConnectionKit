@@ -106,6 +106,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
 
 - (void)willChange; // posts kSVWebEditorViewWillChangeNotification
+- (void)didChange;  // posts kSVWebEditorViewDidChangeNotification
 
 - (NSPasteboard *)insertionPasteboard;
 

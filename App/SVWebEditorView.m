@@ -573,6 +573,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                                         object:self];
 }
 
+- (void)didChange;  // posts kSVWebEditorViewDidChangeNotification
+{
+    [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewDidChangeNotification
+                                                        object:self];
+}
+
 - (NSPasteboard *)insertionPasteboard;
 {
     NSPasteboard *result = nil;
@@ -1334,8 +1340,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webViewDidChange:(NSNotification *)notification;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewDidChangeNotification
-                                                        object:self];
+    [self didChange];
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
