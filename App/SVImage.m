@@ -107,11 +107,6 @@
 
 #pragma mark Editing
 
-- (Class)DOMControllerClass
-{
-    return ([self isPagelet] ? [super DOMControllerClass] : [SVImageDOMController class]); 
-}
-
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
 @end

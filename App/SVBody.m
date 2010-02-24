@@ -98,8 +98,4 @@
     [context writeString:[archive substringFromIndex:archiveIndex]];
 }
 
-#pragma mark Editing
-
-- (Class)DOMControllerClass; { return [SVBodyTextDOMController class]; }
-
 @end

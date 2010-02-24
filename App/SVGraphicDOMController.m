@@ -60,3 +60,16 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVGraphic (SVDOMController)
+
+- (Class)DOMControllerClass;
+{
+    return [SVGraphicDOMController class];
+}
+
+@end

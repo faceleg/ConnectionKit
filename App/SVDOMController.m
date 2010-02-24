@@ -8,7 +8,6 @@
 
 #import "SVDOMController.h"
 
-#import "SVContentObject.h"
 #import "SVHTMLContext.h"
 #import "SVWebEditorViewController.h"
 
@@ -120,6 +119,19 @@
 #pragma mark Editing
 
 - (BOOL)isEditable { return YES; }
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVContentObject (SVDOMController)
+
+- (Class)DOMControllerClass;
+{
+    return [SVDOMController class];
+}
 
 @end
 

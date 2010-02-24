@@ -35,3 +35,16 @@
 - (BOOL)isSelectable { return NO; }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVCallout (SVDOMController)
+
+- (Class)DOMControllerClass;
+{
+    return [SVCalloutDOMController class];
+}
+
+@end

@@ -462,3 +462,16 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVBody (SVDOMController)
+
+- (Class)DOMControllerClass;
+{
+    return [SVBodyTextDOMController class];
+}
+
+@end

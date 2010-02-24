@@ -192,3 +192,16 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVImage (SVDOMController)
+
+- (Class)DOMControllerClass;
+{
+    return ([self isPagelet] ? [super DOMControllerClass] : [SVImageDOMController class]); 
+}
+
+@end

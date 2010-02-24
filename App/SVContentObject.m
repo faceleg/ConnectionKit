@@ -61,13 +61,6 @@
     return result;
 }
 
-- (Class)DOMControllerClass;
-{
-    return [SVDOMController class];
-	
-// FIXME: should really be 
-}
-
 #pragma mark Inspection
 
 - (id)valueForUndefinedKey:(NSString *)key

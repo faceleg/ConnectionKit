@@ -258,3 +258,19 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+#import "SVTitleBox.h"
+
+
+@implementation SVTitleBox (SVDOMController)
+
+- (Class)DOMControllerClass;
+{
+    return [SVTextFieldDOMController class];
+}
+
+@end

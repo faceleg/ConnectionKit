@@ -7,7 +7,6 @@
 //
 
 #import "SVTitleBox.h"
-#import "SVTextFieldDOMController.h"
 
 #import "NSString+Karelia.h"
 #import "NSString+KTExtensions.h"
@@ -37,10 +36,5 @@
 }
 
 @dynamic hidden;
-
-- (Class)DOMControllerClass;
-{
-    return [SVTextFieldDOMController class];
-}
 
 @end
