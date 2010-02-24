@@ -133,3 +133,12 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 @end
 
+
+#pragma mark -
+
+
+@interface SVWebEditorView (SVWebEditorViewController)
+- (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
+- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
+@end
+
