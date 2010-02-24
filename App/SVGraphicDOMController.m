@@ -7,8 +7,10 @@
 //
 
 #import "SVGraphicDOMController.h"
+#import "SVGraphic.h"
 
 #import "SVBodyTextDOMController.h"
+#import "SVTextAttachment.h"
 #import "SVWebEditorView.h"
 
 
@@ -43,10 +45,18 @@
     }
     
     [parentNode insertBefore:[self HTMLElement] refChild:refNode];
-    [[self webEditorViewController] setNeedsUpdate];
     
     
+    // Make Web Editor/Controller copy text to model
     [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:[webEditor webView]];
+    
+    
+    // Mark for update now model has been changed
+    SVGraphic *graphic = [self representedObject];
+    [[graphic textAttachment] setPlacement:
+     [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
+    
+    [[self webEditorViewController] setNeedsUpdate];
 }
 
 @end
