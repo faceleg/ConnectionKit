@@ -289,6 +289,10 @@
 
 - (void)writeHTML
 {
+    // If the placement changes, want whole WebView to update
+    [[SVHTMLContext currentContext] addDependencyOnObject:self keyPath:@"textAttachment.placement"];
+    
+    
     if ([self isPagelet])
     {
         SVTemplate *template = [[self class] template];

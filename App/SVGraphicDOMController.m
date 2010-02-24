@@ -51,12 +51,10 @@
     [webEditor didChange];
     
     
-    // Mark for update now model has been changed
+    // Make sure it's marked as block
     SVGraphic *graphic = [self representedObject];
     [[graphic textAttachment] setPlacement:
      [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
-    
-    [[self webEditorViewController] setNeedsUpdate];
 }
 
 @end
