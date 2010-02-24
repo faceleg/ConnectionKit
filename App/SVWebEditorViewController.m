@@ -693,7 +693,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                                                  inManagedObjectContext:[[self page] managedObjectContext]];
         
         [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
-        [element setWrap:SVContentObjectWrapNone];
         [element awakeFromBundleAsNewlyCreatedObject:YES];
         
         pagelet = element;
