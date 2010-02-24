@@ -85,9 +85,19 @@
 
 - (BOOL)canBePlacedInline; { return NO; }
 
-- (BOOL)didPlaceInline; // turns off title, etc.
+- (void)didPlaceInline; // turns off title, etc.
 {
     [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
+}
+
+- (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
+{
+    SVTextAttachment *attachment = [self textAttachment];
+    if (attachment)
+    {
+        [attachment setPagelet:nil];    // so deleting it doesn't cascade and delete us too
+        [[attachment body] deleteCharactersInRange:[attachment range]];
+    }
 }
 
 #pragma mark Sidebar
