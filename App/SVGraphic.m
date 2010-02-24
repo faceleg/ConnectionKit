@@ -11,6 +11,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "SVBody.h"
 #import "SVTemplate.h"
+#import "SVTextAttachment.h"
 #import "SVTitleBox.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -40,7 +41,15 @@
 - (BOOL)isPagelet;
 {
     //  We are a pagelet UNLESS embedded inline in text
-    BOOL result = ![[self wrap] isEqualToNumber:SVContentObjectWrapNone];
+    BOOL result = YES;
+    
+    NSNumber *placement = [[self textAttachment] placement];
+    if (placement)
+    {
+        SVGraphicPlacement placementValue = [placement integerValue];
+        result = (placementValue != SVGraphicPlacementInline);
+    }
+    
     return result;
 }
 
