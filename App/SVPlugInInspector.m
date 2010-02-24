@@ -40,7 +40,7 @@ change context:(void *)context
 {
     if (context == sPlugInInspectorInspectedObjectsObservation)
     {
-        id controllerClass = nil;
+        Class controllerClass = nil;
         
         @try
         {
@@ -54,6 +54,10 @@ change context:(void *)context
         SVInspectorViewController *inspector = nil;
         if (controllerClass && !NSIsControllerMarker(controllerClass))
         {
+            // If re-selecting something of the same type, keep the Inspector we aready have
+            if ([[self selectedInspector] isKindOfClass:controllerClass]) return;
+            
+            
             // Make an Inspector.
             NSBundle *bundle = [NSBundle bundleForClass:controllerClass];
             inspector = [[controllerClass alloc] initWithNibName:nil    // subclass will override -nibName
