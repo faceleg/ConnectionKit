@@ -43,7 +43,7 @@
     
     // Observer storage
     [self addObserver:self
-		  forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", @"showBorder", nil]
+		  forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", @"videoSize", @"showBorder", nil]
 			  options:NSKeyValueObservingOptionNew
 			  context:NULL];
 	
