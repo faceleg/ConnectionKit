@@ -38,9 +38,9 @@
 @dynamic length;
 @dynamic location;
 
+#pragma mark Placement
+
 @dynamic placement;
-@dynamic causesWrap;
-@dynamic wrap;
 
 - (BOOL)validatePlacement:(NSNumber **)placement error:(NSError **)error;
 {
@@ -57,6 +57,106 @@
     }
     
     return result;
+}
+
+#pragma mark Wrap
+
+@dynamic causesWrap;
+@dynamic wrap;
+
+- (NSNumber *)wrapIsFloatOrBlock
+{
+    NSNumber *result = [self wrap];
+    if (![result isEqualToNumber:SVContentObjectWrapNone])
+    {
+        result = [NSNumber numberWithBool:YES];
+    }
+    return result;
+}
+
+- (void)setWrapIsFloatOrBlock:(NSNumber *)useFloatOrBlock
+{
+    [self setWrap:useFloatOrBlock];
+}
+
++ (NSSet *)keyPathsForValuesAffectingWrapIsFloatOrBlock
+{
+    return [NSSet setWithObject:@"wrap"];
+}
+
+- (BOOL)wrapLeft
+{
+    BOOL result = ([[self causesWrap] boolValue] &&
+                   [[self wrap] isEqualToNumber:SVContentObjectWrapFloatLeft]);
+    return result;
+}
+- (void)setWrapLeft:(BOOL)floatLeft
+{
+    [self setWrap:(floatLeft ? SVContentObjectWrapFloatLeft : SVContentObjectWrapNone)];
+}
++ (NSSet *)keyPathsForValuesAffectingWrapLeft
+{
+    return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
+}
+
+- (BOOL)wrapRight
+{
+    BOOL result = ([[self causesWrap] boolValue] &&
+                   [[self wrap] isEqualToNumber:SVContentObjectWrapFloatRight]);
+    return result;
+}
+- (void)setWrapRight:(BOOL)FloatRight
+{
+    [self setWrap:(FloatRight ? SVContentObjectWrapFloatRight : SVContentObjectWrapNone)];
+}
++ (NSSet *)keyPathsForValuesAffectingWrapRight
+{
+    return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
+}
+
+- (BOOL)wrapLeftSplit
+{
+    BOOL result = ([[self causesWrap] boolValue] &&
+                   [[self wrap] isEqualToNumber:SVContentObjectWrapBlockLeft]);
+    return result;
+}
+- (void)setWrapLeftSplit:(BOOL)BlockLeft
+{
+    [self setWrap:(BlockLeft ? SVContentObjectWrapBlockLeft : SVContentObjectWrapNone)];
+}
++ (NSSet *)keyPathsForValuesAffectingWrapLeftSplit
+{
+    return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
+}
+
+- (BOOL)wrapCenterSplit
+{
+    BOOL result = ([[self causesWrap] boolValue] &&
+                   [[self wrap] isEqualToNumber:SVContentObjectWrapBlockCenter]);
+    return result;
+}
+- (void)setWrapCenterSplit:(BOOL)BlockCenter
+{
+    [self setWrap:(BlockCenter ? SVContentObjectWrapBlockCenter : SVContentObjectWrapNone)];
+}
++ (NSSet *)keyPathsForValuesAffectingWrapCenterSplit
+{
+    return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
+}
+
+- (BOOL)wrapRightSplit
+{
+    BOOL result = ([[self causesWrap] boolValue] &&
+                   [[self wrap] isEqualToNumber:SVContentObjectWrapBlockRight]);
+    return result;
+}
+- (void)setWrapRightSplit:(BOOL)BlockRight
+{
+    [self setWrap:(BlockRight ? SVContentObjectWrapBlockRight : SVContentObjectWrapNone)];
+}
++ (NSSet *)keyPathsForValuesAffectingWrapRightSplit
+{
+    return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
 }
 
 @end

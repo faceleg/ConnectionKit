@@ -28,9 +28,23 @@
 @property(nonatomic, retain) NSNumber *length;
 @property(nonatomic, retain) NSNumber *location;
 
+
+#pragma mark Placement
 @property(nonatomic, copy) NSNumber *placement;     // mandatory, SVGraphicPlacement
+
+
+#pragma mark Wrap
+
 @property(nonatomic, copy) NSNumber *causesWrap;    // mandatory, BOOL
 @property(nonatomic, copy) NSNumber *wrap;          // mandatory, SVGraphicWrap
+
+@property(nonatomic, copy) NSNumber *wrapIsFloatOrBlock;    // setter picks best wrap type
+@property(nonatomic) BOOL wrapLeft;
+@property(nonatomic) BOOL wrapRight;
+@property(nonatomic) BOOL wrapLeftSplit;
+@property(nonatomic) BOOL wrapCenterSplit;
+@property(nonatomic) BOOL wrapRightSplit;
+
 
 @end
 

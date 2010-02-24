@@ -82,14 +82,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
 - (BOOL)canBePlacedInline;  // default is NO. Subclasses can override
 
-@property(nonatomic, copy) SVContentObjectWrap *wrap;
-@property(nonatomic, copy) NSNumber *wrapIsFloatOrBlock;    // setter picks best wrap type
-@property(nonatomic) BOOL wrapIsFloatLeft;
-@property(nonatomic) BOOL wrapIsFloatRight;
-@property(nonatomic) BOOL wrapIsBlockLeft;
-@property(nonatomic) BOOL wrapIsBlockCenter;
-@property(nonatomic) BOOL wrapIsBlockRight;
-
 
 #pragma mark Sidebar
 
