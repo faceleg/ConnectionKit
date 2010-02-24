@@ -279,7 +279,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingClassName
 {
-    return [NSSet setWithObject:@"textAttachment.wrap"];
+    return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
 }
 
 - (void)writeHTML
