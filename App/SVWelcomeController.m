@@ -54,6 +54,8 @@
 - (void)dealloc
 {
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
+	[oRecentDocsController removeObserver:self forKeyPath:@"selection"];
+	
 	[super dealloc];
 }
 
@@ -403,6 +405,11 @@
 	[oRecentDocumentsTable setTarget:self];
 	[oRecentDocumentsTable setIntercellSpacing:NSMakeSize(0,3.0)];	// get the columns closer together
 
+	[oRecentDocsController addObserver:self
+		   forKeyPath:@"selection"
+			  options:NSKeyValueObservingOptionNew
+			  context:nil];
+	
 	[[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateLicenseStatus:)
 												 name:kKSLicenseStatusChangeNotification
@@ -454,24 +461,27 @@
 
 - (IBAction)openSelectedRecentDocument:(id)sender;
 {
-	KSRecentDocument *recentDoc = [[oRecentDocsController selectedObjects] lastObject];  // should only be a single object selected anyhow
-    NSURL *fileURL = [recentDoc URL];
-
-	NSError *error = nil;
-	if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL
-                                                                                display:YES
-                                                                                  error:&error])
-    {
-		if (error)
+	NSArray *recentDocuments = [oRecentDocsController selectedObjects];
+	for (KSRecentDocument *recentDoc in recentDocuments)
+	{
+		NSURL *fileURL = [recentDoc URL];
+		
+		NSError *error = nil;
+		if (![[NSDocumentController sharedDocumentController] openDocumentWithContentsOfURL:fileURL
+																					display:YES
+																					  error:&error])
 		{
-			error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
+			if (error)
+			{
+				error = [self makeErrorLookLikeErrorFromDoubleClickingDocument:error];
+			}
+			[[NSDocumentController sharedDocumentController] presentError:error
+														   modalForWindow:[self window]
+																 delegate:nil
+													   didPresentSelector:nil
+															  contextInfo:NULL];
 		}
-        [[NSDocumentController sharedDocumentController] presentError:error
-            modalForWindow:[self window]
-                  delegate:nil
-        didPresentSelector:nil
-               contextInfo:NULL];
-    }
+	}
 }
 
 - (IBAction) openLicensing:(id)sender
@@ -498,6 +508,26 @@
 	return displayPath;
 }
 
+
+- (void)observeValueForKeyPath:(NSString *)aKeyPath
+                      ofObject:(id)anObject
+                        change:(NSDictionary *)aChange
+                       context:(void *)aContext
+{
+	if ([aKeyPath isEqualToString:@"selection"])
+	{
+		// NSLog(@"%@", [anObject selectedObjects]);
+		if ([[anObject selectedObjects] count] > 1)
+		{
+			[oOpenSelectedButton setTitle:NSLocalizedString(@"Open Selected Items", "Button title - plural recent documents to open")];
+		}
+		else
+		{
+			[oOpenSelectedButton setTitle:NSLocalizedString(@"Open Selected Item", "Button title - single recent document to open")];
+
+		}
+	}
+}
 
 
 @end

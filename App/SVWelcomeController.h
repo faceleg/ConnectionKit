@@ -18,6 +18,7 @@
 	IBOutlet NSView *oStickyRotatedView;
 	IBOutlet NSTextView *oStickyTextView;
 	IBOutlet NSButton *oStickyButton;
+	IBOutlet NSButton *oOpenSelectedButton;
 	IBOutlet NSTableView *oRecentDocumentsTable;
 
 	IBOutlet NSBox *oRecentBox;
