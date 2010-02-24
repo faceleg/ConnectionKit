@@ -101,6 +101,8 @@
                               alt:nil 
                             width:[[self width] description]
                            height:[[self height] description]];
+    
+    [context addDependencyOnObject:self keyPath:@"className"];
 }
 
 #pragma mark Editing
