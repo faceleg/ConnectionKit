@@ -348,23 +348,26 @@
 {
     NSString *result = nil;
     
-    switch ([[self wrap] integerValue])
+    if ([[[self textAttachment] causesWrap] boolValue])
     {
-        case SVGraphicWrapLeft:
-            result = @"narrow right";
-            break;
-        case SVGraphicWrapRight:
-            result = @"narrow left";
-            break;
-        case SVGraphicWrapLeftSplit:
-            result = @"wide right";
-            break;
-        case SVGraphicWrapCenterSplit:
-            result = @"wide center";
-            break;
-        case SVGraphicWrapRightSplit:
-            result = @"wide left";
-            break;
+        switch ([[self wrap] integerValue])
+        {
+            case SVGraphicWrapLeft:
+                result = @"narrow right";
+                break;
+            case SVGraphicWrapRight:
+                result = @"narrow left";
+                break;
+            case SVGraphicWrapLeftSplit:
+                result = @"wide right";
+                break;
+            case SVGraphicWrapCenterSplit:
+                result = @"wide center";
+                break;
+            case SVGraphicWrapRightSplit:
+                result = @"wide left";
+                break;
+        }
     }
     
     return result;
