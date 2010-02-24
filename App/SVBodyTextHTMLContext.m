@@ -73,6 +73,10 @@
     NSString *tagName = [element tagName];
     
     
+    // Ignore graphics
+    if ([[[[self bodyTextDOMController] childWebEditorItems] valueForKey:@"HTMLElement"] containsObject:element]) return element;
+    
+    
     // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
     if ([tagName isEqualToString:@"P"])
     {
