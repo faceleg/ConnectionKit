@@ -82,7 +82,7 @@
     
     
     // Detach from text attachment
-    [pagelet detachFromBodyText];
+    //[pagelet detachFromBodyText];
 }
 
 - (void)addObject:(id)pagelet
