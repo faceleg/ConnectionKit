@@ -176,7 +176,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
-- (IBAction)wrapLeft:(id)sender;
+- (IBAction)wrapLeftSplit:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
@@ -189,7 +189,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                                         object:[[self webEditor] webView]];
 }
 
-- (IBAction)wrapCenter:(id)sender;
+- (IBAction)wrapCenterSplit:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
@@ -202,7 +202,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                                         object:[[self webEditor] webView]];
 }
 
-- (IBAction)wrapRight:(id)sender;
+- (IBAction)wrapRightSplit:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
@@ -215,7 +215,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                                         object:[[self webEditor] webView]];
 }
 
-- (IBAction)wrapFloatLeft:(id)sender;
+- (IBAction)wrapLeft:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
@@ -228,7 +228,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                                         object:[[self webEditor] webView]];
 }
 
-- (IBAction)wrapFloatRight:(id)sender;
+- (IBAction)wrapRight:(id)sender;
 {
     SVWebEditorItem *controller = [[self webEditor] selectedItem];
     [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
@@ -550,27 +550,27 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 @implementation SVWebEditorView (SVBodyTextActions)
 
+- (IBAction)wrapLeftSplit:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+- (IBAction)wrapCenterSplit:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
+- (IBAction)wrapRightSplit:(id)sender;
+{
+    [[self selectedItem] doCommandBySelector:_cmd];
+}
+
 - (IBAction)wrapLeft:(id)sender;
 {
     [[self selectedItem] doCommandBySelector:_cmd];
 }
 
-- (IBAction)wrapCenter:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
 - (IBAction)wrapRight:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
-- (IBAction)wrapFloatLeft:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
-- (IBAction)wrapFloatRight:(id)sender;
 {
     [[self selectedItem] doCommandBySelector:_cmd];
 }

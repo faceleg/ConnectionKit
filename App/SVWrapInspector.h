@@ -11,11 +11,11 @@
 
 @interface SVWrapInspector : KSInspectorViewController
 {
-    IBOutlet NSButton   *oWrapFloatLeftButton;
-    IBOutlet NSButton   *oWrapFloatRightButton;
     IBOutlet NSButton   *oWrapLeftButton;
-    IBOutlet NSButton   *oWrapCenterButton;
     IBOutlet NSButton   *oWrapRightButton;
+    IBOutlet NSButton   *oWrapLeftSplitButton;
+    IBOutlet NSButton   *oWrapCenterButton;
+    IBOutlet NSButton   *oWrapRightSplitButton;
 }
 
 @end

@@ -21,33 +21,33 @@
     {
         NSArray *wraps = [(NSObject *)[self inspectedObjects] valueForKey:@"wrap"];
         
-        [oWrapFloatLeftButton setState:[wraps containsObject:SVContentObjectWrapFloatLeft]];
-        [oWrapFloatRightButton setState:[wraps containsObject:SVContentObjectWrapFloatRight]];
-        [oWrapLeftButton setState:[wraps containsObject:SVContentObjectWrapBlockLeft]];
+        [oWrapLeftButton setState:[wraps containsObject:SVContentObjectWrapFloatLeft]];
+        [oWrapRightButton setState:[wraps containsObject:SVContentObjectWrapFloatRight]];
+        [oWrapLeftSplitButton setState:[wraps containsObject:SVContentObjectWrapBlockLeft]];
         [oWrapCenterButton setState:[wraps containsObject:SVContentObjectWrapBlockCenter]];
-        [oWrapRightButton setState:[wraps containsObject:SVContentObjectWrapBlockRight]];
+        [oWrapRightSplitButton setState:[wraps containsObject:SVContentObjectWrapBlockRight]];
         
-        [oWrapFloatLeftButton setEnabled:YES];
-        [oWrapFloatRightButton setEnabled:YES];
         [oWrapLeftButton setEnabled:YES];
-        [oWrapCenterButton setEnabled:YES];
         [oWrapRightButton setEnabled:YES];
+        [oWrapLeftSplitButton setEnabled:YES];
+        [oWrapCenterButton setEnabled:YES];
+        [oWrapRightSplitButton setEnabled:YES];
     }
     @catch (NSException *exception)
     {
         if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
         
-        [oWrapFloatLeftButton setState:NSOffState];
-        [oWrapFloatRightButton setState:NSOffState];
         [oWrapLeftButton setState:NSOffState];
-        [oWrapCenterButton setState:NSOffState];
         [oWrapRightButton setState:NSOffState];
+        [oWrapLeftSplitButton setState:NSOffState];
+        [oWrapCenterButton setState:NSOffState];
+        [oWrapRightSplitButton setState:NSOffState];
         
-        [oWrapFloatLeftButton setEnabled:NO];
-        [oWrapFloatRightButton setEnabled:NO];
         [oWrapLeftButton setEnabled:NO];
-        [oWrapCenterButton setEnabled:NO];
         [oWrapRightButton setEnabled:NO];
+        [oWrapLeftSplitButton setEnabled:NO];
+        [oWrapCenterButton setEnabled:NO];
+        [oWrapRightSplitButton setEnabled:NO];
     }
 }
 

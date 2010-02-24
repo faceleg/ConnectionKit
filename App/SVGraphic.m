@@ -351,19 +351,19 @@
     switch ([[self wrap] integerValue])
     {
         case SVGraphicWrapLeft:
-            result = @"narrow left";
-            break;
-        case SVGraphicWrapRight:
             result = @"narrow right";
             break;
+        case SVGraphicWrapRight:
+            result = @"narrow left";
+            break;
         case SVGraphicWrapLeftSplit:
-            result = @"wide left";
+            result = @"wide right";
             break;
         case SVGraphicWrapCenterSplit:
             result = @"wide center";
             break;
         case SVGraphicWrapRightSplit:
-            result = @"wide right";
+            result = @"wide left";
             break;
     }
     

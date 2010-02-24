@@ -14,7 +14,7 @@ typedef enum {
     SVGraphicPlacementBlock,
 } SVGraphicPlacement;
 
-typedef enum {
+typedef enum {  // Note that "left" or "right" refers to the side of the graphic *text* will be placed
     SVGraphicWrapNone,
     SVGraphicWrapLeftSplit,
     SVGraphicWrapCenterSplit,

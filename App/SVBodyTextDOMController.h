@@ -29,11 +29,11 @@
 
 
 #pragma mark Placement/Wrap
+- (IBAction)wrapLeftSplit:(id)sender;
+- (IBAction)wrapCenterSplit:(id)sender;
+- (IBAction)wrapRightSplit:(id)sender;
 - (IBAction)wrapLeft:(id)sender;
-- (IBAction)wrapCenter:(id)sender;
 - (IBAction)wrapRight:(id)sender;
-- (IBAction)wrapFloatLeft:(id)sender;
-- (IBAction)wrapFloatRight:(id)sender;
 
 
 #pragma mark Subcontrollers
