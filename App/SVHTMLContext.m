@@ -52,6 +52,7 @@
     _stream = [stream retain];
     _generationPurpose = kSVHTMLGenerationPurposeNormal;
     _includeStyling = YES;
+    _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
     _openElements = [[NSMutableArray alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
