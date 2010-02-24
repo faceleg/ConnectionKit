@@ -477,7 +477,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         for (SVWebEditorItem *anItem in items)
         {
             SVGraphic *graphic = [anItem representedObject];
-            if (![[graphic wrap] isEqualToNumber:SVContentObjectWrapNone])
+            if (![graphic canBePlacedInline])
             {
                 [webEditor removeDragCaret];
                 return YES;
