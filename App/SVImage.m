@@ -32,6 +32,10 @@
 
 @dynamic media;
 
+#pragma mark Placement
+
+- (BOOL)canBePlacedInline; { return YES; }
+
 #pragma mark Size
 
 @dynamic width;
