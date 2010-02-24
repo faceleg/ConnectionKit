@@ -997,18 +997,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
         else if (dropIndex >= [pageletContentItems count])
         {
-            SVGraphic *lastPagelet = [[pageletContentItems lastObject] representedObject];
+            //SVGraphic *lastPagelet = [[pageletContentItems lastObject] representedObject];
             for (SVDOMController *aPageletItem in [sender selectedItems])
             {
                 SVGraphic *pagelet = [aPageletItem representedObject];
-                [pagelet moveAfterSidebarPagelet:lastPagelet];
+                [[_selectableObjectsController sidebarPageletsController] insertObject:pagelet
+                                                                 atArrangedObjectIndex:dropIndex];
             }
         }
         else
         {
             for (SVDOMController *aPageletItem in [sender selectedItems])
             {
-                SVGraphic *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
+                //SVGraphic *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
                 SVGraphic *pagelet = [aPageletItem representedObject];
                 
                 // Pagelets being dragged from outside the sidebar need to be inserted first
@@ -1018,7 +1019,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 }
                 
                 // Move the pagelet to the right index
-                [pagelet moveBeforeSidebarPagelet:anchorPagelet];
+                [[_selectableObjectsController sidebarPageletsController] insertObject:pagelet
+                                                                 atArrangedObjectIndex:dropIndex];
             }
         }
     }

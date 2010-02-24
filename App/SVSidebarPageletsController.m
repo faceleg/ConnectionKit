@@ -61,12 +61,28 @@
 
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
+    SVGraphic *pagelet = object;
+    
+    
+    // Position right
+    if (index >= [[self arrangedObjects] count])
+    {
+        SVGraphic *lastPagelet = [[self arrangedObjects] lastObject];
+        [pagelet moveAfterSidebarPagelet:lastPagelet];
+    }
+    else
+    {
+        SVGraphic *refPagelet = [[self arrangedObjects] objectAtIndex:index];
+        [pagelet moveAfterSidebarPagelet:refPagelet];
+    }
+    
+    
+    // Do the insert
     [super insertObject:object atArrangedObjectIndex:index];
     
     
     // Detach from text attachment
-    SVGraphic *pagelet = object;
-    [pagelet setTextAttachment:nil];
+    [pagelet detachFromBodyText];
 }
 
 - (void)addObject:(id)pagelet

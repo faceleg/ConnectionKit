@@ -420,7 +420,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             // Move the dragged items into place
             for (SVWebEditorItem *anItem in items)
             {
-                [range insertNode:[anItem HTMLElement]];
+                if ([anItem parentWebEditorItem] == self)
+                {
+                    [range insertNode:[anItem HTMLElement]];
+                }
             }
         }
     }
