@@ -41,6 +41,14 @@
 #pragma mark Placement
 
 @dynamic placement;
+- (void)setPlacement:(NSNumber *)placement;
+{
+    [self willChangeValueForKey:@"placement"];
+    [self setPrimitiveValue:placement forKey:@"placement"];
+    [self didChangeValueForKey:@"placement"];
+    
+    if ([placement integerValue] == SVGraphicPlacementInline) [[self pagelet] didPlaceInline];
+}
 
 - (BOOL)validatePlacement:(NSNumber **)placement error:(NSError **)error;
 {

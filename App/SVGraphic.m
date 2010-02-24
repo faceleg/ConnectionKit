@@ -86,6 +86,11 @@
 
 - (BOOL)canBePlacedInline; { return NO; }
 
+- (BOOL)didPlaceInline; // turns off title, etc.
+{
+    [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
+}
+
 #pragma mark Sidebar
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;

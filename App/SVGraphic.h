@@ -81,6 +81,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
 - (BOOL)canBePlacedInline;  // default is NO. Subclasses can override
+- (BOOL)didPlaceInline; // turns off title, etc.
 
 
 #pragma mark Sidebar
