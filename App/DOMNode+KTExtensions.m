@@ -1141,58 +1141,10 @@ static NSSet *sTagsWithNewlineOnClose = nil;
 {
 	NSString *text = [self data];
 	
-	// Hack -- instead of escaping the whole thing, look for comment blocks, which SHOULD NOT BE IN HERE
-	// This code based on replaceAllTextBetweenString:andString:fromDictionary:
-	
-	NSString *startDelim = @"<!--";
-	NSString *endDelim = @"-->";
-	
-	NSRange range = NSMakeRange(0,[text length]);	// We'll increment this
-	NSMutableString *buf = [NSMutableString string];
-		
-	// Now loop through; looking.
-	while (range.length != 0)
-	{
-		NSRange foundRange = [text rangeFromString:startDelim toString:endDelim options:0 range:range];
-		if (foundRange.location != NSNotFound)
-		{
-			// First, append what was the search range and the found range -- before match -- to output
-			{
-				NSRange beforeRange = NSMakeRange(range.location, foundRange.location - range.location);
-				NSString *before = [text substringWithRange:beforeRange];
-				[buf appendString:[before stringByEscapingHTMLEntities]];
-			}
-			// Now, figure out what was between those two strings
-			{
-				NSRange betweenRange = NSMakeRange(foundRange.location, foundRange.length);
-				NSString *between = [text substringWithRange:betweenRange];
-				[buf appendString:between];		// not escaped
-			}
-			// Now, update things and move on.
-			range.length = NSMaxRange(range) - NSMaxRange(foundRange);
-			range.location = NSMaxRange(foundRange);
-		}
-		else
-		{
-			NSString *after = [text substringWithRange:range];
-			[buf appendString:[after stringByEscapingHTMLEntities]];
-			// Now, update to be past the range, to finish up.
-			range.location = NSMaxRange(range);
-			range.length = 0;
-		}
-	}
-	
-/// Fixed in r18043 so we don't need it here, this should take out problem I was having with two spaces in a comment
-//#warning PATCH here to deal with WEBKIT BUG -- 10636   http://bugs.webkit.org/show_bug.cgi?id=10636
-//	if ([self respondsToSelector:@selector(isContentEditable)] && [(DOMHTMLElement *)self isContentEditable])
-//	{
-//		NSString *twoSpaces = @"  ";
-//		NSString *nbsp = [NSString stringWithUTF8String:"\xc2\xa0"]; // non-breaking-space
-//		NSString *replacePattern = [NSString stringWithUTF8String:"\xc2\xa0 "]; // {non-breaking-space, ' '}
-//		[buf replaceOccurrencesOfString:nbsp withString:@" " options:NSLiteralSearch range:NSMakeRange(0, [buf length])];
-//		[buf replaceOccurrencesOfString:twoSpaces withString:replacePattern options:NSBackwardsSearch range:NSMakeRange(0, [buf length])];
-//	}
-	return [NSString stringWithString:buf];
+	// Took out change made in r3666 that put <!-- --> UNESCAPED in the text.  Supposedly it was working around a
+	// DOM bug, but this means that somebody can't do an HTML tutorial and use <!-- --> in their text, since it gets
+	// converted into a comment.  
+	return [text stringByEscapingHTMLEntities];
 }
 
 @end
