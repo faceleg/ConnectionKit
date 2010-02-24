@@ -28,14 +28,6 @@
 - (IBAction)insertFile:(id)sender;
 
 
-#pragma mark Placement/Wrap
-- (IBAction)wrapLeftSplit:(id)sender;
-- (IBAction)wrapCenterSplit:(id)sender;
-- (IBAction)wrapRightSplit:(id)sender;
-- (IBAction)wrapLeft:(id)sender;
-- (IBAction)wrapRight:(id)sender;
-
-
 #pragma mark Subcontrollers
 
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;

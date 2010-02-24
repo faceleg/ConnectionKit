@@ -161,81 +161,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
-#pragma mark Placement/Wrap
-
-- (void)placeDOMElementAtBlockLevel:(DOMElement *)element;
-{
-    // Shift the element up in the tree until it is a child of our own element
-    DOMNode *parentNode = [element parentNode];
-    while (parentNode != [self HTMLElement])
-    {
-        DOMNode *refNode = parentNode;
-        parentNode = [parentNode parentNode];
-        [parentNode insertBefore:element refChild:refNode];
-    }
-}
-
-- (IBAction)wrapLeftSplit:(id)sender;
-{
-    SVWebEditorItem *controller = [[self webEditor] selectedItem];
-    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
-    
-    SVGraphic *graphic = [controller representedObject];
-    [graphic setWrap:SVContentObjectWrapBlockLeft];
-    
-    // Trigger processing of the change
-    [[self webEditor] didChange];
-}
-
-- (IBAction)wrapCenterSplit:(id)sender;
-{
-    SVWebEditorItem *controller = [[self webEditor] selectedItem];
-    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
-    
-    SVGraphic *graphic = [controller representedObject];
-    [graphic setWrap:SVContentObjectWrapBlockCenter];
-    
-    // Trigger processing of the change
-    [[self webEditor] didChange];
-}
-
-- (IBAction)wrapRightSplit:(id)sender;
-{
-    SVWebEditorItem *controller = [[self webEditor] selectedItem];
-    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
-    
-    SVGraphic *graphic = [controller representedObject];
-    [graphic setWrap:SVContentObjectWrapBlockRight];
-    
-    // Trigger processing of the change
-    [[self webEditor] didChange];
-}
-
-- (IBAction)wrapLeft:(id)sender;
-{
-    SVWebEditorItem *controller = [[self webEditor] selectedItem];
-    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
-    
-    SVGraphic *graphic = [controller representedObject];
-    [graphic setWrap:SVContentObjectWrapFloatLeft];
-    
-    // Trigger processing of the change
-    [[self webEditor] didChange];
-}
-
-- (IBAction)wrapRight:(id)sender;
-{
-    SVWebEditorItem *controller = [[self webEditor] selectedItem];
-    [self placeDOMElementAtBlockLevel:[controller HTMLElement]];
-    
-    SVGraphic *graphic = [controller representedObject];
-    [graphic setWrap:SVContentObjectWrapFloatRight];
-    
-    // Trigger processing of the change
-    [[self webEditor] didChange];
-}
-
-
 #pragma mark Editability
 
 - (BOOL)isSelectable { return NO; }
@@ -534,39 +459,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVWebEditorView (SVBodyTextActions)
-
-- (IBAction)wrapLeftSplit:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
-- (IBAction)wrapCenterSplit:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
-- (IBAction)wrapRightSplit:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
-- (IBAction)wrapLeft:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
-}
-
-- (IBAction)wrapRight:(id)sender;
-{
-    [[self selectedItem] doCommandBySelector:_cmd];
 }
 
 @end
