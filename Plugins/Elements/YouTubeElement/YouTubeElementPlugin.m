@@ -164,8 +164,8 @@
 	{
 		NSColor *lightenedColor = [[NSColor whiteColor] blendedColorWithFraction:0.5 ofColor:self.color2];
 		
-		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us
-		self.color1 = lightenedColor;	// mis-interpeting the setter
+		myAutomaticallyUpdatingSecondaryColorFlag = YES;	// The flag is needed to stop us mis-interpeting the setter
+		self.color1 = lightenedColor;
 		myAutomaticallyUpdatingSecondaryColorFlag = NO;
 	}
 	
