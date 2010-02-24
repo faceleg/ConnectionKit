@@ -20,6 +20,9 @@
 
 @property(nonatomic, copy) NSString *string;
 @property(nonatomic, copy) NSSet *attachments;
+- (NSArray *)orderedAttachments;
+
+- (void)deleteCharactersInRange:(NSRange)aRange;
 
 
 @end
