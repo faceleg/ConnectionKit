@@ -48,7 +48,7 @@
     
     
     // Make Web Editor/Controller copy text to model
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:[webEditor webView]];
+    [webEditor didChange];
     
     
     // Mark for update now model has been changed

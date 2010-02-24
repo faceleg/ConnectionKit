@@ -777,8 +777,7 @@ OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 		NSString *undoActionName = [[self windowController] createLink:urlString desiredText:title openLinkInNewWindow:NO];
 		
 		// update webview to reflect node changes
-		[[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-															object:[self webView]];	
+		[[self webEditor] didChange];
 		[[self windowController] setContextElementInformation:nil];
 		
 		[[[self webView] undoManager] setActionName:undoActionName];

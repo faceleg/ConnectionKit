@@ -123,8 +123,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMRange *selection = [webEditor selectedDOMRange];
     [selection insertNode:[controller HTMLElement]];
     
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[webEditor webView]];
+    [webEditor didChange];
 }
 
 - (IBAction)insertPagelet:(id)sender;
@@ -185,8 +184,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setWrap:SVContentObjectWrapBlockLeft];
     
     // Trigger processing of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[[self webEditor] webView]];
+    [[self webEditor] didChange];
 }
 
 - (IBAction)wrapCenterSplit:(id)sender;
@@ -198,8 +196,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setWrap:SVContentObjectWrapBlockCenter];
     
     // Trigger processing of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[[self webEditor] webView]];
+    [[self webEditor] didChange];
 }
 
 - (IBAction)wrapRightSplit:(id)sender;
@@ -211,8 +208,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setWrap:SVContentObjectWrapBlockRight];
     
     // Trigger processing of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[[self webEditor] webView]];
+    [[self webEditor] didChange];
 }
 
 - (IBAction)wrapLeft:(id)sender;
@@ -224,8 +220,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setWrap:SVContentObjectWrapFloatLeft];
     
     // Trigger processing of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[[self webEditor] webView]];
+    [[self webEditor] didChange];
 }
 
 - (IBAction)wrapRight:(id)sender;
@@ -237,8 +232,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [graphic setWrap:SVContentObjectWrapFloatRight];
     
     // Trigger processing of the change
-    [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
-                                                        object:[[self webEditor] webView]];
+    [[self webEditor] didChange];
 }
 
 
