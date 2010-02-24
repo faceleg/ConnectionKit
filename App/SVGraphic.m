@@ -10,6 +10,7 @@
 
 #import "SVHTMLTemplateParser.h"
 #import "SVBody.h"
+#import "SVGraphicDOMController.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
@@ -321,6 +322,10 @@
 @dynamic elementID;
 - (NSString *)editingElementID { return [self elementID]; }
 - (BOOL)shouldPublishEditingElementID { return YES; }
+
+#pragma mark UI
+
+- (Class)DOMControllerClass { return [SVGraphicDOMController class]; }
 
 @end
 
