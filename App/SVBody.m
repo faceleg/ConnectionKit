@@ -74,6 +74,7 @@
     // Delete the characters
     NSMutableString *string = [[self string] mutableCopy];
     [string deleteCharactersInRange:range];
+    [self setString:string];
     
     
     // Knock down all attachment ranges. Delete any attachments within the range
