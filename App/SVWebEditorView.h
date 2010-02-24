@@ -46,7 +46,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     NSPasteboard    *_insertionPasteboard;
     
     // Drag & Drop
-    BOOL        _isDragging;
+    NSArray     *_draggedItems;
     DOMNode     *_dragHighlightNode;
     DOMRange    *_dragCaretDOMRange;
     
@@ -165,7 +165,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @interface SVWebEditorView (Dragging)
 
 #pragma mark Dragging Source
-- (BOOL)isDragging;
+- (NSArray *)draggedItems;
 
 
 #pragma mark Dragging Destination

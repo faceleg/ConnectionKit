@@ -391,18 +391,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         *proposedOperation = NSDragOperationMove;
         
-        // Only inline graphics should use drag caret
-        NSArray *items = [webEditor selectedItems];
-        for (SVWebEditorItem *anItem in items)
-        {
-            SVGraphic *graphic = [anItem representedObject];
-            if (![graphic canBePlacedInline])
-            {
-                [webEditor removeDragCaret];
-                return YES;
-            }
-        }
-        
         return NO;
     }
     else
@@ -421,7 +409,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         SVWebEditorView *webEditor = [self webEditor];
         NSPasteboard *pasteboard = [webEditor insertionPasteboard];
         
-        if (pasteboard && [webEditor isDragging])
+        NSArray *items = [webEditor draggedItems];
+        if (pasteboard && items)
         {
             // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
             [[node mutableChildNodesArray] removeAllObjects];
@@ -429,12 +418,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             
             
             // Move the dragged items into place
-            NSArray *selection = [[webEditor selectedItems] copy];  // Our modifications may cause selection to change
-            for (SVWebEditorItem *anItem in selection)
+            for (SVWebEditorItem *anItem in items)
             {
                 [range insertNode:[anItem HTMLElement]];
             }
-            [selection release];
         }
     }
     

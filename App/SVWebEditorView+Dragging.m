@@ -159,13 +159,14 @@
 - (void)draggedImage:(NSImage *)anImage beganAt:(NSPoint)aPoint
 {
     // Hide the dragged items so it looks like a proper drag
-    _isDragging = YES;    // will redraw without selection borders
+    OBASSERT(!_draggedItems);
+    _draggedItems = [[self selectedItems] copy];    // will redraw without selection borders
 }
 
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
 {
     // Make the dragged items visible again
-    _isDragging = NO;
+    [_draggedItems release]; _draggedItems = nil;
     
     for (SVWebEditorItem *anItem in [self selectedItems])
     {
@@ -174,7 +175,7 @@
     }
 }
 
-- (BOOL)isDragging; { return _isDragging; }
+- (NSArray *)draggedItems; { return _draggedItems; }
 
 #pragma mark Drawing
 
