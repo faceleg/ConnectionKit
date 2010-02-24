@@ -73,7 +73,7 @@
     else
     {
         SVGraphic *refPagelet = [[self arrangedObjects] objectAtIndex:index];
-        [pagelet moveAfterSidebarPagelet:refPagelet];
+        [pagelet moveBeforeSidebarPagelet:refPagelet];
     }
     
     
