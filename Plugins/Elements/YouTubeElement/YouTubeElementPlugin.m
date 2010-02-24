@@ -87,14 +87,25 @@
 		[self resetColors];
 	}
 	
-	
-	// Pages should have a thumbnail
-	else
+// Here we want to NOT allow resizing of element if it's in the sidebar.
+//	// Pagelets cannot adjust their size
+//	if ([element isKindOfClass:[KTPagelet class]])
+//	{
+//		[videoSizeSlider setEnabled:NO];
+//	}
+//	// Pages should have a thumbnail
+//	else
 	{
-		if (![(KTPage *)self thumbnail])
+		
+		/*
+		 
+			NOT YET WORKING IN SANDVOX 2
+		 
+		if (![(KTPage *)element thumbnail])
 		{
-			[(KTPage *)self setThumbnail:[self defaultThumbnail]];
+			[(KTPage *)element setThumbnail:[self defaultThumbnail]];
 		}
+		 */
 	}
 }
 

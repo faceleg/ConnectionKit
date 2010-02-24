@@ -22,12 +22,17 @@
 
 - (IBAction)openYouTubeURL:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://youtube.com/"]];
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.youtube.com/"]];
 }
 
 - (IBAction)resetColors:(id)sender
 {
-	[[[self inspectedObjectsController] selection] resetColors];
+	// so you need to iterate through [[self inspectedObjectsController] selectedObjects]
+	NSArray *objects = [[self inspectedObjectsController] selectedObjects];
+	for (YouTubeElementPlugin *plugin in objects)
+	{
+		[plugin resetColors];
+	}
 }
 
 
