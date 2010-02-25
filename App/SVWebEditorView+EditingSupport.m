@@ -52,17 +52,17 @@
 
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
-    NSArray *items = [self selectedItems];
-    if ([items count] > 0)
+    if ([self selectedDOMRange])
     {
-        if (![[self dataSource] webEditor:self deleteItems:[self selectedItems]])
-        {
-            NSBeep();
-        }
+        [self forwardCommandBySelector:action];
     }
     else
     {
-        [self forwardCommandBySelector:action];
+        NSArray *items = [self selectedItems];
+        if (![[self dataSource] webEditor:self deleteItems:items])
+        {
+            NSBeep();
+        }
     }
 }
 
