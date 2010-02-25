@@ -71,6 +71,22 @@
     }
 }
 
+- (BOOL)validateStyleProperty:(NSString *)propertyName;
+{
+    BOOL result = [super validateStyleProperty:propertyName];
+    
+    if (!result && [propertyName isEqualToString:@"text-align"])
+    {
+        NSString *tagName = [self lastOpenElementTagName];
+        if ([tagName isEqualToString:@"P"])
+        {
+            result = YES;
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Writing
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element
