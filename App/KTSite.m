@@ -112,16 +112,6 @@
 	[[NSUserDefaults standardUserDefaults] setInteger:copy forKey:@"copyMediaOriginals"];
 }
 
-- (NSDictionary *)metadata
-{
-	return [self transientValueForKey:@"metadata" persistentPropertyListKey:@"metadataData"];
-}
-
-- (void)setMetadata:(NSDictionary *)metadata
-{
-	[self setTransientValue:metadata forKey:@"metadata" persistentPropertyListKey:@"metadataData"];
-}
-
 #pragma mark -
 #pragma mark UI
 
