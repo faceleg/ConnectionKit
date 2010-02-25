@@ -1359,13 +1359,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (!_isChangingSelectedItems)
     {
         DOMRange *range = [[self webView] selectedDOMRange];
-        NSArray *items = nil;
-        if (range)
-        {
-            items = [self itemsInDOMRange:range];
-        }
+        NSArray *items = (range) ? [self itemsInDOMRange:range] : nil;
         
-        [self deselectAll:self];
+        [self updateSelectionByDeselectingAll:YES orDeselectItem:nil selectItems:items updateWebView:NO isUIAction:NO];
     }
     
     
