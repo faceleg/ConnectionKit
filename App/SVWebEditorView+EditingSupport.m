@@ -28,15 +28,31 @@
 
 - (void)cut:(id)sender
 {
-    if ([self copySelectedItemsToGeneralPasteboard])
+    // Let the WebView handle it unless there is no text selection
+    if ([self selectedDOMRange])
     {
-        [self delete:sender];
+        [self forwardCommandBySelector:_cmd];
+    }
+    else
+    {
+        if ([self copySelectedItemsToGeneralPasteboard])
+        {
+            [self delete:sender];
+        }
     }
 }
 
 - (void)copy:(id)sender
 {
-    [self copySelectedItemsToGeneralPasteboard];
+    // Let the WebView handle it unless there is no text selection
+    if ([self selectedDOMRange])
+    {
+        [self forwardCommandBySelector:_cmd];
+    }
+    else
+    {
+        [self copySelectedItemsToGeneralPasteboard];
+    }
 }
 
 - (BOOL)copySelectedItemsToGeneralPasteboard;
