@@ -56,6 +56,6 @@
 	<key>KTTemplateName</key>
 	<string>BadgePageletTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>RSSBadgeDelegate</string>
+	<string>RSSBadgePlugin</string>
 </dict>
 </plist>

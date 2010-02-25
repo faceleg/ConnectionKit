@@ -47,6 +47,9 @@
 
 + (void)initialize
 {
+	
+	#warning should use keyPathsForValuesAffecting<key>
+	
 	[self setKeys:[NSArray arrayWithObject:@"type"]
 		triggerChangeNotificationsForDependentKey:@"tabViewIdentifierForFieldType"];
 	

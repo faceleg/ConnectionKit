@@ -89,6 +89,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 {
 	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
 	
+#warning should use keyPathsForValuesAffecting<key>
 
     [ContactElementDelegate setKeys:
         [NSArray arrayWithObjects: @"address", nil]
