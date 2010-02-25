@@ -75,36 +75,47 @@
     
     
     
+    // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
+    DOMElement *elementToMergeInto = nil;
+    if ([_pendingEndDOMElement isEqualNode:element compareChildNodes:NO])
+    {
+        elementToMergeInto = _pendingEndDOMElement;
+        [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
+    }  
+    
+    
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
     NSString *tagName = [element tagName];
-    if ([self hasOpenElementWithTagName:tagName])
+    if (!elementToMergeInto)
     {
-        // Shuffle up following nodes
-        DOMElement *parent = (DOMElement *)[element parentNode];
-        [parent flattenNodesAfterChild:element];
-        
-        
-        // It make take several moves up the tree till we find the conflicting element
-        while (![[parent tagName] isEqualToString:tagName])
+        if ([self hasOpenElementWithTagName:tagName])
         {
-            // Move element across to a clone of its parent
-            DOMNode *clone = [parent cloneNode:NO];
-            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-            [clone appendChild:element];
-            parent = (DOMElement *)[parent parentNode];
+            // Shuffle up following nodes
+            DOMElement *parent = (DOMElement *)[element parentNode];
+            [parent flattenNodesAfterChild:element];
+            
+            
+            // It make take several moves up the tree till we find the conflicting element
+            while (![[parent tagName] isEqualToString:tagName])
+            {
+                // Move element across to a clone of its parent
+                DOMNode *clone = [parent cloneNode:NO];
+                [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+                [clone appendChild:element];
+                parent = (DOMElement *)[parent parentNode];
+            }
+            
+            
+            // Now we're ready to flatten the conflict
+            [element copyInheritedStylingFromElement:parent];
+            [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+            
+            
+            // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+            return nil;
         }
-        
-        
-        // Now we're ready to flatten the conflict
-        [element copyInheritedStylingFromElement:parent];
-        [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
-        
-        
-        // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-        return nil;
     }
-    
     
     
     
@@ -115,11 +126,22 @@
     }
     else
     {
-        // ..so push onto the stack, ready to write if requested
-        [_pendingStartTagDOMElements addObject:element];
+        // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
+        if (!elementToMergeInto) [_pendingStartTagDOMElements addObject:element];
+        
         
         // Write inner HTML
         [element writeInnerHTMLToContext:self];
+        
+        
+        // Do the merge in the DOM
+        if (elementToMergeInto)
+        {
+            [[elementToMergeInto mutableChildNodesArray] addObjectsFromArray:[element mutableChildNodesArray]];
+            [[element parentNode] removeChild:element];
+            element = elementToMergeInto;
+        }
+        
         
         // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
         if ([_pendingStartTagDOMElements lastObject] == element)
@@ -145,37 +167,6 @@
             }
             
             return [element nextSibling];
-            
-            
-            
-            
-            DOMNode *result = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
-            
-            
-            while ([result isEqualNode:element compareChildNodes:NO] && ![tagName isEqualToString:@"P"])
-            {
-                DOMNode *startNode = [result firstChild];
-                
-                // Move elements out of sibling and into original
-                [[element mutableChildNodesArray] addObjectsFromArray:[result mutableChildNodesArray]];
-                
-                // Dump the now uneeded node
-                [[result parentNode] removeChild:result];
-                
-                // Carry on writing
-                [element writeInnerHTMLStartingWithChild:startNode toContext:self];
-                
-                
-                // Recurse in case the next node after that also fits the criteria
-                result = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
-            }
-            
-            
-            
-            
-            [self writeEndTag];
-            
-            return result;
         }
     }
 }
