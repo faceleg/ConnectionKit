@@ -101,12 +101,7 @@
 
 @synthesize editing = _isEditing;
 
-- (void)webViewDidChange; { [self didChangeText]; }
-
-- (void)didChangeText;  // Call this once your subclass has determined a change really took place
-{
-    [[self webEditorViewController] textDOMControllerDidChangeText:self];
-}
+- (void)webViewDidChange; { }
 
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 {

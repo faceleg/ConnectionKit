@@ -236,7 +236,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Editing
 
-- (void)didChangeText;
+- (void)webViewDidChange;
 {
     //  Body Text Controller doesn't track indivdual text changes itself, leaving that up to the paragraphs. So use this point to pass a similar message onto those subcontrollers to handle.
     
@@ -252,8 +252,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVBody *body = [self representedObject];
     if (![html isEqualToString:[body string]])
     {
-        [super didChangeText];
-        
         _isUpdating = YES;
         [body setString:html];
         _isUpdating = NO;

@@ -84,7 +84,7 @@
 
 #pragma mark Editing
 
-- (void)didChangeText;
+- (void)webViewDidChange;
 {
     // Validate the HTML
     NSMutableString *html = [[NSMutableString alloc] init];
@@ -97,10 +97,6 @@
     // Copy HTML across to ourself
     if (![html isEqualToString:_uneditedValue])
     {
-        // Do usual stuff
-        [super didChangeText];
-        
-        
         [self setHTMLString:html needsUpdate:NO];
         
         
