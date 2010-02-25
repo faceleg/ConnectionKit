@@ -189,7 +189,14 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
         if (docProperties)
         {
-            [[self site] setValuesForKeysWithDictionary:docProperties];
+            @try
+            {
+                [[self site] setValuesForKeysWithDictionary:docProperties];
+            }
+            @catch (NSException *exception)
+            {
+                if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
+            }
         }
         
         
