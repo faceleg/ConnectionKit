@@ -52,10 +52,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 	
 	// UI
 	BOOL	myShowDesigns;						// accessor in category method
-	BOOL	myDisplaySiteOutline;				// accessor in category method
 	BOOL	myDisplaySmallPageIcons;			// accessor in category method
-	BOOL	myDisplayStatusBar;					// accessor in category method
-	BOOL	myDisplayEditingControls;			// accessor in category method
 //	short	mySiteOutlineSize;
 	BOOL	myDisplayCodeInjectionWarnings;		// accessor in category method
     
@@ -139,14 +136,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (void)setShowDesigns:(BOOL)value;
 
 // Display properties
-- (BOOL)displayEditingControls;
-- (void)setDisplayEditingControls:(BOOL)value;
-
-- (BOOL)displaySiteOutline;
-- (void)setDisplaySiteOutline:(BOOL)value;
-
-- (BOOL)displayStatusBar;
-- (void)setDisplayStatusBar:(BOOL)value;
 
 - (BOOL)displaySmallPageIcons;
 - (void)setDisplaySmallPageIcons:(BOOL)value;

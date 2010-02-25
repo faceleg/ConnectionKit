@@ -427,9 +427,7 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 		
 		// Properties of document, reverting to preferences if not set in doc.
 		
-		[NSNumber numberWithBool:YES], @"displayStatusBar",
 		[NSNumber numberWithBool:NO], @"displaySmallPageIcons",
-		[NSNumber numberWithBool:YES], @"displaySiteOutline",
 		@"", @"author",		// used to be NSFullUserName() but that puts the user's name on the title bar which people might not notice!
 		
 		// Connection timeout value 

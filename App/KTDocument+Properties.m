@@ -111,30 +111,6 @@
 	myShowDesigns = value;
 }
 
-- (BOOL)displaySiteOutline { return myDisplaySiteOutline; }
-
-- (void)setDisplaySiteOutline:(BOOL)value
-{
-	myDisplaySiteOutline = value;
-	[self updateDefaultDocumentProperty:@"displaySiteOutline"];
-}
-
-- (BOOL)displayStatusBar { return myDisplayStatusBar; }
-
-- (void)setDisplayStatusBar:(BOOL)value
-{
-	myDisplayStatusBar = value;
-	[self updateDefaultDocumentProperty:@"displayStatusBar"];
-}
-
-- (BOOL)displayEditingControls { return myDisplayEditingControls; }
-
-- (void)setDisplayEditingControls:(BOOL)value
-{
-	myDisplayEditingControls = value;
-	[self updateDefaultDocumentProperty:@"displayEditingControls"];
-}
-
 - (BOOL)displaySmallPageIcons { return myDisplaySmallPageIcons; }
 
 - (void)setDisplaySmallPageIcons:(BOOL)aSmall

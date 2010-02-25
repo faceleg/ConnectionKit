@@ -63,8 +63,8 @@
 	DOMDocument *doc = [aDOMElement ownerDocument];
 	BOOL isNew = [[[[self windowController] siteOutlineController] selectedPage] isNewPage];
 	OFF((@"%@", NSStringFromSelector(_cmd) ));
-	BOOL displayEditingControls = [[[self windowController] document] displayEditingControls];
-
+	BOOL displayEditingControls = YES;			/// FOR NOW -- this will all go away
+	
 	if (nil != aDOMElement)
 	{
 		DOMNodeIterator *it = [doc createNodeIterator:aDOMElement whatToShow:DOM_SHOW_ELEMENT filter:[EditableNodeFilter sharedFilter] expandEntityReferences:YES];

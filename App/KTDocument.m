@@ -159,16 +159,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Init UI accessors
-		NSNumber *tmpValue = [self wrappedInheritedValueForKey:@"displaySiteOutline"];
-		[self setDisplaySiteOutline:(tmpValue) ? [tmpValue boolValue] : YES];
-		
-		tmpValue = [self wrappedInheritedValueForKey:@"displayStatusBar"];
-		[self setDisplayStatusBar:(tmpValue) ? [tmpValue boolValue] : YES];
-		
-		tmpValue = [self wrappedInheritedValueForKey:@"displayEditingControls"];
-		[self setDisplayEditingControls:(tmpValue) ? [tmpValue boolValue] : YES];
-		
-		tmpValue = [self wrappedInheritedValueForKey:@"displaySmallPageIcons"];
+		id tmpValue = [self wrappedInheritedValueForKey:@"displaySmallPageIcons"];
 		[self setDisplaySmallPageIcons:(tmpValue) ? [tmpValue boolValue] : NO];
     }
 	
