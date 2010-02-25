@@ -215,8 +215,6 @@
 			[self setIndex:theIndex];
 		}
 	}
-		
-	[self setNewPage:isNewlyCreatedObject];		// for benefit of webkit editing only
 }
 
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
