@@ -38,11 +38,11 @@
 {
 	// Connect up the target icon if needed
 	NSArray *selectedObjects = [[self inspectedObjectsController] selectedObjects];
-	KTPage *collection = [NSNull null];		// placeholder for not known
+	KTPage *collection = (KTPage *)[NSNull null];		// placeholder for not known
 	NSCellStateValue state = NSMixedState;
 	for (RSSBadgePlugin *plugin in selectedObjects)
 	{
-		if (collection == [NSNull null])
+		if (collection == (KTPage *)[NSNull null])
 		{
 			collection = plugin.collection;	// first pass through
 			state = (nil != collection) ? NSOnState : NSOffState;
@@ -95,7 +95,7 @@
 	KTPage *target = [KTPage pageWithUniqueID:collectionID inManagedObjectContext:[[[self inspectedObjectsController] selection] managedObjectContext]];
 	if (target)
 	{
-		[[[self inspectedObjectsController] selection] setValue:target forKey:@"collection"]
+		[[[self inspectedObjectsController] selection] setValue:target forKey:@"collection"];
 		[collectionLinkSourceView setConnected:YES];
 	}
 }

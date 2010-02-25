@@ -38,9 +38,9 @@ typedef enum {
 
 - (NSString *)feedIconResourcePath;
 
-@property RSSBadgeIconStyle iconStyle;
-@property NSString *label;
-@property KTPage *collection;
+@property (assign) RSSBadgeIconStyle iconStyle;
+@property (copy) NSString *label;
+@property (retain) KTPage *collection;
 
 
 @end

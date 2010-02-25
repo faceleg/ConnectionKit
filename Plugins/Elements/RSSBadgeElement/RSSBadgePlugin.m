@@ -61,7 +61,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingUseLargeIconLayout
 {
-	return [NSSet setWithObject:@"iconStyle"]
+	return [NSSet setWithObject:@"iconStyle"];
 }
 
 - (BOOL)useLargeIconLayout
@@ -78,7 +78,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingFeedIconResourcePath
 {
-	return [NSSet setWithObject:@"iconStyle"]
+	return [NSSet setWithObject:@"iconStyle"];
 }
 
 - (NSString *)feedIconResourcePath
