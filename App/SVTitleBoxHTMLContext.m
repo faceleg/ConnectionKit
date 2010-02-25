@@ -56,6 +56,7 @@
 - (void)dealloc
 {
     [_pendingStartTagDOMElements release];
+    OBASSERT(!_pendingEndDOMElement);
     
     [super dealloc];
 }
@@ -293,7 +294,17 @@
 - (void)writeString:(NSString *)string
 {
     // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
-    if ([_pendingStartTagDOMElements count] > 0  && [string length] > 0)
+    if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self performPendingWrites];
+    
+    
+    // Do the writing
+    [super writeString:string];
+}
+
+- (void)performPendingWrites;
+{
+    // Before actually writing the string, push through any pending Elements.
+    if ([_pendingStartTagDOMElements count] > 0)
     {
         NSArray *elements = [_pendingStartTagDOMElements copy];
         [_pendingStartTagDOMElements removeAllObjects];
@@ -307,9 +318,7 @@
         [elements release];
     }
     
-    
-    // Do the writing
-    [super writeString:string];
+    [super performPendingWrites];
 }
 
 - (BOOL)hasOpenElementWithTagName:(NSString *)tagName
