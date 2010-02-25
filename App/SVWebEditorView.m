@@ -666,18 +666,26 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (NSArray *)itemsInDOMRange:(DOMRange *)range
 {
-    NSMutableArray *result = [NSMutableArray array];
-    NSArray *items = [[self mainItem] childWebEditorItems];
+    if ([range collapsed]) return nil;  // shortcut
     
-    for (SVWebEditorItem *anItem in items)
+    
+    // Locate the controller for the text area so we can query it for selectable stuff
+    SVWebEditorItem <SVWebEditorText> *textController = [[self dataSource] webEditor:self
+                                                                textBlockForDOMRange:range];
+    
+    if (textController)
     {
-        if ([range containsNode:[anItem HTMLElement]])
+        NSMutableArray *result = [NSMutableArray array];
+        
+        for (SVWebEditorItem *anItem in [textController childWebEditorItems])
         {
-            [result addObject:anItem];
+            if ([range containsNode:[anItem HTMLElement]]) [result addObject:anItem];
         }
+        
+        return result;
     }
     
-    return result;
+    return nil;
 }
 
 - (NSArray *)selectableAncestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
