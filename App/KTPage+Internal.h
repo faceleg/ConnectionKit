@@ -37,10 +37,6 @@
 - (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;
 
 
-// New page
-- (BOOL)isNewPage;
-- (void)setNewPage:(BOOL)flag;
-
 @end
 
 

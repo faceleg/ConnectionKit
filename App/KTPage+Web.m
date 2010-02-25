@@ -173,16 +173,6 @@
 }
 
 
-- (BOOL)isNewPage
-{
-    return myIsNewPage;
-}
-
-- (void)setNewPage:(BOOL)flag
-{
-    myIsNewPage = flag;
-}
-
 /*!	Return the string that makes up the title.  Page Title | Site Title | Author ... this is the DEFAULT if not set by windowTitle property.
 */
 - (NSString *)comboTitleText

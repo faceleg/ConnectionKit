@@ -37,11 +37,6 @@ typedef enum {
 
 
 @interface KTPage : KTAbstractPage <SVPage>
-{
-  @private
-    // these ivars are only set if the page is root
-	BOOL myIsNewPage;		// accessor is in category
-}
 
 #pragma mark Awake
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
