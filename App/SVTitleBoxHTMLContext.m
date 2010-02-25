@@ -48,14 +48,14 @@
 {
     self = [super initWithStringStream:stream];
     
-    _unwrittenDOMElements = [[NSMutableArray alloc] init];
+    _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
     
     return self;
 }
 
 - (void)dealloc
 {
-    [_unwrittenDOMElements release];
+    [_pendingStartTagDOMElements release];
     
     [super dealloc];
 }
@@ -115,18 +115,18 @@
     else
     {
         // ..so push onto the stack, ready to write if requested
-        [_unwrittenDOMElements addObject:element];
+        [_pendingStartTagDOMElements addObject:element];
         
         // Write inner HTML
         [element writeInnerHTMLToContext:self];
         
         // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
-        if ([_unwrittenDOMElements lastObject] == element)
+        if ([_pendingStartTagDOMElements lastObject] == element)
         {
             DOMNode *result = [element nextSibling];
             
             [[element parentNode] removeChild:element];
-            [_unwrittenDOMElements removeLastObject];
+            [_pendingStartTagDOMElements removeLastObject];
             
             return result;
         }
@@ -293,10 +293,10 @@
 - (void)writeString:(NSString *)string
 {
     // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
-    if ([_unwrittenDOMElements count] > 0  && [string length] > 0)
+    if ([_pendingStartTagDOMElements count] > 0  && [string length] > 0)
     {
-        NSArray *elements = [_unwrittenDOMElements copy];
-        [_unwrittenDOMElements removeAllObjects];
+        NSArray *elements = [_pendingStartTagDOMElements copy];
+        [_pendingStartTagDOMElements removeAllObjects];
         
         for (DOMElement *anElement in elements)
         {
@@ -316,7 +316,7 @@
 {
     tagName = [tagName uppercaseString];
     
-    for (DOMElement *anElement in _unwrittenDOMElements)
+    for (DOMElement *anElement in _pendingStartTagDOMElements)
     {
         if ([[anElement tagName] isEqualToString:tagName]) return YES;
     }

@@ -19,7 +19,7 @@
 @interface SVTitleBoxHTMLContext : KSHTMLOutputStream
 {
   @private
-    NSMutableArray  *_unwrittenDOMElements;
+    NSMutableArray  *_pendingStartTagDOMElements;
 }
 
 
