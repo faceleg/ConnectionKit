@@ -66,7 +66,7 @@
 
 #pragma mark Web Editor Item
 
-- (BOOL)isSelectable { return [self isEditable]; }
+- (BOOL)isSelectable { return [[self selectableAncestors] count] == 0; }
 
 #pragma mark Updating
 
