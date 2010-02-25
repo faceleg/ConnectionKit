@@ -290,8 +290,12 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     NSMutableString *stream = (NSMutableString *)[context stringStream];
     [context writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
     
-    [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:([stream length] - 1)]];
-    [textAttachment setLength:[NSNumber numberWithShort:1]];
+    NSUInteger location = [stream length] - 1;
+    if ([textAttachment range].location != location)
+    {
+        [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:location]];
+        [textAttachment setLength:[NSNumber numberWithShort:1]];
+    }
 }
 
 #pragma mark Links
