@@ -1,4 +1,4 @@
-.kLine:focus { outline: gray outset 1px; }
+.kLine:focus { outline: gray solid 1px; }
 
 img { -webkit-user-select:none; }
 
