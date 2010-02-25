@@ -58,6 +58,13 @@
 }
 
 @dynamic string;
+
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments;
+{
+    [self setString:string];
+    [self setAttachments:attachments];
+}
+
 @dynamic attachments;
 
 - (NSArray *)orderedAttachments;

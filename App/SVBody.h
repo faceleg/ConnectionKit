@@ -19,6 +19,8 @@
 
 
 @property(nonatomic, copy) NSString *string;
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments;
+
 @property(nonatomic, copy) NSSet *attachments;
 - (NSArray *)orderedAttachments;
 
