@@ -19,7 +19,7 @@
 
 
 @property(nonatomic, copy) NSString *string;
-- (void)setString:(NSString *)string attachments:(NSSet *)attachments;
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments
 
 @property(nonatomic, copy) NSSet *attachments;
 - (NSArray *)orderedAttachments;

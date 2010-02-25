@@ -62,7 +62,16 @@
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;
 {
     [self setString:string];
+    
+    NSMutableSet *removedAttachments = [[self attachments] mutableCopy];
+    [removedAttachments minusSet:attachments];
     [self setAttachments:attachments];
+    
+    for (SVTextAttachment *anAttachment in removedAttachments)
+    {
+        [[self managedObjectContext] deleteObject:anAttachment];
+    }
+    [removedAttachments release];
 }
 
 @dynamic attachments;
