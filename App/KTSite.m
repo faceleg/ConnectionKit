@@ -348,17 +348,7 @@
 #pragma mark Publishing
 
 @dynamic hostProperties;
-
-- (NSString *)lastExportDirectoryPath
-{
-    return [self wrappedValueForKey:@"lastExportDirectoryPath"];
-}
-
-- (void)setLastExportDirectoryPath:(NSString *)path
-{
-    [self setWrappedValue:path forKey:@"lastExportDirectoryPath"];
-}
-
+@dynamic lastExportDirectoryPath;
 
 #pragma mark -
 #pragma mark Quick Look

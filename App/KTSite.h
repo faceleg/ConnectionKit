@@ -68,7 +68,6 @@ typedef enum {
 
 // Publishing
 @property(nonatomic, retain, readonly) KTHostProperties *hostProperties;
-- (NSString *)lastExportDirectoryPath;
-- (void)setLastExportDirectoryPath:(NSString *)path;
+@property(nonatomic, copy) NSString *lastExportDirectoryPath;
 
 @end
