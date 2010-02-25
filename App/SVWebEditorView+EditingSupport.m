@@ -12,18 +12,6 @@
 
 @implementation SVWebEditorView (EditingSupport)
 
-- (void)forwardCommandBySelector:(SEL)action;
-{
-    OBPRECONDITION(!_isForwardingCommandToWebView);
-    _isForwardingCommandToWebView = YES;
-    
-    WebFrame *frame = [[self webView] selectedFrame];
-    NSView *view = [[frame frameView] documentView];
-    [view doCommandBySelector:action];
-    
-    _isForwardingCommandToWebView = NO;
-}
-
 #pragma mark Cut, Copy & Paste
 
 - (void)cut:(id)sender
@@ -31,7 +19,7 @@
     // Let the WebView handle it unless there is no text selection
     if ([self selectedDOMRange])
     {
-        [self forwardCommandBySelector:_cmd];
+        [self forceWebViewToPerform:_cmd withObject:sender];
     }
     else
     {
@@ -47,7 +35,7 @@
     // Let the WebView handle it unless there is no text selection
     if ([self selectedDOMRange])
     {
-        [self forwardCommandBySelector:_cmd];
+        [self forceWebViewToPerform:_cmd withObject:sender];
     }
     else
     {
@@ -70,7 +58,7 @@
 {
     if ([self selectedDOMRange])
     {
-        [self forwardCommandBySelector:action];
+        [self forceWebViewToPerform:action withObject:sender];
     }
     else
     {

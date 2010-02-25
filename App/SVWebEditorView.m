@@ -1073,6 +1073,20 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
+#pragma mark Dispatching Messages
+
+- (void)forceWebViewToPerform:(SEL)action withObject:(id)sender;
+{
+    OBPRECONDITION(!_isForwardingCommandToWebView);
+    _isForwardingCommandToWebView = YES;
+    
+    WebFrame *frame = [[self webView] selectedFrame];
+    NSView *view = [[frame frameView] documentView];
+    [view doCommandBySelector:action];
+    
+    _isForwardingCommandToWebView = NO;
+}
+
 #pragma mark Setting the DataSource/Delegate
 
 @synthesize dataSource = _dataSource;
