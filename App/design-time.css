@@ -1,3 +1,5 @@
+.kLine:focus { outline: gray outset 1px; }
+
 img { -webkit-user-select:none; }
 
 div.svx-placeholder
