@@ -47,9 +47,9 @@
 			<key>image</key>
 			<string>TB_Text_Tool.tiff</string>
 			<key>label</key>
-			<string>TOOLBAR_ADD_PAGELET</string>
+			<string>TOOLBAR_INSERT_TEXT_BOX</string>
 			<key>paletteLabel</key>
-			<string>TOOLBAR_ADD_PAGELET</string>
+			<string>PALETTE_INSERT_TEXT_BOX</string>
 			<key>target</key>
 			<string>windowcontroller</string>
 		</dict>

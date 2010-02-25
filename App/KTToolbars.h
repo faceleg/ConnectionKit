@@ -6,8 +6,12 @@
 #define PALETTE_ADD_PAGE_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGE_POPUP", nil, [NSBundle mainBundle], @"Pages", @"")
 #define TOOLTIP_ADD_PAGE NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGE", nil, [NSBundle mainBundle], @"Add a new page to your site.", @"tooltip")
 
-#define TOOLBAR_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGELET", nil, [NSBundle mainBundle], @"Pagelet", @"")
-#define PALETTE_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET", nil, [NSBundle mainBundle], @"Pagelet", @"")
+#define TOOLBAR_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"TOOLBAR_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Text Box", @"")
+#define PALETTE_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"PALETTE_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Text Box", @"")
+#define TOOLTIP_INSERT_TEXT_BOX NSLocalizedStringWithDefaultValue(@"TOOLTIP_INSERT_TEXT_BOX", nil, [NSBundle mainBundle], @"Add a new text box to the current page.", @"tooltip")
+
+#define TOOLBAR_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_PAGELET", nil, [NSBundle mainBundle], @"Pagelets", @"")
+#define PALETTE_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET", nil, [NSBundle mainBundle], @"Pagelets", @"")
 #define PALETTE_ADD_PAGELET_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET_POPUP", nil, [NSBundle mainBundle], @"Pagelets", @"")
 #define TOOLTIP_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGELET", nil, [NSBundle mainBundle], @"Add a new pagelet to the current page.", @"tooltip")
 
