@@ -15,8 +15,12 @@
 @interface SVBodyTextHTMLContext : SVTitleBoxHTMLContext
 {
   @private
+    NSMutableSet    *_attachments;
+    
     SVBodyTextDOMController             *_DOMController;
 }
+
+- (NSSet *)textAttachments;
 
 @property(nonatomic, retain) SVBodyTextDOMController *bodyTextDOMController;
 

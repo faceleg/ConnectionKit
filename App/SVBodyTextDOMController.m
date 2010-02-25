@@ -246,17 +246,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [context setBodyTextDOMController:self];
     
     [[self textHTMLElement] writeInnerHTMLToContext:context];
-    [context release];
     
     
     SVBody *body = [self representedObject];
     if (![html isEqualToString:[body string]])
     {
         _isUpdating = YES;
-        [body setString:html];
+        [body setString:html attachments:[context textAttachments]];
         _isUpdating = NO;
     }
     
+    
+    [context release];
     [html release];
 }
 

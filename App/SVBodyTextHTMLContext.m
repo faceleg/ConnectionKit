@@ -15,11 +15,30 @@
 
 @implementation SVBodyTextHTMLContext
 
+#pragma mark Init & Dealloc
+
+- (id)initWithStringStream:(id <KSStringOutputStream>)stream;
+{
+    if (self = [super initWithStringStream:stream])
+    {
+        _attachments = [[NSMutableSet alloc] init];
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
+    [_attachments release];
     [_DOMController release];
     [super dealloc];
 }
+
+#pragma mark Output
+
+- (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
+
+#pragma mark Validation
 
 + (BOOL)validateTagName:(NSString *)tagName
 {
@@ -52,6 +71,8 @@
     }
 }
 
+#pragma mark Writing
+
 - (DOMNode *)writeDOMElement:(DOMElement *)element
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
@@ -61,6 +82,8 @@
         if ([aController HTMLElement] == element)
         {
             [[self bodyTextDOMController] writeGraphicController:aController toContext:self];
+            [_attachments addObject:[[aController representedObject] textAttachment]];
+            
             return [element nextSibling];
         }
     }
