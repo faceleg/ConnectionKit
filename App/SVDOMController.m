@@ -60,7 +60,6 @@
     [context push];
     [self writeRepresentedObjectHTML];
     [context pop];
-    
     [context release];
     
     
@@ -68,6 +67,7 @@
     DOMDocumentFragment *fragment = [[self HTMLDocument]
                                      createDocumentFragmentWithMarkupString:htmlString
                                      baseURL:[[self HTMLContext] baseURL]];
+    [htmlString release];
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
     [self setHTMLElement:element];
