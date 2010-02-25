@@ -9,9 +9,9 @@
 //  HTML Context that ignores all but text content. Rather specialised, but handy in some situations. e.g. building Spotlight text content metadata.
 
 
-#import "SVMutableStringHTMLContext.h"
+#import "SVHTMLContext.h"
 
 
-@interface SVTextContentHTMLContext : SVMutableStringHTMLContext
+@interface SVTextContentHTMLContext : SVHTMLContext
 
 @end

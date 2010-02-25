@@ -9,6 +9,7 @@
 #import "SVParagraphDOMController.h"
 
 #import "SVBodyTextHTMLContext.h"
+#import "SVHTMLContext.h"
 
 
 static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObservationContext";
@@ -59,13 +60,16 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     DOMHTMLElement *htmlElement = (DOMHTMLElement *)[[self HTMLDocument] createElement:tagName];
     
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    NSMutableString *markupString = [[NSMutableString alloc] init];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:markupString];
+    
     [context push];
     [paragraph writeInnerHTML];
     [context pop];
-    
-    [htmlElement setInnerHTML:[context markupString]];
     [context release];
+    
+    [htmlElement setInnerHTML:markupString];
+    [markupString release];
     
     [self setHTMLElement:htmlElement];
 }
@@ -108,7 +112,9 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
 
     // Replace text contents
-    SVMutableStringHTMLContext *context = [[SVMutableStringHTMLContext alloc] init];
+    NSMutableString *markup = [[NSMutableString alloc] init];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:markup];
+    
     [context copyPropertiesFromContext:[self HTMLContext]];
     [context push];
     
@@ -116,9 +122,10 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     [paragraph writeInnerHTML];
     
     [context pop];
-    [[self HTMLElement] setInnerHTML:[context mutableString]];
     [context release];
     
+    [[self HTMLElement] setInnerHTML:markup];
+    [markup release];
     
     // Paragraph style overrides
     [[self HTMLElement] setAttribute:@"style"
@@ -139,7 +146,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     
     // Easiest way to archive string, is to use a context – see, they do all sorts!
-    SVMutableStringHTMLContext *context = [[SVBodyTextHTMLContext alloc] init];
+    SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] init];
     [[self HTMLElement] writeInnerHTMLToContext:context];
     
     NSString *string = [context markupString];

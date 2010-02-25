@@ -460,8 +460,6 @@
 		27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
-		27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */; };
-		27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */; };
 		27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */; };
 		27BA06C91125A46900B9D8F4 /* SVWebEditorTextRange.m in Sources */ = {isa = PBXBuildFile; fileRef = 27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */; };
 		27BCCCA20F09609E00B06B35 /* KTRemotePublishingEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */; };
@@ -1939,8 +1937,6 @@
 		27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
 		27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = wrapper.xcdatamodel; path = Sandvox.xcdatamodel; sourceTree = "<group>"; };
-		27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMutableStringHTMLContext.h; sourceTree = "<group>"; };
-		27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMutableStringHTMLContext.m; sourceTree = "<group>"; };
 		27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextRange.h; sourceTree = "<group>"; };
 		27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorTextRange.m; sourceTree = "<group>"; };
 		27BCCCA00F09609E00B06B35 /* KTRemotePublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTRemotePublishingEngine.h; sourceTree = "<group>"; };
@@ -3203,8 +3199,6 @@
 				27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */,
 				27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */,
 				27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */,
-				27B52EB410F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h */,
-				27B52EB510F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m */,
 				27A618791123480C00004FED /* SVBodyTextHTMLContext.h */,
 				27A6187A1123480C00004FED /* SVBodyTextHTMLContext.m */,
 				27A619BA1124235200004FED /* SVHTMLContext+HTMLElements.m */,
@@ -5340,7 +5334,6 @@
 				271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */,
 				CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */,
 				27AF0E2810F40B42000A6B15 /* SVPageInspector.h in Headers */,
-				27B52EB610F4A0CA0086DEE4 /* SVMutableStringHTMLContext.h in Headers */,
 				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
 				270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */,
 				270E49A510FA326300EF1FA0 /* SVTitleBoxHTMLContext.h in Headers */,
@@ -6740,7 +6733,6 @@
 				273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */,
 				CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */,
 				27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */,
-				27B52EB710F4A0CA0086DEE4 /* SVMutableStringHTMLContext.m in Sources */,
 				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
 				270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */,
 				270E49A610FA326300EF1FA0 /* SVTitleBoxHTMLContext.m in Sources */,

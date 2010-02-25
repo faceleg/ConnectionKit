@@ -199,7 +199,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Build the HTML.
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] init];
+    NSMutableString *pageHTML = [[NSMutableString alloc] init];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringStream:pageHTML];
+    
     [context setCurrentPage:[self page]];
     [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"]];
@@ -207,7 +209,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [SVHTMLContext pushContext:context];    // will pop after loading
 	[[self page] writeHTML];
     [SVHTMLContext popContext];
-    NSString *pageHTML = [context markupString];
     
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
@@ -249,6 +250,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Tidy up
     [context release];
+    [pageHTML release];
     
 	
     // Clearly the webview is no longer in need of refreshing
