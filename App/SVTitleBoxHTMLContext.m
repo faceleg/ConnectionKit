@@ -134,7 +134,23 @@
         else
         {
             // Close the element, but first, if the next sibling is equal, merge it with this one
+            if (![tagName isEqualToString:@"P"])
+            {
+                OBASSERT(!_pendingEndDOMElement);
+                _pendingEndDOMElement = [element retain];
+            }
+            else
+            {
+                [self writeEndTag];
+            }
+            
+            return [element nextSibling];
+            
+            
+            
+            
             DOMNode *result = [[element nextSibling] nodeByStrippingNonParagraphNodes:self];
+            
             
             while ([result isEqualNode:element compareChildNodes:NO] && ![tagName isEqualToString:@"P"])
             {
@@ -295,6 +311,14 @@
 {
     // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
     if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self performPendingWrites];
+    
+    
+    // Is the last tag awaiting closure?
+    if (_pendingEndDOMElement)
+    {
+        [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
+        [self writeEndTag];
+    }
     
     
     // Do the writing
