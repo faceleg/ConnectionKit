@@ -16,7 +16,7 @@
 #import "SVMutableStringHTMLContext.h"
 
 
-@interface SVTitleBoxHTMLContext : SVMutableStringHTMLContext
+@interface SVTitleBoxHTMLContext : KSHTMLOutputStream
 {
   @private
     NSMutableArray  *_unwrittenDOMElements;

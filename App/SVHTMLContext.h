@@ -160,25 +160,3 @@ typedef enum {
 
 @end
 
-
-#pragma mark -
-
-
-@interface SVHTMLContext (DOM)
-
-- (DOMNode *)writeDOMElement:(DOMElement *)element; // returns the next sibling to write
-- (void)openTagWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
-
-@end
-
-
-@interface DOMElement (SVHTMLContext)
-
-- (void)writeInnerHTMLToContext:(SVHTMLContext *)context;
-- (void)writeInnerHTMLStartingWithChild:(DOMNode *)aNode toContext:(SVHTMLContext *)context; // if node is nil, nothing gets written
-
-- (void)writeCleanedInnerHTMLToContext:(SVHTMLContext *)context;
-- (void)writeCleanedHTMLToContext:(SVHTMLContext *)context innards:(BOOL)writeInnards;
-
-@end
-
