@@ -458,7 +458,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (updateWebView && selectedItem)
     {
         DOMElement *domElement = [selectedItem HTMLElement];
-        if ([domElement enclosingContentEditableElement])
+        DOMElement *editableElement = [domElement enclosingContentEditableElement];
+        if (editableElement && domElement != editableElement)
         {
             [[self window] makeFirstResponder:[domElement documentView]];
             
