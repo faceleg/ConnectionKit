@@ -473,6 +473,8 @@
 		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
+		27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */; };
+		27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */; };
 		27D37D4C112C40A00064701B /* SVParagraphDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2752005C10B5DF4400F96309 /* SVParagraphDOMController.m */; };
 		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */; };
@@ -1950,6 +1952,8 @@
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
+		27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageReplacementURLProtocol.h; sourceTree = "<group>"; };
+		27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageReplacementURLProtocol.m; sourceTree = "<group>"; };
 		27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "SVHTMLTemplateParser+Text.m"; sourceTree = "<group>"; };
 		27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContinueReadingLinkTextBlock.h; sourceTree = "<group>"; };
 		27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueReadingLinkTextBlock.m; sourceTree = "<group>"; };
@@ -3721,6 +3725,8 @@
 				3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */,
 				2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */,
 				2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */,
+				27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */,
+				27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */,
 			);
 			name = Designs;
 			sourceTree = "<group>";
@@ -5370,6 +5376,7 @@
 				277E724D1133595A0081389F /* SVGraphicDOMController.h in Headers */,
 				277E72F7113416A20081389F /* KSHTMLOutputStream.h in Headers */,
 				270F2BB21136B17D0090143E /* KSHTMLOutputStream+DOM.h in Headers */,
+				27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6772,6 +6779,7 @@
 				277E724E1133595A0081389F /* SVGraphicDOMController.m in Sources */,
 				277E72F9113416A20081389F /* KSHTMLOutputStream.m in Sources */,
 				270F2BB31136B17D0090143E /* KSHTMLOutputStream+DOM.m in Sources */,
+				27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
