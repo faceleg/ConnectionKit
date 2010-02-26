@@ -100,33 +100,6 @@
 #pragma mark -
 #pragma mark Perform selector
 
-- (void)makeComponentsPerformSelector:(SEL)selector withObject:(void *)anObject withPage:(KTPage *)page
-{
-	if ([[self page] isDeleted] || [page isDeleted])
-	{
-		return;
-	}
-	
-	// If possible, perform the selector on ourself
-	if ([self respondsToSelector:selector])
-	{
-		[self performSelector:selector withObject:(id)anObject withObject:page];
-	}
-	
-	// If a summary index, also cover our child pages
-	// Technically we only need to cover the page itself and any callouts - the sidebar can be ignored
-	if ([[self className] isEqualToString:@"GeneralIndex"])
-	{
-		NSArray *children = [[self page] sortedChildren];
-		unsigned i;
-		for (i = 0; i < [children count]; i++)
-		{
-			KTPage *page = [children objectAtIndex:i];
-			[page makeComponentsPerformSelector:selector withObject:anObject withPage:page recursive:NO];
-		}
-	}
-}
-
 /*	It's up to subclasses to override these
  */
 - (NSSet *)requiredMediaIdentifiers { return nil; }

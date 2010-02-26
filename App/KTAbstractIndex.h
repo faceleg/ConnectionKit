@@ -43,8 +43,6 @@ typedef enum {
 - (KTAbstractHTMLPlugin *)plugin;
 - (void)setPlugin:(KTAbstractHTMLPlugin *)plugin;
 
-- (void)makeComponentsPerformSelector:(SEL)selector withObject:(void *)anObject withPage:(KTPage *)page;
-
 - (NSString *)cssClassName;	// returns CSS class of index, e.g. listing-index
 
 - (KTNavigationArrowsStyle)navigationArrowsStyle;

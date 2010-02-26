@@ -56,30 +56,6 @@
 	}
 }
 
-/*	Perform the selector on our components (pagelets, index if present). Then allow
- *	-makeSelfOrDelegatePerformSelector: to take over.
- */
-- (void)makeComponentsPerformSelector:(SEL)selector
-						   withObject:(void *)anObject
-							 withPage:(KTPage *)page
-							recursive:(BOOL)recursive
-{
-	// Bail early if we've been deleted
-	if ([self isDeleted])
-	{
-		return;
-	}
-	
-	
-	// Index - if we have no index, this call is to nil, so does nothing
-	KTAbstractIndex *index = [self index];
-	[index makeComponentsPerformSelector:selector withObject:anObject withPage:page];
-	
-	
-	// Self/delegate, and then children
-	[self makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:recursive];
-}
-
 // Called via recursiveComponentPerformSelector
 // Kind of inefficient since we're just looking to see if there are ANY RSS collections
 

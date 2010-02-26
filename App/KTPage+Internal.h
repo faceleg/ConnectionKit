@@ -44,12 +44,6 @@
 
 - (void)setValue:(id)value forKey:(NSString *)key recursive:(BOOL)recursive;
 
-// Perform selector
-- (void)makeComponentsPerformSelector:(SEL)selector
-						   withObject:(void *)anObject
-							 withPage:(KTPage *)page
-							recursive:(BOOL)recursive;
-
 - (void)addDesignsToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
 - (void)addStaleToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage;
 - (void)addRSSCollectionsToArray:(NSMutableArray *)anArray forPage:(KTPage *)aPage;
