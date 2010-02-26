@@ -150,6 +150,7 @@
 	return [[self bundle] pathForImageResource:@"placeholder"];
 }
 
+// IS THIS ACTUALLY BEING USED?????
 - (int)textWidth
 {
 	NSString *textWidthString = [[self bundle] objectForInfoDictionaryKey:@"textWidth"];
