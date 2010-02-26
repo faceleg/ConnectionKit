@@ -76,45 +76,53 @@
     
     
     // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
-    DOMElement *elementToMergeInto = nil;
     if ([_pendingEndDOMElement isEqualNode:element compareChildNodes:NO])
     {
-        elementToMergeInto = _pendingEndDOMElement;
+        DOMElement *elementToMergeInto = _pendingEndDOMElement;
         [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
-    }  
+        
+        // Write inner HTML
+        [element writeInnerHTMLToContext:self];
+        
+        
+        // Do the merge in the DOM
+        [[elementToMergeInto mutableChildNodesArray] addObjectsFromArray:[element mutableChildNodesArray]];
+        [[element parentNode] removeChild:element];
+        
+        
+        // Carry on. We know the element can't be deemed content in its own right since was checked in previous iteration
+        return [self endStylingDOMElement:elementToMergeInto];
+    }
     
     
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
     NSString *tagName = [element tagName];
-    if (!elementToMergeInto)
+    if ([self hasOpenElementWithTagName:tagName])
     {
-        if ([self hasOpenElementWithTagName:tagName])
+        // Shuffle up following nodes
+        DOMElement *parent = (DOMElement *)[element parentNode];
+        [parent flattenNodesAfterChild:element];
+        
+        
+        // It make take several moves up the tree till we find the conflicting element
+        while (![[parent tagName] isEqualToString:tagName])
         {
-            // Shuffle up following nodes
-            DOMElement *parent = (DOMElement *)[element parentNode];
-            [parent flattenNodesAfterChild:element];
-            
-            
-            // It make take several moves up the tree till we find the conflicting element
-            while (![[parent tagName] isEqualToString:tagName])
-            {
-                // Move element across to a clone of its parent
-                DOMNode *clone = [parent cloneNode:NO];
-                [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
-                [clone appendChild:element];
-                parent = (DOMElement *)[parent parentNode];
-            }
-            
-            
-            // Now we're ready to flatten the conflict
-            [element copyInheritedStylingFromElement:parent];
-            [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
-            
-            
-            // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
-            return nil;
+            // Move element across to a clone of its parent
+            DOMNode *clone = [parent cloneNode:NO];
+            [[parent parentNode] insertBefore:clone refChild:[parent nextSibling]];
+            [clone appendChild:element];
+            parent = (DOMElement *)[parent parentNode];
         }
+        
+        
+        // Now we're ready to flatten the conflict
+        [element copyInheritedStylingFromElement:parent];
+        [[parent parentNode] insertBefore:element refChild:[parent nextSibling]];
+        
+        
+        // Pretend we wrote the element and are now finished. Recursion will take us back to the element in its new location to write it for real
+        return nil;
     }
     
     
@@ -126,48 +134,49 @@
     }
     else
     {
-        // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
-        if (!elementToMergeInto) [_pendingStartTagDOMElements addObject:element];
+        return [self writeStylingDOMElement:element];
+    }
+}
+
+- (DOMNode *)writeStylingDOMElement:(DOMElement *)element;
+{
+    // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
+    [_pendingStartTagDOMElements addObject:element];
+    
+    // Write inner HTML
+    [element writeInnerHTMLToContext:self];
+    
+    // Write end tag
+    return [self endStylingDOMElement:element];
+}
+
+- (DOMNode *)endStylingDOMElement:(DOMElement *)element;
+{
+    // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
+    if ([_pendingStartTagDOMElements lastObject] == element)
+    {
+        DOMNode *result = [element nextSibling];
         
+        [[element parentNode] removeChild:element];
+        [_pendingStartTagDOMElements removeLastObject];
         
-        // Write inner HTML
-        [element writeInnerHTMLToContext:self];
-        
-        
-        // Do the merge in the DOM
-        if (elementToMergeInto)
+        return result;
+    }
+    else
+    {
+        // Close the element, but first, if the next sibling is equal, merge it with this one
+        NSString *tagName = [element tagName];
+        if (![tagName isEqualToString:@"P"])
         {
-            [[elementToMergeInto mutableChildNodesArray] addObjectsFromArray:[element mutableChildNodesArray]];
-            [[element parentNode] removeChild:element];
-            element = elementToMergeInto;
-        }
-        
-        
-        // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
-        if ([_pendingStartTagDOMElements lastObject] == element)
-        {
-            DOMNode *result = [element nextSibling];
-            
-            [[element parentNode] removeChild:element];
-            [_pendingStartTagDOMElements removeLastObject];
-            
-            return result;
+            OBASSERT(!_pendingEndDOMElement);
+            _pendingEndDOMElement = [element retain];
         }
         else
         {
-            // Close the element, but first, if the next sibling is equal, merge it with this one
-            if (![tagName isEqualToString:@"P"])
-            {
-                OBASSERT(!_pendingEndDOMElement);
-                _pendingEndDOMElement = [element retain];
-            }
-            else
-            {
-                [self writeEndTag];
-            }
-            
-            return [element nextSibling];
+            [self writeEndTag];
         }
+        
+        return [element nextSibling];
     }
 }
 
@@ -221,6 +230,16 @@
     }
     
     return result;
+}
+
+- (void)writePendingEndTags;
+{
+    // Is the last tag awaiting closure?
+    if (_pendingEndDOMElement)
+    {
+        [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
+        [self writeEndTag];
+    }
 }
 
 - (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
@@ -305,11 +324,7 @@
     
     
     // Is the last tag awaiting closure?
-    if (_pendingEndDOMElement)
-    {
-        [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
-        [self writeEndTag];
-    }
+    if (_pendingEndDOMElement) [self writePendingEndTags];
     
     
     // Do the writing
