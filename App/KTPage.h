@@ -198,8 +198,8 @@ typedef enum {
 
 - (NSString *)javascriptURLPath;
 - (NSString *)comboTitleText;
-- (KTDocType) docType;
-- (NSString *) docTypeName;
+- (KTDocType)docType;
+- (NSString *)docTypeName;
 - (NSString *)DTD;
 @end
 

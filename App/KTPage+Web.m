@@ -231,24 +231,36 @@
 #pragma mark -
 #pragma mark DTD
 
-- (KTDocType) docType
+- (KTDocType)docType
 {
-	KTDocType defaultDocType = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
+	KTDocType result = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
 	
-	[self makeComponentsPerformSelector:@selector(findMinimumDocType:forPage:) withObject:&defaultDocType withPage:self recursive:NO];
 	
-	// if wantsJSKit comments, use transitional doc type (or worse, if already known)
-	if ( defaultDocType > KTXHTMLTransitionalDocType )
+    // if wantsJSKit comments, use transitional doc type (or worse, if already known)
+	if ( result > KTXHTMLTransitionalDocType )
 	{
 		if ([[self allowComments] boolValue] && [[self master] wantsJSKit] )
 		{
-			defaultDocType = KTXHTMLTransitionalDocType; // if this changes to KTHTML401DocType, also change isXHTML
+			result = KTXHTMLTransitionalDocType; // if this changes to KTHTML401DocType, also change isXHTML
 		}
 	}
-	return defaultDocType;
+    
+    
+    // Do any plug-ins want to lower the tone?
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSArray *graphics = [context fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
+    
+    for (NSManagedObject *aGraphic in graphics)
+    {
+        result = MIN(result, [[aGraphic valueForKey:@"docType"] integerValue]);
+        if (result == KTHTML401DocType) break;
+    }
+    
+    
+	return result;
 }
 
-- (NSString *) docTypeName
+- (NSString *)docTypeName
 {
 	KTDocType docType = [self docType];
 	NSString *result = nil;
