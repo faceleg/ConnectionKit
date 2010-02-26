@@ -285,7 +285,7 @@
     {    
         KTPage *page = [[SVHTMLContext currentContext] currentPage];
         KTMaster *master = [page master];
-        if ([master enableImageReplacement])
+        if ([[master enableImageReplacement] boolValue])
         {
             KTDesign *design = [master design];
             NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
