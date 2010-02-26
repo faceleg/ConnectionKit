@@ -1441,25 +1441,30 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                                withObject:[NSNumber numberWithBool:YES]];
 }
 	 
-- (void)viewDidLoad;
-{
+// What is the best way for getting a "viewDidLoad" kind of thing?  KSViewController isn't not working...
+- (void)awakeFromNib
+{	
 	int newWidth = [[[[[[self view] window] windowController] document] site] integerForKey:@"sourceOutlineSize"];
-	if (newWidth > 50)		// make sure it's a reasonable value
-	{
-		NSView *viewToResize = [[oSplitView subviews] firstObjectKS];
-		NSRect resizeFrame = [viewToResize frame];
-		
-		NSView *otherView = [[oSplitView subviews] lastObject];
-		NSRect otherFrame = [otherView frame];
-		
-		int delta = newWidth - resizeFrame.size.width;	// We need to adjust both widths appropriately
-		resizeFrame.size.width += delta;
-		[viewToResize setFrame:resizeFrame];
-		
-		otherFrame.size.width -= delta;
-		[otherView setFrame:otherFrame];
-		[oSplitView adjustSubviews];
-	}
+	
+	NSView *viewToResize = [[oSplitView subviews] firstObjectKS];
+	NSRect resizeFrame = [viewToResize frame];
+	
+	NSView *otherView = [[oSplitView subviews] lastObject];
+	NSRect otherFrame = [otherView frame];
+	
+	// Make sure that neither subview goes below 50 pixels wide, just in case
+	newWidth = MAX(newWidth, 50);
+	newWidth = MIN(newWidth, (resizeFrame.size.width + otherFrame.size.width - 50));
+	
+	int delta = newWidth - resizeFrame.size.width;	// We need to adjust both widths appropriately
+	
+	resizeFrame.size.width += delta;
+	[viewToResize setFrame:resizeFrame];
+	
+	otherFrame.size.width -= delta;
+	[otherView setFrame:otherFrame];
+	
+	[oSplitView adjustSubviews];
 }
 
 @end

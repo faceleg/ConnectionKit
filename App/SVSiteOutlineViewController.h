@@ -8,6 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KTPage.h"
+#import "KSViewController.h"
 
 
 extern NSString *KTDisableCustomSiteOutlineIcons;
