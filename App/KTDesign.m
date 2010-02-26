@@ -322,12 +322,12 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	return result;
 }
 
+#pragma mark Image Replacement
+
 - (NSDictionary *)imageReplacementTags
 {
 	return [[self bundle] objectForInfoDictionaryKey:@"imageReplacement"];
 }
-
-
 
 - (NSImage *)replacementImageForCode:(NSString *)aCode string:(NSString *)aString size:(NSNumber *)aSize
 {
@@ -338,27 +338,40 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	if (nil != replacementParams)
 	{
 		NSMutableDictionary *params = [NSMutableDictionary dictionaryWithDictionary:replacementParams];
-		NSString *fileName = [params objectForKey:@"qtzFile"];
-		if (nil == fileName)
+        
+        NSURL *compositionURL = [self URLForCompositionForImageReplacementCode:aCode];
+		if (compositionURL)
 		{
-			fileName = aCode;
-		}
-		fileName = [[self bundle] pathForResource:fileName ofType:@"qtz"];
-		if (nil != fileName)
-		{
-			OFF((@"IR>>>> Using QC file: %@", fileName));
-			[params setObject:aString forKey:@"String"];		// put in mandatory string input
+			OFF((@"IR>>>> Using QC file: %@", compositionURL));
 			
-			if (nil != aSize)
-			{
-				[params setObject:aSize forKey:@"Size"];			// put in optional size input
-			}
-			[params removeObjectForKey:@"qtzFile"];				// don't want to send this param
-			result = [[KTStringRenderer rendererWithFile:fileName] imageWithInputs:params];
+            [params setObject:aString forKey:@"String"];		// put in mandatory string input
+			[params setValue:aSize forKey:@"Size"];			// put in optional size input
+            [params removeObjectForKey:@"qtzFile"];				// don't want to send this param
+            
+			result = [[KTStringRenderer rendererWithFile:[compositionURL path]]
+                      imageWithInputs:params];
 		}
 	}
 	return result;
 }
+
+- (NSURL *)URLForCompositionForImageReplacementCode:(NSString *)code;
+{
+    NSDictionary *params = [[self imageReplacementTags] objectForKey:code];
+    
+	NSString *fileName = [params objectForKey:@"qtzFile"];
+    if (!fileName) fileName = code;
+    
+    NSString *path = [[self bundle] pathForResource:fileName ofType:@"qtz"];
+    if (path)
+    {
+        return [NSURL fileURLWithPath:path];
+    }
+    
+    return nil;
+}
+
+#pragma mark -
 
 - (NSImage *)thumbnail
 {

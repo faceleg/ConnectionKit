@@ -48,14 +48,22 @@ enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 // Images
 - (NSImage *)thumbnail;
 
-- (NSImage *)replacementImageForCode:(NSString *)aCode string:(NSString *)aString size:(NSNumber *)aSize;
-
 - (NSString *)placeholderImagePath;
 
 - (BOOL)allowsBannerSubstitution;
 - (NSString *)bannerCSSSelector;
 - (BOOL)hasLocalFonts;
 
+
+#pragma mark Image Replacement
+
+- (NSImage *)replacementImageForCode:(NSString *)aCode
+                              string:(NSString *)aString
+                                size:(NSNumber *)aSize;
+
+- (NSURL *)URLForCompositionForImageReplacementCode:(NSString *)code;
+
+   
 // Viewport
 - (unsigned)viewport;	// Mainly used by the iPhone to know a page's optimum width
 
