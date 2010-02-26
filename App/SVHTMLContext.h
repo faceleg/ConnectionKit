@@ -54,6 +54,7 @@ typedef enum {
 
 - (void)copyPropertiesFromContext:(SVHTMLContext *)context;
 
+
 #pragma mark Iterations
 
 // It's pretty common to loop through a series of items when generating HTML. e.g. Pagelets in the Sidebar. When doing so, it's nice to generate a CSS class name that corresponds so special styling can be applied based on that. The Template Parser provides nice functions for generating these class names, but the stack of such iterations is maintained here.
@@ -71,6 +72,11 @@ typedef enum {
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
 - (NSString *)relativeURLStringOfPage:(KTAbstractPage *)page;   
 - (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
+
+
+#pragma mark Extra markup
+- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
+- (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 
 
 #pragma mark Content

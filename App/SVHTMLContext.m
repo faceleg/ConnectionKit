@@ -210,6 +210,16 @@
     [_iteratorsStack removeLastObject];
 }
 
+#pragma mark Extra markup
+
+- (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
+{
+}
+
+- (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
+{
+}
+
 #pragma mark Content
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }

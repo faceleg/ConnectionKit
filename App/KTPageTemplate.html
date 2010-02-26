@@ -67,7 +67,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif3]]
 [[endif2]]
 [[endif]]
-[[extraheaders]]
+[[=parser.stringStream.writeExtraHeaders]]
 
 [[if master.codeInjection.headArea]]
 [[=master.codeInjection.headArea]]
@@ -153,7 +153,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			</div> <!-- container -->
 			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
 		</div> <!-- specific body type -->
-[[endBody]]
+[[=parser.stringStream.writeEndBodyString]]
 
 [[if parser.isPublishing]]
 [[if site.googleAnalyticsCode]]

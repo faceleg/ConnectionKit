@@ -363,34 +363,6 @@
 	 
 }
 
-- (NSString *)endbodyWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	KTPage *page = (KTPage *)[self component];
-	NSMutableString *string = [NSMutableString string];
-	
-		[page makeComponentsPerformSelector:@selector(addLevelTextToEndBody:forPage:) withObject:string withPage:page recursive:NO];
-		
-		//[page recursiveComponentPerformSelector:@selector(addPageTextToEndBody:forPage:) withObject:string];
-		/// Wasn't actually being used by any plugins and is identical to -addLevelTextToEndBody:
-	return string;
-}
-
-- (NSString *)extraheadersWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
-{
-	KTPage *page = (KTPage *)[self component];
-	NSMutableString *string = [NSMutableString string];
-	
-		//[[page root] recursiveComponentPerformSelector:@selector(addSitewideTextToHead:forPage:) withObject:string];
-		/// Disabled this for 1.2.1 since it currently slows down a lot on a large site.
-		
-		
-		//[page makeComponentsPerformSelector:@selector(addLevelTextToHead:forPage:) withObject:string withPage:page];
-		/// Unusued in any plugins so disabled for performance.
-		
-		[page makeComponentsPerformSelector:@selector(addPageTextToHead:forPage:) withObject:string withPage:page recursive:NO];
-	return string;
-}
-
 #pragma mark foreach loop
 
 /*!	return index of forEach loop (prefixed with "i"), or empty string if out of a loop
