@@ -189,9 +189,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         NSDictionary *docProperties = [[NSUserDefaults standardUserDefaults] objectForKey:@"defaultDocumentProperties"];
         if (docProperties)
         {
+			NSMutableDictionary *repairedDocProperties = [NSMutableDictionary dictionaryWithDictionary:docProperties];
+			[repairedDocProperties removeObjectForKey:@"displayEditingControls"];
+			[repairedDocProperties removeObjectForKey:@"displaySiteOutline"];
+			[repairedDocProperties removeObjectForKey:@"displayStatusBar"];
+
+// In case there are others, catch the errors
             @try
             {
-                [[self site] setValuesForKeysWithDictionary:docProperties];
+                [[self site] setValuesForKeysWithDictionary:repairedDocProperties];
             }
             @catch (NSException *exception)
             {
