@@ -60,6 +60,7 @@
 
 #pragma mark Graphical Text
 @property(nonatomic, copy) NSNumber *enableImageReplacement;    // BOOL, mandatory
+@property(nonatomic, copy) NSNumber *graphicalTitleSize;        // float
 
 
 #pragma mark Timestamp

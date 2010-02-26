@@ -407,6 +407,7 @@
 #pragma mark Graphical Text
 
 @dynamic enableImageReplacement;
+@dynamic graphicalTitleSize;
 
 #pragma mark Timestamp
 
