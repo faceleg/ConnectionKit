@@ -236,7 +236,7 @@
 #pragma mark Legacy
 
 @synthesize currentPage = _currentPage;
-- (void)setCurrentPage:(KTAbstractPage *)page
+- (void)setCurrentPage:(KTPage *)page
 {
     page = [page retain];
     [_currentPage release], _currentPage = page;

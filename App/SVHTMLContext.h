@@ -22,13 +22,13 @@ typedef enum {
 #pragma mark -
 
 
-@class KTAbstractPage, SVHTMLTextBlock, SVLink;
+@class KTAbstractPage, KTPage, SVHTMLTextBlock, SVLink;
 
 @interface SVHTMLContext : KSHTMLOutputStream
 {
   @private
     NSURL                   *_baseURL;
-    KTAbstractPage			*_currentPage;
+    KTPage			*_currentPage;
     
 	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL					_includeStyling;
@@ -91,7 +91,7 @@ typedef enum {
 
 
 // In for compatibility, overrides -baseURL
-@property(nonatomic, retain) KTAbstractPage *currentPage;
+@property(nonatomic, retain) KTPage *currentPage;
 
 @end
 
