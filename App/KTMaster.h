@@ -58,6 +58,10 @@
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 
 
+#pragma mark Graphical Text
+@property(nonatomic, copy) NSNumber *enableImageReplacement;    // BOOL, mandatory
+
+
 #pragma mark Timestamp
 @property(nonatomic) NSDateFormatterStyle timestampFormat;
 @property(nonatomic, copy) NSNumber *timestampShowTime;

@@ -65,7 +65,8 @@
 	
 	
 	// Enable/disable graphical text
-	[self setBool:[[NSUserDefaults standardUserDefaults] boolForKey:@"enableImageReplacement"] forKey:@"enableImageReplacement"];
+    BOOL imageReplacement = [[NSUserDefaults standardUserDefaults] boolForKey:@"enableImageReplacement"];
+	[self setEnableImageReplacement:[NSNumber numberWithBool:imageReplacement]];
 	
 	
 	// Timestamp
@@ -403,7 +404,10 @@
 	return result;
 }
 
-#pragma mark -
+#pragma mark Graphical Text
+
+@dynamic enableImageReplacement;
+
 #pragma mark Timestamp
 
 - (NSDateFormatterStyle)timestampFormat { return [self wrappedIntegerForKey:@"timestampFormat"]; }
