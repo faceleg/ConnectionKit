@@ -13,6 +13,7 @@
 #import "KTDesign.h"
 #import "KTMaster.h"
 #import "KTAbstractPage+Internal.h"
+#import "SVImageReplacementURLProtocol.h"
 #import "KTPage+Internal.h"
 #import "SVBody.h"
 #import "SVTitleBox.h"
@@ -28,6 +29,10 @@
 
 #import "Debug.h"
 #import "Macros.h"
+
+
+
+#define HTML_VALUE [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]]
 
 
 @implementation SVHTMLTextBlock
@@ -216,6 +221,7 @@
     {
         NSMutableString *innerHTML = [[NSMutableString alloc] init];
         SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:innerHTML];
+        
         [context push];
         [self writeInnerHTML];
         [context pop];
@@ -225,7 +231,7 @@
         {
             KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];
             KTMaster *master = [page master];
-            if ([master boolForKey:@"enableImageReplacement"])
+            if ([master enableImageReplacement])
             {
                 KTDesign *design = [master design];
                 NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
@@ -236,7 +242,7 @@
                     result = [mediaManager graphicalTextWithString:[innerHTML stringByConvertingHTMLToPlainText]
                                                             design:design
                                               imageReplacementCode:graphicalTextCode
-                                                              size:[master floatForKey:@"graphicalTitleSize"]];
+                                                              size:[[master graphicalTitleSize] floatValue]];
                 }
             }
         }
@@ -265,8 +271,36 @@
 {
 	NSString *result = nil;
 	
-	KTMediaContainer *image = [self graphicalTextMedia];
+	//KTMediaContainer *image = [self graphicalTextMedia];
 	// FIXME: Get graphical text working again
+    
+    
+    
+    NSString *graphicalTextCode = [self graphicalTextCode];
+    if (graphicalTextCode)
+    {    
+        KTPage *page = [[SVHTMLContext currentContext] currentPage];
+        KTMaster *master = [page master];
+        if ([master enableImageReplacement])
+        {
+            KTDesign *design = [master design];
+            NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+            
+            if (graphicalTextSettings)
+            {
+                NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
+                NSString *string = [(SVTitleBox *)HTML_VALUE text];
+                
+                NSURL *url = [NSURL imageReplacementURLWithRendererURL:composition
+                                                                string:string
+                                                                  size:[master graphicalTitleSize]];
+                
+                result = [NSString stringWithFormat:
+                          @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat;",
+                          [url absoluteString]];
+            }
+        }
+    }
     
 	
 	return result;
