@@ -133,6 +133,10 @@
     }
     
     
+    // Graphical text
+    if ([self graphicalTextPreviewStyle]) [classNames addObject:@"replaced"];
+    
+    
     // Turn into a single string
     NSString *result = [classNames componentsJoinedByString:@" "];
     [classNames release];
@@ -352,20 +356,18 @@
 	}
 	
 	// TODO: Add in graphical text styling if there is any
-	//if ([[self parser] includeStyling])
+	if ([context includeStyling])
 	{
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
 			if ([[SVHTMLContext currentContext] isEditable])    // id has already been supplied
 			{
-                [context writeAttribute:@"class" value:@"replaced"];
                 [context writeAttribute:@"style" value:graphicalTextStyle];
 			}
 			else
 			{
                 [context writeAttribute:@"id" value:[self graphicalTextCSSID]];
-                [context writeAttribute:@"class" value:@"replaced"];
 			}
 		}
 	}
