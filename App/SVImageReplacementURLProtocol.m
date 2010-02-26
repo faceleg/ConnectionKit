@@ -40,4 +40,34 @@
 
 @implementation SVImageReplacementURLProtocol
 
++ (void)load
+{
+    [NSURLProtocol registerClass:self];
+}
+
++ (BOOL)canInitWithRequest:(NSURLRequest *)request;
+{
+    if ([[[request URL] scheme] isEqualToString:@"x-image-replacement"])
+    {
+        return YES;
+    }
+    
+    return NO;
+}
+
++ (NSURLRequest *)canonicalRequestForRequest:(NSURLRequest *)request;
+{
+    return request;
+}
+
+- (void)startLoading;
+{
+    
+}
+
+- (void)stopLoading;
+{
+    
+}
+
 @end
