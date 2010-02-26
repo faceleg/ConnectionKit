@@ -21,6 +21,8 @@
 
 @interface SVImageReplacementURLProtocol : NSURLProtocol
 {
+  @private
+    NSInvocationOperation *_operation;
 }
 
 @end
