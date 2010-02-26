@@ -14,7 +14,7 @@
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
 #import "KTLinkSourceView.h"
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagesController.h"
 #import "KTAbstractHTMLPlugin.h"

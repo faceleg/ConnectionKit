@@ -9,7 +9,7 @@
 #import "KTPage.h"
 #import "KTArchivePage.h"
 
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "KTMediaManager.h"
 #import "KTDesign.h"
 #import "KTSite.h"

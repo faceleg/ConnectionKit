@@ -11,7 +11,7 @@
 #import "SVHTMLTemplateParser+Private.h"
 
 #import "KTDesign.h"
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "KTAbstractPage+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVBody.h"

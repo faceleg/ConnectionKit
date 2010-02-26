@@ -18,7 +18,9 @@
 //
 
 #import <Cocoa/Cocoa.h>
+
 #import "KT.h"
+#import "KTCodeInjection.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVExtensibleManagedObject.h"
 
@@ -40,10 +42,14 @@
 
 #pragma mark Other
 
+- (KTDesign *)design;
+- (void)setDesign:(KTDesign *)design;
+- (void)setDesignBundleIdentifier:(NSString *)identifier;
 - (NSURL *)designDirectoryURL;
 
 - (KTMediaContainer *)bannerImage;
 - (void)setBannerImage:(KTMediaContainer *)banner;
+- (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
 - (KTMediaContainer *)logoImage;
 - (void)setLogoImage:(KTMediaContainer *)logo;
@@ -55,6 +61,7 @@
 #pragma mark Timestamp
 @property(nonatomic) NSDateFormatterStyle timestampFormat;
 @property(nonatomic, copy) NSNumber *timestampShowTime;
+
 
 #pragma mark Language
 - (NSString *)language;
@@ -79,6 +86,10 @@
 
 - (NSString *)JSKitModeratorEmail;
 - (void)setJSKitModeratorEmail:(NSString *)aString;
+
+
+#pragma mark Site Outline
+- (KTCodeInjection *)codeInjection;
 
 @end
 

@@ -15,7 +15,7 @@
 #import "KTDocument.h"
 #import "KTElementPlugin.h"
 #import "SVHTMLTemplateParser.h"
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "SVTitleBox.h"
 
 #import "NSBundle+KTExtensions.h"

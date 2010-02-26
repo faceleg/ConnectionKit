@@ -12,7 +12,6 @@
 #import "KTDesign.h"
 #import "KTSite.h"
 #import "KTHostProperties.h"
-#import "KTMaster+Internal.h"
 #import "KTPage.h"
 #import "SVPublishingRecord.h"
 #import "KTURLCredentialStorage.h"

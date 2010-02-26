@@ -54,7 +54,7 @@
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
 #import "SVInspector.h"
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "KTMediaManager+Internal.h"
 #import "KTPage+Internal.h"
 #import "SVSidebar.h"

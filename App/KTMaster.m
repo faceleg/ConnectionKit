@@ -6,7 +6,7 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 
 #import "KT.h"
 #import "KTArchivePage.h"

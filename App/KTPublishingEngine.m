@@ -12,7 +12,7 @@
 #import "KTDesign.h"
 #import "KTSite.h"
 #import "SVHTMLTextBlock.h"
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "KTPage+Internal.h"
 #import "KTTranscriptController.h"
 

@@ -11,7 +11,7 @@
 
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
-#import "KTMaster+Internal.h"
+#import "KTMaster.h"
 #import "KTMediaContainer.h"
 #import "KTPage+Internal.h"
 
