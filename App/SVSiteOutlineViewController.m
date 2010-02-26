@@ -21,7 +21,6 @@
 
 #import "KSPlugin.h"
 #import "KSProgressPanel.h"
-
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
 #import "NSDate+Karelia.h"
@@ -1427,6 +1426,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)persistUIProperties;
 {
+	
+	NSView *subview = [[oSplitView subviews] firstObjectKS];
+	int width = (int) [subview frame].size.width;
+	[[[[[[self view] window] windowController] document] site] setValue:[NSNumber numberWithInt:width] forKey:@"sourceOutlineSize"];
+	
     // Remove old selection
     NSArray *oldSelection = [self persistentSelectedItems];
     [oldSelection makeObjectsPerformSelector:@selector(setIsSelectedInSiteOutline:)
@@ -1435,6 +1439,27 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     NSArray *selection = [[self content] selectedObjects];
     [selection makeObjectsPerformSelector:@selector(setIsSelectedInSiteOutline:)
                                withObject:[NSNumber numberWithBool:YES]];
+}
+	 
+- (void)viewDidLoad;
+{
+	int newWidth = [[[[[[self view] window] windowController] document] site] integerForKey:@"sourceOutlineSize"];
+	if (newWidth > 50)		// make sure it's a reasonable value
+	{
+		NSView *viewToResize = [[oSplitView subviews] firstObjectKS];
+		NSRect resizeFrame = [viewToResize frame];
+		
+		NSView *otherView = [[oSplitView subviews] lastObject];
+		NSRect otherFrame = [otherView frame];
+		
+		int delta = newWidth - resizeFrame.size.width;	// We need to adjust both widths appropriately
+		resizeFrame.size.width += delta;
+		[viewToResize setFrame:resizeFrame];
+		
+		otherFrame.size.width -= delta;
+		[otherView setFrame:otherFrame];
+		[oSplitView adjustSubviews];
+	}
 }
 
 @end
