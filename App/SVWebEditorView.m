@@ -310,7 +310,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[self webViewUndoManager] removeAllActions];
     
     // Store the new text
-    [text webEditorTextWillGainFocus];
+    [text webEditorTextDidBeginEditing];
     [_focusedText release], _focusedText = [text retain];
     
     [self didChangeValueForKey:@"focusedText"];

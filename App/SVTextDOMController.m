@@ -170,7 +170,7 @@
     return result;
 }
 
-- (void)webEditorTextWillGainFocus; { }
+- (void)webEditorTextDidBeginEditing; { }
 
 - (void)webEditorDidChange:(NSNotification *)notification;
 {

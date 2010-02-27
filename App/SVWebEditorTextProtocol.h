@@ -21,8 +21,8 @@
                           givenAction:(WebViewInsertAction)action;
 
 
-// Informs the receiver that it is about to gain focus.
-- (void)webEditorTextWillGainFocus;
+// Sent when the text gains focus. NOT upon the first change (how NSTextView behaves)
+- (void)webEditorTextDidBeginEditing;
 
 // Conceptually the same as how NSTextField is informed editing ended by the field editor. The notification is the same as a WebView will have dished out (could well be nil too)
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;

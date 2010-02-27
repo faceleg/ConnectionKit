@@ -179,9 +179,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [super setEditable:editable];
 }
 
-- (void)webEditorTextWillGainFocus;
+- (void)webEditorTextDidBeginEditing;
 {
-    [super webEditorTextWillGainFocus];
+    [super webEditorTextDidBeginEditing];
     
     // A bit crude, but we don't want WebKit's usual focus ring
     [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
