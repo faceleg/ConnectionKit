@@ -8,6 +8,7 @@
 
 #import "SVTextFieldDOMController.h"
 
+#import "SVHTMLTextBlock.h"
 #import "SVTitleBoxHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
@@ -28,6 +29,7 @@
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
     
+    [_textBlock release];
     [_placeholder release];
     [_uneditedValue release];
     [_HTMLString release];
@@ -83,6 +85,31 @@
 }
 
 #pragma mark Editing
+
+- (void)webEditorTextDidBeginEditing;
+{
+    [super webEditorTextDidBeginEditing];
+    
+    // Remove any graphical text
+    [[self HTMLElement] setAttribute:@"style" value:@""];
+}
+
+- (void)webEditorTextDidEndEditing:(NSNotification *)notification;
+{
+    [super webEditorTextDidEndEditing:notification];
+    
+    
+    // Restore graphical text
+    SVHTMLContext *context = [self HTMLContext];
+    [context push];
+    NSString *style = [[self textBlock] graphicalTextPreviewStyle];
+    [context pop];
+    
+    if (style)
+    {
+        [[[self HTMLElement] style] setCssText:style];
+    }
+}
 
 - (void)webViewDidChange;
 {
@@ -246,6 +273,10 @@
     }
 }
 
+                       #pragma mark Text Block
+                       
+                       @synthesize textBlock = _textBlock;
+                       
 #pragma mark Debugging
 
 - (NSString *)blurb

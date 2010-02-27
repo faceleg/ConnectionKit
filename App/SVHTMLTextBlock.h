@@ -76,6 +76,7 @@
 - (id <SVMedia>)graphicalTextMedia;
 - (NSURL *)graphicalTextImageURL;
 - (NSString *)graphicalTextCSSID;
+- (NSString *)graphicalTextPreviewStyle;
 
 #pragma mark HTML
 - (void)writeInnerHTML;

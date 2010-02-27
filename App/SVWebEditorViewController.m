@@ -289,6 +289,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         // Copy basic properties from text block
         result = [[SVTextFieldDOMController alloc] initWithContentObject:value inDOMDocument:domDoc];
         [result setHTMLContext:[self HTMLContext]];
+        [(SVTextFieldDOMController *)result setTextBlock:aTextBlock];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
         [result setEditable:[aTextBlock isEditable]];

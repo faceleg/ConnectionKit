@@ -1,9 +1,4 @@
 .kLine:focus { outline: gray solid 1px; }
-.replaced:focus {
-    text-align:inherit !important;
-    text-indent:inherit !important;
-    background-image:none !important;
-}
 
 img { -webkit-user-select:none; }
 
