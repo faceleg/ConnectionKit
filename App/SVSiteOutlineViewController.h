@@ -96,6 +96,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 @end
 
 
-@interface KTPage (SVSiteOutline)
+@interface SVSiteItem (SVSiteOutline)
 @property(nonatomic, copy) NSNumber *isSelectedInSiteOutline;
+@property(nonatomic, copy) NSNumber *collectionIsExpandedInSiteOutline;
 @end

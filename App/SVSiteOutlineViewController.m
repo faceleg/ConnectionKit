@@ -1424,6 +1424,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return result;
 }
 
+- (NSArray *)persistentExpandedItems;
+{
+    NSManagedObjectContext *context = [[self content] managedObjectContext];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"collectionIsExpandedInSiteOutline != 0"];
+    
+    NSArray *result = [context fetchAllObjectsForEntityForName:@"SiteItem"
+													 predicate:predicate
+														 error:NULL];
+    
+    return result;
+}
+
 - (void)persistUIProperties;
 {
 	
@@ -1439,6 +1451,17 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     NSArray *selection = [[self content] selectedObjects];
     [selection makeObjectsPerformSelector:@selector(setIsSelectedInSiteOutline:)
                                withObject:[NSNumber numberWithBool:YES]];
+
+    // Similarly for expanded collections
+    oldSelection = [self persistentExpandedItems];
+    [oldSelection makeObjectsPerformSelector:@selector(setCollectionIsExpandedInSiteOutline:)
+                                  withObject:[NSNumber numberWithBool:NO]];
+    
+    selection = nil; // [[self content] selectedObjects];		••• expanded objects?
+	
+    [selection makeObjectsPerformSelector:@selector(setCollectionIsExpandedInSiteOutline:)
+                               withObject:[NSNumber numberWithBool:YES]];
+
 }
 	 
 // What is the best way for getting a "viewDidLoad" kind of thing?  KSViewController isn't not working...
@@ -1473,9 +1496,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 #pragma mark -
 
 
-@implementation KTPage (SVSiteOutline)
+@implementation SVSiteItem (SVSiteOutline)
 
 @dynamic isSelectedInSiteOutline;
+@dynamic collectionIsExpandedInSiteOutline;
 
 @end
 
