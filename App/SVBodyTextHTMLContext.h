@@ -6,13 +6,13 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVTitleBoxHTMLContext.h"
+#import "SVFieldEditorHTMLStream.h"
 
 
 @class SVBodyTextDOMController;
 
 
-@interface SVBodyTextHTMLContext : SVTitleBoxHTMLContext
+@interface SVBodyTextHTMLContext : SVFieldEditorHTMLStream
 {
   @private
     NSMutableSet    *_attachments;

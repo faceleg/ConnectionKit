@@ -1,18 +1,18 @@
 //
-//  SVTitleBoxHTMLContext.m
+//  SVFieldEditorHTMLStream.m
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVTitleBoxHTMLContext.h"
+#import "SVFieldEditorHTMLStream.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMElement+Karelia.h"
 
 
-@interface SVTitleBoxHTMLContext ()
+@interface SVFieldEditorHTMLStream ()
 
 - (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
 
@@ -27,14 +27,14 @@
 #pragma mark -
 
 
-@interface DOMNode (SVTitleBoxHTMLContext)
+@interface DOMNode (SVFieldEditorHTMLStream)
 - (void)flattenNodesAfterChild:(DOMNode *)aChild;
 
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
 
 - (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context;
 
 @end
 
@@ -42,7 +42,7 @@
 #pragma mark -
 
 
-@implementation SVTitleBoxHTMLContext
+@implementation SVFieldEditorHTMLStream
 
 - (id)initWithStringStream:(id <KSStringOutputStream>)stream
 {
@@ -166,15 +166,7 @@
     else
     {
         // Close the element, but first, if the next sibling is equal, merge it with this one
-        NSString *tagName = [element tagName];
-        if (![tagName isEqualToString:@"P"])
-        {
-            [_pendingEndDOMElements addObject:element];
-        }
-        else
-        {
-            [self writeEndTag];
-        }
+        [_pendingEndDOMElements addObject:element];
         
         return [element nextSibling];
     }
@@ -434,7 +426,7 @@
 #pragma mark -
 
 
-@implementation DOMNode (SVTitleBoxHTMLContext)
+@implementation DOMNode (SVFieldEditorHTMLStream)
 
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 
@@ -459,21 +451,21 @@
 
 - (BOOL)isParagraphContent; { return NO; }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context; { return self; }
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context; { return self; }
 
 @end
 
-@implementation DOMElement (SVTitleBoxHTMLContext)
+@implementation DOMElement (SVFieldEditorHTMLStream)
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
 - (BOOL)isParagraphContent;
 {
-    BOOL result = [SVTitleBoxHTMLContext isElementWithTagNameContent:[self tagName]];
+    BOOL result = [SVFieldEditorHTMLStream isElementWithTagNameContent:[self tagName]];
     return result;
 }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVTitleBoxHTMLContext *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context;
 {
     return [context replaceDOMElementIfNeeded:self];
 }
@@ -481,14 +473,14 @@
 @end
         
 
-@implementation DOMHTMLBRElement (SVTitleBoxHTMLContext)
+@implementation DOMHTMLBRElement (SVFieldEditorHTMLStream)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
-@implementation DOMHTMLAnchorElement (SVTitleBoxHTMLContext)
+@implementation DOMHTMLAnchorElement (SVFieldEditorHTMLStream)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
-@implementation DOMCharacterData (SVTitleBoxHTMLContext)
+@implementation DOMCharacterData (SVFieldEditorHTMLStream)
 - (BOOL)isParagraphContent; { return YES; }
 @end
