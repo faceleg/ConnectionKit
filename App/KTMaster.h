@@ -20,12 +20,11 @@
 #import <Cocoa/Cocoa.h>
 
 #import "KT.h"
-#import "KTCodeInjection.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTDesign, SVTitleBox;
+@class KTDesign, SVTitleBox, KTCodeInjection;
 @class SVMediaRecord, KTMediaContainer;
 
 
