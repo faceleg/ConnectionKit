@@ -49,6 +49,7 @@
     self = [super initWithStringStream:stream];
     
     _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
+    _pendingEndDOMElements = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -56,7 +57,7 @@
 - (void)dealloc
 {
     [_pendingStartTagDOMElements release];
-    OBASSERT(!_pendingEndDOMElement);
+    [_pendingEndDOMElements release];
     
     [super dealloc];
 }
@@ -76,10 +77,10 @@
     
     
     // Are we about to open an inline element which matches the one just written? If so, merge them into one. This is made possible by not yet having written the end tag of the element.
-    if ([_pendingEndDOMElement isEqualNode:element compareChildNodes:NO])
+    DOMElement *elementToMergeInto = [_pendingEndDOMElements lastObject];
+    if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
     {
-        DOMElement *elementToMergeInto = _pendingEndDOMElement;
-        [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
+        [_pendingEndDOMElements removeLastObject];
         
         // Write inner HTML
         [element writeInnerHTMLToContext:self];
@@ -168,8 +169,7 @@
         NSString *tagName = [element tagName];
         if (![tagName isEqualToString:@"P"])
         {
-            OBASSERT(!_pendingEndDOMElement);
-            _pendingEndDOMElement = [element retain];
+            [_pendingEndDOMElements addObject:element];
         }
         else
         {
@@ -235,11 +235,13 @@
 - (void)writePendingEndTags;
 {
     // Is the last tag awaiting closure?
-    if (_pendingEndDOMElement)
+    NSArray *elements = [_pendingEndDOMElements copy];
+    [_pendingEndDOMElements removeAllObjects];
+    for (DOMElement *anElement in elements)
     {
-        [_pendingEndDOMElement release]; _pendingEndDOMElement = nil;
         [self writeEndTag];
     }
+    [elements release];
 }
 
 - (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
@@ -324,7 +326,7 @@
     
     
     // Is the last tag awaiting closure?
-    if (_pendingEndDOMElement) [self writePendingEndTags];
+    if ([_pendingEndDOMElements count] > 0 && [string length] > 0) [self writePendingEndTags];
     
     
     // Do the writing

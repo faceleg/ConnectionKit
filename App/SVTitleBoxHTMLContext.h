@@ -20,7 +20,7 @@
 {
   @private
     NSMutableArray  *_pendingStartTagDOMElements;
-    DOMElement      *_pendingEndDOMElement;
+    NSMutableArray  *_pendingEndDOMElements;
 }
 
 
