@@ -90,8 +90,18 @@
 {
     [super webEditorTextDidBeginEditing];
     
-    // Remove any graphical text
-    [[self HTMLElement] setAttribute:@"style" value:@""];
+    // Remove any graphical text. But make sure to maintain element size otherwise editing feels weird
+    if ([[[self HTMLElement] className] rangeOfString:@"replaced"].location != NSNotFound)
+    {
+        NSSize size = [[self HTMLElement] boundingBox].size;
+        
+        NSString *style = [[NSString alloc] initWithFormat:
+                           @"min-width:%fpx; min-height:%fpx;",
+                           size.width, size.height];
+        
+        [[[self HTMLElement] style] setCssText:style];
+        [style release];
+    }
 }
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
