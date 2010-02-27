@@ -12,7 +12,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1"/>
+			<integer value="171"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1318,17 +1318,17 @@
 												<int key="NSPeriodicInterval">25</int>
 											</object>
 										</object>
-										<object class="NSSlider" id="83485353">
+										<object class="NSSlider" id="57277303">
 											<reference key="NSNextResponder" ref="865099582"/>
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{17, 67}, {179, 15}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
-											<object class="NSSliderCell" key="NSCell" id="80218804">
+											<object class="NSSliderCell" key="NSCell" id="445892839">
 												<int key="NSCellFlags">-2080244224</int>
 												<int key="NSCellFlags2">131072</int>
 												<string key="NSContents"/>
-												<reference key="NSControlView" ref="83485353"/>
+												<reference key="NSControlView" ref="57277303"/>
 												<double key="NSMaxValue">1</double>
 												<double key="NSMinValue">0.0</double>
 												<double key="NSValue">0.5</double>
@@ -1615,10 +1615,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.master.graphicalTitleSize</string>
-						<reference key="source" ref="83485353"/>
+						<reference key="source" ref="57277303"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="83485353"/>
+							<reference key="NSSource" ref="57277303"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.master.graphicalTitleSize</string>
 							<string key="NSBinding">value</string>
@@ -1627,6 +1627,22 @@
 						</object>
 					</object>
 					<int key="connectionID">461</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.master.enableImageReplacement</string>
+						<reference key="source" ref="57277303"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="57277303"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.master.enableImageReplacement</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.master.enableImageReplacement</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">463</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1774,7 +1790,7 @@
 							<reference ref="283746977"/>
 							<reference ref="535069643"/>
 							<reference ref="545510401"/>
-							<reference ref="83485353"/>
+							<reference ref="57277303"/>
 							<reference ref="675075821"/>
 						</object>
 						<reference key="parent" ref="708745229"/>
@@ -2560,17 +2576,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">459</int>
-						<reference key="object" ref="83485353"/>
+						<reference key="object" ref="57277303"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="80218804"/>
+							<reference ref="445892839"/>
 						</object>
 						<reference key="parent" ref="865099582"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">460</int>
-						<reference key="object" ref="80218804"/>
-						<reference key="parent" ref="83485353"/>
+						<reference key="object" ref="445892839"/>
+						<reference key="parent" ref="57277303"/>
 					</object>
 				</object>
 			</object>
@@ -2966,7 +2982,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">461</int>
+			<int key="maxID">463</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
