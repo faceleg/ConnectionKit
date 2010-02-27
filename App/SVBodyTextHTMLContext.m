@@ -13,6 +13,25 @@
 #import "SVTextAttachment.h"
 
 
+@interface SVFieldEditorHTMLStream (SVBodyTextHTMLContext)
+- (DOMNode *)super_writeDOMElement:(DOMElement *)element;
+@end
+
+
+#pragma mark -
+
+
+@implementation SVFieldEditorHTMLStream (SVBodyTextHTMLContext)
+- (DOMNode *)super_writeDOMElement:(DOMElement *)element;
+{
+    return [super writeDOMElement:element];
+}
+@end
+
+
+#pragma mark -
+
+
 @implementation SVBodyTextHTMLContext
 
 #pragma mark Init & Dealloc
@@ -103,6 +122,14 @@
             return [element nextSibling];
         }
     }
+    
+    
+    // Paragraphs are permitted in body text
+    if ([[element tagName] isEqualToString:@"P"])
+    {
+        return [self super_writeDOMElement:element];
+    }
+    
    
     return [super writeDOMElement:element];
 }
@@ -115,8 +142,6 @@
     // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
     if ([tagName isEqualToString:@"P"])
     {
-        return element;
-        
         DOMNode *parent = [element parentNode];
         DOMNode *refNode = element;
         while (parent)
