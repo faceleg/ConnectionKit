@@ -256,6 +256,37 @@
 	return result;
 }
 
+- (NSURL *)graphicalTextImageURL;
+{
+    NSURL *result = nil;
+	
+    
+    NSString *graphicalTextCode = [self graphicalTextCode];
+    if (graphicalTextCode)
+    {    
+        KTPage *page = [[SVHTMLContext currentContext] currentPage];
+        KTMaster *master = [page master];
+        if ([[master enableImageReplacement] boolValue])
+        {
+            KTDesign *design = [master design];
+            NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
+            
+            if (graphicalTextSettings)
+            {
+                NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
+                NSString *string = [(SVTitleBox *)HTML_VALUE text];
+                
+                result = [NSURL imageReplacementURLWithRendererURL:composition
+                                                            string:string
+                                                              size:[master graphicalTitleSize]];
+            }
+        }
+    }
+    
+	
+	return result;
+}
+
 - (NSString *)graphicalTextCSSID
 {
     NSString *result = nil;
@@ -275,35 +306,13 @@
 {
 	NSString *result = nil;
 	
-	//KTMediaContainer *image = [self graphicalTextMedia];
-	// FIXME: Get graphical text working again
-    
-    
-    
-    NSString *graphicalTextCode = [self graphicalTextCode];
-    if (graphicalTextCode)
-    {    
-        KTPage *page = [[SVHTMLContext currentContext] currentPage];
-        KTMaster *master = [page master];
-        if ([[master enableImageReplacement] boolValue])
-        {
-            KTDesign *design = [master design];
-            NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
-            
-            if (graphicalTextSettings)
-            {
-                NSURL *composition = [design URLForCompositionForImageReplacementCode:graphicalTextCode];
-                NSString *string = [(SVTitleBox *)HTML_VALUE text];
-                
-                NSURL *url = [NSURL imageReplacementURLWithRendererURL:composition
-                                                                string:string
-                                                                  size:[master graphicalTitleSize]];
-                
-                result = [NSString stringWithFormat:
-                          @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat;",
-                          [url absoluteString]];
-            }
-        }
+	    
+    NSURL *url = [self graphicalTextImageURL];
+    if (url)
+    {
+        result = [NSString stringWithFormat:
+                  @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat;",
+                  [url absoluteString]];
     }
     
 	
