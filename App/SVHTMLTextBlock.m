@@ -310,9 +310,25 @@
     NSURL *url = [self graphicalTextImageURL];
     if (url)
     {
-        result = [NSString stringWithFormat:
-                  @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat;",
-                  [url absoluteString]];
+        NSURLRequest *request = [NSURLRequest requestWithURL:url];
+        NSData *data = [NSURLConnection sendSynchronousRequest:request returningResponse:NULL error:NULL];
+        if (data)
+        {
+            CIImage *image = [[CIImage alloc] initWithData:data];
+            if (image)
+            {
+                unsigned int width = [image extent].size.width;
+                unsigned int height = [image extent].size.height;
+                
+                result = [NSString stringWithFormat:
+                          @"text-align:left; text-indent:-9999px; background:url(%@) top left no-repeat; width:%upx; height:%upx;",
+                          [url absoluteString],
+                          width,
+                          height];
+                
+                [image release];
+            }
+        }
     }
     
 	
