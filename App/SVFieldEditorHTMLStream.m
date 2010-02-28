@@ -14,7 +14,7 @@
 
 @interface SVFieldEditorHTMLStream ()
 
-- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
 - (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;
 - (DOMNode *)unlinkDOMElementBeforeWriting:(DOMElement *)element;
@@ -66,12 +66,11 @@
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element;
 {
-    // Remove any tags not allowed.
-    DOMNode *replacement = [self replaceDOMElementIfNeeded:element];
-    if (replacement != element)
+    // Remove any tags not allowed. Repeat cycle for the node that takes its place
+    NSString *tagName = [element tagName];
+    if (![[self class] validateTagName:tagName])
     {
-        // Pretend to the caller that the element got written (which it didn't) and that the next node to write is the replacement
-        return replacement;
+        return [self handleInvalidDOMElement:element];
     }
     
     
@@ -98,7 +97,6 @@
     
     
     // Can't allow nested elements. e.g.    <span><span>foo</span> bar</span>   is wrong and should be simplified.
-    NSString *tagName = [element tagName];
     if ([self hasOpenElementWithTagName:tagName])
     {
         // Shuffle up following nodes
@@ -172,56 +170,50 @@
     }
 }
 
-- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
-    DOMNode *result = element;
+    DOMNode *result;    // not setting the result is a programmer error
     NSString *tagName = [element tagName];
     
     
-    // Remove any tags not allowed. Repeat cycle for the node that takes its place
-    if (![[self class] validateTagName:tagName])
+    // Convert a bold or italic tag to <strong> or <em>
+    if ([tagName isEqualToString:@"B"] ||
+        [element isKindOfClass:[DOMHTMLHeadingElement class]])
     {
-        // Convert a bold or italic tag to <strong> or <em>
-        if ([tagName isEqualToString:@"B"] ||
-            [element isKindOfClass:[DOMHTMLHeadingElement class]])
+        result = [self changeDOMElement:element toTagName:@"STRONG"];
+    }
+    else if ([tagName isEqualToString:@"I"])
+    {
+        result = [self changeDOMElement:element toTagName:@"EM"];
+    }
+    // Convert a <font> tag to <span> with appropriate styling
+    else if ([tagName isEqualToString:@"FONT"])
+    {
+        result = [self changeDOMElement:element toTagName:@"SPAN"];
+        
+        [self populateSpanElementAttributes:(DOMHTMLElement *)result
+                  fromFontElement:(DOMHTMLFontElement *)element];
+    }
+    else
+    {
+        // Everything else gets removed, or replaced with a <span> with appropriate styling
+        if ([[element style] length] > 0)
         {
-            result = [self changeDOMElement:element toTagName:@"STRONG"];
-        }
-        else if ([tagName isEqualToString:@"I"])
-        {
-            result = [self changeDOMElement:element toTagName:@"EM"];
-        }
-        // Convert a <font> tag to <span> with appropriate styling
-        else if ([tagName isEqualToString:@"FONT"])
-        {
-            result = [self changeDOMElement:element toTagName:@"SPAN"];
+            DOMElement *replacement = [self changeDOMElement:element toTagName:@"SPAN"];
+            [replacement copyInheritedStylingFromElement:element];
             
-            [self populateSpanElementAttributes:(DOMHTMLElement *)result
-                      fromFontElement:(DOMHTMLFontElement *)element];
+            result = replacement;
         }
         else
         {
-            // Everything else gets removed, or replaced with a <span> with appropriate styling
-            if ([[element style] length] > 0)
-            {
-                DOMElement *replacement = [self changeDOMElement:element toTagName:@"SPAN"];
-                [replacement copyInheritedStylingFromElement:element];
-                
-                result = replacement;
-            }
-            else
-            {
-                result = [self unlinkDOMElementBeforeWriting:element];
-            }
-            
-            
-            
+            result = [self unlinkDOMElementBeforeWriting:element];
         }
         
-        result = [result nodeByStrippingNonParagraphNodes:self];
+        
+        
     }
     
-    return result;
+    return [result nodeByStrippingNonParagraphNodes:self];
 }
 
 - (void)writePendingEndTags;
@@ -467,7 +459,12 @@
 
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context;
 {
-    return [context replaceDOMElementIfNeeded:self];
+    if (![[context class] validateTagName:[self tagName]])
+    {
+        return [context handleInvalidDOMElement:self];
+    }
+    
+    return self;
 }
 
 @end

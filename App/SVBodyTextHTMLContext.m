@@ -134,7 +134,7 @@
     return [super writeDOMElement:element];
 }
 
-- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     NSString *tagName = [element tagName];
     
@@ -153,7 +153,7 @@
     }
     
     
-    return [super replaceDOMElementIfNeeded:element];
+    return [super handleInvalidDOMElement:element];
 }
 
 #pragma mark Properties

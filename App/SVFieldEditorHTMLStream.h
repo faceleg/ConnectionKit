@@ -35,7 +35,7 @@
 // Shouldn't need to call directly; -writeStylingDOMElement: does so internally
 - (DOMNode *)endStylingDOMElement:(DOMElement *)element;
 
-- (DOMNode *)replaceDOMElementIfNeeded:(DOMElement *)element;
+- (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
 - (void)writePendingEndTags;
 
