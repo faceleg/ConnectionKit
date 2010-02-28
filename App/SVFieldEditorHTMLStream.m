@@ -170,6 +170,20 @@
     }
 }
 
+- (void)writePendingEndTags;
+{
+    // Is the last tag awaiting closure?
+    NSArray *elements = [_pendingEndDOMElements copy];
+    [_pendingEndDOMElements removeAllObjects];
+    for (DOMElement *anElement in elements)
+    {
+        [self writeEndTag];
+    }
+    [elements release];
+}
+
+#pragma mark Cleanup
+
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     DOMNode *result;    // not setting the result is a programmer error
@@ -214,18 +228,6 @@
     }
     
     return [result nodeByStrippingNonParagraphNodes:self];
-}
-
-- (void)writePendingEndTags;
-{
-    // Is the last tag awaiting closure?
-    NSArray *elements = [_pendingEndDOMElements copy];
-    [_pendingEndDOMElements removeAllObjects];
-    for (DOMElement *anElement in elements)
-    {
-        [self writeEndTag];
-    }
-    [elements release];
 }
 
 - (DOMElement *)changeDOMElement:(DOMElement *)element toTagName:(NSString *)tagName;

@@ -134,6 +134,8 @@
     return [super writeDOMElement:element];
 }
 
+#pragma mark Cleanup
+
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     NSString *tagName = [element tagName];
