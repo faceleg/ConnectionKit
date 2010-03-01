@@ -68,7 +68,7 @@
 {
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
     NSString *tagName = [element tagName];
-    if (![[self class] validateTagName:tagName])
+    if (![self validateTagName:tagName])
     {
         return [self handleInvalidDOMElement:element];
     }
@@ -353,12 +353,12 @@
 
 #pragma mark Tag Whitelist
 
-+ (BOOL)validateTagName:(NSString *)tagName;
+- (BOOL)validateTagName:(NSString *)tagName;
 {
     BOOL result = ([tagName isEqualToString:@"SPAN"] ||
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
-                   [self isElementWithTagNameContent:tagName] ||
+                   [[self class] isElementWithTagNameContent:tagName] ||
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"]);
     
@@ -461,7 +461,7 @@
 
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context;
 {
-    if (![[context class] validateTagName:[self tagName]])
+    if (![context validateTagName:[self tagName]])
     {
         return [context handleInvalidDOMElement:self];
     }

@@ -57,55 +57,6 @@
 
 - (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
 
-#pragma mark Validation
-
-+ (BOOL)validateTagName:(NSString *)tagName
-{
-    BOOL result = ([tagName isEqualToString:@"A"] ||
-                   [super validateTagName:tagName]);
-    
-    return result;
-}
-
-- (BOOL)validateAttribute:(NSString *)attributeName;
-{
-    // Super doesn't allow links; we do.
-    if ([[self lastOpenElementTagName] isEqualToString:@"A"])
-    {
-        BOOL result = ([attributeName isEqualToString:@"href"] ||
-                       [attributeName isEqualToString:@"target"] ||
-                       [attributeName isEqualToString:@"style"] ||
-                       [attributeName isEqualToString:@"charset"] ||
-                       [attributeName isEqualToString:@"hreflang"] ||
-                       [attributeName isEqualToString:@"name"] ||
-                       [attributeName isEqualToString:@"title"] ||
-                       [attributeName isEqualToString:@"rel"] ||
-                       [attributeName isEqualToString:@"rev"]);
-        
-        return result;               
-    }
-    else
-    {
-        return [super validateAttribute:attributeName];
-    }
-}
-
-- (BOOL)validateStyleProperty:(NSString *)propertyName;
-{
-    BOOL result = [super validateStyleProperty:propertyName];
-    
-    if (!result && [propertyName isEqualToString:@"text-align"])
-    {
-        NSString *tagName = [self lastOpenElementTagName];
-        if ([tagName isEqualToString:@"P"])
-        {
-            result = YES;
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark Writing
 
 - (DOMNode *)writeDOMElement:(DOMElement *)element
@@ -156,6 +107,55 @@
     
     
     return [super handleInvalidDOMElement:element];
+}
+
+#pragma mark Validation
+
+- (BOOL)validateTagName:(NSString *)tagName
+{
+    BOOL result = ([tagName isEqualToString:@"A"] ||
+                   [super validateTagName:tagName]);
+    
+    return result;
+}
+
+- (BOOL)validateAttribute:(NSString *)attributeName;
+{
+    // Super doesn't allow links; we do.
+    if ([[self lastOpenElementTagName] isEqualToString:@"A"])
+    {
+        BOOL result = ([attributeName isEqualToString:@"href"] ||
+                       [attributeName isEqualToString:@"target"] ||
+                       [attributeName isEqualToString:@"style"] ||
+                       [attributeName isEqualToString:@"charset"] ||
+                       [attributeName isEqualToString:@"hreflang"] ||
+                       [attributeName isEqualToString:@"name"] ||
+                       [attributeName isEqualToString:@"title"] ||
+                       [attributeName isEqualToString:@"rel"] ||
+                       [attributeName isEqualToString:@"rev"]);
+        
+        return result;               
+    }
+    else
+    {
+        return [super validateAttribute:attributeName];
+    }
+}
+
+- (BOOL)validateStyleProperty:(NSString *)propertyName;
+{
+    BOOL result = [super validateStyleProperty:propertyName];
+    
+    if (!result && [propertyName isEqualToString:@"text-align"])
+    {
+        NSString *tagName = [self lastOpenElementTagName];
+        if ([tagName isEqualToString:@"P"])
+        {
+            result = YES;
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Properties
