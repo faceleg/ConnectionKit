@@ -243,14 +243,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [context setBodyTextDOMController:self];
     
     
-    // Top-level nodes can only be: paragraph, newline, or graphic
+    // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
     DOMNode *aNode = [[self textHTMLElement] firstChild];
     while (aNode)
     {
         aNode = [aNode topLevelBodyTextNodeWriteToStream:context];
-        
-        //if ([aNode isKindOfClass:[DOMElement class]])
-        //[[self textHTMLElement] writeInnerHTMLToContext:context];
     }
     
     
