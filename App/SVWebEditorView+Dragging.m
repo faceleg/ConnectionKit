@@ -135,7 +135,7 @@
 
 - (void)removeDragCaret;
 {
-    [[self webView] removeDragCaret];
+    //[[self webView] removeDragCaret]; — see -[SVWebEditorWebView draggingUpdated:] for why
     [self removeDragCaretFromDOMNodes];
 }
 

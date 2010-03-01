@@ -60,8 +60,9 @@
 {
     NSDragOperation result = [super draggingUpdated:sender];
     
-    // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not removed
-    if (result == NSDragOperationNone) [self removeDragCaret];
+    // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not removed.
+    // Maddeningly though, calling -removeDragCaret makes the WebView perform a Copy rather than Move op!
+    //if (result == NSDragOperationNone) [self removeDragCaret];
     
     _webEditorViewWillHandleDrop = [[self webEditorView] validateDrop:sender
                                                     proposedOperation:&result];
