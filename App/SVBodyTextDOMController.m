@@ -235,15 +235,23 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 #pragma mark Editing
 
 - (void)webViewDidChange;
-{
-    //  Body Text Controller doesn't track indivdual text changes itself, leaving that up to the paragraphs. So use this point to pass a similar message onto those subcontrollers to handle.
-    
+{    
+    //  Write the whole out using a special stream
     
     NSMutableString *html = [[NSMutableString alloc] init];
     SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] initWithStringStream:html];
     [context setBodyTextDOMController:self];
     
-    [[self textHTMLElement] writeInnerHTMLToContext:context];
+    
+    // Top-level nodes can only be: paragraph, newline, or graphic
+    DOMNode *aNode = [[self textHTMLElement] firstChild];
+    while (aNode)
+    {
+        aNode = [aNode topLevelBodyTextNodeWriteToStream:context];
+        
+        //if ([aNode isKindOfClass:[DOMElement class]])
+        //[[self textHTMLElement] writeInnerHTMLToContext:context];
+    }
     
     
     SVBody *body = [self representedObject];

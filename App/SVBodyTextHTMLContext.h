@@ -26,3 +26,11 @@
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface DOMNode (SVBodyText)
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+@end

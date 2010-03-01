@@ -164,3 +164,52 @@
 @synthesize bodyTextDOMController = _DOMController;
 
 @end
+
+
+#pragma mark -
+
+
+@implementation DOMNode (SVBodyText)
+
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+{
+    //  Don't want unknown nodes
+    DOMNode *result = [self nextSibling];
+    [[self parentNode] removeChild:self];
+    return result;
+}
+
+@end
+
+
+@implementation DOMElement (SVBodyText)
+
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+{
+    //  Elements can be treated pretty normally
+    return [context writeDOMElement:self];
+}
+
+@end
+
+
+@implementation DOMText (SVBodyText)
+
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+{
+    //  Only allowed  a single newline at the top level
+    if ([[self previousSibling] nodeType] == DOM_TEXT_NODE)
+    {
+        return [super topLevelBodyTextNodeWriteToStream:context];  // delete self
+    }
+    else
+    {
+        [self setTextContent:@"\n"];
+        [context writeNewline];
+        return [self nextSibling];
+    }
+}
+
+@end
+
+
