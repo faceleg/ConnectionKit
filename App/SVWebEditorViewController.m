@@ -1125,8 +1125,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     SVWebEditorView *webEditor = [self webEditor];
     NSUndoManager *undoManager = [webEditor undoManager];
     
-    [[undoManager prepareWithInvocationTarget:self] 
-     undo_setSelectedTextRange:[webEditor selectedTextRange]];
+    // There's no point recording the action if registration is disabled. Especially since grabbing the selection is a relatively expensive op
+    if ([undoManager isUndoRegistrationEnabled])
+    {
+        [[undoManager prepareWithInvocationTarget:self] 
+         undo_setSelectedTextRange:[webEditor selectedTextRange]];
+    }
 }
 
 #pragma mark -
