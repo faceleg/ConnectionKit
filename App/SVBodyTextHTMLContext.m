@@ -107,11 +107,17 @@
 - (BOOL)validateTagName:(NSString *)tagName
 {
     // Paragraphs are permitted in body text
-    BOOL result = ([tagName isEqualToString:@"P"] ||
-                   [tagName isEqualToString:@"A"] ||
-                   [super validateTagName:tagName]);
+    if ([tagName isEqualToString:@"P"] && [self openElementsCount] == 0)
+    {
+        return YES;
+    }
+    else
+    {
+        BOOL result = ([tagName isEqualToString:@"A"] ||
+                       [super validateTagName:tagName]);
     
-    return result;
+        return result;
+    }
 }
 
 - (BOOL)validateAttribute:(NSString *)attributeName;
