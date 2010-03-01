@@ -80,6 +80,8 @@
     if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
     {
         [_pendingEndDOMElements removeLastObject];
+        [self pushOpenElementWithTagName:[element tagName]];
+        
         
         // Write inner HTML
         [element writeInnerHTMLToContext:self];
@@ -167,6 +169,7 @@
     {
         // Close the element, but first, if the next sibling is equal, merge it with this one
         [_pendingEndDOMElements addObject:element];
+        [self popOpenElement];
         
         return [element nextSibling];
     }
@@ -177,8 +180,10 @@
     // Is the last tag awaiting closure?
     NSArray *elements = [_pendingEndDOMElements copy];
     [_pendingEndDOMElements removeAllObjects];
+    
     for (DOMElement *anElement in elements)
     {
+        [self pushOpenElementWithTagName:[anElement tagName]];
         [self writeEndTag];
     }
     [elements release];
