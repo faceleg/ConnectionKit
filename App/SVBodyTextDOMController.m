@@ -213,17 +213,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (NSArray *)graphicControllers;
 {
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[[self childWebEditorItems] count]];
-    
-    for (KSDOMController *aController in [self childWebEditorItems])
-    {
-        if (![aController isKindOfClass:[SVParagraphDOMController class]])
-        {
-            [result addObject:aController];
-        }
-    }
-    
-    return result;
+    return [self childWebEditorItems];
 }
 
 #pragma mark Updates
