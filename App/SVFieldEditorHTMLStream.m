@@ -303,6 +303,26 @@
 // Comments have no place in text fields! Yes, they get left in the DOM until it's replaced, but you can't see them, so no harm done
 - (void)writeComment:(NSString *)comment; { }
 
+#pragma mark Elements Stack
+
+- (NSUInteger)openElementsCount;
+{
+    NSUInteger result = [super openElementsCount] + [_pendingStartTagDOMElements count];
+    return result;
+}
+
+- (BOOL)hasOpenElementWithTagName:(NSString *)tagName
+{
+    tagName = [tagName uppercaseString];
+    
+    for (DOMElement *anElement in _pendingStartTagDOMElements)
+    {
+        if ([[anElement tagName] isEqualToString:tagName]) return YES;
+    }
+    
+    return [super hasOpenElementWithTagName:tagName];
+}
+
 #pragma mark Primitive Writing
 
 - (void)writeString:(NSString *)string
@@ -337,18 +357,6 @@
     }
     
     [super performPendingWrites];
-}
-
-- (BOOL)hasOpenElementWithTagName:(NSString *)tagName
-{
-    tagName = [tagName uppercaseString];
-    
-    for (DOMElement *anElement in _pendingStartTagDOMElements)
-    {
-        if ([[anElement tagName] isEqualToString:tagName]) return YES;
-    }
-    
-    return [super hasOpenElementWithTagName:tagName];
 }
 
 #pragma mark Tag Whitelist
