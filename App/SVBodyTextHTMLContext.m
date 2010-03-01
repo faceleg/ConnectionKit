@@ -86,7 +86,7 @@
     
     
     // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
-    if ([tagName isEqualToString:@"P"])
+    /*if ([tagName isEqualToString:@"P"])
     {
         DOMNode *parent = [element parentNode];
         DOMNode *refNode = element;
@@ -96,7 +96,7 @@
             if ([[(DOMElement *)parent tagName] isEqualToString:@"P"]) break;
             refNode = parent; parent = [parent parentNode];
         }
-    }
+    }*/
     
     
     return [super handleInvalidDOMElement:element];
