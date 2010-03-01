@@ -141,6 +141,7 @@
 {
     // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
     [_pendingStartTagDOMElements addObject:element];
+    [self pushOpenElementWithTagName:[element tagName]];
     
     // Write inner HTML
     [element writeInnerHTMLToContext:self];
@@ -157,6 +158,7 @@
         DOMNode *result = [element nextSibling];
         
         [[element parentNode] removeChild:element];
+        [self popOpenElement];
         [_pendingStartTagDOMElements removeLastObject];
         
         return result;
@@ -303,26 +305,6 @@
 // Comments have no place in text fields! Yes, they get left in the DOM until it's replaced, but you can't see them, so no harm done
 - (void)writeComment:(NSString *)comment; { }
 
-#pragma mark Elements Stack
-
-- (NSUInteger)openElementsCount;
-{
-    NSUInteger result = [super openElementsCount] + [_pendingStartTagDOMElements count];
-    return result;
-}
-
-- (BOOL)hasOpenElementWithTagName:(NSString *)tagName
-{
-    tagName = [tagName uppercaseString];
-    
-    for (DOMElement *anElement in _pendingStartTagDOMElements)
-    {
-        if ([[anElement tagName] isEqualToString:tagName]) return YES;
-    }
-    
-    return [super hasOpenElementWithTagName:tagName];
-}
-
 #pragma mark Primitive Writing
 
 - (void)writeString:(NSString *)string
@@ -342,19 +324,21 @@
 - (void)performPendingWrites;
 {
     // Before actually writing the string, push through any pending Elements.
-    if ([_pendingStartTagDOMElements count] > 0)
+    NSArray *elements = [_pendingStartTagDOMElements copy];
+    
+    for (DOMElement *anElement in elements) { [self popOpenElement]; }
+    [_pendingStartTagDOMElements removeAllObjects];
+    
+    for (DOMElement *anElement in elements)
     {
-        NSArray *elements = [_pendingStartTagDOMElements copy];
-        [_pendingStartTagDOMElements removeAllObjects];
-        
-        for (DOMElement *anElement in elements)
-        {
-            [self openTagWithDOMElement:anElement];
-            [self closeStartTag];
-        }
-        
-        [elements release];
+        [self openTagWithDOMElement:anElement];
+        [self closeStartTag];
     }
+    
+    [elements release];
+    
+    
+    
     
     [super performPendingWrites];
 }
