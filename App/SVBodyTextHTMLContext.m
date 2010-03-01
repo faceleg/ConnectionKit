@@ -82,6 +82,17 @@
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
+    // Invalid top-level elements should be converted into paragraphs
+    if ([self openElementsCount] == 0)
+    {
+        DOMElement *result = [self changeDOMElement:element toTagName:@"P"];
+        return result;  // pretend the element was written, but retry on this new node
+    }
+    else
+    {
+        return [super handleInvalidDOMElement:element];
+    }
+    
     /*NSString *tagName = [element tagName];
     
     
@@ -97,9 +108,6 @@
             refNode = parent; parent = [parent parentNode];
         }
     }*/
-    
-    
-    return [super handleInvalidDOMElement:element];
 }
 
 #pragma mark Validation
