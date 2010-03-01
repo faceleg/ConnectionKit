@@ -310,9 +310,6 @@
 // Comments have no place in text fields! Yes, they get left in the DOM until it's replaced, but you can't see them, so no harm done
 - (void)writeComment:(NSString *)comment; { }
 
-// Newlines have no place in text fields either.
-- (void)writeNewline { }
-
 #pragma mark Primitive Writing
 
 - (void)writeString:(NSString *)string
