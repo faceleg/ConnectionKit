@@ -75,13 +75,6 @@
     }
     
     
-    // Paragraphs are permitted in body text
-    if ([[element tagName] isEqualToString:@"P"])
-    {
-        return [self super_writeDOMElement:element];
-    }
-    
-   
     return [super writeDOMElement:element];
 }
 
@@ -113,7 +106,9 @@
 
 - (BOOL)validateTagName:(NSString *)tagName
 {
-    BOOL result = ([tagName isEqualToString:@"A"] ||
+    // Paragraphs are permitted in body text
+    BOOL result = ([tagName isEqualToString:@"P"] ||
+                   [tagName isEqualToString:@"A"] ||
                    [super validateTagName:tagName]);
     
     return result;

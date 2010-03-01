@@ -367,7 +367,8 @@
 
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 {
-    BOOL result = ([tagName isEqualToString:@"BR"]);
+    BOOL result = ([tagName isEqualToString:@"P"] ||
+                   [tagName isEqualToString:@"BR"]);
     
     return result;
 }
