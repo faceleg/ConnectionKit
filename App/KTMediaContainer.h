@@ -18,7 +18,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVExtensibleManagedObject.h"
 
 
 @class KTMediaManager, KTMediaFile, KTImageScalingSettings, BDAlias, KTAbstractPage;
