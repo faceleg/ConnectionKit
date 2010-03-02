@@ -367,8 +367,7 @@
     // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
     if (!result && [tagName isEqualToString:@"LI"])
     {
-        NSString *lastTag = [self lastOpenElementTagName];
-        if ([lastTag isEqualToString:@"UL"] || [lastTag isEqualToString:@"OL"]) result = YES;
+        if ([self lastOpenElementIsList]) result = YES;
     }
     
     return result;
