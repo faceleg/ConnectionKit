@@ -119,7 +119,7 @@
         [tagName isEqualToString:@"UL"] ||
         [tagName isEqualToString:@"OL"])
     {
-        BOOL result = ([self openElementsCount] == 0);
+        BOOL result = ([self openElementsCount] == 0 || [self lastOpenElementIsList]);
         return result;
     }
     else
