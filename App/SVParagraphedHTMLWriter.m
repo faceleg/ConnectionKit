@@ -13,7 +13,7 @@
 #import "SVTextAttachment.h"
 
 
-@interface SVFieldEditorHTMLStream (SVParagraphedHTMLWriter)
+@interface SVFieldEditorHTMLWriter (SVParagraphedHTMLWriter)
 - (DOMNode *)super_writeDOMElement:(DOMElement *)element;
 @end
 
@@ -21,7 +21,7 @@
 #pragma mark -
 
 
-@implementation SVFieldEditorHTMLStream (SVParagraphedHTMLWriter)
+@implementation SVFieldEditorHTMLWriter (SVParagraphedHTMLWriter)
 - (DOMNode *)super_writeDOMElement:(DOMElement *)element;
 {
     return [super writeDOMElement:element];

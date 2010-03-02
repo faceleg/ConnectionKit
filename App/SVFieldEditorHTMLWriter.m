@@ -1,18 +1,18 @@
 //
-//  SVFieldEditorHTMLStream.m
+//  SVFieldEditorHTMLWriter.m
 //  Sandvox
 //
 //  Created by Mike on 10/01/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVFieldEditorHTMLStream.h"
+#import "SVFieldEditorHTMLWriter.h"
 
 #import "DOMNode+Karelia.h"
 #import "DOMElement+Karelia.h"
 
 
-@interface SVFieldEditorHTMLStream ()
+@interface SVFieldEditorHTMLWriter ()
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 
@@ -27,14 +27,14 @@
 #pragma mark -
 
 
-@interface DOMNode (SVFieldEditorHTMLStream)
+@interface DOMNode (SVFieldEditorHTMLWriter)
 - (void)flattenNodesAfterChild:(DOMNode *)aChild;
 
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
 
 - (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context;
 
 @end
 
@@ -42,7 +42,7 @@
 #pragma mark -
 
 
-@implementation SVFieldEditorHTMLStream
+@implementation SVFieldEditorHTMLWriter
 
 - (id)initWithStringWriter:(id <KSStringWriter>)stream
 {
@@ -418,7 +418,7 @@
 #pragma mark -
 
 
-@implementation DOMNode (SVFieldEditorHTMLStream)
+@implementation DOMNode (SVFieldEditorHTMLWriter)
 
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 
@@ -443,21 +443,21 @@
 
 - (BOOL)isParagraphContent; { return NO; }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context; { return self; }
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context; { return self; }
 
 @end
 
-@implementation DOMElement (SVFieldEditorHTMLStream)
+@implementation DOMElement (SVFieldEditorHTMLWriter)
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
 
 - (BOOL)isParagraphContent;
 {
-    BOOL result = [SVFieldEditorHTMLStream isElementWithTagNameContent:[self tagName]];
+    BOOL result = [SVFieldEditorHTMLWriter isElementWithTagNameContent:[self tagName]];
     return result;
 }
 
-- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLStream *)context;
+- (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context;
 {
     if (![context validateTagName:[self tagName]])
     {
@@ -470,14 +470,14 @@
 @end
         
 
-@implementation DOMHTMLBRElement (SVFieldEditorHTMLStream)
+@implementation DOMHTMLBRElement (SVFieldEditorHTMLWriter)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
-@implementation DOMHTMLAnchorElement (SVFieldEditorHTMLStream)
+@implementation DOMHTMLAnchorElement (SVFieldEditorHTMLWriter)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
 @end
 
-@implementation DOMCharacterData (SVFieldEditorHTMLStream)
+@implementation DOMCharacterData (SVFieldEditorHTMLWriter)
 - (BOOL)isParagraphContent; { return YES; }
 @end

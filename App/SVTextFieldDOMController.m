@@ -9,7 +9,7 @@
 #import "SVTextFieldDOMController.h"
 
 #import "SVHTMLTextBlock.h"
-#import "SVFieldEditorHTMLStream.h"
+#import "SVFieldEditorHTMLWriter.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -125,7 +125,7 @@
 {
     // Validate the HTML
     NSMutableString *html = [[NSMutableString alloc] init];
-    SVFieldEditorHTMLStream *context = [[SVFieldEditorHTMLStream alloc] initWithStringWriter:html];
+    SVFieldEditorHTMLWriter *context = [[SVFieldEditorHTMLWriter alloc] initWithStringWriter:html];
     [html release];
     
     [[self textHTMLElement] writeInnerHTMLToContext:context];

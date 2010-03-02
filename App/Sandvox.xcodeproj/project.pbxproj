@@ -205,8 +205,8 @@
 		270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */; };
 		270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */; };
 		270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */; };
-		270E49A510FA326300EF1FA0 /* SVFieldEditorHTMLStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLStream.h */; };
-		270E49A610FA326300EF1FA0 /* SVFieldEditorHTMLStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLStream.m */; };
+		270E49A510FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h */; };
+		270E49A610FA326300EF1FA0 /* SVFieldEditorHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLWriter.m */; };
 		270E4A1210FA412400EF1FA0 /* SVTextAttachment.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4A1010FA412400EF1FA0 /* SVTextAttachment.h */; };
 		270E4A1310FA412400EF1FA0 /* SVTextAttachment.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4A1110FA412400EF1FA0 /* SVTextAttachment.m */; };
 		270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */; };
@@ -1664,8 +1664,8 @@
 		270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSidebarPageletsController.m; sourceTree = "<group>"; };
 		270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVParagraphLink.h; sourceTree = "<group>"; };
 		270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVParagraphLink.m; sourceTree = "<group>"; };
-		270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFieldEditorHTMLStream.h; sourceTree = "<group>"; };
-		270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFieldEditorHTMLStream.m; sourceTree = "<group>"; };
+		270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVFieldEditorHTMLWriter.h; sourceTree = "<group>"; };
+		270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVFieldEditorHTMLWriter.m; sourceTree = "<group>"; };
 		270E4A1010FA412400EF1FA0 /* SVTextAttachment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextAttachment.h; sourceTree = "<group>"; };
 		270E4A1110FA412400EF1FA0 /* SVTextAttachment.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextAttachment.m; sourceTree = "<group>"; };
 		270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkInspector.h; sourceTree = "<group>"; };
@@ -3187,8 +3187,8 @@
 		277D3CB310A1B9DE00E4944A /* HTML Context */ = {
 			isa = PBXGroup;
 			children = (
-				270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLStream.h */,
-				270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLStream.m */,
+				270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h */,
+				270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLWriter.m */,
 				27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */,
 				27FDEDD5111AF2C6001F4E60 /* SVTextContentHTMLContext.m */,
 				27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */,
@@ -5328,7 +5328,7 @@
 				27AF0E2810F40B42000A6B15 /* SVPageInspector.h in Headers */,
 				270E44BB10F77D8B00EF1FA0 /* SVSidebarPageletsController.h in Headers */,
 				270E474C10F8B6B800EF1FA0 /* SVParagraphLink.h in Headers */,
-				270E49A510FA326300EF1FA0 /* SVFieldEditorHTMLStream.h in Headers */,
+				270E49A510FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h in Headers */,
 				270E4A1210FA412400EF1FA0 /* SVTextAttachment.h in Headers */,
 				270E4B1610FA4DF500EF1FA0 /* SVLinkInspector.h in Headers */,
 				27E24AC610FB9591004EFE9F /* SVLink.h in Headers */,
@@ -6727,7 +6727,7 @@
 				27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */,
 				270E44BC10F77D8B00EF1FA0 /* SVSidebarPageletsController.m in Sources */,
 				270E474D10F8B6B800EF1FA0 /* SVParagraphLink.m in Sources */,
-				270E49A610FA326300EF1FA0 /* SVFieldEditorHTMLStream.m in Sources */,
+				270E49A610FA326300EF1FA0 /* SVFieldEditorHTMLWriter.m in Sources */,
 				270E4A1310FA412400EF1FA0 /* SVTextAttachment.m in Sources */,
 				270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */,
 				27E24AC710FB9591004EFE9F /* SVLink.m in Sources */,

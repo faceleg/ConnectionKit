@@ -6,13 +6,13 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVFieldEditorHTMLStream.h"
+#import "SVFieldEditorHTMLWriter.h"
 
 
 @class SVBodyTextDOMController;
 
 
-@interface SVParagraphedHTMLWriter : SVFieldEditorHTMLStream
+@interface SVParagraphedHTMLWriter : SVFieldEditorHTMLWriter
 {
   @private
     NSMutableSet    *_attachments;
