@@ -393,22 +393,6 @@
 }
 
 
-/*	Run through our child nodes, converting the source of any images to use the
- *	media:// URL scheme.
- *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
- *	-getElementsByTagName: method.
- */
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-{
-	// Since we're a DOMNode, ask evey child to do this method.
-	DOMNodeList *children = [self childNodes];
-	unsigned i;
-	for (i=0; i<[children length]; i++)
-	{
-		[[children item:i] convertImageSourcesToUseSettingsNamed:settingsName forPlugin:plugin];
-	}
-}
-
 #pragma mark Additional Utility operations
 
 /*!	When nodes next to each other are the same, like <b>foo</b><b>bar</b> this combines them.
@@ -940,29 +924,6 @@
 }
 
 
-/*	Run through our child nodes, converting the source of any images to use the
- *	media:// URL scheme.
- *	This method is implemented for both DOMNode and DOMElement since only DOMElement supports the
- *	-getElementsByTagName: method.
- */
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-{
-	// If we're an IMG element, convert our source
-	if ([self isKindOfClass:[DOMHTMLImageElement class]])
-	{
-		[(DOMHTMLImageElement *)self convertSourceToUseSettingsNamed:settingsName forPlugin:plugin];
-	}
-	
-	// And then convert any child image elements
-	DOMNodeList *childImages = [self getElementsByTagName:@"IMG"];
-	unsigned i;
-	for (i=0; i<[childImages length]; i++)
-	{
-		[(DOMHTMLImageElement *)[childImages item:i] convertSourceToUseSettingsNamed:settingsName
-																		   forPlugin:plugin];
-	}
-}
-
 @end
 
 
@@ -1037,71 +998,6 @@
 	
 	return result;
 // TODO: here I should coalesce PRE elements (with a \n #text node between) into a single PRE
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation DOMHTMLImageElement (KTExtensions)
-
-/*	Create a media container object for our source.
- *	Then replace our source URL with an appropriate media:// one.
- *	Depending on the URL scheme, we can either use the local path, or might have to convert to
- *	data first.
- */
-- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-{
-	NSURL *sourceURL = [NSURL URLWithString:[self src]];
-	if (sourceURL)
-	{
-		// Create a media container from the URL.
-		KTMediaContainer *mediaContainer = nil;
-		if ([sourceURL isFileURL])
-		{
-			mediaContainer = [[plugin mediaManager] mediaContainerWithPath:[sourceURL path]];
-		}
-		else if ([[sourceURL scheme] isEqualToString:@"svxmedia"])	// Media container already exists
-		{
-			return;
-		}
-		else
-		{
-			// Pull the data for the URL from WebKit. May have to use a private method sometimes.
-			WebDataSource *dataSource = [[[self ownerDocument] webFrame] dataSource];
-			NSData *data = [[dataSource subresourceForURL:sourceURL] data];
-			if (!data && [dataSource respondsToSelector:@selector(_archivedSubresourceForURL:)])
-			{
-				data = [[dataSource performSelector:@selector(_archivedSubresourceForURL:)
-										 withObject:sourceURL] data];
-			}
-			
-			if (data)
-			{
-				NSString *UTI = [NSString UTIForFilenameExtension:[[sourceURL path] pathExtension]];
-				mediaContainer = [[plugin mediaManager] mediaContainerWithData:data
-																	  filename:@"pastedGraphic"
-																		   UTI:UTI];
-			}
-		}
-		
-		
-		// Scale the image appropriately
-		if (mediaContainer)
-		{
-			mediaContainer = [mediaContainer imageWithScalingSettingsNamed:settingsName forPlugin:plugin];
-		}
-		
-		
-		// Convert our src URL to point to the media
-		if (mediaContainer)
-		{
-			NSString *mediaURL = [[mediaContainer URIRepresentation] absoluteString];
-			[self setSrc:mediaURL];
-		}
-	}
 }
 
 @end

@@ -70,7 +70,6 @@
 
 // Media
 - (BOOL)isFileList;
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 
 
 - (DOMNode *)removeJunkRecursiveRestrictive:(BOOL)aRestricted allowEmptyParagraphs:(BOOL)anAllowEmptyParagraphs;
@@ -110,9 +109,6 @@
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
 - (DOMElement *)removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs;
 
-- (void)convertImageSourcesToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
-
-
 @end
 
 #pragma mark -
@@ -121,9 +117,4 @@
 @interface DOMHTMLAnchorElement ( KTUndo )
 /*! passing nil for target removes that attribute */
 + (void)element:(DOMHTMLAnchorElement *)anchor setHref:(NSString *)anHref target:(NSString *)aTarget;
-@end
-
-
-@interface DOMHTMLImageElement (KTExtensions)
-- (void)convertSourceToUseSettingsNamed:(NSString *)settingsName forPlugin:(KTAbstractElement *)plugin;
 @end
