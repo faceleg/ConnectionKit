@@ -85,15 +85,16 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif]]
 		<div id="page-container"[[if cssClassName]] class="[[=&cssClassName]]"[[endif]]>
 			<div id="page">
-				<div id="page-top" class="[[if master.logoImage]]has-logo[[else]]no-logo[[endif]]">
+				<div id="page-top" class="[[if master.logo.hidden]]no-logo[[else]]has-logo[[endif]]">
 					<div id="title">
 [[if isRootPage]]
-[[if master.logoImage]]
+[[if master.logo.hidden]]
+[[else2]]
 						<span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
+							src="[[mediainfo info:path media:master.logo sizeName:pageHeaderImage]]"
 							[[if master.headerImageDescription]]alt="[[=&master.headerImageDescription]]"[[endif3]]
-							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
-							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span>
+							width="[[mediainfo info:width media:master.logo sizeName:pageHeaderImage]]"
+							height="[[mediainfo info:height media:master.logo sizeName:pageHeaderImage]]" /></span>
 [[endif2]]
 [[if master.siteTitle.hidden]]
 						<h1 class="hidden">[[=master.siteTitleHTMLString]]</h1>
@@ -101,12 +102,13 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1h placeholder:"Site Title"]][[endif3]]
 [[endif2]]
 [[else]]
-[[if master.logoImage]]
+[[if master.logo.hidden]]
+[[else2]]
 						<a class="imageLink" href="[[path site.rootPage]]"><span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]"
+							src="[[mediainfo info:path media:master.logo sizeName:pageHeaderImage]]"
 							alt="[[=&master.headerImageDescription]]"
-							width="[[mediainfo info:width media:master.logoImage sizeName:pageHeaderImage]]"
-							height="[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]" /></span></a>
+							width="[[mediainfo info:width media:master.logo sizeName:pageHeaderImage]]"
+							height="[[mediainfo info:height media:master.logo sizeName:pageHeaderImage]]" /></span></a>
 [[endif2]]
 [[if master.siteTitle.hidden]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h1>
