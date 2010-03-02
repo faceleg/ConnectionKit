@@ -8,6 +8,7 @@
 
 #import "SVImage.h"
 
+#import "SVApplicationController.h"
 #import "SVHTMLContext.h"
 #import "SVImageDOMController.h"
 #import "SVMediaRecord.h"
@@ -28,6 +29,20 @@
     [result setConstrainProportions:[NSNumber numberWithBool:YES]];
     
     return result;
+}
+
+- (void)awakeFromInsert
+{
+    [super awakeFromInsert];
+    
+    // Use same format & compression as last image
+    BOOL prefersPNG = [[NSUserDefaults standardUserDefaults] boolForKey:kSVPrefersPNGImageFormatKey];
+    if (prefersPNG)
+    {
+        [self setFileType:(NSString *)kUTTypePNG];
+    }
+    
+    [self setCompressionFactor:[[NSUserDefaults standardUserDefaults] objectForKey:kSVPreferredImageCompressionFactorKey]];
 }
 
 @dynamic media;

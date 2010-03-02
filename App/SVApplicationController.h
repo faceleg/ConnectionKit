@@ -25,7 +25,11 @@
 
 extern BOOL gWantToCatchSystemExceptions;
 
+
 extern NSString *kLiveEditableAndSelectableLinksDefaultsKey;
+
+extern NSString *kSVPrefersPNGImageFormatKey;
+extern NSString *kSVPreferredImageCompressionFactorKey;
 
 
 enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tags for IB

@@ -114,6 +114,9 @@ IMPLEMENTATION NOTES & CAUTIONS:
 
 NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectableLinks";
 
+NSString *kSVPrefersPNGImageFormatKey = @"KTPrefersPNGFormat";
+NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
+
 
 @interface NSArray ( TableDataSource )
 - (id)tableView:(NSTableView *)aTableVieRw objectValueForTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex;
@@ -374,8 +377,8 @@ NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectab
 		
 		[NSNumber numberWithFloat:1.0],			@"KTFaviconSharpeningFactor",
 		[NSNumber numberWithFloat:0.3],			@"KTSharpeningFactor",
-		[NSNumber numberWithFloat:0.7],			@"KTPreferredJPEGQuality",
-		[NSNumber numberWithBool:NO],			@"KTPrefersPNGFormat",
+		[NSNumber numberWithFloat:0.7],			kSVPreferredImageCompressionFactorKey,
+		[NSNumber numberWithBool:NO],			kSVPrefersPNGImageFormatKey,
 										 
 		[NSNumber numberWithBool:YES],			@"KTHaloscanTrackbacks",	// KTHaloscanID is nil initially
 		
