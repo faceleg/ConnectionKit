@@ -540,18 +540,18 @@
 												<int key="NSPeriodicInterval">25</int>
 											</object>
 										</object>
-										<object class="NSButton" id="324236261">
+										<object class="NSButton" id="1051444613">
 											<reference key="NSNextResponder" ref="865099582"/>
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{109, 278}, {49, 18}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
-											<object class="NSButtonCell" key="NSCell" id="473320867">
+											<object class="NSButtonCell" key="NSCell" id="1051842434">
 												<int key="NSCellFlags">-2080244224</int>
 												<int key="NSCellFlags2">131072</int>
 												<string key="NSContents">Logo</string>
 												<reference key="NSSupport" ref="26"/>
-												<reference key="NSControlView" ref="324236261"/>
+												<reference key="NSControlView" ref="1051444613"/>
 												<int key="NSButtonFlags">1211912703</int>
 												<int key="NSButtonFlags2">2</int>
 												<reference key="NSNormalImage" ref="414785740"/>
@@ -877,18 +877,18 @@
 												<bool key="NSVertical">NO</bool>
 											</object>
 										</object>
-										<object class="NSTextField" id="11899121">
+										<object class="NSTextField" id="48256287">
 											<reference key="NSNextResponder" ref="865099582"/>
 											<int key="NSvFlags">268</int>
 											<string key="NSFrame">{{192, 94}, {38, 14}}</string>
 											<reference key="NSSuperview" ref="865099582"/>
 											<bool key="NSEnabled">YES</bool>
-											<object class="NSTextFieldCell" key="NSCell" id="48855686">
+											<object class="NSTextFieldCell" key="NSCell" id="322670735">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">272761856</int>
 												<string key="NSContents">Scale</string>
 												<reference key="NSSupport" ref="26"/>
-												<reference key="NSControlView" ref="11899121"/>
+												<reference key="NSControlView" ref="48256287"/>
 												<reference key="NSBackgroundColor" ref="512321341"/>
 												<reference key="NSTextColor" ref="438326776"/>
 											</object>
@@ -1624,22 +1624,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.master.graphicalTitleSize</string>
-						<reference key="source" ref="71765480"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="71765480"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.master.graphicalTitleSize</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.master.graphicalTitleSize</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">461</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: inspectedObjectsController.selection.master.enableImageReplacement</string>
 						<reference key="source" ref="71765480"/>
 						<reference key="destination" ref="1001"/>
@@ -1705,10 +1689,10 @@
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">value: inspectedObjectsController.selection.master.logo.hidden</string>
-						<reference key="source" ref="324236261"/>
+						<reference key="source" ref="1051444613"/>
 						<reference key="destination" ref="1001"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="324236261"/>
+							<reference key="NSSource" ref="1051444613"/>
 							<reference key="NSDestination" ref="1001"/>
 							<string key="NSLabel">value: inspectedObjectsController.selection.master.logo.hidden</string>
 							<string key="NSBinding">value</string>
@@ -1730,6 +1714,37 @@
 						</object>
 					</object>
 					<int key="connectionID">522</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.master.graphicalTitleSize</string>
+						<reference key="source" ref="71765480"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="71765480"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.master.graphicalTitleSize</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.master.graphicalTitleSize</string>
+							<object class="NSDictionary" key="NSOptions">
+								<bool key="EncodedWithXMLCoder">YES</bool>
+								<object class="NSArray" key="dict.sortedKeys">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSNoSelectionPlaceholder</string>
+									<string>NSNotApplicablePlaceholder</string>
+									<string>NSNullPlaceholder</string>
+								</object>
+								<object class="NSMutableArray" key="dict.values">
+									<bool key="EncodedWithXMLCoder">YES</bool>
+									<real value="1"/>
+									<real value="1"/>
+									<real value="1"/>
+								</object>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">527</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1860,9 +1875,9 @@
 							<reference ref="545510401"/>
 							<reference ref="709942646"/>
 							<reference ref="996615216"/>
-							<reference ref="324236261"/>
+							<reference ref="1051444613"/>
 							<reference ref="71765480"/>
-							<reference ref="11899121"/>
+							<reference ref="48256287"/>
 						</object>
 						<reference key="parent" ref="708745229"/>
 					</object>
@@ -2749,31 +2764,31 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">519</int>
-						<reference key="object" ref="324236261"/>
+						<reference key="object" ref="1051444613"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="473320867"/>
+							<reference ref="1051842434"/>
 						</object>
 						<reference key="parent" ref="865099582"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">520</int>
-						<reference key="object" ref="473320867"/>
-						<reference key="parent" ref="324236261"/>
+						<reference key="object" ref="1051842434"/>
+						<reference key="parent" ref="1051444613"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">523</int>
-						<reference key="object" ref="11899121"/>
+						<reference key="object" ref="48256287"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="48855686"/>
+							<reference ref="322670735"/>
 						</object>
 						<reference key="parent" ref="865099582"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">524</int>
-						<reference key="object" ref="48855686"/>
-						<reference key="parent" ref="11899121"/>
+						<reference key="object" ref="322670735"/>
+						<reference key="parent" ref="48256287"/>
 					</object>
 				</object>
 			</object>
@@ -3195,7 +3210,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">524</int>
+			<int key="maxID">527</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
