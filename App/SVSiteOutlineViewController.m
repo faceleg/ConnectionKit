@@ -1429,7 +1429,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     NSManagedObjectContext *context = [[self content] managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"collectionIsExpandedInSiteOutline != 0"];
     
-    NSArray *result = [context fetchAllObjectsForEntityForName:@"SiteItem"
+    NSArray *result = [context fetchAllObjectsForEntityForName:@"Page"
 													 predicate:predicate
 														 error:NULL];
     
