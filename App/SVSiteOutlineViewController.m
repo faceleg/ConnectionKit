@@ -188,6 +188,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     // Store
     [controller retain];
     [_pagesController release]; _pagesController = controller;
+    [controller setContent:[self rootPage]];
     
     
     // Load
@@ -201,7 +202,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     
     // Restore selection
     NSArray *selection = [self persistentSelectedItems];
-    if ([selection count] > 0)  [controller setSelectedObjects:selection];
+    if ([selection count] == 0) selection = [NSArray arrayWithObject:[self rootPage]];
+    [controller setSelectedObjects:selection];
 }
 
 #pragma mark Pages List
