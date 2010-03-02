@@ -87,6 +87,11 @@
     return result;
 }
 
+#pragma mark Publishing
+
+@dynamic fileType;
+@dynamic compressionFactor;
+
 #pragma mark HTML
 
 - (void)writeBody
