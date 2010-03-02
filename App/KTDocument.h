@@ -65,7 +65,12 @@ extern NSString *kKTDocumentWillSaveNotification;
     
     NSMutableSet    *_reservedFilenames;
     NSString        *_deletedMediaDirectoryName;
+	
+	NSURL *_lastExportDirectory;
+
 }
+
+@property (retain) NSURL *lastExportDirectory;
 
 
 // Managing the Persistence Objects
@@ -127,6 +132,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 //- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
 
 @property(nonatomic, retain) KTSite *site;
+
 
 - (KTHTMLInspectorController *)HTMLInspectorController;
 - (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;

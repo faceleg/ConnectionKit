@@ -611,7 +611,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }	
     else if (itemAction == @selector(exportSiteAgain:))
     {
-        NSString *exportPath = [[[self document] site] lastExportDirectoryPath];
+        NSString *exportPath = [[[self document] lastExportDirectory] path];
         return (exportPath != nil && [exportPath isAbsolutePath]);
     }
     
@@ -971,6 +971,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		[[[self document] site] setDocWindowContentRect:[window contentRectForFrameRect:[window frame]]];
 	}
+	[[[self document] site] setLastExportDirectoryPath:[[[self document] lastExportDirectory] path]];
     
     // Ask Site Outline View Controller to do the same - this will save the split view width
     [[self siteOutlineViewController] persistUIProperties];

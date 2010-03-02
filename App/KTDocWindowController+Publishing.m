@@ -217,7 +217,7 @@
     }
     
     
-    NSString *exportDirectoryPath = [[[self document] site] lastExportDirectoryPath];
+    NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     
     [savePanel beginSheetForDirectory:[exportDirectoryPath stringByDeletingLastPathComponent]
                                  file:[exportDirectoryPath lastPathComponent]
@@ -230,7 +230,7 @@
 
 - (IBAction)exportSiteAgain:(id)sender
 {
-    NSString *exportDirectoryPath = [[[self document] site] lastExportDirectoryPath];
+    NSString *exportDirectoryPath = [[[self document] lastExportDirectory] path];
     if (exportDirectoryPath)
     {
         // Start publishing
@@ -286,7 +286,7 @@
     [savePanel orderOut:self];
     
     // Store the path and kick off exporting
-    [[[self document] site] setLastExportDirectoryPath:[savePanel filename]];
+    [[self document] setLastExportDirectory:[NSURL fileURLWithPath:[savePanel filename]]];
     [self exportSiteAgain:self];
 }
 

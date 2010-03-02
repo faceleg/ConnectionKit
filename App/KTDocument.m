@@ -121,6 +121,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 @implementation KTDocument
 
 #pragma mark -
+#pragma mark Synthesized properties, can't be in category
+
+@synthesize lastExportDirectory = _lastExportDirectory;
+
+
+#pragma mark -
 #pragma mark Init & Dealloc
 
 /*! designated initializer for all NSDocument instances. Common initialization to new doc and opening a doc */
@@ -556,6 +562,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			KTHostProperties *hostProperties = [[self site] hostProperties];
 			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
 		}
+	}
+	
+	if (result)
+	{
+		self.lastExportDirectory = [NSURL fileURLWithPath:[[self site] lastExportDirectoryPath]];
 	}
     
     
