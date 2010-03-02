@@ -180,6 +180,21 @@
 	return result;
 }
 
+#pragma mark Resource Files
+- (void)addResource:(NSURL *)resourceURL;   // call to register the resource for needing publishing
+{
+    // TODO: Actually record the resource
+}
+
+- (NSURL *)URLOfResource:(NSURL *)resource; // the URL of a resource once published. Calls -addResource internally
+{
+    [self addResource:resource];
+    return [[[[self currentPage] site] hostProperties] URLForResourceFile:
+            [resource lastPathComponent]];
+}
+
+//- (NSString *)uploadPathOfResource:(NSURL *)resource; // counterpart to -URLOfResource
+
 #pragma mark Iterations
 
 - (NSUInteger)currentIteration; { return [[self currentIterator] iteration]; }
