@@ -66,7 +66,7 @@
 
 - (NSString *)DOMNodeID
 {
-    id value = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+    id value = HTML_VALUE;
 	if ([value isKindOfClass:[SVContentObject class]])
     {
         return [value editingElementID];
@@ -295,7 +295,7 @@
 
 - (void)writeInnerHTML;
 {
-	NSString *result = [[self HTMLSourceObject] valueForKeyPath:[self HTMLSourceKeyPath]];
+	NSString *result = HTML_VALUE;
     if ([result isKindOfClass:[SVBody class]])
     {
         [(SVBody *)result writeHTML];
