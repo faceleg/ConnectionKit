@@ -105,7 +105,7 @@
 	}
 	else if ([aMimeType isEqualToString:@"image/jpeg"])
 	{
-		data = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality]];
+		data = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality]];
 	}
 	else if ([aMimeType isEqualToString:@"image/tiff"])
 	{
@@ -129,7 +129,7 @@
 	}
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypeJPEG] )
 	{
-		data = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality]];
+		data = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality]];
 	}
 	else if ( [aUTI isEqualToString:(NSString *)kUTTypePNG] )
 	{
@@ -193,7 +193,7 @@
 	}
 	else
 	{
-		result = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality]];
+		result = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality]];
 	}
 	return result;
 }
@@ -209,7 +209,7 @@
 	}
 	else
 	{
-		result = [self JPEGRepresentationWithQuality:[NSImage preferredJPEGQuality] originalMedia:aParentMedia];
+		result = [self JPEGRepresentationWithCompressionFactor:[NSImage preferredJPEGQuality] originalMedia:aParentMedia];
 	}
 	return result;
 }
@@ -396,7 +396,7 @@
 	return [self PNGRepresentationWithOriginalMedia:nil];
 }
 
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality originalMedia:(KTMedia *)parentMedia;
 {
 	NSMutableDictionary *props;
 	if (nil != parentMedia)
@@ -429,9 +429,9 @@
 	return result;
 }
 
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality;
 {
-	return [self JPEGRepresentationWithQuality:aQuality originalMedia:nil];
+	return [self JPEGRepresentationWithCompressionFactor:aQuality originalMedia:nil];
 }
 
 

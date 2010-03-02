@@ -75,7 +75,7 @@
 
 	if (![defaults boolForKey:@"KTPrefersPNGFormat"])	// convert to JPEG to show compression
 	{
-		NSData *jpegData = [sharpenedImage JPEGRepresentationWithQuality:quality];
+		NSData *jpegData = [sharpenedImage JPEGRepresentationWithCompressionFactor:quality];
 		sharpenedImage = [[[NSImage alloc] initWithData:jpegData] autorelease];
 		[sharpenedImage normalizeSize];
 	}

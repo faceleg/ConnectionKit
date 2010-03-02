@@ -49,10 +49,15 @@
 // Also see +[NSBitmapImageRep typeForUTI:]
 
 
+#pragma mark Specific representations
+
 - (NSData *)PNGRepresentation;
 - (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality;
-- (NSData *)JPEGRepresentationWithQuality:(float)aQuality originalMedia:(KTMedia *)parentMedia;
+
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality;
+- (NSData *)JPEGRepresentationWithCompressionFactor:(float)aQuality
+                                      originalMedia:(KTMedia *)parentMedia;
+
 - (NSData *)faviconRepresentation;
 
 
