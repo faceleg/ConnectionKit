@@ -1436,6 +1436,24 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     return result;
 }
 
+- (NSArray *)expandedObjects;
+{
+	NSMutableArray *result = [NSMutableArray array];
+	NSOutlineView *ov = self.outlineView;
+	
+	int rows = [ov numberOfRows];
+	for (int row = 0 ; row < rows ; row++)
+	{
+		id item = [ov itemAtRow:row];
+		BOOL expanded = [ov isItemExpanded:item];
+		if (expanded)
+		{
+			[result addObject:item];
+		}
+	}
+	return [NSArray arrayWithArray:result];
+}
+
 - (void)persistUIProperties;
 {
 	
@@ -1457,7 +1475,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [oldSelection makeObjectsPerformSelector:@selector(setCollectionIsExpandedInSiteOutline:)
                                   withObject:[NSNumber numberWithBool:NO]];
     
-    selection = nil; // [[self content] selectedObjects];		••• expanded objects?
+    selection = [self expandedObjects];
 	
     [selection makeObjectsPerformSelector:@selector(setCollectionIsExpandedInSiteOutline:)
                                withObject:[NSNumber numberWithBool:YES]];
@@ -1490,6 +1508,29 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[otherView setFrame:otherFrame];
 		
 		[oSplitView adjustSubviews];
+	}
+	
+	// Restore expanded and selected state
+	NSArray *selectedItems = [self persistentSelectedItems];
+	NSArray *expandedItems = [self persistentExpandedItems];
+	id item;
+	
+	for (item in expandedItems)
+	{
+		[self.outlineView expandItem:item];
+	}
+	if ([expandedItems count])
+	{
+		NSMutableIndexSet *toSelect = [NSMutableIndexSet indexSet];
+		for (item in selectedItems)
+		{
+			NSInteger row = [self.outlineView rowForItem:item];
+			if (row >= 0)
+			{
+				[toSelect addIndex:row];
+			}
+		}
+		[self.outlineView selectRowIndexes:toSelect byExtendingSelection:NO];
 	}
 }
 
