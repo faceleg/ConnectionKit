@@ -51,13 +51,6 @@
 	[super awakeFromInsert];
 	
 	
-	// Placeholder text
-    [self setPrimitiveValue:NSLocalizedString(@"Site Title", "placeholder text")
-                     forKey:@"siteTitleHTMLString"];
-    [self setPrimitiveValue:NSLocalizedString(@"Site Subtitle", "placeholder text")
-                     forKey:@"siteSubtitleHTMLString"];
-	
-	
 	// Prepare our continue reading link
 	NSString *continueReadingLink =
 		NSLocalizedString(@"Continue reading @@", "Link to read a full article. @@ is replaced with the page title");
