@@ -18,10 +18,6 @@
 #import "SVBody.h"
 #import "SVTitleBox.h"
 
-#import "KTMediaManager+Internal.h"
-#import "KTMediaFile.h"
-#import "KTMediaFileUpload.h"
-
 #import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
 #import "NSString+Karelia.h"
@@ -214,46 +210,6 @@
 	code = [code copy];
 	[myGraphicalTextCode release];
 	myGraphicalTextCode = code;
-}
-
-- (id <SVMedia>)graphicalTextMedia
-{
-    id <SVMedia> result = nil;
-	
-	NSString *graphicalTextCode = [self graphicalTextCode];
-    if (graphicalTextCode)
-    {
-        NSMutableString *innerHTML = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:innerHTML];
-        
-        [context push];
-        [self writeInnerHTML];
-        [context pop];
-        [context release];
-        
-        if ([innerHTML length] > 0)
-        {
-            KTPage *page = (KTPage *)[[SVHTMLContext currentContext] currentPage];
-            KTMaster *master = [page master];
-            if ([master enableImageReplacement])
-            {
-                KTDesign *design = [master design];
-                NSDictionary *graphicalTextSettings = [[design imageReplacementTags] objectForKey:graphicalTextCode];
-                if (graphicalTextSettings)
-                {
-                    // Generate the image
-                    KTMediaManager *mediaManager = [[[page site] document] mediaManager];
-                    result = [mediaManager graphicalTextWithString:[innerHTML stringByConvertingHTMLToPlainText]
-                                                            design:design
-                                              imageReplacementCode:graphicalTextCode
-                                                              size:[[master graphicalTitleSize] floatValue]];
-                }
-            }
-        }
-        [innerHTML release];
-	}
-    
-	return result;
 }
 
 - (NSURL *)graphicalTextImageURL;
