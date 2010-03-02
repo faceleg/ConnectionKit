@@ -1028,6 +1028,7 @@
 		CE8D5A7C112B339A007AC2F0 /* validator.css in Resources */ = {isa = PBXBuildFile; fileRef = CE8D5A7B112B339A007AC2F0 /* validator.css */; };
 		CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */; };
 		CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */; };
+		CE8EF8A7113DDB36002ED237 /* LogoPlaceholder.png in Resources */ = {isa = PBXBuildFile; fileRef = CE8EF8A6113DDB36002ED237 /* LogoPlaceholder.png */; };
 		CE91721209D51E530003310B /* target_set.png in Resources */ = {isa = PBXBuildFile; fileRef = CE91721109D51E530003310B /* target_set.png */; };
 		CE9218850809A40500E7F46B /* toolbar_collection.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218830809A40500E7F46B /* toolbar_collection.png */; };
 		CE9218860809A40500E7F46B /* toolbar_group.png in Resources */ = {isa = PBXBuildFile; fileRef = CE9218840809A40500E7F46B /* toolbar_group.png */; };
@@ -2664,6 +2665,7 @@
 		CE8E713E10B5D0950005BD91 /* KTDesignFamily.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignFamily.h; sourceTree = "<group>"; };
 		CE8E713F10B5D0950005BD91 /* KTDesignFamily.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignFamily.m; sourceTree = "<group>"; };
 		CE8E71960912F5E7001DC88D /* paypal.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = paypal.gif; sourceTree = "<group>"; };
+		CE8EF8A6113DDB36002ED237 /* LogoPlaceholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = LogoPlaceholder.png; sourceTree = "<group>"; };
 		CE91721109D51E530003310B /* target_set.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = target_set.png; sourceTree = "<group>"; };
 		CE9218830809A40500E7F46B /* toolbar_collection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_collection.png; sourceTree = "<group>"; };
 		CE9218840809A40500E7F46B /* toolbar_group.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_group.png; sourceTree = "<group>"; };
@@ -3834,6 +3836,7 @@
 		3C202F0A07E0126400DE4994 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				CE8EF8A6113DDB36002ED237 /* LogoPlaceholder.png */,
 				CE510BE011038F4E0082043E /* upload_warning.png */,
 				CE26B10910A8E0280076F383 /* Image Position */,
 				CEB720FE108FC2AA00511E74 /* WelcomeSandvox.png */,
@@ -6052,6 +6055,7 @@
 				27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */,
 				CE8D54C6112B0B23007AC2F0 /* KSProgressPanel.xib in Resources */,
 				CE8D5A7C112B339A007AC2F0 /* validator.css in Resources */,
+				CE8EF8A7113DDB36002ED237 /* LogoPlaceholder.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
