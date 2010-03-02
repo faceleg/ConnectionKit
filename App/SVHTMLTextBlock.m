@@ -441,62 +441,6 @@
 	{
 		// Fix page links
 		result = [self fixPageLinksFromString:result];
-		
-		
-		
-		if ([self importsGraphics] && result)
-		{
-			// Convert media source paths
-			NSScanner *scanner = [[NSScanner alloc] initWithString:result];
-			NSMutableString *buffer = [[NSMutableString alloc] initWithCapacity:[result length]];
-			NSString *aString;	NSString *aMediaPath;
-			
-			while (![scanner isAtEnd])
-			{
-				[scanner scanUpToString:@" src=\"" intoString:&aString];
-				OBASSERT(aString);
-				[buffer appendString:aString];
-				if ([scanner isAtEnd]) break;
-				
-				[buffer appendString:@" src=\""];
-				[scanner setScanLocation:([scanner scanLocation] + 6)];
-				
-				if ([scanner scanUpToString:@"\"" intoString:&aMediaPath])
-				{
-					NSURL *aMediaURI = [NSURL URLWithString:aMediaPath];
-					
-					// Replace the path with one suitable for the specified purpose
-					KTMediaContainer *mediaContainer = [KTMediaContainer mediaContainerForURI:aMediaURI];
-					if (mediaContainer)
-					{
-						if ([[SVHTMLContext currentContext] generationPurpose] == kSVHTMLGenerationPurposeEditing)
-						{
-							aMediaPath = [[mediaContainer file] quickLookPseudoTag];
-						}
-						else
-						{
-                            // FIXME: Make graphical text work again
-							/*KTMediaFile *mediaFile = [mediaContainer sourceMediaFile];
-                            KTMediaFileUpload *upload = [mediaFile uploadForScalingProperties:[mediaContainer latestProperties]];
-							aMediaPath = [[upload URL] stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
-							
-							// TODO: Tell the parser's delegate
-							//[[self parser] didEncounterMediaFile:mediaFile upload:upload];*/
-						}
-					}
-					
-					
-					// Add the processed path back in. For external images, it should remain unchanged
-					if (aMediaPath) [buffer appendString:aMediaPath];
-				}
-			}
-			
-			
-			// Finish up
-			result = [NSString stringWithString:buffer];
-			[buffer release];
-			[scanner release];
-		}
 	}
     
     
