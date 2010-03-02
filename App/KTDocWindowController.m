@@ -110,7 +110,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     // Finish setting up controllers
 	[[self siteOutlineViewController] setRootPage:[[[self document] site] rootPage]];
     [[self siteOutlineViewController] setContent:[self pagesController]];
-	
+
+	// Ready to do this now that the above has been set
+	[[self siteOutlineViewController] loadPersistentProperties];
+
 	
 	// Early on, window-related stuff
 	NSString *sizeString = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultDocumentWindowContentSize"];

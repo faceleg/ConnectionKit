@@ -1414,6 +1414,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (NSArray *)persistentSelectedItems;
 {
+	
     NSManagedObjectContext *context = [[self content] managedObjectContext];
     NSPredicate *predicate = [NSPredicate predicateWithFormat:@"isSelectedInSiteOutline != 0"];
     
@@ -1482,8 +1483,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 }
 	 
-// What is the best way for getting a "viewDidLoad" kind of thing?  KSViewController isn't not working...
-- (void)awakeFromNib
+// called by KTDocWindowController windowDidLoad
+- (void)loadPersistentProperties;
 {	
 	int newWidth = [[[[[[self view] window] windowController] document] site] integerForKey:@"sourceOutlineSize"];
 	if (newWidth > 1)

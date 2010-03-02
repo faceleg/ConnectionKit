@@ -59,6 +59,7 @@ extern NSString *KTDisableCustomSiteOutlineIcons;
 #pragma mark Public Functions
 - (void)reloadSiteOutline;
 - (void)reloadItem:(SVSiteItem *)anItem reloadChildren:(BOOL)aFlag;
+- (void)loadPersistentProperties;
 
 
 #pragma mark Actions
