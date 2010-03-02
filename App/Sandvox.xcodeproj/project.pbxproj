@@ -366,8 +366,8 @@
 		277E71D41133094E0081389F /* SVWrapInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E71D21133094E0081389F /* SVWrapInspector.m */; };
 		277E724D1133595A0081389F /* SVGraphicDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E724B1133595A0081389F /* SVGraphicDOMController.h */; };
 		277E724E1133595A0081389F /* SVGraphicDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E724C1133595A0081389F /* SVGraphicDOMController.m */; };
-		277E72F7113416A20081389F /* KSHTMLOutputStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E72F6113416A20081389F /* KSHTMLOutputStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		277E72F9113416A20081389F /* KSHTMLOutputStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E72F8113416A20081389F /* KSHTMLOutputStream.m */; };
+		277E72F7113416A20081389F /* KSHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E72F6113416A20081389F /* KSHTMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		277E72F9113416A20081389F /* KSHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E72F8113416A20081389F /* KSHTMLWriter.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		278116E5107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* SVWebEditorView+Dragging.m */; };
@@ -1832,8 +1832,8 @@
 		277E71D21133094E0081389F /* SVWrapInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWrapInspector.m; sourceTree = "<group>"; };
 		277E724B1133595A0081389F /* SVGraphicDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicDOMController.h; sourceTree = "<group>"; };
 		277E724C1133595A0081389F /* SVGraphicDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicDOMController.m; sourceTree = "<group>"; };
-		277E72F6113416A20081389F /* KSHTMLOutputStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSHTMLOutputStream.h; sourceTree = "<group>"; };
-		277E72F8113416A20081389F /* KSHTMLOutputStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSHTMLOutputStream.m; sourceTree = "<group>"; };
+		277E72F6113416A20081389F /* KSHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSHTMLWriter.h; sourceTree = "<group>"; };
+		277E72F8113416A20081389F /* KSHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSHTMLWriter.m; sourceTree = "<group>"; };
 		277EE9200CFD8CFF005617FE /* KTStalenessManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTStalenessManager.h; sourceTree = "<group>"; };
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
@@ -4657,8 +4657,8 @@
 		CE01A6B50EAFD63600BDF264 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				277E72F6113416A20081389F /* KSHTMLOutputStream.h */,
-				277E72F8113416A20081389F /* KSHTMLOutputStream.m */,
+				277E72F6113416A20081389F /* KSHTMLWriter.h */,
+				277E72F8113416A20081389F /* KSHTMLWriter.m */,
 				2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */,
 				2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */,
 				CE01A6A40EAFD63600BDF264 /* NSSortDescriptor+Karelia.h */,
@@ -5367,7 +5367,7 @@
 				277E6EF4112EBABC0081389F /* SVRootPublishingRecord.h in Headers */,
 				277E71D31133094E0081389F /* SVWrapInspector.h in Headers */,
 				277E724D1133595A0081389F /* SVGraphicDOMController.h in Headers */,
-				277E72F7113416A20081389F /* KSHTMLOutputStream.h in Headers */,
+				277E72F7113416A20081389F /* KSHTMLWriter.h in Headers */,
 				270F2BB21136B17D0090143E /* KSHTMLOutputStream+DOM.h in Headers */,
 				27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */,
 			);
@@ -6769,7 +6769,7 @@
 				277E6EF5112EBABC0081389F /* SVRootPublishingRecord.m in Sources */,
 				277E71D41133094E0081389F /* SVWrapInspector.m in Sources */,
 				277E724E1133595A0081389F /* SVGraphicDOMController.m in Sources */,
-				277E72F9113416A20081389F /* KSHTMLOutputStream.m in Sources */,
+				277E72F9113416A20081389F /* KSHTMLWriter.m in Sources */,
 				270F2BB31136B17D0090143E /* KSHTMLOutputStream+DOM.m in Sources */,
 				27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */,
 			);

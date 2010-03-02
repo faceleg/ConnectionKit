@@ -16,7 +16,7 @@
 #import "KSHTMLOutputStream+DOM.h"
 
 
-@interface SVFieldEditorHTMLStream : KSHTMLOutputStream
+@interface SVFieldEditorHTMLStream : KSHTMLWriter
 {
   @private
     NSMutableArray  *_pendingStartTagDOMElements;

@@ -36,9 +36,9 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringStream:(id <KSStringOutputStream>)stream;
+- (id)initWithStringWriter:(id <KSStringWriter>)stream;
 {
-    if (self = [super initWithStringStream:stream])
+    if (self = [super initWithStringWriter:stream])
     {
         _attachments = [[NSMutableSet alloc] init];
     }
@@ -179,7 +179,7 @@
 
 @implementation DOMNode (SVBodyText)
 
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Don't want unknown nodes
     DOMNode *result = [self nextSibling];
@@ -192,7 +192,7 @@
 
 @implementation DOMElement (SVBodyText)
 
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
     return [context writeDOMElement:self];
@@ -203,7 +203,7 @@
 
 @implementation DOMText (SVBodyText)
 
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Only allowed  a single newline at the top level
     if ([[self previousSibling] nodeType] == DOM_TEXT_NODE)

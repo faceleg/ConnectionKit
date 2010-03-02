@@ -200,7 +200,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Build the HTML.
     NSMutableString *pageHTML = [[NSMutableString alloc] init];
-	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringStream:pageHTML];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:pageHTML];
     
     [context setCurrentPage:[self page]];
     [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
@@ -908,7 +908,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         // HTML representation of the items
         NSMutableString *html = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:html];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
         [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
         [context push];
         

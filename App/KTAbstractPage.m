@@ -184,7 +184,7 @@
 {
     NSMutableString *result = [NSMutableString string];
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:result];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
     [context setCurrentPage:self];
 	
     [context push];

@@ -45,9 +45,9 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringStream:(id <KSStringOutputStream>)stream; // designated initializer
+- (id)initWithStringWriter:(id <KSStringWriter>)stream; // designated initializer
 {
-    [super initWithStringStream:stream];
+    [super initWithStringWriter:stream];
     
     _generationPurpose = kSVHTMLGenerationPurposeNormal;
     _includeStyling = YES;

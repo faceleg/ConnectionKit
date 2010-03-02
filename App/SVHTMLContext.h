@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "KSHTMLOutputStream.h"
+#import "KSHTMLWriter.h"
 
 #import <WebKit/DOMCore.h>
 
@@ -24,7 +24,7 @@ typedef enum {
 
 @class KTAbstractPage, KTPage, SVHTMLTextBlock, SVLink;
 
-@interface SVHTMLContext : KSHTMLOutputStream
+@interface SVHTMLContext : KSHTMLWriter
 {
   @private
     NSURL                   *_baseURL;

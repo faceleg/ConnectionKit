@@ -15,9 +15,9 @@
 
 @implementation SVWebEditorHTMLContext
 
-- (id)initWithStringStream:(id <KSStringOutputStream>)stream
+- (id)initWithStringWriter:(id <KSStringWriter>)stream
 {
-    [super initWithStringStream:stream];
+    [super initWithStringWriter:stream];
     _objectKeyPathPairs = [[NSMutableSet alloc] init];
     return self;
 }

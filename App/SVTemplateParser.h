@@ -22,7 +22,7 @@
 
 
 @class KTHTMLParserMasterCache;
-@protocol KSStringOutputStream;
+@protocol KSStringWriter;
 
 
 @protocol KTTemplateParserDelegate;
@@ -37,7 +37,7 @@
 	id						myDelegate;
 	SVTemplateParser		*myParentParser;	// Weak ref
 	
-    id <KSStringOutputStream> _stream;  // weak ref, only used mid-parse
+    id <KSStringWriter> _stream;  // weak ref, only used mid-parse
 	NSMutableDictionary	*myOverriddenKeys;
 	
 	NSUInteger  _ifFunctionDepth;
@@ -67,9 +67,9 @@
 
 + (BOOL)parseTemplate:(NSString *)aTemplate
             component:(id)component
-        writeToStream:(id <KSStringOutputStream>)context;
+        writeToStream:(id <KSStringWriter>)context;
 
-- (BOOL)parseIntoStream:(id <KSStringOutputStream>)context;
+- (BOOL)parseIntoStream:(id <KSStringWriter>)context;
 - (BOOL)prepareToParse;
 
 - (NSString *)componentLocalizedString:(NSString *)tag;
@@ -94,7 +94,7 @@ keyPath:(NSString *)keyPath;
 
 #pragma mark Support
 
-@property(nonatomic, readonly) id <KSStringOutputStream> stringStream;
+@property(nonatomic, readonly) id <KSStringWriter> stringStream;
 
 @property(nonatomic, retain, readonly) KTHTMLParserMasterCache *cache;
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;

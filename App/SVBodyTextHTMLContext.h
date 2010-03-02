@@ -32,5 +32,5 @@
 
 
 @interface DOMNode (SVBodyText)
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLOutputStream *)context;
+- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 @end

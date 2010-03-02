@@ -61,7 +61,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     DOMHTMLElement *htmlElement = (DOMHTMLElement *)[[self HTMLDocument] createElement:tagName];
     
     NSMutableString *markupString = [[NSMutableString alloc] init];
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:markupString];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:markupString];
     
     [context push];
     [paragraph writeInnerHTML];
@@ -113,7 +113,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
     // Replace text contents
     NSMutableString *markup = [[NSMutableString alloc] init];
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringStream:markup];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:markup];
     
     [context copyPropertiesFromContext:[self HTMLContext]];
     [context push];

@@ -239,7 +239,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     //  Write the whole out using a special stream
     
     NSMutableString *html = [[NSMutableString alloc] init];
-    SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] initWithStringStream:html];
+    SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] initWithStringWriter:html];
     [context setBodyTextDOMController:self];
     
     

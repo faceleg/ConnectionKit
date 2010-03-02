@@ -125,7 +125,7 @@
 {
     // Validate the HTML
     NSMutableString *html = [[NSMutableString alloc] init];
-    SVFieldEditorHTMLStream *context = [[SVFieldEditorHTMLStream alloc] initWithStringStream:html];
+    SVFieldEditorHTMLStream *context = [[SVFieldEditorHTMLStream alloc] initWithStringWriter:html];
     [html release];
     
     [[self textHTMLElement] writeInnerHTMLToContext:context];
