@@ -10,7 +10,7 @@
 #import "SVParagraphDOMController.h"
 
 #import "KT.h"
-#import "SVBodyTextHTMLContext.h"
+#import "SVParagraphedHTMLWriter.h"
 #import "SVCallout.h"
 #import "KTAbstractPage.h"
 #import "SVGraphic.h"
@@ -239,7 +239,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     //  Write the whole out using a special stream
     
     NSMutableString *html = [[NSMutableString alloc] init];
-    SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] initWithStringWriter:html];
+    SVParagraphedHTMLWriter *context = [[SVParagraphedHTMLWriter alloc] initWithStringWriter:html];
     [context setBodyTextDOMController:self];
     
     
@@ -265,7 +265,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 - (void)writeGraphicController:(SVDOMController *)controller
-                     toContext:(SVBodyTextHTMLContext *)context;
+                     toContext:(SVParagraphedHTMLWriter *)context;
 {
     SVGraphic *graphic = [controller representedObject];
     

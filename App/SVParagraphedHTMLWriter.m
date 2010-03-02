@@ -1,19 +1,19 @@
 //
-//  SVBodyTextHTMLContext.m
+//  SVParagraphedHTMLWriter.m
 //  Sandvox
 //
 //  Created by Mike on 10/02/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVBodyTextHTMLContext.h"
+#import "SVParagraphedHTMLWriter.h"
 
 #import "SVBodyTextDOMController.h"
 #import "SVGraphic.h"
 #import "SVTextAttachment.h"
 
 
-@interface SVFieldEditorHTMLStream (SVBodyTextHTMLContext)
+@interface SVFieldEditorHTMLStream (SVParagraphedHTMLWriter)
 - (DOMNode *)super_writeDOMElement:(DOMElement *)element;
 @end
 
@@ -21,7 +21,7 @@
 #pragma mark -
 
 
-@implementation SVFieldEditorHTMLStream (SVBodyTextHTMLContext)
+@implementation SVFieldEditorHTMLStream (SVParagraphedHTMLWriter)
 - (DOMNode *)super_writeDOMElement:(DOMElement *)element;
 {
     return [super writeDOMElement:element];
@@ -32,7 +32,7 @@
 #pragma mark -
 
 
-@implementation SVBodyTextHTMLContext
+@implementation SVParagraphedHTMLWriter
 
 #pragma mark Init & Dealloc
 

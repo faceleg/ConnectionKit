@@ -8,7 +8,7 @@
 
 #import "SVParagraphDOMController.h"
 
-#import "SVBodyTextHTMLContext.h"
+#import "SVParagraphedHTMLWriter.h"
 #import "SVHTMLContext.h"
 
 
@@ -146,7 +146,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
     
     
     // Easiest way to archive string, is to use a context – see, they do all sorts!
-    SVBodyTextHTMLContext *context = [[SVBodyTextHTMLContext alloc] init];
+    SVParagraphedHTMLWriter *context = [[SVParagraphedHTMLWriter alloc] init];
     [[self HTMLElement] writeInnerHTMLToContext:context];
     
     NSString *string = [context markupString];

@@ -1,5 +1,5 @@
 //
-//  SVBodyTextHTMLContext.h
+//  SVParagraphedHTMLWriter.h
 //  Sandvox
 //
 //  Created by Mike on 10/02/2010.
@@ -12,7 +12,7 @@
 @class SVBodyTextDOMController;
 
 
-@interface SVBodyTextHTMLContext : SVFieldEditorHTMLStream
+@interface SVParagraphedHTMLWriter : SVFieldEditorHTMLStream
 {
   @private
     NSMutableSet    *_attachments;

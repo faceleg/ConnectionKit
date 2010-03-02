@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 
-@class SVBody, SVBodyElement, SVGraphic, SVBodyTextHTMLContext;
+@class SVBody, SVBodyElement, SVGraphic, SVParagraphedHTMLWriter;
 
 
 @interface SVBodyTextDOMController : SVTextDOMController
@@ -36,7 +36,7 @@
 // All the selectable items within ourself
 - (NSArray *)graphicControllers;
 - (void)writeGraphicController:(SVDOMController *)controller
-                     toContext:(SVBodyTextHTMLContext *)context;
+                     toContext:(SVParagraphedHTMLWriter *)context;
 
 
 #pragma mark Updates
