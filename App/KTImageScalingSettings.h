@@ -19,7 +19,14 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTMediaContainer.h"
+
+typedef enum {
+	KTScaleByFactor,
+	KTScaleToSize,
+	KTCropToSize,
+	KTStretchToSize,
+} KTMediaScalingOperation;
+
 
 @interface KTImageScalingSettings : NSObject <NSCoding>
 {

@@ -21,14 +21,6 @@
 #import "SVExtensibleManagedObject.h"
 
 
-typedef enum {
-	KTScaleByFactor,
-	KTScaleToSize,
-	KTCropToSize,
-	KTStretchToSize,
-} KTMediaScalingOperation;
-
-
 @class KTMediaManager, KTMediaFile, KTImageScalingSettings, BDAlias, KTAbstractPage;
 
 @interface KTMediaContainer : NSManagedObject
