@@ -569,10 +569,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if ([page isKindOfClass:[KTPage class]])
     {
         NSMutableSet *resources = [[NSMutableSet alloc] init];
-        [(KTPage *)page makeComponentsPerformSelector:@selector(addResourcesToSet:forPage:) 
-                                           withObject:resources 
-                                             withPage:(KTPage *)page 
-                                            recursive:NO];
+        
         
         NSEnumerator *resourcesEnumerator = [resources objectEnumerator];
         NSString *aResourcePath;
