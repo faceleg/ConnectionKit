@@ -566,7 +566,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	if (result)
 	{
-		self.lastExportDirectory = [NSURL fileURLWithPath:[[self site] lastExportDirectoryPath]];
+        NSString *path = [[self site] lastExportDirectoryPath];
+        if (path) self.lastExportDirectory = [NSURL fileURLWithPath:path];
 	}
     
     
