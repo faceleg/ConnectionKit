@@ -283,11 +283,16 @@
             // Validate individual styling
             if ([attributeName isEqualToString:@"style"])
             {
-                [self removeUnsupportedCustomStyling:[element style]];
+                DOMCSSStyleDeclaration *style = [element style];
+                [self removeUnsupportedCustomStyling:style];
+                
+                // Have to write it specially as changes don't show up in [anAttribute value] sadly
+                [self writeAttribute:@"style" value:[style cssText]];
             }
-            
-            // Now it's OK to persist
-            [self writeAttribute:attributeName value:[anAttribute value]];
+            else
+            {
+                [self writeAttribute:attributeName value:[anAttribute value]];
+            }
         }
         else
         {
