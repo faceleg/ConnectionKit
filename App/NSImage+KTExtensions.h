@@ -46,6 +46,8 @@
 
 - (NSData *)representationForMIMEType:(NSString *)aMimeType;
 - (NSData *)representationForUTI:(NSString *)aUTI;
+// Also see +[NSBitmapImageRep typeForUTI:]
+
 
 - (NSData *)PNGRepresentation;
 - (NSData *)PNGRepresentationWithOriginalMedia:(KTMedia *)parentMedia;
