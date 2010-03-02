@@ -660,18 +660,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
 	int result = 0;
 	
-	if (item != [self rootPage])
-	{
-		// Due to the slightly odd layout of the site outline, must figure the right page
-		if (!item) item = [self rootPage];
-		OBASSERT(item);
-		
-		result = [[item sortedChildren] count];
-		
-		// Root is a special case where we have to add 1 to the total
-		if (item == [self rootPage]) result += 1;
+    if (item)
+    {
+        if (item != [self rootPage])    // the root *page* shows up as a single item right at the top of the outline
+        {
+            result = [[item sortedChildren] count];
+        }
 	}
-	
+    else
+    {
+        result = [[[self rootPage] sortedChildren] count] + 1;  // add 1 to account for how root page is displayed
+    }
+    
 	return result;
 }
 
