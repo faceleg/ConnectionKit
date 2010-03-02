@@ -115,9 +115,12 @@
 - (BOOL)validateTagName:(NSString *)tagName
 {
     // Paragraphs are permitted in body text
-    if ([tagName isEqualToString:@"P"] && [self openElementsCount] == 0)
+    if ([tagName isEqualToString:@"P"] ||
+        [tagName isEqualToString:@"UL"] ||
+        [tagName isEqualToString:@"OL"])
     {
-        return YES;
+        BOOL result = ([self openElementsCount] == 0);
+        return result;
     }
     else
     {
