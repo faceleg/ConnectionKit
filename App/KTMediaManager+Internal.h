@@ -12,7 +12,7 @@
 #import "KTMediaFile.h"
 
 
-@class KTDesign, KTGraphicalTextMediaContainer;
+@class KTDesign;
 
 
 @interface KTMediaManager (Internal)
@@ -50,16 +50,6 @@
 - (KTMediaFile *)mediaFileWithData:(NSData *)data preferredFilename:(NSString *)filename;
 - (KTMediaFile *)mediaFileWithImage:(NSImage *)image;
 - (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
-
-@end
-
-
-@interface KTMediaManager (MediaContainersInternal)
-// Graphical Text
-- (KTGraphicalTextMediaContainer *)graphicalTextWithString:(NSString *)string
-													design:(KTDesign *)design
-									  imageReplacementCode:(NSString *)imageReplacementCode
-													  size:(float)size;
 
 @end
 

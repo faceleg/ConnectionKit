@@ -225,53 +225,6 @@
 }
 
 #pragma mark -
-#pragma mark Graphical Text
-
-/*	Returns an existing graphical text MediaContainer or creates a new one.
- */
-- (KTGraphicalTextMediaContainer *)graphicalTextWithString:(NSString *)string
-													design:(KTDesign *)design
-									  imageReplacementCode:(NSString *)imageReplacementCode
-													  size:(float)size
-{
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:
-							  @"text == %@ AND designIdentifier == %@ AND imageReplacementCode == %@ AND textSize BETWEEN { %f , %f }",
-							  string,
-							  [[design bundle] bundleIdentifier],
-							  imageReplacementCode,
-							  size - 0.01, size + 0.01];
-	
-	NSArray *objects = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"GraphicalText" predicate:predicate error:NULL];
-	KTGraphicalTextMediaContainer *result = [objects firstObjectKS];
-	
-	if (!result)
-	{
-		// Create the container
-		result = [NSEntityDescription insertNewObjectForEntityForName:@"GraphicalText"
-											   inManagedObjectContext:[self managedObjectContext]];
-		
-		[result setValue:string forKey:@"text"];
-		[result setValue:[[design bundle] bundleIdentifier] forKey:@"designIdentifier"];
-		[result setValue:imageReplacementCode forKey:@"imageReplacementCode"];
-		[result setFloat:size forKey:@"textSize"];
-		
-		
-		// Create the actual graphic
-		NSImage *image = [design replacementImageForCode:imageReplacementCode
-												  string:string
-													size:[NSNumber numberWithFloat:size]];
-		
-		if (image)
-		{
-			KTMediaFile *mediaFile = [self mediaFileWithImage:image];
-			[result setValue:mediaFile forKey:@"file"];
-		}
-	}
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark Support
 
 - (KTMediaContainer *)insertNewMediaContainer

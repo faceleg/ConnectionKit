@@ -8,8 +8,6 @@
 
 #import "KTMediaContainer.h"
 
-#import "KTGraphicalTextMediaContainer.h"
-
 #import "KTMediaManager.h"
 
 #import "KTImageScalingSettings.h"
@@ -142,14 +140,11 @@
 	[super awakeFromFetch];
 	
 	// Unarchive our alias
-	if (![self isKindOfClass:[KTGraphicalTextMediaContainer class]])
-	{
-		NSData *aliasData = [self wrappedValueForKey:@"sourceAliasData"];
-		if (aliasData)
-		{
-			[self setPrimitiveValue:[BDAlias aliasWithData:aliasData] forKey:@"sourceAlias"];
-		}
-	}
+	NSData *aliasData = [self wrappedValueForKey:@"sourceAliasData"];
+    if (aliasData)
+    {
+        [self setPrimitiveValue:[BDAlias aliasWithData:aliasData] forKey:@"sourceAlias"];
+    }
 }
 
 - (void)willSave
