@@ -342,7 +342,7 @@
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if ([[SVHTMLContext currentContext] isEditable])    // id has already been supplied
+			if (![[SVHTMLContext currentContext] isForPublishing])    // id has already been supplied
 			{
                 [context writeAttribute:@"style" value:graphicalTextStyle];
 			}
