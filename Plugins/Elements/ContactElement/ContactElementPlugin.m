@@ -80,32 +80,22 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 @synthesize subjectType = _subjectType;
 @dynamic fields;
 
-
-
-
-
 enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelection };
 
 #pragma mark -
 #pragma mark Init & Dealloc
 
-+ (void) initialize
++ (NSSet *)keyPathsForValuesAffectingEncodedRecipient
 {
-	NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
-	
-#warning should use keyPathsForValuesAffecting<key>
-
-    [ContactElementPlugin setKeys:
-        [NSArray arrayWithObjects: @"address", nil]
-        triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
-	[ContactElementPlugin setKeys:
-        [NSArray arrayWithObjects: @"subjectType", nil]
-        triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
-	[ContactElementPlugin setKeys:
-        [NSArray arrayWithObjects: @"subjectType", @"subjectText", nil]
-        triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
-	
-	[pool release];
+    return [NSSet setWithObjects:@"address", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingSubjectPrompt
+{
+    return [NSSet setWithObjects:@"subjectType", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingSubjectInputHTML
+{
+    return [NSSet setWithObjects:@"subjectType", @"subjectText", nil];
 }
 
 
@@ -186,6 +176,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 }
 
 + (Class)inspectorViewControllerClass { return [ContactElementInspector class]; }
+
+- (NSString *)nibName { return @"ContactElement"; }
 
 
 #pragma mark -

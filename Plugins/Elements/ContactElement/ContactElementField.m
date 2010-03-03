@@ -45,19 +45,17 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-+ (void)initialize
+
++ (NSSet *)keyPathsForValuesAffectingTabViewIdentifierForFieldType
 {
-	
-	#warning should use keyPathsForValuesAffecting<key>
-	
-	[self setKeys:[NSArray arrayWithObject:@"type"]
-		triggerChangeNotificationsForDependentKey:@"tabViewIdentifierForFieldType"];
-	
-	[self setKeys:[NSArray arrayWithObjects:@"identifier", @"label", nil]
-		triggerChangeNotificationsForDependentKey:@"UILabel"];
-	
-	
+    return [NSSet setWithObject:@"type"];
 }
+
++ (NSSet *)keyPathsForValuesAffectingUILabel
+{
+    return [NSSet setWithObjects:@"identifier", @"label", nil];
+}
+
 
 - (id)initWithIdentifier:(NSString *)identifier
 {

@@ -35,7 +35,6 @@
 //
 
 #import "SandvoxPlugin.h"
-#import "SandvoxPlugin.h"
 
 
 @class ContactElementFieldsArrayController, ContactElementField;
