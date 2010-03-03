@@ -440,7 +440,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                     NSArray *archives = [(KTPage *)page sortedArchivePages];
                     if ([archives count] > 0)
                     {
-                        nextPage = [children objectAtIndex:0];
+                        nextPage = [archives objectAtIndex:0];
                     }
                 }
             }
