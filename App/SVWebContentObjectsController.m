@@ -10,6 +10,7 @@
 
 #import "SVBody.h"
 #import "SVCallout.h"
+#import "SVLogoImage.h"
 #import "KTPage.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
@@ -76,6 +77,10 @@
         if ([[[self sidebarPageletsController] arrangedObjects] containsObject:object])
         {
             [[self sidebarPageletsController] removeObject:object];
+        }
+        else if ([object isKindOfClass:[SVLogoImage class]])
+        {
+            [(SVLogoImage *)object setHidden:[NSNumber numberWithBool:YES]];
         }
         else
         {
