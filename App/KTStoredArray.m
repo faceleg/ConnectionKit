@@ -61,10 +61,8 @@
 	NSMutableArray *array = [NSMutableArray array];
 	
 	NSArray *items = [self items]; // get them ordered
-	unsigned int i;
-	for ( i=0; i<[items count]; i++)
+	for ( id item in items)
 	{
-		id item = [items objectAtIndex:i];
 		id value = [item valueForKey:@"value"];
 		if ( [value isMemberOfClass:[NSData class]] )
 		{

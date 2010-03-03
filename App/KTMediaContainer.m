@@ -41,9 +41,8 @@
 		NSArray *openDocuments = [[NSDocumentController sharedDocumentController] documents];
 		NSMutableArray *matchingDocs = [NSMutableArray array];
 		
-		NSEnumerator *docsEnumerator = [openDocuments objectEnumerator];
 		KTDocument *aDoc;
-		while (aDoc = [docsEnumerator nextObject])
+		for (aDoc in openDocuments)
 		{
 			if ([aDoc isKindOfClass:[KTDocument class]] && [[[aDoc site] siteID] isEqualToString:docID])
 			{
@@ -60,8 +59,7 @@
 		
 		
 		// Search each matching doc for the media
-		docsEnumerator = [matchingDocs objectEnumerator];
-		while (aDoc = [docsEnumerator nextObject])
+		for (aDoc in matchingDocs)
 		{
 			if ([aDoc isKindOfClass:[KTDocument class]])
 			{

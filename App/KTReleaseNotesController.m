@@ -23,9 +23,8 @@
 		// we want to convert this into a simple dicationary.
 	
 	NSMutableDictionary *simpleParameters = [NSMutableDictionary dictionary];
-	NSEnumerator *theEnum = [feedParams objectEnumerator];
 	NSDictionary *oneParamDict;
-	while ((oneParamDict = [theEnum nextObject]))
+	for (oneParamDict in feedParams)
 	{
 		[simpleParameters setObject:[oneParamDict objectForKey:@"value"] forKey:[oneParamDict objectForKey:@"key"]];
 	}	

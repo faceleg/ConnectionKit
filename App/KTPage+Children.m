@@ -131,9 +131,8 @@
 	[self invalidateSortedChildrenCache];
 	
 	// Delete / mark stale the corresponding archive pages if unused now
-	NSEnumerator *pagesEnumerator = [pages objectEnumerator];
 	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
+	for (aPage in pages)
 	{
 		if (![aPage isKindOfClass:[KTPage class]]) continue;
               
@@ -594,9 +593,8 @@
 	
     NSSet *children = [self childItems];
 	
-	NSEnumerator *e = [children objectEnumerator];
 	KTPage *child;
-	while ( child = [e nextObject] )
+	for ( child in children )
 	{
 		[titlesArray addObject:[child titleHTMLString]];
 	}

@@ -196,10 +196,9 @@ TO DO:
     NSToolbarItem *result = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
 
     NSArray *itemsArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
-    NSEnumerator *enumerator = [itemsArray objectEnumerator];
     NSDictionary *itemInfo;
 
-    while ( itemInfo = [enumerator nextObject] ) 
+    for ( itemInfo in itemsArray ) 
 	{
         if ( [[itemInfo valueForKey:@"identifier"] isEqualToString:itemIdentifier] ) 
 		{
@@ -317,10 +316,9 @@ TO DO:
     NSMutableArray *allowedIdentifiers = [NSMutableArray array];
 
     NSArray *itemArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
-    NSEnumerator *enumerator = [itemArray objectEnumerator];
     NSDictionary *itemInfo;
 
-    while ( itemInfo = [enumerator nextObject] ) 
+    for ( itemInfo in itemArray ) 
 	{
         NSString *itemIdentifier = [itemInfo valueForKey:@"identifier"];
         [allowedIdentifiers addObject:itemIdentifier];

@@ -309,9 +309,8 @@
 	NSMutableString *result = [NSMutableString string];
 	[result appendString:@"<?xml version=\"1.0\" encoding=\"UTF-8\"?>\n<urlset xmlns=\"http://www.sitemaps.org/schemas/sitemap/0.9\">\n"];
 	
-    NSEnumerator *enumerator = [array objectEnumerator];
 	NSDictionary *dict;
-    while ((dict = [enumerator nextObject]) != nil)
+    for (dict in array)
 	{
 		[result appendFormat:
          @"<url><loc>%@</loc><lastmod>%@</lastmod><priority>%.02f</priority></url>\n",

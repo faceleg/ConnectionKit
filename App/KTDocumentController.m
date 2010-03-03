@@ -202,7 +202,7 @@
 						
 			NSString *secondary = NSLocalizedString(@"This document appears to have an unknown document model.\n\nPlease contact Karelia Software by sending feedback from the 'Sandvox' menu.",
 												 "error reason: document model version is unknown");
-			[userInfo setObject:NSLocalizedString("Document model error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
+			[userInfo setObject:NSLocalizedString(@"Document model error.", @"brief description of error") forKey:NSLocalizedDescriptionKey];
 			[userInfo setObject:secondary forKey:NSLocalizedRecoverySuggestionErrorKey];
 			[userInfo setObject:requestedPath forKey:NSFilePathErrorKey];
 			

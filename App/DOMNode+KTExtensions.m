@@ -371,9 +371,8 @@
 	}
 	
 	
-	NSEnumerator *divsEnumerator = [divElements objectEnumerator];
 	DOMHTMLDivElement *aDiv;
-	while (aDiv = [divsEnumerator nextObject])
+	for (aDiv in divElements)
 	{
 		if ([[aDiv childNodes] length] != 1 || ![[aDiv firstChild] isKindOfClass:[DOMText class]])
 		{
@@ -478,9 +477,8 @@
 			}
 		}
 	}
-	NSEnumerator *e = [nodesToUnlink objectEnumerator];
 	DOMElement *theElement;
-	while ((theElement = [e nextObject])) {
+	for (theElement in nodesToUnlink) {
 		(void)[theElement unlink];
 	}
 }

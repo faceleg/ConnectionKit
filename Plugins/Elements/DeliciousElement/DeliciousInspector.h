@@ -7,10 +7,14 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SandvoxPlugin.h"
 
 
-@interface DeliciousInspector : NSObject {
+@interface DeliciousInspector : SVInspectorViewController {
 
 }
+
+- (IBAction) openDelicious:(id)sender;
+
 
 @end

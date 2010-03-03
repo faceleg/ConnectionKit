@@ -86,13 +86,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
 
-#pragma mark Document URLs etc.
-
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
-+ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
-
-+ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
-
 
 #pragma mark Media
 
@@ -173,5 +166,12 @@ extern NSString *kKTDocumentWillSaveNotification;
 // Default implementation does nothing, so implement in subclasses to take action, such as passing the message on to other controllers
 @interface NSWindowController (KTDocumentAdditions)
 - (void)persistUIProperties;
+@end
+
+@interface NSDocument (DatastoreAdditions)
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI;
++ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
+
++ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL;
 @end
 

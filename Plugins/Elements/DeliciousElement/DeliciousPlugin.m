@@ -1,6 +1,5 @@
 //
-//  DeliciousPageletDelegate.m
-//  DeliciousPagelet
+//  DeliciousPlugin
 //
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
@@ -50,27 +49,15 @@
 + (Class)inspectorViewControllerClass { return [DeliciousInspector class]; }
 + (NSSet *)plugInKeys
 {
-	return [NSSet setWithObjects:@"________________", nil];
+	return [NSSet setWithObjects:@"deliciousID", @"restrictedTags", @"sortChronologically", @"maxEntries", @"showTags", @"showExtended", @"listStyle", nil];
 }
 
 /*
- Plugin Properties we use:
-	deliciousID
-	restrictedTags
-	sortChronologically
-	maxEntries
-	showTags
-	showExtended
-	listStyle
  
  See: http://delicious.com/help/json
  
  */
 
-- (IBAction) openDelicious:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://delicious.com/"]];
-}
 
 
 @end

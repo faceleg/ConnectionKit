@@ -74,12 +74,11 @@ NSLog(@"%@", aURL);
 		// we are going to copy directly into the app's app support folder, but if the file already
 		// exists there, or in a subfolder of this app support folder, then we won't.
 	
-	NSEnumerator *enumerator = [myURLs objectEnumerator];
 	NSURL *url;
 	NSMutableArray *errorURLs   = [NSMutableArray array];		// queue up BAD copies
 	NSMutableArray *successURLs = [NSMutableArray array];		// queue up GOOD copies.  URLs of *destination* now.
 
-	while ((url = [enumerator nextObject]) != nil)
+	for (url in myURLs)
 	{
 		NSString *urlPath = [url path];
 		NSString *extension = [urlPath pathExtension];
@@ -141,10 +140,9 @@ NSLog(@"%@", aURL);
 
 		}
 		NSMutableString *pluginList = [NSMutableString string];
-		NSEnumerator *successEnum = [successURLs objectEnumerator];
 		NSURL *url;
 
-		while ((url = [successEnum nextObject]) != nil)
+		for (url in successURLs)
 		{
 			[pluginList appendFormat:@"\t%@\n", [[url path] lastPathComponent]];
 		}
@@ -174,10 +172,9 @@ NSLog(@"%@", aURL);
 			
 		}
 		NSMutableString *pluginList = [NSMutableString string];
-		NSEnumerator *errorEnum = [errorURLs objectEnumerator];
 		NSURL *url;
 		
-		while ((url = [errorEnum nextObject]) != nil)
+		for (url in errorURLs)
 		{
 			[pluginList appendFormat:@"\t%@\n", [[url path] lastPathComponent]];
 		}

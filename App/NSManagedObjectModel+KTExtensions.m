@@ -133,9 +133,8 @@
 	
 	NSArray *entities = [self entities];
 	
-	NSEnumerator *e = [entities objectEnumerator];
 	NSEntityDescription *entity;
-	while ( entity = [e nextObject] )
+	for ( entity in entities )
 	{
 		NSLog(@"Entity: %@", [entity name]);
 		NSLog(@"Super Entity: %@", [[entity superentity] name]);

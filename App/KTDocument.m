@@ -106,7 +106,7 @@ NSString *kKTDocumentDidChangeNotification = @"KTDocumentDidChange";
 NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
-@implementation NSDocument (Datastore)
+@implementation NSDocument (DatastoreAdditions)
 
 // These are made category methods so Shared code can work generically. These determine document types and URLs.
 

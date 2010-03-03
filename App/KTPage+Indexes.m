@@ -133,10 +133,8 @@
 	if ( [self isCollection] && (nil != [self index]) )
 	{
 		NSArray *pages = [self pagesInIndex];
-		int i;
-		for ( i=0; i<[pages count]; i++ )
+		for ( KTPage *page in pages )
 		{
-			KTPage *page = [pages objectAtIndex:i];
 			if ( [page wrappedBoolForKey:@"allowComments"] )
 			{
 				result = YES;
@@ -551,9 +549,8 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	NSRange childrenRange = NSMakeRange(0, MIN([allSortedChildren count], [self integerForKey:@"collectionSummaryMaxPages"]));
 	NSArray *sortedChildren = [allSortedChildren subarrayWithRange:childrenRange];
 	
-	NSEnumerator *pagesEnumerator = [sortedChildren objectEnumerator];
 	KTPage *aPage;
-	while (aPage = [pagesEnumerator nextObject])
+	for (aPage in sortedChildren)
 	{
 		[result appendFormat:@"\t<li>%@</li>\n", [aPage titleHTMLString]];
 	}

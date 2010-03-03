@@ -12,4 +12,9 @@
 
 @implementation DeliciousInspector
 
+- (IBAction) openDelicious:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://delicious.com/"]];
+}
+
 @end

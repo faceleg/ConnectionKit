@@ -696,10 +696,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
-				NSEnumerator *e = [hostComponents objectEnumerator];
 				NSString *cur;
 				
-				while (cur = [e nextObject])
+				for (cur in hostComponents)
 				{
 //					if ([cur isEqualToString:account])
 //					{
@@ -750,10 +749,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 				NSString *urlHost = [url host];
 				NSArray *hostComponents = [urlHost componentsSeparatedByString:@"."];
 				NSMutableArray *newHostComponents = [NSMutableArray array];
-				NSEnumerator *e = [hostComponents objectEnumerator];
 				NSString *cur;
 				
-				while (cur = [e nextObject])
+				for (cur in hostComponents)
 				{
 //					if ([cur isEqualToString:account])
 //					{
@@ -1069,10 +1067,9 @@ static NSCharacterSet *sIllegalSubfolderSet;
 
 			NSArray *pathComponents = [path pathComponents];	///[path componentsSeparatedByString:@"/"];
 			NSString *builtupPath = @"";
-			NSEnumerator *pathEnum = [pathComponents objectEnumerator];
 			NSString *curPath;
 			
-			while (curPath = [pathEnum nextObject]) {
+			for (curPath in pathComponents) {
 				//[builtupPath appendFormat:@"%@/", curPath];	/// Old way that resulted in an erroneous trailing slash
 				builtupPath = [builtupPath stringByAppendingPathComponent:curPath];
 				LOG((@"Creating Directory: %@", builtupPath));

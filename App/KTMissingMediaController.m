@@ -195,8 +195,7 @@
 	
 	
 	// Do the migration
-	NSEnumerator *migrationEnumerator = [mediaToMigrate objectEnumerator];
-	while (aMediaFile = [migrationEnumerator nextObject])
+	for (aMediaFile in mediaToMigrate)
 	{
 		NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
 		NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];

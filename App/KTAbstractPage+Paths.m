@@ -207,11 +207,10 @@
     if (indexFileName)
     {
         NSArray *availableExtensions = [self availableFileExtensions];
-        NSEnumerator *extensionsEnumerator = [availableExtensions objectEnumerator];
         NSString *anExtension;
         NSMutableArray *result = [NSMutableArray arrayWithCapacity:[availableExtensions count]];
         
-        while (anExtension = [extensionsEnumerator nextObject])
+        for (anExtension in availableExtensions)
         {
             OBASSERT(anExtension);
             NSString *aFilename = [indexFileName stringByAppendingPathExtension:anExtension];

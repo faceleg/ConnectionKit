@@ -109,9 +109,8 @@
 	
 	// Editing notifications
 	NSSet *textViews = [NSSet setWithObjects:oPreludeTextView, oHeadTextView, oEarlyHeadTextView, oBodyStartTextView, oBodyEndTextView, nil];
-	NSEnumerator *textViewsEnumerator = [textViews objectEnumerator];
 	NSTextView *aTextView;
-	while (aTextView = [textViewsEnumerator nextObject])
+	for (aTextView in textViews)
 	{
 		[[NSNotificationCenter defaultCenter] addObserver:self 
 												 selector:@selector(textViewDidProcessEditing:)

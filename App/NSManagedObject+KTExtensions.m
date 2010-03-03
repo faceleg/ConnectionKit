@@ -39,10 +39,8 @@
 		NSDictionary *attributes = [entity attributesByName]; // key = attribute name
 		NSArray *attributeNames = [[attributes allKeys] copy];
 		
-		unsigned int i;
-		for ( i=0; i<[attributeNames count]; i++ )
+		for ( NSString *name in attributeNames )
 		{
-			NSString *name = [attributeNames objectAtIndex:i];
 			if ( [name isEqualToString:anAttributeName] )
 			{
 				result = YES;
@@ -67,10 +65,8 @@
 		NSDictionary *relationships = [entity relationshipsByName]; // key = relationship name
 		NSArray *relationshipNames = [[relationships allKeys] copy];
 		
-		unsigned int i;
-		for ( i=0 ; i<[relationshipNames count]; i++ )
+		for ( NSString *name in relationshipNames )
 		{
-			NSString *name = [relationshipNames objectAtIndex:i];
 			if ( [name isEqualToString:aRelationshipName] )
 			{
 				result = YES;

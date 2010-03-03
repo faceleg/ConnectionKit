@@ -338,10 +338,9 @@
     
 	// Search for an existing upload
 	NSSet *uploads = [self valueForKey:@"uploads"];
-	NSEnumerator *uploadsEnumerator = [uploads objectEnumerator];
 	KTMediaFileUpload *result;
 	
-	while (result = [uploadsEnumerator nextObject])
+	for (result in uploads)
 	{
 		if ([predicate evaluateWithObject:result])
 		{

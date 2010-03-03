@@ -199,10 +199,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 							NSLocalizedString(@"Designs", @"plugin type for 'show:' popup menu"), @"Design",
 							nil];
 	NSMutableArray *result = [NSMutableArray array];
-	NSEnumerator *enumerator = [types objectEnumerator];
 	NSString *aTypeString;
 	
-	while ((aTypeString = [enumerator nextObject]) != nil)
+	for (aTypeString in types)
 	{
 		NSString *newTypeString = [lookup objectForKey:aTypeString];
 		if (!newTypeString)

@@ -161,10 +161,8 @@ const CGFloat kMyViewCornerRadius = 6.0;
 	float colorHeight = (65.0/nColors);
 	float currentY = 1.0;						// starting Y coordinate
 	
-	NSUInteger i, count = [colors count];
-	for ( i = 0; i < count; i++ )
+	for ( NSColor *color in colors )
 	{
-		NSColor *color = [colors objectAtIndex:i];
 		[color set];
 		NSRect leftRect  = NSMakeRect(0,   currentY, 2, colorHeight-1);
 		NSRect rightRect = NSMakeRect(106, currentY, 2, colorHeight-1);

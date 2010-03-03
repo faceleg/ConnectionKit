@@ -185,9 +185,8 @@ NSString *KTMediaLogDomain = @"Media";
 	NSArray *mediaFilesForDeletion = [self mediaFilesForDeletion];
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Deleting %u unwanted MediaFile(s)", [mediaFilesForDeletion count]);
 	
-	NSEnumerator *mediaFilesEnumerator = [mediaFilesForDeletion objectEnumerator];
 	KTMediaFile *aMediaFile;
-	while (aMediaFile = [mediaFilesEnumerator nextObject])
+	for (aMediaFile in mediaFilesForDeletion)
 	{
 		[[self managedObjectContext] deleteObject:aMediaFile];
 	}
@@ -213,10 +212,9 @@ NSString *KTMediaLogDomain = @"Media";
     NSError *error = nil;
 	NSArray *allMedia = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"MediaContainer" predicate:predicate error:&error];
 	
-    NSEnumerator *mediaEnumerator = [allMedia objectEnumerator];
 	NSManagedObject *aMedia;
 	NSMutableSet *unrequiredMedia = [[NSMutableSet alloc] init];
-	while (aMedia = [mediaEnumerator nextObject])
+	for (aMedia in allMedia)
 	{
 		if (![requiredMediaIDs containsObject:[aMedia valueForKey:@"identifier"]])
 		{
@@ -226,8 +224,7 @@ NSString *KTMediaLogDomain = @"Media";
 	
 	// Delete those unrequired media IDs
 	KTLog(KTMediaLogDomain, KTLogDebug, @"Removing %u unneeded MediaContainer(s)", [unrequiredMedia count]);
-	NSEnumerator *unrequiredMediaEnumerator = [unrequiredMedia objectEnumerator];
-	while (aMedia = [unrequiredMediaEnumerator nextObject])
+	for (aMedia in unrequiredMedia)
 	{
 		[[self managedObjectContext] deleteObject:aMedia];
 	}
@@ -272,9 +269,8 @@ NSString *KTMediaLogDomain = @"Media";
 	}
 	
 	// Run through the objects asking for their media
-	NSEnumerator *enumerator = [allObjects objectEnumerator];
 	id anObject;
-	while (anObject = [enumerator nextObject])
+	for (anObject in allObjects)
 	{
 		[result unionSet:[anObject performSelector:selector]];
 	}

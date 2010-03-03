@@ -51,10 +51,9 @@
 - (NSIndexSet *)rowsForItems:(NSArray *)items;
 {
 	NSMutableIndexSet *buffer = [[NSMutableIndexSet alloc] init];
-	NSEnumerator *itemsEnumerator = [items objectEnumerator];
 	id anItem;		int aRow;
 	
-	while (anItem = [itemsEnumerator nextObject])
+	for (anItem in items)
 	{
 		aRow = [self rowForItem:anItem];
 		[buffer addIndex:aRow];
@@ -137,9 +136,8 @@
 {
     NSMutableIndexSet *indexSet = [NSMutableIndexSet indexSet];
     
-    NSEnumerator *e = [theItems objectEnumerator];
     id item;
-    while (item = [e nextObject])
+    for (item in theItems)
     {
         int row = [self rowForItem:item];
 		

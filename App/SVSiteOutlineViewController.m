@@ -403,8 +403,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[correctedSelection minusSet:removedPages];
 		
 	NSSet *removedSelectedPages = [removedPages setByIntersectingObjectsFromArray:oldSelection];
-	NSEnumerator *pagesEnumerator = [removedSelectedPages objectEnumerator];	KTPage *aRemovedPage;
-	while (aRemovedPage = [pagesEnumerator nextObject])
+		KTPage *aRemovedPage;
+	for (aRemovedPage in removedSelectedPages)
 	{
 		unsigned originalIndex = [oldSortedChildren indexOfObjectIdenticalTo:aRemovedPage];	// Where possible, select the
 		KTPage *replacementPage = [newSortedChildren objectClosestToIndex:originalIndex];	// next sibling, but fallback to
@@ -1287,10 +1287,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 	else
 	{
-		int i;
-		for ( i=0; i<[archivedPages count]; i++)
+		for ( NSDictionary *pageInfo in archivedPages)
 		{
-			NSDictionary *pageInfo = [archivedPages objectAtIndex:i];
 			if ([pageInfo boolForKey:@"isCollection"]) 
 			{
 				displayProgressIndicator = YES;
@@ -1315,9 +1313,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	i = 1;			
 	
 	NSMutableArray *droppedPages = [NSMutableArray array];
-	NSEnumerator *e = [archivedPages objectEnumerator];
 	NSDictionary *rep;
-	while (rep = [e nextObject])
+	for (rep in archivedPages)
 	{
 		if (progressPanel)
 		{

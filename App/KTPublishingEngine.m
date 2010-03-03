@@ -571,9 +571,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSMutableSet *resources = [[NSMutableSet alloc] init];
         
         
-        NSEnumerator *resourcesEnumerator = [resources objectEnumerator];
         NSString *aResourcePath;
-        while (aResourcePath = [resourcesEnumerator nextObject])
+        for (aResourcePath in resources)
         {
             [self addResourceFile:[NSURL fileURLWithPath:aResourcePath]];
         }
@@ -841,9 +840,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSArray *graphicalTextIDs = [[_graphicalTextBlocks allKeys] sortedArrayUsingSelector:@selector(compare:)];
     NSArray *graphicalTextBlocks = [_graphicalTextBlocks objectsForKeys:graphicalTextIDs notFoundMarker:[NSNull null]];
     
-    NSEnumerator *graphicalTextBlocksEnumerator = [graphicalTextBlocks objectEnumerator];
     SVHTMLTextBlock *aTextBlock;
-    while (aTextBlock = [graphicalTextBlocksEnumerator nextObject])
+    for (aTextBlock in graphicalTextBlocks)
     {
         KTMediaFile *aGraphicalText = [[aTextBlock graphicalTextMedia] file];
         
@@ -983,9 +981,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (isDirectory)
         {
             NSArray *subpaths = [[NSFileManager defaultManager] directoryContentsAtPath:[localURL path]];
-            NSEnumerator *subpathsEnumerator = [subpaths objectEnumerator];
             NSString *aSubPath;
-            while (aSubPath = [subpathsEnumerator nextObject])
+            for (aSubPath in subpaths)
             {
                 NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
                 NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];

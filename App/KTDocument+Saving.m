@@ -641,9 +641,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSMutableSet *pathsToCopy = [NSMutableSet setWithCapacity:[mediaFiles count]];
 	NSMutableSet *pathsToMove = [NSMutableSet setWithCapacity:[mediaFiles count]];
 	
-	NSEnumerator *mediaFilesEnumerator = [mediaFiles objectEnumerator];
 	id aMediaFile;
-	while (aMediaFile = [mediaFilesEnumerator nextObject])
+	for (aMediaFile in mediaFiles)
 	{
 		NSString *path = [aMediaFile currentPath];
 		if ([aMediaFile hasTemporaryObjectID])
@@ -786,10 +785,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             
 			//  kMDItemKeywords (keywords of all pages)
 			NSMutableSet *keySet = [NSMutableSet set];
-            NSUInteger i;
-			for (i=0; i<[pages count]; i++)
+			for (id loopItem in pages)
 			{
-				[keySet addObjectsFromArray:[[pages objectAtIndex:i] keywords]];
+				[keySet addObjectsFromArray:[loopItem keywords]];
 			}
             
 			if ( (nil == keySet) || ([keySet count] == 0) )

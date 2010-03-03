@@ -1,6 +1,5 @@
 //
-//  DeliciousPageletDelegate.h
-//  DeliciousPagelet
+//  DeliciousPlugin
 //
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
@@ -42,6 +41,5 @@
 
 }
 
-- (IBAction) openDelicious:(id)sender;
 
 @end

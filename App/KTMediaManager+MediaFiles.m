@@ -308,9 +308,8 @@
 	NSArray *similarMedia = [self inDocumentMediaFilesWithDigest:[KTMediaFile mediaFileDigestFromContentsOfFile:path]];
 	if ([similarMedia count] > 0)
 	{
-		NSEnumerator *matchEnumerator = [similarMedia objectEnumerator];
 		KTMediaFile *aMediaFile;
-		while (aMediaFile = [matchEnumerator nextObject])
+		for (aMediaFile in similarMedia)
 		{
 			if ([[NSFileManager defaultManager] contentsEqualAtPath:path andPath:[aMediaFile currentPath]])
 			{
@@ -357,10 +356,9 @@
     
     
     NSArray *externalMediaFiles = [self externalMediaFiles];
-	NSEnumerator *mediaFileEnumerator = [externalMediaFiles objectEnumerator];
 	KTMediaFile *aMediaFile;
 	
-	while (aMediaFile = [mediaFileEnumerator nextObject])
+	for (aMediaFile in externalMediaFiles)
 	{
 		if (![self mediaFileShouldBeExternal:[aMediaFile currentPath]])
 		{

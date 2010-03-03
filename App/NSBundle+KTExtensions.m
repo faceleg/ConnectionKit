@@ -16,22 +16,13 @@
 
 /*	Designs can contain their own specialised fonts. This method loads any found fonts ready for application use.
  
-	If we are *running* 10.4 then use the old-fashioned way.  But if we are running 10.5, the 
-	bundle key ATSApplicationFontsPath should be used instead.
+	I've updated this to use the newer 10.5 method ATSFontActivateFromFileReference
  
-	We were having hellish keychain issues when using the 10.4 legacy method, and we need that since
-	the new 10.5 method doesn't exist if you are targetting 10.4 or 10.5.
- 
-	This is NOT generic Karelia code (any more) and when we start targetting 10.5+ then we should
-	get rid of this method altogether.
- 
+	but the notes here said that if running 10.5, the bundle key ATSApplicationFontsPath should be used.
+  
  */
 
-#if MAC_OS_X_VERSION_MIN_REQUIRED > MAC_OS_X_VERSION_10_4
-
-#warning It is time to completel overhaul this to use the Leopard version, not do this hack.
-
-#endif
+#warning Maybe use ATSApplicationFontsPath bundle key
 
 - (void)loadLocalFonts
 {
@@ -44,23 +35,9 @@
 			FSRef fsRef;
 			(void)CFURLGetFSRef((CFURLRef)fontsURL, &fsRef);
 			
-			OSStatus error = -8675309;	// seed with a bogus error, in case we can't get it really filled
+			OSStatus error = ATSFontActivateFromFileReference(&fsRef, kATSFontContextLocal, kATSFontFormatUnspecified, 
+													 NULL, kATSOptionFlagsProcessSubdirectories, NULL);
 
-// 10.5 version if we weren't using ATSApplicationFontsPath
-//				error = ATSFontActivateFromFileReference(&fsRef, kATSFontContextLocal, kATSFontFormatUnspecified, 
-//													 NULL, kATSOptionFlagsProcessSubdirectories, NULL);
-
-			FSSpec fsSpec;
-			if (FSGetCatalogInfo(&fsRef, kFSCatInfoNone, NULL, NULL, &fsSpec, NULL) == noErr)
-			{
-				error = ATSFontActivateFromFileSpecification(&fsSpec,
-															 kATSFontContextLocal,
-															 kATSFontFormatUnspecified,
-															 NULL,
-															 kATSOptionFlagsProcessSubdirectories,
-															 NULL);
-			}
-	
 			if (noErr != error) NSLog(@"Error %s activating fonts in bundle %@", GetMacOSStatusErrorString(error), [[self bundlePath] lastPathComponent]);
 		}
 	}

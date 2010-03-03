@@ -98,9 +98,8 @@
     {
         NSMutableSet *objects = [NSMutableSet setWithCapacity:[allInstances count]];
         
-        NSEnumerator *e = [allInstances objectEnumerator];
         NSManagedObject *instance;
-        while ( instance  = [e nextObject] )
+        for ( instance in allInstances )
         {
 			id object = [instance valueForKey:aColumnName];
 			if (object)

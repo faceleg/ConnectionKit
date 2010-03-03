@@ -187,10 +187,10 @@
 	// First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPlugins = [NSMutableDictionary dictionary];
 	
-	NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
+		// go through each plugin.
     KTAbstractHTMLPlugin *plugin;
 	
-	while (plugin = [enumerator nextObject])
+	for (plugin in plugins)
 	{
 		int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
 		id priorityID = [plugin pluginPropertyForKey:@"KTPluginPriority"];

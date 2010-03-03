@@ -122,9 +122,8 @@
 	// figure out what documents, if any, we can and can't find
 	if ( openLastOpened && (nil != lastOpenedPaths) && ([lastOpenedPaths count] > 0) )
 	{
-		NSEnumerator *enumerator = [lastOpenedPaths objectEnumerator];
 		id aliasData;
-		while ( ( aliasData = [enumerator nextObject] ) )
+		for ( aliasData in lastOpenedPaths )
 		{
 			BDAlias *alias = [BDAlias aliasWithData:aliasData];
 			NSString *path = [alias fullPath];
@@ -156,9 +155,8 @@
 		// open whatever used to be open
 		if ( [filesFound count] > 0 )
 		{
-			NSEnumerator *e = [filesFound objectEnumerator];
 			BDAlias *alias;
-			while ( ( alias = [e nextObject] ) )
+			for ( alias in filesFound )
 			{
 				NSString *path = [alias fullPath];
 				

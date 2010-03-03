@@ -58,10 +58,9 @@ TO DO:
     }
 
     NSMutableArray *filteredObjects = [NSMutableArray arrayWithCapacity:[objects count]];
-    NSEnumerator *objectsEnumerator = [objects objectEnumerator];
     id item;
 
-    while (item = [objectsEnumerator nextObject])
+    for (item in objects)
 	{
 		NSString *name = [item valueForKeyPath:@"provider"];
 		NSString *area = [item valueForKeyPath:@"regions"];

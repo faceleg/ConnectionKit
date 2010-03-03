@@ -166,9 +166,8 @@ NSString *kKTCopyPageletsPasteboard = @"KTCopyPageletsPasteboard";
 {
 	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[archive count]];
 	
-    NSEnumerator *archivedPagesEnumerator = [archive objectEnumerator];
 	NSDictionary *anArchivedPage;
-	while (anArchivedPage = [archivedPagesEnumerator nextObject])
+	for (anArchivedPage in archive)
 	{
 		KTPage *page = [KTPage pageWithPasteboardRepresentation:anArchivedPage parent:aParent];
 		if (page)
