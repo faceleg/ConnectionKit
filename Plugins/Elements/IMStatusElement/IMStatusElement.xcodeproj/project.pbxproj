@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */; };
-		3C42E4250D64FB4B004F35FD /* IMStatusPageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4210D64FB4B004F35FD /* IMStatusPageletDelegate.m */; };
 		3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E4230D64FB4B004F35FD /* IMStatusService.m */; };
 		3C42E42F0D64FB59004F35FD /* iChat.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4290D64FB59004F35FD /* iChat.icns */; };
 		3C42E4300D64FB59004F35FD /* IMStatusPagelet.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42A0D64FB59004F35FD /* IMStatusPagelet.html */; };
@@ -16,12 +15,14 @@
 		3C42E4320D64FB59004F35FD /* online.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42C0D64FB59004F35FD /* online.png */; };
 		3C42E4330D64FB59004F35FD /* online_skype.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42D0D64FB59004F35FD /* online_skype.png */; };
 		3C42E4340D64FB59004F35FD /* online_yahoo.gif in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E42E0D64FB59004F35FD /* online_yahoo.gif */; };
-		3C42E43A0D64FB65004F35FD /* IMStatusPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4350D64FB65004F35FD /* IMStatusPagelet.nib */; };
 		3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4380D64FB65004F35FD /* Localizable.strings */; };
 		3C42E4550D64FBCC004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4540D64FBCC004F35FD /* License.rtf */; };
 		3C42E4780D64FCD1004F35FD /* AddressBook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C42E4770D64FCD1004F35FD /* AddressBook.framework */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
+		CEC23E66113EE5AF0022DA7D /* IMStatusPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC23E65113EE5AF0022DA7D /* IMStatusPlugin.m */; };
+		CEC23E6B113EE5C20022DA7D /* IMStatusInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC23E6A113EE5C20022DA7D /* IMStatusInspector.m */; };
+		CEC23E6F113EE7770022DA7D /* IMStatusPagelet.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC23E6D113EE7770022DA7D /* IMStatusPagelet.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,8 +32,6 @@
 		32DBCF630370AF2F00C91783 /* IMStatusElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusElement_Prefix.pch; sourceTree = "<group>"; };
 		3C42E41E0D64FB4B004F35FD /* ABPerson+IMStatus.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "ABPerson+IMStatus.h"; sourceTree = "<group>"; };
 		3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "ABPerson+IMStatus.m"; sourceTree = "<group>"; };
-		3C42E4200D64FB4B004F35FD /* IMStatusPageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusPageletDelegate.h; sourceTree = "<group>"; };
-		3C42E4210D64FB4B004F35FD /* IMStatusPageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusPageletDelegate.m; sourceTree = "<group>"; };
 		3C42E4220D64FB4B004F35FD /* IMStatusService.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusService.h; sourceTree = "<group>"; };
 		3C42E4230D64FB4B004F35FD /* IMStatusService.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusService.m; sourceTree = "<group>"; };
 		3C42E4290D64FB59004F35FD /* iChat.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = iChat.icns; sourceTree = "<group>"; };
@@ -41,28 +40,20 @@
 		3C42E42C0D64FB59004F35FD /* online.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online.png; sourceTree = "<group>"; };
 		3C42E42D0D64FB59004F35FD /* online_skype.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = online_skype.png; sourceTree = "<group>"; };
 		3C42E42E0D64FB59004F35FD /* online_yahoo.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = online_yahoo.gif; sourceTree = "<group>"; };
-		3C42E4360D64FB65004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E4370D64FB65004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4390D64FB65004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E43D0D64FB71004F35FD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E43E0D64FB71004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E43F0D64FB71004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E4400D64FB79004F35FD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E4410D64FB79004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4420D64FB79004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E4430D64FB84004F35FD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E4440D64FB84004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4450D64FB84004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E4460D64FB8E004F35FD /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E4470D64FB8E004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4480D64FB8E004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E4490D64FB9D004F35FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E44A0D64FB9D004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E44B0D64FB9D004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E44C0D64FBA6004F35FD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E44D0D64FBA6004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E44E0D64FBA6004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		3C42E44F0D64FBB1004F35FD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/IMStatusPagelet.nib; sourceTree = "<group>"; };
 		3C42E4500D64FBB1004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4510D64FBB1004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C42E4540D64FBCC004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
@@ -71,6 +62,11 @@
 		3C42E4770D64FCD1004F35FD /* AddressBook.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AddressBook.framework; path = /System/Library/Frameworks/AddressBook.framework; sourceTree = "<absolute>"; };
 		8D5B49B6048680CD000E48DA /* IMStatus.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = IMStatus.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		CEC23E64113EE5AF0022DA7D /* IMStatusPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusPlugin.h; sourceTree = "<group>"; };
+		CEC23E65113EE5AF0022DA7D /* IMStatusPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusPlugin.m; sourceTree = "<group>"; };
+		CEC23E69113EE5C20022DA7D /* IMStatusInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = IMStatusInspector.h; sourceTree = "<group>"; };
+		CEC23E6A113EE5C20022DA7D /* IMStatusInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = IMStatusInspector.m; sourceTree = "<group>"; };
+		CEC23E6E113EE7770022DA7D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/IMStatusPagelet.xib; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -113,7 +109,7 @@
 			isa = PBXGroup;
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C42E4350D64FB65004F35FD /* IMStatusPagelet.nib */,
+				CEC23E6D113EE7770022DA7D /* IMStatusPagelet.xib */,
 				3C42E42A0D64FB59004F35FD /* IMStatusPagelet.html */,
 				3C42E4290D64FB59004F35FD /* iChat.icns */,
 				3C42E42B0D64FB59004F35FD /* offline.png */,
@@ -132,10 +128,12 @@
 			children = (
 				3C42E41E0D64FB4B004F35FD /* ABPerson+IMStatus.h */,
 				3C42E41F0D64FB4B004F35FD /* ABPerson+IMStatus.m */,
-				3C42E4200D64FB4B004F35FD /* IMStatusPageletDelegate.h */,
-				3C42E4210D64FB4B004F35FD /* IMStatusPageletDelegate.m */,
 				3C42E4220D64FB4B004F35FD /* IMStatusService.h */,
 				3C42E4230D64FB4B004F35FD /* IMStatusService.m */,
+				CEC23E64113EE5AF0022DA7D /* IMStatusPlugin.h */,
+				CEC23E65113EE5AF0022DA7D /* IMStatusPlugin.m */,
+				CEC23E69113EE5C20022DA7D /* IMStatusInspector.h */,
+				CEC23E6A113EE5C20022DA7D /* IMStatusInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -249,9 +247,9 @@
 				3C42E4320D64FB59004F35FD /* online.png in Resources */,
 				3C42E4330D64FB59004F35FD /* online_skype.png in Resources */,
 				3C42E4340D64FB59004F35FD /* online_yahoo.gif in Resources */,
-				3C42E43A0D64FB65004F35FD /* IMStatusPagelet.nib in Resources */,
 				3C42E43B0D64FB65004F35FD /* Localizable.strings in Resources */,
 				3C42E4550D64FBCC004F35FD /* License.rtf in Resources */,
+				CEC23E6F113EE7770022DA7D /* IMStatusPagelet.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -281,8 +279,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C42E4240D64FB4B004F35FD /* ABPerson+IMStatus.m in Sources */,
-				3C42E4250D64FB4B004F35FD /* IMStatusPageletDelegate.m in Sources */,
 				3C42E4260D64FB4B004F35FD /* IMStatusService.m in Sources */,
+				CEC23E66113EE5AF0022DA7D /* IMStatusPlugin.m in Sources */,
+				CEC23E6B113EE5C20022DA7D /* IMStatusInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -304,21 +303,6 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C42E4350D64FB65004F35FD /* IMStatusPagelet.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C42E4360D64FB65004F35FD /* en */,
-				3C42E43D0D64FB71004F35FD /* da */,
-				3C42E4400D64FB79004F35FD /* de */,
-				3C42E4430D64FB84004F35FD /* fr */,
-				3C42E4460D64FB8E004F35FD /* it */,
-				3C42E4490D64FB9D004F35FD /* ja */,
-				3C42E44C0D64FBA6004F35FD /* zh_CN */,
-				3C42E44F0D64FBB1004F35FD /* zh_TW */,
-			);
-			name = IMStatusPagelet.nib;
-			sourceTree = "<group>";
-		};
 		3C42E4380D64FB65004F35FD /* Localizable.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -332,6 +316,14 @@
 				3C42E4510D64FBB1004F35FD /* zh_TW */,
 			);
 			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+		CEC23E6D113EE7770022DA7D /* IMStatusPagelet.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CEC23E6E113EE7770022DA7D /* en */,
+			);
+			name = IMStatusPagelet.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
