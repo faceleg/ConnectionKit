@@ -942,8 +942,6 @@
 		CE01A8260EAFD63600BDF264 /* KSWebViewWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */; };
 		CE01A8270EAFD63600BDF264 /* WebView+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */; };
 		CE01A8280EAFD63600BDF264 /* WebView+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */; };
-		CE01A82B0EAFD65E00BDF264 /* help.mini.png in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8290EAFD65E00BDF264 /* help.mini.png */; };
-		CE01A82C0EAFD65E00BDF264 /* help.small.png in Resources */ = {isa = PBXBuildFile; fileRef = CE01A82A0EAFD65E00BDF264 /* help.small.png */; };
 		CE01A9500EAFDF2A00BDF264 /* KSPDFWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E40EAFDF2900BDF264 /* KSPDFWindow.nib */; };
 		CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E60EAFDF2900BDF264 /* KSRTFDWindow.nib */; };
 		CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */ = {isa = PBXBuildFile; fileRef = CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */; };
@@ -2538,8 +2536,6 @@
 		CE01A7240EAFD63600BDF264 /* KSWebViewWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebViewWindowController.m; sourceTree = "<group>"; };
 		CE01A7250EAFD63600BDF264 /* WebView+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "WebView+Karelia.h"; sourceTree = "<group>"; };
 		CE01A7260EAFD63600BDF264 /* WebView+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WebView+Karelia.m"; sourceTree = "<group>"; };
-		CE01A8290EAFD65E00BDF264 /* help.mini.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.mini.png; sourceTree = "<group>"; };
-		CE01A82A0EAFD65E00BDF264 /* help.small.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = help.small.png; sourceTree = "<group>"; };
 		CE01A8E40EAFDF2900BDF264 /* KSPDFWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSPDFWindow.nib; sourceTree = "<group>"; };
 		CE01A8E60EAFDF2900BDF264 /* KSRTFDWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSRTFDWindow.nib; sourceTree = "<group>"; };
 		CE01A8E70EAFDF2900BDF264 /* KSWebViewWindow.nib */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; path = KSWebViewWindow.nib; sourceTree = "<group>"; };
@@ -4838,8 +4834,6 @@
 			isa = PBXGroup;
 			children = (
 				CE9B4B3E0F5E0C650052134C /* MiniProgressGradient.png */,
-				CE01A8290EAFD65E00BDF264 /* help.mini.png */,
-				CE01A82A0EAFD65E00BDF264 /* help.small.png */,
 			);
 			name = Graphics;
 			path = ../../Shared/Graphics;
@@ -5994,8 +5988,6 @@
 				CEBCFEFE0DB909E4001BF0DF /* arrow_grey_up.pdf in Resources */,
 				277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */,
 				3C382D610E98170600113137 /* dsa_pub.pem in Resources */,
-				CE01A82B0EAFD65E00BDF264 /* help.mini.png in Resources */,
-				CE01A82C0EAFD65E00BDF264 /* help.small.png in Resources */,
 				CE01A9500EAFDF2A00BDF264 /* KSPDFWindow.nib in Resources */,
 				CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */,
 				CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */,

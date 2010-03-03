@@ -106,6 +106,59 @@ NSString *kKTDocumentDidChangeNotification = @"KTDocumentDidChange";
 NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
+@implementation NSDocument (Datastore)
+
+// These are made category methods so Shared code can work generically. These determine document types and URLs.
+
+/*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
+ *	You can pass in nil to use the default UTI for new documents.
+ */
++ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI
+{
+	OBPRECONDITION(inURL);
+	
+	NSURL *result = nil;
+	
+	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
+	{
+		result = [inURL URLByAppendingPathComponent:@"datastore" isDirectory:NO];
+	}
+	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
+	{
+		result = inURL;
+	}
+	else
+	{
+		OBASSERT_NOT_REACHED("Unknown document UTI");
+	}
+	
+	
+	return result;
+}
+
++ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
+{
+    OBPRECONDITION(datastoreURL);
+    OBPRECONDITION([[datastoreURL lastPathComponent] isEqualToString:@"datastore"]);
+    
+    NSURL *result = [datastoreURL URLByDeletingLastPathComponent];
+    return result;
+}
+
++ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL
+{
+	OBASSERT(inURL);
+	
+	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
+	
+	OBPOSTCONDITION(result);
+	return result;
+}
+
+@end
+
+
+
 @interface KTDocument ()
 
 - (KTPage *)makeRootPage;
@@ -596,55 +649,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 /*  Saving a document is somewhat complicated, so it's implemented in a dedicated category:
  *  KTDocument+Saving.m
  */
-
-#pragma mark -
-#pragma mark Document paths
-
-/*	Returns the URL to the primary document persistent store. This differs dependent on the document UTI.
- *	You can pass in nil to use the default UTI for new documents.
- */
-+ (NSURL *)datastoreURLForDocumentURL:(NSURL *)inURL type:(NSString *)documentUTI
-{
-	OBPRECONDITION(inURL);
-	
-	NSURL *result = nil;
-	
-	
-	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
-	{
-		result = [inURL URLByAppendingPathComponent:@"datastore" isDirectory:NO];
-	}
-	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
-	{
-		result = inURL;
-	}
-	else
-	{
-		OBASSERT_NOT_REACHED("Unknown document UTI");
-	}
-	
-	
-	return result;
-}
-
-+ (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
-{
-    OBPRECONDITION(datastoreURL);
-    OBPRECONDITION([[datastoreURL lastPathComponent] isEqualToString:@"datastore"]);
-    
-    NSURL *result = [datastoreURL URLByDeletingLastPathComponent];
-    return result;
-}
-
-+ (NSURL *)quickLookURLForDocumentURL:(NSURL *)inURL
-{
-	OBASSERT(inURL);
-	
-	NSURL *result = [inURL URLByAppendingPathComponent:@"QuickLook" isDirectory:YES];
-	
-	OBPOSTCONDITION(result);
-	return result;
-}
 
 #pragma mark -
 #pragma mark Controller Chain
