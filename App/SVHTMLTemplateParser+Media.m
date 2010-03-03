@@ -67,6 +67,9 @@
 
 - (NSString *)info:(NSString *)infoString forMedia:(KTMediaContainer *)media scalingProperties:(NSDictionary *)scalingProperties
 {
+    return @"";
+    
+    
 	OBPRECONDITION(infoString);
 	OBPRECONDITION(media);
 	

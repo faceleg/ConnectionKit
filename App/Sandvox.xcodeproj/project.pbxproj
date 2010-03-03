@@ -195,6 +195,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
+		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
 		2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */; };
 		2709BC110D7C1C89003A1A37 /* KTArchivePageTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */; };
 		270ABF9C0D76E85500C80911 /* KTAbstractPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 270ABF9A0D76E85500C80911 /* KTAbstractPage.h */; settings = {ATTRIBUTES = (); }; };
@@ -1655,6 +1657,8 @@
 
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
+		27080FBD113DD9C900E66F92 /* SVLogoImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLogoImage.m; sourceTree = "<group>"; };
 		2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageMainContentTemplate.html; sourceTree = "<group>"; };
 		2709BC100D7C1C89003A1A37 /* KTArchivePageTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTArchivePageTemplate.html; sourceTree = "<group>"; };
 		270ABF9A0D76E85500C80911 /* KTAbstractPage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractPage.h; sourceTree = "<group>"; };
@@ -4219,6 +4223,8 @@
 				27C064C010825F4800795D66 /* SVGraphic.m */,
 				277E4E8611104CF4005AF346 /* SVImage.h */,
 				277E4E8711104CF4005AF346 /* SVImage.m */,
+				27080FBC113DD9C900E66F92 /* SVLogoImage.h */,
+				27080FBD113DD9C900E66F92 /* SVLogoImage.m */,
 			);
 			name = Pagelets;
 			sourceTree = "<group>";
@@ -5370,6 +5376,7 @@
 				277E72F7113416A20081389F /* KSHTMLWriter.h in Headers */,
 				270F2BB21136B17D0090143E /* KSHTMLOutputStream+DOM.h in Headers */,
 				27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */,
+				27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6772,6 +6779,7 @@
 				277E72F9113416A20081389F /* KSHTMLWriter.m in Sources */,
 				270F2BB31136B17D0090143E /* KSHTMLOutputStream+DOM.m in Sources */,
 				27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */,
+				27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

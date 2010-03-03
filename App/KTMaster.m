@@ -37,13 +37,19 @@
 
 
 @interface KTMaster ()
+
+@property(nonatomic, retain, readwrite) SVImage *logo;
+
 - (KTMediaManager *)mediaManager;
+
 @end
+
+
+#pragma mark -
 
 
 @implementation KTMaster
 
-#pragma mark -
 #pragma mark Initialization
 
 - (void)awakeFromInsert
@@ -115,6 +121,11 @@
     box = [NSEntityDescription insertNewObjectForEntityForName:@"Footer" inManagedObjectContext:[self managedObjectContext]];
     [box setTextHTMLString:[self defaultCopyrightHTML]];
     [self setFooter:box];
+    
+    
+    // Logo
+    SVImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo" inManagedObjectContext:[self managedObjectContext]];
+    [self setLogo:logo];
 }
 
 - (void)awakeFromFetch
@@ -336,46 +347,10 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Logo
 
-- (KTMediaContainer *)logoImage
-{
-	[self willAccessValueForKey:@"logoImage"];
-	KTMediaContainer *result = [self primitiveValueForKey:@"logoImage"];
-	[self didAccessValueForKey:@"logoImage"];
-	
-	// The media may not have been fetched from the store yet. If so, do it!
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"logoImageMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"logoImage"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"logoImage"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
-}
+@dynamic logo;
 
-- (void)setLogoImage:(KTMediaContainer *)logo
-{
-	[self willChangeValueForKey:@"logoImage"];
-	[self setPrimitiveValue:logo forKey:@"logoImage"];
-	[self setValue:[logo identifier] forKey:@"logoImageMediaIdentifier"];
-	[self didChangeValueForKey:@"logoImage"];
-}
-
-#pragma mark -
 #pragma mark Favicon
 
 @dynamic faviconMedia;
@@ -446,7 +421,6 @@
 	NSMutableSet *result = [NSMutableSet set];
 	
 	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
-	[result addObjectIgnoringNil:[self valueForKey:@"logoImageMediaIdentifier"]];
 	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
 	
 	return result;

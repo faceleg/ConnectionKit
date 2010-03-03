@@ -41,8 +41,6 @@
     {
         [self setFileType:(NSString *)kUTTypePNG];
     }
-    
-    [self setCompressionFactor:[[NSUserDefaults standardUserDefaults] objectForKey:kSVPreferredImageCompressionFactorKey]];
 }
 
 @dynamic media;
