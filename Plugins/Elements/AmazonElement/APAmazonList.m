@@ -272,10 +272,9 @@
 	BOOL result = YES;
 	
 	NSArray *listLookups = [self listLookupOperations];
-	NSEnumerator *enumerator = [listLookups objectEnumerator];
 	AmazonListLookup *lookupOp;
 	
-	while (lookupOp = [enumerator nextObject])
+	for (lookupOp in listLookups)
 	{
 		if (![lookupOp dataHasLoaded]) {
 			result = NO;
@@ -333,10 +332,9 @@
 	NSMutableArray *loadingProducts = [self loadingProducts];
 	
 	// Run through each Amazon item
-	NSEnumerator *enumerator = [listItems objectEnumerator];
 	AmazonItem *item;
 	
-	while (item = [enumerator nextObject])
+	for (item in listItems)
 	{
 		// Create an equivalent APAmazonProduct from the item, but only if it has an ASIN
 		if ([item amazonID])

@@ -73,10 +73,9 @@
 {
 	NSMutableArray *result = [NSMutableArray arrayWithCapacity:1];
 	
-	NSEnumerator *enumerator = [services objectEnumerator];
 	NSDictionary *aServiceDict;
 	
-	while (aServiceDict = [enumerator nextObject])
+	for (aServiceDict in services)
 	{
 		IMStatusService *service = [[IMStatusService alloc] initWithDictionary:aServiceDict
 																  resourcePath:resourcePath];

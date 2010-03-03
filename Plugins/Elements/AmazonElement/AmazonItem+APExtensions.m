@@ -36,10 +36,9 @@
 	// Put the string values of all creator elements together
 	NSMutableArray *creators = [NSMutableArray arrayWithCapacity: [creatorElements count]];
 	
-	NSEnumerator *enumerator = [creatorElements objectEnumerator];
 	NSXMLElement *creatorElement;
 	
-	while (creatorElement = [enumerator nextObject])
+	for (creatorElement in creatorElements)
 	{
 		[creators addObject: [creatorElement stringValue]];
 	}

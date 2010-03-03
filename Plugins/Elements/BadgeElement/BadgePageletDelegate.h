@@ -55,5 +55,7 @@ enum { BADGE_TEXT = 0 };
 @property(nonatomic) BOOL anonymous;
 @property(nonatomic) BOOL openLinkInNewWindow;
 
+@property (retain) NSString    *_badgeAltString;
+@property (retain) NSString    *_badgeTitleString;
 @end
 

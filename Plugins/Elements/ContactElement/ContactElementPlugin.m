@@ -605,9 +605,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	NSArray *dictionaries = [[self delegateOwner] objectForKey:@"fields"];
 	NSMutableArray *result = [NSMutableArray arrayWithCapacity:[dictionaries count]];
 	
-	NSEnumerator *enumerator = [dictionaries objectEnumerator];
 	NSDictionary *dictionary;
-	while (dictionary = [enumerator nextObject])
+	for (dictionary in dictionaries)
 	{
 		ContactElementField *field = [[ContactElementField alloc] initWithDictionary:dictionary];
 		[result addObject:field];

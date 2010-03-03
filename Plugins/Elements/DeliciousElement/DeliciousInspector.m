@@ -7,6 +7,7 @@
 //
 
 #import "DeliciousInspector.h"
+#import "DeliciousPlugin.h"
 
 
 @implementation DeliciousInspector

@@ -219,4 +219,6 @@ static NSArray *sAltStrings = nil;
 
 + (Class)inspectorViewControllerClass { return [SandvoxBadgeInspector class]; }
 
+@synthesize _badgeAltString;
+@synthesize _badgeTitleString;
 @end

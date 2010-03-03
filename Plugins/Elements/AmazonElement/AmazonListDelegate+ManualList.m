@@ -185,10 +185,9 @@
 	
 	// Return the products which have a product code, URL and title.
 	NSArray *products = [self products];
-	NSEnumerator *enumerator = [products objectEnumerator];
 	APManualListProduct *product;
 	
-	while (product = [enumerator nextObject])
+	for (product in products)
 	{
 		if ([product productCode] && [product URL] && [product title]) {
 			[result addObject:product];

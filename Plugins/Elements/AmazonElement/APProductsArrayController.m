@@ -85,9 +85,8 @@
 	if (selection)
 	{
 		APAmazonProduct *product;
-		NSEnumerator *enumerator = [selection objectEnumerator];
 		
-		while (product = [enumerator nextObject])
+		for (product in selection)
 		{
 			NSURL *URL = [product URL];
 			if (URL) {

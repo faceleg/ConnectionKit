@@ -35,6 +35,7 @@
 //
 
 #import "DeliciousPlugin.h"
+#import "DeliciousInspector.h"
 
 
 // LocalizedStringInThisBundle(@"My Delicious Links", "String_On_Page_Template")
@@ -45,6 +46,12 @@
 
 
 @implementation DeliciousPlugin
+
++ (Class)inspectorViewControllerClass { return [DeliciousInspector class]; }
++ (NSSet *)plugInKeys
+{
+	return [NSSet setWithObjects:@"________________", nil];
+}
 
 /*
  Plugin Properties we use:
