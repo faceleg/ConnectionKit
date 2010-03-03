@@ -27,20 +27,27 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 @implementation IMStatusPlugin
 
+@synthesize headlineText = _headlineText;
+@synthesize onlineText = _onlineText;
+@synthesize offlineText = _offlineText;
+@synthesize username = _username;
+@synthesize selectedIMService = _selectedIMService;
+
+
 + (Class)inspectorViewControllerClass { return [IMStatusInspector class]; }
 + (NSSet *)plugInKeys
 {
-	return [NSSet setWithObjects:@"badgeTypeTag", @"anonymous", @"openLinkInNewWindow", nil];
+	return [NSSet setWithObjects:@"headlineText", @"onlineText", @"offlineText", 
+			@"username", @"selectedIMService", nil];
 }
-
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
 	if (isNewObject)
 	{
-		[[self delegateOwner] setObject:LocalizedStringInThisBundle(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website") forKey:@"headlineText"];
-		[[self delegateOwner] setObject:LocalizedStringInThisBundle(@"offline", @"status indicator of chat; offline or unavailable") forKey:@"offlineText"];
-		[[self delegateOwner] setObject:LocalizedStringInThisBundle(@"online", @"status indicator of chat; online or available") forKey:@"onlineText"];
+		self.headlineText = LocalizedStringInThisBundle(@"Chat with me", @"Short headline for badge inviting website viewer to iChat/Skype chat with the owner of the website");
+		self.offlineText = LocalizedStringInThisBundle(@"offline", @"status indicator of chat; offline or unavailable");
+		self.onlineText = LocalizedStringInThisBundle(@"online", @"status indicator of chat; online or available");
 		
 		// Try to set the username and service from the user's address book
 		ABPerson *card = [[ABAddressBook sharedAddressBook] me];
@@ -60,8 +67,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 			}
 		}
 		
-		[[self delegateOwner] setInteger:service forKey:@"selectedIMService"];
-		[[self delegateOwner] setObject:username forKey:@"username"];
+		self.selectedIMService = service;
+		self.username = username;
 	}
 	
 	// LocalizedStringInThisBundle(@"(Please set your ID using the Pagelet Inspector)", @"Used in template");
@@ -165,7 +172,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (IMStatusService *)selectedService
 {
-	return [[IMStatusService services] objectAtIndex:[[self delegateOwner] integerForKey:@"selectedIMService"]];
+	return [[IMStatusService services] objectAtIndex:self.selectedIMService];
 }
 
 #pragma mark -
@@ -176,10 +183,10 @@ NSString *IMWantBorderKey = @"wantBorder";
 	//return nil;
 	
 	/*
-	 return [[self selectedService] badgeHTMLWithUsername:[[self delegateOwner] valueForKey:@"username"]
-	 headline:[[self delegateOwner] valueForKey:@"headlineText"]
-	 onlineLabel:[[self delegateOwner] valueForKey:@"onlineText"]
-	 offlineLabel:[[self delegateOwner] valueForKey:@"offlineText"]
+	 return [[self selectedService] badgeHTMLWithUsername:self.username
+	 headline:self.headlineText
+	 onlineLabel:self.onlineText
+	 offlineLabel:self.offlineText
 	 isPublishing:publishing
 	 livePreview:livePreview];
 	 */
@@ -202,7 +209,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	
 	// Parse the code to get the finished HTML
 	[result replaceOccurrencesOfString:@"#USER#" 
-						    withString:[[[self delegateOwner] valueForKey:@"username"] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
+						    withString:[self.username stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES]
 							   options:NSLiteralSearch 
 							     range:NSMakeRange(0, [result length])];
 	
@@ -243,7 +250,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	}
 	
 	[result replaceOccurrencesOfString:@"#HEADLINE#" 
-						    withString:[[self delegateOwner] valueForKey:@"headlineText"] 
+						    withString:self.headlineText
 							   options:NSLiteralSearch 
 							     range:NSMakeRange(0, [result length])];
 	
@@ -310,7 +317,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (BOOL) wantBorder
 {
-	BOOL result = [[[myConfigs objectAtIndex:[[[self delegateOwner] objectForKey:@"selectedIMService"] unsignedIntValue]]
+	BOOL result = [[[myConfigs objectAtIndex:self.selectedIMService]
 					objectForKey:IMWantBorderKey] boolValue];
 	return result;
 }
@@ -324,8 +331,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([[service serviceIdentifier] isEqualToString:@"aim"])
 	{
 		NSImage *compositedImage = [self imageWithBaseImage:[[self class] baseOnlineIChatImage]
-												   headline:[[self delegateOwner] valueForKey:@"headlineText"]
-													 status:[[self delegateOwner] valueForKey:@"onlineText"]];
+												   headline:self.headlineText
+													 status:self.onlineText];
 		
 		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
                                                                            properties:[NSDictionary dictionary]];
@@ -345,8 +352,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if ([[service serviceIdentifier] isEqualToString:@"aim"])
 	{
 		NSImage *compositedImage = [self imageWithBaseImage:[[self class] baseOfflineIChatImage]
-												   headline:[[self delegateOwner] valueForKey:@"headlineText"]
-													 status:[[self delegateOwner] valueForKey:@"offlineText"]];
+												   headline:self.headlineText
+													 status:self.offlineText];
 		
 		NSData *pngRepresentation = [[compositedImage bitmap] representationUsingType:NSPNGFileType
                                                                            properties:[NSDictionary dictionary]];
@@ -372,10 +379,10 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (NSString *)serviceHTML
 {
-	NSNumber *selectedService = [[self delegateOwner] objectForKey:@"selectedIMService"];
-	NSMutableString *html = [NSMutableString stringWithString:[[myConfigs objectAtIndex:[selectedService unsignedIntValue]] objectForKey:IMHTMLKey]];
+	int selectedService = self.selectedIMService;
+	NSMutableString *html = [NSMutableString stringWithString:[[myConfigs objectAtIndex:selectedService] objectForKey:IMHTMLKey]];
 	[html replaceOccurrencesOfString:@"#USER#" 
-						  withString:[[self delegateOwner] valueForKey:@"username"] 
+						  withString:self.username 
 							 options:NSLiteralSearch 
 							   range:NSMakeRange(0,[html length])];
 	if ([self onlineImagePath])
@@ -396,7 +403,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	
 	// put in the headline for the alt text
 	[html replaceOccurrencesOfString:@"#HEADLINE#" 
-						  withString:[[self delegateOwner] valueForKey:@"headlineText"] 
+						  withString:self.headlineText
 							 options:NSLiteralSearch 
 							   range:NSMakeRange(0,[html length])];
 	

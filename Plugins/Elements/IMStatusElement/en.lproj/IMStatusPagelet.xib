@@ -10,16 +10,14 @@
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
 			<string key="NS.object.0">732</string>
 		</object>
-		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="5"/>
-		</array>
+		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs"/>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 		</array>
 		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="932403882">
 			<object class="NSCustomObject" id="995055962">
-				<string key="NSClassName">IMStatusPageletDelegate</string>
+				<string key="NSClassName">IMStatusInspector</string>
 			</object>
 			<object class="NSCustomObject" id="988355918">
 				<string key="NSClassName">FirstResponder</string>
@@ -36,6 +34,7 @@
 						<int key="NSvFlags">258</int>
 						<string key="NSFrame">{{70, 206}, {173, 22}}</string>
 						<reference key="NSSuperview" ref="434652221"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="431966658">
 							<int key="NSCellFlags">-2076049856</int>
@@ -122,6 +121,7 @@
 						<int key="NSvFlags">260</int>
 						<string key="NSFrame">{{7, 211}, {61, 14}}</string>
 						<reference key="NSSuperview" ref="434652221"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="355964360">
 							<int key="NSCellFlags">67239424</int>
@@ -154,6 +154,7 @@
 						<int key="NSvFlags">258</int>
 						<string key="NSFrame">{{73, 183}, {167, 19}}</string>
 						<reference key="NSSuperview" ref="434652221"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="495341653">
 							<int key="NSCellFlags">-1804468671</int>
@@ -184,6 +185,7 @@
 						<int key="NSvFlags">260</int>
 						<string key="NSFrame">{{7, 185}, {61, 14}}</string>
 						<reference key="NSSuperview" ref="434652221"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="852348935">
 							<int key="NSCellFlags">67239424</int>
@@ -200,6 +202,7 @@
 						<int key="NSvFlags">258</int>
 						<string key="NSFrame">{{7, 130}, {236, 45}}</string>
 						<reference key="NSSuperview" ref="434652221"/>
+						<reference key="NSWindow"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="787930018">
 							<int key="NSCellFlags">67239424</int>
@@ -226,14 +229,15 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 									<object class="NSForm" id="1047481856">
 										<reference key="NSNextResponder" ref="375525953"/>
 										<int key="NSvFlags">266</int>
-										<string key="NSFrame">{{16, 11}, {200, 73}}</string>
+										<string key="NSFrame">{{15, 12}, {200, 73}}</string>
 										<reference key="NSSuperview" ref="375525953"/>
+										<reference key="NSWindow"/>
 										<bool key="NSEnabled">YES</bool>
 										<int key="NSNumRows">3</int>
 										<int key="NSNumCols">1</int>
 										<array class="NSMutableArray" key="NSCells">
 											<object class="NSFormCell" id="713774228">
-												<int key="NSCellFlags">341966401</int>
+												<int key="NSCellFlags">-1805517247</int>
 												<int key="NSCellFlags2">205521920</int>
 												<string key="NSContents"/>
 												<reference key="NSSupport" ref="26"/>
@@ -299,8 +303,7 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 												<reference key="NSSupport" ref="26"/>
 											</object>
 										</object>
-										<int key="NSSelectedRow">-1</int>
-										<int key="NSSelectedCol">-1</int>
+										<reference key="NSSelectedCell" ref="713774228"/>
 										<reference key="NSBackgroundColor" ref="466437752"/>
 										<reference key="NSCellBackgroundColor" ref="242260042"/>
 										<reference key="NSFont" ref="26"/>
@@ -308,10 +311,12 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 								</array>
 								<string key="NSFrame">{{2, 2}, {232, 95}}</string>
 								<reference key="NSSuperview" ref="619222899"/>
+								<reference key="NSWindow"/>
 							</object>
 						</array>
 						<string key="NSFrame">{{7, 6}, {236, 112}}</string>
 						<reference key="NSSuperview" ref="434652221"/>
+						<reference key="NSWindow"/>
 						<string key="NSOffsets">{0, 0}</string>
 						<object class="NSTextFieldCell" key="NSTitleCell">
 							<int key="NSCellFlags">67239424</int>
@@ -333,107 +338,90 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 				</array>
 				<string key="NSFrameSize">{250, 235}</string>
 				<reference key="NSSuperview"/>
+				<reference key="NSWindow"/>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
-			</object>
-			<object class="NSObjectController" id="650744109">
-				<array class="NSMutableArray" key="NSDeclaredKeys">
-					<string>pluginProperties.username</string>
-					<string>pluginProperties.selectedIMService</string>
-					<string>delegate.services</string>
-					<string>pluginProperties.headline</string>
-					<string>pluginProperties.onlineText</string>
-					<string>pluginProperties.headlineText</string>
-					<string>pluginProperties.offlineText</string>
-					<string>selectedIMService</string>
-					<string>username</string>
-					<string>headlineText</string>
-					<string>onlineText</string>
-					<string>offlineText</string>
-					<string>dele</string>
-					<string>delegate.services.serviceName</string>
-				</array>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
 			</object>
 		</array>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<array class="NSMutableArray" key="connectionRecords">
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.username</string>
+						<string key="label">content: inspectedObjectsController.selection.services</string>
+						<reference key="source" ref="580729558"/>
+						<reference key="destination" ref="995055962"/>
+						<object class="NSNibBindingConnector" key="connector" id="554110145">
+							<reference key="NSSource" ref="580729558"/>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">content: inspectedObjectsController.selection.services</string>
+							<string key="NSBinding">content</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.services</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">89</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">contentValues: inspectedObjectsController.selection.services.serviceName</string>
+						<reference key="source" ref="580729558"/>
+						<reference key="destination" ref="995055962"/>
+						<object class="NSNibBindingConnector" key="connector" id="423123079">
+							<reference key="NSSource" ref="580729558"/>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">contentValues: inspectedObjectsController.selection.services.serviceName</string>
+							<string key="NSBinding">contentValues</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.services.serviceName</string>
+							<reference key="NSPreviousConnector" ref="554110145"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">90</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedIndex: inspectedObjectsController.selection.selectedIMService</string>
+						<reference key="source" ref="580729558"/>
+						<reference key="destination" ref="995055962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="580729558"/>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">selectedIndex: inspectedObjectsController.selection.selectedIMService</string>
+							<string key="NSBinding">selectedIndex</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.selectedIMService</string>
+							<reference key="NSPreviousConnector" ref="423123079"/>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">91</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.username</string>
 						<reference key="source" ref="49407139"/>
-						<reference key="destination" ref="650744109"/>
+						<reference key="destination" ref="995055962"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="49407139"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">value: selection.username</string>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.username</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.username</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.username</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">54</int>
+					<int key="connectionID">93</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.headlineText</string>
-						<reference key="source" ref="713774228"/>
-						<reference key="destination" ref="650744109"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="713774228"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">value: selection.headlineText</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.headlineText</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">55</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.onlineText</string>
-						<reference key="source" ref="514031217"/>
-						<reference key="destination" ref="650744109"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="514031217"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">value: selection.onlineText</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.onlineText</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">56</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.offlineText</string>
-						<reference key="source" ref="920381335"/>
-						<reference key="destination" ref="650744109"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="920381335"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">value: selection.offlineText</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.offlineText</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">57</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.selectedIMService</string>
+						<string key="label">enabled: inspectedObjectsController.selection.selectedIMService</string>
 						<reference key="source" ref="1047481856"/>
-						<reference key="destination" ref="650744109"/>
+						<reference key="destination" ref="995055962"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="1047481856"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">enabled: selection.selectedIMService</string>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.selectedIMService</string>
 							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.selectedIMService</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.selectedIMService</string>
 							<object class="NSDictionary" key="NSOptions">
 								<string key="NS.key.0">NSValueTransformerName</string>
 								<string key="NS.object.0">IMStatusPageletServiceIsIChat</string>
@@ -441,57 +429,55 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">59</int>
+					<int key="connectionID">95</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">content: selection.delegate.services</string>
-						<reference key="source" ref="580729558"/>
-						<reference key="destination" ref="650744109"/>
-						<object class="NSNibBindingConnector" key="connector" id="99398209">
-							<reference key="NSSource" ref="580729558"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">content: selection.delegate.services</string>
-							<string key="NSBinding">content</string>
-							<string key="NSKeyPath">selection.delegate.services</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">64</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">contentValues: selection.delegate.services.serviceName</string>
-						<reference key="source" ref="580729558"/>
-						<reference key="destination" ref="650744109"/>
-						<object class="NSNibBindingConnector" key="connector" id="614950459">
-							<reference key="NSSource" ref="580729558"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">contentValues: selection.delegate.services.serviceName</string>
-							<string key="NSBinding">contentValues</string>
-							<string key="NSKeyPath">selection.delegate.services.serviceName</string>
-							<reference key="NSPreviousConnector" ref="99398209"/>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">70</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedIndex: selection.selectedIMService</string>
-						<reference key="source" ref="580729558"/>
-						<reference key="destination" ref="650744109"/>
+						<string key="label">value: inspectedObjectsController.selection.headlineText</string>
+						<reference key="source" ref="713774228"/>
+						<reference key="destination" ref="995055962"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="580729558"/>
-							<reference key="NSDestination" ref="650744109"/>
-							<string key="NSLabel">selectedIndex: selection.selectedIMService</string>
-							<string key="NSBinding">selectedIndex</string>
-							<string key="NSKeyPath">selection.selectedIMService</string>
-							<reference key="NSPreviousConnector" ref="614950459"/>
+							<reference key="NSSource" ref="713774228"/>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.headlineText</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.headlineText</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">72</int>
+					<int key="connectionID">97</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.onlineText</string>
+						<reference key="source" ref="514031217"/>
+						<reference key="destination" ref="995055962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="514031217"/>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.onlineText</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.onlineText</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">99</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.offlineText</string>
+						<reference key="source" ref="920381335"/>
+						<reference key="destination" ref="995055962"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="920381335"/>
+							<reference key="NSDestination" ref="995055962"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.offlineText</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.offlineText</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">101</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -581,12 +567,6 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 							<reference ref="1047481856"/>
 						</array>
 						<reference key="parent" ref="434652221"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">18</int>
-						<reference key="object" ref="650744109"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">PageletController</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">74</int>
@@ -685,8 +665,6 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 				<boolean value="YES" key="12.ImportedFromIB2"/>
 				<string key="13.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="13.ImportedFromIB2"/>
-				<string key="18.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<boolean value="YES" key="18.ImportedFromIB2"/>
 				<string key="25.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="25.ImportedFromIB2"/>
 				<string key="32.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -706,6 +684,12 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 				<boolean value="YES" key="60.ImportedFromIB2"/>
 				<string key="7.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="7.ImportedFromIB2"/>
+				<string key="74.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="75.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="76.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="77.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="78.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
+				<string key="79.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="8.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="8.ImportedFromIB2"/>
 				<string key="9.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -715,39 +699,34 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">79</int>
+			<int key="maxID">101</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">IMStatusPageletDelegate</string>
-					<string key="superclassName">SVElementPlugIn</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">IMStatusPageletDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">IMStatusPageletDelegate</string>
-					<string key="superclassName">SVElementPlugIn</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SVElementPlugIn</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">IMStatusInspector</string>
+					<string key="superclassName">SVInspectorViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">IMStatusInspector.h</string>
+					</object>
+				</object>
+			</array>
+			<array class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
+				<object class="IBPartialClassDescription">
+					<string key="className">SVInspectorViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../../../../../../build/Debug/Sandvox.app/Contents/Headers/SVInspectorViewController.h</string>
 					</object>
 				</object>
 			</array>
@@ -844,14 +823,6 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSForm</string>
 					<string key="superclassName">NSMatrix</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -873,14 +844,6 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSManagedObjectContext</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">CoreData.framework/Headers/NSManagedObjectContext.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1167,14 +1130,6 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSObjectController</string>
-					<string key="superclassName">NSController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSObjectController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSPopUpButton</string>
 					<string key="superclassName">NSButton</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1243,6 +1198,18 @@ dHRpbmdzIGFsbG93IHdlYiB2aXNpdG9ycyB0byBzZWUgeW91ciBvbmxpbmUgc3RhdHVzLg</string>
 					<string key="className">NSView</string>
 					<string key="superclassName">NSResponder</string>
 					<reference key="sourceIdentifier" ref="902546412"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSViewController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">view</string>
+						<string key="NS.object.0">NSView</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSViewController.h</string>
+					</object>
 				</object>
 			</array>
 		</object>

@@ -95,6 +95,6 @@
 	<key>KTTemplateName</key>
 	<string>IMStatusPagelet</string>
 	<key>NSPrincipalClass</key>
-	<string>IMStatusPageletDelegate</string>
+	<string>IMStatusPlugin</string>
 </dict>
 </plist>
