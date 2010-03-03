@@ -94,15 +94,12 @@
 	[oFieldsTableButtonsBox setFill:NTBoxBevel];
 	[oFieldsTableButtonsBox setBorderMask:(NTBoxLeft | NTBoxRight | NTBoxBottom)];
 	[oFieldsTableButtonsBox setFrameColor:[NSColor lightGrayColor]];
-	
-	// Give the buttons their icons
-	[oAddLinkButton setImage:[NSImage addToTableButtonIcon]];
-	[oRemoveLinkButton setImage:[NSImage removeFromTableButtonIcon]];
 
 
 	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
 	[KSEmailAddressComboBox setWillIncludeNames:NO];
-	
+
+#warning cannot find this outlet - what is it supposed to be?
 	// Correct the spacing of the custom labels form
 	NSSize spacing = [oCustomLabelsForm intercellSpacing];
 	spacing.height = 4;

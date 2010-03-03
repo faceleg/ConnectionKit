@@ -45,8 +45,6 @@
 	IBOutlet ContactElementFieldsArrayController *oArrayController;
 	
 	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
-	IBOutlet NSButton	*oAddLinkButton;
-	IBOutlet NSButton	*oRemoveLinkButton;
 
 	IBOutlet NSTextField			*oSubjects;
 	IBOutlet NSTextField			*oLabel;
