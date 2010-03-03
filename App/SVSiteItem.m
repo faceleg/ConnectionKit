@@ -134,6 +134,28 @@
 - (KTPage *)pageRepresentation { return nil; }
 - (id <SVMedia>)mediaRepresentation; { return nil; }
 
+
+
+- (NSString *)baseExampleURLString	// for page details. Subclasses override to be more specific if need be
+{
+	NSURL *resultURL = [self _baseExampleURL];
+    NSString *result = [resultURL absoluteString];
+	return result;
+}
+
+
+- (NSURL *)_baseExampleURL;	// support. Subclasses override to be more specific if need be
+{
+	// Root is a sepcial case where we just supply the site URL
+	NSURL *result = [[[self site] hostProperties] siteURL];
+	if (!result)
+	{
+		result = [NSURL URLWithString:@"http://www.EXAMPLE.com/"];
+	}
+	// What if this contains an index.html at the end?
+	return result;
+}
+
 #pragma mark Publishing
 
 @dynamic publishedPath;

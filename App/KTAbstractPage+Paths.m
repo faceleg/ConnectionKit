@@ -238,13 +238,7 @@
 	NSURL *result = nil;
 	if ([self isRoot])
 	{
-		// Root is a sepcial case where we just supply the site URL
-		result = [[[self site] hostProperties] siteURL];
-		if (!result)
-		{
-			result = [NSURL URLWithString:@"http://www.EXAMPLE.com/"];
-		}
-		// What if this contains an index.html at the end?
+		result = [super _baseExampleURL];
 	}
 	else
 	{

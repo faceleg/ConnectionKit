@@ -96,6 +96,7 @@
 
 - (KTCodeInjection *)codeInjection;
 
+- (NSString *)baseExampleURLString;
 
 @end
 
