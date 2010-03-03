@@ -24,8 +24,7 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection;
-@class SVMediaRecord, KTMediaContainer;
+@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection, SVMediaRecord;
 
 
 @interface KTMaster : SVExtensibleManagedObject 
