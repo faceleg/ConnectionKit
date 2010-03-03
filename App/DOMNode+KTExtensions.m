@@ -8,7 +8,6 @@
 
 #import "DOMNode+KTExtensions.h"
 
-#import "KTMediaContainer.h"
 #import "KTMediaManager.h"
 #import "NSColor+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
