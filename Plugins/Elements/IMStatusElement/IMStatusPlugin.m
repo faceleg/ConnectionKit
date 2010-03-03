@@ -156,6 +156,12 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (void)dealloc
 {
+	
+    self.headlineText = nil;
+    self.onlineText = nil;
+    self.offlineText = nil;
+    self.username = nil;
+	
 	[myConfigs release];
 	[super dealloc];
 }

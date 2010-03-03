@@ -66,6 +66,11 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
             
             while (nil != (key = [theEnum nextObject]) )
             {
+#warning FIXME -- temp until this is fixed.
+if ([key isEqualToString:@"showBorder"])
+{
+	continue;
+}
                 id value = [initialProperties objectForKey:key];
 				if ([value isKindOfClass:[NSString class]])
 				{
