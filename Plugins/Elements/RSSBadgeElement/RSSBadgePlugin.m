@@ -115,6 +115,9 @@
 		case RSSBadgeIconStyleFlatRSS:
 			iconName = @"rss.gif";
 			break;
+		default:
+		case RSSBadgeIconStyleNone:
+			break;
 	}
 	
 	NSString *path = [[self bundle] pathForImageResource:iconName];
