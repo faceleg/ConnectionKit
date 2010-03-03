@@ -7,15 +7,16 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C4A17F40D5E7C7A009476BF /* DeliciousPageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A17F30D5E7C7A009476BF /* DeliciousPageletDelegate.m */; };
+		3C4A17F40D5E7C7A009476BF /* DeliciousPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A17F30D5E7C7A009476BF /* DeliciousPlugin.m */; };
 		3C4A18240D5E7F67009476BF /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18220D5E7F67009476BF /* Localizable.strings */; };
 		3C4A18330D5E7FC1009476BF /* DeliciousPageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18300D5E7FC1009476BF /* DeliciousPageletTemplate.html */; };
-		3C4A18360D5E7FCA009476BF /* DeliciousPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18340D5E7FCA009476BF /* DeliciousPagelet.nib */; };
 		3C4A18BD0D5FA0F0009476BF /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A18BC0D5FA0F0009476BF /* License.rtf */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE427D080E6332E7002146D7 /* delicious.16.png in Resources */ = {isa = PBXBuildFile; fileRef = CE427D070E6332E7002146D7 /* delicious.16.png */; };
 		CE722FCE0D85CF4C00E9C592 /* delicious.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE722FCD0D85CF4C00E9C592 /* delicious.icns */; };
+		CEC23F46113F0F620022DA7D /* DeliciousInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC23F45113F0F620022DA7D /* DeliciousInspector.m */; };
+		CEC23F4B113F0FF30022DA7D /* DeliciousElement.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC23F49113F0FF30022DA7D /* DeliciousElement.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -23,8 +24,8 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* DeliciousElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousElement_Prefix.pch; sourceTree = "<group>"; };
-		3C4A17F20D5E7C7A009476BF /* DeliciousPageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousPageletDelegate.h; sourceTree = "<group>"; };
-		3C4A17F30D5E7C7A009476BF /* DeliciousPageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliciousPageletDelegate.m; sourceTree = "<group>"; };
+		3C4A17F20D5E7C7A009476BF /* DeliciousPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousPlugin.h; sourceTree = "<group>"; };
+		3C4A17F30D5E7C7A009476BF /* DeliciousPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliciousPlugin.m; sourceTree = "<group>"; };
 		3C4A17FE0D5E7D8B009476BF /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C4A17FF0D5E7D8B009476BF /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C4A18190D5E7E7F009476BF /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -44,19 +45,14 @@
 		3C4A182C0D5E7FA1009476BF /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A182D0D5E7FA9009476BF /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/Localizable.strings; sourceTree = "<group>"; };
 		3C4A18300D5E7FC1009476BF /* DeliciousPageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = DeliciousPageletTemplate.html; sourceTree = "<group>"; };
-		3C4A18350D5E7FCA009476BF /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A18370D5E7FD1009476BF /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A18380D5E7FD7009476BF /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A18390D5E7FDD009476BF /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A183A0D5E7FE3009476BF /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A183B0D5E7FE9009476BF /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A183C0D5E7FF1009476BF /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
-		3C4A183D0D5E7FF7009476BF /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/DeliciousPagelet.nib; sourceTree = "<group>"; };
 		3C4A18BC0D5FA0F0009476BF /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Delicious.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Delicious.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE427D070E6332E7002146D7 /* delicious.16.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = delicious.16.png; sourceTree = "<group>"; };
 		CE722FCD0D85CF4C00E9C592 /* delicious.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = delicious.icns; sourceTree = "<group>"; };
+		CEC23F44113F0F620022DA7D /* DeliciousInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DeliciousInspector.h; sourceTree = "<group>"; };
+		CEC23F45113F0F620022DA7D /* DeliciousInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DeliciousInspector.m; sourceTree = "<group>"; };
+		CEC23F4A113F0FF30022DA7D /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DeliciousElement.xib; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -97,7 +93,7 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				3C4A18340D5E7FCA009476BF /* DeliciousPagelet.nib */,
+				CEC23F49113F0FF30022DA7D /* DeliciousElement.xib */,
 				3C4A18300D5E7FC1009476BF /* DeliciousPageletTemplate.html */,
 				CE722FCD0D85CF4C00E9C592 /* delicious.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
@@ -112,8 +108,10 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C4A17F20D5E7C7A009476BF /* DeliciousPageletDelegate.h */,
-				3C4A17F30D5E7C7A009476BF /* DeliciousPageletDelegate.m */,
+				3C4A17F20D5E7C7A009476BF /* DeliciousPlugin.h */,
+				3C4A17F30D5E7C7A009476BF /* DeliciousPlugin.m */,
+				CEC23F44113F0F620022DA7D /* DeliciousInspector.h */,
+				CEC23F45113F0F620022DA7D /* DeliciousInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -222,10 +220,10 @@
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C4A18240D5E7F67009476BF /* Localizable.strings in Resources */,
 				3C4A18330D5E7FC1009476BF /* DeliciousPageletTemplate.html in Resources */,
-				3C4A18360D5E7FCA009476BF /* DeliciousPagelet.nib in Resources */,
 				3C4A18BD0D5FA0F0009476BF /* License.rtf in Resources */,
 				CE722FCE0D85CF4C00E9C592 /* delicious.icns in Resources */,
 				CE427D080E6332E7002146D7 /* delicious.16.png in Resources */,
+				CEC23F4B113F0FF30022DA7D /* DeliciousElement.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -254,7 +252,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C4A17F40D5E7C7A009476BF /* DeliciousPageletDelegate.m in Sources */,
+				3C4A17F40D5E7C7A009476BF /* DeliciousPlugin.m in Sources */,
+				CEC23F46113F0F620022DA7D /* DeliciousInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -291,19 +290,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3C4A18340D5E7FCA009476BF /* DeliciousPagelet.nib */ = {
+		CEC23F49113F0FF30022DA7D /* DeliciousElement.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C4A18350D5E7FCA009476BF /* en */,
-				3C4A18370D5E7FD1009476BF /* da */,
-				3C4A18380D5E7FD7009476BF /* de */,
-				3C4A18390D5E7FDD009476BF /* fr */,
-				3C4A183A0D5E7FE3009476BF /* it */,
-				3C4A183B0D5E7FE9009476BF /* ja */,
-				3C4A183C0D5E7FF1009476BF /* zh_CN */,
-				3C4A183D0D5E7FF7009476BF /* zh_TW */,
+				CEC23F4A113F0FF30022DA7D /* en */,
 			);
-			name = DeliciousPagelet.nib;
+			name = DeliciousElement.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */

@@ -1,5 +1,5 @@
 //
-//  DeliciousPageletDelegate.m
+//  DeliciousPageletDelegate.h
 //  DeliciousPagelet
 //
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
@@ -34,36 +34,14 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "DeliciousPageletDelegate.h"
+#import <Cocoa/Cocoa.h>
+#import "SandvoxPlugin.h"
 
 
-// LocalizedStringInThisBundle(@"My Delicious Links", "String_On_Page_Template")
-// LocalizedStringInThisBundle(@"delicious.com example no.", "String_On_Page_Template -- followed by a number")
-// LocalizedStringInThisBundle(@"(Please set your delicious.com ID using the Pagelet Inspector)", "String_On_Page_Template")
+@interface DeliciousPlugin : SVElementPlugIn {
 
-
-
-
-@implementation DeliciousPageletDelegate
-
-/*
- Plugin Properties we use:
-	deliciousID
-	restrictedTags
-	sortChronologically
-	maxEntries
-	showTags
-	showExtended
-	listStyle
- 
- See: http://delicious.com/help/json
- 
- */
-
-- (IBAction) openDelicious:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://delicious.com/"]];
 }
 
+- (IBAction) openDelicious:(id)sender;
 
 @end
