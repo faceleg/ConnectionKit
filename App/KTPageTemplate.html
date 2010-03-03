@@ -90,11 +90,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[if isRootPage]]
 [[if master.logo.hidden]]
 [[else2]]
-						<span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logo sizeName:pageHeaderImage]]"
-							[[if master.headerImageDescription]]alt="[[=&master.headerImageDescription]]"[[endif3]]
-							width="[[mediainfo info:width media:master.logo sizeName:pageHeaderImage]]"
-							height="[[mediainfo info:height media:master.logo sizeName:pageHeaderImage]]" /></span>
+						<span id="logo-container">[[=master.logo.writeHTML]]</span>
 [[endif2]]
 [[if master.siteTitle.hidden]]
 						<h1 class="hidden">[[=master.siteTitleHTMLString]]</h1>
@@ -104,11 +100,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[else]]
 [[if master.logo.hidden]]
 [[else2]]
-						<a class="imageLink" href="[[path site.rootPage]]"><span id="logo-container"><img id="logo"
-							src="[[mediainfo info:path media:master.logo sizeName:pageHeaderImage]]"
-							alt="[[=&master.headerImageDescription]]"
-							width="[[mediainfo info:width media:master.logo sizeName:pageHeaderImage]]"
-							height="[[mediainfo info:height media:master.logo sizeName:pageHeaderImage]]" /></span></a>
+						<a class="imageLink" href="[[path site.rootPage]]"><span id="logo-container">[[=master.logo.writeHTML]]</span></a>
 [[endif2]]
 [[if master.siteTitle.hidden]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
 						<h1 class="hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h1>

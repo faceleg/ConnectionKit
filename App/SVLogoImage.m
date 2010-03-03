@@ -22,4 +22,11 @@
 - (NSString *)title { return nil; }
 - (void)setTitle:(NSString *)title { }
 
+- (SVTextAttachment *)textAttachment { return nil; }
+
+- (void)writeHTML;
+{
+    [self writeBody];
+}
+
 @end

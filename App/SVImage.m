@@ -112,6 +112,10 @@
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     NSURL *imageURL = [[self media] fileURL];
+    if (!imageURL)
+    {
+        imageURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
+    }
     
     [context writeImageWithIdName:[self editingElementID]
                         className:[self className]
