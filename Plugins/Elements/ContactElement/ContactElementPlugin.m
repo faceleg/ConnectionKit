@@ -69,16 +69,20 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
 @implementation ContactElementPlugin
 
-/*
- Plugin Properties we use:
-	
- sendButtonTitle
- subjectPrompt
- subjectText
- subjectType
- address
- 
- */
+@synthesize address = _address;
+@synthesize emailLabel = _emailLabel;
+@synthesize messageLabel = _messageLabel;
+@synthesize nameLabel = _nameLabel;
+@synthesize sendButtonTitle = _sendButtonTitle;
+@synthesize subjectLabel = _subjectLabel;
+@synthesize subjectText = _subjectText;
+@synthesize sideLabels = _sideLabels;
+@synthesize subjectType = _subjectType;
+@dynamic fields;
+
+
+
+
 
 enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelection };
 
@@ -104,21 +108,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[pool release];
 }
 
-- (void)awakeFromNib
-{
-	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
-	[KSEmailAddressComboBox setWillIncludeNames:NO];
-
-	// Correct the spacing of the custom labels form
-	NSSize spacing = [oCustomLabelsForm intercellSpacing];
-	spacing.height = 4;
-	[oCustomLabelsForm setIntercellSpacing:spacing];
-
-	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(focusMessageField:)
-												 name:@"AddedMessageField"
-											   object:oArrayController];
-}
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
@@ -164,7 +153,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		[fields addObject:aField];
 		[aField release];
 		
-		[self setFields:fields];
+		self.fields = fields;
 	}
 	
 	myPluginProperties = [element retain];
@@ -176,8 +165,17 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
 	[myPluginProperties removeObserver:self forKeyPath:@"fields"];
 	[myPluginProperties release];
-	[myEmailField release];
-	[myFields release];
+
+    self.address = nil;
+    self.emailLabel = nil;
+    self.messageLabel = nil;
+    self.nameLabel = nil;
+    self.sendButtonTitle = nil;
+    self.sideLabels = nil;
+    self.subjectLabel = nil;
+    self.subjectText = nil;
+    self.subjectType = nil;
+    self.fields = nil;
 	
 	[super dealloc];
 }
@@ -245,10 +243,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 }
 
 
-- (void)focusMessageField:(NSNotification *)aNotification	// AddedMessageField notification
-{
-	[[oLabel window] makeFirstResponder:oLabel];
-}
 
 #pragma mark -
 #pragma mark Labels
@@ -259,7 +253,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)sendButtonTitle
 {
-	NSString *result = [[self delegateOwner] objectForKey:@"sendButtonTitle"];
+	NSString *result = _sendButtonTitle;
 	if (nil == result)
 	{
 		result = [[self languageDictionary] objectForKey:@"Send"];
@@ -267,14 +261,10 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-- (void)setSendButtonTitle:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"sendButtonTitle"];
-}
 
 - (NSString *)subjectLabel
 {
-	NSString *result = [[self delegateOwner] objectForKey:@"subjectLabel"];
+	NSString *result = _subjectLabel;
 	if (nil == result)
 	{
 		result = [[self languageDictionary] objectForKey:@"Subject:"];
@@ -282,14 +272,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-- (void)setSubjectLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"subjectLabel"];
-}
-
 - (NSString *)emailLabel
 {
-	NSString *result = [[self delegateOwner] objectForKey:@"emailLabel"];
+	NSString *result = _emailLabel;
 	if (nil == result)
 	{
 		result = [[self languageDictionary] objectForKey:@"EMail:"];
@@ -297,14 +282,10 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-- (void)setEmailLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"emailLabel"];
-}
 
 - (NSString *)nameLabel
 {
-	NSString *result = [[self delegateOwner] objectForKey:@"nameLabel"];
+	NSString *result = _nameLabel;
 	if (nil == result)
 	{
 		result = [[self languageDictionary] objectForKey:@"Name:"];
@@ -312,14 +293,10 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-- (void)setNameLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"nameLabel"];
-}
 
 - (NSString *)messageLabel
 {
-	NSString *result = [[self delegateOwner] objectForKey:@"messageLabel"];
+	NSString *result = _messageLabel;
 	if (nil == result)
 	{
 		result = [[self languageDictionary] objectForKey:@"Message:"];
@@ -327,45 +304,12 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return result;
 }
 
-- (void)setMessageLabel:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"messageLabel"];
-}
-
 #pragma mark -
 #pragma mark Simple Accessors
 
 /*!	Should labels go on the side? (if not, then above the fields)
 */
-- (BOOL)sideLabels
-{
-    return [[self delegateOwner] boolForKey:@"sideLabels"];
-}
 
-- (void)setSideLabels:(BOOL)aSideLabels
-{
-	[[self delegateOwner] setBool:aSideLabels forKey:@"sideLabels"];
-}
-
-- (int) subjectType
-{
-    return [[self delegateOwner] integerForKey:@"subjectType"];
-}
-
-- (void)setSubjectType:(int)aSubjectType
-{
-	[[self delegateOwner] setInteger:aSubjectType forKey:@"subjectType"];
-}
-
-- (NSString *)subjectText
-{
-	return [[self delegateOwner] objectForKey:@"subjectText"];
-}
-
-- (void)setSubjectText:(NSString *)anAddress
-{
-	[[self delegateOwner] setObject:anAddress forKey:@"subjectText"];
-}
 
 
 
@@ -472,7 +416,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 - (NSString *)encodedRecipient
 {
 	
-	NSString *email = [[self delegateOwner] valueForKey:@"address"];
+	NSString *email = self.address;
 	
 	NSData *mailData = [email dataUsingEncoding:NSUTF8StringEncoding];
 	unsigned char outBytes[MAX_EMAILS_LENGTH] = { 0 };
@@ -565,19 +509,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	[self shouldNotImplement:_cmd];
 }
 
-// For the subjects text field, allow return to insert a newline.
-
-- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
-{
-    BOOL retval = NO;
-    if ( (control == oSubjects)
-		&& (commandSelector == @selector(insertNewline:) ) )
-	{
-        retval = YES;
-        [textView insertNewlineIgnoringFieldEditor:nil];
-    }
-    return retval;
-}
 
 #pragma mark *** NEW STUFF ***
 
@@ -620,7 +551,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (ContactElementField *)contactField
 {
-	(void) [self fields];	// make sure loaded
+	(void) self.fields;	// make sure loaded
 	return myEmailField;
 }
 
@@ -628,7 +559,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 - (NSArray *)fields
 {
 	// If there currently is no array, pull it out of the delegateOwner
-	if (!myFields)
+	if (!_fields)
 	{
 		[self setFields:[self fieldsByFetchingFromPluginProperties] archiveToPluginProperties:NO];
 	}
@@ -671,7 +602,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
  */
 - (NSArray *)fieldsPropertyListRepresentation
 {
-	return [[self fields] valueForKey:@"dictionaryRepresentation"];
+	return [self.fields valueForKey:@"dictionaryRepresentation"];
 }
 
 /*	Retrieves the fields plist representation from the delegateOwner and converts it to real
@@ -715,7 +646,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     
     
     // Setup the subject field
-    ContactElementField *subjectField = [[self fields] objectAtIndex:2];
+    ContactElementField *subjectField = [self.fields objectAtIndex:2];
     
     NSString *oldSubjectText = [oldPluginProperties valueForKey:@"subjectText"];
     switch ([oldPluginProperties integerForKey:@"subjectType"])
@@ -755,24 +686,24 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     
     // Setup labels
     NSString *aLabel = [oldPluginProperties valueForKey:@"subjectLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:2] setLabel:aLabel];
+    if (aLabel) [[self.fields objectAtIndex:2] setLabel:aLabel];
     
     aLabel = [oldPluginProperties valueForKey:@"emailLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:1] setLabel:aLabel];
+    if (aLabel) [[self.fields objectAtIndex:1] setLabel:aLabel];
     
     aLabel = [oldPluginProperties valueForKey:@"nameLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:0] setLabel:aLabel];
+    if (aLabel) [[self.fields objectAtIndex:0] setLabel:aLabel];
     
     aLabel = [oldPluginProperties valueForKey:@"messageLabel"];
-    if (aLabel) [[[self fields] objectAtIndex:3] setLabel:aLabel];
+    if (aLabel) [[self.fields objectAtIndex:3] setLabel:aLabel];
     
     aLabel = [oldPluginProperties valueForKey:@"sendButtonTitle"];
-    if (aLabel) [[[self fields] objectAtIndex:4] setLabel:aLabel];
+    if (aLabel) [[self.fields objectAtIndex:4] setLabel:aLabel];
     
     
     
     // We have to force the fields to be updated persistently as there's no array controller involved
-    [self setFields:[self fields] archiveToPluginProperties:YES];
+    [self setFields:self.fields archiveToPluginProperties:YES];
     
     
     return YES;

@@ -43,11 +43,17 @@
 
 @interface ContactElementPlugin : SVElementPlugIn
 {
-	IBOutlet NSTextField			*oSubjects;
-	IBOutlet NSTextField			*oLabel;
-	IBOutlet NSForm					*oCustomLabelsForm;
+	NSString *_address;
+	NSString *_emailLabel;
+	NSString *_messageLabel;
+	NSString *_nameLabel;
+	NSString *_sendButtonTitle;
+	NSString *_subjectLabel;
+	NSString *_subjectText;
+	BOOL _sideLabels;
+	int _subjectType;
+	NSArray *_fields;
 	
-	IBOutlet ContactElementFieldsArrayController *oArrayController;
 	
 	@private
 	
@@ -57,6 +63,17 @@
 	NSArray	*myFields;
 	BOOL	myIsArchivingFields;
 }
+
+@property (copy) NSString *address;
+@property (copy) NSString *emailLabel;
+@property (copy) NSString *messageLabel;
+@property (copy) NSString *nameLabel;
+@property (copy) NSString *sendButtonTitle;
+@property (copy) NSString *subjectLabel;
+@property (copy) NSString *subjectText;
+@property (assign) BOOL sideLabels;
+@property (assign) int subjectType;
+@property (copy) NSArray *fields;
 
 - (NSString *)encodedRecipient;
 - (NSString *)subjectInputHTML;

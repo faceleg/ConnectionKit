@@ -98,6 +98,41 @@
 	// Give the buttons their icons
 	[oAddLinkButton setImage:[NSImage addToTableButtonIcon]];
 	[oRemoveLinkButton setImage:[NSImage removeFromTableButtonIcon]];
+
+
+	[KSEmailAddressComboBox setWillAddAnonymousEntry:NO];
+	[KSEmailAddressComboBox setWillIncludeNames:NO];
+	
+	// Correct the spacing of the custom labels form
+	NSSize spacing = [oCustomLabelsForm intercellSpacing];
+	spacing.height = 4;
+	[oCustomLabelsForm setIntercellSpacing:spacing];
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(focusMessageField:)
+												 name:@"AddedMessageField"
+											   object:oArrayController];
+}
+
+
+- (void)focusMessageField:(NSNotification *)aNotification	// AddedMessageField notification
+{
+	[[oLabel window] makeFirstResponder:oLabel];
+}
+
+
+// For the subjects text field, allow return to insert a newline.
+
+- (BOOL)control:(NSControl *)control textView:(NSTextView *)textView doCommandBySelector:(SEL)commandSelector
+{
+    BOOL retval = NO;
+    if ( (control == oSubjects)
+		&& (commandSelector == @selector(insertNewline:) ) )
+	{
+        retval = YES;
+        [textView insertNewlineIgnoringFieldEditor:nil];
+    }
+    return retval;
 }
 
 @end

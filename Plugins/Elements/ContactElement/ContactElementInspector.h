@@ -37,11 +37,13 @@
 #import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
-@class NTBoxView;
+@class NTBoxView, ContactElementFieldsArrayController;
 
 
 @interface ContactElementInspector : SVInspectorViewController
 {
+	IBOutlet ContactElementFieldsArrayController *oArrayController;
+	
 	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
 	IBOutlet NSButton	*oAddLinkButton;
 	IBOutlet NSButton	*oRemoveLinkButton;
@@ -49,9 +51,7 @@
 	IBOutlet NSTextField			*oSubjects;
 	IBOutlet NSTextField			*oLabel;
 	IBOutlet NSForm					*oCustomLabelsForm;
-	
-//	IBOutlet ContactElementFieldsArrayController *oArrayController;
-	
+		
 @private
 	
 //	ContactElementField *myEmailField;
