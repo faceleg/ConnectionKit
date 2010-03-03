@@ -8,6 +8,21 @@
 
 #import "IMStatusPlugin.h"
 #import "IMStatusInspector.h"
+#import "IMStatusService.h"
+#import "ABPerson+IMStatus.h"
+#import <AddressBook/AddressBook.h>
+
+NSString *IMServiceKey = @"service";
+NSString *IMHTMLKey = @"html"; 
+NSString *IMOnlineImageKey = @"online";
+NSString *IMOfflineImageKey = @"offline";
+NSString *IMWantBorderKey = @"wantBorder";
+
+
+@interface IMStatusPlugin ()
+- (NSString *)onlineImagePath;
+- (NSString *)offlineImagePath;
+@end
 
 
 @implementation IMStatusPlugin
