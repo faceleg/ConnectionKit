@@ -19,14 +19,13 @@
     [self setPrimitiveValue:[NSNumber numberWithUnsignedInt:128] forKey:@"height"];
 }
 
+@dynamic hidden;
+
 - (NSString *)title { return nil; }
 - (void)setTitle:(NSString *)title { }
 
 - (SVTextAttachment *)textAttachment { return nil; }
 
-- (void)writeHTML;
-{
-    [self writeBody];
-}
+- (BOOL)isPagelet { return NO; }
 
 @end

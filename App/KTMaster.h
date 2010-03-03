@@ -24,7 +24,7 @@
 #import "SVExtensibleManagedObject.h"
 
 
-@class KTDesign, SVTitleBox, SVImage, KTCodeInjection;
+@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection;
 @class SVMediaRecord, KTMediaContainer;
 
 
@@ -50,7 +50,7 @@
 - (void)setBannerImage:(KTMediaContainer *)banner;
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
-@property(nonatomic, retain, readonly) SVImage *logo;
+@property(nonatomic, retain, readonly) SVLogoImage *logo;
 
 @property(nonatomic, retain) SVMediaRecord *faviconMedia;
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one

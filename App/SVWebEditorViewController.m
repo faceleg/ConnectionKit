@@ -12,7 +12,7 @@
 #import "SVCallout.h"
 #import "SVPlugInPagelet.h"
 #import "SVHTMLTextBlock.h"
-#import "SVImage.h"
+#import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
@@ -330,6 +330,18 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
     DOMDocument *domDoc = [[self webEditor] HTMLDocument];
+    
+    
+    // Controller for logo if there is one
+    SVLogoImage *logo = [[[self page] master] logo];
+    if (![[logo hidden] boolValue])
+    {
+        SVDOMController *controller = [[[logo DOMControllerClass] alloc] initWithContentObject:logo
+                                                                                 inDOMDocument:domDoc];
+        [[self webEditor] insertItem:controller];
+        [controller release];
+    }
+    
     
     
     // Set up controllers for all sidebar pagelets. Could we do this better by receiving a list of pagelets from the parser?

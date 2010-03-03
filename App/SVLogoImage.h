@@ -10,4 +10,7 @@
 
 
 @interface SVLogoImage : SVImage
+
+@property(nonatomic, copy) NSNumber *hidden;    // BOOL, mandatory
+
 @end

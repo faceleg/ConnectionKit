@@ -38,7 +38,7 @@
 
 @interface KTMaster ()
 
-@property(nonatomic, retain, readwrite) SVImage *logo;
+@property(nonatomic, retain, readwrite) SVLogoImage *logo;
 
 - (KTMediaManager *)mediaManager;
 
@@ -124,7 +124,7 @@
     
     
     // Logo
-    SVImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo" inManagedObjectContext:[self managedObjectContext]];
+    SVLogoImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo" inManagedObjectContext:[self managedObjectContext]];
     [self setLogo:logo];
 }
 
