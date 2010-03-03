@@ -276,43 +276,9 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Banner
 
-- (KTMediaContainer *)bannerImage
-{
-	[self willAccessValueForKey:@"bannerImage"];
-	KTMediaContainer *result = [self primitiveValueForKey:@"bannerImage"];
-	[self didAccessValueForKey:@"bannerImage"];
-	
-	if (!result)
-	{
-		NSString *mediaID = [self valueForKey:@"bannerImageMediaIdentifier"];
-		if (mediaID)
-		{
-			result = [[self mediaManager] mediaContainerWithIdentifier:mediaID];
-			[self setPrimitiveValue:result forKey:@"bannerImage"];
-		}
-		else
-		{
-			[self setPrimitiveValue:[NSNull null] forKey:@"bannerImage"];
-		}
-	}
-	else if ((id)result == [NSNull null])
-	{
-		result = nil;
-	}
-	
-	return result;
-}
-
-- (void)setBannerImage:(KTMediaContainer *)banner
-{
-	[self willChangeValueForKey:@"bannerImage"];
-	[self setPrimitiveValue:banner forKey:@"bannerImage"];
-	[self setValue:[banner identifier] forKey:@"bannerImageMediaIdentifier"];
-	[self didChangeValueForKey:@"bannerImage"];
-}
+@dynamic banner;
 
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose
 {

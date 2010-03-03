@@ -46,12 +46,17 @@
 - (void)setDesignBundleIdentifier:(NSString *)identifier;
 - (NSURL *)designDirectoryURL;
 
-- (KTMediaContainer *)bannerImage;
-- (void)setBannerImage:(KTMediaContainer *)banner;
+
+#pragma mark Banner
+@property(nonatomic, retain) SVMediaRecord *banner;
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
+
+#pragma mark Logo
 @property(nonatomic, retain, readonly) SVLogoImage *logo;
 
+
+#pragma mark Favicon
 @property(nonatomic, retain) SVMediaRecord *faviconMedia;
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 
