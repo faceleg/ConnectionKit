@@ -123,9 +123,6 @@ extern NSString *gInfoWindowAutoSaveName;
 - (IBAction)reload:(id)sender;
 
 
-#pragma mark Choose Dialog
-- (NSOpenPanel *)makeChooseDialog;
-
 @end
 
 

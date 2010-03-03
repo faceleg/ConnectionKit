@@ -390,7 +390,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)addFilePage:(id)sender;         // uses open panel to select a file, then inserts
 {
     // Throw up an open panel
-    NSOpenPanel *openPanel = [self makeChooseDialog];
+    NSOpenPanel *openPanel = [[self document] makeChooseDialog];
     
     [openPanel beginSheetForDirectory:nil
                                  file:nil
@@ -1009,22 +1009,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [controller doCommandBySelector:_cmd];
 }
 
-#pragma mark Choose Dialog
-
-- (NSOpenPanel *)makeChooseDialog;
-{
-    NSOpenPanel *result = [NSOpenPanel openPanel];
-
-	[result setCanChooseDirectories:NO];
-	[result setTreatsFilePackagesAsDirectories:YES];
-	[result setAllowsMultipleSelection:NO];
-
-	[result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
-    
-    return result;
-}
-
-#pragma mark -
 #pragma mark HTML Validation
 
 - (IBAction)validateSource:(id)sender

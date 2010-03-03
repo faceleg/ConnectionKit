@@ -1135,10 +1135,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	NSArray *selectedObjects = [oPagesController selectedObjects];
 	id item = [selectedObjects lastObject];
 	KTSite *site = [item site];
-	KTDocument *doc = [site document];
-	KTDocWindowController *controller = [[doc windowControllers] lastObject];
 
-	NSOpenPanel *panel = [controller makeChooseDialog];
+	NSOpenPanel *panel = [[site document] makeChooseDialog];
 	
 	int returnCode = [panel runModal];
 	

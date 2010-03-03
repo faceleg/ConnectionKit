@@ -911,10 +911,21 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	 */
 }
 
+#pragma mark UI
 
+- (NSOpenPanel *)makeChooseDialog;
+{
+    NSOpenPanel *result = [NSOpenPanel openPanel];
+    
+	[result setCanChooseDirectories:NO];
+	[result setTreatsFilePackagesAsDirectories:YES];
+	[result setAllowsMultipleSelection:NO];
+    
+	[result setPrompt:NSLocalizedString(@"Insert", "open panel prompt button")];
+    
+    return result;
+}
 
-
-#pragma mark -
 #pragma mark Delegate Methods
 
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo

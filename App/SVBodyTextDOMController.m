@@ -134,7 +134,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (IBAction)insertFile:(id)sender;
 {
     NSWindow *window = [[[self HTMLElement] documentView] window];
-    NSOpenPanel *panel = [[window windowController] makeChooseDialog];
+    NSOpenPanel *panel = [[[window windowController] document] makeChooseDialog];
     
     [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
 }

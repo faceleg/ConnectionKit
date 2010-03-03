@@ -108,6 +108,10 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (IBAction)setupHost:(id)sender;
 
 
+#pragma mark UI
+- (NSOpenPanel *)makeChooseDialog;
+
+
 #pragma mark Editing
 
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
@@ -116,6 +120,9 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
 
 @end
+
+
+#pragma mark -
 
 
 @interface KTDocument (Properties)
@@ -149,12 +156,18 @@ extern NSString *kKTDocumentWillSaveNotification;
 @end
 
 
+#pragma mark -
+
+
 @interface KTDocument (Saving)
 
 - (BOOL)isSaving;
 
 
 @end
+
+
+#pragma mark -
 
 
 // Default implementation does nothing, so implement in subclasses to take action, such as passing the message on to other controllers
