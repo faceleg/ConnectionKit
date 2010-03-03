@@ -1,5 +1,5 @@
 //
-//  ContactElementInspectorController.h
+//  ContactElementInspector.h
 //  ContactElement
 //
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
@@ -40,7 +40,7 @@
 @class NTBoxView;
 
 
-@interface ContactElementInspectorController : SVInspectorViewController
+@interface ContactElementInspector : SVInspectorViewController
 {
 	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
 	IBOutlet NSButton	*oAddLinkButton;

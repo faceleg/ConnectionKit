@@ -1,5 +1,5 @@
 //
-//  ContactElementDelegate.h
+//  ContactElementPlugin.h
 //  ContactElement
 //
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
@@ -35,12 +35,13 @@
 //
 
 #import "SandvoxPlugin.h"
+#import "SandvoxPlugin.h"
 
 
 @class ContactElementFieldsArrayController, ContactElementField;
 
 
-@interface ContactElementDelegate : SVElementPlugIn
+@interface ContactElementPlugin : SVElementPlugIn
 {
 	IBOutlet NSTextField			*oSubjects;
 	IBOutlet NSTextField			*oLabel;

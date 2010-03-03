@@ -60,6 +60,6 @@
 	<key>KTTemplateName</key>
 	<string>ContactElementTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>ContactElementDelegate</string>
+	<string>ContactElementPlugin</string>
 </dict>
 </plist>

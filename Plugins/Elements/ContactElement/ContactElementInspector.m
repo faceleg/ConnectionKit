@@ -1,5 +1,5 @@
 //
-//  ContactElementInspectorController.m
+//  ContactElementInspector.m
 //  ContactElement
 //
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
@@ -34,11 +34,11 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementInspectorController.h"
+#import "ContactElementInspector.h"
 #import <SandvoxPlugin.h>
 
 
-@implementation ContactElementInspectorController
+@implementation ContactElementInspector
 
 #pragma mark Init
 

@@ -1,5 +1,5 @@
 //
-//  ContactElementDelegate.m
+//  ContactElementPlugin.m
 //  ContactElement
 //
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
@@ -34,8 +34,8 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementDelegate.h"
-#import "ContactElementInspectorController.h"
+#import "ContactElementPlugin.h"
+#import "ContactElementInspector.h"
 #import "ContactElementField.h"
 
 #import "SandvoxPlugin.h"
@@ -55,7 +55,7 @@
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactElementDelegate ()
+@interface ContactElementPlugin ()
 
 - (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive;
 - (NSArray *)fieldsPropertyListRepresentation;
@@ -67,7 +67,7 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 @end
 
 
-@implementation ContactElementDelegate
+@implementation ContactElementPlugin
 
 /*
  Plugin Properties we use:
@@ -91,13 +91,13 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	
 #warning should use keyPathsForValuesAffecting<key>
 
-    [ContactElementDelegate setKeys:
+    [ContactElementPlugin setKeys:
         [NSArray arrayWithObjects: @"address", nil]
         triggerChangeNotificationsForDependentKey: @"encodedRecipient"];
-	[ContactElementDelegate setKeys:
+	[ContactElementPlugin setKeys:
         [NSArray arrayWithObjects: @"subjectType", nil]
         triggerChangeNotificationsForDependentKey: @"subjectPrompt"];
-	[ContactElementDelegate setKeys:
+	[ContactElementPlugin setKeys:
         [NSArray arrayWithObjects: @"subjectType", @"subjectText", nil]
         triggerChangeNotificationsForDependentKey: @"subjectInputHTML"];
 	
@@ -187,7 +187,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return [NSSet setWithObjects:nil];	
 }
 
-+ (Class)inspectorViewControllerClass { return [ContactElementInspectorController class]; }
++ (Class)inspectorViewControllerClass { return [ContactElementInspector class]; }
 
 
 #pragma mark -

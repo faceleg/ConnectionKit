@@ -49,12 +49,12 @@ typedef enum
 } ContactElementFieldType;
 
 
-@class ContactElementDelegate;
+@class ContactElementPlugin;
 
 
 @interface ContactElementField : NSObject <NSCopying>
 {
-	ContactElementDelegate	*myOwner;
+	ContactElementPlugin	*myOwner;
 	
 	NSString				*myIdentifier;
 	ContactElementFieldType	myType;
@@ -70,8 +70,8 @@ typedef enum
 - (id)initWithDictionary:(NSDictionary *)dictionary;
 
 // Owner
-- (ContactElementDelegate *)owner;
-- (void)setOwner:(ContactElementDelegate *)owner;
+- (ContactElementPlugin *)owner;
+- (void)setOwner:(ContactElementPlugin *)owner;
 
 // Accessors
 - (NSString *)identifier;
