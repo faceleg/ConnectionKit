@@ -280,6 +280,14 @@
 
 @dynamic banner;
 
+- (void)setBannerWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
+{
+    if ([self banner]) [[self managedObjectContext] deleteObject:[self banner]];
+    
+    SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Banner" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
+    [self setBanner:media];
+}
+
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose
 {
 	NSString *result = nil;

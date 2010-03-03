@@ -48,6 +48,7 @@
 
 #pragma mark Banner
 @property(nonatomic, retain) SVMediaRecord *banner;
+- (void)setBannerWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 - (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose;
 
 
