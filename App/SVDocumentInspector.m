@@ -9,10 +9,12 @@
 #import "SVDocumentInspector.h"
 
 #import "KTDocument.h"
+#import "KTMaster.h"
+
+#import "KSCollectionController.h"
 
 
 @implementation SVDocumentInspector
-
 
 //  check representedObject property that's the document.  windowForSheet -- to forward the message....
 
@@ -35,13 +37,16 @@
 
 - (IBAction)chooseBanner:(id)sender;
 {
-	NSBeep();
+	KTDocument *document = [self representedObject];
+    NSOpenPanel *panel = [document makeChooseDialog];
+    
+    if ([panel runModal] == NSFileHandlingPanelOKButton)
+    {
+        NSURL *URL = [panel URL];
+        
+        KTMaster *master = [[[self inspectedObjectsController] selection] valueForKey:@"master"];
+        [master setBannerWithContentsOfURL:URL];
+    }
 }
-
-- (IBAction)chooseLogo:(id)sender;
-{
-	NSBeep();
-}
-
 
 @end

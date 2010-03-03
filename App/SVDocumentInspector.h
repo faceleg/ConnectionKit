@@ -18,6 +18,5 @@
 - (IBAction)configureGoogle:(id)sender;
 - (IBAction)chooseFavicon:(id)sender;
 - (IBAction)chooseBanner:(id)sender;
-- (IBAction)chooseLogo:(id)sender;
 
 @end
