@@ -137,21 +137,7 @@
 	
     
 	// For preview/quicklook mode, the banner CSS
-	NSString *masterCSS = nil;//[[self master] bannerCSSForPurpose:[context generationPurpose]];
-    //[[self master] writeBannerCSS];
-    if (masterCSS)
-    {
-        // For Quick Look and previewing the master-specific stylesheet should be inline.
-        // When publishing it is lumped into main.css
-        if (![context isForPublishing])
-        {
-            [context writeStyleStartTagWithType:@"text/css"];
-            [context writeNewline];
-            [context writeHTMLString:masterCSS];
-            [context writeNewline];
-            [context writeEndTag];
-        }
-	}
+    [[self master] writeBannerCSS];
 }
 
 #pragma mark -

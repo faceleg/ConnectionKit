@@ -288,37 +288,27 @@
     [self setBanner:media];
 }
 
-- (NSString *)bannerCSSForPurpose:(KTHTMLGenerationPurpose)generationPurpose
-{
-	NSString *result = nil;
-	
+@dynamic bannerType;
+
+- (void)writeBannerCSS;
+{	
 	// If the user has specified a custom banner and the design supports it, load it in
-	KTMediaContainer *banner = [self bannerImage];
-	if (banner)
+	if ([[self bannerType] boolValue])
 	{
+        SVHTMLContext *context = [SVHTMLContext currentContext];
+        
+        
 		NSDictionary *scalingProperties = [[self design] imageScalingPropertiesForUse:@"bannerImage"];
 		OBASSERT(scalingProperties);
 		
-		// Find the right path
-        NSString *bannerURLString = nil;
-        if (generationPurpose == kSVHTMLGenerationPurposeEditing)
-        {
-            bannerURLString = [[[banner file] URLForImageScalingProperties:scalingProperties] absoluteString];
-        }
-        else
-        {
-            // FIXME: Update this to new image scaling system
-			NSURL *masterCSSURL = [NSURL URLWithString:@"main.css" relativeToURL:[self designDirectoryURL]];
-            NSURL *mediaURL = [[[banner file] uploadForScalingProperties:scalingProperties] URL];
-            bannerURLString = [mediaURL stringRelativeToURL:masterCSSURL];
-        }
-        
+		
         NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
-        result = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", bannerURLString];
+        SVMediaRecord *banner = [self banner];
+        NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [banner fileURL]];
+        
+        
+        [context includeStyle:css];
 	}
-	
-	
-	return result;
 }
 
 #pragma mark Logo

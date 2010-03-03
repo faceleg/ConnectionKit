@@ -95,6 +95,13 @@
     }
 }
 
+- (void)includeStyle:(NSString *)cssText;
+{
+    [self writeStyleStartTagWithType:@"text/css"];
+    [self writeHTMLString:cssText];
+    [self writeEndTag];
+}
+
 #pragma mark Style
 
 - (void)writeStyleStartTagWithType:(NSString *)type;

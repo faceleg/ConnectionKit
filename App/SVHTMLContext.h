@@ -155,6 +155,7 @@ typedef enum {
 
 // Default is to write a <link> tag to the stylesheet, EXCEPT when publishing where nothing happens. It is expected that a subclass will override the method to build up main.css for real publishing
 - (void)includeStylesheetAtURL:(NSURL *)stylesheetURL;
+- (void)includeStyle:(NSString *)cssText;
 
 
 #pragma mark Style
