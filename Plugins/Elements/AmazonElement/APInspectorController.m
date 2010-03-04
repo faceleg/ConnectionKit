@@ -97,7 +97,7 @@
 	[automaticTableButtonsBox setFrameColor: [NSColor lightGrayColor]];
 	
 	// Give the buttons their icons
-	[[oManualListAddProductButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
+	[oManualListAddProductButton setImage:[NSImage imageNamed:NSImageNameAddTemplate]];
 	[oManualListRemoveProductButton setImage:[NSImage imageNamed:NSImageNameRemoveTemplate]];
 }
 
