@@ -67,10 +67,10 @@
 
 #pragma mark Modifying the Link
 
-- (void)modifyLinkTo:(SVLink *)link;    // sends -changeLink: up the responder chain
+- (void)modifyLinkTo:(SVLink *)link;    // sends -createLink: up the responder chain
 {
     [self setSelectedLink:link];
-    [NSApp sendAction:@selector(changeLink:) to:nil from:self];
+    [NSApp sendAction:@selector(createLink:) to:nil from:self];
     
     // Notify Inspectors of the change
     [self refreshLinkInspectors];

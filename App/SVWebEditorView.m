@@ -860,7 +860,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-- (void)changeLink:(SVLinkInspector *)sender;
+- (void)createLink:(SVLinkInspector *)sender;
 {
     //  Pass on to focused text
     if ([[self focusedText] respondsToSelector:_cmd])

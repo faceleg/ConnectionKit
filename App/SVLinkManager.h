@@ -31,7 +31,7 @@
 
 
 #pragma mark Modifying the Link
-- (void)modifyLinkTo:(SVLink *)link;    // sends -changeLink: up the responder chain
+- (void)modifyLinkTo:(SVLink *)link;    // sends -createLink: up the responder chain
 
 
 #pragma mark UI
@@ -44,5 +44,5 @@
 
 // When changing the link, this message is sent up the responder chain. A suitable object should handle it by asking the sender for the appropriate link properties. For now, this is best done by sending it a -linkDestinationURLString: method.
 @interface NSObject (SVLinkManagerResponderMethod)
-- (void)changeLink:(SVLinkManager *)sender;
+- (void)createLink:(SVLinkManager *)sender;
 @end
