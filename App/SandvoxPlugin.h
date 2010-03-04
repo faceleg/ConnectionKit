@@ -46,7 +46,6 @@
 
 //  Media
 #import "KTMediaFileUpload.h"
-#import "KTMediaManager.h"
 #import "KTImageScalingSettings.h"
 
 // DataSources (drag-and-drop external sources)

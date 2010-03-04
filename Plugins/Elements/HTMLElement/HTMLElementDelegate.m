@@ -174,7 +174,7 @@
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
-    KTAbstractElement *element = [self delegateOwner];
+    id element = [self delegateOwner];
     
     // Import normal properties
     [element setValuesForKeysWithDictionary:oldPluginProperties];

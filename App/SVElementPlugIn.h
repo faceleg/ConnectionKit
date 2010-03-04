@@ -18,7 +18,7 @@
 #pragma mark -
 
 
-@class KTMediaManager, KTPage;
+@class KTPage;
 @protocol SVPage, SVElementPlugInContainer;
 
 
@@ -99,6 +99,5 @@
 
 // Legacy I'd like to get rid of
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
-@property(nonatomic, readonly) KTMediaManager *mediaManager;
 
 @end

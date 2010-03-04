@@ -135,7 +135,7 @@
 
 /*	Keeps various page properties up-to-date with the plugin.
  */
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
+- (void)plugin:(id)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue;
 {
 	if ([key isEqualToString:@"linkType"])
 	{

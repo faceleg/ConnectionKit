@@ -101,7 +101,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
-	KTAbstractElement *element = [self delegateOwner];
+	id element = [self delegateOwner];
 	
 	if (isNewObject)
 	{
@@ -356,7 +356,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
+				[[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -367,7 +367,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 			NSEnumerator *theEnum = [lineArray objectEnumerator];
 			NSString *oneLine;
 
-			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [((KTAbstractElement *)[self delegateOwner]) uniqueID]];
+			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [([self delegateOwner]) uniqueID]];
 			while (nil != (oneLine = [theEnum nextObject]) )
 			{
 				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
@@ -391,7 +391,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-				[((KTAbstractElement *)[self delegateOwner]) uniqueID], [subjectText stringByEscapingHTMLEntities]];
+				[[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 	}
 	
@@ -630,7 +630,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
-    KTAbstractElement *element = [self delegateOwner];
+    id element = [self delegateOwner];
     
     // Import basic properties
     [element setValuesForKeysWithDictionary:oldPluginProperties];

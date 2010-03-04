@@ -114,7 +114,7 @@
 
 /*	Changing collection means disabling archives on the old collection if necessary
  */
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+- (void)plugin:(id)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
 {
 	if ([key isEqualToString:@"collection"])
 	{

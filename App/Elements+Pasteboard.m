@@ -10,7 +10,6 @@
 #import "KTPage.h"
 
 #import "BDAlias.h"
-#import "KTMediaManager.h"
 #import "KTPasteboardArchiving.h"
 
 #import "NSEntityDescription+KTExtensions.h"
@@ -23,7 +22,7 @@
 	NSString *myPluginEntity;
 }
 
-- (id)initWithPlugin:(KTAbstractElement *)plugin;
+- (id)initWithPlugin:(id)plugin;
 
 - (NSString *)pluginID;
 - (NSString *)pluginEntity;

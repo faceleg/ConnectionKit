@@ -183,8 +183,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 @synthesize delegateOwner = _delegateOwner;
 
-- (KTMediaManager *)mediaManager { return [[self delegateOwner] mediaManager]; }
-
 @end
 
 

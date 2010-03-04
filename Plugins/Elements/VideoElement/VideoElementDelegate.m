@@ -278,7 +278,7 @@
 	[[self delegateOwner] setValue:posterImageMedia forKey:@"posterImage"];
 }
 
-- (void)plugin:(KTAbstractElement *)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
+- (void)plugin:(id)plugin didSetValue:(id)value forPluginKey:(NSString *)key oldValue:(id)oldValue
 {
 	// When setting the video load it to get dimensions etc. & update poster image
 	if ([key isEqualToString:@"video"])
@@ -299,7 +299,7 @@
 	// Update page thumbnail if appropriate
 	else if ([key isEqualToString:@"posterImage"])
 	{
-		KTAbstractElement *container = [self delegateOwner];
+		id container = [self delegateOwner];
 		if (container && [container respondsToSelector:@selector(thumbnail)])
 		{
 			if ([container valueForKey:@"thumbnail"] == oldValue)
@@ -945,7 +945,7 @@ After deflating starting at byte 8, you get:
                     fromPlugin:(NSManagedObject *)oldPlugin
                          error:(NSError **)error
 {
-    KTAbstractElement *element = [self delegateOwner];
+    id element = [self delegateOwner];
     
     // Import the video
     KTMediaContainer *video = [[self mediaManager] mediaContainerWithMediaRefNamed:@"VideoElement" element:oldPlugin];
