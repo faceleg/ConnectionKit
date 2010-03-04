@@ -3494,6 +3494,8 @@
 		27FDEF10111B4C84001F4E60 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
+				CE01A6380EAFD63600BDF264 /* KSExtensibleManagedObject.h */,
+				CE01A6390EAFD63600BDF264 /* KSExtensibleManagedObject.m */,
 				27FDEF11111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h */,
 				27FDEF12111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m */,
 			);
@@ -4533,8 +4535,6 @@
 				CE01A6350EAFD63600BDF264 /* KSEmailAddressComboBox.m */,
 				CE01A6360EAFD63600BDF264 /* KSExceptionReporter.h */,
 				CE01A6370EAFD63600BDF264 /* KSExceptionReporter.m */,
-				CE01A6380EAFD63600BDF264 /* KSExtensibleManagedObject.h */,
-				CE01A6390EAFD63600BDF264 /* KSExtensibleManagedObject.m */,
 				CE01A63A0EAFD63600BDF264 /* KSFeedbackReporter.h */,
 				CE01A63B0EAFD63600BDF264 /* KSFeedbackReporter.m */,
 				CE01A63C0EAFD63600BDF264 /* KSFontManager.h */,
