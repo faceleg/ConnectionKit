@@ -52,6 +52,26 @@
 	return [NSSet setWithObjects:@"deliciousID", @"restrictedTags", @"sortChronologically", @"maxEntries", @"showTags", @"showExtended", @"listStyle", nil];
 }
 
+@synthesize deliciousID = _deliciousID;
+@synthesize restrictedTags = _restrictedTags;
+@synthesize sortChronologically = _sortChronologically;
+@synthesize maxEntries = _maxEntries;
+@synthesize showTags = _showTags;
+@synthesize showExtended = _showExtended;
+@synthesize listStyle = _listStyle;
+
+
+
+- (void) dealloc
+{
+    self.deliciousID = nil;
+    self.restrictedTags = nil;
+	[super dealloc];
+}
+
+
+
+
 /*
  
  See: http://delicious.com/help/json

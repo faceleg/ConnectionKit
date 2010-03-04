@@ -39,7 +39,21 @@
 
 @interface DeliciousPlugin : SVElementPlugIn {
 
+	NSString *_deliciousID;
+	NSString *_restrictedTags;
+	BOOL _sortChronologically;
+	int _maxEntries;
+	BOOL _showTags;
+	BOOL _showExtended;
+	int _listStyle;
 }
 
+@property (copy) NSString *deliciousID;
+@property (copy) NSString *restrictedTags;
+@property (assign) BOOL sortChronologically;
+@property (assign) int maxEntries;
+@property (assign) BOOL showTags;
+@property (assign) BOOL showExtended;
+@property (assign) int listStyle;
 
 @end

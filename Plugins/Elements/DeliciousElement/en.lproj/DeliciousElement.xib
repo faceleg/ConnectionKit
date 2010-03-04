@@ -736,22 +736,6 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.inspectedObjectsController.restrictedTags</string>
-						<reference key="source" ref="502497782"/>
-						<reference key="destination" ref="260890528"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="502497782"/>
-							<reference key="NSDestination" ref="260890528"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.inspectedObjectsController.restrictedTags</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.inspectedObjectsController.restrictedTags</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">130</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">selectedIndex: inspectedObjectsController.selection.listStyle</string>
 						<reference key="source" ref="745528151"/>
 						<reference key="destination" ref="260890528"/>
@@ -813,6 +797,22 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">138</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.restrictedTags</string>
+						<reference key="source" ref="502497782"/>
+						<reference key="destination" ref="260890528"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="502497782"/>
+							<reference key="NSDestination" ref="260890528"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.restrictedTags</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.restrictedTags</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">139</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1209,7 +1209,7 @@ Z2h0IEFwcGxlIENvbXB1dGVyLCBJbmMuLCAyMDA1AAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">138</int>
+			<int key="maxID">139</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
