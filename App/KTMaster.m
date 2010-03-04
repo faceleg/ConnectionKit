@@ -20,7 +20,6 @@
 #import "SVTitleBox.h"
 
 #import "KTMediaManager.h"
-#import "KTMediaContainer.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
@@ -331,15 +330,6 @@
     
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
     [self setFaviconMedia:media];
-}
-
-/*	If anyone tries to clear the favicon, actually reset it to the default instead
- */
-- (BOOL)mediaContainerShouldRemoveFile:(KTMediaContainer *)mediaContainer
-{
-	BOOL result = YES;
-	
-	return result;
 }
 
 #pragma mark Graphical Text
