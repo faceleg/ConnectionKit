@@ -339,11 +339,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self webViewDidChange];
 }
 
-- (void)createLink:(SVLinkManager *)sender;
-{
-    [self changeLinkDestinationTo:[[sender selectedLink] URLString]];
-}
-
 @synthesize selectedLink = _selectedLink;
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification
