@@ -8,7 +8,7 @@
 
 #import "SVBodyElement.h"
 
-#import "SVBody.h"
+#import "SVRichText.h"
 
 
 @implementation SVBodyElement 

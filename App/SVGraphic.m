@@ -9,7 +9,7 @@
 #import "SVGraphic.h"
 
 #import "SVHTMLTemplateParser.h"
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
