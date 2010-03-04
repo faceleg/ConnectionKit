@@ -45,7 +45,6 @@
 #import "SVHTMLTemplateParser.h"
 
 //  Media
-#import "KTMediaFileUpload.h"
 #import "KTImageScalingSettings.h"
 
 // DataSources (drag-and-drop external sources)
@@ -90,10 +89,6 @@
 #import "NSString+Karelia.h"
 #import "NSThread+Karelia.h"
 #import "NSURL+Karelia.h"
-
-// CoreData extensions
-//#import "NSManagedObject+KTExtensions.h"
-//#import "NSManagedObjectContext+KTExtensions.h"
 
 // AppKit extensions
 #import "NSApplication+Karelia.h"
