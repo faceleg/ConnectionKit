@@ -13,7 +13,6 @@
 #import "KTOffScreenWebViewController.h"
 #import "KTMaster.h"
 
-#import "KTAbstractPluginDelegate.h"
 #import "DOMNode+KTExtensions.h"
 #import "NSAttributedString+Karelia.h"
 
@@ -73,15 +72,7 @@
 	OBASSERT([aRequestor respondsToSelector:@selector(managedObjectContext)]);
 	
 	// track it with a mediaRef
-	id owner = nil;
-	if ( [aRequestor isKindOfClass:[KTAbstractPluginDelegate class]] )
-	{
-		owner = [aRequestor delegateOwner];
-	}
-	else
-	{
-		owner = aRequestor;
-	}
+	id owner = aRequestor;
 	
 	
 	[aDOMDocument convertImageSourcesToUseSettingsNamed:@"inTextMediumImage" forPlugin:owner];

@@ -13,7 +13,6 @@
 #import "KTPage.h"
 #import "KTPulsatingOverlay.h"
 #import "NSOutlineView+KTExtensions.h"
-#import "KTAbstractPluginDelegate.h"
 
 #import "Registration.h"
 

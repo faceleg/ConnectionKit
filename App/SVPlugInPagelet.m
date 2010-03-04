@@ -8,7 +8,6 @@
 
 #import "SVPlugInPagelet.h"
 
-#import "KTAbstractPluginDelegate.h"
 #import "SVDOMController.h"
 #import "SVElementPlugIn.h"
 #import "KTElementPlugin.h"
