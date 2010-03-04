@@ -76,9 +76,6 @@ extern NSString *KTMediaLogDomain;
 - (NSSet *)missingMediaFiles;
 
 
-// Tidying up
-- (void)moveApplicableExternalMediaInDocument;
-
 - (void)garbageCollect;
 
 

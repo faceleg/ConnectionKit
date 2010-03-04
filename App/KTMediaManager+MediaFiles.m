@@ -346,27 +346,6 @@
 #pragma mark -
 #pragma mark Conversion
 
-/*	Convert any external media files to internal if the document's settings recommend it.
- */
-- (void)moveApplicableExternalMediaInDocument
-{
-	// Not doing that for now
-    return;
-    
-    
-    
-    NSArray *externalMediaFiles = [self externalMediaFiles];
-	KTMediaFile *aMediaFile;
-	
-	for (aMediaFile in externalMediaFiles)
-	{
-		if (![self mediaFileShouldBeExternal:[aMediaFile currentPath]])
-		{
-			[self inDocumentMediaFileToReplaceExternalMedia:aMediaFile];
-		}
-	}
-}
-
 /*  Attempts to move a given file into the document. Returns nil if this fails (e.g. the file can't be located).
  */
 - (KTMediaFile *)inDocumentMediaFileToReplaceExternalMedia:(KTMediaFile *)original

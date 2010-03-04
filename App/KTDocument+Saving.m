@@ -521,15 +521,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     
     
-    // Move external media in-document if the user requests it
-    KTSite *site = [self site];
-    if ([site copyMediaOriginals] != [[site committedValueForKey:@"copyMediaOriginals"] intValue])
-    {
-        [[self mediaManager] moveApplicableExternalMediaInDocument];
-    }
-	
-	
-	return YES;
+    return YES;
 }
 
 - (BOOL)writeDatastoreToURL:(NSURL *)inURL  // TODO: this should be the URL of the datastore, not the document
