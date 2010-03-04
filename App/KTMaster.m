@@ -299,9 +299,9 @@
         SVHTMLContext *context = [SVHTMLContext currentContext];
         
         
-		NSDictionary *scalingProperties = [[self design] imageScalingPropertiesForUse:@"bannerImage"];
+		NSMutableDictionary *scalingProperties = [[[self design] imageScalingPropertiesForUse:@"bannerImage"] mutableCopy];
 		OBASSERT(scalingProperties);
-		
+		[scalingProperties setObject:(NSString *)kUTTypeJPEG forKey:@"fileType"];
 		
         NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
         SVMediaRecord *banner = [self banner];
@@ -310,7 +310,7 @@
                                      scalingProperties:scalingProperties];
         
         
-        NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", URL];
+        NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
         
         
         [context includeStyle:css];

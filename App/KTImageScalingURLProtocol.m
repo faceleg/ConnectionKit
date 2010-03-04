@@ -143,8 +143,7 @@ static NSURLCache *_sharedCache;
 {
 	BOOL result = NO;
 	
-	if ([[[request URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme] &&
-		[request scaledImageSourceURL])
+	if ([[[request URL] scheme] isEqualToString:KTImageScalingURLProtocolScheme])
 	{
 		NSDictionary *query = [[request URL] queryDictionary];
 		if (//[query objectForKey:@"size"] &&   // Allow there to be no size and just convert between data types
@@ -217,7 +216,7 @@ static NSURLCache *_sharedCache;
         // Construct image scaling properties dictionary from the URL
         NSDictionary *URLQuery = [URL queryDictionary];
         
-        NSURL *sourceURL = [[self request] scaledImageSourceURL];
+        NSURL *sourceURL = [[NSURL alloc] initWithScheme:@"file" host:[URL host] path:[URL path]];
         OBASSERT(sourceURL);
         
         
@@ -303,7 +302,7 @@ static NSURLCache *_sharedCache;
     
     
     // Load the image from disk
-    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:[[self request] scaledImageSourceURL]];
+    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:sourceURL];
     if (!sourceImage)
     {
         if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
