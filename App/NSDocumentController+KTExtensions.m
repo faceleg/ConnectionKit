@@ -22,8 +22,7 @@
 	
 	for ( NSPersistentDocument *document in documents )
 	{
-		if ([[document managedObjectContext] isEqual:aContext] ||
-			([document isKindOfClass:[KTDocument class]] && [[(KTDocument *)document mediaManager] managedObjectContext] == aContext))
+		if ([[document managedObjectContext] isEqual:aContext])
 		{
 			return document;
 		}

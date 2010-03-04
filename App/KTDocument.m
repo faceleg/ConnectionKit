@@ -234,11 +234,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (self)
     {
-		// Create media manager
-        _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
-        
-        
-        // Make a new site to store document properties
+		// Make a new site to store document properties
         NSManagedObjectContext *context = [self managedObjectContext];
         
         KTSite *site = [NSEntityDescription insertNewObjectForEntityForName:@"Site"
@@ -348,7 +344,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	[_site release];
     
-    [_mediaManager release];
     [_reservedFilenames release];
     [_deletedMediaDirectoryName release];
 	
@@ -613,10 +608,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         NSString *path = [[self site] lastExportDirectoryPath];
         if (path) self.lastExportDirectory = [NSURL fileURLWithPath:path];
 	}
-    
-    
-    // Create media manager. MUST be done after reading so unique filenames can be registered
-    _mediaManager = [[KTMediaManager alloc] initWithDocument:self];
     
     
     // Reserve all the media filenames already in use    

@@ -48,15 +48,6 @@
     _thread = thread;
 }
 
-#pragma mark -
-#pragma mark Managers
-
-- (KTMediaManager *)mediaManager
-{
-	return _mediaManager;
-}
-
-#pragma mark -
 #pragma mark Other
 
 - (KTSite *)site { return _site; }

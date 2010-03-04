@@ -627,27 +627,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
  */
 - (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError
 {
-	// Build a list of the media files that will require copying/moving to the new doc
-	NSManagedObjectContext *mediaMOC = [[self mediaManager] managedObjectContext];
-	NSArray *mediaFiles = [mediaMOC fetchAllObjectsForEntityForName:@"MediaFile" error:NULL];
-	NSMutableSet *pathsToCopy = [NSMutableSet setWithCapacity:[mediaFiles count]];
-	NSMutableSet *pathsToMove = [NSMutableSet setWithCapacity:[mediaFiles count]];
-	
-	id aMediaFile;
-	for (aMediaFile in mediaFiles)
-	{
-		NSString *path = [aMediaFile currentPath];
-		if ([aMediaFile hasTemporaryObjectID])
-		{
-			[pathsToMove addObjectIgnoringNil:path];
-		}
-		else
-		{
-			[pathsToCopy addObjectIgnoringNil:path];
-		}
-	}
-	
-	
 	// Migrate the main document store
 	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
 	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
