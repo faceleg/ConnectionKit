@@ -442,15 +442,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             [PSC setURL:newStoreURL forPersistentStore:store];
         }
         
-        PSC = [[[self mediaManager] managedObjectContext] persistentStoreCoordinator];
-        OBASSERT([[PSC persistentStores] count] <= 1);
-        store = [PSC persistentStoreForURL:[KTMediaManager mediaStoreURLForDocumentURL:oldURL]];
-        if (store)
-        {
-            NSURL *newStoreURL = [KTMediaManager mediaStoreURLForDocumentURL:absoluteURL];
-            [PSC setURL:newStoreURL forPersistentStore:store];
-        }
-        
         [oldURL release];
     }
 }

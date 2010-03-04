@@ -35,12 +35,7 @@ extern NSString *KTMediaLogDomain;
 }
 
 // Basic Accesors
-+ (NSString *)defaultMediaStoreType;
-+ (NSURL *)mediaStoreURLForDocumentURL:(NSURL *)inURL;
-+ (NSManagedObjectModel *)managedObjectModel;
-
 - (KTDocument *)document;
-- (NSManagedObjectContext *)managedObjectContext;
 
 @end
 
@@ -66,18 +61,6 @@ extern NSString *KTMediaLogDomain;
 
 // Scaling
 - (BOOL)scaledImageContainersShouldGenerateMediaFiles;
-
-@end
-
-
-@interface KTMediaManager (LegacySupport)
-
-- (KTMediaContainer *)mediaContainerWithMediaRefNamed:(NSString *)oldMediaRefName element:(NSManagedObject *)oldElement;
-
-- (NSString *)importLegacyMediaFromString:(NSString *)oldText
-                      scalingSettingsName:(NSString *)scalingSettings
-                               oldElement:(NSManagedObject *)oldElement
-                               newElement:(KTAbstractElement *)newElement;
 
 @end
 
