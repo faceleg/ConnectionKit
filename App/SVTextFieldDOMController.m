@@ -178,6 +178,10 @@
     return result;
 }
 
+#pragma mark Links
+
+- (IBAction)createLink:(id)sender { NSBeep(); }
+
 #pragma mark Bindings/NSEditor
 
 + (void)initialize
