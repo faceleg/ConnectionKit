@@ -6,13 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphic.h"
+#import "SVIntroAndCaptionGraphic.h"
 
 
 @class SVElementPlugIn, KTElementPlugin;
 
 
-@interface SVPlugInPagelet : SVGraphic
+@interface SVPlugInPagelet : SVIntroAndCaptionGraphic
 {
   @private
     SVElementPlugIn *_plugIn;

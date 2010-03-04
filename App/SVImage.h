@@ -6,13 +6,14 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
-#import "SVGraphic.h"
+#import "SVIntroAndCaptionGraphic.h"
+
 
 @class SVMediaRecord;
 @class SVTextAttachment;
 
-@interface SVImage : SVGraphic
+
+@interface SVImage : SVIntroAndCaptionGraphic
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 

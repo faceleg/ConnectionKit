@@ -19,10 +19,16 @@
     [self setPrimitiveValue:[NSNumber numberWithUnsignedInt:128] forKey:@"height"];
 }
 
+- (void)createDefaultIntroAndCaption; { }
+
 @dynamic hidden;
 
 - (NSString *)title { return nil; }
 - (void)setTitle:(NSString *)title { }
+- (SVBody *)introduction { return nil; }
+- (void)setIntroduction:(SVBody *)caption { }
+- (SVBody *)caption { return nil; }
+- (void)setCaption:(SVBody *)caption { }
 
 - (SVTextAttachment *)textAttachment { return nil; }
 
