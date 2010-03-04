@@ -100,10 +100,6 @@
 #pragma mark -
 #pragma mark Perform selector
 
-/*	It's up to subclasses to override these
- */
-- (NSSet *)requiredMediaIdentifiers { return nil; }
-
 - (void)addCSSFilePathToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
 {
 	NSBundle *bundle = [[self plugin] bundle];

@@ -445,30 +445,6 @@
 	}
 }
 
-#pragma mark -
-#pragma mark Media
-
-/*	Each page adds a number of possible required media to the default. e.g. thumbnail
- */
-- (NSSet *)requiredMediaIdentifiers
-{
-	NSMutableSet *result = [NSMutableSet setWithSet:[super requiredMediaIdentifiers]];
-	
-	// Inclue our thumbnail and site outline image
-	[result addObjectIgnoringNil:[self valueForKey:@"thumbnailMediaIdentifier"]];
-	[result addObjectIgnoringNil:[self valueForKey:@"customSiteOutlineIconIdentifier"]];
-	
-	// Include anything our index requires?
-	NSSet *indexMediaIDs = [[self index] requiredMediaIdentifiers];
-	if (indexMediaIDs)
-	{
-		[result unionSet:indexMediaIDs];
-	}
-	
-	return result;
-}
-
-#pragma mark -
 #pragma mark Archiving
 
 + (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document

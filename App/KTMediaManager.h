@@ -70,16 +70,11 @@ extern NSString *KTMediaLogDomain;
 // designated initializer
 - (id)initWithDocument:(KTDocument *)document;
 
-
-
 // Missing media
 - (NSSet *)missingMediaFiles;
 
-
-- (void)garbageCollect;
-
-
 @end
+
 
 /*	At the lowest level of the system is raw KTMediaFile management. Media Files are simple objects that
  *	represent a single unique piece of media, internal or external to the document. Code outside the media
@@ -98,9 +93,4 @@ extern NSString *KTMediaLogDomain;
 - (KTMediaFile *)mediaFileWithImage:(NSImage *)image;
 - (KTMediaFile *)mediaFileWithDraggingInfo:(id <NSDraggingInfo>)info preferExternalFile:(BOOL)preferExternal;
 
-@end
-
-
-@interface NSManagedObject (MediaManagerGarbageCollector)
-- (NSSet *)requiredMediaIdentifiers;
 @end

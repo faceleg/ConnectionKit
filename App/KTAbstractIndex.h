@@ -47,7 +47,4 @@ typedef enum {
 
 - (KTNavigationArrowsStyle)navigationArrowsStyle;
 
-// Media
-- (NSSet *)requiredMediaIdentifiers;
-
 @end
