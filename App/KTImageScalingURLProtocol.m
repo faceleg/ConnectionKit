@@ -7,10 +7,10 @@
 //
 
 #import "KTImageScalingURLProtocol.h"
+#import "KTImageScalingSettings.h"
 
 #import "NSImage+KTExtensions.h"
 
-#import "CIImage+Karelia.h"
 #import "NSApplication+Karelia.h"
 #import "NSError+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -21,6 +21,79 @@
 
 
 NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
+
+
+@implementation NSURL (SandvoxImage)
+
++ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL 
+                                 size:(NSSize)size
+                          scalingMode:(KSImageScalingMode)scalingMode
+                           sharpening:(CGFloat)sharpening
+                    compressionFactor:(CGFloat)compression
+                             fileType:(NSString *)UTI;
+{
+    NSURL *baseURL = [[NSURL alloc] initWithScheme:KTImageScalingURLProtocolScheme
+											  host:[fileURL host]
+											  path:[fileURL path]];
+	
+	NSMutableDictionary *query = [[NSMutableDictionary alloc] init];
+	
+    if (!NSEqualSizes(size, NSZeroSize)) [query setObject:NSStringFromSize(size) forKey:@"size"];
+	[query setObject:[NSString stringWithFormat:@"%i", scalingMode] forKey:@"mode"];
+	if (UTI) [query setObject:UTI forKey:@"filetype"];
+	[query setObject:[NSString stringWithFormat:@"%f", sharpening] forKey:@"sharpen"];
+	[query setFloat:compression forKey:@"compression"];
+	
+	
+	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:query];
+	[query release];
+	[baseURL release];
+	
+	return result;
+}
+
++ (NSURL *)sandvoxImageURLWithFileURL:(NSURL *)fileURL scalingProperties:(NSDictionary *)properties;
+{
+	// Generate a scaled URL only if requested
+	if (properties)
+	{
+		KTImageScalingSettings *settings = [properties objectForKey:@"scalingBehavior"];
+        KSImageScalingMode mode = KSImageScalingModeAspectFit; // use most common value to avoid warning
+		
+        switch ([settings behavior])
+		{
+			case KTScaleToSize:
+				mode = KSImageScalingModeAspectFit;
+				break;
+			case KTStretchToSize:
+				mode = KSImageScalingModeFill;
+				break;
+			case KTCropToSize:
+				mode = [settings alignment] + 11;  // +11 converts from KTMediaScalingOperation to KSImageScalingMode
+				break;
+			default:
+				break;
+		}
+		
+		NSURL *result = [self sandvoxImageURLWithFileURL:fileURL
+                                                    size:[settings size]
+                                             scalingMode:mode
+                                              sharpening:[properties floatForKey:@"sharpeningFactor"]
+                                       compressionFactor:[properties floatForKey:@"compressionFactor"]
+                                                fileType:[properties objectForKey:@"fileType"]];
+		
+		return result;
+	}
+	else
+	{
+		return fileURL;	
+	}
+}
+
+@end
+
+
+#pragma mark -
 
 
 @interface KTImageScalingURLProtocol ()
