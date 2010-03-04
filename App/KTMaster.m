@@ -15,6 +15,7 @@
 #import "KTSite.h"
 #import "KTHostProperties.h"
 #import "KTImageScalingSettings.h"
+#import "KTImageScalingURLProtocol.h"
 #import "SVMediaRecord.h"
 #import "SVTitleBox.h"
 
@@ -293,7 +294,7 @@
 - (void)writeBannerCSS;
 {	
 	// If the user has specified a custom banner and the design supports it, load it in
-	if ([[self bannerType] boolValue])
+	if ([[self bannerType] boolValue] && [[self banner] fileURL])
 	{
         SVHTMLContext *context = [SVHTMLContext currentContext];
         
@@ -304,7 +305,12 @@
 		
         NSString *bannerCSSSelector = [[self design] bannerCSSSelector];
         SVMediaRecord *banner = [self banner];
-        NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [banner fileURL]];
+        
+        NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
+                                     scalingProperties:scalingProperties];
+        
+        
+        NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", URL];
         
         
         [context includeStyle:css];
