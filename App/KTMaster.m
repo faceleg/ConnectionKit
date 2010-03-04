@@ -19,8 +19,6 @@
 #import "SVMediaRecord.h"
 #import "SVTitleBox.h"
 
-#import "KTMediaManager.h"
-
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -37,11 +35,7 @@
 
 
 @interface KTMaster ()
-
 @property(nonatomic, retain, readwrite) SVLogoImage *logo;
-
-- (KTMediaManager *)mediaManager;
-
 @end
 
 
@@ -364,26 +358,6 @@
 - (KTCodeInjection *)codeInjection
 {
     return [self wrappedValueForKey:@"codeInjection"];
-}
-
-#pragma mark -
-#pragma mark Media
-
-- (KTMediaManager *)mediaManager
-{
-	KTSite *site = [[[self valueForKey:@"pages"] anyObject] site];
-    KTMediaManager *result = [[site document] mediaManager];
-	return result;
-}
-
-- (NSSet *)requiredMediaIdentifiers
-{
-	NSMutableSet *result = [NSMutableSet set];
-	
-	[result addObjectIgnoringNil:[[self bannerImage] identifier]];
-	[result addObjectIgnoringNil:[self valueForKey:@"faviconMediaIdentifier"]];
-	
-	return result;
 }
 
 #pragma mark Comments

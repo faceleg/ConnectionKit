@@ -49,7 +49,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
 #import "KTIndexPlugin.h"
-#import "KTMediaManager.h"
 #import "KTPage.h"
 #import "SVWelcomeController.h"
 #import "KTPrefsController.h"
@@ -503,7 +502,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	// debugging domains -- we have to set default values to get them to show up in the table.
 	NSArray *domains = [NSArray arrayWithObjects:
 		ControllerDomain, CKTransportDomain, CKStateMachineDomain, CKParsingDomain, CKProtocolDomain, CKConnectionDomain, /* ThreadingDomain, */
-		/* StreamDomain, */ CKInputStreamDomain, CKOutputStreamDomain, /* SSLDomain, */ CKQueueDomain, KTMediaLogDomain, nil];
+		/* StreamDomain, */ CKInputStreamDomain, CKOutputStreamDomain, /* SSLDomain, */ CKQueueDomain, nil];
 	
 	NSEnumerator *theEnum = [domains objectEnumerator];
 	NSString *aDomain;

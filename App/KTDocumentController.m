@@ -18,7 +18,6 @@
 #import "KTElementPlugin.h"
 #import "KTIndexPlugin.h"
 #import "SVInspector.h"
-#import "KTMediaManager.h"
 #import "KTMaster.h"
 #import "KTPage+Internal.h"
 #import "SVWelcomeController.h"
