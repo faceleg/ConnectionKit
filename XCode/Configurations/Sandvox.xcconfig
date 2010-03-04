@@ -24,7 +24,7 @@ EXPIRY_TIMESTAMP = '@\"2010-04-14 11:59:59 -0800\"'
 CK_REVISION = 1442
 
 // iMedia
-IMEDIA_REVISION = 980
+IMEDIA_REVISION = 997
 
 // Debugging -- should be OMNI_FORCE_ASSERTIONS for beta, DONT_FORCE_ASSERTIONS (an ad-hoc replacement) for release
 
