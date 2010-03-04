@@ -70,7 +70,15 @@
 - (void)modifyLinkTo:(SVLink *)link;    // sends -createLink: up the responder chain
 {
     [self setSelectedLink:link];
-    [NSApp sendAction:@selector(createLink:) to:nil from:self];
+    
+    if (link)
+    {
+        [NSApp sendAction:@selector(createLink:) to:nil from:self];
+    }
+    else
+    {
+        [NSApp sendAction:@selector(unlink:) to:nil from:self];
+    }
     
     // Notify Inspectors of the change
     [self refreshLinkInspectors];

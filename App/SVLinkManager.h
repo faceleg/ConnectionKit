@@ -45,4 +45,5 @@
 // When changing the link, this message is sent up the responder chain. A suitable object should handle it by asking the sender for the appropriate link properties. For now, this is best done by sending it a -linkDestinationURLString: method.
 @interface NSObject (SVLinkManagerResponderMethod)
 - (void)createLink:(SVLinkManager *)sender;
+- (void)unlink:(id)sender;
 @end
