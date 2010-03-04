@@ -9,7 +9,7 @@
 #import "KTMissingMediaController.h"
 
 #import "KTMediaFile.h"
-#import "KTMediaManager+Internal.h"
+#import "KTMediaManager.h"
 
 #import "NSArray+Karelia.h"
 #import "NSHelpManager+Karelia.h"

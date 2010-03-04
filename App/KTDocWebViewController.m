@@ -23,7 +23,7 @@
 #import "KTSite.h"
 
 #import "KTImageScalingURLProtocol.h"
-#import "KTMediaManager+Internal.h"
+#import "KTMediaManager.h"
 #import "KTScaledImageContainer.h"
 #import "KTMediaFile+Internal.h"
 

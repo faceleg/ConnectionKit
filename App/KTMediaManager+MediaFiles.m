@@ -6,7 +6,7 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTMediaManager+Internal.h"
+#import "KTMediaManager.h"
 #import "KTMediaFileEqualityTester.h"
 
 #import "KT.h"
