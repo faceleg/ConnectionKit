@@ -9,7 +9,7 @@
 #import <CoreData/CoreData.h>
 
 
-@class SVBody, SVGraphic;
+@class SVRichText, SVGraphic;
 
 
 @interface SVTextAttachment : NSManagedObject
@@ -20,7 +20,7 @@
 - (void)writeHTML;
 
 
-@property(nonatomic, retain) SVBody *body;
+@property(nonatomic, retain) SVRichText *body;
 @property(nonatomic, retain) SVGraphic *pagelet;
 
 

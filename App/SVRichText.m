@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBody.h"
+#import "SVRichText.h"
 
 #import "SVTextAttachment.h"
 #import "SVGraphic.h"
@@ -20,10 +20,10 @@
 #import "NSSortDescriptor+Karelia.h"
 
 
-@interface SVBody ()
+@interface SVRichText ()
 @end
 
-@interface SVBody (CoreDataGeneratedAccessors)
+@interface SVRichText (CoreDataGeneratedAccessors)
 - (void)addElementsObject:(SVBodyElement *)value;
 - (void)removeElementsObject:(SVBodyElement *)value;
 - (void)addElements:(NSSet *)value;
@@ -34,17 +34,17 @@
 #pragma mark -
 
 
-@implementation SVBody 
+@implementation SVRichText 
 
 #pragma mark Init
 
-+ (SVBody *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVRichText *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     return [NSEntityDescription insertNewObjectForEntityForName:@"PageBody"
                                          inManagedObjectContext:context];
 }
 
-+ (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVRichText *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     return [NSEntityDescription insertNewObjectForEntityForName:@"TextBoxBody"
                                          inManagedObjectContext:context];

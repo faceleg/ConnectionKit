@@ -15,7 +15,7 @@
 #import "KTAbstractPage+Internal.h"
 #import "SVImageReplacementURLProtocol.h"
 #import "KTPage+Internal.h"
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "SVTitleBox.h"
 
 #import "NSObject+Karelia.h"
@@ -296,9 +296,9 @@
 - (void)writeInnerHTML;
 {
 	NSString *result = HTML_VALUE;
-    if ([result isKindOfClass:[SVBody class]])
+    if ([result isKindOfClass:[SVRichText class]])
     {
-        [(SVBody *)result writeHTML];
+        [(SVRichText *)result writeHTML];
     }
     else if ([result isKindOfClass:[SVTitleBox class]])
     {

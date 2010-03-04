@@ -33,7 +33,7 @@ typedef enum {
 
 
 @class KTDesign;
-@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVBody, KTCodeInjection;
+@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, KTCodeInjection;
 
 
 @interface KTPage : KTAbstractPage <SVPage>
@@ -49,7 +49,7 @@ typedef enum {
 
 
 #pragma mark Body
-@property(nonatomic, retain, readonly) SVBody *body;
+@property(nonatomic, retain, readonly) SVRichText *body;
 
 
 #pragma mark Properties

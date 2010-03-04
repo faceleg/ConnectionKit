@@ -14,7 +14,7 @@
 #import "SVCallout.h"
 #import "KTAbstractPage.h"
 #import "SVGraphic.h"
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "KTDocWindowController.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
@@ -251,7 +251,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
     
     
-    SVBody *body = [self representedObject];
+    SVRichText *body = [self representedObject];
     if (![html isEqualToString:[body string]])
     {
         _isUpdating = YES;
@@ -463,7 +463,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 #pragma mark -
 
 
-@implementation SVBody (SVDOMController)
+@implementation SVRichText (SVDOMController)
 
 - (Class)DOMControllerClass;
 {

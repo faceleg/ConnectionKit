@@ -8,13 +8,13 @@
 
 #import "SVTextBox.h"
 
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVTemplate.h"
 
 
 @interface SVTextBox ()
-@property(nonatomic, retain, readwrite) SVBody *body;
+@property(nonatomic, retain, readwrite) SVRichText *body;
 @end
 
 
@@ -47,7 +47,7 @@
     
     
     // Create corresponding body text
-    [self setBody:[SVBody insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
+    [self setBody:[SVRichText insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
 #pragma mark HTML

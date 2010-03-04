@@ -11,7 +11,7 @@
 
 #import "KTAbstractHTMLPlugin.h"
 #import "KTAbstractPage.h"
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "SVDOMController.h"
 #import "SVElementPlugInContainer.h"
 #import "SVGraphic.h"
@@ -130,7 +130,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     return [[[[self delegateOwner] sidebars] anyObject] page];
     
     
-    SVBody *body = [[self delegateOwner] enclosingBody];
+    SVRichText *body = [[self delegateOwner] enclosingBody];
     
     KTAbstractPage *result = nil;
     if ([[[body entity] name] isEqualToString:@"PageBody"])

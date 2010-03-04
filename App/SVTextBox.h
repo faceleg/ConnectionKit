@@ -9,14 +9,14 @@
 #import <CoreData/CoreData.h>
 #import "SVGraphic.h"
 
-@class SVBody;
+@class SVRichText;
 
 @interface SVTextBox :  SVGraphic  
 
 + (SVTextBox *)insertNewTextBoxIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 #pragma mark Body Text
-@property(nonatomic, retain, readonly) SVBody *body;
+@property(nonatomic, retain, readonly) SVRichText *body;
 
 
 @end

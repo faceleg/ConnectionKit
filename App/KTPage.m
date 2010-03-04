@@ -11,7 +11,7 @@
 #import "KSContainsObjectValueTransformer.h"
 #import "Debug.h"
 #import "KTAbstractIndex.h"
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
@@ -34,7 +34,7 @@
 
 
 @interface KTPage ()
-@property(nonatomic, retain, readwrite) SVBody *body;
+@property(nonatomic, retain, readwrite) SVRichText *body;
 @end
 
 
@@ -170,7 +170,7 @@
 	
     
     // Body text. Give it a starting paragraph
-    SVBody *body = [SVBody insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
+    SVRichText *body = [SVRichText insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
     [body setString:@"<p>Lorem Ipsum...</p>"];
     [self setBody:body];
     

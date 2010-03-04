@@ -12,10 +12,10 @@
 @class SVGraphic;
 
 
-@interface SVBody : SVContentObject  
+@interface SVRichText : SVContentObject  
 
-+ (SVBody *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
-+ (SVBody *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVRichText *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVRichText *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 @property(nonatomic, copy) NSString *string;

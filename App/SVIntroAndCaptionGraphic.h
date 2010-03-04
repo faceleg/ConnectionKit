@@ -9,15 +9,15 @@
 #import "SVGraphic.h"
 
 
-@class SVBody;
+@class SVRichText;
 
 
 @interface SVIntroAndCaptionGraphic : SVGraphic  
 
 - (void)createDefaultIntroAndCaption;
 
-@property (nonatomic, retain) SVBody *caption;
-@property (nonatomic, retain) SVBody *introduction;
+@property (nonatomic, retain) SVRichText *caption;
+@property (nonatomic, retain) SVRichText *introduction;
 
 @end
 

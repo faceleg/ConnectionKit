@@ -8,7 +8,7 @@
 
 #import "SVIntroAndCaptionGraphic.h"
 
-#import "SVBody.h"
+#import "SVRichText.h"
 
 
 @implementation SVIntroAndCaptionGraphic 
@@ -22,7 +22,7 @@
 
 - (void)createDefaultIntroAndCaption;
 {
-    SVBody *text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletIntroduction"
+    SVRichText *text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletIntroduction"
                                                  inManagedObjectContext:[self managedObjectContext]];
     [text setString:@""];
     [self setIntroduction:text];

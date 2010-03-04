@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 
-@class SVBody, SVBodyElement, SVGraphic, SVParagraphedHTMLWriter;
+@class SVRichText, SVBodyElement, SVGraphic, SVParagraphedHTMLWriter;
 
 
 @interface SVBodyTextDOMController : SVTextDOMController

@@ -16,7 +16,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
-#import "SVBody.h"
+#import "SVRichText.h"
 #import "SVBodyTextDOMController.h"
 #import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
@@ -300,7 +300,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
            withKeyPath:@"textHTMLString"
                options:nil];
     }
-    else if ([value isKindOfClass:[SVBody class]])
+    else if ([value isKindOfClass:[SVRichText class]])
     {
         result = [[SVBodyTextDOMController alloc] initWithContentObject:value inDOMDocument:domDoc];
         [result setHTMLContext:[self HTMLContext]];

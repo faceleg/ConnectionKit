@@ -9,12 +9,12 @@
 #import "SVContentObject.h"
 
 
-@class SVBody;
+@class SVRichText;
 
 
 @interface SVBodyElement : SVContentObject  
 
-@property (nonatomic, retain) SVBody *enclosingBody;
+@property (nonatomic, retain) SVRichText *enclosingBody;
 
 
 // Shouldn't really have any need to set this yourself. Use a proper array controller instead please.
