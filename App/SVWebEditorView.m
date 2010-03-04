@@ -1237,6 +1237,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return result;
 }
 
+- (BOOL)webView:(WebView *)sender shouldPerformAction:(SEL)action fromSender:(id)fromObject;
+{
+    // Give focused text a chance
+    BOOL result = ![_focusedText tryToPerform:action with:fromObject];
+    return result;
+}
+
 - (BOOL)webView:(WebView *)sender validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)item defaultValidation:(BOOL)defaultValidation
 {
     //  On the whole, let WebKit get on with it. But, if WebKit can't handle the message, and we can, override to do so
