@@ -13,7 +13,9 @@
 
 #import "KTApplication.h"
 #import "SVDocWindow.h"
+#import "SVLink.h"
 #import "SVLinkInspector.h"
+#import "SVLinkManager.h"
 #import "SVSelectionBorder.h"
 
 #import "ESCursors.h"
@@ -26,6 +28,7 @@
 #import "NSObject+Karelia.h"
 #import "NSResponder+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "WebView+Karelia.h"
 
 
 NSString *SVWebEditorViewDidChangeSelectionNotification = @"SVWebEditingOverlaySelectionDidChange";
@@ -1375,15 +1378,30 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
 {
-    OBPRECONDITION([notification object] == [self webView]);
+    WebView *webView = [self webView];
+    OBPRECONDITION([notification object] == webView);
+    
+    
+    //  Update Link Manager to match
+    NSString *linkValue = [webView linkValue];
+    SVLink *link = nil;
+    if ([linkValue length] > 0) link = [[SVLink alloc] initWithURLString:linkValue openInNewWindow:NO];
+    
+    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
+    [link release];
+    
     
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
     if (!_isChangingSelectedItems)
     {
-        DOMRange *range = [[self webView] selectedDOMRange];
-        NSArray *items = (range) ? [self itemsInDOMRange:range] : nil;
+        DOMRange *selection = [webView selectedDOMRange];
+        NSArray *items = (selection) ? [self itemsInDOMRange:selection] : nil;
         
-        [self updateSelectionByDeselectingAll:YES orDeselectItem:nil selectItems:items updateWebView:NO isUIAction:NO];
+        [self updateSelectionByDeselectingAll:YES
+                               orDeselectItem:nil
+                                  selectItems:items
+                                updateWebView:NO
+                                   isUIAction:NO];
     }
     
     

@@ -333,7 +333,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         }
     }
     
-    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:(selection != nil)];
+    //[[SVLinkManager sharedLinkManager] setSelectedLink:link editable:(selection != nil)];
     [link release];
 }
 
