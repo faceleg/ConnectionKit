@@ -295,50 +295,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Links
 
-- (void)changeLinkDestinationTo:(NSString *)linkURLString;
-{
-    SVWebEditorView *webEditor = [self webEditor];
-    DOMRange *selection = [webEditor selectedDOMRange];
-    
-    if (!linkURLString)
-    {
-        DOMHTMLAnchorElement *anchor = [selection editableAnchorElement];
-        if (anchor)
-        {
-            // Figure out selection before editing the DOM
-            DOMNode *remainder = [anchor unlink];
-            [selection selectNode:remainder];
-            [webEditor setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
-        }
-        else
-        {
-            // Fallback way
-            [[webEditor selectedDOMRange] removeAnchorElements];
-        }
-    }
-    else
-    {
-        DOMHTMLAnchorElement *link = (id)[[webEditor HTMLDocument] createElement:@"A"];
-        [link setHref:linkURLString];
-        
-        // Changing link affects selection. But if the selection is collapsed the user almost certainly wants to affect surrounding word/link
-        if ([selection collapsed])
-        {
-            [[webEditor webView] selectWord:self];
-            selection = [webEditor selectedDOMRange];
-        }
-        
-        [selection surroundContents:link];
-        
-        // Make the link the selected object
-        [selection selectNode:link];
-        [webEditor setSelectedDOMRange:selection affinity:NSSelectionAffinityDownstream];
-    }
-    
-    // Need to let paragraph's controller know an actual editing change was made
-    [self webViewDidChange];
-}
-
 @synthesize selectedLink = _selectedLink;
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification
