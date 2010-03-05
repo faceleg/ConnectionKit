@@ -161,10 +161,8 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     self.messageLabel = nil;
     self.nameLabel = nil;
     self.sendButtonTitle = nil;
-    self.sideLabels = nil;
     self.subjectLabel = nil;
     self.subjectText = nil;
-    self.subjectType = nil;
     self.fields = nil;
 	
 	[super dealloc];
@@ -308,6 +306,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 #pragma mark -
 #pragma mark Derived Accessors
 
+- (NSString *)uniqueID
+{
+	return [[SVHTMLContext currentContext] numberOfContentObjects];
+}
+
 - (NSString *)CSSURLs
 {
 	NSURL *designURL = [[[self page] master] designDirectoryURL];
@@ -356,7 +359,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	{
 		case kKTContactSubjectField:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"text\" value=\"%@\" />", 
-				[[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
+					  [self uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 		case kKTContactSubjectSelection:
 		{
@@ -367,7 +370,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 			NSEnumerator *theEnum = [lineArray objectEnumerator];
 			NSString *oneLine;
 
-			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [([self delegateOwner]) uniqueID]];
+			[buf appendFormat:@"<select id=\"s%@\" name=\"s\">", [self uniqueID]];
 			while (nil != (oneLine = [theEnum nextObject]) )
 			{
 				NSArray *commaArray = [oneLine componentsSeparatedByCommas];
@@ -391,7 +394,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		}
 		case kKTContactSubjectHidden:
 			result = [NSString stringWithFormat:@"<input id=\"s%@\" name=\"s\" type=\"hidden\" value=\"%@\" />", 
-				[[self delegateOwner] uniqueID], [subjectText stringByEscapingHTMLEntities]];
+				[self uniqueID], [subjectText stringByEscapingHTMLEntities]];
 			break;
 	}
 	
