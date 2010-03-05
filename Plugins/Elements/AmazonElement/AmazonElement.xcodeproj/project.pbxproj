@@ -37,10 +37,10 @@
 		3C4A17460D5E75AC009476BF /* amazonlist.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17420D5E75AC009476BF /* amazonlist.css */; };
 		3C4A17470D5E75AC009476BF /* template.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17430D5E75AC009476BF /* template.html */; };
 		3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */; };
-		3C4A174D0D5E75CC009476BF /* Inspector.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A174B0D5E75CC009476BF /* Inspector.nib */; };
 		3C4A17580D5E7701009476BF /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C4A17570D5E7701009476BF /* AmazonSupport.framework */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE722FA40D85CE9A00E9C592 /* amazon.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE722FA30D85CE9A00E9C592 /* amazon.icns */; };
+		CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC1F0211141A69D00D8D0B9 /* Inspector.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -107,18 +107,11 @@
 		3C4A17420D5E75AC009476BF /* amazonlist.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = amazonlist.css; sourceTree = "<group>"; };
 		3C4A17430D5E75AC009476BF /* template.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = template.html; sourceTree = "<group>"; };
 		3C4A17440D5E75AC009476BF /* Thumbnail placeholder.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Thumbnail placeholder.png"; sourceTree = "<group>"; };
-		3C4A174C0D5E75CC009476BF /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A174E0D5E75D6009476BF /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A174F0D5E75DF009476BF /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A17500D5E75EC009476BF /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A17510D5E75F4009476BF /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A17520D5E75FD009476BF /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A17530D5E7604009476BF /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/Inspector.nib; sourceTree = "<group>"; };
-		3C4A17540D5E760E009476BF /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/Inspector.nib; sourceTree = "<group>"; };
 		3C4A17570D5E7701009476BF /* AmazonSupport.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AmazonSupport.framework; path = ../../../../../../Builds/Products/Debug/AmazonSupport.framework; sourceTree = SOURCE_ROOT; };
 		8D5B49B6048680CD000E48DA /* Amazon.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = Amazon.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE722FA30D85CE9A00E9C592 /* amazon.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = amazon.icns; sourceTree = "<group>"; };
+		CEC1F0221141A69D00D8D0B9 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Inspector.xib; sourceTree = "<group>"; };
 		D2F7E65807B2D6F200F64583 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = /System/Library/Frameworks/CoreData.framework; sourceTree = "<absolute>"; };
 /* End PBXFileReference section */
 
@@ -160,11 +153,11 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				CEC1F0211141A69D00D8D0B9 /* Inspector.xib */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C4A171E0D5E74ED009476BF /* Buttons */,
 				3C4A17090D5E74C2009476BF /* Layout */,
 				3C4A17400D5E756B009476BF /* Other */,
-				3C4A174B0D5E75CC009476BF /* Inspector.nib */,
 				3C0234620D5C268000E82E4B /* InfoPlist.strings */,
 				3C4A16FD0D5E7460009476BF /* Localizable.strings */,
 			);
@@ -398,8 +391,8 @@
 				3C4A17460D5E75AC009476BF /* amazonlist.css in Resources */,
 				3C4A17470D5E75AC009476BF /* template.html in Resources */,
 				3C4A17480D5E75AC009476BF /* Thumbnail placeholder.png in Resources */,
-				3C4A174D0D5E75CC009476BF /* Inspector.nib in Resources */,
 				CE722FA40D85CE9A00E9C592 /* amazon.icns in Resources */,
+				CEC1F0231141A69D00D8D0B9 /* Inspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -479,19 +472,12 @@
 			name = Localizable.strings;
 			sourceTree = "<group>";
 		};
-		3C4A174B0D5E75CC009476BF /* Inspector.nib */ = {
+		CEC1F0211141A69D00D8D0B9 /* Inspector.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C4A174C0D5E75CC009476BF /* en */,
-				3C4A174E0D5E75D6009476BF /* da */,
-				3C4A174F0D5E75DF009476BF /* de */,
-				3C4A17500D5E75EC009476BF /* fr */,
-				3C4A17510D5E75F4009476BF /* it */,
-				3C4A17520D5E75FD009476BF /* ja */,
-				3C4A17530D5E7604009476BF /* zh_CN */,
-				3C4A17540D5E760E009476BF /* zh_TW */,
+				CEC1F0221141A69D00D8D0B9 /* en */,
 			);
-			name = Inspector.nib;
+			name = Inspector.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
