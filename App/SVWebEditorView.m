@@ -1383,12 +1383,18 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     //  Update Link Manager to match
-    NSString *linkValue = [webView linkValue];
-    SVLink *link = nil;
-    if ([linkValue length] > 0) link = [[SVLink alloc] initWithURLString:linkValue openInNewWindow:NO];
-    
-    [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
-    [link release];
+    NSArray *anchors = [webView selectedAnchorElements];
+    if ([anchors count] == 1)
+    {
+        SVLink *link = [[SVLink alloc] initWithURLString:[[anchors lastObject] href]
+                                         openInNewWindow:NO];
+        [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
+        [link release];
+    }
+    else
+    {
+        [[SVLinkManager sharedLinkManager] setSelectedLink:nil editable:[webView canCreateLink]];
+    }
     
     
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
