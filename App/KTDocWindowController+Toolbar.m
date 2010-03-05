@@ -55,7 +55,7 @@ TO DO:
 
 - (void)makeDocumentToolbar
 {
-    NSToolbar *toolbar = [self toolbarNamed:@"document"];
+    NSToolbar *toolbar = [self toolbarNamed:@"document2"];
 
     [toolbar setAllowsUserCustomization:YES];
     [toolbar setAutosavesConfiguration:YES];

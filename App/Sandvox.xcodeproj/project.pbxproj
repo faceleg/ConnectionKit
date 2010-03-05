@@ -529,7 +529,7 @@
 		3C202DB707E00B9300DE4994 /* CoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB107E00B9300DE4994 /* CoreServices.framework */; };
 		3C202DB807E00B9300DE4994 /* IOKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB207E00B9300DE4994 /* IOKit.framework */; };
 		3C202DB907E00B9300DE4994 /* QuickTime.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C202DB307E00B9300DE4994 /* QuickTime.framework */; };
-		3C202E9507E00F5700DE4994 /* document.toolbar in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E9307E00F5700DE4994 /* document.toolbar */; };
+		3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */ = {isa = PBXBuildFile; fileRef = 3C202E9307E00F5700DE4994 /* document2.toolbar */; };
 		3C202EAD07E0101100DE4994 /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA407E0101100DE4994 /* Credits.html */; };
 		3C202EAF07E0101100DE4994 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA807E0101100DE4994 /* Localizable.strings */; };
 		3C202EF807E0111300DE4994 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EF607E0111300DE4994 /* InfoPlist.strings */; };
@@ -2072,7 +2072,7 @@
 		3C202DB107E00B9300DE4994 /* CoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreServices.framework; path = /System/Library/Frameworks/CoreServices.framework; sourceTree = "<absolute>"; };
 		3C202DB207E00B9300DE4994 /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = /System/Library/Frameworks/IOKit.framework; sourceTree = "<absolute>"; };
 		3C202DB307E00B9300DE4994 /* QuickTime.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuickTime.framework; path = /System/Library/Frameworks/QuickTime.framework; sourceTree = "<absolute>"; };
-		3C202E9307E00F5700DE4994 /* document.toolbar */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = document.toolbar; sourceTree = "<group>"; };
+		3C202E9307E00F5700DE4994 /* document2.toolbar */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = document2.toolbar; sourceTree = "<group>"; };
 		3C202E9407E00F5700DE4994 /* KTToolbars.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTToolbars.h; sourceTree = "<group>"; };
 		3C202E9607E00F8000DE4994 /* png2ico */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.executable"; name = png2ico; path = ../Code/png2ico/png2ico; sourceTree = "<group>"; };
 		3C202EA307E0101100DE4994 /* Acknowledgments.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = Acknowledgments.rtf; sourceTree = "<group>"; };
@@ -3448,7 +3448,7 @@
 			isa = PBXGroup;
 			children = (
 				27A5E6E811086705007C2E7E /* TB_Text_Tool.tiff */,
-				3C202E9307E00F5700DE4994 /* document.toolbar */,
+				3C202E9307E00F5700DE4994 /* document2.toolbar */,
 				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
 				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
@@ -5872,7 +5872,7 @@
 				CE35963F10F3CF340009F2CA /* jquery.jdMenu.js in Resources */,
 				CE35964010F3CF340009F2CA /* jquery.js in Resources */,
 				CE35964110F3CF340009F2CA /* jquery.positionBy.js in Resources */,
-				3C202E9507E00F5700DE4994 /* document.toolbar in Resources */,
+				3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
 				3C202EAF07E0101100DE4994 /* Localizable.strings in Resources */,
