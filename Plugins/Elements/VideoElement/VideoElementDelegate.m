@@ -288,11 +288,13 @@
 	}
     else if ([key isEqualToString:@"remoteURL"])
     {
-        [self loadMovie];
+		[self setMovieSize:NSZeroSize];	// force recalculation
+		[self loadMovie];
     }
     else if ([key isEqualToString:@"movieSource"])
     {
-        [self loadMovie];
+		[self setMovieSize:NSZeroSize];	// force recalculation
+		[self loadMovie];
     }
 	
     
