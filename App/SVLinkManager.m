@@ -12,6 +12,7 @@
 #import "KSDocumentController.h"
 #import "SVInspector.h"
 #import "SVLinkInspector.h"
+#import "KTToolbars.h"
 
 #import "NSAppleScript+Karelia.h"
 
@@ -117,6 +118,12 @@
     if ([anItem action] == @selector(orderFrontLinkPanel:))
     {
         result = [self isEditable];
+        
+        if ([(id <NSObject>)anItem isKindOfClass:[NSToolbarItem class]])
+        {
+            [(NSToolbarItem *)anItem setLabel:
+             ([self selectedLink] ? TOOLBAR_EDIT_LINK : TOOLBAR_CREATE_LINK)];
+        }
     }
     
     return result;
