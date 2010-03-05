@@ -22,13 +22,13 @@ typedef enum {
 #pragma mark -
 
 
-@class KTAbstractPage, KTPage, SVHTMLTextBlock, SVLink;
+@class KTAbstractPage, KTPage, SVContentObject, SVHTMLTextBlock, SVLink;
 
 @interface SVHTMLContext : KSHTMLWriter
 {
   @private
-    NSURL                   *_baseURL;
-    KTPage			*_currentPage;
+    NSURL   *_baseURL;
+    KTPage	*_currentPage;
     
 	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL					_includeStyling;
@@ -37,6 +37,7 @@ typedef enum {
     
     NSMutableArray  *_iteratorsStack;
     
+    NSUInteger      _contentObjects;
     NSMutableArray  *_textBlocks;
 }
 
@@ -86,6 +87,10 @@ typedef enum {
 
 
 #pragma mark Content
+
+- (void)willBeginWritingContentObject:(SVContentObject *)object;
+- (void)didEndWritingContentObject;
+- (NSUInteger)numberOfContentObjectsOnPage; // incremented for each call to -willWriteContentObject:
 
 // Default implementation does nothing. Subclasses can implement for introspecting the dependencies (WebView loading does)
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;

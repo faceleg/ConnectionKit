@@ -299,9 +299,12 @@
 
 - (void)writeHTML
 {
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+
     // If the placement changes, want whole WebView to update
-    [[SVHTMLContext currentContext] addDependencyOnObject:self keyPath:@"textAttachment.placement"];
+    [context addDependencyOnObject:self keyPath:@"textAttachment.placement"];
     
+    [context willBeginWritingContentObject:self];
     
     if ([self isPagelet])
     {
@@ -318,6 +321,8 @@
     {
        [self writeBody];
     }
+    
+    [context didEndWritingContentObject];
 }
 
 - (void)writeBody;

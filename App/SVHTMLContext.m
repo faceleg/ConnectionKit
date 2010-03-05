@@ -237,6 +237,15 @@
 
 #pragma mark Content
 
+- (void)willBeginWritingContentObject:(SVContentObject *)object;
+{
+    _contentObjects++;
+}
+
+- (void)didEndWritingContentObject; { }
+
+- (NSUInteger)numberOfContentObjectsOnPage; { return _contentObjects; }
+
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
 
 - (NSArray *)generatedTextBlocks { return [[_textBlocks copy] autorelease]; }
