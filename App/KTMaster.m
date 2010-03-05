@@ -301,6 +301,7 @@
         
         NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[banner fileURL]
                                      scalingProperties:scalingProperties];
+        [scalingProperties release];
         
         
         NSString *css = [bannerCSSSelector stringByAppendingFormat:@" { background-image: url(\"%@\"); }\n", [URL absoluteString]];
