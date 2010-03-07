@@ -100,6 +100,10 @@
     return result;
 }
 
+#pragma mark Link
+
+@dynamic linkURLString;
+
 #pragma mark Publishing
 
 @dynamic fileType;

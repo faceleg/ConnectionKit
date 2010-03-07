@@ -26,6 +26,10 @@
 - (CGSize)originalSize;
 
 
+#pragma mark Link
+@property(nonatomic, copy) NSString *linkURLString;
+
+
 #pragma mark Publishing
 @property(nonatomic, copy) NSString *fileType;  // e.g. kUTTypePNG
 @property(nonatomic, copy) NSNumber *compressionFactor; // float, 0-1
