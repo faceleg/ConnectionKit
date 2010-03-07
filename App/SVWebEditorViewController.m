@@ -1092,6 +1092,18 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
+- (BOOL)webEditor:(SVWebEditorView *)sender createLink:(SVLinkManager *)actionSender;
+{
+    if (![sender selectedDOMRange])
+    {
+        SVLink *link = [actionSender selectedLink];
+        [_selectableObjectsController setValue:[link URLString] forKeyPath:@"selection.linkURLString"];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 {
     [self setTitle:title];

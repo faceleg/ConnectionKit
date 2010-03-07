@@ -204,6 +204,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 - (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 
+// Return YES if the delegate wants to handle link creation itself
+- (BOOL)webEditor:(SVWebEditorView *)sender createLink:(id)actionSender;
+
 
 #pragma mark Dragging
 

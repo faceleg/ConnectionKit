@@ -92,9 +92,12 @@
 - (void)createLink:(SVLinkInspector *)sender;
 {
     //  Pass on to focused text
-    if ([[self focusedText] respondsToSelector:_cmd])
+    if (![[self dataSource] webEditor:self createLink:sender])
     {
-        [[self focusedText] performSelector:_cmd withObject:sender];
+        if ([[self focusedText] respondsToSelector:_cmd])
+        {
+            [[self focusedText] performSelector:_cmd withObject:sender];
+        }
     }
 }
 
