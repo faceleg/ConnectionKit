@@ -14,7 +14,6 @@
 #import "KTApplication.h"
 #import "SVDocWindow.h"
 #import "SVLink.h"
-#import "SVLinkInspector.h"
 #import "SVLinkManager.h"
 #import "SVSelectionBorder.h"
 
@@ -861,20 +860,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [targetView performSelector:selector withObject:theEvent];
         _isProcessingEvent = NO;
     }
-}
-
-- (void)createLink:(SVLinkInspector *)sender;
-{
-    //  Pass on to focused text
-    if ([[self focusedText] respondsToSelector:_cmd])
-    {
-        [[self focusedText] performSelector:_cmd withObject:sender];
-    }
-}
-
-- (void)doCommandBySelector:(SEL)aSelector
-{
-    [super doCommandBySelector:aSelector];
 }
 
 #pragma mark Tracking the Mouse

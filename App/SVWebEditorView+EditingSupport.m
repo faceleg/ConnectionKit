@@ -9,6 +9,8 @@
 
 #import "SVWebEditorView.h"
 
+#import "SVLinkInspector.h"
+
 
 @implementation SVWebEditorView (EditingSupport)
 
@@ -83,6 +85,17 @@
 - (void)deleteBackward:(id)sender;
 {
     [self delete:sender forwardingSelector:_cmd];
+}
+
+#pragma mark Links
+
+- (void)createLink:(SVLinkInspector *)sender;
+{
+    //  Pass on to focused text
+    if ([[self focusedText] respondsToSelector:_cmd])
+    {
+        [[self focusedText] performSelector:_cmd withObject:sender];
+    }
 }
 
 #pragma mark Undo
