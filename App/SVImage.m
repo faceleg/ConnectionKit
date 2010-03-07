@@ -121,6 +121,11 @@
         imageURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     }
     
+    if ([self isPagelet] && [self linkURLString])
+    {
+        [context writeAnchorStartTagWithHref:[self linkURLString] title:nil target:nil rel:nil];
+    }
+    
     [context writeImageWithIdName:[self editingElementID]
                         className:[self className]
                               src:[imageURL relativeString]
@@ -129,6 +134,8 @@
                            height:[[self height] description]];
     
     [context addDependencyOnObject:self keyPath:@"className"];
+    
+    if ([self isPagelet] && [self linkURLString]) [context writeEndTag];
 }
 
 #pragma mark Editing
