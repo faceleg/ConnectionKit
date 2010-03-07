@@ -19,6 +19,8 @@
 #import "SVRichText.h"
 #import "SVBodyTextDOMController.h"
 #import "SVHTMLContext.h"
+#import "SVLink.h"
+#import "SVLinkManager.h"
 #import "SVMediaRecord.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
@@ -1069,7 +1071,26 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-- (void)webEditorViewDidChangeSelection:(NSNotification *)notification; { }
+- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+{
+    if (![[self webEditor] selectedDOMRange])
+    {
+        NSString *linkURLString = [_selectableObjectsController valueForKeyPath:@"selection.linkURLString"];
+        
+        if (NSIsControllerMarker(linkURLString))
+        {
+            [[SVLinkManager sharedLinkManager] setSelectedLink:nil
+                                                      editable:(linkURLString == NSMultipleValuesMarker)];
+        }
+        else
+        {
+            SVLink *link = nil;
+            if (linkURLString) link = [[SVLink alloc] initWithURLString:linkURLString openInNewWindow:NO];
+            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
+            [link release];
+        }
+    }
+}
 
 - (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
 {
