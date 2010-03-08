@@ -14,6 +14,8 @@
 #import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
 
+#import "NSURL+Karelia.h"
+
 
 @interface SVFieldEditorHTMLWriter (SVParagraphedHTMLWriter)
 - (DOMNode *)super_writeDOMElement:(DOMElement *)element;
@@ -112,6 +114,8 @@
         media = [SVMediaRecord mediaWithContents:data
                                       entityName:@"ImageMedia"
                   insertIntoManagedObjectContext:context];
+        
+        [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL pathExtension]]];
     }
     
     SVImage *image = [SVImage insertNewImageWithMedia:media];
