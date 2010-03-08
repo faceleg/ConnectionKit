@@ -336,7 +336,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Controller for logo if there is one
     SVLogoImage *logo = [[[self page] master] logo];
-    if (![[logo hidden] boolValue])
+    if (logo && ![[logo hidden] boolValue])
     {
         SVDOMController *controller = [[[logo DOMControllerClass] alloc] initWithContentObject:logo
                                                                                  inDOMDocument:domDoc];
