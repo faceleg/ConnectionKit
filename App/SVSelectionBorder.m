@@ -127,10 +127,11 @@
     SVGraphicHandle handle = [self handleAtPoint:mousePoint frameRect:frameRect];
     BOOL result = [self canResizeUsingHandle:handle];
     
-    // Fallback to the frame
+    // Fallback to the frame if appropriate. Make sure to reset handle
     if (!result)
     {
         result = [view mouse:mousePoint inRect:frameRect];
+        handle = kSVGraphicNoHandle;
     }
     
     if (outHandle) *outHandle = handle;
