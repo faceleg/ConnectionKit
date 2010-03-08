@@ -47,7 +47,7 @@
     [self setPrimitiveValue:placement forKey:@"placement"];
     [self didChangeValueForKey:@"placement"];
     
-    if ([placement integerValue] == SVGraphicPlacementInline) [[self pagelet] didPlaceInline];
+    [[self pagelet] didPlaceInline:([placement integerValue] == SVGraphicPlacementInline)];
 }
 
 - (BOOL)validatePlacement:(NSNumber **)placement error:(NSError **)error;

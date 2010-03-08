@@ -85,9 +85,16 @@
 
 - (BOOL)canBePlacedInline; { return NO; }
 
-- (void)didPlaceInline; // turns off title, etc.
+- (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
 {
-    [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
+    if (isInline)
+    {
+        [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
+    }
+    else
+    {
+        [[self textAttachment] setCausesWrap:[NSNumber numberWithBool:YES]];
+    }
 }
 
 - (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
