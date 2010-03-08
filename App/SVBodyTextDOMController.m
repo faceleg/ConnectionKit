@@ -265,7 +265,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 - (void)writeGraphicController:(SVDOMController *)controller
-                     toContext:(SVParagraphedHTMLWriter *)context;
+                     withHTMLWriter:(SVParagraphedHTMLWriter *)context;
 {
     SVGraphic *graphic = [controller representedObject];
     

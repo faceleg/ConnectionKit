@@ -67,7 +67,7 @@
     {
         if ([aController HTMLElement] == element)
         {
-            [[self bodyTextDOMController] writeGraphicController:aController toContext:self];
+            [[self bodyTextDOMController] writeGraphicController:aController withHTMLWriter:self];
             [_attachments addObject:[[aController representedObject] textAttachment]];
             
             return [element nextSibling];

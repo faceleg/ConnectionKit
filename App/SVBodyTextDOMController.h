@@ -36,7 +36,7 @@
 // All the selectable items within ourself
 - (NSArray *)graphicControllers;
 - (void)writeGraphicController:(SVDOMController *)controller
-                     toContext:(SVParagraphedHTMLWriter *)context;
+                     withHTMLWriter:(SVParagraphedHTMLWriter *)context;
 
 
 #pragma mark Updates
