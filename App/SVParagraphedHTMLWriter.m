@@ -10,6 +10,8 @@
 
 #import "SVBodyTextDOMController.h"
 #import "SVGraphic.h"
+#import "SVImage.h"
+#import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
 
 
@@ -59,6 +61,14 @@
 
 #pragma mark Writing
 
+- (void)writeGraphicController:(SVDOMController *)controller;
+{
+    [[self bodyTextDOMController] writeGraphicController:controller
+                                          withHTMLWriter:self];
+    
+    [_attachments addObject:[[controller representedObject] textAttachment]];
+}
+
 - (DOMNode *)writeDOMElement:(DOMElement *)element
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
@@ -67,9 +77,7 @@
     {
         if ([aController HTMLElement] == element)
         {
-            [[self bodyTextDOMController] writeGraphicController:aController withHTMLWriter:self];
-            [_attachments addObject:[[aController representedObject] textAttachment]];
-            
+            [self writeGraphicController:aController];
             return [element nextSibling];
         }
     }
@@ -80,10 +88,76 @@
 
 #pragma mark Cleanup
 
+- (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement;
+{
+    // Make an image object
+    SVBodyTextDOMController *textController = [self bodyTextDOMController];
+    SVRichText *text = [textController representedObject];
+    NSManagedObjectContext *context = [text managedObjectContext];
+    
+    SVMediaRecord *media;
+    NSURL *URL = [imageElement absoluteImageURL];
+    if ([URL isFileURL])
+    {
+        media = [SVMediaRecord mediaWithURL:URL
+                                 entityName:@"ImageMedia"
+             insertIntoManagedObjectContext:context
+                                      error:NULL];
+    }
+    else
+    {
+        NSData *data = 
+        [[[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL] data];
+        
+        media = [SVMediaRecord mediaWithContents:data
+                                      entityName:@"ImageMedia"
+                  insertIntoManagedObjectContext:context];
+    }
+    
+    SVImage *image = [SVImage insertNewImageWithMedia:media];
+    
+    
+    // Make corresponding text attachment
+    SVTextAttachment *textAttachment = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"TextAttachment"
+                                        inManagedObjectContext:context];
+    [textAttachment setPagelet:image];
+    [textAttachment setBody:text];
+    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+    
+    
+    // Create controller for graphic
+    SVDOMController *controller = [[[image DOMControllerClass] alloc]
+                                   initWithHTMLDocument:(DOMHTMLDocument *)[imageElement ownerDocument]];
+    [controller setHTMLContext:[textController HTMLContext]];
+    [controller setRepresentedObject:image];
+    
+    [textController addChildWebEditorItem:controller];
+    [controller release];
+    
+    
+    // Replace old DOM element with new one
+    DOMNode *result = [imageElement nextSibling];
+    DOMNode *parentNode = [imageElement parentNode];
+    [parentNode removeChild:imageElement];
+    [parentNode insertBefore:[controller HTMLElement] refChild:result];
+    
+    
+    // Write the replacement
+    [self writeGraphicController:controller];
+    
+    
+    return result;
+}
+
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
     // Invalid top-level elements should be converted into paragraphs
-    if ([self openElementsCount] == 0)
+    if ([[element tagName] isEqualToString:@"IMG"])
+    {
+        return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element];
+    }
+    else if ([self openElementsCount] == 0)
     {
         DOMElement *result = [self changeDOMElement:element toTagName:@"P"];
         return result;  // pretend the element was written, but retry on this new node

@@ -265,20 +265,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 - (void)writeGraphicController:(SVDOMController *)controller
-                     withHTMLWriter:(SVParagraphedHTMLWriter *)context;
+                withHTMLWriter:(SVParagraphedHTMLWriter *)context;
 {
     SVGraphic *graphic = [controller representedObject];
-    
-    
-    // Ensure graphic has TextAttachment
     SVTextAttachment *textAttachment = [graphic textAttachment];
-    if (!textAttachment)
-    {
-        textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                       inManagedObjectContext:[graphic managedObjectContext]];
-        [textAttachment setPagelet:graphic];
-        [textAttachment setBody:[self representedObject]];
-    }
+    
     
     
     // Set attachment location
