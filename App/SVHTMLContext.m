@@ -109,6 +109,33 @@
     [self setGenerationPurpose:[context generationPurpose]];
 }
 
+#pragma mark Callouts
+
+- (void)writeCalloutStartWithAlignmentClassName:(NSString *)alignment;
+{
+    [self writeStartTag:@"div"
+                 idName:nil
+              className:[@"callout-container " stringByAppendingString:alignment]];
+    
+    [self writeStartTag:@"div" idName:nil className:@"callout"];
+    
+    [self writeStartTag:@"div" idName:nil className:@"callout-content"];
+    
+    
+    OBASSERT(!_calloutAlignment);
+    _calloutAlignment = [alignment copy];
+}
+
+- (void)writeCalloutEnd;    // written lazily so consecutive matching callouts are blended into one
+{
+    [_calloutAlignment release]; _calloutAlignment = nil;
+    
+    
+    [self writeEndTag]; // callout-content
+    [self writeEndTag]; // callout
+    [self writeEndTag]; // callout-container
+}
+
 #pragma mark URLs/Paths
 
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;

@@ -53,6 +53,32 @@
     return result;
 }
 
+- (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
+{
+    return ([self calloutWrapClassName] != nil);
+}
+
+- (NSString *)calloutWrapClassName; // nil if not a callout
+{
+    //  We are a callout if a floated pagelet
+    NSString *result = nil;
+    
+    if ([self isPagelet])
+    {
+        SVGraphicWrap wrap = [[[self textAttachment] wrap] integerValue];
+        if (wrap == SVGraphicWrapLeft)
+        {
+            result = @"left";
+        }
+        else if (wrap == SVGraphicWrapRight)
+        {
+            result = @"right";
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Title
 
 @dynamic titleBox;
@@ -315,6 +341,12 @@
     
     if ([self isPagelet])
     {
+        // Possible callout
+        NSString *calloutWrap = [self calloutWrapClassName];
+        if (calloutWrap) [context writeCalloutStartWithAlignmentClassName:calloutWrap];
+        
+        
+        // Pagelet
         SVTemplate *template = [[self class] template];
         
         SVHTMLTemplateParser *parser =
@@ -323,6 +355,10 @@
         
         [parser parse];
         [parser release];
+        
+        
+        // End callout
+        if (calloutWrap) [context writeCalloutEnd];
     }
     else
     {

@@ -59,6 +59,8 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 #pragma mark Pagelet
 - (BOOL)isPagelet;  // whether to generate <div class="pagelet"> etc. HTML
+- (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
+- (NSString *)calloutWrapClassName; // nil if not a callout
 
 
 #pragma mark Title

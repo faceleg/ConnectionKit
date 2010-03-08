@@ -35,6 +35,8 @@ typedef enum {
 	BOOL                    _liveDataFeeds;
     NSStringEncoding        _stringEncoding;
     
+    NSString    *_calloutAlignment;
+    
     NSMutableArray  *_iteratorsStack;
     
     NSUInteger      _contentObjects;
@@ -54,6 +56,11 @@ typedef enum {
 - (BOOL)isForPublishing;
 
 - (void)copyPropertiesFromContext:(SVHTMLContext *)context;
+
+
+#pragma mark Callouts
+- (void)writeCalloutStartWithAlignmentClassName:(NSString *)alignment;
+- (void)writeCalloutEnd;    // written lazily so consecutive matching callouts are blended into one
 
 
 #pragma mark Iterations
