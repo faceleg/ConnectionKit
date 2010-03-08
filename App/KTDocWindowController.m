@@ -250,7 +250,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	@try	// Called once the window is on-screen via a delayedPerformSelector. Therefore we have to manage exceptions ourself.
     {
         // Check for missing media files. If any are missing alert the user
-        NSSet *missingMedia = [[(KTDocument *)[self document] mediaManager] missingMediaFiles];
+        NSSet *missingMedia = [[self document] missingMedia];
         if (missingMedia && [missingMedia count] > 0)
         {
             KTMissingMediaController *missingMediaController =

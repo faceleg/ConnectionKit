@@ -566,6 +566,28 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return (_deletedMediaDirectoryName != nil);
 }
 
+- (NSSet *)missingMedia;
+{
+	NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"ExternalMedia"];
+    NSArray *externalMedia = [[self managedObjectContext] executeFetchRequest:request error:NULL];
+    
+    NSMutableSet *result = [NSMutableSet set];
+    
+	for (SVMediaRecord *aRecord in externalMedia)
+	{
+		NSString *path = [[aRecord fileURL] path];
+		if (!path ||
+            [path isEqualToString:@""] ||
+            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"qmark"]] ||
+            ![[NSFileManager defaultManager] fileExistsAtPath:path])
+		{
+			[result addObject:aRecord];
+		}
+	}
+	
+	return result;
+}
+
 #pragma mark Document Content Management
 
 /*  Supplement the usual read behaviour by logging host properties and loading document display properties

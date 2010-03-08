@@ -96,6 +96,8 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (NSURL *)deletedMediaDirectory;
 - (BOOL)haveCreatedDeletedMediaDirectory;
 
+- (NSSet *)missingMedia;
+
 
 #pragma mark Actions
 - (IBAction)setupHost:(id)sender;
