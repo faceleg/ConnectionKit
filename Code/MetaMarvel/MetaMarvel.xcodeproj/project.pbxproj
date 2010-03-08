@@ -152,7 +152,8 @@
 			buildConfigurationList = 70138C880896BE9A00968C2F /* Build configuration list for PBXProject "MetaMarvel" */;
 			compatibilityVersion = "Xcode 3.1";
 			hasScannedForEncodings = 1;
-			knownRegions = (
+			developmentRegion = en;
+knownRegions = (
 				en,
 				ja,
 				fr,

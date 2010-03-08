@@ -5444,6 +5444,7 @@
 			isa = PBXProject;
 			buildConfigurationList = CE3BC24108575E2800576982 /* Build configuration list for PBXProject "Sandvox" */;
 			compatibilityVersion = "Xcode 3.1";
+			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
 				en,

@@ -202,12 +202,6 @@
 
 /*	Instead of clearing the thumbnail, reset it to the default.
  */
-- (BOOL)pageShouldClearThumbnail:(KTPage *)page
-{
-	[page setThumbnail:[self defaultThumbnail]];
-	return NO;
-}
-
 - (KTMediaContainer *)defaultThumbnail
 {
 	NSString *iconPath = [[self bundle] pathForImageResource:@"YouTube"];
