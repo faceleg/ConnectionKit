@@ -890,6 +890,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Tell controllers they're selected again
     [selection setValue:[NSNumber numberWithBool:YES] forKey:@"selected"];
+    
+    // Update cursor for finish location
+    [[NSCursor arrowCursor] set];
+    [self mouseMoved:event];
 }
 
 
