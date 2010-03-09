@@ -120,6 +120,17 @@
 	return sPageTemplateString;
 }
 
+- (void)writeMainContent
+{
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[self pageMainContentTemplate]
+                                                                        component:[context currentPage]];
+    
+    [parser parse];
+    [parser release];
+}
+
 #pragma mark CSS
 
 - (NSString *)cssClassName { return @"text-page"; }
