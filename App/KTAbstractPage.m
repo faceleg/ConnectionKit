@@ -34,11 +34,6 @@
 @end
 
 
-@interface KTPage (ChildrenPrivate)
-- (void)invalidateSortedChildrenCache;
-@end
-
-
 @implementation KTAbstractPage
 
 + (NSString *)entityName { return @"AbstractPage"; }
