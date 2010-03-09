@@ -32,11 +32,12 @@ typedef enum {
     KTPage	*_currentPage;
     
 	KTHTMLGenerationPurpose	_generationPurpose;
-	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
     NSStringEncoding        _stringEncoding;
     NSString                *_language;
-    
+    BOOL					_includeStyling;
+    NSURL                   *_mainCSSURL;
+	
     NSString    *_calloutAlignment;
     
     NSMutableArray  *_iteratorsStack;
@@ -48,7 +49,6 @@ typedef enum {
 #pragma mark Properties
 
 @property(nonatomic, copy) NSURL *baseURL;
-@property(nonatomic) BOOL includeStyling;
 @property(nonatomic) BOOL liveDataFeeds;
 @property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
 @property(nonatomic, copy) NSString *language;
@@ -59,6 +59,13 @@ typedef enum {
 - (BOOL)isForPublishing;
 
 - (void)copyPropertiesFromContext:(SVHTMLContext *)context;
+
+
+#pragma mark CSS
+
+@property(nonatomic) BOOL includeStyling;
+
+@property(nonatomic, copy) NSURL *mainCSSURL;
 
 
 #pragma mark Callouts

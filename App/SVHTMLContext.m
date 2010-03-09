@@ -64,6 +64,7 @@
     [_language release];
     [_baseURL release];
     [_currentPage release];
+    [_mainCSSURL release];
     [_iteratorsStack release];
     [_textBlocks release];
     
@@ -73,7 +74,6 @@
 #pragma mark Properties
 
 @synthesize baseURL = _baseURL;
-@synthesize includeStyling = _includeStyling;
 @synthesize liveDataFeeds = _liveDataFeeds;
 @synthesize encoding = _stringEncoding;
 @synthesize language = _language;
@@ -110,6 +110,11 @@
     [self setEncoding:[context encoding]];
     [self setGenerationPurpose:[context generationPurpose]];
 }
+
+#pragma mark CSS
+
+@synthesize includeStyling = _includeStyling;
+@synthesize mainCSSURL = _mainCSSURL;
 
 #pragma mark Callouts
 

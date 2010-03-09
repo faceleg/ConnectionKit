@@ -34,54 +34,7 @@
 #import "Registration.h"
 
 
-@implementation KTPage ( Web )
-
-#pragma mark Class Methods
-
-- (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
-{
-    NSMutableString *result = [NSMutableString string];
-    
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
-    [context setCurrentPage:self];
-	
-    [context push];
-	[self writeHTML];
-    [context pop];
-    
-    [context release];
-    return result;
-}
-
-- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
-{
-	// Build the HTML
-    [[SVHTMLContext currentContext] setXHTML:[self isXHTML]];
-    [[SVHTMLContext currentContext] setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
-    [[SVHTMLContext currentContext] setLanguage:[[self master] language]];
-    
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
-    [parser parseIntoHTMLContext:[SVHTMLContext currentContext]];
-    [parser release];
-}
-
-+ (NSString *)pageTemplate
-{
-	static NSString *sPageTemplateString = nil;
-	
-	if (!sPageTemplateString)
-	{
-		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTPageTemplate" ofType:@"html"];
-		NSData *data = [NSData dataWithContentsOfFile:path];
-		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	}
-	
-	return sPageTemplateString;
-}
-
-#pragma mark CSS
-
-- (NSString *)cssClassName { return @"text-page"; }
+@implementation KTPage (Web)
 
 /*	Generates the path to the specified file with the current page's design.
  *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
@@ -119,6 +72,58 @@
 	return result;
 }
 
+#pragma mark Class Methods
+
+- (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
+{
+    NSMutableString *result = [NSMutableString string];
+    
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
+    [context setCurrentPage:self];
+	
+    [context push];
+	[self writeHTML];
+    [context pop];
+    
+    [context release];
+    return result;
+}
+
+- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
+{
+	// Build the HTML
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    [context setXHTML:[self isXHTML]];
+    [context setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
+    [context setLanguage:[[self master] language]];
+    
+    [context setMainCSSURL:[NSURL URLWithString:[self pathToDesignFile:@"main.css"]
+                                  relativeToURL:[context baseURL]]];
+     
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
+    [parser parseIntoHTMLContext:[SVHTMLContext currentContext]];
+    [parser release];
+}
+
++ (NSString *)pageTemplate
+{
+	static NSString *sPageTemplateString = nil;
+	
+	if (!sPageTemplateString)
+	{
+		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTPageTemplate" ofType:@"html"];
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	}
+	
+	return sPageTemplateString;
+}
+
+#pragma mark CSS
+
+- (NSString *)cssClassName { return @"text-page"; }
+
 /*  Used by KTPageTemplate.html to generate links to the stylesheets needed by this page. Used to be a dedicated [[stylesheet]] parser function
  */
 - (void)writeStylesheetLinks
@@ -132,8 +137,7 @@
     
     
 	// Then the base design's CSS file -- the most specific
-	NSString *mainCSS = [self pathToDesignFile:@"main.css"];
-	[context writeLinkToStylesheet:mainCSS
+	[context writeLinkToStylesheet:[context relativeURLStringOfURL:[context mainCSSURL]]
                              title:[[[self master] design] title]
                              media:nil];
     [context writeNewline];
