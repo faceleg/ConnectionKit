@@ -33,28 +33,7 @@
     }
 }
 
-#pragma mark -
 #pragma mark Perform Selector
-
-/*	Add to the default behavior by respecting the recursive flag
- */
-- (void)makeSelfOrDelegatePerformSelector:(SEL)selector
-							   withObject:(void *)anObject
-								 withPage:(KTPage *)page
-								recursive:(BOOL)recursive
-{
-	[super makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:recursive];
-	
-	if (recursive)
-	{
-		NSEnumerator *childrenEnumerator = [[self childItems] objectEnumerator];
-		KTPage *aPage;
-		while (aPage = [childrenEnumerator nextObject])
-		{
-			[aPage makeSelfOrDelegatePerformSelector:selector withObject:anObject withPage:page recursive:recursive];
-		}
-	}
-}
 
 // Called via recursiveComponentPerformSelector
 // Kind of inefficient since we're just looking to see if there are ANY RSS collections
