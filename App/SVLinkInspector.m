@@ -71,34 +71,15 @@
 
 #pragma mark UI Actions
 
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link
-{
-	return [[[[NSApp mainWindow] windowController] document] site];
-}
 
-- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
+- (void)linkSourceConnectedTo:(KTPage *)aPage;
 {
-	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	[pboard declareTypes:[NSArray arrayWithObject:kKTLocalLinkPboardType] owner:self];
-	[pboard setString:@"LocalLink" forType:kKTLocalLinkPboardType];
-	
-	return pboard;
-}
-
-- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
-{
-	// set up a link to the local page
-    NSString *pageID = [pboard stringForType:kKTLocalLinkPboardType];
-    if (pageID)
-    {
-        KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[[[NSApp mainWindow] windowController] document] managedObjectContext]];
-        if (target)
-        {
-            SVLink *link = [[SVLink alloc] initWithPage:target];
-            [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
-            [link release];
-        }
-    }
+	if (aPage)
+	{
+		SVLink *link = [[SVLink alloc] initWithPage:aPage];
+		[[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+		[link release];
+	}
 }
 
 - (IBAction)setLinkURL:(id)sender;

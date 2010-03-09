@@ -157,25 +157,11 @@
 	return [[self page] site];
 }
 
-- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
+- (void)linkSourceConnectedTo:(KTPage *)aPage;
 {
-	NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	[pboard declareTypes:[NSArray arrayWithObject:@"kKTLocalLinkPboardType"] owner:self];
-	[pboard setString:@"KTCollection" forType:@"kKTLocalLinkPboardType"];	// signify we want collections only
-	
-	return pboard;
-}
-
-- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
-{
-	NSString *pageID = [pboard stringForType:@"kKTLocalLinkPboardType"];
-	if ( (pageID != nil) && ![pageID isEqualToString:@""]  && ![pageID isEqualToString:@"KTCollection"] )
+	if ( nil != aPage )
 	{
-		KTPage *target = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
-		if ( nil != target )
-		{
-			[[self delegateOwner] setValue:target forKey:@"indexedPage"];
-		}
+		[[self delegateOwner] setValue:aPage forKey:@"indexedPage"];
 	}
 }
 

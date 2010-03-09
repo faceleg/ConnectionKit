@@ -154,7 +154,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
                                  [[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
     
 	[dragTypes addObject:kKTPagesPboardType];
-	[dragTypes addObject:kKTLocalLinkPboardType];
+	[dragTypes addObject:kKTLocalLinkPboardAllowedType];		// allow a drag from a link connector
 	[outlineView registerForDraggedTypes:dragTypes];
 	[outlineView setVerticalMotionCanBeginDrag:YES];
 	[outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
@@ -1073,11 +1073,11 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     // There's 2 basic types of drop: creating a link, and everything else. Links are special because they create nothing. Instead it's a feedback mechanism to the source view
     
     NSPasteboard *pboard = [info draggingPasteboard];
-    if ([[pboard types] containsObject:kKTLocalLinkPboardType])
+    if ([[pboard types] containsObject:kKTLocalLinkPboardAllowedType])
 	{
         if (item && anIndex == NSOutlineViewDropOnItemIndex)
         {
-            NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardType];
+            NSString *pboardString = [pboard stringForType:kKTLocalLinkPboardAllowedType];
             return [self validateLinkDrop:pboardString onProposedItem:item];
         }
         else
@@ -1200,9 +1200,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
 	// Remember, links are special
     NSPasteboard *pboard = [info draggingPasteboard];
-	if ([[pboard types] containsObject:kKTLocalLinkPboardType])
+	if ([[pboard types] containsObject:kKTLocalLinkPboardAllowedType])
 	{
-        [pboard setString:[(KTPage *)item uniqueID] forType:kKTLocalLinkPboardType];
+        [pboard setString:[(KTPage *)item uniqueID] forType:kKTLocalLinkPboardReturnType];		// put an ID of the page on the pasteboard for client to convert back to a KTPage object
+				// Is there a better way to pass this object around on the pasteboard?
         return YES;
     }
     

@@ -95,7 +95,7 @@ static KTLinkConnector *_sharedConnector = nil;
 #pragma mark -
 #pragma mark Methods
 
-- (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard userInfo:(id)ui
+- (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard targetWindow:(NSWindow *)aWindow
 {
 	pboard = [pasteboard retain];
 	NSEvent *theEvent;
@@ -125,9 +125,9 @@ static KTLinkConnector *_sharedConnector = nil;
 		
 		while (curWindow = [winEnum nextObject])
 		{
-			if ([[[curWindow windowController] document] site] != ui)
+			if (aWindow && (curWindow != aWindow))
 			{
-				continue; // we only want to allow links to the same document
+				continue; // if target window specified, disallow test if to another window
 			}
 			contentView = [curWindow contentView];
 			pointInWindow = [contentView convertPoint:[curWindow convertScreenToBase:curPoint] fromView:nil];

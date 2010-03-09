@@ -19,7 +19,7 @@
 
 + (id)sharedConnector;
 
-- (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard userInfo:(id)ui;
+- (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard targetWindow:(NSWindow *)aWindow;
 - (void)showConnectionWithFrame:(NSRect)frame;
 - (void)endConnection;
 

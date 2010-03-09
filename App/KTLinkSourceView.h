@@ -19,13 +19,21 @@
 
 #import <Cocoa/Cocoa.h>
 
+@class KTPage;
 
 @protocol KTLinkSourceViewDelegate;
 
 
 @interface KTLinkSourceView : NSView 
 {
-	IBOutlet id <KTLinkSourceViewDelegate> delegate; // not retained
+	BOOL _collectionsOnly;	// controller should set this in awakeFromNib.
+	NSWindow *_targetWindow;	// NSWindow that we are allowed to drag into.
+
+	KTPage *_connectedPage;	// set when done connecting, use bindings or delegate method to find out
+	
+	
+	
+	IBOutlet id <KTLinkSourceViewDelegate> _delegate; // not retained
 	
 	struct __ktDelegateFlags {
 		unsigned begin: 1;
@@ -34,23 +42,24 @@
 		unsigned isConnecting: 1;
 		unsigned isConnected: 1;
 		unsigned unused: 27;
-	} myFlags;
+	} _flags;
 }
 
-- (void)setConnected:(BOOL)isConnected;
+@property (assign) BOOL collectionsOnly;
+@property (copy) NSWindow *targetWindow;
+@property (copy) KTPage *connectedPage;
+@property (assign) id <KTLinkSourceViewDelegate> delegate;
 
-- (void)setDelegate:(id <KTLinkSourceViewDelegate>)delegate;
-- (id <KTLinkSourceViewDelegate>)delegate;
+- (void)setConnected:(BOOL)isConnected;
 
 @end
 
 
 @protocol KTLinkSourceViewDelegate <NSObject>
-- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link;
-- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard;
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link;
+- (void)linkSourceConnectedTo:(KTPage *)aPage;
 @end
 
 
-extern NSString *kKTLocalLinkPboardType;
+extern NSString *kKTLocalLinkPboardReturnType;
+extern NSString *kKTLocalLinkPboardAllowedType;
 

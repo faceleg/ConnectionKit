@@ -67,35 +67,12 @@
 #pragma mark -
 #pragma mark Link source dragging
 
-- (id)userInfoForLinkSource:(KTLinkSourceView *)link
-{
-	return [[self page] site];
-}
 
-- (NSPasteboard *)linkSourceDidBeginDrag:(KTLinkSourceView *)link
+- (void)linkSourceConnectedTo:(KTPage *)aPage;
 {
-	// We only accept Collections
-	NSPasteboard *dragPasteboard = [NSPasteboard pasteboardWithName:NSDragPboard];
-	
-	[dragPasteboard declareTypes:[NSArray arrayWithObject:@"kKTLocalLinkPboardType"]
-						   owner:self];
-	
-	[dragPasteboard setString:@"KTCollection" forType:@"kKTLocalLinkPboardType"];
-	
-	return dragPasteboard;
-}
-
-- (void)linkSourceDidEndDrag:(KTLinkSourceView *)link withPasteboard:(NSPasteboard *)pboard
-{
-	// Bail if nothing was selected
-	NSString *collectionID = [pboard stringForType:@"kKTLocalLinkPboardType"];
-	if (!collectionID || [collectionID isEqualToString:@""])
-		return;
-	
-	KTPage *target = [KTPage pageWithUniqueID:collectionID inManagedObjectContext:[[[self inspectedObjectsController] selection] managedObjectContext]];
-	if (target)
+	if (aPage)
 	{
-		[[[self inspectedObjectsController] selection] setValue:target forKey:@"collection"];
+		[[[self inspectedObjectsController] selection] setValue:aPage forKey:@"collection"];
 		[collectionLinkSourceView setConnected:YES];
 	}
 }
