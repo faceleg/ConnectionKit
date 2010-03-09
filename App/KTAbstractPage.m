@@ -174,6 +174,7 @@
 	// Build the HTML
     [[SVHTMLContext currentContext] setXHTML:[self isXHTML]];
     [[SVHTMLContext currentContext] setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
+    [[SVHTMLContext currentContext] setLanguage:[[self master] language]];
     
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
     [parser parseIntoHTMLContext:[SVHTMLContext currentContext]];

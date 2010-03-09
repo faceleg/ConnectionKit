@@ -140,7 +140,6 @@
     [[self master] writeBannerCSS];
 }
 
-#pragma mark -
 #pragma mark Other
 
 /*!	Generate path to javascript.  Nil if not there */

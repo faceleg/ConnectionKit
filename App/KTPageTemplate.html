@@ -8,7 +8,7 @@
 [[endif]]
 
 [[=DTD]]
-<html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&master.language]]" [[endif]]lang="[[=&master.language]]">
+<html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.stringStream.language]]" [[endif]]lang="[[=&parser.stringStream.language]]">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
 [[if master.codeInjection.earlyHead]]
@@ -244,7 +244,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			</tr>[[endif2]]
 			<tr>
 				<td class="quick-look-key">[['Language]]</td>
-				<td class="quick-look-value">[[=&master.language]]</td>
+				<td class="quick-look-value">[[=&parser.stringStream.language]]</td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Pages]]</td>
