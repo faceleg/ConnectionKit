@@ -343,17 +343,10 @@
 
 @dynamic timestampShowTime;
 
-#pragma mark -
 #pragma mark Language
 
-- (NSString *)language { return [self wrappedValueForKey:@"language"]; }
+@dynamic language;
 
-- (void)setLanguage:(NSString *)language
-{
-    [self setWrappedValue:language forKey:@"language"];
-}
-
-#pragma mark -
 #pragma mark Site Outline
 
 - (KTCodeInjection *)codeInjection

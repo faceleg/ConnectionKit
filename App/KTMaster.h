@@ -76,7 +76,7 @@
 
 
 #pragma mark Language
-- (NSString *)language;
+@property(nonatomic, copy) NSString *language;
 
 
 #pragma mark Comments
