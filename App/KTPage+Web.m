@@ -127,6 +127,7 @@
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[self pageMainContentTemplate]
                                                                         component:[context currentPage]];
     
+    [context setCurrentHeaderLevel:3];
     [parser parse];
     [parser release];
 }

@@ -210,9 +210,14 @@ if ([key isEqualToString:@"showBorder"])
     NSString *bundleID = [[[self plugIn] bundle] bundleIdentifier];
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
+    NSUInteger level = [context currentHeaderLevel];
+    [context setCurrentHeaderLevel:4];
+    
     [context writeComment:[NSString stringWithFormat:@" %@ ", bundleID]];
     [[self plugIn] writeHTML];
     [context writeComment:[NSString stringWithFormat:@" /%@ ", bundleID]];
+    
+    [context setCurrentHeaderLevel:level];
 }
 
 - (Class)DOMControllerClass
