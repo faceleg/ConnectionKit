@@ -39,7 +39,7 @@
     BOOL prefersPNG = [[NSUserDefaults standardUserDefaults] boolForKey:kSVPrefersPNGImageFormatKey];
     if (prefersPNG)
     {
-        [self setFileType:(NSString *)kUTTypePNG];
+        [self setStorageType:[NSNumber numberWithInteger:NSPNGFileType]];
     }
 }
 
@@ -115,7 +115,7 @@
 
 #pragma mark Publishing
 
-@dynamic fileType;
+@dynamic storageType;
 @dynamic compressionFactor;
 
 #pragma mark HTML
