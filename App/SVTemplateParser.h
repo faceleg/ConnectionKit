@@ -69,7 +69,7 @@
             component:(id)component
         writeToStream:(id <KSStringWriter>)context;
 
-- (BOOL)parseIntoStream:(id <KSStringWriter>)context;
+- (BOOL)parseWithStringWriter:(id <KSStringWriter>)context;
 - (BOOL)prepareToParse;
 
 - (NSString *)componentLocalizedString:(NSString *)tag;
@@ -94,7 +94,7 @@ keyPath:(NSString *)keyPath;
 
 #pragma mark Support
 
-@property(nonatomic, readonly) id <KSStringWriter> stringStream;
+@property(nonatomic, readonly) id <KSStringWriter> stringWriter;
 
 @property(nonatomic, retain, readonly) KTHTMLParserMasterCache *cache;
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;

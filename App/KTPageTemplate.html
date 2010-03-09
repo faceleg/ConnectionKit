@@ -8,7 +8,7 @@
 [[endif]]
 
 [[=DTD]]
-<html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.stringStream.language]]" [[endif]]lang="[[=&parser.stringStream.language]]">
+<html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.stringWriter.language]]" [[endif]]lang="[[=&parser.stringWriter.language]]">
 	<head>
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
 [[if master.codeInjection.earlyHead]]
@@ -67,7 +67,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif3]]
 [[endif2]]
 [[endif]]
-[[=parser.stringStream.writeExtraHeaders]]
+[[=parser.stringWriter.writeExtraHeaders]]
 
 [[if master.codeInjection.headArea]]
 [[=master.codeInjection.headArea]]
@@ -93,7 +93,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						<span id="logo-container">[[=master.logo.writeHTML]]</span>
 [[endif2]]
 [[if master.siteTitle.hidden]]
-						<h[[=parser.stringStream.currentHeaderLevel]] class="hidden">[[=master.siteTitleHTMLString]]</h[[=parser.stringStream.currentHeaderLevel]]>
+						<h[[=parser.stringWriter.currentHeaderLevel]] class="hidden">[[=master.siteTitleHTMLString]]</h[[=parser.stringWriter.currentHeaderLevel]]>
 [[else2]]
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1h placeholder:"Site Title"]][[endif3]]
 [[endif2]]
@@ -103,7 +103,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						<a class="imageLink" href="[[path site.rootPage]]"><span id="logo-container">[[=master.logo.writeHTML]]</span></a>
 [[endif2]]
 [[if master.siteTitle.hidden]][[comment WE HAVE TO QUERY ROOT -  THE PROPERTY IS NOT OPTIONAL PER PAGE.]]
-						<h[[=parser.stringStream.currentHeaderLevel]] class="hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h[[=parser.stringStream.currentHeaderLevel]]>
+						<h[[=parser.stringWriter.currentHeaderLevel]] class="hidden"><a href="[[path site.rootPage]]">[[=master.siteTitleHTMLString]]</a></h[[=parser.stringWriter.currentHeaderLevel]]>
 [[else2]]
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.rootPage]][[endif3]]
 [[endif2]]
@@ -147,7 +147,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			</div> <!-- container -->
 			<div id="extraDiv1"><span></span></div><div id="extraDiv2"><span></span></div><div id="extraDiv3"><span></span></div><div id="extraDiv4"><span></span></div><div id="extraDiv5"><span></span></div><div id="extraDiv6"><span></span></div>
 		</div> <!-- specific body type -->
-[[=parser.stringStream.writeEndBodyString]]
+[[=parser.stringWriter.writeEndBodyString]]
 
 [[if parser.isPublishing]]
 [[if site.googleAnalyticsCode]]
@@ -244,7 +244,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 			</tr>[[endif2]]
 			<tr>
 				<td class="quick-look-key">[['Language]]</td>
-				<td class="quick-look-value">[[=&parser.stringStream.language]]</td>
+				<td class="quick-look-value">[[=&parser.stringWriter.language]]</td>
 			</tr>
 			<tr>
 				<td class="quick-look-key">[['Pages]]</td>

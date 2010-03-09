@@ -114,7 +114,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	myCache = cache;
 }
 
-@synthesize stringStream = _stream;
+@synthesize stringWriter = _stream;
 
 #pragma mark -
 #pragma mark KVC Overriding
@@ -195,7 +195,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		if (component && template)
 		{
 			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
-			[parser parseIntoStream:_stream];
+			[parser parseWithStringWriter:_stream];
 			[parser release];
 		}
 	}
@@ -229,13 +229,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
         writeToStream:(id <KSStringWriter>)context;
 {
 	SVTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
-	BOOL result = [parser parseIntoStream:context];
+	BOOL result = [parser parseWithStringWriter:context];
 	[parser release];
     
     return result;
 }
 
-- (BOOL)parseIntoStream:(id <KSStringWriter>)stream;
+- (BOOL)parseWithStringWriter:(id <KSStringWriter>)stream;
 {
 	BOOL result = NO;
 	@try
