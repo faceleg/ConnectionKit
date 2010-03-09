@@ -108,7 +108,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
 		// Set up default bunch of fields
-		NSString *language = [[self elementPlugInContainer] languageCode];
+		NSString *language = [[SVHTMLContext currentContext] language];
 		NSMutableArray *fields = [NSMutableArray array];
 		
 		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
@@ -191,7 +191,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		sLocalizations = [[NSDictionary alloc] initWithContentsOfFile:[[self bundle] pathForResource:@"ContactStrings" ofType:@"plist"]];
 	}
 	
-	NSString *languageCode = [[self elementPlugInContainer] languageCode];
+	NSString *languageCode = [[SVHTMLContext currentContext] language];
 	
 	NSDictionary *result = [sLocalizations objectForKey:languageCode];
 	
@@ -311,14 +311,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return [[SVHTMLContext currentContext] numberOfContentObjects];
 }
 
-- (NSString *)CSSURLs
+- (NSString *)CSSURLs	// used to allow our off-site page to load the CSS on the client's site
 {
-	NSURL *designURL = [[[self page] master] designDirectoryURL];
-    NSURL *mainCSSURL = [designURL URLByAppendingPathComponent:@"main.css" isDirectory:NO];
-	NSURL *masterCSSURL = [designURL URLByAppendingPathComponent:@"master.css" isDirectory:NO];
-	
-    NSString *result = [NSString stringWithFormat:@"%@ %@", [mainCSSURL absoluteString], [masterCSSURL absoluteString]];
-    return result;
+	return [[[SVHTMLContext currentContext] mainCSSURL] absoluteString];
 }
 
 - (NSString *)subjectPrompt

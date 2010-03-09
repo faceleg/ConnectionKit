@@ -51,7 +51,7 @@
 	[newField setType:ContactElementTextFieldField];
 	
 	NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-	NSString *language = [[self elementPlugInContainer] languageCode];
+	NSString *language = [[SVHTMLContext currentContext] language];
 	[newField setLabel:[bundle localizedStringForString:@"New field" language:language]];
 	
 	return newField;
