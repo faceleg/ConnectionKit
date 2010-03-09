@@ -32,7 +32,16 @@
 
 - (IBAction)chooseFavicon:(id)sender;
 {
-	NSBeep();
+	KTDocument *document = [self representedObject];
+    NSOpenPanel *panel = [document makeChooseDialog];
+    
+    if ([panel runModal] == NSFileHandlingPanelOKButton)
+    {
+        NSURL *URL = [panel URL];
+        
+        KTMaster *master = [[[self inspectedObjectsController] selection] valueForKey:@"master"];
+        [master setFaviconWithContentsOfURL:URL];
+    }
 }
 
 - (IBAction)chooseBanner:(id)sender;
