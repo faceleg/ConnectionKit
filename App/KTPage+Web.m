@@ -137,9 +137,13 @@
     
     
 	// Then the base design's CSS file -- the most specific
-	[context writeLinkToStylesheet:[context relativeURLStringOfURL:[context mainCSSURL]]
-                             title:[[[self master] design] title]
-                             media:nil];
+    NSURL *mainCSSURL = [context mainCSSURL]
+    if (mainCSSURL)
+    {
+        [context writeLinkToStylesheet:[context relativeURLStringOfURL:mainCSSURL]
+                                 title:[[[self master] design] title]
+                                 media:nil];
+    }
     [context writeNewline];
 	
 	
