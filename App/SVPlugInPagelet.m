@@ -169,26 +169,6 @@ if ([key isEqualToString:@"showBorder"])
     return result;
 }
 
-/*	Whenever validating something, we give our delegate first crack at it if they wish
- */
-- (BOOL)validateValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
-{
-	BOOL result = YES;
-	
-	id delegate = [self plugIn];
-	if (delegate && [delegate respondsToSelector:@selector(validatePluginValue:forKeyPath:error:)])
-	{
-		result = [delegate validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
-	}
-	
-	if (result)
-	{
-		result = [super validateValue:ioValue forKeyPath:inKeyPath error:outError];
-	}
-	
-	return result;
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == sPlugInPropertiesObservationContext)
