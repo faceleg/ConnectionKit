@@ -59,8 +59,6 @@ KTCollectionPathStyle;
 #pragma mark Other Relationships
 - (KTMaster *)master;
 
-@property(nonatomic, retain, readonly) SVSidebar *sidebar;
-
 
 #pragma mark Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger

@@ -34,6 +34,7 @@
 
 
 @interface KTPage ()
+@property(nonatomic, retain, readwrite) SVSidebar *sidebar;
 @property(nonatomic, retain, readwrite) SVRichText *body;
 @end
 
@@ -163,6 +164,15 @@
 - (void)awakeFromInsert
 {
 	[super awakeFromInsert];
+    
+	
+	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
+    
+    // Create a corresponding sidebar
+    SVSidebar *sidebar = [NSEntityDescription insertNewObjectForEntityForName:@"Sidebar"
+                                                       inManagedObjectContext:[self managedObjectContext]];
+    
+    [self setSidebar:sidebar];
 	
     
     // Placeholder text
@@ -352,6 +362,7 @@
 
 - (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
 
+@dynamic sidebar;
 @dynamic showSidebar;
 
 #pragma mark Dates

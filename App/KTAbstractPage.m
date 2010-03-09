@@ -29,11 +29,6 @@
 #import "Debug.h"
 
 
-@interface KTAbstractPage ()
-@property(nonatomic, retain, readwrite) SVSidebar *sidebar;
-@end
-
-
 @implementation KTAbstractPage
 
 + (NSString *)entityName { return @"AbstractPage"; }
@@ -46,9 +41,7 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Initialisation
-
 
 /*	As above, but uses a predicate to narrow down to a particular ID
  */
@@ -85,19 +78,6 @@
 	return result;
 }
 
-- (void)awakeFromInsert
-{
-    [super awakeFromInsert];
-	
-	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
-    
-    // Create a corresponding sidebar
-    SVSidebar *sidebar = [NSEntityDescription insertNewObjectForEntityForName:@"Sidebar"
-                                                       inManagedObjectContext:[self managedObjectContext]];
-    
-    [self setSidebar:sidebar];
-}
-
 #pragma mark Identifier
 
 @dynamic uniqueID;
@@ -126,8 +106,6 @@
     SUBCLASSMUSTIMPLEMENT;
     return nil;
 }
-
-@dynamic sidebar;
 
 #pragma mark -
 #pragma mark HTML
