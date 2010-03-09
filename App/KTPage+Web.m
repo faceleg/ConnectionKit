@@ -137,7 +137,7 @@
     
     
 	// Then the base design's CSS file -- the most specific
-    NSURL *mainCSSURL = [context mainCSSURL]
+    NSURL *mainCSSURL = [context mainCSSURL];
     if (mainCSSURL)
     {
         [context writeLinkToStylesheet:[context relativeURLStringOfURL:mainCSSURL]
