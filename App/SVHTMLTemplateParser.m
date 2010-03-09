@@ -174,12 +174,6 @@
 #pragma mark -
 #pragma mark Functions
 
-- (NSString *)headerlevelWithParameters:(NSString *)inRestOfTag scaner:(NSScanner *)inScanner;
-{
-    NSString *result = [NSString stringWithFormat:@"%u", [[SVHTMLContext currentContext] currentHeaderLevel]];
-    return result;
-}
-
 - (NSString *)targetStringForPage:(id) aDestPage
 {
 	BOOL openInNewWindow = NO;
