@@ -153,7 +153,7 @@
 	return result;
 }
 
-/*	We have to implement kCompareNotEmptyOrEditing as SVTemplateParser has no concept of editing.
+/*	We have to implement kCompareNotEmptyOrEditing as superclass (SVTemplateParser) has no concept of editing.
  */
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue
 {
@@ -173,6 +173,12 @@
 
 #pragma mark -
 #pragma mark Functions
+
+- (NSString *)headerlevelWithParameters:(NSString *)inRestOfTag scaner:(NSScanner *)inScanner;
+{
+    NSString *result = [NSString stringWithFormat:@"%u", [[SVHTMLContext currentContext] currentHeaderLevel]];
+    return result;
+}
 
 - (NSString *)targetStringForPage:(id) aDestPage
 {
