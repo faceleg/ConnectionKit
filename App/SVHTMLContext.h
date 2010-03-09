@@ -24,6 +24,7 @@ typedef enum {
 
 @class KTAbstractPage, KTPage, SVContentObject, SVHTMLTextBlock, SVLink;
 
+
 @interface SVHTMLContext : KSHTMLWriter
 {
   @private
@@ -34,6 +35,7 @@ typedef enum {
 	BOOL					_includeStyling;
 	BOOL                    _liveDataFeeds;
     NSStringEncoding        _stringEncoding;
+    NSString                *_language;
     
     NSString    *_calloutAlignment;
     
@@ -49,6 +51,7 @@ typedef enum {
 @property(nonatomic) BOOL includeStyling;
 @property(nonatomic) BOOL liveDataFeeds;
 @property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
+@property(nonatomic, copy) NSString *language;
 
 @property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable; // YES if HTML is intended to be edited directly in a Web Editor

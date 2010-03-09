@@ -61,6 +61,7 @@
 
 - (void)dealloc
 {
+    [_language release];
     [_baseURL release];
     [_currentPage release];
     [_iteratorsStack release];
@@ -75,6 +76,7 @@
 @synthesize includeStyling = _includeStyling;
 @synthesize liveDataFeeds = _liveDataFeeds;
 @synthesize encoding = _stringEncoding;
+@synthesize language = _language;
 
 @synthesize generationPurpose = _generationPurpose;
 
