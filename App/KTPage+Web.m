@@ -38,6 +38,33 @@
 
 #pragma mark Class Methods
 
+- (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
+{
+    NSMutableString *result = [NSMutableString string];
+    
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
+    [context setCurrentPage:self];
+	
+    [context push];
+	[self writeHTML];
+    [context pop];
+    
+    [context release];
+    return result;
+}
+
+- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
+{
+	// Build the HTML
+    [[SVHTMLContext currentContext] setXHTML:[self isXHTML]];
+    [[SVHTMLContext currentContext] setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
+    [[SVHTMLContext currentContext] setLanguage:[[self master] language]];
+    
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
+    [parser parseIntoHTMLContext:[SVHTMLContext currentContext]];
+    [parser release];
+}
+
 + (NSString *)pageTemplate
 {
 	static NSString *sPageTemplateString = nil;

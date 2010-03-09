@@ -194,6 +194,9 @@ typedef enum {
 
 
 @interface KTPage (Web)
+
+- (NSString *)markupString;   // HTML for publishing/viewing. Calls -writeHTML with a temp context
+- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
 + (NSString *)pageTemplate;
 
 - (NSString *)javascriptURLPath;

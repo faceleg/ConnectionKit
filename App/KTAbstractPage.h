@@ -65,9 +65,6 @@ KTCollectionPathStyle;
 #pragma mark Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 
-- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
-- (NSString *)markupString;   // HTML for publishing/viewing. Calls -writeHTML with a temp context
-
 - (BOOL)isXHTML;
 
 // Comments
