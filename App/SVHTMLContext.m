@@ -53,6 +53,7 @@
     _includeStyling = YES;
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
+    _headerLevel = 1;
     _iteratorsStack = [[NSMutableArray alloc] init];
     _textBlocks = [[NSMutableArray alloc] init];
     
@@ -115,6 +116,16 @@
 
 @synthesize includeStyling = _includeStyling;
 @synthesize mainCSSURL = _mainCSSURL;
+
+#pragma mark Header Tags
+
+@synthesize currentHeaderLevel = _headerLevel;
+
+- (NSString *)currentHeaderLevelTagName;
+{
+    NSString *result = [NSString stringWithFormat:@"h%u", [self currentHeaderLevel]];
+    return result;
+}
 
 #pragma mark Callouts
 

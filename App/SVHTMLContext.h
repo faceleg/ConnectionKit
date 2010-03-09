@@ -35,8 +35,11 @@ typedef enum {
 	BOOL                    _liveDataFeeds;
     NSStringEncoding        _stringEncoding;
     NSString                *_language;
-    BOOL					_includeStyling;
-    NSURL                   *_mainCSSURL;
+    
+    BOOL    _includeStyling;
+    NSURL   *_mainCSSURL;
+    
+    NSUInteger  _headerLevel;
 	
     NSString    *_calloutAlignment;
     
@@ -66,6 +69,11 @@ typedef enum {
 @property(nonatomic) BOOL includeStyling;
 
 @property(nonatomic, copy) NSURL *mainCSSURL;
+
+
+#pragma mark Header Tags
+@property (nonatomic) NSUInteger currentHeaderLevel;    // if you need to write a header tag, use this level
+- (NSString *)currentHeaderLevelTagName;                // takes, .currentHeaderLevel and produces h3 etc.
 
 
 #pragma mark Callouts
