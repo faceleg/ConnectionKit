@@ -54,19 +54,7 @@
 
 - (void)setIsDraft:(NSNumber *)flag;
 {
-	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parentPage] archivePageForTimestamp:[self timestampDate] createIfNotFound:!flag];
-	
-	
 	[super setIsDraft:flag];
-	
-	
-	// Delete the old archive page if it has nothing on it now
-	if (oldArchivePage)
-	{
-		NSArray *pages = [oldArchivePage sortedPages];
-		if (!pages || [pages count] == 0) [[self managedObjectContext] deletePage:oldArchivePage];
-	}
 	
 	
 	// This may also affect the site menu
