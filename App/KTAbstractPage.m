@@ -239,33 +239,3 @@
 }
 
 @end
-
-
-#pragma mark -
-
-
-@implementation KTAbstractPage (Deprecated)
-
-#pragma mark Title
-
-+ (NSSet *)keyPathsForValuesAffectingTitleHTMLString
-{
-    return [NSSet setWithObject:@"titleBox.textHTMLString"];
-}
-
-- (NSString *)titleText	// get title, but without attributes
-{
-	return [self title];
-}
-
-- (void)setTitleText:(NSString *)value
-{
-	[self setTitle:value];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingTitleText
-{
-    return [NSSet setWithObject:@"title"];
-}
-
-@end
