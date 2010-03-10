@@ -62,7 +62,7 @@
     NSArray *inspectors = [[KSDocumentController sharedDocumentController] inspectors];
     for (SVInspector *anInspector in inspectors)
     {
-        [[anInspector linkInspector] setInspectedLink:[self selectedLink]];
+        [[anInspector linkInspector] refresh];
     }
 }
 

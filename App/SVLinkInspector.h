@@ -18,20 +18,21 @@
 
 @interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
 {
+    IBOutlet NSPopUpButton      *oLinkTypePopUpButton;
+    IBOutlet NSTabView          *oTabView;
+    
     IBOutlet KTLinkSourceView   *oLinkSourceView;
     IBOutlet NSTextField        *oLinkField;
     IBOutlet NSButton           *oOpenInNewWindowCheckbox;
     
   @private
-    NSFormatter *_URLFormatter;
 }
 
 
-#pragma mark Link
-- (void)setInspectedLink:(SVLink *)link;    // don't call directly, invoked as a side-effect of -[SVLinkManager setSelectedLink:editable:]
-
-
 #pragma mark UI Actions
+
+- (IBAction)selectLinkType:(NSPopUpButton *)sender;
+
 - (IBAction)setLinkURL:(id)sender;
 - (IBAction)clearLinkDestination:(id)sender;
 

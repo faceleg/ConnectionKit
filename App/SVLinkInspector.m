@@ -25,33 +25,38 @@
     [super loadView];
         
     // Initial setup
-    [self setInspectedLink:[[SVLinkManager sharedLinkManager] selectedLink]];
+    [self refresh];
 }
 
 #pragma mark Link
 
-- (void)setInspectedLink:(SVLink *)link;
+- (void)refresh;
 {
+    [super refresh];
+    
+    
     // Make the link field editable if there is nothing entered, or the URL is typed in
+    SVLinkManager *manager = [SVLinkManager sharedLinkManager];
+    
+    NSUInteger linkType = 0;
+    
+    
+    SVLink *link = [manager selectedLink];
     if ([link page])
     {
         // Configure for a local link
-        [oLinkField setEditable:NO];
-        [oLinkField setBackgroundColor:[NSColor controlHighlightColor]];
-        [oLinkField setFormatter:nil];
-        
+        linkType = 2;
+                
         [oLinkSourceView setConnected:YES];
         
         NSString *title = [[link page] title];
         if (!title) title = @"";
         [oLinkField setStringValue:title];
     }
-    else
+    else if (link)
     {
         // Configure for a generic link
-        if (!_URLFormatter) _URLFormatter = [[KSURLFormatter alloc] init];
-        [oLinkField setFormatter:_URLFormatter];
-        [oLinkField setBackgroundColor:[NSColor textBackgroundColor]];
+        linkType = 1;
         
         [oLinkSourceView setConnected:NO];
         
@@ -59,6 +64,10 @@
         if (!title) title = @"";
         [oLinkField setStringValue:title];
     }
+    
+    
+    [oLinkTypePopUpButton selectItemAtIndex:linkType];
+    [oTabView selectTabViewItemAtIndex:linkType];
     
     [oOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
 }
@@ -71,6 +80,10 @@
 
 #pragma mark UI Actions
 
+- (IBAction)selectLinkType:(NSPopUpButton *)sender;
+{
+    [oTabView selectTabViewItemAtIndex:[sender indexOfSelectedItem]];
+}
 
 - (void)linkSourceConnectedTo:(KTPage *)aPage;
 {
