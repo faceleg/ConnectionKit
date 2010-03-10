@@ -52,7 +52,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 
 @class SVTitleBox;
-@class SVCallout, SVTextAttachment, SVTemplate;
+@class SVTextAttachment, SVTemplate;
 
 
 @interface SVGraphic : SVContentObject <SVGraphic>
@@ -78,8 +78,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 /*  There is generally no need to directly adjust a graphic's wrap setting. In particular, one hazard is that you could cause a block-level object appear inline. i.e. invalid HTML. Instead, use the higher-level DOM Controller API to modify wrap/placement of the selection.
  */
-
-@property(nonatomic, readonly) SVCallout *callout;
 
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
 - (BOOL)canBePlacedInline;  // default is NO. Subclasses can override

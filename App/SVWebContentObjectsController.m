@@ -9,7 +9,6 @@
 #import "SVWebContentObjectsController.h"
 
 #import "SVRichText.h"
-#import "SVCallout.h"
 #import "SVLogoImage.h"
 #import "KTPage.h"
 #import "SVSidebar.h"
@@ -87,13 +86,6 @@
             SVGraphic *pagelet = object;
             
             // Remove from callout, and delete that if it's now empty
-            SVCallout *callout = [pagelet callout];
-            [callout removePageletsObject:pagelet];
-            if ([[callout pagelets] count] == 0)
-            {
-                [[callout managedObjectContext] deleteObject:callout];
-            }
-            
             if ([[pagelet sidebars] count] == 0)
             {
                 [[pagelet managedObjectContext] deleteObject:pagelet];

@@ -266,10 +266,6 @@
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */; };
 		273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */; };
-		273D6F5110E7C9DF003F5BA8 /* SVCallout.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D6F4F10E7C9DF003F5BA8 /* SVCallout.h */; };
-		273D6F5210E7C9DF003F5BA8 /* SVCallout.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D6F5010E7C9DF003F5BA8 /* SVCallout.m */; };
-		273D705A10E8ECB4003F5BA8 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
-		273D705B10E8ECB4003F5BA8 /* SVCalloutDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */; };
 		273D730310EA7A9C003F5BA8 /* SVElementPlugInContainer.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273D764310EC134F003F5BA8 /* PlugInInspector.xib */; };
 		273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */; };
@@ -1726,8 +1722,6 @@
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
 		273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorHTMLContext.h; sourceTree = "<group>"; };
 		273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorHTMLContext.m; sourceTree = "<group>"; };
-		273D6F4F10E7C9DF003F5BA8 /* SVCallout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCallout.h; sourceTree = "<group>"; };
-		273D6F5010E7C9DF003F5BA8 /* SVCallout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCallout.m; sourceTree = "<group>"; };
 		273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVCalloutDOMController.h; sourceTree = "<group>"; };
 		273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVCalloutDOMController.m; sourceTree = "<group>"; };
 		273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVElementPlugInContainer.h; sourceTree = "<group>"; };
@@ -4223,8 +4217,6 @@
 				279C587F109916F20030F3B7 /* SVSidebar.h */,
 				279C5880109916F20030F3B7 /* SVSidebar.m */,
 				27A095331097598600F43746 /* PageletTemplate.html */,
-				273D6F4F10E7C9DF003F5BA8 /* SVCallout.h */,
-				273D6F5010E7C9DF003F5BA8 /* SVCallout.m */,
 				27C064BF10825F4800795D66 /* SVGraphic.h */,
 				27C064C010825F4800795D66 /* SVGraphic.m */,
 				277E4E8611104CF4005AF346 /* SVImage.h */,
@@ -5323,8 +5315,6 @@
 				277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */,
 				276F8AB210D572780094AA73 /* SVDOMController.h in Headers */,
 				27A3578910E6D59D00C99FB3 /* SVTemplate.h in Headers */,
-				273D6F5110E7C9DF003F5BA8 /* SVCallout.h in Headers */,
-				273D705A10E8ECB4003F5BA8 /* SVCalloutDOMController.h in Headers */,
 				273D730310EA7A9C003F5BA8 /* SVElementPlugInContainer.h in Headers */,
 				273D765010EC169F003F5BA8 /* SVPlugInInspector.h in Headers */,
 				271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */,
@@ -6721,8 +6711,6 @@
 				CEC4C55F10CEEE5100AEE22D /* SVDesignChooserImageBrowserCell.m in Sources */,
 				276F8AB310D572780094AA73 /* SVDOMController.m in Sources */,
 				27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */,
-				273D6F5210E7C9DF003F5BA8 /* SVCallout.m in Sources */,
-				273D705B10E8ECB4003F5BA8 /* SVCalloutDOMController.m in Sources */,
 				273D765110EC169F003F5BA8 /* SVPlugInInspector.m in Sources */,
 				CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */,
 				27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */,

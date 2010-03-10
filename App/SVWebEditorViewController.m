@@ -9,7 +9,6 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVApplicationController.h"
-#import "SVCallout.h"
 #import "SVPlugInPagelet.h"
 #import "SVHTMLTextBlock.h"
 #import "SVLogoImage.h"
@@ -678,16 +677,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)_insertPageletInSidebar:(SVGraphic *)pagelet;
 {
-    // Make sure the pagelet isn't placed anywhere undesireable.
-    // So if you're inserting a pagelet that is already in a callout, remove it from the callout and then delete that if necessary
-    SVCallout *callout = [pagelet callout];
-    [callout removePageletsObject:pagelet];
-    if ([[callout pagelets] count] == 0)
-    {
-        [[callout managedObjectContext] deleteObject:callout];
-    }
-    
-    
     // Place at end of the sidebar
     [[_selectableObjectsController sidebarPageletsController] addObject:pagelet];
 }

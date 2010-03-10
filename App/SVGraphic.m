@@ -106,7 +106,6 @@
 
 #pragma mark Placement
 
-@dynamic callout;
 @dynamic textAttachment;
 
 - (BOOL)canBePlacedInline; { return NO; }
