@@ -13,6 +13,15 @@
 #import <WebKit/WebKit.h>
 
 
+typedef enum {
+    SVLinkNone,
+    SVLinkToPage,
+    SVLinkToRSSFeed,
+    SVLinkToFullSizeImage = 8,
+    SVLinkExternal = 10,
+} SVLinkType;
+
+
 @class SVLink;
 
 

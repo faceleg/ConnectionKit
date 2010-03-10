@@ -38,14 +38,14 @@
     // Make the link field editable if there is nothing entered, or the URL is typed in
     SVLinkManager *manager = [SVLinkManager sharedLinkManager];
     
-    NSUInteger linkType = 0;
+    SVLinkType linkType = SVLinkNone;
     
     
     SVLink *link = [manager selectedLink];
     if ([link page])
     {
         // Configure for a local link
-        linkType = 2;
+        linkType = SVLinkToPage;
                 
         [oLinkSourceView setConnected:YES];
         
@@ -56,7 +56,7 @@
     else if (link)
     {
         // Configure for a generic link
-        linkType = 1;
+        linkType = SVLinkExternal;
         
         [oLinkSourceView setConnected:NO];
         
@@ -66,8 +66,8 @@
     }
     
     
-    [oLinkTypePopUpButton selectItemAtIndex:linkType];
-    [oTabView selectTabViewItemAtIndex:linkType];
+    [oLinkTypePopUpButton selectItemWithTag:linkType];
+    [oTabView selectTabViewItemAtIndex:[oLinkTypePopUpButton indexOfSelectedItem]];
     
     [oOpenInNewWindowCheckbox setState:([link openInNewWindow] ? NSOnState : NSOffState)];
 }
