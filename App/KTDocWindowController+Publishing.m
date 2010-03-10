@@ -9,7 +9,6 @@
 
 #import "KTDocWindowController.h"
 
-#import "KTAbstractPage+Internal.h"
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTExportEngine.h"

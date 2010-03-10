@@ -60,7 +60,7 @@
 		NSArray *flags = [[parameters objectForKey:@"flags"] componentsSeparatedByWhitespace];
 		
 		// Hyperlink
-		KTAbstractPage *hyperlink = nil;
+		KTPage *hyperlink = nil;
 		NSString *hyperlinkKeyPath = [parameters objectForKey:@"hyperlink"];
 		if (hyperlinkKeyPath) hyperlink = [[self cache] valueForKeyPath:hyperlinkKeyPath];
 		
@@ -90,7 +90,7 @@
 								    HTMLTag:(NSString *)tag
 								  className:(NSString *)className
 						  graphicalTextCode:(NSString *)GTCode
-								  hyperlink:(KTAbstractPage *)hyperlink
+								  hyperlink:(KTPage *)hyperlink
 {
 	// Build a text block
 	SVHTMLTextBlock *result = [[[SVHTMLTextBlock alloc] init] autorelease];

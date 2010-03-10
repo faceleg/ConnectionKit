@@ -49,7 +49,7 @@
 #pragma mark -
 #pragma mark Init & Dealloc
 
-- (id)initWithPage:(KTAbstractPage *)page
+- (id)initWithPage:(KTPage *)page
 {
 	// Archive pages are specially parsed so that the component is the parent page.
 	KTPage *component = (KTPage *)page;
@@ -144,7 +144,7 @@
 	
 	if (result)
 	{
-		KTAbstractPage *page = [[SVHTMLContext currentContext] currentPage];
+		KTPage *page = [[SVHTMLContext currentContext] currentPage];
         if (page) [[self cache] overrideKey:@"CurrentPage" withValue:page];
         
 		[[self cache] overrideKey:@"HTMLGenerationPurpose" withValue:[self valueForKey:@"HTMLGenerationPurpose"]];
@@ -343,7 +343,7 @@
 	}
 	
 	// Mark for image replacement ONLY if QC supported.
-	KTAbstractPage *page = [[SVHTMLContext currentContext] currentPage];
+	KTPage *page = [[SVHTMLContext currentContext] currentPage];
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parentPage];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
@@ -482,7 +482,7 @@
 
 /*	Support method that returns the path to the resource dependent of our HTML generation purpose.
  */
-- (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTAbstractPage *)page
+- (NSString *)resourceFilePath:(NSURL *)resourceURL relativeToPage:(KTPage *)page
 {
 	NSString *result = [[SVHTMLContext currentContext] relativeURLStringOfResourceFile:resourceURL];
     
@@ -526,7 +526,7 @@
 {
 	NSString *result = nil;
     
-    if ([anObject isKindOfClass:[KTAbstractPage class]])
+    if ([anObject isKindOfClass:[KTPage class]])
     {
         result = [[SVHTMLContext currentContext] relativeURLStringOfPage:anObject];
     }
@@ -543,7 +543,7 @@
 /*  These methods are no longer public in 2.0 as we have moved to the SVHTMLContext concept. But many templates rely on these methods being present in the parser, so they stick around as wrappers around the new functionality
  */
 
-- (KTAbstractPage *)currentPage
+- (KTPage *)currentPage
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);

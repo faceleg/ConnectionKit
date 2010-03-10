@@ -12,7 +12,7 @@
 #import "KT.h"
 #import "SVParagraphedHTMLWriter.h"
 #import "SVCallout.h"
-#import "KTAbstractPage.h"
+#import "KTPage.h"
 #import "SVGraphic.h"
 #import "SVRichText.h"
 #import "KTDocWindowController.h"
@@ -306,7 +306,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if ([linkURLString hasPrefix:kKTPageIDDesignator])
         {
             NSString *pageID = [linkURLString substringFromIndex:[kKTPageIDDesignator length]];
-            KTAbstractPage *target = [KTAbstractPage pageWithUniqueID:pageID
+            KTPage *target = [KTPage pageWithUniqueID:pageID
                                                inManagedObjectContext:[[self representedObject] managedObjectContext]];
             
             if (target)

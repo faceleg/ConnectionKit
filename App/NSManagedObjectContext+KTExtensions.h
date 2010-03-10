@@ -21,7 +21,7 @@
 #import "NSManagedObjectContext+Karelia.h"
 
 
-@class KTAbstractElement, KTDocument, KTSite, KTAbstractPage, KTPage;
+@class KTAbstractElement, KTDocument, KTSite, KTPage, KTPage;
 
 @interface NSManagedObjectContext (KTExtensions)
 
@@ -59,6 +59,6 @@
 // returns object in context matching criteria 
 - (NSManagedObject *)objectWithUniqueID:(NSString *)aUniqueID entityName:(NSString *)anEntityName;
 
-- (void)deletePage:(KTAbstractPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
+- (void)deletePage:(KTPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
 
 @end

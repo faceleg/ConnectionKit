@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 #import "KTHostProperties.h"
-#import "KTAbstractPage.h"
+#import "KTPage.h"
 #import "KTSite.h"
 #import "BDAlias+QuickLook.h"
 
@@ -175,7 +175,7 @@
     return result;
 }
 
-- (NSString *)relativeURLStringOfPage:(KTAbstractPage *)page;   // will generate a relative URL string when possible
+- (NSString *)relativeURLStringOfPage:(KTPage *)page;   // will generate a relative URL string when possible
 {
     OBPRECONDITION(page);
     

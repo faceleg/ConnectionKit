@@ -37,7 +37,7 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTAbstractPage, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
+@class KTSite, KTPage, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -114,7 +114,7 @@ typedef enum {
 - (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 
 // Pages
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
+- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 
 // Media
 - (NSSet *)uploadedMedia;

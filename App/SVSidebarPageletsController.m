@@ -14,7 +14,7 @@
 
 
 @interface SVSidebarPageletsController ()
-- (void)_addPagelet:(SVGraphic *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
+- (void)_addPagelet:(SVGraphic *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 @end
 
 
@@ -106,7 +106,7 @@
 }
 
 - (void)_addPagelet:(SVGraphic *)pagelet
-toSidebarOfDescendantsOfPageIfApplicable:(KTAbstractPage *)page;
+toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 {
     NSSet *inheritablePagelets = [[page sidebar] pagelets];
     

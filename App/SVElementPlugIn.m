@@ -10,7 +10,7 @@
 #import "SVPageProtocol.h"
 
 #import "KTAbstractHTMLPlugin.h"
-#import "KTAbstractPage.h"
+#import "KTPage.h"
 #import "SVRichText.h"
 #import "SVDOMController.h"
 #import "SVElementPlugInContainer.h"
@@ -130,14 +130,14 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
-- (KTAbstractPage *)page
+- (KTPage *)page
 {
     return [[[[self delegateOwner] sidebars] anyObject] page];
     
     
     SVRichText *body = [[self delegateOwner] enclosingBody];
     
-    KTAbstractPage *result = nil;
+    KTPage *result = nil;
     if ([[[body entity] name] isEqualToString:@"PageBody"])
     {
         result = [body valueForKey:@"page"];
@@ -224,7 +224,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 {
-    KTAbstractPage *result = [KTAbstractPage pageWithUniqueID:identifier
+    KTPage *result = [KTPage pageWithUniqueID:identifier
                                        inManagedObjectContext:[[self delegateOwner] managedObjectContext]];
     return result;
 }

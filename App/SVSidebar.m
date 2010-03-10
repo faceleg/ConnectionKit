@@ -8,7 +8,7 @@
 
 #import "SVSidebar.h"
 
-#import "KTAbstractPage.h"
+#import "KTPage.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVGraphic.h"
 

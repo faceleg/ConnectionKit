@@ -27,7 +27,7 @@
     return self;
 }
 
-- (id)initWithPage:(KTAbstractPage *)page openInNewWindow:(BOOL)openInNewWindow;
+- (id)initWithPage:(KTPage *)page openInNewWindow:(BOOL)openInNewWindow;
 {
     [self initWithURLString:[kKTPageIDDesignator stringByAppendingString:[page uniqueID]]
             openInNewWindow:openInNewWindow];

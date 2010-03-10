@@ -12,7 +12,7 @@
 
 @interface SVHTMLTemplateParser ()
 
-- (NSString *)resourceFilePath:(NSURL *)resourceFile relativeToPage:(KTAbstractPage *)page;
+- (NSString *)resourceFilePath:(NSURL *)resourceFile relativeToPage:(KTPage *)page;
 
 // Delegate
 - (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock;

@@ -8,7 +8,6 @@
 
 #import "KTLocalPublishingEngine.h"
 
-#import "KTAbstractPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"
 #import "KTHostProperties.h"
@@ -199,7 +198,7 @@
     if ([self status] > KTPublishingEngineStatusNotStarted &&
         [self status] < KTPublishingEngineStatusFinished)
     {
-        if ([object isKindOfClass:[KTAbstractPage class]])
+        if ([object isKindOfClass:[KTPage class]])
         {
             [object setPublishedPath:path];
         }
@@ -228,7 +227,7 @@
 
 - (BOOL)shouldUploadHTML:(NSString *)HTML
                 encoding:(NSStringEncoding)encoding
-                 forPage:(KTAbstractPage *)page
+                 forPage:(KTPage *)page
                   toPath:(NSString *)uploadPath
                   digest:(NSData **)outDigest;
 {

@@ -8,12 +8,12 @@
 
 #import <CoreData/CoreData.h>
 
-@class KTAbstractPage;
+@class KTPage;
 @class SVGraphic;
 
 @interface SVSidebar : NSManagedObject  
 
-@property (nonatomic, retain) KTAbstractPage * page;
+@property (nonatomic, retain) KTPage * page;
 
 @property(nonatomic, retain) NSSet *pagelets;   // To sort, use SVGraphic class method
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;

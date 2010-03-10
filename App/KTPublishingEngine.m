@@ -8,7 +8,7 @@
 
 #import "KTPublishingEngine.h"
 
-#import "KTAbstractPage+Internal.h"
+#import "KTPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"
 #import "SVHTMLTextBlock.h"
@@ -49,9 +49,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
-- (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
-- (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page;
-- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page;
+- (void)parseAndUploadPageIfNeeded:(KTPage *)page;
+- (void)_parseAndUploadPageIfNeeded:(KTPage *)page;
+- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page;
 
 // Media
 - (void)queuePendingMedia:(KTMediaFileUpload *)media;
@@ -410,7 +410,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 /*  Semi-public method that parses the page, uploading HTML, media, resources etc. as needed.
  *  It then moves onto the next page after a short delay
  */
-- (void)parseAndUploadPageIfNeeded:(KTAbstractPage *)page
+- (void)parseAndUploadPageIfNeeded:(KTPage *)page
 {
     // Generally this method is called from -performSelector:afterDelay: so do our own exception reporting
     @try
@@ -422,7 +422,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Continue onto the next page if the app is licensed
         if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
         {
-            KTAbstractPage *nextPage = nil;
+            KTPage *nextPage = nil;
             
             
             // First try to publish any children or archive pages
@@ -506,7 +506,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)_parseAndUploadPageIfNeeded:(KTAbstractPage *)page
+- (void)_parseAndUploadPageIfNeeded:(KTPage *)page
 {
 	OBASSERT([NSThread isMainThread]);
 	
@@ -603,7 +603,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  Support method for determining which page to publish next. Only searches UP the tree.
  */
-- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTAbstractPage *)page
+- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page
 {
     OBPRECONDITION(page);
     
@@ -629,7 +629,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 /*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages
  */
-- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTAbstractPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
+- (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 {
     return YES;
 }

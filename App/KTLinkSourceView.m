@@ -126,7 +126,8 @@ static NSImage *sTargetSetImage = nil;
 	
 	// Get the page from the pasteboard
 	NSString *pageID = [pboard stringForType:kKTLocalLinkPboardReturnType];
-	KTPage *targetPage = [KTPage pageWithUniqueID:pageID inManagedObjectContext:[[[self inspectedObjectsController] selection] managedObjectContext]];
+	KTPage *targetPage = [KTPage pageWithUniqueID:pageID 
+                           inManagedObjectContext:[[[self inspectedObjectsController] selection] managedObjectContext]];
 
 	[targetCursor pop];
 	[targetCursor release];

@@ -8,7 +8,7 @@
 
 #import "SVParagraphLink.h"
 
-#import "KTAbstractPage.h"
+#import "KTPage.h"
 
 @implementation SVParagraphLink 
 

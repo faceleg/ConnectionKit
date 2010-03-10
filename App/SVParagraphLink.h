@@ -9,12 +9,12 @@
 #import "SVTextAttachment.h"
 
 
-@class KTAbstractPage;
+@class KTPage;
 
 
 @interface SVParagraphLink : SVTextAttachment  
 
-@property (nonatomic, retain) KTAbstractPage * page;
+@property (nonatomic, retain) KTPage * page;
 
 @end
 

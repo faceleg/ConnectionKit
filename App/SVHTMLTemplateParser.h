@@ -24,14 +24,14 @@
 
 
 @class KTDocument, KTHTMLParserMasterCache, SVHTMLContext, KTMediaFileUpload, SVHTMLTextBlock;
-@class KTAbstractPage;
+@class KTPage;
 @class KTMediaContainer;
 @protocol SVHTMLTemplateParserDelegate, SVMedia;
 
 
 @interface SVHTMLTemplateParser : SVTemplateParser
 
-- (id)initWithPage:(KTAbstractPage *)page;	// Convenience method that parses the whole page
+- (id)initWithPage:(KTPage *)page;	// Convenience method that parses the whole page
 
 @property(nonatomic, assign) id <SVHTMLTemplateParserDelegate> delegate;
 
@@ -74,7 +74,7 @@
 								    HTMLTag:(NSString *)tag
 								  className:(NSString *)className
 						  graphicalTextCode:(NSString *)GTCode
-								  hyperlink:(KTAbstractPage *)hyperlink;
+								  hyperlink:(KTPage *)hyperlink;
 @end
 
 
