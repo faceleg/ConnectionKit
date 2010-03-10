@@ -61,6 +61,8 @@
 
 - (NSError *)makeErrorLookLikeErrorFromDoubleClickingDocument:(NSError *)anError;
 {
+    OBPRECONDITION(anError);
+    
 	NSDictionary *userInfo = [anError userInfo];
 	NSString *path = [userInfo objectForKey:NSFilePathErrorKey];
 	if (nil == path)
