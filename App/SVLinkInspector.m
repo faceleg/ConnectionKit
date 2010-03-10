@@ -53,7 +53,7 @@
         if (!title) title = @"";
         [oLinkField setStringValue:title];
     }
-    else if (link)
+    else if ([link URLString])
     {
         // Configure for a generic link
         linkType = SVLinkExternal;
@@ -86,6 +86,11 @@
     if (type == SVLinkNone)
     {
         [[SVLinkManager sharedLinkManager] modifyLinkTo:nil];
+    }
+    else if (type == SVLinkExternal)
+    {
+        SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
+        if (link) [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
     }
     
     [oTabView selectTabViewItemAtIndex:[sender indexOfSelectedItem]];
