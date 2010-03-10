@@ -43,7 +43,10 @@
     }
 }
 
+#pragma mark Required Attributes
+
 @dynamic media;
+@dynamic alternateText;
 
 #pragma mark Placement
 
@@ -124,21 +127,28 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
+    // src=
     NSURL *imageURL = [[self media] fileURL];
     if (!imageURL)
     {
         imageURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     }
     
+    // alt=
+    NSStream *alt = [self alternateText];
+    if (!alt) alt = @"";
+    
+    // Link
     if ([self isPagelet] && [self linkURLString])
     {
         [context writeAnchorStartTagWithHref:[self linkURLString] title:nil target:nil rel:nil];
     }
     
+    // Actually write the image
     [context writeImageWithIdName:[self editingElementID]
                         className:[self className]
                               src:[imageURL relativeString]
-                              alt:nil 
+                              alt:alt 
                             width:[[self width] description]
                            height:[[self height] description]];
     

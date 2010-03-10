@@ -18,7 +18,8 @@
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 
 
-@property (nonatomic, retain) SVMediaRecord *media;
+@property(nonatomic, retain) SVMediaRecord *media;
+@property(nonatomic, copy) NSString *alternateText;
 
 @property(nonatomic, copy) NSNumber *width;
 @property(nonatomic, copy) NSNumber *height;
