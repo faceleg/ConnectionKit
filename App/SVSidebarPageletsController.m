@@ -136,7 +136,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     [self removePagelet:pagelet fromSidebarOfPage:(KTPage *)[[self sidebar] page]];
     
     // Delete the pagelet if it no longer appears on any pages
-    if ([[pagelet sidebars] count] == 0 && ![pagelet callout])
+    if ([[pagelet sidebars] count] == 0 && ![pagelet textAttachment])
     {
         [[self managedObjectContext] deleteObject:pagelet];
     }
