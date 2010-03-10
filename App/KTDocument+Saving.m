@@ -380,7 +380,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Save the context
-		result = [self writeDatastoreToURL:inURL
+		result = [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
                           forSaveOperation:saveOperation
                        originalContentsURL:inOriginalContentsURL
@@ -524,7 +524,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return YES;
 }
 
-- (BOOL)writeDatastoreToURL:(NSURL *)inURL  // TODO: this should be the URL of the datastore, not the document
+- (BOOL)writeDatastoreToURL:(NSURL *)inURL
                      ofType:(NSString *)inType
            forSaveOperation:(NSSaveOperationType)inSaveOperation
         originalContentsURL:(NSURL *)inOriginalContentsURL
@@ -545,7 +545,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Handle the user choosing "Save As" for an EXISTING document
     if (inSaveOperation == NSSaveAsOperation && [self fileURL])
     {
-        result = [self migrateToURL:inURL ofType:inType originalContentsURL:inOriginalContentsURL error:&error];
+        result = [self migrateToURL:[KTDocument documentURLForDatastoreURL:inURL]
+                             ofType:inType
+                originalContentsURL:inOriginalContentsURL
+                              error:&error];
         if (!result)
         {
             if (outError)
@@ -556,7 +559,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         }
         else
         {
-            result = [self setMetadataForStoreAtURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
+            result = [self setMetadataForStoreAtURL:inURL
                                               error:&error];
         }
     }
