@@ -52,9 +52,9 @@
 	NSManagedObject *anObject;
 	while (anObject = [enumerator nextObject])
 	{
-		if ([anObject isKindOfClass:[KTAbstractPage class]])
+		if ([anObject isKindOfClass:[KTPage class]])
         {
-            [self deletePage:(KTAbstractPage *)anObject];
+            [self deletePage:(KTPage *)anObject];
         }
         else
         {
@@ -192,7 +192,7 @@
 	return nil;
 }
 
-- (void)willDeletePage:(KTAbstractPage *)page;
+- (void)willDeletePage:(KTPage *)page;
 {
     // Let plug-ins know
     [[NSNotificationCenter defaultCenter] postNotificationName:SVPageWillBeDeletedNotification
@@ -203,13 +203,13 @@
     {
         [self willDeletePage:aPage];
     }
-    for (KTAbstractPage *aPage in [page archivePages])
+    for (KTPage *aPage in [page archivePages])
     {
         [self willDeletePage:aPage];
     }
 }
 
-- (void)deletePage:(KTAbstractPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
+- (void)deletePage:(KTPage *)page;  // Please ALWAYS call this for pages as it posts a notification first
 {
     [self willDeletePage:page];
     [self deleteObject:page];
