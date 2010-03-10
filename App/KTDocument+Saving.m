@@ -175,6 +175,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     switch (saveOperation)
     {
         case NSSaveAsOperation:
+        case NSAutosaveOperation:
         {
             // We'll need a path for various operations below
             NSAssert2([absoluteURL isFileURL], @"-%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
@@ -228,7 +229,6 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
         // NSDocument attempts to write a copy of the document out at a temporary location.
         // Core Data cannot support this, so we override it to save directly.
         case NSSaveOperation:
-        case NSAutosaveOperation:
             result = [self writeToURL:absoluteURL
                                ofType:typeName
                      forSaveOperation:saveOperation 
@@ -551,7 +551,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSError *error = nil;
 	
 	
-	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
+	NSManagedObjectContext *context = [self managedObjectContext];
 	
 	
     
@@ -581,7 +581,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Time to actually save the context
     if (result)
     {
-        result = [managedObjectContext save:&error];
+        result = [context save:&error];
     }
 
     
