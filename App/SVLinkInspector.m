@@ -38,7 +38,7 @@
     // Make the link field editable if there is nothing entered, or the URL is typed in
     SVLinkManager *manager = [SVLinkManager sharedLinkManager];
     
-    SVLinkType linkType = SVLinkNone;
+    SVLinkType linkType = 0;
     
     
     SVLink *link = [manager selectedLink];
@@ -83,7 +83,7 @@
 - (IBAction)selectLinkType:(NSPopUpButton *)sender;
 {
     SVLinkType type = [sender selectedTag];
-    if (type == SVLinkNone)
+    if (type == 0)
     {
         [[SVLinkManager sharedLinkManager] modifyLinkTo:nil];
     }
@@ -91,6 +91,12 @@
     {
         SVLink *link = [[SVLinkManager sharedLinkManager] guessLink];
         if (link) [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+    }
+    else if (type == SVLinkToFullSizeImage)
+    {
+        SVLink *link = [[SVLink alloc] initLinkToFullSizeImageOpensInNewWindow:NO];
+        [[SVLinkManager sharedLinkManager] modifyLinkTo:link];
+        [link release];
     }
     
     [oTabView selectTabViewItemAtIndex:[sender indexOfSelectedItem]];

@@ -7,14 +7,14 @@
 //
 
 //  Immutable object, rather like NSFont, that encapsulates a link.
+//  It's actually fairly close to PSLink in many ways – can we match them a bit?
 
 
 #import <Cocoa/Cocoa.h>
 
 
 typedef enum {
-    SVLinkNone,
-    SVLinkToPage,
+    SVLinkToPage = 1,
     SVLinkToRSSFeed,
     SVLinkToFullSizeImage = 8,
     SVLinkExternal = 10,
