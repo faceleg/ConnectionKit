@@ -99,5 +99,6 @@
 
 // Legacy I'd like to get rid of
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
+- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary;
 
 @end
