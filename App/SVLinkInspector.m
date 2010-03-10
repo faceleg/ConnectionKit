@@ -82,6 +82,12 @@
 
 - (IBAction)selectLinkType:(NSPopUpButton *)sender;
 {
+    SVLinkType type = [sender selectedTag];
+    if (type == SVLinkNone)
+    {
+        [[SVLinkManager sharedLinkManager] modifyLinkTo:nil];
+    }
+    
     [oTabView selectTabViewItemAtIndex:[sender indexOfSelectedItem]];
 }
 
