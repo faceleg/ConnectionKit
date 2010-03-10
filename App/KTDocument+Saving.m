@@ -228,6 +228,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
         // NSDocument attempts to write a copy of the document out at a temporary location.
         // Core Data cannot support this, so we override it to save directly.
         case NSSaveOperation:
+        case NSAutosaveOperation:
             result = [self writeToURL:absoluteURL
                                ofType:typeName
                      forSaveOperation:saveOperation 
@@ -322,32 +323,35 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	OBPRECONDITION([inURL isFileURL]);
 	
 	// We don't support any of the other save ops here.
-	OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
+	//OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
 	
 	
 	BOOL result = NO;
+	NSManagedObjectContext *context = [self managedObjectContext];
+    
 	
-	
-    // Kick off thumbnail generation
-    [self startGeneratingQuickLookThumbnail];
-    
-    
-    
-    // Tell deleted media what, if anything, to do
-    NSURL *deletedMediaDirectory = [self deletedMediaDirectory];
-    NSManagedObjectContext *context = [self managedObjectContext];
-    for (NSManagedObject *anObject in [context deletedObjects])
+    if (saveOperation != NSAutosaveOperation)
     {
-        if ([anObject isKindOfClass:[SVMediaRecord class]])
+        // Kick off thumbnail generation
+        [self startGeneratingQuickLookThumbnail];
+        
+        
+        
+        // Tell deleted media what, if anything, to do
+        NSURL *deletedMediaDirectory = [self deletedMediaDirectory];
+        for (NSManagedObject *anObject in [context deletedObjects])
         {
-            SVMediaRecord *media = (SVMediaRecord *)anObject;
-            
-            // FIXME: Only delete if there's nothing left using the same filename
-            
-            NSString *filename = [media committedValueForKey:@"filename"];  // don't want to risk an out-of date in-memory value
-            NSURL *deletedMediaURL = [deletedMediaDirectory URLByAppendingPathComponent:filename
-                                                                            isDirectory:NO];
-            [media moveToURLWhenDeleted:deletedMediaURL];
+            if ([anObject isKindOfClass:[SVMediaRecord class]])
+            {
+                SVMediaRecord *media = (SVMediaRecord *)anObject;
+                
+                // FIXME: Only delete if there's nothing left using the same filename
+                
+                NSString *filename = [media committedValueForKey:@"filename"];  // don't want to risk an out-of date in-memory value
+                NSURL *deletedMediaURL = [deletedMediaDirectory URLByAppendingPathComponent:filename
+                                                                                isDirectory:NO];
+                [media moveToURLWhenDeleted:deletedMediaURL];
+            }
         }
     }
     
@@ -362,10 +366,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
     
 	
-	if (result)
+	NSString *quickLookPreviewHTML = nil;
+    if (saveOperation != NSAutosaveOperation && result)
 	{
         // Generate Quick Look preview HTML
-        NSString *quickLookPreviewHTML = [self quickLookPreviewHTML];
+        quickLookPreviewHTML = [self quickLookPreviewHTML];
         
         
         
@@ -377,8 +382,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                           toURL:inURL
                forSaveOperation:saveOperation
                           error:NULL];
-        
-        
+    }
+     
+    
+    if (result)
+    {
         // Save the context
 		result = [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
@@ -386,9 +394,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                        originalContentsURL:inOriginalContentsURL
                                      error:outError];
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    }
         
-        
-        
+     
+    if (saveOperation != NSAutosaveOperation && result)
+    {
         // Make sure there's a directory to save Quick Look data into
         NSURL *quickLookDirectory = [KTDocument quickLookURLForDocumentURL:inURL];
         [[NSFileManager defaultManager] createDirectoryAtPath:[quickLookDirectory path]
@@ -398,7 +408,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
 		// Write out Quick Look preview
-        if (result && quickLookPreviewHTML)
+        if (quickLookPreviewHTML)
         {
             NSURL *previewURL = [quickLookDirectory URLByAppendingPathComponent:@"Preview.html"
                                                                     isDirectory:NO];
@@ -415,18 +425,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                       [[qlPreviewError debugDescription] condenseWhiteSpace]);
             }
         }
-    }
-    
-    
-    if (result && _quickLookThumbnailWebView)
-    {
-        NSError *qlThumbnailError;
-        if (![self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:&qlThumbnailError])
+        
+        
+        if (_quickLookThumbnailWebView)
         {
-            NSLog(@"Error saving Quick Look thumbnail: %@",
-                  [[qlThumbnailError debugDescription] condenseWhiteSpace]);
+            NSError *qlThumbnailError;
+            if (![self writeQuickLookThumbnailToDocumentURLIfPossible:inURL error:&qlThumbnailError])
+            {
+                NSLog(@"Error saving Quick Look thumbnail: %@",
+                      [[qlThumbnailError debugDescription] condenseWhiteSpace]);
+            }
         }
-	}
+    }
     
     
     // MUST make sure the thumbnail webview has been unloaded, otherwise we'll fail an assertion come the next save. This call does that. #61947
@@ -470,58 +480,61 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 	
 	// For the first save of a document, create the wrapper paths on disk before we do anything else
-	if (saveOperation == NSSaveAsOperation)
+    BOOL result = YES;
+	if (saveOperation == NSSaveAsOperation || saveOperation == NSAutosaveOperation)
 	{
-		[[NSFileManager defaultManager] createDirectoryAtPath:[inURL path] attributes:nil];
-		[[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
+		result = [[NSFileManager defaultManager] createDirectoryAtPath:[inURL path]
+                                           withIntermediateDirectories:NO
+                                                            attributes:nil
+                                                                 error:outError];
+        
+		if (result) [[NSWorkspace sharedWorkspace] setBundleBit:YES forFile:[inURL path]];
 	}
 	
 	
-	// Make sure we have a persistent store coordinator properly set up
-	NSManagedObjectContext *managedObjectContext = [self managedObjectContext];
-	NSPersistentStoreCoordinator *storeCoordinator = [managedObjectContext persistentStoreCoordinator];
-	NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
-	
-	if ([[storeCoordinator persistentStores] count] < 1)
-	{ 
-		BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-																	 ofType:inType
-                                                         modelConfiguration:nil
-                                                               storeOptions:nil
-																	  error:outError];
-		
-		OBASSERT( (YES == didConfigure) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    
+    NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
+    if (result)
+    {
+        // Make sure we have a persistent store coordinator properly set up
+        NSManagedObjectContext *context = [self managedObjectContext];
+        NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
+        
+        if ([[storeCoordinator persistentStores] count] < 1)
+        { 
+            BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
+                                                                         ofType:inType
+                                                             modelConfiguration:nil
+                                                                   storeOptions:nil
+                                                                          error:outError];
+            
+            OBASSERT( (YES == didConfigure) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
 
-		id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
-		if ( !newStore || !didConfigure )
-		{
-			NSLog(@"error: unable to create document: %@", (outError ? [*outError description] : nil) );
-			return NO; // bail out and display outError
-		}
-	} 
-	
-	
-    // Set metadata
-    if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
-    {
-        if (![self setMetadataForStoreAtURL:persistentStoreURL error:outError])
+            id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
+            if ( !newStore || !didConfigure )
+            {
+                NSLog(@"error: unable to create document: %@", (outError ? [*outError description] : nil) );
+                return NO; // bail out and display outError
+            }
+        } 
+        
+        
+        // Set metadata
+        if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
         {
-			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-            return NO; // couldn't setMetadata, but we should have, bail...
-        }
-    }
-    else
-    {
-        if (saveOperation != NSSaveAsOperation)
-        {
-			OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-			LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
-            return NO; // this case should not happen, stop
+            result = [self setMetadataForStoreAtURL:persistentStoreURL error:outError];
         }
     }
     
     
-    return YES;
+    if (!result)
+    {
+        OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+        LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
+    }
+    
+    
+    return result;
 }
 
 - (BOOL)writeDatastoreToURL:(NSURL *)inURL
