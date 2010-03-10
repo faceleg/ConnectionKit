@@ -180,58 +180,6 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     switch (saveOperation)
     {
-        case NSSaveAsOperation:
-        case NSAutosaveOperation:
-        {
-            // We'll need a path for various operations below
-            NSAssert2([absoluteURL isFileURL], @"-%@ called for non-file URL: %@", NSStringFromSelector(_cmd), [absoluteURL absoluteString]);
-            NSString *path = [absoluteURL path];
-            
-            
-            // If a file already exists at the desired location move it out of the way
-            NSString *backupPath = nil;
-            if ([[NSFileManager defaultManager] fileExistsAtPath:path])
-            {
-                backupPath = [self backupExistingFileForSaveAsOperation:path error:outError];
-                if (!backupPath) return NO;
-            }
-            
-            
-            // We want to catch all possible errors so that the save can be reverted. We cover exceptions & errors. Sadly crashers can't
-            // be dealt with at the moment.
-            @try
-            {
-                // Write to the new URL
-                result = [self writeToURL:absoluteURL
-                                   ofType:typeName
-                         forSaveOperation:saveOperation
-                      originalContentsURL:originalContentsURL
-                                    error:outError];
-                OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-            }
-            @finally
-            {
-                if (!result && backupPath)
-                {
-                    // There was an error saving, recover from it
-                    [self recoverBackupFile:backupPath toURL:absoluteURL];
-                }
-            }
-            
-            if (result)
-            {
-                // The save was successful, delete the backup file
-                if (backupPath)
-                {
-                    [[NSFileManager defaultManager] removeFileAtPath:backupPath handler:nil];
-                }
-            }
-            
-            break;
-        }
-            
-            
-            
         // NSDocument attempts to write a copy of the document out at a temporary location.
         // Core Data cannot support this, so we override it to save directly.
         case NSSaveOperation:
@@ -245,12 +193,23 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
         
             
             
-        // Other save types are fine to go through the regular channels
+        // Other save types are basically fine to go through the regular channels
         default:
+        {
             result = [super writeSafelyToURL:absoluteURL 
                                       ofType:typeName 
                             forSaveOperation:saveOperation 
                                        error:outError];
+            
+            // Repair the persistent store URL. Most save operations will then call -setFileURL: which will set the final store URL to use
+            NSURL *writtenStoreURL = [KTDocument datastoreURLForDocumentURL:_lastWrittenURL type:nil];
+            NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
+            NSPersistentStore *store = [coordinator persistentStoreForURL:writtenStoreURL];
+            
+            if (saveOperation == NSAutosaveOperation) absoluteURL = [self fileURL];
+            [coordinator setURL:[KTDocument datastoreURLForDocumentURL:absoluteURL type:nil]
+             forPersistentStore:store];
+        }
     }
     
     OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -330,6 +289,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 	// We don't support any of the other save ops here.
 	//OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
+    
+    
+    // So anyone else can know where we were written to
+    [_lastWrittenURL release]; _lastWrittenURL = [inURL copy];
 	
 	
 	BOOL result = NO;

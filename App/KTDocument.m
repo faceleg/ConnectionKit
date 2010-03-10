@@ -344,6 +344,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	[_site release];
     
+    [_lastWrittenURL release];
     [_reservedFilenames release];
     [_deletedMediaDirectoryName release];
 	

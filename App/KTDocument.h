@@ -58,14 +58,16 @@ extern NSString *kKTDocumentWillSaveNotification;
     
     
     // Saving
-    unsigned            mySaveOperationCount;
-    
-    WebView             *_quickLookThumbnailWebView;
-    NSLock              *_quickLookThumbnailLock;
+    NSURL       *_lastWrittenURL;
+    unsigned    mySaveOperationCount;
     
     NSMutableSet    *_reservedFilenames;
     NSString        *_deletedMediaDirectoryName;
+    
+    WebView             *_quickLookThumbnailWebView;
+    NSLock              *_quickLookThumbnailLock;
 	
+    // Publishing
 	NSURL *_lastExportDirectory;
 
 }
