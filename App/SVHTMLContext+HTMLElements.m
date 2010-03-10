@@ -39,7 +39,7 @@
     if (className) [self writeAttribute:@"class" value:className];
     
     [self writeAttribute:@"src" value:src];
-    if (alt) [self writeAttribute:@"alt" value:alt];
+    [self writeAttribute:@"alt" value:alt];
     if (width) [self writeAttribute:@"width" value:width];
     if (height) [self writeAttribute:@"height" value:height];
     
