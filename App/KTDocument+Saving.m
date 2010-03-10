@@ -172,6 +172,12 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
 	BOOL result = NO;
     
+    
+    // Figure out the original contents URL. Normally it's -fileURL except when autosaved
+    NSURL *originalContentsURL = [self autosavedContentsFileURL];
+    if (!originalContentsURL) originalContentsURL = [self fileURL];
+    
+    
     switch (saveOperation)
     {
         case NSSaveAsOperation:
@@ -199,7 +205,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
                 result = [self writeToURL:absoluteURL
                                    ofType:typeName
                          forSaveOperation:saveOperation
-                      originalContentsURL:[self fileURL]
+                      originalContentsURL:originalContentsURL
                                     error:outError];
                 OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
             }
@@ -232,7 +238,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
             result = [self writeToURL:absoluteURL
                                ofType:typeName
                      forSaveOperation:saveOperation 
-                  originalContentsURL:[self fileURL]
+                  originalContentsURL:originalContentsURL
                                 error:outError];
             
             break;
@@ -539,7 +545,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (BOOL)writeDatastoreToURL:(NSURL *)inURL
                      ofType:(NSString *)inType
-           forSaveOperation:(NSSaveOperationType)inSaveOperation
+           forSaveOperation:(NSSaveOperationType)saveOp
         originalContentsURL:(NSURL *)inOriginalContentsURL
                       error:(NSError **)outError;
 
@@ -556,7 +562,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
     
     // Handle the user choosing "Save As" for an EXISTING document
-    if (inSaveOperation == NSSaveAsOperation && [self fileURL])
+    if ([[context persistentStoreCoordinator] persistentStoreForURL:inURL])
+    {
+        result = [context save:&error];
+    }
+    else
     {
         result = [self migrateToURL:[KTDocument documentURLForDatastoreURL:inURL]
                              ofType:inType
@@ -577,13 +587,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         }
     }
     
-    
-    // Time to actually save the context
-    if (result)
-    {
-        result = [context save:&error];
-    }
-
     
     // Return, making sure to supply appropriate error info
     if (!result && outError) *outError = error;

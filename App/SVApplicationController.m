@@ -1097,7 +1097,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     if (interval > 5 * 60)  interval = 60.0;
 
     KTDocumentController *sharedDocumentController = [KTDocumentController sharedDocumentController];
-    [sharedDocumentController setAutosavingDelay:interval];
+    [sharedDocumentController setAutosavingDelay:5];//interval];
 	
 			 
 	// Try to check immediately so we have right info for initialization
