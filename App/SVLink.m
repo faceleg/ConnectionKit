@@ -19,8 +19,11 @@
 
 - (id)initWithURLString:(NSString *)urlString openInNewWindow:(BOOL)openInNewWindow;
 {
+    OBPRECONDITION(urlString);
+    
     [self init];
     
+    _type = SVLinkExternal;
     _URLString = [urlString copy];
     _openInNewWindow = openInNewWindow;
     
@@ -29,10 +32,23 @@
 
 - (id)initWithPage:(KTPage *)page openInNewWindow:(BOOL)openInNewWindow;
 {
+    OBPRECONDITION(page);
+    
     [self initWithURLString:[kKTPageIDDesignator stringByAppendingString:[page uniqueID]]
             openInNewWindow:openInNewWindow];
     
+    _type = SVLinkToPage;
     _page = [page retain];
+    
+    return self;
+}
+
+- (id)initLinkToFullSizeImageOpensInNewWindow:(BOOL)openInNewWindow;
+{
+    [self init];
+    
+    _type = SVLinkToFullSizeImage;
+    _openInNewWindow = openInNewWindow;
     
     return self;
 }
@@ -54,6 +70,7 @@
 
 #pragma mark Link Properties
 
+@synthesize linkType = _type;
 @synthesize URLString = _URLString;
 @synthesize page = _page;
 @synthesize openInNewWindow = _openInNewWindow;

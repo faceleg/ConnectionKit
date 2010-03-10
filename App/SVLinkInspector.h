@@ -8,21 +8,10 @@
 
 #import "KSInspectorViewController.h"
 
+#import "SVLink.h"
 #import "KTLinkSourceView.h"
 
 #import <WebKit/WebKit.h>
-
-
-typedef enum {
-    SVLinkNone,
-    SVLinkToPage,
-    SVLinkToRSSFeed,
-    SVLinkToFullSizeImage = 8,
-    SVLinkExternal = 10,
-} SVLinkType;
-
-
-@class SVLink;
 
 
 @interface SVLinkInspector : KSInspectorViewController <KTLinkSourceViewDelegate>
