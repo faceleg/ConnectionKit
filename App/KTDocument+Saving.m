@@ -16,7 +16,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTMaster.h"
-#import "KTMediaManager.h"
+#import "SVMediaRecord.h"
 #import "SVTextContentHTMLContext.h"
 #import "SVTitleBox.h"
 
