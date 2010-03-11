@@ -61,6 +61,26 @@
     [super dealloc];
 }
 
+#pragma mark NSCoding
+
+- (id)initWithCoder:(NSCoder *)aDecoder
+{
+    [self init];
+    
+    _type = [aDecoder decodeIntegerForKey:@"type"];
+    _URLString = [[aDecoder decodeObjectForKey:@"URLString"] copy];
+    _openInNewWindow = [aDecoder decodeBoolForKey:@"openInNewWindow"];
+    
+    return self;
+}
+
+- (void)encodeWithCoder:(NSCoder *)aCoder
+{
+    [aCoder encodeInteger:[self linkType] forKey:@"type"];
+    [aCoder encodeObject:[self URLString] forKey:@"URLString"];
+    [aCoder encodeBool:[self openInNewWindow] forKey:@"openInNewWindow"];
+}
+
 #pragma mark Copying
 
 - (id)copyWithZone:(NSZone *)zone

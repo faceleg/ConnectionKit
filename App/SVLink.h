@@ -24,7 +24,7 @@ typedef enum {
 @class KTPage, SVHTMLContext;
 
 
-@interface SVLink : NSObject <NSCopying>
+@interface SVLink : NSObject <NSCopying, NSCoding>
 {
   @private
     SVLinkType  _type;
