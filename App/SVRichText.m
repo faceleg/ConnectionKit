@@ -124,7 +124,6 @@
 - (void)writeHTML
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
-    [context willBeginWritingContentObject:self];
     
     
     //  Piece together each of our elements to generate the HTML
@@ -153,9 +152,6 @@
         
     // Write remaining text
     [context writeString:[archive substringFromIndex:archiveIndex]];
-    
-    
-    [context didEndWritingContentObject];
 }
 
 @end
