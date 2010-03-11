@@ -1100,7 +1100,20 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
 {
-    
+    // Preload main CSS
+    if ([[request URL] ks_isEqualToURL:[[self HTMLContext] mainCSSURL]])
+    {
+        SVHTMLContext *context = [self HTMLContext];
+        NSData *data = [[context mainCSS] dataUsingEncoding:NSUTF8StringEncoding];
+        CFStringRef charSet = CFStringConvertEncodingToIANACharSetName(kCFStringEncodingUTF8);
+        
+        WebResource *resource = [[WebResource alloc] initWithData:data
+                                                              URL:[request URL]
+                                                         MIMEType:@"text/css"
+                                                 textEncodingName:(NSString *)charSet
+                                                        frameName:[[dataSource webFrame] name]];
+        [dataSource addSubresource:resource];
+    }
     
     return request;
 }
