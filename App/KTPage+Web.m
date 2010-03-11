@@ -157,13 +157,7 @@
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     
-    // Always include the global sandvox CSS.
-	NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-    NSString *globalCSS = [NSString stringWithContentsOfFile:globalCSSFile encoding:NSUTF8StringEncoding error:NULL];
-    if (globalCSS) [[context mainCSS] appendString:globalCSS];
-    
-    
-	// Then the base design's CSS file -- the most specific
+    // Write link to main.CSS file -- the most specific
     NSURL *mainCSSURL = [context mainCSSURL];
     if (mainCSSURL)
     {
@@ -175,7 +169,7 @@
 	
 	
 	// design's print.css but not for Quick Look
-    if (![context isEditable])
+    if (![context isForQuickLookPreview])
 	{
 		NSString *printCSS = [self pathToDesignFile:@"print.css"];
 		if (printCSS)
@@ -186,15 +180,26 @@
 	}
 	
 	
+	// Always include the global sandvox CSS.
+	NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
+    NSString *globalCSS = [NSString stringWithContentsOfFile:globalCSSFile encoding:NSUTF8StringEncoding error:NULL];
+    if (globalCSS) [[context mainCSS] appendString:globalCSS];
+    
+    
+    // Load up main.css
+    NSString *mainCSS = [NSString stringWithContentsOfURL:mainCSSURL encoding:NSUTF8StringEncoding error:NULL];
+    if (mainCSS) [[context mainCSS] appendString:mainCSS];
+    
+    
 	// If we're for editing, include additional editing CSS
 	if ([context isEditable])
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"design-time"
 																			 ofType:@"css"];
-		[context writeLinkToStylesheet:[[NSURL fileURLWithPath:editingCSSPath] absoluteString]
-                                 title:nil
-                                 media:nil];
-        [context writeNewline];
+        NSString *editingCSS = [NSString stringWithContentsOfFile:editingCSSPath
+                                                         encoding:NSUTF8StringEncoding
+                                                            error:NULL];
+		if (editingCSS) [[context mainCSS] appendString:editingCSS];
 	}
 	
     
