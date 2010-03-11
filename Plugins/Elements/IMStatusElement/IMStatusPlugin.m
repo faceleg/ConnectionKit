@@ -184,9 +184,10 @@ NSString *IMWantBorderKey = @"wantBorder";
 #pragma mark -
 #pragma mark HTML
 
-- (NSString *)generateHTMLPublishing:(BOOL)isPublishing livePreview:(BOOL)isLivePreview
+- (NSString *)generateHTML
 {
-	//return nil;
+	SVHTMLContext *context = [SVHTMLContext currentContext];
+	
 	
 	/*
 	 return [[self selectedService] badgeHTMLWithUsername:self.username
@@ -201,10 +202,11 @@ NSString *IMWantBorderKey = @"wantBorder";
 	
 	// Get the appropriate code for the publishing mode
 	NSString *HTMLCode = nil;
-	if (isPublishing) {
+	if (kSVHTMLGenerationPurposeNormal == context.generationPurpose)
+	{
 		HTMLCode = [service publishingHTMLCode];
 	}
-	else if (isLivePreview) {
+	else if (context.liveDataFeeds) {
 		HTMLCode = [service livePreviewHTMLCode];
 	}
 	else {
@@ -223,7 +225,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if (onlineImagePath)
 	{
 		// How we reference the path depends on publishing/previewing
-		if (isPublishing) {
+		if (kSVHTMLGenerationPurposeNormal == context.generationPurpose) {
 			onlineImagePath = [[[[[self page] site] hostProperties] URLForResourceFile:onlineImagePath] absoluteString];
 		}
 		else {
@@ -241,7 +243,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if (offlineImagePath)
 	{
 		// How we reference the path depends on publishing/previewing
-		if (isPublishing) {
+		if (kSVHTMLGenerationPurposeNormal == context.generationPurpose) {
 			offlineImagePath = [[[[[self page] site] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
 		}
 		else {
@@ -261,21 +263,6 @@ NSString *IMWantBorderKey = @"wantBorder";
 							     range:NSMakeRange(0, [result length])];
 	
 	return result;
-}
-
-- (NSString *)publishingHTML
-{
-	return [self generateHTMLPublishing:YES livePreview:NO];
-}
-
-- (NSString *)livePreviewHTML
-{
-	return [self generateHTMLPublishing:NO livePreview:YES];
-}
-
-- (NSString *)nonLivePreviewHTML
-{
-	return [self generateHTMLPublishing:NO livePreview:NO];
 }
 
 

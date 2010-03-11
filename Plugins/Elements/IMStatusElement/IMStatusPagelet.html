@@ -9,15 +9,7 @@
     [[if offlineText]] [[endif3]]
 [[endif2]]
 
-[[if parser.HTMLGenerationPurpose]]
-		[[=publishingHTML]]
-[[else2]]
-[[if parser.liveDataFeeds]]
-		[[=livePreviewHTML]]
-[[else3]]
-		[[=nonLivePreviewHTML]]
-[[endif3]]
-[[endif2]]
+[[=generateHTML]]
 
 [[else]]
 [['(Please set your ID using the Pagelet Inspector)]]
