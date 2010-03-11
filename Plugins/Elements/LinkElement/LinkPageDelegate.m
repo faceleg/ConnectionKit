@@ -207,33 +207,6 @@
 #pragma mark -
 #pragma mark Summary
 
-/*	Should be a class method really, but Tiger doesn't support that for KVC.
- */
-- (NSString *)iFrameTemplateHTML
-{
-	static NSString *result;
-	
-	if (!result)
-	{
-		NSBundle *bundle = [NSBundle bundleForClass:[self class]];
-		NSString *templatePath = [bundle pathForResource:@"IFrameTemplate" ofType:@"html"];
-		result = [[NSString alloc] initWithContentsOfFile:templatePath];
-	}
-	
-	return result;
-}
-
-- (NSString *)summary   // Only called for page-within-page
-{
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[self iFrameTemplateHTML]
-														component:[self delegateOwner]];
-	
-	NSString *result = [parser parseTemplate];
-	[parser release];
-	
-	return result;
-}
-
 /*	Summary differs if using page-witin-page
  */
 - (NSString *)summaryHTMLKeyPath
