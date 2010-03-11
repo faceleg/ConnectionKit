@@ -1100,6 +1100,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
 {
+    // Force the WebView to dump its cached resources from the WebDataSource so that any change to main.css gets picked up
+    if ([[request mainDocumentURL] isEqual:[request URL]])
+    {
+        NSMutableURLRequest *result = [[request mutableCopy] autorelease];
+        [result setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
+        return result;
+    }    
+    
+    
     // Preload main CSS
     if ([[request URL] ks_isEqualToURL:[[self HTMLContext] mainCSSURL]])
     {
@@ -1111,8 +1120,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                                                               URL:[request URL]
                                                          MIMEType:@"text/css"
                                                  textEncodingName:(NSString *)charSet
-                                                        frameName:[[dataSource webFrame] name]];
+                                                        frameName:nil];
         [dataSource addSubresource:resource];
+        [resource release];
     }
     
     return request;
