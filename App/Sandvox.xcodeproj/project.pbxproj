@@ -118,7 +118,6 @@
 				3C42E4F80D650433004F35FD /* PBXTargetDependency */,
 				3C42E60A0D650BBD004F35FD /* PBXTargetDependency */,
 				3CA9006E0D63C77000815310 /* PBXTargetDependency */,
-				3C4C69B70D640D9A00398BDA /* PBXTargetDependency */,
 				3C42E48A0D64FCF4004F35FD /* PBXTargetDependency */,
 				3C42E4110D64F956004F35FD /* PBXTargetDependency */,
 				3CA901A90D63D46A00815310 /* PBXTargetDependency */,
@@ -252,7 +251,7 @@
 		272F1F5110C2CBE600BBB836 /* SVContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 272F1F4F10C2CBE600BBB836 /* SVContentObject.h */; };
 		272F1F5210C2CBE600BBB836 /* SVContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F1F5010C2CBE600BBB836 /* SVContentObject.m */; };
 		272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */; };
-		2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* SVTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 2730D66B0DE18ACA004858F5 /* SVTemplateParser.h */; settings = {ATTRIBUTES = (); }; };
 		2730D66E0DE18ACA004858F5 /* SVTemplateParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2730D66C0DE18ACA004858F5 /* SVTemplateParser.m */; };
 		2731ECCD10861E1500D8AAA5 /* SVBodyTextDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2731ECCB10861E1500D8AAA5 /* SVBodyTextDOMController.h */; };
 		2731ECCE10861E1500D8AAA5 /* SVBodyTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2731ECCC10861E1500D8AAA5 /* SVBodyTextDOMController.m */; };
@@ -603,7 +602,7 @@
 		3C682BC10D6234EE00B4D485 /* SVExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B240D622FC100B4D485 /* SVExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B330D62302A00B4D485 /* KTAbstractIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BCC0D62350D00B4D485 /* KTRTFDImporter.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B450D62317600B4D485 /* KTRTFDImporter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCD0D62351000B4D485 /* KTOffScreenWebViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B480D6231C500B4D485 /* KTOffScreenWebViewController.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BD20D62352800B4D485 /* KTImageView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B640D62325F00B4D485 /* KTImageView.h */; settings = {ATTRIBUTES = (); }; };
@@ -1324,13 +1323,6 @@
 			containerPortal = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = ImageElement;
-		};
-		3C4C69B60D640D9A00398BDA /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C67CCAE0D528D8900116BA5 /* ImageElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = ImageElement;
 		};
 		3C4C6A700D6410F300398BDA /* PBXContainerItemProxy */ = {
@@ -6872,11 +6864,6 @@
 			isa = PBXTargetDependency;
 			name = HTMLElement;
 			targetProxy = 3C42E6090D650BBD004F35FD /* PBXContainerItemProxy */;
-		};
-		3C4C69B70D640D9A00398BDA /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = ImageElement;
-			targetProxy = 3C4C69B60D640D9A00398BDA /* PBXContainerItemProxy */;
 		};
 		3C4C6A730D64110700398BDA /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

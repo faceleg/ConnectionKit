@@ -42,8 +42,6 @@
 
 // HTML Writing
 #import "SVHTMLContext.h"
-#import "SVTemplateParser.h"
-#import "SVHTMLTemplateParser.h"
 
 //  Media
 #import "KTImageScalingSettings.h"
