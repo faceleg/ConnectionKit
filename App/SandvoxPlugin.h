@@ -34,7 +34,6 @@
 #import "SVInspectorViewController.h"
 
 // Page composition
-//#import "KTSite.h"
 #import "SVPageProtocol.h"
 
 // HTML Writing
