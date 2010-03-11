@@ -52,7 +52,6 @@
 #import "KTAbstractIndex.h"
 
 // Publishing
-#import "KTHostProperties.h"
 
 // Foundation/AppKit subclasses
 #import "KSEmailAddressComboBox.h"
@@ -62,7 +61,6 @@
 #import "KSTrimFirstLineFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
 #import "KSWebLocation.h"
-#import "KSStringStream.h"
 
 // Foundation extensions
 #import "NSAppleScript+Karelia.h"

@@ -463,7 +463,7 @@
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
 		27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */; };
 		27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */; };
-		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (); }; };
 		27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */; };
 		27D90B3B0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D90B390D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.h */; };
 		27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */; };
