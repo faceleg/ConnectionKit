@@ -125,7 +125,7 @@
     SVTextAttachment *textAttachment = [NSEntityDescription
                                         insertNewObjectForEntityForName:@"TextAttachment"
                                         inManagedObjectContext:context];
-    [textAttachment setPagelet:image];
+    [textAttachment setGraphic:image];
     [textAttachment setBody:text];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     

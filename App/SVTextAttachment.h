@@ -21,7 +21,7 @@
 
 
 @property(nonatomic, retain) SVRichText *body;
-@property(nonatomic, retain) SVGraphic *pagelet;
+@property(nonatomic, retain) SVGraphic *graphic;
 
 
 - (NSRange)range;

@@ -25,7 +25,7 @@
 #pragma mark Range
 
 @dynamic body;
-@dynamic pagelet;
+@dynamic graphic;
 
 
 - (NSRange)range;
@@ -47,7 +47,7 @@
     [self setPrimitiveValue:placement forKey:@"placement"];
     [self didChangeValueForKey:@"placement"];
     
-    [[self pagelet] didPlaceInline:([placement integerValue] == SVGraphicPlacementInline)];
+    [[self graphic] didPlaceInline:([placement integerValue] == SVGraphicPlacementInline)];
 }
 
 - (BOOL)validatePlacement:(NSNumber **)placement error:(NSError **)error;
@@ -57,7 +57,7 @@
     SVGraphicPlacement placementValue = [*placement integerValue];
     if (placementValue == SVGraphicPlacementInline)
     {
-        result = [[self pagelet] canBePlacedInline];
+        result = [[self graphic] canBePlacedInline];
         if (!result && error)
         {
             *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:@"Can't place graphic inline"];

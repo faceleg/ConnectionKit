@@ -127,7 +127,7 @@
     SVTextAttachment *attachment = [self textAttachment];
     if (attachment)
     {
-        [attachment setPagelet:nil];    // so deleting it doesn't cascade and delete us too
+        [attachment setGraphic:nil];    // so deleting it doesn't cascade and delete us too
         [[attachment body] deleteCharactersInRange:[attachment range]];
     }
 }

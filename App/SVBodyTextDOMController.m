@@ -50,7 +50,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     NSSet *graphics = [[self representedObject] attachments];
     for (SVTextAttachment *anAttachment in graphics)
     {
-        SVGraphic *graphic = [anAttachment pagelet];
+        SVGraphic *graphic = [anAttachment graphic];
         Class class = [graphic DOMControllerClass];
         SVDOMController *result = [[class alloc] initWithContentObject:graphic
                                                          inDOMDocument:document];
@@ -102,7 +102,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Create text attachment for the graphic
     SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                                      inManagedObjectContext:[graphic managedObjectContext]];
-    [textAttachment setPagelet:graphic];
+    [textAttachment setGraphic:graphic];
     [textAttachment setBody:[self representedObject]];
     
     
