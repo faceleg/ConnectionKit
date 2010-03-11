@@ -62,10 +62,6 @@ KTCollectionPathStyle;
 // Comments
 - (NSString *)JSKitPath;
 
-// Staleness
-- (BOOL)isStale;
-- (void)setIsStale:(BOOL)stale;
-
 
 @end
 
