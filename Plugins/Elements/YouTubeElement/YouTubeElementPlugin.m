@@ -11,7 +11,6 @@
 #import "YouTubeCocoaExtensions.h"
 
 @interface YouTubeElementPlugin ()
-- (KTMediaContainer *)defaultThumbnail;
 @end
 
 
@@ -198,29 +197,12 @@
 	}
 }
 
-#pragma mark -
 #pragma mark Summaries
 
 - (NSString *)summaryHTMLKeyPath { return @"captionHTML"; }
 
 - (BOOL)summaryHTMLIsEditable { return YES; }
 
-#pragma mark -
-#pragma mark Thumbnail
-
-/*	Instead of clearing the thumbnail, reset it to the default.
- */
-- (KTMediaContainer *)defaultThumbnail
-{
-	NSString *iconPath = [[self bundle] pathForImageResource:@"YouTube"];
-	OBASSERT(iconPath);
-	
-	KTMediaContainer *result = [[self mediaManager] mediaContainerWithPath:iconPath];
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-#pragma mark -
 #pragma mark Size
 
 - (NSString *)sizeToolTip;
