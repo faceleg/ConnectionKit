@@ -52,7 +52,10 @@
     _stringWriter = [writer retain];
     
     _generationPurpose = kSVHTMLGenerationPurposeNormal;
+    
     _includeStyling = YES;
+    _mainCSS = [[NSMutableString alloc] init];
+    
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
     _headerLevel = 1;
@@ -69,7 +72,10 @@
     [_language release];
     [_baseURL release];
     [_currentPage release];
+    
     [_mainCSSURL release];
+    [_mainCSS release];
+    
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_textBlocks release];
@@ -121,6 +127,8 @@
 #pragma mark CSS
 
 @synthesize includeStyling = _includeStyling;
+
+@synthesize mainCSS = _mainCSS;
 @synthesize mainCSSURL = _mainCSSURL;
 
 #pragma mark Header Tags

@@ -36,8 +36,9 @@ typedef enum {
     NSStringEncoding        _stringEncoding;
     NSString                *_language;
     
-    BOOL    _includeStyling;
-    NSURL   *_mainCSSURL;
+    BOOL            _includeStyling;
+    NSURL           *_mainCSSURL;
+    NSMutableString *_mainCSS;
     
     NSUInteger  _headerLevel;
 	
@@ -72,6 +73,7 @@ typedef enum {
 
 @property(nonatomic) BOOL includeStyling;
 
+@property(nonatomic, readonly) NSMutableString *mainCSS;
 @property(nonatomic, copy) NSURL *mainCSSURL;
 
 
@@ -190,10 +192,6 @@ typedef enum {
 - (void)writeLinkToStylesheet:(NSString *)href
                         title:(NSString *)title
                         media:(NSString *)media;
-
-// Default is to write a <link> tag to the stylesheet, EXCEPT when publishing where nothing happens. It is expected that a subclass will override the method to build up main.css for real publishing
-- (void)includeStylesheetAtURL:(NSURL *)stylesheetURL;
-- (void)includeStyle:(NSString *)cssText;
 
 
 #pragma mark Style

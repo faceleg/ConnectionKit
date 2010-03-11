@@ -159,7 +159,8 @@
     
     // Always include the global sandvox CSS.
 	NSString *globalCSSFile = [[NSBundle mainBundle] overridingPathForResource:@"sandvox" ofType:@"css"];
-    [context includeStylesheetAtURL:[NSURL fileURLWithPath:globalCSSFile]];
+    NSString *globalCSS = [NSString stringWithContentsOfFile:globalCSSFile encoding:NSUTF8StringEncoding error:NULL];
+    if (globalCSS) [[context mainCSS] appendString:globalCSS];
     
     
 	// Then the base design's CSS file -- the most specific
