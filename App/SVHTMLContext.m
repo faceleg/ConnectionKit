@@ -54,6 +54,7 @@
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
     _headerLevel = 1;
+    _endBodyMarkup = [[NSMutableString alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
     _textBlocks = [[NSMutableArray alloc] init];
     
@@ -66,6 +67,7 @@
     [_baseURL release];
     [_currentPage release];
     [_mainCSSURL release];
+    [_endBodyMarkup release];
     [_iteratorsStack release];
     [_textBlocks release];
     
@@ -276,8 +278,14 @@
 {
 }
 
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
+{
+    return _endBodyMarkup;
+}
+
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
+    [self writeString:[self endBodyMarkup]];
 }
 
 #pragma mark Content

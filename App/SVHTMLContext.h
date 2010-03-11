@@ -43,6 +43,8 @@ typedef enum {
 	
     NSString    *_calloutAlignment;
     
+    NSMutableString *_endBodyMarkup;
+    
     NSMutableArray  *_iteratorsStack;
     
     NSUInteger      _contentObjects;
@@ -107,7 +109,10 @@ typedef enum {
 
 
 #pragma mark Extra markup
+
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
+
+- (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 
 
