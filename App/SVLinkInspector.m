@@ -37,32 +37,35 @@
     
     // Make the link field editable if there is nothing entered, or the URL is typed in
     SVLinkManager *manager = [SVLinkManager sharedLinkManager];
-    
-    SVLinkType linkType = 0;
-    
-    
     SVLink *link = [manager selectedLink];
-    if ([link page])
+    SVLinkType linkType = [link linkType];
+    
+    switch (linkType)
     {
-        // Configure for a local link
-        linkType = SVLinkToPage;
-                
-        [oLinkSourceView setConnected:YES];
-        
-        NSString *title = [[link page] title];
-        if (!title) title = @"";
-        [oLinkField setStringValue:title];
-    }
-    else if ([link URLString])
-    {
-        // Configure for a generic link
-        linkType = SVLinkExternal;
-        
-        [oLinkSourceView setConnected:NO];
-        
-        NSString *title = [link URLString];
-        if (!title) title = @"";
-        [oLinkField setStringValue:title];
+        case SVLinkToPage:
+        {
+            // Configure for a local link
+            [oLinkSourceView setConnected:YES];
+            
+            NSString *title = [[link page] title];
+            if (!title) title = @"";
+            [oLinkField setStringValue:title];
+            
+            break;
+        }
+        case SVLinkExternal:
+        {
+            // Configure for a generic link
+            [oLinkSourceView setConnected:NO];
+            
+            NSString *title = [link URLString];
+            if (!title) title = @"";
+            [oLinkField setStringValue:title];
+            
+            break;
+        }
+        default:
+            break;
     }
     
     
