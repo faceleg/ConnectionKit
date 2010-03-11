@@ -206,8 +206,11 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
             NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
             NSPersistentStore *store = [coordinator persistentStoreForURL:writtenStoreURL];
             
-            NSURL *repairedURL = [KTDocument datastoreURLForDocumentURL:[self fileURL] type:nil];
-            [coordinator setURL:repairedURL forPersistentStore:store];
+            if ([self fileURL])
+            {
+                NSURL *repairedURL = [KTDocument datastoreURLForDocumentURL:[self fileURL] type:nil];
+                [coordinator setURL:repairedURL forPersistentStore:store];
+            }
         }
     }
     
