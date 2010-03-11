@@ -1083,7 +1083,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (![sender selectedDOMRange])
     {
         SVLink *link = [actionSender selectedLink];
-        [_selectableObjectsController setValue:[link URLString] forKeyPath:@"selection.linkURLString"];
+        [_selectableObjectsController setValue:link forKeyPath:@"selection.link"];
         return YES;
     }
     
