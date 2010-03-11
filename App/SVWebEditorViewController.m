@@ -1095,6 +1095,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setTitle:title];
 }
 
+- (NSURLRequest *)webEditor:(SVWebEditorView *)sender
+            willSendRequest:(NSURLRequest *)request
+           redirectResponse:(NSURLResponse *)redirectResponse
+             fromDataSource:(WebDataSource *)dataSource;
+{
+    
+    
+    return request;
+}
+
 - (void)webEditor:(SVWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
 {
     NSURL *URL = [actionInfo objectForKey:@"WebActionOriginalURLKey"];
