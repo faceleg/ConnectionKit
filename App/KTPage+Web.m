@@ -120,11 +120,25 @@
 	return sPageTemplateString;
 }
 
++ (NSString *)pageMainContentTemplate;
+{
+	static NSString *sPageTemplateString = nil;
+	
+	if (!sPageTemplateString)
+	{
+		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTPageMainContentTemplate" ofType:@"html"];
+		NSData *data = [NSData dataWithContentsOfFile:path];
+		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+	}
+	
+	return sPageTemplateString;
+}
+
 - (void)writeMainContent
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[self pageMainContentTemplate]
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[[self class] pageMainContentTemplate]
                                                                         component:[context currentPage]];
     
     [context setCurrentHeaderLevel:3];

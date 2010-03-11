@@ -57,8 +57,6 @@ KTCollectionPathStyle;
 
 
 #pragma mark Web
-- (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
-
 - (BOOL)isXHTML;
 
 // Comments

@@ -143,7 +143,7 @@
 
 /*	Use a different template to most pages
  */
-- (NSString *)pageMainContentTemplate
++ (NSString *)pageMainContentTemplate
 {
 	static NSString *sPageTemplateString = nil;
 	

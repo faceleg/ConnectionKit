@@ -101,20 +101,6 @@
 
 #pragma mark HTML
 
-- (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
-{
-	static NSString *sPageTemplateString = nil;
-	
-	if (!sPageTemplateString)
-	{
-		NSString *path = [[NSBundle bundleForClass:[self class]] overridingPathForResource:@"KTPageMainContentTemplate" ofType:@"html"];
-		NSData *data = [NSData dataWithContentsOfFile:path];
-		sPageTemplateString = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
-	}
-	
-	return sPageTemplateString;
-}
-
 - (NSString *)uniqueWebViewID
 {
 	NSString *result = [NSString stringWithFormat:@"ktpage-%@", [self uniqueID]];
