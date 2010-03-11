@@ -363,7 +363,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
     
-    [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC 
+    [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC
     [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
     [selectableObjects release];
     

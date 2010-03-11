@@ -10,7 +10,6 @@
 
 #import "SVTextAttachment.h"
 #import "SVGraphic.h"
-#import "SVBodyElement.h"
 #import "SVBodyTextDOMController.h"
 #import "SVHTMLContext.h"
 
@@ -21,13 +20,6 @@
 
 
 @interface SVRichText ()
-@end
-
-@interface SVRichText (CoreDataGeneratedAccessors)
-- (void)addElementsObject:(SVBodyElement *)value;
-- (void)removeElementsObject:(SVBodyElement *)value;
-- (void)addElements:(NSSet *)value;
-- (void)removeElements:(NSSet *)value;
 @end
 
 
