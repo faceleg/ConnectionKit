@@ -597,9 +597,9 @@
 		3C682BB50D62347E00B4D485 /* NSSet+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */; };
 		3C682BB90D62348A00B4D485 /* NSString+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */; };
 		3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTSite.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BBD0D6234DB00B4D485 /* KTSite.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B100D622F1600B4D485 /* KTSite.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BBE0D6234E200B4D485 /* KTPage.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B1B0D622F5F00B4D485 /* KTPage.h */; settings = {ATTRIBUTES = (); }; };
-		3C682BC10D6234EE00B4D485 /* SVExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B240D622FC100B4D485 /* SVExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3C682BC10D6234EE00B4D485 /* SVExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B240D622FC100B4D485 /* SVExtensibleManagedObject.h */; settings = {ATTRIBUTES = (); }; };
 		3C682BC40D6234F500B4D485 /* KTDataSourceProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BC60D6234F900B4D485 /* KTAbstractIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B330D62302A00B4D485 /* KTAbstractIndex.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3C682BCB0D62350800B4D485 /* SVHTMLTemplateParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682B420D62308300B4D485 /* SVHTMLTemplateParser.h */; settings = {ATTRIBUTES = (); }; };
@@ -721,7 +721,7 @@
 		CE01A73A0EAFD63600BDF264 /* KSEmailAddressComboBox.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6350EAFD63600BDF264 /* KSEmailAddressComboBox.m */; };
 		CE01A73B0EAFD63600BDF264 /* KSExceptionReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6360EAFD63600BDF264 /* KSExceptionReporter.h */; };
 		CE01A73C0EAFD63600BDF264 /* KSExceptionReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6370EAFD63600BDF264 /* KSExceptionReporter.m */; };
-		CE01A73D0EAFD63600BDF264 /* KSExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6380EAFD63600BDF264 /* KSExtensibleManagedObject.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A73D0EAFD63600BDF264 /* KSExtensibleManagedObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6380EAFD63600BDF264 /* KSExtensibleManagedObject.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A73E0EAFD63600BDF264 /* KSExtensibleManagedObject.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6390EAFD63600BDF264 /* KSExtensibleManagedObject.m */; };
 		CE01A73F0EAFD63600BDF264 /* KSFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A63A0EAFD63600BDF264 /* KSFeedbackReporter.h */; };
 		CE01A7400EAFD63600BDF264 /* KSFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A63B0EAFD63600BDF264 /* KSFeedbackReporter.m */; };
