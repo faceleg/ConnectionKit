@@ -106,6 +106,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     [_webView setFrameLoadDelegate:self];
     [_webView setPolicyDelegate:self];
+    [_webView setResourceLoadDelegate:self];
     [_webView setUIDelegate:self];
     [_webView setEditingDelegate:self];
     
@@ -1231,6 +1232,16 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         [listener ignore];
         [[self delegate] webEditor:self handleNavigationAction:actionInformation request:request];
     }
+}
+
+#pragma mark WebResourceDelegate
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource
+{
+    return [[self delegate] webEditor:self
+                      willSendRequest:request
+                     redirectResponse:redirectResponse
+                       fromDataSource:dataSource];
 }
 
 #pragma mark WebUIDelegate

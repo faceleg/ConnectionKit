@@ -244,12 +244,21 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
 
    
-   
+#pragma mark Loading
+
 - (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
 - (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
+
+- (NSURLRequest *)webEditor:(SVWebEditorView *)sender
+            willSendRequest:(NSURLRequest *)request
+           redirectResponse:(NSURLResponse *)redirectResponse
+             fromDataSource:(WebDataSource *)dataSource;
+
+
+#pragma mark Navigation
 
      - (void)webEditor:(SVWebEditorView *)webEditorView
 handleNavigationAction:(NSDictionary *)actionInformation
