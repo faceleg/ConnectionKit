@@ -101,12 +101,6 @@
 
 #pragma mark HTML
 
-- (NSString *)uniqueWebViewID
-{
-	NSString *result = [NSString stringWithFormat:@"ktpage-%@", [self uniqueID]];
-	return result;
-}
-
 + (NSCharacterSet *)uniqueIDCharacters
 {
 	static NSCharacterSet *result;
