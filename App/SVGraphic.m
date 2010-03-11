@@ -336,7 +336,7 @@
     // If the placement changes, want whole WebView to update
     [context addDependencyOnObject:self keyPath:@"textAttachment.placement"];
     
-    [context willBeginWritingContentObject:self];
+    [context willBeginWritingGraphic:self];
     
     if ([self isPagelet])
     {
@@ -364,7 +364,7 @@
        [self writeBody];
     }
     
-    [context didEndWritingContentObject];
+    [context didEndWritingGraphic];
 }
 
 - (void)writeBody;

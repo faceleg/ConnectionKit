@@ -21,9 +21,7 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
-    [context willBeginWritingContentObject:self];
     [context writeHTMLString:[self HTMLString]];
-    [context didEndWritingContentObject];
 }
 
 - (NSString *)HTMLString

@@ -327,14 +327,14 @@
 
 #pragma mark Content
 
-- (void)willBeginWritingContentObject:(SVContentObject *)object;
+- (void)willBeginWritingGraphic:(SVGraphic *)object;
 {
     _contentObjects++;
 }
 
-- (void)didEndWritingContentObject; { }
+- (void)didEndWritingGraphic; { }
 
-- (NSUInteger)numberOfContentObjectsOnPage; { return _contentObjects; }
+- (NSUInteger)numberOfGraphicsOnPage; { return _contentObjects; }
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
 
