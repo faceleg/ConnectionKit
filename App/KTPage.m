@@ -360,7 +360,7 @@
     }
 }
 
-- (KTMaster *)master { return [self wrappedValueForKey:@"master"]; }
+@dynamic master;
 
 @dynamic sidebar;
 @dynamic showSidebar;

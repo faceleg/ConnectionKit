@@ -99,15 +99,6 @@
 	return result;
 }
 
-#pragma mark Other Relationships
-
-- (KTMaster *)master
-{
-    SUBCLASSMUSTIMPLEMENT;
-    return nil;
-}
-
-#pragma mark -
 #pragma mark HTML
 
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger

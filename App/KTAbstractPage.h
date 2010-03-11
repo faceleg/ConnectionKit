@@ -56,10 +56,6 @@ KTCollectionPathStyle;
 - (BOOL)isRoot;
 
 
-#pragma mark Other Relationships
-- (KTMaster *)master;
-
-
 #pragma mark Web
 - (NSString *)pageMainContentTemplate;	// instance method too for key paths to work in tiger
 
