@@ -19,6 +19,8 @@
 
 
 @property(nonatomic, retain) SVMediaRecord *media;
+@property(nonatomic, copy) NSURL *sourceURL;
+
 @property(nonatomic, copy) NSString *alternateText;
 
 @property(nonatomic, copy) NSNumber *width;

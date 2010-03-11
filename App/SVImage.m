@@ -15,6 +15,14 @@
 #import "SVTextAttachment.h"
 
 
+@interface SVImage ()
+@property(nonatomic, copy) NSString *sourceURLString;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVImage 
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
@@ -46,6 +54,15 @@
 #pragma mark Required Attributes
 
 @dynamic media;
+@dynamic sourceURLString;
+
+- (NSURL *)sourceURL { return [NSURL URLWithString:[self sourceURLString]]; }
+- (void)setSourceURL:(NSURL *)URL
+{
+    if (URL) [[self managedObjectContext] deleteObject:[self media]];
+    [self setSourceURLString:[URL absoluteString]];
+}
+
 @dynamic alternateText;
 
 #pragma mark Placement
