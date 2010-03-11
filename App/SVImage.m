@@ -131,7 +131,7 @@
 
 #pragma mark Link
 
-@dynamic linkURLString;
+@dynamic link;
 
 #pragma mark Publishing
 
@@ -152,13 +152,13 @@
     }
     
     // alt=
-    NSStream *alt = [self alternateText];
+    NSString *alt = [self alternateText];
     if (!alt) alt = @"";
     
     // Link
-    if ([self isPagelet] && [self linkURLString])
+    if ([self isPagelet] && [self link])
     {
-        [context writeAnchorStartTagWithHref:[self linkURLString] title:nil target:nil rel:nil];
+        [context writeAnchorStartTagWithHref:[[self link] URLString] title:nil target:nil rel:nil];
     }
     
     // Actually write the image
@@ -171,7 +171,7 @@
     
     [context addDependencyOnObject:self keyPath:@"className"];
     
-    if ([self isPagelet] && [self linkURLString]) [context writeEndTag];
+    if ([self isPagelet] && [self link]) [context writeEndTag];
 }
 
 #pragma mark Editing

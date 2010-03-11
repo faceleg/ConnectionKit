@@ -1064,19 +1064,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     if (![[self webEditor] selectedDOMRange])
     {
-        NSString *linkURLString = [_selectableObjectsController valueForKeyPath:@"selection.linkURLString"];
+        SVLink *link = [_selectableObjectsController valueForKeyPath:@"selection.link"];
         
-        if (NSIsControllerMarker(linkURLString))
+        if (NSIsControllerMarker(link))
         {
             [[SVLinkManager sharedLinkManager] setSelectedLink:nil
-                                                      editable:(linkURLString == NSMultipleValuesMarker)];
+                                                      editable:(link == NSMultipleValuesMarker)];
         }
         else
         {
-            SVLink *link = nil;
-            if (linkURLString) link = [[SVLink alloc] initWithURLString:linkURLString openInNewWindow:NO];
             [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
-            [link release];
         }
     }
 }

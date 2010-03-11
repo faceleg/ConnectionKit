@@ -9,7 +9,7 @@
 #import "SVIntroAndCaptionGraphic.h"
 
 
-@class SVMediaRecord;
+@class SVMediaRecord, SVLink;
 @class SVTextAttachment;
 
 
@@ -30,7 +30,7 @@
 
 
 #pragma mark Link
-@property(nonatomic, copy) NSString *linkURLString;
+@property(nonatomic, copy) SVLink *link;
 
 
 #pragma mark Publishing
