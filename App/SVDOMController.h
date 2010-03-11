@@ -68,6 +68,10 @@
 
 @interface SVWebEditorItem (SVDOMController)
 
+#pragma mark DOM
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;    // does nothing
+
+
 #pragma mark Updating
 - (void)update;
 - (void)updateIfNeeded; // recurses down the tree

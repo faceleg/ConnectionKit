@@ -147,6 +147,10 @@
 
 @implementation SVWebEditorItem (SVDOMController)
 
+#pragma mark Content
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document; { }
+
 #pragma mark Updating
 
 - (void)update; { }
