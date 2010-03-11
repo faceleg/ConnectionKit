@@ -16,7 +16,7 @@
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
-@class KTPage, SVHTMLContext, SVDOMController, SVTextDOMController;
+@class KTPage, SVWebEditorHTMLContext, SVDOMController, SVTextDOMController;
 @class SVWebContentObjectsController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -30,7 +30,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     
     // Model
     KTPage                      *_page;
-    SVHTMLContext               *_context;
+    SVWebEditorHTMLContext      *_context;
     
     SVWebContentObjectsController   *_selectableObjectsController;
     
@@ -77,7 +77,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @property(nonatomic, retain, readonly) id <KSCollectionController> selectedObjectsController;
 @property(nonatomic, readonly) SVTextDOMController *focusedTextController;    // KVO-compliant
 
-@property(nonatomic, retain, readonly) SVHTMLContext *HTMLContext;
+@property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
 
 
 #pragma mark Text Areas

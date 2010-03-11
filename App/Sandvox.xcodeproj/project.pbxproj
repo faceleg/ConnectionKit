@@ -373,8 +373,6 @@
 		278ED0DD0D2865260012BA6B /* KTMediaContainer+Pasteboard.h in Headers */ = {isa = PBXBuildFile; fileRef = 278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */; settings = {ATTRIBUTES = (); }; };
 		278F799E10B44A1B00BDBAF7 /* SVRichText.h in Headers */ = {isa = PBXBuildFile; fileRef = 278F799810B44A1B00BDBAF7 /* SVRichText.h */; };
 		278F799F10B44A1B00BDBAF7 /* SVRichText.m in Sources */ = {isa = PBXBuildFile; fileRef = 278F799910B44A1B00BDBAF7 /* SVRichText.m */; };
-		278F79A210B44A3B00BDBAF7 /* SVBodyElement.h in Headers */ = {isa = PBXBuildFile; fileRef = 278F79A010B44A3B00BDBAF7 /* SVBodyElement.h */; };
-		278F79A310B44A3B00BDBAF7 /* SVBodyElement.m in Sources */ = {isa = PBXBuildFile; fileRef = 278F79A110B44A3B00BDBAF7 /* SVBodyElement.m */; };
 		278FCE931079F2AD0091A239 /* NSEvent+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */; };
 		278FCE941079F2AD0091A239 /* NSEvent+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */; };
 		278FCFBB107B5E9D0091A239 /* SVWebEditorTextProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */; };
@@ -1836,8 +1834,6 @@
 		278ED0DC0D2865260012BA6B /* KTMediaContainer+Pasteboard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTMediaContainer+Pasteboard.h"; sourceTree = "<group>"; };
 		278F799810B44A1B00BDBAF7 /* SVRichText.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRichText.h; sourceTree = "<group>"; };
 		278F799910B44A1B00BDBAF7 /* SVRichText.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRichText.m; sourceTree = "<group>"; };
-		278F79A010B44A3B00BDBAF7 /* SVBodyElement.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBodyElement.h; sourceTree = "<group>"; };
-		278F79A110B44A3B00BDBAF7 /* SVBodyElement.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBodyElement.m; sourceTree = "<group>"; };
 		278FCE911079F2AD0091A239 /* NSEvent+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEvent+Karelia.h"; sourceTree = "<group>"; };
 		278FCE921079F2AD0091A239 /* NSEvent+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEvent+Karelia.m"; sourceTree = "<group>"; };
 		278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorTextProtocol.h; sourceTree = "<group>"; };
@@ -3121,7 +3117,7 @@
 				278849810F5FF0D300C70629 /* Site & Master */,
 				273864300D50A6A000A8A209 /* Page */,
 				3C5A73710BF7B69300776464 /* Pagelets */,
-				278F798F10B4485C00BDBAF7 /* Body Text */,
+				278F798F10B4485C00BDBAF7 /* Text */,
 				272EEA6A0DDA56030012005E /* Media */,
 				277E6EDF112EB46E0081389F /* Publishing */,
 			);
@@ -3138,8 +3134,6 @@
 		2778929D10CD5F76008AA683 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
-				2778929E10CD5FA3008AA683 /* SVTitleBox.h */,
-				2778929F10CD5FA3008AA683 /* SVTitleBox.m */,
 				27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */,
 				272F1F4F10C2CBE600BBB836 /* SVContentObject.h */,
 				272F1F5010C2CBE600BBB836 /* SVContentObject.m */,
@@ -3292,9 +3286,11 @@
 			name = Pasteboard;
 			sourceTree = "<group>";
 		};
-		278F798F10B4485C00BDBAF7 /* Body Text */ = {
+		278F798F10B4485C00BDBAF7 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				2778929E10CD5FA3008AA683 /* SVTitleBox.h */,
+				2778929F10CD5FA3008AA683 /* SVTitleBox.m */,
 				27C20F0B11405105006D455E /* SVAuxilaryPageletText.h */,
 				27C20F0C11405105006D455E /* SVAuxilaryPageletText.m */,
 				270E4A1010FA412400EF1FA0 /* SVTextAttachment.h */,
@@ -3302,12 +3298,10 @@
 				270E474A10F8B6B800EF1FA0 /* SVParagraphLink.h */,
 				270E474B10F8B6B800EF1FA0 /* SVParagraphLink.m */,
 				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
-				278F79A010B44A3B00BDBAF7 /* SVBodyElement.h */,
-				278F79A110B44A3B00BDBAF7 /* SVBodyElement.m */,
 				278F799810B44A1B00BDBAF7 /* SVRichText.h */,
 				278F799910B44A1B00BDBAF7 /* SVRichText.m */,
 			);
-			name = "Body Text";
+			name = Text;
 			sourceTree = "<group>";
 		};
 		27969F4B0CF6146700C03F45 /* Missing Media */ = {
@@ -5296,7 +5290,6 @@
 				272B38CD10B18FB60056B4CA /* SVPlugInPagelet.h in Headers */,
 				272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */,
 				278F799E10B44A1B00BDBAF7 /* SVRichText.h in Headers */,
-				278F79A210B44A3B00BDBAF7 /* SVBodyElement.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
 				279218DD10BC44E900E590D5 /* KSOrderedManagedObjectControllers.h in Headers */,
 				2792197D10BC631D00E590D5 /* KSDOMController.h in Headers */,
@@ -6690,7 +6683,6 @@
 				272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */,
 				CED82C7D10B23248004677E4 /* SVDesignChooserImageView.m in Sources */,
 				278F799F10B44A1B00BDBAF7 /* SVRichText.m in Sources */,
-				278F79A310B44A3B00BDBAF7 /* SVBodyElement.m in Sources */,
 				CE8E714110B5D0950005BD91 /* KTDesignFamily.m in Sources */,
 				279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */,
 				2792197E10BC631D00E590D5 /* KSDOMController.m in Sources */,

@@ -9,11 +9,18 @@
 #import "SVHTMLContext.h"
 
 
-@class KSObjectKeyPathPair;
+@class SVWebEditorItem, KSObjectKeyPathPair;
+
+
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
+    NSMutableArray  *_items;
+    SVWebEditorItem *_currentItem;  // weak ref
+    
     NSMutableSet    *_objectKeyPathPairs;
 }
+
+- (NSArray *)webEditorItems;
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 @property(nonatomic, copy, readonly) NSSet *dependencies;

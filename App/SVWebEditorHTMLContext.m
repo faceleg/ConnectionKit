@@ -8,6 +8,7 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "SVDOMController.h"
 #import "SVTemplateParser.h"
 
 #import "KSObjectKeyPathPair.h"
@@ -18,16 +19,64 @@
 - (id)initWithStringWriter:(id <KSStringWriter>)stream
 {
     [super initWithStringWriter:stream];
+    
+    _items = [[NSMutableArray alloc] init];
     _objectKeyPathPairs = [[NSMutableSet alloc] init];
+    
     return self;
 }
 
 - (void)dealloc
 {
+    [_items release];
     [_objectKeyPathPairs release];
     
     [super dealloc];
 }
+
+#pragma mark DOM Controllers
+
+- (NSArray *)webEditorItems;
+{
+    return [[_items copy] autorelease];
+}
+
+- (void)addItem:(SVWebEditorItem *)item
+{
+    [_items addObject:item];
+    
+    [_currentItem addChildWebEditorItem:item];
+    _currentItem = item;
+}
+
+- (void)finishWithCurrentItem;
+{
+    _currentItem = [_currentItem parentWebEditorItem];
+}
+
+- (void)willBeginWritingGraphic:(SVGraphic *)object
+{
+    [super willBeginWritingGraphic:object];
+    
+    // Create controller
+    SVDOMController *controller = [[[object DOMControllerClass] alloc] init];
+    [controller setRepresentedObject:object];
+    
+    // Store controller
+    [self addItem:controller];
+    
+    // Finish up
+    [controller release];
+}
+
+- (void)didEndWritingGraphic;
+{
+    [self finishWithCurrentItem];
+    
+    [super didEndWritingGraphic];
+}
+
+#pragma mark Dependencies
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 {

@@ -52,7 +52,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
 
-@property(nonatomic, retain, readwrite) SVHTMLContext *HTMLContext;
+@property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 @property(nonatomic, copy, readwrite) NSArray *textAreas;
 
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
@@ -288,7 +288,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if ([value isKindOfClass:[SVTitleBox class]])
     {
         // Copy basic properties from text block
-        result = [[SVTextFieldDOMController alloc] initWithContentObject:value inDOMDocument:domDoc];
+        result = [[SVTextFieldDOMController alloc] initWithHTMLElement:element];
         [result setHTMLContext:[self HTMLContext]];
         [(SVTextFieldDOMController *)result setTextBlock:aTextBlock];
         [result setRichText:[aTextBlock isRichText]];
@@ -303,7 +303,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else if ([value isKindOfClass:[SVRichText class]])
     {
-        result = [[SVBodyTextDOMController alloc] initWithContentObject:value inDOMDocument:domDoc];
+        result = [[SVBodyTextDOMController alloc] initWithHTMLElement:element];
         [result setHTMLContext:[self HTMLContext]];
         [result setRichText:YES];
         [result setFieldEditor:NO];
@@ -330,41 +330,42 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
-    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
+    SVWebEditorView *webEditor = [self webEditor];
+    DOMDocument *domDoc = [webEditor HTMLDocument];
     
     
-    // Controller for logo if there is one
-    SVLogoImage *logo = [[[self page] master] logo];
-    if (logo && ![[logo hidden] boolValue])
+    // Context holds the controllers. We need to send them over to the Web Editor.
+    NSArray *controllers = [[self HTMLContext] webEditorItems];
+    NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] init];
+    
+    NSMutableArray *selectableObjects = [[NSMutableArray alloc] initWithCapacity:[controllers count]];
+    
+    for (SVWebEditorItem *anItem in controllers)
     {
-        SVDOMController *controller = [[[logo DOMControllerClass] alloc] initWithContentObject:logo
-                                                                                 inDOMDocument:domDoc];
-        [[self webEditor] insertItem:controller];
-        [controller release];
-    }
-    
-    
-    
-    // Set up controllers for all sidebar pagelets. Could we do this better by receiving a list of pagelets from the parser?
-    if ([[[self page] showSidebar] boolValue])
-    {
-        NSArray *sidebarPagelets = [SVGraphic arrayBySortingPagelets:[[[self page] sidebar] pagelets]];
-        NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] initWithCapacity:[sidebarPagelets count]];
+        [anItem loadHTMLElementFromDocument:domDoc];
+        if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
         
-        for (SVGraphic *aPagelet in sidebarPagelets)
+        
+        // Cheat and figure out if it's a sidebar pagelet controller
+        id anObject = [anItem representedObject];
+        if ([anObject isKindOfClass:[NSManagedObject class]] &&
+            [anObject respondsToSelector:@selector(sidebars)] &&
+            [[anObject sidebars] count] > 0)
         {
-            SVDOMController *controller = [[SVDOMController alloc] initWithContentObject:aPagelet
-                                                                           inDOMDocument:domDoc];
-            [controller setHTMLContext:[self HTMLContext]];
-            
-            [[self webEditor] insertItem:controller];
-            [sidebarPageletItems addObject:controller];
-            [controller release];
+            [sidebarPageletItems addObject:anItem];
         }
         
-        [self setSidebarPageletItems:sidebarPageletItems];
-        [sidebarPageletItems release];
+        
+        //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
+        if (anObject) [selectableObjects addObject:anObject];
     }
+    
+    [self setSidebarPageletItems:sidebarPageletItems];
+    [sidebarPageletItems release];
+    
+    [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC 
+    [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
+    [selectableObjects release];
     
     
     
@@ -388,21 +389,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     
-    
-    //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-    NSEnumerator *itemsEnumerator = [[[self webEditor] mainItem] enumerator];
-    NSMutableArray *selectableObjects = [[NSMutableArray alloc] init];
-    SVWebEditorItem *anItem;
-    while (anItem = [itemsEnumerator nextObject])
-    {
-        id anObject = [anItem representedObject];
-        if (anObject) [selectableObjects addObject:anObject];
-    }
-    
-    [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC 
-    [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
-    [selectableObjects release];
-	
     
     // Match selection to controller
     NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
