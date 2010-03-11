@@ -499,7 +499,7 @@
 		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
 		27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */; };
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
-		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */; };
 		27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */; };

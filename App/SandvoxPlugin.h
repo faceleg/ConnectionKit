@@ -44,7 +44,6 @@
 #import "SVHTMLContext.h"
 
 //  Media
-#import "KTImageScalingSettings.h"
 
 // DataSources (drag-and-drop external sources)
 #import "KTDataSourceProtocol.h"
