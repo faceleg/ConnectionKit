@@ -31,7 +31,7 @@
 #import "KTSite.h"
 
 // Plugins (abstract superclass of all plugins)
-#import "SVElementPlugIn.h"
+#import "SVPageletPlugIn.h"
 #import "SVElementPlugInContainer.h"
 
 #import "SVInspectorViewController.h"

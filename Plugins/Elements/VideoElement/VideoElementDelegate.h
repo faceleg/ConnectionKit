@@ -41,7 +41,7 @@
 
 
 @class KTMediaContainer, KTMediaRef, QTMovie;
-@interface VideoElementDelegate : SVElementPlugIn <KTDataSource>
+@interface VideoElementDelegate : SVPageletPlugIn <KTDataSource>
 {
 	QTMovie		*myMovie;
 	//NSSize	 mySize;		// size as scaled

@@ -36,7 +36,7 @@
 
 #import "SandvoxPlugin.h"
 
-@interface DownloadPageDelegate : SVElementPlugIn <KTDataSource>
+@interface DownloadPageDelegate : SVPageletPlugIn <KTDataSource>
 
 - (IBAction)chooseFile:(id)sender;
 

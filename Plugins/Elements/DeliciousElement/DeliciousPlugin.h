@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface DeliciousPlugin : SVElementPlugIn {
+@interface DeliciousPlugin : SVPageletPlugIn {
 
 	NSString *_deliciousID;
 	NSString *_restrictedTags;

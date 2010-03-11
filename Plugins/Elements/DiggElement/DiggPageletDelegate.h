@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface DiggPageletDelegate : SVElementPlugIn
+@interface DiggPageletDelegate : SVPageletPlugIn
 {
 }
 

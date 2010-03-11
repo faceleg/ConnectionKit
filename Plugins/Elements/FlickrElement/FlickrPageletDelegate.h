@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface FlickrPageletDelegate : SVElementPlugIn 
+@interface FlickrPageletDelegate : SVPageletPlugIn 
 {
 	IBOutlet NSButton *oFlickrButton;
 }

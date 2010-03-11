@@ -37,6 +37,6 @@
 #import "SandvoxPlugin.h"
 
 
-@interface FeedPageletDelegate : SVElementPlugIn <KTDataSource>
+@interface FeedPageletDelegate : SVPageletPlugIn <KTDataSource>
 @end
 

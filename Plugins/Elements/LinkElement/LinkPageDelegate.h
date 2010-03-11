@@ -39,7 +39,7 @@
 typedef enum { kPlainLink, kNewWindowLink, kIframeLink, kFramesetLink } LinkPageType;
 
 @class WebView;
-@interface LinkPageDelegate : SVElementPlugIn <KTDataSource>
+@interface LinkPageDelegate : SVPageletPlugIn <KTDataSource>
 {
 }
 

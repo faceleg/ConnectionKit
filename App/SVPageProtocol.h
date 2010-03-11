@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVElementPlugIn.h"
+#import "SVPageletPlugIn.h"
 
 
 @protocol SVPage <NSObject>
@@ -20,7 +20,7 @@
 @end
 
 
-@interface SVElementPlugIn (SVPage)
+@interface SVPageletPlugIn (SVPage)
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 @end
 

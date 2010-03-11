@@ -9,9 +9,9 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVElementPlugIn;
+@class SVPageletPlugIn;
 @protocol SVElementPlugInFactory
-+ (SVElementPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
++ (SVPageletPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
 @end
 
 
@@ -22,7 +22,7 @@
 @protocol SVPage, SVElementPlugInContainer;
 
 
-@interface SVElementPlugIn : NSObject <SVElementPlugInFactory>
+@interface SVPageletPlugIn : NSObject <SVElementPlugInFactory>
 {
   @private
     id <SVElementPlugInContainer>   _container;

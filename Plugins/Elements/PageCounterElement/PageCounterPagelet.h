@@ -39,7 +39,7 @@
 
 @class WebView;
 
-@interface PageCounterPagelet : SVElementPlugIn
+@interface PageCounterPagelet : SVPageletPlugIn
 {
 	int _selectedTheme;
 }

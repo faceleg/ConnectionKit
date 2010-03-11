@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface SiteMapDelegate : SVElementPlugIn
+@interface SiteMapDelegate : SVPageletPlugIn
 {
 
 }

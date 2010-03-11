@@ -38,7 +38,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface CollectionArchiveDelegate : SVElementPlugIn
+@interface CollectionArchiveDelegate : SVPageletPlugIn
 {
 	IBOutlet KTLinkSourceView	*collectionLinkSourceView;
 }

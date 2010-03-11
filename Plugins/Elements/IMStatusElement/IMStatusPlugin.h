@@ -14,7 +14,7 @@ typedef enum { IMServiceIChat, IMServiceSkype, IMServiceYahoo = 2, } IMService;
 
 
 
-@interface IMStatusPlugin : SVElementPlugIn {
+@interface IMStatusPlugin : SVPageletPlugIn {
 
 	NSMutableArray *myConfigs;
 	

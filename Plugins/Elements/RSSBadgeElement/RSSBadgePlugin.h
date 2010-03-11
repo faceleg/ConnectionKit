@@ -26,7 +26,7 @@ typedef enum {
 } RSSBadgeIconPosition;
 
 
-@interface RSSBadgePlugin : SVElementPlugIn {
+@interface RSSBadgePlugin : SVPageletPlugIn {
 
 	RSSBadgeIconStyle _iconStyle;
 	NSString *_label;

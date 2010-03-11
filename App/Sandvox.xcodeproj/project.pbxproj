@@ -246,8 +246,8 @@
 		272B38CE10B18FB60056B4CA /* SVPlugInPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
 		272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */; };
-		272DA58A108E6F42007A99D5 /* SVElementPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVElementPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		272DA58B108E6F42007A99D5 /* SVElementPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 272DA589108E6F42007A99D5 /* SVElementPlugIn.m */; };
+		272DA58A108E6F42007A99D5 /* SVPageletPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVPageletPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		272DA58B108E6F42007A99D5 /* SVPageletPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 272DA589108E6F42007A99D5 /* SVPageletPlugIn.m */; };
 		272F1F5110C2CBE600BBB836 /* SVContentObject.h in Headers */ = {isa = PBXBuildFile; fileRef = 272F1F4F10C2CBE600BBB836 /* SVContentObject.h */; };
 		272F1F5210C2CBE600BBB836 /* SVContentObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 272F1F5010C2CBE600BBB836 /* SVContentObject.m */; };
 		272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */ = {isa = PBXBuildFile; fileRef = 272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */; };
@@ -1695,8 +1695,8 @@
 		272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorButtonCell.m; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
 		272C18940D0C131B00734495 /* KTMediaFileUpload.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileUpload.m; sourceTree = "<group>"; };
-		272DA588108E6F42007A99D5 /* SVElementPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVElementPlugIn.h; sourceTree = "<group>"; };
-		272DA589108E6F42007A99D5 /* SVElementPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVElementPlugIn.m; sourceTree = "<group>"; };
+		272DA588108E6F42007A99D5 /* SVPageletPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletPlugIn.h; sourceTree = "<group>"; };
+		272DA589108E6F42007A99D5 /* SVPageletPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletPlugIn.m; sourceTree = "<group>"; };
 		272EEBB70DDA65190012005E /* KTMediaManager+MediaContainers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTMediaManager+MediaContainers.m"; sourceTree = "<group>"; };
 		272F1F4F10C2CBE600BBB836 /* SVContentObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVContentObject.h; sourceTree = "<group>"; };
 		272F1F5010C2CBE600BBB836 /* SVContentObject.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVContentObject.m; sourceTree = "<group>"; };
@@ -2846,8 +2846,8 @@
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
 				272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */,
 				272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */,
-				272DA588108E6F42007A99D5 /* SVElementPlugIn.h */,
-				272DA589108E6F42007A99D5 /* SVElementPlugIn.m */,
+				272DA588108E6F42007A99D5 /* SVPageletPlugIn.h */,
+				272DA589108E6F42007A99D5 /* SVPageletPlugIn.m */,
 				273D730110EA7A9C003F5BA8 /* SVElementPlugInContainer.h */,
 				271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */,
 				27FAD5511146AEF80040FA44 /* SVTabViewController.h */,
@@ -5277,7 +5277,7 @@
 				27AED14D1087CC9C005EDA77 /* SVDocWindow.h in Headers */,
 				27AED25B1088C754005EDA77 /* DOMRange+Karelia.h in Headers */,
 				27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */,
-				272DA58A108E6F42007A99D5 /* SVElementPlugIn.h in Headers */,
+				272DA58A108E6F42007A99D5 /* SVPageletPlugIn.h in Headers */,
 				CE4BFDBC108E287C00CFBC6A /* KSFocusingTextField.h in Headers */,
 				CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */,
 				CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */,
@@ -6671,7 +6671,7 @@
 				27AED14E1087CC9C005EDA77 /* SVDocWindow.m in Sources */,
 				27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */,
 				27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */,
-				272DA58B108E6F42007A99D5 /* SVElementPlugIn.m in Sources */,
+				272DA58B108E6F42007A99D5 /* SVPageletPlugIn.m in Sources */,
 				CE4BFDBD108E287C00CFBC6A /* KSFocusingTextField.m in Sources */,
 				CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */,
 				CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */,

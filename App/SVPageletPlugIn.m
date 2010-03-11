@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVElementPlugIn.h"
+#import "SVPageletPlugIn.h"
 #import "SVPageProtocol.h"
 
 #import "KTAbstractHTMLPlugin.h"
@@ -25,12 +25,12 @@
 NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 
-@interface SVElementPlugIn ()
+@interface SVPageletPlugIn ()
 @property(nonatomic, retain) id delegateOwner;
 @end
 
 
-@interface SVElementPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
+@interface SVPageletPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
 - (KTSite *)site;
 @end
 
@@ -38,11 +38,11 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 #pragma mark -
 
 
-@implementation SVElementPlugIn
+@implementation SVPageletPlugIn
 
 #pragma mark Init
 
-+ (SVElementPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
++ (SVPageletPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
 {
     return [[[self alloc] initWithArguments:propertyStorage] autorelease];
 }
@@ -195,7 +195,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 #pragma mark -
 
 
-@implementation SVElementPlugIn (SVElementPlugInContainer)
+@implementation SVPageletPlugIn (SVElementPlugInContainer)
 
 - (KTSite *)site;
 {
@@ -220,7 +220,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 #pragma mark -
 
 
-@implementation SVElementPlugIn (SVPage)
+@implementation SVPageletPlugIn (SVPage)
 
 - (id <SVPage>)pageWithIdentifier:(NSString *)identifier;
 {

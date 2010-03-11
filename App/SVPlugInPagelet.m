@@ -9,7 +9,7 @@
 #import "SVPlugInPagelet.h"
 
 #import "SVDOMController.h"
-#import "SVElementPlugIn.h"
+#import "SVPageletPlugIn.h"
 #import "KTElementPlugin.h"
 #import "SVHTMLContext.h"
 
@@ -97,7 +97,7 @@ if ([key isEqualToString:@"showBorder"])
 
 #pragma mark Plug-in
 
-- (SVElementPlugIn *)plugIn
+- (SVPageletPlugIn *)plugIn
 {
 	if (!_plugIn) 
 	{
@@ -116,7 +116,7 @@ if ([key isEqualToString:@"showBorder"])
                 
                 // Restore plug-in's properties
                 NSDictionary *plugInProperties = [self extensibleProperties];
-                SVElementPlugIn *plugIn = [self plugIn];
+                SVPageletPlugIn *plugIn = [self plugIn];
                 for (NSString *aKey in plugInProperties)
                 {
                     id serializedValue = [plugInProperties objectForKey:aKey];
