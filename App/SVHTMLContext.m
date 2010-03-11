@@ -45,15 +45,18 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringWriter:(id <KSStringWriter>)stream; // designated initializer
+- (id)initWithStringWriter:(id <KSStringWriter>)writer; // designated initializer
 {
-    [super initWithStringWriter:stream];
+    [super initWithStringWriter:writer];
+    
+    _stringWriter = [writer retain];
     
     _generationPurpose = kSVHTMLGenerationPurposeNormal;
     _includeStyling = YES;
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
     _headerLevel = 1;
+    _headerMarkup = [[NSMutableString alloc] init];
     _endBodyMarkup = [[NSMutableString alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
     _textBlocks = [[NSMutableArray alloc] init];
@@ -70,6 +73,7 @@
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_textBlocks release];
+    [_stringWriter release];
     
     [super dealloc];
 }
@@ -274,8 +278,22 @@
 
 #pragma mark Extra markup
 
+- (NSMutableString *)extraHeaderMarkup; // can append to, query, as you like while parsing
+{
+    return _headerMarkup;
+}
+
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
 {
+    // Start buffering into a temporary string writer
+    NSMutableString *buffer = [[NSMutableString alloc] init];
+    [_stringWriter release]; _stringWriter = buffer;
+}
+
+- (id <KSStringWriter>)stringWriter
+{
+    //  Override to force use of our own writer
+    return _stringWriter;
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
@@ -285,6 +303,17 @@
 
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
+    // Finish buffering extra header
+    id <KSStringWriter> buffer = _stringWriter;
+    _stringWriter = [[super stringWriter] retain];
+    
+    [self writeString:[self extraHeaderMarkup]];
+    
+    [self writeString:(NSString *)buffer];
+    [buffer release];
+    
+    
+    // Write the end body markup
     [self writeString:[self endBodyMarkup]];
 }
 
