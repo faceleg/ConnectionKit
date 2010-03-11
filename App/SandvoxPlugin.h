@@ -27,9 +27,6 @@
 #import "assertions.h"
 #import "Macros.h"
 
-// Document
-#import "KTSite.h"
-
 // Plugins (abstract superclass of all plugins)
 #import "SVPageletPlugIn.h"
 #import "SVElementPlugInContainer.h"
@@ -37,8 +34,8 @@
 #import "SVInspectorViewController.h"
 
 // Page composition
+#import "KTSite.h"
 #import "SVPageProtocol.h"
-#import "KTMaster.h"
 
 // HTML Writing
 #import "SVHTMLContext.h"

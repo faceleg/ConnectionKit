@@ -503,7 +503,7 @@
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */; };
 		27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */; };
-		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (); }; };
 		27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F71A7210F7641D0029AE3A /* LinkInspector.xib */; };
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
 		27FAD5531146AEF80040FA44 /* SVTabViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27FAD5511146AEF80040FA44 /* SVTabViewController.h */; };
