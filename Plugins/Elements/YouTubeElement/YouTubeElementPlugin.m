@@ -22,8 +22,9 @@
 @synthesize color1 = _color1;
 @synthesize color2 = _color2;
 @synthesize videoSize = _videoSize;
-@synthesize videoWidth = _videoWidth;
-@synthesize videoHeight = _videoHeight;
+@synthesize widescreen = _widescreen;
+@synthesize playHD = _playHD;
+@synthesize privacy = _privacy;
 @synthesize showBorder = _showBorder;
 @synthesize includeRelatedVideos = _includeRelatedVideos;
 @synthesize useCustomSecondaryColor = _useCustomSecondaryColor;
@@ -31,8 +32,22 @@
 + (Class)inspectorViewControllerClass { return [YouTubeElementInspector class]; }
 + (NSSet *)plugInKeys
 { 
-    return [NSSet setWithObjects:@"userVideoCode", @"videoSize", @"color2", @"color1", @"showBorder", @"includeRelatedVideos", @"useCustomSecondaryColor", nil];
+    return [NSSet setWithObjects:@"userVideoCode", @"videoSize", @"color2", @"color1", @"widescreen", @"showBorder", @"includeRelatedVideos", @"useCustomSecondaryColor", @"privacy", @"playHD", nil];
 }
+
++ (NSSet *)keyPathsForValuesAffectingVideoWidth
+{
+    return [NSSet setWithObjects:@"videoSize", @"widescreen", @"showBorder", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingVideoHeight
+{
+    return [NSSet setWithObjects:@"videoSize", @"widescreen", @"showBorder", nil];
+}
++ (NSSet *)keyPathsForValuesAffectingSizeToolTip
+{
+    return [NSSet setWithObjects:@"videoWidth", @"widescreen", nil];
+}
+
 
 #pragma mark lifetime
 
@@ -43,7 +58,7 @@
     
     // Observer storage
     [self addObserver:self
-		  forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", @"videoSize", @"showBorder", nil]
+		  forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]
 			  options:NSKeyValueObservingOptionNew
 			  context:NULL];
 	
@@ -53,7 +68,7 @@
 - (void)dealloc
 {
 	// Remove old observations
-	[self removeObserver:self forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", @"showBorder", nil]];
+	[self removeObserver:self forKeyPaths:[NSSet setWithObjects:@"userVideoCode", @"color2", @"color1", nil]];
 		
 	// Relase iVars
 	self.userVideoCode = nil;
@@ -80,11 +95,13 @@
 		}
 		
 		// Initial size depends on our location
-		YouTubeVideoSize videoSize = YouTubeVideoSizeDefault;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizePageletWidth : YouTubeVideoSizeDefault;
+		YouTubeVideoSize videoSize = YouTubeVideoSizeSmall;//([element isKindOfClass:[KTPagelet class]]) ? YouTubeVideoSizeSidebar : YouTubeVideoSizeSmall;
 		self.videoSize = videoSize;
+		self.widescreen = YES;
 		
 		// Prepare initial colors
-		[self resetColors];
+		self.useCustomSecondaryColor = NO;
+		self.color2 = [YouTubeElementPlugin defaultPrimaryColor];
 	}
 	
 // Here we want to NOT allow resizing of element if it's in the sidebar.
@@ -147,16 +164,7 @@
 		self.videoID = videoID;
 	}
 	
-	
-	// Update video width & height to match chosen size
-	else if ([keyPath isEqualToString:@"videoSize"] || [keyPath isEqualToString:@"showBorder"])
-	{
-		YouTubeVideoSize videoSize = self.videoSize;
-		unsigned videoWidth = [self videoWidthForSize:videoSize];
-		self.videoWidth = videoWidth;
-		self.videoHeight = [self videoHeightForSize:videoSize];
-	}
-	
+		
 	
 	// When the user adjusts the main colour WITHOUT having adjusted the secondary color, re-generate
 	// a new second colour from it
@@ -213,94 +221,125 @@
 }
 
 #pragma mark -
-#pragma mark Width
+#pragma mark Size
 
-- (unsigned)videoWidthForSize:(YouTubeVideoSize)size
+- (NSString *)sizeToolTip;
 {
-	unsigned result = 425;
-	
-	switch (size)
-	{
-		case YouTubeVideoSizePageletWidth:
-			result = 200;	// width regardless of border size
-			break;
-		case YouTubeVideoSizeNatural:
-			result = ([self boolForKey:@"showBorder"]) ? 347 : 320;
-			break;
-		case YouTubeVideoSizeDefault:
-			result = 425;	// Do what YouTube does, fixed width regardless of border
-			break;
-		case YouTubeVideoSizeSidebarPageWidth:
-			result = 480;
-			break;
-		default:
-			OBASSERT_NOT_REACHED("Unknown YouTube video size");
+	NSString *result = nil;
+	static NSArray *sToolTipsNormal = nil;
+	static NSArray *sToolTipsWide = nil;
+	if (!sToolTipsWide)
+	{		
+		sToolTipsNormal = [[NSArray alloc] initWithObjects:
+						   NSLocalizedString(@"200 pixels wide including any border.", "tooltip description of slider value"),
+						   NSLocalizedString(@"320 pixels wide; original size for classic, flat-screen videos.", "tooltip description of slider value"),
+						   NSLocalizedString(@"425 pixels wide; standard size of classic YouTube video.", "tooltip description of slider value"),
+						   NSLocalizedString(@"480 pixels wide; double size for classic, flat-screen videos.", "tooltip description of slider value"),
+						   NSLocalizedString(@"560 pixels wide.", "tooltip description of slider value"),
+						   NSLocalizedString(@"640 pixels wide.", "tooltip description of slider value"),
+						   NSLocalizedString(@"853 pixels wide. (Wide design required.)", "tooltip description of slider value"),
+						   NSLocalizedString(@"1280 pixels wide. (Wide design required.)", "tooltip description of slider value"),
+					 nil];
+		sToolTipsWide = [[NSArray alloc] initWithObjects:
+						 NSLocalizedString(@"200 pixels wide including any border.", "tooltip description of slider value"),
+						 NSLocalizedString(@"320 pixels wide.", "tooltip description of slider value"),
+						 NSLocalizedString(@"425 pixels wide.", "tooltip description of slider value"),
+						 NSLocalizedString(@"480 pixels wide.", "tooltip description of slider value"),
+						 NSLocalizedString(@"560 pixels wide.", "tooltip description of slider value"),
+						 NSLocalizedString(@"640 pixels wide; 360p size", "tooltip description of slider value"),
+						 NSLocalizedString(@"853 pixels wide; 480p size. (Wide design required.)", "tooltip description of slider value"),
+						 NSLocalizedString(@"1280 pixels wide; 720p size. (Wide design required.)", "tooltip description of slider value"),
+						 nil];
 	}
-	
+	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
+	{
+		if (self.widescreen)
+		{
+			result = [sToolTipsWide objectAtIndex:self.videoSize];
+		}
+		else
+		{
+			result = [sToolTipsNormal objectAtIndex:self.videoSize];
+		}
+	}
 	return result;
 }
 
-- (unsigned)videoHeightForSize:(YouTubeVideoSize)size;
+- (unsigned) videoWidth
 {
+	unsigned widths[] = { 200, 320, 425, 480, 560, 640, 853, 1280	};
+	
+	unsigned result = widths[1];
+	
+	if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
+	{
+		result = widths[self.videoSize];
+	}
+	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar)	// do not increase width for sidebar!
+	{
+		result += 20;
+	}	
+	return result;
+}
+
+
+
+- (unsigned) videoHeight
+{
+	unsigned heights[]		= { 150, 240, 319, 360, 420, 480, 640, 960	};	// above width * 3/4
+	unsigned heightsWide[]	= { 113, 180, 239, 270, 315, 360, 480, 720	};	// above width * 9/16
 	unsigned result = 0;
 	
-	if ([self boolForKey:@"showBorder"])
+	if (self.widescreen)
 	{
-		switch (size)
+		result = heightsWide[1];
+		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
 		{
-			case YouTubeVideoSizePageletWidth:
-				result = 178;
-				break;
-			case YouTubeVideoSizeNatural:
-				result = 308;
-				// empirical width to force video itself to be exactly 320 pixels wide
-				break;
-			case YouTubeVideoSizeDefault:
-				result = 373;
-				break;
-			case YouTubeVideoSizeSidebarPageWidth:
-				result = 414;
-				break;
-			default:
-				OBASSERT_NOT_REACHED("Unknown YouTube video size");
+			// Borders leaves 180 pixels for width of video
+			result = 101;
+		}
+		else if (self.videoSize < NUMBER_OF_VIDEO_SIZES)
+		{
+			result = heightsWide[self.videoSize];
 		}
 	}
 	else
 	{
-		switch (size)
+		result = heights[1];
+		if (self.videoSize == YouTubeVideoSizeSidebar && self.showBorder)	// special case for bordered in sidebar
 		{
-			case YouTubeVideoSizePageletWidth:
-				result = 169;
-				break;
-			case YouTubeVideoSizeNatural:
-				result = 269;
-				break;
-			case YouTubeVideoSizeDefault:
-				result = 355;
-				break;
-			case YouTubeVideoSizeSidebarPageWidth:
-				result = 397;
-				break;
-			default:
-				OBASSERT_NOT_REACHED("Unknown YouTube video size");
+			// Borders leaves 180 pixels for width of video
+			result = 135;
 		}
+		else if (self.videoSize < 8)
+		{
+			result = heights[self.videoSize];
+		}
+	}	
+	if (self.showBorder && self.videoSize != YouTubeVideoSizeSidebar) 
+	{
+		result += 20;
 	}
+	result += 25;	// room for the control bar.
+	
 	return result;
 }
+
 
 #pragma mark -
 #pragma mark Colors
 
-+ (NSColor *)defaultPrimaryColor
++ (NSColor *)defaultPrimaryColor;
 {
 	return [NSColor colorWithCalibratedWhite:0.62 alpha:1.0];
 }
 
-- (IBAction)resetColors
+- (void)resetColors;
 {
 	self.useCustomSecondaryColor = NO;
 	self.color2 = [[self class] defaultPrimaryColor];
 }
+
 
 #pragma mark -
 #pragma mark Data Source

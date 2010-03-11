@@ -117,7 +117,10 @@ self];
 	
 	// Check it's actually a YouTube website!
 	NSString *host = [self host];
-	if (host && ([host hasPrefix:@"youtube."] || [host rangeOfString:@".youtube."].location != NSNotFound))
+	if (host && ([host hasPrefix:@"youtube."]
+			|| [host rangeOfString:@".youtube."].location != NSNotFound
+			|| [host rangeOfString:@".youtube-nocookie."].location != NSNotFound
+				 ))
 	{
 		// The video could be referenced as a "/watch?" or "/v/" style URL
 		NSArray *pathComponents = [[self path] pathComponents];

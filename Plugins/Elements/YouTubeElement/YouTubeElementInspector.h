@@ -12,7 +12,6 @@
 
 @interface YouTubeElementInspector : SVInspectorViewController {
 
-	IBOutlet NSSlider	*videoSizeSlider;
 	
 }
 
