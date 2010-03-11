@@ -32,19 +32,15 @@
     // See header for what steps are
     
     //  1)
-    DOMHTMLElement *element = [contentObject elementForEditingInDOMDocument:document];
+    self = [self init];
     
     //  2)
-    self = [self initWithHTMLElement:element];
-    
-    //  3)
     [self setRepresentedObject:contentObject];
     
-    //  4)
-    if (![contentObject shouldPublishEditingElementID])
-    {
-        [element setIdName:nil];
-    }
+    //  3)
+    [self loadHTMLElementFromDocument:document];
+    OBASSERT([self HTMLElement]);
+    
     
     return self;
 }
@@ -70,6 +66,16 @@
     [htmlString release];
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
+    [self setHTMLElement:element];
+}
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    SVContentObject *contentObject = [self representedObject];
+    DOMHTMLElement *element = [contentObject elementForEditingInDOMDocument:document];
+    
+    if (![contentObject shouldPublishEditingElementID]) [element setIdName:nil];
+    
     [self setHTMLElement:element];
 }
 
