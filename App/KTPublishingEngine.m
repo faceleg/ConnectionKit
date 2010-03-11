@@ -11,6 +11,7 @@
 #import "KTPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"
+#import "SVHTMLContext.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
 #import "KTPage+Internal.h"

@@ -20,7 +20,6 @@
 #import <Cocoa/Cocoa.h>
 
 #import "KT.h"
-#import "SVHTMLTemplateParser.h"
 #import "SVExtensibleManagedObject.h"
 
 

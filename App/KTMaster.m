@@ -14,6 +14,7 @@
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTHostProperties.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
 #import "SVMediaRecord.h"
