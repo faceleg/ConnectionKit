@@ -13,7 +13,7 @@
 @interface KTIndexPlugin : KTAbstractHTMLPlugin
 
 // Inserts one item per known collection preset into aMenu at the specified index.
-+ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu index:(NSUInteger)index;
++ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
 
 
 @end

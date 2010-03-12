@@ -167,7 +167,7 @@ TO DO:
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [KTIndexPlugin populateMenuWithCollectionPresets:menu index:3];
+    [KTIndexPlugin populateMenuWithCollectionPresets:menu atIndex:3];
     
     [menu addItem:[NSMenuItem separatorItem]];
     

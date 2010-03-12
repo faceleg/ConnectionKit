@@ -32,7 +32,7 @@
 }
 
 
-+ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu index:(NSUInteger)index;
++ (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
 {
     // First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
