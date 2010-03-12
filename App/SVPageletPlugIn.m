@@ -74,7 +74,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     for (NSString *aKey in initialProperties)
     {
         #warning FIXME -- temp until this is fixed.
-        if ([aKey isEqualToString:@"showBorder"]) continue;
+        if ([aKey isEqualToString:@"showBorder"]) break;
         
         id value = [initialProperties objectForKey:aKey];
         if ([value isKindOfClass:[NSString class]])
