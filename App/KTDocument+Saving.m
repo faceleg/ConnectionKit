@@ -195,23 +195,10 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
             
         // Other save types are basically fine to go through the regular channels
         default:
-        {
             result = [super writeSafelyToURL:absoluteURL 
                                       ofType:typeName 
                             forSaveOperation:saveOperation 
                                        error:outError];
-            
-            // Repair the persistent store URL. Most save operations will then call -setFileURL: which will set the final store URL to use
-            NSURL *writtenStoreURL = [KTDocument datastoreURLForDocumentURL:_lastWrittenURL type:nil];
-            NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
-            NSPersistentStore *store = [coordinator persistentStoreForURL:writtenStoreURL];
-            
-            if ([self fileURL])
-            {
-                NSURL *repairedURL = [KTDocument datastoreURLForDocumentURL:[self fileURL] type:nil];
-                [coordinator setURL:repairedURL forPersistentStore:store];
-            }
-        }
     }
     
     OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -362,7 +349,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 		result = [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
                           forSaveOperation:saveOperation
-                       originalContentsURL:inOriginalContentsURL
+                       originalContentsURL:[KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil]
                                      error:outError];
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     }
@@ -508,10 +495,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)writeDatastoreToURL:(NSURL *)inURL
-                     ofType:(NSString *)inType
+- (BOOL)writeDatastoreToURL:(NSURL *)URL
+                     ofType:(NSString *)type
            forSaveOperation:(NSSaveOperationType)saveOp
-        originalContentsURL:(NSURL *)inOriginalContentsURL
+        originalContentsURL:(NSURL *)originalContentsURL
                       error:(NSError **)outError;
 
 {
@@ -523,34 +510,37 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 	
 	NSManagedObjectContext *context = [self managedObjectContext];
-	
+	NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
 	
     
     // Handle the user choosing "Save As" for an EXISTING document
-    if ([[context persistentStoreCoordinator] persistentStoreForURL:inURL])
+    if ([storeCoordinator persistentStoreForURL:URL])
     {
         result = [context save:&error];
     }
     else
     {
-        result = [self migrateToURL:[KTDocument documentURLForDatastoreURL:inURL]
-                             ofType:inType
-                originalContentsURL:inOriginalContentsURL
+        result = [self migrateToURL:[KTDocument documentURLForDatastoreURL:URL]
+                             ofType:type
+                originalContentsURL:[KTDocument documentURLForDatastoreURL:originalContentsURL]
                               error:&error];
-        if (!result)
+        if (result)
         {
-            if (outError)
-            {
-                *outError = error;
-            }
-            return NO; // bail out and display outError
+            result = [self setMetadataForStoreAtURL:URL
+                                              error:&error];
+            
+            // Reset store URL. If it's meant to be changed permanently, someone will call -setFileURL:
+            NSPersistentStore *store = [storeCoordinator persistentStoreForURL:URL];
+            [storeCoordinator setURL:originalContentsURL forPersistentStore:store];
         }
         else
         {
-            result = [self setMetadataForStoreAtURL:inURL
-                                              error:&error];
+            if (outError) *outError = error;
+            return NO; // bail out and display outError
         }
     }
+    
+    
     
     
     // Return, making sure to supply appropriate error info
