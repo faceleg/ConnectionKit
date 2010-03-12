@@ -346,7 +346,7 @@
 											<object class="NSTextFieldCell" key="NSCell" id="488424779">
 												<int key="NSCellFlags">68288064</int>
 												<int key="NSCellFlags2">4326400</int>
-												<string key="NSContents">Character encoding</string>
+												<string key="NSContents">Character Encoding</string>
 												<reference key="NSSupport" ref="747072673"/>
 												<reference key="NSControlView" ref="758287466"/>
 												<reference key="NSBackgroundColor" ref="512321341"/>
