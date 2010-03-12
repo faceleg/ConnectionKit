@@ -904,9 +904,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	unsigned designViewport = [[[[[self site] rootPage] master] design] viewport];	// Ensures we don't clip anything important
 	NSRect frame = NSMakeRect(0.0, 0.0, designViewport+20, designViewport+20);	// The 20 keeps scrollbars out the way
 	
-	NSWindow *window = [[NSWindow alloc]
-                        initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
-	[window setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
+	_quickLookThumbnailWebViewWindow = [[NSWindow alloc]
+                                        initWithContentRect:frame styleMask:NSBorderlessWindowMask backing:NSBackingStoreBuffered defer:NO];
+	[_quickLookThumbnailWebViewWindow setReleasedWhenClosed:NO];	// Otherwise we crash upon quitting - I guess NSApplication closes all windows when terminatating?
 	
     
     // Create the webview
@@ -914,7 +914,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	_quickLookThumbnailWebView = [[WebView alloc] initWithFrame:frame];
     
     [_quickLookThumbnailWebView setResourceLoadDelegate:self];
-	[window setContentView:_quickLookThumbnailWebView];
+	[_quickLookThumbnailWebViewWindow setContentView:_quickLookThumbnailWebView];
     
     
     // We want to know when it's finished loading.
@@ -1023,9 +1023,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         [_quickLookThumbnailWebView setResourceLoadDelegate:nil];
         [[NSNotificationCenter defaultCenter] removeObserver:self name:WebViewProgressFinishedNotification object:_quickLookThumbnailWebView];
         
-        NSWindow *webViewWindow = [_quickLookThumbnailWebView window];
         [_quickLookThumbnailWebView release];   _quickLookThumbnailWebView = nil;
-        [webViewWindow release];    // we allocate the window object when creating it but never autorelease. It stays attached to the webview until we release it here
+        [_quickLookThumbnailWebViewWindow release]; _quickLookThumbnailWebViewWindow = nil;
         
         
         // Remove the lock. In the event that loading the webview timed out, it will still be locked.

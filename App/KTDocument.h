@@ -65,6 +65,7 @@ extern NSString *kKTDocumentWillSaveNotification;
     NSString        *_deletedMediaDirectoryName;
     
     WebView             *_quickLookThumbnailWebView;
+    NSWindow            *_quickLookThumbnailWebViewWindow;
     NSLock              *_quickLookThumbnailLock;
 	
     // Publishing
