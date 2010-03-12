@@ -12,12 +12,18 @@
 
 @interface SVDocumentInspector : KSInspectorViewController
 {
-    IBOutlet NSView *oProView;
+    IBOutlet NSPopUpButton		*oLanguagePopup;
+	IBOutlet NSTextField		*oLanguageCodeField;
+	
+	IBOutlet NSView *oProView;
 }
 
 - (IBAction)configureComments:(id)sender;
 - (IBAction)configureGoogle:(id)sender;
 - (IBAction)chooseFavicon:(id)sender;
 - (IBAction)chooseBanner:(id)sender;
+
+- (NSArray *)languages;
+- (IBAction)languageChosen:(id)sender;
 
 @end

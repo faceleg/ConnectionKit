@@ -15,13 +15,64 @@
 
 #import "KSCollectionController.h"
 
+#import "NSString+Karelia.h"
+
+
+static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObservation";
+
 
 @implementation SVDocumentInspector
+
+- (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil;
+{
+    [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    
+    [self addObserver:self
+           forKeyPath:@"inspectedObjectsController.selection.master.language"
+              options:0
+              context:sLanguageObservationContext];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [self removeObserver:self
+              forKeyPath:@"inspectedObjectsController.selection.master.language"];
+    
+    [super dealloc];
+}
 
 - (void)loadView;
 {
     [super loadView];
     
+    
+    // Populate languages popup
+    NSArray *languages = [self languages];
+    NSEnumerator *theEnum = [languages objectEnumerator];
+    id object;
+    int theIndex = 0;
+    
+    while (nil != (object = [theEnum nextObject]) )
+    {
+        NSString *ownName = [[object objectForKey:@"Name"] trim];
+        // not using
+        //			NSString *englishName = [[object objectForKey:@"Eng"]
+        //				trim];
+        //			NSString *charset = [[object objectForKey:@"Charset"] 
+        //				trim];
+        NSString *code = [[object objectForKey:@"Code"] 
+                          trim];
+        [oLanguagePopup insertItemWithTitle:ownName atIndex:theIndex];
+        NSMenuItem *thisItem = [oLanguagePopup itemAtIndex:theIndex];
+        [thisItem setRepresentedObject:code];
+        theIndex++;
+    }
+    
+    
+    // Hide the Pro stuff if running Regular edition
     [oProView setHidden:!(gIsPro || (nil == gRegistrationString))];
 }
 
@@ -65,6 +116,58 @@
         
         KTMaster *master = [[[self inspectedObjectsController] selection] valueForKey:@"master"];
         [master setBannerWithContentsOfURL:URL];
+    }
+}
+
+#pragma mark Info Tab
+
+- (void)refresh;
+{
+    [super refresh];
+}
+    
+- (NSArray *)languages
+{
+    static NSArray *result;
+    
+    if (!result)
+    {
+        NSString *path = [[NSBundle mainBundle] pathForResource:@"Languages" ofType:@"plist"];
+        if (path)
+        {
+            result = [[NSArray alloc] initWithContentsOfFile:path];
+        }
+    }
+    
+    return result;
+}
+
+- (IBAction)languageChosen:(id)sender;
+{
+	BOOL isOther = [[sender selectedItem] tag] < 0;
+	[oLanguageCodeField setEnabled:isOther];
+	
+	NSString *languageCode = [[sender selectedItem] representedObject];
+	[(NSObject *)[self inspectedObjectsController] setValue:languageCode forKeyPath:@"selection.master.language"];
+}
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sLanguageObservationContext)
+    {
+        NSString *languageCode = [object valueForKeyPath:keyPath];
+        NSInteger theIndex = [oLanguagePopup indexOfItemWithRepresentedObject:languageCode];
+        BOOL otherLanguage = (theIndex < 0);
+        [oLanguageCodeField setEnabled:otherLanguage];
+        if (otherLanguage)
+        {
+            theIndex = [oLanguagePopup indexOfItemWithTag:-1];
+        }
+        [oLanguagePopup selectItemAtIndex:theIndex];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 
