@@ -8,6 +8,7 @@
 
 #import "SVImageDOMController.h"
 
+#import "SVImage.h"
 #import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
@@ -197,11 +198,52 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 #pragma mark -
 
 
+@implementation SVImagePageletDOMController
+
+- (id)init
+{
+    [super init];
+    
+    _imageDOMController = [[SVImageDOMController alloc] init];
+    [self addChildWebEditorItem:_imageDOMController];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_imageDOMController release];
+    [super dealloc];
+}
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    [[self imageDOMController] loadHTMLElementFromDocument:document];
+}
+
+- (void)setRepresentedObject:(id)object
+{
+    [super setRepresentedObject:object];
+    
+    [[self imageDOMController] setRepresentedObject:object];
+}
+
+@synthesize imageDOMController = _imageDOMController;
+
+@end
+
+
+#pragma mark -
+
+
 @implementation SVImage (SVDOMController)
 
 - (Class)DOMControllerClass;
 {
-    return ([self isPagelet] ? [super DOMControllerClass] : [SVImageDOMController class]); 
+    return ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]); 
 }
 
 @end
+
