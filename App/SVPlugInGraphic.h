@@ -1,5 +1,5 @@
 //
-//  SVPlugInContentObject.h
+//  SVPlugInGraphic.h
 //  Sandvox
 //
 //  Created by Mike on 16/11/2009.
@@ -13,7 +13,7 @@
 @class KTElementPlugin;
 
 
-@interface SVPlugInPagelet : SVIntroAndCaptionGraphic
+@interface SVPlugInGraphic : SVIntroAndCaptionGraphic
 {
   @private
     NSObject <SVPageletPlugIn> *_plugIn;

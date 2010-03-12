@@ -9,7 +9,7 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVApplicationController.h"
-#import "SVPlugInPagelet.h"
+#import "SVPlugInGraphic.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
@@ -603,7 +603,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     SVGraphic *pagelet;
     if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
     {
-        SVPlugInPagelet *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
+        SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
                                                                  inManagedObjectContext:[[self page] managedObjectContext]];
         
         [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];

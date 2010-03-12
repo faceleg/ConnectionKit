@@ -1,12 +1,12 @@
 //
-//  SVPlugInContentObject.m
+//  SVPlugInGraphic.m
 //  Sandvox
 //
 //  Created by Mike on 16/11/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVPlugInPagelet.h"
+#import "SVPlugInGraphic.h"
 
 #import "SVDOMController.h"
 #import "SVPageletPlugIn.h"
@@ -21,7 +21,7 @@
 static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
 
 
-@implementation SVPlugInPagelet
+@implementation SVPlugInGraphic
 
 #pragma mark Lifecycle
 

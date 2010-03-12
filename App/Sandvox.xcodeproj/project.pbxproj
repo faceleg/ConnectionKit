@@ -242,8 +242,8 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
-		272B38CD10B18FB60056B4CA /* SVPlugInPagelet.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */; };
-		272B38CE10B18FB60056B4CA /* SVPlugInPagelet.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */; };
+		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
+		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
 		272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */; };
 		272DA58A108E6F42007A99D5 /* SVPageletPlugIn.h in Headers */ = {isa = PBXBuildFile; fileRef = 272DA588108E6F42007A99D5 /* SVPageletPlugIn.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1687,8 +1687,8 @@
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
-		272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInPagelet.h; sourceTree = "<group>"; };
-		272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInPagelet.m; sourceTree = "<group>"; };
+		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
+		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
 		272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorButtonCell.m; sourceTree = "<group>"; };
 		272C18930D0C131B00734495 /* KTMediaFileUpload.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileUpload.h; sourceTree = "<group>"; };
@@ -2840,8 +2840,8 @@
 			isa = PBXGroup;
 			children = (
 				3C68250E0D622DEB00B4D485 /* SandvoxPlugin.h */,
-				272B38CB10B18FB60056B4CA /* SVPlugInPagelet.h */,
-				272B38CC10B18FB60056B4CA /* SVPlugInPagelet.m */,
+				272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */,
+				272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */,
 				272DA588108E6F42007A99D5 /* SVPageletPlugIn.h */,
 				272DA589108E6F42007A99D5 /* SVPageletPlugIn.m */,
 				273D730110EA7A9C003F5BA8 /* SVPlugIn.h */,
@@ -5287,7 +5287,7 @@
 				2752332410A8983700120CE8 /* KSInspectorTabsMatrix.h in Headers */,
 				CE578C8510A895DC004C5380 /* KSNonBlackTextFieldCell.h in Headers */,
 				27E83A3810ABB1D6003B8F2F /* KSCollectionController.h in Headers */,
-				272B38CD10B18FB60056B4CA /* SVPlugInPagelet.h in Headers */,
+				272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */,
 				272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */,
 				278F799E10B44A1B00BDBAF7 /* SVRichText.h in Headers */,
 				CE8E714010B5D0950005BD91 /* KTDesignFamily.h in Headers */,
@@ -6679,7 +6679,7 @@
 				2752330C10A8938400120CE8 /* KSInspectorTabCell.m in Sources */,
 				2752332510A8983700120CE8 /* KSInspectorTabsMatrix.m in Sources */,
 				CE578C8610A895DC004C5380 /* KSNonBlackTextFieldCell.m in Sources */,
-				272B38CE10B18FB60056B4CA /* SVPlugInPagelet.m in Sources */,
+				272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */,
 				272B3B2A10B20B240056B4CA /* SVInspectorButtonCell.m in Sources */,
 				CED82C7D10B23248004677E4 /* SVDesignChooserImageView.m in Sources */,
 				278F799F10B44A1B00BDBAF7 /* SVRichText.m in Sources */,
