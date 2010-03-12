@@ -154,15 +154,15 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)writeBody
 {
-    NSString *bundleID = [[[self plugIn] bundle] bundleIdentifier];
+    NSString *identifier = [self plugInIdentifier];
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     NSUInteger level = [context currentHeaderLevel];
     [context setCurrentHeaderLevel:4];
     
-    [context writeComment:[NSString stringWithFormat:@" %@ ", bundleID]];
+    [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
     [[self plugIn] writeHTML];
-    [context writeComment:[NSString stringWithFormat:@" /%@ ", bundleID]];
+    [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
     
     [context setCurrentHeaderLevel:level];
 }
