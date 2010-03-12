@@ -43,7 +43,7 @@ TO DO:
 
 - (NSToolbar *)toolbarNamed:(NSString *)toolbarName;
 
-- (NSToolbarItem *)makeAddPageletToolbarItemWithIdentifier:(NSString *)identifier;
+- (NSToolbarItem *)makePageletsToolbarItemWithIdentifier:(NSString *)identifier;
 
 @end
 
@@ -210,7 +210,7 @@ TO DO:
             }
             else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"]) 
             {
-                result = [self makeAddPageletToolbarItemWithIdentifier:itemIdentifier];
+                result = [self makePageletsToolbarItemWithIdentifier:itemIdentifier];
             }
             
             // cosmetics
@@ -277,7 +277,7 @@ TO DO:
 
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
  */
-- (NSToolbarItem *)makeAddPageletToolbarItemWithIdentifier:(NSString *)identifier;
+- (NSToolbarItem *)makePageletsToolbarItemWithIdentifier:(NSString *)identifier;
 {
 	KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
     
@@ -297,7 +297,6 @@ TO DO:
 						 toMenu:menu
 						 target:self
 						 action:@selector(insertElement:)
-					  pullsDown:YES
 					  showIcons:YES smallIcons:NO smallText:YES];
 	
 	

@@ -927,13 +927,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 								 toMenu:oAddPageMenu
 								 target:nil
 								 action:@selector(addPage:)
-							  pullsDown:NO
 							  showIcons:YES smallIcons:NO smallText:NO];
 			[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
 								 toMenu:oAddPageletMenu
 								 target:nil
 								 action:@selector(insertElement:)
-							  pullsDown:NO
 							  showIcons:YES smallIcons:NO smallText:NO];
 			
 			[KTIndexPlugin populateMenuWithCollectionPresets:oNewPageMenu index:2];

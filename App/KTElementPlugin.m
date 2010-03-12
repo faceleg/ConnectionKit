@@ -174,17 +174,11 @@
 		    toMenu:(NSMenu *)aMenu
 		    target:(id)aTarget
 		    action:(SEL)anAction
-	     pullsDown:(BOOL)isPullDown
 	     showIcons:(BOOL)showIcons
 		smallIcons:(BOOL)smallIcons
 		 smallText:(BOOL)smallText
 {
-    if ( isPullDown ) {
-        // if it's a pulldown, we need to add an empty menu item at the top of the menu
-        [aMenu addItem:[[[NSMenuItem alloc] initWithTitle:@"" action:NULL keyEquivalent:@""] autorelease]];
-    }
-	
-	// First go through and get the localized names of each bundle, and put into a dict keyed by name
+    // First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPlugins = [NSMutableDictionary dictionary];
 	
 		// go through each plugin.
