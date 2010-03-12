@@ -7,31 +7,43 @@
 //
 
 #import <Cocoa/Cocoa.h>
-
-
-@class SVPageletPlugIn;
-@protocol SVElementPlugInFactory
-+ (SVPageletPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
-@end
-
-
-#pragma mark -
+#import "SVPlugIn.h"
 
 
 @class KTPage;
-@protocol SVPage, SVElementPlugInContainer;
+@protocol SVPage, SVPageletPlugInContainer;
 
 
-@interface SVPageletPlugIn : NSObject <SVElementPlugInFactory>
+@interface SVPageletPlugIn : NSObject <SVPageletPlugIn, SVPageletPlugInFactory>
 {
   @private
-    id <SVElementPlugInContainer>   _container;
+    id <SVPageletPlugInContainer>   _container;
     
     id  _delegateOwner;
 }
 
+#pragma mark Initialization
+// Designated initializer. Called by +newPlugInWithArguments:
 - (id)initWithArguments:(NSDictionary *)storage;
 
+//  Default implementation retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+                     pasteboard:(NSPasteboard *)pasteboard
+                       userInfo:(NSDictionary *)info;
+
+
+#pragma mark Storage
+/*
+ Override these methods if the plug-in needs to handle internal settings of an unusual type (typically if the result of -valueForKey: does not conform to the <NSCoding> protocol).
+ The default implementation of -serializedValueForKey: calls -valueForKey: to retrieve the value for the key, then does nothing for NSString, NSNumber, NSDate and uses <NSCoding> encoding for others.
+ The default implementation of -setSerializedValue:forKey calls -setValue:forKey: after decoding the serialized value if necessary.
+ */
+- (id)serializedValueForKey:(NSString *)key;
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+//  SEE SVPlugIn.h FOR MORE DETAILS
+
+
+#pragma mark HTML
 
 // Default implementation generates a <span> or <div> (with an appropriate id) that contains the result of -writeInnerHTML. There is generally NO NEED to override this, and if you do, you MUST write HTML with an enclosing element of the specified ID.
 - (void)writeHTML;
@@ -41,36 +53,8 @@
 - (void)writeInnerHTML;
 
 
-#pragma mark Storage
-
-/*
- Returns the list of KVC keys representing the internal settings of the plug-in. At the moment you must override it in all plug-ins that have some kind of storage, but at some point I'd like to make it automatically read the list in from bundle's Info.plist.
- This list of keys is used for automatic serialization of these internal settings.
- */
-+ (NSSet *)plugInKeys;
-
-/*
- Override these methods if the plug-in needs to handle internal settings of an unusual type (typically if the result of -valueForKey: does not conform to the <NSCoding> protocol).
- The serialized object must be a non-container Plist compliant object i.e. exclusively NSString, NSNumber, NSDate, NSData.
- The default implementation of -serializedValueForKey: calls -valueForKey: to retrieve the value for the key, then does nothing for NSString, NSNumber, NSDate and uses <NSCoding> encoding for others.
- The default implementation of -setSerializedValue:forKey calls -setValue:forKey: after decoding the serialized value if necessary.
- */
-- (id)serializedValueForKey:(NSString *)key;
-- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
-
-/*  FAQ:    How do I reference a page from a plug-in?
- *
- *      Once you've gotten hold of an SVPage object, it's fine to hold it in memory like any other object; just shove it in an instance variable and retain it. You should then also observe SVPageWillBeDeletedNotification and use it discard your reference to the page, as it will become invalid ater that.
- *      To persist your reference to the page, override -serializedValueForKey: to use the page's -identifier property. Likewise, override -setSerializedValue:forKey: to take the serialized ID string and convert it back into a SVPage using -pageWithIdentifier:
- *      All of these methods are documented in SVPageProtocol.h
- */
-
-
 #pragma mark The Wider World
-
 @property(nonatomic, readonly) NSBundle *bundle;    // the object representing the plug-in's bundle
-
-- (id <SVPage>)page;   // TODO: define a SVPage protocol
 
 
 #pragma mark Undo Management
@@ -94,11 +78,14 @@
 
 
 #pragma mark Other
+@property(nonatomic, retain, readonly) id <SVPageletPlugInContainer> elementPlugInContainer;
 
-@property(nonatomic, retain, readonly) id <SVElementPlugInContainer> elementPlugInContainer;
 
-// Legacy I'd like to get rid of
+#pragma mark Legacy
+
+// Called by -awakeFromInsert:... and -awakeFromFetch: for backward compatibility
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
+// Called by -awakeFromInsert:... when there is a pasteboard for backward compatibility
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary;
 
 @end

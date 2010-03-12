@@ -9,19 +9,20 @@
 #import "SVIntroAndCaptionGraphic.h"
 
 
-@class SVPageletPlugIn, KTElementPlugin;
+@protocol SVPageletPlugIn;
+@class KTElementPlugin;
 
 
 @interface SVPlugInPagelet : SVIntroAndCaptionGraphic
 {
   @private
-    SVPageletPlugIn *_plugIn;
+    NSObject <SVPageletPlugIn> *_plugIn;
 }
 
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
 
-@property(nonatomic, retain, readonly) SVPageletPlugIn *plugIn;
+@property(nonatomic, retain, readonly) NSObject <SVPageletPlugIn> *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (KTElementPlugin *)plugin;
 

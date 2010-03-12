@@ -13,7 +13,7 @@
 #import "KTPage.h"
 #import "SVRichText.h"
 #import "SVDOMController.h"
-#import "SVElementPlugInContainer.h"
+#import "SVPlugIn.h"
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
@@ -30,7 +30,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 @end
 
 
-@interface SVPageletPlugIn (SVElementPlugInContainer) <SVElementPlugInContainer>
+@interface SVPageletPlugIn (SVPageletPlugInContainer) <SVPageletPlugInContainer>
 - (KTSite *)site;
 @end
 
@@ -40,11 +40,11 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 @implementation SVPageletPlugIn
 
-#pragma mark Init
+#pragma mark Initialization & Tear Down
 
-+ (SVPageletPlugIn *)elementPlugInWithArguments:(NSDictionary *)propertyStorage;
++ (id <SVPageletPlugIn>)newPlugInWithArguments:(NSDictionary *)propertyStorage;
 {
-    return [[[self alloc] initWithArguments:propertyStorage] autorelease];
+    return [[self alloc] initWithArguments:propertyStorage];
 }
 
 - (id)initWithArguments:(NSDictionary *)storage;
@@ -55,6 +55,42 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     if (!_container) _container = self;
     
     return self;
+}
+
+- (void)awakeFromFetch;
+{
+    [self awakeFromBundleAsNewlyCreatedObject:NO];
+}
+
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+                     pasteboard:(NSPasteboard *)pasteboard
+                       userInfo:(NSDictionary *)info
+{
+    // Load initial properties from bundle
+    NSBundle *bundle = [self bundle];
+    NSDictionary *localizedInfoDictionary = [bundle localizedInfoDictionary];
+    NSDictionary *initialProperties = [bundle objectForInfoDictionaryKey:@"KTPluginInitialProperties"];
+    
+    for (NSString *aKey in initialProperties)
+    {
+        #warning FIXME -- temp until this is fixed.
+        if ([aKey isEqualToString:@"showBorder"]) continue;
+        
+        id value = [initialProperties objectForKey:aKey];
+        if ([value isKindOfClass:[NSString class]])
+        {
+            // Try to localize the string
+            NSString *localized = [localizedInfoDictionary objectForKey:aKey];
+            if (localized) value = localized;
+        }
+        
+        [self setSerializedValue:value forKey:aKey];
+    }
+    
+    
+    // Legacy
+    [self awakeFromBundleAsNewlyCreatedObject:YES];
+    if (pasteboard) [self awakeFromDragWithDictionary:info];
 }
 
 - (void)dealloc
@@ -130,27 +166,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
-- (KTPage *)page
-{
-    return [[[[self delegateOwner] sidebars] anyObject] page];
-    
-    
-    SVRichText *body = [[self delegateOwner] enclosingBody];
-    
-    KTPage *result = nil;
-    if ([[[body entity] name] isEqualToString:@"PageBody"])
-    {
-        result = [body valueForKey:@"page"];
-    }
-    else if ([[[body entity] name] isEqualToString:@"TextBoxBody"])
-    {
-        SVSidebar *aSidebar = [[(SVGraphic *)[body valueForKey:@"pagelet"] sidebars] anyObject];
-        result = [aSidebar page];
-    }
-    
-    return result;
-}
-
 #pragma mark Undo Management
 
 - (void)disableUndoRegistration;
@@ -195,7 +210,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 #pragma mark -
 
 
-@implementation SVPageletPlugIn (SVElementPlugInContainer)
+@implementation SVPageletPlugIn (SVPageletPlugInContainer)
 
 - (KTSite *)site;
 {

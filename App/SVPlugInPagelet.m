@@ -51,57 +51,15 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
  */
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
 {
-	KTElementPlugin *plugin = [self plugin];
-	
-	if ( isNewlyCreatedObject )
-	{
-		NSDictionary *localizedInfoDictionary = [[plugin bundle] localizedInfoDictionary];
-        NSDictionary *initialProperties = [plugin pluginPropertyForKey:@"KTPluginInitialProperties"];
-        if (nil != initialProperties)
-        {
-            // TODO: deal with localization of initial properties
-            NSEnumerator *theEnum = [initialProperties keyEnumerator];
-            id key;
-            
-            while (nil != (key = [theEnum nextObject]) )
-            {
-#warning FIXME -- temp until this is fixed.
-if ([key isEqualToString:@"showBorder"])
-{
-	continue;
-}
-                id value = [initialProperties objectForKey:key];
-				if ([value isKindOfClass:[NSString class]])
-				{
-					// Try to localize the string
-					NSString *localized = [localizedInfoDictionary objectForKey:key];
-					if (nil != localized)
-					{
-						value = localized;
-					}
-				}
-                if ([value respondsToSelector:@selector(mutableCopyWithZone:)])
-                {
-                    value = [[value mutableCopyWithZone:[value zone]] autorelease];
-                }
-				
-                // Send the value to the plug-in. Our KVO will persist it too if appropriate
-                [[self plugIn] setSerializedValue:value forKey:key];
-            }
-        }        
-	}
-	
-	// Ensure our plug-in is loaded
-	[self plugIn];
 }
 
 #pragma mark Plug-in
 
-- (SVPageletPlugIn *)plugIn
+- (NSObject <SVPageletPlugIn> *)plugIn
 {
 	if (!_plugIn) 
 	{
-		Class <SVElementPlugInFactory> plugInFactory = [[[self plugin] bundle] principalClass];
+		Class <SVPageletPlugInFactory> plugInFactory = [[[self plugin] bundle] principalClass];
         if (plugInFactory)
         {                
             // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
@@ -109,14 +67,14 @@ if ([key isEqualToString:@"showBorder"])
             {
                 // Create plug-in object
                 NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
-                _plugIn = [[plugInFactory elementPlugInWithArguments:arguments] retain];
+                _plugIn = [plugInFactory newPlugInWithArguments:arguments];
                 OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
                 
                 [_plugIn setDelegateOwner:self];
                 
                 // Restore plug-in's properties
                 NSDictionary *plugInProperties = [self extensibleProperties];
-                SVPageletPlugIn *plugIn = [self plugIn];
+                NSObject <SVPageletPlugIn> *plugIn = [self plugIn];
                 for (NSString *aKey in plugInProperties)
                 {
                     id serializedValue = [plugInProperties objectForKey:aKey];
@@ -129,11 +87,8 @@ if ([key isEqualToString:@"showBorder"])
                             options:0
                             context:sPlugInPropertiesObservationContext];
                 
-                // Let the delegate know that it's awoken
-                if ([_plugIn respondsToSelector:@selector(awakeFromBundleAsNewlyCreatedObject:)])
-                {
-                    [_plugIn awakeFromBundleAsNewlyCreatedObject:[self isInserted]];
-                }
+                // Let the plug-in know that it's awoken
+                [plugIn awakeFromFetch];
             }
         }
     }

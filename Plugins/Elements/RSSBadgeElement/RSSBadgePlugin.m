@@ -48,7 +48,7 @@
 		self.label = theString;
 		
 		// Try and connect to our parent collection
-		KTPage *parent = (KTPage *)self.page;
+		KTPage *parent = (KTPage *)[self page];
 		if ([parent feedURL])
 		{
 			self.collection = parent;
