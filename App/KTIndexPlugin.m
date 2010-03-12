@@ -89,7 +89,6 @@
             [pluginBundle load];
         }
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
-		NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
 		
 		NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
 		NSString *presetTitle = [pluginBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
@@ -102,7 +101,6 @@
 		
 		
         NSImage *image = [plugin pluginIcon];
-        float imageHeight = image ? [image size].height : 0.0;
 #ifdef DEBUG
         if (nil == image)
         {
@@ -116,7 +114,6 @@
             [image setScalesWhenResized:YES];
             [image setSize:NSMakeSize(32.0f, 32.0f)];
             [menuItem setImage:image];
-            [style setMinimumLineHeight:imageHeight];
         }
         
         [menuItem setTitle:presetTitle];

@@ -170,13 +170,7 @@
 
 // nil targeted actions will be sent to firstResponder (the active document)
 // representedObject is the bundle of the plugin
-+ (void)addPlugins:(NSSet *)plugins
-		    toMenu:(NSMenu *)aMenu
-		    target:(id)aTarget
-		    action:(SEL)anAction
-	     showIcons:(BOOL)showIcons
-		smallIcons:(BOOL)smallIcons
-		 smallText:(BOOL)smallText
++ (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index withPlugins:(NSSet *)plugins;
 {
     // First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPlugins = [NSMutableDictionary dictionary];
@@ -195,17 +189,7 @@
 		if (priority > 0	// don't add zero-priority items to menu!
 			&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
 		{
-			NSString *pluginName = nil;
-			if (anAction == @selector(addPage:) || anAction == nil) {
-				pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
-			}
-			else if (anAction == @selector(addPagelet:)) {
-				pluginName = [plugin pluginPropertyForKey:@"KTPageletName"];
-			}
-			if (!pluginName)
-			{
-				pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
-			}
+			NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
 			
 			[dictOfPlugins setObject:plugin
 							  forKey:[NSString stringWithFormat:@"%d %@", priority, pluginName]];
@@ -222,31 +206,16 @@
 		KTAbstractHTMLPlugin *plugin = [dictOfPlugins objectForKey:priorityAndName];
 		NSBundle *bundle = [plugin bundle];
 		
-        if ( ![bundle isLoaded] && (Nil != [bundle principalClassIncludingOtherLoadedBundles:YES]) ) {
-            [bundle load];
-        }
+        if (![bundle isLoaded] && [bundle principalClassIncludingOtherLoadedBundles:YES]) [bundle load];
+        
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
-		NSMutableParagraphStyle *style = [[[NSMutableParagraphStyle alloc] init] autorelease];
 		
-		NSString *pluginName = nil;
-		if (anAction == @selector(addPage:) || anAction == nil) {
-			pluginName = [plugin pluginPropertyForKey:@"KTPageName"];
-		}
-		else if (anAction == @selector(addPagelet:)) {
-			pluginName = [plugin pluginPropertyForKey:@"KTPageletName"];
-		}
-		if (!pluginName)
-		{
-			pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
-		}
+		NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
 		
 		
 		id priorityID = [plugin pluginPropertyForKey:@"KTPluginPriority"];
-		int priority = 5;
-		if (nil != priorityID)
-		{
-			priority = [priorityID intValue];
-		}
+		NSInteger priority = 5;
+		if (priorityID) priority = [priorityID integerValue];
 		
 		
 		if (!pluginName || [pluginName isEqualToString:@""])
@@ -256,42 +225,24 @@
 		}
 		
 		// set up the image
-		if (showIcons)
 		{
 			NSImage *image = [plugin pluginIcon];
 #ifdef DEBUG
-			if (nil == image)
-			{
-				NSLog(@"nil pluginIcon for %@", pluginName);
-			}
+			if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
 			
 			[image setDataRetained:YES];	// allow image to be scaled.
 			[image setScalesWhenResized:YES];
+            [image setSize:NSMakeSize(32.0f, 32.0f)];
 			// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
-			[image setSize:smallIcons ? NSMakeSize(16.0, 16.0) : NSMakeSize(32.0, 32.0)];
 			[menuItem setImage:image];
 			
-			float imageHeight = image ? [image size].height : 0.0;	// test for non-nil to avoid "The receiver in the message expression is 'nil' and results in the returned value (of type 'NSSize') to be garbage or otherwise undefined"
-
-			[style setMinimumLineHeight:imageHeight];
 			
-			NSFont *titleFont = [NSFont menuFontOfSize:(smallText ? [NSFont smallSystemFontSize] : [NSFont systemFontSize])];
-			NSDictionary *attributes = [NSDictionary dictionaryWithObjectsAndKeys:
-										titleFont, NSFontAttributeName,
-										style, NSParagraphStyleAttributeName,
-										[NSNumber numberWithFloat:(((imageHeight-[NSFont smallSystemFontSize])/2.0)+2.0)], NSBaselineOffsetAttributeName,
-										nil];
-			NSAttributedString *titleString = [[[NSAttributedString alloc] initWithString:pluginName attributes:attributes] autorelease];
-			[menuItem setAttributedTitle:titleString];
+            [menuItem setTitle:pluginName];
 			if (9 == priority && nil == gRegistrationString)
 			{
 				[[NSApp delegate] setMenuItemPro:menuItem];
 			}
-		}
-		else
-		{
-			[menuItem setTitle:pluginName];
 		}
 		
 		
@@ -305,10 +256,9 @@
 		}
 		
 		// set target/action
-		[menuItem setAction:anAction];
-		[menuItem setTarget:aTarget];
+		[menuItem setAction:@selector(insertPagelet:)];
 		
-		[aMenu addItem:menuItem];
+		[menu insertItem:menuItem atIndex:index];   index++;
 	}
 }
 

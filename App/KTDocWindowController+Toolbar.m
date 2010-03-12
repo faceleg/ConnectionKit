@@ -293,11 +293,7 @@ TO DO:
     
     	
 	// Add the proper menu items
-	[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-						 toMenu:menu
-						 target:self
-						 action:@selector(insertElement:)
-					  showIcons:YES smallIcons:NO smallText:YES];
+	[KTElementPlugin populateMenu:menu atIndex:1 withPlugins:[KTElementPlugin pageletPlugins]];
 	
 	
     

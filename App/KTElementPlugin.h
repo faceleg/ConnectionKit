@@ -21,12 +21,6 @@
 + (NSSet *)pageletPlugins;
 + (NSSet *)pagePlugins;
 
-+ (void)addPlugins:(NSSet *)plugins
-		    toMenu:(NSMenu *)aMenu
-		    target:(id)aTarget
-		    action:(SEL)anAction
-	     showIcons:(BOOL)showIcons
-		smallIcons:(BOOL)smallIcons
-		 smallText:(BOOL)smallText;
++ (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index withPlugins:(NSSet *)plugins;
 
 @end

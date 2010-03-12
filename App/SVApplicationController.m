@@ -923,19 +923,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			
 			
 			// build menus
-			[KTElementPlugin addPlugins:[KTElementPlugin pagePlugins]
-								 toMenu:oAddPageMenu
-								 target:nil
-								 action:@selector(addPage:)
-							  showIcons:YES smallIcons:NO smallText:NO];
-			[KTElementPlugin addPlugins:[KTElementPlugin pageletPlugins]
-								 toMenu:oAddPageletMenu
-								 target:nil
-								 action:@selector(insertElement:)
-							  showIcons:YES smallIcons:NO smallText:NO];
-			
-			[KTIndexPlugin populateMenuWithCollectionPresets:oNewPageMenu index:2];
-			
+			[KTElementPlugin populateMenu:oAddPageletMenu atIndex:0 withPlugins:[KTElementPlugin pageletPlugins]];
+						
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];
 			
