@@ -621,7 +621,6 @@
 		3C9BC1DE103DF7E200D2CF47 /* InlineImageElement.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1DC103DF7E200D2CF47 /* InlineImageElement.xib */; };
 		3C9BC1E2103DF7FD00D2CF47 /* MissingMedia.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */; };
 		3C9BC1E6103DF81700D2CF47 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */; };
-		3C9BC1EA103DF84800D2CF47 /* Info.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E8103DF84800D2CF47 /* Info.xib */; };
 		3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */; };
 		3C9BC1F2103DF8D300D2CF47 /* HostSetup.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */; };
 		3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1F4103DF90C00D2CF47 /* KTTransfer.xib */; };
@@ -2195,7 +2194,6 @@
 		3C9BC1DD103DF7E200D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InlineImageElement.xib; sourceTree = "<group>"; };
 		3C9BC1E1103DF7FD00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MissingMedia.xib; sourceTree = "<group>"; };
 		3C9BC1E5103DF81700D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
-		3C9BC1E9103DF84800D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/Info.xib; sourceTree = "<group>"; };
 		3C9BC1ED103DF8BA00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CodeInjection.xib; sourceTree = "<group>"; };
 		3C9BC1F1103DF8D300D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/HostSetup.xib; sourceTree = "<group>"; };
 		3C9BC1F5103DF90C00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KTTransfer.xib; sourceTree = "<group>"; };
@@ -2858,7 +2856,6 @@
 			isa = PBXGroup;
 			children = (
 				273DD21E10CC90A8003CCE97 /* WrapInspector.png */,
-				3C9BC1E8103DF84800D2CF47 /* Info.xib */,
 				27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */,
 				27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */,
 				2782918E10912D5D008D0A64 /* DocumentInspector.xib */,
@@ -5993,7 +5990,6 @@
 				3C9BC1DE103DF7E200D2CF47 /* InlineImageElement.xib in Resources */,
 				3C9BC1E2103DF7FD00D2CF47 /* MissingMedia.xib in Resources */,
 				3C9BC1E6103DF81700D2CF47 /* MainMenu.xib in Resources */,
-				3C9BC1EA103DF84800D2CF47 /* Info.xib in Resources */,
 				3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */,
 				3C9BC1F2103DF8D300D2CF47 /* HostSetup.xib in Resources */,
 				3C9BC1F6103DF90C00D2CF47 /* KTTransfer.xib in Resources */,
@@ -7154,14 +7150,6 @@
 				3C9BC1E5103DF81700D2CF47 /* en */,
 			);
 			name = MainMenu.xib;
-			sourceTree = "<group>";
-		};
-		3C9BC1E8103DF84800D2CF47 /* Info.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C9BC1E9103DF84800D2CF47 /* en */,
-			);
-			name = Info.xib;
 			sourceTree = "<group>";
 		};
 		3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */ = {
