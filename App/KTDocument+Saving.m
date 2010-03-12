@@ -345,11 +345,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (result)
     {
         // Save the context
+        NSURL *originalDatastoreURL = (inOriginalContentsURL ? [KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil] : nil);
+        
 		result = ([self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
                           forSaveOperation:saveOperation
-                       originalContentsURL:[KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil]
+                       originalContentsURL:originalDatastoreURL
                                      error:outError] != nil);
+        
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     }
         
