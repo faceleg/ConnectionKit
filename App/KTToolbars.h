@@ -15,10 +15,10 @@
 #define PALETTE_ADD_PAGELET_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_PAGELET_POPUP", nil, [NSBundle mainBundle], @"Pagelets", @"")
 #define TOOLTIP_ADD_PAGELET NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_PAGELET", nil, [NSBundle mainBundle], @"Add a new pagelet to the current page.", @"tooltip")
 
-#define TOOLBAR_ADD_COLLECTION NSLocalizedStringWithDefaultValue(@"TOOLBAR_ADD_COLLECTION", nil, [NSBundle mainBundle], @"Collections", @"")
-#define PALETTE_ADD_COLLECTION NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_COLLECTION", nil, [NSBundle mainBundle], @"Collections", @"")
-#define PALETTE_ADD_COLLECTION_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_COLLECTION_POPUP", nil, [NSBundle mainBundle], @"Collections", @"")
-#define TOOLTIP_ADD_COLLECTION NSLocalizedStringWithDefaultValue(@"TOOLTIP_ADD_COLLECTION", nil, [NSBundle mainBundle], @"Add a new collection to your site.", @"tooltip")
+#define TOOLBAR_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"TOOLBAR_INSERT_INDEX", nil, [NSBundle mainBundle], @"Indexes", @"")
+#define PALETTE_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"PALETTE_INSERT_INDEX", nil, [NSBundle mainBundle], @"Indexes", @"")
+#define PALETTE_ADD_COLLECTION_POPUP NSLocalizedStringWithDefaultValue(@"PALETTE_ADD_COLLECTION_POPUP", nil, [NSBundle mainBundle], @"Indexes", @"")
+#define TOOLTIP_INSERT_INDEX NSLocalizedStringWithDefaultValue(@"TOOLTIP_INSERT_INDEX", nil, [NSBundle mainBundle], @"Add a new index to your site.", @"tooltip")
 
 #define TOOLBAR_GROUP_COLLECTION NSLocalizedStringWithDefaultValue(@"TOOLBAR_GROUP_COLLECTION", nil, [NSBundle mainBundle], @"Group", @"")
 #define PALETTE_GROUP_COLLECTION NSLocalizedStringWithDefaultValue(@"PALETTE_GROUP_COLLECTION", nil, [NSBundle mainBundle], @"Group", @"")

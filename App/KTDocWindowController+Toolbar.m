@@ -191,9 +191,49 @@ TO DO:
     return [result autorelease];
 }
 
+- (NSToolbarItem *)makeIndexesToolbarItemWithIdentifier:(NSString *)identifier;
+{
+    KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
+    
+    
+    // Generate the menu
+    NSPopUpButton *pulldownButton = [result popUpButton];
+    NSMenu *menu = [pulldownButton menu];
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page pulldown button menu item title")
+                    action:@selector(addPage:)
+             keyEquivalent:@""];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    [KTIndexPlugin populateMenuWithCollectionPresets:menu atIndex:3];
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
+                    action:@selector(addExternalLinkPage:)
+             keyEquivalent:@""];
+    
+    if ([[NSApp delegate] isPro])
+    {
+        [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
+                        action:@selector(addRawTextPage:) keyEquivalent:@""];
+    }
+    
+    [menu addItem:[NSMenuItem separatorItem]];
+    
+    [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page pulldown button menu item title")
+                    action:@selector(addFilePage:)
+             keyEquivalent:@""];
+    
+    
+    return [result autorelease];
+}
+
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString*)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
     NSToolbarItem *result = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
+    [result setImage:nil];
 
     NSArray *itemsArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
     NSDictionary *itemInfo;
@@ -212,7 +252,10 @@ TO DO:
             {
                 result = [self makePageletsToolbarItemWithIdentifier:itemIdentifier];
             }
-            
+            else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"IndexesPopUpButton"])
+            {
+                result = [self makeIndexesToolbarItemWithIdentifier:itemIdentifier];
+            }
             // cosmetics
 			
             [result setLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"label"] value:@"" table:nil]];
@@ -251,10 +294,7 @@ TO DO:
             NSString *imageName = [itemInfo valueForKey:@"image"];
             // are we a view or an image?
             // views can still have images, so we check whether it's a view first
-            if ([[itemInfo valueForKey:@"view"] length] > 0) 
-            {
-			}
-            else if ( (nil != imageName) && ![imageName isEqualToString:@""] ) 
+            if ([imageName length] > 0 && ![result image]) 
 			{
 				NSImage *theImage = nil;
 				if ([imageName hasPrefix:@"/"])	// absolute path -- instantiate thusly
