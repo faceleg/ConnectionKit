@@ -77,18 +77,17 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation
 					  error:(NSError **)outError;
 
-- (BOOL)writeDatastoreToURL:(NSURL *)inURL 
-                     ofType:(NSString *)inType 
-           forSaveOperation:(NSSaveOperationType)inSaveOperation
-        originalContentsURL:(NSURL *)inOriginalContentsURL
-                      error:(NSError **)outError;
+- (NSPersistentStore *)writeDatastoreToURL:(NSURL *)URL
+                                    ofType:(NSString *)typeName
+                          forSaveOperation:(NSSaveOperationType)saveOp
+                       originalContentsURL:(NSURL *)originalContentsURL
+                                     error:(NSError **)outError;
+
 
 - (BOOL)writeMediaRecords:(NSArray *)media
                     toURL:(NSURL *)docURL
          forSaveOperation:(NSSaveOperationType)saveOp
                     error:(NSError **)outError;
-
-- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError;
 
 
 // Metadata
@@ -346,11 +345,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (result)
     {
         // Save the context
-		result = [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
+		result = ([self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
                           forSaveOperation:saveOperation
                        originalContentsURL:[KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil]
-                                     error:outError];
+                                     error:outError] != nil);
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     }
         
@@ -495,43 +494,58 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (BOOL)writeDatastoreToURL:(NSURL *)URL
-                     ofType:(NSString *)type
-           forSaveOperation:(NSSaveOperationType)saveOp
-        originalContentsURL:(NSURL *)originalContentsURL
-                      error:(NSError **)outError;
+- (NSPersistentStore *)writeDatastoreToURL:(NSURL *)URL
+                                    ofType:(NSString *)typeName
+                          forSaveOperation:(NSSaveOperationType)saveOp
+                       originalContentsURL:(NSURL *)originalContentsURL
+                                     error:(NSError **)outError;
 
 {
 	OBASSERT([NSThread currentThread] == [self thread]);
     
     
-    BOOL result = YES;
+    NSManagedObjectContext *context = [self managedObjectContext];
+	NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
+	OBASSERT(storeCoordinator);
+        
+    NSPersistentStore *result = [storeCoordinator persistentStoreForURL:URL];
 	NSError *error = nil;
 	
 	
-	NSManagedObjectContext *context = [self managedObjectContext];
-	NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
-	
-    
     // Handle the user choosing "Save As" for an EXISTING document
-    if ([storeCoordinator persistentStoreForURL:URL])
+    if (result)
     {
-        result = [context save:&error];
+        if (![context save:&error]) result = nil;
     }
     else
     {
-        result = [self migrateToURL:[KTDocument documentURLForDatastoreURL:URL]
-                             ofType:type
-                originalContentsURL:[KTDocument documentURLForDatastoreURL:originalContentsURL]
-                              error:&error];
+        // Migrate the main document store        
+        id oldStore = [storeCoordinator persistentStoreForURL:originalContentsURL];
+        NSAssert5(oldStore,
+                  @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
+                  [originalContentsURL absoluteString],
+                  [storeCoordinator persistentStores],
+                  [self fileURL],
+                  originalContentsURL,
+                  URL);
+        
+        result = [storeCoordinator migratePersistentStore:oldStore
+                                                    toURL:URL
+                                                  options:nil
+                                                 withType:[self persistentStoreTypeForFileType:typeName]
+                                                    error:&error];
+        
         if (result)
         {
-            result = [self setMetadataForStoreAtURL:URL
-                                              error:&error];
-            
+            // Set the new metadata
+            if (![self setMetadataForStoreAtURL:URL error:outError]) result = nil;
+        }
+        
+        
+        if (result)
+        {
             // Reset store URL. If it's meant to be changed permanently, someone will call -setFileURL:
-            NSPersistentStore *store = [storeCoordinator persistentStoreForURL:URL];
-            [storeCoordinator setURL:originalContentsURL forPersistentStore:store];
+            [storeCoordinator setURL:originalContentsURL forPersistentStore:result];
         }
         else
         {
@@ -545,7 +559,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Return, making sure to supply appropriate error info
     if (!result && outError) *outError = error;
-    OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
+    OBASSERT( (result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     
     return result;
 }
@@ -595,49 +609,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     return result;
-}
-
-/*	Called when performing a "Save As" operation on an existing document
- */
-- (BOOL)migrateToURL:(NSURL *)URL ofType:(NSString *)typeName originalContentsURL:(NSURL *)originalContentsURL error:(NSError **)outError
-{
-	// Migrate the main document store
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
-	NSPersistentStoreCoordinator *storeCoordinator = [[self managedObjectContext] persistentStoreCoordinator];
-    OBASSERT(storeCoordinator);
-	
-	NSURL *oldDataStoreURL = [KTDocument datastoreURLForDocumentURL:originalContentsURL type:nil];
-    OBASSERT(oldDataStoreURL);
-    
-    id oldDataStore = [storeCoordinator persistentStoreForURL:oldDataStoreURL];
-    NSAssert5(oldDataStore,
-              @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
-              [oldDataStoreURL absoluteString],
-              [storeCoordinator persistentStores],
-              [self fileURL],
-              originalContentsURL,
-              URL);
-    
-    if (![storeCoordinator migratePersistentStore:oldDataStore
-										    toURL:storeURL
-										  options:nil
-										 withType:[self persistentStoreTypeForFileType:typeName]
-										    error:outError])
-	{
-		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return NO;
-	}
-	
-    
-	// Set the new metadata
-	if ( ![self setMetadataForStoreAtURL:storeURL error:outError] )
-	{
-		OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-		return NO;
-	}	
-	
-    
-	return YES;
 }
 
 #pragma mark -
