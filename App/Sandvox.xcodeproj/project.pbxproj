@@ -328,6 +328,7 @@
 		276A6E90110B4312006FD9F7 /* SVMediaRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */; };
 		276A6F74110B5B7B006FD9F7 /* SVDownloadSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */; };
 		276A6F75110B5B7B006FD9F7 /* SVDownloadSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */; };
+		276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 276C151C114A6C0300D30CFE /* GraphicInspector.xib */; };
 		276F8AB210D572780094AA73 /* SVDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 276F8AB010D572780094AA73 /* SVDOMController.h */; };
 		276F8AB310D572780094AA73 /* SVDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 276F8AB110D572780094AA73 /* SVDOMController.m */; };
 		277026740E1E645200407CD1 /* KTCommentsTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 277026730E1E645200407CD1 /* KTCommentsTemplate.html */; };
@@ -1783,6 +1784,7 @@
 		276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaRecord.m; sourceTree = "<group>"; };
 		276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDownloadSiteItem.h; sourceTree = "<group>"; };
 		276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDownloadSiteItem.m; sourceTree = "<group>"; };
+		276C151C114A6C0300D30CFE /* GraphicInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = GraphicInspector.xib; sourceTree = "<group>"; };
 		276F8AB010D572780094AA73 /* SVDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDOMController.h; sourceTree = "<group>"; };
 		276F8AB110D572780094AA73 /* SVDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDOMController.m; sourceTree = "<group>"; };
 		277026730E1E645200407CD1 /* KTCommentsTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTCommentsTemplate.html; sourceTree = "<group>"; };
@@ -2882,6 +2884,7 @@
 				277E4F7911108847005AF346 /* MetricsInspector.xib */,
 				277E71D11133094E0081389F /* SVWrapInspector.h */,
 				277E71D21133094E0081389F /* SVWrapInspector.m */,
+				276C151C114A6C0300D30CFE /* GraphicInspector.xib */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -6035,6 +6038,7 @@
 				CE8D54C6112B0B23007AC2F0 /* KSProgressPanel.xib in Resources */,
 				CE8D5A7C112B339A007AC2F0 /* validator.css in Resources */,
 				CE8EF8A7113DDB36002ED237 /* LogoPlaceholder.png in Resources */,
+				276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

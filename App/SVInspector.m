@@ -105,6 +105,13 @@
     [_wrapInspector setIcon:[NSImage imageNamed:@"WrapInspector"]];
     
     
+    // Graphic
+    _graphicInspector = [[KSInspectorViewController alloc] initWithNibName:@"GraphicInspector" bundle:nil];
+    [_graphicInspector setIdentifier:@"com.karelia.Sandvox.GraphicInspector"];
+    [_graphicInspector setTitle:NSLocalizedString(@"Graphic", @"Graphic Inspector")];
+    [_graphicInspector setIcon:[NSImage imageNamed:NSImageNameIconViewTemplate]];
+    
+    
     // Metrics
     _metricsInspector = [[KSInspectorViewController alloc] initWithNibName:@"MetricsInspector" bundle:nil];
     [_metricsInspector setIdentifier:@"com.karelia.Sandvox.MetricsInspector"];
@@ -131,6 +138,7 @@
                        _pageInspector,
                        _collectionInspector,
                        _wrapInspector,
+                       _graphicInspector,
                        _metricsInspector,
                        _linkInspector,
                        _plugInInspector,
