@@ -10,8 +10,9 @@
 #import "KSInspectorViewController.h"
 
 
-@interface SVDocumentInspector : KSInspectorViewController {
-
+@interface SVDocumentInspector : KSInspectorViewController
+{
+    IBOutlet NSView *oProView;
 }
 
 - (IBAction)configureComments:(id)sender;

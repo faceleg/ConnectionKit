@@ -11,10 +11,20 @@
 #import "KTDocument.h"
 #import "KTMaster.h"
 
+#import "Registration.h"
+
 #import "KSCollectionController.h"
 
 
 @implementation SVDocumentInspector
+
+- (void)loadView;
+{
+    [super loadView];
+    
+    [oProView setHidden:!(gIsPro || (nil == gRegistrationString))];
+}
+
 
 //  check representedObject property that's the document.  windowForSheet -- to forward the message....
 
