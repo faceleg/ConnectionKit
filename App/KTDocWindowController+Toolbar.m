@@ -24,8 +24,8 @@ TO DO:
 
 #import "SVApplicationController.h"
 #import "KT.h"
-#import "KTElementPlugin.h"
-#import "KTIndexPlugin.h"
+#import "KTElementPlugInWrapper.h"
+#import "KTIndexPlugInWrapper.h"
 #import "SVLinkManager.h"
 #import "KTToolbars.h"
 
@@ -167,7 +167,7 @@ TO DO:
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [KTIndexPlugin populateMenuWithCollectionPresets:menu atIndex:3];
+    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:3];
     
     [menu addItem:[NSMenuItem separatorItem]];
     
@@ -199,7 +199,7 @@ TO DO:
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
-    [KTIndexPlugin populateMenuWithCollectionPresets:menu atIndex:1];
+    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:1];
     
     
     return [result autorelease];
@@ -306,7 +306,7 @@ TO DO:
     
     	
 	// Add the proper menu items
-	[KTElementPlugin populateMenu:menu atIndex:1 withPlugins:[KTElementPlugin pageletPlugins]];
+	[KTElementPlugInWrapper populateMenu:menu atIndex:1 withPlugins:[KTElementPlugInWrapper pageletPlugins]];
 	
 	
     

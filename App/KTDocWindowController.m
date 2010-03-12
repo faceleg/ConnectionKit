@@ -12,14 +12,14 @@
 #import "KTAbstractIndex.h"
 #import "SVApplicationController.h"
 #import "KTCodeInjectionController.h"
-#import "KTElementPlugin+DataSourceRegistration.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVDesignChooserWindowController.h"
 #import "SVPagesController.h"
 #import "KTDocument.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTextBlock.h"
-#import "KTIndexPlugin.h"
+#import "KTIndexPlugInWrapper.h"
 #import "KTMissingMediaController.h"
 #import "KTPage+Internal.h"
 #import "SVSidebar.h"
@@ -439,7 +439,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	// create a new summary
-	KTElementPlugin *collectionPlugin = nil;
+	KTElementPlugInWrapper *collectionPlugin = nil;
 	if ( [sender respondsToSelector:@selector(representedObject)] )
 	{
 		collectionPlugin = [sender representedObject];
@@ -448,18 +448,18 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	if (!collectionPlugin)
 	{
 		NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-		collectionPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
+		collectionPlugin = defaultIdentifier ? [KTIndexPlugInWrapper pluginWithIdentifier:defaultIdentifier] : nil;
 	}
 	OBASSERTSTRING(collectionPlugin, @"Must have a new collection plug-in to group the pages into");
 	
 	
 	NSBundle *collectionBundle = [collectionPlugin bundle];
 	NSString *pageIdentifier = [collectionBundle objectForInfoDictionaryKey:@"KTPreferredPageBundleIdentifier"];
-	KTElementPlugin *pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
+	KTElementPlugInWrapper *pagePlugin = pageIdentifier ? [KTElementPlugInWrapper pluginWithIdentifier:pageIdentifier] : nil;
 	if ( nil == pagePlugin )
 	{
 		pageIdentifier = [[NSUserDefaults standardUserDefaults] objectForKey:@"DefaultIndexBundleIdentifier"];
-		pagePlugin = pageIdentifier ? [KTElementPlugin pluginWithIdentifier:pageIdentifier] : nil;
+		pagePlugin = pageIdentifier ? [KTElementPlugInWrapper pluginWithIdentifier:pageIdentifier] : nil;
 	}
 	if ( nil == pagePlugin )
 	{
@@ -788,7 +788,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// LOG((@"%@", NSStringFromSelector(_cmd) ));
     
 	BOOL result = NO;	// set to YES if at least one item got processed
-	int numberOfItems = [KTElementPlugin numberOfItemsToProcessDrag:info];
+	int numberOfItems = [KTElementPlugInWrapper numberOfItemsToProcessDrag:info];
 	
 	/*
      /// Mike: I see no point in this artificial limit in 1.5
@@ -820,7 +820,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         [progressPanel setMessageText:localizedStatus];
         [progressPanel setDoubleValue:i];
         
-        Class <KTDataSource> bestSource = [KTElementPlugin highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
+        Class <KTDataSource> bestSource = [KTElementPlugInWrapper highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
         if ( nil != bestSource )
         {
             NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];
@@ -832,7 +832,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
             
             if ( didPerformDrag && theBundleIdentifier)
             {
-                KTElementPlugin *thePlugin = [KTElementPlugin pluginWithIdentifier:theBundleIdentifier];
+                KTElementPlugInWrapper *thePlugin = [KTElementPlugInWrapper pluginWithIdentifier:theBundleIdentifier];
                 if (thePlugin)
                 {
                     [dragDataDictionary setObject:thePlugin forKey:kKTDataSourcePlugin];
@@ -864,7 +864,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                         if ([[dragDataDictionary objectForKey:kKTDataSourceRecurse] boolValue])
                         {
                             NSString *defaultIdentifier = [[NSUserDefaults standardUserDefaults] stringForKey:@"DefaultIndexBundleIdentifier"];
-                            KTIndexPlugin *indexPlugin = defaultIdentifier ? [KTIndexPlugin pluginWithIdentifier:defaultIdentifier] : nil;
+                            KTIndexPlugInWrapper *indexPlugin = defaultIdentifier ? [KTIndexPlugInWrapper pluginWithIdentifier:defaultIdentifier] : nil;
                             NSBundle *indexBundle = [indexPlugin bundle];
                             
                             // FIXME: we should load up the properties from a KTPreset
@@ -917,7 +917,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	// Done
-	[KTElementPlugin doneProcessingDrag];
+	[KTElementPlugInWrapper doneProcessingDrag];
 	
 	return result;
 }

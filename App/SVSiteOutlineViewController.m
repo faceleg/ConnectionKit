@@ -9,7 +9,7 @@
 #import "SVSiteOutlineViewController.h"
 
 #import "KTDocument.h"
-#import "KTElementPlugin+DataSourceRegistration.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
@@ -17,9 +17,9 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagesController.h"
-#import "KTAbstractHTMLPlugin.h"
+#import "KTHTMLPlugInWrapper.h"
 
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 #import "KSProgressPanel.h"
 #import "NSArray+Karelia.h"
 #import "NSArray+KTExtensions.h"
@@ -151,7 +151,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	// Drag 'n' drop
 	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
-                                 [[KTElementPlugin setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
+                                 [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
     
 	[dragTypes addObject:kKTPagesPboardType];
 	[dragTypes addObject:kKTLocalLinkPboardAllowedType];		// allow a drag from a link connector

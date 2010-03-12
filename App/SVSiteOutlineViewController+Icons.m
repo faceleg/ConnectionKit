@@ -8,7 +8,7 @@
 
 #import "SVSiteOutlineViewController.h"
 
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "KTDocument.h"
@@ -138,7 +138,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 #pragma mark -
 #pragma mark Bundle Icons
 
-- (NSImage *)iconForPlugin:(KTAbstractHTMLPlugin *)plugin
+- (NSImage *)iconForPlugin:(KTHTMLPlugInWrapper *)plugin
 {
 	OBPRECONDITION(plugin);
 	
@@ -166,7 +166,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	NSImage *result = nil;
 	
     
-    KTAbstractHTMLPlugin *plugin = nil;
+    KTHTMLPlugInWrapper *plugin = nil;
 	if ([item isCollection] && [(KTPage *)item index])
 	{
 		plugin = [[(KTPage *)item index] plugin];

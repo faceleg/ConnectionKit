@@ -1,5 +1,5 @@
 //
-//  KTIndexPlugin.h
+//  KTIndexPluginWrapper.h
 //  Marvel
 //
 //  Created by Mike on 14/02/2008.
@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractHTMLPlugin.h"
+#import "KTHTMLPlugInWrapper.h"
 
 
-@interface KTIndexPlugin : KTAbstractHTMLPlugin
+@interface KTIndexPlugInWrapper : KTHTMLPlugInWrapper
 
 // Inserts one item per known collection preset into aMenu at the specified index.
 + (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;

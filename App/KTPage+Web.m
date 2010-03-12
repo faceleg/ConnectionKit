@@ -13,7 +13,7 @@
 #import "SVApplicationController.h"
 #import "KTDesign.h"
 #import "KTDocument.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTMaster.h"
 #import "SVTitleBox.h"

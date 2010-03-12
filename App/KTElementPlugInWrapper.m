@@ -1,18 +1,18 @@
 //
-//  KTElementPlugin.m
+//  KTElementPlugInWrapper.m
 //  Marvel
 //
 //  Created by Mike on 26/01/2008.
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KT.h"
 #import "NSBundle+Karelia.h"
 
 #import "Registration.h"
 
-@implementation KTElementPlugin
+@implementation KTElementPlugInWrapper
 
 + (void)load
 {
@@ -110,7 +110,7 @@
  
  Maybe if I override this, I can easily get a list sorted by priority
  
-- (NSComparisonResult)compareTitles:(KSPlugin *)aPlugin;
+- (NSComparisonResult)compareTitles:(KSPlugInWrapper *)aPlugin;
 {
 	return [[self title] caseInsensitiveCompare:[aPlugin title]];
 }
@@ -125,11 +125,11 @@
  */
 + (NSSet *)pagePlugins
 {
-	NSDictionary *pluginDict = [KSPlugin pluginsWithFileExtension:kKTElementExtension];
+	NSDictionary *pluginDict = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
 	
 	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
-	KSPlugin *aPlugin;
+	KSPlugInWrapper *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
 		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageUsage"] boolValue])
@@ -148,11 +148,11 @@
  */
 + (NSSet *)pageletPlugins
 {
-	NSDictionary *pluginDict = [KSPlugin pluginsWithFileExtension:kKTElementExtension];
+	NSDictionary *pluginDict = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
 	NSMutableSet *buffer = [NSMutableSet setWithCapacity:[pluginDict count]];
 	
 	NSEnumerator *pluginsEnumerator = [pluginDict objectEnumerator];
-	KSPlugin *aPlugin;
+	KSPlugInWrapper *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
 	{
 		if ([[aPlugin pluginPropertyForKey:@"KTElementSupportsPageletUsage"] boolValue])
@@ -176,7 +176,7 @@
 	NSMutableDictionary *dictOfPlugins = [NSMutableDictionary dictionary];
 	
 		// go through each plugin.
-    KTAbstractHTMLPlugin *plugin;
+    KTHTMLPlugInWrapper *plugin;
 	
 	for (plugin in plugins)
 	{
@@ -203,7 +203,7 @@
 	
 	while (nil != (priorityAndName = [sortedEnum nextObject]) )
 	{
-		KTAbstractHTMLPlugin *plugin = [dictOfPlugins objectForKey:priorityAndName];
+		KTHTMLPlugInWrapper *plugin = [dictOfPlugins objectForKey:priorityAndName];
 		NSBundle *bundle = [plugin bundle];
 		
         if (![bundle isLoaded] && [bundle principalClassIncludingOtherLoadedBundles:YES]) [bundle load];

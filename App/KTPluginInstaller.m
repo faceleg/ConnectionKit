@@ -15,7 +15,7 @@
 #import "NSHelpManager+Karelia.h"
 #import "NSError+Karelia.h"
 #import "KSAppDelegate.h"
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 #import "KSProgressPanel.h"
 
 #import "NSObject+Karelia.h"
@@ -82,7 +82,7 @@ NSLog(@"%@", aURL);
 	{
 		NSString *urlPath = [url path];
 		NSString *extension = [urlPath pathExtension];
-		Class pluginClass = [KSPlugin registeredPluginClassForFileExtension:extension];
+		Class pluginClass = [KSPlugInWrapper registeredPluginClassForFileExtension:extension];
 		NSString *pluginSubfolder = [pluginClass pluginSubfolder];
 		NSString *altDestFolder = [[[[NSApplication applicationSupportPath] stringByAppendingPathComponent:pluginSubfolder]
 								  stringByResolvingSymlinksInPath] stringByStandardizingPath];

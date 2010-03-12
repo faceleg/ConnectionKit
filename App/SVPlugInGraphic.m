@@ -10,7 +10,7 @@
 
 #import "SVDOMController.h"
 #import "SVPageletPlugIn.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "SVHTMLContext.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -108,16 +108,16 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     }
 }
 
-- (KTElementPlugin *)plugin
+- (KTElementPlugInWrapper *)plugin
 {
-	KTElementPlugin *result = [self wrappedValueForKey:@"plugin"];
+	KTElementPlugInWrapper *result = [self wrappedValueForKey:@"plugin"];
 	
 	if (!result)
 	{
 		NSString *identifier = [self valueForKey:@"plugInIdentifier"];
         if (identifier)
         {
-            result = [KTElementPlugin pluginWithIdentifier:identifier];
+            result = [KTElementPlugInWrapper pluginWithIdentifier:identifier];
             [self setPrimitiveValue:result forKey:@"plugin"];
         }
 	}

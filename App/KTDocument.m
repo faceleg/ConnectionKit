@@ -41,18 +41,18 @@
 #import "SVRichText.h"
 #import "KT.h"
 #import "KTAbstractIndex.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTDesign.h"
 #import "SVPagesController.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
 #import "KTSite.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTHTMLInspectorController.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
-#import "KTIndexPlugin.h"
+#import "KTIndexPluginWrapper.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
 #import "KTMediaManager.h"
@@ -273,7 +273,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Set the design
-        KTDesign *design = [[KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
+        KTDesign *design = [[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
         [master setDesign:design];
 		[self setShowDesigns:NO]; // FIXME: turned off old design chooser for now
         

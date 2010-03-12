@@ -27,21 +27,21 @@ typedef enum {
 } KTNavigationArrowsStyle;
 
 
-@class KTPage, KTAbstractHTMLPlugin;
+@class KTPage, KTHTMLPlugInWrapper;
 
 @interface KTAbstractIndex : NSObject
 {
 	KTPage                  *_page;
-	KTAbstractHTMLPlugin    *_plugin;
+	KTHTMLPlugInWrapper    *_plugin;
 }
 
-- (id)initWithPage:(KTPage *)aPage plugin:(KTAbstractHTMLPlugin *)plugin;
+- (id)initWithPage:(KTPage *)aPage plugin:(KTHTMLPlugInWrapper *)plugin;
 
 - (KTPage *)page;
 - (void)setPage:(KTPage *)aPage;
 
-- (KTAbstractHTMLPlugin *)plugin;
-- (void)setPlugin:(KTAbstractHTMLPlugin *)plugin;
+- (KTHTMLPlugInWrapper *)plugin;
+- (void)setPlugin:(KTHTMLPlugInWrapper *)plugin;
 
 - (NSString *)cssClassName;	// returns CSS class of index, e.g. listing-index
 

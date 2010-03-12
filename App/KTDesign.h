@@ -6,7 +6,7 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 
 enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 
@@ -18,7 +18,7 @@ enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 
 
 
-@interface KTDesign : KSPlugin <IKImageBrowserItem>
+@interface KTDesign : KSPlugInWrapper <IKImageBrowserItem>
 {
     @protected
     NSImage *myThumbnail;

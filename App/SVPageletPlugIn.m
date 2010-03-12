@@ -9,7 +9,7 @@
 #import "SVPageletPlugIn.h"
 #import "SVPageProtocol.h"
 
-#import "KTAbstractHTMLPlugin.h"
+#import "KTHTMLPlugInWrapper.h"
 #import "KTPage.h"
 #import "SVRichText.h"
 #import "SVDOMController.h"

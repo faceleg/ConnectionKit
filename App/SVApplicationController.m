@@ -45,10 +45,10 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTDocument.h"
 #import "KTSite.h"
 #import "KTDocumentController.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
-#import "KTIndexPlugin.h"
+#import "KTIndexPluginWrapper.h"
 #import "KTPage.h"
 #import "SVWelcomeController.h"
 #import "KTPrefsController.h"
@@ -162,7 +162,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSMutableString *result = [NSMutableString string];
 	//  additionalPlugins
 	NSArray *extensions = [NSArray arrayWithObjects:kKTElementExtension, kKTIndexExtension, nil];
-	NSString *plugins = [KSPlugin generateReportOfPluginsWithFileExtensions:extensions thirdPartyPluginsOnly:YES];
+	NSString *plugins = [KSPlugInWrapper generateReportOfPluginsWithFileExtensions:extensions thirdPartyPluginsOnly:YES];
 	if (![plugins isEqualToString:@""])
 	{
 		[result appendFormat:@"\nAdditional Plug-ins:\n%@\n", plugins];		// DO NOT LOCALIZE
@@ -923,7 +923,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			
 			
 			// build menus
-			[KTElementPlugin populateMenu:oAddPageletMenu atIndex:0 withPlugins:[KTElementPlugin pageletPlugins]];
+			[KTElementPlugInWrapper populateMenu:oAddPageletMenu atIndex:0 withPlugins:[KTElementPlugInWrapper pageletPlugins]];
 						
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];
@@ -1402,18 +1402,18 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (IBAction)showAvailableDesigns:(id)sender;
 {
-	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDesignExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]
                            titled:@"Designs"];
 }
 
 
 - (IBAction)showAvailableComponents:(id)sender
 {
-	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTElementExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension]
                            titled:@"Available Components: Element Bundles"];
-	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTIndexExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTIndexExtension]
 							titled:@"Available Components: Index Bundles"];
-	[self showDebugTableForObject:[KSPlugin pluginsWithFileExtension:kKTDesignExtension]
+	[self showDebugTableForObject:[KSPlugInWrapper pluginsWithFileExtension:kKTDesignExtension]
                            titled:@"Available Components: Design Bundles"];
 }
 

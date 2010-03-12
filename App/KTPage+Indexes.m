@@ -12,7 +12,7 @@
 #import "KTArchivePage.h"
 #import "SVHTMLContext.h"
 #import "SVHTMLTemplateParser.h"
-#import "KTIndexPlugin.h"
+#import "KTIndexPluginWrapper.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -78,7 +78,7 @@
 
 - (void)setIndex:(KTAbstractIndex *)anIndex { [self setWrappedValue:anIndex forKey:@"index"]; }
 
-- (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)plugin
+- (void)setIndexFromPlugin:(KTHTMLPlugInWrapper *)plugin
 {
 	if (plugin)
 	{

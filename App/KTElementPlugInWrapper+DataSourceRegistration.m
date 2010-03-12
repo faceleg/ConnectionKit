@@ -1,12 +1,12 @@
 //
-//  KTElementPlugin+DataSourceRegistration.m
+//  KTElementPlugInWrapper+DataSourceRegistration.m
 //  Marvel
 //
 //  Created by Mike on 16/10/2008.
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTElementPlugin+DataSourceRegistration.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 
 #import "KT.h"
 #import "KTImageView.h"
@@ -16,18 +16,18 @@
 #import "Debug.h"
 
 
-@implementation KTElementPlugin (DataSourceRegistration)
+@implementation KTElementPlugInWrapper (DataSourceRegistration)
 
 /*  Returns an set of all the available KTElement classes that conform to the KTDataSource protocol
  */
 + (NSSet *)dataSources
 {
-    NSDictionary *elements = [KSPlugin pluginsWithFileExtension:kKTElementExtension];
+    NSDictionary *elements = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
     NSMutableSet *result = [NSMutableSet setWithCapacity:[elements count]];
 	
     
     NSEnumerator *pluginsEnumerator = [elements objectEnumerator];
-    KTElementPlugin *aPlugin;
+    KTElementPlugInWrapper *aPlugin;
 	while (aPlugin = [pluginsEnumerator nextObject])
     {
 		Class anElementClass = [[aPlugin bundle] principalClass];

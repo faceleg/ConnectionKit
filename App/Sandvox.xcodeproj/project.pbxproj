@@ -322,8 +322,8 @@
 		2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */; };
 		276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 276688F40D63625F0019686C /* CIImage+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 276688F50D63625F0019686C /* CIImage+KTExtensions.m */; };
-		27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugin.h */; settings = {ATTRIBUTES = (); }; };
-		27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugin.m */; };
+		27668FC40D63D3070019686C /* KTIndexPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27668FC20D63D3070019686C /* KTIndexPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
+		27668FC50D63D3070019686C /* KTIndexPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27668FC30D63D3070019686C /* KTIndexPlugInWrapper.m */; };
 		276A6E8F110B4312006FD9F7 /* SVMediaRecord.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */; };
 		276A6E90110B4312006FD9F7 /* SVMediaRecord.m in Sources */ = {isa = PBXBuildFile; fileRef = 276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */; };
 		276A6F74110B5B7B006FD9F7 /* SVDownloadSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */; };
@@ -468,8 +468,8 @@
 		27D90B3C0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */; };
 		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
-		27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */; };
-		27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */; };
+		27DB80D00EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h */; };
+		27DB80D10EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m */; };
 		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
@@ -479,10 +479,10 @@
 		27E24AC710FB9591004EFE9F /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24AC510FB9591004EFE9F /* SVLink.m */; };
 		27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24EEB10FCB218004EFE9F /* SVLinkManager.h */; };
 		27E24EEE10FCB218004EFE9F /* SVLinkManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24EEC10FCB218004EFE9F /* SVLinkManager.m */; };
-		27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */; settings = {ATTRIBUTES = (); }; };
-		27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */; };
-		27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */; settings = {ATTRIBUTES = (); }; };
-		27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */; };
+		27E31BC50D4B79AE00895DA1 /* KTHTMLPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31BC30D4B79AE00895DA1 /* KTHTMLPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
+		27E31BC60D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31BC40D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m */; };
+		27E31C330D4B7E1600895DA1 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
+		27E31C340D4B7E1600895DA1 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
 		27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */; };
 		27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */; };
 		27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */; };
@@ -753,8 +753,8 @@
 		CE01A75B0EAFD63600BDF264 /* KSPlaceholderTableView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6560EAFD63600BDF264 /* KSPlaceholderTableView.m */; };
 		CE01A75C0EAFD63600BDF264 /* KSPlaceholderTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6570EAFD63600BDF264 /* KSPlaceholderTextView.h */; };
 		CE01A75D0EAFD63600BDF264 /* KSPlaceholderTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6580EAFD63600BDF264 /* KSPlaceholderTextView.m */; };
-		CE01A75E0EAFD63600BDF264 /* KSPlugin.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6590EAFD63600BDF264 /* KSPlugin.h */; };
-		CE01A75F0EAFD63600BDF264 /* KSPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65A0EAFD63600BDF264 /* KSPlugin.m */; };
+		CE01A75E0EAFD63600BDF264 /* KSPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6590EAFD63600BDF264 /* KSPlugInWrapper.h */; };
+		CE01A75F0EAFD63600BDF264 /* KSPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65A0EAFD63600BDF264 /* KSPlugInWrapper.m */; };
 		CE01A7620EAFD63600BDF264 /* KSPluginLoader.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A65D0EAFD63600BDF264 /* KSPluginLoader.h */; };
 		CE01A7630EAFD63600BDF264 /* KSPluginLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65E0EAFD63600BDF264 /* KSPluginLoader.m */; };
 		CE01A7640EAFD63600BDF264 /* KSPopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A65F0EAFD63600BDF264 /* KSPopUpButton.h */; };
@@ -1778,8 +1778,8 @@
 		2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocument+KTExtensions.m"; sourceTree = "<group>"; };
 		276688F40D63625F0019686C /* CIImage+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "CIImage+KTExtensions.h"; sourceTree = "<group>"; };
 		276688F50D63625F0019686C /* CIImage+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "CIImage+KTExtensions.m"; sourceTree = "<group>"; };
-		27668FC20D63D3070019686C /* KTIndexPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugin.h; sourceTree = "<group>"; };
-		27668FC30D63D3070019686C /* KTIndexPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTIndexPlugin.m; sourceTree = "<group>"; };
+		27668FC20D63D3070019686C /* KTIndexPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTIndexPlugInWrapper.h; sourceTree = "<group>"; };
+		27668FC30D63D3070019686C /* KTIndexPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTIndexPlugInWrapper.m; sourceTree = "<group>"; };
 		276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRecord.h; sourceTree = "<group>"; };
 		276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaRecord.m; sourceTree = "<group>"; };
 		276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDownloadSiteItem.h; sourceTree = "<group>"; };
@@ -1936,8 +1936,8 @@
 		27D90B3A0D7EFF5A00C13012 /* ContinueReadingLinkTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContinueReadingLinkTextBlock.m; sourceTree = "<group>"; };
 		27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLContext.h; sourceTree = "<group>"; };
 		27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLContext.m; sourceTree = "<group>"; };
-		27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTElementPlugin+DataSourceRegistration.h"; sourceTree = "<group>"; };
-		27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTElementPlugin+DataSourceRegistration.m"; sourceTree = "<group>"; };
+		27DB80CE0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTElementPlugInWrapper+DataSourceRegistration.h"; sourceTree = "<group>"; };
+		27DB80CF0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTElementPlugInWrapper+DataSourceRegistration.m"; sourceTree = "<group>"; };
 		27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMElement+Karelia.h"; sourceTree = "<group>"; };
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
@@ -1952,10 +1952,10 @@
 		27E24EEC10FCB218004EFE9F /* SVLinkManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLinkManager.m; sourceTree = "<group>"; };
 		27E2ED920D1A9F650045BC88 /* KTWebViewUndoManagerProxy.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewUndoManagerProxy.h; sourceTree = "<group>"; };
 		27E2ED930D1A9F650045BC88 /* KTWebViewUndoManagerProxy.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewUndoManagerProxy.m; sourceTree = "<group>"; };
-		27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAbstractHTMLPlugin.h; sourceTree = "<group>"; };
-		27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAbstractHTMLPlugin.m; sourceTree = "<group>"; };
-		27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugin.h; sourceTree = "<group>"; };
-		27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugin.m; sourceTree = "<group>"; };
+		27E31BC30D4B79AE00895DA1 /* KTHTMLPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLPlugInWrapper.h; sourceTree = "<group>"; };
+		27E31BC40D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLPlugInWrapper.m; sourceTree = "<group>"; };
+		27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTElementPlugInWrapper.h; sourceTree = "<group>"; };
+		27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTElementPlugInWrapper.m; sourceTree = "<group>"; };
 		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
 		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
 		27E4CFE30EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSRegistration.nib; sourceTree = "<group>"; };
@@ -2337,8 +2337,8 @@
 		CE01A6560EAFD63600BDF264 /* KSPlaceholderTableView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlaceholderTableView.m; sourceTree = "<group>"; };
 		CE01A6570EAFD63600BDF264 /* KSPlaceholderTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlaceholderTextView.h; sourceTree = "<group>"; };
 		CE01A6580EAFD63600BDF264 /* KSPlaceholderTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlaceholderTextView.m; sourceTree = "<group>"; };
-		CE01A6590EAFD63600BDF264 /* KSPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlugin.h; sourceTree = "<group>"; };
-		CE01A65A0EAFD63600BDF264 /* KSPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlugin.m; sourceTree = "<group>"; };
+		CE01A6590EAFD63600BDF264 /* KSPlugInWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlugInWrapper.h; sourceTree = "<group>"; };
+		CE01A65A0EAFD63600BDF264 /* KSPlugInWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlugInWrapper.m; sourceTree = "<group>"; };
 		CE01A65B0EAFD63600BDF264 /* KSPluginInstallerController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPluginInstallerController.h; sourceTree = "<group>"; };
 		CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPluginInstallerController.m; sourceTree = "<group>"; };
 		CE01A65D0EAFD63600BDF264 /* KSPluginLoader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPluginLoader.h; sourceTree = "<group>"; };
@@ -3325,12 +3325,12 @@
 			children = (
 				CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */,
 				CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */,
-				27E31BC30D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h */,
-				27E31BC40D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m */,
-				27E31C310D4B7E1600895DA1 /* KTElementPlugin.h */,
-				27E31C320D4B7E1600895DA1 /* KTElementPlugin.m */,
-				27668FC20D63D3070019686C /* KTIndexPlugin.h */,
-				27668FC30D63D3070019686C /* KTIndexPlugin.m */,
+				27E31BC30D4B79AE00895DA1 /* KTHTMLPlugInWrapper.h */,
+				27E31BC40D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m */,
+				27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */,
+				27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */,
+				27668FC20D63D3070019686C /* KTIndexPlugInWrapper.h */,
+				27668FC30D63D3070019686C /* KTIndexPlugInWrapper.m */,
 			);
 			name = "1.5 Plug-in System";
 			sourceTree = "<group>";
@@ -4231,8 +4231,8 @@
 				3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */,
 				3C682B300D62301900B4D485 /* KTDraggingInfo.h */,
 				3C682B310D62301E00B4D485 /* KTDraggingInfo.m */,
-				27DB80CE0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h */,
-				27DB80CF0EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m */,
+				27DB80CE0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h */,
+				27DB80CF0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -4551,8 +4551,8 @@
 				CE01A6560EAFD63600BDF264 /* KSPlaceholderTableView.m */,
 				CE01A6570EAFD63600BDF264 /* KSPlaceholderTextView.h */,
 				CE01A6580EAFD63600BDF264 /* KSPlaceholderTextView.m */,
-				CE01A6590EAFD63600BDF264 /* KSPlugin.h */,
-				CE01A65A0EAFD63600BDF264 /* KSPlugin.m */,
+				CE01A6590EAFD63600BDF264 /* KSPlugInWrapper.h */,
+				CE01A65A0EAFD63600BDF264 /* KSPlugInWrapper.m */,
 				CE01A65B0EAFD63600BDF264 /* KSPluginInstallerController.h */,
 				CE01A65C0EAFD63600BDF264 /* KSPluginInstallerController.m */,
 				CE01A65D0EAFD63600BDF264 /* KSPluginLoader.h */,
@@ -5070,8 +5070,8 @@
 				27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */,
 				27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */,
 				272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */,
-				27E31BC50D4B79AE00895DA1 /* KTAbstractHTMLPlugin.h in Headers */,
-				27E31C330D4B7E1600895DA1 /* KTElementPlugin.h in Headers */,
+				27E31BC50D4B79AE00895DA1 /* KTHTMLPlugInWrapper.h in Headers */,
+				27E31C330D4B7E1600895DA1 /* KTElementPlugInWrapper.h in Headers */,
 				27ACA3110D57A8E0004732D0 /* KTSummaryWebViewTextBlock.h in Headers */,
 				27ACACB60D588F64004732D0 /* KTPlaceholderBindingTextField.h in Headers */,
 				3C682BBA0D6234D200B4D485 /* SandvoxPlugin.h in Headers */,
@@ -5098,7 +5098,7 @@
 				274E78010D626A49004F89C2 /* NSSet+KTExtensions.h in Headers */,
 				274E78080D626A93004F89C2 /* NSManagedObjectContext+KTExtensions.h in Headers */,
 				276688F60D63625F0019686C /* CIImage+KTExtensions.h in Headers */,
-				27668FC40D63D3070019686C /* KTIndexPlugin.h in Headers */,
+				27668FC40D63D3070019686C /* KTIndexPlugInWrapper.h in Headers */,
 				27AD53A60D6B40C300883550 /* SVHTMLTemplateParser+Private.h in Headers */,
 				27EF5C9B0D6B974E0024575B /* NSBundle+QuickLook.h in Headers */,
 				27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */,
@@ -5113,7 +5113,7 @@
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
-				27DB80D00EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.h in Headers */,
+				27DB80D00EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h in Headers */,
 				276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */,
 				2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */,
 				2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */,
@@ -5145,7 +5145,7 @@
 				CE01A7580EAFD63600BDF264 /* KSPDFViewController.h in Headers */,
 				CE01A75A0EAFD63600BDF264 /* KSPlaceholderTableView.h in Headers */,
 				CE01A75C0EAFD63600BDF264 /* KSPlaceholderTextView.h in Headers */,
-				CE01A75E0EAFD63600BDF264 /* KSPlugin.h in Headers */,
+				CE01A75E0EAFD63600BDF264 /* KSPlugInWrapper.h in Headers */,
 				CE01A7620EAFD63600BDF264 /* KSPluginLoader.h in Headers */,
 				CE01A7640EAFD63600BDF264 /* KSPopUpButton.h in Headers */,
 				CE01A7660EAFD63600BDF264 /* KSPopUpButtonCell.h in Headers */,
@@ -6455,8 +6455,8 @@
 				27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */,
 				272FBCCA0D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m in Sources */,
 				272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */,
-				27E31BC60D4B79AE00895DA1 /* KTAbstractHTMLPlugin.m in Sources */,
-				27E31C340D4B7E1600895DA1 /* KTElementPlugin.m in Sources */,
+				27E31BC60D4B79AE00895DA1 /* KTHTMLPlugInWrapper.m in Sources */,
+				27E31C340D4B7E1600895DA1 /* KTElementPlugInWrapper.m in Sources */,
 				273864330D50A6F900A8A209 /* KTPage+Children.m in Sources */,
 				273864660D50BB1D00A8A209 /* KTPage+Indexes.m in Sources */,
 				27ACA3120D57A8E0004732D0 /* KTSummaryWebViewTextBlock.m in Sources */,
@@ -6494,7 +6494,7 @@
 				3CE79DBA0D6261B300FCEE6D /* NSOutlineView+KTExtensions.m in Sources */,
 				274E829D0D627328004F89C2 /* NSDocumentController+KTExtensions.m in Sources */,
 				276688F70D63625F0019686C /* CIImage+KTExtensions.m in Sources */,
-				27668FC50D63D3070019686C /* KTIndexPlugin.m in Sources */,
+				27668FC50D63D3070019686C /* KTIndexPlugInWrapper.m in Sources */,
 				27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */,
 				27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */,
 				27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */,
@@ -6509,7 +6509,7 @@
 				27368B210DE499170045E406 /* KTStoredSet.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
 				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
-				27DB80D10EA6B0C00099ED9E /* KTElementPlugin+DataSourceRegistration.m in Sources */,
+				27DB80D10EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m in Sources */,
 				2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */,
 				CE01A7280EAFD63600BDF264 /* CIImage+Karelia.m in Sources */,
 				CE01A72A0EAFD63600BDF264 /* KSAbstractBugReporter.m in Sources */,
@@ -6538,7 +6538,7 @@
 				CE01A7590EAFD63600BDF264 /* KSPDFViewController.m in Sources */,
 				CE01A75B0EAFD63600BDF264 /* KSPlaceholderTableView.m in Sources */,
 				CE01A75D0EAFD63600BDF264 /* KSPlaceholderTextView.m in Sources */,
-				CE01A75F0EAFD63600BDF264 /* KSPlugin.m in Sources */,
+				CE01A75F0EAFD63600BDF264 /* KSPlugInWrapper.m in Sources */,
 				CE01A7630EAFD63600BDF264 /* KSPluginLoader.m in Sources */,
 				CE01A7650EAFD63600BDF264 /* KSPopUpButton.m in Sources */,
 				CE01A7670EAFD63600BDF264 /* KSPopUpButtonCell.m in Sources */,

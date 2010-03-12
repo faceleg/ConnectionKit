@@ -15,7 +15,7 @@
 {
     OBPRECONDITION(identifier);
     
-    // We are being incredibly cheeky and sidestepping KSPlugin's usual initialization in order
+    // We are being incredibly cheeky and sidestepping KSPlugInWrapper's usual initialization in order
     // to accomodate having a nil bundle.
     self = [super init];
     

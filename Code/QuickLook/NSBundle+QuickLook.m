@@ -8,18 +8,18 @@
 
 #import "NSBundle+QuickLook.h"
 
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 
 
 @implementation NSBundle (QuickLook)
 
 /*	Supplements the default NSBundle behavior by:
- *		A) Using KSPlugin whenever possible.
+ *		A) Using KSPlugInWrapper whenever possible.
  *		B) Also trying NSWorkspace
  */
 + (NSBundle *)quickLookBundleWithIdentifier:(NSString *)identifier
 {
-	NSBundle *result = [[KSPlugin pluginWithIdentifier:identifier] bundle];
+	NSBundle *result = [[KSPlugInWrapper pluginWithIdentifier:identifier] bundle];
 	
 	if (!result)
 	{

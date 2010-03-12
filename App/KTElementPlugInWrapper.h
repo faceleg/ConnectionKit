@@ -1,5 +1,5 @@
 //
-//  KTElementPlugin.h
+//  KTElementPlugInWrapper.h
 //  Marvel
 //
 //  Created by Mike on 26/01/2008.
@@ -7,13 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KTAbstractHTMLPlugin.h"
+#import "KTHTMLPlugInWrapper.h"
 
 
-@interface KTElementPlugin : KTAbstractHTMLPlugin
-{
-
-}
+@interface KTElementPlugInWrapper : KTHTMLPlugInWrapper
 
 - (NSString *)pageCSSClassName;
 - (NSString *)pageletCSSClassName;

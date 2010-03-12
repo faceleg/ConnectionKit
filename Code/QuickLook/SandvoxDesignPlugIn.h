@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 
 
-@interface SandvoxDesignPlugIn : KSPlugin
+@interface SandvoxDesignPlugIn : KSPlugInWrapper
 {
 
 }

@@ -1,12 +1,12 @@
 //
-//  KTAbstractHTMLPlugin.m
+//  KTHTMLPlugInWrapper.m
 //  Marvel
 //
 //  Created by Mike on 26/01/2008.
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTAbstractHTMLPlugin.h"
+#import "KTHTMLPlugInWrapper.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
@@ -14,7 +14,7 @@
 #import "NSString+Karelia.h"
 
 
-@implementation KTAbstractHTMLPlugin
+@implementation KTHTMLPlugInWrapper
 
 /*	We only want to load 1.5 and later plugins
  */

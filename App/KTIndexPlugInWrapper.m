@@ -1,18 +1,18 @@
 //
-//  KTIndexPlugin.m
+//  KTIndexPluginWrapper.m
 //  Marvel
 //
 //  Created by Mike on 14/02/2008.
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import "KTIndexPlugin.h"
+#import "KTIndexPlugInWrapper.h"
 #import "KT.h"
 #import "NSBundle+Karelia.h"
 
 #import "Registration.h"
 
-@implementation KTIndexPlugin
+@implementation KTIndexPlugInWrapper
 
 + (void)load
 {
@@ -37,9 +37,9 @@
     // First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
 	
-    NSDictionary *plugins = [KSPlugin pluginsWithFileExtension:kKTIndexExtension];
+    NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTIndexExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
-    KTAbstractHTMLPlugin *plugin;
+    KTHTMLPlugInWrapper *plugin;
     
 	while (plugin = [enumerator nextObject])
 	{
@@ -82,7 +82,7 @@
 		NSDictionary *presetDict = [dictOfPresets objectForKey:priorityAndName];
 		NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 		
-		KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:bundleIdentifier];
+		KTIndexPlugInWrapper *plugin = [KTIndexPlugInWrapper pluginWithIdentifier:bundleIdentifier];
 		NSBundle *pluginBundle = [plugin bundle];
 		
         if ( ![pluginBundle isLoaded] && (Nil != [pluginBundle principalClassIncludingOtherLoadedBundles:YES]) ) {

@@ -10,7 +10,7 @@
 #import "KTPage.h"
 
 
-@class KTAbstractHTMLPlugin;
+@class KTHTMLPlugInWrapper;
 
 
 @interface KTPage (Internal)
@@ -34,7 +34,7 @@
 
 // Index
 - (void)setIndex:(KTAbstractIndex *)anIndex;
-- (void)setIndexFromPlugin:(KTAbstractHTMLPlugin *)aBundle;
+- (void)setIndexFromPlugin:(KTHTMLPlugInWrapper *)aBundle;
 
 
 @end

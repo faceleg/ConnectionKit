@@ -18,16 +18,16 @@
 
 + (NSString *)applicationPluginPath	// Designs in their own top-level plugin dir
 {
-	return [[[KSPlugin applicationBundle] bundlePath] stringByAppendingPathComponent:@"Designs"];
+	return [[[KSPlugInWrapper applicationBundle] bundlePath] stringByAppendingPathComponent:@"Designs"];
 }
 
 /*	Register all known plugin types.
  */
 + (void)load
 {
-	[KSPlugin registerPluginClass:[self class] forFileExtension:@"svxDesign"];
-	[KSPlugin registerPluginClass:[KSPlugin class] forFileExtension:@"svxElement"];
-	[KSPlugin registerPluginClass:[KSPlugin class] forFileExtension:@"svxIndex"];
+	[KSPlugInWrapper registerPluginClass:[self class] forFileExtension:@"svxDesign"];
+	[KSPlugInWrapper registerPluginClass:[KSPlugInWrapper class] forFileExtension:@"svxElement"];
+	[KSPlugInWrapper registerPluginClass:[KSPlugInWrapper class] forFileExtension:@"svxIndex"];
 }
 
 @end

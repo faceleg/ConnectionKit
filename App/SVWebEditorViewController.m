@@ -32,7 +32,7 @@
 #import "NSWorkspace+Karelia.h"
 
 #import "KSCollectionController.h"
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>

@@ -12,9 +12,9 @@
 #import "SVExternalLink.h"
 #import "SVDownloadSiteItem.h"
 
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTAbstractIndex.h"
-#import "KTIndexPlugin.h"
+#import "KTIndexPlugInWrapper.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
@@ -139,7 +139,7 @@
     
     NSDictionary *presetDict = [self collectionPreset];
 	NSString *identifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
-	KTIndexPlugin *indexPlugin = identifier ? [KTIndexPlugin pluginWithIdentifier:identifier] : nil;
+	KTIndexPlugInWrapper *indexPlugin = identifier ? [KTIndexPlugInWrapper pluginWithIdentifier:identifier] : nil;
 	
     NSBundle *indexBundle = [indexPlugin bundle];
     

@@ -10,7 +10,7 @@
 #import "SVDesignChooserViewController.h"
 
 #import "Debug.h"
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 #import "KT.h"
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
@@ -49,7 +49,7 @@
     [oScopeBar reloadData];
 	
 	// load designs -- only seems to work if I do it here? seems as good a place as any...
-	NSArray *designs = [KSPlugin sortedPluginsWithFileExtension:kKTDesignExtension];
+	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
 	oViewController.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
     oViewController.selectedDesign = oldDesign;	
 }

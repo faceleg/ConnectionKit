@@ -12,7 +12,7 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTSite.h"
-#import "KTElementPlugin.h"
+#import "KTElementPlugInWrapper.h"
 #import "KTMaster.h"
 #import "KTMediaManager.h"
 #import "KTPage+Internal.h"
@@ -670,7 +670,7 @@
         // Insert a new child page of the right type.
         NSString *pluginIdentifier = [aChildPage valueForKey:@"pluginIdentifier"];
         pluginIdentifier = [[self class] currentPluginIdentifierForOldIdentifier:pluginIdentifier];
-        KTElementPlugin *plugin = [KTElementPlugin pluginWithIdentifier:pluginIdentifier];
+        KTElementPlugInWrapper *plugin = [KTElementPlugInWrapper pluginWithIdentifier:pluginIdentifier];
         
         if (!plugin)
         {

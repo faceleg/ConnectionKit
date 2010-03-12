@@ -9,7 +9,7 @@
 #import "KTAbstractIndex.h"
 #import "KTPage+Internal.h"
 #import "SVHTMLTemplateParser.h"
-#import "KTAbstractHTMLPlugin.h"
+#import "KTHTMLPlugInWrapper.h"
 
 #import "KTWebViewComponentProtocol.h"
 
@@ -20,7 +20,7 @@
 
 @implementation KTAbstractIndex
 
-- (id)initWithPage:(KTPage *)aPage plugin:(KTAbstractHTMLPlugin *)plugin;
+- (id)initWithPage:(KTPage *)aPage plugin:(KTHTMLPlugInWrapper *)plugin;
 {
 	if (self = [super init])
 	{
@@ -39,9 +39,9 @@
 }
 
 
-- (KTAbstractHTMLPlugin *)plugin { return _plugin; }
+- (KTHTMLPlugInWrapper *)plugin { return _plugin; }
 
-- (void)setPlugin:(KTAbstractHTMLPlugin *)plugin
+- (void)setPlugin:(KTHTMLPlugInWrapper *)plugin
 {
     [plugin retain];
     [_plugin release];

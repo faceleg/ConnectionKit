@@ -1,5 +1,5 @@
 //
-//  KTAbstractHTMLPlugin.h
+//  KTHTMLPlugInWrapper.h
 //  Marvel
 //
 //  Created by Mike on 26/01/2008.
@@ -7,10 +7,10 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 
 
-@interface KTAbstractHTMLPlugin : KSPlugin
+@interface KTHTMLPlugInWrapper : KSPlugInWrapper
 {
 	NSImage     *_icon;
 	NSString    *_templateHTML;

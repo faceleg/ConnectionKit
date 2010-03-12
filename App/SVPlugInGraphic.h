@@ -10,7 +10,7 @@
 
 
 @protocol SVPageletPlugIn;
-@class KTElementPlugin;
+@class KTElementPlugInWrapper;
 
 
 @interface SVPlugInGraphic : SVIntroAndCaptionGraphic
@@ -25,7 +25,7 @@
 
 @property(nonatomic, retain, readonly) NSObject <SVPageletPlugIn> *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
-- (KTElementPlugin *)plugin;
+- (KTElementPlugInWrapper *)plugin;
 
 
 

@@ -5,7 +5,7 @@
 #import <QuickLook/QuickLook.h>
 #import <Quartz/Quartz.h>
 
-#import "KSPlugin.h"
+#import "KSPlugInWrapper.h"
 
 #import "BDAlias+QuickLook.h"
 #import "NSBundle+QuickLook.h"
@@ -35,7 +35,7 @@ OSStatus GeneratePreviewForURL(void *thisInterface, QLPreviewRequestRef preview,
 	
 	NSString *sandvoxPath = [[NSWorkspace sharedWorkspace] absolutePathForAppBundleWithIdentifier:@"com.karelia.Sandvox"];
 	NSBundle *sandvoxBundle = [NSBundle bundleWithPath:sandvoxPath];
-	[KSPlugin setApplicationBundle:sandvoxBundle];
+	[KSPlugInWrapper setApplicationBundle:sandvoxBundle];
     
     if (QLPreviewRequestIsCancelled(preview))	// Before proceeding make sure the user didn't cancel the request 
 	{
