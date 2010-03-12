@@ -330,10 +330,13 @@
     }
 }
 
-@dynamic master;
-
 @dynamic sidebar;
 @dynamic showSidebar;
+
+#pragma mark Master
+
+@dynamic master;
+- (NSString *)language { return [[self master] language]; }
 
 #pragma mark Dates
 

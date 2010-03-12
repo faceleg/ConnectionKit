@@ -17,6 +17,8 @@
 - (NSString *)title;
 - (NSString *)titleHTMLString;
 
+- (NSString *)language;
+
 @end
 
 
