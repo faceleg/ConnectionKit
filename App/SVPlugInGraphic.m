@@ -21,21 +21,36 @@
 static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObservation";
 
 
+@interface SVPlugInGraphic ()
+- (void)loadPlugIn;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVPlugInGraphic
 
 #pragma mark Lifecycle
+
++ (SVPlugInGraphic *)insertNewGraphicWithPlugInIdentifier:(NSString *)identifier
+                                   inManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVPlugInGraphic *result =
+    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
+                                  inManagedObjectContext:context];
+    
+    [result setValue:identifier forKey:@"plugInIdentifier"];
+    [result loadPlugIn];
+    
+    return result;
+}
 
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
     
     [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
-}
-
-- (void)awakeFromFetch
-{
-	[super awakeFromFetch];
-    [self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
 /*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.
@@ -47,53 +62,50 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 	[_plugIn release];	_plugIn = nil;
 }
 
-/*!	Called when an object is done initializing; specifically, the bundle has been set.
- */
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-{
-}
-
 #pragma mark Plug-in
 
 - (NSObject <SVPageletPlugIn> *)plugIn
 {
 	if (!_plugIn) 
 	{
-		Class <SVPageletPlugInFactory> plugInFactory = [[[self plugin] bundle] principalClass];
-        if (plugInFactory)
-        {                
-            // It's possible that calling [self plugin] will have called this method again, so that we already have a delegate
-            if (!_plugIn)
-            {
-                // Create plug-in object
-                NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
-                _plugIn = [plugInFactory newPlugInWithArguments:arguments];
-                OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
-                
-                [_plugIn setDelegateOwner:self];
-                
-                // Restore plug-in's properties
-                NSDictionary *plugInProperties = [self extensibleProperties];
-                NSObject <SVPageletPlugIn> *plugIn = [self plugIn];
-                for (NSString *aKey in plugInProperties)
-                {
-                    id serializedValue = [plugInProperties objectForKey:aKey];
-                    [plugIn setSerializedValue:serializedValue forKey:aKey];
-                }
-                
-                // Observe the plug-in's properties so they can be synced back to the MOC
-                [plugIn addObserver:self
-                        forKeyPaths:[[plugIn class] plugInKeys]
-                            options:0
-                            context:sPlugInPropertiesObservationContext];
-                
-                // Let the plug-in know that it's awoken
-                [plugIn awakeFromFetch];
-            }
-        }
+		[self loadPlugIn];
+        
+        // Let the plug-in know that it's awoken
+        [[self plugIn] awakeFromFetch];
     }
     
 	return _plugIn;
+}
+
+- (void)loadPlugIn;
+{
+    Class <SVPageletPlugInFactory> plugInFactory = [[[self plugin] bundle] principalClass];
+    if (plugInFactory)
+    {                
+        OBASSERT(!_plugIn);
+        
+        // Create plug-in object
+        NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
+        _plugIn = [plugInFactory newPlugInWithArguments:arguments];
+        OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
+        
+        [_plugIn setDelegateOwner:self];
+        
+        // Restore plug-in's properties
+        NSDictionary *plugInProperties = [self extensibleProperties];
+        NSObject <SVPageletPlugIn> *plugIn = [self plugIn];
+        for (NSString *aKey in plugInProperties)
+        {
+            id serializedValue = [plugInProperties objectForKey:aKey];
+            [plugIn setSerializedValue:serializedValue forKey:aKey];
+        }
+        
+        // Observe the plug-in's properties so they can be synced back to the MOC
+        [plugIn addObserver:self
+                forKeyPaths:[[plugIn class] plugInKeys]
+                    options:0
+                    context:sPlugInPropertiesObservationContext];
+    }
 }
 
 - (KTElementPlugin *)plugin

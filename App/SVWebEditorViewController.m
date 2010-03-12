@@ -600,23 +600,25 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)insertPageletInSidebar:(id)sender;
 {
     // Create element
-    SVGraphic *pagelet;
     if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
     {
-        SVPlugInGraphic *element = [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
-                                                                 inManagedObjectContext:[[self page] managedObjectContext]];
+        NSString *identifier = [[[sender representedObject] bundle] bundleIdentifier];
+        KTPage *page = [self page];
         
-        [element setValue:[[[sender representedObject] bundle] bundleIdentifier] forKey:@"plugInIdentifier"];
-        [element awakeFromBundleAsNewlyCreatedObject:YES];
+        SVPlugInGraphic *graphic =
+        [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
+                                       inManagedObjectContext:[page managedObjectContext]];
         
-        pagelet = element;
+        [self _insertPageletInSidebar:graphic];
+        
+        [[graphic plugIn] awakeFromInsertIntoPage:page pasteboard:nil userInfo:nil];
     }
     else
     {
-        pagelet = [[_selectableObjectsController newPagelet] autorelease];
+        SVGraphic *pagelet = [[_selectableObjectsController newPagelet] autorelease];
+        [self _insertPageletInSidebar:pagelet];
     }
     
-    [self _insertPageletInSidebar:pagelet];
 }
 
 - (IBAction)insertElement:(id)sender;

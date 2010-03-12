@@ -19,8 +19,9 @@
     NSObject <SVPageletPlugIn> *_plugIn;
 }
 
-
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
+// Creates both graphic and plug-in at same time, but does not send -awakeFromInsert:... to the plug-in
++ (SVPlugInGraphic *)insertNewGraphicWithPlugInIdentifier:(NSString *)identifier
+                                   inManagedObjectContext:(NSManagedObjectContext *)context;
 
 @property(nonatomic, retain, readonly) NSObject <SVPageletPlugIn> *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
