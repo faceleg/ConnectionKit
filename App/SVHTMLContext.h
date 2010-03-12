@@ -50,8 +50,7 @@ typedef enum {
     
     NSMutableArray  *_iteratorsStack;
     
-    NSUInteger      _contentObjects;
-    NSMutableArray  *_textBlocks;
+    NSUInteger      _numberOfGraphics;
 }
 
 #pragma mark Properties
@@ -129,10 +128,6 @@ typedef enum {
 
 // Default implementation does nothing. Subclasses can implement for introspecting the dependencies (WebView loading does)
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
-                               
-@property(nonatomic, copy, readonly) NSArray *generatedTextBlocks;
-- (void)didGenerateTextBlock:(SVHTMLTextBlock *)textBlock;
-
 
 
 

@@ -8,6 +8,7 @@
 
 #import "SVTextDOMController.h"
 
+#import "SVHTMLTextBlock.h"
 #import "SVWebEditorView.h"
 #import "SVWebEditorViewController.h"
 
@@ -58,6 +59,7 @@
                                                   object:nil];
     
     [_textElement release];
+    [_textBlock release];
     
     [super dealloc];
 }
@@ -69,6 +71,14 @@
 {
     [self HTMLElement]; // make sure it's loaded
     return _textElement;
+}
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document
+{
+    DOMElement *element = [document getElementById:[[self textBlock] DOMNodeID]];
+    [self setHTMLElement:(DOMHTMLElement *)element];
+    
+    [self setEditable:[[self textBlock] isEditable]];
 }
 
 #pragma mark Attributes
@@ -96,6 +106,8 @@
 @synthesize isRichText = _isRichText;
 
 @synthesize isFieldEditor = _isFieldEditor;
+
+@synthesize textBlock = _textBlock;
 
 #pragma mark Editing
 

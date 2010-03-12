@@ -29,7 +29,6 @@
     // Bindings don't automatically unbind themselves; have to do it ourself
     [self unbind:NSValueBinding];
     
-    [_textBlock release];
     [_placeholder release];
     [_uneditedValue release];
     [_HTMLString release];
@@ -215,14 +214,7 @@
         // The change needs to be pushed through the GUI unless it was triggered by the user in the first place
         if (!_isCommittingEditing)
         {
-            if ([self isRichText])
-            {
-                [self setHTMLString:value];
-            }
-            else
-            {
-                [self setString:value];
-            }
+            [self setHTMLString:value];
         }
     }
     else
@@ -287,10 +279,6 @@
     }
 }
 
-                       #pragma mark Text Block
-                       
-                       @synthesize textBlock = _textBlock;
-                       
 #pragma mark Debugging
 
 - (NSString *)blurb

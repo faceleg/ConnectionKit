@@ -14,13 +14,15 @@
 #import "KSKeyValueBinding.h"
 
 
-@class SVGraphic, SVBodyElement;
+@class SVHTMLTextBlock;
 
 
 @interface SVTextDOMController : SVDOMController <SVWebEditorText>
 {
   @private
     DOMHTMLElement  *_textElement;
+    
+    SVHTMLTextBlock *_textBlock;
     
     BOOL        _isRichText;
     BOOL        _isFieldEditor;
@@ -46,6 +48,8 @@
 @property(nonatomic, getter=isEditable) BOOL editable;
 @property(nonatomic, setter=setRichText:) BOOL isRichText;
 @property(nonatomic, setter=setFieldEditor:) BOOL isFieldEditor;
+
+@property(nonatomic, retain) SVHTMLTextBlock *textBlock;
 
 
 #pragma mark Editing

@@ -317,6 +317,7 @@
 - (void)writeHTML;
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
+    [context willBeginWritingHTMLTextBlock:self];
     
 	
     // Construct the actual HTML
@@ -389,6 +390,9 @@
 	if (generateSpanIn) [context writeEndTag];
 	if ([self hyperlinkString]) [context writeEndTag];
 	[context writeEndTag];
+    
+    
+    [context didEndWritingHTMLTextBlock];
 }
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.

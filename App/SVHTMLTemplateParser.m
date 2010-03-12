@@ -115,12 +115,8 @@
 	}
 }
 
-- (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock
-{
-	[[SVHTMLContext currentContext] didGenerateTextBlock:textBlock];
-}
+- (void)didParseTextBlock:(SVHTMLTextBlock *)textBlock { }
 
-#pragma mark -
 #pragma mark Parsing
 
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;

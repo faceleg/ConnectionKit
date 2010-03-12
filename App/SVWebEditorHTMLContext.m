@@ -8,8 +8,12 @@
 
 #import "SVWebEditorHTMLContext.h"
 
-#import "SVDOMController.h"
+#import "SVBodyTextDOMController.h"
+#import "SVHTMLTextBlock.h"
+#import "SVRichText.h"
 #import "SVTemplateParser.h"
+#import "SVTextFieldDOMController.h"
+#import "SVTitleBox.h"
 
 #import "KSObjectKeyPathPair.h"
 
@@ -76,6 +80,70 @@
     [super didEndWritingGraphic];
 }
 
+- (SVTextDOMController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock; 
+{    
+    SVTextDOMController *result = nil;
+    
+    
+    // Use the right sort of text area
+    id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
+    
+    if ([value isKindOfClass:[SVTitleBox class]])
+    {
+        // Copy basic properties from text block
+        result = [[SVTextFieldDOMController alloc] init];
+        [result setHTMLContext:self];
+        [result setRichText:[aTextBlock isRichText]];
+        [result setFieldEditor:[aTextBlock isFieldEditor]];
+        
+        // Bind to model
+        [result bind:NSValueBinding
+            toObject:value
+         withKeyPath:@"textHTMLString"
+             options:nil];
+    }
+    else if ([value isKindOfClass:[SVRichText class]])
+    {
+        result = [[SVBodyTextDOMController alloc] init];
+        [result setHTMLContext:self];
+        [result setRichText:YES];
+        [result setFieldEditor:NO];
+    }
+    else
+    {
+        // Copy basic properties from text block
+        result = [[SVTextFieldDOMController alloc] init];
+        [result setHTMLContext:self];
+        [result setRichText:[aTextBlock isRichText]];
+        [result setFieldEditor:[aTextBlock isFieldEditor]];
+        
+        // Bind to model
+        [result bind:NSValueBinding
+            toObject:[aTextBlock HTMLSourceObject]
+         withKeyPath:[aTextBlock HTMLSourceKeyPath]
+             options:nil];
+    }
+    
+    [result setTextBlock:aTextBlock];
+    
+    return [result autorelease];
+}
+
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
+{
+    [super willBeginWritingHTMLTextBlock:textBlock];
+    
+    // Create controller
+    SVDOMController *controller = [self makeControllerForTextBlock:textBlock];
+    [self addItem:controller];
+}
+
+- (void)didEndWritingHTMLTextBlock;
+{
+    [self finishWithCurrentItem];
+    [super didEndWritingHTMLTextBlock];
+}
+
 #pragma mark Dependencies
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
@@ -103,3 +171,15 @@
 - (NSSet *)dependencies { return [[_objectKeyPathPairs copy] autorelease]; }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVHTMLContext (SVEditing)
+
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock; { }
+- (void)didEndWritingHTMLTextBlock; { }
+
+@end
+

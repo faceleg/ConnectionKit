@@ -62,7 +62,6 @@
     _headerMarkup = [[NSMutableString alloc] init];
     _endBodyMarkup = [[NSMutableString alloc] init];
     _iteratorsStack = [[NSMutableArray alloc] init];
-    _textBlocks = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -78,7 +77,6 @@
     
     [_endBodyMarkup release];
     [_iteratorsStack release];
-    [_textBlocks release];
     [_stringWriter release];
     
     [super dealloc];
@@ -329,23 +327,14 @@
 
 - (void)willBeginWritingGraphic:(SVGraphic *)object;
 {
-    _contentObjects++;
+    _numberOfGraphics++;
 }
 
 - (void)didEndWritingGraphic; { }
 
-- (NSUInteger)numberOfGraphicsOnPage; { return _contentObjects; }
+- (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
-
-- (NSArray *)generatedTextBlocks { return [[_textBlocks copy] autorelease]; }
-
-- (void)didGenerateTextBlock:(SVHTMLTextBlock *)textBlock;
-{
-    OBPRECONDITION(_textBlocks);
-    
-    [_textBlocks addObject:textBlock];
-}
 
 #pragma mark Legacy
 

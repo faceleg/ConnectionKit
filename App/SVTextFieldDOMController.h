@@ -12,16 +12,11 @@
 #import "SVTextDOMController.h"
 
 
-@class SVHTMLTextBlock;
-
-
 @interface SVTextFieldDOMController : SVTextDOMController <NSUserInterfaceValidations>
 {
   @private
     NSString    *_HTMLString;
     NSString    *_placeholder;
-    
-    SVHTMLTextBlock *_textBlock;
     
     // Bindings
     NSString        *_uneditedValue;
@@ -36,8 +31,6 @@
 
 
 @property(nonatomic, copy) NSString *placeholderString;
-
-@property(nonatomic, retain) SVHTMLTextBlock *textBlock;
 
 
 @end

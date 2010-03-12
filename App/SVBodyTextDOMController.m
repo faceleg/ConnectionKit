@@ -36,31 +36,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Init & Dealloc
 
-- (id)initWithContentObject:(SVContentObject *)body inDOMDocument:(DOMDocument *)document;
+- (id)init;
 {
     // Super
-    self = [super initWithContentObject:body inDOMDocument:document];
+    self = [super init];
     
     
     // Keep an eye on model
-    [body addObserver:self forKeyPath:@"string" options:0 context:sBodyTextObservationContext];
-    
-    
-    // Create controller for each graphic/attachment
-    NSSet *graphics = [[self representedObject] attachments];
-    for (SVTextAttachment *anAttachment in graphics)
-    {
-        SVGraphic *graphic = [anAttachment graphic];
-        Class class = [graphic DOMControllerClass];
-        SVDOMController *result = [[class alloc] initWithContentObject:graphic
-                                                         inDOMDocument:document];
-        
-        [result setHTMLContext:[[self webEditorViewController] HTMLContext]];
-        
-        [self addChildWebEditorItem:result];
-        [result release];
-    }
-    
+    [self addObserver:self forKeyPath:@"representedObject.string" options:0 context:sBodyTextObservationContext];    
     
     // Finish up
     return self;
@@ -68,7 +51,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)dealloc
 {
-    [[self representedObject] removeObserver:self forKeyPath:@"string"];
+    [self removeObserver:self forKeyPath:@"representedObject.string"];
     
     // Release ivars
     
@@ -169,6 +152,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // TODO: Embedded graphics must NOT be selectable
     for (SVDOMController *aGraphicController in [self graphicControllers])
     {
+        if (![aGraphicController isHTMLElementCreated])
+        {
+            [aGraphicController loadHTMLElementFromDocument:[[self HTMLElement] ownerDocument]];
+        }
+        
         [[[aGraphicController HTMLElement] style] setProperty:@"-webkit-user-select"
                                                         value:@"none"
                                                      priority:@"!important"];

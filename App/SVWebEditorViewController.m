@@ -10,12 +10,10 @@
 
 #import "SVApplicationController.h"
 #import "SVPlugInPagelet.h"
-#import "SVHTMLTextBlock.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
-#import "SVRichText.h"
 #import "SVBodyTextDOMController.h"
 #import "SVHTMLContext.h"
 #import "SVLink.h"
@@ -24,8 +22,6 @@
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
-#import "SVTextFieldDOMController.h"
-#import "SVTitleBox.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KTDocWindowController.h"
@@ -261,73 +257,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @synthesize updating = _isUpdating;
 
-- (SVTextDOMController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock; 
-{    
-    SVTextDOMController *result = nil;
-    
-    
-    // Locate the corresponding HTML element
-    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
-    DOMHTMLElement *element = (DOMHTMLElement *)[domDoc getElementById:[aTextBlock DOMNodeID]];
-    
-    
-    if (!element)
-    {
-        NSLog(@"Couldn't find text area: %@", [aTextBlock DOMNodeID]);
-        return result;
-    }
-    
-    
-    
-    OBASSERT([element isKindOfClass:[DOMHTMLElement class]]);
-    
-    
-    // Use the right sort of text area
-    id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
-    
-    if ([value isKindOfClass:[SVTitleBox class]])
-    {
-        // Copy basic properties from text block
-        result = [[SVTextFieldDOMController alloc] initWithHTMLElement:element];
-        [result setHTMLContext:[self HTMLContext]];
-        [(SVTextFieldDOMController *)result setTextBlock:aTextBlock];
-        [result setRichText:[aTextBlock isRichText]];
-        [result setFieldEditor:[aTextBlock isFieldEditor]];
-        [result setEditable:[aTextBlock isEditable]];
-        
-        // Bind to model
-        [result bind:NSValueBinding
-              toObject:value
-           withKeyPath:@"textHTMLString"
-               options:nil];
-    }
-    else if ([value isKindOfClass:[SVRichText class]])
-    {
-        result = [[SVBodyTextDOMController alloc] initWithHTMLElement:element];
-        [result setHTMLContext:[self HTMLContext]];
-        [result setRichText:YES];
-        [result setFieldEditor:NO];
-        [result setEditable:YES];
-    }
-    else
-    {
-        // Copy basic properties from text block
-        result = [[SVTextFieldDOMController alloc] initWithHTMLElement:element];
-        [result setHTMLContext:[self HTMLContext]];
-        [result setRichText:[aTextBlock isRichText]];
-        [result setFieldEditor:[aTextBlock isFieldEditor]];
-        [result setEditable:[aTextBlock isEditable]];
-        
-        // Bind to model
-        [result bind:NSValueBinding
-              toObject:[aTextBlock HTMLSourceObject]
-           withKeyPath:[aTextBlock HTMLSourceKeyPath]
-               options:nil];
-    }
-    
-    return [result autorelease];
-}
-
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
     SVWebEditorView *webEditor = [self webEditor];
@@ -337,12 +266,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Context holds the controllers. We need to send them over to the Web Editor.
     NSArray *controllers = [[self HTMLContext] webEditorItems];
     NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] init];
+    NSMutableArray *textAreas = [[NSMutableArray alloc] init];
     
     NSMutableArray *selectableObjects = [[NSMutableArray alloc] initWithCapacity:[controllers count]];
     
     for (SVWebEditorItem *anItem in controllers)
     {
-        [anItem loadHTMLElementFromDocument:domDoc];
+        if (![anItem isHTMLElementCreated]) [anItem loadHTMLElementFromDocument:domDoc];
+        OBASSERT([anItem HTMLElement]);
+        
         if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
         
         
@@ -356,6 +288,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
         
         
+        // Figure out if it's a text controller
+        if ([anItem isKindOfClass:[SVTextDOMController class]])
+        {
+            [textAreas addObject:anItem];
+        }
+        
+        
         //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
         if (anObject) [selectableObjects addObject:anObject];
     }
@@ -363,29 +302,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
     
+    [self setTextAreas:textAreas];
+    [textAreas release];
+    
     [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC
     [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
     [selectableObjects release];
-    
-    
-    
-    // Prepare text areas
-    NSArray *parsedTextBlocks = [[self HTMLContext] generatedTextBlocks];
-    NSMutableArray *textAreas = [[NSMutableArray alloc] initWithCapacity:[parsedTextBlocks count]];
-    
-    for (SVHTMLTextBlock *aTextBlock in parsedTextBlocks)
-    {
-        SVTextDOMController *controller = [self makeControllerForTextBlock:aTextBlock];
-        
-        [textAreas addObject:controller];
-        [[self webEditor] insertItem:controller];
-    }
-    
-    
-    
-    // Store controllers    
-    [self setTextAreas:textAreas];
-    [textAreas release];
     
     
     

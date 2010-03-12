@@ -26,3 +26,12 @@
 @property(nonatomic, copy, readonly) NSSet *dependencies;
 
 @end
+
+
+#pragma mark -
+
+
+@interface SVHTMLContext (SVEditing)
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
+- (void)didEndWritingHTMLTextBlock;
+@end

@@ -19,9 +19,6 @@
     DOMHTMLAnchorElement    *_selectedLink;
 }
 
-- (id)initWithContentObject:(SVContentObject *)body inDOMDocument:(DOMDocument *)document;
-
-
 #pragma mark Content
 - (IBAction)insertElement:(id)sender;
 - (IBAction)insertPagelet:(id)sender;
