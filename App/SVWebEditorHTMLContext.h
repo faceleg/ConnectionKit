@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 
-@class SVWebEditorItem, KSObjectKeyPathPair;
+@class SVWebEditorItem, SVDOMController, KSObjectKeyPathPair;
 
 
 @interface SVWebEditorHTMLContext : SVHTMLContext
@@ -32,6 +32,14 @@
 
 
 @interface SVHTMLContext (SVEditing)
+
+#pragma mark Text Blocks
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
 - (void)didEndWritingHTMLTextBlock;
+
+
+#pragma mark Low-level controllers
+// Ignored by regular contexts. Call one of the -didEndWriting… methods after
+- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+
 @end

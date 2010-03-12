@@ -45,14 +45,6 @@
     return [[_items copy] autorelease];
 }
 
-- (void)addItem:(SVWebEditorItem *)item
-{
-    [_items addObject:item];
-    
-    [_currentItem addChildWebEditorItem:item];
-    _currentItem = item;
-}
-
 - (void)finishWithCurrentItem;
 {
     _currentItem = [_currentItem parentWebEditorItem];
@@ -67,7 +59,7 @@
     [controller setRepresentedObject:object];
     
     // Store controller
-    [self addItem:controller];
+    [self willBeginWritingObjectWithDOMController:controller];
     
     // Finish up
     [controller release];
@@ -135,13 +127,21 @@
     
     // Create controller
     SVDOMController *controller = [self makeControllerForTextBlock:textBlock];
-    [self addItem:controller];
+    [self willBeginWritingObjectWithDOMController:controller];
 }
 
 - (void)didEndWritingHTMLTextBlock;
 {
     [self finishWithCurrentItem];
     [super didEndWritingHTMLTextBlock];
+}
+
+- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+{
+    [_items addObject:controller];
+    
+    [_currentItem addChildWebEditorItem:controller];
+    _currentItem = controller;
 }
 
 #pragma mark Dependencies
@@ -180,6 +180,8 @@
 
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock; { }
 - (void)didEndWritingHTMLTextBlock; { }
+
+- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
 
 @end
 
