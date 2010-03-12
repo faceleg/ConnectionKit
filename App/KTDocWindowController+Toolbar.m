@@ -199,32 +199,7 @@ TO DO:
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
-    
-    [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page pulldown button menu item title")
-                    action:@selector(addPage:)
-             keyEquivalent:@""];
-    
-    [menu addItem:[NSMenuItem separatorItem]];
-    
-    [KTIndexPlugin populateMenuWithCollectionPresets:menu atIndex:3];
-    
-    [menu addItem:[NSMenuItem separatorItem]];
-    
-    [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
-                    action:@selector(addExternalLinkPage:)
-             keyEquivalent:@""];
-    
-    if ([[NSApp delegate] isPro])
-    {
-        [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
-                        action:@selector(addRawTextPage:) keyEquivalent:@""];
-    }
-    
-    [menu addItem:[NSMenuItem separatorItem]];
-    
-    [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page pulldown button menu item title")
-                    action:@selector(addFilePage:)
-             keyEquivalent:@""];
+    [KTIndexPlugin populateMenuWithCollectionPresets:menu atIndex:1];
     
     
     return [result autorelease];
@@ -236,9 +211,7 @@ TO DO:
     [result setImage:nil];
 
     NSArray *itemsArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
-    NSDictionary *itemInfo;
-
-    for ( itemInfo in itemsArray ) 
+    for (NSDictionary *itemInfo in itemsArray) 
 	{
         if ( [[itemInfo valueForKey:@"identifier"] isEqualToString:itemIdentifier] ) 
 		{
