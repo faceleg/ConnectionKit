@@ -93,10 +93,6 @@
         [result setIncludeTimestamp:[predecessor includeTimestamp]];
         
         
-        // Keeping it old school. Let the page know it's being inserted
-        [result awakeFromBundleAsNewlyCreatedObject:YES];
-        
-        
         // Give it standard pagelets
         [[result sidebar] addPagelets:[[parent sidebar] pagelets]];
         

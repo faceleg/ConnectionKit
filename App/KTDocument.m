@@ -335,7 +335,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		
     [result setBool:YES forKey:@"isCollection"];	// root is automatically a collection
     [result setAllowComments:[NSNumber numberWithBool:NO]];
-    [result awakeFromBundleAsNewlyCreatedObject:YES];
     
 	return result;
 }

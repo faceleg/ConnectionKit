@@ -135,9 +135,6 @@
 	[page setIncludeTimestamp:[predecessor includeTimestamp]];
 	
 	
-	// And we're finally ready to let normal initalisation take over
-	[page awakeFromBundleAsNewlyCreatedObject:YES];
-
 	return page;
 }
 
@@ -201,32 +198,6 @@
     [self setValue:codeInjection forKey:@"codeInjection"];
 }
 
-/*!	Initialization that happens after awakeFromFetch or awakeFromInsert
-*/
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-{
-	if ( isNewlyCreatedObject )
-	{
-		KTPage *parent = [self parentPage];
-		// Set includeInSiteMenu if this page's parent is root, and not too many siblings
-		if (nil != parent && [parent isRoot] && [[parent childItems] count] < 7)
-		{
-			[self setIncludeInSiteMenu:YES];
-		}
-	}
-	else	// Loading from disk
-	{
-		NSString *identifier = [self valueForKey:@"collectionIndexBundleIdentifier"];
-		if (nil != identifier)
-		{
-			KTIndexPlugin *plugin = [KTIndexPlugin pluginWithIdentifier:identifier];
-			Class indexToAllocate = [[plugin bundle] principalClassIncludingOtherLoadedBundles:YES];
-			KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:self plugin:plugin] autorelease];
-			[self setIndex:theIndex];
-		}
-	}
-}
-
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
@@ -266,7 +237,6 @@
 - (void)awakeFromFetch
 {
 	[super awakeFromFetch];
-	[self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
 #pragma mark Title

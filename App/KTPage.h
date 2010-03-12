@@ -38,11 +38,6 @@ typedef enum {
 
 @interface KTPage : KTAbstractPage <SVPage>
 
-#pragma mark Awake
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary;
-
-
 #pragma mark Title
 @property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too
 - (BOOL)canEditTitle;
