@@ -216,17 +216,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     return result;
 }
 
-- (NSString *)siteObjectIDURIRepresentationString;  // unique per site. used by Badge plug-in
-{
-    return [[self site] URIRepresentationString];
-}
-
-- (NSString *)languageCode;	// used by ContactElementDelegate
-{
-	NSString *language = [[[self page] master] language];
-	return language;
-}
-
 @end
 
 

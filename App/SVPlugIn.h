@@ -64,9 +64,4 @@
 
 
 @protocol SVPageletPlugInContainer <NSObject>
-
-#pragma mark Site
-- (NSString *)siteObjectIDURIRepresentationString;  // unique per site. used by Badge plug-in
-- (NSString *)languageCode;	// used by ContactElementDelegate
-
 @end
