@@ -343,7 +343,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	[_site release];
     
-    [_lastWrittenURL release];
+    [_persistentStoreURL release];
     [_reservedFilenames release];
     [_deletedMediaDirectoryName release];
 	
@@ -421,27 +421,27 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)setFileURL:(NSURL *)absoluteURL
 {
-    NSURL *oldURL = [[self fileURL] copy];
-    [super setFileURL:absoluteURL];
-    
-    
-    if (oldURL)
+    // Mark persistent store as moved
+    NSURL *storeURL = [self datastoreURL];
+    if (storeURL)
     {
         // Also reset the persistent stores' DB connection if needed
         NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
         OBASSERT([[PSC persistentStores] count] <= 1);
-        NSPersistentStore *store = [PSC persistentStoreForURL:[[self class] datastoreURLForDocumentURL:oldURL type:nil]];
-        if (store)
-        {
-            NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-            [PSC setURL:newStoreURL forPersistentStore:store];
-        }
         
-        [oldURL release];
+        NSPersistentStore *store = [PSC persistentStoreForURL:storeURL];
+        OBASSERT(store);
+        
+        NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+        [PSC setURL:newStoreURL forPersistentStore:store];
     }
+    
+    
+    [super setFileURL:absoluteURL];
 }
 
-#pragma mark -
+@synthesize datastoreURL = _persistentStoreURL;
+
 #pragma mark Undo Support
 
 /*  These methods are overridden in the same fashion as NSPersistentDocument

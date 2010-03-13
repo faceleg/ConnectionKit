@@ -279,11 +279,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	//OBPRECONDITION(saveOperation == NSSaveOperation || saveOperation == NSSaveAsOperation);
     
     
-    // So anyone else can know where we were written to
-    [_lastWrittenURL release]; _lastWrittenURL = [inURL copy];
-	
-	
-	BOOL result = NO;
+    BOOL result = NO;
 	NSManagedObjectContext *context = [self managedObjectContext];
     
 	
@@ -519,11 +515,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (result)
     {
         if (![context save:&error]) result = nil;
+        [self setDatastoreURL:URL];
     }
     else
     {
         // Migrate the main document store        
-        id oldStore = [storeCoordinator persistentStoreForURL:originalContentsURL];
+        id oldStore = [storeCoordinator persistentStoreForURL:[self datastoreURL]];
         NSAssert5(oldStore,
                   @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
                   [originalContentsURL absoluteString],
@@ -537,6 +534,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                   options:nil
                                                  withType:[self persistentStoreTypeForFileType:typeName]
                                                     error:&error];
+        [self setDatastoreURL:URL];
         
         if (result)
         {

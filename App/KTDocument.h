@@ -43,7 +43,8 @@ extern NSString *kKTDocumentWillSaveNotification;
     
     // KT
     NSManagedObjectContext	*_managedObjectContext;
-	KTSite                  *_site;                   // accessor in category method
+	NSURL                   *_persistentStoreURL;
+    KTSite                  *_site;                   // accessor in category method
 	
 	//KTMediaManager				*_mediaManager;
 		
@@ -58,7 +59,6 @@ extern NSString *kKTDocumentWillSaveNotification;
     
     
     // Saving
-    NSURL       *_lastWrittenURL;
     unsigned    mySaveOperationCount;
     
     NSMutableSet    *_reservedFilenames;
@@ -88,6 +88,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
+@property(nonatomic, copy) NSURL *datastoreURL;
 
 
 #pragma mark Media
