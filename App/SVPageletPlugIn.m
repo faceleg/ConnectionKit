@@ -124,7 +124,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 - (void)writeInnerHTML;
 {
     // Parse our built-in template
-    NSString *template = [[[self delegateOwner] plugin] templateHTMLAsString];
+    NSString *template = [[[self delegateOwner] plugInWrapper] templateHTMLAsString];
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
                                                                         component:self];
     

@@ -25,7 +25,7 @@
 
 @property(nonatomic, retain, readonly) NSObject <SVPageletPlugIn> *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
-- (KTElementPlugInWrapper *)plugin;
+- (KTElementPlugInWrapper *)plugInWrapper;
 
 
 

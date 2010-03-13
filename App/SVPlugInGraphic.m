@@ -79,7 +79,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)loadPlugIn;
 {
-    Class <SVPageletPlugInFactory> plugInFactory = [[[self plugin] bundle] principalClass];
+    Class <SVPageletPlugInFactory> plugInFactory = [[[self plugInWrapper] bundle] principalClass];
     if (plugInFactory)
     {                
         OBASSERT(!_plugIn);
@@ -108,7 +108,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     }
 }
 
-- (KTElementPlugInWrapper *)plugin
+- (KTElementPlugInWrapper *)plugInWrapper
 {
 	KTElementPlugInWrapper *result = [self wrappedValueForKey:@"plugin"];
 	
