@@ -17,6 +17,7 @@
 #import "KTPage+Internal.h"
 #import "SVRichText.h"
 #import "SVTitleBox.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "NSObject+Karelia.h"
 #import "NSScanner+Karelia.h"
