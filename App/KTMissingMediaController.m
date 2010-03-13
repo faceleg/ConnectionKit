@@ -8,8 +8,8 @@
 
 #import "KTMissingMediaController.h"
 
-#import "KTMediaFile.h"
 #import "KTMediaManager.h"
+#import "SVMediaRecord.h"
 
 #import "NSArray+Karelia.h"
 #import "NSHelpManager+Karelia.h"
@@ -139,8 +139,7 @@
 	KTMediaFile *aMediaFile;
 	while (aMediaFile = [missingMediaEnumerator nextObject])
 	{
-		if ([aMediaFile isKindOfClass:[KTMediaFile class]])
-        {
+		{
             NSString *lastKnownPath = [[aMediaFile alias] lastKnownPath];
             NSArray *lastKnownPathComponents = [lastKnownPath pathComponents];
             

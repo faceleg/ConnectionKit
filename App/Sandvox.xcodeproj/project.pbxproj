@@ -438,8 +438,6 @@
 		27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */; };
 		27AF0E2810F40B42000A6B15 /* SVPageInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AF0E2610F40B42000A6B15 /* SVPageInspector.h */; };
 		27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AF0E2710F40B42000A6B15 /* SVPageInspector.m */; };
-		27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
 		27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */; };
@@ -1903,8 +1901,6 @@
 		27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMRange+Karelia.m"; sourceTree = "<group>"; };
 		27AF0E2610F40B42000A6B15 /* SVPageInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageInspector.h; sourceTree = "<group>"; };
 		27AF0E2710F40B42000A6B15 /* SVPageInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageInspector.m; sourceTree = "<group>"; };
-		27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFile.h; sourceTree = "<group>"; };
-		27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFile.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
 		27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
@@ -2935,8 +2931,6 @@
 		272EEA6A0DDA56030012005E /* Media */ = {
 			isa = PBXGroup;
 			children = (
-				27B103B70CDFB4C0005C69D5 /* KTMediaFile.h */,
-				27B103B80CDFB4C0005C69D5 /* KTMediaFile.m */,
 				2710C254110A110D00A7B997 /* SVMediaProtocol.h */,
 				276A6E8D110B4312006FD9F7 /* SVMediaRecord.h */,
 				276A6E8E110B4312006FD9F7 /* SVMediaRecord.m */,
@@ -5056,7 +5050,6 @@
 				275341340C993D8600AC7220 /* KTHTMLParserMasterCache.h in Headers */,
 				277560360CA5228B00D8A412 /* KSObjectKeyPathPair.h in Headers */,
 				27AA10290CDA065A001D6B9B /* KTMissingMediaController.h in Headers */,
-				27B103B90CDFB4C0005C69D5 /* KTMediaFile.h in Headers */,
 				2716F2D40CE61A8000DE635E /* KTMissingMediaArrayController.h in Headers */,
 				27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */,
 				277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */,
@@ -6440,7 +6433,6 @@
 				277560370CA5228B00D8A412 /* KSObjectKeyPathPair.m in Sources */,
 				273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */,
 				27AA102A0CDA065A001D6B9B /* KTMissingMediaController.m in Sources */,
-				27B103BA0CDFB4C0005C69D5 /* KTMediaFile.m in Sources */,
 				2716F2D50CE61A8000DE635E /* KTMissingMediaArrayController.m in Sources */,
 				27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */,
 				273D7DB40D070BC100057448 /* KTAbstractPage+Paths.m in Sources */,
