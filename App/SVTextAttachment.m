@@ -16,12 +16,6 @@
 
 @implementation SVTextAttachment 
 
-- (void)writeHTML;
-{
-    NSString *string = [[[self paragraph] archiveString] substringWithRange:[self range]];
-    [[SVHTMLContext currentContext] writeString:string];
-}
-
 #pragma mark Range
 
 @dynamic body;
