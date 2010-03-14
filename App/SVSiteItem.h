@@ -72,6 +72,7 @@
 #pragma mark Tree
 
 @property(nonatomic, copy, readonly) NSSet *childItems;
+- (NSArray *)sortedChildren;
 
 //  .parentPage is marked as optional in the xcdatamodel file so subentities can choose their own rules. SVSiteItem programmatically makes .parentPage required. Override -validateParentPage:error: in a subclass to turn this off again.
 @property(nonatomic, retain) KTPage *parentPage;

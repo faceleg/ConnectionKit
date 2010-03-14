@@ -427,36 +427,6 @@
 	return result;
 }
 
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
-{
-	if ( ![self hasChildren] )
-	{
-		return NO;
-	}
-	else
-	{
-		NSEnumerator *e = [[self childItems] objectEnumerator];
-		KTPage *child;
-		while ( child = [e nextObject] )
-		{
-			if ( [child isEqual:aPotentialDescendant] )
-			{
-				return YES;
-			}
-			else if ( [child hasChildren] )
-			{
-				if ( [child containsDescendant:aPotentialDescendant] )
-				{
-					return YES;
-				}
-			}
-		}
-	}
-	
-	return NO;
-}
-
-
 /*	Returns the page's index path relative to root parent. i.e. the Site object.
  *	This means every index starts with 0 to signify root.
  */

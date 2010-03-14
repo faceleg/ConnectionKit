@@ -21,10 +21,8 @@
 + (KTPage *)pageWithParent:(KTPage *)aParent
 	  dataSourceDictionary:(NSDictionary *)aDictionary insertIntoManagedObjectContext:(NSManagedObjectContext *)aContext;
 
-// Hierarchy
-- (BOOL)containsDescendant:(KTPage *)aPotentialDescendant;	// DEPRECATED.  FASTER TO USE isDescendantOfPage:
-- (BOOL)isDescendantOfCollection:(KTPage *)aPotentialAncestor;
 
+// Hierarchy
 - (int)proposedOrderingForProposedChild:(id)aProposedChild
 							   sortType:(SVCollectionSortOrder)aSortType
                               ascending:(BOOL)ascending;

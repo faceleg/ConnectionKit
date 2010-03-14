@@ -54,7 +54,9 @@
 // Drag & Drop
 @property(nonatomic, copy) NSArray *lastItemsWrittenToPasteboard;   // call with nil to clean out
 - (void)setDropSiteItem:(id)item dropChildIndex:(NSInteger)index;
+
 - (BOOL)moveSiteItems:(NSArray *)items intoCollection:(KTPage *)collection childIndex:(NSInteger)index;
+- (BOOL)acceptArchivedPagesDrop:(NSArray *)archivedPages ontoPage:(KTPage *)page childIndex:(int)anIndex;
 
 @end
 
@@ -829,7 +831,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[cell setHasCodeInjection:[[item codeInjection] hasCodeInjection]];
 		if (item == [self rootPage] && ![cell hasCodeInjection])
 		{
-			[cell setHasCodeInjection:[[[item master] codeInjection] hasCodeInjection]];
+			[cell setHasCodeInjection:[[[[self rootPage] master] codeInjection] hasCodeInjection]];
 		}
 		
 		// Home page is drawn slightly differently
@@ -899,14 +901,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
  */
 - (void)outlineViewItemWillCollapse:(NSNotification *)notification
 {
-	SVSiteItem *collapsingItem = [[notification userInfo] objectForKey:@"NSObject"];
+	KTPage *collapsingPage = [[notification userInfo] objectForKey:@"NSObject"];
 	BOOL shouldSelectCollapsingItem = YES;
 	NSEnumerator *selectionEnumerator = [[[self content] selectedObjects] objectEnumerator];
 	SVSiteItem *anItem;
 	
 	while (anItem = [selectionEnumerator nextObject])
 	{
-		if (![anItem isDescendantOfCollection:collapsingItem])
+		if (![anItem isDescendantOfCollection:collapsingPage])
 		{
 			shouldSelectCollapsingItem = NO;
 			break;
@@ -915,7 +917,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	if (shouldSelectCollapsingItem)
 	{
-		[[self outlineView] selectItem:collapsingItem];
+		[[self outlineView] selectItem:collapsingPage];
 	}
 }
 

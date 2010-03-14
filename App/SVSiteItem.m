@@ -199,6 +199,7 @@
 #pragma mark Tree
 
 - (NSSet *)childItems { return nil; }
+- (NSArray *)sortedChildren; { return nil; }
 
 @dynamic parentPage;
 - (BOOL)validateParentPage:(KTPage **)page error:(NSError **)outError;
