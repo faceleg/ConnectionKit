@@ -17,7 +17,9 @@
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
 #import "SVSidebar.h"
-#import "KTSite.h"
+#import "SVTemplate.h"
+
+#import "NSBundle+KTExtensions.h"
 
 #import "NSManagedObject+KTExtensions.h"
 
@@ -124,8 +126,9 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 - (void)writeInnerHTML;
 {
     // Parse our built-in template
-    NSString *template = [[[self delegateOwner] plugInWrapper] templateHTMLAsString];
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template
+    SVTemplate *template = [[self bundle] HTMLTemplate];
+	
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
                                                                         component:self];
     
     [parser parse];

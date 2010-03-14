@@ -7,10 +7,14 @@
 
 #import "NSBundle+KTExtensions.h"
 
-#import "Debug.h"
-#import "NSImage+Karelia.h"
+#import "SVTemplate.h"
+
 #import "NSApplication+Karelia.h"
 #import "KSAppDelegate.h"
+#import "NSImage+Karelia.h"
+
+#import "Debug.h"
+
 
 @implementation NSBundle ( KTExtensions )
 
@@ -51,6 +55,21 @@
 {
 	id result = [self objectForInfoDictionaryKey:@"KTMainEntityName"];
     return result;
+}
+
+- (SVTemplate *)HTMLTemplate;
+{
+    NSString *templateName = [self objectForInfoDictionaryKey:@"KTTemplateName"];
+    if (!templateName) templateName = @"template";
+    
+    NSString *path = [self pathForResource:templateName ofType:@"html"];
+    if (path)
+    {
+        SVTemplate *result = [[SVTemplate alloc] initWithContentsOfURL:[NSURL fileURLWithPath:path]];
+        return [result autorelease];
+    }
+    
+    return nil;
 }
 
 - (NSString *)templateRSSAsString
