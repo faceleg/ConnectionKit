@@ -17,7 +17,6 @@
 #import "KTPage+Internal.h"
 #import "KTTranscriptController.h"
 
-#import "KTMediaFile.h"
 #import "KTMediaFileUpload.h"
 #import "KTImageScalingURLProtocol.h"
 
@@ -642,6 +641,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     return [[_uploadedMedia copy] autorelease];
 }
+
+@class KTMediaFile;
 
 /*  Adds the media file to the upload queue (if it's not already in it)
  */

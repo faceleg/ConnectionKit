@@ -147,7 +147,7 @@
 #pragma mark Continue Reading Link
 
 /*	The continue reading link is a special case as we have to replace its content upon editing
- */
+ /
  
 - (NSString *)continuereadinglinkWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
@@ -177,5 +177,7 @@
 	
 	return result;
 }
+
+ */
 
 @end

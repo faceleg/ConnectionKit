@@ -63,9 +63,9 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Summary
 
+/*
 - (NSString *)summaryWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
 	NSString *result = @"";
@@ -93,8 +93,7 @@
 	return result;
 }
 
-/*	Generates the summary for the page taking into account its type
- */
+ //	Generates the summary for the page taking into account its type
 - (NSString *)summaryForPage:(KTPage *)page truncation:(unsigned)truncation
 {
 	if ([page isCollection])
@@ -107,8 +106,7 @@
 	}
 }
 
-/*	Collections are a bit trickier to handle than pages. -summaryOfPage will call through to here automatically.
- */
+//	Collections are a bit trickier to handle than pages. -summaryOfPage will call through to here automatically.
 - (NSString *)summaryForCollection:(KTPage *)page truncation:(unsigned)truncation
 {
 	NSString *result = nil;
@@ -149,9 +147,8 @@
 	return result;
 }
 
-/*	Generates a summary of a page WITHOUT considering its type.
- *	Support method used by -summaryOfPage and -summaryOfCollection:
- */
+//	Generates a summary of a page WITHOUT considering its type.
+//Support method used by -summaryOfPage and -summaryOfCollection:
 - (NSString *)summaryForContentOfPage:(KTPage *)page truncation:(unsigned)truncation
 {
 	// Create a text block object to handle truncation etc.
@@ -190,5 +187,7 @@
 	
 	return result;
 }
+
+*/
 
 @end
