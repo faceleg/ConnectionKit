@@ -24,7 +24,7 @@
 #import "SVSidebar.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "KTDocWindowController.h"
+#import "KTDocument.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
