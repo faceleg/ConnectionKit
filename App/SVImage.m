@@ -65,7 +65,19 @@
 
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
 {
-    NSURL *result = [[self media] fileURL];
+    NSURL *result = nil;
+    
+    SVMediaRecord *media = [self media];
+    if (media)
+    {
+        result = [media fileURL];
+        if (!result) result = [[media fileURLResponse] URL];
+    }
+    else
+    {
+        //result = [self sourceURL];
+    }
+    
     if (!result)
     {
         result = [self placeholderImageURL];
