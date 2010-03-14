@@ -706,10 +706,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)close
 {	
-	LOGMETHOD;
-    
-    
-    // Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
+	// Allow anyone interested to know we're closing. e.g. KTDocWebViewController uses this
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillCloseNotification object:self];
 
 	
