@@ -54,23 +54,6 @@
 	[self invalidatePagesInIndexCache];
 }
 
-- (void)setIncludeInIndex:(BOOL)flag
-{
-	// Mark our old archive page (if there is one) stale
-	KTArchivePage *oldArchivePage = [[self parentPage] archivePageForTimestamp:[self timestampDate] createIfNotFound:flag];
-	
-	
-	[super setIncludeInIndex:flag];
-	
-	
-	// Delete the old archive page if it has nothing on it now
-	if (oldArchivePage)
-	{
-		NSArray *pages = [oldArchivePage sortedPages];
-		if (!pages || [pages count] == 0) [[self managedObjectContext] deletePage:oldArchivePage];
-	}
-}
-
 #pragma mark -
 #pragma mark Index
 
@@ -256,9 +239,10 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
 	[parser setDelegate:parserDelegate];
 	
-    SVHTMLContext *context = [[SVHTMLContext alloc] init];
+    NSMutableString *result = [NSMutableString string];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
     
-	NSString *result = [parser parseIntoHTMLContext:context];
+	[parser parseIntoHTMLContext:context];
     [context release];
 	[parser release];
 		
@@ -274,13 +258,6 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 - (NSArray *)feedEnclosures
 {
 	NSArray *result = nil;
-	
-	id delegate = [self delegate];
-	if (delegate && [delegate respondsToSelector:@selector(pageWillReturnFeedEnclosures:)])
-	{
-		result = [delegate pageWillReturnFeedEnclosures:self];
-	}
-	
 	return result;
 }
 
@@ -545,7 +522,10 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 {
 	NSMutableString *result = [NSMutableString stringWithString:@"<ul>\n"];
 	
-	NSArray *allSortedChildren = [self childrenWithSorting:sortType inIndex:NO];
+	NSArray *allSortedChildren = [self childrenWithSorting:sortType
+                                                 ascending:YES
+                                                   inIndex:NO];
+    
 	NSRange childrenRange = NSMakeRange(0, MIN([allSortedChildren count], [self integerForKey:@"collectionSummaryMaxPages"]));
 	NSArray *sortedChildren = [allSortedChildren subarrayWithRange:childrenRange];
 	
