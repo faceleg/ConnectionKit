@@ -108,12 +108,19 @@
     }
     else
     {
-        NSData *data = 
-        [[[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL] data];
+        WebResource *resource = [[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL];
+        NSData *data = [resource data];
         
-        media = [SVMediaRecord mediaWithContents:data
-                                      entityName:@"ImageMedia"
-                  insertIntoManagedObjectContext:context];
+        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[resource URL]
+                                                            MIMEType:[resource MIMEType]
+                                               expectedContentLength:[data length]
+                                                    textEncodingName:[resource textEncodingName]];
+        
+        media = [SVMediaRecord mediaWithFileContents:data
+                                         URLResponse:response
+                                          entityName:@"ImageMedia"
+                      insertIntoManagedObjectContext:context];
+        [response release];
         
         [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL pathExtension]]];
     }

@@ -19,8 +19,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 
 @interface SVMediaRecord ()
+
 - (void)setFileURL:(NSURL *)URL;
 @property(nonatomic, retain, readwrite) BDAlias *alias;
+
+@property(nonatomic, copy) NSURLResponse *fileURLResponse;
+
 @end
 
 
@@ -59,9 +63,10 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-+ (SVMediaRecord *)mediaWithContents:(NSData *)data
-                          entityName:(NSString *)entityName
-      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVMediaRecord *)mediaWithFileContents:(NSData *)data
+                             URLResponse:(NSURLResponse *)response
+                              entityName:(NSString *)entityName
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     OBPRECONDITION(data);
     OBPRECONDITION(context);
@@ -71,6 +76,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                     inManagedObjectContext:context];
     
     result->_data = [data copy];
+    [result setFileURLResponse:response];
+    [result setPreferredFilename:[response suggestedFilename]];
     
     return result;
 }
@@ -80,6 +87,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 - (void)dealloc
 {
     [_URL release];
+    [_URLResponse release];
     
     [super dealloc];
 }
@@ -287,6 +295,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     return _data;
 }
+
+@synthesize fileURLResponse = _URLResponse;
 
 @synthesize fileAttributes = _attributes;
 - (NSDictionary *)fileAttributes

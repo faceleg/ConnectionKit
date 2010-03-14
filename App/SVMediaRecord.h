@@ -25,6 +25,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
     
     // Accessing Files
     NSURL           *_URL;
+    NSURLResponse   *_URLResponse;
     NSDictionary    *_attributes;
     NSData          *_data;
 }
@@ -39,9 +40,10 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
                           error:(NSError **)outError;
 
 // Must call -setPreferredFilename: after, and ideally -setFileAttributes: too
-+ (SVMediaRecord *)mediaWithContents:(NSData *)data
-                          entityName:(NSString *)entityName
-      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVMediaRecord *)mediaWithFileContents:(NSData *)data
+                             URLResponse:(NSURLResponse *)response
+                              entityName:(NSString *)entityName
+          insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 #pragma mark Updating Media Records
@@ -83,6 +85,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 - (NSData *)fileContents;   // could return nil if the file is too big, or a directory
 - (BOOL)areContentsCached;
+- (NSURLResponse *)fileURLResponse; // for in-memory media
 
 
 #pragma mark Location Support
