@@ -9,10 +9,10 @@
 #import "SVImage.h"
 
 #import "SVApplicationController.h"
-#import "SVHTMLContext.h"
 #import "SVImageDOMController.h"
 #import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
+#import "SVWebEditorHTMLContext.h"
 
 
 @interface SVImage ()
@@ -72,6 +72,7 @@
     {
         result = [media fileURL];
         if (!result) result = [[media fileURLResponse] URL];
+        [[SVHTMLContext currentContext] addMedia:media];
     }
     else
     {

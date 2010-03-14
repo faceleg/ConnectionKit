@@ -185,5 +185,7 @@
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
 
+- (void)addMedia:(SVMediaRecord *)media; { }
+
 @end
 

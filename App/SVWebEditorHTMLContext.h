@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 
-@class SVWebEditorItem, SVDOMController, KSObjectKeyPathPair;
+@class SVWebEditorItem, SVDOMController, KSObjectKeyPathPair, SVMediaRecord;
 
 
 @interface SVWebEditorHTMLContext : SVHTMLContext
@@ -41,5 +41,10 @@
 #pragma mark Low-level controllers
 // Ignored by regular contexts. Call one of the -didEndWriting… methods after
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+
+
+#pragma mark Media
+- (void)addMedia:(SVMediaRecord *)media;
+
 
 @end
