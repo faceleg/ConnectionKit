@@ -296,6 +296,18 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return _data;
 }
 
+- (WebResource *)webResource;
+{
+    NSURLResponse *response = [self fileURLResponse];
+    
+    WebResource *result = [[WebResource alloc] initWithData:[self fileContents]
+                                                        URL:[response URL]
+                                                   MIMEType:[response MIMEType]
+                                           textEncodingName:[response textEncodingName]
+                                                  frameName:nil];
+    return [result autorelease];
+}
+
 @synthesize fileURLResponse = _URLResponse;
 
 @synthesize fileAttributes = _attributes;

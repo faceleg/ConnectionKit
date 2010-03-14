@@ -84,6 +84,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 @property(nonatomic, copy) NSDictionary *fileAttributes; // mostly to act as a cache
 
 - (NSData *)fileContents;   // could return nil if the file is too big, or a directory
+- (WebResource *)webResource;
 - (BOOL)areContentsCached;
 - (NSURLResponse *)fileURLResponse; // for in-memory media
 
