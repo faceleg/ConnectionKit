@@ -14,15 +14,17 @@
 #import "KTPage.h"
 #import "SVGraphic.h"
 #import "SVRichText.h"
-#import "KTDocWindowController.h"
+#import "KTDocument.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
 #import "SVWebContentObjectsController.h"
+#import "SVWebEditorView.h"
 
 #import "NSDictionary+Karelia.h"
+#import "NSString+Karelia.h"
 #import "DOMNode+Karelia.h"
 #import "DOMRange+Karelia.h"
 
