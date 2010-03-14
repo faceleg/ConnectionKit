@@ -16,7 +16,7 @@
 
 
 @interface SVImage ()
-@property(nonatomic, copy) NSString *sourceURLString;
+@property(nonatomic, copy) NSString *externalSourceURLString;
 @end
 
 
@@ -54,13 +54,13 @@
 #pragma mark Media
 
 @dynamic media;
-@dynamic sourceURLString;
+@dynamic externalSourceURLString;
 
-- (NSURL *)sourceURL { return [NSURL URLWithString:[self sourceURLString]]; }
-- (void)setSourceURL:(NSURL *)URL
+- (NSURL *)externalSourceURL { return [NSURL URLWithString:[self externalSourceURLString]]; }
+- (void)setExternalSourceURL:(NSURL *)URL
 {
     if (URL) [[self managedObjectContext] deleteObject:[self media]];
-    [self setSourceURLString:[URL absoluteString]];
+    [self setExternalSourceURLString:[URL absoluteString]];
 }
 
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
