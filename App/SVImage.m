@@ -51,7 +51,7 @@
     }
 }
 
-#pragma mark Required Attributes
+#pragma mark Media
 
 @dynamic media;
 @dynamic sourceURLString;
@@ -62,6 +62,25 @@
     if (URL) [[self managedObjectContext] deleteObject:[self media]];
     [self setSourceURLString:[URL absoluteString]];
 }
+
+- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
+{
+    NSURL *result = [[self media] fileURL];
+    if (!result)
+    {
+        result = [self placeholderImageURL];
+    }
+    
+    return result;
+}
+
+- (NSURL *)placeholderImageURL; // the fallback when no media or external source is chose
+{
+    NSURL *result = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
+    return result;
+}
+
+#pragma mark Metrics
 
 @dynamic alternateText;
 
@@ -145,11 +164,7 @@
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     // src=
-    NSURL *imageURL = [[self media] fileURL];
-    if (!imageURL)
-    {
-        imageURL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
-    }
+    NSURL *imageURL = [self imagePreviewURL];
     
     // alt=
     NSString *alt = [self alternateText];
@@ -164,7 +179,7 @@
     // Actually write the image
     [context writeImageWithIdName:[self editingElementID]
                         className:[self className]
-                              src:[imageURL relativeString]
+                              src:[context relativeURLStringOfURL:imageURL]
                               alt:alt 
                             width:[[self width] description]
                            height:[[self height] description]];

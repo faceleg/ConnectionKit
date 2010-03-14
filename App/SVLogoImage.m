@@ -34,4 +34,10 @@
 
 - (BOOL)isPagelet { return NO; }
 
+- (NSURL *)placeholderImageURL; // the fallback when no media or external source is chose
+{
+    NSURL *result = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
+    return result;
+}
+
 @end

@@ -18,8 +18,16 @@
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 
 
+#pragma mark Media
+
 @property(nonatomic, retain) SVMediaRecord *media;
 @property(nonatomic, copy) NSURL *sourceURL;
+
+- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
+- (NSURL *)placeholderImageURL; // the fallback when no media or external source is chose
+
+
+#pragma mark Metrics
 
 @property(nonatomic, copy) NSString *alternateText;
 
