@@ -104,21 +104,6 @@
 	// Remove the page and update the page cache
 	[[self mutableSetValueForKey:@"childItems"] removeObject:item];
 	[self invalidateSortedChildrenCache];
-	
-	// Delete the corresponding archive page if unused now
-    if ([item isKindOfClass:[KTPage class]])
-    {
-        KTArchivePage *archive = [self archivePageForTimestamp:[(KTPage *)item timestampDate]
-                                              createIfNotFound:NO];
-        if (archive)
-        {
-            NSArray *archivePages = [archive sortedPages];
-            if ([archivePages count] == 0)
-            {
-                [[self managedObjectContext] deletePage:archive];
-            }
-        }
-    }
 }
 
 
@@ -129,23 +114,6 @@
 {
 	[[self mutableSetValueForKey:@"childItems"] minusSet:pages];
 	[self invalidateSortedChildrenCache];
-	
-	// Delete / mark stale the corresponding archive pages if unused now
-	KTPage *aPage;
-	for (aPage in pages)
-	{
-		if (![aPage isKindOfClass:[KTPage class]]) continue;
-              
-        KTArchivePage *archive = [self archivePageForTimestamp:[aPage timestampDate] createIfNotFound:NO];
-		if (archive)
-		{
-			NSArray *archivePages = [archive sortedPages];
-			if ([archivePages count] == 0)
-			{
-				[[self managedObjectContext] deletePage:archive];
-			}
-		}
-	}
 }
 
 #pragma mark Sorting Properties
