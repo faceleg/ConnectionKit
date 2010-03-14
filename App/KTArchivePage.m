@@ -113,7 +113,7 @@
         archiveTitle = [NSString stringWithFormat:@"%@ %@", collectionTitle, archiveTitle];
     }
     
-    [self setTitleWithString:archiveTitle];
+    [self setTitle:archiveTitle];
 }
 
 
