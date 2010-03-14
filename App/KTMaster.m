@@ -36,6 +36,7 @@
 
 
 @interface KTMaster ()
+@property(nonatomic, copy) NSString *designIdentifier;
 @property(nonatomic, retain, readwrite) SVLogoImage *logo;
 @end
 
@@ -151,7 +152,6 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Design
 
 - (KTDesign *)design
@@ -162,7 +162,7 @@
 	
 	if (!result)
 	{
-		NSString *identifier = [self valueForKeyPath:@"designPublishingInfo.identifier"];
+		NSString *identifier = [self designIdentifier];
         if (identifier)
         {
             result = [KTDesign pluginWithIdentifier:identifier];
@@ -180,36 +180,11 @@
 	return result;
 }
 
-- (NSManagedObject *)_designPublishInfoWithIdentifier:(NSString *)identifier
-{
-	NSManagedObjectContext *moc = [self managedObjectContext];
-	
-	// Look to see if there is an existing DesignPublishingInfo object
-	NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", identifier];
-	NSError *error = nil;
-	NSArray *existingDesigns = [moc fetchAllObjectsForEntityForName:@"DesignPublishingInfo" predicate:predicate error:&error];
-	if (error) {
-		NSAlert *alert = [NSAlert alertWithError:error];
-		[alert setIcon:[NSApp applicationIconImage]];
-		[alert runModal];	
-	}
-	NSManagedObject *result = [existingDesigns lastObject];
-	
-	
-	// If no existing design was found, create a new object
-	if (!result)
-	{
-		result = [NSEntityDescription insertNewObjectForEntityForName:@"DesignPublishingInfo" inManagedObjectContext:moc];
-		[result setValue:identifier forKey:@"identifier"];
-	}
-	
-	
-	return result;
-}
+@dynamic designIdentifier;
 
 /*  Special private method where you supply ONE of the parameters
  */
-- (void)_setDesignBundleIdentifier:(NSString *)identifier xorDesign:(KTDesign *)design
+- (void)_setDesignIdentifier:(NSString *)identifier xorDesign:(KTDesign *)design
 {
     if (!identifier)
     {
@@ -231,7 +206,7 @@
 	[self setPrimitiveValue:design forKey:@"design"];
 	[self didChangeValueForKey:@"design"];
 	
-	[self setValue:[self _designPublishInfoWithIdentifier:identifier] forKey:@"designPublishingInfo"];
+	[self setDesignIdentifier:identifier];
 }
 
 - (void)setDesign:(KTDesign *)design
@@ -239,7 +214,7 @@
 	OBASSERT(design);
     
     // Currently, we operate this as a neat cover 
-	[self _setDesignBundleIdentifier:nil xorDesign:design];
+	[self _setDesignIdentifier:nil xorDesign:design];
 }
 
 /*  This method is used when a design's identifier is known, but the design itself is unavailable. (e.g. importing old docs)
@@ -248,7 +223,7 @@
 {
     OBPRECONDITION(identifier); 
     
-    [self _setDesignBundleIdentifier:identifier xorDesign:nil];
+    [self _setDesignIdentifier:identifier xorDesign:nil];
 }
 
 - (NSURL *)designDirectoryURL
