@@ -37,6 +37,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                           error:(NSError **)outError;
 {
     OBPRECONDITION(URL);
+    OBPRECONDITION(context);
     
     
     NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
@@ -63,7 +64,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     OBPRECONDITION(data);
-    
+    OBPRECONDITION(context);
+
     
     SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
                                                     inManagedObjectContext:context];
