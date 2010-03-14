@@ -84,6 +84,7 @@
     {
         // Copy basic properties from text block
         result = [[SVTextFieldDOMController alloc] init];
+        [result setRepresentedObject:value];
         [result setHTMLContext:self];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
@@ -97,6 +98,7 @@
     else if ([value isKindOfClass:[SVRichText class]])
     {
         result = [[SVBodyTextDOMController alloc] init];
+        [result setRepresentedObject:value];
         [result setHTMLContext:self];
         [result setRichText:YES];
         [result setFieldEditor:NO];
