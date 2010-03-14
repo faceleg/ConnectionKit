@@ -18,12 +18,19 @@
     SVWebEditorItem *_currentItem;  // weak ref
     
     NSMutableSet    *_objectKeyPathPairs;
+    
+    NSMutableSet    *_media;
 }
 
 - (NSArray *)webEditorItems;
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 @property(nonatomic, copy, readonly) NSSet *dependencies;
+
+
+#pragma mark Media
+- (NSSet *)media;
+
 
 @end
 

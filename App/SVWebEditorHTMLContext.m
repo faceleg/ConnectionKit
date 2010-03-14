@@ -26,6 +26,7 @@
     
     _items = [[NSMutableArray alloc] init];
     _objectKeyPathPairs = [[NSMutableSet alloc] init];
+    _media = [[NSMutableSet alloc] init];
     
     return self;
 }
@@ -34,6 +35,7 @@
 {
     [_items release];
     [_objectKeyPathPairs release];
+    [_media release];
     
     [super dealloc];
 }
@@ -171,6 +173,16 @@
 }
 
 - (NSSet *)dependencies { return [[_objectKeyPathPairs copy] autorelease]; }
+
+#pragma mark Media
+
+- (NSSet *)media; { return [[_media copy] autorelease]; }
+
+- (void)addMedia:(SVMediaRecord *)media;
+{
+    [super addMedia:media];
+    [_media addObject:media];
+}
 
 @end
 
