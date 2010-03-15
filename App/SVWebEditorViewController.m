@@ -964,7 +964,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (![self isUpdating])
     {
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
-        result = [_selectableObjectsController setSelectedObjects:objects];
+        result = [_selectableObjectsController setSelectedObjects:objects insertIfNeeded:YES];
     }
     
     return result;

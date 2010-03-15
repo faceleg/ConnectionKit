@@ -136,13 +136,19 @@
     return result;
 }
 
-- (BOOL)selectObjectByInsertingIfNeeded:(id)object;
+- (BOOL)setSelectedObjects:(NSArray *)objects insertIfNeeded:(BOOL)insertIfNeeded;
 {
-    BOOL result = [self setSelectedObjects:[NSArray arrayWithObject:object]];
-    if ([[self selectedObjects] count] == 0)
+    BOOL result = [self setSelectedObjects:objects];
+    
+    NSArray *selection = [self selectedObjects];
+    if ([selection count] < [objects count])
     {
-        [self addObject:object];
-        if (![self selectsInsertedObjects]) result = [self selectObjectByInsertingIfNeeded:object];
+        for (id anObject in objects)
+        {
+            if (![selection containsObject:anObject]) [self addObject:anObject];
+        }
+        
+        [self setSelectedObjects:objects];
     }
     
     return result;

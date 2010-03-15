@@ -30,7 +30,7 @@
 @property(nonatomic, retain) KTPage *page;
 
 
-- (BOOL)selectObjectByInsertingIfNeeded:(id)object;
+- (BOOL)setSelectedObjects:(NSArray *)objects insertIfNeeded:(BOOL)insertIfNeeded;
 
 
 #pragma mark  SPI
