@@ -91,6 +91,10 @@
 - (void)writeContentRecursively:(BOOL)recursive;// writes to the current HTML context. Ignore things like site title
 
 
+#pragma mark Thumbnail
+@property(nonatomic, retain, readonly) NSImage *thumbnail;
+
+
 #pragma mark UI
 
 @property(nonatomic, readonly) BOOL isCollection;

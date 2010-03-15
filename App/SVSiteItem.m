@@ -264,6 +264,10 @@
     [context writeNewline];
 }
 
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail { return nil; }
+
 #pragma mark UI
 
 - (BOOL)isCollection { return NO; }

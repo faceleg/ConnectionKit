@@ -3041,6 +3041,28 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		274DF472114E486600AC8C03 /* Site Items */ = {
+			isa = PBXGroup;
+			children = (
+				273864300D50A6A000A8A209 /* Page */,
+				274DF473114E487E00AC8C03 /* Other */,
+			);
+			name = "Site Items";
+			sourceTree = "<group>";
+		};
+		274DF473114E487E00AC8C03 /* Other */ = {
+			isa = PBXGroup;
+			children = (
+				276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */,
+				276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */,
+				2747DA3810FE8DE6007428BB /* SVExternalLink.h */,
+				2747DA3910FE8DE6007428BB /* SVExternalLink.m */,
+				2747DA3610FE8DE6007428BB /* SVSiteItem.h */,
+				2747DA3710FE8DE6007428BB /* SVSiteItem.m */,
+			);
+			name = Other;
+			sourceTree = "<group>";
+		};
 		2752C70F0C8DC4CA00BD90EA /* Scripts */ = {
 			isa = PBXGroup;
 			children = (
@@ -3103,7 +3125,7 @@
 			children = (
 				2778929D10CD5F76008AA683 /* Shared */,
 				278849810F5FF0D300C70629 /* Site & Master */,
-				273864300D50A6A000A8A209 /* Page */,
+				274DF472114E486600AC8C03 /* Site Items */,
 				3C5A73710BF7B69300776464 /* Pagelets */,
 				278F798F10B4485C00BDBAF7 /* Text */,
 				272EEA6A0DDA56030012005E /* Media */,
@@ -3248,16 +3270,10 @@
 		278849810F5FF0D300C70629 /* Site & Master */ = {
 			isa = PBXGroup;
 			children = (
-				2747DA3610FE8DE6007428BB /* SVSiteItem.h */,
-				2747DA3710FE8DE6007428BB /* SVSiteItem.m */,
-				2747DA3810FE8DE6007428BB /* SVExternalLink.h */,
-				2747DA3910FE8DE6007428BB /* SVExternalLink.m */,
 				3C682B100D622F1600B4D485 /* KTSite.h */,
 				3C682B110D622F1D00B4D485 /* KTSite.m */,
 				273C2F8E0CCE58C100E48E22 /* KTMaster.h */,
 				273C2F8F0CCE58C100E48E22 /* KTMaster.m */,
-				276A6F72110B5B7B006FD9F7 /* SVDownloadSiteItem.h */,
-				276A6F73110B5B7B006FD9F7 /* SVDownloadSiteItem.m */,
 			);
 			name = "Site & Master";
 			sourceTree = "<group>";

@@ -69,7 +69,9 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
-		result = [self bundleIconForItem:item];
+		result = [item thumbnail];
+        
+        if (!result) result = [self bundleIconForItem:item];
 	}
 	
 	
