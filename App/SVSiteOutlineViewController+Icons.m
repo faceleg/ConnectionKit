@@ -67,7 +67,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	{
 		result = [self favicon];
 	}
-	else
+	else if ([item imageRepresentation])
 	{
         CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
         if (imageSource)
@@ -79,10 +79,10 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             
             CFRelease(imageSource);
         }
-        
-        
-        if (!result) result = [self bundleIconForItem:item];
 	}
+              
+              
+    if (!result) result = [self bundleIconForItem:item];
 	
 	
 	// As a final resort, we fallback to the broken icon
