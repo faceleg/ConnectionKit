@@ -3193,8 +3193,6 @@
 				27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */,
 				2730D66B0DE18ACA004858F5 /* SVTemplateParser.h */,
 				2730D66C0DE18ACA004858F5 /* SVTemplateParser.m */,
-				27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */,
-				27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */,
 				278EC6F10C97136500A212EC /* KTHTMLParserCache.h */,
 				278EC6F20C97136500A212EC /* KTHTMLParserCache.m */,
 				275341320C993D8600AC7220 /* KTHTMLParserMasterCache.h */,
@@ -4086,6 +4084,8 @@
 		3C5A72FE0BF7AF0500776464 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
+				27EF5C990D6B974E0024575B /* NSBundle+QuickLook.h */,
+				27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */,
 				27FC47ED1030CE7500A4A5E2 /* NSSet+Karelia.h */,
 				27FC47EE1030CE7500A4A5E2 /* NSSet+Karelia.m */,
 				3CE79D870D6260D000FCEE6D /* NSArray+KTExtensions.h */,
