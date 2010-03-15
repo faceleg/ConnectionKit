@@ -431,6 +431,17 @@
 	}
 }
 
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail;
+{
+    id image = [[[[self body] orderedAttachments] firstObjectKS] graphic];
+    
+    NSImage *result = [[NSImage alloc] initWithThumbnailOfURL:[[image media] fileURL]
+                                                 maxPixelSize:128];
+    return [result autorelease];
+}
+
 #pragma mark Archiving
 
 + (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document
