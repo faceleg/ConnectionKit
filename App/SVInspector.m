@@ -70,6 +70,7 @@
     if (!controller) controller = [[self class] noSelectionController];
     
     [_wrapInspector setInspectedObjectsController:controller];
+    [_graphicInspector setInspectedObjectsController:controller];
     [_metricsInspector setInspectedObjectsController:controller];
     [_linkInspector setInspectedObjectsController:controller];
     [_plugInInspector setInspectedObjectsController:controller];

@@ -14,6 +14,7 @@
 #import "SVTextAttachment.h"
 #import "SVTitleBox.h"
 
+#import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
@@ -130,6 +131,25 @@
         [attachment setGraphic:nil];    // so deleting it doesn't cascade and delete us too
         [[attachment body] deleteCharactersInRange:[attachment range]];
     }
+}
+
+- (BOOL)validateLayout:(NSError **)outError;
+{
+    // If want to show title, cannot be inline
+    BOOL result = YES;
+    
+    if (![[[self titleBox] hidden] boolValue] && ![self isPagelet])
+    {
+        result = NO;
+        if (outError)
+        {
+            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                            code:NSManagedObjectValidationError
+                            localizedDescription:@"Graphics cannot show title while inline"];
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Sidebar
@@ -275,20 +295,18 @@
 - (BOOL)validateForInsert:(NSError **)error
 {
     BOOL result = [super validateForInsert:error];
-    if (result)
-    {
-        result = [self validatePlacement:error];
-    }
+    if (result) result = [self validatePlacement:error];
+    if (result) result = [self validateLayout:error];
+    
     return result;
 }
 
 - (BOOL)validateForUpdate:(NSError **)error
 {
     BOOL result = [super validateForUpdate:error];
-    if (result)
-    {
-        result = [self validatePlacement:error];
-    }
+    if (result) result = [self validatePlacement:error];
+    if (result) result = [self validateLayout:error];
+    
     return result;
 }
 

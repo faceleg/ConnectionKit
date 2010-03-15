@@ -23,8 +23,7 @@
 
 @dynamic hidden;
 
-- (NSString *)title { return nil; }
-- (void)setTitle:(NSString *)title { }
+- (SVTitleBox *)titleBox { return nil; }
 - (SVRichText *)introduction { return nil; }
 - (void)setIntroduction:(SVRichText *)caption { }
 - (SVRichText *)caption { return nil; }

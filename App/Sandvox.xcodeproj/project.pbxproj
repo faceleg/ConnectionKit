@@ -289,6 +289,8 @@
 		2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF4911008D54007428BB /* SVSiteItemViewController.h */; };
 		2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF8011009B59007428BB /* SVURLPreviewViewController.h */; };
 		2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DF8111009B59007428BB /* SVURLPreviewViewController.m */; };
+		274DF567114EB01600AC8C03 /* SVPageletTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */; };
+		274DF568114EB01600AC8C03 /* SVPageletTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77EE0D6269B6004F89C2 /* NSManagedObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A713F0BF7ADE100776464 /* NSManagedObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
 		274E77F40D6269E3004F89C2 /* NSBundle+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAA0D62345000B4D485 /* NSBundle+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -1731,6 +1733,8 @@
 		2747DF4911008D54007428BB /* SVSiteItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItemViewController.h; sourceTree = "<group>"; };
 		2747DF8011009B59007428BB /* SVURLPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVURLPreviewViewController.h; sourceTree = "<group>"; };
 		2747DF8111009B59007428BB /* SVURLPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLPreviewViewController.m; sourceTree = "<group>"; };
+		274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletTitleBox.h; sourceTree = "<group>"; };
+		274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletTitleBox.m; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
 		274E82990D6272B6004F89C2 /* NSDocumentController+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocumentController+KTExtensions.h"; sourceTree = "<group>"; };
 		274E829A0D6272B6004F89C2 /* NSDocumentController+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSDocumentController+KTExtensions.m"; sourceTree = "<group>"; };
@@ -3302,6 +3306,8 @@
 				27E83E4710D9A9BA00FBEC84 /* CalloutTemplate.html */,
 				278F799810B44A1B00BDBAF7 /* SVRichText.h */,
 				278F799910B44A1B00BDBAF7 /* SVRichText.m */,
+				274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */,
+				274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -5350,6 +5356,7 @@
 				27C20EB5114034F4006D455E /* SVIntroAndCaptionGraphic.h in Headers */,
 				27C20F0F11405105006D455E /* SVAuxilaryPageletText.h in Headers */,
 				27FAD5531146AEF80040FA44 /* SVTabViewController.h in Headers */,
+				274DF567114EB01600AC8C03 /* SVPageletTitleBox.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6741,6 +6748,7 @@
 				27C20EB6114034F4006D455E /* SVIntroAndCaptionGraphic.m in Sources */,
 				27C20F1011405105006D455E /* SVAuxilaryPageletText.m in Sources */,
 				27FAD5541146AEF80040FA44 /* SVTabViewController.m in Sources */,
+				274DF568114EB01600AC8C03 /* SVPageletTitleBox.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -161,4 +161,20 @@
     return [NSSet setWithObjects:@"wrap", @"causesWrap", nil];
 }
 
+#pragma mark Validation
+
+- (BOOL)validateForInsert:(NSError **)error;
+{
+    BOOL result = [super validateForInsert:error];
+    if (result) result = [[self graphic] validateLayout:error];
+    return result;
+}
+
+- (BOOL)validateForUpdate:(NSError **)error;
+{
+    BOOL result = [super validateForUpdate:error];
+    if (result) result = [[self graphic] validateLayout:error];
+    return result;
+}
+
 @end
