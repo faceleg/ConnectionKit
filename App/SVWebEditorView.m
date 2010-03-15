@@ -1340,6 +1340,28 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return YES;
 }
 
+- (BOOL)webView:(WebView *)webView shouldChangeSelectedDOMRange:(DOMRange *)currentRange
+     toDOMRange:(DOMRange *)proposedRange affinity:(NSSelectionAffinity)selectionAffinity
+ stillSelecting:(BOOL)flag;
+{
+    BOOL result = YES;
+    
+    //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
+    if (!_isChangingSelectedItems)
+    {
+        NSArray *items = (proposedRange) ? [self itemsInDOMRange:proposedRange] : nil;
+        
+        result = [self updateSelectionByDeselectingAll:YES
+                                        orDeselectItem:nil
+                                           selectItems:items
+                                         updateWebView:NO
+                                            isUIAction:YES];
+    }
+    
+    
+    return result;
+}
+
 - (BOOL)webView:(WebView *)webView shouldChangeTypingStyle:(DOMCSSStyleDeclaration *)currentStyle toStyle:(DOMCSSStyleDeclaration *)proposedStyle
 {
     BOOL result = YES;
@@ -1417,20 +1439,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     else
     {
         [[SVLinkManager sharedLinkManager] setSelectedLink:nil editable:[webView canCreateLink]];
-    }
-    
-    
-    //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
-    if (!_isChangingSelectedItems)
-    {
-        DOMRange *selection = [webView selectedDOMRange];
-        NSArray *items = (selection) ? [self itemsInDOMRange:selection] : nil;
-        
-        [self updateSelectionByDeselectingAll:YES
-                               orDeselectItem:nil
-                                  selectItems:items
-                                updateWebView:NO
-                                   isUIAction:YES];
     }
     
     
