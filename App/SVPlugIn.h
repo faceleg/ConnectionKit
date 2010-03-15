@@ -48,6 +48,10 @@
 - (void)writeHTML;
 
 
+#pragma mark Thumbnail
+- (NSImage *)thumbnail;
+
+
 @end
 
 

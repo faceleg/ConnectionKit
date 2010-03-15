@@ -180,6 +180,13 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return result;
 }
 
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail;
+{
+    return [[self plugIn] thumbnail];
+}
+
 #pragma mark Deprecated
 
 // Loads of old plug-ins rely on this property

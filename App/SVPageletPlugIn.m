@@ -163,6 +163,10 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self setValue:serializedValue forKey:key];
 }
 
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail; { return nil; }
+
 #pragma mark The Wider World
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
