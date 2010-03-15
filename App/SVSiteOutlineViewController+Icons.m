@@ -109,15 +109,15 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 		NSURL *faviconURL = [faviconRecord fileURL];
 		
 		// Create the thumbnail
-		result = [[NSImage alloc] initWithContentsOfURL:faviconURL
-                                          ofMaximumSize:[self maximumIconSize]];
+		result = [[NSImage alloc] initWithThumbnailOfURL:faviconURL
+                                          maxPixelSize:[self maximumIconSize]];
 		
 		// If there is no favicon chosen, default to 32favicon
 		if (!result)
 		{
 			NSString *path = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-            result = [[NSImage alloc] initWithContentsOfFile:path
-                                               ofMaximumSize:[self maximumIconSize]];
+            result = [[NSImage alloc] initWithThumbnailOfFile:path
+                                               maxPixelSize:[self maximumIconSize]];
 		}
         
         // Store
@@ -263,7 +263,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         
         
         // Draw the thumbnail
-        NSImage *thumbnail = [[NSImage alloc] initWithContentsOfFile:path ofMaximumSize:maxSize];
+        NSImage *thumbnail = [[NSImage alloc] initWithThumbnailOfFile:path maxPixelSize:maxSize];
         float thumbOriginX = 0.5 * ([thumbnail size].width - iconSize);
         float thumbOriginY = 0.5 * ([thumbnail size].height - iconSize);
         NSRect thumbSourceRect = NSMakeRect(thumbOriginX, thumbOriginY, iconSize, iconSize);
@@ -411,7 +411,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
-		result = [[NSImage alloc] initWithContentsOfFile:path ofMaximumSize:iconSize];
+		result = [[NSImage alloc] initWithThumbnailOfFile:path maxPixelSize:iconSize];
 	}
 	
 	// Notify the main thread that we're done
