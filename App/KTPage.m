@@ -434,12 +434,16 @@
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail;
+- (id)imageRepresentation;
 {
     SVGraphic *firstGraphic = [[[[self body] orderedAttachments] firstObjectKS] graphic];
-    
-    NSImage *result = [firstGraphic thumbnail];
-    return result;
+    return [firstGraphic imageRepresentation];
+}
+
+- (NSString *)imageRepresentationType;
+{
+    SVGraphic *firstGraphic = [[[[self body] orderedAttachments] firstObjectKS] graphic];
+    return [firstGraphic imageRepresentationType];
 }
 
 #pragma mark Archiving

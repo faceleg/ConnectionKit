@@ -7,6 +7,7 @@
 //
 
 #import "SVContentObject.h"
+#import <iMedia/IMBImageItem.h>
 
 
 typedef enum {
@@ -55,7 +56,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @class SVTextAttachment, SVTemplate;
 
 
-@interface SVGraphic : SVContentObject <SVGraphic>
+@interface SVGraphic : SVContentObject <SVGraphic, IMBImageItem>
 
 #pragma mark Pagelet
 - (BOOL)isPagelet;  // whether to generate <div class="pagelet"> etc. HTML
@@ -114,10 +115,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 - (NSString *)className;
 
 + (SVTemplate *)template;
-
-
-#pragma mark Thumbnail
-- (NSImage *)thumbnail;
    
    
 @end

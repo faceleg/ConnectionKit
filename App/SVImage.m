@@ -206,9 +206,7 @@
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail;
-{
-    return [[self media] thumbnail];
-}
+- (id)imageRepresentation { return [[self media] imageRepresentation]; }
+- (NSString *)imageRepresentationType { return [[self media] imageRepresentationType]; }
 
 @end

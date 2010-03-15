@@ -339,23 +339,15 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail;
+- (id)imageRepresentation
 {
-    NSImage *result = nil;
-    
-    if ([self areContentsCached])
-    {
-        result = [[NSImage alloc] initWithThumbnailFromData:[self fileContents]
-                                               maxPixelSize:128];
-        [result autorelease];
-    }
-    else
-    {
-        NSURL *URL = [self fileURL];
-        result = [[NSImage alloc] initWithThumbnailOfURL:URL maxPixelSize:128];
-        [result autorelease];
-    }
-    
+    id result = ([self areContentsCached] ? (id)[self fileContents] : (id)[self fileURL]);
+    return result;
+}
+
+- (NSString *)imageRepresentationType
+{
+    NSString *result = ([self areContentsCached] ? IKImageBrowserNSDataRepresentationType : IKImageBrowserNSURLRepresentationType);
     return result;
 }
 

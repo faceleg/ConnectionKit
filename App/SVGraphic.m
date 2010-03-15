@@ -408,7 +408,8 @@
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail; { return nil; }
+- (id)imageRepresentation { return nil; }
+- (NSString *)imageRepresentationType { return nil; }
 
 @end
 

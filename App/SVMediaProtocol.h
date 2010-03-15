@@ -6,17 +6,16 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+//#import <Cocoa/Cocoa.h>
+#import <iMedia/IMBImageItem.h>
 
 
-@protocol SVMedia <NSObject>
+@protocol SVMedia <NSObject, IMBImageItem>
 
 - (NSURL *)fileURL;
 - (NSData *)fileContents;
 
 - (NSString *)filename; // non-nil value means the media should be inside the doc package (or deleted)
 - (NSString *)preferredFilename;    // what the media would like to named given the chance
-
-- (NSImage *)thumbnail;
 
 @end
