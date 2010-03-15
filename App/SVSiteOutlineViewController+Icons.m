@@ -69,7 +69,17 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	else
 	{
-		result = [item thumbnail];
+        CGImageSourceRef imageSource = [IMBComboTextCell createImageSourceWithImageBrowserItem:item];
+        if (imageSource)
+        {
+            NSNumber *size = [NSNumber numberWithUnsignedInteger:[self maximumIconSize]];
+            result = [[NSImage alloc] initWithThumbnailFromCGImageSource:imageSource
+                                                            maxPixelSize:size];
+            [result autorelease];
+            
+            CFRelease(imageSource);
+        }
+        
         
         if (!result) result = [self bundleIconForItem:item];
 	}

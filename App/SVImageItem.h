@@ -6,8 +6,8 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
-
+#import <Quartz/Quartz.h>
+#import <iMedia/IMBComboTextCell.h>
 
 @protocol SVImageItem
 

@@ -266,7 +266,8 @@
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail { return nil; }
+- (id)imageRepresentation; { return nil; }
+- (id)imageRepresentationType { return IKImageBrowserNSImageRepresentationType; }
 
 #pragma mark UI
 

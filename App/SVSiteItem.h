@@ -12,13 +12,14 @@
 
 
 #import "SVExtensibleManagedObject.h"
+#import "SVImageItem.h"
 
 
 @class KTSite, KTPage, KTCodeInjection, SVExternalLink;
 @protocol SVWebContentViewController, SVMedia;
 
 
-@interface SVSiteItem : SVExtensibleManagedObject  
+@interface SVSiteItem : SVExtensibleManagedObject <SVImageItem>
 
 #pragma mark Title
 @property(nonatomic, copy) NSString *title; // implemented as @dynamic
@@ -89,10 +90,6 @@
 
 #pragma mark Contents
 - (void)writeContentRecursively:(BOOL)recursive;// writes to the current HTML context. Ignore things like site title
-
-
-#pragma mark Thumbnail
-@property(nonatomic, retain, readonly) NSImage *thumbnail;
 
 
 #pragma mark UI
