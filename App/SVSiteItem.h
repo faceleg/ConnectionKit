@@ -12,14 +12,14 @@
 
 
 #import "SVExtensibleManagedObject.h"
-#import "SVImageItem.h"
+#import <iMedia/IMBImageItem.h>
 
 
 @class KTSite, KTPage, KTCodeInjection, SVExternalLink;
 @protocol SVWebContentViewController, SVMedia;
 
 
-@interface SVSiteItem : SVExtensibleManagedObject <SVImageItem>
+@interface SVSiteItem : SVExtensibleManagedObject <IMBImageItem>
 
 #pragma mark Title
 @property(nonatomic, copy) NSString *title; // implemented as @dynamic
