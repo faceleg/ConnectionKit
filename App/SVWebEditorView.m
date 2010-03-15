@@ -1430,7 +1430,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                                orDeselectItem:nil
                                   selectItems:items
                                 updateWebView:NO
-                                   isUIAction:NO];
+                                   isUIAction:YES];
     }
     
     
