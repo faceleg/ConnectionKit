@@ -114,6 +114,10 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 + (SVTemplate *)template;
 
 
+#pragma mark Thumbnail
+- (NSImage *)thumbnail;
+   
+   
 @end
 
 

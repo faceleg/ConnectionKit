@@ -18,6 +18,7 @@
 #import "KTIndexPluginWrapper.h"
 #import "KTMaster.h"
 #import "SVPageTitle.h"
+#import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
@@ -435,11 +436,10 @@
 
 - (NSImage *)thumbnail;
 {
-    id image = [[[[self body] orderedAttachments] firstObjectKS] graphic];
+    SVGraphic *firstGraphic = [[[[self body] orderedAttachments] firstObjectKS] graphic];
     
-    NSImage *result = [[NSImage alloc] initWithThumbnailOfURL:[[image media] fileURL]
-                                                 maxPixelSize:128];
-    return [result autorelease];
+    NSImage *result = [firstGraphic thumbnail];
+    return result;
 }
 
 #pragma mark Archiving

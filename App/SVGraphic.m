@@ -388,6 +388,10 @@
 - (NSString *)editingElementID { return [self elementID]; }
 - (BOOL)shouldPublishEditingElementID { return YES; }
 
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail; { return nil; }
+
 @end
 
 
