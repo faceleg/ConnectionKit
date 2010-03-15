@@ -202,8 +202,13 @@
     if ([self isPagelet] && [self link]) [context writeEndTag];
 }
 
-#pragma mark Editing
-
 - (BOOL)shouldPublishEditingElementID; { return NO; }
+
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail;
+{
+    return [[self media] thumbnail];
+}
 
 @end

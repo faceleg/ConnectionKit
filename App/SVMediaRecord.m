@@ -10,6 +10,7 @@
 
 #import "NSManagedObject+KTExtensions.h"
 
+#import "NSImage+Karelia.h"
 #import "NSURL+Karelia.h"
 
 #import "BDAlias.h"
@@ -334,6 +335,28 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     [super didTurnIntoFault];
     
     [_data release]; _data = nil;
+}
+
+#pragma mark Thumbnail
+
+- (NSImage *)thumbnail;
+{
+    NSImage *result = nil;
+    
+    if ([self areContentsCached])
+    {
+        result = [[NSImage alloc] initWithThumbnailFromData:[self fileContents]
+                                               maxPixelSize:128];
+        [result autorelease];
+    }
+    else
+    {
+        NSURL *URL = [self fileURL];
+        result = [[NSImage alloc] initWithThumbnailOfURL:URL maxPixelSize:128];
+        [result autorelease];
+    }
+    
+    return result;
 }
 
 #pragma mark File Management

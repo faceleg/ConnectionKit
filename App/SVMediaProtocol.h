@@ -17,4 +17,6 @@
 - (NSString *)filename; // non-nil value means the media should be inside the doc package (or deleted)
 - (NSString *)preferredFilename;    // what the media would like to named given the chance
 
+- (NSImage *)thumbnail;
+
 @end
