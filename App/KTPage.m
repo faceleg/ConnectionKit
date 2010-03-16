@@ -15,22 +15,24 @@
 #import "KTDesign.h"
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
+#import "SVGraphic.h"
 #import "KTIndexPluginWrapper.h"
 #import "KTMaster.h"
+#import "SVMediaRecord.h"
 #import "SVPageTitle.h"
 #import "SVTextAttachment.h"
 
-#import "NSArray+Karelia.h"
-#import "NSAttributedString+Karelia.h"
 #import "NSBundle+KTExtensions.h"
-#import "NSBundle+Karelia.h"
-#import "NSDocumentController+KTExtensions.h"
-#import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSString+KTExtensions.h"
+
+#import "NSArray+Karelia.h"
+#import "NSAttributedString+Karelia.h"
+#import "NSBundle+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSSet+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 
 
@@ -434,17 +436,24 @@
 
 #pragma mark Thumbnail
 
-- (id)imageRepresentation;
+- (id <IMBImageItem>)thumbnail;
 {
-    SVGraphic *firstGraphic = [[[[self body] orderedAttachments] firstObjectKS] graphic];
-    return [firstGraphic imageRepresentation];
+    id <IMBImageItem> result = nil;
+    
+    if ([[self thumbnailType] integerValue] == -1)
+    {
+        result = [self customThumbnail];
+    }
+    else
+    {
+        result = [[[[self body] orderedAttachments] firstObjectKS] graphic];
+    }
+    
+    return result;
 }
 
-- (NSString *)imageRepresentationType;
-{
-    SVGraphic *firstGraphic = [[[[self body] orderedAttachments] firstObjectKS] graphic];
-    return [firstGraphic imageRepresentationType];
-}
+@dynamic thumbnailType;
+@dynamic customThumbnail;
 
 #pragma mark Archiving
 
