@@ -65,13 +65,13 @@
 
 - (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
 {
-    //  If there are no documents open, it's quite feasible to have no context. If so, disable automatically preparing content0
     [super setManagedObjectContext:managedObjectContext];
     
+    //  Setting automaticallyPreparesContent to YES in IB doesn't handle there being no MOC set properly. So we hold off doing the initial fetch until there is a MOC. After that everything seems to work normally.
     if (managedObjectContext && ![self automaticallyPreparesContent])
     {
-        [self prepareContent];
         [self setAutomaticallyPreparesContent:YES];
+        [self fetch:self];
     }
 }
 
