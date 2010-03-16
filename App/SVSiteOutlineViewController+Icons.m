@@ -67,17 +67,21 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	{
 		result = [self favicon];
 	}
-	else if ([item imageRepresentation])
+	else
 	{
-        CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(item, NULL);
-        if (imageSource)
+        id <IMBImageItem> thumbnail = [item thumbnail];
+        if ([thumbnail imageRepresentation])
         {
-            NSNumber *size = [NSNumber numberWithUnsignedInteger:[self maximumIconSize]];
-            result = [[NSImage alloc] initWithThumbnailFromCGImageSource:imageSource
-                                                            maxPixelSize:size];
-            [result autorelease];
-            
-            CFRelease(imageSource);
+            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
+            if (imageSource)
+            {
+                NSNumber *size = [NSNumber numberWithUnsignedInteger:[self maximumIconSize]];
+                result = [[NSImage alloc] initWithThumbnailFromCGImageSource:imageSource
+                                                                maxPixelSize:size];
+                [result autorelease];
+                
+                CFRelease(imageSource);
+            }
         }
 	}
               

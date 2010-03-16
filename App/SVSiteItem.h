@@ -19,7 +19,7 @@
 @protocol SVWebContentViewController, SVMedia;
 
 
-@interface SVSiteItem : SVExtensibleManagedObject <IMBImageItem>
+@interface SVSiteItem : SVExtensibleManagedObject
 
 #pragma mark Title
 @property(nonatomic, copy) NSString *title; // implemented as @dynamic
@@ -90,6 +90,10 @@
 
 #pragma mark Contents
 - (void)writeContentRecursively:(BOOL)recursive;// writes to the current HTML context. Ignore things like site title
+
+
+#pragma mark Thumbnail
+@property(nonatomic, readonly) id <IMBImageItem> thumbnail;
 
 
 #pragma mark UI
