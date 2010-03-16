@@ -44,6 +44,10 @@
 @property(nonatomic) BOOL wrapRightSplit;
 
 
+#pragma mark Validation
+- (BOOL)validateWrap:(NSError **)outError;
+
+
 @end
 
 

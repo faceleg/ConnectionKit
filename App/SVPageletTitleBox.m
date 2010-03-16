@@ -9,6 +9,7 @@
 #import "SVPageletTitleBox.h"
 
 #import "SVGraphic.h"
+#import "SVTextAttachment.h"
 
 
 @implementation SVPageletTitleBox
@@ -20,14 +21,14 @@
 - (BOOL)validateForInsert:(NSError **)error;
 {
     BOOL result = [super validateForInsert:error];
-    if (result) result = [[self pagelet] validateLayout:error];
+    if (result && [[self pagelet] textAttachment]) result = [[[self pagelet] textAttachment] validateWrap:error];
     return result;
 }
 
 - (BOOL)validateForUpdate:(NSError **)error;
 {
     BOOL result = [super validateForUpdate:error];
-    if (result) result = [[self pagelet] validateLayout:error];
+    if (result && [[self pagelet] textAttachment]) result = [[[self pagelet] textAttachment] validateWrap:error];
     return result;
 }
 

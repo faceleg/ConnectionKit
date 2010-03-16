@@ -133,25 +133,6 @@
     }
 }
 
-- (BOOL)validateLayout:(NSError **)outError;
-{
-    // If want to show title, cannot be inline
-    BOOL result = YES;
-    
-    if (![[[self titleBox] hidden] boolValue] && ![self isPagelet])
-    {
-        result = NO;
-        if (outError)
-        {
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                            code:NSManagedObjectValidationError
-                            localizedDescription:@"Graphics cannot show title while inline"];
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark Sidebar
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
@@ -296,7 +277,7 @@
 {
     BOOL result = [super validateForInsert:error];
     if (result) result = [self validatePlacement:error];
-    if (result) result = [self validateLayout:error];
+    if (result && [self textAttachment]) result = [[self textAttachment] validateWrap:error];
     
     return result;
 }
@@ -305,7 +286,7 @@
 {
     BOOL result = [super validateForUpdate:error];
     if (result) result = [self validatePlacement:error];
-    if (result) result = [self validateLayout:error];
+    if (result && [self textAttachment]) result = [[self textAttachment] validateWrap:error];
     
     return result;
 }

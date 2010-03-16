@@ -86,8 +86,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 - (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
 
-- (BOOL)validateLayout:(NSError **)outError;
-
 
 #pragma mark Sidebar
 
