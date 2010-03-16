@@ -69,7 +69,7 @@
 
 - (BOOL)isSelectable
 {
-    BOOL result = [[self selectableAncestors] count] == 0;
+    BOOL result = ([self representedObject] && [[self selectableAncestors] count] == 0);
     
     if ([self textBlock] && [[self textBlock] hyperlinkString]) result = NO;
     
