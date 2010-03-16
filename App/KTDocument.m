@@ -392,7 +392,7 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	OBASSERT(inURL);
 	
-	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
+	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"] isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
 	return result;

@@ -444,7 +444,7 @@ typedef enum {
 				NSURL *imageURL = [NSURL URLWithString:imageURLString];
                 
                 NSArray *pathComponents = [[imageURL path] pathComponents];
-                if ([pathComponents count] >= 3 && [[pathComponents objectAtIndex:1] isEqualToString:@"_Media"])
+                if ([pathComponents count] >= 3 && [[pathComponents objectAtIndex:1] isEqualToString:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"]])
                 {
                     NSString *mediaRef = [[imageURL queryDictionary] objectForKey:@"ref"];
                     if (!mediaRef)
