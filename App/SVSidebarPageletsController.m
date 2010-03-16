@@ -23,6 +23,8 @@
 
 @implementation SVSidebarPageletsController
 
+#pragma mark Init & Dealloc
+
 - (id)initWithSidebar:(SVSidebar *)sidebar;
 {
     self = [self init];
@@ -57,7 +59,23 @@
     [super dealloc];
 }
 
+#pragma mark Managing Content
+
 @synthesize sidebar = _sidebar;
+
+- (void)setManagedObjectContext:(NSManagedObjectContext *)managedObjectContext
+{
+    //  If there are no documents open, it's quite feasible to have no context. If so, disable automatically preparing content0
+    [super setManagedObjectContext:managedObjectContext];
+    
+    if (managedObjectContext && ![self automaticallyPreparesContent])
+    {
+        [self prepareContent];
+        [self setAutomaticallyPreparesContent:YES];
+    }
+}
+
+#pragma mark Adding and Removing Objects
 
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
