@@ -67,7 +67,14 @@
 
 #pragma mark Web Editor Item
 
-- (BOOL)isSelectable { return [[self selectableAncestors] count] == 0; }
+- (BOOL)isSelectable
+{
+    BOOL result = [[self selectableAncestors] count] == 0;
+    
+    if ([self textBlock] && [[self textBlock] hyperlinkString]) result = NO;
+    
+    return result;
+}
 
 #pragma mark Updating
 
