@@ -94,7 +94,7 @@
 
 #pragma mark Thumbnail
 @property(nonatomic, readonly) id <IMBImageItem> thumbnail;
-@property(nonatomic, copy) NSNumber *thumbnailType; // 0 for automatic, -1 for custom
+@property(nonatomic, copy) NSNumber *thumbnailType; // 0 for automatic, 1 for custom, 2 to Pick from Page
 @property(nonatomic, retain) SVMediaRecord *customThumbnail;
 
 
