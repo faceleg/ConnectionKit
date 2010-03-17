@@ -453,6 +453,11 @@
     return result;
 }
 
++ (NSSet *)keyPathsForValuesAffectingThumbnail;
+{
+    return [NSSet setWithObjects:@"thumbnailType", @"customThumbnail", @"thumbnailSourceGraphic.thumbnail", nil];
+}
+
 @dynamic thumbnailSourceGraphic;
 
 #pragma mark Archiving
