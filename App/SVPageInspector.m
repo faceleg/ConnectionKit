@@ -15,8 +15,23 @@
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
 
+#import "KSIsEqualValueTransformer.h"
+
 
 @implementation SVPageInspector
+
++ (void) initialize;
+{
+    KSIsEqualValueTransformer *transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInteger:1]];
+    [transformer setNegatesResult:YES];
+    [NSValueTransformer setValueTransformer:transformer forName:@"SVIsCustomThumbnail"];
+    [transformer release];
+    
+    transformer = [[KSIsEqualValueTransformer alloc] initWithComparisonValue:[NSNumber numberWithInteger:2]];
+    [transformer setNegatesResult:YES];
+    [KSIsEqualValueTransformer setValueTransformer:transformer forName:@"SVIsPickFromPageThumbnail"];
+    [transformer release];
+}
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
