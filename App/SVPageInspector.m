@@ -8,8 +8,10 @@
 
 #import "SVPageInspector.h"
 
+#import "KTDocument.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
+#import "SVMediaRecord.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
 
@@ -50,6 +52,25 @@
 {
     //  When the user selects a timestamp type, want to treat it as if they hit the checkbox too
     if (![showTimestampCheckbox integerValue]) [showTimestampCheckbox performClick:self];
+}
+
+#pragma mark Thumbnail
+
+- (IBAction)chooseCustomThumbnail:(NSButton *)sender;
+{
+    KTDocument *document = [self representedObject];
+    NSOpenPanel *panel = [document makeChooseDialog];
+    
+    if ([panel runModal] == NSFileHandlingPanelOKButton)
+    {
+        SVMediaRecord *media = [SVMediaRecord mediaWithURL:[panel URL]
+                                                entityName:@"Thumbnail"
+                            insertIntoManagedObjectContext:[document managedObjectContext]
+                                                     error:NULL];
+        
+        [(NSObject *)[self inspectedObjectsController] replaceMedia:media
+                                                         forKeyPath:@"selection.customThumbnail"];
+    }
 }
 
 #pragma mark Sidebar Pagelets

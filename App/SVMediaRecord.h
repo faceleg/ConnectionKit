@@ -46,6 +46,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
           insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
+
 #pragma mark Updating Media Records
 
 - (BOOL)moveToURL:(NSURL *)URL error:(NSError **)error;
@@ -102,3 +103,13 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface NSObject (SVMediaRecord)
+// Calls -setValue:forKeyPath: with the media, but first deletes any existing media
+- (void)replaceMedia:(SVMediaRecord *)media forKeyPath:(NSString *)keyPath;
+@end
+

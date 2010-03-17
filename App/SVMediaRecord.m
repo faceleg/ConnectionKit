@@ -400,4 +400,22 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     
     return result;
 }
+
 @end
+
+
+#pragma mark -
+
+
+@implementation NSObject (SVMediaRecord)
+
+- (void)replaceMedia:(SVMediaRecord *)media forKeyPath:(NSString *)keyPath;
+{
+    SVMediaRecord *oldMedia = [self valueForKeyPath:keyPath];
+    if (oldMedia) [[oldMedia managedObjectContext] deleteObject:oldMedia];
+    
+    [self setValue:media forKeyPath:keyPath];
+}
+
+@end
+

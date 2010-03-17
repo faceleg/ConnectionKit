@@ -24,4 +24,6 @@
 
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
 
+- (IBAction)chooseCustomThumbnail:(NSButton *)sender;
+
 @end
