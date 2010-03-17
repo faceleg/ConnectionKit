@@ -268,6 +268,7 @@
 
 - (id <IMBImageItem>)thumbnail; { return nil; }
 
+@dynamic thumbnailType;
 @dynamic customThumbnail;
 
 #pragma mark UI

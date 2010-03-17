@@ -58,10 +58,6 @@ typedef enum {
 @property(nonatomic, copy) NSString *customPathExtension;
 
 
-#pragma mark Thumbnail
-@property(nonatomic, copy) NSNumber *thumbnailType; // 0 for automatic, -1 for custom
-
-
 #pragma mark Debugging
 - (NSString *)shortDescription;
 

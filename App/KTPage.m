@@ -458,8 +458,6 @@
     return result;
 }
 
-@dynamic thumbnailType;
-
 #pragma mark Archiving
 
 + (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document
