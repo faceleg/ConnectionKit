@@ -438,17 +438,12 @@
 
 - (id <IMBImageItem>)thumbnail;
 {
-    id <IMBImageItem> result = nil;
+    id <IMBImageItem> result;
     
     if ([[self thumbnailType] integerValue] == 2)
     {
-        NSArray *attachments = [[self body] orderedAttachments];
-        for (SVTextAttachment *anAttachment in attachments)
-        {
-            SVGraphic *graphic = [anAttachment graphic];
-            result = [graphic thumbnail];
-            if (result) break;
-        }
+        SVGraphic *graphic = [self thumbnailSourceGraphic];
+        result = [graphic thumbnail];
     }
     else
     {
@@ -457,6 +452,8 @@
     
     return result;
 }
+
+@dynamic thumbnailSourceGraphic;
 
 #pragma mark Archiving
 

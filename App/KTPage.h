@@ -32,7 +32,7 @@ typedef enum {
 } SVCollectionSortOrder;
 
 
-@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVMediaRecord, KTCodeInjection;
+@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection;
 
 
 @interface KTPage : KTAbstractPage <SVPage>
@@ -56,6 +56,10 @@ typedef enum {
 
 #pragma mark Paths
 @property(nonatomic, copy) NSString *customPathExtension;
+
+
+#pragma mark Thumbnail
+@property(nonatomic, retain) SVGraphic *thumbnailSourceGraphic;
 
 
 #pragma mark Debugging
