@@ -266,7 +266,17 @@
 
 #pragma mark Thumbnail
 
-- (id <IMBImageItem>)thumbnail; { return nil; }
+- (id <IMBImageItem>)thumbnail;
+{
+    id <IMBImageItem> result = nil;
+    
+    if ([[self thumbnailType] integerValue] == 1)
+    {
+        result = [self customThumbnail];
+    }
+    
+    return result;
+}
 
 @dynamic thumbnailType;
 @dynamic customThumbnail;

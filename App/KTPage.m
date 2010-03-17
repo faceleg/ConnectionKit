@@ -440,11 +440,7 @@
 {
     id <IMBImageItem> result = nil;
     
-    if ([[self thumbnailType] integerValue] == -1)
-    {
-        result = [self customThumbnail];
-    }
-    else
+    if ([[self thumbnailType] integerValue] == 2)
     {
         NSArray *attachments = [[self body] orderedAttachments];
         for (SVTextAttachment *anAttachment in attachments)
@@ -453,6 +449,10 @@
             result = [graphic thumbnail];
             if (result) break;
         }
+    }
+    else
+    {
+        result = [super thumbnail];
     }
     
     return result;
