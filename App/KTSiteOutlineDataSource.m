@@ -595,6 +595,11 @@ NSString *kKTLocalLinkPboardType = @"kKTLocalLinkPboardType";
 			lineY = LARGE_ICON_CELL_HEIGHT+LARGE_ICON_ROOT_SPACING-3.0;
 		}
 #warning I'm getting some CGContextSetFillColorWithColor: invalid context 0x0
+		CGContextRef context = (CGContextRef)[[NSGraphicsContext currentContext] graphicsPort];
+		if (!context) {
+			DJW((@"Nil graphics context; [NSGraphicsContext currentContext] = %@", [NSGraphicsContext currentContext]));
+		}
+
 		[[NSColor colorWithCalibratedWhite:0.80 alpha:1.0] set];
 		[NSBezierPath fillRect:NSMakeRect(lineX, lineY, width, height)];
 		[[NSColor colorWithCalibratedWhite:0.60 alpha:1.0] set];

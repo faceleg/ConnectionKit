@@ -83,7 +83,7 @@
 
 		while (nil != (element = [theEnum nextObject]) )
 		{
-OFF((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
+DJW((@"processEditable: %@", [[element outerHTML] condenseWhiteSpace]));
 			
 			[element setContentEditable:@"true"];
 			DOMElement *parentNode = (DOMElement *)[element parentNode];
