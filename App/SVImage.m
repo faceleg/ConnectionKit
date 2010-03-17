@@ -206,7 +206,7 @@
 
 #pragma mark Thumbnail
 
-- (id)imageRepresentation { return [[self media] imageRepresentation]; }
-- (NSString *)imageRepresentationType { return [[self media] imageRepresentationType]; }
+- (id <IMBImageItem>)thumbnail { return [self media]; }
++ (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"media"]; }
 
 @end

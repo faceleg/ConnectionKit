@@ -446,7 +446,13 @@
     }
     else
     {
-        result = [[[[self body] orderedAttachments] firstObjectKS] graphic];
+        NSArray *attachments = [[self body] orderedAttachments];
+        for (SVTextAttachment *anAttachment in attachments)
+        {
+            SVGraphic *graphic = [anAttachment graphic];
+            result = [graphic thumbnail];
+            if (result) break;
+        }
     }
     
     return result;
