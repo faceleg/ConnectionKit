@@ -268,6 +268,8 @@
 
 - (id <IMBImageItem>)thumbnail; { return nil; }
 
+@dynamic customThumbnail;
+
 #pragma mark UI
 
 - (BOOL)isCollection { return NO; }

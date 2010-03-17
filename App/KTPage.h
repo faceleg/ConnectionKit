@@ -60,7 +60,6 @@ typedef enum {
 
 #pragma mark Thumbnail
 @property(nonatomic, copy) NSNumber *thumbnailType; // 0 for automatic, -1 for custom
-@property(nonatomic, retain) SVMediaRecord *customThumbnail;
 
 
 #pragma mark Debugging

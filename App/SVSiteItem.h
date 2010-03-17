@@ -15,7 +15,7 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class KTSite, KTPage, KTCodeInjection, SVExternalLink;
+@class KTSite, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord;
 @protocol SVWebContentViewController, SVMedia;
 
 
@@ -94,6 +94,7 @@
 
 #pragma mark Thumbnail
 @property(nonatomic, readonly) id <IMBImageItem> thumbnail;
+@property(nonatomic, retain) SVMediaRecord *customThumbnail;
 
 
 #pragma mark UI

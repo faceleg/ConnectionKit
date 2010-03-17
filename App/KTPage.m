@@ -459,7 +459,6 @@
 }
 
 @dynamic thumbnailType;
-@dynamic customThumbnail;
 
 #pragma mark Archiving
 
