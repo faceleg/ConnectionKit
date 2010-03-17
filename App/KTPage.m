@@ -460,16 +460,6 @@
 
 @dynamic thumbnailSourceGraphic;
 
-#pragma mark Archiving
-
-+ (id)objectWithArchivedIdentifier:(NSString *)identifier inDocument:(KTDocument *)document
-{
-	id result = [KTAbstractPage pageWithUniqueID:identifier inManagedObjectContext:[document managedObjectContext]];
-	return result;
-}
-
-- (NSString *)archiveIdentifier { return [self uniqueID]; }
-
 #pragma mark Editing
 
 - (KTPage *)pageRepresentation { return self; }
