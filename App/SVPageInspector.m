@@ -169,6 +169,14 @@
     }
 }
 
+- (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
+{
+    NSMenuItem *selectedItem = [sender selectedItem];
+    SVGraphic *graphic = [selectedItem representedObject];
+    
+    [(NSObject *)[self inspectedObjectsController] setValue:graphic forKeyPath:@"selection.thumbnailSourceGraphic"];
+}
+
 #pragma mark Sidebar Pagelets
 
 - (void)mocDidChange:(NSNotification *)notification
