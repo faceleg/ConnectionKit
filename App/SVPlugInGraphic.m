@@ -182,7 +182,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail;
+- (id <IMBImageItem>)thumbnail;
 {
     return [[self plugIn] thumbnail];
 }

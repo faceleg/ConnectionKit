@@ -7,6 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import <iMedia/IMBImageItem.h>
 
 
 @protocol SVPage;
@@ -49,7 +50,7 @@
 
 
 #pragma mark Thumbnail
-- (NSImage *)thumbnail;
+- (id <IMBImageItem>)thumbnail;
 
 
 @end

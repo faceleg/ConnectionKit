@@ -165,7 +165,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark Thumbnail
 
-- (NSImage *)thumbnail; { return nil; }
+- (id <IMBImageItem>)thumbnail; { return nil; }
 
 #pragma mark The Wider World
 
