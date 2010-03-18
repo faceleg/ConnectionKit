@@ -145,18 +145,14 @@
 
 - (CGSize)originalSize;
 {
-    CIImage *image;
-    NSURL *URL = [[self media] fileURL];
-    if (URL)
+    CGSize result = CGSizeMake(200.0f, 128.0f);
+    
+    SVMediaRecord *media = [self media];
+    if (media)
     {
-        image = [[CIImage alloc] initWithContentsOfURL:URL];
+        CIImage *image = [CIImage imageWithIMBImageItem:media];
+        result = [image extent].size;
     }
-    else
-    {
-        image = [[CIImage alloc] initWithData:[[self media] fileContents]];
-    }
-    CGSize result = [image extent].size;
-    [image release];
     
     return result;
 }
