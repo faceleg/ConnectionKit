@@ -120,7 +120,9 @@
     
     
     // Logo
-    SVLogoImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo" inManagedObjectContext:[self managedObjectContext]];
+    SVLogoImage *logo = [NSEntityDescription insertNewObjectForEntityForName:@"Logo"
+                                                      inManagedObjectContext:[self managedObjectContext]];
+    [logo setConstrainProportions:YES];
     [self setLogo:logo];
 }
 
