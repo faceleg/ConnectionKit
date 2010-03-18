@@ -157,7 +157,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     {
         if (resizingHeight)
         {
-            if ([[image constrainProportions] boolValue])
+            if ([image constrainProportions])
             {
                 // TODO: better logic
                 [image setWidth:[NSNumber numberWithFloat:bounds.size.width]];

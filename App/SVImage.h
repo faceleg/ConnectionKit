@@ -28,12 +28,13 @@
 
 
 #pragma mark Metrics
-
 @property(nonatomic, copy) NSString *alternateText;
 
-@property(nonatomic, copy) NSNumber *width;
-@property(nonatomic, copy) NSNumber *height;
-@property(nonatomic, copy) NSNumber *constrainProportions;  // BOOL, required
+
+#pragma mark Size
+@property(nonatomic, copy)  NSNumber *width;
+@property(nonatomic, copy)  NSNumber *height;
+@property(nonatomic)        BOOL constrainProportions;
 - (CGSize)originalSize;
 
 

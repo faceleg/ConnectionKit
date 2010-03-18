@@ -16,7 +16,11 @@
 
 
 @interface SVImage ()
+
 @property(nonatomic, copy) NSString *externalSourceURLString;
+
+@property(nonatomic, copy) NSNumber *constrainedAspectRatio;
+
 @end
 
 
@@ -34,7 +38,7 @@
     CGSize size = [result originalSize];
     [result setWidth:[NSNumber numberWithFloat:size.width]];
     [result setHeight:[NSNumber numberWithFloat:size.height]];
-    [result setConstrainProportions:[NSNumber numberWithBool:YES]];
+    [result setConstrainProportions:YES];
     
     return result;
 }
@@ -110,13 +114,13 @@
     [self setPrimitiveValue:width forKey:@"width"];
     [self didChangeValueForKey:@"width"];
     
-    if ([[self constrainProportions] boolValue])
+    NSNumber *aspectRatio = [self constrainedAspectRatio];
+    if (aspectRatio)
     {
-        CGSize originalSize = [self originalSize];
-        CGFloat height = originalSize.height * ([width floatValue] / originalSize.width);
+        NSUInteger height = ([width floatValue] / [aspectRatio floatValue]);
         
         [self willChangeValueForKey:@"height"];
-        [self setPrimitiveValue:[NSNumber numberWithFloat:height] forKey:@"height"];
+        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:height] forKey:@"height"];
         [self didChangeValueForKey:@"height"];
     }
 }
@@ -128,18 +132,37 @@
     [self setPrimitiveValue:height forKey:@"height"];
     [self didChangeValueForKey:@"height"];
     
-    if ([[self constrainProportions] boolValue])
+    NSNumber *aspectRatio = [self constrainedAspectRatio];
+    if (aspectRatio)
     {
-        CGSize originalSize = [self originalSize];
-        CGFloat width = originalSize.width * ([height floatValue] / originalSize.height);
+        NSUInteger width = ([height floatValue] * [aspectRatio floatValue]);
         
         [self willChangeValueForKey:@"width"];
-        [self setPrimitiveValue:[NSNumber numberWithFloat:width] forKey:@"width"];
+        [self setPrimitiveValue:[NSNumber numberWithUnsignedInteger:width] forKey:@"width"];
         [self didChangeValueForKey:@"width"];
     }
 }
 
-@dynamic constrainProportions;
+- (BOOL)constrainProportions { return [self constrainedAspectRatio] != nil; }
+- (void)setConstrainProportions:(BOOL)constrainProportions;
+{
+    if (constrainProportions)
+    {
+        CGFloat aspectRatio = [[self width] floatValue] / [[self height] floatValue];
+        [self setConstrainedAspectRatio:[NSNumber numberWithFloat:aspectRatio]];
+    }
+    else
+    {
+        [self setConstrainedAspectRatio:nil];
+    }
+}
+
++ (NSSet *)keyPathsForValuesAffectingConstrainProportions;
+{
+    return [NSSet setWithObject:@"constrainedAspectRatio"];
+}
+
+@dynamic constrainedAspectRatio;
 
 // TODO: We might want to cache this?
 
