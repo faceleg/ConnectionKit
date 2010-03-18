@@ -46,12 +46,19 @@
                                                  name:NSManagedObjectContextObjectsDidChangeNotification
                                                object:nil];
     
+    [self addObserver:self
+           forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"
+              options:0
+              context:NULL];
+    
     return self;
 }
 
 - (void)dealloc
 {
     [[NSNotificationCenter defaultCenter] removeObserver:self];
+    [self removeObserver:self forKeyPath:@"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"];
+    
     [super dealloc];
 }
 
@@ -92,7 +99,7 @@
     }
 }
 
-- (NSImage *)selectedThumbnailImage
+- (void)updatePickFromPageThumbnail
 {
     NSImage *result = nil;
     
@@ -110,14 +117,21 @@
         }
     }
     
-    return [result autorelease];
+    [[oThumbnailPicker itemAtIndex:0] setImage:result];
         
 }
 
-+ (NSSet *)keyPathsForValuesAffectingSelectedThumbnailImage;
+- (void) observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-    return [NSSet setWithObject:
-            @"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"];
+    if ([keyPath isEqualToString:@"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"])
+    {
+        [self updatePickFromPageThumbnail];
+    }
+    else
+    
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 - (void)menuNeedsUpdate:(NSMenu *)menu
