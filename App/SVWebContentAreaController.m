@@ -20,11 +20,8 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 
 @implementation SVWebContentAreaController
 
-- (id)init
+- (void)prepareContent;
 {
-    [super init];
-    
-    
     // Create controllers
     _webEditorViewController = [[SVWebEditorViewController alloc] init];
     [_webEditorViewController setDelegate:self];
@@ -35,7 +32,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     [self addViewController:_webPreviewController];
     
     _sourceViewController = [[SVWebSourceViewController alloc] initWithNibName:@"HTMLSourceView"
-                                                               bundle:nil
+                                                                        bundle:nil
 													   webEditorViewController:_webEditorViewController];
     [self addViewController:_sourceViewController];
     
@@ -56,6 +53,14 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
                             forKeyPath:@"viewIsReadyToAppear"
                                options:0
                                context:sWebContentReadyToAppearObservationContext];
+}
+
+- (id)init
+{
+    [super init];
+    
+    
+    [self prepareContent];
     
     
     return self;
@@ -63,8 +68,9 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 
 - (id)initWithCoder:(NSCoder *)coder
 {
-    // We don't support loading any properties from a nib (yet), so jump straight to normal initialisation
-    return [self init];
+    self = [super initWithCoder:coder];
+    [self prepareContent];
+    return self;
 }
 
 - (void)dealloc
