@@ -92,6 +92,34 @@
     }
 }
 
+- (NSImage *)selectedThumbnailImage
+{
+    NSImage *result = nil;
+    
+    id <IMBImageItem> thumbnail = [(NSObject *)[self inspectedObjectsController]
+                                   valueForKeyPath:@"selection.thumbnailSourceGraphic.thumbnail"];
+    if (thumbnail && !NSIsControllerMarker(thumbnail))
+    {
+        CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
+        if (source)
+        {
+            result = [[NSImage alloc]
+                      initWithThumbnailFromCGImageSource:source
+                      maxPixelSize:[NSNumber numberWithUnsignedInteger:32]];
+            CFRelease(source);
+        }
+    }
+    
+    return [result autorelease];
+        
+}
+
++ (NSSet *)keyPathsForValuesAffectingSelectedThumbnailImage;
+{
+    return [NSSet setWithObject:
+            @"inspectedObjectsController.selection.thumbnailSourceGraphic.thumbnail.imageRepresentation"];
+}
+
 - (void)menuNeedsUpdate:(NSMenu *)menu
 {
     // Dump the old menu. Curiously, NSMenu has no easy way to do this.
@@ -99,7 +127,7 @@
     
     
     // Populate with available choices
-    KTPage *page = [(NSObject *)[self inspectedObjectsController] valueForKeyPath:@"selection.page"];
+    KTPage *page = [(NSObject *)[self inspectedObjectsController] valueForKeyPath:@"selection.self"];
     for (SVTextAttachment *anAttachment in [[page body] orderedAttachments])
     {
         SVGraphic *graphic = [anAttachment graphic];
@@ -118,8 +146,10 @@
                 {
                     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
                     [item setRepresentedObject:graphic];
+                    
                     [item setImage:thumnailImage];
                     [thumnailImage release];
+                    
                     [menu addItem:item];
                 }
             }
