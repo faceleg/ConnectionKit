@@ -12,10 +12,14 @@
 #import "KTPage.h"
 #import "SVGraphic.h"
 #import "SVMediaRecord.h"
+#import "SVRichText.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
+#import "SVTextAttachment.h"
 
 #import "KSIsEqualValueTransformer.h"
+
+#import "NSImage+Karelia.h"
 
 
 @implementation SVPageInspector
@@ -91,18 +95,48 @@
 - (void)menuNeedsUpdate:(NSMenu *)menu
 {
     // Dump the old menu. Curiously, NSMenu has no easy way to do this.
-    [oThumbnailPicker removeAllItems];
+    while ([menu numberOfItems] > 1) { [menu removeItemAtIndex:1]; }
+    
+    
+    // Populate with available choices
+    KTPage *page = [(NSObject *)[self inspectedObjectsController] valueForKeyPath:@"selection.page"];
+    for (SVTextAttachment *anAttachment in [[page body] orderedAttachments])
+    {
+        SVGraphic *graphic = [anAttachment graphic];
+        id <IMBImageItem> thumbnail = [graphic thumbnail];
+        if ([thumbnail imageRepresentation])
+        {
+            CGImageSourceRef source = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
+            if (source)
+            {
+                NSImage *thumnailImage = [[NSImage alloc]
+                                          initWithThumbnailFromCGImageSource:source
+                                          maxPixelSize:[NSNumber numberWithUnsignedInteger:32]];
+                CFRelease(source);
+                
+                if (thumnailImage)
+                {
+                    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:@"" action:nil keyEquivalent:@""];
+                    [item setRepresentedObject:graphic];
+                    [item setImage:thumnailImage];
+                    [thumnailImage release];
+                    [menu addItem:item];
+                }
+            }
+        }
+    }
     
     
     // Placeholder
-    if ([menu numberOfItems] <= 0) [menu addItemWithTitle:@"" action:nil keyEquivalent:@""];
-    
-    NSMenuItem *placeholder = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"No images found on page", "Page thumbnail picker placeholder")
-                                                         action:nil
-                                                  keyEquivalent:@""];
-    [placeholder setEnabled:NO];
-    [menu addItem:placeholder];
-    [placeholder release];
+    if ([menu numberOfItems] <= 1)
+    {
+        NSMenuItem *placeholder = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"No images found on page", "Page thumbnail picker placeholder")
+                                                             action:nil
+                                                      keyEquivalent:@""];
+        [placeholder setEnabled:NO];
+        [menu addItem:placeholder];
+        [placeholder release];
+    }
 }
 
 #pragma mark Sidebar Pagelets

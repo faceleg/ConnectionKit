@@ -16,6 +16,8 @@
 {
     IBOutlet KTPlaceholderBindingTextField  *oMenuTitleField;
     
+    IBOutlet NSPopUpButton  *oThumbnailPicker;
+    
     IBOutlet NSButton *showTimestampCheckbox;
     
     IBOutlet SVSidebarPageletsController    *oSidebarPageletsController;
