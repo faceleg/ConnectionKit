@@ -654,6 +654,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (media)
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
+        [image setWidth:[NSNumber numberWithUnsignedInteger:200]];
         [self _insertPageletInSidebar:image];
     }
     else
