@@ -88,6 +88,23 @@
     }
 }
 
+- (void)menuNeedsUpdate:(NSMenu *)menu
+{
+    // Dump the old menu. Curiously, NSMenu has no easy way to do this.
+    [oThumbnailPicker removeAllItems];
+    
+    
+    // Placeholder
+    if ([menu numberOfItems] <= 0) [menu addItemWithTitle:@"" action:nil keyEquivalent:@""];
+    
+    NSMenuItem *placeholder = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"No images found on page", "Page thumbnail picker placeholder")
+                                                         action:nil
+                                                  keyEquivalent:@""];
+    [placeholder setEnabled:NO];
+    [menu addItem:placeholder];
+    [placeholder release];
+}
+
 #pragma mark Sidebar Pagelets
 
 - (void)mocDidChange:(NSNotification *)notification
