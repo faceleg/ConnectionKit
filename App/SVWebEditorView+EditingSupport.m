@@ -49,8 +49,7 @@
 {
     // Rely on the datasource to serialize items to the pasteboard
     BOOL result = [[self dataSource] webEditor:self 
-                                    writeItems:[self selectedItems]
-                                  toPasteboard:[NSPasteboard generalPasteboard]];
+                      addSelectionToPasteboard:[NSPasteboard generalPasteboard]];
     if (!result) NSBeep();
     
     return result;

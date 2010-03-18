@@ -808,48 +808,66 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return YES;
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)sender writeItems:(NSArray *)items toPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)webEditor:(SVWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
+    DOMRange *selectedDOMRange = [sender selectedDOMRange];
     
-    NSArray *pboardReps = [items valueForKeyPath:@"representedObject.propertyListRepresentation"];
-    if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
+    
+    if (selectedDOMRange)
     {
-        [pasteboard declareTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
-        result = YES;
-        
-        
-        
-        // HTML representation of the items
+        // Add our own custom type to the pasteboard
         NSMutableString *html = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
-        [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
-        [context push];
+        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithStringWriter:html];
+        [writer writeDOMRange:selectedDOMRange];
+        [writer release];
         
-        for (SVDOMController *aController in items)
-        {
-            [aController writeRepresentedObjectHTML];
-        }
-        
-        [context pop];
-        [context release];
-        
-        [pasteboard setString:html forType:NSHTMLPboardType];
+        [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:nil];
         [html release];
-        
-        
-        /*
-        [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
-                           owner:self];
-        [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:pboardReps]
-                    forType:kKTPageletsPboardType];
-                    */
     }
     else
     {
-        [pasteboard declareTypes:[NSArray array] owner:self];
-        result = YES;
+        NSArray *items = [sender selectedItems];
+        NSArray *pboardReps = [items valueForKeyPath:@"representedObject.propertyListRepresentation"];
+        if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
+        {
+            [pasteboard declareTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
+            result = YES;
+            
+            
+            
+            // HTML representation of the items
+            NSMutableString *html = [[NSMutableString alloc] init];
+            SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
+            [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
+            [context push];
+            
+            for (SVDOMController *aController in items)
+            {
+                [aController writeRepresentedObjectHTML];
+            }
+            
+            [context pop];
+            [context release];
+            
+            [pasteboard setString:html forType:NSHTMLPboardType];
+            [html release];
+            
+            
+            /*
+            [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
+                               owner:self];
+            [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:pboardReps]
+                        forType:kKTPageletsPboardType];
+                        */
+        }
+        else
+        {
+            [pasteboard declareTypes:[NSArray array] owner:self];
+            result = YES;
+        }
     }
+    
     
     
     return result;

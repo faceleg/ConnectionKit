@@ -1472,6 +1472,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return result;
 }
 
+#pragma mark WebEditingDelegate Private
+
+- (void)webView:(WebView *)webView didSetSelectionTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    [[self dataSource] webEditor:self addSelectionToPasteboard:pasteboard];
+}
+
 @end
 
 
