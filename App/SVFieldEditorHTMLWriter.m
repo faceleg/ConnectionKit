@@ -64,7 +64,7 @@
 
 #pragma mark Elements
 
-- (DOMNode *)writeDOMElement:(DOMElement *)element withTreeWalker:(DOMTreeWalker *)walker;
+- (DOMNode *)_writeDOMElement:(DOMElement *)element;
 {
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
     NSString *tagName = [element tagName];
@@ -84,10 +84,7 @@
         
         
         // Write inner HTML
-        if ([walker firstChild])
-        {
-            [self writeChildNodesOfDOMElement:element withTreeWalker:walker];
-        }
+        [self writeChildNodesOfDOMElement:element];
         
         
         // Do the merge in the DOM
@@ -134,25 +131,22 @@
     //  The element might turn out to be empty...
     if ([element isParagraphContent])
     {
-        return [super writeDOMElement:element withTreeWalker:walker];
+        return [super _writeDOMElement:element];
     }
     else
     {
-        return [self writeStylingDOMElement:element withTreeWalker:walker];
+        return [self writeStylingDOMElement:element];
     }
 }
 
-- (DOMNode *)writeStylingDOMElement:(DOMElement *)element withTreeWalker:(DOMTreeWalker *)walker;
+- (DOMNode *)writeStylingDOMElement:(DOMElement *)element;
 {
     // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
     [_pendingStartTagDOMElements addObject:element];
     [self pushOpenElementWithTagName:[element tagName]];
     
     // Write inner HTML
-    if ([walker firstChild])
-    {
-        [self writeChildNodesOfDOMElement:element withTreeWalker:walker];
-    }
+    [self writeChildNodesOfDOMElement:element];
     
     // Write end tag
     return [self endStylingDOMElement:element];

@@ -52,7 +52,7 @@
     [_attachments addObject:[[controller representedObject] textAttachment]];
 }
 
-- (DOMNode *)writeDOMElement:(DOMElement *)element withTreeWalker:(DOMTreeWalker *)walker;
+- (DOMNode *)_writeDOMElement:(DOMElement *)element
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
     
@@ -61,12 +61,12 @@
         if ([aController HTMLElement] == element)
         {
             [self writeGraphicController:aController];
-            return [walker nextSibling];
+            return [element nextSibling];
         }
     }
     
     
-    return [super writeDOMElement:element withTreeWalker:walker];
+    return [super _writeDOMElement:element];
 }
 
 #pragma mark Cleanup
@@ -264,8 +264,7 @@
 - (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
-    [context writeDOMElement:self];
-    return [self nextSibling];
+    return [context _writeDOMElement:self];
 }
 
 @end
