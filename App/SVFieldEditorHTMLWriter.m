@@ -64,7 +64,7 @@
 
 #pragma mark Elements
 
-- (DOMNode *)_writeDOMElement:(DOMElement *)element;
+- (DOMNode *)writeDOMElement:(DOMElement *)element inRange:(DOMRange *)range;
 {
     // Remove any tags not allowed. Repeat cycle for the node that takes its place
     NSString *tagName = [element tagName];
@@ -131,7 +131,7 @@
     //  The element might turn out to be empty...
     if ([element isParagraphContent])
     {
-        return [super _writeDOMElement:element];
+        return [super writeDOMElement:element inRange:range];
     }
     else
     {
