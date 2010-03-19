@@ -52,7 +52,7 @@
     [_attachments addObject:[[controller representedObject] textAttachment]];
 }
 
-- (DOMNode *)_writeDOMElement:(DOMElement *)element
+- (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
     
@@ -61,12 +61,12 @@
         if ([aController HTMLElement] == element)
         {
             [self writeGraphicController:aController];
-            return [element nextSibling];
+            return YES;
         }
     }
     
     
-    return [super _writeDOMElement:element];
+    return NO;
 }
 
 #pragma mark Cleanup
