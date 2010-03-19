@@ -52,7 +52,7 @@
     [_attachments addObject:[[controller representedObject] textAttachment]];
 }
 
-- (DOMNode *)writeDOMElement:(DOMElement *)element inRange:(DOMRange *)range;
+- (DOMNode *)_writeDOMElement:(DOMElement *)element
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
     
@@ -66,7 +66,7 @@
     }
     
     
-    return [super writeDOMElement:element inRange:range];
+    return [super _writeDOMElement:element];
 }
 
 #pragma mark Cleanup
@@ -264,7 +264,7 @@
 - (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
-    return [context writeDOMElement:self inRange:nil];
+    return [context _writeDOMElement:self];
 }
 
 @end
