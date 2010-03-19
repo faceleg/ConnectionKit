@@ -84,7 +84,7 @@
         
         
         // Write inner HTML
-        [self writeChildNodesOfDOMElement:element];
+        [self writeInnerOfDOMNode:element];
         
         
         // Do the merge in the DOM
@@ -146,7 +146,7 @@
     [self pushOpenElementWithTagName:[element tagName]];
     
     // Write inner HTML
-    [self writeChildNodesOfDOMElement:element];
+    [self writeInnerOfDOMNode:element];
     
     // Write end tag
     return [self endStylingDOMElement:element];
