@@ -392,7 +392,8 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	OBASSERT(inURL);
 	
-	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:[[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultMediaPath"] isDirectory:YES];
+	// Do *NOT* use DefaultMediaPath -- this is the place in the document, not the published site!
+	NSURL *result = [[self siteURLForDocumentURL:inURL] URLByAppendingPathComponent:@"_Media" isDirectory:YES];
 	
 	OBPOSTCONDITION(result);
 	return result;
