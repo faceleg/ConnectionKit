@@ -16,7 +16,9 @@
 #import "KSHTMLWriter+DOM.h"
 
 
-@interface SVFieldEditorHTMLWriter : KSHTMLWriter
+#import "SVHTMLWriter.h"
+
+@interface SVFieldEditorHTMLWriter : SVHTMLWriter
 {
   @private
     NSMutableArray  *_pendingStartTagDOMElements;
