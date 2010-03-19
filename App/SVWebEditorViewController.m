@@ -823,6 +823,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         [writer release];
         
         [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:nil];
+        [pasteboard setString:html forType:@"com.karelia.html+graphics"];
         [html release];
     }
     else
