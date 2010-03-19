@@ -992,8 +992,9 @@ NSString *KTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         [[[[self documentInfo] root] master] setPublishedDesignCSSDigest:nil];
 		
-		NSArray *media = [[[self mediaManager] managedObjectContext] allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
-		[media setBool:YES forKey:@"isStale"];
+        NSManagedObjectContext *mediaContext = [[self mediaManager] managedObjectContext];
+		NSArray *media = [mediaContext allObjectsWithEntityName:@"MediaFileUpload" error:NULL];
+		[mediaContext deleteObjectsInCollection:media];
         
         
         // All page and sitemap URLs are now invalid
