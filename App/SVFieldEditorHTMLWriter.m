@@ -84,8 +84,10 @@
         
         
         // Write inner HTML
-        [walker firstChild];
-        [self writeChildNodesOfDOMElement:element withTreeWalker:walker];
+        if ([walker firstChild])
+        {
+            [self writeChildNodesOfDOMElement:element withTreeWalker:walker];
+        }
         
         
         // Do the merge in the DOM
@@ -147,8 +149,10 @@
     [self pushOpenElementWithTagName:[element tagName]];
     
     // Write inner HTML
-    [walker firstChild];
-    [self writeChildNodesOfDOMElement:element withTreeWalker:walker];
+    if ([walker firstChild])
+    {
+        [self writeChildNodesOfDOMElement:element withTreeWalker:walker];
+    }
     
     // Write end tag
     return [self endStylingDOMElement:element];
