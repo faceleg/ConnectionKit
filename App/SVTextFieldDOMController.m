@@ -134,7 +134,7 @@
     SVFieldEditorHTMLWriter *context = [[SVFieldEditorHTMLWriter alloc] initWithStringWriter:html];
     [html release];
     
-    [[self textHTMLElement] writeInnerHTMLToContext:context];
+    [context writeChildNodesOfDOMElement:[self textHTMLElement]];
     
     
     // Copy HTML across to ourself

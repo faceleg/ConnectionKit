@@ -17,25 +17,6 @@
 #import "NSURL+Karelia.h"
 
 
-@interface SVFieldEditorHTMLWriter (SVParagraphedHTMLWriter)
-- (DOMNode *)super_writeDOMElement:(DOMElement *)element;
-@end
-
-
-#pragma mark -
-
-
-@implementation SVFieldEditorHTMLWriter (SVParagraphedHTMLWriter)
-- (DOMNode *)super_writeDOMElement:(DOMElement *)element;
-{
-    return [super writeDOMElement:element];
-}
-@end
-
-
-#pragma mark -
-
-
 @implementation SVParagraphedHTMLWriter
 
 #pragma mark Init & Dealloc
@@ -71,7 +52,7 @@
     [_attachments addObject:[[controller representedObject] textAttachment]];
 }
 
-- (DOMNode *)writeDOMElement:(DOMElement *)element
+- (DOMNode *)writeDOMElement:(DOMElement *)element withTreeWalker:(DOMTreeWalker *)walker;
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
     
@@ -80,12 +61,12 @@
         if ([aController HTMLElement] == element)
         {
             [self writeGraphicController:aController];
-            return [element nextSibling];
+            return [walker nextSibling];
         }
     }
     
     
-    return [super writeDOMElement:element];
+    return [super writeDOMElement:element withTreeWalker:walker];
 }
 
 #pragma mark Cleanup
@@ -283,7 +264,8 @@
 - (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
-    return [context writeDOMElement:self];
+    [context writeDOMElement:self];
+    return [self nextSibling];
 }
 
 @end

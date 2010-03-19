@@ -27,10 +27,10 @@
 #pragma mark Writing
 
 // Overrides super's implementation to delete or modify some elements rather than really write them. The correct result is still returned so that the context can carry on recursing correctly.
-- (DOMNode *)writeDOMElement:(DOMElement *)element;
+- (DOMNode *)writeDOMElement:(DOMElement *)element withTreeWalker:(DOMTreeWalker *)walker;
 
 // Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
-- (DOMNode *)writeStylingDOMElement:(DOMElement *)element;
+- (DOMNode *)writeStylingDOMElement:(DOMElement *)element withTreeWalker:(DOMTreeWalker *)walker;
 
 // Shouldn't need to call directly; -writeStylingDOMElement: does so internally
 - (DOMNode *)endStylingDOMElement:(DOMElement *)element;
