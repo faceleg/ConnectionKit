@@ -192,17 +192,12 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             
             
             // OK, real logic here. De-archive custom HTML
-            if ([[pasteboard types] containsObject:@"com.karelia.html+graphics"])
+            SVAttributedHTML *attributedHTML = [SVAttributedHTML
+                                                attributedHTMLFromPasteboard:pasteboard
+                                                managedObjectContext:[[self representedObject] managedObjectContext]];
+            
+            if (attributedHTML)
             {
-                NSDictionary *plist = [pasteboard propertyListForType:@"com.karelia.html+graphics"];
-                
-                NSString *html = [plist objectForKey:@"HTMLString"];
-                NSArray *attachments = [plist objectForKey:@"attachments"];
-                
-                SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] initWithString:html];
-                
-                
-                
                 NSMutableString *editingHTML = [[NSMutableString alloc] init];
                 SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:editingHTML];
                 [context copyPropertiesFromContext:[self HTMLContext]];

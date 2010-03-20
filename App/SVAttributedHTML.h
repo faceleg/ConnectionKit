@@ -19,6 +19,10 @@
     
 }
 
++ (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
+                              managedObjectContext:(NSManagedObjectContext *)context;
+
+
 - (void)writeHTMLToContext:(SVHTMLContext *)context;
 
 

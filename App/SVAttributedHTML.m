@@ -12,6 +12,8 @@
 #import "SVHTMLContext.h"
 #import "SVTextAttachment.h"
 
+#import "NSManagedObject+KTExtensions.h"
+
 
 @implementation SVAttributedHTML
 
@@ -54,6 +56,36 @@
 - (void)setAttributes:(NSDictionary *)attributes range:(NSRange)aRange
 {
     [_storage setAttributes:attributes range:aRange];
+}
+
+#pragma mark Pasteboard
+
++ (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
+                              managedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSDictionary *plist = [pasteboard propertyListForType:@"com.karelia.html+graphics"];
+    if (!plist) return nil;
+    
+    
+    SVAttributedHTML *result = [[self alloc] initWithString:[plist objectForKey:@"HTMLString"]];
+    
+    
+    // Create attachment objects for each serialized one
+    NSArray *attachments = [plist objectForKey:@"attachments"];
+    for (NSDictionary *aSerializedAttachment in attachments)
+    {
+        SVTextAttachment *attachment = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"TextAttachment"
+                                        inManagedObjectContext:context];
+        [attachment awakeFromPropertyList:aSerializedAttachment];
+        
+        [result addAttribute:@"SVAttachment"
+                       value:attachment
+                       range:[attachment range]];
+    }
+    
+    
+    return result;
 }
 
 #pragma mark Output
