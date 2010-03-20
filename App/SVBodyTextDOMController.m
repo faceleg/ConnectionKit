@@ -207,14 +207,16 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                 
                 
                 
+                DOMDocumentFragment *fragment = [(DOMHTMLDocument *)[node ownerDocument]
+                                                 createDocumentFragmentWithMarkupString:editingHTML
+                                                 baseURL:nil];
+                [editingHTML release];
+                [range insertNode:fragment];
                 
                 
                 // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
                 [[node mutableChildNodesArray] removeAllObjects];
-                [node appendChild:[[node ownerDocument] createTextNode:editingHTML]];
-                
-                
-                [editingHTML release];
+                [node appendChild:[[node ownerDocument] createTextNode:@""]];
             }
         }
     }
