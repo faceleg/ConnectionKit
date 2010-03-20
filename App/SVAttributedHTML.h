@@ -15,7 +15,7 @@
 @interface SVAttributedHTML : NSMutableAttributedString
 {
   @private
-    NSMutableString *_string;
+    NSMutableAttributedString *_storage;
     
 }
 
