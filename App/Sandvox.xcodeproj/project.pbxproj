@@ -3115,13 +3115,11 @@
 		2759CC98103970FC00E2C046 /* View Controller */ = {
 			isa = PBXGroup;
 			children = (
-				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
-				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
+				273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */,
+				273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */,
 				CE26FA1308C4D9C500C9604B /* design-time.css */,
 				2759CC991039711200E2C046 /* SVWebEditorViewController.h */,
 				2759CC9A1039711200E2C046 /* SVWebEditorViewController.m */,
-				273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */,
-				273DCF9E10CBD5D3003CCE97 /* SVWebContentObjectsController.m */,
 			);
 			name = "View Controller";
 			sourceTree = "<group>";
@@ -3194,6 +3192,8 @@
 		277D3CB310A1B9DE00E4944A /* HTML Context */ = {
 			isa = PBXGroup;
 			children = (
+				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
+				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 				270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h */,
 				270E49A410FA326300EF1FA0 /* SVFieldEditorHTMLWriter.m */,
 				27FDEDD4111AF2C6001F4E60 /* SVTextContentHTMLContext.h */,

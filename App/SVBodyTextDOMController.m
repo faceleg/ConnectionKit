@@ -16,7 +16,6 @@
 #import "SVGraphic.h"
 #import "SVRichText.h"
 #import "KTDocument.h"
-#import "SVHTMLContext.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
@@ -24,6 +23,7 @@
 #import "SVParagraphedHTMLWriter.h"
 #import "SVTextAttachment.h"
 #import "SVWebContentObjectsController.h"
+#import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorView.h"
 
 #import "NSDictionary+Karelia.h"
@@ -198,23 +198,37 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             
             if (attributedHTML)
             {
+                // Generate HTML for the DOM
                 NSMutableString *editingHTML = [[NSMutableString alloc] init];
-                SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:editingHTML];
+                SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:editingHTML];
                 [context copyPropertiesFromContext:[self HTMLContext]];
                 
                 [attributedHTML writeHTMLToContext:context];
-                [context release];
                 
                 
-                
-                DOMDocumentFragment *fragment = [(DOMHTMLDocument *)[node ownerDocument]
+                // Insert HTML into the DOM
+                DOMHTMLDocument *domDoc = (DOMHTMLDocument *)[node ownerDocument];
+                DOMDocumentFragment *fragment = [domDoc
                                                  createDocumentFragmentWithMarkupString:editingHTML
                                                  baseURL:nil];
-                [editingHTML release];
                 [range insertNode:fragment];
                 
                 
-                // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+                // Insert DOM controllers
+                // TODO: This duplicates -[SVWebEditorViewController webEditorViewDidFinishLoading:] somewhat
+                for (SVWebEditorItem *anItem in [context webEditorItems])
+                {
+                    if (![anItem isHTMLElementCreated]) [anItem loadHTMLElementFromDocument:domDoc];
+                    OBASSERT([anItem HTMLElement]);
+                    
+                    if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
+                }
+                
+                
+                // FInish up. Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+                [context release];
+                [editingHTML release];
+                
                 [[node mutableChildNodesArray] removeAllObjects];
                 [node appendChild:[[node ownerDocument] createTextNode:@""]];
             }
