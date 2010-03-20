@@ -33,6 +33,13 @@
     return self;
 }
 
+- (id)initWithAttributedString:(NSAttributedString *)attrStr;
+{
+    [super init];
+    _storage = [[NSMutableAttributedString alloc] initWithAttributedString:attrStr];
+    return self;
+}
+
 - (void)dealloc
 {
     [_storage release];
@@ -102,29 +109,50 @@
 + (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
                               managedObjectContext:(NSManagedObjectContext *)context;
 {
-    NSDictionary *plist = [pasteboard propertyListForType:@"com.karelia.html+graphics"];
-    if (!plist) return nil;
+    NSData *data = [pasteboard dataForType:@"com.karelia.html+graphics"];
+    if (!data) return nil;
     
     
-    SVAttributedHTML *result = [[self alloc] initWithString:[plist objectForKey:@"HTMLString"]];
+    NSAttributedString *archivedAttributedString = [NSKeyedUnarchiver
+                                                      unarchiveObjectWithData:data];
+    
+    SVAttributedHTML *result = [[self alloc] initWithAttributedString:archivedAttributedString];
     
     
     // Create attachment objects for each serialized one
-    NSArray *attachments = [plist objectForKey:@"attachments"];
-    for (NSDictionary *aSerializedAttachment in attachments)
+    NSRange range = NSMakeRange(0, [result length]);
+    NSUInteger location = 0;
+    
+    while (location < range.length)
     {
-        SVTextAttachment *attachment = [NSEntityDescription
-                                        insertNewObjectForEntityForName:@"TextAttachment"
-                                        inManagedObjectContext:context];
-        [attachment awakeFromPropertyList:aSerializedAttachment];
+        NSRange effectiveRange;
+        id serializedProperties = [result attribute:@"Serialized SVAttachment"
+                                            atIndex:location
+                              longestEffectiveRange:&effectiveRange
+                                            inRange:range];
         
-        [result addAttribute:@"SVAttachment"
-                       value:attachment
-                       range:[attachment range]];
+        if (serializedProperties)
+        {
+            // Replace the attachment
+            SVTextAttachment *attachment = [NSEntityDescription
+                                            insertNewObjectForEntityForName:@"TextAttachment"
+                                            inManagedObjectContext:context];
+            [attachment awakeFromPropertyList:serializedProperties];
+            
+            [result removeAttribute:@"Serialized SVAttachment"
+                              range:effectiveRange];
+            
+            [result addAttribute:@"SVAttachment"
+                           value:attachment
+                           range:effectiveRange];
+        }
+        
+        // Advance the search
+        location = location + effectiveRange.length;
     }
     
     
-    return result;
+    return [result autorelease];
 }
 
 #pragma mark Output
