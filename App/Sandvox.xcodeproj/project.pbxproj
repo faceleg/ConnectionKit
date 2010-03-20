@@ -223,6 +223,8 @@
 		2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */; };
 		271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 271372AE11543BC5003AB050 /* SVHTMLWriter.h */; };
 		271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271372B011543BC5003AB050 /* SVHTMLWriter.m */; };
+		2713756911551296003AB050 /* SVAttributedHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713756711551296003AB050 /* SVAttributedHTML.h */; };
+		2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713756811551296003AB050 /* SVAttributedHTML.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
 		2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */; };
 		2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */; };
@@ -1664,6 +1666,8 @@
 		2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTMLWriter.m; sourceTree = "<group>"; };
 		271372AE11543BC5003AB050 /* SVHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLWriter.h; sourceTree = "<group>"; };
 		271372B011543BC5003AB050 /* SVHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLWriter.m; sourceTree = "<group>"; };
+		2713756711551296003AB050 /* SVAttributedHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAttributedHTML.h; sourceTree = "<group>"; };
+		2713756811551296003AB050 /* SVAttributedHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTML.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
 		2713BDFC10778AE8000864C2 /* NSResponder+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSResponder+Karelia.m"; sourceTree = "<group>"; };
 		2713C05210780FFD000864C2 /* SVLoadingPlaceholderViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLoadingPlaceholderViewController.h; sourceTree = "<group>"; };
@@ -3326,6 +3330,8 @@
 				278F799910B44A1B00BDBAF7 /* SVRichText.m */,
 				274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */,
 				274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */,
+				2713756711551296003AB050 /* SVAttributedHTML.h */,
+				2713756811551296003AB050 /* SVAttributedHTML.m */,
 			);
 			name = Text;
 			sourceTree = "<group>";
@@ -5378,6 +5384,7 @@
 				27A080791151704F005D873A /* SVImageItemCell.h in Headers */,
 				2713726511542AFF003AB050 /* SVAttributedHTMLWriter.h in Headers */,
 				271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */,
+				2713756911551296003AB050 /* SVAttributedHTML.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6773,6 +6780,7 @@
 				27A0807A1151704F005D873A /* SVImageItemCell.m in Sources */,
 				2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */,
 				271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */,
+				2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

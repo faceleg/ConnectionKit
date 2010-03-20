@@ -10,11 +10,13 @@
 #import "SVParagraphDOMController.h"
 
 #import "KT.h"
+#import "SVAttributedHTML.h"
 #import "SVAttributedHTMLWriter.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
 #import "SVRichText.h"
 #import "KTDocument.h"
+#import "SVHTMLContext.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
@@ -150,6 +152,82 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (NSArray *)graphicControllers;
 {
     return [self childWebEditorItems];
+}
+
+#pragma mark Controlling Editing Behaviour
+
+- (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
+                    replacingDOMRange:(DOMRange *)range
+                          givenAction:(WebViewInsertAction)action;
+{
+    // When moving an inline element, want to actually do that move
+    
+    SVWebEditorView *webEditor = [self webEditor];
+    NSPasteboard *pasteboard = [webEditor insertionPasteboard];
+    if (pasteboard)
+    {
+            
+        NSArray *items = [webEditor draggedItems];
+        if (action == WebViewInsertActionDropped && pasteboard && items)
+        {
+            // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+            [[node mutableChildNodesArray] removeAllObjects];
+            [node appendChild:[[node ownerDocument] createTextNode:@""]];
+            
+            
+            // Move the dragged items into place
+            for (SVWebEditorItem *anItem in items)
+            {
+                if ([anItem parentWebEditorItem] == self)
+                {
+                    [range insertNode:[anItem HTMLElement]];
+                }
+            }
+        }
+        else
+        {
+                
+            
+            
+            
+            
+            // OK, real logic here. De-archive custom HTML
+            if ([[pasteboard types] containsObject:@"com.karelia.html+graphics"])
+            {
+                NSDictionary *plist = [pasteboard propertyListForType:@"com.karelia.html+graphics"];
+                
+                NSString *html = [plist objectForKey:@"HTMLString"];
+                NSArray *attachments = [plist objectForKey:@"attachments"];
+                
+                SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] initWithString:html];
+                
+                
+                
+                NSMutableString *editingHTML = [[NSMutableString alloc] init];
+                SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:editingHTML];
+                [context copyPropertiesFromContext:[self HTMLContext]];
+                
+                [attributedHTML writeHTMLToContext:context];
+                [context release];
+                
+                
+                
+                
+                
+                // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+                [[node mutableChildNodesArray] removeAllObjects];
+                [node appendChild:[[node ownerDocument] createTextNode:editingHTML]];
+                
+                
+                [editingHTML release];
+            }
+        }
+    }
+    
+    
+    
+    
+    return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
 }
 
 #pragma mark Responding to Changes
@@ -349,41 +427,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         return [super webEditorTextValidateDrop:info proposedOperation:proposedOperation];
     }
-}
-
-- (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
-                    replacingDOMRange:(DOMRange *)range
-                          givenAction:(WebViewInsertAction)action;
-{
-    // When moving an inline element, want to actually do that move
-    if (action == WebViewInsertActionDropped)
-    {
-        SVWebEditorView *webEditor = [self webEditor];
-        NSPasteboard *pasteboard = [webEditor insertionPasteboard];
-        
-        NSArray *items = [webEditor draggedItems];
-        if (pasteboard && items)
-        {
-            // Insert nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
-            [[node mutableChildNodesArray] removeAllObjects];
-            [node appendChild:[[node ownerDocument] createTextNode:@""]];
-            
-            
-            // Move the dragged items into place
-            for (SVWebEditorItem *anItem in items)
-            {
-                if ([anItem parentWebEditorItem] == self)
-                {
-                    [range insertNode:[anItem HTMLElement]];
-                }
-            }
-        }
-    }
-    
-    
-    
-    
-    return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
 }
 
 #pragma mark KVO
