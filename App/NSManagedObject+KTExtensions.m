@@ -524,14 +524,14 @@
 
 #pragma mark Serialization
 
-- (id)propertyList;               // calls [self serializedValueForKey:] with each non-transient attribute
+- (id)serializedProperties;               // calls [self serializedValueForKey:] with each non-transient attribute
 {
     NSMutableDictionary *result = [NSMutableDictionary dictionary];
-    [self populateSerializedValues:result];    
+    [self populateSerializedProperties:result];    
     return result;
 }
 
-- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     NSDictionary *attributes = [[self entity] propertiesByNameOfClass:[NSAttributeDescription class]
                                            includeTransientProperties:NO];

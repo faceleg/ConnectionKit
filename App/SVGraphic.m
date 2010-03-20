@@ -393,9 +393,9 @@
 
 #pragma mark Serialization
 
-- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
-    [super populateSerializedValues:propertyList];
+    [super populateSerializedProperties:propertyList];
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
 }
 

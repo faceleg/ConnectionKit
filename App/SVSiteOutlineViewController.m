@@ -550,7 +550,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     for (SVSiteItem *anItem in items)
     {
         // Serialize
-        id plist = [anItem propertyList];
+        id plist = [anItem serializedProperties];
         
         
         // Where's it going to be placed?

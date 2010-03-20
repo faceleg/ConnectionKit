@@ -14,16 +14,16 @@
 
 @implementation KTPage (Serialization)
 
-- (void)populateSerializedValues:(NSMutableDictionary *)propertyList
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList
 {
-    [super populateSerializedValues:propertyList];
+    [super populateSerializedProperties:propertyList];
     
     // Title
     [propertyList setValue:[[self titleBox] textHTMLString]
                     forKey:@"titleHTMLString"];
     
     // Body
-    [propertyList setValue:[[self body] propertyList] forKey:@"body"];
+    [propertyList setValue:[[self body] serializedProperties] forKey:@"body"];
     
     // Code Injection
     [propertyList setValue:[[self codeInjection] propertyList]

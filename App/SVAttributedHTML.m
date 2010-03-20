@@ -86,7 +86,7 @@
         if (attachment)
         {
             // Replace the attachment
-            id plist = [attachment propertyList];
+            id plist = [attachment serializedProperties];
             
             [archivableAttributedString removeAttribute:@"SVAttachment"
                                                   range:effectiveRange];

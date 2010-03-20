@@ -201,10 +201,10 @@
 
 #pragma mark Serialization
 
-- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
-    [super populateSerializedValues:propertyList];
-    [propertyList setObject:[[self graphic] propertyList] forKey:@"graphic"];
+    [super populateSerializedProperties:propertyList];
+    [propertyList setObject:[[self graphic] serializedProperties] forKey:@"graphic"];
 }
 
 - (void)awakeFromPropertyList:(id)propertyList;

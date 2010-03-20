@@ -70,10 +70,10 @@
 #pragma mark Serialization
 
 // Default implemention creates a mutable dictionary and passes it to -populateSerializedValues:. Override to use something other than a dictionary, or create a mutable dictionary with the right capacity.
-- (id)propertyList;
+- (id)serializedProperties;
 
 // Calls [self serializedValueForKey:] with each non-transient attribute. Override to add in any relationships and custom properties
-- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;   
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;   
 
 - (id)serializedValueForKey:(NSString *)key;    // MUST return a plist object. Override to handle invalid types
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString*)key;
