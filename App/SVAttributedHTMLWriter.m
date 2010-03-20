@@ -15,6 +15,8 @@
 #import "SVTextAttachment.h"
 #import "SVBodyTextDOMController.h"
 
+#import "NSManagedObject+KTExtensions.h"
+
 #import "NSString+Karelia.h"
 
 
@@ -52,9 +54,19 @@
 - (void)writeGraphicController:(SVDOMController *)controller
                 withHTMLWriter:(KSHTMLWriter *)writer;
 {
+    // Write the graphic
     SVGraphic *graphic = [controller representedObject];
     SVTextAttachment *textAttachment = [graphic textAttachment];
-    [_attachmentsWritten addObject:[textAttachment propertyList]];
+    
+    NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+    [textAttachment populateSerializedValues:plist];
+    [_attachmentsWritten addObject:plist];
+    
+    
+    // Adjust position to match this destination
+    NSUInteger location = ([_htmlWritten length] - 1);
+    [plist setObject:[NSNumber numberWithUnsignedInt:location]
+              forKey:@"location"];
 }
 
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
