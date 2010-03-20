@@ -263,6 +263,11 @@
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
 
+#pragma mark Pasteboard
+
+// Up to subclasses to add custom types
+- (void)addSelectionTypesToPasteboard:(NSPasteboard *)pasteboard; { }
+
 #pragma mark Undo
 
 - (void)breakUndoCoalescing;

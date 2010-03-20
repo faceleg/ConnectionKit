@@ -9,7 +9,7 @@
 //  Super simple KSHTMLWriter subclass that uses a delegate instead of that weird pseudo-delegate
 
 
-#import "KSHTMLWriter.h"
+#import "KSHTMLWriter+DOM.h"
 
 
 @protocol SVHTMLWriterDelegate;

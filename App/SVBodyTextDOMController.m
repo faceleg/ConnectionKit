@@ -276,6 +276,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [link release];
 }
 
+#pragma mark Pasteboard
+
+- (void)addSelectionTypesToPasteboard:(NSPasteboard *)pasteboard;
+{
+    // Add our own custom type to the pasteboard
+    NSMutableString *html = [[NSMutableString alloc] init];
+    KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithStringWriter:html];
+    [writer writeDOMRange:[[self webEditor] selectedDOMRange]];
+    [writer release];
+    
+    [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:nil];
+    [pasteboard setString:html forType:@"com.karelia.html+graphics"];
+    [html release];
+}
+
 #pragma mark Dragging
 
 - (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info

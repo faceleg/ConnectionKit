@@ -811,20 +811,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (BOOL)webEditor:(SVWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
-    DOMRange *selectedDOMRange = [sender selectedDOMRange];
+    SVTextDOMController *textController = [self focusedTextController];
     
     
-    if (selectedDOMRange)
+    if (textController)
     {
-        // Add our own custom type to the pasteboard
-        NSMutableString *html = [[NSMutableString alloc] init];
-        KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithStringWriter:html];
-        [writer writeDOMRange:selectedDOMRange];
-        [writer release];
-        
-        [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:nil];
-        [pasteboard setString:html forType:@"com.karelia.html+graphics"];
-        [html release];
+        [textController addSelectionTypesToPasteboard:pasteboard];
     }
     else
     {
