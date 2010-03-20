@@ -11,6 +11,8 @@
 #import "SVGraphic.h"
 #import "SVHTMLContext.h"
 
+#import "NSManagedObject+KTExtensions.h"
+
 #import "NSError+Karelia.h"
 
 
@@ -203,6 +205,19 @@
 {
     [super populateSerializedValues:propertyList];
     [propertyList setObject:[[self graphic] propertyList] forKey:@"graphic"];
+}
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    
+    
+    // Graphic
+    NSString *entityName = [propertyList valueForKeyPath:@"graphic.entity"];
+    SVGraphic *graphic = [NSEntityDescription insertNewObjectForEntityForName:entityName
+                                                       inManagedObjectContext:[self managedObjectContext]];
+    [graphic awakeFromPropertyList:propertyList];
+    [self setGraphic:graphic];
 }
 
 @end

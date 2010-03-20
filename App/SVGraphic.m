@@ -391,6 +391,14 @@
 
 - (id <IMBImageItem>)thumbnail { return nil; }
 
+#pragma mark Serialization
+
+- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedValues:propertyList];
+    [propertyList setObject:[[self entity] name] forKey:@"entity"];
+}
+
 @end
 
 
