@@ -280,15 +280,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)addSelectionTypesToPasteboard:(NSPasteboard *)pasteboard;
 {
-    // Add our own custom type to the pasteboard
-    NSMutableString *html = [[NSMutableString alloc] init];
-    KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithStringWriter:html];
-    [writer writeDOMRange:[[self webEditor] selectedDOMRange]];
-    [writer release];
+    [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
     
-    [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:nil];
-    [pasteboard setString:html forType:@"com.karelia.html+graphics"];
-    [html release];
+    [SVAttributedHTMLWriter writeDOMRange:[[self webEditor] selectedDOMRange]
+                             toPasteboard:pasteboard
+                       graphicControllers:[self graphicControllers]];
 }
 
 #pragma mark Dragging

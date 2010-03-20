@@ -25,4 +25,8 @@
 + (void)writeContentsOfTextDOMController:(SVTextDOMController *)domController
                         toAttributedHTML:(SVRichText *)textObject;
 
++ (void)writeDOMRange:(DOMRange *)range
+         toPasteboard:(NSPasteboard *)pasteboard
+   graphicControllers:(NSArray *)graphicControllers;
+
 @end

@@ -112,5 +112,20 @@
     return NO;
 }
 
++ (void)writeDOMRange:(DOMRange *)range
+         toPasteboard:(NSPasteboard *)pasteboard
+   graphicControllers:(NSArray *)graphicControllers;
+{
+    // Add our own custom type to the pasteboard
+    NSMutableString *html = [[NSMutableString alloc] init];
+    SVHTMLWriter *writer = [[SVHTMLWriter alloc] initWithStringWriter:html];
+    [writer setDelegate:self];
     
+    [writer writeDOMRange:range];
+    [writer release];
+    
+    [pasteboard setString:html forType:@"com.karelia.html+graphics"];
+    [html release];
+}
+
 @end
