@@ -69,7 +69,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self setTextHTMLElement:element];
 }
 
-#pragma mark Content
+#pragma mark Updating
 
 - (void)update
 {
@@ -78,72 +78,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self didUpdate];
 }
 
-#pragma mark Insertion
+@synthesize updating = _isUpdating;
 
-- (void)insertGraphic:(SVGraphic *)graphic;
+- (void)willUpdate
 {
-    SVWebEditorView *webEditor = [self webEditor];
-    
-    
-    // Create text attachment for the graphic
-    SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
-                                                                     inManagedObjectContext:[graphic managedObjectContext]];
-    [textAttachment setGraphic:graphic];
-    [textAttachment setBody:[self representedObject]];
-    
-    
-    // Create controller for graphic
-    SVDOMController *controller = [[[graphic DOMControllerClass] alloc]
-                                   initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
-    [controller setHTMLContext:[self HTMLContext]];
-    [controller setRepresentedObject:graphic];
-    
-    [self addChildWebEditorItem:controller];
-    [controller release];
-    
-    
-    // Generate DOM node
-    [webEditor willChange];
-    
-    DOMRange *selection = [webEditor selectedDOMRange];
-    [selection insertNode:[controller HTMLElement]];
-    
-    [webEditor didChange];
+    OBPRECONDITION(!_isUpdating);
+    _isUpdating = YES;
 }
 
-- (IBAction)insertPagelet:(id)sender;
+- (void)didUpdate
 {
-    // TODO: Make the insertion
-}
-
-- (IBAction)insertFile:(id)sender;
-{
-    NSWindow *window = [[[self HTMLElement] documentView] window];
-    NSOpenPanel *panel = [[[window windowController] document] makeChooseDialog];
-    
-    [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
-}
-
-- (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
-{
-    if (returnCode == NSCancelButton) return;
-    
-    
-    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
-    SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
-                                            entityName:@"ImageMedia"
-                        insertIntoManagedObjectContext:context
-                                                 error:NULL];
-    
-    if (media)
-    {
-        SVImage *image = [SVImage insertNewImageWithMedia:media];
-        [self insertGraphic:image];
-    }
-    else
-    {
-        NSBeep();
-    }
+    OBPRECONDITION(_isUpdating);
+    _isUpdating = NO;
 }
 
 #pragma mark Editability
@@ -206,23 +152,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return [self childWebEditorItems];
 }
 
-#pragma mark Updates
-
-@synthesize updating = _isUpdating;
-
-- (void)willUpdate
-{
-    OBPRECONDITION(!_isUpdating);
-    _isUpdating = YES;
-}
-
-- (void)didUpdate
-{
-    OBPRECONDITION(_isUpdating);
-    _isUpdating = NO;
-}
-
-#pragma mark Editing
+#pragma mark Responding to Changes
 
 - (void)webViewDidChange;
 {    
@@ -321,6 +251,74 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     //[[SVLinkManager sharedLinkManager] setSelectedLink:link editable:(selection != nil)];
     [link release];
+}
+
+#pragma mark Insertion
+
+- (void)insertGraphic:(SVGraphic *)graphic;
+{
+    SVWebEditorView *webEditor = [self webEditor];
+    
+    
+    // Create text attachment for the graphic
+    SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                                     inManagedObjectContext:[graphic managedObjectContext]];
+    [textAttachment setGraphic:graphic];
+    [textAttachment setBody:[self representedObject]];
+    
+    
+    // Create controller for graphic
+    SVDOMController *controller = [[[graphic DOMControllerClass] alloc]
+                                   initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
+    [controller setHTMLContext:[self HTMLContext]];
+    [controller setRepresentedObject:graphic];
+    
+    [self addChildWebEditorItem:controller];
+    [controller release];
+    
+    
+    // Generate DOM node
+    [webEditor willChange];
+    
+    DOMRange *selection = [webEditor selectedDOMRange];
+    [selection insertNode:[controller HTMLElement]];
+    
+    [webEditor didChange];
+}
+
+- (IBAction)insertPagelet:(id)sender;
+{
+    // TODO: Make the insertion
+}
+
+- (IBAction)insertFile:(id)sender;
+{
+    NSWindow *window = [[[self HTMLElement] documentView] window];
+    NSOpenPanel *panel = [[[window windowController] document] makeChooseDialog];
+    
+    [panel beginSheetForDirectory:nil file:nil modalForWindow:window modalDelegate:self didEndSelector:@selector(chooseDialogDidEnd:returnCode:contextInfo:) contextInfo:NULL];
+}
+
+- (void)chooseDialogDidEnd:(NSSavePanel *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
+{
+    if (returnCode == NSCancelButton) return;
+    
+    
+    NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
+    SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
+                                            entityName:@"ImageMedia"
+                        insertIntoManagedObjectContext:context
+                                                 error:NULL];
+    
+    if (media)
+    {
+        SVImage *image = [SVImage insertNewImageWithMedia:media];
+        [self insertGraphic:image];
+    }
+    else
+    {
+        NSBeep();
+    }
 }
 
 #pragma mark Pasteboard
