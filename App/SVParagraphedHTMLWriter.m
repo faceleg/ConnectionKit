@@ -21,10 +21,52 @@
 
 #pragma mark Init & Dealloc
 
+- (id)initWithStringWriter:(id <KSStringWriter>)stream;
+{
+    if (self = [super initWithStringWriter:stream])
+    {
+        _attachments = [[NSMutableSet alloc] init];
+    }
+    
+    return self;
+}
+
 - (void)dealloc
 {
+    [_attachments release];
     [_DOMController release];
     [super dealloc];
+}
+
+#pragma mark Output
+
+- (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
+
+#pragma mark Writing
+
+- (void)writeGraphicController:(SVDOMController *)controller;
+{
+    [[self bodyTextDOMController] writeGraphicController:controller
+                                          withHTMLWriter:self];
+    
+    [_attachments addObject:[[controller representedObject] textAttachment]];
+}
+
+- (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
+{
+    NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
+    
+    for (SVDOMController *aController in graphicControllers)
+    {
+        if ([aController HTMLElement] == element)
+        {
+            [self writeGraphicController:aController];
+            return YES;
+        }
+    }
+    
+    
+    return NO;
 }
 
 #pragma mark Cleanup
@@ -94,7 +136,7 @@
     
     
     // Write the replacement
-    [[self delegate] HTMLWriter:self writeDOMElement:[controller HTMLElement]];
+    [self writeGraphicController:controller];
     
     
     return result;

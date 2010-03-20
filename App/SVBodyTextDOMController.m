@@ -19,6 +19,7 @@
 #import "SVLinkManager.h"
 #import "SVLink.h"
 #import "SVMediaRecord.h"
+#import "SVParagraphedHTMLWriter.h"
 #import "SVTextAttachment.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorView.h"
@@ -226,10 +227,56 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (void)webViewDidChange;
 {    
     //  Write the whole out using a special stream
+    
+       
+    NSMutableString *html = [[NSMutableString alloc] init];
+    
+    SVParagraphedHTMLWriter *context = 
+    [[SVParagraphedHTMLWriter alloc] initWithStringWriter:html];
+    
+    [context setBodyTextDOMController:self];
+    
+    
+    // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
+    DOMNode *aNode = [[self textHTMLElement] firstChild];
+    while (aNode)
+    {
+        aNode = [aNode topLevelBodyTextNodeWriteToStream:context];
+    }
+    
+    
+    SVRichText *textObject = [self representedObject];
+    if (![html isEqualToString:[textObject string]])
+    {
         _isUpdating = YES;
-    [SVAttributedHTMLWriter writeContentsOfTextDOMController:self
-                                            toAttributedHTML:[self representedObject]];
-    _isUpdating = NO;
+        [textObject setString:html
+                  attachments:[context textAttachments]];
+        _isUpdating = NO;
+    }
+    
+    
+    // Tidy up
+    [context release];
+}
+
+- (void)writeGraphicController:(SVDOMController *)controller
+                withHTMLWriter:(SVParagraphedHTMLWriter *)context;
+{
+    SVGraphic *graphic = [controller representedObject];
+    SVTextAttachment *textAttachment = [graphic textAttachment];
+    
+    
+    
+    // Set attachment location
+    NSMutableString *stream = (NSMutableString *)[context stringWriter];
+    [context writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+    
+    NSUInteger location = [stream length] - 1;
+    if ([textAttachment range].location != location)
+    {
+        [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:location]];
+        [textAttachment setLength:[NSNumber numberWithShort:1]];
+    }
 }
 
 #pragma mark Links
