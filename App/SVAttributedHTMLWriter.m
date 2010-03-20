@@ -19,22 +19,21 @@
 
 @implementation SVAttributedHTMLWriter
 
-- (void)writeContentsOfTextDOMController:(SVTextDOMController *)domController
++ (void)writeContentsOfTextDOMController:(SVTextDOMController *)domController
                         toAttributedHTML:(SVRichText *)textObject;
 {
+    SVAttributedHTMLWriter *writer = [[self alloc] init];
+    
     //  Write the whole out using a special stream
-    
-    _htmlWritten = [[NSMutableString alloc] init];
-    
+        
     SVParagraphedHTMLWriter *context = 
-    [[SVParagraphedHTMLWriter alloc] initWithStringWriter:_htmlWritten];
+    [[SVParagraphedHTMLWriter alloc] initWithStringWriter:writer->_htmlWritten];
     
-    [context setDelegate:self];
+    [context setDelegate:writer];
     [context setBodyTextDOMController:(id)domController];
     
     
-    _textDOMController = domController;
-    _attachmentsWritten = [[NSMutableSet alloc] init];
+    writer->_textDOMController = domController;
     
     
     // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
@@ -45,18 +44,34 @@
     }
     
     
-    if (![_htmlWritten isEqualToString:[textObject string]])
+    if (![writer->_htmlWritten isEqualToString:[textObject string]])
     {
-        [textObject setString:_htmlWritten
-                  attachments:_attachmentsWritten];
+        [textObject setString:writer->_htmlWritten
+                  attachments:writer->_attachmentsWritten];
     }
     
     
     // Tidy up
     [context release];
+    [writer release];
+}
+
+- (id)init
+{
+    [super init];
+    
+    _htmlWritten = [[NSMutableString alloc] init];
+    _attachmentsWritten = [[NSMutableSet alloc] init];
+    
+    return self;
+}
+
+- (void)dealloc
+{
     [_htmlWritten release];
     [_attachmentsWritten release];
-    _textDOMController = nil;
+    
+    [super dealloc];
 }
 
 - (void)writeGraphicController:(SVDOMController *)controller

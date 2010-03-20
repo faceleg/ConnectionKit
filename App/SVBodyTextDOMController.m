@@ -226,14 +226,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (void)webViewDidChange;
 {    
     //  Write the whole out using a special stream
-    SVAttributedHTMLWriter *writer = [[SVAttributedHTMLWriter alloc] init];
-    
-    _isUpdating = YES;
-    [writer writeContentsOfTextDOMController:self
-                            toAttributedHTML:[self representedObject]];
+        _isUpdating = YES;
+    [SVAttributedHTMLWriter writeContentsOfTextDOMController:self
+                                            toAttributedHTML:[self representedObject]];
     _isUpdating = NO;
-    
-    [writer release];
 }
 
 #pragma mark Links

@@ -22,7 +22,7 @@
     NSMutableSet        *_attachmentsWritten;
 }
 
-- (void)writeContentsOfTextDOMController:(SVTextDOMController *)domController
++ (void)writeContentsOfTextDOMController:(SVTextDOMController *)domController
                         toAttributedHTML:(SVRichText *)textObject;
 
 @end
