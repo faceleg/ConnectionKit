@@ -16,14 +16,11 @@
 @interface SVAttributedHTMLWriter : NSObject <SVHTMLWriterDelegate>
 {
   @private
-    SVTextDOMController *_textDOMController;
+    NSMutableString *_htmlWritten;
+    NSMutableArray  *_attachmentsWritten;
     
-    NSMutableString     *_htmlWritten;
-    NSMutableSet        *_attachmentsWritten;
+    NSArray *_graphicControllers;   // weak, temp ref
 }
-
-+ (void)writeContentsOfTextDOMController:(SVTextDOMController *)domController
-                        toAttributedHTML:(SVRichText *)textObject;
 
 + (void)writeDOMRange:(DOMRange *)range
          toPasteboard:(NSPasteboard *)pasteboard
