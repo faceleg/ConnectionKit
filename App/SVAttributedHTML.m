@@ -60,6 +60,45 @@
 
 #pragma mark Pasteboard
 
+- (void)writeToPasteboard:(NSPasteboard *)pasteboard;
+{
+    // Create a clone where SVTextAttachment is replaced by its serialized form
+    NSMutableAttributedString *archivableAttributedString = [self mutableCopy];
+    
+    NSRange range = NSMakeRange(0, [archivableAttributedString length]);
+    NSUInteger location = 0;
+    
+    while (location < range.length)
+    {
+        NSRange effectiveRange;
+        SVTextAttachment *attachment = [archivableAttributedString attribute:@"SVAttachment"
+                                                                     atIndex:location
+                                                       longestEffectiveRange:&effectiveRange
+                                                                     inRange:range];
+        
+        if (attachment)
+        {
+            // Replace the attachment
+            id plist = [attachment propertyList];
+            
+            [archivableAttributedString removeAttribute:@"SVAttachment"
+                                                  range:effectiveRange];
+            
+            [archivableAttributedString addAttribute:@"Serialized SVAttachment"
+                                               value:plist
+                                               range:effectiveRange];
+        }
+        
+        // Advance the search
+        location = location + effectiveRange.length;
+    }
+    
+    
+    // Write to the pboard in archive form
+    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:archivableAttributedString];
+    [pasteboard setData:data forType:@"com.karelia.html+graphics"];
+}
+
 + (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
                               managedObjectContext:(NSManagedObjectContext *)context;
 {

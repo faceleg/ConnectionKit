@@ -10,16 +10,14 @@
 #import "SVHTMLWriter.h"
 
 
-@class SVTextDOMController, SVRichText;
+@class SVAttributedHTML;
 
 
-@interface SVAttributedHTMLWriter : NSObject <SVHTMLWriterDelegate>
+@interface SVAttributedHTMLWriter : NSObject <SVHTMLWriterDelegate, KSStringWriter>
 {
   @private
-    NSMutableString *_htmlWritten;
-    NSMutableArray  *_attachmentsWritten;
-    
-    NSArray *_graphicControllers;   // weak, temp ref
+    SVAttributedHTML    *_attributedHTML;
+    NSArray             *_graphicControllers;   // weak, temp ref
 }
 
 + (void)writeDOMRange:(DOMRange *)range

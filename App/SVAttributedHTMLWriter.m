@@ -8,6 +8,7 @@
 
 
 #import "SVAttributedHTMLWriter.h"
+#import "SVAttributedHTML.h"
 
 #import "SVGraphic.h"
 #import "SVParagraphedHTMLWriter.h"
@@ -22,51 +23,42 @@
 
 @implementation SVAttributedHTMLWriter
 
-- (id)init
+- (id)initWithAttributedHTML:(SVAttributedHTML *)attributedHTML;
 {
     [super init];
-    
-    _htmlWritten = [[NSMutableString alloc] init];
-    _attachmentsWritten = [[NSMutableArray alloc] init];
+    _attributedHTML = [attributedHTML retain];
+    return self;
+}
+
+- (id)init
+{
+    SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] init];
+    self = [self initWithAttributedHTML:attributedHTML];
+    [attributedHTML release];
     
     return self;
 }
 
 - (void)dealloc
 {
-    [_htmlWritten release];
-    [_attachmentsWritten release];
+    [_attributedHTML release];
     
     [super dealloc];
 }
 
-- (void)writeToPasteboard:(NSPasteboard *)pasteboard;
-{
-    NSDictionary *plist = [[NSDictionary alloc] initWithObjectsAndKeys:
-                           _htmlWritten, @"HTMLString",
-                           _attachmentsWritten, @"attachments",
-                           nil];
-    
-    [pasteboard setPropertyList:plist forType:@"com.karelia.html+graphics"];
-    [plist release];
-}
-
 - (void)writeGraphicController:(SVDOMController *)controller
-                withHTMLWriter:(KSHTMLWriter *)writer;
 {
     // Write the graphic
     SVGraphic *graphic = [controller representedObject];
     SVTextAttachment *textAttachment = [graphic textAttachment];
     
-    NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
-    [textAttachment populateSerializedValues:plist];
-    [_attachmentsWritten addObject:plist];
+    NSAttributedString *attributedString =
+    [[NSAttributedString alloc] initWithString:[NSString stringWithUnichar:NSAttachmentCharacter]
+                                    attributes:[NSDictionary dictionaryWithObject:textAttachment
+                                                                           forKey:@"SVAttachment"]];
     
-    
-    // Adjust position to match this destination
-    NSUInteger location = ([_htmlWritten length] - 1);
-    [plist setObject:[NSNumber numberWithUnsignedInt:location]
-              forKey:@"location"];
+    [_attributedHTML appendAttributedString:attributedString];
+    [attributedString release];
 }
 
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
@@ -75,7 +67,7 @@
     {
         if ([aController HTMLElement] == element)
         {
-            [self writeGraphicController:aController withHTMLWriter:writer];
+            [self writeGraphicController:aController];
             return YES;
         }
     }
@@ -86,7 +78,7 @@
 
 - (void)writeDOMRange:(DOMRange *)range graphicControllers:(NSArray *)graphicControllers;
 {
-    SVHTMLWriter *writer = [[SVHTMLWriter alloc] initWithStringWriter:_htmlWritten];
+    SVHTMLWriter *writer = [[SVHTMLWriter alloc] initWithStringWriter:self];
     [writer setDelegate:self];
     
     _graphicControllers = graphicControllers;
@@ -101,10 +93,25 @@
    graphicControllers:(NSArray *)graphicControllers;
 {
     // Add our own custom type to the pasteboard
-    SVAttributedHTMLWriter *writer = [[SVAttributedHTMLWriter alloc] init];
+    SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] init];
+    
+    SVAttributedHTMLWriter *writer = [[self alloc] initWithAttributedHTML:attributedHTML];
     [writer writeDOMRange:range graphicControllers:graphicControllers];
-    [writer writeToPasteboard:pasteboard];
     [writer release];
+    
+    [attributedHTML writeToPasteboard:pasteboard];
+    [attributedHTML release];
+}
+
+#pragma mark KSStringWriter
+
+- (void)writeString:(NSString *)string;
+{
+    NSRange range = NSMakeRange([_attributedHTML length], 0);
+    [_attributedHTML replaceCharactersInRange:range withString:string];
+    
+    range.length = [string length];
+    [_attributedHTML setAttributes:nil range:range];
 }
 
 @end
