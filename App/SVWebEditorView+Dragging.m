@@ -369,7 +369,7 @@
     NSArray *selection = [self selectedItems];
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
-    if ([[self dataSource] webEditor:self writeItems:selection toPasteboard:pboard])
+    if ([[self dataSource] webEditor:self addSelectionToPasteboard:pboard])
     {
         // Now let's start a-dragging!
         SVWebEditorItem *item = [selection lastObject]; // FIXME: use the item actually being dragged
