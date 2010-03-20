@@ -197,4 +197,12 @@
     return result;
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedValues:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedValues:propertyList];
+    [propertyList setObject:[[self graphic] propertyList] forKey:@"graphic"];
+}
+
 @end
