@@ -23,6 +23,7 @@
     SVWebEditorItem *_parentController;
     
     BOOL    _selected;
+    BOOL    _editing;
 }
 
 @property(nonatomic, assign, readonly) SVWebEditorView *webEditor;  // NOT KVO-compliant
@@ -41,7 +42,8 @@
 - (BOOL)isEditable;
 - (unsigned int)resizingMask;
 
-@property(nonatomic, getter=isSelected) BOOL selected;
+@property(nonatomic, getter=isSelected) BOOL selected;  // draw selection handles & outline when YES
+@property(nonatomic, getter=isEditing) BOOL editing;    // draw outline when YES
 
 - (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
 

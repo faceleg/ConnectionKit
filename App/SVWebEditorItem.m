@@ -132,12 +132,34 @@
     return result;
 }
 
+- (void)updateOutline;
+{
+    if ([self isSelected] || [self isEditing])
+    {
+        [[[self HTMLElement] style] setProperty:@"outline"
+                                          value:@"1px gray solid"
+                                       priority:@""];
+    }
+    else
+    {
+        [[[self HTMLElement] style] removeProperty:@"outline"];
+    }
+}
+
 @synthesize selected = _selected;
 - (void)setSelected:(BOOL)selected
 {
     _selected = selected;
     
     [[[self HTMLElement] documentView] setNeedsDisplayInRect:[self drawingRect]];
+    [self updateOutline];
+}
+
+@synthesize editing = _editing;
+- (void)setEditing:(BOOL)isEditing;
+{
+    _editing = isEditing;
+    [self updateOutline];
 }
 
 #pragma mark Searching the Tree

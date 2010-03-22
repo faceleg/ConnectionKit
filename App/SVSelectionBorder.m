@@ -29,7 +29,7 @@
     self = [super init];
     
     _resizingMask = /*kCALayerLeftEdge | */kCALayerRightEdge | kCALayerBottomEdge/* | kCALayerTopEdge*/;
-    _borderColor = [[NSColor grayColor] copy];
+    //_borderColor = [[NSColor grayColor] copy];
     
     return self;
 }
