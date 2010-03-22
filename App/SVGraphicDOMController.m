@@ -26,37 +26,6 @@
     return result;
 }
 
-- (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
-{
-    SVBodyTextDOMController *bodyController = [self enclosingBodyTextDOMController];
-    
-    
-    SVWebEditorView *webEditor = [self webEditor];
-    [webEditor willChange];
-    
-    
-    // Seek out the paragraph nearest myself. Place my HTML element before/after there
-    DOMNode *refNode = [self HTMLElement];
-    DOMNode *parentNode = [refNode parentNode];
-    while (parentNode != [bodyController HTMLElement])
-    {
-        refNode = parentNode;
-        parentNode = [parentNode parentNode];
-    }
-    
-    [parentNode insertBefore:[self HTMLElement] refChild:refNode];
-    
-    
-    // Make Web Editor/Controller copy text to model
-    [webEditor didChange];
-    
-    
-    // Make sure it's marked as block
-    SVGraphic *graphic = [self representedObject];
-    [[graphic textAttachment] setPlacement:
-     [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
-}
-
 @end
 
 

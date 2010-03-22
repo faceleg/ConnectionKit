@@ -117,14 +117,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [super setEditable:editable];
 }
 
-- (void)webEditorTextDidBeginEditing;
-{
-    [super webEditorTextDidBeginEditing];
-    
-    // A bit crude, but we don't want WebKit's usual focus ring
-    [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
-}
-
 #pragma mark Subcontrollers
 
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
@@ -216,6 +208,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 #pragma mark Responding to Changes
+
+- (void)webEditorTextDidBeginEditing;
+{
+    [super webEditorTextDidBeginEditing];
+    
+    // A bit crude, but we don't want WebKit's usual focus ring
+    [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
+}
 
 - (void)webViewDidChange;
 {    
@@ -382,6 +382,41 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         NSBeep();
     }
+}
+
+- (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
+{
+    SVWebEditorView *webEditor = [self webEditor];
+    [webEditor willChange];
+    
+    
+    for (SVDOMController *aController in [webEditor selectedItems])
+    {
+        if ([aController parentWebEditorItem] != self) continue;
+        
+        
+        // Seek out the paragraph nearest myself. Place my HTML element before/after there
+        DOMNode *refNode = [aController HTMLElement];
+        DOMNode *parentNode = [refNode parentNode];
+        while (parentNode != [self HTMLElement])
+        {
+            refNode = parentNode;
+            parentNode = [parentNode parentNode];
+        }
+        
+        [parentNode insertBefore:[aController HTMLElement] refChild:refNode];
+    }
+    
+    
+    
+    // Make Web Editor/Controller copy text to model
+    [webEditor didChange];
+    
+    
+    // Make sure it's marked as block
+    SVGraphic *graphic = [self representedObject];
+    [[graphic textAttachment] setPlacement:
+     [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
 }
 
 #pragma mark Pasteboard
