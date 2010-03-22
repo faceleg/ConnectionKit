@@ -52,16 +52,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
 
 
-// Selection
+#pragma mark Selection
+
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 
 - (BOOL)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection isUIAction:(BOOL)isUIAction;
 - (BOOL)deselectItem:(SVWebEditorItem *)item isUIAction:(BOOL)isUIAction;
 
+// Monster method for updating the selection
+// For a WebView-initiated change, specify the new DOM range. Otherwise, pass nil and the WebView's selection will be updated to match.
 - (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(SVWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
-                          updateWebView:(BOOL)updateWebView
+                               DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
 
 @property(nonatomic, copy) NSArray *selectionParentItems;
@@ -356,7 +359,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return [self updateSelectionByDeselectingAll:!extendSelection
                                   orDeselectItem:nil
                                      selectItems:items
-                                   updateWebView:YES
+                                   DOMRange:nil
                                       isUIAction:isUIAction];
 }
 
@@ -365,14 +368,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return [self updateSelectionByDeselectingAll:NO
                                   orDeselectItem:item
                                      selectItems:nil
-                                   updateWebView:YES
+                                   DOMRange:nil
                                       isUIAction:isUIAction];
 }
 
 - (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(SVWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
-                          updateWebView:(BOOL)updateWebView
+                               DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
 {
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
@@ -458,7 +461,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
     SVWebEditorItem *selectedItem = [self selectedItem];
-    if (updateWebView && selectedItem)
+    if (!domRange && selectedItem)
     {
         DOMElement *domElement = [selectedItem HTMLElement];
         DOMElement *editableElement = [domElement enclosingContentEditableElement];
@@ -486,7 +489,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     else
     {
-        DOMNode *selectionNode = [[self selectedDOMRange] commonAncestorContainer];
+        DOMNode *selectionNode = [domRange commonAncestorContainer];
         if (selectionNode)
         {
             SVWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
@@ -1336,7 +1339,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         result = [self updateSelectionByDeselectingAll:YES
                                         orDeselectItem:nil
                                            selectItems:items
-                                         updateWebView:NO
+                                         DOMRange:proposedRange
                                             isUIAction:YES];
     }
     
