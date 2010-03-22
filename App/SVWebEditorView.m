@@ -517,31 +517,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @synthesize selectionParentItems = _selectionParentItems;
 - (void)setSelectionParentItems:(NSArray *)items
 {
-    NSView *docView = [[[[self webView] mainFrame] frameView] documentView];
-    
-    SVSelectionBorder *border = [[SVSelectionBorder alloc] init];
-    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
-    
-    // Mark old as needing display
-    [border setEditing:YES];
-    for (SVWebEditorItem *anItem in [self selectionParentItems])
-    {
-        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
-        [docView setNeedsDisplayInRect:drawingRect];
-    }
+    // Let them know
+    [[self selectionParentItems] setBool:NO forKey:@"editing"];
+    [items setBool:YES forKey:@"editing"];
     
     // Store items
     items = [items copy];
     [_selectionParentItems release]; _selectionParentItems = items;
-    
-    // Draw new items
-    for (SVWebEditorItem *anItem in items)
-    {
-        NSRect drawingRect = [border drawingRectForGraphicBounds:[[anItem HTMLElement] boundingBox]];
-        [docView setNeedsDisplayInRect:drawingRect];
-    }
-    
-    [border release];
 }
 
 - (void)windowDidChangeFirstResponder:(NSNotification *)notification
