@@ -165,9 +165,10 @@
 
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation;
 {
-    // When moving an item within text, delete the source
+    // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
     if (operation == NSDragOperationMove)
     {
+        [self willChange];
         for (SVWebEditorItem *anItem in [self draggedItems])
         {
             DOMHTMLElement *node = [anItem HTMLElement];
@@ -175,8 +176,10 @@
             
             [anItem removeFromParentWebEditorItem];
         }
+        [self didChange];
     }
     
+    // Clean up
     [_draggedItems release]; _draggedItems = nil;
 }
 
