@@ -107,10 +107,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         {
             [aGraphicController loadHTMLElementFromDocument:[[self HTMLElement] ownerDocument]];
         }
-        
-        [[[aGraphicController HTMLElement] style] setProperty:@"-webkit-user-select"
-                                                        value:@"none"
-                                                     priority:@"!important"];
     }
     
     // Carry on
@@ -147,6 +143,27 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 }
 
 #pragma mark Controlling Editing Behaviour
+
+- (BOOL)webEditorTextShouldChangeSelectedDOMRange:(DOMRange *)currentRange
+                                       toDOMRange:(DOMRange *)proposedRange
+                                         affinity:(NSSelectionAffinity)selectionAffinity
+                                   stillSelecting:(BOOL)flag;
+{
+    DOMNode *proposedStart = [proposedRange startContainer];
+    DOMNode *proposedEnd = [proposedRange endContainer];
+    
+    NSArray *selectableControllers = [self selectableTopLevelDescendants];
+    for (SVWebEditorItem *anItem in selectableControllers)
+    {
+        if ([proposedEnd isDescendantOfNode:[anItem HTMLElement]] ||
+            [proposedStart isDescendantOfNode:[anItem HTMLElement]])
+        {
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
                     replacingDOMRange:(DOMRange *)range
