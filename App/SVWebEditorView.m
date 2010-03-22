@@ -61,7 +61,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 // Monster method for updating the selection
 // For a WebView-initiated change, specify the new DOM range. Otherwise, pass nil and the WebView's selection will be updated to match.
-- (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
+- (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(SVWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
                                DOMRange:(DOMRange *)domRange
@@ -356,7 +356,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (BOOL)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection isUIAction:(BOOL)isUIAction;
 {
-    return [self updateSelectionByDeselectingAll:!extendSelection
+    return [self changeSelectionByDeselectingAll:!extendSelection
                                   orDeselectItem:nil
                                      selectItems:items
                                    DOMRange:nil
@@ -365,14 +365,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (BOOL)deselectItem:(SVWebEditorItem *)item isUIAction:(BOOL)isUIAction;
 {
-    return [self updateSelectionByDeselectingAll:NO
+    return [self changeSelectionByDeselectingAll:NO
                                   orDeselectItem:item
                                      selectItems:nil
                                    DOMRange:nil
                                       isUIAction:isUIAction];
 }
 
-- (BOOL)updateSelectionByDeselectingAll:(BOOL)deselectAll
+- (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(SVWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
                                DOMRange:(DOMRange *)domRange
@@ -1343,7 +1343,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         {
             NSArray *items = (proposedRange) ? [self itemsInDOMRange:proposedRange] : nil;
             
-            result = [self updateSelectionByDeselectingAll:YES
+            result = [self changeSelectionByDeselectingAll:YES
                                             orDeselectItem:nil
                                                selectItems:items
                                              DOMRange:proposedRange
