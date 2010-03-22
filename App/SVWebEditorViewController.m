@@ -817,6 +817,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (textController)
     {
         [textController addSelectionTypesToPasteboard:pasteboard];
+        return YES;
     }
     else
     {
