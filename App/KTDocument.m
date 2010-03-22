@@ -409,6 +409,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
                                                        URL:storeURL
                                                    options:nil
                                                      error:outError] != nil);
+    
+    if (result) [self setDatastoreURL:storeURL];
 	
 	
     return result;
