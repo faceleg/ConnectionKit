@@ -118,20 +118,6 @@
 
 - (BOOL)isEditable { return NO; }
 
-- (NSArray *)selectableAncestors;
-{
-    NSMutableArray *result = [NSMutableArray array];
-    
-    SVWebEditorItem *aParentItem = [self parentWebEditorItem];
-    while (aParentItem)
-    {
-        if ([aParentItem isSelectable]) [result addObject:aParentItem];
-        aParentItem = [aParentItem parentWebEditorItem];
-    }
-    
-    return result;
-}
-
 - (void)updateOutline;
 {
     if ([self isSelected] || [self isEditing])
@@ -214,6 +200,40 @@
         {
             result = [anItem descendantItemWithRepresentedObject:object];
             if (result) break;
+        }
+    }
+    
+    return result;
+}
+
+- (NSArray *)selectableAncestors;
+{
+    NSMutableArray *result = [NSMutableArray array];
+    
+    SVWebEditorItem *aParentItem = [self parentWebEditorItem];
+    while (aParentItem)
+    {
+        if ([aParentItem isSelectable]) [result addObject:aParentItem];
+        aParentItem = [aParentItem parentWebEditorItem];
+    }
+    
+    return result;
+}
+
+- (NSArray *)selectableTopLevelDescendants;
+{
+    NSArray *children = [self childWebEditorItems];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[children count]];
+    
+    for (SVWebEditorItem *anItem in children)
+    {
+        if ([anItem isSelectable])
+        {
+            [result addObject:anItem];
+        }
+        else
+        {
+            [result addObjectsFromArray:[anItem selectableTopLevelDescendants]];
         }
     }
     

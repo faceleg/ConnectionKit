@@ -101,7 +101,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (void)setEditable:(BOOL)editable
 {
     // TODO: Embedded graphics must NOT be selectable
-    for (SVDOMController *aGraphicController in [self graphicControllers])
+    for (SVDOMController *aGraphicController in [self selectableTopLevelDescendants])
     {
         if (![aGraphicController isHTMLElementCreated])
         {

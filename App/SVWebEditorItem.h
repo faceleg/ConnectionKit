@@ -45,8 +45,6 @@
 @property(nonatomic, getter=isSelected) BOOL selected;  // draw selection handles & outline when YES
 @property(nonatomic, getter=isEditing) BOOL editing;    // draw outline when YES
 
-- (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
-
 
 #pragma mark Searching the Tree
 
@@ -56,6 +54,9 @@
 - (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
 - (NSEnumerator *)enumerator;
+
+- (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
+- (NSArray *)selectableTopLevelDescendants;
 
 
 #pragma mark NSResponder Aping
