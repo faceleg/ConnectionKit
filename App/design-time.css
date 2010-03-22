@@ -1,6 +1,8 @@
 .kLine:focus { outline: gray solid 1px; }
 
-img { -webkit-user-select:none; }
+img, .pagelet {
+    -webkit-user-select:none;
+}
 
 div.svx-placeholder
 {
