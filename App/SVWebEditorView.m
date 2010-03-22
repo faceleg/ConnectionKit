@@ -1334,13 +1334,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
     if (!_isChangingSelectedItems)
     {
-        NSArray *items = (proposedRange) ? [self itemsInDOMRange:proposedRange] : nil;
+        result = [[self focusedText] webEditorTextShouldChangeSelectedDOMRange:currentRange
+                                                                    toDOMRange:proposedRange
+                                                                      affinity:selectionAffinity
+                                                                stillSelecting:flag];
         
-        result = [self updateSelectionByDeselectingAll:YES
-                                        orDeselectItem:nil
-                                           selectItems:items
-                                         DOMRange:proposedRange
-                                            isUIAction:YES];
+        if (result)
+        {
+            NSArray *items = (proposedRange) ? [self itemsInDOMRange:proposedRange] : nil;
+            
+            result = [self updateSelectionByDeselectingAll:YES
+                                            orDeselectItem:nil
+                                               selectItems:items
+                                             DOMRange:proposedRange
+                                                isUIAction:YES];
+        }
     }
     
     

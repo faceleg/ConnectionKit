@@ -261,6 +261,14 @@
 	return result;
 }
 
+- (BOOL)webEditorTextShouldChangeSelectedDOMRange:(DOMRange *)currentRange
+                                       toDOMRange:(DOMRange *)proposedRange
+                                         affinity:(NSSelectionAffinity)selectionAffinity
+                                   stillSelecting:(BOOL)flag;
+{
+    return YES;
+}
+
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
 
 #pragma mark Pasteboard
