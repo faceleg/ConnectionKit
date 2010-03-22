@@ -163,16 +163,21 @@
     _draggedItems = [[self selectedItems] copy];    // will redraw without selection borders
 }
 
-- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation
+- (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation;
 {
-    // Make the dragged items visible again
-    [_draggedItems release]; _draggedItems = nil;
-    
-    for (SVWebEditorItem *anItem in [self selectedItems])
+    // When moving an item within text, delete the source
+    if (operation == NSDragOperationMove)
     {
-        DOMElement *element = [anItem HTMLElement];
-        [[element style] removeProperty:@"visibility"];
+        for (SVWebEditorItem *anItem in [self draggedItems])
+        {
+            DOMHTMLElement *node = [anItem HTMLElement];
+            [[node parentNode] removeChild:node];
+            
+            [anItem removeFromParentWebEditorItem];
+        }
     }
+    
+    [_draggedItems release]; _draggedItems = nil;
 }
 
 - (NSArray *)draggedItems; { return _draggedItems; }
@@ -369,8 +374,15 @@
     NSArray *selection = [self selectedItems];
     NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
     
+    
+    NSArray *types = [[self webView] pasteboardTypesForSelection];
+    [pboard declareTypes:types owner:self];
+    [[self webView] writeSelectionWithPasteboardTypes:types toPasteboard:pboard];
+    
+    
     if ([[self dataSource] webEditor:self addSelectionToPasteboard:pboard])
     {
+        
         // Now let's start a-dragging!
         SVWebEditorItem *item = [selection lastObject]; // FIXME: use the item actually being dragged
         
