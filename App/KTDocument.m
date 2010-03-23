@@ -235,6 +235,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (self)
     {
+        // We really don't want the doc being marked as edited as soon as it's created, so suppress registration
+        NSUndoManager *undoManager = [self undoManager];
+        [undoManager disableUndoRegistration];
+        
+        
 		// Make a new site to store document properties
         NSManagedObjectContext *context = [self managedObjectContext];
         
@@ -311,8 +316,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [[root sidebar] addPageletsObject:textBox];
         
         
-        // None of this should be available to undo
-        [self processPendingChangesAndClearChangeCount];
+        // Finish up
+        [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                            object:undoManager];
+        [undoManager enableUndoRegistration];
     }
 	
 	
@@ -698,15 +705,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     {
         [[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentDidChangeNotification object:self];
     }
-}
-
-// TODO: Is this method strictly necessary? Seems kinda hackish to me
-- (void)processPendingChangesAndClearChangeCount
-{
-	LOGMETHOD;
-	[[self managedObjectContext] processPendingChanges];
-	[[self undoManager] removeAllActions];
-	[self updateChangeCount:NSChangeCleared];
 }
 
 #pragma mark -
