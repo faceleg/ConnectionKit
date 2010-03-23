@@ -297,9 +297,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             if ([anObject isKindOfClass:[SVMediaRecord class]])
             {
                 SVMediaRecord *media = (SVMediaRecord *)anObject;
-                
-                // FIXME: Only delete if there's nothing left using the same filename
-                
+                                
                 NSString *filename = [media committedValueForKey:@"filename"];  // don't want to risk an out-of date in-memory value
                 NSURL *deletedMediaURL = [deletedMediaDirectory URLByAppendingPathComponent:filename
                                                                                 isDirectory:NO];
