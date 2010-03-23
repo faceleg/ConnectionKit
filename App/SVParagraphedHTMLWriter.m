@@ -264,7 +264,14 @@
 - (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
-    return [context _writeDOMElement:self];
+    if ([context HTMLWriter:context writeDOMElement:self])
+    {
+        return [self nextSibling];
+    }
+    else
+    {
+        return [context _writeDOMElement:self];
+    }
 }
 
 @end
