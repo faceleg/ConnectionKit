@@ -149,6 +149,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                          affinity:(NSSelectionAffinity)selectionAffinity
                                    stillSelecting:(BOOL)flag;
 {
+    return YES;
     DOMNode *proposedStart = [proposedRange startContainer];
     DOMNode *proposedEnd = [proposedRange endContainer];
     

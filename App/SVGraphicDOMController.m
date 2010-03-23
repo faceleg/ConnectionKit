@@ -26,6 +26,23 @@
     return result;
 }
 
+- (void)setEditing:(BOOL)editing;
+{
+    [super setEditing:editing];
+    
+    
+    if (editing)
+    {
+        [[[self HTMLElement] style] setProperty:@"-webkit-user-select"
+                                          value:@"auto"
+                                       priority:@""];
+    }
+    else
+    {
+        [[[self HTMLElement] style] removeProperty:@"-webkit-user-select"];
+    }
+}
+
 @end
 
 

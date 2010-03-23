@@ -470,7 +470,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
             [[self window] makeFirstResponder:[domElement documentView]];
             
             DOMRange *range = [[domElement ownerDocument] createRange];
-            [range selectNode:domElement];
+            if ([domElement hasChildNodes])
+            {
+                [range selectNodeContents:domElement];
+            }
+            else
+            {
+                [range selectNode:domElement];
+            }
             [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
         }
         else
