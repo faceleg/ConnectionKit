@@ -89,18 +89,7 @@
 	return myHTMLInspectorController;
 }
 
-#pragma mark -
 #pragma mark Document Display Properties
-
-- (BOOL)showDesigns
-{
-	return myShowDesigns;
-}
-
-- (void)setShowDesigns:(BOOL)value
-{
-	myShowDesigns = value;
-}
 
 - (BOOL)displaySmallPageIcons { return myDisplaySmallPageIcons; }
 

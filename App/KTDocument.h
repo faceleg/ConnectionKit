@@ -52,7 +52,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 	
 	
 	// UI
-	BOOL	myShowDesigns;						// accessor in category method
 	BOOL	myDisplaySmallPageIcons;			// accessor in category method
 //	short	mySiteOutlineSize;
 	BOOL	myDisplayCodeInjectionWarnings;		// accessor in category method

@@ -275,7 +275,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Set the design
         KTDesign *design = [[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension] firstObjectKS];
         [master setDesign:design];
-		[self setShowDesigns:NO]; // FIXME: turned off old design chooser for now
         
         
         // Set up root properties that used to come from document defaults
