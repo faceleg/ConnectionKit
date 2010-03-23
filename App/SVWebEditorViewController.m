@@ -266,11 +266,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (SVWebEditorItem *anItem in controllers)
     {
-        if (![anItem isHTMLElementCreated]) [anItem loadHTMLElementFromDocument:domDoc];
-        OBASSERT([anItem HTMLElement]);
-        
+        // Insert into the tree if a top-level item
         if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
-        
         
         // Cheat and figure out if it's a sidebar pagelet controller
         id anObject = [anItem representedObject];
@@ -280,17 +277,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         {
             [sidebarPageletItems addObject:anItem];
         }
-        
-        
-        // Figure out if it's a text controller
-        if ([anItem isKindOfClass:[SVTextDOMController class]])
-        {
-            [textAreas addObject:anItem];
-        }
-        
-        
-        //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-        if (anObject) [selectableObjects addObject:anObject];
     }
     
     [self setSidebarPageletItems:sidebarPageletItems];
@@ -337,11 +323,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // Did Update
     [self didUpdate];
-}
-
-- (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
-{
-    
 }
 
 - (void)scheduleUpdate
@@ -1123,6 +1104,26 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         [[undoManager prepareWithInvocationTarget:self] 
          undo_setSelectedTextRange:[webEditor selectedTextRange]];
     }
+}
+
+- (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+{
+    // Ensure element is loaded
+    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
+    if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
+    OBASSERT([item HTMLElement]);
+    
+    
+    // Figure out if it's a text controller
+    if ([item isKindOfClass:[SVTextDOMController class]])
+    {
+        //[textAreas addObject:anItem];
+    }
+    
+    
+    //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
+    id anObject = [item representedObject];
+    if (anObject) [_selectableObjectsController addObject:anObject];
 }
 
 #pragma mark -
