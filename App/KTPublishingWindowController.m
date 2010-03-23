@@ -118,7 +118,6 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 	[oInformativeTextLabel setStringValue:[self informativeText]];
 	
     
-    // TODO: Ensure the button is wide enough for e.g. German
     [oFirstButton setTitle:NSLocalizedString(@"Stop", @"Stop publishing button title")];
     
 	
