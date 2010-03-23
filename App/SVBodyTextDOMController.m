@@ -401,18 +401,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         }
         
         [parentNode insertBefore:[aController HTMLElement] refChild:refNode];
+        
+        
+        // Make sure it's marked as block
+        SVGraphic *graphic = [aController representedObject];
+        [[graphic textAttachment] setPlacement:
+         [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
     }
     
     
     
     // Make Web Editor/Controller copy text to model
     [webEditor didChange];
-    
-    
-    // Make sure it's marked as block
-    SVGraphic *graphic = [self representedObject];
-    [[graphic textAttachment] setPlacement:
-     [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
 }
 
 #pragma mark Pasteboard

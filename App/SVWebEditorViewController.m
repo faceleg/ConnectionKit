@@ -1155,9 +1155,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
-    NSArray *items = [[self selectedItems] copy];
-    [items ks_tryToMakeObjectsPerformSelector:_cmd withObject:nil];
-    [items release];
+    [(SVWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
 }
 
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
