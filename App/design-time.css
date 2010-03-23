@@ -1,6 +1,7 @@
 .kLine:focus { outline: gray solid 1px; }
 
-img, .pagelet {
+/*  Super-cunning rule to make only pagelets *inside* an editable area, unselectable */
+img, [contenteditable=true] .pagelet {
     -webkit-user-select:none;
 }
 
