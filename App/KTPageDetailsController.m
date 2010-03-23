@@ -1157,10 +1157,7 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		else
 		{
 			// Success: delete old media, store new:
-			[context deleteObject:[downloadPage media]];
-			[downloadPage setMedia:record];
-			
-			// TODO: Force the webview to refresh?  Or figure out why it didn't?
+			[downloadPage replaceMedia:record forKeyPath:@"media"];
 		}
 	}
 	 
