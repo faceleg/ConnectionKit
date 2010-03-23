@@ -266,11 +266,7 @@
                                          affinity:(NSSelectionAffinity)selectionAffinity
                                    stillSelecting:(BOOL)flag;
 {
-    // Ensure user can't select part of a range outside our bounds
-    DOMNode *proposedNode = [proposedRange commonAncestorContainer];
-    BOOL result = ([proposedNode isDescendantOfNode:[self textHTMLElement]]);
-    
-    return result;
+    return YES;
 }
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
