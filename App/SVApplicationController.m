@@ -1106,7 +1106,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[self setMenuItemPro:oEditRawHTMLMenuItem];
 
 		
-		// FIXME: MISSING. [self setMenuItemPro:oFindSubmenu];
 		[self setMenuItemPro:oCodeInjectionMenuItem];
 		[self setMenuItemPro:oCodeInjectionLevelMenuItem];
 	}
