@@ -144,28 +144,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Controlling Editing Behaviour
 
-- (BOOL)webEditorTextShouldChangeSelectedDOMRange:(DOMRange *)currentRange
-                                       toDOMRange:(DOMRange *)proposedRange
-                                         affinity:(NSSelectionAffinity)selectionAffinity
-                                   stillSelecting:(BOOL)flag;
-{
-    return YES;
-    DOMNode *proposedStart = [proposedRange startContainer];
-    DOMNode *proposedEnd = [proposedRange endContainer];
-    
-    NSArray *selectableControllers = [self selectableTopLevelDescendants];
-    for (SVWebEditorItem *anItem in selectableControllers)
-    {
-        if ([proposedEnd isDescendantOfNode:[anItem HTMLElement]] ||
-            [proposedStart isDescendantOfNode:[anItem HTMLElement]])
-        {
-            return NO;
-        }
-    }
-    
-    return YES;
-}
-
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
                     replacingDOMRange:(DOMRange *)range
                           givenAction:(WebViewInsertAction)action;

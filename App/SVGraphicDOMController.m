@@ -31,6 +31,7 @@
     [super setEditing:editing];
     
     
+    // Make sure we're selectable while editing
     if (editing)
     {
         [[[self HTMLElement] style] setProperty:@"-webkit-user-select"
