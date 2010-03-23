@@ -87,11 +87,9 @@ KTCollectionPathStyle;
 
 
 #pragma mark Path Extension
-// TODO: Rename other methods to follow this scheme
 @property(nonatomic, copy, readonly) NSString *pathExtension;
-
-- (NSString *)defaultFileExtension;
-- (NSArray *)availableFileExtensions;
+- (NSString *)defaultPathExtension;
+- (NSArray *)availablePathExtensions;
 
 
 // Summat else

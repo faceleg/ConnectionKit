@@ -125,13 +125,13 @@
  */
 - (NSString *)pathExtension
 {
-	return [self defaultFileExtension];
+	return [self defaultPathExtension];
 }
 
 /*	The value -fileExtension should return if there is no custom extensions set.
  *	Mainly used for bindings.
  */
-- (NSString *)defaultFileExtension
+- (NSString *)defaultPathExtension
 {
 	NSString *result = [[NSUserDefaults standardUserDefaults] objectForKey:@"fileExtension"];
 	
@@ -145,7 +145,7 @@
 
 /*	All custom file extensions available for the receiver. Mainly used for bindings.
  */
-- (NSArray *)availableFileExtensions
+- (NSArray *)availablePathExtensions
 {
 	NSArray *result = [NSArray arrayWithObjects:@"html", @"htm", @"php", @"shtml", @"asp", nil];
 	return result;
@@ -206,7 +206,7 @@
 	NSString *indexFileName = [self indexFileName];
     if (indexFileName)
     {
-        NSArray *availableExtensions = [self availableFileExtensions];
+        NSArray *availableExtensions = [self availablePathExtensions];
         NSString *anExtension;
         NSMutableArray *result = [NSMutableArray arrayWithCapacity:[availableExtensions count]];
         
