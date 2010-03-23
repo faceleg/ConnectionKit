@@ -309,6 +309,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         [[textBox body] setString:@"<p>Test paragraph</p>"];
         [[root sidebar] addPageletsObject:textBox];
+        
+        
+        // None of this should be available to undo
+        [self processPendingChangesAndClearChangeCount];
     }
 	
 	

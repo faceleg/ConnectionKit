@@ -172,11 +172,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// Check for missing media
 	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
-		
-	// LAST: clear the undo stack
-	[[self document] performSelector:@selector(processPendingChangesAndClearChangeCount)
-						  withObject:nil
-						  afterDelay:0.0];
 }
 
 #pragma mark Controllers
