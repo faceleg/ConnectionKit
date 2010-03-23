@@ -10,6 +10,7 @@
 
 #import "NSManagedObject+KTExtensions.h"
 
+#import "NSError+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSURL+Karelia.h"
 
@@ -360,8 +361,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         // When inserting media, it must either refer to an alias, or raw data
         result = ([self alias] || _data);
-        // TODO: Generate proper error object
-        if (!result && error) *error = nil;
+        if (!result && error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                           code:NSValidationMissingMandatoryPropertyError
+                                           localizedDescription:@"New media must be sourced from data or an alias"];
     }
     return result;
 }
