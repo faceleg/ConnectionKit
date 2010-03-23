@@ -163,13 +163,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             [range insertNode:fragment];
             
             
-            // Insert DOM controllers
-            // TODO: This duplicates -[SVWebEditorViewController webEditorViewDidFinishLoading:] somewhat
+            // Insert DOM controllers. Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
             for (SVWebEditorItem *anItem in [context webEditorItems])
             {
-                if (![anItem isHTMLElementCreated]) [anItem loadHTMLElementFromDocument:domDoc];
-                OBASSERT([anItem HTMLElement]);
-                
                 if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
             }
             
