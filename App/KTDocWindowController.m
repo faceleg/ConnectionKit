@@ -793,10 +793,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
      */
 	KTPage *latestPage = nil; //only select the last page created
 	
-	
-    //[[[self document] managedObjectContext] lockPSCAndSelf];
-    // TODO: it would be nice if we could do the ordering insert just once ahead of time, rather than once per "insertPage:atIndex:"
-    
+	    
     NSString *localizedStatus = NSLocalizedString(@"Creating pages...", "");
     KSProgressPanel *progressPanel = nil;
     if (numberOfItems > 3)
