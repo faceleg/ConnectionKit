@@ -72,6 +72,7 @@
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSObject+Karelia.h"
@@ -606,7 +607,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [self setSite:site];
         if (!site)
         {
-            if (outError) *outError = nil;  // TODO: Return a proper error object
+            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                          code:NSFileReadCorruptFileError
+                                          localizedDescription:NSLocalizedString(@"Site not found", "doc open error")];
             result = NO;
         }
     }
