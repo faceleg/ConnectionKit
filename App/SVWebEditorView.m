@@ -565,7 +565,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;   // calls -willChange when returning YES.
 {
-    BOOL result = YES;
+    // Dissallow edits outside the current text area
+    SVWebEditorItem *textController = [[self dataSource] webEditor:self
+                                              textBlockForDOMRange:[self selectedDOMRange]];
+    
+    DOMNode *editingNode = [range commonAncestorContainer];
+    BOOL result = [editingNode isDescendantOfNode:[textController HTMLElement]];
     
     if (result) [self willChange];
     
