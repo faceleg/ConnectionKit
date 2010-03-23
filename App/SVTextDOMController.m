@@ -267,11 +267,8 @@
                                    stillSelecting:(BOOL)flag;
 {
     // Ensure user can't select part of a range outside our bounds
-    DOMNode *proposedStart = [proposedRange startContainer];
-    DOMNode *proposedEnd = [proposedRange endContainer];
-    
-    BOOL result = ([proposedStart isDescendantOfNode:[self textHTMLElement]] &&
-                   [proposedEnd isDescendantOfNode:[self textHTMLElement]]);
+    DOMNode *proposedNode = [proposedRange commonAncestorContainer];
+    BOOL result = ([proposedNode isDescendantOfNode:[self textHTMLElement]]);
     
     return result;
 }
