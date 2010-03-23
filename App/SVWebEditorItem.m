@@ -7,6 +7,7 @@
 //
 
 #import "SVWebEditorItem.h"
+#import "SVWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -76,6 +77,11 @@
     [_childControllers release]; _childControllers = [children copy];
     
     [controller setParentWebEditorItem:self];
+    
+    
+    // Let delegate know
+    SVWebEditorView *webEditor = [self webEditor];
+    [[webEditor delegate] webEditor:webEditor didAddItem:controller];
 }
 
 - (void)removeFromParentWebEditorItem;

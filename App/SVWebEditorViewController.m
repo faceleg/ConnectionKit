@@ -339,6 +339,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self didUpdate];
 }
 
+- (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+{
+    
+}
+
 - (void)scheduleUpdate
 {
     // Private method known only to our Main DOM Controller. Schedules an update if needed.

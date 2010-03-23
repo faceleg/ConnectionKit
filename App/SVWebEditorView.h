@@ -267,7 +267,13 @@ handleNavigationAction:(NSDictionary *)actionInformation
 #pragma mark Text Editing
 - (void)webEditorWillChange:(NSNotification *)notification;
 
+
+#pragma mark Web Editor Items
+- (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+
+
 @end
+
 
 extern NSString *SVWebEditorViewDidChangeSelectionNotification;
 
