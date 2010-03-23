@@ -24,23 +24,36 @@
 
 @implementation SVDesignChooserWindowController
 
+#pragma mark Properties
+
+- (KTDesign *)design
+{
+    [self window];    // make sure nib is loaded
+    return oViewController.selectedDesign;
+}
+- (void)setDesign:(KTDesign *)design
+{
+    [self window];    // make sure nib is loaded
+    oViewController.selectedDesign = design;
+}
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
 @synthesize targetWhenChosen = _targetWhenChosen;
 
+#pragma mark -
 
 - (void)awakeFromNib
 {
     [oViewController setupTrackingRects];
 }
 
-- (void)displayWithSelectorButIWishWeCouldSpecifyABlock:(SEL)aSelector object:aTarget designWas:(KTDesign *)oldDesign;
+- (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 {
 	self.selectorWhenChosen = aSelector;
 	self.targetWhenChosen = aTarget;
 	
     [NSApp beginSheet:[self window]
-       modalForWindow:[[self document] windowForSheet]
+       modalForWindow:window
         modalDelegate:self
        didEndSelector:@selector(designChooserDidEndSheet:returnCode:contextInfo:)
           contextInfo:nil];
@@ -51,7 +64,6 @@
 	// load designs -- only seems to work if I do it here? seems as good a place as any...
 	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
 	oViewController.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
-    oViewController.selectedDesign = oldDesign;	
 }
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.

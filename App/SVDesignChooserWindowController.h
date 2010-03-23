@@ -20,6 +20,8 @@
 	id	_targetWhenChosen;		// weak to avoid retain cycle
 }
 
+@property(nonatomic, retain) KTDesign *design;
+
 @property(assign) SEL selectorWhenChosen;
 @property(assign) id  targetWhenChosen;
 @property(retain) SVDesignChooserViewController *viewController;
@@ -27,6 +29,6 @@
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
 
-- (void)displayWithSelectorButIWishWeCouldSpecifyABlock:(SEL)aSelector object:aTarget designWas:(KTDesign *)oldDesign;
+- (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 
 @end
