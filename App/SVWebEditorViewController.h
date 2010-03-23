@@ -35,7 +35,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     SVWebContentObjectsController   *_selectableObjectsController;
     
     // Controllers
-    NSArray         *_textAreas;
+    NSMutableArray  *_textDOMControllers;
     
     DOMHTMLDivElement   *_sidebarDiv;
     NSArray             *_sidebarPageletItems;

@@ -49,7 +49,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
-@property(nonatomic, copy, readwrite) NSArray *textAreas;
 
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
 
@@ -78,6 +77,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
+    _textDOMControllers = [[NSMutableArray alloc] init];
+    
     return self;
 }
     
@@ -89,7 +90,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setDelegate:nil];
     
     [_page release];
-    [_textAreas release];
+    [_textDOMControllers release];
     [_context release];
     
     [super dealloc];
@@ -187,6 +188,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     // And DOM controllers.
     [[[self webEditor] mainItem] setChildWebEditorItems:nil];
+    [_textDOMControllers removeAllObjects];
     
     
     // Build the HTML.
@@ -260,7 +262,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Context holds the controllers. We need to send them over to the Web Editor.
     NSArray *controllers = [[self HTMLContext] webEditorItems];
     NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] init];
-    NSMutableArray *textAreas = [[NSMutableArray alloc] init];
     
     NSMutableArray *selectableObjects = [[NSMutableArray alloc] initWithCapacity:[controllers count]];
     
@@ -281,10 +282,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
-    
-    [self setTextAreas:textAreas];
-    [textAreas release];
-    
+        
     [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC
     [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
     [selectableObjects release];
@@ -425,7 +423,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Figure out if it's a text controller
     if ([item isKindOfClass:[SVTextDOMController class]])
     {
-        //[textAreas addObject:anItem];
+        [_textDOMControllers addObject:item];
     }
     
     
@@ -443,7 +441,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Text Areas
 
-@synthesize textAreas = _textAreas;
+- (NSArray *)textAreas { return [[_textDOMControllers copy] autorelease]; }
 
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 {
