@@ -81,7 +81,7 @@
 		NSBeep();
 		if (outError)
 		{
-			*outError = nil;	// Otherwise we crash	// TODO: Perhaps actually return an error
+			*outError = nil;	// otherwise we crash
 		}
 		return nil;
 	}
@@ -212,13 +212,7 @@
 			}
 			return nil;
 		}
-
-		
-		if (![modelVersion isEqualToString:kKTModelVersion] && NO)
-		{
-				// TODO: What is this for?
-		}
-	}
+    }
 	
 	// by now, absoluteURL should be a good file, open it
 	id document = [super openDocumentWithContentsOfURL:absoluteURL
