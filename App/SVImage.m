@@ -164,8 +164,6 @@
 
 @dynamic constrainedAspectRatio;
 
-// TODO: We might want to cache this?
-
 - (CGSize)originalSize;
 {
     CGSize result = CGSizeMake(200.0f, 128.0f);
