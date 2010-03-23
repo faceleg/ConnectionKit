@@ -14,7 +14,6 @@
 {
   @private
     NSArrayController   *_inspectedObjectsController;
-    // FIXME: Space for extra ivars for compatibility
 }
 
 //  DON'T try to override any initializer instance methods; Plug-in system makes no guarantee about which it will use.
