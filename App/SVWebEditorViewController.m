@@ -414,6 +414,33 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
+- (void)registerWebEditorItem:(SVWebEditorItem *)item;  // recurses through, registering descendants too
+{
+    // Ensure element is loaded
+    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
+    if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
+    OBASSERT([item HTMLElement]);
+    
+    
+    // Figure out if it's a text controller
+    if ([item isKindOfClass:[SVTextDOMController class]])
+    {
+        //[textAreas addObject:anItem];
+    }
+    
+    
+    //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
+    id anObject = [item representedObject];
+    if (anObject) [_selectableObjectsController addObject:anObject];
+    
+    
+    // Register descendants
+    for (SVWebEditorItem *anItem in [item childWebEditorItems])
+    {
+        [self registerWebEditorItem:anItem];
+    }
+}
+
 #pragma mark Text Areas
 
 @synthesize textAreas = _textAreas;
@@ -1108,22 +1135,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
 {
-    // Ensure element is loaded
-    DOMDocument *domDoc = [[self webEditor] HTMLDocument];
-    if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
-    OBASSERT([item HTMLElement]);
-    
-    
-    // Figure out if it's a text controller
-    if ([item isKindOfClass:[SVTextDOMController class]])
-    {
-        //[textAreas addObject:anItem];
-    }
-    
-    
-    //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
-    id anObject = [item representedObject];
-    if (anObject) [_selectableObjectsController addObject:anObject];
+    OBPRECONDITION(sender == [self webEditor]);
+    [self registerWebEditorItem:item];
 }
 
 #pragma mark -
