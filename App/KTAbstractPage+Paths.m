@@ -382,7 +382,6 @@
 /*	Does the hard graft for -publishedPathRelativeToParent.
  *	Should NOT be called externally, PRIVATE method only.
  */
-// FIXME: This method should return nil for pages without a parent. e.g. the home page. However, at the moment this would screw up -uploadPath.
 - (NSString *)pathRelativeToParentWithCollectionPathStyle:(KTCollectionPathStyle)collectionPathStyle
 {
 	NSString *result = @"";
