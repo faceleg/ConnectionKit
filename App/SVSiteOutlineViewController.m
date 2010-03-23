@@ -979,7 +979,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
 	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
     
-    NSArray *pages = items; // TODO: Only write the highest-level pages
+    NSArray *pages = items;
     [self setLastItemsWrittenToPasteboard:pages];
     
     NSArray *serializedPages = [pages valueForKey:@"propertyListRepresentation"];
