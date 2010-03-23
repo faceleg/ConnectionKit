@@ -121,12 +121,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     // Store new webview
     [super setWebView:webView];
-    
-    
-    // Spell-checking
-    // TODO: Define a constant or method for this
-    BOOL spellCheck = [[NSUserDefaults standardUserDefaults] boolForKey:@"ContinuousSpellChecking"];
-	[webView setContinuousSpellCheckingEnabled:spellCheck];
 }
 
 @synthesize webEditor = _webEditorView;

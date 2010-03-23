@@ -293,7 +293,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:YES],			@"AutoOpenLastOpenedOnLaunch",
 		[NSArray array],						@"KSOpenDocuments",
 		[NSNumber numberWithBool:YES],			@"OpenUntitledFileWhenIconClicked",
-		[NSNumber numberWithBool:YES],			@"ContinuousSpellChecking",
 						
 		[NSNumber numberWithBool:NO],			@"DisplayInfo",
 		
