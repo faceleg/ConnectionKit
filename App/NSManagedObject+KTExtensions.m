@@ -133,21 +133,6 @@
 	return [[[self objectID] URIRepresentation] absoluteString];
 }
 
-- (BOOL)hasTemporaryObjectID
-{
-	return [[self objectID] isTemporaryID];
-}
-
-- (BOOL)hasTemporaryURIRepresentation
-{
-	return [self hasTemporaryObjectID];
-}
-
-- (BOOL)isNewlyCreatedObject
-{
-    return [self hasTemporaryObjectID];
-}
-
 - (BOOL)hasChanges
 {
 	// changedValues, according to docs, doesn't fire faults
