@@ -105,6 +105,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
 
+- (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;   // calls -willChange when returning YES.
 - (void)willChange; // posts kSVWebEditorViewWillChangeNotification
 - (void)didChange;  // posts kSVWebEditorViewDidChangeNotification
 

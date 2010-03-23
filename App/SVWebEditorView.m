@@ -563,6 +563,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [[[self webView] preferences] setInteger:behaviour forKey:@"editableLinkBehavior"];
 }
 
+- (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;   // calls -willChange when returning YES.
+{
+    BOOL result = YES;
+    
+    if (result) [self willChange];
+    
+    return result;
+}
+
 - (void)willChange; // posts kSVWebEditorViewWillChangeNotification
 {
     [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewWillChangeNotification
@@ -1314,13 +1323,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebEditingDelegate
 
-#define POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED if (result) [self willChange]
-
 - (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
 {
-    BOOL result = YES;
-    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
-    return result;
+    return [self shouldChangeTextInDOMRange:range];
 }
 
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
@@ -1370,16 +1375,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldChangeTypingStyle:(DOMCSSStyleDeclaration *)currentStyle toStyle:(DOMCSSStyleDeclaration *)proposedStyle
 {
-    BOOL result = YES;
-    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
-    return result;
+    return [self shouldChangeTextInDOMRange:[self selectedDOMRange]];
 }
 
 - (BOOL)webView:(WebView *)webView shouldDeleteDOMRange:(DOMRange *)range
 {
-    BOOL result = YES;
-    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
-    return result;
+    return [self shouldChangeTextInDOMRange:range];
 }
 
 - (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
@@ -1398,7 +1399,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     // Finish up
-    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
+    if (result) result = [self shouldChangeTextInDOMRange:range];
     return result;
 }
 
@@ -1418,7 +1419,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         }
     }
     
-    POST_WILL_CHANGE_NOTIFICATION_IF_NEEDED;
+    if (result) result = [self shouldChangeTextInDOMRange:range];;
     return result;
 }
 
