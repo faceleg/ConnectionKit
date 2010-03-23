@@ -98,21 +98,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (BOOL)isSelectable { return NO; }
 
-- (void)setEditable:(BOOL)editable
-{
-    // TODO: Embedded graphics must NOT be selectable
-    for (SVDOMController *aGraphicController in [self selectableTopLevelDescendants])
-    {
-        if (![aGraphicController isHTMLElementCreated])
-        {
-            [aGraphicController loadHTMLElementFromDocument:[[self HTMLElement] ownerDocument]];
-        }
-    }
-    
-    // Carry on
-    [super setEditable:editable];
-}
-
 #pragma mark Subcontrollers
 
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
