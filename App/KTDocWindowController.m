@@ -336,8 +336,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         _designChooserWindowController = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
     }
     
-	// FIXME: Need to get to the selected page's design ... e.g. [[[self page] master] design]
-    [_designChooserWindowController setDesign:nil];
+    KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
+    if (NSIsControllerMarker(design)) design = nil;
+    [_designChooserWindowController setDesign:design];
     
     [_designChooserWindowController beginSheetModalForWindow:[self window]
                                                     delegate:self
