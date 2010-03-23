@@ -95,26 +95,9 @@
 #pragma mark -
 
 
-@interface DOMNode ( KTUndo )
-+ (DOMNode *)node:(DOMNode *)parent insertBefore:(DOMNode *)newChild :(DOMNode *)refChild;
-+ (DOMNode *)node:(DOMNode *)parent appendChild:(DOMNode *)child;
-+ (DOMNode *)node:(DOMNode *)parent removeChild:(DOMNode *)child;
-@end
-
-#pragma mark -
-
-
 @interface DOMElement ( KTExtensions )
 
 + (NSString *)cleanupStyleText:(NSString *)inStyleText restrictUnderlines:(BOOL)aRestrictUnderlines wasItalic:(BOOL *)outWasItalic wasBold:(BOOL *)outWasBold wasTT:(BOOL *)outWasTT;
 - (DOMElement *)removeJunkFromParagraphAllowEmpty:(BOOL)anAllowEmptyParagraphs;
 
-@end
-
-#pragma mark -
-
-
-@interface DOMHTMLAnchorElement ( KTUndo )
-/*! passing nil for target removes that attribute */
-+ (void)element:(DOMHTMLAnchorElement *)anchor setHref:(NSString *)anHref target:(NSString *)aTarget;
 @end
