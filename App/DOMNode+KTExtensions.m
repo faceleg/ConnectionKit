@@ -202,9 +202,7 @@
 
 /*! recursive method that returns all instances of a particular element */
 
-// TODO: this could be rewritten to use DOMNodeIterator, perhaps faster
-
-- (NSArray *)childrenOfClass:(Class)aClass
+- (NSArray *)sv_descendantNodesOfClass:(Class)aClass
 {
 	NSMutableArray *array = [NSMutableArray array];
 	
@@ -215,13 +213,15 @@
 	 
 	if ( [self hasChildNodes] )
 	{
-		DOMNodeList *nodes = [self childNodes];
+		// This could potentially be rewritten to use DOMNodeIterator, perhaps faster
+        
+        DOMNodeList *nodes = [self childNodes];
 		int i;
 		int length = [nodes length];
 		for ( i=0; i<length; i++ )
 		{
 			id node = [nodes item:i];
-			[array addObjectsFromArray:[node childrenOfClass:aClass]];
+			[array addObjectsFromArray:[node sv_descendantNodesOfClass:aClass]];
 		}
 	}
 	
@@ -230,27 +230,27 @@
 
 - (NSArray *)anchorElements
 {
-	return [self childrenOfClass:[DOMHTMLAnchorElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLAnchorElement class]];
 }
 
 - (NSArray *)divElements
 {
-	return [self childrenOfClass:[DOMHTMLDivElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLDivElement class]];
 }
 
 - (NSArray *)imageElements
 {
-	return [self childrenOfClass:[DOMHTMLImageElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLImageElement class]];
 }
 
 - (NSArray *)linkElements
 {
-	return [self childrenOfClass:[DOMHTMLLinkElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLLinkElement class]];
 }
 
 - (NSArray *)objectElements
 {
-	return [self childrenOfClass:[DOMHTMLObjectElement class]];
+	return [self sv_descendantNodesOfClass:[DOMHTMLObjectElement class]];
 }
 
 #pragma mark inner/outer HTML

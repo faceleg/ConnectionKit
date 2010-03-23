@@ -50,7 +50,7 @@
 - (BOOL)hasChildOfClass:(Class)aClass;
 
 /*! recursive method that returns all instances of a particular element */
-- (NSArray *)childrenOfClass:(Class)aClass;
+- (NSArray *)sv_descendantNodesOfClass:(Class)aClass;
 
 /*! returns all child DOMHTMLAnchorElements (a tags) */
 - (NSArray *)anchorElements;
