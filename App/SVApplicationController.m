@@ -1215,7 +1215,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	NSArray* mediaTypes = [NSArray arrayWithObjects:kIMBMediaTypeImage,kIMBMediaTypeAudio,kIMBMediaTypeMovie,kIMBMediaTypeLink,nil];
 	IMBPanelController* panelController = [IMBPanelController sharedPanelControllerWithDelegate:self mediaTypes:mediaTypes];
 
-/* TEMP -- TODO: PUT BACK IN
+/* TEMP -- PUT BACK IN
 	if ( [panelController infoWindowIsVisible] )
 	{
 		[panelController flipBack:nil];
@@ -1226,7 +1226,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	// set menu to opposite of flag
 	if ( newValue )
 	{
-// TODO: PUT BACK IN [panelController setIdentifier:@"Sandvox"];
+// PUT BACK IN [panelController setIdentifier:@"Sandvox"];
 		[panelController showWindow:sender];
 	}
 	else
