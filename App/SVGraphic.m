@@ -341,7 +341,7 @@
     {
         // Possible callout
         NSString *calloutWrap = [self calloutWrapClassName];
-        if (calloutWrap) [context writeCalloutStartWithAlignmentClassName:calloutWrap];
+        if (calloutWrap) [context writeCalloutStartTagsWithAlignmentClassName:calloutWrap];
         
         
         // Pagelet

@@ -9,6 +9,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "SVBodyTextDOMController.h"
+#import "SVCalloutDOMController.h"
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
 #import "SVTemplateParser.h"
@@ -123,6 +124,29 @@
     [result setTextBlock:aTextBlock];
     
     return [result autorelease];
+}
+
+- (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
+{
+    SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
+    [self willBeginWritingObjectWithDOMController:controller];
+    [controller release];
+    
+    // Note that SVWebEditorHTMLContext overrides this method to write slightly differently. So if you change it here, make sure to change there too if needed
+    [self writeStartTag:@"div"
+                 idName:[controller HTMLElementIDName]
+              className:[@"callout-container " stringByAppendingString:alignment]];
+    
+    [self writeStartTag:@"div" idName:nil className:@"callout"];
+    
+    [self writeStartTag:@"div" idName:nil className:@"callout-content"];
+}
+
+- (void)writeCalloutEnd;
+{
+    [super writeCalloutEnd];
+    
+    [self finishWithCurrentItem];
 }
 
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;

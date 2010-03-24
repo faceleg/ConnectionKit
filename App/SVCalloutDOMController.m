@@ -7,44 +7,19 @@
 //
 
 #import "SVCalloutDOMController.h"
-#import "SVCallout.h"
-
-#import "SVGraphic.h"
 
 
 @implementation SVCalloutDOMController
 
-- (id)initWithContentObject:(SVContentObject *)contentObject inDOMDocument:(DOMDocument *)document
+- (NSString *)HTMLElementIDName;
 {
-    [super initWithContentObject:contentObject inDOMDocument:document];
-    
-    // Create subcontrollers for each of our pagelets
-    SVCallout *callout = [self representedObject];
-    for (SVGraphic *aPagelet in [callout pagelets])
-    {
-        SVDOMController *pageletController = [[[aPagelet DOMControllerClass] alloc] initWithContentObject:aPagelet inDOMDocument:document];
-        
-        [self addChildWebEditorItem:pageletController];
-        [pageletController release];
-    }
-    
-    
-    return self;
+    return [NSString stringWithFormat:@"callout-controller-%p", self];
 }
 
-- (BOOL)isSelectable { return NO; }
-
-@end
-
-
-#pragma mark -
-
-
-@implementation SVCallout (SVDOMController)
-
-- (Class)DOMControllerClass;
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
-    return [SVCalloutDOMController class];
+    DOMElement *element = [document getElementById:[self HTMLElementIDName]];
+    [self setHTMLElement:(DOMHTMLElement *)element];
 }
 
 @end

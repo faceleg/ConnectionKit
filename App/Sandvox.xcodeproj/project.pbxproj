@@ -466,6 +466,8 @@
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
 		27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */; };
 		27CE81191137EEB100EE1A6F /* SVImageReplacementURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CE81171137EEB100EE1A6F /* SVImageReplacementURLProtocol.m */; };
+		27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D705810E8ECB4003F5BA8 /* SVCalloutDOMController.h */; };
+		27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D705910E8ECB4003F5BA8 /* SVCalloutDOMController.m */; };
 		27D6DE9C0DCFA95800C8834F /* KTHostProperties.h in Headers */ = {isa = PBXBuildFile; fileRef = CEAE1667084530C1007025D4 /* KTHostProperties.h */; settings = {ATTRIBUTES = (); }; };
 		27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */; };
 		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -5385,6 +5387,7 @@
 				2713726511542AFF003AB050 /* SVAttributedHTMLWriter.h in Headers */,
 				271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */,
 				2713756911551296003AB050 /* SVAttributedHTML.h in Headers */,
+				27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6781,6 +6784,7 @@
 				2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */,
 				271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */,
 				2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */,
+				27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

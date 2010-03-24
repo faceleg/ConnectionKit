@@ -141,8 +141,9 @@
 
 #pragma mark Callouts
 
-- (void)writeCalloutStartWithAlignmentClassName:(NSString *)alignment;
+- (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
 {
+    // Note that SVWebEditorHTMLContext overrides this method to write slightly differently. So if you change it here, make sure to change there too if needed
     [self writeStartTag:@"div"
                  idName:nil
               className:[@"callout-container " stringByAppendingString:alignment]];
