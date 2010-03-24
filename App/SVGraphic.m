@@ -335,15 +335,18 @@
     // If the placement changes, want whole WebView to update
     [context addDependencyOnObject:self keyPath:@"textAttachment.placement"];
     
+    
+    // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
+    NSString *calloutWrap = [self calloutWrapClassName];
+    if (calloutWrap) [context writeCalloutStartTagsWithAlignmentClassName:calloutWrap];
+    
+    
+    // Alert context. Must happen *after* enclosing callout is written
     [context willBeginWritingGraphic:self];
+    
     
     if ([self isPagelet])
     {
-        // Possible callout
-        NSString *calloutWrap = [self calloutWrapClassName];
-        if (calloutWrap) [context writeCalloutStartTagsWithAlignmentClassName:calloutWrap];
-        
-        
         // Pagelet
         SVTemplate *template = [[self class] template];
         
@@ -353,17 +356,16 @@
         
         [parser parse];
         [parser release];
-        
-        
-        // End callout
-        if (calloutWrap) [context writeCalloutEnd];
     }
     else
     {
        [self writeBody];
     }
     
+    
+    // Finish up
     [context didEndWritingGraphic];
+    if (calloutWrap) [context writeCalloutEnd];
 }
 
 - (void)writeBody;
