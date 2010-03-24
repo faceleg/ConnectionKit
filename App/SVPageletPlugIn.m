@@ -106,7 +106,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 - (void)writeHTML:(SVHTMLContext *)context;
 {
-    [self writeInnerHTML];
+    [self writeInnerHTML:context];
     
     return;
         
@@ -121,7 +121,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     return result;
 }
 
-- (void)writeInnerHTML;
+- (void)writeInnerHTML:(SVHTMLContext *)context;
 {
     // Parse our built-in template
     SVTemplate *template = [[self bundle] HTMLTemplate];
@@ -129,7 +129,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
                                                                         component:self];
     
-    [parser parse];
+    [parser parseIntoHTMLContext:context];
     [parser release];
 }
 

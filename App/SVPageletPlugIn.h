@@ -49,7 +49,7 @@
 @property(nonatomic, readonly) NSString *elementID;
 
 // Default implementation parses the template specified in Info.plist
-- (void)writeInnerHTML;
+- (void)writeInnerHTML:(SVHTMLContext *)context;
 
 
 #pragma mark The Wider World
