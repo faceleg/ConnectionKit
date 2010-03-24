@@ -649,14 +649,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     // Reserve all the media filenames already in use    
     NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    
-    [request setEntity:[NSEntityDescription entityForName:@"MediaRecord" inManagedObjectContext:context]];
+    NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaInDocument"];
     NSArray *media = [context executeFetchRequest:request error:NULL];
+    
     for (SVMediaRecord *aMediaRecord in media)
     {
         NSString *filename = [aMediaRecord filename];
-        if (filename) [_reservedFilenames addObject:[filename lowercaseString]];
+        [_reservedFilenames addObject:[filename lowercaseString]];
     }
     
     [request release];
