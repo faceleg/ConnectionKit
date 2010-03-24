@@ -144,8 +144,15 @@
 
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
 {
+    // Ignore callout <div>s
+    if ([[element tagName] isEqualToString:@"DIV"] &&
+        [[element className] hasPrefix:@"callout-container"])
+    {
+        return [element nextSibling];
+    }
+    
     // Invalid top-level elements should be converted into paragraphs
-    if ([[element tagName] isEqualToString:@"IMG"])
+    else if ([[element tagName] isEqualToString:@"IMG"])
     {
         return [self convertImageElementToGraphic:(DOMHTMLImageElement *)element];
     }
