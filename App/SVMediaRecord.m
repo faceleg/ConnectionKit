@@ -22,7 +22,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 @interface SVMediaRecord ()
 
-- (void)setFileURL:(NSURL *)URL;
 @property(nonatomic, retain, readwrite) BDAlias *alias;
 
 @property(nonatomic, copy) NSURLResponse *fileURLResponse;
@@ -184,15 +183,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     {
         // Just before copying into the document, media is assigned a filename, which won't have been persisted yet
         NSString *filename = [self committedValueForKey:@"filename"];
-        if (filename)
-        {
-            NSURL *storeURL = [[[self objectID] persistentStore] URL];
-            NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
-            
-            result = [docURL URLByAppendingPathComponent:filename
-                                             isDirectory:NO];
-        }
-        else
+        if (!filename)
         {
             // Get best path we can out of the alias
             NSString *path = [[self alias] fullPath];
@@ -213,16 +204,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     URL = [URL copy];
     [_URL release]; _URL = URL;
-}
-
-- (NSURL *)savedFileURL;
-{
-    NSURL *storeURL = [[[self objectID] persistentStore] URL];
-    NSURL *docURL = [storeURL URLByDeletingLastPathComponent];
-    
-    NSURL *result = [docURL URLByAppendingPathComponent:[self filename]
-                                            isDirectory:NO];
-    return result;
 }
 
 #pragma mark Location Support

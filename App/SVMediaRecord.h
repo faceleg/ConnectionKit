@@ -73,9 +73,11 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 //  In general you should get hold of a file in the manner that best suits you.
 //  -   If you prefer data, ask for that. If it fails, it may be that the data is too big to reasonably load into memory, so fallback to -fileURL.
 //  -   If you prefer a real file, use -fileURL. If that fails because the file is not found, it might be in-memory, so fallback to that.
-//  You should have no need under normal usage to specifically use -alias.
+//  You should have no need under normal usage to call -setFileURL: yourself; the document takes care of that for you. Similarly there should be no need to call -alias directly yourself.
+//  .fileURL is not KVO-compliant
 
 - (NSURL *)fileURL;
+- (void)setFileURL:(NSURL *)URL;
 
 
 #pragma mark Accessing Files
