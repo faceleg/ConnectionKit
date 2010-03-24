@@ -215,7 +215,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Other ivars
-        _reservedFilenames = [[NSMutableSet alloc] init];
+        _filenameReservations = [[NSMutableDictionary alloc] init];
         
         
         // Init UI accessors
@@ -355,7 +355,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	[_site release];
     
     [_persistentStoreURL release];
-    [_reservedFilenames release];
+    [_filenameReservations release];
     [_deletedMediaDirectoryName release];
 	
 	// release context
@@ -490,8 +490,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Media
 
-- (NSString *)reservePreferredFilename:(NSString *)preferredFilename;    // returns the filename reserved
+- (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
 {
+    NSString *preferredFilename = [wrapper preferredFilename];
     NSString *result = preferredFilename;
     
     NSUInteger count = 1;
@@ -508,7 +509,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     // Reserve it
-    [_reservedFilenames addObject:[result lowercaseString]];
+    [_filenameReservations setObject:wrapper forKey:[result lowercaseString]];
     
     return result;
 }
@@ -520,7 +521,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     // Consult both cache and file system to see if the name is taken
     filename = [filename lowercaseString];
-    BOOL result = [_reservedFilenames containsObject:filename];
+    BOOL result = ([_filenameReservations objectForKey:filename] != nil);
     if (!result)
     {
         result = [[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
@@ -543,7 +544,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)unreserveFilename:(NSString *)filename;
 {
-    [_reservedFilenames removeObject:[filename lowercaseString]];
+    [_filenameReservations removeObjectForKey:[filename lowercaseString]];
 }
 
 - (NSURL *)deletedMediaDirectory;
@@ -655,7 +656,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     for (SVMediaRecord *aMediaRecord in media)
     {
         NSString *filename = [aMediaRecord filename];
-        [_reservedFilenames addObject:[filename lowercaseString]];
+        OBASSERT(![_filenameReservations objectForKey:filename]);  // we don't quite support multiple media registration yet. Can't call -isFilenameReserved: since it will find the file on disk and return YES
+        [_filenameReservations setObject:aMediaRecord forKey:[filename lowercaseString]];
     }
     
     [request release];

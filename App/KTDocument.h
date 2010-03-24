@@ -28,9 +28,10 @@ extern NSString *kKTDocumentWillCloseNotification;
 extern NSString *kKTDocumentWillSaveNotification;
 
 
-@class KTSite;//, KTMediaManager;
+@class KTSite;
 @class KTDocWindowController, KTHTMLInspectorController;
 @class KTElementPlugInWrapper;
+@protocol SVDocumentFileWrapper;
 
 
 @interface KTDocument : NSDocument
@@ -60,8 +61,9 @@ extern NSString *kKTDocumentWillSaveNotification;
     // Saving
     unsigned    mySaveOperationCount;
     
-    NSMutableSet    *_reservedFilenames;
-    NSString        *_deletedMediaDirectoryName;
+    
+    NSMutableDictionary *_filenameReservations;
+    NSString            *_deletedMediaDirectoryName;
     
     WebView             *_quickLookThumbnailWebView;
     NSWindow            *_quickLookThumbnailWebViewWindow;
@@ -92,7 +94,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 #pragma mark Media
 
-- (NSString *)reservePreferredFilename:(NSString *)filename;    // returns the filename reserved
+- (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
 - (BOOL)isFilenameReserved:(NSString *)filename;
 - (void)unreserveFilename:(NSString *)filename;
 
@@ -162,6 +164,16 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (BOOL)isSaving;
 
 
+@end
+
+
+#pragma mark -
+
+
+@protocol SVDocumentFileWrapper <NSObject>
+- (NSURL *)fileURL;
+- (NSString *)preferredFilename;
+- (BOOL)isDeleted;
 @end
 
 
