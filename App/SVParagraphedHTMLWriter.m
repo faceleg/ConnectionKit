@@ -54,13 +54,25 @@
 
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
 {
-    NSArray *graphicControllers = [[self bodyTextDOMController] graphicControllers];
+    NSArray *graphicControllers = [[self bodyTextDOMController] childWebEditorItems];
     
     for (SVDOMController *aController in graphicControllers)
     {
         if ([aController HTMLElement] == element)
         {
-            [self writeGraphicController:aController];
+            if ([aController isSelectable])
+            {
+                [self writeGraphicController:aController];
+            }
+            else
+            {
+                NSArray *graphicControllers = [aController selectableTopLevelDescendants];
+                for (aController in graphicControllers)
+                {
+                    [self writeGraphicController:aController];
+                }
+            }
+                
             return YES;
         }
     }

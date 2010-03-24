@@ -122,11 +122,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return result;
 }
 
-- (NSArray *)graphicControllers;
-{
-    return [self childWebEditorItems];
-}
-
 #pragma mark Controlling Editing Behaviour
 
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
@@ -404,7 +399,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     [SVAttributedHTMLWriter writeDOMRange:[[self webEditor] selectedDOMRange]
                              toPasteboard:pasteboard
-                       graphicControllers:[self graphicControllers]];
+                       graphicControllers:[self childWebEditorItems]];
 }
 
 #pragma mark Dragging
