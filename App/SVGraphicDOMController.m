@@ -16,6 +16,8 @@
 
 @implementation SVGraphicDOMController
 
+- (BOOL)isSelectable { return YES; }
+
 - (SVBodyTextDOMController *)enclosingBodyTextDOMController;
 {
     id result = [self parentWebEditorItem];
