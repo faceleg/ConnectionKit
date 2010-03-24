@@ -10,6 +10,7 @@
 #import <iMedia/IMBImageItem.h>
 
 
+@class SVHTMLContext;
 @protocol SVPage;
 @protocol SVPageletPlugIn
 
@@ -46,7 +47,7 @@
 
 
 #pragma mark HTML Generation
-- (void)writeHTML;
+- (void)writeHTML:(SVHTMLContext *)context;
 
 
 #pragma mark Thumbnail

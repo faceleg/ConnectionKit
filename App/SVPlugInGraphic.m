@@ -161,7 +161,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:4];
     
     [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
-    [[self plugIn] writeHTML];
+    [[self plugIn] writeHTML:context];
     [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
     
     [context setCurrentHeaderLevel:level];

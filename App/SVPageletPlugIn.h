@@ -10,7 +10,6 @@
 #import "SVPlugIn.h"
 
 
-@class KTPage;
 @protocol SVPage, SVPageletPlugInContainer;
 
 
@@ -46,7 +45,7 @@
 #pragma mark HTML
 
 // Default implementation generates a <span> or <div> (with an appropriate id) that contains the result of -writeInnerHTML. There is generally NO NEED to override this, and if you do, you MUST write HTML with an enclosing element of the specified ID.
-- (void)writeHTML;
+- (void)writeHTML:(SVHTMLContext *)context;
 @property(nonatomic, readonly) NSString *elementID;
 
 // Default implementation parses the template specified in Info.plist
