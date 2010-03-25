@@ -669,6 +669,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         NSString *filename = [aMediaRecord filename];
         OBASSERT(![_filenameReservations objectForKey:filename]);  // we don't quite support multiple media registration yet. Can't call -isFilenameReserved: since it will find the file on disk and return YES
         [_filenameReservations setObject:aMediaRecord forKey:[filename lowercaseString]];
+        
+        // Media needs to be told its location to be useful
+        // Use -fileURL instead of absoluteURL since it accounts for autosave properly
+        NSURL *mediaURL = [[self fileURL] URLByAppendingPathComponent:filename isDirectory:NO];
+        [aMediaRecord setFileURL:mediaURL];
     }
         
     
