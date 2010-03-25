@@ -203,10 +203,18 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-- (void)forceUpdateFromURL:(NSURL *)URL;
+- (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
 {
     URL = [URL copy];
     [_URL release]; _URL = URL;
+    
+    return YES;
+}
+
+- (void)forceUpdateFromURL:(NSURL *)URL;
+{
+    BOOL result = [self readFromURL:URL options:options error:error];
+    OBPOSTCONDITION(result);
 }
 
 #pragma mark Location Support
