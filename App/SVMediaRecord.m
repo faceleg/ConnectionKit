@@ -154,13 +154,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
         
         [_destinationURL release]; _destinationURL = oldURL;
     }
-    
-    
-    // After insertion, don't want URL to be fixed as it could be changed by the document moving or something
-    if (inserted)
-    {
-        [self forceUpdateFromURL:nil];
-    }
 }
 
 #pragma mark Location
