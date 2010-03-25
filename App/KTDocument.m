@@ -56,7 +56,7 @@
 #import "KTIndexPluginWrapper.h"
 #import "SVInspector.h"
 #import "KTMaster.h"
-#import "KTMediaManager.h"
+#import "SVMediaRecord.h"
 #import "KTPage+Internal.h"
 #import "SVSidebar.h"
 #import "KTSummaryWebViewTextBlock.h"
@@ -632,14 +632,21 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     for (SVMediaRecord *aMediaRecord in media)
     {
-        NSString *filename = [aMediaRecord filename];
-        OBASSERT(![_filenameReservations objectForKey:filename]);  // we don't quite support multiple media registration yet. Can't call -isFilenameReserved: since it will find the file on disk and return YES
-        [_filenameReservations setObject:aMediaRecord forKey:[filename lowercaseString]];
-        
         // Media needs to be told its location to be useful
         // Use -fileURL instead of absoluteURL since it accounts for autosave properly
+        NSString *filename = [[aMediaRecord filename] lowercaseString];
         NSURL *mediaURL = [[self fileURL] URLByAppendingPathComponent:filename isDirectory:NO];
         [aMediaRecord forceUpdateFromURL:mediaURL];
+        
+        // Does this match some media already loaded? 
+        // Can't call -isFilenameReserved: since it will find the file on disk and return YES
+        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:filename]; 
+        if (fileWrapper)
+        {
+            [aMediaRecord setNextObject:fileWrapper];
+        }
+        
+        [_filenameReservations setObject:aMediaRecord forKey:filename];
     }
         
     

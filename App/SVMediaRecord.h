@@ -29,6 +29,9 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
     NSURLResponse   *_URLResponse;
     NSDictionary    *_attributes;
     NSData          *_data;
+    
+    // Matching Media
+    id <SVDocumentFileWrapper>  _nextObject;
 }
 
 
@@ -107,6 +110,11 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Writing Files
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
+
+
+#pragma mark Matching Media
+// Two media records can refer to the same file on disk. So that we can do this still presenting a single object to KTDocument, matching records are chained together in a singly linked list using .nextObject.
+@property(nonatomic, retain) id <SVDocumentFileWrapper> nextObject;
 
 
 @end

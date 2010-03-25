@@ -89,6 +89,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     [_URL release];
     [_URLResponse release];
+    [_nextObject release];
     
     [super dealloc];
 }
@@ -351,12 +352,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-- (BOOL)isDeletedFromDocument;
-{
-    BOOL result = ([self isInserted] || ![self managedObjectContext]);
-    return result;
-}
-
 #pragma mark Writing Files
 
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
@@ -388,6 +383,23 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
         [self forceUpdateFromURL:URL];
     }
     
+    
+    return result;
+}
+
+#pragma mark Matching Media
+
+@synthesize nextObject = _nextObject;
+
+- (BOOL)isDeletedFromDocument;
+{
+    BOOL result = ([self isInserted] || ![self managedObjectContext]);
+    if (result)
+    {
+        // Let next object have final say. Potentially this could go down a long chain if you have lots of copies of the same file!
+        id <SVDocumentFileWrapper> next = [self nextObject];
+        if (next) result = [next isDeletedFromDocument];
+    }
     
     return result;
 }
