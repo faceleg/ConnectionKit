@@ -184,6 +184,24 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+#pragma mark Updating File Wrappers
+
+- (BOOL)matchesContentsOfURL:(NSURL *)otherURL;
+{
+    BOOL result = NO;
+    
+    NSURL *URL = [self fileURL];
+    if (URL)
+    {
+        result = [[NSFileManager defaultManager] contentsEqualAtPath:[otherURL path]
+                                                             andPath:[URL path]];
+    }
+    
+    // TODO: Fallback to comparing data
+    
+    return result;
+}
+
 - (void)forceUpdateFromURL:(NSURL *)URL;
 {
     URL = [URL copy];

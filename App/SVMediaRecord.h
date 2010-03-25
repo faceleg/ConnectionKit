@@ -81,6 +81,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
 #pragma mark Updating File Wrappers
+- (BOOL)matchesContentsOfURL:(NSURL *)url;
 - (void)forceUpdateFromURL:(NSURL *)URL;
 
 

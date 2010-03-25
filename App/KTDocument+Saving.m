@@ -570,26 +570,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     //  Look through out existing media to see if there is one with the same data
     
     id <SVDocumentFileWrapper> result = nil;
-    NSFileManager *fileManager = [[NSFileManager alloc] init];
     
     
     for (NSString *aKey in _filenameReservations)
     {
         result = [_filenameReservations objectForKey:aKey];
         
-        NSURL *mediaURL = [media fileURL];
-        if (mediaURL)
-        {
-            NSURL *URL = [result fileURL]; OBASSERT(URL);
-            if ([fileManager contentsEqualAtPath:[mediaURL path] andPath:[URL path]])
-            {
-                return result;
-            }
-        }
-        else
-        {
-            // Try to compare data
-        }
+        NSURL *URL = [result fileURL]; OBASSERT(URL);
+        if ([media matchesContentsOfURL:URL]) return result;
     }
     
     
