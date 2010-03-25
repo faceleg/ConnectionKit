@@ -89,6 +89,10 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
                     toURL:(NSURL *)docURL
          forSaveOperation:(NSSaveOperationType)saveOp
                     error:(NSError **)outError;
+- (BOOL)writeMediaRecord:(SVMediaRecord *)media
+           toDocumentURL:(NSURL *)docURL
+        forSaveOperation:(NSSaveOperationType)saveOp
+                   error:(NSError **)outError;
 
 
 // Metadata
@@ -565,6 +569,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+#pragma mark Media
+
 - (id <SVDocumentFileWrapper>)duplicateOfMediaRecord:(SVMediaRecord *)media;
 {
     //  Look through out existing media to see if there is one with the same data
@@ -603,33 +609,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Process each file
     for (SVMediaRecord *aMediaRecord in media)
     {
-        // Reserve filename if needed first.
-        NSString *filename = [aMediaRecord committedValueForKey:@"filename"];
-        if (!filename)
-        {
-            // Is there already a media record with the same data?
-            SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
-            if (dupe)
-            {
-                filename = [dupe filename];
-            }
-            else
-            {
-                filename = [self addDocumentFileWrapper:aMediaRecord];
-            }
-        }
-        
-        // Try write
-        NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
-        if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError])
-        {    
-            [aMediaRecord setFilename:filename];
-        }
-        else
-        {
-            result = NO;
-            [self unreserveFilename:filename];
-        }
+        result = [self writeMediaRecord:aMediaRecord
+                          toDocumentURL:docURL
+                       forSaveOperation:saveOp
+                                  error:outError];
     }
     
     [context processPendingChanges];
@@ -640,7 +623,48 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-#pragma mark -
+- (BOOL)writeMediaRecord:(SVMediaRecord *)aMediaRecord
+           toDocumentURL:(NSURL *)docURL
+        forSaveOperation:(NSSaveOperationType)saveOp
+                   error:(NSError **)outError;
+{
+    BOOL result = YES;
+    
+    
+    // Reserve filename if needed first.
+    NSString *filename = [aMediaRecord committedValueForKey:@"filename"];
+    if (!filename)
+    {
+        // Is there already a media record with the same data? If so can shortcut usual mechanism
+        SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
+        if (dupe)
+        {
+            [aMediaRecord setFilename:[dupe filename]];
+            return YES;
+        }
+        else
+        {
+            filename = [self addDocumentFileWrapper:aMediaRecord];
+        }
+    }
+    
+    
+    // Try write
+    NSURL *mediaURL = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
+    if ([aMediaRecord writeToURL:mediaURL updateFileURL:NO error:outError])
+    {    
+        [aMediaRecord setFilename:filename];
+    }
+    else
+    {
+        result = NO;
+        [self unreserveFilename:filename];
+    }
+    
+    
+    return result;
+}
+
 #pragma mark Metadata
 
 /*! setMetadataForStoreAtURL: sets all metadata for the store all at once */
