@@ -208,6 +208,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     URL = [URL copy];
     [_URL release]; _URL = URL;
     
+    // Pass on to next object as well
+    [[self nextObject] forceUpdateFromURL:URL];
+    
     return YES;
 }
 
