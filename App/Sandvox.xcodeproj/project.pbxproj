@@ -479,6 +479,8 @@
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
 		27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */; };
 		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
+		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
+		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
 		27E24AC610FB9591004EFE9F /* SVLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24AC410FB9591004EFE9F /* SVLink.h */; };
 		27E24AC710FB9591004EFE9F /* SVLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E24AC510FB9591004EFE9F /* SVLink.m */; };
 		27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E24EEB10FCB218004EFE9F /* SVLinkManager.h */; };
@@ -1957,6 +1959,8 @@
 		27DEC7900DDC3EB500D795F3 /* Media System.graffle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = "Media System.graffle"; sourceTree = "<group>"; };
 		27DECBA80DE03F0800D795F3 /* KTMediaFileEqualityTester.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMediaFileEqualityTester.h; sourceTree = "<group>"; };
 		27DECBA90DE03F0800D795F3 /* KTMediaFileEqualityTester.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMediaFileEqualityTester.m; sourceTree = "<group>"; };
+		27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentUndoManager.h; sourceTree = "<group>"; };
+		27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentUndoManager.m; sourceTree = "<group>"; };
 		27E24AC410FB9591004EFE9F /* SVLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLink.h; sourceTree = "<group>"; };
 		27E24AC510FB9591004EFE9F /* SVLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLink.m; sourceTree = "<group>"; };
 		27E24EEB10FCB218004EFE9F /* SVLinkManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLinkManager.h; sourceTree = "<group>"; };
@@ -3715,6 +3719,8 @@
 				3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */,
 				2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */,
 				2765061D0EAE417200461A0E /* NSDocument+KTExtensions.m */,
+				27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */,
+				27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -5388,6 +5394,7 @@
 				271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */,
 				2713756911551296003AB050 /* SVAttributedHTML.h in Headers */,
 				27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */,
+				27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6785,6 +6792,7 @@
 				271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */,
 				2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */,
 				27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */,
+				27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

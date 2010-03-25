@@ -47,6 +47,7 @@
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"
+#import "SVDocumentUndoManager.h"
 #import "KTSite.h"
 #import "KTElementPlugInWrapper.h"
 #import "KTHTMLInspectorController.h"
@@ -61,7 +62,6 @@
 #import "KTSummaryWebViewTextBlock.h"
 #import "SVTextBox.h"
 #import "KTLocalPublishingEngine.h"
-#import "SVTextDOMController.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -208,7 +208,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		[[self managedObjectContext] setPersistentStoreCoordinator:PSC];
 		[PSC release];
         
-        NSUndoManager *undoManager = [[SVWebEditorTextControllerUndoManager alloc] init];
+        NSUndoManager *undoManager = [[SVDocumentUndoManager alloc] init];
         [[self managedObjectContext] setUndoManager:undoManager];
         [undoManager release];
         [super setUndoManager:[[self managedObjectContext] undoManager]];

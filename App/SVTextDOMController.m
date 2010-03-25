@@ -336,41 +336,4 @@
 @end
 
 
-#pragma mark -
-
-
-@implementation SVWebEditorTextControllerUndoManager
-
-- (unsigned short)lastRegisteredActionIdentifier;
-{
-    return _lastRegisteredActionIdentifier;
-}
-
-- (void)forwardInvocation:(NSInvocation *)anInvocation
-{
-    _lastRegisteredActionIdentifier++;
-    return [super forwardInvocation:anInvocation];
-}
-
-- (void)registerUndoWithTarget:(id)target selector:(SEL)aSelector object:(id)anObject
-{
-    _lastRegisteredActionIdentifier++;
-    return [super registerUndoWithTarget:target selector:aSelector object:anObject];
-}
-
-- (void)undoNestedGroup
-{
-    _lastRegisteredActionIdentifier++;
-    return [super undoNestedGroup];
-}
-
-- (void)redo
-{
-    _lastRegisteredActionIdentifier++;
-    return [super redo];
-}
-
-@end
-
-
 

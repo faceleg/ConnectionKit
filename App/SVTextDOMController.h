@@ -92,10 +92,3 @@
 - (unsigned short)lastRegisteredActionIdentifier;
 @end
 
-
-@interface SVWebEditorTextControllerUndoManager : NSUndoManager
-{
-    unsigned short _lastRegisteredActionIdentifier;
-}
-@end
-
