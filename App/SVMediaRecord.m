@@ -123,15 +123,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     [_destinationURL release]; _destinationURL = URL;
 }
 
-- (void)willSave
-{
-    // Once deleted, there is no way to know our URL, so fix it in position
-    if ([self isDeleted])
-    {
-        [self forceUpdateFromURL:[self fileURL]];
-    }
-}
-
 - (void)didSave
 {
     BOOL inserted = [self isInserted];
