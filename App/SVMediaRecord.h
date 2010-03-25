@@ -78,7 +78,10 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 //  .fileURL is not KVO-compliant
 
 - (NSURL *)fileURL;
-- (void)setFileURL:(NSURL *)URL;
+
+
+#pragma mark Updating File Wrappers
+- (void)forceUpdateFromURL:(NSURL *)URL;
 
 
 #pragma mark Accessing Files

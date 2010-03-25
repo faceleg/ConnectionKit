@@ -101,7 +101,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                 toPath:[URL path]
                                                  error:error])
     {
-        [self setFileURL:URL];
+        [self forceUpdateFromURL:URL];
         return YES;
     }
     
@@ -128,7 +128,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // Once deleted, there is no way to know our URL, so fix it in position
     if ([self isDeleted])
     {
-        [self setFileURL:[self fileURL]];
+        [self forceUpdateFromURL:[self fileURL]];
     }
 }
 
@@ -158,7 +158,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
         }
         else
         {
-            [self setFileURL:_destinationURL];
+            [self forceUpdateFromURL:_destinationURL];
         }
         
         [_destinationURL release]; _destinationURL = oldURL;
@@ -168,7 +168,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // After insertion, don't want URL to be fixed as it could be changed by the document moving or something
     if (inserted)
     {
-        [self setFileURL:nil];
+        [self forceUpdateFromURL:nil];
     }
 }
 
@@ -200,7 +200,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
-- (void)setFileURL:(NSURL *)URL;
+- (void)forceUpdateFromURL:(NSURL *)URL;
 {
     URL = [URL copy];
     [_URL release]; _URL = URL;
@@ -383,7 +383,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     // Update fileURL to match
     if (updateFileURL && result)
     {
-        [self setFileURL:URL];
+        [self forceUpdateFromURL:URL];
     }
     
     

@@ -459,7 +459,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:key];
         if (![fileWrapper isDeletedFromDocument])
         {
-            [fileWrapper setFileURL:[absoluteURL URLByAppendingPathComponent:key isDirectory:NO]];
+            [fileWrapper forceUpdateFromURL:[absoluteURL URLByAppendingPathComponent:key isDirectory:NO]];
         }
     }
 }
@@ -673,7 +673,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Media needs to be told its location to be useful
         // Use -fileURL instead of absoluteURL since it accounts for autosave properly
         NSURL *mediaURL = [[self fileURL] URLByAppendingPathComponent:filename isDirectory:NO];
-        [aMediaRecord setFileURL:mediaURL];
+        [aMediaRecord forceUpdateFromURL:mediaURL];
     }
         
     
