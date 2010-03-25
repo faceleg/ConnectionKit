@@ -172,8 +172,9 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 @protocol SVDocumentFileWrapper <NSObject>
 - (NSURL *)fileURL;
+- (void)setFileURL:(NSURL *)fileURL;
 - (NSString *)preferredFilename;
-- (BOOL)isDeleted;
+- (BOOL)isDeletedFromDocument;
 @end
 
 

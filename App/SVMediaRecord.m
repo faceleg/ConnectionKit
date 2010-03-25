@@ -349,6 +349,12 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+- (BOOL)isDeletedFromDocument;
+{
+    BOOL result = ([self isInserted] || ![self managedObjectContext]);
+    return result;
+}
+
 #pragma mark Writing Files
 
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;

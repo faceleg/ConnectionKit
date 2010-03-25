@@ -586,7 +586,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSString *filename = [aMediaRecord committedValueForKey:@"filename"];
         if (!filename)
         {
-            filename = [self reservePreferredFilename:[aMediaRecord preferredFilename]];
+            filename = [self addDocumentFileWrapper:aMediaRecord];
         }
         
         // Try write

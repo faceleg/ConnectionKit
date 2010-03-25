@@ -451,6 +451,17 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     [super setFileURL:absoluteURL];
+    
+    
+    // Update media etc. to match
+    for (NSString *key in _filenameReservations)
+    {
+        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:key];
+        if (![fileWrapper isDeletedFromDocument])
+        {
+            [fileWrapper setFileURL:[absoluteURL URLByAppendingPathComponent:key isDirectory:NO]];
+        }
+    }
 }
 
 @synthesize datastoreURL = _persistentStoreURL;
@@ -659,9 +670,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         OBASSERT(![_filenameReservations objectForKey:filename]);  // we don't quite support multiple media registration yet. Can't call -isFilenameReserved: since it will find the file on disk and return YES
         [_filenameReservations setObject:aMediaRecord forKey:[filename lowercaseString]];
     }
-    
-    [request release];
-    
+        
     
     return result;
 }
