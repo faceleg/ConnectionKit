@@ -98,9 +98,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (BOOL)isFilenameReserved:(NSString *)filename;
 - (void)unreserveFilename:(NSString *)filename;
 
-- (NSURL *)deletedMediaDirectory;
-- (BOOL)haveCreatedDeletedMediaDirectory;
-
 - (NSSet *)missingMedia;
 
 

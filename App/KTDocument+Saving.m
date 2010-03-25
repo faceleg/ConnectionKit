@@ -12,6 +12,7 @@
 #import "KTDesign.h"
 #import "KTDocumentController.h"
 #import "KTDocWindowController.h"
+#import "SVDocumentUndoManager.h"
 #import "KTSite.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
@@ -291,7 +292,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Tell deleted media what, if anything, to do
-        NSURL *deletedMediaDirectory = [self deletedMediaDirectory];
+        NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
         for (NSManagedObject *anObject in [context deletedObjects])
         {
             if ([anObject isKindOfClass:[SVMediaRecord class]])

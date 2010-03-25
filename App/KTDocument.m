@@ -68,7 +68,6 @@
 #import "KSAbstractBugReporter.h"
 #import "KSSilencingConfirmSheet.h"
 
-#import "NSApplication+Karelia.h"       // Karelia Cocoa additions
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSDate+Karelia.h"
@@ -558,39 +557,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [_filenameReservations removeObjectForKey:[filename lowercaseString]];
 }
 
-- (NSURL *)deletedMediaDirectory;
-{	
-    // Figure out location
-    NSURL *sandvoxSupportDirectory = [NSURL fileURLWithPath:[NSApplication applicationSupportPath]
-                                                isDirectory:YES];
-    
-    NSURL *allDeletedMediaDirectory = [sandvoxSupportDirectory URLByAppendingPathComponent:@"Deleted Media"
-                                                                               isDirectory:YES];
-	
-    if (!_deletedMediaDirectoryName)
-    {
-        _deletedMediaDirectoryName = [[[NSProcessInfo processInfo] globallyUniqueString] copy];
-    }
-    NSURL *result = [allDeletedMediaDirectory URLByAppendingPathComponent:_deletedMediaDirectoryName
-                                                              isDirectory:YES];
-	
-    
-	// Create the directory if needs be
-	[[NSFileManager defaultManager] createDirectoryAtPath:[result path]
-                              withIntermediateDirectories:YES
-                                               attributes:nil
-                                                    error:NULL];
-    
-    
-	OBPOSTCONDITION(result);
-	return result;
-}
-
-- (BOOL)haveCreatedDeletedMediaDirectory;
-{
-    return (_deletedMediaDirectoryName != nil);
-}
-
 - (NSSet *)missingMedia;
 {
 	NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"ExternalMedia"];
@@ -684,7 +650,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
  *  KTDocument+Saving.m
  */
 
-#pragma mark -
 #pragma mark Controller Chain
 
 /*!	Force KTDocument to use a custom subclass of NSWindowController
@@ -707,7 +672,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [super removeWindowController:windowController];
 }
 
-#pragma mark -
 #pragma mark Changes
 
 /*  Supplement NSDocument by broadcasting a notification that the document did change
@@ -722,7 +686,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
 }
 
-#pragma mark -
 #pragma mark Closing Documents
 
 - (void)close
@@ -732,19 +695,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 	
 	// Remove temporary media files
-    if ([self haveCreatedDeletedMediaDirectory])
-    {
-        [[NSFileManager defaultManager] removeItemAtPath:[[self deletedMediaDirectory] path]
-                                                   error:NULL];
-    }
-	
+    [[self undoManager] removeDeletedMediaDirectory:NULL];
     
 	[super close];
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDocumentDidClose" object:self];
 }
 
-#pragma mark -
 #pragma mark Error Presentation
 
 /*! we override willPresentError: here largely to deal with
