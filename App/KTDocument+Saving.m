@@ -330,6 +330,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
         NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
         NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+        
         [self writeMediaRecords:mediaToWriteIntoDocument
                           toURL:inURL
                forSaveOperation:saveOperation
@@ -564,6 +565,37 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
+- (id <SVDocumentFileWrapper>)duplicateOfMediaRecord:(SVMediaRecord *)media;
+{
+    //  Look through out existing media to see if there is one with the same data
+    
+    id <SVDocumentFileWrapper> result = nil;
+    NSFileManager *fileManager = [[NSFileManager alloc] init];
+    
+    
+    for (NSString *aKey in _filenameReservations)
+    {
+        result = [_filenameReservations objectForKey:aKey];
+        
+        NSURL *mediaURL = [media fileURL];
+        if (mediaURL)
+        {
+            NSURL *URL = [result fileURL]; OBASSERT(URL);
+            if ([fileManager contentsEqualAtPath:[mediaURL path] andPath:[URL path]])
+            {
+                return result;
+            }
+        }
+        else
+        {
+            // Try to compare data
+        }
+    }
+    
+    
+    return nil;
+}
+
 - (BOOL)writeMediaRecords:(NSArray *)media
                     toURL:(NSURL *)docURL
          forSaveOperation:(NSSaveOperationType)saveOp
@@ -587,7 +619,16 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSString *filename = [aMediaRecord committedValueForKey:@"filename"];
         if (!filename)
         {
-            filename = [self addDocumentFileWrapper:aMediaRecord];
+            // Is there already a media record with the same data?
+            SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
+            if (dupe)
+            {
+                filename = [dupe filename];
+            }
+            else
+            {
+                filename = [self addDocumentFileWrapper:aMediaRecord];
+            }
         }
         
         // Try write
