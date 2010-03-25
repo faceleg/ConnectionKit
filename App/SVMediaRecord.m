@@ -214,12 +214,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return YES;
 }
 
-- (void)forceUpdateFromURL:(NSURL *)URL;
-{
-    BOOL result = [self readFromURL:URL options:0 error:NULL];
-    OBPOSTCONDITION(result);
-}
-
 #pragma mark Location Support
 
 @dynamic filename;
@@ -401,6 +395,26 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 #pragma mark Matching Media
 
 @synthesize nextObject = _nextObject;
+
+#pragma mark SVDocumentFileWrapper
+
+- (void)forceUpdateFromURL:(NSURL *)URL;
+{
+    BOOL result = [self readFromURL:URL options:0 error:NULL];
+    OBPOSTCONDITION(result);
+}
+
+- (BOOL)shouldRemoveFromDocument;
+{
+    // YES if we and all following linked objects are marked for deletion
+    BOOL result = [self isDeleted];
+    if (result)
+    {
+        id <SVDocumentFileWrapper> next = [self nextObject];
+        if (next) result = [next shouldRemoveFromDocument];
+    }
+    return result;
+}
 
 - (BOOL)isDeletedFromDocument;
 {

@@ -168,9 +168,12 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 
 @protocol SVDocumentFileWrapper <NSObject>
+
 - (NSURL *)fileURL;
 - (void)forceUpdateFromURL:(NSURL *)URL;
 - (NSString *)preferredFilename;
+
+- (BOOL)shouldRemoveFromDocument;   // will be moved or deleted depending on undo manager
 - (BOOL)isDeletedFromDocument;
 @end
 

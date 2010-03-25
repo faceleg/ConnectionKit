@@ -297,16 +297,14 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         // Tell deleted media what, if anything, to do
         NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
-        for (NSManagedObject *anObject in [context deletedObjects])
+        for (NSString *aKey in _filenameReservations)
         {
-            if ([anObject isKindOfClass:[SVMediaRecord class]])
+            id <SVDocumentFileWrapper> media = [_filenameReservations objectForKey:aKey];
+            if ([media shouldRemoveFromDocument])
             {
-                SVMediaRecord *media = (SVMediaRecord *)anObject;
-                                
-                NSString *filename = [media committedValueForKey:@"filename"];  // don't want to risk an out-of date in-memory value
-                NSURL *deletedMediaURL = [deletedMediaDirectory URLByAppendingPathComponent:filename
+                NSURL *deletionURL = [deletedMediaDirectory URLByAppendingPathComponent:aKey
                                                                                 isDirectory:NO];
-                [media moveToURLWhenDeleted:deletedMediaURL];
+                [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
             }
         }
     }
