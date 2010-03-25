@@ -639,6 +639,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
         if (dupe)
         {
+            [aMediaRecord readFromURL:[dupe fileURL] options:0 error:NULL];
             [aMediaRecord setFilename:[dupe filename]];
             return YES;
         }
