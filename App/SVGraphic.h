@@ -119,6 +119,11 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @property(nonatomic, readonly) id <IMBImageItem> thumbnail; // MUST be KVO-compliant
 
 
+#pragma mark Serialization
++ (id)graphicWithSerializedProperties:(id)properties
+       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
+
 @end
 
 

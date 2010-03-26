@@ -215,10 +215,10 @@
     
     // Graphic
     NSDictionary *serializedGraphic = [propertyList valueForKeyPath:@"graphic"];
-    NSString *entityName = [serializedGraphic objectForKey:@"entity"];
-    SVGraphic *graphic = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                       inManagedObjectContext:[self managedObjectContext]];
-    [graphic awakeFromPropertyList:serializedGraphic];
+    
+    SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedGraphic
+                                     insertIntoManagedObjectContext:[self managedObjectContext]];
+
     [self setGraphic:graphic];
 }
 

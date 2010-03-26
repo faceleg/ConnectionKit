@@ -111,15 +111,22 @@
     [pasteboard setData:data forType:@"com.karelia.html+graphics"];
 }
 
-+ (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
-                              managedObjectContext:(NSManagedObjectContext *)context;
++ (NSAttributedString *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard;
 {
     NSData *data = [pasteboard dataForType:@"com.karelia.html+graphics"];
     if (!data) return nil;
     
     
-    NSAttributedString *archivedAttributedString = [NSKeyedUnarchiver
-                                                      unarchiveObjectWithData:data];
+    NSAttributedString *result = [NSKeyedUnarchiver unarchiveObjectWithData:data];
+    return result;
+}
+
++ (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
+                              managedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSAttributedString *archivedAttributedString =
+    [self attributedHTMLFromPasteboard:pasteboard];
+    if (!archivedAttributedString) return nil;
     
     SVAttributedHTML *result = [[self alloc] initWithAttributedString:archivedAttributedString];
     
@@ -158,6 +165,44 @@
     
     
     return [result autorelease];
+}
+
++ (NSArray *)pageletsFromPasteboard:(NSPasteboard *)pasteboard
+     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSMutableArray *result = [NSMutableArray array];
+    NSAttributedString *archive = [self attributedHTMLFromPasteboard:pasteboard];
+    
+    
+    // Create attachment objects for each serialized one
+    NSRange range = NSMakeRange(0, [archive length]);
+    NSUInteger location = 0;
+    
+    while (location < range.length)
+    {
+        NSRange effectiveRange;
+        id serializedProperties = [archive attribute:@"Serialized SVAttachment"
+                                             atIndex:location
+                               longestEffectiveRange:&effectiveRange
+                                             inRange:range];
+        
+        if (serializedProperties)
+        {
+            // Replace the attachment
+            id serializedGraphic = [serializedProperties valueForKey:@"graphic"];
+            
+            SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedGraphic
+                                             insertIntoManagedObjectContext:context];
+            
+            [result addObject:graphic];
+        }
+        
+        // Advance the search
+        location = location + effectiveRange.length;
+    }
+    
+    
+    return result;
 }
 
 #pragma mark Output

@@ -9,6 +9,7 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVApplicationController.h"
+#import "SVAttributedHTML.h"
 #import "SVPlugInGraphic.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
@@ -913,16 +914,18 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (BOOL)webEditor:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditor]);
+    
+    
+    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+    if (dropIndex == NSNotFound) return NO;
+    
+    
     BOOL result = NO;
     
     
     //  When dragging within the sidebar, want to move the selected pagelets
     if ([dragInfo draggingSource] == sender)
     {
-        NSUInteger dropIndex = [self indexOfDrop:dragInfo];
-        if (dropIndex == NSNotFound) return NO;
-        
-        
         NSArray *sidebarPageletControllers = [self sidebarPageletItems];
         for (SVDOMController *aPageletItem in [sender selectedItems])
         {
@@ -937,6 +940,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
     }
     
+    
+    if (!result)
+    {
+        // Fallback to inserting a new pagelet from the pasteboard
+        NSArray *pagelets = [SVAttributedHTML
+                             pageletsFromPasteboard:[dragInfo draggingPasteboard]
+                             insertIntoManagedObjectContext:[[self page] managedObjectContext]];
+        
+        for (SVGraphic *aPagelet in pagelets)
+        {
+            result = YES;
+            [[_selectableObjectsController sidebarPageletsController] insertObject:aPagelet
+                                                             atArrangedObjectIndex:dropIndex];
+        }
+    }
     
     return result;
 }

@@ -25,8 +25,11 @@
 
 #pragma mark Pasteboard
 - (void)writeToPasteboard:(NSPasteboard *)pasteboard;
+
 + (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
                               managedObjectContext:(NSManagedObjectContext *)context;
 
++ (NSArray *)pageletsFromPasteboard:(NSPasteboard *)pasteboard
+     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 @end

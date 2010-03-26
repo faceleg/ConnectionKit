@@ -395,6 +395,20 @@
 
 #pragma mark Serialization
 
++ (id)graphicWithSerializedProperties:(id)properties
+       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSString *entityName = [properties objectForKey:@"entity"];
+    
+    SVGraphic *result = [NSEntityDescription
+                          insertNewObjectForEntityForName:entityName
+                          inManagedObjectContext:context];
+    
+    [result awakeFromPropertyList:properties];
+    
+    return result;
+}
+
 - (void)awakeFromPropertyList:(id)propertyList;
 {
     // Don't deserialzed element ID as it means we have two of them!
