@@ -85,8 +85,12 @@
         
         if (attachment)
         {
-            // Replace the attachment
-            id plist = [attachment serializedProperties];
+            // Replace the attachment. Ignore range as it's not relevant any more
+            NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+            [attachment populateSerializedProperties:plist];
+            [plist removeObjectForKey:@"location"];
+            [plist removeObjectForKey:@"length"];
+            
             
             [archivableAttributedString removeAttribute:@"SVAttachment"
                                                   range:effectiveRange];
@@ -94,6 +98,7 @@
             [archivableAttributedString addAttribute:@"Serialized SVAttachment"
                                                value:plist
                                                range:effectiveRange];
+            [plist release];
         }
         
         // Advance the search
