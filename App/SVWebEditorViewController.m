@@ -334,6 +334,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)scheduleUpdate
 {
+    // Ignore if Web Editor is dragging
+    if ([[[self webEditor] draggedItems] count] > 0) return;
+    
     // Private method known only to our Main DOM Controller. Schedules an update if needed.
     if (!_willUpdate)
 	{
