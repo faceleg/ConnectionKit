@@ -21,11 +21,15 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 @implementation SVImageDOMController
 
+#pragma mark Dealloc
+
 - (void)dealloc
 {
     [self setRepresentedObject:nil];
     [super dealloc];
 }
+
+#pragma mark Content
 
 - (void)setRepresentedObject:(id)image
 {
@@ -40,6 +44,28 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     [image addObserver:self forKeyPath:@"wrap" options:0 context:sImageSizeObservationContext];
 }
 
+#pragma mark Updating
+
+- (void)update;
+{
+    // mark the current area for drawing
+    DOMHTMLElement *element = [self HTMLElement];
+    SVImage *image = [self representedObject];
+    
+    BOOL liveResize = [[self webEditor] inLiveGraphicResize];
+    if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+    
+    
+    // Push property change into DOM
+    [element setClassName:[image className]];
+    [element setAttribute:@"width" value:[[image width] description]];
+    [element setAttribute:@"height" value:[[image height] description]];
+    
+    
+    // and then mark the resulting area for drawing
+    if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+}
+
 - (void)observeValueForKeyPath:(NSString *)keyPath
                       ofObject:(id)object
                         change:(NSDictionary *)change
@@ -47,33 +73,22 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 {
     if (context == sImageSizeObservationContext)
     {
-        // mark the current area for drawing
-        DOMHTMLElement *element = [self HTMLElement];
-        
-        BOOL liveResize = [[self webEditor] inLiveGraphicResize];
-        if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
-        
-        
-        // Push property change into DOM
-        if ([keyPath isEqualToString:@"wrap"])
+        if ([[self webEditor] inLiveGraphicResize])
         {
-            [element setClassName:[[self representedObject] className]];
+            [self update];
         }
         else
         {
-            [element setAttribute:keyPath
-                         value:[[object valueForKeyPath:keyPath] description]];
+            [self setNeedsUpdate];
         }
-        
-        
-        // and then mark the resulting area for drawing
-        if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
     }
     else
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
+
+#pragma mark Resizing
 
 - (unsigned int)resizingMask
 {
