@@ -26,11 +26,11 @@
     [propertyList setValue:[[self body] serializedProperties] forKey:@"body"];
     
     // Code Injection
-    [propertyList setValue:[[self codeInjection] propertyList]
+    [propertyList setValue:[[self codeInjection] serializedProperties]
                     forKey:@"codeInjection"];
     
     // Children
-    NSArray *children = [[self sortedChildren] valueForKey:@"propertyList"];
+    NSArray *children = [[self sortedChildren] valueForKey:@"serializedProperties"];
     [propertyList setValue:children forKey:@"childItems"];
 }
 

@@ -979,11 +979,34 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 {
 	[pboard declareTypes:[NSArray arrayWithObject:kKTPagesPboardType] owner:self];
     
-    NSArray *pages = items;
-    [self setLastItemsWrittenToPasteboard:pages];
+    [self setLastItemsWrittenToPasteboard:items];
     
-    NSArray *serializedPages = [pages valueForKey:@"propertyListRepresentation"];
+    NSMutableArray *serializedPages = [[NSMutableArray alloc] initWithCapacity:[items count]];
+    for (SVSiteItem *anItem in items)
+    {
+        // Ignore if it's a descendant of a selected collection
+        BOOL write = YES;
+        KTPage *parent = [anItem parentPage];
+        while (parent)
+        {
+            if ([items containsObjectIdenticalTo:parent])
+            {
+                write = NO;
+                break;
+            }
+            parent = [parent parentPage];
+        }
+        
+        // Serialize
+        if (write)
+        {
+            id plist = [anItem serializedProperties];
+            [serializedPages addObject:plist];
+        }
+    }
+    
     [pboard setPropertyList:serializedPages forType:kKTPagesPboardType];
+    [serializedPages release];
     
     
     
