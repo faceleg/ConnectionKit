@@ -476,7 +476,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return [self textAreaForDOMNode:[range startContainer]];
 }
 
-#pragma mark Graphics
+#pragma mark Sidebar
 
 @synthesize sidebarPageletItems = _sidebarPageletItems;
 
@@ -915,44 +915,22 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     OBPRECONDITION(sender == [self webEditor]);
     BOOL result = NO;
     
-    NSArray *pageletContentItems = [self sidebarPageletItems];
     
-    
-    //  When dragging within the same view, want to move the selected pagelets
-    //  Possibly bad, I'm assuming all selected items are pagelets
+    //  When dragging within the sidebar, want to move the selected pagelets
     if ([dragInfo draggingSource] == sender)
     {
-        result = YES;
-        
         NSUInteger dropIndex = [self indexOfDrop:dragInfo];
-        if (dropIndex == NSNotFound)
+        if (dropIndex == NSNotFound) return NO;
+        
+        
+        NSArray *sidebarPageletControllers = [self sidebarPageletItems];
+        for (SVDOMController *aPageletItem in [sender selectedItems])
         {
-            result = NO;
-        }
-        else if (dropIndex >= [pageletContentItems count])
-        {
-            //SVGraphic *lastPagelet = [[pageletContentItems lastObject] representedObject];
-            for (SVDOMController *aPageletItem in [sender selectedItems])
+            if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
             {
-                SVGraphic *pagelet = [aPageletItem representedObject];
-                [[_selectableObjectsController sidebarPageletsController] insertObject:pagelet
-                                                                 atArrangedObjectIndex:dropIndex];
-            }
-        }
-        else
-        {
-            for (SVDOMController *aPageletItem in [sender selectedItems])
-            {
-                //SVGraphic *anchorPagelet = [[pageletContentItems objectAtIndex:dropIndex] representedObject];
-                SVGraphic *pagelet = [aPageletItem representedObject];
+                result = YES;
                 
-                // Pagelets being dragged from outside the sidebar need to be inserted first
-                if (![[pagelet sidebars] containsObject:[[self page] sidebar]])
-                {
-                    [self _insertPageletInSidebar:pagelet];
-                }
-                
-                // Move the pagelet to the right index
+                SVGraphic *pagelet = [aPageletItem representedObject];
                 [[_selectableObjectsController sidebarPageletsController] insertObject:pagelet
                                                                  atArrangedObjectIndex:dropIndex];
             }
