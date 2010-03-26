@@ -395,6 +395,17 @@
 
 #pragma mark Serialization
 
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    // Don't deserialzed element ID as it means we have two of them!
+    NSString *ID = [self elementID];
+    [super awakeFromPropertyList:propertyList];
+    
+    [self willChangeValueForKey:@"elementID"];
+    [self setPrimitiveValue:ID forKey:@"elementID"];
+    [self didChangeValueForKey:@"elementID"];
+}
+
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];
