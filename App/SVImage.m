@@ -238,14 +238,9 @@
     SVMediaRecord *media = [self media];
     
     NSData *data = [media fileContents];
-    NSURL *URL = [[media fileURLResponse] URL];
-    if (!data)
-    {
-        URL = [[self media] fileURL];
-        if (URL) data = [NSData dataWithContentsOfURL:URL];
-    }
-    
     [propertyList setValue:data forKey:@"fileContents"];
+    
+    NSURL *URL = [self imagePreviewURL];
     [propertyList setValue:URL forKey:@"sourceURL"];
 }
 

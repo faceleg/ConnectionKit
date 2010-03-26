@@ -284,7 +284,16 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 - (NSData *)fileContents;
 {
-    return _data;
+    if (_data) return _data;
+    
+    NSURL *URL = [self fileURL];
+    if (URL)
+    {
+        NSData *result = [NSData dataWithContentsOfURL:URL];
+        return result;
+    }
+    
+    return nil;
 }
 
 - (WebResource *)webResource;
