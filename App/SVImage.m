@@ -235,13 +235,42 @@
     [super populateSerializedProperties:propertyList];
     
     // Write image data
-    NSData *data = [[self media] fileContents];
+    SVMediaRecord *media = [self media];
+    
+    NSData *data = [media fileContents];
+    NSURL *URL = [[media fileURLResponse] URL];
     if (!data)
     {
-        NSURL *URL = [[self media] fileURL];
+        URL = [[self media] fileURL];
         if (URL) data = [NSData dataWithContentsOfURL:URL];
     }
+    
     [propertyList setValue:data forKey:@"fileContents"];
+    [propertyList setValue:URL forKey:@"sourceURL"];
+}
+
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    
+    // Pull out image data
+    NSData *data = [propertyList objectForKey:@"fileContents"];
+    if (data)
+    {
+        NSURLResponse *response = [[NSURLResponse alloc]
+                                   initWithURL:[propertyList objectForKey:@"sourceURL"]
+                                   MIMEType:nil
+                                   expectedContentLength:[data length]
+                                   textEncodingName:nil];
+        
+        SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:data
+                                                        URLResponse:response
+                                                         entityName:@"ImageMedia"
+                                     insertIntoManagedObjectContext:[self managedObjectContext]];
+        [response release];
+        
+        [self setMedia:media];
+    }
 }
 
 @end
