@@ -14,6 +14,8 @@
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 
+#import "NSManagedObject+KTExtensions.h"
+
 
 @interface SVImage ()
 
@@ -225,5 +227,21 @@
 
 - (id <IMBImageItem>)thumbnail { return [self media]; }
 + (NSSet *)keyPathsForValuesAffectingThumbnail { return [NSSet setWithObject:@"media"]; }
+
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    // Write image data
+    NSData *data = [[self media] fileContents];
+    if (!data)
+    {
+        NSURL *URL = [[self media] fileURL];
+        if (URL) data = [NSData dataWithContentsOfURL:URL];
+    }
+    [propertyList setValue:data forKey:@"fileContents"];
+}
 
 @end
