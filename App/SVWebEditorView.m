@@ -351,7 +351,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
  */
 - (void)selectItem:(SVWebEditorItem *)item event:(NSEvent *)event
 {
-    BOOL itemIsSelected = [[self selectedItems] containsObjectIdenticalTo:item];
+    NSArray *currentSelection = [self selectedItems];
+    BOOL itemIsSelected = [currentSelection containsObjectIdenticalTo:item];
     
     
     // Depending on the command key, add/remove from the selection, or become the selection. 
@@ -365,6 +366,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
         {
             // Is it embedded in some editable text? Can't select multiple embedded items this way, must select the text range enclosing them instead.
             BOOL isEmbedded = [[item HTMLElement] isContentEditable];
+            
+            // Weed out embedded items from the existing selection
+            if (!isEmbedded)
+            {
+                for (SVWebEditorItem *anItem in currentSelection)
+                {
+                    if ([[anItem HTMLElement] isContentEditable])
+                    {
+                        [self deselectAll:self];
+                        break;
+                    }
+                }
+            }
             
             [self selectItems:[NSArray arrayWithObject:item]
          byExtendingSelection:!isEmbedded
