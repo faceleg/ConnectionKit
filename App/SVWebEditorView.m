@@ -345,6 +345,44 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self deselectItem:item isUIAction:NO];
 }
 
+/*!
+ @method selectItem:event:
+ @abstract The user tried to select the item using event. Add/remove it to the selection appropriately
+ */
+- (void)selectItem:(SVWebEditorItem *)item event:(NSEvent *)event
+{
+    BOOL itemIsSelected = [[self selectedItems] containsObjectIdenticalTo:item];
+    
+    
+    // Depending on the command key, add/remove from the selection, or become the selection. 
+    if ([event modifierFlags] & NSCommandKeyMask)
+    {
+        if (itemIsSelected)
+        {
+            [self deselectItem:item isUIAction:YES];
+        }
+        else
+        {
+            // Is it embedded in some editable text? Can't select multiple embedded items this way, must select the text range enclosing them instead.
+            BOOL isEmbedded = [[item HTMLElement] isContentEditable];
+            
+            [self selectItems:[NSArray arrayWithObject:item]
+         byExtendingSelection:!isEmbedded
+                   isUIAction:YES];
+        }
+    }
+    else
+    {
+        [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO isUIAction:YES];
+        
+        if (itemIsSelected)
+        {
+            // If you click an aready selected item quick enough, it will start editing
+            _mouseUpMayBeginEditing = YES;
+        }
+    }
+}
+
 - (IBAction)deselectAll:(id)sender;
 {
     [self selectItems:nil byExtendingSelection:NO isUIAction:YES];
@@ -903,10 +941,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self mouseMoved:event];
 }
 
-
-
-
-
 /*  Actions we could take from this:
  *      - Deselect everything
  *      - Change selection to new item
@@ -941,30 +975,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
       
     if (item)
     {
-        BOOL itemIsSelected = [[self selectedItems] containsObjectIdenticalTo:item];
-        
-        // Depending on the command key, add/remove from the selection, or become the selection
-        if ([event modifierFlags] & NSCommandKeyMask)
-        {
-            if (itemIsSelected)
-            {
-                [self deselectItem:item isUIAction:YES];
-            }
-            else
-            {
-                [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:YES isUIAction:YES];
-            }
-        }
-        else
-        {
-            [self selectItems:[NSArray arrayWithObject:item] byExtendingSelection:NO isUIAction:YES];
-            
-            if (itemIsSelected)
-            {
-                // If you click an aready selected item quick enough, it will start editing
-                _mouseUpMayBeginEditing = YES;
-            }
-        }
+        [self selectItem:item event:event];
     }
     else
     {
