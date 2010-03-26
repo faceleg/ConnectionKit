@@ -10,6 +10,7 @@
 
 #import "SVGraphic.h"
 #import "SVHTMLContext.h"
+#import "SVTitleBox.h"
 
 #import "NSManagedObject+KTExtensions.h"
 
