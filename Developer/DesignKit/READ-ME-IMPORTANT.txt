@@ -1,5 +1,8 @@
 This is what is in this folder.  Please understand what all these files are for!
 
+Check for Newer Version.url  -- open this in your browser to see if this kit has been updated.
+
+
 main.css -- the starting point.  It will be very helpful if you start your CSS with this. 
 big template main.css -- This is a larger starting point.  You might want to use this to start with.
 
