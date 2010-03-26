@@ -173,14 +173,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setViewIsReadyToAppear:NO];
 }
 
-#pragma mark Updating
+#pragma mark Loading
 
-- (void)update;
+/*  Loading is to Updating as Drawing is to Displaying (in NSView)
+ */
+
+- (void)loadWebEditor
 {
-	[self willUpdate];
-
-    
-	// Tear down old dependencies
+    // Tear down old dependencies
     for (KSObjectKeyPathPair *aDependency in _pageDependencies)
     {
         [[aDependency object] removeObserver:self
@@ -245,14 +245,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Tidy up
     [context release];
     [pageHTML release];
-    
-	
-    // Clearly the webview is no longer in need of refreshing
-    _willUpdate = NO;
-	_needsUpdate = NO;
 }
-
-@synthesize updating = _isUpdating;
 
 - (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
 {
@@ -324,6 +317,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self didUpdate];
 }
 
+#pragma mark Updating
+
+- (void)update;
+{
+	[self willUpdate];
+    
+	[self loadWebEditor];
+	
+    // Clearly the webview is no longer in need of refreshing
+    _willUpdate = NO;
+	_needsUpdate = NO;
+}
+
+@synthesize updating = _isUpdating;
+
 - (void)scheduleUpdate
 {
     // Private method known only to our Main DOM Controller. Schedules an update if needed.
@@ -365,6 +373,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 - (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
+
+@synthesize autoupdate = _autoupdate;
+- (void)setAutoupdate:(BOOL)autoupdate;
+{
+    _autoupdate = autoupdate;
+}
 
 - (void)willUpdate;
 {
