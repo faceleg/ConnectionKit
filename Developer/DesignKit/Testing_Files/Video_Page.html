@@ -10,7 +10,7 @@
 		<meta name="viewport" content="width=750" />
 		<link rel="Shortcut Icon" type="image/x-icon" href="_Media/32favicon.ico" />
 <link rel="stylesheet" type="text/css" href="http://designerskit.karelia.com/sandvox.css" /> <!-- This is loaded across ALL designs, no matter what - do not remove or replace -->
-<link rel="stylesheet" type="text/css" href="../main.css" title="Aqua" />  <!-- This will be replaced by the reference to YYOUR NEW STYLE SHEET -->
+<link rel="stylesheet" type="text/css" href="../main.css" title="YOUR_DESIGN_NAME" />  <!-- This will be replaced by the reference to YOUR NEW STYLE SHEET -->
 <!--
 Photo credits for this website's design: <http://unpublished.karelia.com/sandvox_IntotheBlue/Credits.rtf>
 Licensing for this website's design:     <http://unpublished.karelia.com/sandvox_IntotheBlue/License.rtf>
@@ -84,6 +84,9 @@ QT_WriteOBJECT_XHTML (
 				<param name="scale" value="tofit" />
 				<param name="type" value="video/quicktime" />
 				<param name="pluginspage" value="http://www.apple.com/quicktime/download/" />
+				
+				<!-- Yes, I know that "embed" is an element that does not validate. -->
+				
 				<embed src="http://designerskit.karelia.com/kid.mp4"
 					width="640"
 					height="496"
@@ -108,7 +111,9 @@ QT_WriteOBJECT_XHTML (
 				</div> <!-- content -->
 				<div class="clear"></div>
 				<div id="page-bottom">
-					<div><span id="k-svxTextBlock-59717729E2224E72A34F" class="in"><p>Parting Words (copyright, contact information, etc.)</p></span></div>
+					<div id="page-bottom-contents">
+					Parting Words (copyright, contact information, etc.)
+					</div> <!-- page-bottom-contents -->
 					<div class="hidden"> <a href="#title">[Back To Top]</a></div>
 				</div> <!-- page-bottom -->
 			</div> <!-- container -->

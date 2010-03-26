@@ -1,0 +1,30 @@
+This is what is in this folder.  Please understand what all these files are for!
+
+main.css -- the starting point.  It will be very helpful if you start your CSS with this. 
+big template main.css -- This is a larger starting point.  You might want to use this to start with.
+
+Credits.rtf		-- These are files that we will be including with the final design.
+License.rtf
+Sandvox Design License.rtf
+Info.plist
+
+example_design	-- This is an example of a Sandvox design, our "Aqua" design. If you copy the
+				"Testing_Files" folder into this folder, and then open all of the files inside
+				with your browser, you will be able to see how well this design performs under
+				a variety of conditions.  (There are some improvements we need to make!)
+
+Testing_Files -- Many files that you will need to use to make sure your CSS is correct.
+				For testing, this folder should live inside the folder that contains main.css (and your other
+				image/css files).  When you open the files in the Browser, you will see how well your design
+				looks under a variety of options.
+					THE FILES IN THIS FOLDER SHOULD NEVER BE MODIFIED!
+					
+The final delivery for a design should have:
+	* main.css
+	* ... image files, additional CSS files for IE compatibility, etc.
+	* The 4 ".rtf" and ".plist" files listed above
+
+The final delivery should NOT have any ".html" files!
+
+Specification and more information:  
+	http://docs.karelia.com/z/Sandvox_Designers_Guide.html

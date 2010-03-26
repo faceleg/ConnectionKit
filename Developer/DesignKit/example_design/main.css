@@ -1,5 +1,5 @@
 /* 
-   css Copyright (c) 2005-2007 by Karelia Software. All rights reserved.
+   css Copyright (c) 2005-2009 Karelia Software. All Rights Reserved.
    css released under Creative Commons License 
         - http://creativecommons.org/licenses/by-sa/2.5/ 
    All associated graphics belong to their respective owners 
@@ -55,6 +55,10 @@ body.no-sidebar #page {
     background: url(new_header_bkgd.png) no-repeat;
     margin-left: 17px;
     margin-right: 23px;
+}
+
+.has-custom-banner #page-top {
+	overflow: hidden;
 }
 
 #title {
@@ -197,6 +201,8 @@ body.no-sidebar #page-content {
     text-align: left;
 }
 
+
+
 .pagelet {
     width:200px;
     word-wrap:break-word;
@@ -219,6 +225,10 @@ body.no-sidebar #page-content {
     display:block;
 }
 
+
+.pagelet .contactElement.labelsOnSide {
+	margin-right:4px;
+}
 
 #main {
     min-height: 190px;
@@ -291,16 +301,24 @@ li ul {
 	padding-top:8px!important;
 }
 
-#main li, #sidebar li {
+#main ul li, #sidebar ul li {
     padding-left: 25px;
     background: url(bullet.png) no-repeat;
     padding-bottom: 6px;
 	padding-top:2px;
 }
 
+ol {
+	padding-left: 30px;
+}
 
-.article {
+dd {
+	margin-left: 30px;
+}
+
+.article, .no-callouts {
 	margin:0px 10px 10px 10px!important;
+	clear: right;
 }
 
 .article h3 {
@@ -342,6 +360,10 @@ li h3 {
     margin-bottom: 10px;
 }
 
+.article-info {
+	clear:right;
+}
+
 .article-thumbnail {
     float: left;
     margin-right: 10px;
@@ -357,7 +379,7 @@ li h3 {
     border: 1px solid rgb(158, 158, 158);
 }
 
-.callout li, #sidebar li {
+.callout ul li, #sidebar ul li {
     background: url(bullet_blue.png) no-repeat !important;
 }
 
@@ -375,7 +397,7 @@ li h3 {
 	padding: 3px 30px 0px 23px; 
 }
 
-#page-bottom div {
+#page-bottom #page-bottom-contents {
 	overflow:hidden;
 	height:20px;
 }
@@ -465,7 +487,7 @@ body.no-sidebar .photogrid-index {
     height: 33px;
     overflow: hidden;
     position:absolute;
-	top: 140px; /* needs to leave 38px from the bottom of the gridItem */
+	top: 140px; /* needs to leave 38px from the bottom of the gridItem */
 	width: 136px;
 }
 
@@ -656,7 +678,7 @@ body.allow-sidebar #main {
 body.has-custom-banner #title {
 	margin: 0px 0px -14px 0px;
 	background: url(banner_image.jpg) center top no-repeat; 
-	min-height:140px;
+	height:160px;
 }
 
 * html body.has-custom-banner #title {
