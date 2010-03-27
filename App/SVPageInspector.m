@@ -72,6 +72,8 @@
                  toObject:self
               withKeyPath:@"inspectedObjectsController.selection.menuTitle"
                   options:nil];
+    
+    [self updatePickFromPageThumbnail];
 }
 
 - (IBAction)selectTimestampType:(NSPopUpButton *)sender;
