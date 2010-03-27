@@ -20,6 +20,7 @@
 
 
 @interface SVRichText ()
+@property(nonatomic, copy, readwrite) NSSet *attachments;
 @end
 
 

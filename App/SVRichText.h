@@ -21,7 +21,7 @@
 @property(nonatomic, copy) NSString *string;
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments
 
-@property(nonatomic, copy) NSSet *attachments;
+@property(nonatomic, copy, readonly) NSSet *attachments;
 - (NSArray *)orderedAttachments;
 
 - (void)deleteCharactersInRange:(NSRange)aRange;
