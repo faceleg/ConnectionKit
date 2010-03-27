@@ -28,5 +28,6 @@
 
 - (IBAction)chooseCustomThumbnail:(NSButton *)sender;
 - (IBAction)pickThumbnailFromPage:(NSPopUpButton *)sender;
+- (void)updatePickFromPageThumbnail;
 
 @end
