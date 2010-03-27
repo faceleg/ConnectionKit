@@ -9,9 +9,28 @@
 #import "SVPageBody.h"
 
 #import "KTPage.h"
+#import "SVTextAttachment.h"
+
+#import "NSArray+Karelia.h"
+
 
 @implementation SVPageBody 
 
 @dynamic page;
+
+- (void)setString:(NSString *)string attachments:(NSSet *)attachments;
+{
+    [super setString:string attachments:attachments];
+    
+    
+    // Make sure out page's thumbnail source graphic matches up
+    KTPage *page = [self page];
+    SVGraphic *thumbnailGraphic = [page thumbnailSourceGraphic];
+    if (!thumbnailGraphic || ![attachments containsObject:thumbnailGraphic])
+    {
+        thumbnailGraphic = [[[self orderedAttachments] firstObjectKS] graphic];
+        [page setThumbnailSourceGraphic:thumbnailGraphic];
+    }
+}
 
 @end
