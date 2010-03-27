@@ -299,6 +299,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                                      inManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
+    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     [textAttachment setBody:[self representedObject]];
     
     
