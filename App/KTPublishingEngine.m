@@ -465,13 +465,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Pages are finished, move onto the next
         
         // Upload banner image and design
+        /*
         KTMaster *master = [[[self site] rootPage] master];
 		NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
         KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
         if (bannerImage)
         {
             [self uploadMediaIfNeeded:bannerImage];
-        }
+        }*/
         
         [self uploadDesignIfNeeded];
         [self uploadMainCSSIfNeeded];
