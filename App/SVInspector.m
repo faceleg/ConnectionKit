@@ -9,6 +9,7 @@
 #import "SVInspector.h"
 #import "SVInspectorViewController.h"
 #import "SVLinkInspector.h"
+#import "SVMetricsInspector.h"
 #import "SVPageInspector.h"
 #import "SVPlugInInspector.h"
 #import "SVDocumentInspector.h"
@@ -114,7 +115,7 @@
     
     
     // Metrics
-    _metricsInspector = [[KSInspectorViewController alloc] initWithNibName:@"MetricsInspector" bundle:nil];
+    _metricsInspector = [[SVMetricsInspector alloc] initWithNibName:@"MetricsInspector" bundle:nil];
     [_metricsInspector setIdentifier:@"com.karelia.Sandvox.MetricsInspector"];
     [_metricsInspector setTitle:NSLocalizedString(@"Metrics", @"Metrics Inspector")];
     [_metricsInspector setIcon:[NSImage imageNamed:NSImageNameActionTemplate]];

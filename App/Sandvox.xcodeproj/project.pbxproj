@@ -510,6 +510,8 @@
 		27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */; };
 		27F36590115EB7BA003BDA5F /* SVPageBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVPageBody.h */; };
 		27F36591115EB7BA003BDA5F /* SVPageBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVPageBody.m */; };
+		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
+		27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F365EC11602161003BDA5F /* SVMetricsInspector.m */; };
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (); }; };
 		27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27F71A7210F7641D0029AE3A /* LinkInspector.xib */; };
 		27F790D9106BABA6007DF81B /* KSDragging.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F790D8106BABA6007DF81B /* KSDragging.h */; };
@@ -2033,6 +2035,8 @@
 		27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorItem.m; sourceTree = "<group>"; };
 		27F3658E115EB7BA003BDA5F /* SVPageBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageBody.h; sourceTree = "<group>"; };
 		27F3658F115EB7BA003BDA5F /* SVPageBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageBody.m; sourceTree = "<group>"; };
+		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
+		27F365EC11602161003BDA5F /* SVMetricsInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMetricsInspector.m; sourceTree = "<group>"; };
 		27F71A7210F7641D0029AE3A /* LinkInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkInspector.xib; sourceTree = "<group>"; };
 		27F790D8106BABA6007DF81B /* KSDragging.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSDragging.h; sourceTree = "<group>"; };
 		27FAD5511146AEF80040FA44 /* SVTabViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTabViewController.h; sourceTree = "<group>"; };
@@ -3524,6 +3528,8 @@
 			isa = PBXGroup;
 			children = (
 				277E4F7911108847005AF346 /* MetricsInspector.xib */,
+				27F365EB11602161003BDA5F /* SVMetricsInspector.h */,
+				27F365EC11602161003BDA5F /* SVMetricsInspector.m */,
 			);
 			name = "Metrics Inspector";
 			sourceTree = "<group>";
@@ -5466,6 +5472,7 @@
 				27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */,
 				27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */,
 				27F36590115EB7BA003BDA5F /* SVPageBody.h in Headers */,
+				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6865,6 +6872,7 @@
 				27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */,
 				27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */,
 				27F36591115EB7BA003BDA5F /* SVPageBody.m in Sources */,
+				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
