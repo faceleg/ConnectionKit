@@ -2875,35 +2875,14 @@
 		27196F5F1090A9710096B612 /* Inspector */ = {
 			isa = PBXGroup;
 			children = (
-				273DD21E10CC90A8003CCE97 /* WrapInspector.png */,
-				27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */,
-				27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */,
-				2782918E10912D5D008D0A64 /* DocumentInspector.xib */,
-				2782919010912E14008D0A64 /* PageInspector.xib */,
-				27196F611090A9D40096B612 /* SVInspector.h */,
-				27196F621090A9D40096B612 /* SVInspector.m */,
-				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
-				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
-				27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */,
-				272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */,
-				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
-				273DD20710CC74AA003CCE97 /* CollectionInspector.xib */,
-				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
-				273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */,
-				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
-				CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */,
-				CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */,
-				27AF0E2610F40B42000A6B15 /* SVPageInspector.h */,
-				27AF0E2710F40B42000A6B15 /* SVPageInspector.m */,
-				27F71A7210F7641D0029AE3A /* LinkInspector.xib */,
-				270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */,
-				270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */,
-				277E4F7911108847005AF346 /* MetricsInspector.xib */,
-				277E71D11133094E0081389F /* SVWrapInspector.h */,
-				277E71D21133094E0081389F /* SVWrapInspector.m */,
-				276C151C114A6C0300D30CFE /* GraphicInspector.xib */,
-				27A080771151704F005D873A /* SVImageItemCell.h */,
-				27A080781151704F005D873A /* SVImageItemCell.m */,
+				27F365E7116020E4003BDA5F /* Shared */,
+				27F365E6116020D4003BDA5F /* Document Inspector */,
+				27F365E5116020CE003BDA5F /* Page Inspector */,
+				27F365E4116020C3003BDA5F /* Wrap Inspector */,
+				27F365E3116020BC003BDA5F /* Graphic Inspector */,
+				27F365E2116020B1003BDA5F /* Metrics Inspector */,
+				27F365E1116020A9003BDA5F /* Link Inspector */,
+				27F365E01160209B003BDA5F /* Plug-In Inspector */,
 			);
 			name = Inspector;
 			sourceTree = "<group>";
@@ -3519,6 +3498,91 @@
 				27E62FF90EC3060A0044ED36 /* AmazonSupport.framework */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		27F365E01160209B003BDA5F /* Plug-In Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				273D764310EC134F003F5BA8 /* PlugInInspector.xib */,
+				273D764E10EC169F003F5BA8 /* SVPlugInInspector.h */,
+				273D764F10EC169F003F5BA8 /* SVPlugInInspector.m */,
+			);
+			name = "Plug-In Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E1116020A9003BDA5F /* Link Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				27F71A7210F7641D0029AE3A /* LinkInspector.xib */,
+				270E4B1410FA4DF500EF1FA0 /* SVLinkInspector.h */,
+				270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */,
+			);
+			name = "Link Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E2116020B1003BDA5F /* Metrics Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				277E4F7911108847005AF346 /* MetricsInspector.xib */,
+			);
+			name = "Metrics Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E3116020BC003BDA5F /* Graphic Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				276C151C114A6C0300D30CFE /* GraphicInspector.xib */,
+			);
+			name = "Graphic Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E4116020C3003BDA5F /* Wrap Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				277E71D11133094E0081389F /* SVWrapInspector.h */,
+				277E71D21133094E0081389F /* SVWrapInspector.m */,
+				27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */,
+				273DD21E10CC90A8003CCE97 /* WrapInspector.png */,
+			);
+			name = "Wrap Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E5116020CE003BDA5F /* Page Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				2782919010912E14008D0A64 /* PageInspector.xib */,
+				273DD20710CC74AA003CCE97 /* CollectionInspector.xib */,
+				27AF0E2610F40B42000A6B15 /* SVPageInspector.h */,
+				27AF0E2710F40B42000A6B15 /* SVPageInspector.m */,
+			);
+			name = "Page Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E6116020D4003BDA5F /* Document Inspector */ = {
+			isa = PBXGroup;
+			children = (
+				CE9E525E111C933B00BEF1C8 /* SVDocumentInspector.h */,
+				CE9E525F111C933B00BEF1C8 /* SVDocumentInspector.m */,
+				2782918E10912D5D008D0A64 /* DocumentInspector.xib */,
+			);
+			name = "Document Inspector";
+			sourceTree = "<group>";
+		};
+		27F365E7116020E4003BDA5F /* Shared */ = {
+			isa = PBXGroup;
+			children = (
+				27A080771151704F005D873A /* SVImageItemCell.h */,
+				27A080781151704F005D873A /* SVImageItemCell.m */,
+				27196F611090A9D40096B612 /* SVInspector.h */,
+				27196F621090A9D40096B612 /* SVInspector.m */,
+				27ACACB40D588F64004732D0 /* KTPlaceholderBindingTextField.h */,
+				2782914410912B30008D0A64 /* SVInspectorViewController.h */,
+				2782914510912B30008D0A64 /* SVInspectorViewController.m */,
+				27ACACB50D588F64004732D0 /* KTPlaceholderBindingTextField.m */,
+				272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */,
+				272B3B2810B20B240056B4CA /* SVInspectorButtonCell.m */,
+			);
+			name = Shared;
 			sourceTree = "<group>";
 		};
 		27FDEF10111B4C84001F4E60 /* Core Data */ = {
