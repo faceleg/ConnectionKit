@@ -254,10 +254,9 @@
 
 - (void)setBannerWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 {
-    if ([self banner]) [[self managedObjectContext] deleteObject:[self banner]];
-    
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Banner" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
-    [self setBanner:media];
+    
+    [self replaceMedia:media forKeyPath:@"banner"];
 }
 
 @dynamic bannerType;
@@ -298,11 +297,10 @@
 @dynamic faviconMedia;
 
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
-{
-    if ([self faviconMedia]) [[self managedObjectContext] deleteObject:[self faviconMedia]];
-    
+{    
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:URL entityName:@"Favicon" insertIntoManagedObjectContext:[self managedObjectContext] error:NULL];
-    [self setFaviconMedia:media];
+    
+    [self replaceMedia:media forKeyPath:@"faviconMedia"];
 }
 
 #pragma mark Graphical Text

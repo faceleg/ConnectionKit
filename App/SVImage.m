@@ -80,7 +80,8 @@
 - (NSURL *)externalSourceURL { return [NSURL URLWithString:[self externalSourceURLString]]; }
 - (void)setExternalSourceURL:(NSURL *)URL
 {
-    if (URL) [[self managedObjectContext] deleteObject:[self media]];
+    if (URL) [self replaceMedia:nil forKeyPath:@"media"];
+    
     [self setExternalSourceURLString:[URL absoluteString]];
 }
 

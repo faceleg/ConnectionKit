@@ -127,7 +127,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 
 @interface NSObject (SVMediaRecord)
-// Calls -setValue:forKeyPath: with the media, but first deletes any existing media
+// Calls -setValue:forKeyPath: with the media, but first deletes any existing media.
+// IMPORTANT: The existing media's delete rule MUST be "No Action" otherwise Core Data tries to apply the rule during undo/redo and screws up, setting the property to nil.
 - (void)replaceMedia:(SVMediaRecord *)media forKeyPath:(NSString *)keyPath;
 @end
 
