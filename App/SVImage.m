@@ -77,7 +77,11 @@
 
 @dynamic externalSourceURLString;
 
-- (NSURL *)externalSourceURL { return [NSURL URLWithString:[self externalSourceURLString]]; }
+- (NSURL *)externalSourceURL
+{
+    NSString *string = [self externalSourceURLString];
+    return (string) ? [NSURL URLWithString:string] : nil;
+}
 - (void)setExternalSourceURL:(NSURL *)URL
 {
     if (URL) [self replaceMedia:nil forKeyPath:@"media"];
@@ -85,7 +89,7 @@
     [self setExternalSourceURLString:[URL absoluteString]];
 }
 
-- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
+- (NSURL *)sourceURL  // for bindings
 {
     NSURL *result = nil;
     
@@ -98,9 +102,18 @@
     }
     else
     {
-        //result = [self sourceURL];
+        result = [self externalSourceURL];
     }
     
+    return result;
+}
+
+- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
+{    
+    SVMediaRecord *media = [self media];
+    if (media) [[SVHTMLContext currentContext] addMedia:media];
+    
+    NSURL *result = [self sourceURL];
     if (!result)
     {
         result = [self placeholderImageURL];
