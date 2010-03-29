@@ -628,7 +628,6 @@
 		3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C89AD7108E0BE1400CA0522 /* KTDocumentController.m */; };
 		3C96FCAE07E7FF5100B418ED /* KTStringRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */; };
 		3C96FD6707E7FFFF00B418ED /* Quartz.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C96FD6607E7FFFF00B418ED /* Quartz.framework */; };
-		3C9BC1DE103DF7E200D2CF47 /* InlineImageElement.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1DC103DF7E200D2CF47 /* InlineImageElement.xib */; };
 		3C9BC1E2103DF7FD00D2CF47 /* MissingMedia.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */; };
 		3C9BC1E6103DF81700D2CF47 /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1E4103DF81700D2CF47 /* MainMenu.xib */; };
 		3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */; };
@@ -2215,7 +2214,6 @@
 		3C96FCAC07E7FF5100B418ED /* KTStringRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStringRenderer.m; sourceTree = "<group>"; };
 		3C96FD6607E7FFFF00B418ED /* Quartz.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Quartz.framework; path = /System/Library/Frameworks/Quartz.framework; sourceTree = "<absolute>"; };
 		3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ContactElement.xcodeproj; path = ../Plugins/Elements/ContactElement/ContactElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C9BC1DD103DF7E200D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/InlineImageElement.xib; sourceTree = "<group>"; };
 		3C9BC1E1103DF7FD00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MissingMedia.xib; sourceTree = "<group>"; };
 		3C9BC1E5103DF81700D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/MainMenu.xib; sourceTree = "<group>"; };
 		3C9BC1ED103DF8BA00D2CF47 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/CodeInjection.xib; sourceTree = "<group>"; };
@@ -4051,7 +4049,6 @@
 		3C26C4400BC597D200FF874D /* Localized */ = {
 			isa = PBXGroup;
 			children = (
-				3C9BC1DC103DF7E200D2CF47 /* InlineImageElement.xib */,
 				3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */,
 				3C9BC1EC103DF8BA00D2CF47 /* CodeInjection.xib */,
 				3C9BC1F0103DF8D300D2CF47 /* HostSetup.xib */,
@@ -6110,7 +6107,6 @@
 				CE9B4B3F0F5E0C650052134C /* MiniProgressGradient.png in Resources */,
 				27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */,
 				3C30161B103DE0580036A9D0 /* KTDocument.xib in Resources */,
-				3C9BC1DE103DF7E200D2CF47 /* InlineImageElement.xib in Resources */,
 				3C9BC1E2103DF7FD00D2CF47 /* MissingMedia.xib in Resources */,
 				3C9BC1E6103DF81700D2CF47 /* MainMenu.xib in Resources */,
 				3C9BC1EE103DF8BA00D2CF47 /* CodeInjection.xib in Resources */,
@@ -7254,14 +7250,6 @@
 				3C30161A103DE0580036A9D0 /* en */,
 			);
 			name = KTDocument.xib;
-			sourceTree = "<group>";
-		};
-		3C9BC1DC103DF7E200D2CF47 /* InlineImageElement.xib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				3C9BC1DD103DF7E200D2CF47 /* en */,
-			);
-			name = InlineImageElement.xib;
 			sourceTree = "<group>";
 		};
 		3C9BC1E0103DF7FD00D2CF47 /* MissingMedia.xib */ = {
