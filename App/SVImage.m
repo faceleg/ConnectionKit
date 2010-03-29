@@ -108,6 +108,11 @@
     return result;
 }
 
+- (void)setSourceURL:(NSURL *)URL;
+{
+    [self setExternalSourceURL:URL];
+}
+
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
 {    
     SVMediaRecord *media = [self media];
