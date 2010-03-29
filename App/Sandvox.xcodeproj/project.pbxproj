@@ -753,8 +753,6 @@
 		CE01A7530EAFD63600BDF264 /* KSOverrideConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A64E0EAFD63600BDF264 /* KSOverrideConstants.h */; };
 		CE01A7540EAFD63600BDF264 /* KSURLInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7550EAFD63600BDF264 /* KSURLInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */; };
-		CE01A7560EAFD63600BDF264 /* KSPathInfoFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6510EAFD63600BDF264 /* KSPathInfoFieldCell.h */; };
-		CE01A7570EAFD63600BDF264 /* KSPathInfoFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6520EAFD63600BDF264 /* KSPathInfoFieldCell.m */; };
 		CE01A7580EAFD63600BDF264 /* KSPDFViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */; };
 		CE01A7590EAFD63600BDF264 /* KSPDFViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6540EAFD63600BDF264 /* KSPDFViewController.m */; };
 		CE01A75A0EAFD63600BDF264 /* KSPlaceholderTableView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6550EAFD63600BDF264 /* KSPlaceholderTableView.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2349,8 +2347,6 @@
 		CE01A64E0EAFD63600BDF264 /* KSOverrideConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSOverrideConstants.h; sourceTree = "<group>"; };
 		CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLInfoField.h; sourceTree = "<group>"; };
 		CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLInfoField.m; sourceTree = "<group>"; };
-		CE01A6510EAFD63600BDF264 /* KSPathInfoFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPathInfoFieldCell.h; sourceTree = "<group>"; };
-		CE01A6520EAFD63600BDF264 /* KSPathInfoFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPathInfoFieldCell.m; sourceTree = "<group>"; };
 		CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPDFViewController.h; sourceTree = "<group>"; };
 		CE01A6540EAFD63600BDF264 /* KSPDFViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPDFViewController.m; sourceTree = "<group>"; };
 		CE01A6550EAFD63600BDF264 /* KSPlaceholderTableView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlaceholderTableView.h; sourceTree = "<group>"; };
@@ -4655,8 +4651,6 @@
 				CE01A64E0EAFD63600BDF264 /* KSOverrideConstants.h */,
 				CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */,
 				CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */,
-				CE01A6510EAFD63600BDF264 /* KSPathInfoFieldCell.h */,
-				CE01A6520EAFD63600BDF264 /* KSPathInfoFieldCell.m */,
 				CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */,
 				CE01A6540EAFD63600BDF264 /* KSPDFViewController.m */,
 				CE01A6550EAFD63600BDF264 /* KSPlaceholderTableView.h */,
@@ -5249,7 +5243,6 @@
 				CE01A7510EAFD63600BDF264 /* KSNoCascadeWindow.h in Headers */,
 				CE01A7530EAFD63600BDF264 /* KSOverrideConstants.h in Headers */,
 				CE01A7540EAFD63600BDF264 /* KSURLInfoField.h in Headers */,
-				CE01A7560EAFD63600BDF264 /* KSPathInfoFieldCell.h in Headers */,
 				CE01A7580EAFD63600BDF264 /* KSPDFViewController.h in Headers */,
 				CE01A75A0EAFD63600BDF264 /* KSPlaceholderTableView.h in Headers */,
 				CE01A75C0EAFD63600BDF264 /* KSPlaceholderTextView.h in Headers */,
@@ -6645,7 +6638,6 @@
 				CE01A7500EAFD63600BDF264 /* KSNoCascadePanel.m in Sources */,
 				CE01A7520EAFD63600BDF264 /* KSNoCascadeWindow.m in Sources */,
 				CE01A7550EAFD63600BDF264 /* KSURLInfoField.m in Sources */,
-				CE01A7570EAFD63600BDF264 /* KSPathInfoFieldCell.m in Sources */,
 				CE01A7590EAFD63600BDF264 /* KSPDFViewController.m in Sources */,
 				CE01A75B0EAFD63600BDF264 /* KSPlaceholderTableView.m in Sources */,
 				CE01A75D0EAFD63600BDF264 /* KSPlaceholderTextView.m in Sources */,
