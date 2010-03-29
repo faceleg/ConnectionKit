@@ -60,6 +60,21 @@
 #pragma mark Media
 
 @dynamic media;
+
+- (void)setMediaWithURL:(NSURL *)URL;
+{
+    SVMediaRecord *media = nil;
+    if (URL)
+    {
+        media = [SVMediaRecord mediaWithURL:URL
+                                 entityName:@"ImageMedia"
+             insertIntoManagedObjectContext:[self managedObjectContext]
+                                      error:NULL];
+    }
+    
+    [self replaceMedia:media forKeyPath:@"media"];
+}
+
 @dynamic externalSourceURLString;
 
 - (NSURL *)externalSourceURL { return [NSURL URLWithString:[self externalSourceURLString]]; }

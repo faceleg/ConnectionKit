@@ -22,7 +22,8 @@
     {
         NSURL *URL = [panel URL];
         
-        NSBeep();
+        [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
+                                                 withObject:URL];
     }
 }
 

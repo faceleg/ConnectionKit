@@ -21,6 +21,8 @@
 #pragma mark Media
 
 @property(nonatomic, retain) SVMediaRecord *media;
+- (void)setMediaWithURL:(NSURL *)URL;
+
 @property(nonatomic, copy) NSURL *externalSourceURL;
 
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
