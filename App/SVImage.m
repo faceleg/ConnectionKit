@@ -232,6 +232,7 @@
                             width:[[self width] description]
                            height:[[self height] description]];
     
+    [context addDependencyOnObject:self keyPath:@"media"];
     [context addDependencyOnObject:self keyPath:@"className"];
     
     if ([self isPagelet] && [self link]) [context writeEndTag];
