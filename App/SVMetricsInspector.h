@@ -9,9 +9,12 @@
 #import "KSInspectorViewController.h"
 
 
+@class KSURLInfoField;
+
+
 @interface SVMetricsInspector : KSInspectorViewController
 {
-
+    IBOutlet KSURLInfoField *oFileInfoField;
 }
 
 - (IBAction)chooseFile:(NSButton *)sender;

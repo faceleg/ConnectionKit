@@ -241,7 +241,7 @@
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="854195217">
 							<int key="NSCellFlags">-2072904127</int>
-							<int key="NSCellFlags2">272761856</int>
+							<int key="NSCellFlags2">272765952</int>
 							<string key="NSContents">Foo-bar.png</string>
 							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="323255974"/>
@@ -693,6 +693,7 @@
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSArray" key="dict.sortedKeys">
 									<bool key="EncodedWithXMLCoder">YES</bool>
+									<string>NSAllowsEditingMultipleValuesSelection</string>
 									<string>NSConditionallySetsEnabled</string>
 									<string>NSNoSelectionPlaceholder</string>
 									<string>NSNotApplicablePlaceholder</string>
@@ -700,6 +701,7 @@
 								</object>
 								<object class="NSMutableArray" key="dict.values">
 									<bool key="EncodedWithXMLCoder">YES</bool>
+									<boolean value="NO"/>
 									<boolean value="YES"/>
 									<string type="base64-UTF8">IA</string>
 									<string type="base64-UTF8">IA</string>
@@ -709,7 +711,15 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">94</int>
+					<int key="connectionID">95</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oFileInfoField</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="323255974"/>
+					</object>
+					<int key="connectionID">99</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1059,7 +1069,7 @@
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{1105, 600}, {230, 244}}</string>
+					<string>{{1096, 601}, {230, 244}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
@@ -1122,7 +1132,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">94</int>
+			<int key="maxID">99</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1138,7 +1148,7 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">KSURLInfoField</string>
 					<string key="superclassName">NSTextField</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="36758705">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="272693556">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSURLInfoField.h</string>
 					</object>
@@ -1174,7 +1184,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="36758705"/>
+					<reference key="sourceIdentifier" ref="272693556"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -1319,6 +1329,10 @@
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">chooseFile:</string>
 						<string key="NS.object.0">NSButton</string>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">oFileInfoField</string>
+						<string key="NS.object.0">KSURLInfoField</string>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
