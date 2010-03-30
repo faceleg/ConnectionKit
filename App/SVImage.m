@@ -57,6 +57,21 @@
     }
 }
 
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+                     pasteboard:(NSPasteboard *)pasteboard
+                       userInfo:(NSDictionary *)info;
+{
+    [super awakeFromInsertIntoPage:page pasteboard:pasteboard userInfo:info];
+    
+    // Start off at a decent size.
+    NSNumber *maxWidth = [NSNumber numberWithUnsignedInteger:490];
+    
+    if ([[self width] isGreaterThan:maxWidth])
+    {
+        [self setWidth:maxWidth];
+    }
+}
+
 #pragma mark Media
 
 @dynamic media;
