@@ -53,6 +53,15 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
 }
 
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+                     pasteboard:(NSPasteboard *)pasteboard
+                       userInfo:(NSDictionary *)info;
+{
+    [super awakeFromInsertIntoPage:page pasteboard:pasteboard userInfo:info];
+    
+    [[self plugIn] awakeFromInsertIntoPage:page pasteboard:pasteboard userInfo:info];
+}
+
 /*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.
  */
 - (void)willTurnIntoFault

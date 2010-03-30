@@ -37,6 +37,13 @@
     [self setTitle:[[self class] placeholderTitleText]];
 }
 
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+                     pasteboard:(NSPasteboard *)pasteboard
+                       userInfo:(NSDictionary *)info;
+{
+    
+}
+
 #pragma mark Pagelet
 
 - (BOOL)isPagelet;

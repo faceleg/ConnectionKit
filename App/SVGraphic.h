@@ -54,9 +54,16 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 @class SVTitleBox;
 @class SVTextAttachment, SVTemplate;
+@protocol SVPage;
 
 
 @interface SVGraphic : SVContentObject <SVGraphic>
+
+#pragma mark Initialization
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+                     pasteboard:(NSPasteboard *)pasteboard
+                       userInfo:(NSDictionary *)info;
+
 
 #pragma mark Pagelet
 - (BOOL)isPagelet;  // whether to generate <div class="pagelet"> etc. HTML

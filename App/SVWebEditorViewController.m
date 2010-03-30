@@ -623,25 +623,25 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)insertPageletInSidebar:(id)sender;
 {
     // Create element
+    KTPage *page = [self page];
+    
+    SVGraphic *pagelet;
     if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
     {
         NSString *identifier = [[[sender representedObject] bundle] bundleIdentifier];
-        KTPage *page = [self page];
         
-        SVPlugInGraphic *graphic =
-        [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
-                                       inManagedObjectContext:[page managedObjectContext]];
-        
-        [self _insertPageletInSidebar:graphic];
-        
-        [[graphic plugIn] awakeFromInsertIntoPage:page pasteboard:nil userInfo:nil];
+        pagelet = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
+                                                 inManagedObjectContext:[page managedObjectContext]];
     }
     else
     {
-        SVGraphic *pagelet = [[_selectableObjectsController newPagelet] autorelease];
-        [self _insertPageletInSidebar:pagelet];
+        pagelet = [[_selectableObjectsController newPagelet] autorelease];
     }
     
+    
+    // Insert it
+    [pagelet awakeFromInsertIntoPage:page pasteboard:nil userInfo:nil];
+    [self _insertPageletInSidebar:pagelet];
 }
 
 - (IBAction)insertElement:(id)sender;
@@ -677,8 +677,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (media)
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
-        [image setWidth:[NSNumber numberWithUnsignedInteger:200]];
         [self _insertPageletInSidebar:image];
+        [image awakeFromInsertIntoPage:[self page] pasteboard:nil userInfo:nil];
     }
     else
     {
