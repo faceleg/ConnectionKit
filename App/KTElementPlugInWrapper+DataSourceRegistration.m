@@ -73,11 +73,10 @@
     return result;
 }
 
-+ (Class <KTDataSource>)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo
++ (Class <KTDataSource>)highestPriorityDataSourceForPasteboard:(NSPasteboard *)pboard
                                                    index:(unsigned)anIndex
                                        isCreatingPagelet:(BOOL)isCreatingPagelet
 {
-    NSPasteboard *pboard = [draggingInfo draggingPasteboard];
     NSArray *pboardTypes = [pboard types];
     NSSet *setOfTypes = [NSSet setWithArray:pboardTypes];
 	
@@ -96,7 +95,7 @@
         if (acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]])
         {
             // yep, so get the rating and see if it's better than our current bestRating
-            KTSourcePriority rating = [anElementClass priorityForItemOnPasteboard:[draggingInfo draggingPasteboard] atIndex:anIndex creatingPagelet:isCreatingPagelet];
+            KTSourcePriority rating = [anElementClass priorityForItemOnPasteboard:pboard atIndex:anIndex creatingPagelet:isCreatingPagelet];
             if (rating >= bestRating)
             {
                 secondBestRating = bestRating;

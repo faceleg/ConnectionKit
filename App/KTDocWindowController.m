@@ -813,7 +813,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         [progressPanel setMessageText:localizedStatus];
         [progressPanel setDoubleValue:i];
         
-        Class <KTDataSource> bestSource = [KTElementPlugInWrapper highestPriorityDataSourceForDrag:info index:i isCreatingPagelet:NO];
+        Class <KTDataSource> bestSource = [KTElementPlugInWrapper highestPriorityDataSourceForPasteboard:[info draggingPasteboard] index:i isCreatingPagelet:NO];
         if ( nil != bestSource )
         {
             NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];

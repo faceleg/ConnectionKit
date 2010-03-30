@@ -18,7 +18,7 @@
 
 
 + (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
-+ (Class <KTDataSource>)highestPriorityDataSourceForDrag:(id <NSDraggingInfo>)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
++ (Class <KTDataSource>)highestPriorityDataSourceForPasteboard:(NSPasteboard *)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
 
 + (void)doneProcessingDrag;
 @end
