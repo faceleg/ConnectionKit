@@ -63,8 +63,10 @@
 {
     [super awakeFromInsertIntoPage:page pasteboard:pasteboard userInfo:info];
     
+    
     // Start off at a decent size.
     NSNumber *maxWidth = [NSNumber numberWithUnsignedInteger:490];
+    if ([self isPagelet]) maxWidth = [NSNumber numberWithUnsignedInteger:200];
     
     if ([[self width] isGreaterThan:maxWidth])
     {
