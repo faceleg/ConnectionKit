@@ -52,7 +52,7 @@
 // Foundation/AppKit subclasses
 #import "KSEmailAddressComboBox.h"
 #import "KSLabel.h"
-#import "KSPathInfoField.h"
+#import "KSURLInfoField.h"
 #import "KSPlaceholderTableView.h"
 #import "KSTrimFirstLineFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
