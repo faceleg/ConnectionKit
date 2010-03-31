@@ -322,13 +322,41 @@
 	self.color2 = [[self class] defaultPrimaryColor];
 }
 
-
-#pragma mark -
-#pragma mark Data Source
+#pragma mark Pasteboard
 
 + (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
-	return [KSWebLocation webLocationPasteboardTypes];
+	return [KSWebLocation readableTypesForPasteboard:nil];
+}
+
+- (id)initWithPasteboardPropertyList:(id)propertyList
+                              ofType:(NSString *)type;
+{
+    // Only accept YouTube video URLs
+    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
+                                                                             ofType:type];
+    
+    if (location)
+    {
+        NSString *videoID = [[location URL] youTubeVideoID];
+        if (videoID)
+        {
+            self = [self init];
+            [self setVideoID:videoID];
+        }
+        else
+        {
+            [self release]; self = nil;
+        }
+        
+        [location release];
+    }
+    else
+    {
+        [self release]; self = nil;
+    }
+	
+    return self;
 }
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender
