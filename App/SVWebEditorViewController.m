@@ -11,6 +11,7 @@
 #import "SVApplicationController.h"
 #import "SVAttributedHTML.h"
 #import "SVPlugInGraphic.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
@@ -961,9 +962,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     if (!result)
     {
         // Fallback to inserting a new pagelet from the pasteboard
-        NSArray *pagelets = [SVAttributedHTML
-                             pageletsFromPasteboard:[dragInfo draggingPasteboard]
-                             insertIntoManagedObjectContext:[[self page] managedObjectContext]];
+        NSManagedObjectContext *moc = [[self page] managedObjectContext];
+        NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
+        
+        NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+                                      insertIntoManagedObjectContext:moc];
+        
+
+        // Fallback to generic pasteboard support
+        if ([pagelets count] < 1)
+        {
+            pagelets = [KTElementPlugInWrapper insertNewGraphicsWithPasteboard:pasteboard
+                                                        inManagedObjectContext:moc];
+        }
         
         for (SVGraphic *aPagelet in pagelets)
         {
