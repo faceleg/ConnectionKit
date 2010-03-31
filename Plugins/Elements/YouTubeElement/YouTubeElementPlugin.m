@@ -329,6 +329,12 @@
 	return [KSWebLocation readableTypesForPasteboard:nil];
 }
 
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+                                         pasteboard:(NSPasteboard *)pasteboard;
+{
+    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
+}
+
 - (id)initWithPasteboardPropertyList:(id)propertyList
                               ofType:(NSString *)type;
 {
@@ -341,7 +347,7 @@
         NSString *videoID = [[location URL] youTubeVideoID];
         if (videoID)
         {
-            self = [self init];
+            self = [self initWithArguments:nil];
             [self setVideoID:videoID];
         }
         else
