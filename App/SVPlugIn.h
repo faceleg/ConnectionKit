@@ -52,6 +52,13 @@
 - (id <IMBImageItem>)thumbnail;
 
 
+#pragma mark Pasteboard
+// See NSPasteboardReading for full details. Sandvox doesn't support +readingOptionsForType:pasteboard: yet
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+@optional
+- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
+
+
 @end
 
 

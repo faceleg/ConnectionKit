@@ -78,6 +78,11 @@
 @property(nonatomic, retain, readonly) id <SVPageletPlugInContainer> elementPlugInContainer;
 
 
+#pragma mark Pasteboard
+// Default implementation returns result of +supportedPasteboardTypesForCreatingPagelet: (if receiver confroms to KTDataSource) for backward compatibility.
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+
+
 #pragma mark Legacy
 
 // Called by -awakeFromInsert:... and -awakeFromFetch: for backward compatibility

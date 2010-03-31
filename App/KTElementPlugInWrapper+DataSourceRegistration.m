@@ -49,7 +49,7 @@
     Class anElementClass;
 	while (anElementClass = [pluginsEnumerator nextObject])
     {
-		NSArray *acceptedTypes = [anElementClass supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
+		NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:nil];
         [result addObjectsFromArray:acceptedTypes];
     }
 	
@@ -90,7 +90,7 @@
 	while (anElementClass = [pluginsEnumerator nextObject])
     {
 		// for each dataSource, see if it will handle what's on the pboard
-        NSArray *acceptedTypes = [anElementClass supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
+        NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:pboard];
         
         if (acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]])
         {

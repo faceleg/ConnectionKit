@@ -9,6 +9,7 @@
 #import "SVPageletPlugIn.h"
 #import "SVPageProtocol.h"
 
+#import "KTDataSourceProtocol.h"
 #import "KTHTMLPlugInWrapper.h"
 #import "KTPage.h"
 #import "SVRichText.h"
@@ -196,6 +197,19 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 #pragma mark Other
 
 @synthesize elementPlugInContainer = _container;
+
+#pragma mark Pasteboard
+
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+{
+    NSArray *result = nil;
+    if ([self conformsToProtocol:@protocol(KTDataSource)])
+    {
+        result = [(Class <KTDataSource>)self supportedPasteboardTypesForCreatingPagelet:YES];
+    }
+    
+    return result;
+}
 
 #pragma mark Legacy
 
