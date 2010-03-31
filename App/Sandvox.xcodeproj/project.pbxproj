@@ -793,7 +793,6 @@
 		CE01A7870EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */; };
 		CE01A7880EAFD63600BDF264 /* KSViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6830EAFD63600BDF264 /* KSViewController.h */; };
 		CE01A7890EAFD63600BDF264 /* KSViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6840EAFD63600BDF264 /* KSViewController.m */; };
-		CE01A78A0EAFD63600BDF264 /* KSWebLocation+WeblocFiles.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6850EAFD63600BDF264 /* KSWebLocation+WeblocFiles.m */; };
 		CE01A78B0EAFD63600BDF264 /* KSWebLocation.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6860EAFD63600BDF264 /* KSWebLocation.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A78C0EAFD63600BDF264 /* KSWebLocation.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6870EAFD63600BDF264 /* KSWebLocation.m */; };
 		CE01A78D0EAFD63600BDF264 /* NSAppleScript+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6880EAFD63600BDF264 /* NSAppleScript+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -2389,7 +2388,6 @@
 		CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSVerticallyAlignedTextCell.m; sourceTree = "<group>"; };
 		CE01A6830EAFD63600BDF264 /* KSViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSViewController.h; sourceTree = "<group>"; };
 		CE01A6840EAFD63600BDF264 /* KSViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSViewController.m; sourceTree = "<group>"; };
-		CE01A6850EAFD63600BDF264 /* KSWebLocation+WeblocFiles.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KSWebLocation+WeblocFiles.m"; sourceTree = "<group>"; };
 		CE01A6860EAFD63600BDF264 /* KSWebLocation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWebLocation.h; sourceTree = "<group>"; };
 		CE01A6870EAFD63600BDF264 /* KSWebLocation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWebLocation.m; sourceTree = "<group>"; };
 		CE01A6880EAFD63600BDF264 /* NSAppleScript+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSAppleScript+Karelia.h"; sourceTree = "<group>"; };
@@ -4689,7 +4687,6 @@
 				CE01A6820EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m */,
 				CE01A6830EAFD63600BDF264 /* KSViewController.h */,
 				CE01A6840EAFD63600BDF264 /* KSViewController.m */,
-				CE01A6850EAFD63600BDF264 /* KSWebLocation+WeblocFiles.m */,
 				CE01A6860EAFD63600BDF264 /* KSWebLocation.h */,
 				CE01A6870EAFD63600BDF264 /* KSWebLocation.m */,
 				CE01A6880EAFD63600BDF264 /* NSAppleScript+Karelia.h */,
@@ -6658,7 +6655,6 @@
 				CE01A7810EAFD63600BDF264 /* KSThreadProxy.m in Sources */,
 				CE01A7870EAFD63600BDF264 /* KSVerticallyAlignedTextCell.m in Sources */,
 				CE01A7890EAFD63600BDF264 /* KSViewController.m in Sources */,
-				CE01A78A0EAFD63600BDF264 /* KSWebLocation+WeblocFiles.m in Sources */,
 				CE01A78C0EAFD63600BDF264 /* KSWebLocation.m in Sources */,
 				CE01A78E0EAFD63600BDF264 /* NSAppleScript+Karelia.m in Sources */,
 				CE01A7900EAFD63600BDF264 /* NSApplication+Karelia.m in Sources */,
