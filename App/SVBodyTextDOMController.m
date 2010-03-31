@@ -351,7 +351,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         SVImage *image = [SVImage insertNewImageWithMedia:media];
         [self insertGraphic:image];
         
-        [image awakeFromInsertIntoPage:[[self webEditorViewController] page]
+        [image awakeFromInsertIntoPage:[[self HTMLContext] currentPage]
                             pasteboard:nil
                               userInfo:nil];
     }
