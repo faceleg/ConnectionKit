@@ -11,10 +11,10 @@
 
 @class KTDesign;
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
+// ImageKit only declares these as informal protocols
 @protocol IKImageBrowserDataSource <NSObject> @end
 @protocol IKImageBrowserDelegate <NSObject> @end
-#endif
+
 
 @interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
 {    
