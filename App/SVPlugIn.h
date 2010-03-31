@@ -12,7 +12,9 @@
 
 @class SVHTMLContext;
 @protocol SVPage;
-@protocol SVPageletPlugIn
+
+
+@protocol SVPageletPlugIn <NSObject>
 
 #pragma mark Managing Life Cycle
 
