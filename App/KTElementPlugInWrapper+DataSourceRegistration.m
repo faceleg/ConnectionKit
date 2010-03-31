@@ -10,6 +10,7 @@
 
 #import "KT.h"
 #import "KTImageView.h"
+#import "SVPlugInGraphic.h"
 
 #import "NSString+Karelia.h"
 
@@ -18,7 +19,7 @@
 
 @implementation KTElementPlugInWrapper (DataSourceRegistration)
 
-/*  Returns an set of all the available KTElement classes that conform to the KTDataSource protocol
+/*  Returns a set of all the available KTElement classes that conform to the KTDataSource protocol
  */
 + (NSSet *)dataSources
 {
@@ -39,6 +40,44 @@
 	
     return result;
 }
+
++ (NSArray *)insertNewGraphicsWithPasteboard:(NSPasteboard *)pasteboard
+                      inManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSArray *result = [NSArray arrayWithObject:[self insertNewGraphicWithPasteboard:pasteboard
+                                                             inManagedObjectContext:context]];
+    return result;
+}
+
++ (SVGraphic *)insertNewGraphicWithPasteboard:(NSPasteboard *)pasteboard
+                       inManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSArray *datasources = [[self dataSources] allObjects];
+    for (Class aSource in datasources)
+    {
+        NSArray *types = [aSource readableTypesForPasteboard:pasteboard];
+        NSString *type = [pasteboard availableTypeFromArray:types];
+        if (type)
+        {
+            /*
+            id plist = [pasteboard dataForType:type];
+            id <SVPageletPlugIn> plugIn = [[aSource alloc] 
+                                           initWithPasteboardPropertyList:plist
+                                           ofType:type];
+            */
+            NSString *identifier = [[NSBundle bundleForClass:aSource] bundleIdentifier];
+            SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
+                                                               inManagedObjectContext:context];
+            //[result setPlugIn:plugIn];
+            
+            return result;
+        }
+    }
+    
+    return nil;
+}
+
+#pragma mark -
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isCreatingPagelet

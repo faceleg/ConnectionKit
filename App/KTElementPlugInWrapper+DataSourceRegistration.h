@@ -10,14 +10,27 @@
 #import "KTDataSourceProtocol.h"
 
 
+@class SVGraphic;
+#import "SVPageletPlugIn.h"
+
 
 @interface KTElementPlugInWrapper (DataSourceRegistration)
+
++ (NSArray *)insertNewGraphicsWithPasteboard:(NSPasteboard *)pasteboard
+                      inManagedObjectContext:(NSManagedObjectContext *)context;
+
+// Looks at just first item on pboard
++ (SVGraphic *)insertNewGraphicWithPasteboard:(NSPasteboard *)pasteboard
+                       inManagedObjectContext:(NSManagedObjectContext *)context;
+
+
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
 
 
 + (NSUInteger)numberOfItemsInPasteboard:(NSPasteboard *)draggingInfo;
+
 + (Class <KTDataSource>)highestPriorityDataSourceForPasteboard:(NSPasteboard *)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
 
 + (void)doneProcessingDrag;

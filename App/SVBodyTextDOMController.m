@@ -131,12 +131,20 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 {
     // When moving an inline element, want to actually do that move
     
+    BOOL result = YES;
+    
+    
     SVWebEditorView *webEditor = [self webEditor];
     NSPasteboard *pasteboard = [webEditor insertionPasteboard];
     if (pasteboard)
     {
-            
-        // De-archive custom HTML
+        // Prepare to write HTML
+        NSMutableString *editingHTML = [[NSMutableString alloc] init];
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:editingHTML];
+        [context copyPropertiesFromContext:[self HTMLContext]];
+        
+        
+        // Try to de-archive custom HTML
         SVAttributedHTML *attributedHTML = [SVAttributedHTML
                                             attributedHTMLFromPasteboard:pasteboard
                                             managedObjectContext:[[self representedObject] managedObjectContext]];
@@ -144,49 +152,61 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            NSMutableString *editingHTML = [[NSMutableString alloc] init];
-            SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:editingHTML];
-            [context copyPropertiesFromContext:[self HTMLContext]];
-            
             [attributedHTML writeHTMLToContext:context];
-            
-            
-            // Insert HTML into the DOM
-            DOMHTMLDocument *domDoc = (DOMHTMLDocument *)[node ownerDocument];
-            DOMDocumentFragment *fragment = [domDoc
-                                             createDocumentFragmentWithMarkupString:editingHTML
-                                             baseURL:nil];
-            [range insertNode:fragment];
-            
-            
-            // Insert DOM controllers. Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
-            for (SVWebEditorItem *anItem in [context webEditorItems])
-            {
-                if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
-            }
-            
-            
-            // Finish up. Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
-            [context release];
-            [editingHTML release];
-            
-            [[node mutableChildNodesArray] removeAllObjects];
-            [node appendChild:[[node ownerDocument] createTextNode:@""]];
+            result = NO;
         }
         
+        // Fallback to interpreting standard pboard data
         else
         {
-            NSUInteger count = [KTElementPlugInWrapper numberOfItemsInPasteboard:pasteboard];
-            for (int i = 0; i < count; i++)
+            NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
+            
+            NSArray *graphics = [KTElementPlugInWrapper insertNewGraphicsWithPasteboard:pasteboard
+                                                                 inManagedObjectContext:moc];
+            
+            if (graphics)
             {
-                Class <KTDataSource> dataSource = [KTElementPlugInWrapper highestPriorityDataSourceForPasteboard:pasteboard index:i isCreatingPagelet:YES];
+                [context push];
+                [SVContentObject writeContentObjects:graphics];
+                [context pop];
+                
+                result = NO;
             }
         }
+        
+        
+        
+        
+        // Insert HTML into the DOM
+        DOMHTMLDocument *domDoc = (DOMHTMLDocument *)[node ownerDocument];
+        DOMDocumentFragment *fragment = [domDoc
+                                         createDocumentFragmentWithMarkupString:editingHTML
+                                         baseURL:nil];
+        [range insertNode:fragment];
+        
+        
+        // Insert DOM controllers. Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
+        for (SVWebEditorItem *anItem in [context webEditorItems])
+        {
+            if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
+        }
+        
+        
+        [context release];
+        [editingHTML release];
     }
     
     
+    // Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+    if (!result)
+    {
+        [[node mutableChildNodesArray] removeAllObjects];
+        [node appendChild:[[node ownerDocument] createTextNode:@""]];
+        result = YES;
+    }
     
-    return [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+    result = [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+    return result;
 }
 
 #pragma mark Responding to Changes
