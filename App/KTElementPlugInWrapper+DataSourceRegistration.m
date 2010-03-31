@@ -44,8 +44,10 @@
 + (NSArray *)insertNewGraphicsWithPasteboard:(NSPasteboard *)pasteboard
                       inManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    NSArray *result = [NSArray arrayWithObject:[self insertNewGraphicWithPasteboard:pasteboard
-                                                             inManagedObjectContext:context]];
+    SVGraphic *graphic = [self insertNewGraphicWithPasteboard:pasteboard
+                                       inManagedObjectContext:context];
+    
+    NSArray *result = (graphic) ? [NSArray arrayWithObject:graphic] : nil;
     return result;
 }
 
@@ -59,18 +61,28 @@
         NSString *type = [pasteboard availableTypeFromArray:types];
         if (type)
         {
-            /*
             id plist = [pasteboard dataForType:type];
-            id <SVPageletPlugIn> plugIn = [[aSource alloc] 
-                                           initWithPasteboardPropertyList:plist
-                                           ofType:type];
-            */
-            NSString *identifier = [[NSBundle bundleForClass:aSource] bundleIdentifier];
-            SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
-                                                               inManagedObjectContext:context];
-            //[result setPlugIn:plugIn];
-            
-            return result;
+            @try    // talking to a plug-in so might fail
+            {
+                id <SVPageletPlugIn> plugIn = [[aSource alloc] 
+                                               initWithPasteboardPropertyList:plist
+                                               ofType:type];
+                
+                if (plugIn)
+                {
+                    NSString *identifier = [[NSBundle bundleForClass:aSource] bundleIdentifier];
+                    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
+                                                                       inManagedObjectContext:context];
+                    [plugIn release];
+                    //[result setPlugIn:plugIn];
+                    
+                    return result;
+                }
+            }
+            @catch (NSException *exception)
+            {
+                // TODO: Log warning
+            }
         }
     }
     
