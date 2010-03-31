@@ -5,16 +5,14 @@
 //  Copyright 2004-2009 Karelia Software. All rights reserved.
 //
 
-#import <Foundation/Foundation.h>
 #import "KSPlugInWrapper.h"
+
 
 enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 
 @class KTImageScalingSettings;
 
-#if MAC_OS_X_VERSION_MAX_ALLOWED <= MAC_OS_X_VERSION_10_5
-@protocol IKImageBrowserItem <NSObject> @end
-#endif
+@protocol IKImageBrowserItem <NSObject> @end    // weirdly ImageKit only declares it as an informal protocol
 
 
 
