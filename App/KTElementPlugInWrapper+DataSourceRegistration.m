@@ -14,6 +14,8 @@
 
 #import "NSString+Karelia.h"
 
+#import "KSWebLocation.h"
+
 #import "Debug.h"
 
 
@@ -61,11 +63,33 @@
         NSString *type = [pasteboard availableTypeFromArray:types];
         if (type)
         {
-            id plist = [pasteboard dataForType:type];
             @try    // talking to a plug-in so might fail
             {
+                // What should I read off the pasteboard?
+                NSPasteboardReadingOptions readingOptions = NSPasteboardReadingAsData;
+                if ([aSource respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
+                {
+                    readingOptions = [aSource readingOptionsForType:type pasteboard:pasteboard];
+                }
+                
+                id propertyList;
+                if (readingOptions & NSPasteboardReadingAsPropertyList)
+                {
+                    propertyList = [pasteboard propertyListForType:type];
+                }
+                else if (readingOptions & NSPasteboardReadingAsString)
+                {
+                    propertyList = [pasteboard stringForType:type];
+                }
+                else
+                {
+                    propertyList = [pasteboard dataForType:type];
+                }
+                
+                
+                // Try to create plug-in from property list
                 id <SVPageletPlugIn> plugIn = [[aSource alloc] 
-                                               initWithPasteboardPropertyList:plist
+                                               initWithPasteboardPropertyList:propertyList
                                                ofType:type];
                 
                 if (plugIn)
