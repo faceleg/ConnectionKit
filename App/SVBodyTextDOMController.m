@@ -16,6 +16,7 @@
 #import "SVGraphic.h"
 #import "SVRichText.h"
 #import "KTDocument.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVImage.h"
 #import "SVLinkManager.h"
 #import "SVLink.h"
@@ -165,12 +166,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             }
             
             
-            // FInish up. Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
+            // Finish up. Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
             [context release];
             [editingHTML release];
             
             [[node mutableChildNodesArray] removeAllObjects];
             [node appendChild:[[node ownerDocument] createTextNode:@""]];
+        }
+        
+        else
+        {
+            NSUInteger count = [KTElementPlugInWrapper numberOfItemsInPasteboard:pasteboard];
+            for (int i = 0; i < count; i++)
+            {
+                Class <KTDataSource> dataSource = [KTElementPlugInWrapper highestPriorityDataSourceForPasteboard:pasteboard index:i isCreatingPagelet:YES];
+            }
         }
     }
     

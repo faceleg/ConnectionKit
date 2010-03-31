@@ -58,7 +58,7 @@
 
 /*!	Ask all the data sources to try to figure out how many items need to be processed in a drag
  */
-+ (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
++ (NSUInteger)numberOfItemsInPasteboard:(NSPasteboard *)pasteboard;
 {
 	unsigned result = 1;
     
@@ -66,7 +66,7 @@
     Class anElementClass;
 	while (anElementClass = [pluginsEnumerator nextObject])
     {
-		unsigned multiplicity = [anElementClass numberOfItemsFoundOnPasteboard:[draggingInfo draggingPasteboard]];
+		unsigned multiplicity = [anElementClass numberOfItemsFoundOnPasteboard:pasteboard];
 		if (multiplicity > result) result = multiplicity;
     }
     

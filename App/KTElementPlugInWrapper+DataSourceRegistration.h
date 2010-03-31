@@ -17,7 +17,7 @@
 + (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
 
 
-+ (unsigned)numberOfItemsToProcessDrag:(id <NSDraggingInfo>)draggingInfo;
++ (NSUInteger)numberOfItemsInPasteboard:(NSPasteboard *)draggingInfo;
 + (Class <KTDataSource>)highestPriorityDataSourceForPasteboard:(NSPasteboard *)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;
 
 + (void)doneProcessingDrag;

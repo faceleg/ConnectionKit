@@ -784,7 +784,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// LOG((@"%@", NSStringFromSelector(_cmd) ));
     
 	BOOL result = NO;	// set to YES if at least one item got processed
-	int numberOfItems = [KTElementPlugInWrapper numberOfItemsToProcessDrag:info];
+	int numberOfItems = [KTElementPlugInWrapper numberOfItemsInPasteboard:[info draggingPasteboard]];
 	
 	/*
      /// Mike: I see no point in this artificial limit in 1.5

@@ -37,7 +37,9 @@ typedef enum {
 
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
+
 + (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
+
 + (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
                       fromPasteboard:(NSPasteboard *)pasteboard
                              atIndex:(unsigned)dragIndex
