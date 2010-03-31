@@ -57,11 +57,9 @@
     }
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
-                     pasteboard:(NSPasteboard *)pasteboard
-                       userInfo:(NSDictionary *)info;
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 {
-    [super awakeFromInsertIntoPage:page pasteboard:pasteboard userInfo:info];
+    [super awakeFromInsertIntoPage:page];
     
     
     // Start off at a decent size.

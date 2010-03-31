@@ -26,9 +26,7 @@
 - (id)initWithArguments:(NSDictionary *)storage;
 
 //  Default implementation retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
-                     pasteboard:(NSPasteboard *)pasteboard
-                       userInfo:(NSDictionary *)info;
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 
 
 #pragma mark Storage

@@ -20,9 +20,7 @@
 - (void)awakeFromFetch;
 
 // Called for new pagelets. Pasteboard is non-nil if inserting by pasting or drag & drop.
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
-                     pasteboard:(NSPasteboard *)pasteboard
-                       userInfo:(NSDictionary *)info;
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 
 
 #pragma mark Storage

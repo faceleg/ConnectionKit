@@ -640,7 +640,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Insert it
-    [pagelet awakeFromInsertIntoPage:page pasteboard:nil userInfo:nil];
+    [pagelet awakeFromInsertIntoPage:page];
     [self _insertPageletInSidebar:pagelet];
 }
 
@@ -678,7 +678,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
         [self _insertPageletInSidebar:image];
-        [image awakeFromInsertIntoPage:[self page] pasteboard:nil userInfo:nil];
+        [image awakeFromInsertIntoPage:[self page]];
     }
     else
     {

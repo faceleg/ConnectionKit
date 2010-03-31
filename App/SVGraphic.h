@@ -60,9 +60,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @interface SVGraphic : SVContentObject <SVGraphic>
 
 #pragma mark Initialization
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
-                     pasteboard:(NSPasteboard *)pasteboard
-                       userInfo:(NSDictionary *)info;
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 
 
 #pragma mark Pagelet

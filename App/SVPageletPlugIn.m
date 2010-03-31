@@ -64,9 +64,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
-                     pasteboard:(NSPasteboard *)pasteboard
-                       userInfo:(NSDictionary *)info
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 {
     // Load initial properties from bundle
     NSBundle *bundle = [self bundle];
@@ -92,7 +90,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     
     // Legacy
     [self awakeFromBundleAsNewlyCreatedObject:YES];
-    if (pasteboard) [self awakeFromDragWithDictionary:info];
 }
 
 - (void)dealloc
