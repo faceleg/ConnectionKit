@@ -23,6 +23,11 @@
 + (SVPlugInGraphic *)insertNewGraphicWithPlugInIdentifier:(NSString *)identifier
                                    inManagedObjectContext:(NSManagedObjectContext *)context;
 
+// When pulling content off the pasteboard, the plug-in is already created and populated by the pasteboard. Use this method to create a graphic object to host it
++ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(id <SVPageletPlugIn>)plugIn
+                         inManagedObjectContext:(NSManagedObjectContext *)context;
+
+
 @property(nonatomic, retain, readonly) NSObject <SVPageletPlugIn> *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (KTElementPlugInWrapper *)plugInWrapper;

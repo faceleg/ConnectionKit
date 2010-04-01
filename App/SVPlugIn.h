@@ -25,6 +25,10 @@
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 
 
+#pragma mark Identifier
++ (NSString *)plugInIdentifier; // use standard reverse DNS-style string
+
+
 #pragma mark Storage
 /*
  Returns the list of KVC keys representing the internal settings of the plug-in. At the moment you must override it in all plug-ins that have some kind of storage, but at some point I'd like to make it automatically read the list in from bundle's Info.plist.
@@ -43,7 +47,6 @@
  *      To persist your reference to the page, override -serializedValueForKey: to use the page's -identifier property. Likewise, override -setSerializedValue:forKey: to take the serialized ID string and convert it back into a SVPage using -pageWithIdentifier:
  *      All of these methods are documented in SVPageProtocol.h
  */
-
 
 
 #pragma mark HTML Generation

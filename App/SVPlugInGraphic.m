@@ -22,6 +22,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 
 @interface SVPlugInGraphic ()
+- (void)setPlugIn:(NSObject <SVPageletPlugIn> *)plugIn useSerializedProperties:(BOOL)serialize;
 - (void)loadPlugIn;
 @end
 
@@ -42,6 +43,22 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     
     [result setValue:identifier forKey:@"plugInIdentifier"];
     [result loadPlugIn];
+    
+    return result;
+}
+
++ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(id <SVPageletPlugIn>)plugIn
+                         inManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVPlugInGraphic *result =
+    [NSEntityDescription insertNewObjectForEntityForName:@"PlugInPagelet"    
+                                  inManagedObjectContext:context];
+    
+    [result setValue:[[plugIn class] plugInIdentifier] forKey:@"plugInIdentifier"];
+    
+    
+    // Copy the current properties out of the plug-in. Cheating with KVO for the moment
+    [result setPlugIn:plugIn useSerializedProperties:YES];
     
     return result;
 }
@@ -84,6 +101,19 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 	return _plugIn;
 }
 
+- (void)setPlugIn:(NSObject <SVPageletPlugIn> *)plugIn useSerializedProperties:(BOOL)serialize;
+{
+    OBASSERT(!_plugIn);
+    _plugIn = [plugIn retain];
+               
+    
+    // Observe the plug-in's properties so they can be synced back to the MOC
+    [plugIn addObserver:self
+            forKeyPaths:[[plugIn class] plugInKeys]
+                options:(serialize ? NSKeyValueObservingOptionInitial : 0)
+                context:sPlugInPropertiesObservationContext];
+}
+
 - (void)loadPlugIn;
 {
     Class <SVPageletPlugInFactory> plugInFactory = [[[self plugInWrapper] bundle] principalClass];
@@ -93,25 +123,21 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         
         // Create plug-in object
         NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
-        _plugIn = [plugInFactory newPlugInWithArguments:arguments];
-        OBASSERTSTRING(_plugIn, @"plugin delegate cannot be nil!");
+        NSObject <SVPageletPlugIn> *plugIn = [plugInFactory newPlugInWithArguments:arguments];
+        OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
         
-        [_plugIn setDelegateOwner:self];
+        [plugIn setDelegateOwner:self];
         
         // Restore plug-in's properties
         NSDictionary *plugInProperties = [self extensibleProperties];
-        NSObject <SVPageletPlugIn> *plugIn = [self plugIn];
         for (NSString *aKey in plugInProperties)
         {
             id serializedValue = [plugInProperties objectForKey:aKey];
             [plugIn setSerializedValue:serializedValue forKey:aKey];
         }
         
-        // Observe the plug-in's properties so they can be synced back to the MOC
-        [plugIn addObserver:self
-                forKeyPaths:[[plugIn class] plugInKeys]
-                    options:0
-                    context:sPlugInPropertiesObservationContext];
+        [self setPlugIn:plugIn useSerializedProperties:NO];
+        [plugIn release];
     }
 }
 

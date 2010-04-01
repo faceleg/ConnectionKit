@@ -131,6 +131,15 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [parser release];
 }
 
+#pragma mark Identifier
+
++ (NSString *)plugInIdentifier; // use standard reverse DNS-style string
+{
+    NSBundle *bundle = [NSBundle bundleForClass:self];
+    NSString *result = [bundle bundleIdentifier];
+    return result;
+}
+
 #pragma mark Storage
 
 + (NSSet *)plugInKeys; { return nil; }
