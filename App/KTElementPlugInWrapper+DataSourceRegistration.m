@@ -113,6 +113,7 @@
 
 #pragma mark -
 
+
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
 + (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isCreatingPagelet
 {
@@ -168,7 +169,7 @@
         if (acceptedTypes && [setOfTypes intersectsSet:[NSSet setWithArray:acceptedTypes]])
         {
             // yep, so get the rating and see if it's better than our current bestRating
-            KTSourcePriority rating = [anElementClass priorityForItemOnPasteboard:pboard atIndex:anIndex creatingPagelet:isCreatingPagelet];
+            KTSourcePriority rating = (KTSourcePriority)[anElementClass priorityForItemOnPasteboard:pboard atIndex:anIndex creatingPagelet:isCreatingPagelet];
             if (rating >= bestRating)
             {
                 secondBestRating = bestRating;
