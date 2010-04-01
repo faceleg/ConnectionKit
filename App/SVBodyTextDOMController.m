@@ -261,6 +261,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVTextAttachment *textAttachment = [graphic textAttachment];
     
     
+    // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
+    if (!textAttachment)
+    {
+        textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                       inManagedObjectContext:[graphic managedObjectContext]];
+        [textAttachment setGraphic:graphic];
+        [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementBlock]];
+        [textAttachment setCausesWrap:[NSNumber numberWithBool:YES]];
+        [textAttachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
+        [textAttachment setBody:[self representedObject]];
+    }
+    
     
     // Set attachment location
     NSMutableString *stream = (NSMutableString *)[context stringWriter];
