@@ -382,9 +382,12 @@
         [context writeStartTag:@"span" idName:nil className:CSSClassName];
 	}
 	
+    
 	
 	// Stick in the main HTML
-	[self writeInnerHTML];
+	if ([self isRichText]) [context writeNewline];
+    [self writeInnerHTML];
+    if ([self isRichText]) [context writeNewline];
 	
 	
 	// Write end tags
