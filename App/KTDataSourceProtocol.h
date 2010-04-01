@@ -17,7 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "KSWebLocation.h"   // for NSPasteboardReading
 
 
 // Priority
@@ -32,19 +32,7 @@ typedef enum {
 } KTSourcePriority;
 
 
-@protocol KTDataSource
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-
-
-+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pasteboard;
-
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-
-+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-                      fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex
-				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-
+@protocol KTDataSource <NSPasteboardReading>
 @end
 
 
