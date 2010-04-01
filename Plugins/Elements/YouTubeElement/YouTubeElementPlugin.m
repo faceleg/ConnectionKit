@@ -348,7 +348,7 @@
         if (videoID)
         {
             self = [self initWithArguments:nil];
-            [self setVideoID:videoID];
+            [self setUserVideoCode:[[location URL] absoluteString]];
         }
         else
         {
