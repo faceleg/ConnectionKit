@@ -9,7 +9,7 @@
 #import "SVParagraphedHTMLWriter.h"
 
 #import "SVBodyTextDOMController.h"
-#import "SVGraphic.h"
+#import "SVGraphicDOMController.h"
 #import "SVImage.h"
 #import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
@@ -52,6 +52,38 @@
     [_attachments addObject:[[controller representedObject] textAttachment]];
 }
 
+- (void)writeDOMController:(SVDOMController *)controller;
+{
+    // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
+    SVGraphic *graphic = [controller representedObject];
+    SVTextAttachment *attachment = [graphic textAttachment];
+    
+    DOMNode *node = [controller HTMLElement];
+    DOMNode *parentNode = [node parentNode];
+    
+    if (parentNode != [[self bodyTextDOMController] textHTMLElement] &&
+        [[attachment placement] integerValue] != SVGraphicPlacementInline)
+    {
+        // Push the element off up the tree
+        [[parentNode parentNode] insertBefore:node refChild:[parentNode nextSibling]];
+    }
+        
+    
+    // Graphics are written as-is. Callouts write their contents
+    if ([controller isSelectable])
+    {
+        [self writeGraphicController:controller];
+    }
+    else
+    {
+        NSArray *graphicControllers = [controller selectableTopLevelDescendants];
+        for (SVDOMController *aController in graphicControllers)
+        {
+            [self writeGraphicController:aController];
+        }
+    }
+}
+
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
 {
     NSArray *graphicControllers = [[self bodyTextDOMController] childWebEditorItems];
@@ -60,19 +92,7 @@
     {
         if ([aController HTMLElement] == element)
         {
-            if ([aController isSelectable])
-            {
-                [self writeGraphicController:aController];
-            }
-            else
-            {
-                NSArray *graphicControllers = [aController selectableTopLevelDescendants];
-                for (aController in graphicControllers)
-                {
-                    [self writeGraphicController:aController];
-                }
-            }
-                
+            [self writeDOMController:aController];
             return YES;
         }
     }
