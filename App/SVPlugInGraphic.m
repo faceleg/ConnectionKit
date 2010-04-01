@@ -57,8 +57,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [result setValue:[[plugIn class] plugInIdentifier] forKey:@"plugInIdentifier"];
     
     
-    // Copy the current properties out of the plug-in. Cheating with KVO for the moment
-    [result setPlugIn:plugIn useSerializedProperties:YES];
+    [result setPlugIn:plugIn useSerializedProperties:YES];  // pasing YES to copy the current properties out of the plug-in
+    
     
     return result;
 }
@@ -107,6 +107,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     _plugIn = [plugIn retain];
                
     
+    [plugIn setDelegateOwner:self];
+    
     // Observe the plug-in's properties so they can be synced back to the MOC
     [plugIn addObserver:self
             forKeyPaths:[[plugIn class] plugInKeys]
@@ -125,8 +127,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
         NSObject <SVPageletPlugIn> *plugIn = [plugInFactory newPlugInWithArguments:arguments];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
-        
-        [plugIn setDelegateOwner:self];
         
         // Restore plug-in's properties
         NSDictionary *plugInProperties = [self extensibleProperties];

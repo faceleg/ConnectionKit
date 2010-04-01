@@ -94,11 +94,9 @@
                 
                 if (plugIn)
                 {
-                    NSString *identifier = [[NSBundle bundleForClass:aSource] bundleIdentifier];
-                    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
-                                                                       inManagedObjectContext:context];
+                    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugIn:plugIn
+                                                             inManagedObjectContext:context];
                     [plugIn release];
-                    //[result setPlugIn:plugIn];
                     
                     return result;
                 }
