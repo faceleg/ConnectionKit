@@ -845,45 +845,54 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else
     {
+        result = YES;
+        
+        // Want serialized pagelets on pboard
+        SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] init];
+        
+        
+        // Want HTML of pagelets on pboard
+        NSMutableString *html = [[NSMutableString alloc] init];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
+        [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
+        [context push];
+        
+        
         NSArray *items = [sender selectedItems];
-        NSArray *pboardReps = [items valueForKeyPath:@"representedObject.propertyListRepresentation"];
-        if (![pboardReps containsObjectIdenticalTo:[NSNull null]])
+        for (SVWebEditorItem *anItem in items)
         {
-            [pasteboard declareTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
-            result = YES;
-            
-            
-            
-            // HTML representation of the items
-            NSMutableString *html = [[NSMutableString alloc] init];
-            SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
-            [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
-            [context push];
-            
-            for (SVDOMController *aController in items)
+            // Give up if the selection contains a non-graphic
+            SVGraphic *graphic = [anItem representedObject];
+            if (![graphic isKindOfClass:[SVGraphic class]])
             {
-                [aController writeRepresentedObjectHTML];
+                break;
+                result = NO;
             }
             
-            [context pop];
-            [context release];
             
-            [pasteboard setString:html forType:NSHTMLPboardType];
-            [html release];
+            // Add the attachment to the custom HTML
+            NSAttributedString *attachmentString = [SVAttributedHTML attributedHTMLWithAttachment:graphic];
+            [attributedHTML appendAttributedString:attachmentString];
             
             
-            /*
-            [pasteboard declareTypes:[NSArray arrayWithObject:kKTPageletsPboardType]
-                               owner:self];
-            [pasteboard setData:[NSKeyedArchiver archivedDataWithRootObject:pboardReps]
-                        forType:kKTPageletsPboardType];
-                        */
+            // HTML representation of the item
+            [(SVDOMController *)anItem writeRepresentedObjectHTML];
         }
-        else
-        {
-            [pasteboard declareTypes:[NSArray array] owner:self];
-            result = YES;
-        }
+        
+        
+        // Place serialized pagelets on pboard
+        [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
+        [attributedHTML writeToPasteboard:pasteboard];
+        [attributedHTML release];
+        
+        
+        // Place HTML on pasteboard
+        [context pop];
+        [context release];
+        
+        [pasteboard setString:html forType:NSHTMLPboardType];
+        [html release];
+        [pasteboard addTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
     }
     
     
