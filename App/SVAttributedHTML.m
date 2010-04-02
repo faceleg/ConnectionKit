@@ -156,14 +156,16 @@
         if (serializedProperties)
         {
             // Replace the attachment
-            SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedProperties
-                                             insertIntoManagedObjectContext:context];
+            SVTextAttachment *attachment = [NSEntityDescription
+                                            insertNewObjectForEntityForName:@"TextAttachment"
+                                            inManagedObjectContext:context];
+            [attachment awakeFromPropertyList:serializedProperties];
             
             [result removeAttribute:@"Serialized SVAttachment"
                               range:effectiveRange];
             
             [result addAttribute:@"SVAttachment"
-                           value:graphic
+                           value:[attachment graphic]
                            range:effectiveRange];
         }
         
