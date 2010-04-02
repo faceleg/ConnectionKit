@@ -245,4 +245,15 @@
     [context pop];
 }
 
+#pragma mark Convenience
+
++ (NSAttributedString *)attributedHTMLWithAttachment:(id)attachment;
+{
+    NSAttributedString *result = [NSAttributedString
+      attributedStringWithString:[NSString stringWithUnichar:NSAttachmentCharacter]
+      attributes:[NSDictionary dictionaryWithObject:attachment forKey:@"SVAttachment"]];
+                                  
+    return result;
+}
+
 @end

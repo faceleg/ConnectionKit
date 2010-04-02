@@ -32,4 +32,9 @@
 + (NSArray *)pageletsFromPasteboard:(NSPasteboard *)pasteboard
      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
+
+#pragma mark Convenience
++ (NSAttributedString *)attributedHTMLWithAttachment:(id)attachment;
+
+
 @end
