@@ -48,8 +48,10 @@
 - (BOOL)copySelectedItemsToGeneralPasteboard;
 {
     // Rely on the datasource to serialize items to the pasteboard
-    BOOL result = [[self dataSource] webEditor:self 
-                      addSelectionToPasteboard:[NSPasteboard generalPasteboard]];
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    [pasteboard declareTypes:nil owner:nil];
+    
+    BOOL result = [[self dataSource] webEditor:self addSelectionToPasteboard:pasteboard];
     if (!result) NSBeep();
     
     return result;
