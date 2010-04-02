@@ -14,6 +14,8 @@
 
 #import "NSManagedObject+KTExtensions.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVAttributedHTML
 
@@ -248,11 +250,11 @@
 
 + (NSAttributedString *)attributedHTMLWithAttachment:(id)attachment;
 {
-    NSAttributedString *result = [NSAttributedString
-      attributedStringWithString:[NSString stringWithUnichar:NSAttachmentCharacter]
+    NSAttributedString *result = [[NSAttributedString alloc]
+      initWithString:[NSString stringWithUnichar:NSAttachmentCharacter]
       attributes:[NSDictionary dictionaryWithObject:attachment forKey:@"SVAttachment"]];
                                   
-    return result;
+    return [result autorelease];
 }
 
 @end
