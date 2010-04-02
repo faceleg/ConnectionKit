@@ -50,11 +50,10 @@
 {
     // Write the graphic
     SVGraphic *graphic = [controller representedObject];
-    SVTextAttachment *textAttachment = [graphic textAttachment];
     
     NSAttributedString *attributedString =
     [[NSAttributedString alloc] initWithString:[NSString stringWithUnichar:NSAttachmentCharacter]
-                                    attributes:[NSDictionary dictionaryWithObject:textAttachment
+                                    attributes:[NSDictionary dictionaryWithObject:graphic
                                                                            forKey:@"SVAttachment"]];
     
     [_attributedHTML appendAttributedString:attributedString];
