@@ -146,7 +146,6 @@
 */
 
 
-#pragma mark -
 #pragma mark Plugin
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -308,7 +307,6 @@
 }
 
 
-#pragma mark -
 #pragma mark Colors
 
 + (NSColor *)defaultPrimaryColor;
@@ -320,6 +318,24 @@
 {
 	self.useCustomSecondaryColor = NO;
 	self.color2 = [[self class] defaultPrimaryColor];
+}
+
+#pragma mark Thumbnail
+
+- (id <IMBImageItem>)thumbnail;
+{
+    return self;
+}
+
+- (id)imageRepresentation;
+{
+    NSString *path = [[self bundle] pathForImageResource:@"YouTube"];
+    return path;
+}
+
+- (NSString *)imageRepresentationType;
+{
+    return IKImageBrowserPathRepresentationType;
 }
 
 #pragma mark Pasteboard
