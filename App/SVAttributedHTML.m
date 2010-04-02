@@ -80,28 +80,36 @@
     while (location < range.length)
     {
         NSRange effectiveRange;
-        SVTextAttachment *attachment = [archivableAttributedString attribute:@"SVAttachment"
-                                                                     atIndex:location
-                                                       longestEffectiveRange:&effectiveRange
-                                                                     inRange:range];
+        SVGraphic *graphic = [archivableAttributedString attribute:@"SVAttachment"
+                                                              atIndex:location
+                                                longestEffectiveRange:&effectiveRange
+                                                              inRange:range];
         
-        if (attachment)
+        NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+        
+        SVTextAttachment *textAttachment = [graphic textAttachment];
+        if (textAttachment)
         {
             // Replace the attachment. Ignore range as it's not relevant any more
-            NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
-            [attachment populateSerializedProperties:plist];
+            [textAttachment populateSerializedProperties:plist];
             [plist removeObjectForKey:@"location"];
             [plist removeObjectForKey:@"length"];
-            
-            
-            [archivableAttributedString removeAttribute:@"SVAttachment"
-                                                  range:effectiveRange];
-            
-            [archivableAttributedString addAttribute:@"Serialized SVAttachment"
-                                               value:plist
-                                               range:effectiveRange];
-            [plist release];
         }
+        else
+        {
+            // Fake the attachment
+            [plist setObject:[graphic serializedProperties] forKey:@"graphic"];
+        }
+        
+        
+        [archivableAttributedString removeAttribute:@"SVAttachment"
+                                              range:effectiveRange];
+        
+        [archivableAttributedString addAttribute:@"Serialized SVAttachment"
+                                           value:plist
+                                           range:effectiveRange];
+        [plist release];
+        
         
         // Advance the search
         location = location + effectiveRange.length;
@@ -221,16 +229,15 @@
     while (location < range.length)
     {
         NSRange effectiveRange;
-        SVGraphic *graphic = [self attribute:@"SVAttachment"
+        SVGraphic *attachment = [self attribute:@"SVAttachment"
                                                atIndex:location
                                  longestEffectiveRange:&effectiveRange
                                                inRange:range];
-        SVTextAttachment *attachment = [graphic textAttachment];
         
         if (attachment)
         {
             // Write the graphic
-            [graphic writeHTML];
+            [attachment writeHTML];
         }
         else
         {
