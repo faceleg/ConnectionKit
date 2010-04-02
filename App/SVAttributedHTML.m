@@ -146,16 +146,14 @@
         if (serializedProperties)
         {
             // Replace the attachment
-            SVTextAttachment *attachment = [NSEntityDescription
-                                            insertNewObjectForEntityForName:@"TextAttachment"
-                                            inManagedObjectContext:context];
-            [attachment awakeFromPropertyList:serializedProperties];
+            SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedProperties
+                                             insertIntoManagedObjectContext:context];
             
             [result removeAttribute:@"Serialized SVAttachment"
                               range:effectiveRange];
             
             [result addAttribute:@"SVAttachment"
-                           value:attachment
+                           value:graphic
                            range:effectiveRange];
         }
         
@@ -221,15 +219,16 @@
     while (location < range.length)
     {
         NSRange effectiveRange;
-        SVTextAttachment *attachment = [self attribute:@"SVAttachment"
+        SVGraphic *graphic = [self attribute:@"SVAttachment"
                                                atIndex:location
                                  longestEffectiveRange:&effectiveRange
                                                inRange:range];
+        SVTextAttachment *attachment = [graphic textAttachment];
         
         if (attachment)
         {
             // Write the graphic
-            [[attachment graphic] writeHTML];
+            [graphic writeHTML];
         }
         else
         {
