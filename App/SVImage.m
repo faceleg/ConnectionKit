@@ -33,6 +33,8 @@
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 {
+    OBPRECONDITION(media);
+    
     SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
                                                    inManagedObjectContext:[media managedObjectContext]];
     [result setMedia:media];
