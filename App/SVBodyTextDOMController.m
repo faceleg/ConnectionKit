@@ -453,17 +453,19 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                 proposedOperation:(NSDragOperation *)proposedOperation;
 {
     // When dragging graphics within the Web Editor, want to move them rather than do a copy
-    SVWebEditorView *webEditor = [self webEditor];
-    if ([info draggingSource] == webEditor)
+    
+    BOOL result = [super webEditorTextValidateDrop:info proposedOperation:proposedOperation];   // let super know
+    
+    if (!result)
     {
-        *proposedOperation = NSDragOperationMove;
-        
-        return NO;
+        SVWebEditorView *webEditor = [self webEditor];
+        if ([info draggingSource] == webEditor)
+        {
+            *proposedOperation = NSDragOperationMove;
+        }
     }
-    else
-    {
-        return [super webEditorTextValidateDrop:info proposedOperation:proposedOperation];
-    }
+    
+    return result;
 }
 
 #pragma mark KVO
