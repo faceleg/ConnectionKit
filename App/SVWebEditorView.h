@@ -127,7 +127,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 - (id)selectableItemAtPoint:(NSPoint)point;
 - (id)selectableItemForDOMNode:(DOMNode *)node;
-- (NSArray *)itemsInDOMRange:(DOMRange *)range;
+- (NSArray *)selectableItemsInDOMRange:(DOMRange *)range;
 
 
 #pragma mark Dispatching Messages

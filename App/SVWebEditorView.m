@@ -732,7 +732,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (NSArray *)itemsInDOMRange:(DOMRange *)range
+- (NSArray *)selectableItemsInDOMRange:(DOMRange *)range
 {
     if ([range collapsed]) return nil;  // shortcut
     
@@ -745,7 +745,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         NSMutableArray *result = [NSMutableArray array];
         
-        for (SVWebEditorItem *anItem in [textController childWebEditorItems])
+        for (SVWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
             if ([range containsNode:[anItem HTMLElement]]) [result addObject:anItem];
         }
@@ -1410,7 +1410,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         
         if (result)
         {
-            NSArray *items = (proposedRange) ? [self itemsInDOMRange:proposedRange] : nil;
+            NSArray *items = (proposedRange) ? [self selectableItemsInDOMRange:proposedRange] : nil;
             
             result = [self changeSelectionByDeselectingAll:YES
                                             orDeselectItem:nil
