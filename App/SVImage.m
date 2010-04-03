@@ -254,14 +254,15 @@
     if (!alt) alt = @"";
     
     // Link
-    if ([self isPagelet] && [self link])
+    BOOL isPagelet = [self isPagelet];
+    if (isPagelet && [self link])
     {
         [context writeAnchorStartTagWithHref:[[self link] URLString] title:nil target:nil rel:nil];
     }
     
     // Actually write the image
     [context writeImageWithIdName:[self editingElementID]
-                        className:[self className]
+                        className:(isPagelet ? nil : [self className])
                               src:[context relativeURLStringOfURL:imageURL]
                               alt:alt 
                             width:[[self width] description]
