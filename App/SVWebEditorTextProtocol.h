@@ -39,6 +39,7 @@
 
 #pragma mark Dragging
 
+// Return YES if you want to take over dragging. NO if you want usual dragging behaviour, just influence over operation
 - (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
                 proposedOperation:(NSDragOperation *)proposedOperation;
 
