@@ -329,7 +329,12 @@
 - (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
                 proposedOperation:(NSDragOperation *)proposedOperation;
 {
-    if ([info draggingSource] == [self webEditor]) *proposedOperation = NSDragOperationNone;
+    // I wish I knew why I wrote this code in the first place! What is it for? – Mike
+    if ([info draggingSource] == [self webEditor])
+    {
+        *proposedOperation = NSDragOperationNone;
+    }
+    
     return NO;
 }
 
