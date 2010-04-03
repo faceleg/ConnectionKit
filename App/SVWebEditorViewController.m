@@ -1206,6 +1206,29 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @implementation SVWebEditorView (SVWebEditorViewController)
 
+// Presently, SVWebEditorView doesn't implement paste directly itself, so we can jump in here
+- (IBAction)paste:(id)sender;
+{
+    SVWebEditorViewController *controller = (id)[self dataSource];
+    
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    NSManagedObjectContext *context = [[controller page] managedObjectContext];
+    OBASSERT(context);
+    
+    NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+                                                 insertIntoManagedObjectContext:context];
+    
+    if ([pagelets count])
+    {
+        SVSidebarPageletsController *sidebarPageletsController = [(id)[controller selectedObjectsController] sidebarPageletsController];
+        [sidebarPageletsController addObjects:pagelets];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
     [(SVWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
