@@ -172,6 +172,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Dragging Source
 - (NSArray *)draggedItems;
+- (void)forgetDraggedItems; // call if you want to take over handling of drag source
 
 
 #pragma mark Dragging Destination

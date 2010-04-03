@@ -194,6 +194,11 @@
 
 - (NSArray *)draggedItems; { return _draggedItems; }
 
+- (void)forgetDraggedItems; // call if you want to take over handling of drag source
+{
+    [_draggedItems release]; _draggedItems = nil;
+}
+
 #pragma mark Drawing
 
 - (void)drawDragCaretInView:(NSView *)view;
