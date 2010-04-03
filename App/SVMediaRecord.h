@@ -37,7 +37,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Creating New Media
 
-// Will return nil if the URL can't be read
+// Will return nil if an alias can't be created from the URL. It's OK if the file attributes can't be read in.
 + (SVMediaRecord *)mediaWithURL:(NSURL *)URL
                      entityName:(NSString *)entityName
  insertIntoManagedObjectContext:(NSManagedObjectContext *)context
