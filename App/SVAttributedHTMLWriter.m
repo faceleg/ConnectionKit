@@ -14,7 +14,7 @@
 #import "SVParagraphedHTMLWriter.h"
 #import "SVRichText.h"
 #import "SVTextAttachment.h"
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 
 #import "NSManagedObject+KTExtensions.h"
 

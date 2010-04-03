@@ -8,7 +8,7 @@
 
 #import "SVParagraphedHTMLWriter.h"
 
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVImage.h"
 #import "SVMediaRecord.h"
@@ -106,7 +106,7 @@
 - (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement;
 {
     // Make an image object
-    SVBodyTextDOMController *textController = [self bodyTextDOMController];
+    SVRichTextDOMController *textController = [self bodyTextDOMController];
     SVRichText *text = [textController representedObject];
     NSManagedObjectContext *context = [text managedObjectContext];
     

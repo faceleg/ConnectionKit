@@ -9,7 +9,7 @@
 #import "SVGraphicDOMController.h"
 #import "SVGraphic.h"
 
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorView.h"
 
@@ -18,10 +18,10 @@
 
 - (BOOL)isSelectable { return YES; }
 
-- (SVBodyTextDOMController *)enclosingBodyTextDOMController;
+- (SVRichTextDOMController *)enclosingBodyTextDOMController;
 {
     id result = [self parentWebEditorItem];
-    while (result && ![result isKindOfClass:[SVBodyTextDOMController class]])
+    while (result && ![result isKindOfClass:[SVRichTextDOMController class]])
     {
         result = [result parentWebEditorItem];
     }

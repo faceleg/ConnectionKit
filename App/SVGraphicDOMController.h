@@ -9,11 +9,11 @@
 #import "SVDOMController.h"
 
 
-@class SVBodyTextDOMController;
+@class SVRichTextDOMController;
 
 
 @interface SVGraphicDOMController : SVDOMController
 
-- (SVBodyTextDOMController *)enclosingBodyTextDOMController;
+- (SVRichTextDOMController *)enclosingBodyTextDOMController;
 
 @end

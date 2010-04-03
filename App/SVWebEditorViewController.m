@@ -16,7 +16,7 @@
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 #import "SVHTMLContext.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"

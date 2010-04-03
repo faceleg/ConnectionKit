@@ -156,7 +156,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 }
 
 
-- (void)enclosingBodyControllerWebViewDidChange:(SVBodyTextDOMController *)bodyController;
+- (void)enclosingBodyControllerWebViewDidChange:(SVRichTextDOMController *)bodyController;
 {
     // Commit any changes caused by the user. Caller will take care of undo coalescing and other behaviour
     BOOL edited = _editTimestamp && [[NSApp currentEvent] timestamp] == _editTimestamp;
@@ -210,7 +210,7 @@ static NSString *sParagraphInnerHTMLObservationContext = @"ParagraphInnerHTMLObs
 
 
 @implementation KSDOMController (enclosingBodyControllerDidChangeText)
-- (void)enclosingBodyControllerWebViewDidChange:(SVBodyTextDOMController *)bodyController;
+- (void)enclosingBodyControllerWebViewDidChange:(SVRichTextDOMController *)bodyController;
 {
     // I don't care
 }

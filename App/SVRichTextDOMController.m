@@ -1,12 +1,12 @@
 //
-//  SVPageletBodyTextAreaController.m
+//  SVRichTextDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 14/10/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 #import "SVParagraphDOMController.h"
 
 #import "KT.h"
@@ -38,7 +38,7 @@
 static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 
-@implementation SVBodyTextDOMController
+@implementation SVRichTextDOMController
 
 #pragma mark Init & Dealloc
 
@@ -495,7 +495,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (Class)DOMControllerClass;
 {
-    return [SVBodyTextDOMController class];
+    return [SVRichTextDOMController class];
 }
 
 @end

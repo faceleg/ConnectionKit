@@ -9,7 +9,7 @@
 #import "SVFieldEditorHTMLWriter.h"
 
 
-@class SVBodyTextDOMController;
+@class SVRichTextDOMController;
 
 
 @interface SVParagraphedHTMLWriter : SVFieldEditorHTMLWriter
@@ -17,12 +17,12 @@
   @private
     NSMutableSet    *_attachments;
     
-    SVBodyTextDOMController             *_DOMController;
+    SVRichTextDOMController             *_DOMController;
 }
 
 - (NSSet *)textAttachments;
 
-@property(nonatomic, retain) SVBodyTextDOMController *bodyTextDOMController;
+@property(nonatomic, retain) SVRichTextDOMController *bodyTextDOMController;
 
 
 @end

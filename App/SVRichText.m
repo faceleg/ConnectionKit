@@ -10,7 +10,7 @@
 
 #import "SVTextAttachment.h"
 #import "SVGraphic.h"
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 #import "SVHTMLContext.h"
 
 #import "NSArray+Karelia.h"

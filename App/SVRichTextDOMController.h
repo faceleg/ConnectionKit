@@ -1,5 +1,5 @@
 //
-//  SVPageletBodyTextAreaController.h
+//  SVRichTextDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 14/10/2009.
@@ -12,7 +12,7 @@
 @class SVRichText, SVBodyElement, SVGraphic, SVParagraphedHTMLWriter;
 
 
-@interface SVBodyTextDOMController : SVTextDOMController
+@interface SVRichTextDOMController : SVTextDOMController
 {        
     BOOL    _isUpdating;    
     

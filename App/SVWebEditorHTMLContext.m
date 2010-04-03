@@ -8,7 +8,7 @@
 
 #import "SVWebEditorHTMLContext.h"
 
-#import "SVBodyTextDOMController.h"
+#import "SVRichTextDOMController.h"
 #import "SVCalloutDOMController.h"
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
@@ -100,7 +100,7 @@
     }
     else if ([value isKindOfClass:[SVRichText class]])
     {
-        result = [[SVBodyTextDOMController alloc] init];
+        result = [[SVRichTextDOMController alloc] init];
         [result setRepresentedObject:value];
         [result setHTMLContext:self];
         [result setRichText:YES];
