@@ -786,6 +786,40 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
+#pragma mark Drag & Drop
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
+{
+    NSDragOperation result = NSDragOperationNone;
+    
+    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+    if (dropIndex != NSNotFound)
+    {
+        result = NSDragOperationMove;
+        
+        
+        // Place the drag caret to match the drop index
+        NSArray *pageletContentItems = [self sidebarPageletItems];
+        if (dropIndex >= [pageletContentItems count])
+        {
+            DOMNode *node = [_sidebarDiv lastChild];
+            DOMRange *range = [[node ownerDocument] createRange];
+            [range setStartAfter:node];
+            [[self webEditor] moveDragCaretToDOMRange:range];
+        }
+        else
+        {
+            SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
+            
+            DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
+            [range setStartBefore:[aPageletItem HTMLElement]];
+            [[self webEditor] moveDragCaretToDOMRange:range];
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;
@@ -918,29 +952,9 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     
     id result = sender;
     
-    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
-    if (dropIndex != NSNotFound)
+    if ([self draggingUpdated:dragInfo] != NSDragOperationNone)
     {
-        result = NSDragOperationMove;
-        
-        
-        // Place the drag caret to match the drop index
-        NSArray *pageletContentItems = [self sidebarPageletItems];
-        if (dropIndex >= [pageletContentItems count])
-        {
-            DOMNode *node = [_sidebarDiv lastChild];
-            DOMRange *range = [[node ownerDocument] createRange];
-            [range setStartAfter:node];
-            [sender moveDragCaretToDOMRange:range];
-        }
-        else
-        {
-            SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
-            
-            DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
-            [range setStartBefore:[aPageletItem HTMLElement]];
-            [sender moveDragCaretToDOMRange:range];
-        }
+        result = self;
     }
     else
     {
