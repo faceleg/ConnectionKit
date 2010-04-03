@@ -942,6 +942,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             [sender moveDragCaretToDOMRange:range];
         }
     }
+    else
+    {
+        // Don't allow drops of pagelets inside non-page body text.
+        if ([dragInfo draggingSource] == sender && [[sender draggedItems] count])
+        {
+            NSDictionary *element = [[sender webView] elementAtPoint:[sender convertPointFromBase:[dragInfo draggingLocation]]];
+            DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+            
+            if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
+                  isEqualToString:@"PageBody"])
+            {
+                result = YES;
+            }
+        }
+    }
     
     
     return result;
