@@ -211,9 +211,12 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Dragging
 
-// Return something other than NSDragOperationNone to take command of the drop
-- (NSDragOperation)webEditor:(SVWebEditorView *)sender
-      dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
+/*!
+ @method webEditor:dragDestinationForDraggingInfo:
+ @result Object conforming to NSDraggingDestination or nil. Return the Web Editor itself for standard behaviour
+ */
+- (NSObject *)webEditor:(SVWebEditorView *)sender
+dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 
 - (BOOL)webEditor:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
 
@@ -225,6 +228,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
  @result YES if the items could be written to the pasteboard
  */
 - (BOOL)webEditor:(SVWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
+
 
 @end
 

@@ -1292,7 +1292,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     NSUInteger result = WebDragDestinationActionNone;
     
-    if (![[self dataSource] webEditor:self dataSourceShouldHandleDrop:dragInfo])
+    if ([[self dataSource] webEditor:self dragDestinationForDraggingInfo:dragInfo] == self)
     {
        result = WebDragDestinationActionEdit;
     }

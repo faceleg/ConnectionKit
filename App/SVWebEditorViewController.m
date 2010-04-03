@@ -911,12 +911,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 /*  Want to leave the Web Editor View in charge of drag & drop except for pagelets
  */
-- (NSDragOperation)webEditor:(SVWebEditorView *)sender
-      dataSourceShouldHandleDrop:(id <NSDraggingInfo>)dragInfo;
+- (NSObject *)webEditor:(SVWebEditorView *)sender
+dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditor]);
     
-    NSDragOperation result = NSDragOperationNone;
+    id result = sender;
     
     NSUInteger dropIndex = [self indexOfDrop:dragInfo];
     if (dropIndex != NSNotFound)
@@ -953,7 +953,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
                   isEqualToString:@"PageBody"])
             {
-                result = YES;
+                result = nil;
             }
         }
     }

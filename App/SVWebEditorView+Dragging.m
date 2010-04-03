@@ -84,7 +84,9 @@
     // Let datasource have a crack at the drop. If it's not interested either, ensure the drag caret is removed
     if (op == NSDragOperationNone)
     {
-        op = [[self dataSource] webEditor:self dataSourceShouldHandleDrop:sender];
+        NSObject *draggingDestination = [[self dataSource] webEditor:self dragDestinationForDraggingInfo:sender];
+        if (draggingDestination) op = [draggingDestination draggingUpdated:sender];
+        
         if (op == NSDragOperationNone)
         {
             [self removeDragCaret];
