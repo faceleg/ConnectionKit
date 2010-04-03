@@ -420,12 +420,19 @@
     [self willChangeValueForKey:@"elementID"];
     [self setPrimitiveValue:ID forKey:@"elementID"];
     [self didChangeValueForKey:@"elementID"];
+    
+    
+    // Restore title
+    [[self titleBox] awakeFromPropertyList:[propertyList objectForKey:@"titleBox"]];
 }
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];
+    
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
+    
+    [propertyList setObject:[[self titleBox] serializedProperties] forKey:@"titleBox"];
 }
 
 @end
