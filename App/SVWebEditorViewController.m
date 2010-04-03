@@ -828,7 +828,16 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
-    [_selectableObjectsController remove:self];
+    NSArray *objects = [items valueForKey:@"representedObject"];
+    if ([objects isEqualToArray:[_selectableObjectsController selectedObjects]])
+    {
+        [_selectableObjectsController remove:self];
+    }
+    else
+    {
+        [_selectableObjectsController removeObjects:objects];
+    }
+    
     return YES;
 }
 
