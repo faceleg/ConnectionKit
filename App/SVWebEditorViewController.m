@@ -997,6 +997,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
             if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
             {
                 result = YES;
+                [sender forgetDraggedItems];
                 
                 SVGraphic *pagelet = [aPageletItem representedObject];
                 [[_selectableObjectsController sidebarPageletsController] insertObject:pagelet
