@@ -95,7 +95,7 @@
             [plist removeObjectForKey:@"location"];
             [plist removeObjectForKey:@"length"];
         }
-        else
+        else if (graphic)
         {
             // Fake the attachment
             [plist setObject:[graphic serializedProperties] forKey:@"graphic"];
