@@ -171,10 +171,13 @@
         [self willChange];
         for (SVWebEditorItem *anItem in [self draggedItems])
         {
-            DOMHTMLElement *node = [anItem HTMLElement];
-            [[node parentNode] removeChild:node];
-            
-            [anItem removeFromParentWebEditorItem];
+            if ([[anItem HTMLElement] isContentEditable])
+            {
+                DOMHTMLElement *node = [anItem HTMLElement];
+                [[node parentNode] removeChild:node];
+                
+                [anItem removeFromParentWebEditorItem];
+            }
         }
         [self didChange];
     }
