@@ -6,38 +6,20 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVIntroAndCaptionGraphic.h"
+
+#import "SVMediaGraphic.h"
 
 
-@class SVMediaRecord, SVLink;
-@class SVTextAttachment;
+@class SVLink, SVTextAttachment;
 
-
-@interface SVImage : SVIntroAndCaptionGraphic
+@interface SVImage : SVMediaGraphic
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
 + (SVImage *)insertNewImageInManagedObjectContext:(NSManagedObjectContext *)context;
 
-#pragma mark Media
-
-@property(nonatomic, retain) SVMediaRecord *media;
-- (void)setMediaWithURL:(NSURL *)URL;
-
-@property(nonatomic, copy) NSURL *externalSourceURL;
-
-- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
-- (NSURL *)placeholderImageURL; // the fallback when no media or external source is chose
-
 
 #pragma mark Metrics
 @property(nonatomic, copy) NSString *alternateText;
-
-
-#pragma mark Size
-@property(nonatomic, copy)  NSNumber *width;
-@property(nonatomic, copy)  NSNumber *height;
-@property(nonatomic)        BOOL constrainProportions;
-- (CGSize)originalSize;
 
 
 #pragma mark Link
