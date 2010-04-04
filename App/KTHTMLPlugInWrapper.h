@@ -16,8 +16,10 @@
 	NSString    *_templateHTML;
 }
 
-- (NSString *)pluginName;
+- (NSString *)name;
 - (NSImage *)pluginIcon;            // derived from pluginIconName
+- (NSUInteger)priority;
+
 - (NSString *)CSSClassName;
 - (NSString *)templateHTMLAsString;
 

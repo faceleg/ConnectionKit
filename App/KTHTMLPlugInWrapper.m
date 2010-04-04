@@ -52,7 +52,7 @@
 
 /*	Implemented for the sake of bindings
  */
-- (NSString *)pluginName { return [self pluginPropertyForKey:@"KTPluginName"]; }
+- (NSString *)name { return [self pluginPropertyForKey:@"KTPluginName"]; }
 
 - (NSImage *)pluginIcon
 {
@@ -78,6 +78,11 @@
 	}
 	
 	return _icon;
+}
+
+- (NSUInteger)priority;
+{
+    return [[self pluginPropertyForKey:@"KTPluginPriority"] unsignedIntegerValue];
 }
 
 - (NSString *)CSSClassName
