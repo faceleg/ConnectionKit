@@ -82,10 +82,6 @@ static SVPageletManager *sSharedPageletManager;
 	KTHTMLPlugInWrapper *plugin;
 	for (plugin in sortedPlugins)
 	{
-		NSBundle *bundle = [plugin bundle];
-		
-        if (![bundle isLoaded] && [bundle principalClassIncludingOtherLoadedBundles:YES]) [bundle load];
-        
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
 		NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
