@@ -87,11 +87,6 @@ static SVPageletManager *sSharedPageletManager;
 		NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
 		
 		
-		id priorityID = [plugin pluginPropertyForKey:@"KTPluginPriority"];
-		NSInteger priority = 5;
-		if (priorityID) priority = [priorityID integerValue];
-		
-		
 		if (!pluginName || [pluginName isEqualToString:@""])
 		{
 			NSLog(@"empty plugin name for %@", plugin);
@@ -112,7 +107,7 @@ static SVPageletManager *sSharedPageletManager;
         
         
         [menuItem setTitle:pluginName];
-        if (9 == priority && nil == gRegistrationString)
+        if (9 == [plugin priority] && nil == gRegistrationString)
         {
             [[NSApp delegate] setMenuItemPro:menuItem];
         }

@@ -82,7 +82,10 @@
 
 - (NSUInteger)priority;
 {
-    return [[self pluginPropertyForKey:@"KTPluginPriority"] unsignedIntegerValue];
+    NSUInteger result = 5;  // default priority
+    NSNumber *priority = [self pluginPropertyForKey:@"KTPluginPriority"];
+    if (priority) result = [priority unsignedIntegerValue];
+    return result;
 }
 
 - (NSString *)CSSClassName
