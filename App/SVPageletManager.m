@@ -9,7 +9,6 @@
 #import "SVPageletManager.h"
 
 #import "KTElementPlugInWrapper.h"
-#import "SVGraphicRegistrationInfo.h"
 #import "SVImage.h"
 
 #import "NSSet+Karelia.h"
