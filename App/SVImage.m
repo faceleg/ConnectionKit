@@ -90,7 +90,7 @@
     if (URL)
     {
         media = [SVMediaRecord mediaWithURL:URL
-                                 entityName:@"ImageMedia"
+                                 entityName:@"GraphicMedia"
              insertIntoManagedObjectContext:[self managedObjectContext]
                                       error:NULL];
     }
@@ -319,7 +319,7 @@
         
         SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:data
                                                         URLResponse:response
-                                                         entityName:@"ImageMedia"
+                                                         entityName:@"GraphicMedia"
                                      insertIntoManagedObjectContext:[self managedObjectContext]];
         [response release];
         

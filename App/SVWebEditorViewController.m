@@ -669,7 +669,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     NSManagedObjectContext *context = [[self page] managedObjectContext];
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
-                                            entityName:@"ImageMedia"
+                                            entityName:@"GraphicMedia"
                         insertIntoManagedObjectContext:context
                                                  error:NULL];
     

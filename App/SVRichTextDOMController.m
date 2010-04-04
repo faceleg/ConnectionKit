@@ -384,7 +384,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
-                                            entityName:@"ImageMedia"
+                                            entityName:@"GraphicMedia"
                         insertIntoManagedObjectContext:context
                                                  error:NULL];
     
