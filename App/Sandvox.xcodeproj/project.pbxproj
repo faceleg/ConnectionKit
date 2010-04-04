@@ -447,8 +447,6 @@
 		27B0BF6C1168B8840084BFE0 /* SVPageletManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0BF6A1168B8840084BFE0 /* SVPageletManager.h */; };
 		27B0BF6D1168B8840084BFE0 /* SVPageletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0BF6B1168B8840084BFE0 /* SVPageletManager.m */; };
 		27B0BFE21168C1530084BFE0 /* photopage.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27B0BFE11168C1530084BFE0 /* photopage.icns */; };
-		27B0BFFD1168C2890084BFE0 /* SVGraphicRegistrationInfo.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0BFFB1168C2890084BFE0 /* SVGraphicRegistrationInfo.h */; };
-		27B0BFFE1168C2890084BFE0 /* SVGraphicRegistrationInfo.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0BFFC1168C2890084BFE0 /* SVGraphicRegistrationInfo.m */; };
 		27B306D60D74266F00903807 /* KTDocument+Saving.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B306D50D74266F00903807 /* KTDocument+Saving.m */; };
 		27B48D750C3D94AA00F37B9A /* Sandvox.xcdatamodel in Sources */ = {isa = PBXBuildFile; fileRef = 27B48D740C3D94AA00F37B9A /* Sandvox.xcdatamodel */; };
 		27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */ = {isa = PBXBuildFile; fileRef = 27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */; };
@@ -1927,8 +1925,6 @@
 		27B0BF6A1168B8840084BFE0 /* SVPageletManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletManager.h; sourceTree = "<group>"; };
 		27B0BF6B1168B8840084BFE0 /* SVPageletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletManager.m; sourceTree = "<group>"; };
 		27B0BFE11168C1530084BFE0 /* photopage.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = photopage.icns; sourceTree = "<group>"; };
-		27B0BFFB1168C2890084BFE0 /* SVGraphicRegistrationInfo.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicRegistrationInfo.h; sourceTree = "<group>"; };
-		27B0BFFC1168C2890084BFE0 /* SVGraphicRegistrationInfo.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicRegistrationInfo.m; sourceTree = "<group>"; };
 		27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponent.h; sourceTree = "<group>"; };
 		27B17DAA0CA80A9E00187918 /* KTWebViewComponent.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTWebViewComponent.m; sourceTree = "<group>"; };
 		27B306D50D74266F00903807 /* KTDocument+Saving.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Saving.m"; sourceTree = "<group>"; };
@@ -3434,8 +3430,6 @@
 				27B0BF6A1168B8840084BFE0 /* SVPageletManager.h */,
 				27B0BF6B1168B8840084BFE0 /* SVPageletManager.m */,
 				27B0BFE11168C1530084BFE0 /* photopage.icns */,
-				27B0BFFB1168C2890084BFE0 /* SVGraphicRegistrationInfo.h */,
-				27B0BFFC1168C2890084BFE0 /* SVGraphicRegistrationInfo.m */,
 			);
 			name = Registration;
 			sourceTree = "<group>";
@@ -5484,7 +5478,6 @@
 				27F36590115EB7BA003BDA5F /* SVPageBody.h in Headers */,
 				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
 				27B0BF6C1168B8840084BFE0 /* SVPageletManager.h in Headers */,
-				27B0BFFD1168C2890084BFE0 /* SVGraphicRegistrationInfo.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6884,7 +6877,6 @@
 				27F36591115EB7BA003BDA5F /* SVPageBody.m in Sources */,
 				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
 				27B0BF6D1168B8840084BFE0 /* SVPageletManager.m in Sources */,
-				27B0BFFE1168C2890084BFE0 /* SVGraphicRegistrationInfo.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

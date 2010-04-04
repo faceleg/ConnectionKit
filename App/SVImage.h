@@ -16,7 +16,7 @@
 @interface SVImage : SVIntroAndCaptionGraphic
 
 + (SVImage *)insertNewImageWithMedia:(SVMediaRecord *)media;
-
++ (SVImage *)insertNewImageInManagedObjectContext:(NSManagedObjectContext *)context;
 
 #pragma mark Media
 

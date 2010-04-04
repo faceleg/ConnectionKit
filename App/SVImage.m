@@ -35,8 +35,7 @@
 {
     OBPRECONDITION(media);
     
-    SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
-                                                   inManagedObjectContext:[media managedObjectContext]];
+    SVImage *result = [self insertNewImageInManagedObjectContext:[media managedObjectContext]];
     [result setMedia:media];
     
     CGSize size = [result originalSize];
@@ -44,6 +43,13 @@
     [result setHeight:[NSNumber numberWithFloat:size.height]];
     [result setConstrainProportions:YES];
     
+    return result;
+}
+
++ (SVImage *)insertNewImageInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVImage *result = [NSEntityDescription insertNewObjectForEntityForName:@"Image"
+                                                    inManagedObjectContext:context];
     return result;
 }
 

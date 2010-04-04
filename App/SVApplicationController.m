@@ -48,7 +48,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTElementPlugInWrapper.h"
 #import "KTHostProperties.h"
 #import "KTHostSetupController.h"
-#import "SVImage.h"
 #import "KTIndexPluginWrapper.h"
 #import "KTPage.h"
 #import "SVPageletManager.h"
@@ -922,10 +921,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			// load plugins
 			[_progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
             
-            //[[SVPageletManager sharedPageletManager]
-            //registerPageletClass:[SVImage class]
-            //icon:[NSImage imageNamed:@"photopage.icns"]];
-			
 			
 			// build menus
 			[[SVPageletManager sharedPageletManager] populateMenu:oAddPageletMenu

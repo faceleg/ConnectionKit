@@ -10,10 +10,41 @@
 
 #import "KTElementPlugInWrapper.h"
 #import "SVGraphicRegistrationInfo.h"
+#import "SVImage.h"
 
 #import "NSSet+Karelia.h"
 
 #import "Registration.h"
+
+
+@interface SVImageFactory : NSObject <SVGraphicFactory>
+@end
+
+
+@implementation SVImageFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVImage *result = [SVImage insertNewImageInManagedObjectContext:context];
+    [result setWidth:[NSNumber numberWithUnsignedInt:200]];
+    [result setHeight:[NSNumber numberWithUnsignedInt:200]];
+    
+    return result;
+}
+
+- (NSString *)name { return @"Photo"; }
+
+- (NSImage *)pluginIcon
+{
+    return [NSImage imageNamed:@"photopage.icns"];
+}
+
+- (NSUInteger)priority; { return 1; }
+
+@end
+
+
+#pragma mark -
 
 
 @implementation SVPageletManager
@@ -25,7 +56,8 @@ static SVPageletManager *sSharedPageletManager;
     if (!sSharedPageletManager)
     {
         // Order plug-ins first by priority, then by name
-        NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
+        NSSet *factories = [KTElementPlugInWrapper pageletPlugins];
+        factories = [factories setByAddingObject:[[[SVImageFactory alloc] init] autorelease]];
         
         NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
                                                                      ascending:YES];
@@ -38,7 +70,7 @@ static SVPageletManager *sSharedPageletManager;
         [prioritySort release];
         [nameSort release];
         
-        NSArray *sortedPlugins = [plugins KS_sortedArrayUsingDescriptors:sortDescriptors];
+        NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
         
         sSharedPageletManager = [[SVPageletManager alloc] initWithGraphicFactories:sortedPlugins];
     }
