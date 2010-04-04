@@ -14,10 +14,14 @@
 
 @interface SVPageletManager : NSObject
 {
+    NSMutableArray  *_pageletClasses;
 }
 
 + (SVPageletManager *)sharedPageletManager;
 
-- (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index withPlugins:(NSSet *)plugins;
+- (void)registerPageletClass:(Class)pageletClass
+                        icon:(NSImage *)icon;
+
+- (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
 
 @end

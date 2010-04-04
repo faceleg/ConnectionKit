@@ -9,6 +9,7 @@
 #import "SVPageletManager.h"
 
 #import "KTElementPlugInWrapper.h"
+#import "SVGraphicRegistrationInfo.h"
 
 #import "Registration.h"
 
@@ -24,16 +25,42 @@ static SVPageletManager *sSharedPageletManager;
 
 + (SVPageletManager *)sharedPageletManager; { return sSharedPageletManager; }
 
+- (id)init
+{
+    [super init];
+    
+    _pageletClasses = [[NSMutableArray alloc] init];
+    
+    return self;
+}
+
+#pragma mark Registration
+
+- (void)registerPageletClass:(Class)pageletClass
+                        icon:(NSImage *)icon;
+{
+    OBPRECONDITION(pageletClass);
+    OBPRECONDITION(icon);
+    
+    SVGraphicRegistrationInfo *info = [[SVGraphicRegistrationInfo alloc]
+                                       initWithPageletClass:pageletClass
+                                       icon:icon];
+    [_pageletClasses addObject:info];
+    [info release];
+}
+
+#pragma mark Menu
+
 // nil targeted actions will be sent to firstResponder (the active document)
 // representedObject is the bundle of the plugin
-- (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index withPlugins:(NSSet *)plugins;
+- (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
 {
     // First go through and get the localized names of each bundle, and put into a dict keyed by name
 	NSMutableDictionary *dictOfPlugins = [NSMutableDictionary dictionary];
 	
     // go through each plugin.
     KTHTMLPlugInWrapper *plugin;
-	
+	NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
 	for (plugin in plugins)
 	{
 		int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9

@@ -308,8 +308,7 @@ TO DO:
     	
 	// Add the proper menu items
 	[[SVPageletManager sharedPageletManager] populateMenu:menu
-                                                  atIndex:1
-                                              withPlugins:[KTElementPlugInWrapper pageletPlugins]];
+                                                  atIndex:1];
 	
 	
     
