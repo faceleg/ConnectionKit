@@ -11,6 +11,8 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVGraphicRegistrationInfo.h"
 
+#import "NSSet+Karelia.h"
+
 #import "Registration.h"
 
 
@@ -54,39 +56,32 @@ static SVPageletManager *sSharedPageletManager;
 // nil targeted actions will be sent to firstResponder (the active document)
 // representedObject is the bundle of the plugin
 - (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
-{
-    // First go through and get the localized names of each bundle, and put into a dict keyed by name
-	NSMutableDictionary *dictOfPlugins = [NSMutableDictionary dictionary];
-	
+{	
     // go through each plugin.
-    KTHTMLPlugInWrapper *plugin;
-	NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
-	for (plugin in plugins)
-	{
-		int priority = 5;		// default if unspecified (RichText=1, Photo=2, other=5, Advanced HTML = 9
-		id priorityID = [plugin pluginPropertyForKey:@"KTPluginPriority"];
-		if (nil != priorityID)
-		{
-			priority = [priorityID intValue];
-		}
-		if (priority > 0	// don't add zero-priority items to menu!
-			&& (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
-		{
-			NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
-			
-			[dictOfPlugins setObject:plugin
-							  forKey:[NSString stringWithFormat:@"%d %@", priority, pluginName]];
-		}
-	}
+    NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
+    
+    NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
+                                                                 ascending:YES];
+    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
+                                  initWithKey:@"name"
+                                  ascending:YES
+                                  selector:@selector(caseInsensitiveCompare:)];
+    
+    NSArray *sortDescriptors = [NSArray arrayWithObjects:prioritySort, nameSort, nil];
+    [prioritySort release];
+    [nameSort release];
+    
+    NSArray *sortedPlugins = [plugins KS_sortedArrayUsingDescriptors:sortDescriptors];
+    
+    
+    
 	
+    
+    
 	// Now add the sorted arrays
-	NSArray *sortedPriorityNames = [[dictOfPlugins allKeys] sortedArrayUsingSelector:@selector(caseInsensitiveCompare:)];
-	NSEnumerator *sortedEnum = [sortedPriorityNames objectEnumerator];
-	NSString *priorityAndName;
-	
-	while (nil != (priorityAndName = [sortedEnum nextObject]) )
+	KTHTMLPlugInWrapper *plugin;
+	for (plugin in sortedPlugins)
 	{
-		KTHTMLPlugInWrapper *plugin = [dictOfPlugins objectForKey:priorityAndName];
 		NSBundle *bundle = [plugin bundle];
 		
         if (![bundle isLoaded] && [bundle principalClassIncludingOtherLoadedBundles:YES]) [bundle load];
