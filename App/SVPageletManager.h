@@ -18,6 +18,7 @@
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 - (NSString *)name;
 - (NSImage *)pluginIcon;
+- (NSUInteger)priority; // 0-9, where 9 is Pro status
 @end
 
 
@@ -26,13 +27,13 @@
 
 @interface SVPageletManager : NSObject
 {
-    NSMutableArray  *_pageletClasses;
+    NSArray *_graphicFactories;
 }
 
 + (SVPageletManager *)sharedPageletManager;
+- (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 
-- (void)registerPageletClass:(Class)pageletClass
-                        icon:(NSImage *)icon;
+@property(nonatomic, copy, readonly) NSArray *graphicFactories;
 
 - (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
 

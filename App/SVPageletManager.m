@@ -22,34 +22,40 @@ static SVPageletManager *sSharedPageletManager;
 
 + (void)initialize
 {
-    if (!sSharedPageletManager) sSharedPageletManager = [[SVPageletManager alloc] init];
+    if (!sSharedPageletManager)
+    {
+        // Order plug-ins first by priority, then by name
+        NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
+        
+        NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
+                                                                     ascending:YES];
+        NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
+                                      initWithKey:@"name"
+                                      ascending:YES
+                                      selector:@selector(caseInsensitiveCompare:)];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:prioritySort, nameSort, nil];
+        [prioritySort release];
+        [nameSort release];
+        
+        NSArray *sortedPlugins = [plugins KS_sortedArrayUsingDescriptors:sortDescriptors];
+        
+        sSharedPageletManager = [[SVPageletManager alloc] initWithGraphicFactories:sortedPlugins];
+    }
 }
 
 + (SVPageletManager *)sharedPageletManager; { return sSharedPageletManager; }
 
-- (id)init
+- (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 {
-    [super init];
+    [self init];
     
-    _pageletClasses = [[NSMutableArray alloc] init];
+    _graphicFactories = [graphicFactories copy];
     
     return self;
 }
 
-#pragma mark Registration
-
-- (void)registerPageletClass:(Class)pageletClass
-                        icon:(NSImage *)icon;
-{
-    OBPRECONDITION(pageletClass);
-    OBPRECONDITION(icon);
-    
-    SVGraphicRegistrationInfo *info = [[SVGraphicRegistrationInfo alloc]
-                                       initWithPageletClass:pageletClass
-                                       icon:icon];
-    [_pageletClasses addObject:info];
-    [info release];
-}
+@synthesize graphicFactories = _graphicFactories;
 
 #pragma mark Menu
 
@@ -57,30 +63,7 @@ static SVPageletManager *sSharedPageletManager;
 // representedObject is the bundle of the plugin
 - (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
 {	
-    // Order plug-ins first by priority, then by name
-    NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
-    
-    NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
-                                                                 ascending:YES];
-    NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
-                                  initWithKey:@"name"
-                                  ascending:YES
-                                  selector:@selector(caseInsensitiveCompare:)];
-    
-    NSArray *sortDescriptors = [NSArray arrayWithObjects:prioritySort, nameSort, nil];
-    [prioritySort release];
-    [nameSort release];
-    
-    NSArray *sortedPlugins = [plugins KS_sortedArrayUsingDescriptors:sortDescriptors];
-    
-    
-    
-	
-    
-    
-	// Now add the sorted arrays
-	id <SVGraphicFactory> factory;
-	for (factory in sortedPlugins)
+    for (id <SVGraphicFactory> factory in [self graphicFactories])
 	{
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
