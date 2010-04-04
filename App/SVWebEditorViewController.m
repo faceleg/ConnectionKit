@@ -629,10 +629,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     SVGraphic *pagelet;
     if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
     {
-        NSString *identifier = [[[sender representedObject] bundle] bundleIdentifier];
-        
-        pagelet = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
-                                                 inManagedObjectContext:[page managedObjectContext]];
+        pagelet = [[sender representedObject] insertNewGraphicInManagedObjectContext:
+                   [[self page] managedObjectContext]];
     }
     else
     {

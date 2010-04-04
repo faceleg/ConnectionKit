@@ -6,11 +6,11 @@
 //  Copyright 2008-2009 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
 #import "KSPlugInWrapper.h"
+#import "SVPageletManager.h"
 
 
-@interface KTHTMLPlugInWrapper : KSPlugInWrapper
+@interface KTHTMLPlugInWrapper : KSPlugInWrapper <SVGraphicFactory>
 {
 	NSImage     *_icon;
 	NSString    *_templateHTML;

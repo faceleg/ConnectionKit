@@ -8,6 +8,8 @@
 
 #import "KTHTMLPlugInWrapper.h"
 
+#import "SVPlugInGraphic.h"
+
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSImage+Karelia.h"
@@ -139,5 +141,16 @@
 	}
 }
 
+#pragma mark Factory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSString *identifier = [[self bundle] bundleIdentifier];
+    
+    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
+                                                       inManagedObjectContext:context];
+    
+    return result;
+}
 
 @end

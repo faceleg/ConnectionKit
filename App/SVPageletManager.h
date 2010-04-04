@@ -12,6 +12,15 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class SVGraphic;
+@protocol SVGraphicFactory
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+@end
+
+
+#pragma mark -
+
+
 @interface SVPageletManager : NSObject
 {
     NSMutableArray  *_pageletClasses;
