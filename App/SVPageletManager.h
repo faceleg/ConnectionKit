@@ -13,8 +13,11 @@
 
 
 @class SVGraphic;
+
 @protocol SVGraphicFactory
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+- (NSString *)name;
+- (NSImage *)pluginIcon;
 @end
 
 

@@ -79,23 +79,23 @@ static SVPageletManager *sSharedPageletManager;
     
     
 	// Now add the sorted arrays
-	KTHTMLPlugInWrapper *plugin;
-	for (plugin in sortedPlugins)
+	id <SVGraphicFactory> factory;
+	for (factory in sortedPlugins)
 	{
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
-		NSString *pluginName = [plugin pluginPropertyForKey:@"KTPluginName"];
+		NSString *pluginName = [factory name];
 		
 		
 		if (!pluginName || [pluginName isEqualToString:@""])
 		{
-			NSLog(@"empty plugin name for %@", plugin);
+			NSLog(@"empty plugin name for %@", factory);
 			pluginName = @"";
 		}
 		
         
 		// Icon
-        NSImage *image = [[plugin pluginIcon] copy];
+        NSImage *image = [[factory pluginIcon] copy];
 #ifdef DEBUG
         if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
@@ -107,14 +107,14 @@ static SVPageletManager *sSharedPageletManager;
         
         
         [menuItem setTitle:pluginName];
-        if (9 == [plugin priority] && nil == gRegistrationString)
+        if (9 == [factory priority] && nil == gRegistrationString)
         {
             [[NSApp delegate] setMenuItemPro:menuItem];
         }
 		
         
 		
-		[menuItem setRepresentedObject:plugin];
+		[menuItem setRepresentedObject:factory];
         
 		
 		// set target/action
