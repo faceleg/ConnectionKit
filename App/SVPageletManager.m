@@ -109,16 +109,15 @@ static SVPageletManager *sSharedPageletManager;
 		
 		// set up the image
 		{
-			NSImage *image = [plugin pluginIcon];
+			NSImage *image = [[plugin pluginIcon] copy];
 #ifdef DEBUG
 			if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
 			
-			[image setDataRetained:YES];	// allow image to be scaled.
-			[image setScalesWhenResized:YES];
             [image setSize:NSMakeSize(32.0f, 32.0f)];
 			// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
 			[menuItem setImage:image];
+            [image release];
 			
 			
             [menuItem setTitle:pluginName];
