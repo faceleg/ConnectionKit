@@ -84,15 +84,16 @@ static SVPageletManager *sSharedPageletManager;
 	{
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
+        
+        // Name
 		NSString *pluginName = [factory name];
-		
-		
-		if (!pluginName || [pluginName isEqualToString:@""])
+		if (![pluginName length])
 		{
 			NSLog(@"empty plugin name for %@", factory);
 			pluginName = @"";
 		}
-		
+		[menuItem setTitle:pluginName];
+        
         
 		// Icon
         NSImage *image = [[factory pluginIcon] copy];
@@ -101,12 +102,11 @@ static SVPageletManager *sSharedPageletManager;
 #endif
         
         [image setSize:NSMakeSize(32.0f, 32.0f)];
-        // FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
         [menuItem setImage:image];
         [image release];
         
         
-        [menuItem setTitle:pluginName];
+        // Pro status
         if (9 == [factory priority] && nil == gRegistrationString)
         {
             [[NSApp delegate] setMenuItemPro:menuItem];
