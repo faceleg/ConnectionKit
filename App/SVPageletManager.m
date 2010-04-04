@@ -57,7 +57,7 @@ static SVPageletManager *sSharedPageletManager;
 // representedObject is the bundle of the plugin
 - (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
 {	
-    // go through each plugin.
+    // Order plug-ins first by priority, then by name
     NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
     
     NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
@@ -98,35 +98,29 @@ static SVPageletManager *sSharedPageletManager;
 			pluginName = @"";
 		}
 		
-		// set up the image
-		{
-			NSImage *image = [[plugin pluginIcon] copy];
+        
+		// Icon
+        NSImage *image = [[plugin pluginIcon] copy];
 #ifdef DEBUG
-			if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
+        if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
 #endif
-			
-            [image setSize:NSMakeSize(32.0f, 32.0f)];
-			// FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
-			[menuItem setImage:image];
-            [image release];
-			
-			
-            [menuItem setTitle:pluginName];
-			if (9 == priority && nil == gRegistrationString)
-			{
-				[[NSApp delegate] setMenuItemPro:menuItem];
-			}
-		}
+        
+        [image setSize:NSMakeSize(32.0f, 32.0f)];
+        // FIXME: it would be better to pre-scale images in the same family rather than scale here, larger than 32 might be warranted in some cases, too
+        [menuItem setImage:image];
+        [image release];
+        
+        
+        [menuItem setTitle:pluginName];
+        if (9 == priority && nil == gRegistrationString)
+        {
+            [[NSApp delegate] setMenuItemPro:menuItem];
+        }
 		
+        
 		
-		if ([plugin isKindOfClass:[KTElementPlugInWrapper class]])
-		{
-			[menuItem setRepresentedObject:plugin];
-		}
-		else
-		{
-			[menuItem setRepresentedObject:[[plugin bundle] bundleIdentifier]];
-		}
+		[menuItem setRepresentedObject:plugin];
+        
 		
 		// set target/action
 		[menuItem setAction:@selector(insertPagelet:)];
