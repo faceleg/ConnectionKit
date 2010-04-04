@@ -27,6 +27,7 @@ TO DO:
 #import "KTElementPlugInWrapper.h"
 #import "KTIndexPlugInWrapper.h"
 #import "SVLinkManager.h"
+#import "SVPageletManager.h"
 #import "KTToolbars.h"
 
 #import "NSImage+KTExtensions.h"
@@ -306,7 +307,9 @@ TO DO:
     
     	
 	// Add the proper menu items
-	[KTElementPlugInWrapper populateMenu:menu atIndex:1 withPlugins:[KTElementPlugInWrapper pageletPlugins]];
+	[[SVPageletManager sharedPageletManager] populateMenu:menu
+                                                  atIndex:1
+                                              withPlugins:[KTElementPlugInWrapper pageletPlugins]];
 	
 	
     

@@ -50,12 +50,13 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTHostSetupController.h"
 #import "KTIndexPluginWrapper.h"
 #import "KTPage.h"
-#import "SVWelcomeController.h"
+#import "SVPageletManager.h"
 #import "KTPrefsController.h"
 #import "KTPrefsController.h"
 #import "KTReleaseNotesController.h"
 #import "KTToolbars.h"
 #import "KTTranscriptController.h"
+#import "SVWelcomeController.h"
 
 #import "NSApplication+Karelia.h"
 #import "NSArray+KTExtensions.h"
@@ -922,7 +923,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			
 			
 			// build menus
-			[KTElementPlugInWrapper populateMenu:oAddPageletMenu atIndex:0 withPlugins:[KTElementPlugInWrapper pageletPlugins]];
+			[[SVPageletManager sharedPageletManager] populateMenu:oAddPageletMenu
+                                                          atIndex:0
+                                                      withPlugins:[KTElementPlugInWrapper pageletPlugins]];
 						
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];

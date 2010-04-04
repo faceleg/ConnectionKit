@@ -18,6 +18,4 @@
 + (NSSet *)pageletPlugins;
 + (NSSet *)pagePlugins;
 
-+ (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index withPlugins:(NSSet *)plugins;
-
 @end
