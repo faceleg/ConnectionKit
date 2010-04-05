@@ -8,7 +8,9 @@
 
 #import "SVMovie.h"
 
+#import "SVHTMLContext.h"
 #import "SVMediaRecord.h"
+
 
 @implementation SVMovie 
 
@@ -20,5 +22,10 @@
 }
 
 @dynamic posterFrame;
+
+- (void)writeBody;
+{
+    [[SVHTMLContext currentContext] writeHTMLString:@"<p>[[MAKE ME WRITE SOME HTML!]]</p>"];
+}
 
 @end
