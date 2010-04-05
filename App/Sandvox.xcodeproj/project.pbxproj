@@ -295,6 +295,8 @@
 		2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF4911008D54007428BB /* SVSiteItemViewController.h */; };
 		2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF8011009B59007428BB /* SVURLPreviewViewController.h */; };
 		2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DF8111009B59007428BB /* SVURLPreviewViewController.m */; };
+		274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = 274B8CC5116A76EE00AAADB6 /* SVMovie.h */; };
+		274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = 274B8CC6116A76EE00AAADB6 /* SVMovie.m */; };
 		274DF567114EB01600AC8C03 /* SVPageletTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */; };
 		274DF568114EB01600AC8C03 /* SVPageletTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -1760,6 +1762,8 @@
 		2747DF4911008D54007428BB /* SVSiteItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItemViewController.h; sourceTree = "<group>"; };
 		2747DF8011009B59007428BB /* SVURLPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVURLPreviewViewController.h; sourceTree = "<group>"; };
 		2747DF8111009B59007428BB /* SVURLPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLPreviewViewController.m; sourceTree = "<group>"; };
+		274B8CC5116A76EE00AAADB6 /* SVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMovie.h; sourceTree = "<group>"; };
+		274B8CC6116A76EE00AAADB6 /* SVMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMovie.m; sourceTree = "<group>"; };
 		274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletTitleBox.h; sourceTree = "<group>"; };
 		274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletTitleBox.m; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
@@ -3149,7 +3153,7 @@
 				2778929D10CD5F76008AA683 /* Shared */,
 				278849810F5FF0D300C70629 /* Site & Master */,
 				274DF472114E486600AC8C03 /* Site Items */,
-				3C5A73710BF7B69300776464 /* Pagelets */,
+				3C5A73710BF7B69300776464 /* Graphics */,
 				278F798F10B4485C00BDBAF7 /* Text */,
 				272EEA6A0DDA56030012005E /* Media */,
 				277E6EDF112EB46E0081389F /* Publishing */,
@@ -4330,9 +4334,11 @@
 			name = "Core Data";
 			sourceTree = "<group>";
 		};
-		3C5A73710BF7B69300776464 /* Pagelets */ = {
+		3C5A73710BF7B69300776464 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				274B8CC5116A76EE00AAADB6 /* SVMovie.h */,
+				274B8CC6116A76EE00AAADB6 /* SVMovie.m */,
 				27C20EB3114034F4006D455E /* SVIntroAndCaptionGraphic.h */,
 				27C20EB4114034F4006D455E /* SVIntroAndCaptionGraphic.m */,
 				27A617651123005100004FED /* TextBoxBodyTemplate.html */,
@@ -4350,7 +4356,7 @@
 				27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */,
 				27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */,
 			);
-			name = Pagelets;
+			name = Graphics;
 			sourceTree = "<group>";
 		};
 		3C5A73770BF7B82600776464 /* Debugging */ = {
@@ -5497,6 +5503,7 @@
 				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
 				27B0BF6C1168B8840084BFE0 /* SVPageletManager.h in Headers */,
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
+				274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */,
 				CEFEB85A116A6F9A00BA54CC /* KSPathInfoField.h in Headers */,
 				CEFEB85C116A6F9A00BA54CC /* KSPathInfoFieldCell.h in Headers */,
 			);
@@ -6899,6 +6906,7 @@
 				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
 				27B0BF6D1168B8840084BFE0 /* SVPageletManager.m in Sources */,
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
+				274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */,
 				CEFEB85B116A6F9A00BA54CC /* KSPathInfoField.m in Sources */,
 				CEFEB85D116A6F9A00BA54CC /* KSPathInfoFieldCell.m in Sources */,
 			);
