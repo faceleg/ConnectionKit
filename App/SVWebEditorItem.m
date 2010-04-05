@@ -109,7 +109,7 @@
     return result;
 }
 
-- (void)addDescendantsToMutableArray:(NSMutableArray *)descendants;
+- (void)populateDescendants:(NSMutableArray *)descendants;
 {
     [descendants addObjectsFromArray:[self childWebEditorItems]];
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd withObject:descendants];
@@ -352,7 +352,7 @@
     
     // For now, the easy thing is to cheat and gather everything up into a single array immediately, and enumerate that
     NSMutableArray *items = [[NSMutableArray alloc] init];
-    [item addDescendantsToMutableArray:items];
+    [item populateDescendants:items];
     
     _iterator = [[items objectEnumerator] retain];
     [items release];
