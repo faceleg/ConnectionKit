@@ -34,6 +34,20 @@ ul.jd_menu_vertical ul li {
 	margin: 0px;
 }
 
+
+ul.jd_menu,
+ul.jd_menu ul,
+ul.jd_menu_vertical,
+ul.jd_menu_vertical ul {
+/* DJW COMMENTING THIS OUT
+	background-color: #369;
+	border: 1px solid #036;
+	border-top: 1px solid #69C;
+	border-left: 1px solid #69C;
+	
+	height: 20px;
+*/
+}
 ul.jd_menu_vertical {
 	height: auto;
 }
@@ -43,36 +57,15 @@ ul.jd_menu ul {
 * html ul.jd_menu ul {
 	width: 1%;
 }
-
-
-
-/* This looks like stuff that would vary per design */
-
-
-ul.jd_menu,
-ul.jd_menu ul,
-ul.jd_menu_vertical,
-ul.jd_menu_vertical ul {
-
-/*
-	background-color: #369;
-	border: 1px solid #036;
-	border-top: 1px solid #69C;
-	border-left: 1px solid #69C;
-	
-	height: 20px;
-*/
-}
-
 ul.jd_menu li {
-
-/*
+/* DJW COMMENTING THIS OUT
 	font-family: sans-serif;
 	font-size: 12px;
 	color: #FFF;
 	
 	line-height: 14px;
-*/	
+*/
+	
 	margin: 0px;
 	padding: 4px 7px 3px 7px;
 	height: 13px;
@@ -80,12 +73,9 @@ ul.jd_menu li {
 	cursor: pointer;
 	white-space: nowrap;
 }
-
-
 ul.jd_menu li li {
 	width: 200px;
 }
-
 ul.jd_menu li a {
 	color: #FFF;
 	text-decoration: none;

@@ -1086,6 +1086,10 @@
 		CEF9D2040D8644D500BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
 		CEF9D2050D8644D600BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
 		CEF9D2060D8644D600BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
+		CEFEB85A116A6F9A00BA54CC /* KSPathInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFEB856116A6F9A00BA54CC /* KSPathInfoField.h */; };
+		CEFEB85B116A6F9A00BA54CC /* KSPathInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEB857116A6F9A00BA54CC /* KSPathInfoField.m */; };
+		CEFEB85C116A6F9A00BA54CC /* KSPathInfoFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFEB858116A6F9A00BA54CC /* KSPathInfoFieldCell.h */; };
+		CEFEB85D116A6F9A00BA54CC /* KSPathInfoFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEB859116A6F9A00BA54CC /* KSPathInfoFieldCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -2760,6 +2764,10 @@
 		CEF9D1F00D86446600BD9895 /* rounded.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rounded.pdf; sourceTree = "<group>"; };
 		CEF9D1F10D86446600BD9895 /* rotate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rotate.pdf; sourceTree = "<group>"; };
 		CEF9D1F20D86446600BD9895 /* grow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = grow.pdf; sourceTree = "<group>"; };
+		CEFEB856116A6F9A00BA54CC /* KSPathInfoField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPathInfoField.h; path = ../../../Shared/AppKit/KSPathInfoField.h; sourceTree = SOURCE_ROOT; };
+		CEFEB857116A6F9A00BA54CC /* KSPathInfoField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPathInfoField.m; path = ../../../Shared/AppKit/KSPathInfoField.m; sourceTree = SOURCE_ROOT; };
+		CEFEB858116A6F9A00BA54CC /* KSPathInfoFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPathInfoFieldCell.h; path = ../../../Shared/AppKit/KSPathInfoFieldCell.h; sourceTree = SOURCE_ROOT; };
+		CEFEB859116A6F9A00BA54CC /* KSPathInfoFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPathInfoFieldCell.m; path = ../../../Shared/AppKit/KSPathInfoFieldCell.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -4670,6 +4678,10 @@
 				CE01A64C0EAFD63600BDF264 /* KSNoCascadeWindow.h */,
 				CE01A64D0EAFD63600BDF264 /* KSNoCascadeWindow.m */,
 				CE01A64E0EAFD63600BDF264 /* KSOverrideConstants.h */,
+				CEFEB856116A6F9A00BA54CC /* KSPathInfoField.h */,
+				CEFEB857116A6F9A00BA54CC /* KSPathInfoField.m */,
+				CEFEB858116A6F9A00BA54CC /* KSPathInfoFieldCell.h */,
+				CEFEB859116A6F9A00BA54CC /* KSPathInfoFieldCell.m */,
 				CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */,
 				CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */,
 				CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */,
@@ -5485,6 +5497,8 @@
 				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
 				27B0BF6C1168B8840084BFE0 /* SVPageletManager.h in Headers */,
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
+				CEFEB85A116A6F9A00BA54CC /* KSPathInfoField.h in Headers */,
+				CEFEB85C116A6F9A00BA54CC /* KSPathInfoFieldCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6233,7 +6247,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
-			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://ssl.karelia.com/private/invalidLicenses.h.php?app=1\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
+			shellScript = "#!/bin/bash\n\n###\n### UPDATE SandvoxInvalidLicenses.h FOR RELEASE BUILDS\n###\n\ncurl --proxy-anyauth --insecure --user \"xcode:home.cooking.32\" \"https://secure.karelia.com/private/invalidLicenses.h.php?app=1\" -o \"${SRCROOT}/../../Shared/Licensing/SandvoxInvalidLicenses.h\"\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
 		3C5A77C40EB6E0880049B898 /* ShellScript */ = {
@@ -6885,6 +6899,8 @@
 				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
 				27B0BF6D1168B8840084BFE0 /* SVPageletManager.m in Sources */,
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
+				CEFEB85B116A6F9A00BA54CC /* KSPathInfoField.m in Sources */,
+				CEFEB85D116A6F9A00BA54CC /* KSPathInfoFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

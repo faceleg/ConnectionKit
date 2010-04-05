@@ -458,15 +458,14 @@
 
 - (NSString *)sitemenu
 {
-	if (self.site.pagesInSiteMenu)
+	if (self.site.pagesInSiteMenu)	// Are there any pages in the site menu?
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
 		[context writeNewline];
-		[context writeStartTag:@"div" idName:@"sitemenu" className:nil];
+		[context writeStartTag:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context writeNewline];
-		[context writeStartTag:@"h2" idName:nil className:@"hidden"];
+		[context writeStartTag:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
 		[context writeNewline];
-
 		[context writeString:
 		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
 		[context writeNewline];
@@ -477,10 +476,12 @@
 		[context writeEndTag];	// a
         [context writeNewline];
 		[context writeEndTag];	// h2
-
 		[context writeNewline];
-		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];
 		
+		
+		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];		// <div id="sitemenu-content">
+		[context writeNewline];
+	
 		KTSite *site = self.site;
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
 		
@@ -488,6 +489,7 @@
 		NSMutableArray *tree = [NSMutableArray array];
 		if (HIER_MENU_NONE == hierMenuType || [[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
 		{
+			// Flat menu, either by design's preference or user default
 			for (KTPage *siteMenuPage in pagesInSiteMenu)
 			{
 				NSDictionary *duple = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", nil];
@@ -495,7 +497,7 @@
 			}
 			[self outputMenuForArrayOfDuples:tree isTreeTop:NO];
 		}
-		else
+		else	// hierarchical menu
 		{
 			// now to build up the hiearchical site menu.
 			// Array of dictionaries keyed with "page" and "children" array

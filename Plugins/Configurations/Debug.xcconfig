@@ -6,7 +6,7 @@
 USER_HEADER_SEARCH_PATHS = "$(SYMROOT)/Debug/Sandvox.app/Contents/PrivateHeaders" "$(SYMROOT)/Debug/Sandvox.app/Contents/Headers"
 BUNDLE_LOADER = $(SYMROOT)/Debug/Sandvox.app/Contents/MacOS/Sandvox
 
-// we're building for Tiger and above
+// we're building for Leopard and above
 MACOSX_DEPLOYMENT_TARGET = 10.5
 SDKROOT = /Developer/SDKs/MacOSX10.5.sdk
 
