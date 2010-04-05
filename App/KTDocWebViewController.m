@@ -160,7 +160,7 @@
     
     // By default, WebKit catches and logs any exceptions in delegate methods.
     // For beta builds though, we want any exceptions to be reported back to Karelia via our feedback reporter
-#ifdef VARIANT_BETA
+#ifndef VARIANT_RELEASE
     if ([aWebView respondsToSelector:@selector(_setCatchesDelegateExceptions:)])
     {
         [aWebView _setCatchesDelegateExceptions:NO];

@@ -125,7 +125,6 @@
 				3C42E2A00D64D262004F35FD /* PBXTargetDependency */,
 				3C42DE1D0D64CCDC004F35FD /* PBXTargetDependency */,
 				3C42DDAF0D64C8D9004F35FD /* PBXTargetDependency */,
-				3C42E6080D650BAF004F35FD /* PBXTargetDependency */,
 				CEEE5AED0DAE886500B7F6A2 /* PBXTargetDependency */,
 				274E82800D627180004F89C2 /* PBXTargetDependency */,
 				CE2556D60D3432DA003A5B5E /* PBXTargetDependency */,
@@ -966,7 +965,6 @@
 		CE2232C10869F47200341BAF /* rss_on.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B70869F47200341BAF /* rss_on.png */; };
 		CE2232C20869F47200341BAF /* rss_off.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2232B80869F47200341BAF /* rss_off.png */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
-		CE2622A70A35E7C2009467ED /* preview.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = CE2622A60A35E7C2009467ED /* preview.mp4 */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE264CDE081708DD009D3B6C /* grabber.png in Resources */ = {isa = PBXBuildFile; fileRef = CE264CDB081708DD009D3B6C /* grabber.png */; };
 		CE2652D608180BA4009D3B6C /* grabberDim.png in Resources */ = {isa = PBXBuildFile; fileRef = CE2652D508180BA4009D3B6C /* grabberDim.png */; };
@@ -1088,10 +1086,6 @@
 		CEF9D2040D8644D500BD9895 /* rounded.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F00D86446600BD9895 /* rounded.pdf */; };
 		CEF9D2050D8644D600BD9895 /* rotate.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F10D86446600BD9895 /* rotate.pdf */; };
 		CEF9D2060D8644D600BD9895 /* grow.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9D1F20D86446600BD9895 /* grow.pdf */; };
-		CEFEB85A116A6F9A00BA54CC /* KSPathInfoField.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFEB856116A6F9A00BA54CC /* KSPathInfoField.h */; };
-		CEFEB85B116A6F9A00BA54CC /* KSPathInfoField.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEB857116A6F9A00BA54CC /* KSPathInfoField.m */; };
-		CEFEB85C116A6F9A00BA54CC /* KSPathInfoFieldCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CEFEB858116A6F9A00BA54CC /* KSPathInfoFieldCell.h */; };
-		CEFEB85D116A6F9A00BA54CC /* KSPathInfoFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CEFEB859116A6F9A00BA54CC /* KSPathInfoFieldCell.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1318,13 +1312,6 @@
 			proxyType = 2;
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = HTMLElement;
-		};
-		3C42E6070D650BAF004F35FD /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3C42E5EA0D650ABF004F35FD /* VideoElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = VideoElement;
 		};
 		3C42E6090D650BBD004F35FD /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2588,7 +2575,6 @@
 		CE2232B80869F47200341BAF /* rss_off.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = rss_off.png; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
-		CE2622A60A35E7C2009467ED /* preview.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = preview.mp4; sourceTree = "<group>"; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
 		CE264CD9081708DD009D3B6C /* bak.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = bak.png; sourceTree = "<group>"; };
 		CE264CDA081708DD009D3B6C /* fwd.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fwd.png; sourceTree = "<group>"; };
@@ -2768,10 +2754,6 @@
 		CEF9D1F00D86446600BD9895 /* rounded.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rounded.pdf; sourceTree = "<group>"; };
 		CEF9D1F10D86446600BD9895 /* rotate.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = rotate.pdf; sourceTree = "<group>"; };
 		CEF9D1F20D86446600BD9895 /* grow.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = grow.pdf; sourceTree = "<group>"; };
-		CEFEB856116A6F9A00BA54CC /* KSPathInfoField.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPathInfoField.h; path = ../../../Shared/AppKit/KSPathInfoField.h; sourceTree = SOURCE_ROOT; };
-		CEFEB857116A6F9A00BA54CC /* KSPathInfoField.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPathInfoField.m; path = ../../../Shared/AppKit/KSPathInfoField.m; sourceTree = SOURCE_ROOT; };
-		CEFEB858116A6F9A00BA54CC /* KSPathInfoFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSPathInfoFieldCell.h; path = ../../../Shared/AppKit/KSPathInfoFieldCell.h; sourceTree = SOURCE_ROOT; };
-		CEFEB859116A6F9A00BA54CC /* KSPathInfoFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSPathInfoFieldCell.m; path = ../../../Shared/AppKit/KSPathInfoFieldCell.m; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -3948,7 +3930,6 @@
 				CE8D5A7B112B339A007AC2F0 /* validator.css */,
 				CE35963110F3CF340009F2CA /* jdmenu */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
-				CE2622A60A35E7C2009467ED /* preview.mp4 */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
 				CED45AEC0947891100BB172E /* CheckOpenGL.qtz */,
 				3C202F4307E0132000DE4994 /* documentJavascript.txt */,
@@ -4684,10 +4665,6 @@
 				CE01A64C0EAFD63600BDF264 /* KSNoCascadeWindow.h */,
 				CE01A64D0EAFD63600BDF264 /* KSNoCascadeWindow.m */,
 				CE01A64E0EAFD63600BDF264 /* KSOverrideConstants.h */,
-				CEFEB856116A6F9A00BA54CC /* KSPathInfoField.h */,
-				CEFEB857116A6F9A00BA54CC /* KSPathInfoField.m */,
-				CEFEB858116A6F9A00BA54CC /* KSPathInfoFieldCell.h */,
-				CEFEB859116A6F9A00BA54CC /* KSPathInfoFieldCell.m */,
 				CE01A64F0EAFD63600BDF264 /* KSURLInfoField.h */,
 				CE01A6500EAFD63600BDF264 /* KSURLInfoField.m */,
 				CE01A6530EAFD63600BDF264 /* KSPDFViewController.h */,
@@ -6074,7 +6051,6 @@
 				CEC25E260997DC0F00335E28 /* diamondplate.png in Resources */,
 				795D666309D356C6005F166D /* target.png in Resources */,
 				CE91721209D51E530003310B /* target_set.png in Resources */,
-				CE2622A70A35E7C2009467ED /* preview.mp4 in Resources */,
 				CE0F676A0A39EEE50092DC43 /* globe.png in Resources */,
 				CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */,
 				CEA962C30AF6A924008A1367 /* sandvox.css in Resources */,
@@ -7010,11 +6986,6 @@
 			isa = PBXTargetDependency;
 			name = FlickrElement;
 			targetProxy = 3C42E4F70D650433004F35FD /* PBXContainerItemProxy */;
-		};
-		3C42E6080D650BAF004F35FD /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = VideoElement;
-			targetProxy = 3C42E6070D650BAF004F35FD /* PBXContainerItemProxy */;
 		};
 		3C42E60A0D650BBD004F35FD /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;

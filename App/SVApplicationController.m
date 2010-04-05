@@ -129,7 +129,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (BOOL) appIsExpired;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
 
-#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
+#if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
 #endif
 - (void)informAppHasExpired;
@@ -270,7 +270,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithBool:NO],			@"LiveDataFeeds",
 #endif
 		
-#ifdef VARIANT_BETA
+#ifndef VARIANT_RELEASE
 		[NSNumber numberWithBool:YES],			@"ShowScoutMessages",	// Alerts when there is a "Scout message" from submitting a bug/error
 //		@"Beta Testing Reports",				@"AssignSubmission",	// Virtual user for beta testing reports, DON'T go to normal support person when testing
 #else
@@ -711,7 +711,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		
 		|| ( [name isEqualToString:NSGenericException]
 			&& NSNotFound != [reason rangeOfString:@"-[QCPatch portForKey:]: There is no port with key"].location )
-#ifndef VARIANT_BETA
+#ifdef VARIANT_RELEASE
 		|| ( [name isEqualToString:NSRangeException]
 			&& NSNotFound != [reason rangeOfString:@"-[NSBigMutableString characterAtIndex:]: Range or index out of bounds"].location )
 #endif
@@ -720,7 +720,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		return NO;
 	}
 	
-#ifndef VARIANT_BETA
+#ifdef VARIANT_RELEASE
 	if ( [name isEqualToString:NSInternalInconsistencyException] )
 	{
 		// catch all Undo exceptions and simply reset
@@ -882,7 +882,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[NSApp terminate:nil];
 		}
 
-#ifdef VARIANT_BETA
+#ifndef VARIANT_RELEASE
 		NSLog(@"Running build %@", [NSApplication buildVersion]);
 #endif
 
@@ -1002,7 +1002,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	if (!_checkedExpiration)
 	{
-#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
+#if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 		/*
 		 unsigned char km[16];
 		 GetKeys((void *)km);
@@ -1308,7 +1308,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (IBAction)openSupportForum:(id)sender
 {
 	
-//#ifdef VARIANT_BETA
+//#ifndef VARIANT_RELEASE
 //	NSString *urlString = @"http://support.karelia.com/?sandvox-beta";
 //#else
 	NSString *urlString = @"http://support.karelia.com/?sandvox";
@@ -1317,18 +1317,30 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:url];	
 }
 
-#if defined(VARIANT_BETA) && defined(EXPIRY_TIMESTAMP)
+#if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus
 {
 #ifndef DEBUG
     NSString *marketingVersion = [NSApplication marketingVersion];
     NSString *buildVersion = [NSApplication buildVersion];
     
+#ifdef VARIANT_BETA
 	NSAlert *alert = [NSAlert alertWithMessageText:NSLocalizedString(@"Sandvox Public Beta", "Alert: Beta Message") 
 									 defaultButton:nil 
 								   alternateButton:nil 
 									   otherButton:nil
 						 informativeTextWithFormat:NSLocalizedString(@"You are running Sandvox version %@, build %@.\n\nThis is a Public Beta version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback...\\U201D under the Sandvox menu, or email support@karelia.com.\n\nSince this is BETA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", "Alert: Beta Informative Text"), marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
+#endif
+#ifdef VARIANT_ALPHA
+	NSAlert *alert = [NSAlert alertWithMessageText:@"Sandvox Alpha"		// Not bothering to localize this alpha text.
+									 defaultButton:nil 
+								   alternateButton:nil 
+									   otherButton:nil
+						 informativeTextWithFormat:@"You are running Sandvox version %@, build %@.\n\nThis is a private alpha version and will expire on %@. (We will make a new version available by then.)\n\nIf you find problems, please use \\U201CSend Feedback...\\U201D under the Sandvox menu, or email support@karelia.com.\n\nSince this is ALPHA software, DO NOT use it with critical data or for critical business functions. Please keep backups of your files and all source material. We cannot guarantee that future versions of Sandvox will be able to open sites created with this version!\n\nUse of this version is subject to the terms and conditions of Karelia Software's Sandvox Beta License Agreement.", marketingVersion, buildVersion, [[NSDate dateWithString:EXPIRY_TIMESTAMP] relativeFormatWithStyle:NSDateFormatterLongStyle]];
+#endif
+	
+	
+	
 	(void)[alert runModal];
 #endif
 }

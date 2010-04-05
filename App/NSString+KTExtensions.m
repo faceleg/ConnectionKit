@@ -17,7 +17,7 @@
 
 
 // TEMPORARY FOR BETA -- HOW IS NSSTRING BEING PASSED THIS METHOD?
-#ifdef VARIANT_BETA
+#ifndef VARIANT_RELEASE
 - (NSString *)identifier
 {
 	[NSException raise:NSInternalInconsistencyException format:@"calling identifier on %@", self];

@@ -5,9 +5,10 @@
 // the "marketing" version is baked into CFBundleShortVersionString
 SANDVOX_VERSION = 2.0a1
 
-// the SLA variant to wrap around the .dmg [BETA,RELEASE]
-// Also determines if VARIANT_BETA or VARIANT_RELEASE is defined.
-PRODUCT_VARIANT = BETA
+// the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
+// Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
+// For checking alpha/beta behaviors, better to test for being *not* VARIANT_RELEASE
+PRODUCT_VARIANT = ALPHA
 
 // expiry for beta
 EXPIRY_TIMESTAMP = '@\"2010-04-31 11:59:59 -0800\"'
