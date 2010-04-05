@@ -87,10 +87,8 @@
 
 #pragma mark HTML
 
-- (void)writeBody
+- (void)writeBody:(SVHTMLContext *)context
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    
     // src=
     NSURL *imageURL = [self imagePreviewURL];
     

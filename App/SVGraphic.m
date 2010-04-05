@@ -361,7 +361,7 @@
     }
     else
     {
-       [self writeBody];
+        [self writeBody:context];
     }
     
     
@@ -370,11 +370,14 @@
     if (calloutWrap) [context writeCalloutEnd];
 }
 
-- (void)writeBody;
+- (void)writeBody:(SVHTMLContext *)context;
 {
     SUBCLASSMUSTIMPLEMENT;
     [self doesNotRecognizeSelector:_cmd];
 }
+
+// For the benefit of pagelet HTML template
+- (void)writeBody { [self writeBody:[SVHTMLContext currentContext]]; }
 
 + (SVTemplate *)template;
 {

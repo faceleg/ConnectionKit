@@ -53,7 +53,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 
 @class SVTitleBox;
-@class SVTextAttachment, SVTemplate;
+@class SVTextAttachment, SVHTMLContext, SVTemplate;
 @protocol SVPage;
 
 
@@ -112,7 +112,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 #pragma mark HTML
 
-- (void)writeBody;  // Subclasses MUST override
+- (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
 
 @property(nonatomic, retain, readonly) NSString *elementID;
 - (NSString *)className;

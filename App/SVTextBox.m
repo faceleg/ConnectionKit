@@ -52,7 +52,7 @@
 
 #pragma mark HTML
 
-- (void)writeBody;
+- (void)writeBody:(SVHTMLContext *)context;
 {
     static SVTemplate *sBodyTemplate;
     if (!sBodyTemplate)

@@ -185,10 +185,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark HTML
 
-- (void)writeBody
+- (void)writeBody:(SVHTMLContext *)context
 {
     NSString *identifier = [self plugInIdentifier];
-    SVHTMLContext *context = [SVHTMLContext currentContext];
     
     NSUInteger level = [context currentHeaderLevel];
     [context setCurrentHeaderLevel:4];
