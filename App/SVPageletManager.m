@@ -10,6 +10,7 @@
 
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
+#import "SVMovie.h"
 
 #import "NSSet+Karelia.h"
 
@@ -46,6 +47,36 @@
 #pragma mark -
 
 
+@interface SVMovieFactory : NSObject <SVGraphicFactory>
+@end
+
+
+@implementation SVMovieFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVMovie *result = [SVMovie insertNewMovieInManagedObjectContext:context];
+    [result setWidth:[NSNumber numberWithUnsignedInt:200]];
+    [result setHeight:[NSNumber numberWithUnsignedInt:200]];
+    
+    return result;
+}
+
+- (NSString *)name { return @"Movie"; }
+
+- (NSImage *)pluginIcon
+{
+    return [NSImage imageNamed:@"Video.icns"];
+}
+
+- (NSUInteger)priority; { return 5; }
+
+@end
+
+
+#pragma mark -
+
+
 @implementation SVPageletManager
 
 static SVPageletManager *sSharedPageletManager;
@@ -57,6 +88,7 @@ static SVPageletManager *sSharedPageletManager;
         // Order plug-ins first by priority, then by name
         NSSet *factories = [KTElementPlugInWrapper pageletPlugins];
         factories = [factories setByAddingObject:[[[SVImageFactory alloc] init] autorelease]];
+        factories = [factories setByAddingObject:[[[SVMovieFactory alloc] init] autorelease]];
         
         NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
                                                                      ascending:YES];

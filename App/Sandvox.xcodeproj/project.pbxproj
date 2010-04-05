@@ -296,6 +296,7 @@
 		2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DF8111009B59007428BB /* SVURLPreviewViewController.m */; };
 		274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = 274B8CC5116A76EE00AAADB6 /* SVMovie.h */; };
 		274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */ = {isa = PBXBuildFile; fileRef = 274B8CC6116A76EE00AAADB6 /* SVMovie.m */; };
+		274B8D8A116A7D0400AAADB6 /* Video.icns in Resources */ = {isa = PBXBuildFile; fileRef = 274B8D89116A7D0400AAADB6 /* Video.icns */; };
 		274DF567114EB01600AC8C03 /* SVPageletTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */; };
 		274DF568114EB01600AC8C03 /* SVPageletTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */; };
 		274E77EC0D62699D004F89C2 /* NSObject+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C682BAE0D62347100B4D485 /* NSObject+KTExtensions.h */; settings = {ATTRIBUTES = (); }; };
@@ -1751,6 +1752,7 @@
 		2747DF8111009B59007428BB /* SVURLPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLPreviewViewController.m; sourceTree = "<group>"; };
 		274B8CC5116A76EE00AAADB6 /* SVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMovie.h; sourceTree = "<group>"; };
 		274B8CC6116A76EE00AAADB6 /* SVMovie.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMovie.m; sourceTree = "<group>"; };
+		274B8D89116A7D0400AAADB6 /* Video.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = Video.icns; sourceTree = "<group>"; };
 		274DF565114EB01600AC8C03 /* SVPageletTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageletTitleBox.h; sourceTree = "<group>"; };
 		274DF566114EB01600AC8C03 /* SVPageletTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageletTitleBox.m; sourceTree = "<group>"; };
 		274E823E0D627147004F89C2 /* MetaSandvox.mdimporter */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; name = MetaSandvox.mdimporter; path = /Users/Mike/Developer/Builds/Products/Debug/MetaSandvox.mdimporter; sourceTree = "<absolute>"; };
@@ -3428,6 +3430,7 @@
 				27B0BF6A1168B8840084BFE0 /* SVPageletManager.h */,
 				27B0BF6B1168B8840084BFE0 /* SVPageletManager.m */,
 				27B0BFE11168C1530084BFE0 /* photopage.icns */,
+				274B8D89116A7D0400AAADB6 /* Video.icns */,
 			);
 			name = Registration;
 			sourceTree = "<group>";
@@ -5481,8 +5484,6 @@
 				27B0BF6C1168B8840084BFE0 /* SVPageletManager.h in Headers */,
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
 				274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */,
-				CEFEB85A116A6F9A00BA54CC /* KSPathInfoField.h in Headers */,
-				CEFEB85C116A6F9A00BA54CC /* KSPathInfoFieldCell.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6167,6 +6168,7 @@
 				CE8EF8A7113DDB36002ED237 /* LogoPlaceholder.png in Resources */,
 				276C151D114A6C0300D30CFE /* GraphicInspector.xib in Resources */,
 				27B0BFE21168C1530084BFE0 /* photopage.icns in Resources */,
+				274B8D8A116A7D0400AAADB6 /* Video.icns in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6883,8 +6885,6 @@
 				27B0BF6D1168B8840084BFE0 /* SVPageletManager.m in Sources */,
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
 				274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */,
-				CEFEB85B116A6F9A00BA54CC /* KSPathInfoField.m in Sources */,
-				CEFEB85D116A6F9A00BA54CC /* KSPathInfoFieldCell.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
