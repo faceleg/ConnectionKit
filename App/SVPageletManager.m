@@ -11,6 +11,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
 #import "SVMovie.h"
+#import "SVPlugIn.h"
 
 #import "NSSet+Karelia.h"
 
@@ -80,6 +81,7 @@
 @implementation SVPageletManager
 
 static SVPageletManager *sSharedPageletManager;
+static SVPageletManager *sSharedIndexManager;
 
 + (void)initialize
 {
@@ -105,9 +107,40 @@ static SVPageletManager *sSharedPageletManager;
         
         sSharedPageletManager = [[SVPageletManager alloc] initWithGraphicFactories:sortedPlugins];
     }
+    
+    
+    if (!sSharedIndexManager)
+    {
+        // Order plug-ins first by priority, then by name
+        NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
+        NSMutableSet *factories = [plugins mutableCopy];
+        for (id <SVGraphicFactory> aFactory in plugins)
+        {
+            if (![[aFactory class] conformsToProtocol:@protocol(SVIndexPlugIn)])
+            {
+                [factories removeObject:aFactory];
+            }
+        }
+        
+        NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
+                                                                     ascending:YES];
+        NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
+                                      initWithKey:@"name"
+                                      ascending:YES
+                                      selector:@selector(caseInsensitiveCompare:)];
+        
+        NSArray *sortDescriptors = [NSArray arrayWithObjects:prioritySort, nameSort, nil];
+        [prioritySort release];
+        [nameSort release];
+        
+        NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
+        
+        sSharedIndexManager = [[SVPageletManager alloc] initWithGraphicFactories:sortedPlugins];
+    }
 }
 
 + (SVPageletManager *)sharedPageletManager; { return sSharedPageletManager; }
++ (SVPageletManager *)sharedIndexManager; { return sSharedIndexManager; }
 
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 {

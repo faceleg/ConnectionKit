@@ -14,7 +14,7 @@
 
 @class SVGraphic;
 
-@protocol SVGraphicFactory
+@protocol SVGraphicFactory <NSObject>
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 - (NSString *)name;
 - (NSImage *)pluginIcon;
@@ -31,6 +31,8 @@
 }
 
 + (SVPageletManager *)sharedPageletManager;
++ (SVPageletManager *)sharedIndexManager;
+
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 
 @property(nonatomic, copy, readonly) NSArray *graphicFactories;
