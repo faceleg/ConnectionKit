@@ -171,13 +171,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Plug-in settings storage
 
-- (BOOL)usesExtensiblePropertiesForUndefinedKey:(NSString *)key
-{
-    NSSet *keys = [[[self plugIn] class] plugInKeys];
-    BOOL result = [keys containsObject:key];
-    return result;
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
     if (context == sPlugInPropertiesObservationContext)
