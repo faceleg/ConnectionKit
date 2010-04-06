@@ -142,9 +142,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;
 - (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;
 
-- (BOOL)showDesigns;
-- (void)setShowDesigns:(BOOL)value;
-
 // Display properties
 
 - (BOOL)displaySmallPageIcons;
