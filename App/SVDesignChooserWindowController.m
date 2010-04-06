@@ -45,6 +45,9 @@
 - (void)awakeFromNib
 {
     [oViewController setupTrackingRects];
+
+	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+	oViewController.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
 }
 
 - (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
@@ -60,10 +63,6 @@
     
     [oScopeBar setDelegate:self];
     [oScopeBar reloadData];
-	
-	// load designs -- only seems to work if I do it here? seems as good a place as any...
-	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-	oViewController.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
 }
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.

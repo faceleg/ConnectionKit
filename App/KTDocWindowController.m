@@ -329,7 +329,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     if ( !_designChooserWindowController )
     {
         _designChooserWindowController = [[SVDesignChooserWindowController alloc] initWithWindowNibName:@"SVDesignChooser"];
-    }
+	}
     
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
     if (NSIsControllerMarker(design)) design = nil;
