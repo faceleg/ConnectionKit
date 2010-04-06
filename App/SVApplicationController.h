@@ -71,7 +71,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
     IBOutlet NSMenu			*oAddPageMenu;
     IBOutlet NSMenu			*oNewPageMenu;
     IBOutlet NSMenu			*oAddPageletMenu;
-	
+	IBOutlet NSMenu         *oInsertIndexMenu;
+    
 	IBOutlet NSTableView	*oDebugTable;
 	IBOutlet NSPanel		*oDebugMediaPanel;
 	
