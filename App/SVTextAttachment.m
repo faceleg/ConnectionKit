@@ -166,6 +166,24 @@
 
 #pragma mark Validation
 
+- (BOOL)validateWrap:(NSNumber **)wrap error:(NSError **)outError;
+{
+    BOOL result = YES;
+    
+    // I've defined a constant for SVGraphicWrapCenter, but have no way to support it at the moment
+    if ([*wrap integerValue] == SVGraphicWrapCenter)
+    {
+        result = NO;
+        if (outError)
+        {
+            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                            code:NSManagedObjectValidationError localizedDescription:@"Wrap Left not supported"];
+        }
+    }
+    
+    return result;
+}
+
 - (BOOL)validateForInsert:(NSError **)error;
 {
     BOOL result = [super validateForInsert:error];
