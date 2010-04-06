@@ -1,5 +1,5 @@
 //
-//  SVPageletManager.h
+//  SVGraphicFactoryManager.h
 //  Sandvox
 //
 //  Created by Mike on 04/04/2010.
@@ -25,13 +25,13 @@
 #pragma mark -
 
 
-@interface SVPageletManager : NSObject
+@interface SVGraphicFactoryManager : NSObject
 {
     NSArray *_graphicFactories;
 }
 
-+ (SVPageletManager *)sharedPageletManager;
-+ (SVPageletManager *)sharedIndexManager;
++ (SVGraphicFactoryManager *)sharedPageletManager;
++ (SVGraphicFactoryManager *)sharedIndexManager;
 
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 

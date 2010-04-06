@@ -1,12 +1,12 @@
 //
-//  SVPageletManager.m
+//  SVGraphicFactoryManager.m
 //  Sandvox
 //
 //  Created by Mike on 04/04/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVPageletManager.h"
+#import "SVGraphicFactoryManager.h"
 
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
@@ -78,10 +78,10 @@
 #pragma mark -
 
 
-@implementation SVPageletManager
+@implementation SVGraphicFactoryManager
 
-static SVPageletManager *sSharedPageletManager;
-static SVPageletManager *sSharedIndexManager;
+static SVGraphicFactoryManager *sSharedPageletManager;
+static SVGraphicFactoryManager *sSharedIndexManager;
 
 + (void)initialize
 {
@@ -105,7 +105,7 @@ static SVPageletManager *sSharedIndexManager;
         
         NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
         
-        sSharedPageletManager = [[SVPageletManager alloc] initWithGraphicFactories:sortedPlugins];
+        sSharedPageletManager = [[SVGraphicFactoryManager alloc] initWithGraphicFactories:sortedPlugins];
     }
     
     
@@ -135,12 +135,12 @@ static SVPageletManager *sSharedIndexManager;
         
         NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
         
-        sSharedIndexManager = [[SVPageletManager alloc] initWithGraphicFactories:sortedPlugins];
+        sSharedIndexManager = [[SVGraphicFactoryManager alloc] initWithGraphicFactories:sortedPlugins];
     }
 }
 
-+ (SVPageletManager *)sharedPageletManager; { return sSharedPageletManager; }
-+ (SVPageletManager *)sharedIndexManager; { return sSharedIndexManager; }
++ (SVGraphicFactoryManager *)sharedPageletManager; { return sSharedPageletManager; }
++ (SVGraphicFactoryManager *)sharedIndexManager; { return sSharedIndexManager; }
 
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 {

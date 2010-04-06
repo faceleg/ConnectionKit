@@ -50,7 +50,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTHostSetupController.h"
 #import "KTIndexPluginWrapper.h"
 #import "KTPage.h"
-#import "SVPageletManager.h"
+#import "SVGraphicFactoryManager.h"
 #import "KTPrefsController.h"
 #import "KTPrefsController.h"
 #import "KTReleaseNotesController.h"
@@ -925,7 +925,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
             
 			
 			// build menus
-			[[SVPageletManager sharedPageletManager] populateMenu:oAddPageletMenu
+			[[SVGraphicFactoryManager sharedPageletManager] populateMenu:oAddPageletMenu
                                                           atIndex:0];
 						
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];

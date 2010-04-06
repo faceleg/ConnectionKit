@@ -7,7 +7,7 @@
 //
 
 #import "KSPlugInWrapper.h"
-#import "SVPageletManager.h"
+#import "SVGraphicFactoryManager.h"
 
 
 @interface KTHTMLPlugInWrapper : KSPlugInWrapper <SVGraphicFactory>
