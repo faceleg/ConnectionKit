@@ -103,6 +103,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 - (IBAction)showReleaseNotes:(id)sender;
 - (IBAction)showTranscriptWindow:(id)sender;
 - (IBAction)showAvailableDesigns:(id)sender;
+- (IBAction) showWelcomeWindow:(id)sender;
 
 - (IBAction)showProductPage:(id)sender;
 

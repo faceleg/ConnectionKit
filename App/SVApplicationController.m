@@ -288,6 +288,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[NSNumber numberWithUnsignedInt:5],		@"KeepAtMostNBackups",
 		
 		[NSNumber numberWithBool:YES],			@"SendCrashReports",
+		[NSNumber numberWithBool:YES],			@"ShowWelcomeWindow",
 		
 		[NSNumber numberWithBool:YES],			@"EscapeNBSP",		// no longer used apparently
 		[NSNumber numberWithBool:YES],			@"GetURLsFromSafari",
@@ -1187,6 +1188,13 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
     [[NSUserDefaults standardUserDefaults] setObject:NSStringFromSize(contentSize)
                                               forKey:@"DefaultDocumentWindowContentSize"];
 }
+
+
+- (IBAction) showWelcomeWindow:(id)sender
+{
+	[[SVWelcomeController sharedController] showWindowAndBringToFront:YES initial:NO];
+}
+
 
 - (IBAction) showTranscriptWindow:(id)sender
 {

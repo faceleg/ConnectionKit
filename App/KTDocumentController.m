@@ -55,7 +55,13 @@
     }
     else
     {
-		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
+		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
+		NSUserDefaults *defaults = [controller defaults];
+
+		if ([defaults boolForKey:@"ShowWelcomeWindow"])
+		{
+			[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
+		}
     }
 }
 
