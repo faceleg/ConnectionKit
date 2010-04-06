@@ -72,3 +72,12 @@
 
 @protocol SVPageletPlugInContainer <NSObject>
 @end
+
+
+#pragma mark -
+
+
+@protocol SVIndexPlugIn <SVPageletPlugIn>
+// We need an API! In the meantime, the protocol declaration serves as a placeholder for the registration system.
+@end
+
