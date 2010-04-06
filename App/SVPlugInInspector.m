@@ -40,21 +40,23 @@ change context:(void *)context
 {
     if (context == sPlugInInspectorInspectedObjectsObservation)
     {
-        Class controllerClass = nil;
-        
+        NSString *identifier = nil;
         @try
         {
-            controllerClass = [[[self inspectedObjectsController] selection] valueForKeyPath:@"plugIn.class.inspectorViewControllerClass"];
+            identifier = [[[self inspectedObjectsController] selection] valueForKeyPath:@"plugInIdentifier"];
         }
         @catch (NSException *exception)
         {
             if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
         }
         
+        
         SVInspectorViewController *inspector = nil;
-        if (controllerClass && !NSIsControllerMarker(controllerClass))
+        if (identifier && !NSIsControllerMarker(identifier))
         {
             // If re-selecting something of the same type, keep the Inspector we aready have
+            Class controllerClass = [[[self inspectedObjectsController] selection] valueForKeyPath:@"plugIn.class.inspectorViewControllerClass"];
+            
             if ([[self selectedInspector] isKindOfClass:controllerClass]) return;
             
             
