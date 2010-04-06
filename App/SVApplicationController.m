@@ -910,13 +910,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[self warnExpiring:nil];
 #endif
 #endif
-			
+			// TODO: I've turned off the progress panel for now. In my opinion the app is fast enough to launch now that we don't need the panel. If this is confirmed, take out the panel code completely. Mike.
+            
 			// put up a splash panel with a progress indicator
 			_progressPanel = [[KSProgressPanel alloc] init];
 			[_progressPanel setMessageText:NSLocalizedString(@"Initializing...",
 															"Message while initializing launching application.")];
 			[_progressPanel setInformativeText:nil];
-			[_progressPanel makeKeyAndOrderFront:self];
+			//[_progressPanel makeKeyAndOrderFront:self];
 
 
 			// load plugins
