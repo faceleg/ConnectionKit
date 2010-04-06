@@ -1124,9 +1124,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[[oAdvancedMenu menu] removeItem:oAdvancedMenu];	// web view menu
 			oAdvancedMenu = nil;
 			
-			[[oFindSubmenu menu] removeItem:oFindSubmenu];
-			oFindSubmenu = nil;
-
 			[[oEditRawHTMLMenuItem menu] removeItem:oEditRawHTMLMenuItem];
 			oEditRawHTMLMenuItem = nil;
 			
