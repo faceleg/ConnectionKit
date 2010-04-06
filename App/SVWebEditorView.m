@@ -44,6 +44,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
 } WebKitEditableLinkBehavior;
 
 
+@interface WebView (SVPrivate)
+- (void)_setCatchesDelegateExceptions:(BOOL)flag;
+@end
+
+
 #pragma mark -
 
 
@@ -106,6 +111,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // WebView
     _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    
+#ifndef VARIANT_RELEASE
+    if ([_webView respondsToSelector:@selector(_setCatchesDelegateExceptions:)])
+    {
+        [_webView _setCatchesDelegateExceptions:NO];
+    }
+#endif
     
     [_webView setFrameLoadDelegate:self];
     [_webView setPolicyDelegate:self];
