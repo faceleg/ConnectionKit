@@ -273,6 +273,16 @@
 	if (forceBringToFront || (showIfDefaultSet && [defaults boolForKey:@"ShowWelcomeWindow"] && ![[self window] isVisible]) )
 	{
 		[self showWindow:self];
+		
+		// Convenience -- focus on first item in list
+		NSArray *recentDocs = [oRecentDocsController content];
+		if ([recentDocs count])
+		{
+			[[self window] makeFirstResponder:oRecentDocumentsTable];
+			[oRecentDocsController setSelectionIndexes:[NSIndexSet indexSetWithIndex:0]];
+		}
+
+		
 	}
 }
 
