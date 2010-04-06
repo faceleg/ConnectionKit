@@ -130,7 +130,8 @@
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index;
 {
-	DJW((@"%s",__FUNCTION__));
+	// Simulate the clicking of the OK button... 
+	[NSApp sendAction:@selector(chooseDesign:) to:nil from:self];	
 }
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *) event;
