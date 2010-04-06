@@ -58,10 +58,8 @@
 		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
 		NSUserDefaults *defaults = [controller defaults];
 
-		if ([defaults boolForKey:@"ShowWelcomeWindow"])
-		{
-			[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
-		}
+		// Open recent documents, maybe show welcome window.
+		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
     }
 }
 

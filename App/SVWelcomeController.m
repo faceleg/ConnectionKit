@@ -101,8 +101,10 @@
 	return result;
 }
 
-- (void) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
+- (BOOL) reopenPreviouslyOpenedDocumentsUsingProgressPanel:(KSProgressPanel *)progressPanel
 {
+	BOOL result = NO;		// set to yes if we want welcome window to be shown
+	
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	NSFileManager *fm = [NSFileManager defaultManager];
 	
@@ -249,20 +251,28 @@
 			[alert release];
 		}
 	}
-}
-
-- (void)showWindowAndBringToFront:(BOOL)bringToFront initial:(BOOL)firstTimeSoReopenSavedDocuments;
-{
-	if (firstTimeSoReopenSavedDocuments)
-	{
-		[self reopenPreviouslyOpenedDocumentsUsingProgressPanel:[[NSApp delegate] progressPanel]];
-	}
 	else
 	{
-		if (bringToFront || ![[self window] isVisible])
-		{
-			[self showWindow:self];
-		}
+		result = YES;		// we can show the welcome window; no recent docs opened.
+	}
+	return result;
+}
+
+- (void)showWindowAndBringToFront:(BOOL)forceBringToFront initial:(BOOL)firstTimeSoReopenSavedDocuments;
+{
+	BOOL showIfDefaultSet = YES;
+	
+	if (firstTimeSoReopenSavedDocuments)
+	{
+		showIfDefaultSet = [self reopenPreviouslyOpenedDocumentsUsingProgressPanel:[[NSApp delegate] progressPanel]];
+	}
+	
+	// Show it if we either force it to be shown, or it's allowed be shown if defaults set
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	
+	if (forceBringToFront || (showIfDefaultSet && [defaults boolForKey:@"ShowWelcomeWindow"] && ![[self window] isVisible]) )
+	{
+		[self showWindow:self];
 	}
 }
 
