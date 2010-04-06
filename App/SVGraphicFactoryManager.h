@@ -15,10 +15,15 @@
 @class SVGraphic;
 
 @protocol SVGraphicFactory <NSObject>
+
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+
 - (NSString *)name;
 - (NSImage *)pluginIcon;
 - (NSUInteger)priority; // 0-9, where 9 is Pro status
+
+- (BOOL)isIndex;
+
 @end
 
 
@@ -27,6 +32,7 @@
 
 @interface SVGraphicFactoryManager : NSObject
 {
+  @private
     NSArray *_graphicFactories;
 }
 

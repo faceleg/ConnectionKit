@@ -42,6 +42,8 @@
 
 - (NSUInteger)priority; { return 1; }
 
+- (BOOL)isIndex; { return NO; }
+
 @end
 
 
@@ -71,6 +73,8 @@
 }
 
 - (NSUInteger)priority; { return 5; }
+
+- (BOOL)isIndex; { return NO; }
 
 @end
 
@@ -116,7 +120,7 @@ static SVGraphicFactoryManager *sSharedIndexManager;
         NSMutableSet *factories = [plugins mutableCopy];
         for (id <SVGraphicFactory> aFactory in plugins)
         {
-            if (![[aFactory class] conformsToProtocol:@protocol(SVIndexPlugIn)])
+            if (![aFactory isIndex])
             {
                 [factories removeObject:aFactory];
             }

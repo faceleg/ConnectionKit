@@ -90,6 +90,8 @@
     return result;
 }
 
+- (BOOL)isIndex; { return [[self name] containsSubstring:@"Index"]; }
+
 - (NSString *)CSSClassName
 {
 	// TODO: If nothing is specified, try to assemble a good guess from the plugin properties
