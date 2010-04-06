@@ -317,6 +317,8 @@
     
     if (![NSApp isTerminating])
 	{
+		[self synchronizeOpenDocumentsUserDefault];	// do this (again) here -- in removeDocument, it doesn't actually remove it!
+		
 		// Show the placeholder window when there are no docs open
         if ([[self documents] count] == 0)
         {
@@ -327,6 +329,8 @@
 
 #pragma mark -
 #pragma mark Recent Documents
+
+// N.B.: This is called by -[NSDocumentController removeDocument:] so we will have to sync later too.
 
 - (void)noteNewRecentDocument:(NSDocument *)aDocument
 {
