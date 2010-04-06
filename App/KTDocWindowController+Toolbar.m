@@ -200,7 +200,7 @@ TO DO:
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
-    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:1];
+    [[SVGraphicFactoryManager sharedIndexFactoryManager] populateMenu:menu atIndex:1];
     
     
     return [result autorelease];
