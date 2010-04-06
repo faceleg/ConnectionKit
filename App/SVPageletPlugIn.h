@@ -30,6 +30,7 @@
 
 
 #pragma mark Storage
+
 /*
  Override these methods if the plug-in needs to handle internal settings of an unusual type (typically if the result of -valueForKey: does not conform to the <NSCoding> protocol).
  The default implementation of -serializedValueForKey: calls -valueForKey: to retrieve the value for the key, then does nothing for NSString, NSNumber, NSDate and uses <NSCoding> encoding for others.
@@ -38,6 +39,8 @@
 - (id)serializedValueForKey:(NSString *)key;
 - (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
 //  SEE SVPlugIn.h FOR MORE DETAILS
+
+- (void)setNilValueForKey:(NSString *)key;  // default implementation calls -setValue:forKey: with 0 number
 
 
 #pragma mark HTML

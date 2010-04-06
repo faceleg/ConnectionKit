@@ -168,6 +168,11 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self setValue:serializedValue forKey:key];
 }
 
+- (void)setNilValueForKey:(NSString *)key;  // default implementation calls -setValue:forKey: with 0 number
+{
+    [self setValue:[NSNumber numberWithInteger:0] forKey:key];
+}
+
 #pragma mark Thumbnail
 
 - (id <IMBImageItem>)thumbnail; { return nil; }
