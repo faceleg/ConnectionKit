@@ -10,6 +10,7 @@
 
 #import "KTHostProperties.h"
 #import "SVHTMLContext.h"
+#import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "KTSite.h"
 
