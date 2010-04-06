@@ -143,8 +143,8 @@ static SVGraphicFactoryManager *sSharedIndexManager;
     }
 }
 
-+ (SVGraphicFactoryManager *)sharedPageletManager; { return sSharedPageletManager; }
-+ (SVGraphicFactoryManager *)sharedIndexManager; { return sSharedIndexManager; }
++ (SVGraphicFactoryManager *)sharedPageletFactoryManager; { return sSharedPageletManager; }
++ (SVGraphicFactoryManager *)sharedIndexFactoryManager; { return sSharedIndexManager; }
 
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 {

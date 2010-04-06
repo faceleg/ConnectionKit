@@ -928,8 +928,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];
 			
-			[[SVGraphicFactoryManager sharedPageletManager] populateMenu:oAddPageletMenu atIndex:0];
-            [[SVGraphicFactoryManager sharedIndexManager] populateMenu:oInsertIndexMenu atIndex:0];
+			[[SVGraphicFactoryManager sharedPageletFactoryManager] populateMenu:oAddPageletMenu atIndex:0];
+            [[SVGraphicFactoryManager sharedIndexFactoryManager] populateMenu:oInsertIndexMenu atIndex:0];
 				
             
 			BOOL firstRun = [defaults boolForKey:@"FirstRun"];

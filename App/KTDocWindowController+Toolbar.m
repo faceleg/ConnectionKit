@@ -307,7 +307,7 @@ TO DO:
     
     	
 	// Add the proper menu items
-	[[SVGraphicFactoryManager sharedPageletManager] populateMenu:menu
+	[[SVGraphicFactoryManager sharedPageletFactoryManager] populateMenu:menu
                                                   atIndex:1];
 	
 	

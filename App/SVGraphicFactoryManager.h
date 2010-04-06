@@ -36,8 +36,8 @@
     NSArray *_graphicFactories;
 }
 
-+ (SVGraphicFactoryManager *)sharedPageletManager;
-+ (SVGraphicFactoryManager *)sharedIndexManager;
++ (SVGraphicFactoryManager *)sharedPageletFactoryManager;
++ (SVGraphicFactoryManager *)sharedIndexFactoryManager;
 
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 
