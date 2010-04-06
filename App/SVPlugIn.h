@@ -70,14 +70,5 @@
 #pragma mark -
 
 
-// System calls this to instantiate your plug-in
-@protocol SVPageletPlugInFactory
-+ (NSObject <SVPageletPlugIn> *)newPlugInWithArguments:(NSDictionary *)propertyStorage;
-@end
-
-
-#pragma mark -
-
-
 @protocol SVPageletPlugInContainer <NSObject>
 @end

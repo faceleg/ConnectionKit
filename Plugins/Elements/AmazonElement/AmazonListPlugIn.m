@@ -80,9 +80,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	//[AmazonOperation setAssociateID:@"karelsofwa-20"];
 }
 
-- (id)initWithArguments:(NSDictionary *)arguments
+- (id)init;
 {
-    self = [super initWithArguments:arguments];
+    self = [super init];
     
     
     // Observer storage

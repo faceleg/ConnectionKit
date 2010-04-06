@@ -13,7 +13,7 @@
 @protocol SVPage, SVPageletPlugInContainer;
 
 
-@interface SVPageletPlugIn : NSObject <SVPageletPlugIn, SVPageletPlugInFactory>
+@interface SVPageletPlugIn : NSObject <SVPageletPlugIn>
 {
   @private
     id <SVPageletPlugInContainer>   _container;
@@ -22,7 +22,7 @@
 }
 
 #pragma mark Initialization
-// Designated initializer. Called by +newPlugInWithArguments:
+// Left in for compatibility right now. Ignore for any new work!
 - (id)initWithArguments:(NSDictionary *)storage;
 
 //  Default implementation retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them

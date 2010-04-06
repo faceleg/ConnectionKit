@@ -45,11 +45,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark Initialization & Tear Down
 
-+ (id <SVPageletPlugIn>)newPlugInWithArguments:(NSDictionary *)propertyStorage;
-{
-    return [[self alloc] initWithArguments:propertyStorage];
-}
-
 - (id)initWithArguments:(NSDictionary *)storage;
 {
     self = [self init];

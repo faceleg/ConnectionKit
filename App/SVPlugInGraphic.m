@@ -127,14 +127,13 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)loadPlugIn;
 {
-    Class <SVPageletPlugInFactory> plugInFactory = [[[self plugInWrapper] bundle] principalClass];
-    if (plugInFactory)
+    Class plugInClass = [[[self plugInWrapper] bundle] principalClass];
+    if (plugInClass)
     {                
         OBASSERT(!_plugIn);
         
         // Create plug-in object
-        NSDictionary *arguments = [NSDictionary dictionaryWithObject:[NSMutableDictionary dictionary] forKey:@"PropertiesStorage"];
-        NSObject <SVPageletPlugIn> *plugIn = [plugInFactory newPlugInWithArguments:arguments];
+        NSObject <SVPageletPlugIn> *plugIn = [[plugInClass alloc] init];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
         
         // Restore plug-in's properties

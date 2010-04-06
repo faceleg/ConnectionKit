@@ -50,9 +50,9 @@
 
 #pragma mark lifetime
 
-- (id)initWithArguments:(NSDictionary *)arguments
+- (id)init;
 {
-    self = [super initWithArguments:arguments];
+    self = [super init];
     
     
     // Observer storage
@@ -363,7 +363,7 @@
         NSString *videoID = [[location URL] youTubeVideoID];
         if (videoID)
         {
-            self = [self initWithArguments:nil];
+            self = [self init];
             [self setUserVideoCode:[[location URL] absoluteString]];
         }
         else
