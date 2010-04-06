@@ -53,7 +53,17 @@
 	return [[_cellClass alloc] init];
 }
 
-
+- (void)keyDown:(NSEvent *)theEvent
+{
+	if (53 == [theEvent keyCode])		// escape -- doesn't seeem to be a constant for this.
+	{
+		[NSApp sendAction:@selector(cancelSheet:) to:nil from:self];
+	}
+	else
+	{
+		[super keyDown:theEvent];
+	}
+}
 
 
 @end
