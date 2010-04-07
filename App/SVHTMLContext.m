@@ -75,6 +75,7 @@
     [_mainCSSURL release];
     [_mainCSS release];
     
+    [_headerMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
     [_stringWriter release];
