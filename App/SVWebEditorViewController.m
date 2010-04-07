@@ -180,7 +180,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 /*  Loading is to Updating as Drawing is to Displaying (in NSView)
  */
 
-- (void)loadWebEditor
+- (void)loadPageHTMLIntoWebEditor
 {
     // Tear down old dependencies
     [self stopObservingDependencies];
@@ -321,7 +321,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
 	[self willUpdate];
     
-	[self loadWebEditor];
+	[self loadPageHTMLIntoWebEditor];
 	
     // Clearly the webview is no longer in need of refreshing
     _willUpdate = NO;
