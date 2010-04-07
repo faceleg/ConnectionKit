@@ -81,6 +81,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     
     
     [_webEditorViewController release];
+    [_sourceViewController release];
     [_placeholderViewController release];
     
     [_selectedPages release];
