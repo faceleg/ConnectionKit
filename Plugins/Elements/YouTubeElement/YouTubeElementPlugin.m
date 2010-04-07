@@ -354,16 +354,18 @@
 - (id)initWithPasteboardPropertyList:(id)propertyList
                               ofType:(NSString *)type;
 {
+    self = [self init];
+    
+    
     // Only accept YouTube video URLs
     KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
-                                                                             ofType:type];
+                                                                            ofType:type];
     
     if (location)
     {
         NSString *videoID = [[location URL] youTubeVideoID];
         if (videoID)
         {
-            self = [self init];
             [self setUserVideoCode:[[location URL] absoluteString]];
         }
         else
