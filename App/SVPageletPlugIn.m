@@ -29,12 +29,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 
 @interface SVPageletPlugIn ()
-@property(nonatomic, retain) id delegateOwner;
-@end
-
-
-@interface SVPageletPlugIn (SVPageletPlugInContainer) <SVPageletPlugInContainer>
-- (KTSite *)site;
 @end
 
 
@@ -215,21 +209,11 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject { }
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary { }		// we may want to do something different.
 
-@synthesize delegateOwner = _delegateOwner;
-
 @end
 
 
 #pragma mark -
 
-
-@implementation SVPageletPlugIn (SVPageletPlugInContainer)
-
-- (KTSite *)site;
-{
-    KTSite *result = [[self page] site];
-    return result;
-}
 
 @end
 

@@ -76,7 +76,7 @@
 
 
 #pragma mark Other
-@property(nonatomic, retain, readonly) id <SVPageletPlugInContainer> elementPlugInContainer;
+@property(nonatomic, assign) id <SVPageletPlugInContainer> elementPlugInContainer;
 
 
 #pragma mark Pasteboard

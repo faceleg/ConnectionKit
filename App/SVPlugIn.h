@@ -11,7 +11,7 @@
 
 
 @class SVHTMLContext;
-@protocol SVPage;
+@protocol SVPage, SVElementPlugInContainer;
 
 
 @protocol SVPageletPlugIn <NSObject>
@@ -23,6 +23,8 @@
 
 // Called for new pagelets. Pasteboard is non-nil if inserting by pasting or drag & drop.
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+
+- (void)setElementPlugInContainer:(id <SVElementPlugInContainer>)container;
 
 
 #pragma mark Identifier
@@ -71,6 +73,12 @@
 
 
 @protocol SVPageletPlugInContainer <NSObject>
+
+@property(nonatomic, copy) NSString *title;
+@property(nonatomic) BOOL showsTitle;
+
+@property(nonatomic) BOOL showsBorder;
+
 @end
 
 
