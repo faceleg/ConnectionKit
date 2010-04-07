@@ -182,12 +182,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_mainItem setWebEditor:nil];
     [_mainItem release];
     
-    [_webView setFrameLoadDelegate:nil];
-    [_webView setPolicyDelegate:nil];
-    [_webView setUIDelegate:nil];
-    [_webView setEditingDelegate:nil];
-    
     [_selectedItems release];
+    
+    [_webView close];
     [_webView release];
         
     [super dealloc];
