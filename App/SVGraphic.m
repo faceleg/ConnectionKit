@@ -86,17 +86,6 @@
 
 @dynamic titleBox;
 
-- (void)setTitle:(NSString *)title;
-{
-    SVTitleBox *text = [self titleBox];
-    if (!text)
-    {
-        text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletTitle" inManagedObjectContext:[self managedObjectContext]];
-        [self setTitleBox:text];
-    }
-    [text setText:title];
-}
-
 + (NSString *)placeholderTitleText;
 {
     return NSLocalizedString(@"Pagelet", "pagelet title placeholder");
@@ -438,6 +427,35 @@
     [propertyList setObject:[[self titleBox] serializedProperties] forKey:@"titleBox"];
 }
 
+#pragma mark SVPageletPlugInContainer
+
+- (NSString *)title	// get title, but without attributes
+{
+	return [[self titleBox] text];
+}
+
+- (void)setTitle:(NSString *)title;
+{
+    SVTitleBox *text = [self titleBox];
+    if (!text)
+    {
+        text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletTitle" inManagedObjectContext:[self managedObjectContext]];
+        [self setTitleBox:text];
+    }
+    [text setText:title];
+}
+
++ (NSSet *)keyPathsForValuesAffectingTitle
+{
+    return [NSSet setWithObject:@"titleBox.text"];
+}
+
+- (BOOL)showsTitle { return ![[[self titleBox] hidden] boolValue]; }
+- (void)setShowsTitle:(BOOL)show { [[self titleBox] setHidden:[NSNumber numberWithBool:!show]]; }
+
+- (BOOL)isBordered { return [[self showBorder] boolValue]; }
+- (void)setBordered:(BOOL)border { [self setShowBorder:[NSNumber numberWithBool:border]]; }
+
 @end
 
 
@@ -456,21 +474,6 @@
 + (NSSet *)keyPathsForValuesAffectingTitleHTMLString
 {
     return [NSSet setWithObject:@"titleBox.textHTMLString"];
-}
-
-- (NSString *)titleText	// get title, but without attributes
-{
-	return [[self titleBox] text];
-}
-
-- (void)setTitleText:(NSString *)value
-{
-	[self setTitle:value];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingTitleText
-{
-    return [NSSet setWithObject:@"title"];
 }
 
 @end

@@ -7,6 +7,7 @@
 //
 
 #import "SVContentObject.h"
+#import "SVPlugIn.h"
 #import <iMedia/IMBImageItem.h>
 
 
@@ -57,7 +58,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @protocol SVPage;
 
 
-@interface SVGraphic : SVContentObject <SVGraphic>
+@interface SVGraphic : SVContentObject <SVGraphic, SVPageletPlugInContainer>
 
 #pragma mark Initialization
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
