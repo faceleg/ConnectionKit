@@ -99,7 +99,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (NSObject <SVPageletPlugIn> *)plugIn
 {
-	if (!_plugIn) 
+	if (!_plugIn && [self plugInIdentifier])    // during undo/redo, plugInIdentifier may not have been set up yet
 	{
 		[self loadPlugIn];
         
