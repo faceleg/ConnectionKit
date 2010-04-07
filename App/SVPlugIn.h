@@ -77,7 +77,7 @@
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic) BOOL showsTitle;
 
-@property(nonatomic) BOOL showsBorder;
+@property(nonatomic, getter=isBordered) BOOL bordered;
 
 @end
 
