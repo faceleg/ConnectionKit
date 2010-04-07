@@ -106,6 +106,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     [self setOutlineView:nil];
     
     
+    [self setContent:nil];  // implementation relies on .rootPage being non-nil, so must do this first
+	[self setRootPage:nil];
+    
     // Dump the pages list
     [_draggedItems release];
     
@@ -119,8 +122,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	[_cachedCustomPageIcons release];
 	[_customIconGenerationQueue release];
     
-    [self setContent:nil];
-	
+    
 	[super dealloc];
 }
 
