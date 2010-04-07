@@ -45,16 +45,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark Initialization & Tear Down
 
-- (id)initWithArguments:(NSDictionary *)storage;
-{
-    self = [self init];
-    
-    _container = [[storage objectForKey:@"Container"] retain];
-    if (!_container) _container = self;
-    
-    return self;
-}
-
 - (void)awakeFromFetch;
 {
     [self awakeFromBundleAsNewlyCreatedObject:NO];

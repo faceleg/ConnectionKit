@@ -22,8 +22,6 @@
 }
 
 #pragma mark Initialization
-// Left in for compatibility right now. Ignore for any new work!
-- (id)initWithArguments:(NSDictionary *)storage;
 
 //  Default implementation retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
