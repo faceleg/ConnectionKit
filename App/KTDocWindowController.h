@@ -93,7 +93,7 @@ extern NSString *gInfoWindowAutoSaveName;
 
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
-@property(nonatomic, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
+@property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
 @property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
 
 

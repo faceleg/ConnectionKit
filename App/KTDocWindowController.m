@@ -50,6 +50,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 
 @interface KTDocWindowController ()
+@property(nonatomic, retain, readwrite) SVWebContentAreaController *webContentAreaController;
 @end
 
 
@@ -83,9 +84,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)dealloc
 {
-	// Get rid of the site outline controller
+	// Get rid of view controllers
 	[self setSiteOutlineViewController:nil];
-	
+	[self setWebContentAreaController:nil];
 	
     // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
