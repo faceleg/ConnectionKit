@@ -523,31 +523,43 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
     SVWebEditorItem *selectedItem = [self selectedItem];
-    if (!domRange && selectedItem)
+    if (!domRange)
     {
-        DOMElement *domElement = [selectedItem HTMLElement];
-        DOMElement *editableElement = [domElement enclosingContentEditableElement];
-        if (editableElement && domElement != editableElement)
+        if (selectedItem)
         {
-            [[self window] makeFirstResponder:[domElement documentView]];
-            
-            DOMRange *range = [[domElement ownerDocument] createRange];
-            if ([domElement hasChildNodes])
+            DOMElement *domElement = [selectedItem HTMLElement];
+            DOMElement *editableElement = [domElement enclosingContentEditableElement];
+            if (editableElement && domElement != editableElement)
             {
-                [range selectNodeContents:domElement];
+                [[self window] makeFirstResponder:[domElement documentView]];
+                
+                DOMRange *range = [[domElement ownerDocument] createRange];
+                if ([domElement hasChildNodes])
+                {
+                    [range selectNodeContents:domElement];
+                }
+                else
+                {
+                    [range selectNode:domElement];
+                }
+                [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
             }
             else
             {
-                [range selectNode:domElement];
+                [[self window] makeFirstResponder:self];
             }
+        }
+        
+        // There's no selected items left, so move cursor to left of deselected item
+        else if (itemToDeselect)
+        {
+            DOMElement *element = [itemToDeselect HTMLElement];
+            DOMRange *range = [[element ownerDocument] createRange];
+            [range setStartBefore:element];
+            [range collapse:YES];
             [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
         }
-        else
-        {
-            [[self window] makeFirstResponder:self];
-        }
     }
-    
     
     
     // Update parentItems list
