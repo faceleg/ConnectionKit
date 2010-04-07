@@ -90,7 +90,7 @@
     return result;
 }
 
-- (BOOL)isIndex; { return [[self name] containsSubstring:@"Index"]; }
+- (BOOL)isIndex; { return [[self name] rangeOfString:@"Index"].location != NSNotFound; }
 
 - (NSString *)CSSClassName
 {
