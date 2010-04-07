@@ -111,6 +111,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // WebView
     _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
+    [_webView setShouldCloseWithWindow:YES];    // seems correct for a doc-based app
     
 #ifndef VARIANT_RELEASE
     if ([_webView respondsToSelector:@selector(_setCatchesDelegateExceptions:)])
