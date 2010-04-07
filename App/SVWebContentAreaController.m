@@ -226,8 +226,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 - (void)setSelectedViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *) controller;
 {
     // Store
-    [controller retain];
-    [_selectedViewControllerWhenReady release]; _selectedViewControllerWhenReady = controller;
+    _selectedViewControllerWhenReady = controller;
     
     
     //  Either the view's ready to appear, or we need to wait until it really is

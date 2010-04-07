@@ -64,7 +64,7 @@ typedef enum {
 @property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
 
 // If the controller is ready, displays it immediately. If not, the existing view remains on screen until either the new view is ready. If too much time elapses before the new view is ready, a placeholder is swapped in the meantime. Passing nil is fine and will switch to the placeholder view
-@property(nonatomic, retain) NSViewController <SVSiteItemViewController> *selectedViewControllerWhenReady;
+@property(nonatomic, assign) NSViewController <SVSiteItemViewController> *selectedViewControllerWhenReady;
 
 - (void)presentLoadingViewController;
 
