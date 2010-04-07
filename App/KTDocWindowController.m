@@ -366,6 +366,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (IBAction)addPage:(id)sender;             // your basic page
 {
     [[self pagesController] setEntityName:@"Page"];
+    [[self pagesController] setCollectionPreset:nil];
     [[self pagesController] add:self];
 }
 
