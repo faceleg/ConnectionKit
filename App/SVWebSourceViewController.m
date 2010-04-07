@@ -48,13 +48,13 @@
 
 
 
-- (void) webEditorViewControllerWillUpdate:(NSNotification *)aNotification
+- (void)webEditorViewControllerWillUpdate:(NSNotification *)aNotification
 {	
 	if ([[self view] window] || nil == aNotification)		// only do something if we are attached to a window or this is a forced notification
 	{
 		KTPage *page = [self.webEditorViewController page];
 		
-		NSString *pageHTML = [page markupString];
+		NSString *pageHTML = (page) ? [page markupString] : @"";
 		
 		NSTextStorage *textStorage = [oSourceView textStorage];
 		NSRange fullRange = NSMakeRange(0, [textStorage length]);
