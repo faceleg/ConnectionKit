@@ -7,10 +7,12 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KTDesign.h"		// for fake protocol
+
 
 @class KTDesign;
 
-@interface KTDesignFamily : NSObject {
+@interface KTDesignFamily : NSObject <IKImageBrowserItem>  {
 
 	NSMutableArray *_designs;
 }

@@ -47,7 +47,7 @@
     [oViewController setupTrackingRects];
 
 	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-	oViewController.designs = designs; // [KTDesign consolidateDesignsIntoFamilies:designs];
+	oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:designs];
 }
 
 - (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;

@@ -228,7 +228,7 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 			{
 				family = [[[KTDesignFamily alloc] init] autorelease];
 				[families setObject:family forKey:parentBundleIdentifier];	// so we can find later
-				[result addObject:result];	// first time seen, so add to result list
+				[result addObject:family];	// first time seen, so add to result list
 			}
 			[family addDesign:design];	// add to list of children
 		}
