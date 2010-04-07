@@ -354,6 +354,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     _needsUpdate = YES;
     
     [self scheduleUpdate];
+    [self stopObservingDependencies];   // no point observing now we're marked for update
 }
 
 - (void)stopObservingDependencies;
