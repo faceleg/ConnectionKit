@@ -49,6 +49,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
+- (void)stopObservingDependencies;
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
@@ -182,11 +183,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (void)loadWebEditor
 {
     // Tear down old dependencies
-    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
-    {
-        [[aDependency object] removeObserver:self
-                                  forKeyPath:[aDependency keyPath]];
-    }
+    [self stopObservingDependencies];
     
     // And DOM controllers.
     [[[self webEditor] mainItem] setChildWebEditorItems:nil];
@@ -357,6 +354,17 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     _needsUpdate = YES;
     
     [self scheduleUpdate];
+}
+
+- (void)stopObservingDependencies;
+{
+    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
+    {
+        [[aDependency object] removeObserver:self
+                                  forKeyPath:[aDependency keyPath]];
+    }
+    
+    [_pageDependencies release]; _pageDependencies = nil;
 }
 
 - (void)updateIfNeeded
