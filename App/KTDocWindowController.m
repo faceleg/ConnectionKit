@@ -59,6 +59,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 @implementation KTDocWindowController
 
++ (void)initialize;
+{
+    [self exposeBinding:@"contentTitle"];
+}
+
 /*	Designated initializer.
  */
 - (id)initWithWindow:(NSWindow *)window;
