@@ -11,10 +11,10 @@
 #import "KTPage+Internal.h"
 #import "KTDesign.h"
 #import "KTSite.h"
-#import "SVHTMLContext.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
 #import "KTPage+Internal.h"
+#import "SVPublishingHTMLContext.h"
 #import "KTTranscriptController.h"
 
 #import "KTMediaFileUpload.h"
@@ -525,9 +525,16 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
 	
 	// Generate HTML data
-	KTPage *masterPage = ([item isKindOfClass:[KTPage class]]) ? (KTPage *)item : [item parentPage];
-	NSString *HTML = [[item markupString] stringByAdjustingHTMLForPublishing];
-	OBASSERT(HTML);
+	NSMutableString *HTML = [[NSMutableString alloc] init];
+    
+    SVPublishingHTMLContext *context = [[SVPublishingHTMLContext alloc]
+                                        initWithStringWriter:HTML];
+    [context setCurrentPage:item];
+	
+	[item writeHTML:context];
+    [context release];
+    
+    KTPage *masterPage = ([item isKindOfClass:[KTPage class]]) ? (KTPage *)item : [item parentPage];
     
     if ([self status] > KTPublishingEngineStatusUploading) return; // Engine may be cancelled mid-parse. If so, go no further.
 	
