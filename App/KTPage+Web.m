@@ -81,19 +81,15 @@
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
     [context setCurrentPage:self];
 	
-    [context push];
-	[self writeHTML];
-    [context pop];
+	[self writeHTML:context];
     
     [context release];
     return result;
 }
 
-- (void)writeHTML;  // prepares the current HTML context (XHTML, encoding etc.), then writes to it
+- (void)writeHTML:(SVHTMLContext *)context;
 {
-	// Build the HTML
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    
+	// Build the HTML    
     [context setXHTML:[self isXHTML]];
     [context setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
     [context setLanguage:[[self master] language]];
@@ -101,8 +97,9 @@
     [context setMainCSSURL:[NSURL URLWithString:[self pathToDesignFile:@"main.css"]
                                   relativeToURL:[context baseURL]]];
      
+    
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
-    [parser parseIntoHTMLContext:[SVHTMLContext currentContext]];
+    [parser parseIntoHTMLContext:context];
     [parser release];
 }
 

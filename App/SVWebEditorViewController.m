@@ -197,9 +197,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [context setCurrentPage:[self page]];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"]];
     
-    [SVHTMLContext pushContext:context];    // will pop after loading
-	[[self page] writeHTML];
-    [SVHTMLContext popContext];
+	[[self page] writeHTML:context];
     
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the

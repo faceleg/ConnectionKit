@@ -893,11 +893,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [context setLiveDataFeeds:NO];
     [context setCurrentPage:[[self site] rootPage]];
     
-    [context push];
-    [[[self site] rootPage] writeHTML];
-    [context pop];
-	
-    [context release];
+    [[[self site] rootPage] writeHTML:context];
+	[context release];
     
 	
     // Load into webview
@@ -1095,10 +1092,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     [context setCurrentPage:[[self site] rootPage]];
     
-    [context push];
-    [[[self site] rootPage] writeHTML];
-    [context pop];
-    
+    [[[self site] rootPage] writeHTML:context];
     [context release];
     
     return result;
