@@ -79,6 +79,8 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 													name:NSViewBoundsDidChangeNotification
 												  object:[self view]];
 	
+	self.view = nil;		// stop observing early.
+	
 	self.activeTextField = nil;
 	[_metaDescriptionCountdown release];
 	[_windowTitleCountdown release];
@@ -100,7 +102,10 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 		[oPagesController removeObserver:self forKeyPath:@"selection.metaDescription"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.windowTitle"];
 		[oPagesController removeObserver:self forKeyPath:@"selection.fileName"];
-		
+		[oPagesController removeObserver:self forKeyPath:@"selection.baseExampleURLString"];
+		[oPagesController removeObserver:self forKeyPath:@"selection.title"];
+		[oPagesController removeObserver:self forKeyPath:@"selectedObjects"];
+				
 		[[oDocWindowController webContentAreaController] removeObserver:self forKeyPath:@"selectedViewController"];
 
 	}
@@ -166,10 +171,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 						  context:sSelectedObjectsObservationContext];
 	[self updateFieldsBasedOnSelectedSiteOutlineObjects:[oPagesController selectedObjects]];
 	
-	[[oDocWindowController webContentAreaController] addObserver:self
-													  forKeyPath:@"selectedViewController"
-														 options:NSKeyValueObservingOptionNew
-														 context:sSelectedViewControllerObservationContext];
+	[[oDocWindowController webContentAreaController]
+						addObserver:self
+						 forKeyPath:@"selectedViewController"
+							options:NSKeyValueObservingOptionNew
+							context:sSelectedViewControllerObservationContext];
 	[self rebindWindowTitleAndMetaDescriptionFields];
 
 	
