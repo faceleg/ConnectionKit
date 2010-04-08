@@ -50,7 +50,7 @@
     // Gather the HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:htmlString];
+    SVHTMLContext *context = [[[[self HTMLContext] class] alloc] initWithStringWriter:htmlString];
     [context copyPropertiesFromContext:[self HTMLContext]];
     
     [context push];

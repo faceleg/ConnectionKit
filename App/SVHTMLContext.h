@@ -32,7 +32,6 @@ typedef enum {
     NSURL   *_baseURL;
     KTPage	*_currentPage;
     
-	KTHTMLGenerationPurpose	_generationPurpose;
 	BOOL                    _liveDataFeeds;
     NSStringEncoding        _stringEncoding;
     NSString                *_language;
@@ -61,7 +60,7 @@ typedef enum {
 @property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
 @property(nonatomic, copy) NSString *language;
 
-@property(nonatomic) KTHTMLGenerationPurpose generationPurpose;
+@property(nonatomic, readonly) KTHTMLGenerationPurpose generationPurpose;
 @property(nonatomic, readonly, getter=isEditable) BOOL editable; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;

@@ -18,8 +18,10 @@
 #import "KTPage.h"
 #import "KTMaster.h"
 #import "SVMediaRecord.h"
+#import "SVQuickLookPreviewHTMLContext.h"
 #import "SVTextContentHTMLContext.h"
 #import "SVTitleBox.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "KSSilencingConfirmSheet.h"
 #import "KSThreadProxy.h"
@@ -886,9 +888,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Put together the HTML for the thumbnail
     NSMutableString *thumbnailHTML = [[NSMutableString alloc] init];
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:thumbnailHTML];
+    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:thumbnailHTML];
     
-    [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
     [context setLiveDataFeeds:NO];
     [context setCurrentPage:[[self site] rootPage]];
     
@@ -1090,9 +1091,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT([NSThread currentThread] == [self thread]);
     
     NSMutableString *result = [NSMutableString string];
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
+    SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] initWithStringWriter:result];
     
-    [context setGenerationPurpose:kSVHTMLGenerationPurposeQuickLookPreview];
     [context setCurrentPage:[[self site] rootPage]];
     
     [context push];

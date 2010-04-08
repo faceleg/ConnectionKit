@@ -41,6 +41,10 @@
     [super dealloc];
 }
 
+#pragma mark Purpose
+
+- (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeEditing; }
+
 #pragma mark DOM Controllers
 
 - (NSArray *)webEditorItems;

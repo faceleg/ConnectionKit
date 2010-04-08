@@ -50,9 +50,7 @@
     [super initWithStringWriter:writer];
     
     _stringWriter = [writer retain];
-    
-    _generationPurpose = kSVHTMLGenerationPurposeNormal;
-    
+        
     _includeStyling = YES;
     _mainCSS = [[NSMutableString alloc] init];
     
@@ -90,7 +88,7 @@
 @synthesize encoding = _stringEncoding;
 @synthesize language = _language;
 
-@synthesize generationPurpose = _generationPurpose;
+- (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeNormal; }
 
 - (BOOL)isEditable { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
 + (NSSet *)keyPathsForValuesAffectingEditable
@@ -120,7 +118,6 @@
     [self setLiveDataFeeds:[context liveDataFeeds]];
     [self setXHTML:[context isXHTML]];
     [self setEncoding:[context encoding]];
-    [self setGenerationPurpose:[context generationPurpose]];
 }
 
 #pragma mark CSS

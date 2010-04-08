@@ -195,7 +195,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:pageHTML];
     
     [context setCurrentPage:[self page]];
-    [context setGenerationPurpose:kSVHTMLGenerationPurposeEditing];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"]];
     
     [SVHTMLContext pushContext:context];    // will pop after loading
@@ -904,7 +903,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         // Want HTML of pagelets on pboard
         NSMutableString *html = [[NSMutableString alloc] init];
         SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
-        [context setGenerationPurpose:kSVHTMLGenerationPurposeNormal];
         [context push];
         
         
