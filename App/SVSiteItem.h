@@ -41,7 +41,7 @@
 #pragma mark Drafts and Indexes
 
 @property(nonatomic, copy) NSNumber *isDraft;
-- (BOOL)pageOrParentDraft;
+- (BOOL)isDraftOrHasDraftAncestor;
 - (void)setPageOrParentDraft:(BOOL)inDraft;
 - (BOOL)excludedFromSiteMap;
 

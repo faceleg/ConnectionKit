@@ -73,12 +73,12 @@
 	[[self parentPage] invalidatePagesInIndexCache];
 }
 
-- (BOOL)pageOrParentDraft
+- (BOOL)isDraftOrHasDraftAncestor
 {
 	BOOL result = [[self isDraft] boolValue];
 	if (!result && [self parentPage] != nil)
 	{
-		result = [[self parentPage] pageOrParentDraft];
+		result = [[self parentPage] isDraftOrHasDraftAncestor];
 	}
 	return result;
 }
@@ -104,7 +104,7 @@
 		NSString *serverPath = [self publishedPath];
 		
 		// thinks it should be in index, so see if maybe we shouldn't publish it.  Faster to check serverPath first.
-		if (nil == serverPath && [self pageOrParentDraft])
+		if (nil == serverPath && [self isDraftOrHasDraftAncestor])
 		{
 			result = YES;	// DON'T include if if hasn't been published before, and if it's draft
 		}

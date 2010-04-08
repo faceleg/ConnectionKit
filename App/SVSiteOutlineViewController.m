@@ -828,7 +828,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		//[cell setStaleness:isPageStale ? kStalenessPage : kNotStale];
 		
 		// Draft
-		BOOL isDraft = [item pageOrParentDraft];
+		BOOL isDraft = [item isDraftOrHasDraftAncestor];
 		[cell setDraft:isDraft];
 		
 		// Code Injection
