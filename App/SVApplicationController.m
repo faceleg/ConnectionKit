@@ -647,7 +647,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
     else if (action == @selector(toggleMediaBrowserShown:))
     {
-        if ([[[IMBPanelController sharedPanelControllerWithoutLoading] window] isVisible])
+        if ([IMBPanelController isSharedPanelControllerLoaded] &&
+            [[[IMBPanelController sharedPanelController] window] isVisible])
         {
             [menuItem setTitle:NSLocalizedString(@"Hide Media Browser", @"menu title to hide inspector panel")];
         }
