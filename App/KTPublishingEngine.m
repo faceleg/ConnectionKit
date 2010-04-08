@@ -507,29 +507,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)_parseAndUploadPageIfNeeded:(KTPage *)page
+- (void)_parseAndUploadPageIfNeeded:(KTPage *)item
 {
 	OBASSERT([NSThread isMainThread]);
 	
 	
-    if ([page isKindOfClass:[KTPage class]])
-	{
-		// Don't publish drafts or special pages with no direct content
-		if ([(KTPage *)page pageOrParentDraft]) return;
-	}
+    // Don't publish drafts or special pages with no direct content
+    if ([item isDraftOrHasDraftAncestor]) return;
     
     
     
     // Bail early if the page is not for publishing. This MUST come after testing if the page is a
     // File Download, as they have no upload path, but still need to process media. Case 40515.
-	NSString *uploadPath = [page uploadPath];
+	NSString *uploadPath = [item uploadPath];
 	if (!uploadPath) return;
     
     
 	
 	// Generate HTML data
-	KTPage *masterPage = ([page isKindOfClass:[KTPage class]]) ? (KTPage *)page : [page parentPage];
-	NSString *HTML = [[page markupString] stringByAdjustingHTMLForPublishing];
+	KTPage *masterPage = ([item isKindOfClass:[KTPage class]]) ? (KTPage *)item : [item parentPage];
+	NSString *HTML = [[item markupString] stringByAdjustingHTMLForPublishing];
 	OBASSERT(HTML);
     
     if ([self status] > KTPublishingEngineStatusUploading) return; // Engine may be cancelled mid-parse. If so, go no further.
@@ -544,7 +541,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
 	
     NSData *digest = nil;
-    if (![self shouldUploadHTML:HTML encoding:encoding forPage:page toPath:fullUploadPath digest:&digest])
+    if (![self shouldUploadHTML:HTML encoding:encoding forPage:item toPath:fullUploadPath digest:&digest])
     {
         return;
     }
@@ -559,7 +556,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         if (digest)
         {
-            [transferRecord setProperty:page forKey:@"object"];
+            [transferRecord setProperty:item forKey:@"object"];
             [transferRecord setProperty:digest forKey:@"dataDigest"];
             [transferRecord setProperty:fullUploadPath forKey:@"path"];
         }
@@ -567,7 +564,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
 	// Ask the delegate for any extra resource files that the parser didn't catch
-    if ([page isKindOfClass:[KTPage class]])
+    if ([item isKindOfClass:[KTPage class]])
     {
         NSMutableSet *resources = [[NSMutableSet alloc] init];
         
@@ -584,18 +581,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	
     
 	// Generate and publish RSS feed if needed
-	if ([page isKindOfClass:[KTPage class]] &&
-        [(KTPage *)page collectionSyndicate] &&
-        [(KTPage *)page collectionCanSyndicate])
+	if ([item isKindOfClass:[KTPage class]] &&
+        [(KTPage *)item collectionSyndicate] &&
+        [(KTPage *)item collectionCanSyndicate])
 	{
-		NSString *RSSString = [(KTPage *)page RSSFeedWithParserDelegate:self];
+		NSString *RSSString = [(KTPage *)item RSSFeedWithParserDelegate:self];
 		if (RSSString)
 		{			
 			// Now that we have page contents in unicode, clean up to the desired character encoding.
 			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
 			OBASSERT(RSSData);
 			
-			NSString *RSSFilename = [(KTPage *)page RSSFileName];
+			NSString *RSSFilename = [(KTPage *)item RSSFileName];
 			NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
 			[self uploadData:RSSData toPath:RSSUploadPath];
 		}
