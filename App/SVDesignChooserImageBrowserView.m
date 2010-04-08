@@ -35,6 +35,8 @@
 		[self performSelector:@selector(setCellClass:) withObject:_cellClass];
 	}
 	
+	[self setAllowsEmptySelection:NO];	// doesn't seem to stick when set in IB
+	
 	//	[self setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
 	//	[self setCellSize:NSMakeSize(44.0,22.0)];
 	[self setIntercellSpacing:NSMakeSize(0.0,0.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
