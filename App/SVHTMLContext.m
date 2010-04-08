@@ -242,7 +242,11 @@
 #pragma mark Media
 
 // Up to subclasses to implement
-- (void)addMedia:(id <SVMedia>)media; { }
+- (NSURL *)addMedia:(id <SVMedia>)media;
+{
+    NSURL *result = [media fileURL];
+    return result;
+}
 
 #pragma mark Resource Files
 - (void)addResource:(NSURL *)resourceURL;   // call to register the resource for needing publishing

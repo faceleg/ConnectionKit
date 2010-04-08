@@ -6,7 +6,8 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-//#import <Cocoa/Cocoa.h>
+
+#import <Foundation/Foundation.h>
 #import <iMedia/IMBImageItem.h>
 
 

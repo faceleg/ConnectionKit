@@ -107,7 +107,7 @@ typedef enum {
 
 
 #pragma mark Media
-- (void)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMedia:(id <SVMedia>)media;    // returns the URL to find the media at. Pass on to -relativeURLStringOfURL: etc.
 
 
 #pragma mark Resource Files

@@ -202,10 +202,11 @@
 
 - (NSSet *)media; { return [[_media copy] autorelease]; }
 
-- (void)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMedia:(id <SVMedia>)media;
 {
-    [super addMedia:media];
+    NSURL *result = [super addMedia:media];
     [_media addObject:media];
+    return result;
 }
 
 @end
