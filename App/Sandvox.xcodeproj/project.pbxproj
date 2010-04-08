@@ -1071,6 +1071,8 @@
 		CEC4D2BC0934333800D75C23 /* ExceptionHandling.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEC4D2BB0934333800D75C23 /* ExceptionHandling.framework */; };
 		CEC69B06108E6FC4000E6E84 /* MAAttachedWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */; };
 		CEC69B07108E6FC4000E6E84 /* MAAttachedWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */; };
+		CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = CED05D23116E5105003228C5 /* SVPublishingHTMLContext.h */; };
+		CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = CED05D24116E5105003228C5 /* SVPublishingHTMLContext.m */; };
 		CED196C50AC33F90002E8A4A /* Sandvox Help in Resources */ = {isa = PBXBuildFile; fileRef = CED194330AC33F8F002E8A4A /* Sandvox Help */; };
 		CED26DC50D383F4B002C0137 /* a2hosting.png in Resources */ = {isa = PBXBuildFile; fileRef = CED26DC40D383F4B002C0137 /* a2hosting.png */; };
 		CED45AED0947891100BB172E /* CheckOpenGL.qtz in Resources */ = {isa = PBXBuildFile; fileRef = CED45AEC0947891100BB172E /* CheckOpenGL.qtz */; };
@@ -2735,6 +2737,8 @@
 		CEC69B04108E6FC4000E6E84 /* MAAttachedWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAAttachedWindow.h; sourceTree = "<group>"; };
 		CEC69B05108E6FC4000E6E84 /* MAAttachedWindow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MAAttachedWindow.m; sourceTree = "<group>"; };
 		CECCED7C0E646B6800BE9016 /* Symbolication.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Symbolication.framework; path = /System/Library/PrivateFrameworks/Symbolication.framework; sourceTree = "<absolute>"; };
+		CED05D23116E5105003228C5 /* SVPublishingHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishingHTMLContext.h; sourceTree = "<group>"; };
+		CED05D24116E5105003228C5 /* SVPublishingHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPublishingHTMLContext.m; sourceTree = "<group>"; };
 		CED194330AC33F8F002E8A4A /* Sandvox Help */ = {isa = PBXFileReference; lastKnownFileType = folder; path = "Sandvox Help"; sourceTree = "<group>"; };
 		CED26DC40D383F4B002C0137 /* a2hosting.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = a2hosting.png; sourceTree = "<group>"; };
 		CED45AEC0947891100BB172E /* CheckOpenGL.qtz */ = {isa = PBXFileReference; lastKnownFileType = file.bplist; path = CheckOpenGL.qtz; sourceTree = "<group>"; };
@@ -3187,6 +3191,8 @@
 		277D3CB310A1B9DE00E4944A /* HTML Context */ = {
 			isa = PBXGroup;
 			children = (
+				CED05D23116E5105003228C5 /* SVPublishingHTMLContext.h */,
+				CED05D24116E5105003228C5 /* SVPublishingHTMLContext.m */,
 				273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */,
 				273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */,
 				270E49A310FA326300EF1FA0 /* SVFieldEditorHTMLWriter.h */,
@@ -5491,6 +5497,7 @@
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
 				274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */,
 				278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */,
+				CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6893,6 +6900,7 @@
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
 				274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */,
 				278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */,
+				CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
