@@ -239,6 +239,11 @@
 	return result;
 }
 
+#pragma mark Media
+
+// Up to subclasses to implement
+- (void)addMedia:(id <SVMedia>)media; { }
+
 #pragma mark Resource Files
 - (void)addResource:(NSURL *)resourceURL;   // call to register the resource for needing publishing
 {

@@ -49,9 +49,4 @@
 // Ignored by regular contexts. Call one of the -didEndWriting… methods after
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
 
-
-#pragma mark Media
-- (void)addMedia:(SVMediaRecord *)media;
-
-
 @end

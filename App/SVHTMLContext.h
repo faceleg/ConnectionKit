@@ -23,6 +23,7 @@ typedef enum {
 
 
 @class KTPage, KTPage, SVGraphic, SVHTMLTextBlock, SVLink;
+@protocol SVMedia;
 
 
 @interface SVHTMLContext : KSHTMLWriter
@@ -103,6 +104,10 @@ typedef enum {
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
 - (NSString *)relativeURLStringOfPage:(KTPage *)page;   
 - (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
+
+
+#pragma mark Media
+- (void)addMedia:(id <SVMedia>)media;
 
 
 #pragma mark Resource Files

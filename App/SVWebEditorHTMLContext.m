@@ -202,7 +202,7 @@
 
 - (NSSet *)media; { return [[_media copy] autorelease]; }
 
-- (void)addMedia:(SVMediaRecord *)media;
+- (void)addMedia:(id <SVMedia>)media;
 {
     [super addMedia:media];
     [_media addObject:media];
@@ -220,8 +220,6 @@
 - (void)didEndWritingHTMLTextBlock; { }
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
-
-- (void)addMedia:(SVMediaRecord *)media; { }
 
 @end
 
