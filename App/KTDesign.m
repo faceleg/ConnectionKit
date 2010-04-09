@@ -269,6 +269,15 @@ void MyDrawingFunction(CGContextRef context, CGRect bounds)
 	return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
 }
 
+- (NSString *)genre
+{
+	return [[self bundle] objectForInfoDictionaryKey:@"genre"];
+}
+- (NSString *)color	// dark, light, or color
+{
+	return [[self bundle] objectForInfoDictionaryKey:@"color"];
+}
+
 
 - (NSString *)sidebarBorderable
 {

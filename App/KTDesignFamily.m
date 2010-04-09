@@ -91,6 +91,17 @@
 	return YES;
 }
 
+// Genre, color properties so that we can filter  ... assume a whole family is the same
+
+- (NSString *) genre;
+{
+	return [[[self designs] firstObjectKS] genre];
+}
+- (NSString *) color;
+{
+	return [[[self designs] firstObjectKS] color];
+}
+
 
 
 @end

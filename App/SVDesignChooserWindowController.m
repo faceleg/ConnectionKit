@@ -39,15 +39,21 @@
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
 @synthesize targetWhenChosen = _targetWhenChosen;
+@synthesize allDesigns = _allDesigns;
+@synthesize genre = _genre;
+@synthesize color = _color;
+
+enum { kGenreGroup, kColorGroup };
 
 #pragma mark -
 
 - (void)awakeFromNib
 {
-    [oViewController setupTrackingRects];
-
 	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-	oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:designs];
+
+	// Get all designs; we'll be filtering...
+	self.allDesigns = [KTDesign consolidateDesignsIntoFamilies:designs];
+	oViewController.designs = self.allDesigns;
 }
 
 - (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
@@ -63,6 +69,8 @@
     
     [oScopeBar setDelegate:self];
     [oScopeBar reloadData];
+
+    [oViewController setupTrackingRects];
 }
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
@@ -104,24 +112,51 @@
 #pragma mark -
 #pragma mark MGScopeBarDelegate
 
+
 - (NSInteger)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
 {
-    return 1;
+    return 2;
 }
 
 - (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber
 {
-    return [NSArray arrayWithObjects:@"All", @"Business", @"Artistic", @"Family", @"Light", @"Dark", nil ];
+	NSArray *result = nil;
+	switch(groupNumber)
+	{
+		case kGenreGroup:
+			result = [NSArray arrayWithObjects:@"Business", @"Artistic", @"Family", nil ];
+#ifdef DEBUG
+			result = [result arrayByAddingObject:@"NULL"];
+#endif
+			break;
+		case kColorGroup:
+			result = [NSArray arrayWithObjects:@"Light", @"Dark", @"Color", nil ];
+#ifdef DEBUG
+			result = [result arrayByAddingObject:@"NULL"];
+#endif
+			break;
+	}
+	return result;
 }
 
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar labelForGroup:(NSInteger)groupNumber
 {
-    return NSLocalizedString (@"Kind:", @"Label for kind of design; right before list of kinds of designs");
+//	NSString *result = nil;
+//	switch(groupNumber)
+//	{
+//		case kGenreGroup:
+//			result = NSLocalizedString(@"Genre");
+//			break;
+//		case kColorGroup:
+//			result = NSLocalizedString(@"Background");
+//			break;
+//	}
+	return @"";
 }
 
 - (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(NSInteger)groupNumber
 {
-    return MGRadioSelectionMode;
+    return MGMultipleSelectionMode;		// we will handle selection to be radio-like
 }
 
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar 
@@ -132,16 +167,94 @@
 	if (!sDesignScopeBarTitles)
 	{
 		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
-							  NSLocalizedString(@"All", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"All",
 NSLocalizedString(@"Business", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Business",
 NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Artistic",
 NSLocalizedString(@"Family", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Family",
 NSLocalizedString(@"Light", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Light",
 NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Dark",
+								 
+								 
+								 NSLocalizedString(@"Colorful", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Color",
+
+								 
+								 
 								 nil];
 	}
-	return [sDesignScopeBarTitles objectForKey:identifier];
+	NSString *result = [sDesignScopeBarTitles objectForKey:identifier];
+	if (!result)
+	{
+		result = identifier;	// fallback, but it won't be localized
+	}
+	return result;
 }
 
+// Respond to clicks by acting sort of like a radio button, but allowing for none to be clicked.
+// thus we de-select any old item in the group if we are setting a new one.
+// Then, based on which ones are selected, build up our filter predicate.
+
+- (void)scopeBar:(MGScopeBar *)theScopeBar selectedStateChanged:(BOOL)selected forItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
+{
+	switch (groupNumber)
+	{
+		case kGenreGroup:
+		{
+			if (selected && self.genre)
+			{
+				// turn off previous selection in this group
+				[theScopeBar setSelected:NO forItem:self.genre inGroup:kGenreGroup];
+			}
+			self.genre = selected ? identifier : nil;
+			break;
+		}	
+		case kColorGroup:
+		{
+			if (selected && self.color)
+			{
+				// turn off previous selection in this group
+				[theScopeBar setSelected:NO forItem:self.color inGroup:kColorGroup];
+			}
+			self.color = selected ? identifier : nil;
+			break;
+		}
+	}
+
+	if (self.genre || self.color)
+	{
+		NSMutableArray *preds = [NSMutableArray array];
+		if (self.color)
+		{
+			if (![@"NULL" isEqualToString:self.color])
+			{
+				[preds addObject:[NSPredicate predicateWithFormat:@"color == %@", [self.color lowercaseString]]];
+			}
+			else
+			{
+				[preds addObject:[NSPredicate predicateWithFormat:@"color == NULL"]];
+			}
+			
+		}
+		if (self.genre)
+		{
+			if (![@"NULL" isEqualToString:self.genre])
+			{
+				[preds addObject:[NSPredicate predicateWithFormat:@"genre == %@", [self.genre lowercaseString]]];
+			}
+			else
+			{
+				[preds addObject:[NSPredicate predicateWithFormat:@"genre == NULL"]];
+			}
+
+		
+		}
+		
+		oViewController.designs = [self.allDesigns filteredArrayUsingPredicate:
+								   [NSCompoundPredicate andPredicateWithSubpredicates:preds]
+								   ];
+	}
+	else	// no filter -- all
+	{
+		oViewController.designs = self.allDesigns;
+	}
+}
 
 @end

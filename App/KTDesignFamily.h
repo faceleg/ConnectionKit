@@ -17,6 +17,10 @@
 	NSMutableArray *_designs;
 }
 
+- (NSString *) genre;
+- (NSString *) color;
+
+
 - (void) addDesign:(KTDesign *)aDesign;
 
 @property (retain) NSMutableArray *designs;

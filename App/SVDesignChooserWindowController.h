@@ -15,16 +15,24 @@
 {
     IBOutlet SVDesignChooserViewController   *oViewController;
     IBOutlet MGScopeBar             *oScopeBar;
-    	
+	
+	NSArray *_allDesigns;
+	NSString *_genre;
+	NSString *_color;
+	
 	SEL _selectorWhenChosen;
 	id	_targetWhenChosen;		// weak to avoid retain cycle
 }
 
 @property(nonatomic, retain) KTDesign *design;
 
+@property(copy) NSArray *allDesigns;
+
 @property(assign) SEL selectorWhenChosen;
 @property(assign) id  targetWhenChosen;
 @property(retain) SVDesignChooserViewController *viewController;
+@property (copy) NSString *genre;
+@property (copy) NSString *color;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;

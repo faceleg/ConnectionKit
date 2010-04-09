@@ -58,7 +58,10 @@
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
-	// _trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
+	
+	/// UNCOMMENT TO TURN THIS BACK ON
+	//
+	///_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -178,14 +181,12 @@
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
-	DJW((@"%s",__FUNCTION__));
 	return 1;
 }
 
 
 - (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
 {
-	DJW((@"%s",__FUNCTION__));
 	return nil;
 }
 

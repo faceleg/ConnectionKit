@@ -41,6 +41,8 @@ enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 - (NSDictionary *)imageReplacementTags;	// returns a dictionary, key is the tag (h3, #sitemenu li, etc.), value is URL to pull apart with options for renderer.
 - (NSString *)sidebarBorderable;
 - (NSString *)calloutBorderable;
+- (NSString *)genre;	
+- (NSString *)color;	// dark, light, or color
 - (BOOL)menusUseNonBreakingSpaces;
 
 // Images
