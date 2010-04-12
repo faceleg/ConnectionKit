@@ -9,6 +9,8 @@
 #import "KTImageScalingURLProtocol.h"
 #import "KTImageScalingSettings.h"
 
+#import "SVImageScalingOperation.h"
+
 #import "NSImage+KTExtensions.h"
 
 #import "NSApplication+Karelia.h"
@@ -98,9 +100,6 @@ NSString *KTImageScalingURLProtocolScheme = @"x-sandvox-image";
 
 @interface KTImageScalingURLProtocol ()
 - (void)_startLoadingUncached;
-- (NSData *)_loadImageAtURL:(NSURL *)sourceURL scaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error;
-- (NSData *)_loadImageAtURL:(NSURL *)URL convertToType:(NSString *)fileType error:(NSError **)error;
-- (NSData *)_loadFaviconFromURL:(NSURL *)UR error:(NSError **)errorL;
 @end
 
 
@@ -207,247 +206,54 @@ static NSURLCache *_sharedCache;
 
 - (void)_startLoadingUncached
 {
-    @try
+    // Run the scaling op
+    SVImageScalingOperation *op = [[SVImageScalingOperation alloc] initWithURL:
+                                   [[self request] URL]];
+    [op start];
+    
+    
+    // Return decent result
+    NSData *imageData = [op result];
+    if (imageData)
     {
-        NSURL *URL = [[self request] URL];
+        // Construct new cached response
+        NSURLResponse *response = [op returnedResponse];
+        
+        [[self client] URLProtocol:self
+                didReceiveResponse:response
+                cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
+        
+        [[self client] URLProtocol:self didLoadData:imageData];
         
         
         
-        // Construct image scaling properties dictionary from the URL
-        NSDictionary *URLQuery = [URL queryDictionary];
+        // Cache result
+        NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
+        [response release];
         
-        NSURL *sourceURL = [[NSURL alloc] initWithScheme:@"file" host:[URL host] path:[URL path]];
-        OBASSERT(sourceURL);
-        
-        
-        
-        // There are three possible ways to render the result
-        //  A) Scale with CoreImage
-        //  B) Convert without scaling using CGImageDestination/Source
-        //  C) Create a favicon representation
-        NSString *UTI = [URLQuery objectForKey:@"filetype"];
-        OBASSERT(UTI);
-        
-        NSData *imageData = nil;    NSError *error = nil;
-        if ([UTI isEqualToString:(NSString *)kUTTypeICO])
-        {
-            // This is a little bit of a hack as it ignores size info, and purely creates a favicon
-            imageData = [self _loadFaviconFromURL:sourceURL error:&error];
-        }
-        else
-        {
-            NSString *size = [URLQuery objectForKey:@"size"];
-            if (size)
-            {
-                imageData = [self _loadImageAtURL:sourceURL scaledToSize:NSSizeFromString(size) type:UTI error:&error];
-            }
-            else
-            {
-                imageData = [self _loadImageAtURL:sourceURL convertToType:UTI error:&error];
-            }
-        }
+        [[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
+        [cachedResponse release];
         
         
         
-        if (imageData)
-        {
-            // Construct new cached response
-            NSURLResponse *response = [[NSURLResponse alloc] initWithURL:URL
-                                                                MIMEType:[NSString MIMETypeForUTI:UTI]
-                                                   expectedContentLength:[imageData length]
-                                                        textEncodingName:nil];
-            
-            [[self client] URLProtocol:self
-                    didReceiveResponse:response
-                    cacheStoragePolicy:NSURLCacheStorageNotAllowed];	// We'll take care of our own caching
-            
-            [[self client] URLProtocol:self didLoadData:imageData];
-            
-            
-            
-            // Cache result
-            NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
-            [response release];
-            
-            [[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
-            [cachedResponse release];
-            
-            
-            
-            // Tidy up
-            [[self client] URLProtocolDidFinishLoading:self];
-        }
-        else
-        {
-            // The URL client will crash on the main thread if we pass a nil error object
-            if (!error) error = [NSError errorWithDomain:NSURLErrorDomain code:NSURLErrorUnknown userInfo:nil];
-            [[self client] URLProtocol:self didFailWithError:error];
-        }
-        
-        
-	}
-    @catch (NSException *exception)
-    {
-        [[self client] URLProtocol:self didFailWithError:[NSError errorWithLocalizedDescription:[exception reason]]];
-        [NSApp performSelectorOnMainThread:@selector(reportException:) withObject:exception waitUntilDone:NO];
+        // Tidy up
+        [[self client] URLProtocolDidFinishLoading:self];
     }
-}
-
-
-/*  Support method to read in an image, scale it down and then create the the specified data representation
- */
-- (NSData *)_loadImageAtURL:(NSURL *)sourceURL scaledToSize:(NSSize)size type:(NSString *)fileType error:(NSError **)error // Mode will be read from the URL
-{
-    NSURL *URL = [[self request] URL];
-    
-    
-    // Load the image from disk
-    CIImage *sourceImage = [[CIImage alloc] initWithContentsOfURL:sourceURL];
-    if (!sourceImage)
+    else
     {
-        if (error) *error = [NSError errorWithDomain:NSURLErrorDomain
-                                                code:NSURLErrorResourceUnavailable
+        // The URL client will crash on the main thread if we pass a nil error object
+        NSError *error = nil;
+        if (!error) error = [NSError errorWithDomain:NSURLErrorDomain
+                                                code:NSURLErrorUnknown
                                             userInfo:nil];
-        return nil;
+        
+        [[self client] URLProtocol:self didFailWithError:error];
     }
     
     
-    // Construct image scaling properties dictionary from the URL
-    NSDictionary *URLQuery = [URL queryDictionary];
-    KSImageScalingMode scalingMode = [URLQuery integerForKey:@"mode"];
-    
-    
-    // Scale the image
-    CIImage *scaledImage = [sourceImage imageByScalingToSize:CGSizeMake(size.width, size.height)
-                                                        mode:scalingMode
-                                                 opaqueEdges:YES];
-    OBASSERT(scaledImage);
-    
-    
-    // Sharpen if needed
-    float sharpeningFactor = [URLQuery floatForKey:@"sharpen"];
-    if (sharpeningFactor)
-    {
-        scaledImage = [scaledImage sharpenLuminanceWithFactor:sharpeningFactor];
-    }
-    OBASSERT(scaledImage);
-    
-    
-    // Ensure we have a graphics context big enough to render into
-    static CGContextRef graphicsContext;
-    static CIContext *coreImageContext;
-    if (!graphicsContext)
-    {
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-        
-        graphicsContext = CGBitmapContextCreate(NULL,
-                                                640, 640,
-                                                8,
-                                                640 * 4,
-                                                colorSpace,
-                                                kCGImageAlphaPremultipliedLast);
-        OBASSERT(graphicsContext);
-        CGColorSpaceRelease(colorSpace);
-        
-        coreImageContext = [CIContext contextWithCGContext:graphicsContext // Need to cache a CI context from this too
-                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
-        [coreImageContext retain];
-    }
-    
-    CGRect neededContextRect = [scaledImage extent];    // Clang, we assert scaledImage is non-nil above
-    size_t currentContextWidth = CGBitmapContextGetWidth(graphicsContext);
-    size_t currentContextHeight = CGBitmapContextGetHeight(graphicsContext);
-    
-    if (currentContextWidth < neededContextRect.size.width || currentContextHeight < neededContextRect.size.height)
-    {
-        CGContextRelease(graphicsContext);
-        
-        size_t newContextWidth = MAX(currentContextWidth, (size_t)ceilf(neededContextRect.size.width));
-        size_t newContextHeight = MAX(currentContextHeight, (size_t)ceilf(neededContextRect.size.height));
-        CGColorSpaceRef colorSpace = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-        
-        graphicsContext = CGBitmapContextCreate(NULL,
-                                                newContextWidth, newContextHeight,
-                                                8,
-                                                newContextWidth * 4,
-                                                colorSpace,
-                                                kCGImageAlphaPremultipliedLast);
-        OBASSERT(graphicsContext);
-        CGColorSpaceRelease(colorSpace);
-        
-        [coreImageContext release]; // Need to cache a CI context from this too
-        coreImageContext = [CIContext contextWithCGContext:graphicsContext
-                                                   options:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:YES] forKey:kCIContextUseSoftwareRenderer]];
-        [coreImageContext retain];
-    }
-    
-    
-    // Render a CGImage
-    CGImageRef finalImage = [coreImageContext createCGImage:scaledImage fromRect:neededContextRect];
-    OBASSERT(finalImage);
-    
-    
-    // Convert to data
-	NSArray *identifiers = (NSArray *)CGImageDestinationCopyTypeIdentifiers();
-	OBASSERT([identifiers containsObject:fileType]);
-    [identifiers release];
-	
-    
-    NSMutableData *result = [NSMutableData data];
-    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                              (CFStringRef)fileType,
-                                                                              1,
-                                                                              NULL);
-    OBASSERT(imageDestination);
-    
-    CGImageDestinationAddImage(imageDestination,
-                               finalImage,
-                               (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
-    
-    if (!CGImageDestinationFinalize(imageDestination)) result = nil;
-    CFRelease(imageDestination);
-    CGImageRelease(finalImage); // On Tiger the CGImage MUST be released before deallocating the CIImage!
-    [sourceImage release];
-    
-    
-    // Finish up
-    return result;
+    [op release];
 }
 
-
-/*  Support method to convert an image to the specified format without scaling
- */
-- (NSData *)_loadImageAtURL:(NSURL *)URL convertToType:(NSString *)fileType error:(NSError **)error
-{
-    CGImageSourceRef imageSource = CGImageSourceCreateWithURL((CFURLRef)URL, NULL);
-    OBASSERT(imageSource);
-    
-    NSMutableData *result = [NSMutableData data];
-    CGImageDestinationRef imageDestination = CGImageDestinationCreateWithData((CFMutableDataRef)result,
-                                                                              (CFStringRef)fileType,
-                                                                              1,
-                                                                              NULL);
-    OBASSERT(imageDestination);
-    
-    CGImageDestinationAddImageFromSource(imageDestination,
-                                         imageSource,
-                                         0,
-                                         (CFDictionaryRef)[NSDictionary dictionaryWithObject:[NSNumber numberWithFloat:[NSImage preferredJPEGQuality]] forKey:(NSString *)kCGImageDestinationLossyCompressionQuality]);
-    
-    if (!CGImageDestinationFinalize(imageDestination)) result = nil;
-    CFRelease(imageDestination);
-    CFRelease(imageSource);
-    
-    return result;
-}
-
-- (NSData *)_loadFaviconFromURL:(NSURL *)URL error:(NSError **)error
-{
-    NSImage *sourceImage = [[NSImage alloc] initWithContentsOfURL:URL];
-    NSData *result = [sourceImage faviconRepresentation];
-    [sourceImage release];
-    return result;
-}
 
 @end
 

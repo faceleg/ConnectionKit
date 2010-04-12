@@ -399,6 +399,8 @@
 		2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */; };
 		2796DF0A11733C4D000DD6EC /* SVMediaRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */; };
 		2796DF0B11733C4D000DD6EC /* SVMediaRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */; };
+		2796DFC711736375000DD6EC /* SVImageScalingOperation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DFC511736375000DD6EC /* SVImageScalingOperation.h */; };
+		2796DFC811736375000DD6EC /* SVImageScalingOperation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DFC611736375000DD6EC /* SVImageScalingOperation.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
 		2797B4BE0EF6E65E00F91398 /* KSURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1876,6 +1878,8 @@
 		2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringHTMLContext.m; sourceTree = "<group>"; };
 		2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRepresentation.h; sourceTree = "<group>"; };
 		2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaRepresentation.m; sourceTree = "<group>"; };
+		2796DFC511736375000DD6EC /* SVImageScalingOperation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageScalingOperation.h; sourceTree = "<group>"; };
+		2796DFC611736375000DD6EC /* SVImageScalingOperation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVImageScalingOperation.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
 		2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportSavePanelController.m; sourceTree = "<group>"; };
 		2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLFormatter.h; sourceTree = "<group>"; };
@@ -3431,8 +3435,6 @@
 		27AE74720EEDE6AD00409D80 /* Publishing Engine */ = {
 			isa = PBXGroup;
 			children = (
-				2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */,
-				2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */,
 				3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */,
 				3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
@@ -3482,10 +3484,14 @@
 		27C20DB31140189D006D455E /* 2.0 */ = {
 			isa = PBXGroup;
 			children = (
+				2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */,
+				2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */,
 				27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */,
 				27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */,
 				2774DFA90F16D87C0085A4D8 /* KTImageScalingURLProtocol.h */,
 				2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */,
+				2796DFC511736375000DD6EC /* SVImageScalingOperation.h */,
+				2796DFC611736375000DD6EC /* SVImageScalingOperation.m */,
 			);
 			name = 2.0;
 			sourceTree = "<group>";
@@ -5512,6 +5518,7 @@
 				CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */,
 				2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */,
 				2796DF0A11733C4D000DD6EC /* SVMediaRepresentation.h in Headers */,
+				2796DFC711736375000DD6EC /* SVImageScalingOperation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6917,6 +6924,7 @@
 				CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */,
 				2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */,
 				2796DF0B11733C4D000DD6EC /* SVMediaRepresentation.m in Sources */,
+				2796DFC811736375000DD6EC /* SVImageScalingOperation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

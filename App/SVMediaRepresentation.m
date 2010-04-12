@@ -51,9 +51,12 @@
 {
     if ([self width] || [self height])
     {
+        
     }
-    
-    return [[self mediaRecord] fileContents];
+    else
+    {
+        return [[self mediaRecord] fileContents];
+    }
 }
 
 @end
