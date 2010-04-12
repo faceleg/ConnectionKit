@@ -52,9 +52,15 @@
 @synthesize height = _height;
 @synthesize fileType = _type;
 
+- (BOOL)isNativeRepresentation;
+{
+    BOOL result = !([self width] || [self height]);
+    return result;
+}
+
 - (NSData *)data;
 {
-    if ([self width] || [self height])
+    if (![self isNativeRepresentation])
     {
         NSURL *URL = [NSURL sandvoxImageURLWithFileURL:[[self mediaRecord] fileURL]
                                                   size:NSMakeSize([[self width] floatValue], [[self height] floatValue])

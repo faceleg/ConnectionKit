@@ -32,6 +32,7 @@
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
 @property(nonatomic, copy, readonly) NSString *fileType;
+- (BOOL)isNativeRepresentation;
 
 - (NSData *)data;
 
