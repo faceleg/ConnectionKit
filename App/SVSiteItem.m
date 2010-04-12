@@ -258,6 +258,9 @@
 
 #pragma mark Contents
 
+// Subclasses will do something useful
+- (void)writeHTML:(SVHTMLContext *)context recursively:(BOOL)recursive; { }
+
 - (void)writeContentRecursively:(BOOL)recursive;
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];

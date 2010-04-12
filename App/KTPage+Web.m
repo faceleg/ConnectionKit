@@ -103,6 +103,19 @@
     [parser release];
 }
 
+- (void)writeHTML:(SVHTMLContext *)context recursively:(BOOL)recursive;
+{
+    [self writeHTML:context];
+    
+    if (recursive)
+    {
+        for (SVSiteItem *anItem in [self sortedChildren])
+        {
+            [anItem writeHTML:context recursively:recursive];
+        }
+    }
+}
+
 + (NSString *)pageTemplate
 {
 	static NSString *sPageTemplateString = nil;
