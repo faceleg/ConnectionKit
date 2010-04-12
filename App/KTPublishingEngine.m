@@ -154,6 +154,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark -
 #pragma mark Overall flow control
 
+- (void)start
+{
+	if ([self status] != KTPublishingEngineStatusNotStarted) return;
+    _status = KTPublishingEngineStatusParsing;
+    
+    [self main];
+}
+
 - (void)main
 {
     // Setup connection and transfer records
@@ -176,14 +184,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
                    withObject:[[self site] rootPage]
                    afterDelay:KTParsingInterval];
     }
-}
-
-- (void)start
-{
-	if ([self status] != KTPublishingEngineStatusNotStarted) return;
-    _status = KTPublishingEngineStatusParsing;
-    
-    [self main];
 }
 
 - (void)cancel
