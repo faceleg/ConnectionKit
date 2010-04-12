@@ -41,9 +41,9 @@ typedef enum {
 @protocol KTPublishingEngineDelegate;
 
 
-@interface KTPublishingEngine : NSObject
+@interface KTPublishingEngine : NSOperation
 {
-@private
+  @private
     KTSite	*_site;
     NSString        *_documentRootPath;
     NSString        *_subfolderPath;    // nil if there is no subfolder
@@ -78,8 +78,6 @@ typedef enum {
 - (NSString *)baseRemotePath;
 
 // Control
-- (void)start;
-- (void)cancel;
 - (KTPublishingEngineStatus)status;
 
 // Tranfer records
