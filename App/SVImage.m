@@ -108,8 +108,8 @@
                             className:(isPagelet ? nil : [self className])
                           sourceMedia:media
                                   alt:alt
-                                width:[[self width] description]
-                               height:[[self height] description]];
+                                width:[self width]
+                               height:[self height]];
     }
     else
     {

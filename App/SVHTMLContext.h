@@ -113,8 +113,8 @@ typedef enum {
                    className:(NSString *)className
                  sourceMedia:(SVMediaRecord *)media
                          alt:(NSString *)altText
-                       width:(NSString *)width
-                      height:(NSString *)height;
+                       width:(NSNumber *)width
+                      height:(NSNumber *)height;
 
 
 #pragma mark Resource Files

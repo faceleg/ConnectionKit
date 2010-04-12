@@ -16,10 +16,18 @@
 {
   @private
     SVMediaRecord   *_mediaRecord;
+    NSNumber        *_width;
+    NSNumber        *_height;
 }
 
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord;
 
+- (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
+                    width:(NSNumber *)width
+                   height:(NSNumber *)height;
+
 @property(nonatomic, retain, readonly) SVMediaRecord *mediaRecord;
+@property(nonatomic, copy, readonly) NSNumber *width;
+@property(nonatomic, copy, readonly) NSNumber *height;
 
 @end

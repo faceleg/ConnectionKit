@@ -35,11 +35,15 @@
                    className:(NSString *)className
                  sourceMedia:(SVMediaRecord *)media
                          alt:(NSString *)altText
-                       width:(NSString *)width
-                      height:(NSString *)height;
+                       width:(NSNumber *)width
+                      height:(NSNumber *)height;
 {
-    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc] initWithMediaRecord:media];
+    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc] initWithMediaRecord:media
+                                                                              width:width
+                                                                             height:height];
+    
     [_mediaReps addObject:rep];
+    [rep release];
 }
 
 @synthesize mediaRepresentations = _mediaReps;

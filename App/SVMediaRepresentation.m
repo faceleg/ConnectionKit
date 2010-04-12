@@ -16,16 +16,35 @@
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord;
 {
     [self init];
+    
     _mediaRecord = [mediaRecord retain];
+    
+    return self;
+}
+
+- (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
+                    width:(NSNumber *)width
+                   height:(NSNumber *)height;
+{
+    self = [self initWithMediaRecord:mediaRecord];
+    
+    _width = [width copy];
+    _height = [height copy];
+    
     return self;
 }
 
 - (void)dealloc
 {
     [_mediaRecord release];
+    [_width release];
+    [_height release];
+    
     [super dealloc];
 }
 
 @synthesize mediaRecord = _mediaRecord;
+@synthesize width = _width;
+@synthesize height = _height;
 
 @end

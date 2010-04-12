@@ -250,8 +250,8 @@
                    className:(NSString *)className
                  sourceMedia:(SVMediaRecord *)media
                          alt:(NSString *)altText
-                       width:(NSString *)width
-                      height:(NSString *)height;
+                       width:(NSNumber *)width
+                      height:(NSNumber *)height;
 {
     NSURL *URL = [self addMedia:media];
     
@@ -259,7 +259,8 @@
                      className:className
                            src:[self relativeURLStringOfURL:URL]
                            alt:altText
-                         width:width height:height];
+                         width:[width description]
+                        height:[height description]];
 }
 
 #pragma mark Resource Files
