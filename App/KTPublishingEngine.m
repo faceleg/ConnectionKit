@@ -14,6 +14,7 @@
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringHTMLContext.h"
+#import "SVMediaRepresentation.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
 #import "KTTranscriptController.h"
@@ -177,6 +178,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
         [homePage writeHTML:context recursively:YES];
+        
+        NSArray *mediaReps = [context mediaRepresentations];
+        for (SVMediaRepresentation *mediaRep in mediaReps)
+        {
+            [self uploadData:[mediaRep data]
+                      toPath:[[self baseRemotePath] stringByAppendingPathComponent:@"foo.png"]];
+        }
+        
         [context release];
         
         

@@ -30,4 +30,6 @@
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
 
+- (NSData *)data;
+
 @end
