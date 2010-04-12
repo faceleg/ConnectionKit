@@ -397,6 +397,8 @@
 		27963C1E110F3F4E0050B776 /* download.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27963C1D110F3F4E0050B776 /* download.icns */; };
 		2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */; };
 		2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */; };
+		2796DF0A11733C4D000DD6EC /* SVMediaRepresentation.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */; };
+		2796DF0B11733C4D000DD6EC /* SVMediaRepresentation.m in Sources */ = {isa = PBXBuildFile; fileRef = 2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */; };
 		2797B4BA0EF6E63900F91398 /* KTExportSavePanelController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */; };
 		2797B4BB0EF6E63900F91398 /* KTExportSavePanelController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */; };
 		2797B4BE0EF6E65E00F91398 /* KSURLFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -1872,6 +1874,8 @@
 		27963C1D110F3F4E0050B776 /* download.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = download.icns; sourceTree = "<group>"; };
 		2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringHTMLContext.h; sourceTree = "<group>"; };
 		2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringHTMLContext.m; sourceTree = "<group>"; };
+		2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaRepresentation.h; sourceTree = "<group>"; };
+		2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaRepresentation.m; sourceTree = "<group>"; };
 		2797B4B80EF6E63900F91398 /* KTExportSavePanelController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportSavePanelController.h; sourceTree = "<group>"; };
 		2797B4B90EF6E63900F91398 /* KTExportSavePanelController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportSavePanelController.m; sourceTree = "<group>"; };
 		2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSURLFormatter.h; sourceTree = "<group>"; };
@@ -3427,6 +3431,8 @@
 		27AE74720EEDE6AD00409D80 /* Publishing Engine */ = {
 			isa = PBXGroup;
 			children = (
+				2796DF0811733C4D000DD6EC /* SVMediaRepresentation.h */,
+				2796DF0911733C4D000DD6EC /* SVMediaRepresentation.m */,
 				3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */,
 				3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */,
 				27A82FEA0D915AAB005FF13D /* KTWebPathsProtocol.h */,
@@ -5505,6 +5511,7 @@
 				278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */,
 				CED05D25116E5105003228C5 /* SVPublishingHTMLContext.h in Headers */,
 				2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */,
+				2796DF0A11733C4D000DD6EC /* SVMediaRepresentation.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6909,6 +6916,7 @@
 				278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */,
 				CED05D26116E5105003228C5 /* SVPublishingHTMLContext.m in Sources */,
 				2796DEE411733440000DD6EC /* SVMediaGatheringHTMLContext.m in Sources */,
+				2796DF0B11733C4D000DD6EC /* SVMediaRepresentation.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -11,7 +11,10 @@
 
 @interface SVMediaGatheringHTMLContext : SVHTMLContext
 {
-
+  @private
+    NSMutableSet    *_mediaReps;
 }
+
+@property(nonatomic, copy, readonly) NSSet *mediaRepresentations;
 
 @end
