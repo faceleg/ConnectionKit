@@ -12,6 +12,7 @@
 #import "KTPage.h"
 #import "KTSite.h"
 #import "BDAlias+QuickLook.h"
+#import "SVMediaRecord.h"
 
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
