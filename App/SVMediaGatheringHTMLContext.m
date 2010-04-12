@@ -16,7 +16,7 @@
 - (id)initWithStringWriter:(id <KSStringWriter>)writer;
 {
     self = [super initWithStringWriter:writer];
-    _mediaReps = [[NSMutableSet alloc] init];
+    _mediaReps = [[NSMutableArray alloc] init];
     return self;
 }
 
