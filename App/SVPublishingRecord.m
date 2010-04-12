@@ -74,6 +74,24 @@
     return result;
 }
 
+- (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
+{
+    if ([[self SHA1Digest] isEqual:digest])
+    {
+        return self;
+    }
+    else
+    {
+        for (SVPublishingRecord *aRecord in [self contentRecords])
+        {
+            SVPublishingRecord *result = [aRecord publishingRecordForSHA1Digest:digest];
+            if (result) return result;
+        }
+    }
+    
+    return nil;
+}
+
 @dynamic date;
 @dynamic SHA1Digest;
 @dynamic length;

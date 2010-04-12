@@ -543,5 +543,10 @@ to be verified.
     return result;
 }
 
+- (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
+{
+    return [[self rootPublishingRecord] publishingRecordForSHA1Digest:digest];
+}
+
 @end
 
