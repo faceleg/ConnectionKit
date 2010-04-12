@@ -245,6 +245,22 @@
     return result;
 }
 
+- (void)writeImageWithIdName:(NSString *)idName
+                   className:(NSString *)className
+                 sourceMedia:(SVMediaRecord *)media
+                         alt:(NSString *)altText
+                       width:(NSString *)width
+                      height:(NSString *)height;
+{
+    NSURL *URL = [self addMedia:media];
+    
+    [self writeImageWithIdName:idName
+                     className:className
+                           src:[self relativeURLStringOfURL:URL]
+                           alt:altText
+                         width:width height:height];
+}
+
 #pragma mark Resource Files
 - (void)addResource:(NSURL *)resourceURL;   // call to register the resource for needing publishing
 {

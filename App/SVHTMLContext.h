@@ -22,7 +22,7 @@ typedef enum {
 #pragma mark -
 
 
-@class KTPage, KTPage, SVGraphic, SVHTMLTextBlock, SVLink;
+@class KTPage, KTPage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
 @protocol SVMedia;
 
 
@@ -106,7 +106,15 @@ typedef enum {
 
 
 #pragma mark Media
+
 - (NSURL *)addMedia:(id <SVMedia>)media;    // returns the URL to find the media at. Pass on to -relativeURLStringOfURL: etc.
+
+- (void)writeImageWithIdName:(NSString *)idName
+                   className:(NSString *)className
+                 sourceMedia:(SVMediaRecord *)media
+                         alt:(NSString *)altText
+                       width:(NSString *)width
+                      height:(NSString *)height;
 
 
 #pragma mark Resource Files

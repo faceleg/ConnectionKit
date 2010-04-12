@@ -89,9 +89,6 @@
 
 - (void)writeBody:(SVHTMLContext *)context
 {
-    // src=
-    NSURL *imageURL = [self imagePreviewURL];
-    
     // alt=
     NSString *alt = [self alternateText];
     if (!alt) alt = @"";
@@ -104,15 +101,29 @@
     }
     
     // Actually write the image
-    [context writeImageWithIdName:[self editingElementID]
-                        className:(isPagelet ? nil : [self className])
-                              src:[context relativeURLStringOfURL:imageURL]
-                              alt:alt 
-                            width:[[self width] description]
-                           height:[[self height] description]];
+    SVMediaRecord *media = [self media];
+    if (media)
+    {
+        [context writeImageWithIdName:[self editingElementID]
+                            className:(isPagelet ? nil : [self className])
+                          sourceMedia:media
+                                  alt:alt
+                                width:[[self width] description]
+                               height:[[self height] description]];
+    }
+    else
+    {
+        [context writeImageWithIdName:[self editingElementID]
+                            className:(isPagelet ? nil : [self className])
+                                  src:[context relativeURLStringOfURL:[self imagePreviewURL]]
+                                  alt:alt
+                                width:[[self width] description]
+                               height:[[self height] description]];
+    }
     
     [context addDependencyOnObject:self keyPath:@"media"];
     [context addDependencyOnObject:self keyPath:@"className"];
+    
     
     if ([self isPagelet] && [self link]) [context writeEndTag];
 }
