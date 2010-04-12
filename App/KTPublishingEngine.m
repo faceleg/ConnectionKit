@@ -13,6 +13,7 @@
 #import "KTSite.h"
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
+#import "SVMediaGatheringHTMLContext.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
 #import "KTTranscriptController.h"
@@ -153,12 +154,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 #pragma mark -
 #pragma mark Overall flow control
 
-- (void)start
+- (void)main
 {
-	if ([self status] != KTPublishingEngineStatusNotStarted) return;
-    _status = KTPublishingEngineStatusParsing;
-    
-    
     // Setup connection and transfer records
     [self createConnection];
     [self setRootTransferRecord:[CKTransferRecord rootRecordWithPath:[[self documentRootPath] standardizedPOSIXPath]]];
@@ -167,10 +164,26 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Start by publishing the home page if setting up connection was successful
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
+        // Gather media
+        KTPage *homePage = [[self site] rootPage];
+        
+        SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
+        [homePage writeHTML:context];
+        [context release];
+        
+        
         [self performSelector:@selector(parseAndUploadPageIfNeeded:)
                    withObject:[[self site] rootPage]
                    afterDelay:KTParsingInterval];
     }
+}
+
+- (void)start
+{
+	if ([self status] != KTPublishingEngineStatusNotStarted) return;
+    _status = KTPublishingEngineStatusParsing;
+    
+    [self main];
 }
 
 - (void)cancel
