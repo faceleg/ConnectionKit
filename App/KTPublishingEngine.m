@@ -168,7 +168,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         KTPage *homePage = [[self site] rootPage];
         
         SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
-        [homePage writeHTML:context];
+        [homePage writeHTML:context recursively:YES];
         [context release];
         
         
