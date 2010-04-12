@@ -229,7 +229,6 @@ static NSURLCache *_sharedCache;
         
         // Cache result
         NSCachedURLResponse *cachedResponse = [[NSCachedURLResponse alloc] initWithResponse:response data:imageData];
-        [response release];
         
         [[[self class] sharedScaledImageCache] storeCachedResponse:cachedResponse forRequest:[self request]];
         [cachedResponse release];

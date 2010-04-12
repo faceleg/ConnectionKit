@@ -40,7 +40,8 @@
 {
     SVMediaRepresentation *rep = [[SVMediaRepresentation alloc] initWithMediaRecord:media
                                                                               width:width
-                                                                             height:height];
+                                                                             height:height
+                                                                           fileType:(NSString *)kUTTypePNG];
     
     [_mediaReps addObject:rep];
     [rep release];

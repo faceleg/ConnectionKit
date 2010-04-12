@@ -18,17 +18,20 @@
     SVMediaRecord   *_mediaRecord;
     NSNumber        *_width;
     NSNumber        *_height;
+    NSString        *_type;
 }
 
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord;
 
 - (id)initWithMediaRecord:(SVMediaRecord *)mediaRecord
                     width:(NSNumber *)width
-                   height:(NSNumber *)height;
+                   height:(NSNumber *)height
+                 fileType:(NSString *)type;
 
 @property(nonatomic, retain, readonly) SVMediaRecord *mediaRecord;
 @property(nonatomic, copy, readonly) NSNumber *width;
 @property(nonatomic, copy, readonly) NSNumber *height;
+@property(nonatomic, copy, readonly) NSString *fileType;
 
 - (NSData *)data;
 
