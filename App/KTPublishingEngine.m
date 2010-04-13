@@ -765,8 +765,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
         if (publishingRecord)
         {
-            [self uploadData:fileContents
-                      toPath:[[self baseRemotePath] stringByAppendingPathComponent:[publishingRecord filename]]];
+            NSString *path = [publishingRecord path];
+            [self uploadData:fileContents toPath:path];
         }
         else
         {
