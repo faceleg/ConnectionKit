@@ -57,6 +57,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page;
 
 // Media
+- (void)gatherMedia;
 - (void)queuePendingMedia:(KTMediaFileUpload *)media;
 - (void)dequeuePendingMedia;
 
@@ -174,36 +175,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Start by publishing the home page if setting up connection was successful
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
-        // Gather up media using special context
-        SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
-        _currentContext = context;
-        
-        KTPage *homePage = [[self site] rootPage];
-        [homePage publish:self recursively:YES];
-        
-        _currentContext = nil;
-        
-        
-        // Process the media
-        NSArray *mediaReps = [context mediaRepresentations];
-        for (SVMediaRepresentation *mediaRep in mediaReps)
-        {
-            NSData *digest  = [[mediaRep data] SHA1HashDigest];
-            
-            SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
-            if (publishingRecord)
-            {
-                [self uploadData:[mediaRep data]
-                          toPath:[[self baseRemotePath] stringByAppendingPathComponent:[publishingRecord filename]]];
-            }
-            else
-            {
-                [self uploadData:[mediaRep data]
-                          toPath:[[self baseRemotePath] stringByAppendingPathComponent:@"foo.png"]];
-            }
-        }
-        
-        [context release];
+        [self gatherMedia];
         
         
         [self performSelector:@selector(parseAndUploadPageIfNeeded:)
@@ -680,8 +652,41 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return YES;
 }
 
-#pragma mark -
 #pragma mark Media
+
+- (void)gatherMedia;
+{
+    // Gather up media using special context
+    SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
+    _currentContext = context;
+    
+    KTPage *homePage = [[self site] rootPage];
+    [homePage publish:self recursively:YES];
+    
+    _currentContext = nil;
+    
+    
+    // Process the media
+    NSArray *mediaReps = [context mediaRepresentations];
+    for (SVMediaRepresentation *mediaRep in mediaReps)
+    {
+        NSData *digest  = [[mediaRep data] SHA1HashDigest];
+        
+        SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
+        if (publishingRecord)
+        {
+            [self uploadData:[mediaRep data]
+                      toPath:[[self baseRemotePath] stringByAppendingPathComponent:[publishingRecord filename]]];
+        }
+        else
+        {
+            [self uploadData:[mediaRep data]
+                      toPath:[[self baseRemotePath] stringByAppendingPathComponent:@"foo.png"]];
+        }
+    }
+    
+    [context release];
+}
 
 - (NSSet *)uploadedMedia
 {
