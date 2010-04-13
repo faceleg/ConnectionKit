@@ -174,12 +174,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Start by publishing the home page if setting up connection was successful
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
-        // Gather media
-        KTPage *homePage = [[self site] rootPage];
-        
+        // Gather up media using special context
         SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
-        [homePage writeHTML:context recursively:YES];
+        _currentContext = context;
         
+        KTPage *homePage = [[self site] rootPage];
+        [homePage publish:self recursively:YES];
+        
+        _currentContext = nil;
+        
+        
+        // Process the media
         NSArray *mediaReps = [context mediaRepresentations];
         for (SVMediaRepresentation *mediaRep in mediaReps)
         {
@@ -218,7 +223,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (KTPublishingEngineStatus)status { return _status; }
 
-#pragma mark -
 #pragma mark Transfer Records
 
 - (CKTransferRecord *)rootTransferRecord { return _rootTransferRecord; }
@@ -244,6 +248,14 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (CKTransferRecord *)baseTransferRecord
 {
    return _baseTransferRecord;
+}
+
+#pragma mark Publishing
+
+- (SVHTMLContext *)currentHTMLContext;
+{
+    // Make them a media context
+    return _currentContext;
 }
 
 @end

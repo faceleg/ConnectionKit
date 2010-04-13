@@ -37,7 +37,7 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTPage, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
+@class KTSite, KTPage, SVHTMLContext, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -50,6 +50,8 @@ typedef enum {
     
     KTPublishingEngineStatus            _status;
     id <KTPublishingEngineDelegate>     _delegate;
+    
+    SVHTMLContext   *_currentContext;
     
 	id <CKConnection>	_connection;
     CKTransferRecord    *_rootTransferRecord;
@@ -83,6 +85,11 @@ typedef enum {
 // Tranfer records
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
+
+
+#pragma mark Publishing
+- (SVHTMLContext *)currentHTMLContext;
+
 
 @end
 

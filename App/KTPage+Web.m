@@ -14,8 +14,11 @@
 #import "KTDesign.h"
 #import "KTDocument.h"
 #import "KTElementPlugInWrapper.h"
+#import "SVHTMLContext.h"
+#import "SVHTMLTextBlock.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTMaster.h"
+#import "KTPublishingEngine.h"
 #import "SVTitleBox.h"
 
 #import "NSBundle+KTExtensions.h"
@@ -26,8 +29,6 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSObject+Karelia.h"
-#import "SVHTMLContext.h"
-#import "SVHTMLTextBlock.h"
 
 #import <WebKit/WebKit.h>
 
@@ -103,15 +104,16 @@
     [parser release];
 }
 
-- (void)writeHTML:(SVHTMLContext *)context recursively:(BOOL)recursive;
+- (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive;
 {
+    SVHTMLContext *context = [publishingEngine currentHTMLContext];
     [self writeHTML:context];
     
     if (recursive)
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
-            [anItem writeHTML:context recursively:recursive];
+            [anItem publish:publishingEngine recursively:recursive];
         }
     }
 }
