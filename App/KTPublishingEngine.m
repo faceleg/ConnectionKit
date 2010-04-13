@@ -58,6 +58,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)parseAndUploadPageIfNeeded:(KTPage *)page;
 - (void)_parseAndUploadPageIfNeeded:(KTPage *)page;
 - (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page;
+- (void)publishNonPageContent;
 
 // Media
 - (void)gatherMedia;
@@ -176,6 +177,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Publish pages properly
         KTPage *home = [[self site] rootPage];
         [home publish:self recursively:YES];
+        
+        
+        // Finish up
+        [self publishNonPageContent];
     }
 }
 
@@ -341,7 +346,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @implementation KTPublishingEngine (SubclassSupport)
 
-#pragma mark -
 #pragma mark Overall flow control
 
 /*  Call this method once publishing has ended, whether it be successfully or not.
@@ -391,7 +395,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [undoManager removeAllActions];
 }
 
-#pragma mark -
 #pragma mark Connection
 
 /*  Simple accessor for the connection. If we haven't started uploading yet, or have finished, it returns nil.
@@ -585,40 +588,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Pages are finished, move onto the next
         
         // Upload banner image and design
-        /*
-        KTMaster *master = [[[self site] rootPage] master];
-		NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
-        KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
-        if (bannerImage)
-        {
-            [self uploadMediaIfNeeded:bannerImage];
-        }*/
-        
-        [self uploadDesignIfNeeded];
-        [self uploadMainCSSIfNeeded];
-        
-        
-        // Upload resources. KTLocalPublishingEngine & subclasses use this point to bail out if
-        // there are no changes to publish
-        if ([self uploadResourceFiles])
-        {
-            // Upload sitemap if the site has one
-            [self uploadGoogleSiteMapIfNeeded];
-            
-            
-            // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
-            if ([_pendingMediaUploads count] == 0)
-            {
-                _status = KTPublishingEngineStatusUploading;
-                [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-                
-                [[self connection] disconnect]; // Once everything is uploaded, disconnect
-            }
-            else
-            {
-                _status = KTPublishingEngineStatusLoadingMedia;
-            }
-        }
+        [self publishNonPageContent];
+
     }
     @catch (NSException *exception)
     {
@@ -752,6 +723,44 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
 {
     return YES;
+}
+
+- (void)publishNonPageContent
+{
+    /*
+     KTMaster *master = [[[self site] rootPage] master];
+     NSDictionary *scalingProps = [[master design] imageScalingPropertiesForUse:@"bannerImage"];
+     KTMediaFileUpload *bannerImage = [[[master bannerImage] file] uploadForScalingProperties:scalingProps];
+     if (bannerImage)
+     {
+     [self uploadMediaIfNeeded:bannerImage];
+     }*/
+    
+    [self uploadDesignIfNeeded];
+    [self uploadMainCSSIfNeeded];
+    
+    
+    // Upload resources. KTLocalPublishingEngine & subclasses use this point to bail out if
+    // there are no changes to publish
+    if ([self uploadResourceFiles])
+    {
+        // Upload sitemap if the site has one
+        [self uploadGoogleSiteMapIfNeeded];
+        
+        
+        // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
+        if ([_pendingMediaUploads count] == 0)
+        {
+            _status = KTPublishingEngineStatusUploading;
+            [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+            
+            [[self connection] disconnect]; // Once everything is uploaded, disconnect
+        }
+        else
+        {
+            _status = KTPublishingEngineStatusLoadingMedia;
+        }
+    }
 }
 
 #pragma mark Media
