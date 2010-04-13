@@ -55,9 +55,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 
-- (void)parseAndUploadPageIfNeeded:(KTPage *)page;
+@end
+
+
+@interface KTPublishingEngine (SubclassSupportPrivate)
+
 - (void)_parseAndUploadPageIfNeeded:(KTPage *)page;
-- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page;
 - (void)publishNonPageContent;
 
 // Media
@@ -530,74 +533,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-/*  Semi-public method that parses the page, uploading HTML, media, resources etc. as needed.
- *  It then moves onto the next page after a short delay
+/*!
+ Unused. Left over from 1.6 code so I can copy out functionality
  */
-- (void)parseAndUploadPageIfNeeded:(KTPage *)page
-{
-    // Generally this method is called from -performSelector:afterDelay: so do our own exception reporting
-    @try
-    {
-        
-        [self _parseAndUploadPageIfNeeded:page];
-        
-        
-        // Continue onto the next page if the app is licensed
-        if (!gLicenseIsBlacklisted && (nil != gRegistrationString))	// License is OK
-        {
-            KTPage *nextPage = nil;
-            
-            
-            // First try to publish any children or archive pages
-            if ([page isKindOfClass:[KTPage class]])
-            {
-                NSArray *children = [(KTPage *)page sortedChildren];
-                if ([children count] > 0)
-                {
-                    nextPage = [children objectAtIndex:0];
-                }
-                else
-                {
-                    NSArray *archives = [(KTPage *)page sortedArchivePages];
-                    if ([archives count] > 0)
-                    {
-                        nextPage = [children objectAtIndex:0];
-                    }
-                }
-            }
-            
-            
-            // If there are no children, we have to search up the tree
-            if (!nextPage)
-            {
-                nextPage = [self _pageToPublishAfterPageExcludingChildren:page];
-            }
-            
-            
-            if (nextPage)
-            {
-                [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-                           withObject:nextPage
-                           afterDelay:KTParsingInterval];
-                
-                return;
-            }
-        }
-        
-        
-        // Pages are finished, move onto the next
-        
-        // Upload banner image and design
-        [self publishNonPageContent];
-
-    }
-    @catch (NSException *exception)
-    {
-        [NSApp reportException:exception];
-        @throw;
-    }
-}
-
 - (void)_parseAndUploadPageIfNeeded:(KTPage *)item
 {
 	OBASSERT([NSThread isMainThread]);
@@ -690,32 +628,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 			[self uploadData:RSSData toPath:RSSUploadPath];
 		}
 	}
-}
-
-/*  Support method for determining which page to publish next. Only searches UP the tree.
- */
-- (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page
-{
-    OBPRECONDITION(page);
-    
-    KTPage *result = nil;
-    
-    // Buld the list of siblings
-    KTPage *parent = [page parentPage];
-    NSArray *siblings = [[parent sortedChildren] arrayByAddingObjectsFromArray:[parent sortedArchivePages]];
-    
-    // Search for the next sibling. If none is found, publish the parent.
-    unsigned nextIndex = [siblings indexOfObjectIdenticalTo:page] + 1;
-    if (nextIndex < [siblings count])
-    {
-        result = [siblings objectAtIndex:nextIndex];
-    }
-    else if (parent)
-    {
-        result = [self _pageToPublishAfterPageExcludingChildren:parent];
-    }
-    
-    return result;
 }
 
 /*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages
