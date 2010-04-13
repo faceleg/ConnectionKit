@@ -592,22 +592,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         [transferRecord setProperty:item forKey:@"object"];
 	}
-    
-    
-	// Ask the delegate for any extra resource files that the parser didn't catch
-    if ([item isKindOfClass:[KTPage class]])
-    {
-        NSMutableSet *resources = [[NSMutableSet alloc] init];
-        
-        
-        NSString *aResourcePath;
-        for (aResourcePath in resources)
-        {
-            [self addResourceFile:[NSURL fileURLWithPath:aResourcePath]];
-        }
-        
-        [resources release];
-    }
 }
 
 /*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages

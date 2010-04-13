@@ -111,6 +111,17 @@
     
     [self writeHTML:context];
     [context close];
+    
+    
+	// Ask the delegate for any extra resource files that the parser didn't catch
+    NSMutableSet *resources = [[NSMutableSet alloc] init];
+    NSString *aResourcePath;
+    for (aResourcePath in resources)
+    {
+        [publishingEngine addResourceFile:[NSURL fileURLWithPath:aResourcePath]];
+    }
+    
+    [resources release];
 	
 	
 	// Generate and publish RSS feed if needed
