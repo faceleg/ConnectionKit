@@ -9,6 +9,7 @@
 #import "SVMediaGatheringHTMLContext.h"
 
 #import "SVMediaRepresentation.h"
+#import "KTPublishingEngine.h"
 
 
 @implementation SVMediaGatheringHTMLContext
@@ -16,13 +17,11 @@
 - (id)initWithStringWriter:(id <KSStringWriter>)writer;
 {
     self = [super initWithStringWriter:writer];
-    _mediaReps = [[NSMutableArray alloc] init];
     return self;
 }
 
 - (void)dealloc;
 {
-    [_mediaReps release];
     [super dealloc];
 }
 
@@ -43,10 +42,8 @@
                                                                              height:height
                                                                            fileType:(NSString *)kUTTypePNG];
     
-    [_mediaReps addObject:rep];
+    [[self publishingEngine] publishMediaRepresentation:rep];
     [rep release];
 }
-
-@synthesize mediaRepresentations = _mediaReps;
 
 @end

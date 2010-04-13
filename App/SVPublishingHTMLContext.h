@@ -9,9 +9,14 @@
 #import "SVHTMLContext.h"
 
 
+@class KTPublishingEngine;
+
 @interface SVPublishingHTMLContext : SVHTMLContext
 {
-
+  @private
+    KTPublishingEngine  *_publishingEngine;
 }
+
+@property(nonatomic, retain) KTPublishingEngine *publishingEngine;
 
 @end

@@ -6,15 +6,12 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLContext.h"
+#import "SVPublishingHTMLContext.h"
 
 
-@interface SVMediaGatheringHTMLContext : SVHTMLContext
+@interface SVMediaGatheringHTMLContext : SVPublishingHTMLContext
 {
   @private
-    NSMutableArray  *_mediaReps;
 }
-
-@property(nonatomic, copy, readonly) NSArray *mediaRepresentations;
 
 @end

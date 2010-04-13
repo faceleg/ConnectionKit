@@ -753,6 +753,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
     // Gather up media using special context
     SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
+    [context setPublishingEngine:self];
     _currentContext = context;
     
     KTPage *homePage = [[self site] rootPage];
@@ -760,34 +761,31 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     _currentContext = nil;
     
-    
-    // Process the media
-    NSArray *mediaReps = [context mediaRepresentations];
-    for (SVMediaRepresentation *mediaRep in mediaReps)
-    {
-        // Is there already an existing file on the server? If so, use that
-        NSData *fileContents = [mediaRep data];
-        NSData *digest = [fileContents SHA1HashDigest];
-        
-        SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
-        if (publishingRecord)
-        {
-            NSString *path = [publishingRecord path];
-            [self uploadData:fileContents toPath:path];
-        }
-        else
-        {
-            id <SVMedia> media = [mediaRep mediaRecord];
-            
-            NSString *path = [[[self baseRemotePath]
-                               stringByAppendingPathComponent:@"_Media"]
-                              stringByAppendingPathComponent:[media preferredFilename]];
-            
-            [self uploadData:fileContents toPath:path];
-        }
-    }
-    
     [context release];
+}
+
+- (void)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+{
+    // Is there already an existing file on the server? If so, use that
+    NSData *fileContents = [mediaRep data];
+    NSData *digest = [fileContents SHA1HashDigest];
+    
+    SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
+    if (publishingRecord)
+    {
+        NSString *path = [publishingRecord path];
+        [self uploadData:fileContents toPath:path];
+    }
+    else
+    {
+        id <SVMedia> media = [mediaRep mediaRecord];
+        
+        NSString *path = [[[self baseRemotePath]
+                           stringByAppendingPathComponent:@"_Media"]
+                          stringByAppendingPathComponent:[media preferredFilename]];
+        
+        [self uploadData:fileContents toPath:path];
+    }
 }
 
 - (NSSet *)uploadedMedia

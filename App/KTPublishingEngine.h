@@ -37,7 +37,7 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTPage, SVHTMLContext, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
+@class KTSite, KTPage, SVHTMLContext, SVMediaRepresentation, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
 @protocol KTPublishingEngineDelegate;
 
 
@@ -92,6 +92,8 @@ typedef enum {
 #pragma mark Publishing
 
 - (SVHTMLContext *)currentHTMLContext;
+
+- (void)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
 
 // Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;

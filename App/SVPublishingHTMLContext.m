@@ -11,4 +11,13 @@
 
 @implementation SVPublishingHTMLContext
 
+- (void)dealloc
+{
+    [_publishingEngine release];
+    
+    [super dealloc];
+}
+
+@synthesize publishingEngine = _publishingEngine;
+
 @end
