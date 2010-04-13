@@ -106,8 +106,11 @@
 
 - (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive;
 {
-    SVHTMLContext *context = [publishingEngine currentHTMLContext];
+    NSString *path = [self uploadPath];
+    SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
+    
     [self writeHTML:context];
+    [context close];
     
     if (recursive)
     {

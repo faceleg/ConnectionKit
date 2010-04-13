@@ -79,7 +79,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @implementation KTPublishingEngine
 
-#pragma mark -
 #pragma mark Init & Dealloc
 
 /*  Subfolder can be either nil (there isn't one), or a path relative to the doc root. Exporting
@@ -172,11 +171,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if ([self status] <= KTPublishingEngineStatusUploading)
     {
         [self gatherMedia];
+    
         
-        
-        [self performSelector:@selector(parseAndUploadPageIfNeeded:)
-                   withObject:[[self site] rootPage]
-                   afterDelay:KTParsingInterval];
+        // Publish pages properly
+        KTPage *home = [[self site] rootPage];
+        [home publish:self recursively:YES];
     }
 }
 
@@ -220,10 +219,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 #pragma mark Publishing
 
-- (SVHTMLContext *)currentHTMLContext;
+- (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
 {
-    // Make them a media context
-    return _currentContext;
+    // Media gathering uses a single special context
+    if (_currentContext) return _currentContext;
+    
+    // Make context
+    SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] init];
+    [result setPublishingEngine:self];
+    return [result autorelease];
 }
 
 /*	Use these methods instead of asking the connection directly. They will handle creating the

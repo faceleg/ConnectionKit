@@ -92,7 +92,8 @@ typedef enum {
 
 #pragma mark Publishing
 
-- (SVHTMLContext *)currentHTMLContext;
+// When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
+- (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
 
 - (void)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
 
