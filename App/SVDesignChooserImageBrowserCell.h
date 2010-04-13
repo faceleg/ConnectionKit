@@ -11,7 +11,8 @@
 #import <Quartz/Quartz.h>
 #if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5
 #else
-#import "DumpedImageKit.h"
+// I think I might not need that if I do a deployment target of 10.5 with an SDK of 10.6
+x#import "DumpedImageKit.h"
 #endif
 
 

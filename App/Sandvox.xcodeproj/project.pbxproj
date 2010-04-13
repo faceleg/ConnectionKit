@@ -7400,7 +7400,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
-				SDKROOT = macosx10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Release;
 		};
@@ -7418,7 +7419,8 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ARCHS = "$(NATIVE_ARCH)";
-				SDKROOT = macosx10.5;
+				MACOSX_DEPLOYMENT_TARGET = 10.5;
+				SDKROOT = macosx10.6;
 			};
 			name = Debug;
 		};
