@@ -57,6 +57,8 @@ typedef enum {
     CKTransferRecord    *_rootTransferRecord;
     CKTransferRecord    *_baseTransferRecord;
     
+    NSMutableSet    *_paths;    // all the paths which are in use by the site
+    
     NSMutableSet            *_uploadedMedia;
     NSMutableArray          *_pendingMediaUploads;
     KSSimpleURLConnection   *_currentPendingMediaConnection;

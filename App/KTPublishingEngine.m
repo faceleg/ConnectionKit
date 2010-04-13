@@ -53,6 +53,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
+- (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+
 - (void)parseAndUploadPageIfNeeded:(KTPage *)page;
 - (void)_parseAndUploadPageIfNeeded:(KTPage *)page;
 - (KTPage *)_pageToPublishAfterPageExcludingChildren:(KTPage *)page;
@@ -97,6 +99,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	{
 		_site = [site retain];
         
+        _paths = [[NSMutableSet alloc] init];
         _uploadedMedia = [[NSMutableSet alloc] init];
         _pendingMediaUploads = [[NSMutableArray alloc] init];
         _resourceFiles = [[NSMutableSet alloc] init];
@@ -120,6 +123,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[_documentRootPath release];
     [_subfolderPath release];
     
+    [_paths release];
     OBASSERT([_pendingMediaUploads count] == 0);
     [_pendingMediaUploads release];
     OBASSERT(!_currentPendingMediaConnection);
@@ -131,14 +135,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[super dealloc];
 }
 
-#pragma mark -
-#pragma mark Delegate
-
-- (id <KTPublishingEngineDelegate>)delegate { return _delegate; }
-
-- (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate { _delegate = delegate; }
-
-#pragma mark -
 #pragma mark Simple Accessors
 
 - (KTSite *)site { return _site; }
@@ -155,7 +151,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;
 }
 
-#pragma mark -
 #pragma mark Overall flow control
 
 - (void)start
@@ -270,10 +265,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
             [result setName:[remotePath lastPathComponent]];
             
-            [parent addContent:result];
-            
-            // Also set permissions for the file
-            [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+            [self didQueueUpload:result toDirectory:parent];
         }
     }
     else
@@ -302,9 +294,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     if (result)
     {
-        [parent addContent:result];
-        
-        [connection setPermissions:[self remoteFilePermissions] forFile:remotePath];
+        [self didQueueUpload:result toDirectory:parent];
     }
     else
     {
@@ -318,6 +308,23 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     return result;
 }
+         
+- (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
+{
+    [parent addContent:record];
+    
+    NSString *path = [record path];
+    [_paths addObject:path];
+    
+    [[self connection] setPermissions:[self remoteFilePermissions]
+                              forFile:path];
+}
+
+#pragma mark Delegate
+
+- (id <KTPublishingEngineDelegate>)delegate { return _delegate; }
+
+- (void)setDelegate:(id <KTPublishingEngineDelegate>)delegate { _delegate = delegate; }
 
 @end
 
@@ -496,7 +503,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[[[KTTranscriptController sharedControllerWithoutLoading] textStorage] appendAttributedString:attributedString];
 }
 
-#pragma mark -
 #pragma mark Pages
 
 /*  Uploads the site map if the site has the option enabled
@@ -759,6 +765,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSArray *mediaReps = [context mediaRepresentations];
     for (SVMediaRepresentation *mediaRep in mediaReps)
     {
+        // Is there already an existing file on the server? If so, use that
         NSData *fileContents = [mediaRep data];
         NSData *digest = [fileContents SHA1HashDigest];
         
