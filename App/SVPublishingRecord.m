@@ -76,9 +76,12 @@
 
 - (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
 {
-    if ([[self SHA1Digest] isEqual:digest])
+    if (![self isDirectory])
     {
-        return self;
+        if ([[self SHA1Digest] isEqual:digest])
+        {
+            return self;
+        }
     }
     else
     {
