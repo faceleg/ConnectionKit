@@ -225,7 +225,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (_currentContext) return _currentContext;
     
     // Make context
-    SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] init];
+    NSMutableString *string = [[NSMutableString alloc] init];
+    SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] initWithStringWriter:string];
+    [string release];
+    
     [result setPublishingEngine:self];
     return [result autorelease];
 }
