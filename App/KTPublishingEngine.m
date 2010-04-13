@@ -608,26 +608,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         [resources release];
     }
-	
-	
-    
-	// Generate and publish RSS feed if needed
-	if ([item isKindOfClass:[KTPage class]] &&
-        [(KTPage *)item collectionSyndicate] &&
-        [(KTPage *)item collectionCanSyndicate])
-	{
-		NSString *RSSString = [(KTPage *)item RSSFeedWithParserDelegate:self];
-		if (RSSString)
-		{			
-			// Now that we have page contents in unicode, clean up to the desired character encoding.
-			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-			OBASSERT(RSSData);
-			
-			NSString *RSSFilename = [(KTPage *)item RSSFileName];
-			NSString *RSSUploadPath = [[fullUploadPath stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-			[self uploadData:RSSData toPath:RSSUploadPath];
-		}
-	}
 }
 
 /*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages

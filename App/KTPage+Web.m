@@ -111,6 +111,25 @@
     
     [self writeHTML:context];
     [context close];
+	
+	
+	// Generate and publish RSS feed if needed
+	if ([self collectionSyndicate] &&
+        [self collectionCanSyndicate])
+	{
+		NSString *RSSString = [self RSSFeedWithParserDelegate:publishingEngine];
+		if (RSSString)
+		{			
+			// Now that we have page contents in unicode, clean up to the desired character encoding.
+			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+			OBASSERT(RSSData);
+			
+			NSString *RSSFilename = [self RSSFileName];
+			NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+			[publishingEngine uploadData:RSSData toPath:RSSUploadPath];
+		}
+	}
+    
     
     // Continue onto the next page if the app is licensed
     if (recursive && !gLicenseIsBlacklisted && gRegistrationString)
