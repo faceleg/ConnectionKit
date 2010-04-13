@@ -112,7 +112,8 @@
     [self writeHTML:context];
     [context close];
     
-    if (recursive)
+    // Continue onto the next page if the app is licensed
+    if (recursive && !gLicenseIsBlacklisted && gRegistrationString)
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
