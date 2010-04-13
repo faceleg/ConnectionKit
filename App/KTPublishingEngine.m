@@ -773,8 +773,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
     if (publishingRecord)
     {
+        // Only upload the data if it's not already being done
         NSString *path = [publishingRecord path];
-        [self uploadData:fileContents toPath:path];
+        if (![_paths containsObject:path])
+        {
+            [self uploadData:fileContents toPath:path];
+        }
     }
     else
     {
