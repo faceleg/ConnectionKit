@@ -22,6 +22,8 @@
 - (BOOL)isRegularFile;
 - (BOOL)isDirectory;
 
+#pragma mark Path
+- (NSString *)path; // relative to the root record
 @property (nonatomic, retain) NSString *filename;
 @property (nonatomic, retain) SVDirectoryPublishingRecord *parentDirectoryRecord;
 

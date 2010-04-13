@@ -36,6 +36,14 @@
 - (BOOL)isRegularFile; { return NO; }
 - (BOOL)isDirectory; { return NO; }
 
+#pragma mark Path
+
+- (NSString *)path; // relative to the root record
+{
+    NSString *result = [[[self parentDirectoryRecord] path] stringByAppendingPathComponent:[self filename]];
+    return result;
+}
+
 @dynamic filename;
 - (BOOL)validateFilename:(NSString **)outFilename error:(NSError **)error;
 {

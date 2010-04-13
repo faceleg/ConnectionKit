@@ -14,6 +14,8 @@
 
 @dynamic hostProperties;
 
+- (NSString *)path; { return @""; }
+
 - (BOOL)validateFilename:(NSString **)outFilename error:(NSError **)error;
 {
     return YES;
