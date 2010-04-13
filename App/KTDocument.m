@@ -937,15 +937,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 			NSLog(@"new hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);		
 		}
 		
-		// Mark designs and media as stale (pages are handled automatically)
-		NSArray *designs = [[self managedObjectContext] fetchAllObjectsForEntityForName:@"DesignPublishingInfo" error:NULL];
-		[designs setValue:nil forKey:@"versionLastPublished"];
-        
-        NSArray *media = [[[self mediaManager] managedObjectContext] fetchAllObjectsForEntityForName:@"MediaFileUpload" error:NULL];
-		[media setBool:YES forKey:@"isStale"];
-        
-        
-        // All page and sitemap URLs are now invalid
+		// All page and sitemap URLs are now invalid
         [[[self site] rootPage] recursivelyInvalidateURL:YES];
         [self willChangeValueForKey:@"publishedSitemapURL"];
         [self didChangeValueForKey:@"publishedSitemapURL"];
