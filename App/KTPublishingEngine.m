@@ -14,6 +14,7 @@
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringHTMLContext.h"
+#import "SVMediaRecord.h"
 #import "SVMediaRepresentation.h"
 #import "KTPage+Internal.h"
 #import "SVPublishingHTMLContext.h"
@@ -670,18 +671,24 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSArray *mediaReps = [context mediaRepresentations];
     for (SVMediaRepresentation *mediaRep in mediaReps)
     {
-        NSData *digest  = [[mediaRep data] SHA1HashDigest];
+        NSData *fileContents = [mediaRep data];
+        NSData *digest = [fileContents SHA1HashDigest];
         
         SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
         if (publishingRecord)
         {
-            [self uploadData:[mediaRep data]
+            [self uploadData:fileContents
                       toPath:[[self baseRemotePath] stringByAppendingPathComponent:[publishingRecord filename]]];
         }
         else
         {
-            [self uploadData:[mediaRep data]
-                      toPath:[[self baseRemotePath] stringByAppendingPathComponent:@"foo.png"]];
+            id <SVMedia> media = [mediaRep mediaRecord];
+            
+            NSString *path = [[[self baseRemotePath]
+                               stringByAppendingPathComponent:@"_Media"]
+                              stringByAppendingPathComponent:[media preferredFilename]];
+            
+            [self uploadData:fileContents toPath:path];
         }
     }
     
