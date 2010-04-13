@@ -11,6 +11,7 @@
 #import "KTDesign.h"
 #import "KTSite.h"
 #import "KTHostProperties.h"
+#import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPublishingRecord.h"
 #import "KTURLCredentialStorage.h"
@@ -202,19 +203,8 @@
         {
             [object setPublishedPath:path];
         }
-        else if ([object isKindOfClass:[KTDesign class]])
-        {
-            // Record the version of the design published
-            NSManagedObjectContext *moc = [[self site] managedObjectContext];
-            NSPredicate *predicate = [NSPredicate predicateWithFormat:@"identifier == %@", [(KTDesign *)object identifier]];
-            
-            NSArray *designPublishingInfo = [moc fetchAllObjectsForEntityForName:@"DesignPublishingInfo"
-                                                             predicate:predicate
-                                                                 error:NULL];
-            
-            [designPublishingInfo setValue:[(KTDesign *)object marketingVersion] forKey:@"versionLastPublished"];
-        }
-        else if ([object isKindOfClass:[KTMaster class]])
+        else if ([object isKindOfClass:[KTMaster class]] ||
+                 [object isKindOfClass:[KTDesign class]])
         {
         }
         else
@@ -293,10 +283,10 @@
 - (void)uploadDesignIfNeeded
 {
     // When publishing changes, only upload the design if its published version is different to the current one
-    KTMaster *master = [[[self site] rootPage] master];
-    KTDesign *design = [master design];
+    //KTMaster *master = [[[self site] rootPage] master];
+    //KTDesign *design = [master design];
     if (![self onlyPublishChanges] ||
-        ![[design marketingVersion] isEqualToString:[master valueForKeyPath:@"designPublishingInfo.versionLastPublished"]])
+        !NO)
     {
         [super uploadDesignIfNeeded];
     }
