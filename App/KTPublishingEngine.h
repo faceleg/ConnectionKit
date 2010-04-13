@@ -88,7 +88,12 @@ typedef enum {
 
 
 #pragma mark Publishing
+
 - (SVHTMLContext *)currentHTMLContext;
+
+// Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
+- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 
 
 @end
@@ -114,9 +119,6 @@ typedef enum {
 - (id <CKConnection>)connection;
 - (void)setConnection:(id <CKConnection>)connection;
 - (void)createConnection;
-
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 
 // Pages
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
