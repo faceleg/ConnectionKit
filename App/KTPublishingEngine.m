@@ -754,14 +754,31 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Gather up media using special context
     SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
     [context setPublishingEngine:self];
+    
+    _newMedia = [[NSMutableArray alloc] init];
     _currentContext = context;
     
     KTPage *homePage = [[self site] rootPage];
     [homePage publish:self recursively:YES];
     
     _currentContext = nil;
-    
     [context release];
+    
+    
+    // Assign filenames to the new media
+    for (SVMediaRepresentation *mediaRep in _newMedia)
+    {
+        id <SVMedia> media = [mediaRep mediaRecord];
+        
+        NSString *path = [[[self baseRemotePath]
+                           stringByAppendingPathComponent:@"_Media"]
+                          stringByAppendingPathComponent:[media preferredFilename]];
+        
+        NSData *fileContents = [mediaRep data];
+        [self uploadData:fileContents toPath:path];
+    }
+    
+    [_newMedia release]; _newMedia = nil;
 }
 
 - (void)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
@@ -782,13 +799,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
     else
     {
-        id <SVMedia> media = [mediaRep mediaRecord];
-        
-        NSString *path = [[[self baseRemotePath]
-                           stringByAppendingPathComponent:@"_Media"]
-                          stringByAppendingPathComponent:[media preferredFilename]];
-        
-        [self uploadData:fileContents toPath:path];
+        // Put off uploading until all media has been gathered
+        [_newMedia addObject:mediaRep];
     }
 }
 

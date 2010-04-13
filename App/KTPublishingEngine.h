@@ -59,6 +59,7 @@ typedef enum {
     
     NSMutableSet    *_paths;    // all the paths which are in use by the site
     
+    NSMutableArray          *_newMedia;
     NSMutableSet            *_uploadedMedia;
     NSMutableArray          *_pendingMediaUploads;
     KSSimpleURLConnection   *_currentPendingMediaConnection;
