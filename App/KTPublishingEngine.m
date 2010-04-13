@@ -595,12 +595,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		CKTransferRecord *transferRecord = [self uploadData:pageData toPath:fullUploadPath];
         OBASSERT(transferRecord);
         
-        if (digest)
-        {
-            [transferRecord setProperty:item forKey:@"object"];
-            [transferRecord setProperty:digest forKey:@"dataDigest"];
-            [transferRecord setProperty:fullUploadPath forKey:@"path"];
-        }
+        [transferRecord setProperty:item forKey:@"object"];
 	}
     
     
@@ -930,8 +925,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (digest)
         {
             [result setProperty:master forKey:@"object"];
-            [result setProperty:cssUploadPath forKey:@"path"];
-            [result setProperty:digest forKey:@"dataDigest"];
         }
     }
     
@@ -1080,6 +1073,11 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         NSLog(@"Unable to create transfer record for path:%@ data:%@", remotePath, data); // case 40520 logging
     }
+    
+    
+    // Record digest of the data for after publishing
+    [result setProperty:[data SHA1HashDigest] forKey:@"dataDigest"];
+    [result setProperty:remotePath forKey:@"path"];
     
     return result;
 }
