@@ -49,9 +49,7 @@
 
 - (void)drawBackground;
 {
-	[[NSColor redColor] set];
-	[NSBezierPath fillRect:[self frame]];
-	
+	// If I draw something here it only shows up for just a flash, so it gets covered up.
 	[super drawBackground];
 }
 

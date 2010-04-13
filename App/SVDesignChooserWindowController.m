@@ -45,6 +45,29 @@
 
 enum { kGenreGroup, kColorGroup };
 
++ (NSSet *)keyPathsForValuesAffectingNoMatchString
+{
+    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
+    return [NSSet setWithObjects:@"genre", @"color", nil];
+}
+
+- (NSString *)noMatchString;
+{
+	NSString *genreString = [self scopeBar:oScopeBar titleOfItem:self.genre inGroup:kGenreGroup];
+	NSString *colorString = [self scopeBar:oScopeBar titleOfItem:self.color inGroup:kColorGroup];
+	NSString *result = nil;
+	if (genreString && colorString)
+	{
+		result = [NSString stringWithFormat:NSLocalizedString(@"No matches for “%@” and “%@”", @"Warning that two filter strings yielded no matching designs"), genreString, colorString];
+	}
+	else	// single item matched
+	{
+		NSString *value = genreString ? genreString : colorString;
+		result = [NSString stringWithFormat:NSLocalizedString(@"No matches for “%@”", @"Warning that one filter string yielded no matching designs"), value];
+	}
+	return result;
+}
+
 #pragma mark -
 
 - (void)awakeFromNib
@@ -163,6 +186,8 @@ enum { kGenreGroup, kColorGroup };
            titleOfItem:(NSString *)identifier 
                inGroup:(NSInteger)groupNumber
 {
+	// We are ignoring the scope bar and group number parameter; it's not used.
+	
 	static NSDictionary *sDesignScopeBarTitles = nil;
 	if (!sDesignScopeBarTitles)
 	{
@@ -180,10 +205,14 @@ NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a d
 								 
 								 nil];
 	}
-	NSString *result = [sDesignScopeBarTitles objectForKey:identifier];
-	if (!result)
+	NSString *result = nil;
+	if (identifier)		// look up only if it's not nil.
 	{
-		result = identifier;	// fallback, but it won't be localized
+		result = [sDesignScopeBarTitles objectForKey:identifier];
+		if (!result)
+		{
+			result = identifier;	// fallback, but it won't be localized
+		}
 	}
 	return result;
 }
@@ -256,5 +285,7 @@ NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a d
 		oViewController.designs = self.allDesigns;
 	}
 }
+
+
 
 @end

@@ -33,6 +33,7 @@
 @property(retain) SVDesignChooserViewController *viewController;
 @property (copy) NSString *genre;
 @property (copy) NSString *color;
+@property (readonly) NSString *noMatchString;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
