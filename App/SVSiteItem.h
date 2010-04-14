@@ -15,8 +15,8 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class KTSite, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord, KTPublishingEngine;
-@protocol SVWebContentViewController, SVMedia;
+@class KTSite, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord;
+@protocol SVWebContentViewController, SVMedia, SVPublishingContext;
 
 
 @interface SVSiteItem : SVExtensibleManagedObject
@@ -89,7 +89,7 @@
 
 
 #pragma mark Contents
-- (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive;
+- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive;
 - (void)writeContentRecursively:(BOOL)recursive;// writes to the current HTML context. Ignore things like site title
 
 

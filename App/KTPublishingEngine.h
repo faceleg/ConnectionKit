@@ -22,6 +22,31 @@
 #import <Connection/Connection.h>
 
 
+@class SVHTMLContext, SVMediaRepresentation;
+
+
+@protocol SVPublishingContext
+
+#pragma mark HTML
+// When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
+- (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
+
+
+#pragma mark Media
+- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+
+
+#pragma mark Raw
+// Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
+- (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
+- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath;
+
+@end
+
+
+#pragma mark -
+
+
 extern NSString *KTPublishingEngineErrorDomain;
 enum {
 	KTPublishingEngineErrorAuthenticationFailed,
@@ -38,16 +63,16 @@ typedef enum {
     KTPublishingEngineStatusFinished,
 } KTPublishingEngineStatus;
 
-@class KTSite, KTPage, SVHTMLContext, SVMediaRepresentation, KTMediaFileUpload, SVHTMLTextBlock, KSSimpleURLConnection;
+@class KTSite, KTPage, SVHTMLTextBlock, KSSimpleURLConnection;
 @protocol KTPublishingEngineDelegate;
 
 
-@interface KTPublishingEngine : NSOperation
+@interface KTPublishingEngine : NSOperation <SVPublishingContext>
 {
   @private
-    KTSite	*_site;
-    NSString        *_documentRootPath;
-    NSString        *_subfolderPath;    // nil if there is no subfolder
+    KTSite      *_site;
+    NSString    *_documentRootPath;
+    NSString    *_subfolderPath;    // nil if there is no subfolder
     
     KTPublishingEngineStatus            _status;
     id <KTPublishingEngineDelegate>     _delegate;
@@ -87,18 +112,6 @@ typedef enum {
 // Tranfer records
 - (CKTransferRecord *)rootTransferRecord;
 - (CKTransferRecord *)baseTransferRecord;
-
-
-#pragma mark Publishing
-
-// When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
-- (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
-
-- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
-
-// Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath;
 
 
 @end

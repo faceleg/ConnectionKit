@@ -259,7 +259,7 @@
 #pragma mark Contents
 
 // Subclasses will do something useful
-- (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive; { }
+- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive; { }
 
 - (void)writeContentRecursively:(BOOL)recursive;
 {

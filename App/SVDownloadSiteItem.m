@@ -38,7 +38,7 @@
 
 #pragma mark Publishing
 
-- (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive;
+- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive;
 {
     id <SVMedia> media = [self media];
     
@@ -48,7 +48,7 @@
     uploadPath = [uploadPath stringByAppendingPathComponent:
                   [[media preferredFilename] legalizedWebPublishingFilename]];
     
-    [publishingEngine uploadContentsOfURL:[media fileURL] toPath:uploadPath];
+    [publishingEngine publishContentsOfURL:[media fileURL] toPath:uploadPath];
 }
 
 @end

@@ -101,7 +101,7 @@
     [parser release];
 }
 
-- (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive;
+- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive;
 {
     NSString *path = [self uploadPath];
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
@@ -134,7 +134,7 @@
 			
 			NSString *RSSFilename = [self RSSFileName];
 			NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-			[publishingEngine uploadData:RSSData toPath:RSSUploadPath];
+			[publishingEngine publishData:RSSData toPath:RSSUploadPath];
 		}
 	}
     

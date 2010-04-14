@@ -238,7 +238,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 /*	Use these methods instead of asking the connection directly. They will handle creating the
  *  appropriate directories first if needed.
  */
-- (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
+- (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath
 {
 	OBPRECONDITION(localURL);
     OBPRECONDITION([localURL isFileURL]);
@@ -260,7 +260,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             {
                 NSURL *aURL = [localURL URLByAppendingPathComponent:aSubPath isDirectory:NO];
                 NSString *aRemotePath = [remotePath stringByAppendingPathComponent:aSubPath];
-                [self uploadContentsOfURL:aURL toPath:aRemotePath];
+                [self publishContentsOfURL:aURL toPath:aRemotePath];
             }
         }
         else
@@ -286,7 +286,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return result;    
 }
 
-- (CKTransferRecord *)uploadData:(NSData *)data toPath:(NSString *)remotePath
+- (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath
 {
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
@@ -370,7 +370,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             NSString *path = [publishingRecord path];
             if (![_paths containsObject:path])
             {
-                [self uploadData:fileContents toPath:path];
+                [self publishData:fileContents toPath:path];
             }
             
             [_uploadedMediaReps setObject:path forKey:mediaRep];
@@ -418,7 +418,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Upload
     NSData *fileContents = [mediaRep data];
-    [self uploadData:fileContents toPath:path];
+    [self publishData:fileContents toPath:path];
     
     [_uploadedMediaReps setObject:path forKey:mediaRep];
 }
@@ -612,7 +612,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSData *gzipped = [siteMapData compressGzip];
         
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
-        [self uploadData:gzipped toPath:siteMapPath];
+        [self publishData:gzipped toPath:siteMapPath];
     }
 }
 
@@ -676,7 +676,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         if (![filename isEqualToString:@"main.css"])    // We handle uploading CSS separately
         {
             NSString *uploadPath = [remoteDesignDirectoryPath stringByAppendingPathComponent:filename];
-            [self uploadContentsOfURL:aResource toPath:uploadPath];
+            [self publishContentsOfURL:aResource toPath:uploadPath];
         }
 	}
 }
@@ -783,7 +783,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     NSData *digest = nil;
     if ([self shouldUploadMainCSSData:mainCSSData toPath:cssUploadPath digest:&digest])
     {
-        result = [self uploadData:mainCSSData toPath:cssUploadPath];
+        result = [self publishData:mainCSSData toPath:cssUploadPath];
         
         if (digest)
         {
@@ -848,7 +848,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     {
         NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[aResource lastPathComponent]];
         
-        [self uploadContentsOfURL:aResource toPath:resourceRemotePath];
+        [self publishContentsOfURL:aResource toPath:resourceRemotePath];
     }
     
     return YES;
