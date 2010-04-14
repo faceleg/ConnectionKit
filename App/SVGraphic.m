@@ -424,7 +424,8 @@
     
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
     
-    [propertyList setObject:[[self titleBox] serializedProperties] forKey:@"titleBox"];
+    [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
+                    forKey:@"titleBox"];  
 }
 
 #pragma mark SVPageletPlugInContainer
