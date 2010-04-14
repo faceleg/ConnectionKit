@@ -10,7 +10,7 @@
 
 [[if type==2]]
 	<script type="text/javascript">
-var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path page.site.hostProperties.resourcesDirectoryURL]][[else2]][[=previewResourceDirectory]][[endif2]]";
+var resourceDir = "[[if parser.HTMLGenerationPurpose]][[path parser.currentPage.site.hostProperties.resourcesDirectoryURL]][[else2]][[=previewResourceDirectory]][[endif2]]";
 var theme = "[[=&theme]]";
 var countRequest = false;
 var pcWidth = "[[=width]]";
