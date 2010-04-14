@@ -108,7 +108,8 @@
 {
     NSString *path = [self uploadPath];
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
-    
+    [context setCurrentPage:self];
+	
     [self writeHTML:context];
     [context close];
     
@@ -125,8 +126,7 @@
 	
 	
 	// Generate and publish RSS feed if needed
-	if ([self collectionSyndicate] &&
-        [self collectionCanSyndicate])
+	if ([self collectionSyndicate] && [self collectionCanSyndicate])
 	{
 		NSString *RSSString = [self RSSFeedWithParserDelegate:publishingEngine];
 		if (RSSString)
