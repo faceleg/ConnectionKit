@@ -212,8 +212,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     _visibleRect = [[[self webEditor] documentView] visibleRect];
     
     
-	// Figure out the URL to use
-	NSURL *pageURL = [[self page] URL];
+	// Figure out the URL to use. 
+	NSURL *pageURL = nil;//[[self page] URL];   Turned this off for now
     if (![pageURL scheme] ||        // case 44071: WebKit will not load the HTML or offer delegate
         ![pageURL host] ||          // info if the scheme is something crazy like fttp:
         !([[pageURL scheme] isEqualToString:@"http"] || [[pageURL scheme] isEqualToString:@"https"]))
