@@ -8,6 +8,7 @@
 
 #import "SVPublishingHTMLContext.h"
 
+#import "SVMediaRepresentation.h"
 #import "KTPage.h"
 #import "KTPublishingEngine.h"
 
@@ -64,6 +65,29 @@
             [transferRecord setProperty:page forKey:@"object"];
         }
     }
+}
+
+- (void)writeImageWithIdName:(NSString *)idName
+                   className:(NSString *)className
+                 sourceMedia:(SVMediaRecord *)media
+                         alt:(NSString *)altText
+                       width:(NSNumber *)width
+                      height:(NSNumber *)height;
+{
+    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc] initWithMediaRecord:media
+                                                                              width:width
+                                                                             height:height
+                                                                           fileType:(NSString *)kUTTypePNG];
+    
+    NSString *path = [[self publishingEngine] publishMediaRepresentation:rep];
+    [rep release];
+    
+    [self writeImageWithIdName:idName
+                     className:className
+                           src:path
+                           alt:altText
+                         width:[width description]
+                        height:[height description]];
 }
 
 @end

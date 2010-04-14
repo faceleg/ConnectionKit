@@ -102,6 +102,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 		_site = [site retain];
         
         _paths = [[NSMutableSet alloc] init];
+        _uploadedMediaReps = [[NSMutableDictionary alloc] init];
+        
         _uploadedMedia = [[NSMutableSet alloc] init];
         _pendingMediaUploads = [[NSMutableArray alloc] init];
         _resourceFiles = [[NSMutableSet alloc] init];
@@ -158,7 +160,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)start
 {
 	if ([self status] != KTPublishingEngineStatusNotStarted) return;
-    _status = KTPublishingEngineStatusParsing;
+    _status = KTPublishingEngineStatusGatheringMedia;
     
     [self main];
 }
@@ -177,6 +179,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
         
         // Publish pages properly
+        _status = KTPublishingEngineStatusParsing;
         KTPage *home = [[self site] rootPage];
         [home publish:self recursively:YES];
         
@@ -332,6 +335,219 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [[self connection] setPermissions:[self remoteFilePermissions]
                               forFile:path];
+}
+
+#pragma mark Media
+
+- (void)gatherMedia;
+{
+    // Gather up media using special context
+    SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
+    [context setPublishingEngine:self];
+    
+    _newMedia = [[NSMutableArray alloc] init];
+    _currentContext = context;
+    
+    KTPage *homePage = [[self site] rootPage];
+    [homePage publish:self recursively:YES];
+    
+    _currentContext = nil;
+    [context release];
+    
+    
+    // Assign filenames to the new media
+    for (SVMediaRepresentation *mediaRep in _newMedia)
+    {
+        [self publishNewMediaRepresentation:mediaRep];
+    }
+    [_newMedia release]; _newMedia = nil;
+}
+
+- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+{
+    if ([self status] == KTPublishingEngineStatusGatheringMedia)
+    {
+        // Is there already an existing file on the server? If so, use that
+        NSData *fileContents = [mediaRep data];
+        NSData *digest = [fileContents SHA1HashDigest];
+        
+        SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
+        if (publishingRecord)
+        {
+            // Only upload the data if it's not already being done
+            NSString *path = [publishingRecord path];
+            if (![_paths containsObject:path])
+            {
+                [self uploadData:fileContents toPath:path];
+            }
+            
+            [_uploadedMediaReps setObject:path forKey:mediaRep];
+        }
+        else
+        {
+            // Put off uploading until all media has been gathered
+            [_newMedia addObject:mediaRep];
+        }
+        
+        return nil;
+    }
+    else
+    {
+        NSString *result = [_uploadedMediaReps objectForKey:mediaRep];
+        return result;
+    }
+}
+
+- (void)publishNewMediaRepresentation:(SVMediaRepresentation *)mediaRep
+{
+    //  The media rep does not already exist on the server, so need to assign it a new path
+    id <SVMedia> media = [mediaRep mediaRecord];
+    
+    NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
+    NSString *preferredFilename = [media preferredFilename];
+    NSString *pathExtension = [preferredFilename pathExtension];
+    
+    NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
+                                   legalizedWebPublishingFileName];
+    
+    NSString *path = [mediaDirectoryPath stringByAppendingPathComponent:
+                      [legalizedFileName stringByAppendingPathExtension:pathExtension]];
+    
+    NSUInteger count = 1;
+    while ([_paths containsObject:path])
+    {
+        count++;
+        NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
+        
+        path = [mediaDirectoryPath stringByAppendingPathComponent:
+                [fileName stringByAppendingPathExtension:pathExtension]];
+    }
+    
+    
+    // Upload
+    NSData *fileContents = [mediaRep data];
+    [self uploadData:fileContents toPath:path];
+    
+    [_uploadedMediaReps setObject:path forKey:mediaRep];
+}
+
+- (NSSet *)uploadedMedia
+{
+    return [[_uploadedMedia copy] autorelease];
+}
+
+@class KTMediaFile;
+
+/*  Adds the media file to the upload queue (if it's not already in it)
+ */
+- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
+{
+    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
+    {
+        KTMediaFile *mediaFile = [media valueForKey:@"file"];
+		NSString *sourcePath = [mediaFile currentPath];
+		if (sourcePath)
+		{
+			NSURL *URL = [mediaFile URLForImageScalingProperties:[media scalingProperties]];
+            OBASSERT(URL);
+            
+            
+            if ([URL isFileURL])
+            {
+                // Upload the media. Store the media object with the transfer record for processing later
+				NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+                OBASSERT(uploadPath);
+                
+                CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
+                [transferRecord setProperty:media forKey:@"object"];
+			}
+            else
+            {
+                // Asynchronously load the data and then upload it
+                [self queuePendingMedia:media];
+            }
+            
+            
+            // Record that we're uploading the object
+            [_uploadedMedia addObject:media];
+		}
+	}
+}
+
+/*  Upload the media if needed
+ */
+- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
+{
+    // It used to be possible for the connection to be cancelled mid-parse. If so, just ignore the media
+    if (upload) // && [self status] <= KTPublishingEngineStatusUploading)
+	{
+		[self uploadMediaIfNeeded:upload];
+	}
+}
+
+- (void)queuePendingMedia:(KTMediaFileUpload *)media
+{
+    [_pendingMediaUploads addObject:media];
+    
+    // Kick off processing if this is the first item on the queue
+    if ([_pendingMediaUploads count] == 1)
+    {
+        [self dequeuePendingMedia];
+    }
+}
+
+- (void)dequeuePendingMedia
+{
+    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
+    KTMediaFile *mediaFile = [media valueForKey:@"file"];
+    NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
+    OBASSERT(URLRequest);
+    _currentPendingMediaConnection = [[KSSimpleURLConnection alloc] initWithRequest:URLRequest delegate:self];
+}
+
+- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response
+{
+    OBPRECONDITION(connection == _currentPendingMediaConnection);
+    
+    
+    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
+    NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
+    OBASSERT(uploadPath);
+    
+    CKTransferRecord *transferRecord = [self uploadData:data toPath:uploadPath];
+    [transferRecord setProperty:media forKey:@"object"];
+    
+    // Tidy up after the connection
+    [self connection:connection didFailWithError:nil];
+}
+
+- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
+{
+    if (error)
+    {
+        NSLog(@"Media connection for publishing failed: %@", [error debugDescription]);
+    }
+    
+    
+    OBPRECONDITION(connection == _currentPendingMediaConnection);
+    [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
+    
+    
+    // Remove from the queue and start the next item if available
+    [_pendingMediaUploads removeObjectAtIndex:0];
+    if ([_pendingMediaUploads count] > 0)
+    {
+        [self dequeuePendingMedia];
+    }
+    else if ([self status] == KTPublishingEngineStatusLoadingMedia)
+    {
+        // If all content has been generated and there's no more media to load, queue the final
+        // disconnect command and inform the delegate
+        _status = KTPublishingEngineStatusUploading;
+        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+        
+        [[self connection] disconnect];
+    }
 }
 
 #pragma mark Delegate
@@ -577,206 +793,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-#pragma mark Media
-
-- (void)gatherMedia;
-{
-    // Gather up media using special context
-    SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
-    [context setPublishingEngine:self];
-    
-    _newMedia = [[NSMutableArray alloc] init];
-    _currentContext = context;
-    
-    KTPage *homePage = [[self site] rootPage];
-    [homePage publish:self recursively:YES];
-    
-    _currentContext = nil;
-    [context release];
-    
-    
-    // Assign filenames to the new media
-    for (SVMediaRepresentation *mediaRep in _newMedia)
-    {
-        [self publishNewMediaRepresentation:mediaRep];
-    }
-    [_newMedia release]; _newMedia = nil;
-}
-
-- (void)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
-{
-    // Is there already an existing file on the server? If so, use that
-    NSData *fileContents = [mediaRep data];
-    NSData *digest = [fileContents SHA1HashDigest];
-    
-    SVPublishingRecord *publishingRecord = [[[self site] hostProperties] publishingRecordForSHA1Digest:digest];
-    if (publishingRecord)
-    {
-        // Only upload the data if it's not already being done
-        NSString *path = [publishingRecord path];
-        if (![_paths containsObject:path])
-        {
-            [self uploadData:fileContents toPath:path];
-        }
-    }
-    else
-    {
-        // Put off uploading until all media has been gathered
-        [_newMedia addObject:mediaRep];
-    }
-}
-
-- (void)publishNewMediaRepresentation:(SVMediaRepresentation *)mediaRep
-{
-    //  The media rep does not already exist on the server, so need to assign it a new path
-    id <SVMedia> media = [mediaRep mediaRecord];
-    
-    NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
-    NSString *preferredFilename = [media preferredFilename];
-    NSString *pathExtension = [preferredFilename pathExtension];
-    
-    NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
-                                   legalizedWebPublishingFileName];
-    
-    NSString *path = [mediaDirectoryPath stringByAppendingPathComponent:
-                      [legalizedFileName stringByAppendingPathExtension:pathExtension]];
-    
-    NSUInteger count = 1;
-    while ([_paths containsObject:path])
-    {
-        count++;
-        NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
-        
-        path = [mediaDirectoryPath stringByAppendingPathComponent:
-                [fileName stringByAppendingPathExtension:pathExtension]];
-    }
-    
-    
-    // Upload
-    NSData *fileContents = [mediaRep data];
-    [self uploadData:fileContents toPath:path];
-}
-
-- (NSSet *)uploadedMedia
-{
-    return [[_uploadedMedia copy] autorelease];
-}
-
-@class KTMediaFile;
-
-/*  Adds the media file to the upload queue (if it's not already in it)
- */
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
-{
-    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
-    {
-        KTMediaFile *mediaFile = [media valueForKey:@"file"];
-		NSString *sourcePath = [mediaFile currentPath];
-		if (sourcePath)
-		{
-			NSURL *URL = [mediaFile URLForImageScalingProperties:[media scalingProperties]];
-            OBASSERT(URL);
-            
-            
-            if ([URL isFileURL])
-            {
-                // Upload the media. Store the media object with the transfer record for processing later
-				NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-                OBASSERT(uploadPath);
-                
-                CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
-                [transferRecord setProperty:media forKey:@"object"];
-			}
-            else
-            {
-                // Asynchronously load the data and then upload it
-                [self queuePendingMedia:media];
-            }
-            
-            
-            // Record that we're uploading the object
-            [_uploadedMedia addObject:media];
-		}
-	}
-}
-				
-/*  Upload the media if needed
- */
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
-{
-    // It used to be possible for the connection to be cancelled mid-parse. If so, just ignore the media
-    if (upload) // && [self status] <= KTPublishingEngineStatusUploading)
-	{
-		[self uploadMediaIfNeeded:upload];
-	}
-}
-
-- (void)queuePendingMedia:(KTMediaFileUpload *)media
-{
-    [_pendingMediaUploads addObject:media];
-    
-    // Kick off processing if this is the first item on the queue
-    if ([_pendingMediaUploads count] == 1)
-    {
-        [self dequeuePendingMedia];
-    }
-}
-
-- (void)dequeuePendingMedia
-{
-    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
-    KTMediaFile *mediaFile = [media valueForKey:@"file"];
-    NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
-    OBASSERT(URLRequest);
-    _currentPendingMediaConnection = [[KSSimpleURLConnection alloc] initWithRequest:URLRequest delegate:self];
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response
-{
-    OBPRECONDITION(connection == _currentPendingMediaConnection);
-    
-    
-    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
-    NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-    OBASSERT(uploadPath);
-    
-    CKTransferRecord *transferRecord = [self uploadData:data toPath:uploadPath];
-    [transferRecord setProperty:media forKey:@"object"];
-    
-    // Tidy up after the connection
-    [self connection:connection didFailWithError:nil];
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
-{
-    if (error)
-    {
-        NSLog(@"Media connection for publishing failed: %@", [error debugDescription]);
-    }
-    
-    
-    OBPRECONDITION(connection == _currentPendingMediaConnection);
-    [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
-    
-    
-    // Remove from the queue and start the next item if available
-    [_pendingMediaUploads removeObjectAtIndex:0];
-    if ([_pendingMediaUploads count] > 0)
-    {
-        [self dequeuePendingMedia];
-    }
-    else if ([self status] == KTPublishingEngineStatusLoadingMedia)
-    {
-        // If all content has been generated and there's no more media to load, queue the final
-        // disconnect command and inform the delegate
-        _status = KTPublishingEngineStatusUploading;
-        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-        
-        [[self connection] disconnect];
-    }
-}
-
-#pragma mark -
 #pragma mark Design
 
 - (void)uploadDesignIfNeeded

@@ -81,4 +81,29 @@
     }
 }
 
+- (BOOL)isEqualToMediaRepresentation:(SVMediaRepresentation *)otherRep;
+{
+    BOOL result = ([[self mediaRecord] isEqual:[otherRep mediaRecord]] &&
+                   [[self width] isEqualToNumber:[otherRep width]] &&
+                   [[self height] isEqualToNumber:[otherRep height]] &&
+                   [[self fileType] isEqualToString:[otherRep fileType]]);
+    return result;
+}
+
+- (BOOL)isEqual:(id)object;
+{
+    return (self == object ||
+            ([object isKindOfClass:[SVMediaRepresentation class]] &&
+             [self isEqualToMediaRepresentation:object]));
+}
+
+- (NSUInteger)hash { return [[self mediaRecord] hash]; }
+
+#pragma mark NSCopying
+
+- (id)copyWithZone:(NSZone *)zone;
+{
+    return [self retain];   // immutable
+}
+
 @end

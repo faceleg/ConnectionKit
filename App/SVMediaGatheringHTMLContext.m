@@ -8,7 +8,6 @@
 
 #import "SVMediaGatheringHTMLContext.h"
 
-#import "SVMediaRepresentation.h"
 #import "KTPublishingEngine.h"
 
 
@@ -28,22 +27,6 @@
 - (void)writeString:(NSString *)string;
 {
     // Ignore
-}
-
-- (void)writeImageWithIdName:(NSString *)idName
-                   className:(NSString *)className
-                 sourceMedia:(SVMediaRecord *)media
-                         alt:(NSString *)altText
-                       width:(NSNumber *)width
-                      height:(NSNumber *)height;
-{
-    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc] initWithMediaRecord:media
-                                                                              width:width
-                                                                             height:height
-                                                                           fileType:(NSString *)kUTTypePNG];
-    
-    [[self publishingEngine] publishMediaRepresentation:rep];
-    [rep release];
 }
 
 @end

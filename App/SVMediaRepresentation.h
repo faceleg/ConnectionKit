@@ -12,7 +12,7 @@
 @class SVMediaRecord;
 
 
-@interface SVMediaRepresentation : NSObject
+@interface SVMediaRepresentation : NSObject <NSCopying>
 {
   @private
     SVMediaRecord   *_mediaRecord;
@@ -35,5 +35,7 @@
 - (BOOL)isNativeRepresentation;
 
 - (NSData *)data;
+
+- (BOOL)isEqualToMediaRepresentation:(SVMediaRepresentation *)otherRep;
 
 @end

@@ -31,6 +31,7 @@ enum {
 
 typedef enum {
     KTPublishingEngineStatusNotStarted,
+    KTPublishingEngineStatusGatheringMedia,
     KTPublishingEngineStatusParsing,        // Pages are being parsed one-by-one
     KTPublishingEngineStatusLoadingMedia,   // Parsing has finished, but there is still media to load
     KTPublishingEngineStatusUploading,      // All content has been generated, just waiting for queued uploads now
@@ -58,6 +59,7 @@ typedef enum {
     CKTransferRecord    *_baseTransferRecord;
     
     NSMutableSet    *_paths;    // all the paths which are in use by the site
+    NSMutableDictionary *_uploadedMediaReps;
     
     NSMutableArray          *_newMedia;
     NSMutableSet            *_uploadedMedia;
@@ -95,7 +97,7 @@ typedef enum {
 // When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path;
 
-- (void)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
+- (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
 
 // Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
 - (CKTransferRecord *)uploadContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
