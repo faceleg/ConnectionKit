@@ -9,6 +9,10 @@
 #import "SVDownloadSiteItem.h"
 
 #import "SVMediaRecord.h"
+#import "KTPage.h"
+#import "KTPublishingEngine.h"
+
+#import "NSString+Karelia.h"
 
 
 @implementation SVDownloadSiteItem
@@ -30,6 +34,21 @@
 + (NSSet *)keyPathsForValuesAffectingMediaRepresentation
 {
     return [NSSet setWithObject:@"media"];
+}
+
+#pragma mark Publishing
+
+- (void)publish:(KTPublishingEngine *)publishingEngine recursively:(BOOL)recursive;
+{
+    id <SVMedia> media = [self media];
+    
+    NSString *uploadPath = [publishingEngine baseRemotePath];
+    uploadPath = [uploadPath stringByAppendingPathComponent:[[self parentPage] uploadPath]];
+    uploadPath = [uploadPath stringByDeletingLastPathComponent];
+    uploadPath = [uploadPath stringByAppendingPathComponent:
+                  [[media preferredFilename] legalizedWebPublishingFilename]];
+    
+    [publishingEngine uploadContentsOfURL:[media fileURL] toPath:uploadPath];
 }
 
 @end
