@@ -598,16 +598,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Assign filenames to the new media
     for (SVMediaRepresentation *mediaRep in _newMedia)
     {
-        id <SVMedia> media = [mediaRep mediaRecord];
-        
-        NSString *path = [[[self baseRemotePath]
-                           stringByAppendingPathComponent:@"_Media"]
-                          stringByAppendingPathComponent:[media preferredFilename]];
-        
-        NSData *fileContents = [mediaRep data];
-        [self uploadData:fileContents toPath:path];
+        [self publishNewMediaRepresentation:mediaRep];
     }
-    
     [_newMedia release]; _newMedia = nil;
 }
 
@@ -632,6 +624,37 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         // Put off uploading until all media has been gathered
         [_newMedia addObject:mediaRep];
     }
+}
+
+- (void)publishNewMediaRepresentation:(SVMediaRepresentation *)mediaRep
+{
+    //  The media rep does not already exist on the server, so need to assign it a new path
+    id <SVMedia> media = [mediaRep mediaRecord];
+    
+    NSString *mediaDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:@"_Media"];
+    NSString *preferredFilename = [media preferredFilename];
+    NSString *pathExtension = [preferredFilename pathExtension];
+    
+    NSString *legalizedFileName = [[preferredFilename stringByDeletingPathExtension]
+                                   legalizedWebPublishingFileName];
+    
+    NSString *path = [mediaDirectoryPath stringByAppendingPathComponent:
+                      [legalizedFileName stringByAppendingPathExtension:pathExtension]];
+    
+    NSUInteger count = 1;
+    while ([_paths containsObject:path])
+    {
+        count++;
+        NSString *fileName = [legalizedFileName stringByAppendingFormat:@"-%u", count];
+        
+        path = [mediaDirectoryPath stringByAppendingPathComponent:
+                [fileName stringByAppendingPathExtension:pathExtension]];
+    }
+    
+    
+    // Upload
+    NSData *fileContents = [mediaRep data];
+    [self uploadData:fileContents toPath:path];
 }
 
 - (NSSet *)uploadedMedia
