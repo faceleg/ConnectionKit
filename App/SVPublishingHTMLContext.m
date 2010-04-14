@@ -12,6 +12,8 @@
 #import "KTPage.h"
 #import "KTPublishingEngine.h"
 
+#import "NSString+Karelia.h"
+
 
 @implementation SVPublishingHTMLContext
 
@@ -79,12 +81,17 @@
                                                                              height:height
                                                                            fileType:(NSString *)kUTTypePNG];
     
-    NSString *path = [[self publishingEngine] publishMediaRepresentation:rep];
+    KTPublishingEngine *pubEngine = [self publishingEngine];
+    NSString *path = [pubEngine publishMediaRepresentation:rep];
     [rep release];
+    
+    NSString *basePath = [pubEngine baseRemotePath];
+    if (![basePath hasSuffix:@"/"]) basePath = [basePath stringByAppendingString:@"/"];
+    NSString *relPath = [path pathRelativeToPath:basePath];
     
     [self writeImageWithIdName:idName
                      className:className
-                           src:path
+                           src:relPath
                            alt:altText
                          width:[width description]
                         height:[height description]];
