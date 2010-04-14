@@ -40,7 +40,7 @@
 /*	Generates the path to the specified file with the current page's design.
  *	Takes into account the HTML Generation Purpose to handle Quick Look etc.
  */
-- (NSString *)pathToDesignFile:(NSString *)filename
+- (NSString *)pathToDesignFile:(NSString *)filename inContext:(SVHTMLContext *)context;
 {
 	NSString *result = nil;
 	
@@ -50,7 +50,7 @@
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{
-		switch ([[SVHTMLContext currentContext] generationPurpose])
+		switch ([context generationPurpose])
 		{
 			case kSVHTMLGenerationPurposeEditing:
 				result = [[NSURL fileURLWithPath:localPath] absoluteString];
@@ -62,9 +62,9 @@
 				
 			default:
 			{
-				KTMaster *master = [(KTPage *)[[SVHTMLContext currentContext] currentPage] master];
+				KTMaster *master = [(KTPage *)[context currentPage] master];
 				NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
-				result = [designFileURL stringRelativeToURL:[[SVHTMLContext currentContext] baseURL]];
+				result = [designFileURL stringRelativeToURL:[context baseURL]];
 				break;
 			}
 		}
@@ -95,7 +95,8 @@
     [context setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
     [context setLanguage:[[self master] language]];
     
-    [context setMainCSSURL:[NSURL URLWithString:[self pathToDesignFile:@"main.css"]
+    NSString *cssPath = [self pathToDesignFile:@"main.css" inContext:context];
+    [context setMainCSSURL:[NSURL URLWithString:cssPath
                                   relativeToURL:[context baseURL]]];
      
     
@@ -220,7 +221,7 @@
 	// design's print.css but not for Quick Look
     if (![context isForQuickLookPreview])
 	{
-		NSString *printCSS = [self pathToDesignFile:@"print.css"];
+		NSString *printCSS = [self pathToDesignFile:@"print.css" inContext:context];
 		if (printCSS)
         {
             [context writeLinkToStylesheet:printCSS title:nil media:@"print"];
