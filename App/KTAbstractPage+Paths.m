@@ -308,10 +308,14 @@
     else
     {
         // For normal pages, figure out the path relative to parent and resolve it
-        NSString *path = [self pathRelativeToParent];
-        if (path)
+        NSURL *baseURL = [[self parentPage] URL];
+        if (baseURL)
         {
-            result = [NSURL URLWithString:path relativeToURL:[[self parentPage] URL]];
+            NSString *path = [self pathRelativeToParent];
+            if (path)
+            {
+                result = [NSURL URLWithString:path relativeToURL:baseURL];
+            }
         }
     }
 	

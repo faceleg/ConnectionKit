@@ -202,8 +202,11 @@
             result= @"javascript:void(0)";
             break;
         default:
-            result = [self relativeURLStringOfURL:[page URL]];
+        {
+            NSURL *URL = [page URL];
+            if (URL) result = [self relativeURLStringOfURL:URL];
             break;
+        }
     }
     
     return result;
