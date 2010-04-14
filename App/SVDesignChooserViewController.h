@@ -31,14 +31,8 @@
 @property (retain) KTDesign *selectedDesign;
 @end
 
-@interface SVDesignChooserScrollView : NSScrollView
-{
-    NSGradient *_backgroundGradient;
-}
-@end
-
-@interface SVDesignChooserViewBox : NSBox
-@end
-
-@interface SVDesignChooserSelectionView : NSView
-@end
+//@interface SVDesignChooserViewBox : NSBox
+//@end
+//
+//@interface SVDesignChooserSelectionView : NSView
+//@end

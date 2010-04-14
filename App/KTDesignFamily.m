@@ -14,12 +14,16 @@
 @implementation KTDesignFamily
 
 @synthesize designs = _designs;
+@synthesize thumbnails = _thumbnails;
+@synthesize thumbnailIndex = _thumbnailIndex;
+@synthesize colors = _colors;
 
 - (id) init
 {
 	self = [super init];
 	if ( self != nil )
 	{
+		_thumbnails = [[NSMutableDictionary alloc] init];
 		_designs = [[NSMutableArray alloc] init];
 	}
 	return self;
@@ -27,7 +31,9 @@
 
 - (void) dealloc
 {
+	self.thumbnails = nil;
 	self.designs = nil;
+	self.colors = nil;
 	[super dealloc];
 }
 
@@ -51,24 +57,91 @@
  */
 - (NSString *) imageRepresentationType; /* required */
 {
-	return IKImageBrowserNSImageRepresentationType;
+	return IKImageBrowserCGImageRepresentationType;
 }
+
+
 /*! 
  @method imageRepresentation
  @abstract Returns the image to display (required). Can return nil if the item has no image to display.
  @discussion This methods is called frequently, so the receiver should cache the returned instance.
  */
+
+
 - (id) imageRepresentation; /* required */
 {
-	return [[[self designs] firstObjectKS] thumbnail];
+	int viewWidth = kDesignThumbWidth + 12;
+	
+	NSNumber *indexNumber = [NSNumber numberWithInt:self.thumbnailIndex];
+	CGImageRef result = (CGImageRef) [self.thumbnails objectForKey:indexNumber];	// cached?
+	if (!result)
+	{
+		int safeIndex = self.thumbnailIndex;
+		if (safeIndex >= [[self designs] count])
+		{
+			safeIndex = 0;	// make sure we don't overflow number of design variations
+		}
+		
+		// SET UP
+		
+		CGColorSpaceRef genericRGB = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
+		CGContextRef context = CGBitmapContextCreate(NULL, viewWidth, kDesignThumbHeight, 8, 0, genericRGB, kCGImageAlphaPremultipliedFirst);
+		NSGraphicsContext *graphicsContext = [NSGraphicsContext
+												graphicsContextWithGraphicsPort:context flipped:NO];
+		[NSGraphicsContext saveGraphicsState];
+		[NSGraphicsContext setCurrentContext:graphicsContext];
+		
+		// DRAW
+		
+		NSRect boundsOfThumb = NSMakeRect(6.0, 0.0, kDesignThumbWidth, kDesignThumbHeight);
+		CGImageRef startImage = [[[self designs] objectAtIndex:safeIndex] thumbnailCG];
+
+		CGContextDrawImage([[NSGraphicsContext currentContext]
+							graphicsPort], *(CGRect*)&boundsOfThumb, startImage);
+
+		if (!self.colors)
+		{
+			NSMutableArray *collectingColors = [NSMutableArray array];
+			for (KTDesign *design in self.designs)
+			{
+				NSColor *aColor = [design mainColor];
+				if (!aColor) aColor = [NSColor whiteColor];
+				[collectingColors addObject:aColor];
+			}
+			self.colors = [NSArray arrayWithArray:collectingColors];
+		}
+		// Now for the stripes that show there are variations
+		int nColors = [self.colors count];
+		float colorHeight = ((float)(kDesignThumbHeight+1)/nColors);
+		float currentY = 0.0;						// starting Y coordinate
+		
+		for ( NSColor *color in self.colors )
+		{
+			[color set];
+			NSRect leftRect  = NSMakeRect(0,				currentY, 4, colorHeight-1);
+			NSRect rightRect = NSMakeRect(viewWidth-4,		currentY, 4, colorHeight-1);
+			[NSBezierPath fillRect:leftRect];
+			[NSBezierPath fillRect:rightRect];
+			currentY += colorHeight;
+		}
+		
+		
+		// BUILD AND CACHE IMAGE
+		result = CGBitmapContextCreateImage(context);
+		CFRelease(context);
+		[self.thumbnails setObject:(id)result forKey:indexNumber];
+	}
+	return (id) result;
 }
+
+
 /*! 
  @method imageVersion
  @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
  */
 - (NSUInteger) imageVersion;
 {
-	return 1;
+	return _thumbnailIndex;
 }
 /*! 
  @method imageTitle
@@ -97,7 +170,7 @@
 {
 	return [[[self designs] firstObjectKS] genre];
 }
-- (NSString *) color;
+- (NSColor *) color;
 {
 	return [[[self designs] firstObjectKS] color];
 }

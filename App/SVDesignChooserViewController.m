@@ -45,23 +45,14 @@
 	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
 	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
 	
-	
-
-	//[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
-	//[view setValue:attributes forKey:IKImageBrowserCellsTitleAttributesKey];
-	if ([view respondsToSelector:@selector(setIntercellSpacing:)])
-	{
-		[view setCellSize:NSMakeSize(140,100)];	// a bit wider to allow for 4 columns
-		[((id)view) setIntercellSpacing:NSMakeSize(4.0,0.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
-	}
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
 	
 	/// UNCOMMENT TO TURN THIS BACK ON
-	//
-	///_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
+	
+	_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -86,8 +77,8 @@
 }
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-#define CELLWIDTH 150
-#define CELLHEIGHT 112
+#define CELLWIDTH 140
+#define CELLHEIGHT 100
 	DJW((@"%s %@",__FUNCTION__, theEvent));
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [[self view] convertPoint:windowPoint fromView:nil];
@@ -107,7 +98,7 @@
 		
 		NSLog(@"%@ %d,%d -> %d : %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
 
-		[[self view] setNeedsDisplayInRect:frameForItemAtIndex];
+		// [[self view] setNeedsDisplayInRect:frameForItemAtIndex];
 		
 		
 	}
@@ -238,60 +229,36 @@
 
 
 
-@implementation SVDesignChooserScrollView
 
-- (void)awakeFromNib
-{
-    //NSColor *startingColor = [NSColor darkGrayColor];
-    //NSColor *endingColor = [NSColor blackColor];
-    //_backgroundGradient = [[NSGradient alloc] initWithStartingColor:startingColor
-    //                                                    endingColor:endingColor];    
-}
+//@implementation SVDesignChooserViewBox
+//
+//- (NSView *)hitTest:(NSPoint)aPoint
+//{
+//    return nil; // don't allow any mouse clicks for subviews (needed?)
+//}
+//
+//@end
 
-- (void)drawRect:(NSRect)rect
-{
-    //[_backgroundGradient drawInRect:[self bounds] angle:90.0];
-    //[[NSColor colorWithCalibratedRed:0.079 green:0.079 blue:0.079 alpha:1.000] set];
-    //[NSBezierPath fillRect:rect];
-}
-
-- (void)dealloc
-{
-    //[_backgroundGradient release];
-    [super dealloc];
-}
-
-@end
-
-@implementation SVDesignChooserViewBox
-
-- (NSView *)hitTest:(NSPoint)aPoint
-{
-    return nil; // don't allow any mouse clicks for subviews (needed?)
-}
-
-@end
-
-@implementation SVDesignChooserSelectionView
-
-
-// view's hidden binding is bound to viewcontoller.selection (NSNegateBoolean)
-// so this only appears drawn around the selection
-- (void)drawRect:(NSRect)rect
-{
-	// draw a rectangle under where the highlight will go
-    NSBezierPath *underPath = [NSBezierPath bezierPathWithRect:rect];
-    [underPath setLineWidth:3.0];
-    [underPath setLineJoinStyle:NSRoundLineJoinStyle];
-    [[NSColor colorWithCalibratedWhite:0.10 alpha:1.0] set];
-    [underPath stroke];
-	
-    // do a thicker line in selectedControlColor to indicate selection
-    NSBezierPath *highlightPath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(rect, 1.5, 1.5) xRadius:9.0 yRadius:9.0];
-    [highlightPath setLineWidth:3.0];
-    [highlightPath setLineJoinStyle:NSRoundLineJoinStyle];
-    [[NSColor alternateSelectedControlColor] set];
-    [highlightPath stroke];
-}
-
-@end
+//@implementation SVDesignChooserSelectionView
+//
+//
+//// view's hidden binding is bound to viewcontoller.selection (NSNegateBoolean)
+//// so this only appears drawn around the selection
+//- (void)drawRect:(NSRect)rect
+//{
+//	// draw a rectangle under where the highlight will go
+//    NSBezierPath *underPath = [NSBezierPath bezierPathWithRect:rect];
+//    [underPath setLineWidth:3.0];
+//    [underPath setLineJoinStyle:NSRoundLineJoinStyle];
+//    [[NSColor colorWithCalibratedWhite:0.10 alpha:1.0] set];
+//    [underPath stroke];
+//	
+//    // do a thicker line in selectedControlColor to indicate selection
+//    NSBezierPath *highlightPath = [NSBezierPath bezierPathWithRoundedRect:NSInsetRect(rect, 1.5, 1.5) xRadius:9.0 yRadius:9.0];
+//    [highlightPath setLineWidth:3.0];
+//    [highlightPath setLineJoinStyle:NSRoundLineJoinStyle];
+//    [[NSColor alternateSelectedControlColor] set];
+//    [highlightPath stroke];
+//}
+//
+//@end

@@ -15,6 +15,9 @@
 @interface KTDesignFamily : NSObject <IKImageBrowserItem>  {
 
 	NSMutableArray *_designs;
+	NSMutableDictionary *_thumbnails;	// keyed by nsnumber for version so it can be arbitrary sized
+	int _thumbnailIndex;		// which object we are getting the thumbnail
+	NSArray *_colors;
 }
 
 - (NSString *) genre;
@@ -24,5 +27,8 @@
 - (void) addDesign:(KTDesign *)aDesign;
 
 @property (retain) NSMutableArray *designs;
+@property (retain) NSMutableDictionary *thumbnails;
+@property (retain) NSArray *colors;			// colors of the children design variations, cached
+@property (assign) int thumbnailIndex;
 
 @end

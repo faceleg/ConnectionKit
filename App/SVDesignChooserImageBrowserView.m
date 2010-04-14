@@ -43,11 +43,9 @@
 	{
 		[self setIntercellSpacing:NSMakeSize(0.0,0.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
 	}
-	//	[self setAnimates:NO];
-	//	[self setWantsLayer:NO];
-	
-	//	NSColor* selectionColor = [NSColor selectedTextBackgroundColor];
-	//	[self setValue:selectionColor forKey:IKImageBrowserSelectionColorKey];
+	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
+	 
+	[self setCellSize:NSMakeSize(140,100)];	// a bit wider to allow for 4 columns
 }
 
 

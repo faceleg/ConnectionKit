@@ -14,12 +14,15 @@ enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 
 @protocol IKImageBrowserItem <NSObject> @end    // weirdly ImageKit only declares it as an informal protocol
 
+extern const int kDesignThumbWidth;
+extern const int kDesignThumbHeight;
 
 
 @interface KTDesign : KSPlugInWrapper <IKImageBrowserItem>
 {
     @protected
     NSImage *myThumbnail;
+	CGImageRef *myThumbnailCG;
 	NSSet	*myResourceFileURLs;
 	
 	BOOL myFontsLoaded;
@@ -44,9 +47,11 @@ enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
 - (NSString *)genre;	
 - (NSString *)color;	// dark, light, or color
 - (BOOL)menusUseNonBreakingSpaces;
+- (NSColor *)mainColor;		// from RGB string, to help with thumbnail variations
 
 // Images
 - (NSImage *)thumbnail;
+- (CGImageRef)thumbnailCG;
 
 - (NSString *)placeholderImagePath;
 
