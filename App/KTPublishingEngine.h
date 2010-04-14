@@ -36,12 +36,17 @@
 - (NSString *)publishMediaRepresentation:(SVMediaRepresentation *)mediaRep;
 
 
+#pragma mark Resource Files
+- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
+
+
 #pragma mark Raw
 // Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
 - (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath;
 
 - (NSString *)baseRemotePath;
+
 
 @end
 

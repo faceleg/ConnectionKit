@@ -22,6 +22,10 @@
 {
     return nil;
 }
+- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
+{
+    return nil;
+}
 
 - (SVHTMLContext *)beginPublishingHTMLToPath:(NSString *)path
 {

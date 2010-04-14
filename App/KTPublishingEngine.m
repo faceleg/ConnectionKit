@@ -47,9 +47,6 @@
 NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 
-#define KTParsingInterval 0.1
-
-
 @interface KTPublishingEngine ()
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
@@ -813,8 +810,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	[self addGraphicalTextBlock:textBlock];
 }
 
-#pragma mark -
 #pragma mark Resource Files
+
+- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
+{
+    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
+    NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[fileURL lastPathComponent]];
+    
+    [self publishContentsOfURL:fileURL toPath:resourceRemotePath];
+    
+    return resourceRemotePath;
+}
 
 - (NSSet *)resourceFiles
 {
@@ -858,7 +865,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     return YES;
 }
 
-#pragma mark -
 #pragma mark Uploading Support
 
 /*  Creates the specified directory including any parent directories that haven't already been queued for creation.
