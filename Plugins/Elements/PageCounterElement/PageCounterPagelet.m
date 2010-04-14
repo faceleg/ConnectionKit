@@ -229,10 +229,10 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return [NSURL fileURLWithPath:path];
 }
 
-// called via recursiveComponentPerformSelector
-- (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
+- (void)writeHTML:(SVHTMLContext *)context;
 {
-	if (PC_GRAPHICS == [self type])
+    // Include resources for each digit if needed
+    if (PC_GRAPHICS == [self type])
 	{
 		NSString *theme = [self theme];
 		NSBundle *b = [self bundle];
@@ -245,7 +245,8 @@ NSString *PCSampleImageKey = @"sampleImage";
 			NSString *format = [NSString stringWithFormat:@"%@-%d.png", theme, i];
 			if (imagePath)
 			{
-				[aSet addObject:[imagePath stringByAppendingPathComponent:format]];
+				[context addResource:
+                 [NSURL fileURLWithPath:[imagePath stringByAppendingPathComponent:format]]];
 			}
 			else
 			{
@@ -253,10 +254,14 @@ NSString *PCSampleImageKey = @"sampleImage";
                                                  ofType:[format pathExtension] 
                                             inDirectory:@"digits"];
                 OBASSERT(resource);
-                [aSet addObject:resource];
+                [context addResource:[NSURL fileURLWithPath:resource]];
 			}
 		}
 	}
+    
+    
+    // Carry on
+    [super writeHTML:context];
 }
 
 //LocalizedStringInThisBundle("page views",@" preceeded by a number to show how many times a page has been viewed over the web");
