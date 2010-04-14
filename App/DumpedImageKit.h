@@ -8,18 +8,6 @@
 // This header was generated with ClassDumper on 10.5 but was edited  
 // heavily to make it compile on both 10.5 and 10.6 development systems...
 
-NSString *const IKImageBrowserCellBackgroundLayer;
-NSString *const IKImageBrowserCellForegroundLayer;
-NSString *const IKImageBrowserCellSelectionLayer;
-NSString *const IKImageBrowserCellPlaceHolderLayer;
-
-typedef enum{
-	IKImageStateNoImage=0,
-	IKImageStateInvalid,
-	IKImageStateReady,
-} IKImageBrowserCellState;
-
-
 @class IKMipmapImage;
 
 @interface IKImageCell : NSObject

@@ -20,6 +20,7 @@
 
 - (NSRect) myBackgroundFrame
 {
+	NSLog(@"%s",__FUNCTION__);
 	NSRect imgFrame = [self imageFrame];
 	NSRect frame = [self frame];
 	
@@ -32,161 +33,13 @@
 }
 
 //---------------------------------------------------------------------------------
-// layerForType:
-//
-// provides the layers for the given types
-//---------------------------------------------------------------------------------
-- (CALayer *) layerForType:(NSString*) type
-{
-	NSLog(@"Types: %@ %@ %@ %@", IKImageBrowserCellPlaceHolderLayer, IKImageBrowserCellForegroundLayer, IKImageBrowserCellSelectionLayer, IKImageBrowserCellBackgroundLayer);
-		  
-	CGColorRef color;
-	
-	//retrieve some usefull rects
-	NSRect frame = [self frame];
-	NSRect imageFrame = [self imageFrame];
-	NSRect relativeImageFrame = NSMakeRect(imageFrame.origin.x - frame.origin.x, imageFrame.origin.y - frame.origin.y, imageFrame.size.width, imageFrame.size.height);
-	
-	/* place holder layer */
-	if(type == IKImageBrowserCellPlaceHolderLayer){
-		//create a place holder layer
-		CALayer *layer = [CALayer layer];
-		layer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-		
-		CALayer *placeHolderLayer = [CALayer layer];
-		placeHolderLayer.frame = *(CGRect*) &relativeImageFrame;
-		
-		float fillComponents[4] = {1.0, 1.0, 1.0, 0.3};
-		float strokeComponents[4] = {1.0, 1.0, 1.0, 0.9};
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		
-		//set a background color
-		color = CGColorCreate(colorSpace, fillComponents);
-		[placeHolderLayer setBackgroundColor:color];
-		CFRelease(color);
-		
-		//set a stroke color
-		color = CGColorCreate(colorSpace, strokeComponents);
-		[placeHolderLayer setBorderColor:color];
-		CFRelease(color);
-		
-		[placeHolderLayer setBorderWidth:2.0];
-		////[placeHolderLayer setCornerRadius:10];
-		CFRelease(colorSpace);
-		
-		[layer addSublayer:placeHolderLayer];
-		
-		return layer;
-	}
-	
-	/* foreground layer */
-	if(type == IKImageBrowserCellForegroundLayer){
-		//no foreground layer on place holders
-		if([self cellState] != IKImageStateReady)
-			return nil;
-		
-		//create a foreground layer that will contain several childs layer
-		CALayer *layer = [CALayer layer];
-		layer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-		
-		NSRect imageContainerFrame = [self myBackgroundFrame];
-		NSRect relativeImageContainerFrame = NSMakeRect(imageContainerFrame.origin.x - frame.origin.x, imageContainerFrame.origin.y - frame.origin.y, imageContainerFrame.size.width, imageContainerFrame.size.height);
-		
-		//add a glossy overlay
-//		CALayer *glossyLayer = [CALayer layer];
-//		glossyLayer.frame = *(CGRect*) &relativeImageContainerFrame;
-//		[glossyLayer setContents:(id)glossyImage()];
-//		[layer addSublayer:glossyLayer];
-		
-		//add a pin icon
-//		CALayer *pinLayer = [CALayer layer];
-//		[pinLayer setContents:(id)pinImage()];
-//		pinLayer.frame = CGRectMake((frame.size.width/2)-5, frame.size.height - 17, 24, 30);
-//		[layer addSublayer:pinLayer];
-		
-		return layer;
-	}
-	
-	/* selection layer */
-	if(type == IKImageBrowserCellSelectionLayer){
-		
-		//create a selection layer
-		CALayer *selectionLayer = [CALayer layer];
-		
-		frame = [self myBackgroundFrame];
-		
-		selectionLayer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-		
-		float fillComponents[4] = {1.0, 0, 0.5, 0.3};
-		float strokeComponents[4] = {1.0, 0.0, 0.5, 1.0};
-		
-		//set a background color
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		color = CGColorCreate(colorSpace, fillComponents);
-		[selectionLayer setBackgroundColor:color];
-		CFRelease(color);
-		
-		//set a border color
-		color = CGColorCreate(colorSpace, strokeComponents);
-		[selectionLayer setBorderColor:color];
-		CFRelease(color);
-		
-		[selectionLayer setBorderWidth:2.0];
-		////[selectionLayer setCornerRadius:5];
-		
-		return selectionLayer;
-	}
-	
-	/* background layer */
-	if(type == IKImageBrowserCellBackgroundLayer){
-		//no background layer on place holders
-		if([self cellState] != IKImageStateReady)
-			return nil;
-		
-		CALayer *layer = [CALayer layer];
-		layer.frame = CGRectMake(0, 0, frame.size.width, frame.size.height);
-		
-		NSRect bgFrame  = [self myBackgroundFrame];
-		NSRect backgroundRect = NSMakeRect(bgFrame.origin.x - frame.origin.x, bgFrame.origin.y - frame.origin.y, bgFrame.size.width, bgFrame.size.height);		
-		
-		CALayer *photoBackgroundLayer = [CALayer layer];
-		photoBackgroundLayer.frame = *(CGRect*) &backgroundRect;
-		
-		float fillComponents[4] = {0.95, 0.95, 0.95, 1.0};
-		float strokeComponents[4] = {0.2, 0.2, 0.2, 0.5};
-		
-		CGColorSpaceRef colorSpace = CGColorSpaceCreateDeviceRGB();
-		
-		color = CGColorCreate(colorSpace, fillComponents);
-		[photoBackgroundLayer setBackgroundColor:color];
-		CFRelease(color);
-		
-		color = CGColorCreate(colorSpace, strokeComponents);
-		[photoBackgroundLayer setBorderColor:color];
-		CFRelease(color);
-		
-		[photoBackgroundLayer setBorderWidth:1.0];
-		[photoBackgroundLayer setShadowOpacity:0.5];
-		////[photoBackgroundLayer setCornerRadius:3];
-		
-		CFRelease(colorSpace);
-		
-		[layer addSublayer:photoBackgroundLayer];
-		
-		return layer;
-	}
-	
-	NSLog(@"not handled type = %@", type);
-	return nil;
-}
-
-//---------------------------------------------------------------------------------
 // imageFrame
 //
 // define where the image should be drawn
 //---------------------------------------------------------------------------------
 - (NSRect) imageFrame
 {
+	NSLog(@"%s",__FUNCTION__);
 	//get default imageFrame and aspect ratio
 	NSRect imageFrame = [super imageFrame];
 	
@@ -231,6 +84,7 @@
 //---------------------------------------------------------------------------------
 - (NSRect) imageContainerFrame
 {
+	NSLog(@"%s",__FUNCTION__);
 	NSRect container = [super frame];
 	
 	//make the image container 15 pixels up
@@ -247,6 +101,7 @@
 //---------------------------------------------------------------------------------
 - (NSRect) titleFrame
 {
+	NSLog(@"%s",__FUNCTION__);
 	//get the default frame for the title
 	NSRect titleFrame = [super titleFrame];
 	
@@ -269,6 +124,7 @@
 //---------------------------------------------------------------------------------
 - (NSRect) selectionFrame
 {
+	NSLog(@"%s",__FUNCTION__);
 	return NSInsetRect([self myBackgroundFrame], -5, -5);
 }
 
