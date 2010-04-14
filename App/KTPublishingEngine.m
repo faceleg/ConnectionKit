@@ -60,7 +60,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @interface KTPublishingEngine (SubclassSupportPrivate)
 
-- (void)_parseAndUploadPageIfNeeded:(KTPage *)page;
 - (void)publishNonPageContent;
 
 // Media
@@ -531,67 +530,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         NSString *siteMapPath = [[self baseRemotePath] stringByAppendingPathComponent:@"sitemap.xml.gz"];
         [self uploadData:gzipped toPath:siteMapPath];
     }
-}
-
-/*!
- Unused. Left over from 1.6 code so I can copy out functionality
- */
-- (void)_parseAndUploadPageIfNeeded:(KTPage *)item
-{
-	OBASSERT([NSThread isMainThread]);
-	
-	
-    // Don't publish drafts or special pages with no direct content
-    if ([item isDraftOrHasDraftAncestor]) return;
-    
-    
-    
-    // Bail early if the page is not for publishing. This MUST come after testing if the page is a
-    // File Download, as they have no upload path, but still need to process media. Case 40515.
-	NSString *uploadPath = [item uploadPath];
-	if (!uploadPath) return;
-    
-    
-	
-	// Generate HTML data
-	NSMutableString *HTML = [[NSMutableString alloc] init];
-    
-    SVPublishingHTMLContext *context = [[SVPublishingHTMLContext alloc]
-                                        initWithStringWriter:HTML];
-    [context setCurrentPage:item];
-	
-	[item writeHTML:context];
-    [context release];
-    
-    KTPage *masterPage = ([item isKindOfClass:[KTPage class]]) ? (KTPage *)item : [item parentPage];
-    
-    if ([self status] > KTPublishingEngineStatusUploading) return; // Engine may be cancelled mid-parse. If so, go no further.
-	
-	NSString *charset = [[masterPage master] valueForKey:@"charset"];
-	NSStringEncoding encoding = [charset encodingFromCharset];
-	NSData *pageData = [HTML dataUsingEncoding:encoding allowLossyConversion:YES];
-	OBASSERT(pageData);
-    
-    
-    // Give subclasses a chance to ignore the upload
-    NSString *fullUploadPath = [[self baseRemotePath] stringByAppendingPathComponent:uploadPath];
-	
-    NSData *digest = nil;
-    if (![self shouldUploadHTML:HTML encoding:encoding forPage:item toPath:fullUploadPath digest:&digest])
-    {
-        return;
-    }
-    
-    
-    
-    // Upload page data. Store the page and its digest with the record for processing later
-    if (fullUploadPath)
-    {
-		CKTransferRecord *transferRecord = [self uploadData:pageData toPath:fullUploadPath];
-        OBASSERT(transferRecord);
-        
-        [transferRecord setProperty:item forKey:@"object"];
-	}
 }
 
 /*  Slightly messy support method that allows KTPublishingEngine to reject publishing non-stale pages

@@ -147,7 +147,10 @@
     {
         for (SVSiteItem *anItem in [self sortedChildren])
         {
-            [anItem publish:publishingEngine recursively:recursive];
+            if (![[anItem isDraft] boolValue])
+            {
+                [anItem publish:publishingEngine recursively:recursive];
+            }
         }
     }
 }
