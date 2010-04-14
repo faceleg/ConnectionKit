@@ -59,12 +59,9 @@ typedef enum {
     CKTransferRecord    *_baseTransferRecord;
     
     NSMutableSet    *_paths;    // all the paths which are in use by the site
-    NSMutableDictionary *_uploadedMediaReps;
     
-    NSMutableArray          *_newMedia;
-    NSMutableSet            *_uploadedMedia;
-    NSMutableArray          *_pendingMediaUploads;
-    KSSimpleURLConnection   *_currentPendingMediaConnection;
+    NSMutableDictionary *_uploadedMediaReps;
+    NSMutableArray      *_newMedia;
     
     NSMutableSet        *_resourceFiles;
     NSMutableDictionary *_graphicalTextBlocks;
@@ -130,10 +127,6 @@ typedef enum {
 
 // Pages
 - (BOOL)shouldUploadHTML:(NSString *)HTML encoding:(NSStringEncoding)encoding forPage:(KTPage *)page toPath:(NSString *)uploadPath digest:(NSData **)outDigest;
-
-// Media
-- (NSSet *)uploadedMedia;
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media;
 
 // Design
 - (void)uploadDesignIfNeeded;

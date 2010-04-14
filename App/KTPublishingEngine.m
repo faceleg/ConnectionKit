@@ -64,8 +64,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 // Media
 - (void)gatherMedia;
-- (void)queuePendingMedia:(KTMediaFileUpload *)media;
-- (void)dequeuePendingMedia;
 
 // Resources
 - (void)addResourceFile:(NSURL *)resourceURL;
@@ -104,8 +102,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _paths = [[NSMutableSet alloc] init];
         _uploadedMediaReps = [[NSMutableDictionary alloc] init];
         
-        _uploadedMedia = [[NSMutableSet alloc] init];
-        _pendingMediaUploads = [[NSMutableArray alloc] init];
         _resourceFiles = [[NSMutableSet alloc] init];
         _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
@@ -128,10 +124,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_subfolderPath release];
     
     [_paths release];
-    OBASSERT([_pendingMediaUploads count] == 0);
-    [_pendingMediaUploads release];
-    OBASSERT(!_currentPendingMediaConnection);
-    [_uploadedMedia release];
     
     [_resourceFiles release];
     [_graphicalTextBlocks release];
@@ -431,124 +423,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [_uploadedMediaReps setObject:path forKey:mediaRep];
 }
 
-- (NSSet *)uploadedMedia
-{
-    return [[_uploadedMedia copy] autorelease];
-}
-
 @class KTMediaFile;
-
-/*  Adds the media file to the upload queue (if it's not already in it)
- */
-- (void)uploadMediaIfNeeded:(KTMediaFileUpload *)media
-{
-    if (![_uploadedMedia containsObject:media])    // Don't bother if it's already in the queue
-    {
-        KTMediaFile *mediaFile = [media valueForKey:@"file"];
-		NSString *sourcePath = [mediaFile currentPath];
-		if (sourcePath)
-		{
-			NSURL *URL = [mediaFile URLForImageScalingProperties:[media scalingProperties]];
-            OBASSERT(URL);
-            
-            
-            if ([URL isFileURL])
-            {
-                // Upload the media. Store the media object with the transfer record for processing later
-				NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-                OBASSERT(uploadPath);
-                
-                CKTransferRecord *transferRecord = [self uploadContentsOfURL:[NSURL fileURLWithPath:sourcePath] toPath:uploadPath];
-                [transferRecord setProperty:media forKey:@"object"];
-			}
-            else
-            {
-                // Asynchronously load the data and then upload it
-                [self queuePendingMedia:media];
-            }
-            
-            
-            // Record that we're uploading the object
-            [_uploadedMedia addObject:media];
-		}
-	}
-}
-
-/*  Upload the media if needed
- */
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseMediaFile:(KTMediaFile *)mediaFile upload:(KTMediaFileUpload *)upload;	
-{
-    // It used to be possible for the connection to be cancelled mid-parse. If so, just ignore the media
-    if (upload) // && [self status] <= KTPublishingEngineStatusUploading)
-	{
-		[self uploadMediaIfNeeded:upload];
-	}
-}
-
-- (void)queuePendingMedia:(KTMediaFileUpload *)media
-{
-    [_pendingMediaUploads addObject:media];
-    
-    // Kick off processing if this is the first item on the queue
-    if ([_pendingMediaUploads count] == 1)
-    {
-        [self dequeuePendingMedia];
-    }
-}
-
-- (void)dequeuePendingMedia
-{
-    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
-    KTMediaFile *mediaFile = [media valueForKey:@"file"];
-    NSURLRequest *URLRequest = [mediaFile URLRequestForImageScalingProperties:[media scalingProperties]];
-    OBASSERT(URLRequest);
-    _currentPendingMediaConnection = [[KSSimpleURLConnection alloc] initWithRequest:URLRequest delegate:self];
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFinishLoadingData:(NSData *)data response:(NSURLResponse *)response
-{
-    OBPRECONDITION(connection == _currentPendingMediaConnection);
-    
-    
-    KTMediaFileUpload *media = [_pendingMediaUploads objectAtIndex:0];
-    NSString *uploadPath = [[self baseRemotePath] stringByAppendingPathComponent:[media pathRelativeToSite]];
-    OBASSERT(uploadPath);
-    
-    CKTransferRecord *transferRecord = [self uploadData:data toPath:uploadPath];
-    [transferRecord setProperty:media forKey:@"object"];
-    
-    // Tidy up after the connection
-    [self connection:connection didFailWithError:nil];
-}
-
-- (void)connection:(KSSimpleURLConnection *)connection didFailWithError:(NSError *)error
-{
-    if (error)
-    {
-        NSLog(@"Media connection for publishing failed: %@", [error debugDescription]);
-    }
-    
-    
-    OBPRECONDITION(connection == _currentPendingMediaConnection);
-    [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
-    
-    
-    // Remove from the queue and start the next item if available
-    [_pendingMediaUploads removeObjectAtIndex:0];
-    if ([_pendingMediaUploads count] > 0)
-    {
-        [self dequeuePendingMedia];
-    }
-    else if ([self status] == KTPublishingEngineStatusLoadingMedia)
-    {
-        // If all content has been generated and there's no more media to load, queue the final
-        // disconnect command and inform the delegate
-        _status = KTPublishingEngineStatusUploading;
-        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-        
-        [[self connection] disconnect];
-    }
-}
 
 #pragma mark Delegate
 
@@ -578,13 +453,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (!didPublish)
     {
         [NSObject cancelPreviousPerformRequestsWithTarget:self];
-        
-        if ([_pendingMediaUploads count] > 0)
-        {
-            [_currentPendingMediaConnection cancel];
-            [_currentPendingMediaConnection release];   _currentPendingMediaConnection = nil;
-            [_pendingMediaUploads removeAllObjects];
-        }
         
         // Disconnect connection
         [[self connection] forceDisconnect];
@@ -779,17 +647,10 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         
         
         // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
-        if ([_pendingMediaUploads count] == 0)
-        {
-            _status = KTPublishingEngineStatusUploading;
-            [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-            
-            [[self connection] disconnect]; // Once everything is uploaded, disconnect
-        }
-        else
-        {
-            _status = KTPublishingEngineStatusLoadingMedia;
-        }
+        _status = KTPublishingEngineStatusUploading;
+        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+        
+        [[self connection] disconnect]; // Once everything is uploaded, disconnect
     }
 }
 
