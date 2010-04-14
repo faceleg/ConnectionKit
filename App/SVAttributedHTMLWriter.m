@@ -113,4 +113,6 @@
     [_attributedHTML setAttributes:nil range:range];
 }
 
+- (void)close; { }
+
 @end
