@@ -50,24 +50,20 @@
 	NSString *localPath = [[[design bundle] bundlePath] stringByAppendingPathComponent:filename];
 	if ([[NSFileManager defaultManager] fileExistsAtPath:localPath])
 	{
-		switch ([context generationPurpose])
-		{
-			case kSVHTMLGenerationPurposeEditing:
-				result = [[NSURL fileURLWithPath:localPath] absoluteString];
-				break;
-				
-			case kSVHTMLGenerationPurposeQuickLookPreview:
-				result = [[design bundle] quicklookDataForFile:filename];
-				break;
-				
-			default:
-			{
-				KTMaster *master = [(KTPage *)[context currentPage] master];
-				NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
-				result = [designFileURL stringRelativeToURL:[context baseURL]];
-				break;
-			}
-		}
+		if ([context isForQuickLookPreview])
+        {
+            result = [[design bundle] quicklookDataForFile:filename];
+        }
+        else if ([context isEditable] && ![context baseURL])
+        {
+            result = [[NSURL fileURLWithPath:localPath] absoluteString];
+        }
+        else
+        {
+            KTMaster *master = [(KTPage *)[context currentPage] master];
+            NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
+            result = [designFileURL stringRelativeToURL:[context baseURL]];
+        }
 	}
 	
 	return result;
