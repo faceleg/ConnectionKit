@@ -41,6 +41,8 @@
 - (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
 - (CKTransferRecord *)publishData:(NSData *)data toPath:(NSString *)remotePath;
 
+- (NSString *)baseRemotePath;
+
 @end
 
 
