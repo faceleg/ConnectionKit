@@ -1542,7 +1542,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         result = [_focusedText webEditorTextDoCommandBySelector:command];
         
         // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
-        if (!result && [self respondsToSelector:command])
+        if (!result && [self respondsToSelector:command] && command != @selector(paste:))
         {
             [self doCommandBySelector:command];
             result = YES;
