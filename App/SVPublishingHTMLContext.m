@@ -97,4 +97,9 @@
                         height:[height description]];
 }
 
+- (void)addResource:(NSURL *)resourceURL;
+{
+    [[self publishingEngine] publishResourceAtURL:resourceURL];
+}
+
 @end
