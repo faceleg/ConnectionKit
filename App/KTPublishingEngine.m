@@ -51,6 +51,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 - (void)setRootTransferRecord:(CKTransferRecord *)rootRecord;
 
+- (BOOL)shouldPublishToPath:(NSString *)path;
 - (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 
 @end
@@ -242,6 +243,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     OBPRECONDITION([localURL isFileURL]);
     OBPRECONDITION(remotePath);
     
+    if (![self shouldPublishToPath:remotePath]) return nil;
+    
     
     CKTransferRecord *result = nil;
     
@@ -269,7 +272,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             id <CKConnection> connection = [self connection];
             OBASSERT(connection);
             [connection connect];	// Ensure we're connected
-            result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
+            
+            result = [connection uploadFile:[localURL path]
+                                     toFile:remotePath
+                       checkRemoteExistence:NO
+                                   delegate:nil];
+            
             [result setName:[remotePath lastPathComponent]];
             
             [self didQueueUpload:result toDirectory:parent];
@@ -288,6 +296,8 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 {
 	OBPRECONDITION(data);
     OBPRECONDITION(remotePath);
+    
+    if (![self shouldPublishToPath:remotePath]) return nil;
     
     
     CKTransferRecord *parent = [self createDirectory:[remotePath stringByDeletingLastPathComponent]];
@@ -315,7 +325,13 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     return result;
 }
-         
+    
+- (BOOL)shouldPublishToPath:(NSString *)path;
+{
+    BOOL result = ![_paths containsObject:path];
+    return result;
+}
+
 - (void)didQueueUpload:(CKTransferRecord *)record toDirectory:(CKTransferRecord *)parent;
 {
     [parent addContent:record];
