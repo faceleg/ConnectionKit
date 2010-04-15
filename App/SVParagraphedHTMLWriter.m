@@ -130,16 +130,23 @@
         [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL pathExtension]]];
     }
     
-    SVImage *image = [SVImage insertNewImageWithMedia:media];
+    SVImage *image = [SVImage insertNewImageInManagedObjectContext:context];
+    [image setMedia:media];
     
     
     // Try to divine image size
     int width = [imageElement width];
-    if (width > 0) [image setWidth:[NSNumber numberWithInt:width]];
-    
     int height = [imageElement height];
-    if (height > 0) [image setHeight:[NSNumber numberWithInt:height]];
     
+    if (width > 0 && height > 0)
+    {
+        [image setWidth:[NSNumber numberWithInt:width]];
+        [image setHeight:[NSNumber numberWithInt:height]];
+    }
+    else
+    {
+        [image makeOriginalSize];
+    }
     [image setConstrainProportions:YES];
     
     
