@@ -74,7 +74,7 @@
     unsigned int _privateAnimationMask:1;
 }
 
-- (IKImageBrowserCellState)cellState;
+//- (IKImageBrowserCellState)cellState;
 
 + (void)stopCurrentPlayerIfAny;
 + (BOOL)aCellIsPlayingInView:(id)fp8;
