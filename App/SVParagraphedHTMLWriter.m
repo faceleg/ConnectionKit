@@ -133,6 +133,16 @@
     SVImage *image = [SVImage insertNewImageWithMedia:media];
     
     
+    // Try to divine image size
+    int width = [imageElement width];
+    if (width > 0) [image setWidth:[NSNumber numberWithInt:width]];
+    
+    int height = [imageElement height];
+    if (height > 0) [image setHeight:[NSNumber numberWithInt:height]];
+    
+    [image setConstrainProportions:YES];
+    
+    
     // Make corresponding text attachment
     SVTextAttachment *textAttachment = [NSEntityDescription
                                         insertNewObjectForEntityForName:@"TextAttachment"
