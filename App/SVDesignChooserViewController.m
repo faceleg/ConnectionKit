@@ -131,7 +131,9 @@
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
 	DJW((@"%s",__FUNCTION__));
-//	[self viewBoundsDidChange:nil];
+	
+	// Re-add a tracking rect... Will this help?
+	_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
 
 }
 

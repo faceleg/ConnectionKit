@@ -118,19 +118,39 @@
 		int nColors = [self.colors count];
 		float colorWidth = ((float)(viewWidth+between)/nColors);
 		float currentX = 0.0;						// starting Y coordinate
-		
+		int i = 0;
 		for ( NSColor *color in self.colors )
 		{
 			[color set];
 			NSRect theRect  = NSMakeRect(currentX, viewHeight-swatchHeight, colorWidth-between, swatchHeight);
 			[NSBezierPath fillRect:theRect];
+			
+			if (i == self.imageVersion)		// show a highlight
+			{
+				NSRect hiliteRect = NSMakeRect(currentX, viewHeight-swatchHeight-3, colorWidth-between, 2);
+				[[NSColor blackColor] set];
+				[NSBezierPath fillRect:hiliteRect];
+			}
 			currentX += colorWidth;
+			i++;
 		}
 		
 		
 		// BUILD AND CACHE IMAGE
 		result = CGBitmapContextCreateImage(context);
 		CFRelease(context);
+		
+		
+		
+		
+//		NSBitmapImageRep *bitmap = [[[NSBitmapImageRep alloc] initWithCGImage:result] autorelease];
+//		NSData *data = [bitmap TIFFRepresentation];
+//		[data writeToFile:[NSString stringWithFormat:@"/Volumes/dwood/Desktop/foo_%d.tiff", self.imageVersion] atomically:NO];
+		
+		
+		
+		
+		
 		[self.thumbnails setObject:(id)result forKey:indexNumber];
 	}
 	return (id) result;
