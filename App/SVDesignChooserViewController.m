@@ -44,7 +44,9 @@
 	[paraStyle setTighteningFactorForTruncation:0.2];
 	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
 	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
-	
+
+	[[[self view] window] setAcceptsMouseMovedEvents:YES];
+
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
@@ -81,17 +83,19 @@
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [theView convertPoint:windowPoint fromView:nil];
 
+
 	if (!NSPointInRect(localPoint, [theView bounds])) return;
 	
 	int index = [theView indexOfItemAtPoint:localPoint];
 	if (NSNotFound != index)
 	{
+		NSLog(@"Mouse: %@ -- index %d", NSStringFromPoint(localPoint), index);
+
 		NSRect frame = [theView itemFrameAtIndex:index];
 		float imageX = NSMidX(frame)-(kDesignThumbWidth/2);
 		float howFarX = (localPoint.x - imageX) / kDesignThumbWidth;
 		if (howFarX < 0.0) howFarX = 0.0;
 		if (howFarX > 1.0) howFarX = 1.0;
-//		NSLog(@"%.2f : Mouse: %@ -- index %d frame = %@", howFarX, NSStringFromPoint(localPoint), index, NSStringFromRect(frame));
 		
 		if ([[self.designs objectAtIndex:index] respondsToSelector:@selector(scrub:)])
 		{
@@ -102,12 +106,10 @@
 			if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])
 			{
 				[theView reloadCellDataAtIndex:index];
-				NSLog(@"reloadCellDataAtIndex:");
 			}
 			else
 			{
 				[theView reloadData];
-				NSLog(@"reloadData");
 			}
 			[theView setAnimates:YES];
 		}
@@ -129,6 +131,8 @@
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
 	DJW((@"%s",__FUNCTION__));
+//	[self viewBoundsDidChange:nil];
+
 }
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index;
@@ -215,6 +219,11 @@
 	if (NSNotFound != firstIndex)
 	{
 		result = [self.designs objectAtIndex:firstIndex];
+	}
+	if ([result isKindOfClass:[KTDesignFamily class]])
+	{
+		KTDesignFamily *family = (KTDesignFamily *)result;
+		result = [family.designs objectAtIndex:family.imageVersion];
 	}
 	return result;
 }

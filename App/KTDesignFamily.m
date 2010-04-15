@@ -74,6 +74,7 @@
 	int yOffset = 16;
 	int swatchHeight = 12;
 	int viewHeight = kDesignThumbHeight + yOffset;
+	int between = 2;
 	
 	NSNumber *indexNumber = [NSNumber numberWithInt:self.imageVersion];
 	CGImageRef result = (CGImageRef) [self.thumbnails objectForKey:indexNumber];	// cached?
@@ -96,7 +97,7 @@
 		
 		// DRAW
 		
-		NSRect boundsOfThumb = NSMakeRect(0, 0, kDesignThumbWidth, viewHeight);
+		NSRect boundsOfThumb = NSMakeRect(0, 0, kDesignThumbWidth, kDesignThumbHeight);
 		CGImageRef startImage = [[[self designs] objectAtIndex:safeIndex] thumbnailCG];
 
 		CGContextDrawImage([[NSGraphicsContext currentContext]
@@ -115,13 +116,13 @@
 		}
 		// Now for the stripes that show there are variations
 		int nColors = [self.colors count];
-		float colorWidth = ((float)(viewWidth+1)/nColors);
+		float colorWidth = ((float)(viewWidth+between)/nColors);
 		float currentX = 0.0;						// starting Y coordinate
 		
 		for ( NSColor *color in self.colors )
 		{
 			[color set];
-			NSRect theRect  = NSMakeRect(currentX, viewHeight-swatchHeight, colorWidth-1, swatchHeight);
+			NSRect theRect  = NSMakeRect(currentX, viewHeight-swatchHeight, colorWidth-between, swatchHeight);
 			[NSBezierPath fillRect:theRect];
 			currentX += colorWidth;
 		}
@@ -132,7 +133,6 @@
 		CFRelease(context);
 		[self.thumbnails setObject:(id)result forKey:indexNumber];
 	}
-	NSLog(@"Image for version:%d", self.imageVersion);
 	return (id) result;
 }
 
@@ -142,7 +142,6 @@
 	int whichIndex = howFar * designCount;
 	whichIndex = MIN(whichIndex, designCount-1);
 	self.imageVersion = whichIndex;
-	NSLog(@"Using index %d", self.imageVersion);
 }
 
 /*! 
@@ -151,7 +150,13 @@
  */
 - (NSString *) imageTitle;
 {
-	return [[[[self designs] firstObjectKS] title] uppercaseString];
+	int safeIndex = self.imageVersion;
+	if (safeIndex >= [[self designs] count])
+	{
+		safeIndex = 0;	// make sure we don't overflow number of design variations
+	}
+	
+	return [[[self designs] objectAtIndex:safeIndex] title];
 }
 /*! 
  @method imageSubtitle
@@ -159,8 +164,14 @@
  */
 - (NSString *) imageSubtitle;
 {
-	return [[[self designs] firstObjectKS] contributor];
+	int safeIndex = self.imageVersion;
+	if (safeIndex >= [[self designs] count])
+	{
+		safeIndex = 0;	// make sure we don't overflow number of design variations
+	}
+	return [[[self designs] objectAtIndex:safeIndex] contributor];
 }
+
 - (BOOL) isSelectable;
 {
 	return YES;
