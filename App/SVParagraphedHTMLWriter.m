@@ -122,18 +122,10 @@
     else
     {
         WebResource *resource = [[[[imageElement ownerDocument] webFrame] dataSource] subresourceForURL:URL];
-        NSData *data = [resource data];
         
-        NSURLResponse *response = [[NSURLResponse alloc] initWithURL:[resource URL]
-                                                            MIMEType:[resource MIMEType]
-                                               expectedContentLength:[data length]
-                                                    textEncodingName:[resource textEncodingName]];
-        
-        media = [SVMediaRecord mediaWithFileContents:data
-                                         URLResponse:response
-                                          entityName:@"GraphicMedia"
-                      insertIntoManagedObjectContext:context];
-        [response release];
+        media = [SVMediaRecord mediaWithWebResource:resource
+                                         entityName:@"GraphicMedia"
+                     insertIntoManagedObjectContext:context];
         
         [media setPreferredFilename:[@"pastedImage" stringByAppendingPathExtension:[URL pathExtension]]];
     }
