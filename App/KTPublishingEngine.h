@@ -95,7 +95,6 @@ typedef enum {
     NSMutableDictionary *_uploadedMediaReps;
     NSMutableArray      *_newMedia;
     
-    NSMutableSet        *_resourceFiles;
     NSMutableDictionary *_graphicalTextBlocks;
 }
 
@@ -154,10 +153,6 @@ typedef enum {
 - (void)addGraphicalTextBlock:(SVHTMLTextBlock *)textBlock;
 - (CKTransferRecord *)uploadMainCSSIfNeeded;
 - (BOOL)shouldUploadMainCSSData:(NSData *)mainCSSData toPath:(NSString *)path digest:(NSData **)outDigest;
-
-// Resources
-- (NSSet *)resourceFiles;
-- (BOOL)uploadResourceFiles;
 
 @end
 

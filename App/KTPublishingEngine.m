@@ -101,7 +101,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _paths = [[NSMutableSet alloc] init];
         _uploadedMediaReps = [[NSMutableDictionary alloc] init];
         
-        _resourceFiles = [[NSMutableSet alloc] init];
         _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
         _documentRootPath = [docRoot copy];
@@ -124,7 +123,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_paths release];
     
-    [_resourceFiles release];
     [_graphicalTextBlocks release];
 	
 	[super dealloc];
@@ -442,6 +440,19 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
 @class KTMediaFile;
 
+#pragma mark Resource Files
+
+- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
+{
+    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
+    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
+    NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[fileURL lastPathComponent]];
+    
+    [self publishContentsOfURL:fileURL toPath:resourceRemotePath];
+    
+    return resourceRemotePath;
+}
+
 #pragma mark Delegate
 
 - (id <KTPublishingEngineDelegate>)delegate { return _delegate; }
@@ -655,20 +666,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     [self uploadMainCSSIfNeeded];
     
     
-    // Upload resources. KTLocalPublishingEngine & subclasses use this point to bail out if
-    // there are no changes to publish
-    if ([self uploadResourceFiles])
-    {
-        // Upload sitemap if the site has one
-        [self uploadGoogleSiteMapIfNeeded];
-        
-        
-        // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
-        _status = KTPublishingEngineStatusUploading;
-        [[self delegate] publishingEngineDidFinishGeneratingContent:self];
-        
-        [[self connection] disconnect]; // Once everything is uploaded, disconnect
-    }
+    // Upload sitemap if the site has one
+    [self uploadGoogleSiteMapIfNeeded];
+    
+    
+    // Inform the delegate if there's no pending media. If there is, we'll inform once that is done
+    _status = KTPublishingEngineStatusUploading;
+    [[self delegate] publishingEngineDidFinishGeneratingContent:self];
+    
+    [[self connection] disconnect]; // Once everything is uploaded, disconnect
 }
 
 #pragma mark Design
@@ -824,61 +830,6 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)HTMLParser:(SVHTMLTemplateParser *)parser didParseTextBlock:(SVHTMLTextBlock *)textBlock
 {
 	[self addGraphicalTextBlock:textBlock];
-}
-
-#pragma mark Resource Files
-
-- (NSString *)publishResourceAtURL:(NSURL *)fileURL;
-{
-    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
-    NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[fileURL lastPathComponent]];
-    
-    [self publishContentsOfURL:fileURL toPath:resourceRemotePath];
-    
-    return resourceRemotePath;
-}
-
-- (NSSet *)resourceFiles
-{
-    return [[_resourceFiles copy] autorelease];
-}
-
-- (void)addResourceFile:(NSURL *)resourceURL
-{
-    resourceURL = [resourceURL absoluteURL];    // Ensures hashing and -isEqual: work right
-    
-    if (![_resourceFiles containsObject:resourceURL])
-    {
-        [_resourceFiles addObject:resourceURL];
-    }
-}
-
-- (void)HTMLParser:(SVHTMLTemplateParser *)parser didEncounterResourceFile:(NSURL *)resourceURL
-{
-	OBPRECONDITION(resourceURL);
-    [self addResourceFile:resourceURL];
-}
-
-/*  Takes all the queued up resource files and uploads them. KTRemotePublishingEngine uses this as
- *  the cut-in point for if there are no changes to publish. Return NO to signify publishing should
- *  not continue.
- */
-- (BOOL)uploadResourceFiles
-{
-    NSString *resourcesDirectoryName = [[NSUserDefaults standardUserDefaults] valueForKey:@"DefaultResourcesPath"];
-    NSString *resourcesDirectoryPath = [[self baseRemotePath] stringByAppendingPathComponent:resourcesDirectoryName];
-    
-    NSEnumerator *resourcesEnumerator = [[self resourceFiles] objectEnumerator];
-    NSURL *aResource;
-    while (aResource = [resourcesEnumerator nextObject])
-    {
-        NSString *resourceRemotePath = [resourcesDirectoryPath stringByAppendingPathComponent:[aResource lastPathComponent]];
-        
-        [self publishContentsOfURL:aResource toPath:resourceRemotePath];
-    }
-    
-    return YES;
 }
 
 #pragma mark Uploading Support
