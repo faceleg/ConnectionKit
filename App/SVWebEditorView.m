@@ -621,17 +621,74 @@ typedef enum {  // this copied from WebPreferences+Private.h
  These methods check to see if the move command should in fact select a graphic (like Pages does). If so, they perform that selection and return YES. Otherwise, do nothing and return NO.
  */
 
-- (BOOL)moveRightAndSelectGraphic;
+- (BOOL)tryToSelectItemByMovingLeft;
 {
     BOOL result = NO;
     
     DOMRange *selection = [self selectedDOMRange];
     if ([selection collapsed])
     {
-        DOMNode *node = [[selection endContainer] nextSibling];
-        if (node)
+        // Is there a next node to select? (there isn't if selection is mid-text or the first child)
+        DOMNode *previousNode = nil;
+        
+        DOMNode *selectionStart = [selection startContainer];
+        if ([selectionStart nodeType] == DOM_TEXT_NODE)
         {
-            SVWebEditorItem *item = [self selectableItemForDOMNode:node];
+            if ([selection startOffset] == 0) previousNode = [selectionStart previousSibling];
+        }
+        else
+        {
+            previousNode = [[[selectionStart childNodes] item:[selection startOffset]]
+                            previousSibling];
+        }
+        
+        
+        // Great, found a node to perhaps select – does it correspond to a selectable item?
+        if (previousNode)
+        {
+            SVWebEditorItem *item = [self selectableItemForDOMNode:previousNode];
+            if (item)
+            {
+                result = [self changeSelectionByDeselectingAll:YES
+                                                orDeselectItem:nil
+                                                   selectItems:[NSArray arrayWithObject:item]
+                                                      DOMRange:nil
+                                                    isUIAction:YES];
+            }
+        }
+    }
+    
+    return result;
+}
+
+- (BOOL)tryToSelectItemByMovingRight;
+{
+    BOOL result = NO;
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if ([selection collapsed])
+    {
+        // Is there a next node to select? (there isn't if selection is mid-text or the last child)
+        DOMNode *nextNode = nil;
+        
+        DOMNode *selectionEnd = [selection endContainer];
+        if ([selectionEnd nodeType] == DOM_TEXT_NODE)
+        {
+            if ([[selectionEnd nodeValue] length] == [selection endOffset])
+            {
+                nextNode = [selectionEnd nextSibling];
+            }
+        }
+        else
+        {
+            nextNode = [[[selectionEnd childNodes] item:[selection endOffset]] nextSibling];
+        }
+        
+        
+        // Great, found a node to perhaps select – does it correspond to a selectable item?
+        if (nextNode)
+        {
+            SVWebEditorItem *item = [self selectableItemForDOMNode:nextNode];
             if (item)
             {
                 result = [self changeSelectionByDeselectingAll:YES
@@ -749,9 +806,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (SVWebEditorItem *)selectableItemForDOMNode:(DOMNode *)node;
+- (SVWebEditorItem *)selectableItemForDOMNode:(DOMNode *)nextNode;
 {
-    OBPRECONDITION(node);
+    OBPRECONDITION(nextNode);
     SVWebEditorItem *result = nil;
     
     
@@ -766,7 +823,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // The child matching the node may not be selectable. If so, search its children
         while (parentItem)
         {
-            result = [parentItem childItemForDOMNode:node];
+            result = [parentItem childItemForDOMNode:nextNode];
             if ([result isSelectable])
             {
                 break;
@@ -1082,9 +1139,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Is the item at that location supposed to be for editing?
             NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
             NSDictionary *element = [[self webView] elementAtPoint:location];
-            DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+            DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
             
-            SVWebEditorItem *item = [[self selectedItem] descendantItemForDOMNode:node];
+            SVWebEditorItem *item = [[self selectedItem] descendantItemForDOMNode:nextNode];
             
             
             
@@ -1487,7 +1544,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return [self shouldChangeTextInDOMRange:range];
 }
 
-- (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+- (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)nextNode replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     BOOL result = [self canEditText];
     
@@ -1496,7 +1553,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
         
         // Let the text object decide
-        result = [text webEditorTextShouldInsertNode:node
+        result = [text webEditorTextShouldInsertNode:nextNode
                                    replacingDOMRange:range
                                          givenAction:action];
     }
@@ -1578,11 +1635,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             // Moving left or right should select the graphic to the left if there is one
             if (command == @selector(moveLeft:))
             {
-                
+                result = [self tryToSelectItemByMovingLeft];
             }
             else if (command == @selector(moveRight:))
             {
-                result = [self moveRightAndSelectGraphic];
+                result = [self tryToSelectItemByMovingRight];
             }
             
             else if ([self respondsToSelector:command] && command != @selector(paste:))
