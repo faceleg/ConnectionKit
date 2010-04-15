@@ -103,8 +103,29 @@
 
 #pragma mark Cleanup
 
+- (SVWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
+{
+    for (SVWebEditorItem *anItem in [[self bodyTextDOMController] childWebEditorItems])
+    {
+        DOMNode *node = [anItem HTMLElement];
+        if (![node parentNode] && [node isEqualNode:aNode]) return anItem;
+    }
+    
+    return nil;
+}
+
 - (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement;
 {
+    // Is there an orphaned item we should reconnect to?
+    SVWebEditorItem *orphanedItem = [self orphanedWebEditorItemMatchingDOMNode:imageElement];
+    if (orphanedItem)
+    {
+        [orphanedItem setHTMLElement:imageElement];
+        [self writeGraphicController:(SVGraphicDOMController *)orphanedItem];
+        return [orphanedItem HTMLElement];
+    }
+    
+    
     // Make an image object
     SVRichTextDOMController *textController = [self bodyTextDOMController];
     SVRichText *text = [textController representedObject];
