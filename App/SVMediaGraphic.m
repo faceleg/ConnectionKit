@@ -175,4 +175,11 @@
     return result;
 }
 
+- (void)makeOriginalSize;
+{
+    CGSize size = [self originalSize];
+    [self setWidth:[NSNumber numberWithFloat:size.width]];
+    [self setHeight:[NSNumber numberWithFloat:size.height]];
+}
+
 @end

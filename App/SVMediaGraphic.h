@@ -29,6 +29,7 @@
 @property(nonatomic, copy)  NSNumber *height;
 @property(nonatomic)        BOOL constrainProportions;
 - (CGSize)originalSize;
+- (void)makeOriginalSize;
 
 
 @end

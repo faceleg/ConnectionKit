@@ -26,9 +26,7 @@
     SVImage *result = [self insertNewImageInManagedObjectContext:[media managedObjectContext]];
     [result setMedia:media];
     
-    CGSize size = [result originalSize];
-    [result setWidth:[NSNumber numberWithFloat:size.width]];
-    [result setHeight:[NSNumber numberWithFloat:size.height]];
+    [result makeOriginalSize];
     [result setConstrainProportions:YES];
     
     return result;
