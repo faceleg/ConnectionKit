@@ -15,7 +15,7 @@
 
 @synthesize designs = _designs;
 @synthesize thumbnails = _thumbnails;
-@synthesize thumbnailIndex = _thumbnailIndex;
+@synthesize imageVersion = _imageVersion;
 @synthesize colors = _colors;
 
 - (id) init
@@ -72,11 +72,11 @@
 {
 	int viewWidth = kDesignThumbWidth + 12;
 	
-	NSNumber *indexNumber = [NSNumber numberWithInt:self.thumbnailIndex];
+	NSNumber *indexNumber = [NSNumber numberWithInt:self.imageVersion];
 	CGImageRef result = (CGImageRef) [self.thumbnails objectForKey:indexNumber];	// cached?
 	if (!result)
 	{
-		int safeIndex = self.thumbnailIndex;
+		int safeIndex = self.imageVersion;
 		if (safeIndex >= [[self designs] count])
 		{
 			safeIndex = 0;	// make sure we don't overflow number of design variations
@@ -131,18 +131,19 @@
 		CFRelease(context);
 		[self.thumbnails setObject:(id)result forKey:indexNumber];
 	}
+	NSLog(@"Image for version:%d", self.imageVersion);
 	return (id) result;
 }
 
-
-/*! 
- @method imageVersion
- @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
- */
-- (NSUInteger) imageVersion;
+- (void) scrub:(float)howFar;
 {
-	return _thumbnailIndex;
+	int designCount = [[self designs] count];
+	int whichIndex = howFar * designCount;
+	whichIndex = MIN(whichIndex, designCount-1);
+	self.imageVersion = whichIndex;
+	NSLog(@"Using index %d", self.imageVersion);
 }
+
 /*! 
  @method imageTitle
  @abstract Returns the title to display as a NSString. Use setValue:forKey: with IKImageBrowserCellTitleAttribute to set text attributes.

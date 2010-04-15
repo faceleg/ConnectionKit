@@ -44,8 +44,9 @@
 		[self setIntercellSpacing:NSMakeSize(0.0,0.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
 	}
 	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
-	 
-	[self setCellSize:NSMakeSize(140,100)];	// a bit wider to allow for 4 columns
+	[self setConstrainsToOriginalSize:YES];
+	[self setContentResizingMask:NSViewNotSizable];
+	[self setCellSize:NSMakeSize(120,80)];	// a bit wider to allow for 4 columns
 }
 
 

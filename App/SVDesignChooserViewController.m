@@ -11,6 +11,7 @@
 #import "KSPlugInWrapper.h"
 #import "KT.h"
 #import "KTDesign.h"
+#import "KTDesignFamily.h"
 
 @implementation SVDesignChooserViewController
 
@@ -77,38 +78,32 @@
 }
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-#define CELLWIDTH 140
-#define CELLHEIGHT 100
-	DJW((@"%s %@",__FUNCTION__, theEvent));
+	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [[self view] convertPoint:windowPoint fromView:nil];
 
-	NSSize itemSize = NSMakeSize(CELLWIDTH,CELLHEIGHT);		// this is constant in our case ... is there any good way to query this?
-	int xIndex = localPoint.x / itemSize.width;
-	int yIndex = localPoint.y / itemSize.height;
-	int listIndex = yIndex * 4 + xIndex;
-	if (listIndex < [self.designs count])
+	int index = [theView indexOfItemAtPoint:localPoint];
+	if (NSNotFound != index)
 	{
-		NSRect frameForItemAtIndex = NSMakeRect(CELLWIDTH*xIndex, CELLHEIGHT*yIndex, CELLWIDTH, CELLHEIGHT);
+		NSRect frame = [theView itemFrameAtIndex:index];
+		float imageX = NSMidX(frame)-(kDesignThumbWidth/2);
+		float howFarX = (localPoint.x - imageX) / kDesignThumbWidth;
+		if (howFarX < 0.0) howFarX = 0.0;
+		if (howFarX > 1.0) howFarX = 1.0;
+//		NSLog(@"%.2f : Mouse: %@ -- index %d frame = %@", howFarX, NSStringFromPoint(localPoint), index, NSStringFromRect(frame));
 		
-		if ([[self view] respondsToSelector:@selector(frameForItemAtIndex:)])		// 10.6
+		if ([[self.designs objectAtIndex:index] respondsToSelector:@selector(scrub:)])
 		{
-//			frameForItemAtIndex = [[self view] frameForItemAtIndex:listIndex];
+			KTDesignFamily *family = [self.designs objectAtIndex:index];
+			[family scrub:howFarX];
+			[theView reloadData];
 		}
-		
-		NSLog(@"%@ %d,%d -> %d : %@",NSStringFromPoint(localPoint), xIndex,yIndex, listIndex, NSStringFromRect(frameForItemAtIndex));
-
-		// [[self view] setNeedsDisplayInRect:frameForItemAtIndex];
-		
-		
 	}
 	else
 	{
-		NSLog(@"out of bounds");
+//		NSLog(@"    Mouse: %@", NSStringFromPoint(localPoint));
 	}
 }
-
-
 
 - (void)viewBoundsDidChange:(NSNotification *)aNotif;
 {
