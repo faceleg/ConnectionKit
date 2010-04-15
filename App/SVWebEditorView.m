@@ -615,6 +615,37 @@ typedef enum {  // this copied from WebPreferences+Private.h
     OBPRECONDITION([notification object] == [self window]);
 }
 
+#pragma mark Keyboard-Induced selection
+
+/*!
+ These methods check to see if the move command should in fact select a graphic (like Pages does). If so, they perform that selection and return YES. Otherwise, do nothing and return NO.
+ */
+
+- (BOOL)moveRightAndSelectGraphic;
+{
+    BOOL result = NO;
+    
+    DOMRange *selection = [self selectedDOMRange];
+    if ([selection collapsed])
+    {
+        DOMNode *node = [[selection endContainer] nextSibling];
+        if (node)
+        {
+            SVWebEditorItem *item = [self selectableItemForDOMNode:node];
+            if (item)
+            {
+                result = [self changeSelectionByDeselectingAll:YES
+                                                orDeselectItem:nil
+                                                   selectItems:[NSArray arrayWithObject:item]
+                                                      DOMRange:nil
+                                                    isUIAction:YES];
+            }
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Editing
 
 - (BOOL)canEditText;
@@ -1542,10 +1573,23 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         result = [_focusedText webEditorTextDoCommandBySelector:command];
         
         // Is it a command which we handle? (our implementation may well call back through to the WebView when appropriate)
-        if (!result && [self respondsToSelector:command] && command != @selector(paste:))
+        if (!result)
         {
-            [self doCommandBySelector:command];
-            result = YES;
+            // Moving left or right should select the graphic to the left if there is one
+            if (command == @selector(moveLeft:))
+            {
+                
+            }
+            else if (command == @selector(moveRight:))
+            {
+                result = [self moveRightAndSelectGraphic];
+            }
+            
+            else if ([self respondsToSelector:command] && command != @selector(paste:))
+            {
+                [self doCommandBySelector:command];
+                result = YES;
+            }
         }
     }
     
