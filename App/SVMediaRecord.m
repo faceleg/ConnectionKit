@@ -81,6 +81,29 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
++ (SVMediaRecord *)mediaWithWebResource:(WebResource *)resource
+                             entityName:(NSString *)entityName
+         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    NSData *data = [resource data];
+    NSURL *URL = [resource URL];
+    
+    NSURLResponse *response = [[NSURLResponse alloc] initWithURL:URL
+                                                        MIMEType:[resource MIMEType]
+                                           expectedContentLength:[data length]
+                                                textEncodingName:[resource textEncodingName]];
+    
+    SVMediaRecord *result = [self mediaWithFileContents:data
+                                            URLResponse:response
+                                             entityName:entityName
+                         insertIntoManagedObjectContext:context];
+    [response release];
+    
+    [result setPreferredFilename:[URL lastPathComponent]];
+    
+    return result;
+}
+
 #pragma mark Dealloc
 
 - (void)dealloc
