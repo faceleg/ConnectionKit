@@ -70,7 +70,10 @@
 
 - (id) imageRepresentation; /* required */
 {
-	int viewWidth = kDesignThumbWidth + 12;
+	int viewWidth = kDesignThumbWidth;
+	int yOffset = 16;
+	int swatchHeight = 12;
+	int viewHeight = kDesignThumbHeight + yOffset;
 	
 	NSNumber *indexNumber = [NSNumber numberWithInt:self.imageVersion];
 	CGImageRef result = (CGImageRef) [self.thumbnails objectForKey:indexNumber];	// cached?
@@ -85,7 +88,7 @@
 		// SET UP
 		
 		CGColorSpaceRef genericRGB = CGColorSpaceCreateWithName(kCGColorSpaceGenericRGB);
-		CGContextRef context = CGBitmapContextCreate(NULL, viewWidth, kDesignThumbHeight, 8, 0, genericRGB, kCGImageAlphaPremultipliedFirst);
+		CGContextRef context = CGBitmapContextCreate(NULL, viewWidth, viewHeight, 8, 0, genericRGB, kCGImageAlphaPremultipliedFirst);
 		NSGraphicsContext *graphicsContext = [NSGraphicsContext
 												graphicsContextWithGraphicsPort:context flipped:NO];
 		[NSGraphicsContext saveGraphicsState];
@@ -93,7 +96,7 @@
 		
 		// DRAW
 		
-		NSRect boundsOfThumb = NSMakeRect(6.0, 0.0, kDesignThumbWidth, kDesignThumbHeight);
+		NSRect boundsOfThumb = NSMakeRect(0, 0, kDesignThumbWidth, viewHeight);
 		CGImageRef startImage = [[[self designs] objectAtIndex:safeIndex] thumbnailCG];
 
 		CGContextDrawImage([[NSGraphicsContext currentContext]
@@ -112,17 +115,15 @@
 		}
 		// Now for the stripes that show there are variations
 		int nColors = [self.colors count];
-		float colorHeight = ((float)(kDesignThumbHeight+1)/nColors);
-		float currentY = 0.0;						// starting Y coordinate
+		float colorWidth = ((float)(viewWidth+1)/nColors);
+		float currentX = 0.0;						// starting Y coordinate
 		
 		for ( NSColor *color in self.colors )
 		{
 			[color set];
-			NSRect leftRect  = NSMakeRect(0,				currentY, 4, colorHeight-1);
-			NSRect rightRect = NSMakeRect(viewWidth-4,		currentY, 4, colorHeight-1);
-			[NSBezierPath fillRect:leftRect];
-			[NSBezierPath fillRect:rightRect];
-			currentY += colorHeight;
+			NSRect theRect  = NSMakeRect(currentX, viewHeight-swatchHeight, colorWidth-1, swatchHeight);
+			[NSBezierPath fillRect:theRect];
+			currentX += colorWidth;
 		}
 		
 		

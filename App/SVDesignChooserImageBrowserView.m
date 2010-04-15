@@ -46,7 +46,7 @@
 	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
 	[self setConstrainsToOriginalSize:YES];
 	[self setContentResizingMask:NSViewNotSizable];
-	[self setCellSize:NSMakeSize(120,80)];	// a bit wider to allow for 4 columns
+	[self setCellSize:NSMakeSize(120,80)];	// a bit wider to allow for 4 columns.  HARD TO TELL HOW THIS REALLY ADJUSTS THINGS.
 }
 
 

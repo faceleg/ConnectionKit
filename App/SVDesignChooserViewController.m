@@ -26,8 +26,7 @@
 	
 	[view setDataSource:self];
 	[view setDelegate:self];
-	
-
+		
 	NSMutableDictionary *attributes;
 	NSMutableParagraphStyle *paraStyle;
 	
@@ -80,8 +79,10 @@
 {
 	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
 	NSPoint windowPoint = [theEvent locationInWindow];
-	NSPoint localPoint = [[self view] convertPoint:windowPoint fromView:nil];
+	NSPoint localPoint = [theView convertPoint:windowPoint fromView:nil];
 
+	if (!NSPointInRect(localPoint, [theView bounds])) return;
+	
 	int index = [theView indexOfItemAtPoint:localPoint];
 	if (NSNotFound != index)
 	{
@@ -94,15 +95,28 @@
 		
 		if ([[self.designs objectAtIndex:index] respondsToSelector:@selector(scrub:)])
 		{
+			[theView setAnimates:NO];		// Not sure why ... this was in Pieter Omvlee's presentation http://pieteromvlee.net/slides/IKImageBrowserView.pdf
+			
 			KTDesignFamily *family = [self.designs objectAtIndex:index];
 			[family scrub:howFarX];
-			[theView reloadData];
+			if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])
+			{
+				[theView reloadCellDataAtIndex:index];
+				NSLog(@"reloadCellDataAtIndex:");
+			}
+			else
+			{
+				[theView reloadData];
+				NSLog(@"reloadData");
+			}
+			[theView setAnimates:YES];
 		}
 	}
 	else
 	{
 //		NSLog(@"    Mouse: %@", NSStringFromPoint(localPoint));
 	}
+	[super mouseMoved:theEvent];
 }
 
 - (void)viewBoundsDidChange:(NSNotification *)aNotif;
