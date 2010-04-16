@@ -55,9 +55,6 @@
     }
     else
     {
-		NSUserDefaultsController *controller = [NSUserDefaultsController sharedUserDefaultsController];
-		NSUserDefaults *defaults = [controller defaults];
-
 		// Open recent documents, maybe show welcome window.
 		[[SVWelcomeController sharedController] showWindowAndBringToFront:NO initial:firstTimeSoReopenSavedDocuments];
     }
