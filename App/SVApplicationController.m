@@ -395,7 +395,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			nil],								@"defaultHostProperties",
 		
 		[NSNumber numberWithShort:0],		@"truncateCharacters",
-		[NSNumber numberWithShort:KTCopyMediaAll], @"copyMediaOriginals",
 		[NSNumber numberWithShort:KTSummarizeAutomatic], @"collectionSummaryType",
 		[NSNumber numberWithShort:NSDateFormatterMediumStyle], @"timestampFormat",
 		[NSNumber numberWithBool:YES], @"timestampShowTime",

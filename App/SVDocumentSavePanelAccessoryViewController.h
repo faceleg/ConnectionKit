@@ -11,7 +11,10 @@
 
 @interface SVDocumentSavePanelAccessoryViewController : NSViewController
 {
-
+    IBOutlet NSButton   *oCopyMoviesCheckbox;
 }
+
+
+- (BOOL)copyMoviesIntoDocument;
 
 @end

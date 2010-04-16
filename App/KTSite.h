@@ -47,9 +47,6 @@ typedef enum {
 
 
 
-- (KTCopyMediaType)copyMediaOriginals;
-- (void)setCopyMediaOriginals:(KTCopyMediaType)copy;
-
 - (NSString *)appNameVersion;
 
 

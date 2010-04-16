@@ -11,4 +11,12 @@
 
 @implementation SVDocumentSavePanelAccessoryViewController
 
+- (BOOL)copyMoviesIntoDocument;
+{
+    [self view];    // Make sure it's loaded
+    
+    BOOL result = ([oCopyMoviesCheckbox state] == NSOnState);
+    return result;
+}
+
 @end

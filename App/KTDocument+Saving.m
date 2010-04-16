@@ -11,6 +11,7 @@
 
 #import "KTDesign.h"
 #import "KTDocumentController.h"
+#import "SVDocumentSavePanelAccessoryViewController.h"
 #import "KTDocWindowController.h"
 #import "SVDocumentUndoManager.h"
 #import "KTSite.h"
@@ -116,7 +117,6 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 
 @implementation KTDocument (Saving)
 
-#pragma mark -
 #pragma mark Save to URL
 
 - (BOOL)saveToURL:(NSURL *)absoluteURL
@@ -129,6 +129,14 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	
     // Let anyone interested know
 	[[NSNotificationCenter defaultCenter] postNotificationName:kKTDocumentWillSaveNotification object:self];
+    
+    
+    // Store media referencing behaviour. Primitive so as not to affect undo stack
+    if (saveOperation == NSSaveAsOperation || saveOperation == NSSaveToOperation)
+    {
+        [[self site] setPrimitiveValue:[NSNumber numberWithBool:[_accessoryViewController copyMoviesIntoDocument]]
+                                forKey:@"copyMoviesIntoDocument"];
+    }
     
     
     // Record display properties
@@ -153,7 +161,6 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     return (mySaveOperationCount > 0);
 }
 
-#pragma mark -
 #pragma mark Save Panel
 
 - (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
@@ -162,7 +169,7 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
     
     if (!_accessoryViewController)
     {
-        _accessoryViewController = [[NSViewController alloc]
+        _accessoryViewController = [[SVDocumentSavePanelAccessoryViewController alloc]
                                     initWithNibName:@"DocumentSavePanelAccessoryView" bundle:nil];
     }
     
