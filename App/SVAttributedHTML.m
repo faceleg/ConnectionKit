@@ -119,6 +119,7 @@
     // Write to the pboard in archive form
     NSData *data = [NSKeyedArchiver archivedDataWithRootObject:archivableAttributedString];
     [pasteboard setData:data forType:@"com.karelia.html+graphics"];
+    [archivableAttributedString release];
 }
 
 + (NSAttributedString *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard;
