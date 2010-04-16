@@ -29,7 +29,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 
 @class KTSite;
-@class KTDocWindowController, KTHTMLInspectorController;
+@class KTDocWindowController, KTHTMLInspectorController, SVDocumentSavePanelAccessoryViewController;
 @class KTElementPlugInWrapper;
 @protocol SVDocumentFileWrapper;
 
@@ -59,8 +59,8 @@ extern NSString *kKTDocumentWillSaveNotification;
     
     
     // Saving
-    unsigned    mySaveOperationCount;
-    
+    unsigned                                    mySaveOperationCount;
+    SVDocumentSavePanelAccessoryViewController  *_accessoryViewController;
     
     NSMutableDictionary *_filenameReservations;
     NSString            *_deletedMediaDirectoryName;

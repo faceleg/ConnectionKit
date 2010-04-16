@@ -270,6 +270,8 @@
 		273B400B1176305600A275E6 /* SVMediaGatheringPublishingContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B40091176305600A275E6 /* SVMediaGatheringPublishingContext.h */; };
 		273B400C1176305600A275E6 /* SVMediaGatheringPublishingContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B400A1176305600A275E6 /* SVMediaGatheringPublishingContext.m */; };
 		273B43741178676900A275E6 /* DocumentSavePanelAccessoryView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273B43731178676900A275E6 /* DocumentSavePanelAccessoryView.xib */; };
+		273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */; };
+		273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */; };
 		273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */; };
@@ -1734,6 +1736,8 @@
 		273B40091176305600A275E6 /* SVMediaGatheringPublishingContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringPublishingContext.h; sourceTree = "<group>"; };
 		273B400A1176305600A275E6 /* SVMediaGatheringPublishingContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGatheringPublishingContext.m; sourceTree = "<group>"; };
 		273B43731178676900A275E6 /* DocumentSavePanelAccessoryView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = DocumentSavePanelAccessoryView.xib; sourceTree = "<group>"; };
+		273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
+		273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
 		273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorHTMLContext.h; sourceTree = "<group>"; };
@@ -3841,6 +3845,8 @@
 				27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */,
 				27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */,
 				273B43731178676900A275E6 /* DocumentSavePanelAccessoryView.xib */,
+				273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */,
+				273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -5524,6 +5530,7 @@
 				2796DF0A11733C4D000DD6EC /* SVMediaRepresentation.h in Headers */,
 				2796DFC711736375000DD6EC /* SVImageScalingOperation.h in Headers */,
 				273B400B1176305600A275E6 /* SVMediaGatheringPublishingContext.h in Headers */,
+				273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6931,6 +6938,7 @@
 				2796DF0B11733C4D000DD6EC /* SVMediaRepresentation.m in Sources */,
 				2796DFC811736375000DD6EC /* SVImageScalingOperation.m in Sources */,
 				273B400C1176305600A275E6 /* SVMediaGatheringPublishingContext.m in Sources */,
+				273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

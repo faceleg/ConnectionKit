@@ -160,11 +160,13 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 {
     BOOL result = [super prepareSavePanel:savePanel];
     
-    NSViewController *accessoryViewController = [[NSViewController alloc]
-                                                 initWithNibName:@"DocumentSavePanelAccessoryView" bundle:nil];
+    if (!_accessoryViewController)
+    {
+        _accessoryViewController = [[NSViewController alloc]
+                                    initWithNibName:@"DocumentSavePanelAccessoryView" bundle:nil];
+    }
     
-    [savePanel setAccessoryView:[accessoryViewController view]];
-    [accessoryViewController release];
+    [savePanel setAccessoryView:[_accessoryViewController view]];
     
     return result;
 }
