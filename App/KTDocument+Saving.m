@@ -156,6 +156,19 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 #pragma mark -
 #pragma mark Save Panel
 
+- (BOOL)prepareSavePanel:(NSSavePanel *)savePanel;
+{
+    BOOL result = [super prepareSavePanel:savePanel];
+    
+    NSViewController *accessoryViewController = [[NSViewController alloc]
+                                                 initWithNibName:@"DocumentSavePanelAccessoryView" bundle:nil];
+    
+    [savePanel setAccessoryView:[accessoryViewController view]];
+    [accessoryViewController release];
+    
+    return result;
+}
+
 - (NSArray *)writableTypesForSaveOperation:(NSSaveOperationType)saveOperation
 {
 	// we restrict writableTypes to our main document type so that the persistence framework does
