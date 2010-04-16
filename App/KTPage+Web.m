@@ -233,7 +233,8 @@
     
     
     // Load up main.css
-    NSString *mainCSS = [NSString stringWithContentsOfURL:mainCSSURL encoding:NSUTF8StringEncoding error:NULL];
+    NSString *mainCSS = [NSString stringWithData:[[[self master] design] mainCSSData]
+                                        encoding:NSUTF8StringEncoding];
     if (mainCSS) [[context mainCSS] appendString:mainCSS];
     
     
