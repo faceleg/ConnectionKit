@@ -117,7 +117,7 @@ const int kDesignThumbHeight = 65;
 - (void)dealloc
 {
     [myThumbnail release];
-	if (myThumbnailCG) CGImageRelease(myThumbnailCG);
+	CGImageRelease(myThumbnailCG);  // CGImageRelease handles the ref being nil, unlike CFRelease
 	[myResourceFileURLs release];
 	
     [super dealloc];

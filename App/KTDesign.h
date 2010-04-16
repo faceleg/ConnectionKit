@@ -22,7 +22,7 @@ extern const int kDesignThumbHeight;
 {
     @protected
     NSImage *myThumbnail;
-	CGImageRef *myThumbnailCG;
+	CGImageRef  myThumbnailCG;  // CGImageRefs aren't supposed to be pointers
 	NSSet	*myResourceFileURLs;
 	
 	BOOL myFontsLoaded;
