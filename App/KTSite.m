@@ -91,14 +91,16 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark Accessors
 
 - (NSString *)siteID { return [self wrappedValueForKey:@"siteID"]; }
 
 @synthesize document = _document;
 
-#pragma mark -
+#pragma mark Media
+
+@dynamic copyMoviesIntoDocument;
+
 #pragma mark UI
 
 - (NSRect)docWindowContentRect

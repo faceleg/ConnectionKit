@@ -45,6 +45,8 @@ typedef enum {
 - (KTPage *)pageWithPreviewURLPath:(NSString *)path;
 
 
+#pragma mark Media
+@property(nonatomic, copy, readonly) NSNumber *copyMoviesIntoDocument;  // BOOL
 
 
 - (NSString *)appNameVersion;
