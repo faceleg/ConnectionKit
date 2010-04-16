@@ -191,12 +191,12 @@
 	<key>LSEnvironment</key>
 	<dict>
 		<key>MinimumSystemVersion</key>
-		<string>10.4.11</string>
+		<string>10.5.7</string>
 	</dict>
 	<key>NSAppleScriptEnabled</key>
 	<false/>
 	<key>NSHumanReadableCopyright</key>
-	<string>© 2004-2009 Karelia Software. All Rights Reserved.</string>
+	<string>© 2004-2010 Karelia Software. All Rights Reserved.</string>
 	<key>NSMainNibFile</key>
 	<string>MainMenu</string>
 	<key>NSPrincipalClass</key>
