@@ -44,6 +44,7 @@
 #import "KTElementPlugInWrapper.h"
 #import "KTDesign.h"
 #import "SVPagesController.h"
+#import "SVDocumentFileWrapper.h"
 #import "KTDocWebViewController.h"
 #import "KTDocWindowController.h"
 #import "KTDocumentController.h"

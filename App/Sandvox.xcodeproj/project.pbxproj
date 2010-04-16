@@ -273,7 +273,6 @@
 		273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */; };
 		273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */; };
 		273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 273B44381179046500A275E6 /* SVDocumentFileWrapper.h */; };
-		273B443B1179046500A275E6 /* SVDocumentFileWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 273B44391179046500A275E6 /* SVDocumentFileWrapper.m */; };
 		273C2F910CCE58C100E48E22 /* KTMaster.m in Sources */ = {isa = PBXBuildFile; fileRef = 273C2F8F0CCE58C100E48E22 /* KTMaster.m */; };
 		273D139410A321EA00E88CC6 /* SVWebEditorHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */; };
 		273D139510A321EB00E88CC6 /* SVWebEditorHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 273D139310A321EA00E88CC6 /* SVWebEditorHTMLContext.m */; };
@@ -1741,7 +1740,6 @@
 		273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentSavePanelAccessoryViewController.h; sourceTree = "<group>"; };
 		273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentSavePanelAccessoryViewController.m; sourceTree = "<group>"; };
 		273B44381179046500A275E6 /* SVDocumentFileWrapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDocumentFileWrapper.h; sourceTree = "<group>"; };
-		273B44391179046500A275E6 /* SVDocumentFileWrapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDocumentFileWrapper.m; sourceTree = "<group>"; };
 		273C2F8E0CCE58C100E48E22 /* KTMaster.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMaster.h; sourceTree = "<group>"; };
 		273C2F8F0CCE58C100E48E22 /* KTMaster.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMaster.m; sourceTree = "<group>"; };
 		273D139210A321EA00E88CC6 /* SVWebEditorHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorHTMLContext.h; sourceTree = "<group>"; };
@@ -3852,7 +3850,6 @@
 				273B438211786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h */,
 				273B438311786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m */,
 				273B44381179046500A275E6 /* SVDocumentFileWrapper.h */,
-				273B44391179046500A275E6 /* SVDocumentFileWrapper.m */,
 			);
 			name = Document;
 			sourceTree = "<group>";
@@ -6946,7 +6943,6 @@
 				2796DFC811736375000DD6EC /* SVImageScalingOperation.m in Sources */,
 				273B400C1176305600A275E6 /* SVMediaGatheringPublishingContext.m in Sources */,
 				273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */,
-				273B443B1179046500A275E6 /* SVDocumentFileWrapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
