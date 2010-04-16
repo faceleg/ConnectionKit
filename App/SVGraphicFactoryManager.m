@@ -138,6 +138,7 @@ static SVGraphicFactoryManager *sSharedIndexManager;
         [nameSort release];
         
         NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
+        [factories release];
         
         sSharedIndexManager = [[SVGraphicFactoryManager alloc] initWithGraphicFactories:sortedPlugins];
     }
