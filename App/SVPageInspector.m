@@ -120,6 +120,7 @@
     }
     
     [[oThumbnailPicker itemAtIndex:0] setImage:result];
+    [result release];
         
 }
 
@@ -167,6 +168,7 @@
                     [thumnailImage release];
                     
                     [menu addItem:item];
+                    [item release];
                 }
             }
         }
