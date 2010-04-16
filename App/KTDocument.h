@@ -164,20 +164,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 #pragma mark -
 
 
-@protocol SVDocumentFileWrapper <NSObject>
-
-- (NSURL *)fileURL;
-- (void)forceUpdateFromURL:(NSURL *)URL;
-- (NSString *)preferredFilename;
-
-- (BOOL)shouldRemoveFromDocument;   // will be moved or deleted depending on undo manager
-- (BOOL)isDeletedFromDocument;
-@end
-
-
-#pragma mark -
-
-
 // Default implementation does nothing, so implement in subclasses to take action, such as passing the message on to other controllers
 @interface NSWindowController (KTDocumentAdditions)
 - (void)persistUIProperties;
