@@ -194,7 +194,16 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:4];
     
     [context writeComment:[NSString stringWithFormat:@" %@ ", identifier]];
-    [[self plugIn] writeHTML:context];
+    
+    @try
+    {
+        [[self plugIn] writeHTML:context];
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: Log or report exception
+    }
+    
     [context writeComment:[NSString stringWithFormat:@" /%@ ", identifier]];
     
     [context setCurrentHeaderLevel:level];
@@ -202,7 +211,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (Class)DOMControllerClass
 {
-    // Ask the plug-in what it would like, but don't let it chose something wacky
+    // Ask the plug-in what it would like, but don't let it choose something wacky
     Class result = [[[self plugIn] class] DOMControllerClass];
     if (![result isSubclassOfClass:[super DOMControllerClass]])
     {
