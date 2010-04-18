@@ -229,7 +229,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 	return [NSURL fileURLWithPath:path];
 }
 
-- (void)writeHTML:(SVHTMLContext *)context;
+- (void)writeHTML:(id <SVPlugInContext>)context;
 {
     // Include resources for each digit if needed
     if (PC_GRAPHICS == [self type])

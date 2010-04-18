@@ -7,6 +7,7 @@
 //
 
 #import "KSHTMLWriter.h"
+#import "SVPlugIn.h"
 
 #import <WebKit/DOMCore.h>
 
@@ -26,7 +27,7 @@ typedef enum {
 @protocol SVMedia;
 
 
-@interface SVHTMLContext : KSHTMLWriter
+@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext>
 {
   @private
     NSURL   *_baseURL;
@@ -169,7 +170,7 @@ typedef enum {
 #pragma mark -
 
 
-@interface SVHTMLContext (HTMLElements)
+@interface KSHTMLWriter (HTMLElements)
 
 #pragma mark Links
 

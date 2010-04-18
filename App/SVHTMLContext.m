@@ -378,6 +378,10 @@
     [self setBaseURL:[page URL]];
 }
 
+#pragma mark SVPlugInContext
+
+- (KSHTMLWriter *)HTMLWriter; { return self; }
+
 @end
 
 

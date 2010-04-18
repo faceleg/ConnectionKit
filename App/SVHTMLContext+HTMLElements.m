@@ -12,7 +12,7 @@
 #import "NSString+Karelia.h"
 
 
-@implementation SVHTMLContext (HTMLElements)
+@implementation KSHTMLWriter (HTMLElements)
 
 #pragma mark Higher-level Tag Writing
 

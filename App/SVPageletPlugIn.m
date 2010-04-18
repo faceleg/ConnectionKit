@@ -11,7 +11,7 @@
 
 #import "KTDataSourceProtocol.h"
 #import "KTHTMLPlugInWrapper.h"
-#import "KTPage.h"
+//#import "KTPage.h"
 #import "SVRichText.h"
 #import "SVDOMController.h"
 #import "SVPlugIn.h"
@@ -81,15 +81,15 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark Content
 
-- (void)writeHTML:(SVHTMLContext *)context;
+- (void)writeHTML:(id <SVPlugInContext>)context;
 {
     [self writeInnerHTML:context];
     
     return;
         
-    [context writeStartTag:@"div" idName:[self elementID] className:nil];
-    [self writeInnerHTML];
-    [context writeEndTag];
+    [[context HTMLWriter] writeStartTag:@"div" idName:[self elementID] className:nil];
+    [self writeInnerHTML:context];
+    [[context HTMLWriter] writeEndTag];
 }
 
 - (NSString *)elementID
@@ -98,7 +98,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     return result;
 }
 
-- (void)writeInnerHTML:(SVHTMLContext *)context;
+- (void)writeInnerHTML:(id <SVPlugInContext>)context;
 {
     // Parse our built-in template
     SVTemplate *template = [[self bundle] HTMLTemplate];
@@ -106,7 +106,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
                                                                         component:self];
     
-    [parser parseIntoHTMLContext:context];
+    [parser parseIntoHTMLContext:(SVHTMLContext *)context];
     [parser release];
 }
 

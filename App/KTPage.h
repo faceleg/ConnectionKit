@@ -32,7 +32,7 @@ typedef enum {
 } SVCollectionSortOrder;
 
 
-@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection;
+@class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
 
 @interface KTPage : KTAbstractPage <SVPage>

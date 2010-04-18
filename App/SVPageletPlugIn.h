@@ -44,11 +44,11 @@
 #pragma mark HTML
 
 // Default implementation generates a <span> or <div> (with an appropriate id) that contains the result of -writeInnerHTML. There is generally NO NEED to override this, and if you do, you MUST write HTML with an enclosing element of the specified ID.
-- (void)writeHTML:(SVHTMLContext *)context;
+- (void)writeHTML:(id <SVPlugInContext>)context;
 @property(nonatomic, readonly) NSString *elementID;
 
 // Default implementation parses the template specified in Info.plist
-- (void)writeInnerHTML:(SVHTMLContext *)context;
+- (void)writeInnerHTML:(id <SVPlugInContext>)context;
 
 
 #pragma mark The Wider World

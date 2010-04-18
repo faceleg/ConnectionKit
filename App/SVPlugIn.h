@@ -10,8 +10,8 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class SVHTMLContext;
-@protocol SVPage, SVPageletPlugInContainer;
+@class KSHTMLWriter;
+@protocol SVPlugInContext, SVPage, SVPageletPlugInContainer;
 
 
 @protocol SVPageletPlugIn <NSObject>
@@ -45,14 +45,14 @@
 
 /*  FAQ:    How do I reference a page from a plug-in?
  *
- *      Once you've gotten hold of an SVPage object, it's fine to hold it in memory like any other object; just shove it in an instance variable and retain it. You should then also observe SVPageWillBeDeletedNotification and use it discard your reference to the page, as it will become invalid ater that.
+ *      Once you've gotten hold of an SVPage object, it's fine to hold it in memory like any other object; just shove it in an instance variable and retain it. You should then also observe SVPageWillBeDeletedNotification and use it discard your reference to the page, as it will become invalid after that.
  *      To persist your reference to the page, override -serializedValueForKey: to use the page's -identifier property. Likewise, override -setSerializedValue:forKey: to take the serialized ID string and convert it back into a SVPage using -pageWithIdentifier:
  *      All of these methods are documented in SVPageProtocol.h
  */
 
 
 #pragma mark HTML Generation
-- (void)writeHTML:(SVHTMLContext *)context;
+- (void)writeHTML:(id <SVPlugInContext>)context;
 
 
 #pragma mark Thumbnail
@@ -66,6 +66,14 @@
 - (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
 
 
+@end
+
+
+#pragma mark -
+
+
+@protocol SVPlugInContext
+- (KSHTMLWriter *)HTMLWriter;
 @end
 
 
