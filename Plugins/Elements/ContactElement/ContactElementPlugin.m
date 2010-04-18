@@ -308,7 +308,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 - (NSString *)uniqueID
 {
-	return [[SVHTMLContext currentContext] numberOfContentObjects];
+	return [[SVHTMLContext currentContext] numberOfGraphicsOnPage];
 }
 
 - (NSString *)CSSURLs	// used to allow our off-site page to load the CSS on the client's site
