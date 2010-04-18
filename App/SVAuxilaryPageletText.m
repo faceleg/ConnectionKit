@@ -12,6 +12,13 @@
 
 @implementation SVAuxilaryPageletText 
 
+- (void)awakeFromInsert;
+{
+    [super awakeFromInsert];
+    
+    [self setPrimitiveValue:@"<p></p>" forKey:@"string"];
+}
+
 @dynamic hidden;
 
 @end

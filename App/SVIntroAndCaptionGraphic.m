@@ -24,12 +24,10 @@
 {
     SVRichText *text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletIntroduction"
                                                  inManagedObjectContext:[self managedObjectContext]];
-    [text setString:@""];
     [self setIntroduction:text];
     
     text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletCaption"
                                          inManagedObjectContext:[self managedObjectContext]];
-    [text setString:@""];
     [self setCaption:text];
 }
 
