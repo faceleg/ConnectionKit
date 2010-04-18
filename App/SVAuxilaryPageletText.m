@@ -16,7 +16,7 @@
 {
     [super awakeFromInsert];
     
-    [self setPrimitiveValue:@"<p></p>" forKey:@"string"];
+    [self setPrimitiveValue:@"<p><br /></p>" forKey:@"string"];
 }
 
 @dynamic hidden;
