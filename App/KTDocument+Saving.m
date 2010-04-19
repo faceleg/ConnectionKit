@@ -81,12 +81,11 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 		   forSaveOperation:(NSSaveOperationType)inSaveOperation
 					  error:(NSError **)outError;
 
-- (NSPersistentStore *)writeDatastoreToURL:(NSURL *)URL
-                                    ofType:(NSString *)typeName
-                          forSaveOperation:(NSSaveOperationType)saveOp
-                       originalContentsURL:(NSURL *)originalContentsURL
-                                     error:(NSError **)outError;
-
+- (BOOL)writeDatastoreToURL:(NSURL *)URL
+                     ofType:(NSString *)typeName
+           forSaveOperation:(NSSaveOperationType)saveOp
+        originalContentsURL:(NSURL *)originalContentsURL
+                      error:(NSError **)outError;
 
 - (BOOL)writeMediaRecords:(NSArray *)media
                     toURL:(NSURL *)docURL
@@ -369,11 +368,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         // Save the context
         NSURL *originalDatastoreURL = (inOriginalContentsURL ? [KTDocument datastoreURLForDocumentURL:inOriginalContentsURL type:nil] : nil);
         
-		result = ([self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
+		result =  [self writeDatastoreToURL:[KTDocument datastoreURLForDocumentURL:inURL type:nil]
                                     ofType:inType
                           forSaveOperation:saveOperation
                        originalContentsURL:originalDatastoreURL
-                                     error:outError] != nil);
+                                     error:outError];
         
 		OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
     }
@@ -519,11 +518,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     return result;
 }
 
-- (NSPersistentStore *)writeDatastoreToURL:(NSURL *)URL
-                                    ofType:(NSString *)typeName
-                          forSaveOperation:(NSSaveOperationType)saveOp
-                       originalContentsURL:(NSURL *)originalContentsURL
-                                     error:(NSError **)outError;
+- (BOOL)writeDatastoreToURL:(NSURL *)URL
+                     ofType:(NSString *)typeName
+           forSaveOperation:(NSSaveOperationType)saveOp
+        originalContentsURL:(NSURL *)originalContentsURL
+                      error:(NSError **)outError;
 
 {
 	OBASSERT([NSThread currentThread] == [self thread]);
@@ -533,15 +532,25 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
 	OBASSERT(storeCoordinator);
         
-    NSPersistentStore *result = [storeCoordinator persistentStoreForURL:URL];
-	NSError *error = nil;
+    NSError *error = nil;
 	
 	
-    // Handle the user choosing "Save As" for an EXISTING document
-    if (result)
+    // Upon first save of a new doc, create store
+    NSPersistentStore *store = [self persistentStore];
+    if (!store)
     {
-        if (![context save:&error]) result = nil;
-        [self setDatastoreURL:URL];
+        OBASSERT(!originalContentsURL);
+        store = [storeCoordinator persistentStoreForURL:URL];   // -configurePersistentStore… should have been called earlier to make store
+        [self setPersistentStore:store];
+        OBASSERT(store);
+    }
+    
+    
+    // Handle the user choosing "Save As" for an EXISTING document
+    BOOL result = YES;
+    if (!originalContentsURL)   // saving a new doc (it might have been previously autosaved though
+    {
+        result = [context save:&error];
     }
     else
     {
