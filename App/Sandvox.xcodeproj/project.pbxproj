@@ -1095,6 +1095,7 @@
 		CEDE1DC50A5C6B8C0055352C /* NonStandardURL.html in Resources */ = {isa = PBXBuildFile; fileRef = CEC4DB2F0935179500D75C23 /* NonStandardURL.html */; };
 		CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C202EA307E0101100DE4994 /* Acknowledgments.rtf */; };
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
+		CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECCED7C0E646B6800BE9016 /* Symbolication.framework */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
@@ -2684,7 +2685,6 @@
 		CE7779E30AE499C2002E6844 /* SVWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWelcomeController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
-		CE82FF420E777F62003A0110 /* vmutils.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vmutils.framework; path = /System/Library/PrivateFrameworks/vmutils.framework; sourceTree = "<absolute>"; };
 		CE8D547A112AFDBD007AC2F0 /* SVHTMLValidatorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLValidatorController.h; sourceTree = "<group>"; };
 		CE8D547B112AFDBD007AC2F0 /* SVHTMLValidatorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLValidatorController.m; sourceTree = "<group>"; };
 		CE8D54C5112B0B23007AC2F0 /* KSProgressPanel.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = KSProgressPanel.xib; sourceTree = "<group>"; };
@@ -2817,6 +2817,7 @@
 				3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */,
 				CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */,
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
+				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -2845,7 +2846,6 @@
 		1058C7A6FEA54F5311CA2CBB /* System Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CE82FF420E777F62003A0110 /* vmutils.framework */,
 				CECCED7C0E646B6800BE9016 /* Symbolication.framework */,
 				3C202DAF07E00B9300DE4994 /* AddressBook.framework */,
 				3C5C0DB30BF8213E003594F8 /* ApplicationServices.framework */,
@@ -7408,6 +7408,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
@@ -7427,6 +7431,10 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */;
 			buildSettings = {
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
