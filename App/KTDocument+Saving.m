@@ -510,12 +510,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	OBASSERT(coordinator);
         
     
-    // Handle the user choosing "Save As" for an EXISTING document
     BOOL result = YES;
     NSError *error = nil;
 	
     
-	if (!originalContentsURL)   // saving a new doc (it might have been previously autosaved though
+	// Saving a new doc (it might have been previously autosaved though)
+    if (!originalContentsURL)
     {
         // Saving a new doc either uses fresh persistent store, or relocates the existing autosaved store
         NSPersistentStore *store = [self persistentStore];
@@ -539,6 +539,16 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         if (result) result = [context save:&error];
     }
+    
+    
+    // Saving an existing doc
+    else if (saveOp == NSSaveOperation)
+    {
+        result = [context save:&error];
+    }
+    
+    
+    // Save As for existing doc
     else
     {
         // Migrate the main document store        
