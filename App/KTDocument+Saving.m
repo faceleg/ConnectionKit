@@ -530,13 +530,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
-    if (originalContentsURL)
+    if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
     {
-        if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
-        {
-            OBASSERT(store);
-            [coordinator setURL:originalContentsURL forPersistentStore:store];
-        }
+        [coordinator setURL:originalContentsURL
+         forPersistentStore:[self persistentStore]];    // store variable might be nil, so go back to the source
     }
     
     
