@@ -356,7 +356,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     [_accessoryViewController release];
     
-    [_persistentStoreURL release];
+    [_store release];
     [_filenameReservations release];
     [_deletedMediaDirectoryName release];
 	
@@ -410,23 +410,20 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	OBPRECONDITION([[storeCoordinator persistentStores] count] == 0);   // This method should only be called the once
     
     
-    BOOL result = YES;
-	
+    
 	/// and we compute the sqlite URL here for both read and write
 	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
 	
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
-	result = ([storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
-                                             configuration:nil
-                                                       URL:storeURL
-                                                   options:nil
-                                                     error:outError] != nil);
+	NSPersistentStore *store = [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
+                                                              configuration:nil
+                                                                        URL:storeURL
+                                                                    options:nil
+                                                                      error:outError];
+    // Don't retain the store just yet; -writeToURL:… or -readFromURL:… will do that
     
-    if (result) [self setDatastoreURL:storeURL];
-	
-	
-    return result;
+	return (store != nil);
 }
 
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType
@@ -434,18 +431,89 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	return NSBinaryStoreType;
 }
 
+#pragma mark Reading From and Writing to URLs
+
+/*  Supplement the usual read behaviour by logging host properties and loading document display properties
+ */
+- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+	// Should only be called the once
+    BOOL result = [self configurePersistentStoreCoordinatorForURL:absoluteURL ofType:typeName modelConfiguration:nil storeOptions:nil error:outError];
+    
+    
+    // Grab the site object
+    if (result)
+	{
+        KTSite *site = [[[self managedObjectContext] site] retain];
+        [self setSite:site];
+        if (!site)
+        {
+            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                          code:NSFileReadCorruptFileError
+                                          localizedDescription:NSLocalizedString(@"Site not found", "doc open error")];
+            result = NO;
+        }
+    }
+    
+    
+    if (result)
+    {
+		// Load up document display properties
+		[self setDisplaySmallPageIcons:[[self site] boolForKey:@"displaySmallPageIcons"]];
+		
+		
+        // For diagnostics, log the value of the host properties
+		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"])
+		{
+			KTHostProperties *hostProperties = [[self site] hostProperties];
+			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
+		}
+	}
+	
+	if (result)
+	{
+        NSString *path = [[self site] lastExportDirectoryPath];
+        if (path) self.lastExportDirectory = [NSURL fileURLWithPath:path];
+	}
+    
+    
+    // Reserve all the media filenames already in use    
+    NSManagedObjectContext *context = [self managedObjectContext];
+    NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaInDocument"];
+    NSArray *media = [context executeFetchRequest:request error:NULL];
+    
+    for (SVMediaRecord *aMediaRecord in media)
+    {
+        // Media needs to be told its location to be useful
+        // Use -fileURL instead of absoluteURL since it accounts for autosave properly
+        NSString *filename = [[aMediaRecord filename] lowercaseString];
+        NSURL *mediaURL = [[self fileURL] URLByAppendingPathComponent:filename isDirectory:NO];
+        [aMediaRecord forceUpdateFromURL:mediaURL];
+        
+        // Does this match some media already loaded? 
+        // Can't call -isFilenameReserved: since it will find the file on disk and return YES
+        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:filename]; 
+        if (fileWrapper)
+        {
+            [aMediaRecord setNextObject:fileWrapper];
+        }
+        
+        [_filenameReservations setObject:aMediaRecord forKey:filename];
+    }
+    
+    
+    return result;
+}
+
 - (void)setFileURL:(NSURL *)absoluteURL
 {
     // Mark persistent store as moved
-    NSURL *storeURL = [self datastoreURL];
-    if (storeURL)
+    NSPersistentStore *store = [self persistentStore];
+    if (store)
     {
         // Also reset the persistent stores' DB connection if needed
         NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
-        OBASSERT([[PSC persistentStores] count] <= 1);
-        
-        NSPersistentStore *store = [PSC persistentStoreForURL:storeURL];
-        OBASSERT(store);
+        OBASSERT([[PSC persistentStores] containsObject:store]);
         
         NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
         [PSC setURL:newStoreURL forPersistentStore:store];
@@ -466,7 +534,17 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
 }
 
-@synthesize datastoreURL = _persistentStoreURL;
+- (void)setAutosavedContentsFileURL:(NSURL *)absoluteURL;
+{
+    [super setAutosavedContentsFileURL:absoluteURL];
+    
+    if (absoluteURL && ![self fileURL])
+    {
+        
+    }
+}
+
+@synthesize persistentStore = _store;
 
 #pragma mark Undo Support
 
@@ -580,80 +658,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	}
 	
 	return result;
-}
-
-#pragma mark Document Content Management
-
-/*  Supplement the usual read behaviour by logging host properties and loading document display properties
- */
-- (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
-{
-	// Should only be called the once
-    BOOL result = [self configurePersistentStoreCoordinatorForURL:absoluteURL ofType:typeName modelConfiguration:nil storeOptions:nil error:outError];
-    
-    
-    // Grab the site object
-    if (result)
-	{
-        KTSite *site = [[[self managedObjectContext] site] retain];
-        [self setSite:site];
-        if (!site)
-        {
-            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                          code:NSFileReadCorruptFileError
-                                          localizedDescription:NSLocalizedString(@"Site not found", "doc open error")];
-            result = NO;
-        }
-    }
-    
-    
-    if (result)
-    {
-		// Load up document display properties
-		[self setDisplaySmallPageIcons:[[self site] boolForKey:@"displaySmallPageIcons"]];
-		
-		
-        // For diagnostics, log the value of the host properties
-		if ([[NSUserDefaults standardUserDefaults] boolForKey:@"LogHostInfoToConsole"])
-		{
-			KTHostProperties *hostProperties = [[self site] hostProperties];
-			NSLog(@"hostProperties = %@", [[hostProperties hostPropertiesReport] condenseWhiteSpace]);
-		}
-	}
-	
-	if (result)
-	{
-        NSString *path = [[self site] lastExportDirectoryPath];
-        if (path) self.lastExportDirectory = [NSURL fileURLWithPath:path];
-	}
-    
-    
-    // Reserve all the media filenames already in use    
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaInDocument"];
-    NSArray *media = [context executeFetchRequest:request error:NULL];
-    
-    for (SVMediaRecord *aMediaRecord in media)
-    {
-        // Media needs to be told its location to be useful
-        // Use -fileURL instead of absoluteURL since it accounts for autosave properly
-        NSString *filename = [[aMediaRecord filename] lowercaseString];
-        NSURL *mediaURL = [[self fileURL] URLByAppendingPathComponent:filename isDirectory:NO];
-        [aMediaRecord forceUpdateFromURL:mediaURL];
-        
-        // Does this match some media already loaded? 
-        // Can't call -isFilenameReserved: since it will find the file on disk and return YES
-        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:filename]; 
-        if (fileWrapper)
-        {
-            [aMediaRecord setNextObject:fileWrapper];
-        }
-        
-        [_filenameReservations setObject:aMediaRecord forKey:filename];
-    }
-        
-    
-    return result;
 }
 
 /*  Saving a document is somewhat complicated, so it's implemented in a dedicated category:
