@@ -532,9 +532,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
 	OBASSERT(storeCoordinator);
         
-    NSError *error = nil;
-	
-	
+    
     // Upon first save of a new doc, create store
     NSPersistentStore *store = [self persistentStore];
     if (!store)
@@ -548,7 +546,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Handle the user choosing "Save As" for an EXISTING document
     BOOL result = YES;
-    if (!originalContentsURL)   // saving a new doc (it might have been previously autosaved though
+    NSError *error = nil;
+	
+	if (!originalContentsURL)   // saving a new doc (it might have been previously autosaved though
     {
         result = [context save:&error];
     }

@@ -538,9 +538,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
     [super setAutosavedContentsFileURL:absoluteURL];
     
+    // If this the only copy, tell the store its new location
     if (absoluteURL && ![self fileURL])
     {
-        
+        NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
+        NSURL *storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+        NSPersistentStore *store = [self persistentStore];
+        [coordinator setURL:storeURL forPersistentStore:store];
     }
 }
 
