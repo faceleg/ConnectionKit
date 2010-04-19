@@ -529,7 +529,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (result) result = [context save:&error];
     
     
-    // Restore persistent store URL after Save To-type operations
+    // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
     if (originalContentsURL)
     {
         if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
@@ -538,49 +538,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             [coordinator setURL:originalContentsURL forPersistentStore:store];
         }
     }
-    
-    
-    if (result)
-    {
-        if (NO)
-        {
-            // Migrate the main document store        
-            id oldStore = [coordinator persistentStoreForURL:[self datastoreURL]];
-            NSAssert5(oldStore,
-                      @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
-                      [originalContentsURL absoluteString],
-                      [coordinator persistentStores],
-                      [self fileURL],
-                      originalContentsURL,
-                      URL);
-            
-            result = [coordinator migratePersistentStore:oldStore
-                                                        toURL:URL
-                                                      options:nil
-                                                     withType:[self persistentStoreTypeForFileType:typeName]
-                                                        error:&error];
-            [self setDatastoreURL:URL];
-            
-            if (result)
-            {
-                // Set the new metadata
-                if (![self setMetadataForStoreAtURL:URL error:outError]) result = nil;
-            }
-            
-            
-            if (result)
-            {
-                // Reset store URL. If it's meant to be changed permanently, someone will call -setFileURL:
-                [coordinator setURL:originalContentsURL forPersistentStore:result];
-            }
-            else
-            {
-                if (outError) *outError = error;
-                return NO; // bail out and display outError
-            }
-        }
-    }
-    
     
     
     // Return, making sure to supply appropriate error info
