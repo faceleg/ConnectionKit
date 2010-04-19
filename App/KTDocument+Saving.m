@@ -529,6 +529,15 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     if (result) result = [context save:&error];
     
     
+    // Restore persistent store URL after Save To-type operations
+    if (originalContentsURL)
+    {
+        if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
+        {
+            OBASSERT(store);
+            [coordinator setURL:originalContentsURL forPersistentStore:store];
+        }
+    }
     
     
     if (result)
