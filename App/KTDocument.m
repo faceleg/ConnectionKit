@@ -435,7 +435,13 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
 {
 	// Should only be called the once
-    BOOL result = [self configurePersistentStoreCoordinatorForURL:absoluteURL ofType:typeName modelConfiguration:nil storeOptions:nil error:outError];
+    NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+    
+    BOOL result = [self configurePersistentStoreCoordinatorForURL:newStoreURL
+                                                           ofType:typeName
+                                               modelConfiguration:nil
+                                                     storeOptions:nil
+                                                            error:outError];
     
     
     // Grab the site object
