@@ -200,32 +200,27 @@ NSString *kKTDocumentWillSaveNotification = @"KTDocumentWillSave";
 	BOOL result = NO;
     
     
-    // Figure out the original contents URL. Normally it's -fileURL except when autosaved
-    NSURL *originalContentsURL = [self autosavedContentsFileURL];
-    if (!originalContentsURL) originalContentsURL = [self fileURL];
-    
-    
-    switch (saveOperation)
+    if (saveOperation == NSSaveOperation)
+        //(saveOperation == NSAutosaveOperation && [absoluteURL isEqual:[self autosavedContentsFileURL]]))
     {
         // NSDocument attempts to write a copy of the document out at a temporary location.
         // Core Data cannot support this, so we override it to save directly.
-        case NSSaveOperation:
-            result = [self writeToURL:absoluteURL
-                               ofType:typeName
-                     forSaveOperation:saveOperation 
-                  originalContentsURL:originalContentsURL
-                                error:outError];
-            
-            break;
+        result = [self writeToURL:absoluteURL
+                           ofType:typeName
+                 forSaveOperation:saveOperation 
+              originalContentsURL:[self fileURL]
+                            error:outError];
         
-            
-            
-        // Other save types are basically fine to go through the regular channels
-        default:
-            result = [super writeSafelyToURL:absoluteURL 
-                                      ofType:typeName 
-                            forSaveOperation:saveOperation 
-                                       error:outError];
+        
+        
+    }
+    // Other situations are basically fine to go through the regular channels
+    else
+    {
+        result = [super writeSafelyToURL:absoluteURL 
+                                  ofType:typeName 
+                        forSaveOperation:saveOperation 
+                                   error:outError];
     }
     
     OBASSERT( (YES == result) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
@@ -529,42 +524,52 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     NSManagedObjectContext *context = [self managedObjectContext];
-	NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
-	OBASSERT(storeCoordinator);
+	NSPersistentStoreCoordinator *coordinator = [context persistentStoreCoordinator];
+	OBASSERT(coordinator);
         
-    
-    // Upon first save of a new doc, create store
-    NSPersistentStore *store = [self persistentStore];
-    if (!store)
-    {
-        OBASSERT(!originalContentsURL);
-        store = [storeCoordinator persistentStoreForURL:URL];   // -configurePersistentStore… should have been called earlier to make store
-        [self setPersistentStore:store];
-        OBASSERT(store);
-    }
     
     
     // Handle the user choosing "Save As" for an EXISTING document
     BOOL result = YES;
     NSError *error = nil;
 	
+    
 	if (!originalContentsURL)   // saving a new doc (it might have been previously autosaved though
     {
+        // Saving a new doc either uses fresh persistent store, or relocates the existing autosaved store
+        NSPersistentStore *store = [self persistentStore];
+        if (!store)
+        {
+            // -configurePersistentStore… should have been called earlier to make store. We need to pull that store up and use it.
+            OBASSERT(!originalContentsURL);
+            store = [coordinator persistentStoreForURL:URL];   
+            [self setPersistentStore:store];
+            OBASSERT(store);
+        }
+        else
+        {
+            // Fake a placeholder file ready for the store to save over
+            [[NSFileManager defaultManager] createFileAtPath:[URL path]
+                                                    contents:[NSData data]
+                                                  attributes:nil];
+            [coordinator setURL:URL forPersistentStore:store];
+        }
+        
         result = [context save:&error];
     }
     else
     {
         // Migrate the main document store        
-        id oldStore = [storeCoordinator persistentStoreForURL:[self datastoreURL]];
+        id oldStore = [coordinator persistentStoreForURL:[self datastoreURL]];
         NSAssert5(oldStore,
                   @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
                   [originalContentsURL absoluteString],
-                  [storeCoordinator persistentStores],
+                  [coordinator persistentStores],
                   [self fileURL],
                   originalContentsURL,
                   URL);
         
-        result = [storeCoordinator migratePersistentStore:oldStore
+        result = [coordinator migratePersistentStore:oldStore
                                                     toURL:URL
                                                   options:nil
                                                  withType:[self persistentStoreTypeForFileType:typeName]
@@ -581,7 +586,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         if (result)
         {
             // Reset store URL. If it's meant to be changed permanently, someone will call -setFileURL:
-            [storeCoordinator setURL:originalContentsURL forPersistentStore:result];
+            [coordinator setURL:originalContentsURL forPersistentStore:result];
         }
         else
         {
