@@ -478,7 +478,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         
         // Set metadata
-        if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
+        if ([self fileURL])
         {
             result = [self setMetadataForStoreAtURL:persistentStoreURL error:outError];
         }
@@ -532,6 +532,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                                   modelConfiguration:nil
                                                         storeOptions:nil
                                                                error:&error];
+            
+            // Once the store is configured, we can finally give it some metadata. For existing docs, this is done earlier in the process
+            if (result) result = [self setMetadataForStoreAtURL:URL error:&error];
         }
         
         if (result) result = [context save:&error];
@@ -696,7 +699,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	@try
 	{
 		id theStore = [coordinator persistentStoreForURL:aStoreURL];
-		if ( nil != theStore )
+		if (theStore)
 		{
 			// grab whatever data is already there (at least NSStoreTypeKey and NSStoreUUIDKey)
 			NSMutableDictionary *metadata = [[[coordinator metadataForPersistentStore:theStore] mutableCopy] autorelease];
