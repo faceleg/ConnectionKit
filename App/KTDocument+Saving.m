@@ -11,6 +11,7 @@
 
 #import "KTDesign.h"
 #import "KTDocumentController.h"
+#import "SVDocumentFileWrapper.h"
 #import "SVDocumentSavePanelAccessoryViewController.h"
 #import "KTDocWindowController.h"
 #import "SVDocumentUndoManager.h"
