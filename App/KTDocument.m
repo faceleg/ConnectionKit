@@ -162,6 +162,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 @interface KTDocument ()
 
+- (void)setURLForPersistentStoreUsingFileURL:(NSURL *)absoluteURL;
+
 - (KTPage *)makeRootPage;
 
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
@@ -326,11 +328,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return self;
 }
 
-- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+- (id)initForURL:(NSURL *)absoluteDocumentURL withContentsOfURL:(NSURL *)absoluteDocumentContentsURL ofType:(NSString *)typeName error:(NSError **)outError
 {
-    if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
+    if (self = [super initForURL:absoluteDocumentURL withContentsOfURL:absoluteDocumentContentsURL ofType:typeName error:outError])
     {
-        
+        // Correct persistent store URL now that it's finished reading
+        [self setURLForPersistentStoreUsingFileURL:absoluteDocumentURL];
     }
     
     return self;
@@ -508,18 +511,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-- (void)setURLForPersistentStoreUsingFileURL:(NSURL *)absoluteURL;
-{
-    NSPersistentStore *store = [self persistentStore];
-    if (!store) return;
-    
-    NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
-    NSURL *storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-    OBASSERT([[coordinator persistentStores] containsObject:store]);
-    
-    [coordinator setURL:storeURL forPersistentStore:store];
-}
-
 - (void)setFileURL:(NSURL *)absoluteURL
 {
     // Mark persistent store as moved
@@ -552,6 +543,18 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 }
 
 @synthesize persistentStore = _store;
+
+- (void)setURLForPersistentStoreUsingFileURL:(NSURL *)absoluteURL;
+{
+    NSPersistentStore *store = [self persistentStore];
+    if (!store) return;
+    
+    NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
+    NSURL *storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+    OBASSERT([[coordinator persistentStores] containsObject:store]);
+    
+    [coordinator setURL:storeURL forPersistentStore:store];
+}
 
 #pragma mark Undo Support
 
