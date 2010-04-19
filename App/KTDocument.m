@@ -508,19 +508,22 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
+- (void)setURLForPersistentStoreUsingFileURL:(NSURL *)absoluteURL;
+{
+    NSPersistentStore *store = [self persistentStore];
+    if (!store) return;
+    
+    NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
+    NSURL *storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
+    OBASSERT([[coordinator persistentStores] containsObject:store]);
+    
+    [coordinator setURL:storeURL forPersistentStore:store];
+}
+
 - (void)setFileURL:(NSURL *)absoluteURL
 {
     // Mark persistent store as moved
-    NSPersistentStore *store = [self persistentStore];
-    if (store)
-    {
-        // Also reset the persistent stores' DB connection if needed
-        NSPersistentStoreCoordinator *PSC = [[self managedObjectContext] persistentStoreCoordinator];
-        OBASSERT([[PSC persistentStores] containsObject:store]);
-        
-        NSURL *newStoreURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-        [PSC setURL:newStoreURL forPersistentStore:store];
-    }
+    [self setURLForPersistentStoreUsingFileURL:absoluteURL];
     
     
     [super setFileURL:absoluteURL];
@@ -544,10 +547,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // If this the only copy, tell the store its new location
     if (absoluteURL && ![self fileURL])
     {
-        NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
-        NSURL *storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
-        NSPersistentStore *store = [self persistentStore];
-        [coordinator setURL:storeURL forPersistentStore:store];
+        [self setURLForPersistentStoreUsingFileURL:absoluteURL];
     }
 }
 

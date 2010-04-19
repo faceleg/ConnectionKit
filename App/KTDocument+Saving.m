@@ -511,13 +511,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     }
     else if (saveOp != NSSaveOperation)
     {
-        // Saving a new doc either uses fresh persistent store, or relocates the existing autosaved store
-        if (store)
-        {
-            // Fake a placeholder file ready for the store to save over
-            result = [[NSData data] writeToURL:URL options:0 error:&error];
-            if (result) [coordinator setURL:URL forPersistentStore:store];
-        }
+        // Fake a placeholder file ready for the store to save over
+        result = [[NSData data] writeToURL:URL options:0 error:&error];
+        if (result) [coordinator setURL:URL forPersistentStore:store];
     }
     
     
