@@ -476,24 +476,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSManagedObjectContext *context = [self managedObjectContext];
         NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
         
-        if ([[storeCoordinator persistentStores] count] < 1)
-        { 
-            BOOL didConfigure = [self configurePersistentStoreCoordinatorForURL:inURL // not newSaveURL as configurePSC needs to be consistent
-                                                                         ofType:inType
-                                                             modelConfiguration:nil
-                                                                   storeOptions:nil
-                                                                          error:outError];
-            
-            OBASSERT( (YES == didConfigure) || (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
-
-            id newStore = [storeCoordinator persistentStoreForURL:persistentStoreURL];
-            if ( !newStore || !didConfigure )
-            {
-                NSLog(@"error: unable to create document: %@", (outError ? [*outError description] : nil) );
-                return NO; // bail out and display outError
-            }
-        } 
-        
         
         // Set metadata
         if ([storeCoordinator persistentStoreForURL:persistentStoreURL])
@@ -528,7 +510,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	OBASSERT(coordinator);
         
     
-    
     // Handle the user choosing "Save As" for an EXISTING document
     BOOL result = YES;
     NSError *error = nil;
@@ -538,19 +519,19 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         // Saving a new doc either uses fresh persistent store, or relocates the existing autosaved store
         NSPersistentStore *store = [self persistentStore];
-        if (!store)
-        {
-            // -configurePersistentStore… should have been called earlier to make store. We need to pull that store up and use it.
-            OBASSERT(!originalContentsURL);
-            store = [coordinator persistentStoreForURL:URL];   
-            [self setPersistentStore:store];
-            OBASSERT(store);
-        }
-        else
+        if (store)
         {
             // Fake a placeholder file ready for the store to save over
             result = [[NSData data] writeToURL:URL options:0 error:&error];
             if (result) [coordinator setURL:URL forPersistentStore:store];
+        }
+        else
+        {
+            result = [self configurePersistentStoreCoordinatorForURL:URL
+                                                              ofType:typeName
+                                                  modelConfiguration:nil
+                                                        storeOptions:nil
+                                                               error:&error];
         }
         
         if (result) result = [context save:&error];

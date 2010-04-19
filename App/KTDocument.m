@@ -411,17 +411,14 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     
-	/// and we compute the sqlite URL here for both read and write
-	NSURL *storeURL = [KTDocument datastoreURLForDocumentURL:URL type:nil];
-	
 	// these two lines basically take the place of sending [super configurePersistentStoreCoordinatorForURL:ofType:error:]
 	// NB: we're not going to use the supplied configuration or options here, though we could in a Leopard-only version
 	NSPersistentStore *store = [storeCoordinator addPersistentStoreWithType:[self persistentStoreTypeForFileType:fileType]
                                                               configuration:nil
-                                                                        URL:storeURL
+                                                                        URL:URL
                                                                     options:nil
                                                                       error:outError];
-    // Don't retain the store just yet; -writeToURL:… or -readFromURL:… will do that
+    [self setPersistentStore:store];
     
 	return (store != nil);
 }
@@ -442,9 +439,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Grab the site object
+    NSManagedObjectContext *context = [self managedObjectContext];
     if (result)
 	{
-        KTSite *site = [[[self managedObjectContext] site] retain];
+        KTSite *site = [[context site] retain];
         [self setSite:site];
         if (!site)
         {
@@ -478,7 +476,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Reserve all the media filenames already in use    
-    NSManagedObjectContext *context = [self managedObjectContext];
     NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"MediaInDocument"];
     NSArray *media = [context executeFetchRequest:request error:NULL];
     
