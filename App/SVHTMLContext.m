@@ -191,7 +191,7 @@
 {
     OBPRECONDITION(page);
     
-    NSString *result;
+    NSString *result = nil;
     
     switch ([self generationPurpose])
     {
