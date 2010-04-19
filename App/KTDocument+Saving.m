@@ -549,13 +549,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         else
         {
             // Fake a placeholder file ready for the store to save over
-            [[NSFileManager defaultManager] createFileAtPath:[URL path]
-                                                    contents:[NSData data]
-                                                  attributes:nil];
-            [coordinator setURL:URL forPersistentStore:store];
+            result = [[NSData data] writeToURL:URL atomically:NO];
+            if (result) [coordinator setURL:URL forPersistentStore:store];
         }
         
-        result = [context save:&error];
+        if (result) result = [context save:&error];
     }
     else
     {
