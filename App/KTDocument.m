@@ -550,8 +550,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     if (!store) return;
     
     NSPersistentStoreCoordinator *coordinator = [[self managedObjectContext] persistentStoreCoordinator];
-    NSURL *storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
     OBASSERT([[coordinator persistentStores] containsObject:store]);
+    
+    NSURL *storeURL = nil;
+    if (absoluteURL) storeURL = [[self class] datastoreURLForDocumentURL:absoluteURL type:nil];
     
     [coordinator setURL:storeURL forPersistentStore:store];
 }
