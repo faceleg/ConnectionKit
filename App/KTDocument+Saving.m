@@ -469,24 +469,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	
 	
     
-    NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
-    if (result)
-    {
-        // Make sure we have a persistent store coordinator properly set up
-        NSManagedObjectContext *context = [self managedObjectContext];
-        NSPersistentStoreCoordinator *storeCoordinator = [context persistentStoreCoordinator];
-        
-        
-        // Set metadata
-        if ([self fileURL])
-        {
-            result = [self setMetadataForStoreAtURL:persistentStoreURL error:outError];
-        }
-    }
-    
-    
     if (!result)
     {
+        NSURL *persistentStoreURL = [KTDocument datastoreURLForDocumentURL:inURL type:nil];
         OBASSERT( (nil == outError) || (nil != *outError) ); // make sure we didn't return NO with an empty error
         LOG((@"error: wants to setMetadata during save but no persistent store at %@", persistentStoreURL));
     }
@@ -514,79 +499,78 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSError *error = nil;
 	
     
-	// Saving a new doc (it might have been previously autosaved though)
-    if (!originalContentsURL)
+    // Setup persistent store appropriately
+	NSPersistentStore *store = [self persistentStore];
+    if (!store)
+    {
+        result = [self configurePersistentStoreCoordinatorForURL:URL
+                                                          ofType:typeName
+                                              modelConfiguration:nil
+                                                    storeOptions:nil
+                                                           error:&error];
+    }
+    else if (saveOp != NSSaveOperation)
     {
         // Saving a new doc either uses fresh persistent store, or relocates the existing autosaved store
-        NSPersistentStore *store = [self persistentStore];
         if (store)
         {
             // Fake a placeholder file ready for the store to save over
             result = [[NSData data] writeToURL:URL options:0 error:&error];
             if (result) [coordinator setURL:URL forPersistentStore:store];
         }
-        else
+    }
+    
+    
+    // Now we're sure store is available, can give it some metadata.
+    if (result) result = [self setMetadataForStoreAtURL:URL error:&error];
+    
+    
+    // Do the save
+    if (result) result = [context save:&error];
+    
+    
+    
+    
+    if (result)
+    {
+        if (NO)
         {
-            result = [self configurePersistentStoreCoordinatorForURL:URL
-                                                              ofType:typeName
-                                                  modelConfiguration:nil
-                                                        storeOptions:nil
-                                                               error:&error];
+            // Migrate the main document store        
+            id oldStore = [coordinator persistentStoreForURL:[self datastoreURL]];
+            NSAssert5(oldStore,
+                      @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
+                      [originalContentsURL absoluteString],
+                      [coordinator persistentStores],
+                      [self fileURL],
+                      originalContentsURL,
+                      URL);
             
-            // Once the store is configured, we can finally give it some metadata. For existing docs, this is done earlier in the process
-            if (result) result = [self setMetadataForStoreAtURL:URL error:&error];
-        }
-        
-        if (result) result = [context save:&error];
-    }
-    
-    
-    // Saving an existing doc
-    else if (saveOp == NSSaveOperation)
-    {
-        result = [context save:&error];
-    }
-    
-    
-    // Save As for existing doc
-    else
-    {
-        // Migrate the main document store        
-        id oldStore = [coordinator persistentStoreForURL:[self datastoreURL]];
-        NSAssert5(oldStore,
-                  @"No persistent store found for URL: %@\nPersistent stores: %@\nDocument URL:%@\nOriginal contents URL:%@\nDestination URL:%@",
-                  [originalContentsURL absoluteString],
-                  [coordinator persistentStores],
-                  [self fileURL],
-                  originalContentsURL,
-                  URL);
-        
-        result = [coordinator migratePersistentStore:oldStore
-                                                    toURL:URL
-                                                  options:nil
-                                                 withType:[self persistentStoreTypeForFileType:typeName]
-                                                    error:&error];
-        [self setDatastoreURL:URL];
-        
-        if (result)
-        {
-            // Set the new metadata
-            if (![self setMetadataForStoreAtURL:URL error:outError]) result = nil;
-        }
-        
-        
-        if (result)
-        {
-            // Reset store URL. If it's meant to be changed permanently, someone will call -setFileURL:
-            [coordinator setURL:originalContentsURL forPersistentStore:result];
-        }
-        else
-        {
-            if (outError) *outError = error;
-            return NO; // bail out and display outError
+            result = [coordinator migratePersistentStore:oldStore
+                                                        toURL:URL
+                                                      options:nil
+                                                     withType:[self persistentStoreTypeForFileType:typeName]
+                                                        error:&error];
+            [self setDatastoreURL:URL];
+            
+            if (result)
+            {
+                // Set the new metadata
+                if (![self setMetadataForStoreAtURL:URL error:outError]) result = nil;
+            }
+            
+            
+            if (result)
+            {
+                // Reset store URL. If it's meant to be changed permanently, someone will call -setFileURL:
+                [coordinator setURL:originalContentsURL forPersistentStore:result];
+            }
+            else
+            {
+                if (outError) *outError = error;
+                return NO; // bail out and display outError
+            }
         }
     }
-    
     
     
     
