@@ -508,6 +508,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                                               modelConfiguration:nil
                                                     storeOptions:nil
                                                            error:&error];
+        store = [self persistentStore];
     }
     else if (saveOp != NSSaveOperation)
     {
@@ -528,8 +529,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     // Restore persistent store URL after Save To-type operations. Even if save failed (just to be on the safe side)
     if (saveOp == NSAutosaveOperation || saveOp == NSSaveToOperation)
     {
-        [coordinator setURL:originalContentsURL
-         forPersistentStore:[self persistentStore]];    // store variable might be nil, so go back to the source
+        [coordinator setURL:originalContentsURL forPersistentStore:store];
     }
     
     
