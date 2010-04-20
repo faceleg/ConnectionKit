@@ -206,7 +206,7 @@ static NSArray *sAltStrings = nil;
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
     // add resource to context and return URL (URLOfResource: claims it calls addResource: internally)
-    NSURL *result = [[SVHTMLContext currentContext] URLOfResource:resourceURL];
+    NSURL *result = [[SVHTMLContext currentContext] addResourceWithURL:resourceURL];
     return result;
 }
 

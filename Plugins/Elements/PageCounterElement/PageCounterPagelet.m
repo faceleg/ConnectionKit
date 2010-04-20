@@ -245,7 +245,7 @@ NSString *PCSampleImageKey = @"sampleImage";
 			NSString *format = [NSString stringWithFormat:@"%@-%d.png", theme, i];
 			if (imagePath)
 			{
-				[context addResource:
+				[context addResourceWithURL:
                  [NSURL fileURLWithPath:[imagePath stringByAppendingPathComponent:format]]];
 			}
 			else
@@ -254,7 +254,7 @@ NSString *PCSampleImageKey = @"sampleImage";
                                                  ofType:[format pathExtension] 
                                             inDirectory:@"digits"];
                 OBASSERT(resource);
-                [context addResource:[NSURL fileURLWithPath:resource]];
+                [context addResourceWithURL:[NSURL fileURLWithPath:resource]];
 			}
 		}
 	}

@@ -74,6 +74,7 @@
 
 @protocol SVPlugInContext
 - (KSHTMLWriter *)HTMLWriter;
+- (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 @end
 
 

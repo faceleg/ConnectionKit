@@ -29,6 +29,6 @@
     // Ignore
 }
 
-- (void)addResource:(NSURL *)resourceURL; { }   // ignore also
+- (NSURL *)addResourceWithURL:(NSURL *)resourceURL; { }   // ignore also
 
 @end

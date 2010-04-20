@@ -119,9 +119,8 @@ typedef enum {
 
 
 #pragma mark Resource Files
-- (void)addResource:(NSURL *)resourceURL;   // call to register the resource for needing publishing
-- (NSURL *)URLOfResource:(NSURL *)resource; // the URL of a resource once published. Calls -addResource internally
-//- (NSString *)uploadPathOfResource:(NSURL *)resource; // counterpart to -URLOfResource
+// Call to register the resource for needing publishing. Returns the URL to reference the resource by
+- (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 
 
 #pragma mark Extra markup

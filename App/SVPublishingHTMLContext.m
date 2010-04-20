@@ -8,11 +8,14 @@
 
 #import "SVPublishingHTMLContext.h"
 
+#import "KTHostProperties.h"
 #import "SVMediaRepresentation.h"
 #import "KTPage.h"
 #import "KTPublishingEngine.h"
+#import "KTSite.h"
 
 #import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
 
 
 @implementation SVPublishingHTMLContext
@@ -97,9 +100,13 @@
                         height:[height description]];
 }
 
-- (void)addResource:(NSURL *)resourceURL;
+- (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
+    [super addResourceWithURL:resourceURL];
     [[self publishingEngine] publishResourceAtURL:resourceURL];
+    
+    return [[[[self currentPage] site] hostProperties] URLForResourceFile:
+            [resourceURL lastPathComponent]];
 }
 
 @end
