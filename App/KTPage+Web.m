@@ -595,7 +595,7 @@
 							[[textblock property:toplink.menuTitle graphicalTextCode:mc tag:span]]
 						 </li>
 					 [[else2]]
-						 <li class='[[i]] [[eo]][[last]][[if parser.currentPage.includeInSiteMenu]][[else3]][[if toplink==parser.currentPage.parentPage]][[if parser.currentPage.parentPage.index]] currentParent[[endif5]][[endif4]][[endif3]]'>
+						 <li class='[[i]] [[eo]][[last]][[if !parser.currentPage.includeInSiteMenu]][[if toplink==parser.currentPage.parentPage]][[if parser.currentPage.parentPage.index]] currentParent[[endif5]][[endif4]][[endif3]]'>
 							 <a [[target toplink]]href='[[path toplink]]' title='[[=&toplink.titleText]]'>
 							 [[textblock property:toplink.menuTitle graphicalTextCode:m tag:span]]</a>
 						 </li>

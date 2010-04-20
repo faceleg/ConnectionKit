@@ -188,9 +188,9 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DeliciousElement" */;
 			compatibilityVersion = "Xcode 3.0";
-			hasScannedForEncodings = 1;
 			developmentRegion = en;
-knownRegions = (
+			hasScannedForEncodings = 1;
+			knownRegions = (
 				en,
 				da,
 				de,

@@ -3,9 +3,9 @@
 <div class="VideoElement">
 	<div class="video">
 		<object type="application/x-shockwave-flash" width="[[=videoWidth]]" height="[[=videoHeight]]">
-			<param name="movie" value="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if includeRelatedVideos]][[else3]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.stringWriter.language]]"></param>
+			<param name="movie" value="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.stringWriter.language]]"></param>
 			<param name="wmode" value="transparent"></param>
-			<embed src="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if includeRelatedVideos]][[else3]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.stringWriter.language]]"
+			<embed src="http://www.[[if privacy]]youtube-nocookie[[else3]]youtube[[endif3]].com/v/[[=videoID]][[if !includeRelatedVideos]]&amp;rel=0[[endif3]][[if playHD]]&amp;hd=1[[endif3]]&amp;color1=[[=color1.youTubeVideoColorString]]&amp;color2=[[=color2.youTubeVideoColorString]][[if showBorder]]&amp;border=1[[endif3]]&amp;hl=[[=&parser.stringWriter.language]]"
 				type="application/x-shockwave-flash" wmode="transparent" width="[[=videoWidth]]" height="[[=videoHeight]]"></embed>
 		</object>
 	</div>

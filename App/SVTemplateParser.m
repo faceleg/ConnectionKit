@@ -588,7 +588,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	NSString *left = nil;
 	NSString *right = nil;
 	ComparisonType comparisonType = [inRestOfTag parseComparisonintoLeft:&left right:&right];
-	if (kCompareUnknown == comparisonType || nil == left || (nil == right && (comparisonType != kCompareNotEmpty && comparisonType != kCompareNotEmptyOrEditing)) )
+	if (kCompareUnknown == comparisonType || nil == left || (nil == right && (comparisonType != kCompareNotEmpty && comparisonType != kCompareNotEmptyOrEditing)) || (comparisonType == kCompareNegate && ![left isEqualToString:@""]) )
 	{
 		NSLog(@"if: unable to find valid comparison '%@'", inRestOfTag);
 		return @"";
@@ -640,6 +640,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 			break;
 		case kCompareMoreEquals:
 			result = ( [leftValue intValue] >= [rightValue intValue] );
+			break;
+		case kCompareNegate:	// negate the value of the right value, so somewhat the opposite of kCompareNotEmpty
+			result = ![self isNotEmpty:rightValue];
 			break;
 		case kCompareUnknown:
 			break;
