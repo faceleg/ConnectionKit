@@ -30,7 +30,7 @@
 - (void)webEditorTextDidChange;
 
 // Return YES if you will handle the selector yourself. Return NO to have the Web Editor do its own thing
-- (BOOL)webEditorTextDoCommandBySelector:(SEL)selector;
+- (BOOL)webEditorTextDoCommandBySelector:(SEL)action;
 
 - (BOOL)webEditorTextShouldChangeSelectedDOMRange:(DOMRange *)currentRange
                                        toDOMRange:(DOMRange *)proposedRange
