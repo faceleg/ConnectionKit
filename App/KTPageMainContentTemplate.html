@@ -4,8 +4,8 @@
 [[if showNavigationArrows]]
 [[if parentPage.index.navigationArrowsStyle==1]]
 							<div class="collection-navigation photo-navigation">
-								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[endif3]]</div>
-								<div id="next-photo" class="next-page">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[`navigateNextHTML]]</a>[[endif3]]</div>
+								<div id="previous-photo" class="previous-page">[[if previousPage]]<a class="imageLink" href="[[path previousPage]]#previous-photo">[[`navigatePreviousHTML]]</a>[[else3]]<span class="disabled-nav">[[`navigatePreviousHTML]]</span>[[endif3]]</div>
+								<div id="next-photo" class="next-page">[[if nextPage]]<a class="imageLink" href="[[path nextPage]]#previous-photo">[[`navigateNextHTML]]</a>[[else3]]<span class="disabled-nav">[[`navigateNextHTML]]</span>[[endif3]]</div>
 								<div id="photo-list" class="collection-index"><a class="imageLink" href="[[path parentPage]]">[[`navigateListHTML]]</a></div>
 							</div>
 [[else2]]

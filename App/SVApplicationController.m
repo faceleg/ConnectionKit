@@ -233,7 +233,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 + (void)registerDefaults
 {
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-    
+
+	[IMBConfig registerDefaultValues];
+	[IMBConfig setShowsGroupNodes:YES];
     
     // BUGSID:36452 - having WebKitDefaultFontSize present seriously screws up text rendering
     [defaults removeObjectForKey:@"WebKitDefaultFontSize"];
@@ -1036,6 +1038,26 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	
 	[[self sparkleUpdater] checkForUpdatesInBackground];	// check Sparkle before alerting
 }
+
+
+- (void) controller:(IMBParserController*)inController didLoadParser:(IMBParser*)inParser forMediaType:(NSString*)inMediaType
+{
+	NSLog(@"%s inParser=%@ inMediaType=%@",__FUNCTION__,NSStringFromClass(inParser.class),inMediaType);
+	
+	if ([inParser isKindOfClass:[IMBFlickrParser class]])
+	{
+		IMBFlickrParser* flickrParser = (IMBFlickrParser*)inParser;
+		flickrParser.delegate = self;
+		
+		// For your actual app, you would put in the hard-wired strings here.
+		
+		flickrParser.flickrAPIKey = @"263df73e82720248908c08946c4303ad";		// Karelia's key
+		flickrParser.flickrSharedSecret = @"e91e1638196e3c3d";					// Karelia's shared secret
+		
+	}		// end IMBFlickrParser code
+}
+
+
 
 /*
 - (BOOL)iMediaBrowser:(iMediaBrowser *)browser willUseMediaParser:(NSString *)parserClassname forMediaType:(NSString *)media;
