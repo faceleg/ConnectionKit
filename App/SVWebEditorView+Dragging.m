@@ -169,23 +169,24 @@
 {
     if (operation == NSDragOperationMove || operation == NSDragOperationDelete)
     {
-        [self willChange];
-        for (SVWebEditorItem *anItem in [self draggedItems])
+        if ([self shouldChangeText:[self focusedText]])
         {
-            // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
-            if ([[anItem HTMLElement] isContentEditable])
+            for (SVWebEditorItem *anItem in [self draggedItems])
             {
-                DOMHTMLElement *node = [anItem HTMLElement];
-                [[node parentNode] removeChild:node];
-                
-                [anItem removeFromParentWebEditorItem];
+                // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
+                if ([[anItem HTMLElement] isContentEditable])
+                {
+                    DOMHTMLElement *node = [anItem HTMLElement];
+                    [[node parentNode] removeChild:node];
+                    
+                    [anItem removeFromParentWebEditorItem];
+                }
             }
+            [self didChange];
+            
+            // Remove the objects
+            [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
         }
-        [self didChange];
-        
-        
-        // Remove the objects
-        [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
     }
     
     // Clean up

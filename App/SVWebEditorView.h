@@ -45,6 +45,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL            _liveLinks;
     NSPasteboard    *_insertionPasteboard;
     
+    SVWebEditorItem <SVWebEditorText>   *_changingTextController;   // weak ref, only used in passing
+    
     // Drag & Drop
     NSArray     *_draggedItems;
     DOMNode     *_dragHighlightNode;
@@ -105,9 +107,11 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @property(nonatomic) BOOL liveEditableAndSelectableLinks;   // you can bind this to the defaults
 
-- (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;   // calls -willChange when returning YES.
-- (void)willChange; // posts kSVWebEditorViewWillChangeNotification
-- (void)didChange;  // posts kSVWebEditorViewDidChangeNotification
+// Like NSTextView, you should call one of these when wanting to apply an editing action to the DOM. Posts kSVWebEditorViewWillChangeNotification notification if successful.
+// After editing, call -didChange which posts kSVWebEditorViewDidChangeNotification and handles undo registration/peristence for the edit.
+- (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;
+- (BOOL)shouldChangeText:(SVWebEditorItem <SVWebEditorText> *)textController;
+- (void)didChange;
 
 - (NSPasteboard *)insertionPasteboard;
 

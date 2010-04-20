@@ -127,7 +127,7 @@
     }
 }
 
-- (void)webViewDidChange;
+- (void)webEditorTextDidChange;
 {
     // Validate the HTML
     NSMutableString *html = [[NSMutableString alloc] init];

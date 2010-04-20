@@ -42,22 +42,11 @@
     // Undo
     _undoCoalescingActionIdentifier = NSNotFound;
     
-    // Editing
-    [[NSNotificationCenter defaultCenter] addObserver:self
-                                             selector:@selector(webEditorDidChange:)
-                                                 name:kSVWebEditorViewDidChangeNotification
-                                               object:nil];
-    
-    
     return self;
 }
 
 - (void)dealloc
 {
-    [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                    name:kSVWebEditorViewDidChangeNotification
-                                                  object:nil];
-    
     [_textElement release];
     [_textBlock release];
     
@@ -113,7 +102,7 @@
 
 @synthesize editing = _isEditing;
 
-- (void)webViewDidChange; { }
+- (void)webEditorTextDidChange; { }
 
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 {
@@ -191,7 +180,7 @@
     
     
     // Handle the edit
-    [self webViewDidChange];
+    [self webEditorTextDidChange];
     
     
     // Wait until after -didChangeText so subclass has done its work

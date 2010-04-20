@@ -183,6 +183,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [_mainItem release];
     
     [_selectedItems release];
+    OBASSERT(!_changingTextController);
     
     [_webView close];
     [_webView release];
@@ -740,21 +741,36 @@ typedef enum {  // this copied from WebPreferences+Private.h
         result = [editingNode isDescendantOfNode:[textController HTMLElement]];
     }
     
-    if (result) [self willChange];
+    
+    if (result)
+    {
+        result = [self shouldChangeText:[[self dataSource] webEditor:self
+                                                textBlockForDOMRange:range]];
+    }
     
     return result;
 }
 
-- (void)willChange; // posts kSVWebEditorViewWillChangeNotification
+- (BOOL)shouldChangeText:(SVWebEditorItem <SVWebEditorText> *)textController;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewWillChangeNotification
-                                                        object:self];
+    OBPRECONDITION(textController);
+    
+    // The change is going to go ahead, so let's handle it. Woo!
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:kSVWebEditorViewWillChangeNotification object:self];
+    
+    _changingTextController = textController;
+    
+    return YES;
 }
 
 - (void)didChange;  // posts kSVWebEditorViewDidChangeNotification
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:kSVWebEditorViewDidChangeNotification
-                                                        object:self];
+    [_changingTextController webEditorTextDidChange];
+    _changingTextController = nil;
+    
+    [[NSNotificationCenter defaultCenter]
+     postNotificationName:kSVWebEditorViewDidChangeNotification object:self];
 }
 
 - (NSPasteboard *)insertionPasteboard;

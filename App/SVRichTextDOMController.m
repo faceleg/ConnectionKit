@@ -219,7 +219,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
 }
 
-- (void)webViewDidChange;
+- (void)webEditorTextDidChange;
 {    
     //  Write the whole out using a special stream
     
@@ -356,12 +356,12 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Generate DOM node
-    [webEditor willChange];
-    
     DOMRange *selection = [webEditor selectedDOMRange];
-    [selection insertNode:[controller HTMLElement]];
-    
-    [webEditor didChange];
+    if ([webEditor shouldChangeTextInDOMRange:selection])
+    {
+        [selection insertNode:[controller HTMLElement]];
+        [webEditor didChange];
+    }
 }
 
 - (IBAction)insertPagelet:(id)sender;
@@ -404,7 +404,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
     SVWebEditorView *webEditor = [self webEditor];
-    [webEditor willChange];
+    if (![webEditor shouldChangeText:self]) return;
     
     
     for (SVDOMController *aController in [webEditor selectedItems])

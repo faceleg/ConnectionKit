@@ -56,9 +56,6 @@
 
 @property(nonatomic, readonly, getter=isEditing) BOOL editing;
 
-// There has been a change somewhere in the corresponding WebView (there's no direct API for querying whereabouts the change was). Subclasses should implement to check if they know of a change being made and act accordingly.
-- (void)webViewDidChange;
-
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 
