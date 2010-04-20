@@ -15,7 +15,7 @@
 
 - (IBAction)badgeClicked:(id)sender
 {
-	[[[self inspectedObjectsController] selection] setInteger:[sender tag]
+	[[[self inspectedObjectsController] selection] setInteger:[[sender selectedItem] tag]
                                                        forKey:@"badgeTypeTag"];
 }
 
