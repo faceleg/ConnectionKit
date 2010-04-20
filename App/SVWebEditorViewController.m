@@ -985,7 +985,11 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     
     
     NSUInteger dropIndex = [self indexOfDrop:dragInfo];
-    if (dropIndex == NSNotFound) return NO;
+    if (dropIndex == NSNotFound)
+    {
+        NSBeep();
+        return NO;
+    }
     
     
     BOOL result = NO;
