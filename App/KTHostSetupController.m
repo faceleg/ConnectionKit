@@ -1453,14 +1453,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 }
 - (NSString *) iDiskImagePath
 {
-	if (floor(NSAppKitVersionNumber) <= 824)		// Tiger
-	{
-		return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/iDiskGenericIcon.icns";
-	}
-	else
-	{
-		return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes 'macn' or 'idsk' (or 'mymc', Leopard-only?) -- not sure which 
-	}
+	return @"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/dotMacLogo.icns";		// becomes 'macn' or 'idsk' (or 'mymc', Leopard-only?) -- not sure which 
 }
 - (NSString *) iMacImagePath
 {
