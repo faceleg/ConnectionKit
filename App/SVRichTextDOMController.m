@@ -209,6 +209,17 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return result;
 }
 
+- (BOOL)webEditorTextDoCommandBySelector:(SEL)action;
+{
+    // Bit of a bug in WebKit that means when you delete backwards in an empty text area, the empty paragraph object gets deleted. Fair enough, but WebKit doesn't send you a delegate message asking permission! #71489
+    if (action == @selector(deleteBackward:))
+    {
+        if ([[[self textHTMLElement] innerText] length] <= 1) return YES;
+    }
+        
+    return [super webEditorTextDoCommandBySelector:action];
+}
+
 #pragma mark Responding to Changes
 
 - (void)webEditorTextDidBeginEditing;
