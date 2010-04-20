@@ -21,6 +21,17 @@
 #pragma mark Standard Text Block
 
 // TODO: Generate nothing when publishing
+/* parameters allowed:
+	property
+	object
+	tag
+	class
+	flags
+	hyperlink
+	graphicalTextCode
+ 
+ */
+
 - (NSString *)textblockWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
 	NSDictionary *parameters = [[self class] parametersDictionaryWithString:inRestOfTag];

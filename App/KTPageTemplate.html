@@ -76,7 +76,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[=codeInjection.headArea]]
 [[endif]]
 	</head>
-	<body class="sandvox [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]][[if master.banner]] has-custom-banner[[else]] no-custom-banner[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjection.bodyTag]][[=master.codeInjection.bodyTag]][[endif]][[if codeInjection.bodyTag]][[=codeInjection.bodyTag]][[endif]]>
+	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.banner]]has-custom-banner[[else]]no-custom-banner[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjection.bodyTag]][[=master.codeInjection.bodyTag]][[endif]][[if codeInjection.bodyTag]][[=codeInjection.bodyTag]][[endif]]>
 [[if master.codeInjection.bodyTagStart]]
 [[=master.codeInjection.bodyTagStart]]
 [[endif]]
@@ -85,7 +85,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 [[endif]]
 		<div id="page-container"[[if cssClassName]] class="[[=&cssClassName]]"[[endif]]>
 			<div id="page">
-				<div id="page-top" class="[[if master.logo.hidden]]no-logo[[else]]has-logo[[endif]]">
+				<div id="page-top" class="[[if master.logo.hidden]]no-logo[[else]]has-logo[[endif]] [[if !master.siteTitle.hidden]]has-title[[else]]no-title[[endif]] [[if !master.siteSubtitle.hidden]]has-tagline[[else]]no-tagline[[endif]]">
 					<div id="title">
 [[if isRootPage]]
 [[if master.logo.hidden]]
@@ -108,7 +108,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 						[[if master.siteTitle]][[textblock property:master.siteTitle flags:"line" tag:h1 graphicalTextCode:h1 hyperlink:site.rootPage]][[endif3]]
 [[endif2]]
 [[endif]]
-						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p graphicalTextCode:st placeholder:"Site Subtitle"]][[endif]]
+						[[if !master.siteSubtitle.hidden]][[textblock property:master.siteSubtitle flags:"line" tag:p graphicalTextCode:st class:tagline placeholder:"Site Tagline"]][[endif]]
 					</div><!-- title -->
 					<div id="sitemenu-container">
 						[[=sitemenu]]
