@@ -182,7 +182,7 @@
                     [anItem removeFromParentWebEditorItem];
                 }
             }
-            [self didChange];
+            [self didChangeText];
             
             // Remove the objects
             [[self dataSource] webEditor:self deleteItems:[self draggedItems]];

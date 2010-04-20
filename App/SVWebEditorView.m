@@ -764,7 +764,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return YES;
 }
 
-- (void)didChange;  // posts kSVWebEditorViewDidChangeNotification
+- (void)didChangeText;  // posts kSVWebEditorViewDidChangeNotification
 {
     [_changingTextController webEditorTextDidChange];
     _changingTextController = nil;
@@ -1602,7 +1602,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (void)webViewDidChange:(NSNotification *)notification;
 {
-    [self didChange];
+    [self didChangeText];
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification

@@ -111,7 +111,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // After editing, call -didChange which posts kSVWebEditorViewDidChangeNotification and handles undo registration/peristence for the edit.
 - (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;
 - (BOOL)shouldChangeText:(SVWebEditorItem <SVWebEditorText> *)textController;
-- (void)didChange;
+- (void)didChangeText;
 
 - (NSPasteboard *)insertionPasteboard;
 

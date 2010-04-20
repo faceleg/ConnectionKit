@@ -360,7 +360,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if ([webEditor shouldChangeTextInDOMRange:selection])
     {
         [selection insertNode:[controller HTMLElement]];
-        [webEditor didChange];
+        [webEditor didChangeText];
     }
 }
 
@@ -433,7 +433,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Make Web Editor/Controller copy text to model
-    [webEditor didChange];
+    [webEditor didChangeText];
 }
 
 #pragma mark Pasteboard
