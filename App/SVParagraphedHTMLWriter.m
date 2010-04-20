@@ -350,17 +350,22 @@
 
 - (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
 {
-    //  Only allowed  a single newline at the top level
-    if ([[self previousSibling] nodeType] == DOM_TEXT_NODE)
+    //  Only allowed  a single newline at the top level. Ignore whitespace at the very start of text
+    DOMNode *previousNode = [self previousSibling];
+    if (previousNode)
     {
-        return [super topLevelBodyTextNodeWriteToStream:context];  // delete self
+        if ([previousNode nodeType] == DOM_TEXT_NODE)
+        {
+            return [super topLevelBodyTextNodeWriteToStream:context];  // delete self
+        }
+        else
+        {
+            [self setTextContent:@"\n"];
+            [context writeNewline];
+        }
     }
-    else
-    {
-        [self setTextContent:@"\n"];
-        [context writeNewline];
-        return [self nextSibling];
-    }
+    
+    return [self nextSibling];
 }
 
 @end
