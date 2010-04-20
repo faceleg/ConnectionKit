@@ -43,7 +43,7 @@
     }
     
     // Write HTML
-    [SVContentObject writeContentObjects:pagelets];
+    [SVContentObject writeContentObjects:pagelets inContext:context];
 }
 
 @end

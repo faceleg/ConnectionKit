@@ -17,10 +17,8 @@
 
 #pragma mark HTML
 
-- (void)writeHTML;          // default calls -HTMLString and writes that to the current HTML context
-{
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    
+- (void)writeHTML:(SVHTMLContext *)context; // default calls -HTMLString and writes that to the current context
+{    
     [context writeHTMLString:[self HTMLString]];
 }
 
@@ -31,12 +29,21 @@
     return nil;
 }
 
++ (void)writeContentObjects:(NSArray *)objects inContext:(SVHTMLContext *)context;
+{
+    for (SVContentObject *anObject in objects)
+    {
+        [anObject writeHTML:context];
+        [context writeNewline];
+    }
+}
+
 + (void)writeContentObjects:(NSArray *)objects; // calls -writeHTML for each object
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     for (SVContentObject *anObject in objects)
     {
-        [anObject writeHTML];
+        [anObject writeHTML:context];
         [context writeNewline];
     }
 }

@@ -319,10 +319,8 @@
     return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
 }
 
-- (void)writeHTML
+- (void)writeHTML:(SVHTMLContext *)context
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-
     // If the placement changes, want whole WebView to update
     [context addDependencyOnObject:self keyPath:@"textAttachment.placement"];
     
