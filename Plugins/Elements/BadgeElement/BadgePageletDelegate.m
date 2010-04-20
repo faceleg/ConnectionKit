@@ -107,6 +107,7 @@ static NSArray *sAltStrings = nil;
 	return sAltStrings;
 }
 
+// TJT: why aren't we just synthesizing these?
 - (void)setBadgeAltString:(NSString *)aBadgeAltString
 {
     [aBadgeAltString retain];
@@ -121,12 +122,12 @@ static NSArray *sAltStrings = nil;
     _badgeTitleString = aBadgeTitleString;
 }
 
-- (NSString *) badgePreludeString
+- (NSString *)badgePreludeString
 {
 	return LocalizedStringInThisBundle(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language");
 }
 
-- (NSString *) badgeLinkString
+- (NSString *)badgeLinkString
 {
 	return LocalizedStringInThisBundle(@"Sandvox", @"linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created with' regardless of language.");
 }
@@ -135,7 +136,10 @@ static NSArray *sAltStrings = nil;
 // Use a hash to get a sort of arbitrary string for this unique document
 - (NSString *) generateBlurbVariant:(int)aVariant
 {
-	NSString *seedString = [[self elementPlugInContainer] siteObjectIDURIRepresentationString];
+    //NSString *seedString = [[self elementPlugInContainer] siteObjectIDURIRepresentationString];
+    //FIXME: what should we really be doing for a seedString?
+    NSString *seedString = [NSString shortUUIDString];
+    
 	NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1HashDigest];
 	unsigned char *bytes = (unsigned char *)[hashData bytes];
 	// we have a nice 20-byte hash .... now to boil this down to a very small number!
@@ -155,10 +159,9 @@ static NSArray *sAltStrings = nil;
 	NSString *blurb = [[BadgePageletDelegate sharedAltStrings] objectAtIndex:stringNumber];
 
 	return blurb;
-	
 }
 
-- (NSString *) badgeAltString
+- (NSString *)badgeAltString
 {
 	if (nil == _badgeAltString)
 	{
@@ -169,7 +172,7 @@ static NSArray *sAltStrings = nil;
 	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
 }
 
-- (NSString *) badgeTitleString
+- (NSString *)badgeTitleString
 {
 	if (nil == _badgeTitleString)
 	{
@@ -195,24 +198,16 @@ static NSArray *sAltStrings = nil;
 	return result;
 }
 
-// Returns path of badge resource.  This is used by the template to get the path in resources directory
-- (NSString *) badgeResourcePath
+// returns URL for current badge, suitable for use in HTML template
+- (NSURL *)badgeURL
 {
-	NSString *path = [[self bundle] pathForImageResource:[self currentBadgeName]];
-	return path;
-}
-
-// Called via recursiveComponentPerformSelector
-
-- (void)addResourcesToSet:(NSMutableSet *)aSet forPage:(KTPage *)aPage
-{
-	NSString *badgeName = [self currentBadgeName];
-	if (nil != badgeName)
-	{
-		NSString *path = [[self bundle] pathForImageResource:badgeName];
-        OBASSERT(path);
-		[aSet addObject:path];
-	}
+    // find badge resource
+    NSString *resourcePath = [[self bundle] pathForImageResource:[self currentBadgeName]];
+    NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
+    
+    // add resource to context and return URL (URLOfResource: claims it calls addResource: internally)
+    NSURL *result = [[SVHTMLContext currentContext] URLOfResource:resourceURL];
+    return result;
 }
 
 #pragma mark Inspector
