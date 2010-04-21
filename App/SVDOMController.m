@@ -81,7 +81,7 @@
 
 - (void)writeRepresentedObjectHTML;
 {
-    [[self representedObject] writeHTML];
+    [[self representedObject] writeHTML:[SVHTMLContext currentContext]];
 }
 
 @synthesize HTMLContext = _context;
