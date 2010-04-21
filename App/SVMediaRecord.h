@@ -8,7 +8,7 @@
 
 #import <CoreData/CoreData.h>
 #import "SVMediaProtocol.h"
-#import "KTDocument.h"
+#import "SVDocumentFileWrapper.h"
 
 
 extern NSString *kSVDidDeleteMediaRecordNotification;
