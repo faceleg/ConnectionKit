@@ -8,7 +8,7 @@
 
 #import "SVIntroAndCaptionGraphic.h"
 
-#import "SVAuxilaryPageletText.h"
+#import "SVAuxiliaryPageletText.h"
 #import "SVTitleBox.h"
 
 
@@ -23,7 +23,7 @@
 
 - (void)createDefaultIntroAndCaption;
 {
-    SVAuxilaryPageletText *text = [NSEntityDescription
+    SVAuxiliaryPageletText *text = [NSEntityDescription
                                    insertNewObjectForEntityForName:@"PageletIntroduction"
                                    inManagedObjectContext:[self managedObjectContext]];
     [self setIntroduction:text];
