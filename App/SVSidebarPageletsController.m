@@ -34,6 +34,7 @@
     [self setManagedObjectContext:[sidebar managedObjectContext]];
     [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
+    [self setAutomaticallyRearrangesObjects:YES];
     [self setSortDescriptors:[SVGraphic pageletSortDescriptors]];
     
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
