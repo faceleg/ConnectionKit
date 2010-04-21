@@ -91,7 +91,9 @@
 
 - (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeNormal; }
 
-- (BOOL)isEditable { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
+- (BOOL)isForEditing; { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
+
+- (BOOL)isEditable { return [self isForEditing]; }
 + (NSSet *)keyPathsForValuesAffectingEditable
 {
     return [NSSet setWithObject:@"generationPurpose"];
