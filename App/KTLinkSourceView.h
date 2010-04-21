@@ -24,9 +24,10 @@
 @protocol KTLinkSourceViewDelegate;
 
 
-@interface KTLinkSourceView : NSView 
+@interface KTLinkSourceView : NSView
 {
 	BOOL _collectionsOnly;	// controller should set this in awakeFromNib.
+	BOOL _enabled;
 	NSWindow *_targetWindow;	// NSWindow that we are allowed to drag into.
 
 	KTPage *_connectedPage;	// set when done connecting, use bindings or delegate method to find out
@@ -45,6 +46,7 @@
 	} _flags;
 }
 
+@property (assign) BOOL enabled;
 @property (assign) BOOL collectionsOnly;
 @property (copy) NSWindow *targetWindow;
 @property (copy) KTPage *connectedPage;

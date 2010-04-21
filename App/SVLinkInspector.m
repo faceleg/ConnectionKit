@@ -28,6 +28,23 @@
     [self refresh];
 }
 
+- (void)awakeFromNib
+{
+	[oLinkSourceView bind:NSEnabledBinding
+				  toObject:self
+			   withKeyPath:@"linkManager.editable"
+				   options:nil];
+	
+}
+
+- (void)dealloc
+{
+	[oLinkSourceView unbind:NSEnabledBinding];
+	[super dealloc];
+}
+
+
+
 #pragma mark Link
 
 - (void)refresh;

@@ -21,8 +21,13 @@ NSString *kKTLocalLinkPboardAllowedType = @"kKTLocalLinkPboardAllowedType";
 @synthesize targetWindow = _targetWindow;
 @synthesize connectedPage = _connectedPage;
 @synthesize delegate = _delegate;
+@synthesize enabled = _enabled;
 
-
+- (void) setEnabled:(BOOL)anEnabled;
+{
+	_enabled = anEnabled;
+	[self setNeedsDisplay:YES];
+}
 
 - (id)initWithFrame:(NSRect)frame {
     self = [super initWithFrame:frame];
@@ -82,7 +87,7 @@ static NSImage *sTargetSetImage = nil;
 		drawInRect:centeredRect
 		  fromRect:NSZeroRect
 		 operation:NSCompositeSourceOver
-		  fraction:_flags.isConnecting ? 0.5 : 1.0];		// Transparent while dragging
+		  fraction:_flags.isConnecting||(!_enabled) ? 0.5 : 1.0];		// Transparent while dragging
 	[NSGraphicsContext restoreGraphicsState];
 	
 	if (_flags.isConnecting)	// while connecting, draw a rectangle around it
