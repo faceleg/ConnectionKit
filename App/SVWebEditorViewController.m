@@ -79,6 +79,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     _selectableObjectsController = [[SVWebContentObjectsController alloc] init];
     [_selectableObjectsController setAvoidsEmptySelection:NO];
+    [_selectableObjectsController setPreservesSelection:NO];    // we'll take care of that
     [_selectableObjectsController setObjectClass:[NSObject class]];
     
     _textDOMControllers = [[NSMutableArray alloc] init];
@@ -250,14 +251,17 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Context holds the controllers. We need to send them over to the Web Editor.
+    // Doing so will populate _selectableObjectsController, so need to clear out its content & remember the selection first
+    
+    NSArray *selection = [_selectableObjectsController selectedObjects];
+    [_selectableObjectsController setContent:nil];
+    
     NSArray *controllers = [[self HTMLContext] webEditorItems];
     NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] init];
-    
-    NSMutableArray *selectableObjects = [[NSMutableArray alloc] initWithCapacity:[controllers count]];
-    
+        
     for (SVWebEditorItem *anItem in controllers)
     {
-        // Insert into the tree if a top-level item
+        // Insert into the tree if a top-level item.
         if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
         
         // Cheat and figure out if it's a sidebar pagelet controller
@@ -273,9 +277,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
         
-    [_selectableObjectsController setPage:[self page]];         // do NOT set the controller's MOC. Unless you set both MOC
-    [_selectableObjectsController setContent:selectableObjects];// and entity name, saving will raise an exception. (crazy I know!)
-    [selectableObjects release];
+    [_selectableObjectsController setPage:[self page]]; // do NOT set the controller's MOC. Unless you set both MOC
+                                                        // and entity name, saving will raise an exception. (crazy I know!)
+    [_selectableObjectsController setSelectedObjects:selection];    // restore selection
     
     
     
