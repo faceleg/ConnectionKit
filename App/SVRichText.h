@@ -24,6 +24,8 @@
 @property(nonatomic, copy, readonly) NSSet *attachments;
 - (NSArray *)orderedAttachments;
 
+- (BOOL)isEmpty;
+
 - (void)deleteCharactersInRange:(NSRange)aRange;
 
 

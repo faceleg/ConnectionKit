@@ -12,9 +12,15 @@
 
 @implementation SVAuxiliaryPageletTextDOMController
 
+- (BOOL)shouldDisplayPlaceholderString;
+{
+    SVAuxiliaryPageletText *text = [self representedObject];
+    return [text isEmpty];
+}
+
 - (void)didUpdate;
 {
-    if ([[[self textHTMLElement] innerText] length] <= 1)
+    if ([self shouldDisplayPlaceholderString])
     {
         [[self textHTMLElement] setInnerText:NSLocalizedString(@"Double-click to edit", "placeholder")];
     }

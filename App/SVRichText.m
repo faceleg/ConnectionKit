@@ -17,6 +17,7 @@
 #import "NSError+Karelia.h"
 #import "NSSet+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
+#import "NSString+Karelia.h"
 
 
 @interface SVRichText ()
@@ -76,6 +77,13 @@
                                                                ascending:YES]];
     
     return attachments;
+}
+
+- (BOOL)isEmpty;
+{
+    NSString *text = [[self string] stringByConvertingHTMLToPlainText];
+    BOOL result = ([text length] == 0 || [text isEqualToString:@"\n"]);
+    return result;
 }
 
 - (void)deleteCharactersInRange:(NSRange)range;
