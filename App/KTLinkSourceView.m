@@ -83,6 +83,7 @@ static NSImage *sTargetSetImage = nil;
 		[aShadow setShadowColor:[NSColor colorWithCalibratedWhite:0.0 alpha:0.75]];
 		[aShadow set];
 	}
+	
 	[(_flags.isConnected ? sTargetSetImage : sTargetImage)
 		drawInRect:centeredRect
 		  fromRect:NSZeroRect
@@ -103,6 +104,8 @@ static NSImage *sTargetSetImage = nil;
 
 - (void)mouseDown:(NSEvent *)theEvent
 {
+	if (!_enabled) return;
+	
 	_flags.isConnecting = YES;
 	[self setNeedsDisplay:YES];
 	NSCursor *targetCursor = [[NSCursor alloc] initWithImage:sTargetImage
