@@ -87,28 +87,23 @@
     // Use the right sort of text area
     id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
     
-    if ([value isKindOfClass:[SVTitleBox class]])
+    if ([value isKindOfClass:[SVContentObject class]])
     {
         // Copy basic properties from text block
-        result = [[SVTextFieldDOMController alloc] init];
+        result = [[[value DOMControllerClass] alloc] init];
         [result setRepresentedObject:value];
         [result setHTMLContext:self];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
         
-        // Bind to model
-        [result bind:NSValueBinding
-            toObject:value
-         withKeyPath:@"textHTMLString"
-             options:nil];
-    }
-    else if ([value isKindOfClass:[SVRichText class]])
-    {
-        result = [[SVRichTextDOMController alloc] init];
-        [result setRepresentedObject:value];
-        [result setHTMLContext:self];
-        [result setRichText:YES];
-        [result setFieldEditor:NO];
+        if ([value isKindOfClass:[SVTitleBox class]])
+        {
+            // Bind to model
+            [result bind:NSValueBinding
+                toObject:value
+             withKeyPath:@"textHTMLString"
+                 options:nil];
+        }
     }
     else
     {
