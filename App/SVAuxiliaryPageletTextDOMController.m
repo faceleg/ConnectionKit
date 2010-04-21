@@ -18,7 +18,7 @@
     return [text isEmpty];
 }
 
-- (void)didUpdate;
+- (void)updateDOMWithPlaceholderStringIfNeeded;
 {
     if ([self shouldDisplayPlaceholderString])
     {
@@ -29,7 +29,13 @@
 - (void)setTextHTMLElement:(DOMHTMLElement *)element;
 {
     [super setTextHTMLElement:element];
-    [self didUpdate];
+    [self updateDOMWithPlaceholderStringIfNeeded];
+}
+
+- (void)webEditorTextDidEndEditing:(NSNotification *)notification;
+{
+    [super webEditorTextDidEndEditing:notification];
+    [self updateDOMWithPlaceholderStringIfNeeded];
 }
 
 @end
