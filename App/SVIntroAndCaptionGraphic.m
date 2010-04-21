@@ -8,7 +8,8 @@
 
 #import "SVIntroAndCaptionGraphic.h"
 
-#import "SVRichText.h"
+#import "SVAuxilaryPageletText.h"
+#import "SVTitleBox.h"
 
 
 @implementation SVIntroAndCaptionGraphic 
@@ -22,8 +23,9 @@
 
 - (void)createDefaultIntroAndCaption;
 {
-    SVRichText *text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletIntroduction"
-                                                 inManagedObjectContext:[self managedObjectContext]];
+    SVAuxilaryPageletText *text = [NSEntityDescription
+                                   insertNewObjectForEntityForName:@"PageletIntroduction"
+                                   inManagedObjectContext:[self managedObjectContext]];
     [self setIntroduction:text];
     
     text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletCaption"
@@ -33,5 +35,17 @@
 
 @dynamic caption;
 @dynamic introduction;
+
+#pragma mark SVPlugInContainer
+
+@dynamic title;
+@dynamic showsTitle;
+@dynamic bordered;
+
+- (BOOL)showsIntroduction { return ![[[self introduction] hidden] boolValue]; }
+- (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:[NSNumber numberWithBool:!show]]; }
+
+- (BOOL)showsCaption { return ![[[self caption] hidden] boolValue]; }
+- (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
 
 @end

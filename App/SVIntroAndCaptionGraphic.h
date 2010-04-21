@@ -9,15 +9,15 @@
 #import "SVGraphic.h"
 
 
-@class SVRichText;
+@class SVAuxilaryPageletText;
 
 
-@interface SVIntroAndCaptionGraphic : SVGraphic  
+@interface SVIntroAndCaptionGraphic : SVGraphic <SVPageletPlugInContainer>
 
 - (void)createDefaultIntroAndCaption;
 
-@property (nonatomic, retain) SVRichText *caption;
-@property (nonatomic, retain) SVRichText *introduction;
+@property (nonatomic, retain) SVAuxilaryPageletText *caption;
+@property (nonatomic, retain) SVAuxilaryPageletText *introduction;
 
 @end
 

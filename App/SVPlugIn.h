@@ -90,6 +90,9 @@
 @property(nonatomic, copy) NSString *title;
 @property(nonatomic) BOOL showsTitle;
 
+@property(nonatomic) BOOL showsIntroduction;
+@property(nonatomic) BOOL showsCaption;
+
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
 @end

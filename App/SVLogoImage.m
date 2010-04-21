@@ -25,10 +25,10 @@
 
 - (SVTitleBox *)titleBox { return nil; }
 - (void)setTitle:(NSString *)title; { }
-- (SVRichText *)introduction { return nil; }
-- (void)setIntroduction:(SVRichText *)caption { }
-- (SVRichText *)caption { return nil; }
-- (void)setCaption:(SVRichText *)caption { }
+- (SVAuxilaryPageletText *)introduction { return nil; }
+- (void)setIntroduction:(SVAuxilaryPageletText *)caption { }
+- (SVAuxilaryPageletText *)caption { return nil; }
+- (void)setCaption:(SVAuxilaryPageletText *)caption { }
 
 - (SVTextAttachment *)textAttachment { return nil; }
 

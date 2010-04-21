@@ -58,7 +58,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @protocol SVPage;
 
 
-@interface SVGraphic : SVContentObject <SVGraphic, SVPageletPlugInContainer>
+@interface SVGraphic : SVContentObject <SVGraphic>
 
 #pragma mark Initialization
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
@@ -74,10 +74,12 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @property(nonatomic, retain) SVTitleBox *titleBox;
 - (void)setTitle:(NSString *)title;   // creates Title object if needed
 + (NSString *)placeholderTitleText;
+@property(nonatomic) BOOL showsTitle;
 
 
 #pragma mark Layout/Styling
 @property(nonatomic, copy) NSNumber *showBackground;
+@property(nonatomic, getter=isBordered) BOOL bordered;
 @property(nonatomic, copy) NSNumber *showBorder;
 
 
