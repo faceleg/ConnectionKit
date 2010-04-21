@@ -64,6 +64,9 @@
     {
         [self setWidth:maxWidth];
     }
+    
+    // Show caption
+    [self setShowsCaption:YES];
 }
 
 #pragma mark Metrics
