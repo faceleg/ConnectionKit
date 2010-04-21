@@ -24,6 +24,7 @@
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
+#import "SVSidebarPageletsController.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KTDocument.h"
@@ -1007,8 +1008,8 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
                 [sender forgetDraggedItems];
                 
                 SVGraphic *pagelet = [aPageletItem representedObject];
-                [[_selectableObjectsController sidebarPageletsController] insertObject:pagelet
-                                                                 atArrangedObjectIndex:dropIndex];
+                [[_selectableObjectsController sidebarPageletsController] moveObject:pagelet
+                                                                             toIndex:dropIndex];
             }
         }
     }

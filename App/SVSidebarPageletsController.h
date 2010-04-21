@@ -26,6 +26,10 @@
 @property(nonatomic, retain, readonly) SVSidebar *sidebar;
 
 
+#pragma mark Adding/Inserting/Removing/Objects
+- (void)moveObject:(id)object toIndex:(NSUInteger)index;
+
+
 #pragma mark Recursion
 // When adding or removing a pagelet, generally want to recursively add it to all applicable descendants too.
 // -addObject: etc. do this as part of their implementation, but if you're not in a position to call -addObject: (i.e. a controller that lists all pagelets, not just those on a specific page) you can use -addPagelet:toSidebarOfPage: directly instead.

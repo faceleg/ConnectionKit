@@ -80,21 +80,8 @@
 
 - (void)insertObject:(id)object atArrangedObjectIndex:(NSUInteger)index;
 {
-    SVGraphic *pagelet = object;
-    
-    
     // Position right
-    if (index >= [[self arrangedObjects] count])
-    {
-        SVGraphic *lastPagelet = [[self arrangedObjects] lastObject];
-        [pagelet moveAfterSidebarPagelet:lastPagelet];
-    }
-    else
-    {
-        SVGraphic *refPagelet = [[self arrangedObjects] objectAtIndex:index];
-        [pagelet moveBeforeSidebarPagelet:refPagelet];
-    }
-    
+    [self moveObject:object toIndex:index];
     
     // Do the insert
     [super insertObject:object atArrangedObjectIndex:index];
@@ -175,6 +162,23 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
         
         // Remove from the receiver
         [[page sidebar] removePageletsObject:pagelet];
+    }
+}
+
+- (void)moveObject:(id)object toIndex:(NSUInteger)index;
+{
+    SVGraphic *pagelet = object;
+    
+    
+    if (index >= [[self arrangedObjects] count])
+    {
+        SVGraphic *lastPagelet = [[self arrangedObjects] lastObject];
+        [pagelet moveAfterSidebarPagelet:lastPagelet];
+    }
+    else
+    {
+        SVGraphic *refPagelet = [[self arrangedObjects] objectAtIndex:index];
+        [pagelet moveBeforeSidebarPagelet:refPagelet];
     }
 }
 
