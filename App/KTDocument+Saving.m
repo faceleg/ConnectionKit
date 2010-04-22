@@ -549,22 +549,18 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     //  Look through out existing media to see if there is one with the same data
     
-    id <SVDocumentFileWrapper> result = nil;
+    SVMediaRecord *result = nil;
     
     
     for (NSString *aKey in _filenameReservations)
     {
         result = [_filenameReservations objectForKey:aKey];
         
-        NSURL *URL = [result fileURL];
-        if (URL)
-        {
-            if ([media fileContentsEqualContentsOfURL:URL]) return result;
-        }
+        if ([media fileContentsEqualMediaRecord:result]) break;
     }
     
     
-    return nil;
+    return result;
 }
 
 - (BOOL)writeMediaRecords:(NSArray *)media
