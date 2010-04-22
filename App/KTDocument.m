@@ -530,6 +530,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)didReadContentsForURL:(NSURL *)URL;
 {
+    // We really don't want the doc being marked as edited as soon as it's created, so suppress registration
+    NSUndoManager *undoManager = [self undoManager];
+    [undoManager disableUndoRegistration];
+    
+    
     // Insert media records for any unknown files in the package. #62243
     NSArray *directoryContents = [[NSFileManager defaultManager]
                                   contentsOfDirectoryAtPath:[URL path] error:NULL];
@@ -550,6 +555,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             [self addDocumentFileWrapper:record];
         }
     }
+    
+    
+    // Finish up
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    [undoManager enableUndoRegistration];
 }
 
 - (void)setFileURL:(NSURL *)absoluteURL
