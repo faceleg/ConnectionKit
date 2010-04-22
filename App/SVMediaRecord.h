@@ -88,9 +88,6 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Updating File Wrappers
 
-// Used to be -matchesContentsOfURL: but actually behaves rather differently to NSFileWrapper method of same name
-- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)url;
-
 // For now: options is ignored, always returns YES
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
 
@@ -105,6 +102,13 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 - (WebResource *)webResource;
 - (BOOL)areContentsCached;
 - (NSURLResponse *)fileURLResponse; // for in-memory media
+
+
+#pragma mark Comparing Files
+
+// Used to be -matchesContentsOfURL: but actually behaves rather differently to NSFileWrapper method of same name
+- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)url;
+- (BOOL)fileContentsEqualData:(NSData *)data;
 
 
 #pragma mark Location Support

@@ -208,22 +208,6 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Updating File Wrappers
 
-- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)otherURL;
-{
-    BOOL result = NO;
-    
-    NSURL *URL = [self fileURL];
-    if (URL)
-    {
-        result = [[NSFileManager defaultManager] contentsEqualAtPath:[otherURL path]
-                                                             andPath:[URL path]];
-    }
-    
-    // TODO: Fallback to comparing data
-    
-    return result;
-}
-
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;
 {
     URL = [URL copy];
@@ -355,6 +339,41 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     [super didTurnIntoFault];
     
     [_data release]; _data = nil;
+}
+
+#pragma mark Comparing Files
+
+- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)otherURL;
+{
+    BOOL result = NO;
+    
+    NSURL *URL = [self fileURL];
+    if (URL)
+    {
+        result = [[NSFileManager defaultManager] contentsEqualAtPath:[otherURL path]
+                                                             andPath:[URL path]];
+    }
+    
+    // TODO: Fallback to comparing data
+    
+    return result;
+}
+
+- (BOOL)fileContentsEqualData:(NSData *)data;
+{
+    BOOL result = NO;
+    
+    if ([self areContentsCached])
+    {
+        result = [[self fileContents] isEqualToData:data];
+    }
+    else
+    {
+        // This could be made more efficient by looking at the file size before reading in from disk
+        result = [[self fileContents] isEqualToData:data];
+    }
+    
+    return result;
 }
 
 #pragma mark Thumbnail
