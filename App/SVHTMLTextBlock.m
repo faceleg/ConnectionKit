@@ -296,20 +296,23 @@
 
 - (void)writeInnerHTML;
 {
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    
+    
 	NSString *result = HTML_VALUE;
     if ([result isKindOfClass:[SVRichText class]])
     {
-        [(SVRichText *)result writeHTML];
+        [(SVRichText *)result writeHTML:context];
     }
     else if ([result isKindOfClass:[SVTitleBox class]])
     {
         NSString *html = [(SVTitleBox *)result textHTMLString];
-        if (html) [[SVHTMLContext currentContext] writeHTMLString:html];
+        if (html) [context writeHTMLString:html];
     }
     else
     {
         result = [self processHTML:result];
-        if (result) [[SVHTMLContext currentContext] writeHTMLString:result];
+        if (result) [context writeHTMLString:result];
     }
 }
 
