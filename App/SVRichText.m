@@ -144,7 +144,7 @@
         [context writeString:aString];
         
         // Write the attachment
-        [[anAttachment graphic] writeHTML];
+        [[anAttachment graphic] writeHTML:context];
         lastAttachment = anAttachment;
         
         NSRange lastAttachmentRange = [lastAttachment range];
