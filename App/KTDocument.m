@@ -544,15 +544,20 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         if ([self isFilenameAvailable:aFilename])
         {
             // Create media record
+            NSManagedObjectContext *context = [self managedObjectContext];
+            
             SVMediaRecord *record = [SVMediaRecord
                                      mediaWithURL:[URL URLByAppendingPathComponent:aFilename isDirectory:NO]
                                      entityName:@"MediaRecord"
-                                     insertIntoManagedObjectContext:[self managedObjectContext]
+                                     insertIntoManagedObjectContext:context
                                      error:NULL];
             [record setFilename:aFilename]; // mark as already copied into doc
             
             // Record
             [self addDocumentFileWrapper:record];
+            
+            // Delete immediately so as to dispose of at next save
+            [context deleteObject:record];
         }
     }
     
