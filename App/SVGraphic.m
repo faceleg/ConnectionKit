@@ -140,13 +140,6 @@
     return result;
 }
 
-+ (NSArray *)arrayBySortingPagelets:(NSSet *)pagelets;
-{
-    NSArray *sortDescriptors = [self pageletSortDescriptors];
-    NSArray *result = [[pagelets allObjects] sortedArrayUsingDescriptors:sortDescriptors];
-    return result;
-}
-
 + (NSArray *)pageletSortDescriptors;
 {
     static NSArray *result;

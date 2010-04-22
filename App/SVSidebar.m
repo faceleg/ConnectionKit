@@ -8,9 +8,10 @@
 
 #import "SVSidebar.h"
 
-#import "KTPage.h"
-#import "SVHTMLTemplateParser.h"
 #import "SVGraphic.h"
+#import "SVHTMLTemplateParser.h"
+#import "KTPage.h"
+#import "SVSidebarPageletsController.h"
 
 #import "NSSortDescriptor+Karelia.h"
 
@@ -32,18 +33,16 @@
 
 - (void)writePageletsHTML;
 {
-    NSArray *pagelets = [SVGraphic arrayBySortingPagelets:[self pagelets]];
+    // Use the best controller available to give us an ordered list of pagelets
+    SVSidebarPageletsController *pageletsController =
+    [[SVSidebarPageletsController alloc] initWithSidebar:self];
     
-    // Kinda hacky, have to record a series of dependencies to handle sorting. #59554
     SVHTMLContext *context = [SVHTMLContext currentContext];
-    [context addDependencyOnObject:self keyPath:@"pagelets"];
-    for (SVGraphic *aPagelet in pagelets)
-    {
-        [context addDependencyOnObject:aPagelet keyPath:@"sortKey"];
-    }
+    [context addDependencyOnObject:pageletsController keyPath:@"arrangedObjects"];
     
     // Write HTML
-    [SVContentObject writeContentObjects:pagelets inContext:context];
+    [SVContentObject writeContentObjects:[pageletsController arrangedObjects] inContext:context];
+    [pageletsController release];
 }
 
 @end
