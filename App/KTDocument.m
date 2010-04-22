@@ -625,18 +625,15 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     OBPRECONDITION(filename);
     
     
-    // Consult both cache and file system to see if the name is taken
+    // Consult both cache to see if the name is taken
     filename = [filename lowercaseString];
     BOOL result = ([_filenameReservations objectForKey:filename] == nil);
-    if (result)
-    {
-        result = ![[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
-    }
+    
     
     // The document also reserves some special cases itself
     if (result)
     {
-        if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
+        if ([[filename stringByDeletingLastPathComponent] isEqualToString:@"index"] ||
             [filename isEqualToString:@"quicklook"] ||
             [filename isEqualToString:@"contents"])
         {
