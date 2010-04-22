@@ -107,6 +107,9 @@ NSString *kKTDocumentDidChangeNotification = @"KTDocumentDidChange";
 NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 
+#define SVPersistentStoreFilename @"index"
+
+
 @implementation NSDocument (DatastoreAdditions)
 
 // These are made category methods so Shared code can work generically. These determine document types and URLs.
@@ -122,7 +125,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 	
 	if (!documentUTI || [documentUTI isEqualToString:kKTDocumentUTI])
 	{
-		result = [inURL URLByAppendingPathComponent:@"datastore" isDirectory:NO];
+		result = [inURL URLByAppendingPathComponent:SVPersistentStoreFilename isDirectory:NO];
 	}
 	else if ([documentUTI isEqualToString:kKTDocumentUTI_ORIGINAL])
 	{
@@ -140,7 +143,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 + (NSURL *)documentURLForDatastoreURL:(NSURL *)datastoreURL;
 {
     OBPRECONDITION(datastoreURL);
-    OBPRECONDITION([[datastoreURL lastPathComponent] isEqualToString:@"datastore"]);
+    OBPRECONDITION([[datastoreURL lastPathComponent] isEqualToString:SVPersistentStoreFilename]);
     
     NSURL *result = [datastoreURL URLByDeletingLastPathComponent];
     return result;
@@ -634,7 +637,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     if (!result)
     {
         if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
-            [filename hasPrefix:@"datastore."] || [filename isEqualToString:@"datastore"] ||
             [filename isEqualToString:@"quicklook"] ||
             [filename isEqualToString:@"contents"])
         {
