@@ -1099,6 +1099,12 @@
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECCED7C0E646B6800BE9016 /* Symbolication.framework */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
+		CEF9A72D117FC30700B0BBCB /* color-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A727117FC30700B0BBCB /* color-design.pdf */; };
+		CEF9A72E117FC30700B0BBCB /* dark-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A728117FC30700B0BBCB /* dark-design.pdf */; };
+		CEF9A72F117FC30700B0BBCB /* flexible-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A729117FC30700B0BBCB /* flexible-design.pdf */; };
+		CEF9A730117FC30700B0BBCB /* light-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72A117FC30700B0BBCB /* light-design.pdf */; };
+		CEF9A731117FC30700B0BBCB /* standard-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72B117FC30700B0BBCB /* standard-design.pdf */; };
+		CEF9A732117FC30700B0BBCB /* wide-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72C117FC30700B0BBCB /* wide-design.pdf */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
 		CEF9D1460D86304600BD9895 /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CEF9D1470D86304900BD9895 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */; };
@@ -2782,6 +2788,12 @@
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEF9A727117FC30700B0BBCB /* color-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "color-design.pdf"; path = "DesignPicker/color-design.pdf"; sourceTree = "<group>"; };
+		CEF9A728117FC30700B0BBCB /* dark-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "dark-design.pdf"; path = "DesignPicker/dark-design.pdf"; sourceTree = "<group>"; };
+		CEF9A729117FC30700B0BBCB /* flexible-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "flexible-design.pdf"; path = "DesignPicker/flexible-design.pdf"; sourceTree = "<group>"; };
+		CEF9A72A117FC30700B0BBCB /* light-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "light-design.pdf"; path = "DesignPicker/light-design.pdf"; sourceTree = "<group>"; };
+		CEF9A72B117FC30700B0BBCB /* standard-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "standard-design.pdf"; path = "DesignPicker/standard-design.pdf"; sourceTree = "<group>"; };
+		CEF9A72C117FC30700B0BBCB /* wide-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "wide-design.pdf"; path = "DesignPicker/wide-design.pdf"; sourceTree = "<group>"; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF9D0B00D862B5100BD9895 /* ImageWebKitPlugin-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "ImageWebKitPlugin-Info.plist"; sourceTree = "<group>"; };
 		CEF9D0C10D862C4A00BD9895 /* KTImageWebKitViewFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageWebKitViewFactory.h; sourceTree = "<group>"; };
@@ -3799,6 +3811,12 @@
 		3C0B1D53104798F5002EE098 /* Design Chooser */ = {
 			isa = PBXGroup;
 			children = (
+				CEF9A727117FC30700B0BBCB /* color-design.pdf */,
+				CEF9A728117FC30700B0BBCB /* dark-design.pdf */,
+				CEF9A729117FC30700B0BBCB /* flexible-design.pdf */,
+				CEF9A72A117FC30700B0BBCB /* light-design.pdf */,
+				CEF9A72B117FC30700B0BBCB /* standard-design.pdf */,
+				CEF9A72C117FC30700B0BBCB /* wide-design.pdf */,
 				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
 				3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */,
 				3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */,
@@ -6228,6 +6246,12 @@
 				27B0BFE21168C1530084BFE0 /* photopage.icns in Resources */,
 				274B8D8A116A7D0400AAADB6 /* Video.icns in Resources */,
 				273B43741178676900A275E6 /* DocumentSavePanelAccessoryView.xib in Resources */,
+				CEF9A72D117FC30700B0BBCB /* color-design.pdf in Resources */,
+				CEF9A72E117FC30700B0BBCB /* dark-design.pdf in Resources */,
+				CEF9A72F117FC30700B0BBCB /* flexible-design.pdf in Resources */,
+				CEF9A730117FC30700B0BBCB /* light-design.pdf in Resources */,
+				CEF9A731117FC30700B0BBCB /* standard-design.pdf in Resources */,
+				CEF9A732117FC30700B0BBCB /* wide-design.pdf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

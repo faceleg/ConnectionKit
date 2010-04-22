@@ -149,6 +149,10 @@ const int kDesignThumbHeight = 65;
 {
 	return [[self bundle] objectForInfoDictionaryKey:@"color"];
 }
+- (NSString *)width;	// standard, wide, or flexible
+{
+	return [[self bundle] objectForInfoDictionaryKey:@"width"];
+}
 
 
 - (NSString *)sidebarBorderable
@@ -256,7 +260,7 @@ const int kDesignThumbHeight = 65;
 
 - (NSImage *)thumbnail
 {
-	if (nil == myThumbnailCG)
+	if (nil == myThumbnail)
 	{
 		NSString *path = [[self bundle] pathForImageResource:@"thumbnail"];
 		if (nil != path)
@@ -267,12 +271,12 @@ const int kDesignThumbHeight = 65;
 			// make sure thumbnail is not too big!
 		}
 	}
-	return myThumbnailCG;
+	return myThumbnail;
 }
 
 - (CGImageRef)thumbnailCG
 {
-	if (nil == myThumbnail)
+	if (nil == myThumbnailCG)
 	{
 		NSString *path = [[self bundle] pathForImageResource:@"thumbnail"];
 		if (nil != path)

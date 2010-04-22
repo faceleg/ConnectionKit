@@ -23,6 +23,7 @@
 
 - (NSString *) genre;
 - (NSColor *) color;
+- (NSString *) width;
 
 - (void) scrub:(float)howFar;
 

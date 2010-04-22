@@ -207,6 +207,11 @@
 {
 	return [[[self designs] firstObjectKS] color];
 }
+- (NSString *) width;
+{
+	KTDesign *design = [[self designs] firstObjectKS];
+	return [design width];
+}
 
 
 

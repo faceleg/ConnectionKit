@@ -19,7 +19,8 @@
 	NSArray *_allDesigns;
 	NSString *_genre;
 	NSString *_color;
-	
+	NSString *_width;
+
 	SEL _selectorWhenChosen;
 	id	_targetWhenChosen;		// weak to avoid retain cycle
 }
@@ -33,6 +34,7 @@
 @property(retain) SVDesignChooserViewController *viewController;
 @property (copy) NSString *genre;
 @property (copy) NSString *color;
+@property (copy) NSString *width;
 @property (readonly) NSString *noMatchString;
 
 - (IBAction)cancelSheet:(id)sender;

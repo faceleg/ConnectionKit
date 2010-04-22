@@ -21,6 +21,10 @@
 
 #import "MGScopeBar.h"
 
+@interface SVDesignChooserWindowController ()
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
+@end
+
 
 @implementation SVDesignChooserWindowController
 
@@ -42,28 +46,40 @@
 @synthesize allDesigns = _allDesigns;
 @synthesize genre = _genre;
 @synthesize color = _color;
+@synthesize width = _width;
 
-enum { kGenreGroup, kColorGroup };
+enum { kGenreGroup, kColorGroup, kWidthGroup };
 
 + (NSSet *)keyPathsForValuesAffectingNoMatchString
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", nil];
 }
 
 - (NSString *)noMatchString;
 {
-	NSString *genreString = [self scopeBar:oScopeBar titleOfItem:self.genre inGroup:kGenreGroup];
-	NSString *colorString = [self scopeBar:oScopeBar titleOfItem:self.color inGroup:kColorGroup];
-	NSString *result = nil;
-	if (genreString && colorString)
+	NSString *result = @"";
+	if (self.genre || self.color || self.width)
 	{
-		result = [NSString stringWithFormat:NSLocalizedString(@"No matches for “%@” and “%@”", @"Warning that two filter strings yielded no matching designs"), genreString, colorString];
-	}
-	else	// single item matched
-	{
-		NSString *value = genreString ? genreString : colorString;
-		result = [NSString stringWithFormat:NSLocalizedString(@"No matches for “%@”", @"Warning that one filter string yielded no matching designs"), value];
+		NSMutableArray *matches = [NSMutableArray array];
+		if (self.genre) [matches addObject:[self scopeBar:oScopeBar titleOfItem:self.genre inGroup:kGenreGroup]];
+		if (self.color) [matches addObject:[self scopeBar:oScopeBar AXDescriptionForItem:self.color inGroup:kColorGroup]];		// get the string from the tooltip
+		if (self.width) [matches addObject:[self scopeBar:oScopeBar AXDescriptionForItem:self.width inGroup:kWidthGroup]];		// get the string from the tooltip
+
+		NSMutableString *matchesString = [NSMutableString string];
+		for (int i = 0 ; i < [matches count] ; i++)
+		{
+			NSString *match = [matches objectAtIndex:i];
+			if (i == [matches count] -1)
+			{
+				[matchesString appendFormat:NSLocalizedString(@"“%@”", @"a search string in quotes, either by itself or last in a list of strings joined by 'and'"), match];
+			}
+			else
+			{
+				[matchesString appendFormat:NSLocalizedString(@"“%@” and ", @"a search string in quotes followed by 'and' (with a space afterwards)"), match];
+			}
+		}
+		result = [NSString stringWithFormat:NSLocalizedString(@"No matches for %@", @"Warning that string/strings yielded no matching designs"), matchesString];
 	}
 	return result;
 }
@@ -138,7 +154,7 @@ enum { kGenreGroup, kColorGroup };
 
 - (NSInteger)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
 {
-    return 2;
+    return 3;
 }
 
 - (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber
@@ -154,6 +170,12 @@ enum { kGenreGroup, kColorGroup };
 			break;
 		case kColorGroup:
 			result = [NSArray arrayWithObjects:@"Light", @"Dark", @"Color", nil ];
+#ifdef DEBUG
+			result = [result arrayByAddingObject:@"NULL"];
+#endif
+			break;
+		case kWidthGroup:
+			result = [NSArray arrayWithObjects:@"Standard", @"Wide", @"Flexible", nil ];
 #ifdef DEBUG
 			result = [result arrayByAddingObject:@"NULL"];
 #endif
@@ -186,6 +208,12 @@ enum { kGenreGroup, kColorGroup };
            titleOfItem:(NSString *)identifier 
                inGroup:(NSInteger)groupNumber
 {
+	if ([identifier hasPrefix:@"NULL"])
+	{
+		return [NSString stringWithUnichar:0x2205];
+	}
+	if (kWidthGroup == groupNumber || kColorGroup == groupNumber) return @"";
+
 	// We are ignoring the scope bar and group number parameter; it's not used.
 	
 	static NSDictionary *sDesignScopeBarTitles = nil;
@@ -195,28 +223,60 @@ enum { kGenreGroup, kColorGroup };
 NSLocalizedString(@"Business", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Business",
 NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Artistic",
 NSLocalizedString(@"Family", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Family",
-NSLocalizedString(@"Light", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Light",
-NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Dark",
-								 
-								 
-								 NSLocalizedString(@"Colorful", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Color",
-
-								 
 								 
 								 nil];
 	}
 	NSString *result = nil;
-	if (identifier)		// look up only if it's not nil.
+	if (nil != identifier)		// look up only if it's not nil.
 	{
 		result = [sDesignScopeBarTitles objectForKey:identifier];
 		if (!result)
 		{
-			result = identifier;	// fallback, but it won't be localized
+			result = [identifier uppercaseString];	// uppercase to help identify that it's not really localized
 		}
 	}
 	return result;
 }
 
+- (NSImage *)scopeBar:(MGScopeBar *)theScopeBar imageForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
+{
+	static NSDictionary *sDesignScopeBarImages = nil;
+	if (!sDesignScopeBarImages)
+	{
+		sDesignScopeBarImages = [[NSDictionary alloc] initWithObjectsAndKeys:
+								 [NSImage imageNamed:@"standard-design"], @"Standard",
+								 [NSImage imageNamed:@"wide-design"], @"Wide",
+								 [NSImage imageNamed:@"flexible-design"], @"Flexible",
+								 [NSImage imageNamed:@"dark-design"], @"Dark",
+								 [NSImage imageNamed:@"light-design"], @"Light",
+								 [NSImage imageNamed:@"color-design"], @"Color",
+								 nil];
+	}
+	return [sDesignScopeBarImages objectForKey:identifier];
+}
+
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber; // default is no toolTip.
+{
+	if ([identifier hasPrefix:@"NULL"])
+	{
+		return [NSString stringWithUnichar:0x2205];
+	}
+	static NSDictionary *sDesignScopeBarTooltips = nil;
+	if (!sDesignScopeBarTooltips)
+	{
+		sDesignScopeBarTooltips = [[NSDictionary alloc] initWithObjectsAndKeys:
+								   NSLocalizedString(@"Standard width", @"type of design"), @"Standard",
+								   NSLocalizedString(@"Wide width", @"type of design"), @"Wide",
+								   NSLocalizedString(@"Flexible width", @"type of design"), @"Flexible",
+								   NSLocalizedString(@"Light", @"type of design"), @"Light",
+								   NSLocalizedString(@"Dark", @"type of design"), @"Dark",
+								   NSLocalizedString(@"Colorful", @"type of design"), @"Color",
+								   nil];
+	}
+	NSString *result = [sDesignScopeBarTooltips objectForKey:identifier];
+	if (!result) result = [identifier uppercaseString];	// uppercase to help identify that it's not really localized
+	return result;
+}
 // Respond to clicks by acting sort of like a radio button, but allowing for none to be clicked.
 // thus we de-select any old item in the group if we are setting a new one.
 // Then, based on which ones are selected, build up our filter predicate.
@@ -245,9 +305,19 @@ NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a d
 			self.color = selected ? identifier : nil;
 			break;
 		}
+		case kWidthGroup:
+		{
+			if (selected && self.width)
+			{
+				// turn off previous selection in this group
+				[theScopeBar setSelected:NO forItem:self.width inGroup:kWidthGroup];
+			}
+			self.width = selected ? identifier : nil;
+			break;
+		}
 	}
 
-	if (self.genre || self.color)
+	if (self.genre || self.color || self.width)
 	{
 		NSMutableArray *preds = [NSMutableArray array];
 		if (self.color)
@@ -272,8 +342,17 @@ NSLocalizedString(@"Dark", @"category for kind of design, goes below 'Choose a d
 			{
 				[preds addObject:[NSPredicate predicateWithFormat:@"genre == NULL"]];
 			}
-
-		
+		}
+		if (self.width)
+		{
+			if (![@"NULL" isEqualToString:self.width])
+			{
+				[preds addObject:[NSPredicate predicateWithFormat:@"width == %@", [self.width lowercaseString]]];
+			}
+			else
+			{
+				[preds addObject:[NSPredicate predicateWithFormat:@"width == NULL"]];
+			}
 		}
 		
 		oViewController.designs = [self.allDesigns filteredArrayUsingPredicate:
