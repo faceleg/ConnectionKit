@@ -169,6 +169,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (KTPage *)makeRootPage;
 
+- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
+
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end
@@ -331,12 +333,24 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return self;
 }
 
+- (id)initWithContentsOfURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
+{
+    if (self = [super initWithContentsOfURL:absoluteURL ofType:typeName error:outError])
+    {
+        [self didReadContentsForURL:absoluteURL];
+    }
+    
+    return self;
+}
+
 - (id)initForURL:(NSURL *)absoluteDocumentURL withContentsOfURL:(NSURL *)absoluteDocumentContentsURL ofType:(NSString *)typeName error:(NSError **)outError
 {
     if (self = [super initForURL:absoluteDocumentURL withContentsOfURL:absoluteDocumentContentsURL ofType:typeName error:outError])
     {
         // Correct persistent store URL now that it's finished reading
         [self setURLForPersistentStoreUsingFileURL:absoluteDocumentURL];
+        
+        [self didReadContentsForURL:absoluteDocumentURL];
     }
     
     return self;
@@ -507,11 +521,35 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
             [aMediaRecord setNextObject:fileWrapper];
         }
         
-        [_filenameReservations setObject:aMediaRecord forKey:filename];
+        [self setDocumentFileWrapper:aMediaRecord forKey:filename];
     }
     
     
     return result;
+}
+
+- (void)didReadContentsForURL:(NSURL *)URL;
+{
+    // Insert media records for any unknown files in the package. #62243
+    NSArray *directoryContents = [[NSFileManager defaultManager]
+                                  contentsOfDirectoryAtPath:[URL path] error:NULL];
+    
+    for (NSString *aFilename in directoryContents)
+    {
+        if ([self isFilenameAvailable:aFilename])
+        {
+            // Create media record
+            SVMediaRecord *record = [SVMediaRecord
+                                     mediaWithURL:[URL URLByAppendingPathComponent:aFilename isDirectory:NO]
+                                     entityName:@"MediaRecord"
+                                     insertIntoManagedObjectContext:[self managedObjectContext]
+                                     error:NULL];
+            [record setFilename:aFilename]; // mark as already copied into doc
+            
+            // Record
+            [self addDocumentFileWrapper:record];
+        }
+    }
 }
 
 - (void)setFileURL:(NSURL *)absoluteURL
@@ -615,9 +653,14 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     // Reserve it
-    [_filenameReservations setObject:wrapper forKey:[result lowercaseString]];
+    [self setDocumentFileWrapper:wrapper forKey:[result lowercaseString]];
     
     return result;
+}
+
+- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
+{
+    [_filenameReservations setObject:wrapper forKey:key];
 }
 
 - (BOOL)isFilenameAvailable:(NSString *)filename;

@@ -77,7 +77,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 @property (retain) NSURL *lastExportDirectory;
 
 
-// Managing the Persistence Objects
+#pragma mark Managing the Persistence Objects
 + (NSManagedObjectModel *)managedObjectModel;
 - (NSManagedObjectContext *)managedObjectContext;
 
@@ -90,6 +90,10 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (NSString *)persistentStoreTypeForFileType:(NSString *)fileType;
 
 @property(nonatomic, retain) NSPersistentStore *persistentStore;
+
+
+#pragma mark Reading
+- (void)didReadContentsForURL:(NSURL *)URL;
 
 
 #pragma mark Media
