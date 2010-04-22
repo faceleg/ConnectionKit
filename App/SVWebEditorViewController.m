@@ -198,6 +198,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [context setCurrentPage:[self page]];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"]];
+    [context setSidebarPageletsController:[_selectableObjectsController sidebarPageletsController]];
     
 	[[self page] writeHTML:context];
     

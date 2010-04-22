@@ -208,6 +208,11 @@
     return result;
 }
 
+#pragma mark Sidebar
+
+@synthesize sidebarPageletsController = _sidebarPageletsController;
+- (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
+
 @end
 
 
@@ -220,6 +225,8 @@
 - (void)didEndWritingHTMLTextBlock; { }
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
+
+- (NSArrayController *)cachedSidebarPageletsController; { return nil; }
 
 @end
 

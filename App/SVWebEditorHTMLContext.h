@@ -20,6 +20,8 @@
     NSMutableSet    *_objectKeyPathPairs;
     
     NSMutableSet    *_media;
+    
+    NSArrayController   *_sidebarPageletsController;
 }
 
 - (NSArray *)webEditorItems;
@@ -30,6 +32,10 @@
 
 #pragma mark Media
 - (NSSet *)media;
+
+
+#pragma mark Sidebar
+@property(nonatomic, retain) NSArrayController *sidebarPageletsController;
 
 
 @end
@@ -48,5 +54,10 @@
 #pragma mark Low-level controllers
 // Ignored by regular contexts. Call one of the -didEndWriting… methods after
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+
+
+#pragma mark Sidebar
+// The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
+- (NSArrayController *)cachedSidebarPageletsController;
 
 @end
