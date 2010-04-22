@@ -545,6 +545,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 
 - (id <SVDocumentFileWrapper>)duplicateOfMediaRecord:(SVMediaRecord *)media;
 {
+    OBPRECONDITION(media);
+    
     //  Look through out existing media to see if there is one with the same data
     
     id <SVDocumentFileWrapper> result = nil;
@@ -554,8 +556,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         result = [_filenameReservations objectForKey:aKey];
         
-        NSURL *URL = [result fileURL]; OBASSERT(URL);
-        if ([media matchesContentsOfURL:URL]) return result;
+        NSURL *URL = [result fileURL];
+        if (URL)
+        {
+            if ([media matchesContentsOfURL:URL]) return result;
+        }
     }
     
     
