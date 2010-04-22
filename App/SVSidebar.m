@@ -31,18 +31,22 @@
 
 #pragma mark HTML
 
-- (void)writePageletsHTML;
+- (void)writePageletsHTML:(SVHTMLContext *)context;
 {
     // Use the best controller available to give us an ordered list of pagelets
     SVSidebarPageletsController *pageletsController =
     [[SVSidebarPageletsController alloc] initWithSidebar:self];
     
-    SVHTMLContext *context = [SVHTMLContext currentContext];
     [context addDependencyOnObject:pageletsController keyPath:@"arrangedObjects"];
     
     // Write HTML
     [SVContentObject writeContentObjects:[pageletsController arrangedObjects] inContext:context];
     [pageletsController release];
+}
+
+- (void)writePageletsHTML;
+{
+    [self writePageletsHTML:[SVHTMLContext currentContext]];
 }
 
 @end

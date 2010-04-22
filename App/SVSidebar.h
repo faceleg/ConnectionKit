@@ -9,7 +9,7 @@
 #import <CoreData/CoreData.h>
 
 @class KTPage;
-@class SVGraphic;
+@class SVGraphic, SVHTMLContext;
 
 @interface SVSidebar : NSManagedObject  
 
@@ -20,7 +20,7 @@
 
 
 #pragma mark HTML
-- (void)writePageletsHTML;
+- (void)writePageletsHTML:(SVHTMLContext *)context;
 
 @end
 
