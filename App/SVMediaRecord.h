@@ -88,7 +88,8 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Updating File Wrappers
 
-- (BOOL)matchesContentsOfURL:(NSURL *)url;
+// Used to be -matchesContentsOfURL: but actually behaves rather differently to NSFileWrapper method of same name
+- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)url;
 
 // For now: options is ignored, always returns YES
 - (BOOL)readFromURL:(NSURL *)URL options:(NSUInteger)options error:(NSError **)error;

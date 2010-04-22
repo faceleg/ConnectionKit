@@ -559,7 +559,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         NSURL *URL = [result fileURL];
         if (URL)
         {
-            if ([media matchesContentsOfURL:URL]) return result;
+            if ([media fileContentsEqualContentsOfURL:URL]) return result;
         }
     }
     

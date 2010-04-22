@@ -208,7 +208,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Updating File Wrappers
 
-- (BOOL)matchesContentsOfURL:(NSURL *)otherURL;
+- (BOOL)fileContentsEqualContentsOfURL:(NSURL *)otherURL;
 {
     BOOL result = NO;
     
