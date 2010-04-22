@@ -184,23 +184,31 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)loadPageHTMLIntoWebEditor
 {
-    // Tear down old dependencies
+    // Tear down old dependencies...
     [self stopObservingDependencies];
     
-    // And DOM controllers.
+    // ...and DOM controllers.
     [[[self webEditor] mainItem] setChildWebEditorItems:nil];
     [_textDOMControllers removeAllObjects];
     
     
-    // Build the HTML.
+    // Prepare the environment for generating HTML
+    KTPage *page = [self page];
+    [_selectableObjectsController setPage:page]; // do NOT set the controller's MOC. Unless you set both MOC
+                                                        // and entity name, saving will raise an exception. (crazy I know!)
+    
+    
+    // Construct HTML Context
     NSMutableString *pageHTML = [[NSMutableString alloc] init];
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:pageHTML];
     
-    [context setCurrentPage:[self page]];
+    [context setCurrentPage:page];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"]];
     [context setSidebarPageletsController:[_selectableObjectsController sidebarPageletsController]];
     
-	[[self page] writeHTML:context];
+    
+    // Go for it. You write that HTML girl!
+	[page writeHTML:context];
     
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
@@ -216,7 +224,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
 	// Figure out the URL to use. 
-	NSURL *pageURL = nil;//[[self page] URL];   Turned this off for now
+	NSURL *pageURL = nil;//[page URL];   Turned this off for now
     if (![pageURL scheme] ||        // case 44071: WebKit will not load the HTML or offer delegate
         ![pageURL host] ||          // info if the scheme is something crazy like fttp:
         !([[pageURL scheme] isEqualToString:@"http"] || [[pageURL scheme] isEqualToString:@"https"]))
@@ -278,8 +286,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
         
-    [_selectableObjectsController setPage:[self page]]; // do NOT set the controller's MOC. Unless you set both MOC
-                                                        // and entity name, saving will raise an exception. (crazy I know!)
     [_selectableObjectsController setSelectedObjects:selection];    // restore selection
     
     
