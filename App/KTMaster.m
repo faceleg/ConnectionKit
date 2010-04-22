@@ -17,6 +17,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTImageScalingSettings.h"
 #import "KTImageScalingURLProtocol.h"
+#import "SVLogoImage.h"
 #import "SVMediaRecord.h"
 #import "SVTitleBox.h"
 
