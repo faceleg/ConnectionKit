@@ -11,6 +11,7 @@
 #import "NSManagedObject+KTExtensions.h"
 
 #import "NSError+Karelia.h"
+#import "NSFileManager+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSURL+Karelia.h"
 
@@ -356,9 +357,8 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     else
     {
         // Fallback to comparing data. This could be made more efficient by looking at the file size before reading in from disk
-        NSData *otherData = [[NSData alloc] initWithContentsOfURL:otherURL];
-        result = [[self fileContents] isEqualToData:otherData];
-        [otherData release];
+        NSData *data = [self fileContents];
+        result = [[NSFileManager defaultManager] ks_contents:data equalContentsAtURL:otherURL];
     }
     
     return result;
