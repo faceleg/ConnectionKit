@@ -344,6 +344,21 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 
 #pragma mark Comparing Files
 
+- (BOOL)fileContentsEqualMediaRecord:(SVMediaRecord *)otherRecord;
+{
+    NSURL *otherURL = [otherRecord fileURL];
+    
+    // If already in-memory might as well use it. If without a file URL, have no choice!
+    if (!otherURL || [otherRecord areContentsCached])
+    {
+        return [self fileContentsEqualData:[otherRecord fileContents]];
+    }
+    else
+    {
+        return [self fileContentsEqualContentsOfURL:otherURL];
+    }
+}
+
 - (BOOL)fileContentsEqualContentsOfURL:(NSURL *)otherURL;
 {
     BOOL result = NO;

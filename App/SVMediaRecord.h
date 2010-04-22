@@ -106,6 +106,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Comparing Files
 
+- (BOOL)fileContentsEqualMediaRecord:(SVMediaRecord *)otherRecord;
 // Used to be -matchesContentsOfURL: but actually behaves rather differently to NSFileWrapper method of same name
 - (BOOL)fileContentsEqualContentsOfURL:(NSURL *)url;
 - (BOOL)fileContentsEqualData:(NSData *)data;
