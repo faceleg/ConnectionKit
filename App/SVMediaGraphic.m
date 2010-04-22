@@ -144,8 +144,17 @@
 {
     if ([self constrainProportions])
     {
-        [self constrainedAspectRatio];
-        [self setWidth:[NSNumber numberWithFloat:size.width]];
+        CGFloat constraintRatio = [[self constrainedAspectRatio] floatValue];
+        CGFloat aspectRatio = size.width / size.height;
+        
+        if (aspectRatio < constraintRatio)
+        {
+            [self setHeight:[NSNumber numberWithFloat:size.height]];
+        }
+        else
+        {
+            [self setWidth:[NSNumber numberWithFloat:size.width]];
+        }
     }
     else
     {
