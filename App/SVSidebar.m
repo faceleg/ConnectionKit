@@ -12,6 +12,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVSidebarPageletsController.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "NSSortDescriptor+Karelia.h"
 
@@ -34,14 +35,18 @@
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
     // Use the best controller available to give us an ordered list of pagelets
-    SVSidebarPageletsController *pageletsController =
-    [[SVSidebarPageletsController alloc] initWithSidebar:self];
+    NSArrayController *controller = [context cachedSidebarPageletsController];
+    if (!controller)
+    {
+        controller = [[SVSidebarPageletsController alloc] initWithSidebar:self];
+        [controller autorelease];
+    }
     
-    [context addDependencyOnObject:pageletsController keyPath:@"arrangedObjects"];
+    [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    
     
     // Write HTML
-    [SVContentObject writeContentObjects:[pageletsController arrangedObjects] inContext:context];
-    [pageletsController release];
+    [SVContentObject writeContentObjects:[controller arrangedObjects] inContext:context];
 }
 
 - (void)writePageletsHTML;
