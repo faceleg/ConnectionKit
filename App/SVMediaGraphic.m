@@ -140,6 +140,20 @@
     }
 }
 
+- (void)setSize:(NSSize)size;
+{
+    if ([self constrainProportions])
+    {
+        [self constrainedAspectRatio];
+        [self setWidth:[NSNumber numberWithFloat:size.width]];
+    }
+    else
+    {
+        [self setWidth:[NSNumber numberWithFloat:size.width]];
+        [self setHeight:[NSNumber numberWithFloat:size.height]];
+    }
+}
+
 - (BOOL)constrainProportions { return [self constrainedAspectRatio] != nil; }
 - (void)setConstrainProportions:(BOOL)constrainProportions;
 {

@@ -25,9 +25,14 @@
 
 
 #pragma mark Size
+
+// If -constrainProportions returns YES, these 3 methods will adjust image size to maintain proportions
 @property(nonatomic, copy)  NSNumber *width;
 @property(nonatomic, copy)  NSNumber *height;
+- (void)setSize:(NSSize)size;
+
 @property(nonatomic)        BOOL constrainProportions;
+
 - (CGSize)originalSize;
 - (void)makeOriginalSize;
 
