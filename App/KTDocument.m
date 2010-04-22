@@ -676,7 +676,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     // The document also reserves some special cases itself
     if (result)
     {
-        if ([[filename stringByDeletingLastPathComponent] isEqualToString:@"index"] ||
+        if ([[filename stringByDeletingPathExtension] isEqualToString:@"index"] ||
             [filename isEqualToString:@"quicklook"] ||
             [filename isEqualToString:@"contents"])
         {
