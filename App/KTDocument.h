@@ -95,7 +95,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 #pragma mark Media
 
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
-- (BOOL)isFilenameReserved:(NSString *)filename;
+- (BOOL)isFilenameAvailable:(NSString *)filename;
 - (void)unreserveFilename:(NSString *)filename;
 
 - (NSSet *)missingMedia;

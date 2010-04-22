@@ -602,7 +602,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     NSString *result = preferredFilename;
     
     NSUInteger count = 1;
-    while ([self isFilenameReserved:result])
+    while (![self isFilenameAvailable:result])
     {
         // Adjust the filename ready to try again
         count++;
@@ -620,27 +620,27 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     return result;
 }
 
-- (BOOL)isFilenameReserved:(NSString *)filename;
+- (BOOL)isFilenameAvailable:(NSString *)filename;
 {
     OBPRECONDITION(filename);
     
     
     // Consult both cache and file system to see if the name is taken
     filename = [filename lowercaseString];
-    BOOL result = ([_filenameReservations objectForKey:filename] != nil);
-    if (!result)
+    BOOL result = ([_filenameReservations objectForKey:filename] == nil);
+    if (result)
     {
-        result = [[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
+        result = ![[NSFileManager defaultManager] fileExistsAtPath:[[self fileName] stringByAppendingPathComponent:filename]];
     }
     
     // The document also reserves some special cases itself
-    if (!result)
+    if (result)
     {
         if ([filename hasPrefix:@"index."] || [filename isEqualToString:@"index"] ||
             [filename isEqualToString:@"quicklook"] ||
             [filename isEqualToString:@"contents"])
         {
-            result = YES;
+            result = NO;
         }
     }
     
