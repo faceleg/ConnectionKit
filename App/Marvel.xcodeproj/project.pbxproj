@@ -100,7 +100,6 @@
 				3C9B66E60BFA95B9007A4871 /* Script - Add png2ico */,
 				3C9B66E80BFA95DD007A4871 /* Script - Add Spotlight Importer */,
 				2770641E0DA985AA001EB02A /* Script - Add QuickLook LEOPARD */,
-				CE452BD41057052300EFF3EC /* Script - Add Dock Tile Plugin */,
 				CE9D3ED20DAAB8450025717A /* Script - Remove Unsupported Languages */,
 				CE85D385107A84E200F5299F /* Script - [RELEASE] remove nib stuff */,
 				CECF823611010BA600ECED3A /* Script - Make sure everything is world-readable */,
@@ -6007,20 +6006,6 @@
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\nexport APPNAME=\"Design Kit\"\n\n${SRCROOT}/../Tools/package-designkit\n\n### this script should NOT have 'Run script only when installing' checked\n";
 			showEnvVarsInLog = 0;
-		};
-		CE452BD41057052300EFF3EC /* Script - Add Dock Tile Plugin */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputPaths = (
-			);
-			name = "Script - Add Dock Tile Plugin";
-			outputPaths = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\nPBXCP=\"${SRCROOT}/../../Shared/Tools/pbxcp\"\n\nSOURCE=\"${SRCROOT}/../Plugins/DockTile.docktileplugin\"\nPLUGINS_DIR=\"${TARGET_BUILD_DIR}/Sandvox.app/Contents/PlugIns\"\n\necho \"Dock Tile Plugin: PBXCp ${SOURCE} ${PLUGINS_DIR}\"\n\nmkdir -p ${PLUGINS_DIR}\n\n${PBXCP} \\\n  -exclude .DS_Store -exclude CVS -exclude .svn -resolve-src-symlinks \\\n  \"${SOURCE}\" \"${PLUGINS_DIR}\"\n\n\n";
 		};
 		CE85D385107A84E200F5299F /* Script - [RELEASE] remove nib stuff */ = {
 			isa = PBXShellScriptBuildPhase;
