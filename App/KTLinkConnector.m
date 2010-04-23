@@ -23,6 +23,7 @@ typedef enum {
 	KTLinkConnectorRightBottomStyle
 } KTLinkConnectorStyle;
 
+
 @interface KTLinkConnectorView : NSView
 {
 	KTLinkConnectorStyle _style;
@@ -32,26 +33,30 @@ typedef enum {
 
 @end
 
+
 NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
     return NSMakeRect(((point1.x <= point2.x) ? point1.x : point2.x), ((point1.y <= point2.y) ? point1.y : point2.y), ((point1.x <= point2.x) ? point2.x - point1.x : point1.x - point2.x), ((point1.y <= point2.y) ? point2.y - point1.y : point1.y - point2.y));
 }
 
-static KTLinkConnector *_sharedConnector = nil;
+
+#pragma mark -
+
 
 @interface KTLinkConnector ()
-
 - (NSDate *)startTime;
 - (void)setStartTime:(NSDate *)aStartTime;
-
-
-
 @end
+
+
+#pragma mark -
+
 
 @implementation KTLinkConnector
 
 + (id)sharedConnector
 {
-	if (!_sharedConnector)
+	static KTLinkConnector *_sharedConnector = nil;
+    if (!_sharedConnector)
 		_sharedConnector = [[KTLinkConnector alloc] init];
 	return _sharedConnector;
 }
@@ -84,7 +89,6 @@ static KTLinkConnector *_sharedConnector = nil;
 	[super dealloc];
 }
 
-#pragma mark -
 #pragma mark Overrides
 
 - (BOOL)acceptsFirstResponder { return YES; }
@@ -92,7 +96,6 @@ static KTLinkConnector *_sharedConnector = nil;
 - (BOOL)resignFirstResponder { return YES; }
 - (BOOL)ignoresMouseEvents { return YES; }
 
-#pragma mark -
 #pragma mark Methods
 
 - (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard targetWindow:(NSWindow *)aWindow
@@ -332,7 +335,6 @@ static KTLinkConnector *_sharedConnector = nil;
 	return nil;
 }
 
-#pragma mark -
 #pragma mark Accessors
 
 
