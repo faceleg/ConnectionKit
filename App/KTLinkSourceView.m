@@ -6,7 +6,10 @@
 //  Copyright 2006-2009 Karelia Software. All rights reserved.
 //
 
+
 #import "KTLinkSourceView.h"
+
+#import "SVLink.h"
 #import "KTLinkConnector.h"
 
 
@@ -15,7 +18,6 @@ NSString *kKTLocalLinkPboardAllowedType = @"kKTLocalLinkPboardAllowedType";
 
 
 @implementation KTLinkSourceView
-
 
 @synthesize collectionsOnly = _collectionsOnly;
 @synthesize targetWindow = _targetWindow;
@@ -29,7 +31,8 @@ NSString *kKTLocalLinkPboardAllowedType = @"kKTLocalLinkPboardAllowedType";
 	[self setNeedsDisplay:YES];
 }
 
-- (id)initWithFrame:(NSRect)frame {
+- (id)initWithFrame:(NSRect)frame
+{
     self = [super initWithFrame:frame];
     if (self) 
 	{
@@ -41,7 +44,7 @@ NSString *kKTLocalLinkPboardAllowedType = @"kKTLocalLinkPboardAllowedType";
     return self;
 }
 
-- (void) dealloc
+- (void)dealloc
 {
 	self.targetWindow = nil;
 	self.connectedPage = nil;
@@ -127,15 +130,15 @@ static NSImage *sTargetSetImage = nil;
 	NSPoint center = NSMakePoint(NSMidX(bounds), NSMidY(bounds));
 	NSPoint p = [[self window] convertBaseToScreen:[self convertPoint:center toView:nil]];
 	
-	[[KTLinkConnector sharedConnector] startConnectionWithPoint:p pasteboard:pboard targetWindow:self.targetWindow];
+    KTLinkConnector *connector = [KTLinkConnector sharedConnector];
+    [connector setLink:nil];
+	[connector startConnectionWithPoint:p pasteboard:pboard targetWindow:self.targetWindow];
 	
 	_flags.isConnecting = NO;
 	[self setNeedsDisplay:YES];
 	
 	// Get the page from the pasteboard
-	NSString *pageID = [pboard stringForType:kKTLocalLinkPboardReturnType];
-	KTPage *targetPage = [KTPage pageWithUniqueID:pageID 
-                           inManagedObjectContext:[[[self inspectedObjectsController] selection] managedObjectContext]];
+	KTPage *targetPage = [[connector link] page];
 
 	[targetCursor pop];
 	[targetCursor release];
