@@ -86,6 +86,7 @@ NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
 - (void)dealloc
 {
 	// Don't worry about leaking, this is a singleton
+    [_link release];
 	[super dealloc];
 }
 
@@ -337,7 +338,7 @@ NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
 
 #pragma mark Accessors
 
-
+@synthesize link = _link;
 
 - (NSDate *)startTime
 {
@@ -354,7 +355,9 @@ NSRect KTRectFromPoints(NSPoint point1, NSPoint point2) {
 
 @end
 
+
 #pragma mark -
+
 
 @implementation KTLinkConnectorView
 

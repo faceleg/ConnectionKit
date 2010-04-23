@@ -9,12 +9,16 @@
 #import <Cocoa/Cocoa.h>
 
 
+@class SVLink;
+
 @interface KTLinkConnector : NSWindow <NSDraggingInfo>
 {
 	NSView *lastViewOver;
 	NSPoint lastPoint;
 	NSPasteboard *pboard;
 	NSDate *myStartTime;
+    
+    SVLink  *_link;
 }
 
 + (id)sharedConnector;
@@ -22,5 +26,7 @@
 - (void)startConnectionWithPoint:(NSPoint)point pasteboard:(NSPasteboard *)pasteboard targetWindow:(NSWindow *)aWindow;
 - (void)showConnectionWithFrame:(NSRect)frame;
 - (void)endConnection;
+
+@property(nonatomic, copy) SVLink *link;
 
 @end
