@@ -314,7 +314,7 @@ static KTLinkConnector *_sharedConnector = nil;
 
 - (id)draggingSource
 {
-	return nil;
+	return self;
 }
 
 - (int)draggingSequenceNumber
