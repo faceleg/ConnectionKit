@@ -138,7 +138,7 @@
     NSArray *result = [NSArray arrayWithObjects:
                        _documentInspector,
                        _pageInspector,
-                       _collectionInspector,
+                       //_collectionInspector,
                        _wrapInspector,
                        _graphicInspector,
                        _metricsInspector,
