@@ -13,23 +13,26 @@
 #import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
+#import "SVLink.h"
+#import "KTLinkConnector.h"
 #import "KTLinkSourceView.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVPagesController.h"
 #import "KTHTMLPlugInWrapper.h"
 
+#import "NSArray+KTExtensions.h"
+#import "NSManagedObjectContext+KTExtensions.h"
+#import "NSOutlineView+KTExtensions.h"
+#import "NSSet+KTExtensions.h"
+
 #import "KSPlugInWrapper.h"
 #import "KSProgressPanel.h"
 #import "NSArray+Karelia.h"
-#import "NSArray+KTExtensions.h"
 #import "NSDate+Karelia.h"
 #import "NSEvent+Karelia.h"
-#import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
-#import "NSOutlineView+KTExtensions.h"
 #import "NSResponder+Karelia.h"
-#import "NSSet+KTExtensions.h"
 #import "NSSet+Karelia.h"
 
 #import "Debug.h"
@@ -1231,8 +1234,12 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     NSPasteboard *pboard = [info draggingPasteboard];
 	if ([[pboard types] containsObject:kKTLocalLinkPboardAllowedType])
 	{
-        [pboard setString:[(KTPage *)item uniqueID] forType:kKTLocalLinkPboardReturnType];		// put an ID of the page on the pasteboard for client to convert back to a KTPage object
-				// Is there a better way to pass this object around on the pasteboard?
+        KTLinkConnector *linkConnector = [info draggingSource];
+        
+        SVLink *link = [[SVLink alloc] initWithPage:item openInNewWindow:NO];
+        [linkConnector setLink:link];
+        [link release];
+        
         return YES;
     }
     
