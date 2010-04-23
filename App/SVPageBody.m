@@ -8,6 +8,7 @@
 
 #import "SVPageBody.h"
 
+#import "SVGraphic.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
 

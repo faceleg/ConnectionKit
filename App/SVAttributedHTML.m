@@ -223,9 +223,6 @@
     //  Pretty similar to -[SVRichText richText]. Perhaps we can merge the two eventually?
     
     
-    [context push];
-    
-    
     NSRange range = NSMakeRange(0, [self length]);
     NSUInteger location = 0;
     
@@ -240,7 +237,7 @@
         if (attachment)
         {
             // Write the graphic
-            [attachment writeHTML];
+            [attachment writeHTML:context];
         }
         else
         {
@@ -251,9 +248,6 @@
         // Advance the search
         location = location + effectiveRange.length;
     }
-    
-    
-    [context pop];
 }
 
 #pragma mark Convenience
