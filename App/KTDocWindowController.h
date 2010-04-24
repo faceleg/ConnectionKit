@@ -129,22 +129,6 @@ extern NSString *gInfoWindowAutoSaveName;
 #pragma mark -
 
 
-@interface KTDocWindowController ( Pasteboard )
-- (BOOL)canPastePages;
-- (BOOL)canPastePagelets;
-
-- (IBAction)paste:(id)sender;
-- (IBAction)pasteViaContextualMenu:(id)sender;
-- (IBAction)pastePages:(id)sender;
-- (IBAction)pastePagelets:(id)sender;
-
-- (IBAction)duplicate:(id)sender;
-@end
-
-
-#pragma mark -
-
-
 @interface KTDocWindowController ( Toolbar )
 
 - (void)makeDocumentToolbar;

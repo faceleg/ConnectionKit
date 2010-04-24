@@ -591,7 +591,6 @@
 		3C3F54A20D625983004885E7 /* AmazonSupport.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C3F54A10D625983004885E7 /* AmazonSupport.framework */; };
 		3C4328CA07F7D7F600DD0D92 /* KTHostSetupController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D7B07DFC30800DE4994 /* KTHostSetupController.m */; };
 		3C4328E207F7DCA600DD0D92 /* KTDocWindowController+Toolbar.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */; };
-		3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */; };
 		3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */; };
 		3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71310BF7ADE100776464 /* NSFetchRequest+KTExtensions.m */; };
 		3C5A724B0BF7ADE100776464 /* NSManagedObject+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A71400BF7ADE100776464 /* NSManagedObject+KTExtensions.m */; };
@@ -2179,7 +2178,6 @@
 		3C4C6A750D64122700398BDA /* DeliciousElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DeliciousElement.xcodeproj; path = ../Plugins/Elements/DeliciousElement/DeliciousElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6A7E0D64123200398BDA /* DiggElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = DiggElement.xcodeproj; path = ../Plugins/Elements/DiggElement/DiggElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3C4C6AA90D64136C00398BDA /* AmazonElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = AmazonElement.xcodeproj; path = ../Plugins/Elements/AmazonElement/AmazonElement.xcodeproj; sourceTree = SOURCE_ROOT; };
-		3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Pasteboard.m"; sourceTree = "<group>"; };
 		3C5A712C0BF7ADE100776464 /* NSEntityDescription+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSEntityDescription+KTExtensions.h"; sourceTree = "<group>"; };
 		3C5A712D0BF7ADE100776464 /* NSEntityDescription+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSEntityDescription+KTExtensions.m"; sourceTree = "<group>"; };
 		3C5A71300BF7ADE100776464 /* NSFetchRequest+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSFetchRequest+KTExtensions.h"; sourceTree = "<group>"; };
@@ -3532,7 +3530,6 @@
 				3C202E9307E00F5700DE4994 /* document2.toolbar */,
 				3C301619103DE0580036A9D0 /* KTDocument.xib */,
 				CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */,
-				3C4D337609683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m */,
 				3C202D3C07DFC0F000DE4994 /* KTDocWindowController+Toolbar.m */,
 				CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */,
 				CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */,
@@ -6637,7 +6634,6 @@
 				3C89AD7308E0BE1400CA0522 /* KTDocumentController.m in Sources */,
 				CE510FCE090EA74C00547CFF /* KTTranscriptController.m in Sources */,
 				3CBFD398093C45930057668A /* KTSiteOutlineView.m in Sources */,
-				3C4D337709683E5C0058B0B8 /* KTDocWindowController+Pasteboard.m in Sources */,
 				3C27FE03096F198E00702991 /* KTReleaseNotesController.m in Sources */,
 				3C27FF28096F4E4A00702991 /* KTAcknowledgmentsController.m in Sources */,
 				CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */,
