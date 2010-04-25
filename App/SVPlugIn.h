@@ -83,7 +83,8 @@
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
 - (BOOL)isForPublishing;
 
-@property(nonatomic) KTDocType docType; // changing mid-parse may have no immediate effect, but instead kick off a new session
+// Call if your plug-in supports only particular HTML doc types. Otherwise, leave along! Calling mid-write may have no immediate effect; instead the system will try another write after applying the limit.
+- (void)limitToMaxDocType:(KTDocType)docType;
 
 @end
 

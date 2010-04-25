@@ -62,6 +62,9 @@ typedef enum {
 @property(nonatomic) NSStringEncoding encoding;   // UTF-8 by default
 @property(nonatomic, copy) NSString *language;
 
+@property(nonatomic) KTDocType maxDocType;
+- (void)limitToMaxDocType:(KTDocType)docType;
+
 @property(nonatomic, readonly) KTHTMLGenerationPurpose generationPurpose;
 - (BOOL)isEditable; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;

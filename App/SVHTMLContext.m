@@ -57,6 +57,8 @@
     
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
+    _docType = KTDocTypeAll;
+    
     _headerLevel = 1;
     _headerMarkup = [[NSMutableString alloc] init];
     _endBodyMarkup = [[NSMutableString alloc] init];
@@ -88,7 +90,13 @@
 @synthesize liveDataFeeds = _liveDataFeeds;
 @synthesize encoding = _stringEncoding;
 @synthesize language = _language;
-@synthesize docType = _docType;
+
+@synthesize maxDocType = _docType;
+
+- (void)limitToMaxDocType:(KTDocType)docType;
+{
+    if (docType < [self maxDocType]) [self setMaxDocType:docType];
+}
 
 - (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeNormal; }
 
