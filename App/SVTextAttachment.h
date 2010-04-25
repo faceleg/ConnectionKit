@@ -45,7 +45,7 @@
 
 
 #pragma mark Validation
-- (BOOL)validateWrap:(NSError **)outError;
+- (BOOL)validateWrapping:(NSError **)outError;
 
 
 @end

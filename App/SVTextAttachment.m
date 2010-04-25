@@ -187,32 +187,25 @@
 - (BOOL)validateForInsert:(NSError **)error;
 {
     BOOL result = [super validateForInsert:error];
-    if (result) result = [self validateWrap:error];
+    if (result) result = [self validateWrapping:error];
     return result;
 }
 
 - (BOOL)validateForUpdate:(NSError **)error;
 {
     BOOL result = [super validateForUpdate:error];
-    if (result) result = [self validateWrap:error];
+    if (result) result = [self validateWrapping:error];
     return result;
 }
 
-- (BOOL)validateWrap:(NSError **)outError;
+- (BOOL)validateWrapping:(NSError **)outError;
 {
     // If want to show title, cannot be inline
     BOOL result = YES;
     
-    if ([[self placement] integerValue] == SVGraphicPlacementInline &&
-        ![[[[self graphic] titleBox] hidden] boolValue])
+    if ([[self placement] integerValue] == SVGraphicPlacementInline)
     {
-        result = NO;
-        if (outError)
-        {
-            *outError = [NSError errorWithDomain:NSCocoaErrorDomain
-                                            code:NSManagedObjectValidationError
-                            localizedDescription:@"Graphics cannot show title while inline"];
-        }
+        result = [[self graphic] validateForInlinePlacement:outError];
     }
     
     return result;

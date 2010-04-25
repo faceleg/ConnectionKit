@@ -124,6 +124,20 @@
     }
 }
 
+- (BOOL)validateForInlinePlacement:(NSError **)error;
+{
+    BOOL result;
+    
+    if (!(result = ![self showsTitle]))
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSManagedObjectValidationError
+                                localizedDescription:@"Graphics cannot show title while inline"];
+    }
+    
+    return result;
+}
+
 #pragma mark Sidebar
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
@@ -251,17 +265,11 @@
 
 #pragma mark Validation
 
-- (BOOL)validatePlacement:(NSError **)error
-{
-    // Used to insist that pagelets should always have a sidebar OR callout. Now, it should be OK for a pagelet not to appear anywhere since it can be filed away in the Page Inspector, ready to put back on a page.
-    return YES;
-}
-
 - (BOOL)validateForInsert:(NSError **)error
 {
     BOOL result = [super validateForInsert:error];
-    if (result) result = [self validatePlacement:error];
-    if (result && [self textAttachment]) result = [[self textAttachment] validateWrap:error];
+    if (result) result = [self validateForInlinePlacement:error];
+    if (result && [self textAttachment]) result = [[self textAttachment] validateWrapping:error];
     
     return result;
 }
@@ -269,8 +277,8 @@
 - (BOOL)validateForUpdate:(NSError **)error
 {
     BOOL result = [super validateForUpdate:error];
-    if (result) result = [self validatePlacement:error];
-    if (result && [self textAttachment]) result = [[self textAttachment] validateWrap:error];
+    if (result) result = [self validateForInlinePlacement:error];
+    if (result && [self textAttachment]) result = [[self textAttachment] validateWrapping:error];
     
     return result;
 }
