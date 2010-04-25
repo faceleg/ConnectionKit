@@ -66,7 +66,10 @@
     }
     
     // Show caption
-    [self setShowsCaption:YES];
+    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    {
+        [self setShowsCaption:YES];
+    }
 }
 
 #pragma mark Metrics
