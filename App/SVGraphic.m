@@ -154,7 +154,7 @@
     return result;
 }
 
-+ (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
++ (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;
 {
     BOOL result = YES;
     

@@ -27,7 +27,7 @@
 
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error
 {
-    return [SVGraphic validatePagelets:pagelets error:error];
+    return [SVGraphic validateSortKeyForPagelets:pagelets error:error];
 }
 
 #pragma mark HTML

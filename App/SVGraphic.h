@@ -102,7 +102,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 + (NSArray *)pageletSortDescriptors;
 
 // Checks that a given set of pagelets have unique sort keys
-+ (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
++ (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;
 
 // Shouldn't really have any need to set this yourself. Use a proper array controller instead please.
 @property(nonatomic, copy) NSNumber *sortKey;
