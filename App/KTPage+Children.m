@@ -12,6 +12,7 @@
 #import "KTSite.h"
 
 #import "NSArray+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
@@ -471,6 +472,22 @@
 #pragma mark Navigation Arrows
 
 @dynamic showNavigationArrows;
+
+- (BOOL)validateShowNavigationArrows:(NSNumber **)show error:(NSError **)error;
+{
+    // Navigation arrows aren't allowed on home page
+    BOOL result = YES;
+    
+    if ([*show boolValue] && [self isRootPage])
+    {
+        result = NO;
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSValidationNumberTooLargeError
+                                localizedDescription:@"Can't have navigation arrows on the home page"];
+    }
+    
+    return result;
+}
 
 #pragma mark -
 #pragma mark Should probably be deprecated
