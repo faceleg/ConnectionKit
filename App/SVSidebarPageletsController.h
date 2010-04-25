@@ -16,7 +16,7 @@
 @class SVGraphic, KTPage, SVSidebar;
 
 
-@interface SVSidebarPageletsController : KSSetController
+@interface SVSidebarPageletsController : NSArrayController
 {
   @private
     SVSidebar   *_sidebar;
