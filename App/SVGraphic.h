@@ -99,7 +99,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 #pragma mark Sidebar
 
-+ (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 + (NSArray *)pageletSortDescriptors;
 
 // Checks that a given set of pagelets have unique sort keys

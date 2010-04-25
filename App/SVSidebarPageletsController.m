@@ -60,6 +60,27 @@
     [super dealloc];
 }
 
+#pragma mark Arranging Objects
+
+- (NSArray *)allSidebarPagelets;
+{
+    //  Fetches all sidebar pagelets in the receiver's MOC and sorts them.
+    
+    
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Graphic"
+                                   inManagedObjectContext:context]];
+    [request setSortDescriptors:[SVGraphic pageletSortDescriptors]];
+    
+    NSArray *result = [context executeFetchRequest:request error:NULL];
+    
+    // Tidy up
+    [request release];
+    return result;
+}
+
 #pragma mark Managing Content
 
 @synthesize sidebar = _sidebar;
@@ -181,7 +202,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 {
     OBPRECONDITION(pagelet);
     
-    NSArray *pagelets = [SVGraphic sortedPageletsInManagedObjectContext:[self managedObjectContext]];
+    NSArray *pagelets = [self allSidebarPagelets];
     
     // Locate after pagelet
     NSUInteger index = [pagelets indexOfObject:pagelet];
@@ -217,7 +238,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 {
     OBPRECONDITION(pagelet);
     
-    NSArray *pagelets = [SVGraphic sortedPageletsInManagedObjectContext:[self managedObjectContext]];
+    NSArray *pagelets = [self allSidebarPagelets];
     
     // Locate after pagelet
     NSUInteger index = [pagelets indexOfObject:pagelet];

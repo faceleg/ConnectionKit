@@ -140,22 +140,6 @@
 
 #pragma mark Sidebar
 
-+ (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    OBPRECONDITION(context);
-    
-    NSFetchRequest *request = [[NSFetchRequest alloc] init];
-    [request setEntity:[NSEntityDescription entityForName:@"Graphic"
-                                   inManagedObjectContext:context]];
-    [request setSortDescriptors:[self pageletSortDescriptors]];
-    
-    NSArray *result = [context executeFetchRequest:request error:NULL];
-    
-    // Tidy up
-    [request release];
-    return result;
-}
-
 + (NSArray *)pageletSortDescriptors;
 {
     static NSArray *result;
