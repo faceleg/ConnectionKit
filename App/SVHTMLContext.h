@@ -33,9 +33,10 @@ typedef enum {
     NSURL   *_baseURL;
     KTPage	*_currentPage;
     
-	BOOL                    _liveDataFeeds;
-    NSStringEncoding        _stringEncoding;
-    NSString                *_language;
+	BOOL                _liveDataFeeds;
+    NSStringEncoding    _stringEncoding;
+    NSString            *_language;
+    KTDocType           _docType;
     
     BOOL            _includeStyling;
     NSURL           *_mainCSSURL;

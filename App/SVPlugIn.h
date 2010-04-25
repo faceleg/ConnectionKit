@@ -7,6 +7,8 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KT.h"
+
 #import <iMedia/IMBImageItem.h>
 
 
@@ -73,12 +75,16 @@
 
 
 @protocol SVPlugInContext
+
 - (KSHTMLWriter *)HTMLWriter;
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
 - (BOOL)isForPublishing;
+
+@property(nonatomic) KTDocType docType; // changing mid-parse may have no immediate effect, but instead kick off a new session
+
 @end
 
 

@@ -88,6 +88,7 @@
 @synthesize liveDataFeeds = _liveDataFeeds;
 @synthesize encoding = _stringEncoding;
 @synthesize language = _language;
+@synthesize docType = _docType;
 
 - (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeNormal; }
 
