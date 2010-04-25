@@ -93,16 +93,11 @@
 
 - (void)addObject:(id)pagelet
 {
-    // Place at end of the sidebar
-    SVGraphic *lastPagelet = [[self arrangedObjects] lastObject];
-    [pagelet moveAfterSidebarPagelet:lastPagelet];
-    
-    
-    // Also add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
+    // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
     [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[[self sidebar] page]];
     
     
-	[super addObject:pagelet];
+	[super addObject:pagelet];  // calls through to -insertObject:atArrangedObjectIndex: to handle ordering
 }
 
 - (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
@@ -173,12 +168,84 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     if (index >= [[self arrangedObjects] count])
     {
         SVGraphic *lastPagelet = [[self arrangedObjects] lastObject];
-        [pagelet moveAfterSidebarPagelet:lastPagelet];
+        [self moveObject:pagelet afterObject:lastPagelet];
     }
     else
     {
         SVGraphic *refPagelet = [[self arrangedObjects] objectAtIndex:index];
-        [pagelet moveBeforeSidebarPagelet:refPagelet];
+        [self moveObject:pagelet beforeObject:refPagelet];
+    }
+}
+
+- (void)moveObject:(id)object beforeObject:(id)pagelet;
+{
+    OBPRECONDITION(pagelet);
+    
+    NSArray *pagelets = [SVGraphic sortedPageletsInManagedObjectContext:[self managedObjectContext]];
+    
+    // Locate after pagelet
+    NSUInteger index = [pagelets indexOfObject:pagelet];
+    OBASSERT(index != NSNotFound);
+    
+    // Set our sort key to match
+    NSNumber *pageletSortKey = [pagelet sortKey];
+    OBASSERT(pageletSortKey);
+    NSInteger previousSortKey = [pageletSortKey integerValue] - 1;
+    [object setSortKey:[NSNumber numberWithInteger:previousSortKey]];
+    
+    // Bump previous pagelets along as needed
+    for (NSUInteger i = index; i > 0; i--)  // odd handling of index so we can use an *unsigned* integer
+    {
+        SVGraphic *previousPagelet = [pagelets objectAtIndex:(i - 1)];
+        if (previousPagelet != object)    // don't want to accidentally process self twice
+        {
+            previousSortKey--;
+            
+            if ([[previousPagelet sortKey] integerValue] > previousSortKey)
+            {
+                [previousPagelet setSortKey:[NSNumber numberWithInteger:previousSortKey]];
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+}
+
+- (void)moveObject:(id)object afterObject:(id)pagelet;
+{
+    OBPRECONDITION(pagelet);
+    
+    NSArray *pagelets = [SVGraphic sortedPageletsInManagedObjectContext:[self managedObjectContext]];
+    
+    // Locate after pagelet
+    NSUInteger index = [pagelets indexOfObject:pagelet];
+    OBASSERT(index != NSNotFound);
+    
+    // Set our sort key to match
+    NSNumber *pageletSortKey = [pagelet sortKey];
+    OBASSERT(pageletSortKey);
+    NSInteger nextSortKey = [pageletSortKey integerValue] + 1;
+    [object setSortKey:[NSNumber numberWithInteger:nextSortKey]];
+    
+    // Bump following pagelets along as needed
+    for (NSUInteger i = index+1; i < [pagelets count]; i++)
+    {
+        SVGraphic *nextPagelet = [pagelets objectAtIndex:i];
+        if (nextPagelet != object)    // don't want to accidentally process self twice
+        {
+            nextSortKey++;
+            
+            if ([[nextPagelet sortKey] integerValue] < nextSortKey)
+            {
+                [nextPagelet setSortKey:[NSNumber numberWithInteger:nextSortKey]];
+            }
+            else
+            {
+                break;
+            }
+        }
     }
 }
 

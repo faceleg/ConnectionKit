@@ -142,6 +142,8 @@
 
 + (NSArray *)sortedPageletsInManagedObjectContext:(NSManagedObjectContext *)context;
 {
+    OBPRECONDITION(context);
+    
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Graphic"
                                    inManagedObjectContext:context]];
@@ -190,78 +192,6 @@
 @dynamic sortKey;
 
 @dynamic sidebars;
-
-- (void)moveBeforeSidebarPagelet:(SVGraphic *)pagelet
-{
-    OBPRECONDITION(pagelet);
-    
-    NSArray *pagelets = [[self class] sortedPageletsInManagedObjectContext:[self managedObjectContext]];
-    
-    // Locate after pagelet
-    NSUInteger index = [pagelets indexOfObject:pagelet];
-    OBASSERT(index != NSNotFound);
-    
-    // Set our sort key to match
-    NSNumber *pageletSortKey = [pagelet sortKey];
-    OBASSERT(pageletSortKey);
-    NSInteger previousSortKey = [pageletSortKey integerValue] - 1;
-    [self setSortKey:[NSNumber numberWithInteger:previousSortKey]];
-    
-    // Bump previous pagelets along as needed
-    for (NSUInteger i = index; i > 0; i--)  // odd handling of index so we can use an *unsigned* integer
-    {
-        SVGraphic *previousPagelet = [pagelets objectAtIndex:(i - 1)];
-        if (previousPagelet != self)    // don't want to accidentally process self twice
-        {
-            previousSortKey--;
-            
-            if ([[previousPagelet sortKey] integerValue] > previousSortKey)
-            {
-                [previousPagelet setSortKey:[NSNumber numberWithInteger:previousSortKey]];
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-}
-
-- (void)moveAfterSidebarPagelet:(SVGraphic *)pagelet;
-{
-    OBPRECONDITION(pagelet);
-    
-    NSArray *pagelets = [[self class] sortedPageletsInManagedObjectContext:[self managedObjectContext]];
-    
-    // Locate after pagelet
-    NSUInteger index = [pagelets indexOfObject:pagelet];
-    OBASSERT(index != NSNotFound);
-    
-    // Set our sort key to match
-    NSNumber *pageletSortKey = [pagelet sortKey];
-    OBASSERT(pageletSortKey);
-    NSInteger nextSortKey = [pageletSortKey integerValue] + 1;
-    [self setSortKey:[NSNumber numberWithInteger:nextSortKey]];
-    
-    // Bump following pagelets along as needed
-    for (NSUInteger i = index+1; i < [pagelets count]; i++)
-    {
-        SVGraphic *nextPagelet = [pagelets objectAtIndex:i];
-        if (nextPagelet != self)    // don't want to accidentally process self twice
-        {
-            nextSortKey++;
-            
-            if ([[nextPagelet sortKey] integerValue] < nextSortKey)
-            {
-                [nextPagelet setSortKey:[NSNumber numberWithInteger:nextSortKey]];
-            }
-            else
-            {
-                break;
-            }
-        }
-    }
-}
 
 #pragma mark Validation
 

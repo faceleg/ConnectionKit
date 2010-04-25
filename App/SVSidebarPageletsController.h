@@ -28,6 +28,8 @@
 
 #pragma mark Adding/Inserting/Removing/Objects
 - (void)moveObject:(id)object toIndex:(NSUInteger)index;
+- (void)moveObject:(id)object beforeObject:(id)pagelet;
+- (void)moveObject:(id)object afterObject:(id)pagelet;
 
 
 #pragma mark Recursion

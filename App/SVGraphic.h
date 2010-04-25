@@ -110,9 +110,6 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 @property(nonatomic, readonly) NSSet *sidebars;
 
-- (void)moveBeforeSidebarPagelet:(SVGraphic *)pagelet;
-- (void)moveAfterSidebarPagelet:(SVGraphic *)pagelet;
-
 
 #pragma mark HTML
 
