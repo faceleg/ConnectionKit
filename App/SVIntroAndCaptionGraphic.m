@@ -11,6 +11,8 @@
 #import "SVAuxiliaryPageletText.h"
 #import "SVTitleBox.h"
 
+#import "NSError+Karelia.h"
+
 
 @implementation SVIntroAndCaptionGraphic 
 
@@ -35,6 +37,26 @@
 
 @dynamic caption;
 @dynamic introduction;
+
+- (BOOL)validateForInlinePlacement:(NSError **)error;
+{
+    BOOL result = [super validateForInlinePlacement:error];
+    
+    if (!(result = ![self showsIntroduction]))
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSManagedObjectValidationError
+                                localizedDescription:@"Graphics cannot show introduction while inline"];
+    }
+    else if (!(result = ![self showsCaption]))
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSManagedObjectValidationError
+                     localizedDescription:@"Graphics cannot show caption while inline"];
+    }
+    
+    return result;
+}
 
 #pragma mark SVPlugInContainer
 
