@@ -16,7 +16,6 @@
 
 #import "NSError+Karelia.h"
 #import "NSManagedObject+KTExtensions.h"
-#import "NSSortDescriptor+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -139,20 +138,6 @@
 }
 
 #pragma mark Sidebar
-
-+ (NSArray *)pageletSortDescriptors;
-{
-    static NSArray *result;
-    if (!result)
-    {
-        result = [NSSortDescriptor sortDescriptorArrayWithKey:@"sortKey"
-                                                    ascending:YES];
-        [result retain];
-        OBASSERT(result);
-    }
-    
-    return result;
-}
 
 + (BOOL)validateSortKeyForPagelets:(NSSet **)pagelets error:(NSError **)error;
 {

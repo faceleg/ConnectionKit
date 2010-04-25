@@ -26,6 +26,10 @@
 @property(nonatomic, retain, readonly) SVSidebar *sidebar;
 
 
+#pragma mark Arranging Objects
++ (NSArray *)pageletSortDescriptors;
+
+
 #pragma mark Adding/Inserting/Removing/Objects
 - (void)moveObject:(id)object toIndex:(NSUInteger)index;
 - (void)moveObject:(id)object beforeObject:(id)pagelet;

@@ -12,6 +12,8 @@
 #import "SVGraphic.h"
 #import "SVSidebar.h"
 
+#import "NSSortDescriptor+Karelia.h"
+
 
 @interface SVSidebarPageletsController ()
 - (void)_addPagelet:(SVGraphic *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
@@ -35,7 +37,7 @@
     [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
     [self setAutomaticallyRearrangesObjects:YES];
-    [self setSortDescriptors:[SVGraphic pageletSortDescriptors]];
+    [self setSortDescriptors:[[self class] pageletSortDescriptors]];
     
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES],
@@ -49,7 +51,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    [self setSortDescriptors:[SVGraphic pageletSortDescriptors]];
+    [self setSortDescriptors:[[self class] pageletSortDescriptors]];
     return self;
 }
 
@@ -72,12 +74,26 @@
     NSFetchRequest *request = [[NSFetchRequest alloc] init];
     [request setEntity:[NSEntityDescription entityForName:@"Graphic"
                                    inManagedObjectContext:context]];
-    [request setSortDescriptors:[SVGraphic pageletSortDescriptors]];
+    [request setSortDescriptors:[[self class] pageletSortDescriptors]];
     
     NSArray *result = [context executeFetchRequest:request error:NULL];
     
     // Tidy up
     [request release];
+    return result;
+}
+
++ (NSArray *)pageletSortDescriptors;
+{
+    static NSArray *result;
+    if (!result)
+    {
+        result = [NSSortDescriptor sortDescriptorArrayWithKey:@"sortKey"
+                                                    ascending:YES];
+        [result retain];
+        OBASSERT(result);
+    }
+    
     return result;
 }
 
