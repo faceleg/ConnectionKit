@@ -1376,14 +1376,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #endif
 
 
-/*!	Utility method for bindings. If we aren't PNG (or nil), then we're JPEG. */
-- (BOOL)preferredImageFormatIsJPEG
-{
-	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
-	bool prefersPNG = [defaults boolForKey:@"KTPrefersPNGFormat"];
-	return !prefersPNG;
-}
-
 - (IBAction)showPluginWindow:(id)sender;
 {
 	if (([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask) )	// undocumented: option key - only showing new updates.
