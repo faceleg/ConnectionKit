@@ -167,7 +167,6 @@
 - (BOOL)validateForInsert:(NSError **)error
 {
     BOOL result = [super validateForInsert:error];
-    if (result) result = [self validateForInlinePlacement:error];
     if (result && [self textAttachment]) result = [[self textAttachment] validateWrapping:error];
     
     return result;
@@ -176,7 +175,6 @@
 - (BOOL)validateForUpdate:(NSError **)error
 {
     BOOL result = [super validateForUpdate:error];
-    if (result) result = [self validateForInlinePlacement:error];
     if (result && [self textAttachment]) result = [[self textAttachment] validateWrapping:error];
     
     return result;
