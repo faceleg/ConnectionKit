@@ -17,6 +17,8 @@
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVParagraphedHTMLWriter
 
@@ -111,6 +113,21 @@
         DOMNode *node = [anItem HTMLElement];
         if (![node parentNode] && [node isEqualNode:aNode]) return anItem;
     }
+    
+    return nil;
+}
+
+- (DOMNode *)handleInvalidBlockElement:(DOMElement *)element;
+{
+    // Move the element and its next siblings up a level. Next stage of recursion will find them there
+    
+    
+    DOMNode *parent = [element parentNode];
+    DOMNode *newParent = [parent parentNode];
+    NSArray *nodes = [parent childDOMNodesAfterChild:[element previousSibling]];
+    
+    [newParent insertDOMNodes:nodes beforeChild:[parent nextSibling]];
+    
     
     return nil;
 }
@@ -214,6 +231,7 @@
         return [element nextSibling];
     }
     
+    
     // Invalid top-level elements should be converted into paragraphs
     else if ([[element tagName] isEqualToString:@"IMG"])
     {
@@ -226,24 +244,18 @@
     }
     else
     {
-        return [super handleInvalidDOMElement:element];
-    }
-    
-    /*NSString *tagName = [element tagName];
-    
-    
-    // If a paragraph ended up here, treat it like normal, but then push all nodes following it out into new paragraphs
-    if ([tagName isEqualToString:@"P"])
-    {
-        DOMNode *parent = [element parentNode];
-        DOMNode *refNode = element;
-        while (parent)
+        // Non-top-level block elements should be converted into paragraphs higher up the tree
+        DOMDocument *doc = [element ownerDocument];
+        DOMCSSStyleDeclaration *style = [doc getComputedStyle:element pseudoElement:nil];
+        if ([[style getPropertyValue:@"display"] isEqualToString:@"block"])
         {
-            [parent flattenNodesAfterChild:refNode];
-            if ([[(DOMElement *)parent tagName] isEqualToString:@"P"]) break;
-            refNode = parent; parent = [parent parentNode];
+            return [self handleInvalidBlockElement:element];
         }
-    }*/
+        else
+        {
+            return [super handleInvalidDOMElement:element];
+        }
+    }
 }
 
 #pragma mark Validation
