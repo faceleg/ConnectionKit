@@ -176,7 +176,8 @@
 	KTMediaContainer *downloadMedia = [[self delegateOwner] valueForKey:@"downloadMedia"];
 	if (downloadMedia)
 	{
-		result = [NSArray arrayWithObject:downloadMedia];
+		[self mediaFileUpload]; // call to ensure MediaFile has been populated with desired upload path. #70643
+        result = [NSArray arrayWithObject:downloadMedia];
 	}
 	
 	return result;

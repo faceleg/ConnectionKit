@@ -41,5 +41,6 @@
 - (IBAction)chooseFile:(id)sender;
 
 - (BOOL)setDownloadMedia:(KTMediaContainer *)media;
+- (KTMediaFileUpload *)mediaFileUpload;
 @end
 
