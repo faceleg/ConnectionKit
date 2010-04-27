@@ -249,6 +249,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)checkForMissingMedia
 {
+    return;
+    
 	@try	// Called once the window is on-screen via a delayedPerformSelector. Therefore we have to manage exceptions ourself.
     {
         // Check for missing media files. If any are missing alert the user
