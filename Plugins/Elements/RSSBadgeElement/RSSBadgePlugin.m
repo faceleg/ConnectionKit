@@ -29,16 +29,17 @@
 	[super dealloc];
 }
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
 {
-	if (isNewObject)
-	{
+    [super awakeFromInsertIntoPage:page];
+    
+    
 		// Use an appropriately localized label
 		//
 		// Make the string we want get generated, but we are forcing the string to be in target language.
 		//
 		NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
-		NSString *language = [[SVHTMLContext currentContext] language];   OBASSERT(language);
+		NSString *language = [page language];   OBASSERT(language);
         
         NSString *theString = [theBundle localizedStringForString:@"Subscribe to RSS feed" 
 														 language:language
@@ -48,12 +49,11 @@
 		self.label = theString;
 		
 		// Try and connect to our parent collection
-		KTPage *parent = (KTPage *)[self page];
+		KTPage *parent = page;
 		if ([parent feedURL])
 		{
 			self.collection = parent;
 		}
-	}
 }
 
 #pragma mark -
