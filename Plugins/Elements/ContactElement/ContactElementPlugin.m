@@ -106,8 +106,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     
 	id element = [self delegateOwner];
 	
-	if (isNewObject)
-	{
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
 		// Set up default bunch of fields
@@ -147,7 +145,6 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		[aField release];
 		
 		self.fields = fields;
-	}
 	
 	myPluginProperties = [element retain];
 	[myPluginProperties addObserver:self forKeyPath:@"fields" options:0 context:NULL];
