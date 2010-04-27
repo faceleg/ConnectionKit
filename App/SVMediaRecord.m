@@ -240,6 +240,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+@dynamic shouldCopyFileIntoDocument;
 
 - (BDAlias *)alias
 {
@@ -264,7 +265,30 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 	[self setValue:[alias aliasData] forKey:@"aliasData"];
 }
 
-@dynamic shouldCopyFileIntoDocument;
+- (BDAlias *)autosaveAlias
+{
+	BDAlias *result = [self wrappedValueForKey:@"autosaveAlias"];
+	
+	if (!result)
+	{
+		NSData *aliasData = [self valueForKey:@"autosaveAliasData"];
+		if (aliasData)
+		{
+			result = [BDAlias aliasWithData:aliasData];
+			[self setPrimitiveValue:result forKey:@"autosaveAlias"];
+		}
+	}
+	
+	return result;
+}
+
+- (void)setAutosaveAlias:(BDAlias *)alias
+{
+    [self willChangeValueForKey:@"autosaveAlias"];
+	[self setPrimitiveValue:alias forKey:@"autosaveAlias"];
+	[self setValue:[alias aliasData] forKey:@"autosaveAliasData"];
+    [self didChangeValueForKey:@"autosaveAlias"];
+}
 
 @dynamic preferredFilename;
 - (BOOL)validatePreferredFilename:(NSString **)filename error:(NSError **)outError
