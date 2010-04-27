@@ -3,12 +3,12 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10D573</string>
-		<string key="IBDocument.InterfaceBuilderVersion">783</string>
+		<string key="IBDocument.InterfaceBuilderVersion">785</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
-			<string key="NS.object.0">783</string>
+			<string key="NS.object.0">785</string>
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -46,7 +46,7 @@
 					<object class="NSPopUpButton" id="631113392">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">271</int>
-						<string key="NSFrame">{{44, 134}, {142, 69}}</string>
+						<string key="NSFrame">{{44, 139}, {142, 69}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="323951779">
@@ -64,27 +64,26 @@
 							<string key="NSKeyEquivalent"/>
 							<int key="NSPeriodicDelay">400</int>
 							<int key="NSPeriodicInterval">75</int>
-							<object class="NSMenuItem" key="NSMenuItem" id="828120455">
+							<object class="NSMenuItem" key="NSMenuItem" id="687837001">
 								<reference key="NSMenu" ref="990687765"/>
 								<string key="NSTitle"/>
 								<string key="NSKeyEquiv"/>
-								<int key="NSKeyEquivModMask">1048576</int>
 								<int key="NSMnemonicLoc">2147483647</int>
 								<int key="NSState">1</int>
 								<object class="NSCustomResource" key="NSImage">
 									<string key="NSClassName">NSImage</string>
-									<string key="NSResourceName">sandvox_bucket_white</string>
+									<string key="NSResourceName">sandvox_icon_white</string>
 								</object>
-								<object class="NSCustomResource" key="NSOnImage" id="34984059">
+								<object class="NSCustomResource" key="NSOnImage" id="671665031">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuCheckmark</string>
 								</object>
-								<object class="NSCustomResource" key="NSMixedImage" id="712970376">
+								<object class="NSCustomResource" key="NSMixedImage" id="400602329">
 									<string key="NSClassName">NSImage</string>
 									<string key="NSResourceName">NSMenuMixedState</string>
 								</object>
 								<string key="NSAction">_popUpItemAction:</string>
-								<int key="NSTag">7</int>
+								<int key="NSTag">1</int>
 								<reference key="NSTarget" ref="323951779"/>
 							</object>
 							<bool key="NSMenuItemRespectAlignment">YES</bool>
@@ -92,21 +91,7 @@
 								<string key="NSTitle">OtherViews</string>
 								<object class="NSMutableArray" key="NSMenuItems">
 									<bool key="EncodedWithXMLCoder">YES</bool>
-									<object class="NSMenuItem" id="687837001">
-										<reference key="NSMenu" ref="990687765"/>
-										<string key="NSTitle"/>
-										<string key="NSKeyEquiv"/>
-										<int key="NSMnemonicLoc">2147483647</int>
-										<object class="NSCustomResource" key="NSImage">
-											<string key="NSClassName">NSImage</string>
-											<string key="NSResourceName">sandvox_icon_white</string>
-										</object>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
-										<string key="NSAction">_popUpItemAction:</string>
-										<int key="NSTag">1</int>
-										<reference key="NSTarget" ref="323951779"/>
-									</object>
+									<reference ref="687837001"/>
 									<object class="NSMenuItem" id="815487330">
 										<reference key="NSMenu" ref="990687765"/>
 										<string key="NSTitle"/>
@@ -117,8 +102,8 @@
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sandvox_castle</string>
 										</object>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">2</int>
 										<reference key="NSTarget" ref="323951779"/>
@@ -133,8 +118,8 @@
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sandvox_castle_white</string>
 										</object>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">3</int>
 										<reference key="NSTarget" ref="323951779"/>
@@ -149,8 +134,8 @@
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sandvox_castle_top</string>
 										</object>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">4</int>
 										<reference key="NSTarget" ref="323951779"/>
@@ -165,8 +150,8 @@
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sandvox_castle_top_white</string>
 										</object>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">5</int>
 										<reference key="NSTarget" ref="323951779"/>
@@ -181,28 +166,42 @@
 											<string key="NSClassName">NSImage</string>
 											<string key="NSResourceName">sandvox_bucket</string>
 										</object>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<int key="NSTag">6</int>
 										<reference key="NSTarget" ref="323951779"/>
 									</object>
-									<reference ref="828120455"/>
+									<object class="NSMenuItem" id="828120455">
+										<reference key="NSMenu" ref="990687765"/>
+										<string key="NSTitle"/>
+										<string key="NSKeyEquiv"/>
+										<int key="NSKeyEquivModMask">1048576</int>
+										<int key="NSMnemonicLoc">2147483647</int>
+										<object class="NSCustomResource" key="NSImage">
+											<string key="NSClassName">NSImage</string>
+											<string key="NSResourceName">sandvox_bucket_white</string>
+										</object>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
+										<string key="NSAction">_popUpItemAction:</string>
+										<int key="NSTag">7</int>
+										<reference key="NSTarget" ref="323951779"/>
+									</object>
 									<object class="NSMenuItem" id="345405688">
 										<reference key="NSMenu" ref="990687765"/>
 										<string key="NSTitle">Created with Sandvox</string>
 										<string key="NSKeyEquiv"/>
 										<int key="NSKeyEquivModMask">1048576</int>
 										<int key="NSMnemonicLoc">2147483647</int>
-										<reference key="NSOnImage" ref="34984059"/>
-										<reference key="NSMixedImage" ref="712970376"/>
+										<reference key="NSOnImage" ref="671665031"/>
+										<reference key="NSMixedImage" ref="400602329"/>
 										<string key="NSAction">_popUpItemAction:</string>
 										<reference key="NSTarget" ref="323951779"/>
 									</object>
 								</object>
 								<reference key="NSMenuFont" ref="820113075"/>
 							</object>
-							<int key="NSSelectedIndex">6</int>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
 							<bool key="NSAltersState">YES</bool>
@@ -212,13 +211,13 @@
 					<object class="NSButton" id="877583155">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{9, 80}, {177, 18}}</string>
+						<string key="NSFrame">{{9, 85}, {213, 18}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="379211560">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">131072</int>
-							<string key="NSContents">Anonymous Referral</string>
+							<string key="NSContents">Anonymize referrals</string>
 							<object class="NSFont" key="NSSupport" id="26">
 								<string key="NSName">LucidaGrande</string>
 								<double key="NSSize">11</double>
@@ -239,13 +238,13 @@
 					<object class="NSTextField" id="544188229">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 209}, {216, 14}}</string>
+						<string key="NSFrame">{{7, 214}, {216, 14}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="706007146">
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">272760832</int>
-							<string key="NSContents">Type of Badge</string>
+							<string key="NSContents">Badge</string>
 							<object class="NSFont" key="NSSupport">
 								<string key="NSName">LucidaGrande-Bold</string>
 								<double key="NSSize">11</double>
@@ -275,7 +274,7 @@
 					<object class="NSTextField" id="67915784">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 4}, {213, 70}}</string>
+						<string key="NSFrame">{{7, 10}, {216, 69}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="281126725">
@@ -295,7 +294,7 @@
 					<object class="NSButton" id="237012871">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{9, 102}, {177, 18}}</string>
+						<string key="NSFrame">{{9, 107}, {213, 18}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="169646981">
