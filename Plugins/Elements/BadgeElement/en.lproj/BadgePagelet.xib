@@ -215,7 +215,7 @@
 					<object class="NSButton" id="877583155">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{9, 85}, {213, 18}}</string>
+						<string key="NSFrame">{{9, 85}, {193, 18}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="379211560">
@@ -238,7 +238,7 @@
 					<object class="NSTextField" id="544188229">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{7, 214}, {216, 14}}</string>
+						<string key="NSFrame">{{7, 214}, {196, 14}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="706007146">
@@ -274,7 +274,7 @@
 					<object class="NSTextField" id="67915784">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{27, 10}, {196, 73}}</string>
+						<string key="NSFrame">{{27, 10}, {186, 73}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSTextFieldCell" key="NSCell" id="281126725">
@@ -294,7 +294,7 @@
 					<object class="NSButton" id="237012871">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">266</int>
-						<string key="NSFrame">{{9, 107}, {213, 18}}</string>
+						<string key="NSFrame">{{9, 107}, {193, 18}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSButtonCell" key="NSCell" id="169646981">
@@ -589,6 +589,7 @@
 					<string>5.IBEditorWindowLastContentRect</string>
 					<string>5.IBPluginDependency</string>
 					<string>5.IBUserGuides</string>
+					<string>5.IBViewEditorWindowController.showingLayoutRectangles</string>
 					<string>5.ImportedFromIB2</string>
 					<string>88.IBPluginDependency</string>
 					<string>88.ImportedFromIB2</string>
@@ -624,6 +625,7 @@
 					<object class="NSMutableArray">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 					</object>
+					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
