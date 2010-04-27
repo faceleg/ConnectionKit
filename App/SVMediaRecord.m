@@ -191,7 +191,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
                                                              // persisted yet, so test -committedValueForKey:
     {
         // Get best path we can out of the alias
-        NSString *path = [[self alias] fullPath];
+        NSString *path = [[self autosaveAlias] fullPath];
+        if (!path) path = [[self alias] fullPath];
+        if (!path) path = [[self autosaveAlias] lastKnownPath];
         if (!path) path = [[self alias] lastKnownPath];
         
         // Ignore files which are in the Trash
