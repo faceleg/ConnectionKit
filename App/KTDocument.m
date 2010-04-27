@@ -678,6 +678,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Media
 
+- (NSDictionary *)documentFileWrappers; { return [[_filenameReservations copy] autorelease]; }
+
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
 {
     NSString *preferredFilename = [wrapper preferredFilename];
@@ -714,7 +716,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     // Consult both cache to see if the name is taken
     filename = [filename lowercaseString];
-    BOOL result = ([_filenameReservations objectForKey:filename] == nil);
+    BOOL result = ([[self documentFileWrappers] objectForKey:filename] == nil);
     
     
     // The document also reserves some special cases itself

@@ -316,9 +316,11 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         
         // Tell deleted media what, if anything, to do
         NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
-        for (NSString *aKey in _filenameReservations)
+        NSDictionary *wrappers = [self documentFileWrappers];
+        
+        for (NSString *aKey in wrappers)
         {
-            id <SVDocumentFileWrapper> media = [_filenameReservations objectForKey:aKey];
+            id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
             if ([media shouldRemoveFromDocument])
             {
                 NSURL *deletionURL = [deletedMediaDirectory URLByAppendingPathComponent:aKey
@@ -345,7 +347,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         if (saveOperation == NSAutosaveOperation)
         {
             // Mark media as autosaved. #61400
-            //NSArray *media = [_filenameReservations allValues];
+            //NSArray *media = [[self documentFileWrappers] allValues];
             //[media makeObjectsPerformSelector:@selector(willAutosave)];
         }
         else
@@ -561,9 +563,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     id <SVDocumentFileWrapper> result = nil;
     
     
-    for (NSString *aKey in _filenameReservations)
+    NSDictionary *wrappers = [self documentFileWrappers];
+    for (NSString *aKey in wrappers)
     {
-        SVMediaRecord *aMediaRecord = [_filenameReservations objectForKey:aKey];
+        SVMediaRecord *aMediaRecord = [wrappers objectForKey:aKey];
         if ([media fileContentsEqualMediaRecord:aMediaRecord])
         {
             result = aMediaRecord;
