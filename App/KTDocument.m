@@ -350,6 +350,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Correct persistent store URL now that it's finished reading
         [self setURLForPersistentStoreUsingFileURL:absoluteDocumentURL];
         
+        
+        // Correct media URLs
+        //  #61400
+        
+        
+        // Finish up
         [self didReadContentsForURL:absoluteDocumentURL];
     }
     
@@ -537,10 +543,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Does this match some media already loaded? 
         // Can't call -isFilenameReserved: since it will find the file on disk and return YES
         id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:filename]; 
-        if (fileWrapper)
-        {
-            [aMediaRecord setNextObject:fileWrapper];
-        }
+        if (fileWrapper) [aMediaRecord setNextObject:fileWrapper];
         
         [self setDocumentFileWrapper:aMediaRecord forKey:filename];
     }

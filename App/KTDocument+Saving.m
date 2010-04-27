@@ -344,9 +344,9 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         if (saveOperation == NSAutosaveOperation)
         {
-            // Mark media as autosaved
-            NSArray *media = [_filenameReservations allValues];
-            [media makeObjectsPerformSelector:@selector(willAutosave)];
+            // Mark media as autosaved. #61400
+            //NSArray *media = [_filenameReservations allValues];
+            //[media makeObjectsPerformSelector:@selector(willAutosave)];
         }
         else
         {
