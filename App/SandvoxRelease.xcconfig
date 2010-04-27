@@ -2,7 +2,7 @@
 // grab SANDVOX_VERSION and SVN_VERSION
 #include "../Xcode/Configurations/Sandvox.xcconfig"
 
-// release builds are Universal, using Tiger's SDK
+// release builds are 32-bit Universal, using Leopards's SDK
 ARCHS = ppc i386
 
 GCC_PRECOMPILE_PREFIX_HEADER = YES
