@@ -42,9 +42,8 @@ static NSArray *sBadgeNames = nil;
 static NSArray *sAltStrings = nil;
 
 @interface BadgePageletDelegate ()
-- (void)setBadgeAltString:(NSString *)aBadgeAltString;
-- (void)setBadgeTitleString:(NSString *)aBadgeTitleString;
 @end
+
 
 @implementation BadgePageletDelegate
 
@@ -52,8 +51,8 @@ static NSArray *sAltStrings = nil;
 
 - (void)dealloc
 {
-	[self setBadgeAltString:nil];
-	[self setBadgeTitleString:nil];
+    self.badgeAltString = nil;
+    self.badgeTitleString = nil;
 	[super dealloc];
 }
 
@@ -107,20 +106,6 @@ static NSArray *sAltStrings = nil;
 	return sAltStrings;
 }
 
-// TJT: why aren't we just synthesizing these?
-- (void)setBadgeAltString:(NSString *)aBadgeAltString
-{
-    [aBadgeAltString retain];
-    [_badgeAltString release];
-    _badgeAltString = aBadgeAltString;
-}
-
-- (void)setBadgeTitleString:(NSString *)aBadgeTitleString
-{
-    [aBadgeTitleString retain];
-    [_badgeTitleString release];
-    _badgeTitleString = aBadgeTitleString;
-}
 
 - (NSString *)badgePreludeString
 {
@@ -134,20 +119,18 @@ static NSArray *sAltStrings = nil;
 
 
 // Use a hash to get a sort of arbitrary string for this unique document
-- (NSString *) generateBlurbVariant:(int)aVariant
+- (NSString *)generateBlurbVariant:(int)aVariant
 {
-    //NSString *seedString = [[self elementPlugInContainer] siteObjectIDURIRepresentationString];
-    //FIXME: what should we really be doing for a seedString?
-    NSString *seedString = [NSString shortUUIDString];
+    NSString *seedString = [NSString UUIDString];
     
-	NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1HashDigest];
-	unsigned char *bytes = (unsigned char *)[hashData bytes];
-	// we have a nice 20-byte hash .... now to boil this down to a very small number!
+    NSData *hashData = [[seedString dataUsingEncoding:NSASCIIStringEncoding allowLossyConversion:YES] SHA1HashDigest];
+    unsigned char *bytes = (unsigned char *)[hashData bytes];
+    // we have a nice 20-byte hash .... now to boil this down to a very small number!
 	
-	// Make a quick checksum of this
-	unsigned long long total = 0;
-	int i;
-	for ( i = 0 ; i < 20 ; i++ )
+    // Make a quick checksum of this
+    unsigned long long total = 0;
+    int i;
+    for ( i = 0 ; i < 20 ; i++ )
 	{
 		unichar theChar = bytes[i];
 		total = (total << 1) ^ theChar;
@@ -157,7 +140,7 @@ static NSArray *sAltStrings = nil;
 	
 	int stringNumber = total % [[BadgePageletDelegate sharedAltStrings] count];
 	NSString *blurb = [[BadgePageletDelegate sharedAltStrings] objectAtIndex:stringNumber];
-
+    
 	return blurb;
 }
 
@@ -171,6 +154,7 @@ static NSArray *sAltStrings = nil;
 	}
 	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
 }
+@synthesize badgeAltString = _badgeAltString;
 
 - (NSString *)badgeTitleString
 {
@@ -182,15 +166,13 @@ static NSArray *sAltStrings = nil;
 	}
 	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
 }
+@synthesize badgeTitleString = _badgeTitleString;
 
-
-// TAG 0 means not image...
-
-
+// returns title of graphic to display
 - (NSString *)currentBadgeName
 {
 	NSString *result = nil;
-	unsigned int tag = [self badgeTypeTag];
+	unsigned int tag = [self badgeTypeTag]; // TAG 0 means not image...
 	if (tag > BADGE_TEXT && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
 	{
 		result = [[BadgePageletDelegate sharedBadgeNames] objectAtIndex:tag-1];
@@ -214,6 +196,4 @@ static NSArray *sAltStrings = nil;
 
 + (Class)inspectorViewControllerClass { return [SandvoxBadgeInspector class]; }
 
-@synthesize _badgeAltString;
-@synthesize _badgeTitleString;
 @end

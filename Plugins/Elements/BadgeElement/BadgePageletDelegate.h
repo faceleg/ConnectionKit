@@ -2,7 +2,7 @@
 //  BadgePageletDelegate.h
 //  Sandvox SDK
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-20010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -35,11 +35,11 @@
 //
 
 #import "SandvoxPlugin.h"
+@class WebView;
 
 enum { BADGE_TEXT = 0 };
 // Zero is the text only version, non-zero ones are various graphical ones but there isn't any need to enumerate the differences in code....
 
-@class WebView;
 @interface BadgePageletDelegate : SVPageletPlugIn
 {
   @private
@@ -47,15 +47,15 @@ enum { BADGE_TEXT = 0 };
     BOOL    _anonymous;
     BOOL    _openLinkInNewWindow;
     
-	NSString    *_badgeAltString;
-	NSString    *_badgeTitleString;
+    NSString    *_badgeAltString;
+    NSString    *_badgeTitleString;
 }
 
 @property(nonatomic) int badgeTypeTag;
 @property(nonatomic) BOOL anonymous;
 @property(nonatomic) BOOL openLinkInNewWindow;
 
-@property (retain) NSString    *_badgeAltString;
-@property (retain) NSString    *_badgeTitleString;
+@property(nonatomic, copy) NSString *badgeAltString;
+@property(nonatomic, copy) NSString *badgeTitleString;
 @end
 
