@@ -99,8 +99,11 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 }
 
 
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 {
+    [super awakeFromInsertIntoPage:page];
+    
+    
 	id element = [self delegateOwner];
 	
 	if (isNewObject)
@@ -108,7 +111,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
 		// Set up default bunch of fields
-		NSString *language = [[SVHTMLContext currentContext] language];
+		NSString *language = [page language];
 		NSMutableArray *fields = [NSMutableArray array];
 		
 		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
