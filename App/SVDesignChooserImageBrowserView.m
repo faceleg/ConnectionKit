@@ -45,7 +45,7 @@
 	}
 	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
 	[self setConstrainsToOriginalSize:YES];
-	[self setContentResizingMask:NSViewNotSizable];
+//	DO NOT DO THIS, BREAKS SCROLL BAR ON 10.5: [self setContentResizingMask:NSViewNotSizable];
 	[self setCellSize:NSMakeSize(120,80)];	// a bit wider to allow for 4 columns.  HARD TO TELL HOW THIS REALLY ADJUSTS THINGS.
 }
 

@@ -220,10 +220,12 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 	if (!sDesignScopeBarTitles)
 	{
 		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
-NSLocalizedString(@"Business", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Business",
-NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Artistic",
-NSLocalizedString(@"Family", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Family",
-								 
+NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Minimal",
+		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Glossy",
+		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Bold",
+		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Artistic",
+		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Specialty",
+				 
 								 nil];
 	}
 	NSString *result = nil;
