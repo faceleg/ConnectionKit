@@ -260,7 +260,7 @@
 									<bytes key="NSWhite">MC42NjY2NjY2ODY1AA</bytes>
 								</object>
 							</object>
-							<object class="NSColor" key="NSTextColor" id="407306803">
+							<object class="NSColor" key="NSTextColor">
 								<int key="NSColorSpace">6</int>
 								<string key="NSCatalogName">System</string>
 								<string key="NSColorName">controlTextColor</string>
@@ -288,7 +288,10 @@
 							</object>
 							<reference key="NSControlView" ref="67915784"/>
 							<reference key="NSBackgroundColor" ref="840584110"/>
-							<reference key="NSTextColor" ref="407306803"/>
+							<object class="NSColor" key="NSTextColor">
+								<int key="NSColorSpace">3</int>
+								<bytes key="NSWhite">MC40MDAwMDAwMDYAA</bytes>
+							</object>
 						</object>
 					</object>
 					<object class="NSButton" id="237012871">
