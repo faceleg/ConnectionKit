@@ -46,19 +46,19 @@
 					<object class="NSPopUpButton" id="631113392">
 						<reference key="NSNextResponder" ref="511240985"/>
 						<int key="NSvFlags">271</int>
-						<string key="NSFrame">{{44, 139}, {142, 69}}</string>
+						<string key="NSFrame">{{28, 139}, {174, 69}}</string>
 						<reference key="NSSuperview" ref="511240985"/>
 						<bool key="NSEnabled">YES</bool>
 						<object class="NSPopUpButtonCell" key="NSCell" id="323951779">
 							<int key="NSCellFlags">-2076049856</int>
-							<int key="NSCellFlags2">2048</int>
-							<object class="NSFont" key="NSSupport" id="820113075">
+							<int key="NSCellFlags2">133120</int>
+							<object class="NSFont" key="NSSupport" id="26">
 								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">13</double>
-								<int key="NSfFlags">1044</int>
+								<double key="NSSize">11</double>
+								<int key="NSfFlags">3100</int>
 							</object>
 							<reference key="NSControlView" ref="631113392"/>
-							<int key="NSButtonFlags">-2034089729</int>
+							<int key="NSButtonFlags">-2033565441</int>
 							<int key="NSButtonFlags2">130</int>
 							<string key="NSAlternateContents"/>
 							<string key="NSKeyEquivalent"/>
@@ -200,7 +200,11 @@
 										<reference key="NSTarget" ref="323951779"/>
 									</object>
 								</object>
-								<reference key="NSMenuFont" ref="820113075"/>
+								<object class="NSFont" key="NSMenuFont">
+									<string key="NSName">LucidaGrande</string>
+									<double key="NSSize">13</double>
+									<int key="NSfFlags">1044</int>
+								</object>
 							</object>
 							<int key="NSPreferredEdge">1</int>
 							<bool key="NSUsesItemFromMenu">YES</bool>
@@ -218,11 +222,7 @@
 							<int key="NSCellFlags">67239424</int>
 							<int key="NSCellFlags2">131072</int>
 							<string key="NSContents">Anonymize referrals</string>
-							<object class="NSFont" key="NSSupport" id="26">
-								<string key="NSName">LucidaGrande</string>
-								<double key="NSSize">11</double>
-								<int key="NSfFlags">3100</int>
-							</object>
+							<reference key="NSSupport" ref="26"/>
 							<reference key="NSControlView" ref="877583155"/>
 							<int key="NSButtonFlags">1211912703</int>
 							<int key="NSButtonFlags2">2</int>
