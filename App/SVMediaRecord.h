@@ -123,6 +123,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Writing Files
 - (BOOL)writeToURL:(NSURL *)URL updateFileURL:(BOOL)updateFileURL error:(NSError **)outError;
+- (void)willAutosave;
 
 
 #pragma mark Matching Media

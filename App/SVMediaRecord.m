@@ -484,6 +484,18 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+- (void)willAutosave;
+{
+    //  Time to store an autosave alias!
+    
+    NSString *path = [_URL path];
+    if (path)
+    {
+        BDAlias *alias = [BDAlias aliasWithPath:path];
+        [self setAutosaveAlias:alias];
+    }
+}
+
 #pragma mark Matching Media
 
 @synthesize nextObject = _nextObject;

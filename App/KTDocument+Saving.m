@@ -340,24 +340,33 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
 	
 	NSString *quickLookPreviewHTML = nil;
-    if (saveOperation != NSAutosaveOperation && result)
-	{
-        // Generate Quick Look preview HTML
-        quickLookPreviewHTML = [self quickLookPreviewHTML];
-        
-        
-        
-        // Build a list of all media to copy into the document
-        NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
-        NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
-        NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
-        
-        [self writeMediaRecords:mediaToWriteIntoDocument
-                          toURL:inURL
-               forSaveOperation:saveOperation
-                          error:NULL];
+    if (result)
+    {
+        if (saveOperation == NSAutosaveOperation)
+        {
+            // Mark media as autosaved
+            NSArray *media = [_filenameReservations allValues];
+            [media makeObjectsPerformSelector:@selector(willAutosave)];
+        }
+        else
+        {
+            // Generate Quick Look preview HTML
+            quickLookPreviewHTML = [self quickLookPreviewHTML];
+            
+            
+            
+            // Build a list of all media to copy into the document
+            NSString *requestName = (saveOperation == NSSaveAsOperation) ? @"MediaToCopyIntoDocument" : @"MediaAwaitingCopyIntoDocument";
+            NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:requestName];
+            NSArray *mediaToWriteIntoDocument = [context executeFetchRequest:request error:NULL];
+            
+            [self writeMediaRecords:mediaToWriteIntoDocument
+                              toURL:inURL
+                   forSaveOperation:saveOperation
+                              error:NULL];
+        }
     }
-     
+    
     
     if (result)
     {
