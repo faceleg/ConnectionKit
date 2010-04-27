@@ -119,7 +119,7 @@ static NSArray *sAltStrings = nil;
 
 
 // Use a hash to get a sort of arbitrary string for this unique document
-- (NSString *)generateBlurbVariant:(int)aVariant
+- (NSString *)generateBlurbVariant:(NSInteger)aVariant
 {
     NSString *seedString = [NSString UUIDString];
     
@@ -129,7 +129,7 @@ static NSArray *sAltStrings = nil;
 	
     // Make a quick checksum of this
     unsigned long long total = 0;
-    int i;
+    NSInteger i;
     for ( i = 0 ; i < 20 ; i++ )
 	{
 		unichar theChar = bytes[i];
@@ -138,7 +138,7 @@ static NSArray *sAltStrings = nil;
 	
 	total += aVariant;		// Offset the number just a bit
 	
-	int stringNumber = total % [[BadgePageletDelegate sharedAltStrings] count];
+	NSInteger stringNumber = total % [[BadgePageletDelegate sharedAltStrings] count];
 	NSString *blurb = [[BadgePageletDelegate sharedAltStrings] objectAtIndex:stringNumber];
     
 	return blurb;
@@ -172,7 +172,7 @@ static NSArray *sAltStrings = nil;
 - (NSString *)currentBadgeName
 {
 	NSString *result = nil;
-	unsigned int tag = [self badgeTypeTag]; // TAG 0 means not image...
+	NSUInteger tag = [self badgeTypeTag]; // TAG 0 means not image...
 	if (tag > BADGE_TEXT && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
 	{
 		result = [[BadgePageletDelegate sharedBadgeNames] objectAtIndex:tag-1];
