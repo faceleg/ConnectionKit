@@ -186,22 +186,19 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 	// If the URL has been fixed, use that!
     NSURL *result = _URL;
     
-    if (!result)
+    if (!result && [self committedValueForKey:@"filename"]) // just before copying into the document, media is
+                                                            // assigned a filename, which won't have been
+                                                            // persisted yet, so test -committedValueForKey:
     {
-        // Just before copying into the document, media is assigned a filename, which won't have been persisted yet
-        NSString *filename = [self committedValueForKey:@"filename"];
-        if (!filename)
-        {
-            // Get best path we can out of the alias
-            NSString *path = [[self alias] fullPath];
-            if (!path) path = [[self alias] lastKnownPath];
-            
-            // Ignore files which are in the Trash
-            if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
-            
-            
-            if (path) result = [NSURL fileURLWithPath:path];
-        }
+        // Get best path we can out of the alias
+        NSString *path = [[self alias] fullPath];
+        if (!path) path = [[self alias] lastKnownPath];
+        
+        // Ignore files which are in the Trash
+        if ([path rangeOfString:@".Trash"].location != NSNotFound) path = nil;
+        
+        
+        if (path) result = [NSURL fileURLWithPath:path];
     }
     
     return result;
