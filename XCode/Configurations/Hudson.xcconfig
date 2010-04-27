@@ -2,13 +2,16 @@
 // this configuration is used for command-line builds via Hudson, only
 // <http://hudson-ci.org/>
 
-// xcodebuild -target Sandvox-ExecutableOnly -configuration Release \
+// xcodebuild -target BuildAndPackageRelease -configuration Release \
 // -sdk macosx10.5 -xcconfig /path/to/Hudson.xcconfig clean build
 
-// needed so that included, built third party framework headers can be found
-BUILT_PRODUCTS_DIR = /Users/Shared/Builds
-TARGET_BUILD_DIR = /Users/Shared/Builds
+// needed so that third party frameworks and framework headers can be found
+BUILT_PRODUCTS_DIR = /tmp/SandvoxBuilds
+TARGET_BUILD_DIR = /tmp/SandvoxBuilds
+TARGET_TEMP_DIR = /tmp/SandvoxBuilds/Intermediates
 
-// needed to override -Werror?
+// needed to override -Werror for Connection Kit?
 OTHER_CFLAGS = -w
 
+// release builds are 32-bit Universal, using Leopards's SDK
+ARCHS = ppc i386
