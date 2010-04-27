@@ -631,7 +631,7 @@
 		if (NSNotFound != whereColon.location)
 		{
 			key = [keyValue substringToIndex:whereColon.location];
-			value = [[keyValue substringFromIndex:NSMaxRange(whereColon)] trim];
+			value = [[keyValue substringFromIndex:NSMaxRange(whereColon)] stringByTrimmingWhitespace];
 		}
 		else
 		{

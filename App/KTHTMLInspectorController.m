@@ -190,7 +190,7 @@ initial syntax coloring.
 			
 			if (nil == source) source = @"";
 			source = [source stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
-			source = [source trim];
+			source = [source stringByTrimmingWhitespace];
 
 			while (NSNotFound != [source rangeOfString:@"\n\n\n"].location)
 			{

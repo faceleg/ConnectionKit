@@ -1953,7 +1953,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 	// URL
 	if ([sUrlKeySet containsObject:key])
 	{
-		newValue = [newValue trim];
+		newValue = [newValue stringByTrimmingWhitespace];
 		
         KSURLFormatter *formatter = [[KSURLFormatter alloc] init];
         NSURL *newValueURL = [formatter URLFromString:newValue];

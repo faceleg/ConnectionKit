@@ -57,14 +57,14 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     
     while (nil != (object = [theEnum nextObject]) )
     {
-        NSString *ownName = [[object objectForKey:@"Name"] trim];
+        NSString *ownName = [[object objectForKey:@"Name"] stringByTrimmingWhitespace];
         // not using
         //			NSString *englishName = [[object objectForKey:@"Eng"]
         //				trim];
         //			NSString *charset = [[object objectForKey:@"Charset"] 
         //				trim];
         NSString *code = [[object objectForKey:@"Code"] 
-                          trim];
+                          stringByTrimmingWhitespace];
         [oLanguagePopup insertItemWithTitle:ownName atIndex:theIndex];
         NSMenuItem *thisItem = [oLanguagePopup itemAtIndex:theIndex];
         [thisItem setRepresentedObject:code];
