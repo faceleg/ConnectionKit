@@ -450,6 +450,23 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 #pragma mark Reading From and Writing to URLs
 
+/*!
+ *  If the media is not marked as autosaved, returns the URL it should have. Otherwise returns nil.
+ */
+- (NSURL *)URLForMediaRecord:(SVMediaRecord *)media
+                    filename:(NSString *)filename
+       inDocumentWithFileURL:(NSURL *)docURL;
+{
+    NSURL *result = nil;
+    
+    if (![media autosaveAlias] && filename)
+    {
+        result = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
+    }
+    
+    return result;
+}
+
 /*  Supplement the usual read behaviour by logging host properties and loading document display properties
  */
 - (BOOL)readFromURL:(NSURL *)absoluteURL ofType:(NSString *)typeName error:(NSError **)outError
@@ -510,8 +527,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         // Media needs to be told its location to be useful
         // Use -fileURL instead of absoluteURL since it accounts for autosave properly
         NSString *filename = [[aMediaRecord filename] lowercaseString];
-        NSURL *mediaURL = [[self fileURL] URLByAppendingPathComponent:filename isDirectory:NO];
-        [aMediaRecord forceUpdateFromURL:mediaURL];
+        
+        NSURL *mediaURL = [self URLForMediaRecord:aMediaRecord 
+                                         filename:filename
+                            inDocumentWithFileURL:[self fileURL]];
+        
+        if (mediaURL) [aMediaRecord forceUpdateFromURL:mediaURL];
         
         // Does this match some media already loaded? 
         // Can't call -isFilenameReserved: since it will find the file on disk and return YES
@@ -583,7 +604,11 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:key];
         if (![fileWrapper isDeletedFromDocument])
         {
-            [fileWrapper forceUpdateFromURL:[absoluteURL URLByAppendingPathComponent:key isDirectory:NO]];
+            NSURL *URL = [self URLForMediaRecord:(SVMediaRecord *)fileWrapper
+                                        filename:key
+                           inDocumentWithFileURL:absoluteURL];
+            
+            [fileWrapper forceUpdateFromURL:URL];
         }
     }
 }
