@@ -247,7 +247,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMNode *aNode = [[self textHTMLElement] firstChild];
     while (aNode)
     {
-        aNode = [aNode topLevelBodyTextNodeWriteToStream:context];
+        aNode = [aNode topLevelParagraphWriteToStream:context];
     }
     
     

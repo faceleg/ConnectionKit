@@ -317,7 +317,7 @@
 
 @implementation DOMNode (SVBodyText)
 
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
+- (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
 {
     //  Don't want unknown nodes
     DOMNode *result = [self nextSibling];
@@ -330,7 +330,7 @@
 
 @implementation DOMElement (SVBodyText)
 
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
+- (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
     if ([context HTMLWriter:context writeDOMElement:self])
@@ -348,7 +348,7 @@
 
 @implementation DOMText (SVBodyText)
 
-- (DOMNode *)topLevelBodyTextNodeWriteToStream:(KSHTMLWriter *)context;
+- (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
 {
     //  Only allowed  a single newline at the top level. Ignore whitespace at the very start of text
     DOMNode *previousNode = [self previousSibling];
@@ -356,7 +356,7 @@
     {
         if ([previousNode nodeType] == DOM_TEXT_NODE)
         {
-            return [super topLevelBodyTextNodeWriteToStream:context];  // delete self
+            return [super topLevelParagraphWriteToStream:context];  // delete self
         }
         else
         {
