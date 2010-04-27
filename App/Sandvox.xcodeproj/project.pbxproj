@@ -1101,7 +1101,7 @@
 		CEF9A72D117FC30700B0BBCB /* color-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A727117FC30700B0BBCB /* color-design.pdf */; };
 		CEF9A72E117FC30700B0BBCB /* dark-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A728117FC30700B0BBCB /* dark-design.pdf */; };
 		CEF9A72F117FC30700B0BBCB /* flexible-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A729117FC30700B0BBCB /* flexible-design.pdf */; };
-		CEF9A730117FC30700B0BBCB /* light-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72A117FC30700B0BBCB /* light-design.pdf */; };
+		CEF9A730117FC30700B0BBCB /* bright-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72A117FC30700B0BBCB /* bright-design.pdf */; };
 		CEF9A731117FC30700B0BBCB /* standard-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72B117FC30700B0BBCB /* standard-design.pdf */; };
 		CEF9A732117FC30700B0BBCB /* wide-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72C117FC30700B0BBCB /* wide-design.pdf */; };
 		CEF9D0C30D862C4A00BD9895 /* KTImageWebKitViewFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = CEF9D0C20D862C4A00BD9895 /* KTImageWebKitViewFactory.m */; };
@@ -2790,7 +2790,7 @@
 		CEF9A727117FC30700B0BBCB /* color-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "color-design.pdf"; path = "DesignPicker/color-design.pdf"; sourceTree = "<group>"; };
 		CEF9A728117FC30700B0BBCB /* dark-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "dark-design.pdf"; path = "DesignPicker/dark-design.pdf"; sourceTree = "<group>"; };
 		CEF9A729117FC30700B0BBCB /* flexible-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "flexible-design.pdf"; path = "DesignPicker/flexible-design.pdf"; sourceTree = "<group>"; };
-		CEF9A72A117FC30700B0BBCB /* light-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "light-design.pdf"; path = "DesignPicker/light-design.pdf"; sourceTree = "<group>"; };
+		CEF9A72A117FC30700B0BBCB /* bright-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "bright-design.pdf"; path = "DesignPicker/bright-design.pdf"; sourceTree = "<group>"; };
 		CEF9A72B117FC30700B0BBCB /* standard-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "standard-design.pdf"; path = "DesignPicker/standard-design.pdf"; sourceTree = "<group>"; };
 		CEF9A72C117FC30700B0BBCB /* wide-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "wide-design.pdf"; path = "DesignPicker/wide-design.pdf"; sourceTree = "<group>"; };
 		CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = ImageWebKitPlugin.bundle; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -3811,7 +3811,7 @@
 				CEF9A727117FC30700B0BBCB /* color-design.pdf */,
 				CEF9A728117FC30700B0BBCB /* dark-design.pdf */,
 				CEF9A729117FC30700B0BBCB /* flexible-design.pdf */,
-				CEF9A72A117FC30700B0BBCB /* light-design.pdf */,
+				CEF9A72A117FC30700B0BBCB /* bright-design.pdf */,
 				CEF9A72B117FC30700B0BBCB /* standard-design.pdf */,
 				CEF9A72C117FC30700B0BBCB /* wide-design.pdf */,
 				3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */,
@@ -6248,7 +6248,7 @@
 				CEF9A72D117FC30700B0BBCB /* color-design.pdf in Resources */,
 				CEF9A72E117FC30700B0BBCB /* dark-design.pdf in Resources */,
 				CEF9A72F117FC30700B0BBCB /* flexible-design.pdf in Resources */,
-				CEF9A730117FC30700B0BBCB /* light-design.pdf in Resources */,
+				CEF9A730117FC30700B0BBCB /* bright-design.pdf in Resources */,
 				CEF9A731117FC30700B0BBCB /* standard-design.pdf in Resources */,
 				CEF9A732117FC30700B0BBCB /* wide-design.pdf in Resources */,
 			);

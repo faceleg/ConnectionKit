@@ -163,19 +163,19 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 	switch(groupNumber)
 	{
 		case kGenreGroup:
-			result = [NSArray arrayWithObjects:@"Business", @"Artistic", @"Family", nil ];
+			result = [KTDesign genreValues];
 #ifdef DEBUG
 			result = [result arrayByAddingObject:@"NULL"];
 #endif
 			break;
 		case kColorGroup:
-			result = [NSArray arrayWithObjects:@"Light", @"Dark", @"Color", nil ];
+			result = [KTDesign colorValues];
 #ifdef DEBUG
 			result = [result arrayByAddingObject:@"NULL"];
 #endif
 			break;
 		case kWidthGroup:
-			result = [NSArray arrayWithObjects:@"Standard", @"Wide", @"Flexible", nil ];
+			result = [KTDesign widthValues];
 #ifdef DEBUG
 			result = [result arrayByAddingObject:@"NULL"];
 #endif
@@ -248,8 +248,8 @@ NSLocalizedString(@"Family", @"category for kind of design, goes below 'Choose a
 								 [NSImage imageNamed:@"wide-design"], @"Wide",
 								 [NSImage imageNamed:@"flexible-design"], @"Flexible",
 								 [NSImage imageNamed:@"dark-design"], @"Dark",
-								 [NSImage imageNamed:@"light-design"], @"Light",
-								 [NSImage imageNamed:@"color-design"], @"Color",
+								 [NSImage imageNamed:@"bright-design"], @"Bright",
+								 [NSImage imageNamed:@"color-design"], @"Colorful",
 								 nil];
 	}
 	return [sDesignScopeBarImages objectForKey:identifier];
@@ -268,9 +268,9 @@ NSLocalizedString(@"Family", @"category for kind of design, goes below 'Choose a
 								   NSLocalizedString(@"Standard width", @"type of design"), @"Standard",
 								   NSLocalizedString(@"Wide width", @"type of design"), @"Wide",
 								   NSLocalizedString(@"Flexible width", @"type of design"), @"Flexible",
-								   NSLocalizedString(@"Light", @"type of design"), @"Light",
+								   NSLocalizedString(@"Bright", @"type of design"), @"Bright",
 								   NSLocalizedString(@"Dark", @"type of design"), @"Dark",
-								   NSLocalizedString(@"Colorful", @"type of design"), @"Color",
+								   NSLocalizedString(@"Colorful", @"type of design"), @"Colorful",
 								   nil];
 	}
 	NSString *result = [sDesignScopeBarTooltips objectForKey:identifier];

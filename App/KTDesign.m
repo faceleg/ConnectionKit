@@ -45,7 +45,21 @@ const int kDesignThumbHeight = 65;
 	return result;
 }
 
-
++ (NSArray *)genreValues;
+{
+	NSArray *result = [NSArray arrayWithObjects:@"Minimal", @"Glossy", @"Bold", @"Artistic", @"Specialty", nil ];
+	return result;
+}
++ (NSArray *)colorValues;
+{
+	NSArray *result = [NSArray arrayWithObjects:@"Bright", @"Dark", @"Colorful", nil ];
+	return result;
+}
++ (NSArray *)widthValues;
+{
+	NSArray *result = [NSArray arrayWithObjects:@"Standard", @"Wide", @"Flexible", nil ];
+	return result;
+}
 
 + (void)load
 {
@@ -81,6 +95,30 @@ const int kDesignThumbHeight = 65;
 	{
 		NSLog(@"Couldn't find main.css for %@, not enabling design", [aCandidateBundle bundlePath]);
 	}
+	
+	NSMutableString *categoryProblems = [NSMutableString string];
+	NSString *genre = [aCandidateBundle objectForInfoDictionaryKey:@"genre"];
+	NSString *color = [aCandidateBundle objectForInfoDictionaryKey:@"color"];
+	NSString *width = [aCandidateBundle objectForInfoDictionaryKey:@"width"];
+	if (nil == genre || ![[KTDesign genreValues] containsObject:genre])
+	{
+		[categoryProblems appendFormat:@"genre = %@; must be %@", genre, [[KTDesign genreValues] description]];
+	}
+	if (nil == color || ![[KTDesign colorValues] containsObject:color])
+	{
+		if (![categoryProblems isEqualToString:@""]) [categoryProblems appendString:@"; "];
+		[categoryProblems appendFormat:@"color = %@: must be %@", color, [[KTDesign colorValues] description]];
+	}
+	if (nil == width || ![[KTDesign widthValues] containsObject:width])
+	{
+		if (![categoryProblems isEqualToString:@""]) [categoryProblems appendString:@"; "];
+		[categoryProblems appendFormat:@"width = %@: must be %@", width, [[KTDesign widthValues] description]];
+	}
+	if (![categoryProblems isEqualToString:@""])
+	{
+		NSLog(@"In %@: %@", [aCandidateBundle bundlePath], categoryProblems);
+	}
+	
 	return result;
 }
 
@@ -145,7 +183,7 @@ const int kDesignThumbHeight = 65;
 {
 	return [[self bundle] objectForInfoDictionaryKey:@"genre"];
 }
-- (NSString *)color	// dark, light, or color
+- (NSString *)color	// dark, light, or colorful
 {
 	return [[self bundle] objectForInfoDictionaryKey:@"color"];
 }

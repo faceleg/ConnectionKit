@@ -31,6 +31,10 @@ extern const int kDesignThumbHeight;
 + (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs;
 - (NSString *)parentBundleIdentifier;
 
++ (NSArray *)genreValues;
++ (NSArray *)colorValues;
++ (NSArray *)widthValues;
+
 - (int)numberOfSubDesigns;
 - (NSArray *)subDesigns;
 
@@ -45,7 +49,7 @@ extern const int kDesignThumbHeight;
 - (NSString *)sidebarBorderable;
 - (NSString *)calloutBorderable;
 - (NSString *)genre;	
-- (NSString *)color;	// dark, light, or color
+- (NSString *)color;	// dark, light, or colorful
 - (NSString *)width;	// standard, wide, or flexible
 - (BOOL)menusUseNonBreakingSpaces;
 - (NSColor *)mainColor;		// from RGB string, to help with thumbnail variations
