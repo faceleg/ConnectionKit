@@ -14,6 +14,7 @@
 #import "SVMediaRecord.h"
 #import "SVTextAttachment.h"
 
+#import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
 
@@ -350,22 +351,43 @@
 
 - (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
 {
-    //  Only allowed  a single newline at the top level. Ignore whitespace at the very start of text
-    DOMNode *previousNode = [self previousSibling];
-    if (previousNode)
+    NSString *text = [self textContent];
+    if ([text isWhitespace])
     {
-        if ([previousNode nodeType] == DOM_TEXT_NODE)
+        //  Only allowed  a single newline at the top level. Ignore whitespace at the very start of text
+        DOMNode *previousNode = [self previousSibling];
+        if (previousNode)
         {
-            return [super topLevelParagraphWriteToStream:context];  // delete self
+            if ([previousNode nodeType] == DOM_TEXT_NODE)
+            {
+                return [super topLevelParagraphWriteToStream:context];  // delete self
+            }
+            else
+            {
+                [self setTextContent:@"\n"];
+                [context writeNewline];
+            }
         }
-        else
-        {
-            [self setTextContent:@"\n"];
-            [context writeNewline];
-        }
+        
+        return [self nextSibling];
     }
-    
-    return [self nextSibling];
+    else
+    {
+        // Create a paragraph to contain the text
+        DOMDocument *doc = [self ownerDocument];
+        DOMElement *paragraph = [doc createElement:@"P"];
+        [[self parentNode] appendChild:paragraph];
+        
+        // Move content into the paragraph
+        DOMNode *aNode;
+        DOMNode *previousNode = [self previousSibling];
+        while ((aNode = [paragraph previousSibling]) != previousNode)
+        {
+            [paragraph insertBefore:aNode refChild:[paragraph firstChild]];
+        }
+        
+        return paragraph;
+    }
 }
 
 @end
