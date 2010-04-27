@@ -167,9 +167,16 @@
     }
     else
     {
-        // Close the element, but first, if the next sibling is equal, merge it with this one
-        [_pendingEndDOMElements addObject:element];
-        [self popOpenElement];
+        if ([[element tagName] isEqualToString:@"P"])
+        {
+            [self writeEndTag];
+        }
+        else
+        {
+            // Close the element, but first, if the next sibling is equal, merge it with this one
+            [_pendingEndDOMElements addObject:element];
+            [self popOpenElement];  // -writeEndTag internally calls -popOpenElement
+        }
         
         return [element nextSibling];
     }
@@ -361,6 +368,7 @@
                    [tagName isEqualToString:@"STRONG"] ||
                    [tagName isEqualToString:@"EM"] ||
                    [[self class] isElementWithTagNameContent:tagName] ||
+                   [tagName isEqualToString:@"P"] ||    // used to be covered by -isElementWithTagNameContent:
                    [tagName isEqualToString:@"SUP"] ||
                    [tagName isEqualToString:@"SUB"]);
     
@@ -375,8 +383,8 @@
 
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 {
-    BOOL result = ([tagName isEqualToString:@"P"] ||
-                   [tagName isEqualToString:@"BR"]);
+    // Used to report <P> elements as content. Don't actually want to since an empty <P> element should be removed
+    BOOL result = ([tagName isEqualToString:@"BR"]);
     
     return result;
 }
