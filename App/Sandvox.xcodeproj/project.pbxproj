@@ -2242,6 +2242,7 @@
 		3C682BB40D62347E00B4D485 /* NSSet+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSSet+KTExtensions.m"; sourceTree = "<group>"; };
 		3C682BB60D62348400B4D485 /* NSString+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+KTExtensions.h"; sourceTree = "<group>"; };
 		3C682BB80D62348A00B4D485 /* NSString+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+KTExtensions.m"; sourceTree = "<group>"; };
+		3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Hudson.xcconfig; path = ../XCode/Configurations/Hudson.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C6EA9461048E4E700B0763D /* SVDesignChooserWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserWindowController.h; sourceTree = "<group>"; };
 		3C6EA9471048E4E700B0763D /* SVDesignChooserWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVDesignChooserWindowController.m; sourceTree = "<group>"; };
 		3C6EA94C1048E59300B0763D /* SVDesignChooserViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVDesignChooserViewController.h; sourceTree = "<group>"; };
@@ -4525,6 +4526,7 @@
 		3C951FF70D762D9C009FCAC9 /* Configuration */ = {
 			isa = PBXGroup;
 			children = (
+				3C6B91F31186859B00EBFAA2 /* Hudson.xcconfig */,
 				3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */,
 				3CECB4FA085EA759000A9A69 /* SandvoxDebug.xcconfig */,
 				3CECB524085EA76A000A9A69 /* SandvoxRelease.xcconfig */,

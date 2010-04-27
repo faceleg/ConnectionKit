@@ -1,0 +1,14 @@
+
+// this configuration is used for command-line builds via Hudson, only
+// <http://hudson-ci.org/>
+
+// xcodebuild -target Sandvox-ExecutableOnly -configuration Release \
+// -sdk macosx10.5 -xcconfig /path/to/Hudson.xcconfig clean build
+
+// needed so that included, built third party framework headers can be found
+BUILT_PRODUCTS_DIR = /Users/Shared/Builds
+TARGET_BUILD_DIR = /Users/Shared/Builds
+
+// needed to override -Werror?
+OTHER_CFLAGS = -w
+
