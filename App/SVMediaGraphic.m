@@ -66,7 +66,7 @@
     if (media)
     {
         result = [media fileURL];
-        if (!result) result = [[media fileURLResponse] URL];
+        if (!result) result = [[media URLResponse] URL];
         [[SVHTMLContext currentContext] addMedia:media];
     }
     else

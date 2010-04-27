@@ -257,7 +257,7 @@
 - (NSURL *)addMedia:(id <SVMedia>)media;
 {
     NSURL *result = [media fileURL];
-    if (!result) result = [[(SVMediaRecord *)media fileURLResponse] URL];
+    if (!result) result = [[(SVMediaRecord *)media URLResponse] URL];
     
     return result;
 }
