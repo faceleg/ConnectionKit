@@ -26,6 +26,7 @@
 
 @interface KTLinkSourceView : NSView
 {
+  @private
 	BOOL _collectionsOnly;	// controller should set this in awakeFromNib.
 	BOOL _enabled;
 	NSWindow *_targetWindow;	// NSWindow that we are allowed to drag into.
@@ -34,7 +35,7 @@
 	
 	
 	
-	IBOutlet id <KTLinkSourceViewDelegate> _delegate; // not retained
+	id <KTLinkSourceViewDelegate> _delegate; // not retained
 	
 	struct __ktDelegateFlags {
 		unsigned begin: 1;
@@ -46,11 +47,11 @@
 	} _flags;
 }
 
-@property (assign) BOOL enabled;
-@property (assign) BOOL collectionsOnly;
-@property (copy) NSWindow *targetWindow;
-@property (copy) KTPage *connectedPage;
-@property (assign) id <KTLinkSourceViewDelegate> delegate;
+@property(nonatomic, assign) BOOL enabled;
+@property(nonatomic, assign) BOOL collectionsOnly;
+@property(nonatomic, copy) NSWindow *targetWindow;
+@property(nonatomic, copy) KTPage *connectedPage;
+@property(nonatomic, assign) IBOutlet id <KTLinkSourceViewDelegate> delegate;
 
 - (void)setConnected:(BOOL)isConnected;
 
