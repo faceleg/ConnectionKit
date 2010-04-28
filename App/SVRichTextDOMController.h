@@ -20,7 +20,6 @@
 }
 
 #pragma mark Content
-- (IBAction)insertElement:(id)sender;
 - (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertFile:(id)sender;
 

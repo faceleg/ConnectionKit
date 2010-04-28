@@ -668,14 +668,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self _insertPageletInSidebar:pagelet];
 }
 
-- (IBAction)insertElement:(id)sender;
-{
-    if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
-    {
-        [self insertPageletInSidebar:sender];
-    }
-}
-
 - (IBAction)insertFile:(id)sender;
 {
     if (![self tryToMakeSelectionPerformAction:_cmd with:sender])
