@@ -220,11 +220,11 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 	if (!sDesignScopeBarTitles)
 	{
 		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
-NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Minimal",
-		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Glossy",
-		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Bold",
-		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Artistic",
-		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"Specialty",
+NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"minimal",
+		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"glossy",
+		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"bold",
+		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"artistic",
+		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"specialty",
 				 
 								 nil];
 	}
@@ -246,12 +246,12 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 	if (!sDesignScopeBarImages)
 	{
 		sDesignScopeBarImages = [[NSDictionary alloc] initWithObjectsAndKeys:
-								 [NSImage imageNamed:@"standard-design"], @"Standard",
-								 [NSImage imageNamed:@"wide-design"], @"Wide",
-								 [NSImage imageNamed:@"flexible-design"], @"Flexible",
-								 [NSImage imageNamed:@"dark-design"], @"Dark",
-								 [NSImage imageNamed:@"bright-design"], @"Bright",
-								 [NSImage imageNamed:@"colorful-design"], @"Colorful",
+								 [NSImage imageNamed:@"standard-design"], @"standard",
+								 [NSImage imageNamed:@"wide-design"], @"wide",
+								 [NSImage imageNamed:@"flexible-design"], @"flexible",
+								 [NSImage imageNamed:@"dark-design"], @"dark",
+								 [NSImage imageNamed:@"bright-design"], @"bright",
+								 [NSImage imageNamed:@"colorful-design"], @"colorful",
 								 nil];
 	}
 	return [sDesignScopeBarImages objectForKey:identifier];
@@ -267,12 +267,12 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 	if (!sDesignScopeBarTooltips)
 	{
 		sDesignScopeBarTooltips = [[NSDictionary alloc] initWithObjectsAndKeys:
-								   NSLocalizedString(@"Standard width", @"type of design"), @"Standard",
-								   NSLocalizedString(@"Wide width", @"type of design"), @"Wide",
-								   NSLocalizedString(@"Flexible width", @"type of design"), @"Flexible",
-								   NSLocalizedString(@"Bright", @"type of design"), @"Bright",
-								   NSLocalizedString(@"Dark", @"type of design"), @"Dark",
-								   NSLocalizedString(@"Colorful", @"type of design"), @"Colorful",
+								   NSLocalizedString(@"Standard width", @"type of design"), @"standard",
+								   NSLocalizedString(@"Wide width", @"type of design"), @"wide",
+								   NSLocalizedString(@"Flexible width", @"type of design"), @"flexible",
+								   NSLocalizedString(@"Bright", @"type of design"), @"bright",
+								   NSLocalizedString(@"Dark", @"type of design"), @"dark",
+								   NSLocalizedString(@"Colorful", @"type of design"), @"colorful",
 								   nil];
 	}
 	NSString *result = [sDesignScopeBarTooltips objectForKey:identifier];

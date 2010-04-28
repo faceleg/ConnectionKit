@@ -996,6 +996,11 @@
 		CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */; };
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2D37D71187BA6C0051E238 /* colorful-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D37D61187BA6C0051E238 /* colorful-design.pdf */; };
+		CE2D42EA1188BD910051E238 /* LIEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2D42E51188BD910051E238 /* LIEffect.h */; };
+		CE2D42EB1188BD910051E238 /* LIEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2D42E61188BD910051E238 /* LIEffect.m */; };
+		CE2D42EC1188BD910051E238 /* LIFlipEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2D42E71188BD910051E238 /* LIFlipEffect.h */; };
+		CE2D42ED1188BD910051E238 /* LIFlipEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2D42E81188BD910051E238 /* LIFlipEffect.m */; };
+		CE2D42EE1188BD910051E238 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D42E91188BD910051E238 /* README.rtf */; };
 		CE35963C10F3CF340009F2CA /* jquery.bgiframe.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963410F3CF340009F2CA /* jquery.bgiframe.js */; };
 		CE35963D10F3CF340009F2CA /* jquery.dimensions.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963510F3CF340009F2CA /* jquery.dimensions.js */; };
 		CE35963E10F3CF340009F2CA /* jquery.jdMenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE35963610F3CF340009F2CA /* jquery.jdMenu.css */; };
@@ -2639,6 +2644,11 @@
 		CE27F6620D6193B200D211EA /* NSTextView+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSTextView+KTExtensions.h"; sourceTree = "<group>"; };
 		CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSTextView+KTExtensions.m"; sourceTree = "<group>"; };
 		CE2D37D61187BA6C0051E238 /* colorful-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "colorful-design.pdf"; sourceTree = "<group>"; };
+		CE2D42E51188BD910051E238 /* LIEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIEffect.h; sourceTree = "<group>"; };
+		CE2D42E61188BD910051E238 /* LIEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIEffect.m; sourceTree = "<group>"; };
+		CE2D42E71188BD910051E238 /* LIFlipEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIFlipEffect.h; sourceTree = "<group>"; };
+		CE2D42E81188BD910051E238 /* LIFlipEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIFlipEffect.m; sourceTree = "<group>"; };
+		CE2D42E91188BD910051E238 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
 		CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAsyncOffscreenWebViewController.h; sourceTree = "<group>"; };
 		CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAsyncOffscreenWebViewController.m; sourceTree = "<group>"; };
 		CE35963210F3CF340009F2CA /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
@@ -5043,6 +5053,18 @@
 			path = "Image Position";
 			sourceTree = "<group>";
 		};
+		CE2D42E41188BD910051E238 /* LIFlipEffect */ = {
+			isa = PBXGroup;
+			children = (
+				CE2D42E51188BD910051E238 /* LIEffect.h */,
+				CE2D42E61188BD910051E238 /* LIEffect.m */,
+				CE2D42E71188BD910051E238 /* LIFlipEffect.h */,
+				CE2D42E81188BD910051E238 /* LIFlipEffect.m */,
+				CE2D42E91188BD910051E238 /* README.rtf */,
+			);
+			path = LIFlipEffect;
+			sourceTree = "<group>";
+		};
 		CE35963110F3CF340009F2CA /* jdmenu */ = {
 			isa = PBXGroup;
 			children = (
@@ -5207,6 +5229,7 @@
 				CEC69AF8108E6F7D000E6E84 /* MAAttachedWindow */,
 				3C2DA6E0104C7A790037D270 /* MGScopeBar */,
 				CE75EA90111A550600474753 /* ESCursors */,
+				CE2D42E41188BD910051E238 /* LIFlipEffect */,
 			);
 			path = ThirdParty;
 			sourceTree = "<group>";
@@ -6258,6 +6281,7 @@
 				CEF9A731117FC30700B0BBCB /* standard-design.pdf in Resources */,
 				CEF9A732117FC30700B0BBCB /* wide-design.pdf in Resources */,
 				CE2D37D71187BA6C0051E238 /* colorful-design.pdf in Resources */,
+				CE2D42EE1188BD910051E238 /* README.rtf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

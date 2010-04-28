@@ -47,17 +47,17 @@ const int kDesignThumbHeight = 65;
 
 + (NSArray *)genreValues;
 {
-	NSArray *result = [NSArray arrayWithObjects:@"Minimal", @"Glossy", @"Bold", @"Artistic", @"Specialty", nil ];
+	NSArray *result = [NSArray arrayWithObjects:@"minimal", @"glossy", @"bold", @"artistic", @"specialty", nil ];
 	return result;
 }
 + (NSArray *)colorValues;
 {
-	NSArray *result = [NSArray arrayWithObjects:@"Bright", @"Dark", @"Colorful", nil ];
+	NSArray *result = [NSArray arrayWithObjects:@"bright", @"dark", @"colorful", nil ];
 	return result;
 }
 + (NSArray *)widthValues;
 {
-	NSArray *result = [NSArray arrayWithObjects:@"Standard", @"Wide", @"Flexible", nil ];
+	NSArray *result = [NSArray arrayWithObjects:@"standard", @"wide", @"flexible", nil ];
 	return result;
 }
 
