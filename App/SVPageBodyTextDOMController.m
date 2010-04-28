@@ -23,7 +23,7 @@
     SVGraphic *graphic = [SVGraphicFactoryManager graphicWithActionSender:sender
                                            insertIntoManagedObjectContext:context];
     
-    [self insertGraphic:graphic];
+    [self addGraphic:graphic placeInline:NO];
     [graphic awakeFromInsertIntoPage:[[self HTMLContext] currentPage]];
 }
 

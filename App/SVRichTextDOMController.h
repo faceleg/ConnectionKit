@@ -21,7 +21,7 @@
 
 #pragma mark Content
 - (IBAction)insertFile:(id)sender;
-- (void)insertGraphic:(SVGraphic *)graphic;
+- (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
 
 
 #pragma mark Subcontrollers

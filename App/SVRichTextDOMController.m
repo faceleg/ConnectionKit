@@ -344,7 +344,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Insertion
 
-- (void)insertGraphic:(SVGraphic *)graphic;
+- (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
 {
     SVWebEditorView *webEditor = [self webEditor];
     
@@ -353,7 +353,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                                      inManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
-    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+    [textAttachment setPlacement:
+     [NSNumber numberWithInteger:(placeInline ? SVGraphicPlacementInline : SVGraphicPlacementBlock)]];
     [textAttachment setBody:[self representedObject]];
     
     
@@ -363,17 +364,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [controller setHTMLContext:[self HTMLContext]];
     [controller setRepresentedObject:graphic];
     
-    [self addChildWebEditorItem:controller];
-    [controller release];
     
-    
-    // Generate DOM node
+    // Generate & insert DOM node
     DOMRange *selection = [webEditor selectedDOMRange];
     if ([webEditor shouldChangeTextInDOMRange:selection])
     {
         [selection insertNode:[controller HTMLElement]];
+    
+        // Insert controller – must do after node is inserted so descandant nodes can be located by ID
+        [self addChildWebEditorItem:controller];
+        [controller release];
+        
+        // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
     }
+    
     
     
     // Select item
@@ -407,7 +412,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if (media)
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
-        [self insertGraphic:image];
+        [self addGraphic:image placeInline:YES];
         
         [image awakeFromInsertIntoPage:[[self HTMLContext] currentPage]];
     }
