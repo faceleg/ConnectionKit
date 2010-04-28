@@ -631,10 +631,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [[_selectableObjectsController sidebarPageletsController] addObject:pagelet];
     
     // Add to main controller too
-    BOOL selectInserted = [_selectableObjectsController selectsInsertedObjects];
-    [_selectableObjectsController setSelectsInsertedObjects:YES];
-    [_selectableObjectsController addObject:pagelet];
-    [_selectableObjectsController setSelectsInsertedObjects:selectInserted];
+    NSArrayController *controller = [self selectedObjectsController];
+    BOOL selectInserted = [controller selectsInsertedObjects];
+    [controller setSelectsInsertedObjects:YES];
+    [controller addObject:pagelet];
+    [controller setSelectsInsertedObjects:selectInserted];
 }
 
 - (IBAction)insertPagelet:(id)sender;
