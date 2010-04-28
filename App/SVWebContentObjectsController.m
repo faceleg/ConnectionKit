@@ -8,9 +8,10 @@
 
 #import "SVWebContentObjectsController.h"
 
-#import "SVRichText.h"
+#import "SVGraphicFactoryManager.h"
 #import "SVLogoImage.h"
 #import "KTPage.h"
+#import "SVRichText.h"
 #import "SVSidebar.h"
 #import "SVSidebarPageletsController.h"
 #import "SVTitleBox.h"
@@ -32,12 +33,8 @@
 
 - (SVGraphic *)newPagelet;
 {
-    NSManagedObjectContext *moc = [[self page] managedObjectContext];
-    SVTextBox *result = [SVTextBox insertNewTextBoxIntoManagedObjectContext:moc];
-	OBASSERT(result);
-    
-    // Create matching first paragraph
-    [[result body] setString:@"<p>Test</p>"];
+    SVGraphic *result = [SVGraphicFactoryManager graphicWithActionSender:nil
+                                     insertIntoManagedObjectContext:[self managedObjectContext]];
     
     
     return [result retain]; // it's a -newFoo method

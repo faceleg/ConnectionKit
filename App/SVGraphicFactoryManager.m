@@ -12,6 +12,7 @@
 #import "SVImage.h"
 #import "SVMovie.h"
 #import "SVPlugIn.h"
+#import "SVTextBox.h"
 
 #import "NSSet+Karelia.h"
 
@@ -206,6 +207,27 @@ static SVGraphicFactoryManager *sSharedIndexManager;
 		
 		[menu insertItem:menuItem atIndex:index];   index++;
 	}
+}
+
++ (SVGraphic *)graphicWithActionSender:(id)sender
+        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVGraphic *result;
+    if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
+    {
+        id <SVGraphicFactory> factory = [sender representedObject];
+        result = [factory insertNewGraphicInManagedObjectContext:context];
+    }
+    else
+    {
+        result = [SVTextBox insertNewTextBoxIntoManagedObjectContext:context];
+        OBASSERT(result);
+        
+        // Create matching first paragraph
+        [[(SVTextBox *)result body] setString:@"<p>Test</p>"];
+    }
+    
+    return result;
 }
 
 @end

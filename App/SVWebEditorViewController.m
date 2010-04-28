@@ -651,16 +651,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Create element
     KTPage *page = [self page];
     
-    SVGraphic *pagelet;
-    if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
-    {
-        pagelet = [[sender representedObject] insertNewGraphicInManagedObjectContext:
-                   [[self page] managedObjectContext]];
-    }
-    else
-    {
-        pagelet = [[_selectableObjectsController newPagelet] autorelease];
-    }
+    SVGraphic *pagelet = [SVGraphicFactoryManager graphicWithActionSender:sender
+                                      insertIntoManagedObjectContext:[page managedObjectContext]];
     
     
     // Insert it
