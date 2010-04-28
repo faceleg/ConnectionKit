@@ -251,7 +251,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 								 [NSImage imageNamed:@"flexible-design"], @"Flexible",
 								 [NSImage imageNamed:@"dark-design"], @"Dark",
 								 [NSImage imageNamed:@"bright-design"], @"Bright",
-								 [NSImage imageNamed:@"color-design"], @"Colorful",
+								 [NSImage imageNamed:@"colorful-design"], @"Colorful",
 								 nil];
 	}
 	return [sDesignScopeBarImages objectForKey:identifier];
