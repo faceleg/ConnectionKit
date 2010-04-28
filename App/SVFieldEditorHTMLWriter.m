@@ -322,6 +322,23 @@
 // Comments have no place in text fields! Yes, they get left in the DOM until it's replaced, but you can't see them, so no harm done
 - (void)writeComment:(NSString *)comment; { }
 
+- (DOMNode *)didWriteDOMText:(DOMText *)textNode nextNode:(DOMNode *)nextNode;
+{
+    // Is the next node also text? If so, normalize by appending to textNode. #68577
+    if ([nextNode nodeType] == DOM_TEXT_NODE)
+    {
+        // Do usual writing. Produces correct output, and handles possibility of a chain of unnormalized text nodes
+        DOMNode *nodeToAppend = nextNode;
+        nextNode = [nodeToAppend performSelector:@selector(writeHTMLToContext:) withObject:self];
+        
+        // Delete node by appending to ourself
+        [textNode appendData:[nodeToAppend nodeValue]];
+        [[nodeToAppend parentNode] removeChild:nodeToAppend];
+    }
+    
+    return [super didWriteDOMText:textNode nextNode:nextNode];
+}
+
 #pragma mark Primitive Writing
 
 - (void)writeString:(NSString *)string
