@@ -116,7 +116,9 @@ const int kDesignThumbHeight = 65;
 	}
 	if (![categoryProblems isEqualToString:@""])
 	{
-		NSLog(@"In %@: %@", [aCandidateBundle bundlePath], categoryProblems);
+		DJW((@"TO NSLOG: In %@: %@", [aCandidateBundle bundlePath], categoryProblems));
+		
+		// Should be NSLog though...
 	}
 	
 	return result;
