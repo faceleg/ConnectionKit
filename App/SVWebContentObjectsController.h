@@ -23,7 +23,6 @@
 }
 
 // More specialised than -newObject
-- (SVGraphic *)newPagelet;
 - (BOOL)sidebarPageletAppearsOnAncestorPage:(SVGraphic *)pagelet;
 
 // Provides extra contextual information on top of -managedObjectContext

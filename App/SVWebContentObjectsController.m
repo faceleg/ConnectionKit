@@ -31,15 +31,6 @@
     [super dealloc];
 }
 
-- (SVGraphic *)newPagelet;
-{
-    SVGraphic *result = [SVGraphicFactoryManager graphicWithActionSender:nil
-                                     insertIntoManagedObjectContext:[self managedObjectContext]];
-    
-    
-    return [result retain]; // it's a -newFoo method
-}
-
 @synthesize page = _page;
 - (void)setPage:(KTPage *)page
 {
