@@ -260,10 +260,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Context holds the controllers. We need to send them over to the Web Editor.
-    // Doing so will populate _selectableObjectsController, so need to clear out its content & remember the selection first
+    // Doing so will populate .selectedObjectsController, so need to clear out its content & remember the selection first
     
-    NSArray *selection = [_selectableObjectsController selectedObjects];
-    [_selectableObjectsController setContent:nil];
+    NSArray *selection = [[self selectedObjectsController] selectedObjects];
+    [[self selectedObjectsController] setContent:nil];
     
     NSArray *controllers = [[self HTMLContext] webEditorItems];
     NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] init];
@@ -286,7 +286,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setSidebarPageletItems:sidebarPageletItems];
     [sidebarPageletItems release];
         
-    [_selectableObjectsController setSelectedObjects:selection];    // restore selection
+    [[self selectedObjectsController] setSelectedObjects:selection];    // restore selection
     
     
     
@@ -466,7 +466,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
     id anObject = [item representedObject];
-    if (anObject) [_selectableObjectsController addObject:anObject];
+    if (anObject) [[self selectedObjectsController] addObject:anObject];
     
     
     // Register descendants
@@ -885,13 +885,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
 {
     NSArray *objects = [items valueForKey:@"representedObject"];
-    if ([objects isEqualToArray:[_selectableObjectsController selectedObjects]])
+    if ([objects isEqualToArray:[[self selectedObjectsController] selectedObjects]])
     {
-        [_selectableObjectsController remove:self];
+        [[self selectedObjectsController] remove:self];
     }
     else
     {
-        [_selectableObjectsController removeObjects:objects];
+        [[self selectedObjectsController] removeObjects:objects];
     }
     
     return YES;
@@ -1079,7 +1079,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     if (![self isUpdating])
     {
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
-        result = [_selectableObjectsController setSelectedObjects:objects insertIfNeeded:YES];
+        result = [[self selectedObjectsController] setSelectedObjects:objects];
     }
     
     return result;
@@ -1089,7 +1089,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     if (![[self webEditor] selectedDOMRange])
     {
-        SVLink *link = [_selectableObjectsController valueForKeyPath:@"selection.link"];
+        SVLink *link = [[self selectedObjectsController] valueForKeyPath:@"selection.link"];
         
         if (NSIsControllerMarker(link))
         {
@@ -1108,7 +1108,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     if (![sender selectedDOMRange])
     {
         SVLink *link = [actionSender selectedLink];
-        [_selectableObjectsController setValue:link forKeyPath:@"selection.link"];
+        [[self selectedObjectsController] setValue:link forKeyPath:@"selection.link"];
         return YES;
     }
     

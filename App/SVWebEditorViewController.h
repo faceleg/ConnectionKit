@@ -76,7 +76,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 // Everything here should be KVO-compliant
 @property(nonatomic, retain) KTPage *page;  // reloads
-@property(nonatomic, retain, readonly) id <KSCollectionController> selectedObjectsController;
+@property(nonatomic, retain, readonly) NSArrayController *selectedObjectsController;
 @property(nonatomic, readonly) SVTextDOMController *focusedTextController;    // KVO-compliant
 
 @property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
