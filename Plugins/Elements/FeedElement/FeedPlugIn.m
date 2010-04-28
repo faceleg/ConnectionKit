@@ -1,5 +1,5 @@
 //
-//  FeedPageletDelegate.m
+//  FeedPlugin.m
 //  Sandvox SDK
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "FeedPageletDelegate.h"
+#import "FeedPlugIn.h"
 
 
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"

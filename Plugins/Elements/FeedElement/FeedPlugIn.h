@@ -1,5 +1,5 @@
 //
-//  FeedPageletDelegate.h
+//  FeedPlugin.h
 //  Sandvox SDK
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
