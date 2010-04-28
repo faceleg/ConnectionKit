@@ -332,6 +332,8 @@
 		2759CCA0103976D800E2C046 /* SVWebContentAreaController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */; };
 		275AA3900D7844BB009F98AA /* KTArchivePage.h in Headers */ = {isa = PBXBuildFile; fileRef = 275AA38E0D7844BB009F98AA /* KTArchivePage.h */; };
 		275AA3910D7844BB009F98AA /* KTArchivePage.m in Sources */ = {isa = PBXBuildFile; fileRef = 275AA38F0D7844BB009F98AA /* KTArchivePage.m */; };
+		2764AA1E1188D16C00D8E1BB /* SVPageBodyTextDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2764AA1C1188D16C00D8E1BB /* SVPageBodyTextDOMController.h */; };
+		2764AA1F1188D16C00D8E1BB /* SVPageBodyTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2764AA1D1188D16C00D8E1BB /* SVPageBodyTextDOMController.m */; };
 		276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */; };
 		2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = 276505990EADF91900461A0E /* KTPage+Internal.h */; };
 		2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */; };
@@ -1816,6 +1818,8 @@
 		2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebContentAreaController.m; sourceTree = "<group>"; };
 		275AA38E0D7844BB009F98AA /* KTArchivePage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTArchivePage.h; sourceTree = "<group>"; };
 		275AA38F0D7844BB009F98AA /* KTArchivePage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTArchivePage.m; sourceTree = "<group>"; };
+		2764AA1C1188D16C00D8E1BB /* SVPageBodyTextDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageBodyTextDOMController.h; sourceTree = "<group>"; };
+		2764AA1D1188D16C00D8E1BB /* SVPageBodyTextDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageBodyTextDOMController.m; sourceTree = "<group>"; };
 		276503470EAD29D200461A0E /* KTAbstractPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTAbstractPage+Internal.h"; sourceTree = "<group>"; };
 		276505990EADF91900461A0E /* KTPage+Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTPage+Internal.h"; sourceTree = "<group>"; };
 		2765061C0EAE417200461A0E /* NSDocument+KTExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSDocument+KTExtensions.h"; sourceTree = "<group>"; };
@@ -3289,6 +3293,8 @@
 				2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */,
 				27D9A257117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h */,
 				27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */,
+				2764AA1C1188D16C00D8E1BB /* SVPageBodyTextDOMController.h */,
+				2764AA1D1188D16C00D8E1BB /* SVPageBodyTextDOMController.m */,
 			);
 			name = "Text DOM Controllers";
 			sourceTree = "<group>";
@@ -5559,6 +5565,7 @@
 				273B438411786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.h in Headers */,
 				273B443A1179046500A275E6 /* SVDocumentFileWrapper.h in Headers */,
 				27D9A259117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h in Headers */,
+				2764AA1E1188D16C00D8E1BB /* SVPageBodyTextDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6973,6 +6980,7 @@
 				273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */,
 				27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */,
 				2792AD9011844DFE001FDACE /* KSHTMLWriter+HTMLElements.m in Sources */,
+				2764AA1F1188D16C00D8E1BB /* SVPageBodyTextDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

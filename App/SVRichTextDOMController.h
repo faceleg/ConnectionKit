@@ -20,8 +20,8 @@
 }
 
 #pragma mark Content
-- (IBAction)insertPagelet:(id)sender;
 - (IBAction)insertFile:(id)sender;
+- (void)insertGraphic:(SVGraphic *)graphic;
 
 
 #pragma mark Subcontrollers

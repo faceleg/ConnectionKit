@@ -385,11 +385,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
 }
 
-- (IBAction)insertPagelet:(id)sender;
-{
-    // TODO: Make the insertion
-}
-
 - (IBAction)insertFile:(id)sender;
 {
     NSWindow *window = [[[self HTMLElement] documentView] window];
