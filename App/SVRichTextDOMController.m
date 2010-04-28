@@ -26,6 +26,7 @@
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorView.h"
+#import "SVWebEditorViewController.h"
 
 #import "NSDictionary+Karelia.h"
 #import "NSString+Karelia.h"
@@ -372,6 +373,15 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [selection insertNode:[controller HTMLElement]];
         [webEditor didChangeText];
+    }
+    
+    
+    // Select item
+    NSArrayController *selectionController =
+    [[self webEditorViewController] selectedObjectsController];
+    if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
+    {
+        [webEditor setSelectedItems:[NSArray arrayWithObject:controller]];
     }
 }
 
