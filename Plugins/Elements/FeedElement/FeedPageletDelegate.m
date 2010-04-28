@@ -2,7 +2,7 @@
 //  FeedPageletDelegate.m
 //  Sandvox SDK
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -47,9 +47,17 @@
 
 @implementation FeedPageletDelegate
 
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:@"max", @"url", @"key", @"openLinksInNewWindow", nil];
+}
+
+
 #pragma mark -
 #pragma mark Initialization
 
+// still exists, but deprecated
+// use awakeFromInsertIntoPage or awakeFromFetch instead
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
 {
 	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
@@ -72,6 +80,8 @@
 	}
 }
 
+
+// no longer exists, use NSPasteboardReading protocol instead, look for example
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 {
 	[super awakeFromDragWithDictionary:aDictionary];
@@ -92,6 +102,7 @@
 #pragma mark -
 #pragma mark URL
 
+// now irrelevant, use standard key/value validation methods, if nec., instread
 - (BOOL)validatePluginValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError;
 {
 	BOOL result = YES;
@@ -117,6 +128,7 @@
 	return result;
 }
 
+// should return a URL
 - (NSString *)urlAsHTTP		// server wants URL in http:// format
 {
 	NSString *url = [[self delegateOwner] valueForKey:@"url"];
@@ -127,6 +139,7 @@
 	return url;
 }
 
+// should return a URL
 - (NSString *)host		// server wants URL in http:// format
 {
 	NSString *urlString = [[self delegateOwner] valueForKey:@"url"];
@@ -150,6 +163,8 @@
 	return result;
 }
 
+
+// no longer doable, just return NO for now
 - (BOOL)isPage
 {
 	id container = [self delegateOwner];
@@ -158,6 +173,10 @@
 
 #pragma mark -
 #pragma mark Plugin
+
+// need to tell context while generating 
+
+// writeHTML override, figure this out, tell writeHTML which doc type is needed, then call super
 
 /*	With links set to open in a new window, we must use transitional XHTML.
  */
@@ -175,6 +194,9 @@
 
 #pragma mark -
 #pragma mark Data Source
+
+// implement pasteboard protocol instead, look for example, youtube?
+// NSPasteboardReading (back ported to 10.5)
 
 + (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
@@ -293,5 +315,8 @@
     
     return result;
 }
+
+// test drag and drop by dragging into sidebar Area
+
 
 @end
