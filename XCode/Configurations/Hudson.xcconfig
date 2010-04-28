@@ -6,9 +6,9 @@
 // -sdk macosx10.5 -xcconfig /path/to/Hudson.xcconfig clean build
 
 // needed so that third party frameworks and framework headers can be found
-BUILT_PRODUCTS_DIR = /tmp/SandvoxBuilds
-TARGET_BUILD_DIR = /tmp/SandvoxBuilds
-TARGET_TEMP_DIR = /tmp/SandvoxBuilds/Intermediates
+BUILT_PRODUCTS_DIR = /tmp/Hudson
+TARGET_BUILD_DIR = /tmp/Hudson
+//TARGET_TEMP_DIR = /tmp/SandvoxBuilds/Intermediates
 
 // needed to override -Werror for Connection Kit?
 OTHER_CFLAGS = -w
