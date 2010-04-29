@@ -67,7 +67,7 @@
         if ( nil != theURL )
         {
             self.url = theURL;
-            [[self container] setTitle:[theTitle stringByEscapingHTMLEntities]];
+            [[self container] setTitle:theTitle];
         }
     }
 }
@@ -120,28 +120,24 @@
 //	return result;
 //}
 
-// should return a URL
-- (NSString *)urlAsHTTP		// server wants URL in http:// format
+- (NSURL *)urlAsHTTP		// server requires http:// scheme
 {
-	NSString *url = [[self delegateOwner] valueForKey:@"url"];
-	if ([url hasPrefix:@"feed://"])	// convert feed://
+    NSURL *result = self.url;
+	if ( [[result scheme] isEqualToString:@"feed://"] )	// convert feed://
 	{
-		url = [NSString stringWithFormat:@"http://%@", [url substringFromIndex:7]];
+        result = [[[NSURL alloc] initWithScheme:@"http://" host:[result host] path:[result path]] autorelease];
 	}
-	return url;
+	return result;
 }
 
-// should return a URL
-- (NSString *)host		// server wants URL in http:// format
+- (NSString *)host
 {
-	NSString *urlString = [[self delegateOwner] valueForKey:@"url"];
-	NSURL *asURL = [KSURLFormatter URLFromString:urlString];
-	NSString *host = [asURL host];
-	if (nil == host)
-	{
-		host = @"";
-	}
-	return host;
+    NSString *result = [self.url host];
+    if ( !result )
+    {
+        result = @"";
+    }
+    return result;
 }
 
 /*!	We make a digest of a the "h" parameter so that our server will be less likely to be 
@@ -149,18 +145,19 @@
 */
 - (NSString *)key
 {
-	NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", [self urlAsHTTP]];
+	NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", [[self urlAsHTTP] absoluteString]];
 	NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
-	NSString *result = [data sha1DigestString];
-	return result;
+	return [data sha1DigestString];
 }
 
 
-// no longer doable, just return NO for now
 - (BOOL)isPage
 {
-	id container = [self delegateOwner];
-	return ( [container isKindOfClass:[KTPage class]] );
+//	id container = [self delegateOwner];
+//	return ( [container isKindOfClass:[KTPage class]] );
+    
+    //FIXME: no longer doable, just return NO for now
+    return NO;
 }
 
 #pragma mark -
@@ -174,7 +171,7 @@
  */
 - (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
 {
-	if ([[self delegateOwner] boolForKey:@"openLinksInNewWindow"])
+	if (self.openLinksInNewWindow)
 	{
 		int *docType = (int *)aDocTypePointer;
 		if (*docType > KTXHTMLTransitionalDocType)
