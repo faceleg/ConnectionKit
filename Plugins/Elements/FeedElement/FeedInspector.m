@@ -11,4 +11,6 @@
 
 @implementation FeedInspector
 
+- (NSString *)nibName { return @"FeedInspector"; }
+
 @end
