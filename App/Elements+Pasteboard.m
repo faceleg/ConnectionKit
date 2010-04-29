@@ -252,10 +252,6 @@
 	[result setFileName:suggestedFileName];
 	
 	
-	// Wake up the page
-    [result awakeFromBundleAsNewlyCreatedObject:NO];
-	
-	
 	return result;
 }
 
