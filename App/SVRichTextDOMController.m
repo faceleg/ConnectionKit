@@ -61,6 +61,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self removeObserver:self forKeyPath:@"representedObject.string"];
     
     // Release ivars
+    OBASSERT(!_changeHTMLContext);
     
     [super dealloc];
 }
@@ -141,8 +142,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         // Prepare to write HTML
         NSMutableString *editingHTML = [[NSMutableString alloc] init];
-        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:editingHTML];
-        [context copyPropertiesFromContext:[self HTMLContext]];
+        OBASSERT(!_changeHTMLContext);
+        _changeHTMLContext = [[SVWebEditorHTMLContext alloc] initWithStringWriter:editingHTML];
+        [_changeHTMLContext copyPropertiesFromContext:[self HTMLContext]];
         
         
         // Try to de-archive custom HTML
@@ -153,8 +155,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            [attributedHTML writeHTMLToContext:context];
-            result = NO;
+            [attributedHTML writeHTMLToContext:_changeHTMLContext];
         }
         
         // Fallback to interpreting standard pboard data
@@ -167,11 +168,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             
             if (graphics)
             {
-                [context push];
-                [SVContentObject writeContentObjects:graphics];
-                [context pop];
-                
-                result = NO;
+                [SVContentObject writeContentObjects:graphics inContext:_changeHTMLContext];
             }
         }
         
@@ -180,23 +177,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         // Insert HTML into the DOM
         DOMHTMLDocument *domDoc = (DOMHTMLDocument *)[node ownerDocument];
+        
         DOMDocumentFragment *fragment = [domDoc
                                          createDocumentFragmentWithMarkupString:editingHTML
                                          baseURL:nil];
+        [editingHTML release];
         
         [[node mutableChildDOMNodes] removeAllObjects];
         [node appendChildNodes:[fragment childNodes]];
-        
-        
-        // Insert DOM controllers. Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
-        for (SVWebEditorItem *anItem in [context webEditorItems])
-        {
-            if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
-        }
-        
-        
-        [context release];
-        [editingHTML release];
     }
     
     
@@ -235,6 +223,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)webEditorTextDidChange;
 {    
+    // Are there DOM Controllers from the change waiting to be inserted?
+    if (_changeHTMLContext)
+    {
+        for (SVWebEditorItem *anItem in [_changeHTMLContext webEditorItems])
+        {
+            // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
+            if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
+        }
+        
+        [_changeHTMLContext release]; _changeHTMLContext = nil;
+    }
+        
+        
+    
+    
     //  Write the whole out using a special stream
     
        

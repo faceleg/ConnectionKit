@@ -9,12 +9,14 @@
 #import "SVTextDOMController.h"
 
 
-@class SVRichText, SVBodyElement, SVGraphic, SVParagraphedHTMLWriter;
+@class SVRichText, SVBodyElement, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
 
 
 @interface SVRichTextDOMController : SVTextDOMController
 {        
-    BOOL    _isUpdating;    
+    BOOL    _isUpdating;
+    
+    SVWebEditorHTMLContext  *_changeHTMLContext;
     
     DOMHTMLAnchorElement    *_selectedLink;
 }
