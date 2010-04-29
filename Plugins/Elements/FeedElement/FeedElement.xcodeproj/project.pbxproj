@@ -102,12 +102,12 @@
 			children = (
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3CA9FF510D63C34000815310 /* FeedPagelet.nib */,
+				3C0AB90D11877E790005584A /* FeedInspector.xib */,
 				3CA9FF530D63C34000815310 /* Localizable.strings */,
 				3CA9FF4B0D63C31F00815310 /* FeedPlugInTemplate.html */,
 				3CA9FF4C0D63C31F00815310 /* rsspagelet.icns */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3CA9FF6C0D63C3A800815310 /* License.rtf */,
-				3C0AB90D11877E790005584A /* FeedInspector.xib */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
