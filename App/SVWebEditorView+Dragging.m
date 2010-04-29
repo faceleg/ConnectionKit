@@ -418,10 +418,6 @@
         
         if (dragImage)
         {
-            // Moving an item is a 2 step process. Have to group the undo ops to make them appear as 1.
-            NSUndoManager *undoManager = [self undoManager];
-            [undoManager beginUndoGrouping];
-            
             [self dragImage:dragImage
                          at:dragImageRect
                      offset:NSZeroSize
@@ -429,8 +425,6 @@
                  pasteboard:pboard
                      source:self
                   slideBack:YES];
-            
-            [undoManager endUndoGrouping]; 
         }
     }
     
