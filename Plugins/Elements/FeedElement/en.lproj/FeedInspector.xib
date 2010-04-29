@@ -30,7 +30,7 @@
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="874183983">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="657107513">
-				<string key="NSClassName">KTPagelet</string>
+				<string key="NSClassName">FeedInspector</string>
 			</object>
 			<object class="NSCustomObject" id="1069706273">
 				<string key="NSClassName">FirstResponder</string>
@@ -435,52 +435,21 @@
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
 			</object>
-			<object class="NSObjectController" id="445938471">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>max</string>
-					<string>url</string>
-					<string>useLiveFeed</string>
-					<string>pluginProperties.url</string>
-					<string>pluginProperties.max</string>
-					<string>openLinksInNewWindow</string>
-					<string>summaryChars</string>
-				</object>
-				<string key="NSObjectClassName">KTPagelet</string>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.max</string>
-						<reference key="source" ref="347076910"/>
-						<reference key="destination" ref="445938471"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="347076910"/>
-							<reference key="NSDestination" ref="445938471"/>
-							<string key="NSLabel">value: selection.max</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.max</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">85</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.url</string>
+						<string key="label">value: inspectedObjectsController.selection.url</string>
 						<reference key="source" ref="602456663"/>
-						<reference key="destination" ref="445938471"/>
+						<reference key="destination" ref="657107513"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="602456663"/>
-							<reference key="NSDestination" ref="445938471"/>
-							<string key="NSLabel">value: selection.url</string>
+							<reference key="NSDestination" ref="657107513"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.url</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.url</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.url</string>
 							<object class="NSDictionary" key="NSOptions">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSArray" key="dict.sortedKeys">
@@ -497,71 +466,87 @@
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">86</int>
+					<int key="connectionID">151</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.max</string>
-						<reference key="source" ref="820867612"/>
-						<reference key="destination" ref="445938471"/>
+						<string key="label">value: inspectedObjectsController.selection.max</string>
+						<reference key="source" ref="347076910"/>
+						<reference key="destination" ref="657107513"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="820867612"/>
-							<reference key="NSDestination" ref="445938471"/>
-							<string key="NSLabel">value: selection.max</string>
+							<reference key="NSSource" ref="347076910"/>
+							<reference key="NSDestination" ref="657107513"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.max</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.max</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.max</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">100</int>
+					<int key="connectionID">154</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.openLinksInNewWindow</string>
-						<reference key="source" ref="12524464"/>
-						<reference key="destination" ref="445938471"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="12524464"/>
-							<reference key="NSDestination" ref="445938471"/>
-							<string key="NSLabel">value: selection.openLinksInNewWindow</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.openLinksInNewWindow</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">113</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.summaryChars</string>
+						<string key="label">value: inspectedObjectsController.selection.summaryChars</string>
 						<reference key="source" ref="837173491"/>
-						<reference key="destination" ref="445938471"/>
+						<reference key="destination" ref="657107513"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="837173491"/>
-							<reference key="NSDestination" ref="445938471"/>
-							<string key="NSLabel">value: selection.summaryChars</string>
+							<reference key="NSDestination" ref="657107513"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.summaryChars</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.summaryChars</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.summaryChars</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">133</int>
+					<int key="connectionID">156</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.summaryChars</string>
-						<reference key="source" ref="55078962"/>
-						<reference key="destination" ref="445938471"/>
+						<string key="label">value: inspectedObjectsController.selection.openLinksInNewWindow</string>
+						<reference key="source" ref="12524464"/>
+						<reference key="destination" ref="657107513"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="55078962"/>
-							<reference key="NSDestination" ref="445938471"/>
-							<string key="NSLabel">value: selection.summaryChars</string>
+							<reference key="NSSource" ref="12524464"/>
+							<reference key="NSDestination" ref="657107513"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.openLinksInNewWindow</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.summaryChars</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.openLinksInNewWindow</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">135</int>
+					<int key="connectionID">158</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.max</string>
+						<reference key="source" ref="820867612"/>
+						<reference key="destination" ref="657107513"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="820867612"/>
+							<reference key="NSDestination" ref="657107513"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.max</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.max</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">160</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.summaryChars</string>
+						<reference key="source" ref="55078962"/>
+						<reference key="destination" ref="657107513"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="55078962"/>
+							<reference key="NSDestination" ref="657107513"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.summaryChars</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.summaryChars</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">162</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -721,12 +706,6 @@
 						<reference key="parent" ref="1034569472"/>
 					</object>
 					<object class="IBObjectRecord">
-						<int key="objectID">65</int>
-						<reference key="object" ref="445938471"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">Pagelet Controller</string>
-					</object>
-					<object class="IBObjectRecord">
 						<int key="objectID">138</int>
 						<reference key="object" ref="744153836"/>
 						<reference key="parent" ref="1061521490"/>
@@ -843,8 +822,6 @@
 					<string>58.ImportedFromIB2</string>
 					<string>6.IBPluginDependency</string>
 					<string>6.ImportedFromIB2</string>
-					<string>65.IBPluginDependency</string>
-					<string>65.ImportedFromIB2</string>
 					<string>69.IBPluginDependency</string>
 					<string>69.ImportedFromIB2</string>
 					<string>7.IBPluginDependency</string>
@@ -905,8 +882,6 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="unlocalizedProperties">
@@ -925,11 +900,19 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">149</int>
+			<int key="maxID">162</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">FeedInspector</string>
+					<string key="superclassName">SVInspectorViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">FeedInspector.h</string>
+					</object>
+				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">FirstResponder</string>
 					<string key="superclassName">NSObject</string>
@@ -938,40 +921,15 @@
 						<string key="minorKey"/>
 					</object>
 				</object>
+			</object>
+			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
+				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTAbstractPlugin</string>
-					<string key="superclassName">KTManagedObject</string>
-					<object class="NSMutableDictionary" key="outlets">
-						<string key="NS.key.0">myDelegate</string>
-						<string key="NS.object.0">id</string>
-					</object>
+					<string key="className">SVInspectorViewController</string>
+					<string key="superclassName">NSViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">KTManagedObject</string>
-					<string key="superclassName">NSManagedObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">KTPagelet</string>
-					<string key="superclassName">KTAbstractPlugin</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSManagedObject</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../App/SVInspectorViewController.h</string>
 					</object>
 				</object>
 			</object>
@@ -1061,14 +1019,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSController</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSFormatter</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -1077,25 +1027,9 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSManagedObject</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">CoreData.framework/Headers/NSManagedObject.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSManagedObjectContext</string>
-					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">CoreData.framework/Headers/NSManagedObjectContext.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSMenu</string>
 					<string key="superclassName">NSObject</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="72956282">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="503284208">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">AppKit.framework/Headers/NSMenu.h</string>
 					</object>
@@ -1168,7 +1102,7 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
-					<reference key="sourceIdentifier" ref="72956282"/>
+					<reference key="sourceIdentifier" ref="503284208"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
@@ -1353,14 +1287,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSObjectController</string>
-					<string key="superclassName">NSController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSObjectController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSResponder</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
@@ -1432,6 +1358,18 @@
 					<string key="className">NSView</string>
 					<string key="superclassName">NSResponder</string>
 					<reference key="sourceIdentifier" ref="161812263"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSViewController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">view</string>
+						<string key="NS.object.0">NSView</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSViewController.h</string>
+					</object>
 				</object>
 			</object>
 		</object>
