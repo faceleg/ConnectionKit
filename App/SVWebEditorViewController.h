@@ -38,7 +38,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     NSMutableArray  *_textDOMControllers;
     
     DOMHTMLDivElement   *_sidebarDiv;
-    NSArray             *_sidebarPageletItems;
     
     // Loading
     BOOL                    _needsUpdate, _willUpdate, _autoupdate;
@@ -91,11 +90,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 // A series of methods for retrieving the Text Block to go with a bit of the webview
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
-
-
-#pragma mark Graphics
-
-@property(nonatomic, copy, readonly) NSArray *sidebarPageletItems;
 
 
 #pragma mark Content Objects

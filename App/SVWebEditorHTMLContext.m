@@ -28,6 +28,7 @@
     _items = [[NSMutableArray alloc] init];
     _objectKeyPathPairs = [[NSMutableSet alloc] init];
     _media = [[NSMutableSet alloc] init];
+    _sidebarPageletDOMControllers = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -69,6 +70,12 @@
     
     // Store controller
     [self willBeginWritingObjectWithDOMController:controller];
+    
+    if ([[[self cachedSidebarPageletsController] arrangedObjects] containsObject:object])
+    {
+        [_sidebarPageletDOMControllers addObject:controller];
+    }
+    
     
     // Finish up
     [controller release];
@@ -212,7 +219,10 @@
 
 #pragma mark Sidebar
 
-@synthesize sidebarPageletDOMControllers = _sidebarPageletDOMControllers;
+- (NSArray *)sidebarPageletDOMControllers
+{
+    return [[_sidebarPageletDOMControllers copy] autorelease];
+}
 
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 - (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
@@ -230,7 +240,6 @@
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
 
-- (void)setSidebarPageletDOMControllers:(NSArray *)controllers; { }
 - (NSArrayController *)cachedSidebarPageletsController; { return nil; }
 
 @end

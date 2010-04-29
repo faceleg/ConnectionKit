@@ -21,7 +21,7 @@
     
     NSMutableSet    *_media;
     
-    NSArray             *_sidebarPageletDOMControllers;
+    NSMutableArray      *_sidebarPageletDOMControllers;
     NSArrayController   *_sidebarPageletsController;
 }
 
@@ -36,7 +36,7 @@
 
 
 #pragma mark Sidebar
-@property(nonatomic, copy) NSArray *sidebarPageletDOMControllers;
+@property(nonatomic, copy, readonly) NSArray *sidebarPageletDOMControllers;
 @property(nonatomic, retain) NSArrayController *sidebarPageletsController;
 
 
@@ -59,8 +59,6 @@
 
 
 #pragma mark Sidebar
-
-- (void)setSidebarPageletDOMControllers:(NSArray *)controllers;
 
 // The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
 - (NSArrayController *)cachedSidebarPageletsController;

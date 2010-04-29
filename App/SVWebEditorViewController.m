@@ -57,7 +57,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
 
 // Pagelets
-@property(nonatomic, copy, readwrite) NSArray *sidebarPageletItems;
 - (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
 - (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
                            belowNode:(DOMNode *)node
@@ -266,26 +265,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [[self selectedObjectsController] setContent:nil];
     
     NSArray *controllers = [[self HTMLContext] webEditorItems];
-    NSMutableArray *sidebarPageletItems = [[NSMutableArray alloc] init];
         
     for (SVWebEditorItem *anItem in controllers)
     {
         // Insert into the tree if a top-level item.
         if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
-        
-        // Cheat and figure out if it's a sidebar pagelet controller
-        id anObject = [anItem representedObject];
-        if ([anObject isKindOfClass:[NSManagedObject class]] &&
-            [anObject respondsToSelector:@selector(sidebars)] &&
-            [[anObject sidebars] count] > 0)
-        {
-            [sidebarPageletItems addObject:anItem];
-        }
     }
     
-    [self setSidebarPageletItems:sidebarPageletItems];
-    [sidebarPageletItems release];
-        
     [[self selectedObjectsController] setSelectedObjects:selection];    // restore selection
     
     
@@ -515,15 +501,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Sidebar
 
-@synthesize sidebarPageletItems = _sidebarPageletItems;
-
 /*  Similar to NSTableView's concept of dropping above a given row
  */
 - (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo
 {
     NSUInteger result = NSNotFound;
     SVWebEditorView *editor = [self webEditor];
-    NSArray *pageletContentItems = [self sidebarPageletItems];
+    NSArray *pageletContentItems = [[self HTMLContext] sidebarPageletDOMControllers];
     
     
     // Ideally, we're making a drop *before* a pagelet
@@ -810,7 +794,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if (result)
         {
             // Place the drag caret to match the drop index
-            NSArray *pageletContentItems = [self sidebarPageletItems];
+            NSArray *pageletContentItems = [[self HTMLContext] sidebarPageletDOMControllers];
             if (dropIndex >= [pageletContentItems count])
             {
                 DOMNode *node = [_sidebarDiv lastChild];
@@ -1006,7 +990,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     //  When dragging within the sidebar, want to move the selected pagelets
     if ([dragInfo draggingSource] == sender)
     {
-        NSArray *sidebarPageletControllers = [self sidebarPageletItems];
+        NSArray *sidebarPageletControllers = [[self HTMLContext] sidebarPageletDOMControllers];
         for (SVDOMController *aPageletItem in [sender selectedItems])
         {
             if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
