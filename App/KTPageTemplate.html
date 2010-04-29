@@ -88,8 +88,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				<div id="page-top" class="[[if master.logo.hidden]]no-logo[[else]]has-logo[[endif]] [[if !master.siteTitle.hidden]]has-title[[else]]no-title[[endif]] [[if !master.siteSubtitle.hidden]]has-tagline[[else]]no-tagline[[endif]]">
 					<div id="title">
 [[if isRootPage]]
-[[if master.logo.hidden]]
-[[else2]]
+[[if !master.logo.hidden]]
 						<span id="logo-container">[[=master.logo.writeHTML]]</span>
 [[endif2]]
 [[if master.siteTitle.hidden]]
