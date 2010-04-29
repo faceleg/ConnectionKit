@@ -35,7 +35,7 @@
 //
 
 #import "FeedPlugIn.h"
-
+#import "FeedInspector.h"
 
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
@@ -74,51 +74,51 @@
 
 
 // no longer exists, use NSPasteboardReading protocol instead, look for example
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
-{
-	[super awakeFromDragWithDictionary:aDictionary];
-	
-	// Note: We're not using kKTDataSourceURLString  ... URL of original page .. right now.
-	
-	NSString *urlString = [aDictionary valueForKey:kKTDataSourceFeedURLString];
-	if (urlString ) {
-		[[self delegateOwner] setValue:urlString forKey:@"url"];
-	}
-	
-	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
-	if ( nil != title ) {
-		[[self delegateOwner] setTitleHTML:[title stringByEscapingHTMLEntities]];
-	}
-}
+//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
+//{
+//	[super awakeFromDragWithDictionary:aDictionary];
+//	
+//	// Note: We're not using kKTDataSourceURLString  ... URL of original page .. right now.
+//	
+//	NSString *urlString = [aDictionary valueForKey:kKTDataSourceFeedURLString];
+//	if (urlString ) {
+//		[[self delegateOwner] setValue:urlString forKey:@"url"];
+//	}
+//	
+//	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
+//	if ( nil != title ) {
+//		[[self delegateOwner] setTitleHTML:[title stringByEscapingHTMLEntities]];
+//	}
+//}
 
 #pragma mark -
 #pragma mark URL
 
 // now irrelevant, use standard key/value validation methods, if nec., instread
-- (BOOL)validatePluginValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError;
-{
-	BOOL result = YES;
-	
-	if ([inKeyPath isEqualToString:@"url"])
-	{
-		// If there is no URL prefix, use feed://
-		if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
-		{
-			*ioValue = [@"feed://" stringByAppendingString:*ioValue];
-		}
-		// Convert http:// to feed://
-		else if ([*ioValue hasPrefix:@"http://"])
-		{
-			*ioValue = [NSString stringWithFormat:@"feed://%@", [*ioValue substringFromIndex:7]];
-		}
-	}
-	else
-	{
-		result = [super validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
-	}
-	
-	return result;
-}
+//- (BOOL)validatePluginValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError;
+//{
+//	BOOL result = YES;
+//	
+//	if ([inKeyPath isEqualToString:@"url"])
+//	{
+//		// If there is no URL prefix, use feed://
+//		if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
+//		{
+//			*ioValue = [@"feed://" stringByAppendingString:*ioValue];
+//		}
+//		// Convert http:// to feed://
+//		else if ([*ioValue hasPrefix:@"http://"])
+//		{
+//			*ioValue = [NSString stringWithFormat:@"feed://%@", [*ioValue substringFromIndex:7]];
+//		}
+//	}
+//	else
+//	{
+//		result = [super validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
+//	}
+//	
+//	return result;
+//}
 
 // should return a URL
 - (NSString *)urlAsHTTP		// server wants URL in http:// format
@@ -309,6 +309,15 @@
 }
 
 // test drag and drop by dragging into sidebar Area
+
+#pragma mark -
+#pragma mark Inspector
+
++ (Class)inspectorViewControllerClass { return [FeedInspector class]; }
+
+
+#pragma mark -
+#pragma mark Properties
 
 @synthesize openLinksInNewWindow = _openLinksInNewWindow;
 @synthesize max = _max;
