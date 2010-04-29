@@ -123,9 +123,9 @@
 - (NSURL *)urlAsHTTP		// server requires http:// scheme
 {
     NSURL *result = self.url;
-	if ( [[result scheme] isEqualToString:@"feed://"] )	// convert feed://
+	if ( [[result scheme] isEqualToString:@"feed"] )	// convert feed://
 	{
-        result = [[[NSURL alloc] initWithScheme:@"http://" host:[result host] path:[result path]] autorelease];
+        result = [[[NSURL alloc] initWithScheme:@"http" host:[result host] path:[result path]] autorelease];
 	}
 	return result;
 }
