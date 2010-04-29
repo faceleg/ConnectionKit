@@ -185,6 +185,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         [[node mutableChildDOMNodes] removeAllObjects];
         [node appendChildNodes:[fragment childNodes]];
+        
+        
+        // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
+        [webEditor removeDraggedItems];
     }
     
     
