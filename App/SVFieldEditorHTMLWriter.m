@@ -344,7 +344,7 @@
 - (void)writeString:(NSString *)string
 {
     // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
-    if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self performPendingWrites];
+    if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self flush];
     
     
     // Is the last tag awaiting closure?
@@ -355,7 +355,7 @@
     [super writeString:string];
 }
 
-- (void)performPendingWrites;
+- (void)flush;
 {
     // Before actually writing the string, push through any pending Elements.
     NSArray *elements = [_pendingStartTagDOMElements copy];
@@ -374,7 +374,7 @@
     
     
     
-    [super performPendingWrites];
+    [super flush];
 }
 
 #pragma mark Tag Whitelist
