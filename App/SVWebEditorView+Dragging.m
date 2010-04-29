@@ -169,33 +169,41 @@
 {
     if (operation == NSDragOperationMove || operation == NSDragOperationDelete)
     {
-        for (SVWebEditorItem *anItem in [self draggedItems])
-        {
-            // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
-            DOMRange *range = [[self HTMLDocument] createRange];
-            [range selectNode:[anItem HTMLElement]];
-            
-            if ([self shouldChangeTextInDOMRange:range])
-            {
-                DOMHTMLElement *node = [anItem HTMLElement];
-                [[node parentNode] removeChild:node];
-                
-                [anItem removeFromParentWebEditorItem];
-                [self didChangeText];
-            }
-            
-            [range detach];
-        }
-        
-        // Remove the objects
-        [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
+        [self removeDraggedItems];
     }
     
     // Clean up
-    [_draggedItems release]; _draggedItems = nil;
+    [self forgetDraggedItems];
 }
 
 - (NSArray *)draggedItems; { return _draggedItems; }
+
+- (void)removeDraggedItems; // removes from DOM and item tree
+{
+    for (SVWebEditorItem *anItem in [self draggedItems])
+    {
+        // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
+        DOMRange *range = [[self HTMLDocument] createRange];
+        [range selectNode:[anItem HTMLElement]];
+        
+        if ([self shouldChangeTextInDOMRange:range])
+        {
+            DOMHTMLElement *node = [anItem HTMLElement];
+            [[node parentNode] removeChild:node];
+            
+            [anItem removeFromParentWebEditorItem];
+            [self didChangeText];
+        }
+        
+        [range detach];
+    }
+    
+    // Remove the objects
+    [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
+    
+    // Clean up
+    [self forgetDraggedItems];
+}
 
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
 {
