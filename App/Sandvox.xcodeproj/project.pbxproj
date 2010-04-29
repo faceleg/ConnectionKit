@@ -996,10 +996,6 @@
 		CE27F6650D6193B200D211EA /* NSImage+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6610D6193B200D211EA /* NSImage+KTExtensions.m */; };
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2D37D71187BA6C0051E238 /* colorful-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D37D61187BA6C0051E238 /* colorful-design.pdf */; };
-		CE2D42EA1188BD910051E238 /* LIEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2D42E51188BD910051E238 /* LIEffect.h */; };
-		CE2D42EB1188BD910051E238 /* LIEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2D42E61188BD910051E238 /* LIEffect.m */; };
-		CE2D42EC1188BD910051E238 /* LIFlipEffect.h in Headers */ = {isa = PBXBuildFile; fileRef = CE2D42E71188BD910051E238 /* LIFlipEffect.h */; };
-		CE2D42ED1188BD910051E238 /* LIFlipEffect.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2D42E81188BD910051E238 /* LIFlipEffect.m */; };
 		CE2D42EE1188BD910051E238 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D42E91188BD910051E238 /* README.rtf */; };
 		CE35963C10F3CF340009F2CA /* jquery.bgiframe.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963410F3CF340009F2CA /* jquery.bgiframe.js */; };
 		CE35963D10F3CF340009F2CA /* jquery.dimensions.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963510F3CF340009F2CA /* jquery.dimensions.js */; };

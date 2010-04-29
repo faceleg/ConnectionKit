@@ -22,7 +22,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 
 @interface SVPlugInGraphic ()
-- (void)setPlugIn:(NSObject <SVPageletPlugIn> *)plugIn useSerializedProperties:(BOOL)serialize;
+- (void)setPlugIn:(NSObject <SVPlugIn> *)plugIn useSerializedProperties:(BOOL)serialize;
 - (void)loadPlugIn;
 @end
 
@@ -47,7 +47,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return result;
 }
 
-+ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(id <SVPageletPlugIn>)plugIn
++ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(id <SVPlugIn>)plugIn
                          inManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVPlugInGraphic *result =
@@ -97,7 +97,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 #pragma mark Plug-in
 
-- (NSObject <SVPageletPlugIn> *)plugIn
+- (NSObject <SVPlugIn> *)plugIn
 {
 	if (!_plugIn && [self plugInIdentifier])    // during undo/redo, plugInIdentifier may not have been set up yet
 	{
@@ -110,7 +110,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 	return _plugIn;
 }
 
-- (void)setPlugIn:(NSObject <SVPageletPlugIn> *)plugIn useSerializedProperties:(BOOL)serialize;
+- (void)setPlugIn:(NSObject <SVPlugIn> *)plugIn useSerializedProperties:(BOOL)serialize;
 {
     OBASSERT(!_plugIn);
     _plugIn = [plugIn retain];
@@ -133,7 +133,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         OBASSERT(!_plugIn);
         
         // Create plug-in object
-        NSObject <SVPageletPlugIn> *plugIn = [[plugInClass alloc] init];
+        NSObject <SVPlugIn> *plugIn = [[plugInClass alloc] init];
         OBASSERTSTRING(plugIn, @"plug-in cannot be nil!");
         
         // Restore plug-in's properties

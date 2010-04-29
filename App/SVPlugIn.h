@@ -16,7 +16,7 @@
 @protocol SVPlugInContext, SVPage, SVPageletPlugInContainer;
 
 
-@protocol SVPageletPlugIn <NSObject>
+@protocol SVPlugIn <NSObject>
 
 #pragma mark Managing Life Cycle
 
@@ -108,7 +108,7 @@
 #pragma mark -
 
 
-@protocol SVIndexPlugIn <SVPageletPlugIn>
+@protocol SVIndexPlugIn <SVPlugIn>
 // We need an API! In the meantime, the protocol declaration serves as a placeholder for the registration system.
 @end
 

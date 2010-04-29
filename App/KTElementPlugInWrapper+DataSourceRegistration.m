@@ -88,7 +88,7 @@
                 
                 
                 // Try to create plug-in from property list
-                id <SVPageletPlugIn> plugIn = [[aSource alloc] 
+                id <SVPlugIn> plugIn = [[aSource alloc] 
                                                initWithPasteboardPropertyList:propertyList
                                                ofType:type];
                 
