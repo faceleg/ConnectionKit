@@ -125,7 +125,8 @@
     NSURL *result = self.url;
 	if ( [[result scheme] isEqualToString:@"feed"] )	// convert feed://
 	{
-        result = [[[NSURL alloc] initWithScheme:@"http" host:[result host] path:[result path]] autorelease];
+        NSString *string = [NSString stringWithFormat:@"http://%@", [[result absoluteString] substringFromIndex:7]];
+        result = [NSURL URLWithString:string];
 	}
 	return result;
 }
