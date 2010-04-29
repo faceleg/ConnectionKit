@@ -56,28 +56,20 @@
 #pragma mark -
 #pragma mark Initialization
 
-// still exists, but deprecated
-// use awakeFromInsertIntoPage or awakeFromFetch instead
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewObject
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page
 {
-	[super awakeFromBundleAsNewlyCreatedObject:isNewObject];
-		
-	if ( isNewObject )
-	{
-		NSURL *theURL = nil;
-		NSString *theTitle = nil;
-		if ([NSAppleScript safariFrontmostFeedURL:&theURL title:&theTitle])
-		{
-			if (nil != theURL)	// need non-nil URL to make use of the title
-			{
-				[[self delegateOwner] setObject:[theURL absoluteString] forKey:@"url"];
-				if (nil != theTitle)
-				{
-					[[self delegateOwner] setTitleHTML:[theTitle stringByEscapingHTMLEntities]];
-				}
-			}
-		}
-	}
+    [super awakeFromInsertIntoPage:page];
+    
+    NSURL *theURL = nil;
+    NSString *theTitle = nil;
+    if ([NSAppleScript safariFrontmostFeedURL:&theURL title:&theTitle])
+    {
+        if ( nil != theURL )
+        {
+            self.url = theURL;
+            [[self elementPlugInContainer] setTitle:[theTitle stringByEscapingHTMLEntities]];
+        }
+    }
 }
 
 
@@ -318,5 +310,9 @@
 
 // test drag and drop by dragging into sidebar Area
 
-
+@synthesize openLinksInNewWindow = _openLinksInNewWindow;
+@synthesize max = _max;
+@synthesize summaryChars = _summaryChars;
+@synthesize key = _key;
+@synthesize url = _url;
 @end

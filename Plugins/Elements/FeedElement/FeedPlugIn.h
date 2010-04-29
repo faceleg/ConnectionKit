@@ -38,5 +38,19 @@
 
 
 @interface FeedPlugIn : SVPageletPlugIn
+{
+    BOOL _openLinksInNewWindow;
+    NSUInteger _max;
+    NSUInteger _summaryChars;
+    
+    NSString *_key;
+    NSURL *_url;
+}
+
+@property(nonatomic) BOOL openLinksInNewWindow;
+@property(nonatomic) NSUInteger max;
+@property(nonatomic) NSUInteger summaryChars;
+@property(nonatomic, copy) NSString *key;
+@property(nonatomic, retain) NSURL *url;
 @end
 
