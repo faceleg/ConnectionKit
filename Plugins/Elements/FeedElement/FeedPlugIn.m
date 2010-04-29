@@ -36,6 +36,7 @@
 
 #import "FeedPlugIn.h"
 #import "FeedInspector.h"
+#import "KSURLFormatter.h"
 
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
@@ -126,7 +127,7 @@
 	if ( [[result scheme] isEqualToString:@"feed"] )	// convert feed://
 	{
         NSString *string = [NSString stringWithFormat:@"http://%@", [[result absoluteString] substringFromIndex:7]];
-        result = [NSURL URLWithString:string];
+        result = [KSURLFormatter URLFromString:string];
 	}
 	return result;
 }
@@ -146,7 +147,8 @@
 */
 - (NSString *)key
 {
-	NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", [[self urlAsHTTP] absoluteString]];
+    NSString *URLAsString = [[self urlAsHTTP] absoluteString];
+	NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", URLAsString];
 	NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
 	return [data sha1DigestString];
 }
@@ -164,23 +166,16 @@
 #pragma mark -
 #pragma mark Plugin
 
-// need to tell context while generating 
-
-// writeHTML override, figure this out, tell writeHTML which doc type is needed, then call super
-
-/*	With links set to open in a new window, we must use transitional XHTML.
- */
-- (void)findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
+- (void)writeHTML:(SVHTMLContext *)context
 {
-	if (self.openLinksInNewWindow)
-	{
-		int *docType = (int *)aDocTypePointer;
-		if (*docType > KTXHTMLTransitionalDocType)
-		{
-			*docType = KTXHTMLTransitionalDocType;
-		}
-	}
+    if ( self.openLinksInNewWindow )
+    {
+        // target=_blank requires Transitional doc type
+        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
+    }
+    [super writeHTML:context];
 }
+
 
 #pragma mark -
 #pragma mark Data Source
