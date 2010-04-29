@@ -59,8 +59,8 @@
 - (NSArray *)selectableTopLevelDescendants;
 
 
-#pragma mark NSResponder Aping
-// Nothing to do since we now inherit from NSResponder!
+#pragma mark Drag Source
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)flag;
 
 
 #pragma mark Resizing

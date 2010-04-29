@@ -246,7 +246,14 @@
     return result;
 }
 
-#pragma mark NSResponder Aping
+#pragma mark Dragging Source
+
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
+{
+    NSDragOperation result = NSDragOperationCopy;
+    if (isLocal) result = (result | NSDragOperationMove);
+    return result;
+}
 
 #pragma mark Resizing
 

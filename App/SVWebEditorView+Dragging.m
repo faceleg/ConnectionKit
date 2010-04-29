@@ -153,8 +153,13 @@
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
 {
-    NSDragOperation result = NSDragOperationCopy;
-    if (isLocal) result = (result | NSDragOperationMove);
+    // Only support operations that all dragged items support.
+    NSDragOperation result = NSDragOperationEvery;
+    for (SVWebEditorItem *anItem in [self draggedItems])
+    {
+        result = result & [anItem draggingSourceOperationMaskForLocal:isLocal];
+    }
+    
     return result;
 }
 
