@@ -167,6 +167,9 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 
 - (void)willRemoveObject:(id)object
 {
+    [super willRemoveObject:object];
+    
+    
     OBPRECONDITION([object isKindOfClass:[SVGraphic class]]);
     SVGraphic *pagelet = object;
                    
