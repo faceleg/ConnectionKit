@@ -1111,6 +1111,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
              fromDataSource:(WebDataSource *)dataSource;
 {
     // Force the WebView to dump its cached resources from the WebDataSource so that any change to main.css gets picked up
+    /*
     if ([[request mainDocumentURL] isEqual:[request URL]])
     {
         for (SVMediaRecord *aMediaRecord in [[self HTMLContext] media])
@@ -1122,7 +1123,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
         NSMutableURLRequest *result = [[request mutableCopy] autorelease];
         [result setCachePolicy:NSURLRequestReloadIgnoringLocalCacheData];
         return result;
-    }    
+    }    */
     
     
     // Preload main CSS
