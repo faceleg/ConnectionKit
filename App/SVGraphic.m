@@ -311,7 +311,15 @@
     
     
     // Restore title
-    [[self titleBox] awakeFromPropertyList:[propertyList objectForKey:@"titleBox"]];
+    NSDictionary *serializedTitle = [propertyList objectForKey:@"titleBox"];
+    if (serializedTitle)
+    {
+        [[self titleBox] awakeFromPropertyList:serializedTitle];
+    }
+    else
+    {
+        [self setShowsTitle:NO];
+    }
 }
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
@@ -321,7 +329,7 @@
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
     
     [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
-                    forKey:@"titleBox"];  
+                    forKey:@"titleBox"];
 }
 
 #pragma mark SVPageletPlugInContainer

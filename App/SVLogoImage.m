@@ -8,6 +8,8 @@
 
 #import "SVLogoImage.h"
 
+#import "NSManagedObject+KTExtensions.h"
+
 
 @implementation SVLogoImage
 
@@ -38,6 +40,16 @@
 {
     NSURL *result = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     return result;
+}
+
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    // Correct entity to Image
+    [propertyList setObject:@"Image" forKey:@"entity"];
 }
 
 @end
