@@ -154,11 +154,11 @@
 {
 	BOOL result = YES;
 	
-	id delegate = [self delegate];
+	/*id delegate = [self delegate];
 	if (delegate && [delegate respondsToSelector:_cmd])
 	{
 		result = [delegate shouldMaskCustomSiteOutlinePageIcon:page];
-	}
+	}*/
 	
 	return result;
 }
