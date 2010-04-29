@@ -37,6 +37,8 @@
     [_items release];
     [_objectKeyPathPairs release];
     [_media release];
+    [_sidebarPageletDOMControllers release];
+    [_sidebarPageletsController release];
     
     [super dealloc];
 }
@@ -210,6 +212,8 @@
 
 #pragma mark Sidebar
 
+@synthesize sidebarPageletDOMControllers = _sidebarPageletDOMControllers;
+
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 - (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
 
@@ -226,6 +230,7 @@
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
 
+- (void)setSidebarPageletDOMControllers:(NSArray *)controllers; { }
 - (NSArrayController *)cachedSidebarPageletsController; { return nil; }
 
 @end
