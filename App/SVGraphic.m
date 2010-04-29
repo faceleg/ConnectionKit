@@ -320,6 +320,10 @@
     {
         [self setShowsTitle:NO];
     }
+    
+    
+    // Ensure border is correct. plist may have set it to nil
+    if (![self showBorder]) [self setBordered:NO];
 }
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
