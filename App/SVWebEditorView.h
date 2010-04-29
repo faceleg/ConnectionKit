@@ -176,7 +176,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Dragging Source
 - (NSArray *)draggedItems;
-- (void)removeDraggedItems; // removes from DOM and item tree, then calls -forgetDraggedItems
+- (void)removeDraggedItems; // removes from DOM and item tree, then calls -forgetDraggedItems. You are responsible for calling -didChangeText after
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
 
 

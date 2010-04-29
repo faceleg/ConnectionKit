@@ -170,6 +170,7 @@
     if (operation == NSDragOperationMove || operation == NSDragOperationDelete)
     {
         [self removeDraggedItems];
+        [self didChangeText];
     }
     
     // Clean up
@@ -192,7 +193,6 @@
             [[node parentNode] removeChild:node];
             
             [anItem removeFromParentWebEditorItem];
-            [self didChangeText];
         }
         
         [range detach];
