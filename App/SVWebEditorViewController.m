@@ -802,25 +802,30 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSUInteger dropIndex = [self indexOfDrop:dragInfo];
     if (dropIndex != NSNotFound)
     {
-        result = NSDragOperationMove;
+        NSDragOperation mask = [dragInfo draggingSourceOperationMask];
+        result = mask & NSDragOperationMove;
+        if (!result) result = mask & NSDragOperationCopy;
         
         
-        // Place the drag caret to match the drop index
-        NSArray *pageletContentItems = [self sidebarPageletItems];
-        if (dropIndex >= [pageletContentItems count])
+        if (result)
         {
-            DOMNode *node = [_sidebarDiv lastChild];
-            DOMRange *range = [[node ownerDocument] createRange];
-            [range setStartAfter:node];
-            [[self webEditor] moveDragCaretToDOMRange:range];
-        }
-        else
-        {
-            SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
-            
-            DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
-            [range setStartBefore:[aPageletItem HTMLElement]];
-            [[self webEditor] moveDragCaretToDOMRange:range];
+            // Place the drag caret to match the drop index
+            NSArray *pageletContentItems = [self sidebarPageletItems];
+            if (dropIndex >= [pageletContentItems count])
+            {
+                DOMNode *node = [_sidebarDiv lastChild];
+                DOMRange *range = [[node ownerDocument] createRange];
+                [range setStartAfter:node];
+                [[self webEditor] moveDragCaretToDOMRange:range];
+            }
+            else
+            {
+                SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
+                
+                DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
+                [range setStartBefore:[aPageletItem HTMLElement]];
+                [[self webEditor] moveDragCaretToDOMRange:range];
+            }
         }
     }
     
