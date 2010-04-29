@@ -1,5 +1,5 @@
 //
-//  FeedPlugin.m
+//  FeedPlugIn.m
 //  Sandvox SDK
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
@@ -45,11 +45,11 @@
 // LocalizedStringInThisBundle(@"item summary", "String_On_Page_Template - example of a summary of an RSS item")
 
 
-@implementation FeedPageletDelegate
+@implementation FeedPlugIn
 
 + (NSSet *)plugInKeys
 { 
-    return [NSSet setWithObjects:@"max", @"url", @"key", @"openLinksInNewWindow", nil];
+    return [NSSet setWithObjects:@"url", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
 }
 
 

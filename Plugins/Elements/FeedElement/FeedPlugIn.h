@@ -1,5 +1,5 @@
 //
-//  FeedPlugin.h
+//  FeedPlugIn.h
 //  Sandvox SDK
 //
 //  Copyright 2004-2010 Karelia Software. All rights reserved.
@@ -37,6 +37,6 @@
 #import "SandvoxPlugin.h"
 
 
-@interface FeedPageletDelegate : SVPageletPlugIn <KTDataSource>
+@interface FeedPlugIn : SVPageletPlugIn
 @end
 
