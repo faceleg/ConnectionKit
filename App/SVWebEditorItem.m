@@ -250,8 +250,12 @@
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 {
+    // Copy is supported all the time. But only support moving items while they're in editable HTML
     NSDragOperation result = NSDragOperationCopy;
-    if (isLocal) result = (result | NSDragOperationMove);
+    if (isLocal && [[self HTMLElement] isContentEditable])
+    {
+        result = (result | NSDragOperationMove);
+    }
     return result;
 }
 
