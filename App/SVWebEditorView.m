@@ -873,7 +873,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
         
         for (SVWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
-            if ([range containsNode:[anItem HTMLElement]]) [result addObject:anItem];
+            DOMHTMLElement *element = [anItem HTMLElement];
+            if ([element parentNode] && [range containsNode:element])   // weed out any obvious ophans
+            {
+                [result addObject:anItem];
+            }
         }
         
         return result;
