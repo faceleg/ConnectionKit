@@ -49,10 +49,17 @@
 
 - (void)writeGraphicController:(SVDOMController *)controller;
 {
+    SVGraphic *graphic = [controller representedObject];
+    SVTextAttachment *attachment = [graphic textAttachment];
+    if ([[attachment placement] integerValue] == SVGraphicPlacementBlock)
+    {
+        OBASSERTSTRING([self openElementsCount] == 0, @"Only inline graphics can be placed mid-paragraph");
+    }
+    
     [[self bodyTextDOMController] writeGraphicController:controller
                                           withHTMLWriter:self];
     
-    [_attachments addObject:[[controller representedObject] textAttachment]];
+    [_attachments addObject:attachment];
 }
 
 - (void)writeDOMController:(SVDOMController *)controller;
