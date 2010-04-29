@@ -183,8 +183,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         DOMDocumentFragment *fragment = [domDoc
                                          createDocumentFragmentWithMarkupString:editingHTML
                                          baseURL:nil];
-        [range insertNode:fragment];
-        [node mutableChildDOMNodes];
+        
+        [[node mutableChildDOMNodes] removeAllObjects];
+        [node appendChildNodes:[fragment childNodes]];
         
         
         // Insert DOM controllers. Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
