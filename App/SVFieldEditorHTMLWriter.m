@@ -88,7 +88,7 @@
         
         
         // Do the merge in the DOM
-        [[elementToMergeInto mutableChildNodesArray] addObjectsFromArray:[element mutableChildNodesArray]];
+        [[elementToMergeInto mutableChildDOMNodes] addObjectsFromArray:[element mutableChildDOMNodes]];
         [[element parentNode] removeChild:element];
         
         

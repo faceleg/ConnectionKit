@@ -126,7 +126,7 @@
             if (index - nodeLength == [self startIndex])
             {
                 DOMNode *parentNode = [aNode parentNode];
-                NSUInteger offset = [[parentNode mutableChildNodesArray] indexOfObjectIdenticalTo:aNode];
+                NSUInteger offset = [[parentNode mutableChildDOMNodes] indexOfObjectIdenticalTo:aNode];
                 [range setStart:parentNode offset:offset];
             }
             else
@@ -164,7 +164,7 @@
             if (index == [self endIndex])
             {
                 DOMNode *parentNode = [aNode parentNode];
-                NSUInteger offset = [[parentNode mutableChildNodesArray] indexOfObjectIdenticalTo:aNode];
+                NSUInteger offset = [[parentNode mutableChildDOMNodes] indexOfObjectIdenticalTo:aNode];
                 [range setEnd:parentNode offset:(offset + 1)];
             }
             else

@@ -184,6 +184,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                          createDocumentFragmentWithMarkupString:editingHTML
                                          baseURL:nil];
         [range insertNode:fragment];
+        [node mutableChildDOMNodes];
         
         
         // Insert DOM controllers. Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
@@ -201,7 +202,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Pretend we Inserted nothing. MUST supply empty text node otherwise WebKit interprets as a paragraph break for some reason
     if (!result)
     {
-        [[node mutableChildNodesArray] removeAllObjects];
+        [[node mutableChildDOMNodes] removeAllObjects];
         [node appendChild:[[node ownerDocument] createTextNode:@""]];
         result = YES;
     }
