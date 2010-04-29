@@ -125,26 +125,6 @@
 	}
 }
 
-/* ???? WHAT HAPPENS WITH THIS?
- 
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary
-{
-	[super awakeFromDragWithDictionary:aDataSourceDictionary];
-	
-	// Look for a YouTube URL
-	NSString *URLString = [aDataSourceDictionary valueForKey:kKTDataSourceURLString];
-	if (URLString)
-	{
-		NSURL *URL = [NSURL URLWithString:URLString];
-		if (URL && [URL youTubeVideoID])
-		{
-			self.userVideoCode = URLString;
-		}
-	}
-}
-
-*/
-
 
 #pragma mark Plugin
 
