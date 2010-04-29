@@ -22,6 +22,8 @@
     [context writeHTMLString:[self HTMLString]];
 }
 
+- (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
+
 - (NSString *)HTMLString
 {
     SUBCLASSMUSTIMPLEMENT;

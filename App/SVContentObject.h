@@ -27,6 +27,7 @@
 //  To implement HTML support, your object needs to write some HTML to the current HTML context. This is done by calling -writeHTML. For most objects you should override this method, but for simpler cases, it's enough to override -HTMLString and return a suitable value there.
 
 - (void)writeHTML:(SVHTMLContext *)context; // default calls -HTMLString and writes that to the current context
+- (void)writeHTML;
 - (NSString *)HTMLString;   // default raises an exception
 
 //  Calls -writeHTML: or -writeHTML for each object
