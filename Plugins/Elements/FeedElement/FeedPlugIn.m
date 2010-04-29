@@ -67,7 +67,7 @@
         if ( nil != theURL )
         {
             self.url = theURL;
-            [[self elementPlugInContainer] setTitle:[theTitle stringByEscapingHTMLEntities]];
+            [[self container] setTitle:[theTitle stringByEscapingHTMLEntities]];
         }
     }
 }

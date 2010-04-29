@@ -189,7 +189,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark Other
 
-@synthesize elementPlugInContainer = _container;
+@synthesize container = _container;
 
 #pragma mark Pasteboard
 

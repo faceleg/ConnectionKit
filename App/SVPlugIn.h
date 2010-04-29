@@ -26,7 +26,7 @@
 // Called for new pagelets. Pasteboard is non-nil if inserting by pasting or drag & drop.
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 
-- (void)setElementPlugInContainer:(id <SVPageletPlugInContainer>)container;
+- (void)setContainer:(id <SVPageletPlugInContainer>)container;
 
 
 #pragma mark Identifier

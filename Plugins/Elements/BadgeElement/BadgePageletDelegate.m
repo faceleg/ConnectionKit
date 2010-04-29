@@ -59,7 +59,7 @@ static NSArray *sAltStrings = nil;
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page
 {
     [super awakeFromInsertIntoPage:page];
-    [[self elementPlugInContainer] setShowsTitle:NO];
+    [[self container] setShowsTitle:NO];
 }
 
 #pragma mark Basic properties
