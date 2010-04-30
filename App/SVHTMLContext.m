@@ -270,10 +270,12 @@
                       height:(NSNumber *)height;
 {
     NSURL *URL = [self addMedia:media];
+    NSString *src = [self relativeURLStringOfURL:URL];
+    if (!src) src = @"";
     
     [self writeImageWithIdName:idName
                      className:className
-                           src:[self relativeURLStringOfURL:URL]
+                           src:src
                            alt:altText
                          width:[width description]
                         height:[height description]];
