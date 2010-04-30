@@ -632,8 +632,10 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         SVMediaRecord *dupe = (SVMediaRecord *)[self duplicateOfMediaRecord:aMediaRecord];
         if (dupe)
         {
-            [aMediaRecord readFromURL:[dupe fileURL] options:0 error:NULL];
-            [aMediaRecord setFilename:[dupe filename]];
+            // Don't try to access -[dupe filename] as it may be a deleted object, and therefore unable to fulfil the fault
+            NSURL *fileURL = [dupe fileURL];
+            [aMediaRecord readFromURL:fileURL options:0 error:NULL];
+            [aMediaRecord setFilename:[fileURL lastPathComponent]];
             return YES;
         }
         else
