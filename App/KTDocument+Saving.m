@@ -636,6 +636,12 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
             NSURL *fileURL = [dupe fileURL];
             [aMediaRecord readFromURL:fileURL options:0 error:NULL];
             [aMediaRecord setFilename:[fileURL lastPathComponent]];
+            
+            NSString *key = [self keyForDocumentFileWrapper:dupe];
+            OBASSERT(key);
+            [aMediaRecord setNextObject:dupe];
+            [self setDocumentFileWrapper:aMediaRecord forKey:key];
+            
             return YES;
         }
         else
