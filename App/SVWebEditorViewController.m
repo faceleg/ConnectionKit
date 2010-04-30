@@ -327,9 +327,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)scheduleUpdate
 {
-    // Ignore if Web Editor is dragging — why did I do this? #71500
-    //if ([[[self webEditor] draggedItems] count] > 0) return;
-    
     // Private method known only to our Main DOM Controller. Schedules an update if needed.
     if (!_willUpdate)
 	{
@@ -1029,6 +1026,11 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
             [[_selectableObjectsController sidebarPageletsController] insertObject:aPagelet
                                                              atArrangedObjectIndex:dropIndex];
         }
+        
+        
+        // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
+        [sender removeDraggedItems];
+        [sender didChangeText];
     }
     
     return result;
