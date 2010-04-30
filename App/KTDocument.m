@@ -169,8 +169,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (KTPage *)makeRootPage;
 
-- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
-
 - (void)setupHostSheetDidEnd:(NSWindow *)sheet returnCode:(int)returnCode contextInfo:(void *)contextInfo;
 
 @end
@@ -679,6 +677,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 #pragma mark Media
 
 - (NSDictionary *)documentFileWrappers; { return [[_filenameReservations copy] autorelease]; }
+
+- (NSString *)keyForDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper;
+{
+    NSArray *keys = [[self documentFileWrappers] allKeysForObject:wrapper];
+    return [keys lastObject];
+}
 
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
 {
