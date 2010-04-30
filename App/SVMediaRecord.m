@@ -356,9 +356,9 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return (_data != nil);
 }
 
-- (void)didTurnIntoFault
+- (void)willTurnIntoFault
 {
-    [super didTurnIntoFault];
+    [super willTurnIntoFault];
     
     // Only throw away data if it can be reloaded
     if ([self fileURL])
