@@ -315,12 +315,12 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Create a starter pagelet
-        SVTextBox *textBox = [SVTextBox insertNewTextBoxIntoManagedObjectContext:[self managedObjectContext]];
-        [textBox setSortKey:[NSNumber numberWithShort:0]];
-        [textBox setTitle:@"Test"];
+        id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"];
+        SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
+        [badge setSortKey:[NSNumber numberWithShort:0]];
         
-        [[textBox body] setString:@"<p>Test paragraph</p>"];
-        [[root sidebar] addPageletsObject:textBox];
+        [[root sidebar] addPageletsObject:badge];
+        [badge awakeFromInsertIntoPage:root];
         
         
         // Finish up
