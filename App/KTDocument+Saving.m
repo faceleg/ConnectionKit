@@ -313,23 +313,6 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     {
         // Kick off thumbnail generation
         [self startGeneratingQuickLookThumbnail];
-        
-        
-        
-        // Tell deleted media what, if anything, to do
-        NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
-        NSDictionary *wrappers = [self documentFileWrappers];
-        
-        for (NSString *aKey in wrappers)
-        {
-            id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
-            if ([media shouldRemoveFromDocument])
-            {
-                NSURL *deletionURL = [deletedMediaDirectory URLByAppendingPathComponent:aKey
-                                                                                isDirectory:NO];
-                [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
-            }
-        }
     }
     
     
@@ -368,6 +351,23 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
                               toURL:inURL
                    forSaveOperation:saveOperation
                               error:NULL];
+            
+            
+            
+            // Tell deleted media what, if anything, to do. MUST happen after searching for new media. #72736
+            NSURL *deletedMediaDirectory = [[self undoManager] deletedMediaDirectory];
+            NSDictionary *wrappers = [self documentFileWrappers];
+            
+            for (NSString *aKey in wrappers)
+            {
+                id <SVDocumentFileWrapper> media = [wrappers objectForKey:aKey];
+                if ([media shouldRemoveFromDocument])
+                {
+                    NSURL *deletionURL = [deletedMediaDirectory URLByAppendingPathComponent:aKey
+                                                                                isDirectory:NO];
+                    [(SVMediaRecord *)media moveToURLWhenDeleted:deletionURL];
+                }
+            }
         }
     }
     
