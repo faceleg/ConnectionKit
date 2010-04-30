@@ -40,7 +40,7 @@
 	<dict>
 		<key>max</key>
 		<integer>0</integer>
-		<key>url</key>
+		<key>URL</key>
 		<string></string>
 	</dict>
 	<key>KTPluginName</key>
