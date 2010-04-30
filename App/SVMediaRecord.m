@@ -360,7 +360,11 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     [super didTurnIntoFault];
     
-    [_data release]; _data = nil;
+    // Only throw away data if it can be reloaded
+    if ([self fileURL])
+    {
+        [_data release]; _data = nil;
+    }
 }
 
 #pragma mark Comparing Files
