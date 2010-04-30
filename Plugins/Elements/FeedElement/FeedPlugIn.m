@@ -50,7 +50,7 @@
 
 + (NSSet *)plugInKeys
 { 
-    return [NSSet setWithObjects:@"url", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
+    return [NSSet setWithObjects:@"URL", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
 }
 
 
@@ -67,7 +67,7 @@
     {
         if ( nil != theURL )
         {
-            self.url = theURL;
+            self.URL = theURL;
             [[self container] setTitle:theTitle];
         }
     }
@@ -95,35 +95,41 @@
 #pragma mark -
 #pragma mark URL
 
-// now irrelevant, use standard key/value validation methods, if nec., instread
-//- (BOOL)validatePluginValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError;
-//{
-//	BOOL result = YES;
-//	
-//	if ([inKeyPath isEqualToString:@"url"])
-//	{
-//		// If there is no URL prefix, use feed://
-//		if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
-//		{
-//			*ioValue = [@"feed://" stringByAppendingString:*ioValue];
-//		}
-//		// Convert http:// to feed://
-//		else if ([*ioValue hasPrefix:@"http://"])
-//		{
-//			*ioValue = [NSString stringWithFormat:@"feed://%@", [*ioValue substringFromIndex:7]];
-//		}
-//	}
-//	else
-//	{
-//		result = [super validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
-//	}
-//	
-//	return result;
-//}
-
-- (NSURL *)urlAsHTTP		// server requires http:// scheme
+-(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
 {
-    NSURL *result = self.url;
+    BOOL result = YES;
+    NSURL *theURL = *ioValue;
+    
+    if ( nil != theURL )
+    {
+        //    // If there is no URL prefix, use feed://
+        //    if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
+        //    {
+        //        *ioValue = [@"feed://" stringByAppendingString:*ioValue];
+        //    }
+        //    // Convert http:// to feed://
+        //    else if ([*ioValue hasPrefix:@"http://"])
+        //    {
+        //        *ioValue = [NSString stringWithFormat:@"feed://%@", [*ioValue substringFromIndex:7]];
+        //    }
+        
+        // we're now using KSURLFormatter to make sure that we're passed a valid URL,
+        // so the top half of the original code is no longer applicable
+        
+        // but, do we need to switch any other scheme to feed:// ?
+        NSString *scheme = [theURL scheme];
+        if ( ![scheme isEqualToString:@"feed"] )
+        {
+            
+        }
+    }
+
+    return result;
+}
+
+- (NSURL *)URLAsHTTP		// server requires http:// scheme
+{
+    NSURL *result = self.URL;
 	if ( [[result scheme] isEqualToString:@"feed"] )	// convert feed://
 	{
         NSString *string = [NSString stringWithFormat:@"http://%@", [[result absoluteString] substringFromIndex:7]];
@@ -134,7 +140,7 @@
 
 - (NSString *)host
 {
-    NSString *result = [self.url host];
+    NSString *result = [self.URL host];
     if ( !result )
     {
         result = @"";
@@ -147,12 +153,11 @@
 */
 - (NSString *)key
 {
-    NSString *URLAsString = [[self urlAsHTTP] absoluteString];
+    NSString *URLAsString = [[self URLAsHTTP] absoluteString];
 	NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", URLAsString];
 	NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
 	return [data sha1DigestString];
 }
-
 
 - (BOOL)isPage
 {
@@ -316,5 +321,5 @@
 @synthesize max = _max;
 @synthesize summaryChars = _summaryChars;
 @synthesize key = _key;
-@synthesize url = _url;
+@synthesize URL = _URL;
 @end
