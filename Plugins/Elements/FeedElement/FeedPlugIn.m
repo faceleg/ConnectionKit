@@ -48,6 +48,10 @@
 
 @implementation FeedPlugIn
 
+
+#pragma mark -
+#pragma mark SVPlugin
+
 + (NSSet *)plugInKeys
 { 
     return [NSSet setWithObjects:@"URL", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
@@ -74,26 +78,18 @@
 }
 
 
-// no longer exists, use NSPasteboardReading protocol instead, look for example
-//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
-//{
-//	[super awakeFromDragWithDictionary:aDictionary];
-//	
-//	// Note: We're not using kKTDataSourceURLString  ... URL of original page .. right now.
-//	
-//	NSString *urlString = [aDictionary valueForKey:kKTDataSourceFeedURLString];
-//	if (urlString ) {
-//		[[self delegateOwner] setValue:urlString forKey:@"url"];
-//	}
-//	
-//	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
-//	if ( nil != title ) {
-//		[[self delegateOwner] setTitleHTML:[title stringByEscapingHTMLEntities]];
-//	}
-//}
-
 #pragma mark -
-#pragma mark URL
+#pragma mark Template
+
+- (void)writeHTML:(SVHTMLContext *)context
+{
+    if ( self.openLinksInNewWindow )
+    {
+        // target=_blank requires Transitional doc type
+        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
+    }
+    [super writeHTML:context];
+}
 
 -(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
 {
@@ -168,25 +164,33 @@
     return NO;
 }
 
-#pragma mark -
-#pragma mark Plugin
-
-- (void)writeHTML:(SVHTMLContext *)context
-{
-    if ( self.openLinksInNewWindow )
-    {
-        // target=_blank requires Transitional doc type
-        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
-    }
-    [super writeHTML:context];
-}
-
 
 #pragma mark -
-#pragma mark Data Source
+#pragma mark Pasteboard
 
 // implement pasteboard protocol instead, look for example, youtube?
 // NSPasteboardReading (back ported to 10.5)
+
+// test drag and drop by dragging into sidebar Area
+
+// no longer exists, use NSPasteboardReading protocol instead, look for example
+//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
+//{
+//	[super awakeFromDragWithDictionary:aDictionary];
+//	
+//	// Note: We're not using kKTDataSourceURLString  ... URL of original page .. right now.
+//	
+//	NSString *urlString = [aDictionary valueForKey:kKTDataSourceFeedURLString];
+//	if (urlString ) {
+//		[[self delegateOwner] setValue:urlString forKey:@"url"];
+//	}
+//	
+//	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
+//	if ( nil != title ) {
+//		[[self delegateOwner] setTitleHTML:[title stringByEscapingHTMLEntities]];
+//	}
+//}
+
 
 + (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
@@ -197,6 +201,52 @@
             NSURLPboardType,	// Apple URL pasteboard type
             nil];
 }
+
+#pragma mark Pasteboard
+
++ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
+{
+	return [KSWebLocation readableTypesForPasteboard:nil];
+}
+
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+                                         pasteboard:(NSPasteboard *)pasteboard;
+{
+    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
+}
+
+- (id)initWithPasteboardPropertyList:(id)propertyList
+                              ofType:(NSString *)type;
+{
+    self = [self init];
+    
+    
+    // Only accept YouTube video URLs
+    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
+                                                                             ofType:type];
+    
+    if (location)
+    {
+        NSString *videoID = [[location URL] youTubeVideoID];
+        if (videoID)
+        {
+            [self setUserVideoCode:[[location URL] absoluteString]];
+        }
+        else
+        {
+            [self release]; self = nil;
+        }
+        
+        [location release];
+    }
+    else
+    {
+        [self release]; self = nil;
+    }
+	
+    return self;
+}
+
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
 {
@@ -306,7 +356,6 @@
     return result;
 }
 
-// test drag and drop by dragging into sidebar Area
 
 #pragma mark -
 #pragma mark Inspector
