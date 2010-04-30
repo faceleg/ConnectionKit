@@ -141,7 +141,7 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
 {
     OBPRECONDITION(URL);
     
-    OBASSERT(!_destinationURL); // shouldn't be possible to schedule twice
+    // Shouldn't be possible to schedule twice (so _destinationURL should be nil), but that can happen if first save fails validation
     URL = [URL copy];
     [_destinationURL release]; _destinationURL = URL;
 }

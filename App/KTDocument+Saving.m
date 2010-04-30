@@ -307,6 +307,8 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
 	NSManagedObjectContext *context = [self managedObjectContext];
     
 	
+@try
+{
     if (saveOperation != NSAutosaveOperation)
     {
         // Kick off thumbnail generation
@@ -426,10 +428,13 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
         }
     }
     
-    
+}
+@finally
+{
     // MUST make sure the thumbnail webview has been unloaded, otherwise we'll fail an assertion come the next save. This call does that. #61947
     [self _quickLookThumbnail];
-	
+}	
+
 	
 	return result;
 }
