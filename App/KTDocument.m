@@ -463,7 +463,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
     NSURL *result = nil;
     
-    if (![media autosaveAlias] && filename)
+    if (/*![media autosaveAlias] &&*/ filename)
     {
         result = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
     }
