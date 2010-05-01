@@ -204,61 +204,61 @@
 
 #pragma mark Pasteboard
 
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-{
-	return [KSWebLocation readableTypesForPasteboard:nil];
-}
-
-+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type
-                                         pasteboard:(NSPasteboard *)pasteboard;
-{
-    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
-}
-
-- (id)initWithPasteboardPropertyList:(id)propertyList
-                              ofType:(NSString *)type;
-{
-    self = [self init];
-    
-    
-    // Only accept YouTube video URLs
-    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
-                                                                             ofType:type];
-    
-    if (location)
-    {
-        NSString *videoID = [[location URL] youTubeVideoID];
-        if (videoID)
-        {
-            [self setUserVideoCode:[[location URL] absoluteString]];
-        }
-        else
-        {
-            [self release]; self = nil;
-        }
-        
-        [location release];
-    }
-    else
-    {
-        [self release]; self = nil;
-    }
-	
-    return self;
-}
-
-
-+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
-{
-	NSArray *theArray = nil;
-    
-	if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
-        && nil != (theArray = [pboard propertyListForType:kNetNewsWireString]) )
-	{
-		return [theArray count];
-	}
-	return 1;	// can't find any multiplicity
-}
+//+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//	return [KSWebLocation readableTypesForPasteboard:nil];
+//}
+//
+//+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+//                                         pasteboard:(NSPasteboard *)pasteboard;
+//{
+//    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
+//}
+//
+//- (id)initWithPasteboardPropertyList:(id)propertyList
+//                              ofType:(NSString *)type;
+//{
+//    self = [self init];
+//    
+//    
+//    // Only accept YouTube video URLs
+//    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
+//                                                                             ofType:type];
+//    
+//    if (location)
+//    {
+//        NSString *videoID = [[location URL] youTubeVideoID];
+//        if (videoID)
+//        {
+//            [self setUserVideoCode:[[location URL] absoluteString]];
+//        }
+//        else
+//        {
+//            [self release]; self = nil;
+//        }
+//        
+//        [location release];
+//    }
+//    else
+//    {
+//        [self release]; self = nil;
+//    }
+//	
+//    return self;
+//}
+//
+//
+//+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
+//{
+//	NSArray *theArray = nil;
+//    
+//	if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
+//        && nil != (theArray = [pboard propertyListForType:kNetNewsWireString]) )
+//	{
+//		return [theArray count];
+//	}
+//	return 1;	// can't find any multiplicity
+//}
 
 + (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
 {
