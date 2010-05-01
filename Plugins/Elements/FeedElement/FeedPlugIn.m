@@ -37,6 +37,7 @@
 #import "FeedPlugIn.h"
 #import "FeedInspector.h"
 #import "KSURLFormatter.h"
+#import "KSWebLocation.h"
 
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
@@ -150,9 +151,9 @@
 - (NSString *)key
 {
     NSString *URLAsString = [[self URLAsHTTP] absoluteString];
-	NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", URLAsString];
-	NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
-	return [data sha1DigestString];
+    NSString *stringToDigest = [NSString stringWithFormat:@"%@:NSString", URLAsString];
+    NSData *data = [stringToDigest dataUsingEncoding:NSUTF8StringEncoding];
+    return [data sha1DigestString];
 }
 
 - (BOOL)isPage
@@ -166,10 +167,52 @@
 
 
 #pragma mark -
-#pragma mark Pasteboard
+#pragma mark NSPasteboardReading
 
-// implement pasteboard protocol instead, look for example, youtube?
-// NSPasteboardReading (back ported to 10.5)
+// returns an array of UTI strings of data types the receiver can read from the pasteboard and be initialized from. (required)
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
+{
+    return [KSWebLocation readableTypesForPasteboard:pasteboard];
+}
+
+// returns options for reading data of a specified type from a given pasteboard. (required)
++ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type 
+                                         pasteboard:(NSPasteboard *)pasteboard
+{
+    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
+}
+
+// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
+- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type
+{
+    self = [self init];
+    
+    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
+                                                                             ofType:type];
+    if ( location )
+    {
+        NSURL *URL = [location URL];
+        
+//        NSString *videoID = [[location URL] youTubeVideoID];
+//        if (videoID)
+//        {
+//            [self setUserVideoCode:[[location URL] absoluteString]];
+//        }
+//        else
+//        {
+//            [self release]; self = nil;
+//        }
+//        
+//        [location release];
+    }
+    else
+    {
+        [self release]; self = nil;
+    }
+	
+    return self;
+}
+
 
 // test drag and drop by dragging into sidebar Area
 
@@ -191,18 +234,16 @@
 //	}
 //}
 
-
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-{
-    return [NSArray arrayWithObjects:
-            kNetNewsWireString,	// from NetNewsWire
-            @"WebURLsWithTitlesPboardType",
-            @"BookmarkDictionaryListPboardType",
-            NSURLPboardType,	// Apple URL pasteboard type
-            nil];
-}
-
-#pragma mark Pasteboard
+//
+//+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//    return [NSArray arrayWithObjects:
+//            kNetNewsWireString,	// from NetNewsWire
+//            @"WebURLsWithTitlesPboardType",
+//            @"BookmarkDictionaryListPboardType",
+//            NSURLPboardType,	// Apple URL pasteboard type
+//            nil];
+//}
 
 //+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 //{
@@ -260,101 +301,101 @@
 //	return 1;	// can't find any multiplicity
 //}
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-{
-    
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
-		&& nil != [pboard propertyListForType:kNetNewsWireString])
-	{
-		return KTSourcePriorityIdeal;	// Yes, it's really a feed, from NNW
-	}
-    
-	// Check to make sure it's not file: or feed:
-	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
-	NSString *scheme = [extractedURL scheme];
-	if ([scheme isEqualToString:@"feed"])
-	{
-		return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
-	}
-	if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
-	{
-		NSString *extension = [[[extractedURL path] pathExtension] lowercaseString];
-		if ([extension isEqualToString:@"xml"]
-			|| [extension isEqualToString:@"rss"]
-			|| [extension isEqualToString:@"rdf"]
-			|| [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
-		{
-			return KTSourcePriorityIdeal;
-		}
-	}
-    
-	// Otherwise, it doesn't look like it's a feed, so reject
-	return KTSourcePriorityNone;
-}
+//+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//    
+//	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
+//		&& nil != [pboard propertyListForType:kNetNewsWireString])
+//	{
+//		return KTSourcePriorityIdeal;	// Yes, it's really a feed, from NNW
+//	}
+//    
+//	// Check to make sure it's not file: or feed:
+//	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
+//	NSString *scheme = [extractedURL scheme];
+//	if ([scheme isEqualToString:@"feed"])
+//	{
+//		return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
+//	}
+//	if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
+//	{
+//		NSString *extension = [[[extractedURL path] pathExtension] lowercaseString];
+//		if ([extension isEqualToString:@"xml"]
+//			|| [extension isEqualToString:@"rss"]
+//			|| [extension isEqualToString:@"rdf"]
+//			|| [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
+//		{
+//			return KTSourcePriorityIdeal;
+//		}
+//	}
+//    
+//	// Otherwise, it doesn't look like it's a feed, so reject
+//	return KTSourcePriorityNone;
+//}
 
-+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-                      fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex
-				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-
-{
-    BOOL result = NO;
-    
-    NSString *feedURLString = nil;
-    NSString *feedTitle= nil;
-	NSString *pageURLString = nil;
-    
-    NSArray *orderedTypes = [self supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
-    
-	
-    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
-    
-    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
-    {
-        NSArray *arrayFromData = [pasteboard propertyListForType:@"BookmarkDictionaryListPboardType"];
-        NSDictionary *objectInfo = [arrayFromData objectAtIndex:dragIndex];
-        feedURLString = [objectInfo valueForKey:@"URLString"];
-        feedTitle = [[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"];
-    }
-    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
-    {
-        NSArray *arrayFromData = [pasteboard propertyListForType:@"WebURLsWithTitlesPboardType"];
-        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
-        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
-        feedURLString = [urlStringArray objectAtIndex:dragIndex];
-        feedTitle = [urlTitleArray objectAtIndex:dragIndex];
-    }
-    else if ( [bestType isEqualToString:kNetNewsWireString] )
-    {
-        NSArray *arrayFromData = [pasteboard propertyListForType:kNetNewsWireString];
-        NSDictionary *firstFeed = [arrayFromData objectAtIndex:dragIndex];
-        feedURLString = [firstFeed objectForKey:@"sourceRSSURL"];
-		pageURLString = [firstFeed objectForKey:@"sourceHomeURL"];
-        feedTitle = [firstFeed objectForKey:@"sourceName"];
-    }
-    else if ( [bestType isEqualToString:NSURLPboardType] )		// only one here
-    {
-		NSURL *url = [NSURL URLFromPasteboard:pasteboard];
-		feedURLString = [url absoluteString];
-		// Note: no title available from this
-    }
-    
-    if ( nil != feedURLString )
-    {
-        [aDictionary setValue:feedURLString forKey:kKTDataSourceFeedURLString];
-        if ( nil != feedTitle )
-        {
-            [aDictionary setValue:feedTitle forKey:kKTDataSourceTitle];
-        }
-		if (nil != pageURLString)	// only shows up on NNW drags
-		{
-			[aDictionary setValue:feedURLString forKey:kKTDataSourceURLString];
-		}
-        result = YES;
-    }
-    
-    return result;
-}
+//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+//                      fromPasteboard:(NSPasteboard *)pasteboard
+//                             atIndex:(unsigned)dragIndex
+//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+//
+//{
+//    BOOL result = NO;
+//    
+//    NSString *feedURLString = nil;
+//    NSString *feedTitle= nil;
+//	NSString *pageURLString = nil;
+//    
+//    NSArray *orderedTypes = [self supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
+//    
+//	
+//    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
+//    
+//    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
+//    {
+//        NSArray *arrayFromData = [pasteboard propertyListForType:@"BookmarkDictionaryListPboardType"];
+//        NSDictionary *objectInfo = [arrayFromData objectAtIndex:dragIndex];
+//        feedURLString = [objectInfo valueForKey:@"URLString"];
+//        feedTitle = [[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"];
+//    }
+//    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
+//    {
+//        NSArray *arrayFromData = [pasteboard propertyListForType:@"WebURLsWithTitlesPboardType"];
+//        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
+//        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
+//        feedURLString = [urlStringArray objectAtIndex:dragIndex];
+//        feedTitle = [urlTitleArray objectAtIndex:dragIndex];
+//    }
+//    else if ( [bestType isEqualToString:kNetNewsWireString] )
+//    {
+//        NSArray *arrayFromData = [pasteboard propertyListForType:kNetNewsWireString];
+//        NSDictionary *firstFeed = [arrayFromData objectAtIndex:dragIndex];
+//        feedURLString = [firstFeed objectForKey:@"sourceRSSURL"];
+//		pageURLString = [firstFeed objectForKey:@"sourceHomeURL"];
+//        feedTitle = [firstFeed objectForKey:@"sourceName"];
+//    }
+//    else if ( [bestType isEqualToString:NSURLPboardType] )		// only one here
+//    {
+//		NSURL *url = [NSURL URLFromPasteboard:pasteboard];
+//		feedURLString = [url absoluteString];
+//		// Note: no title available from this
+//    }
+//    
+//    if ( nil != feedURLString )
+//    {
+//        [aDictionary setValue:feedURLString forKey:kKTDataSourceFeedURLString];
+//        if ( nil != feedTitle )
+//        {
+//            [aDictionary setValue:feedTitle forKey:kKTDataSourceTitle];
+//        }
+//		if (nil != pageURLString)	// only shows up on NNW drags
+//		{
+//			[aDictionary setValue:feedURLString forKey:kKTDataSourceURLString];
+//		}
+//        result = YES;
+//    }
+//    
+//    return result;
+//}
 
 
 #pragma mark -
