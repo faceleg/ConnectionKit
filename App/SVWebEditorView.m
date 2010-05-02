@@ -633,14 +633,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
         DOMNode *previousNode = nil;
         
         DOMNode *selectionStart = [selection startContainer];
+        int startOffset = [selection startOffset];
+        
         if ([selectionStart nodeType] == DOM_TEXT_NODE)
         {
-            if ([selection startOffset] == 0) previousNode = [selectionStart previousSibling];
+            if (startOffset == 0) previousNode = [selectionStart previousSibling];
         }
-        else
-        {
-            previousNode = [[[selectionStart childNodes] item:[selection startOffset]]
-                            previousSibling];
+        else if (startOffset >= 1)  // use different technique to -tryToSelectItemByMovingRight to handle startOffset being *after*
+        {                           // the last child node
+            previousNode = [[selectionStart childNodes] item:(startOffset - 1)];
         }
         
         
