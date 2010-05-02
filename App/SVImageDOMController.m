@@ -44,6 +44,18 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     [image addObserver:self forKeyPath:@"wrap" options:0 context:sImageSizeObservationContext];
 }
 
+#pragma mark Selection
+
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+{
+    if ([[self HTMLElement] isContentEditable])
+    {
+        return YES;
+    }
+    
+    return [super allowsDirectAccessToWebViewWhenSelected];
+}
+
 #pragma mark Updating
 
 - (void)update;
