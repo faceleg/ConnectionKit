@@ -45,6 +45,8 @@
 @property(nonatomic, getter=isSelected) BOOL selected;  // draw selection handles & outline when YES
 @property(nonatomic, getter=isEditing) BOOL editing;    // draw outline when YES
 
+- (BOOL)allowsDirectAccessToWebViewWhenSelected;
+
 
 #pragma mark Searching the Tree
 

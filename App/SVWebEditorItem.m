@@ -154,6 +154,8 @@
     [self updateOutline];
 }
 
+- (BOOL)allowsDirectAccessToWebViewWhenSelected; { return NO; }
+
 #pragma mark Searching the Tree
 
 - (SVWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
