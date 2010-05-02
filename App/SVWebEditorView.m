@@ -995,7 +995,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     // First off, we'll only consider special behaviour if targeting the document
     NSView *result = [super hitTest:aPoint];
-    if ([result isDescendantOf:[[[[self webView] mainFrame] frameView] documentView]])
+    if ([result isDescendantOf:[self documentView]])
     {
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
