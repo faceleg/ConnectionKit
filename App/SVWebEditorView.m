@@ -1005,25 +1005,27 @@ typedef enum {  // this copied from WebPreferences+Private.h
         SVGraphicHandle handle;
         SVWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
         
-        if (!item || handle == kSVGraphicNoHandle) item = [self selectableItemAtPoint:point];
-        
-        if (item)
+        if ([item allowsDirectAccessToWebViewWhenSelected] && handle == kSVGraphicNoHandle)
+		{
+            
+        }
+        else
         {
-            if (![item allowsDirectAccessToWebViewWhenSelected])
+            if (!item || handle == kSVGraphicNoHandle) item = [self selectableItemAtPoint:point];
+            
+            if (item)
             {
                 if (![[self selectionParentItems] containsObject:item])
                 {
                     result = self;
                 }
             }
-        }
-        else if ([[self selectionParentItems] count] > 0)
-        {
-            result = self;
+            else if ([[self selectionParentItems] count] > 0)
+            {
+                result = self;
+            }
         }
     }
-    
-    
     
     
     
@@ -1102,10 +1104,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
  *      - Start editing selected item (actually happens upon -mouseUp:)
  *      - Add to the selection
  */
-- (void)mouseDown:(NSEvent *)event
+- (void)mouseDown:(NSEvent *)event;
 {
     // Store the event for a bit (for draging, editing, etc.). Note that we're not interested in it while editing
-    OBASSERT(!_mouseDownEvent);
+    [_mouseDownEvent release];
     _mouseDownEvent = [event retain];
     
     
@@ -1131,6 +1133,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (item)
     {
         [self selectItem:item event:event];
+        
+        // If mousing down on an image, pass the event through
+        if ([item allowsDirectAccessToWebViewWhenSelected]) [NSApp postEvent:event atStart:YES];
     }
     else
     {
