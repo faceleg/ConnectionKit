@@ -187,23 +187,20 @@
 {
     self = [self init];
     
-    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
-                                                                             ofType:type];
+    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList ofType:type];
     if ( location )
     {
         NSURL *URL = [location URL];
-        
-//        NSString *videoID = [[location URL] youTubeVideoID];
-//        if (videoID)
-//        {
-//            [self setUserVideoCode:[[location URL] absoluteString]];
-//        }
-//        else
-//        {
-//            [self release]; self = nil;
-//        }
-//        
-//        [location release];
+        if ( URL )
+        {
+            self.URL = URL;
+            //FIXME: is there any way to set a title from dragging in a URL? if we could, how could we set it if we don't yet have a container?
+        }
+        else
+        {
+            [location release];
+            [self release]; self = nil;
+        }
     }
     else
     {
@@ -214,9 +211,6 @@
 }
 
 
-// test drag and drop by dragging into sidebar Area
-
-// no longer exists, use NSPasteboardReading protocol instead, look for example
 //- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
 //{
 //	[super awakeFromDragWithDictionary:aDictionary];
