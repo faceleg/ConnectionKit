@@ -34,7 +34,7 @@
 	while (aPlugin = [pluginsEnumerator nextObject])
     {
 		Class anElementClass = [[aPlugin bundle] principalClass];
-        if ([anElementClass conformsToProtocol:@protocol(KTDataSource)])
+        if ([anElementClass conformsToProtocol:@protocol(NSPasteboardReading)])
         {
             [result addObject:anElementClass];
         }
