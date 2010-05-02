@@ -683,7 +683,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         }
         else
         {
-            nextNode = [[[selectionEnd childNodes] item:[selection endOffset]] nextSibling];
+            nextNode = [[selectionEnd childNodes] item:[selection endOffset]];
         }
         
         
