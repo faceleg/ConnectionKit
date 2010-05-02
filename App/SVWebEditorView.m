@@ -1004,25 +1004,22 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint so as to take hyperlinks into account
         SVGraphicHandle handle;
         SVWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
-        if (item && handle == kSVGraphicNoHandle && [item allowsDirectAccessToWebViewWhenSelected])
+        
+        if (!item || handle == kSVGraphicNoHandle) item = [self selectableItemAtPoint:point];
+        
+        if (item)
         {
-            
-        }
-        else
-        {
-            if (!item || handle == kSVGraphicNoHandle) item = [self selectableItemAtPoint:point];
-            
-            if (item)
+            if (![item allowsDirectAccessToWebViewWhenSelected])
             {
                 if (![[self selectionParentItems] containsObject:item])
                 {
                     result = self;
                 }
             }
-            else if ([[self selectionParentItems] count] > 0)
-            {
-                result = self;
-            }
+        }
+        else if ([[self selectionParentItems] count] > 0)
+        {
+            result = self;
         }
     }
     
