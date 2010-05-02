@@ -37,6 +37,7 @@
         if ([anElementClass conformsToProtocol:@protocol(NSPasteboardReading)])
         {
             [result addObject:anElementClass];
+            [anElementClass load];
         }
     }
 	
@@ -88,7 +89,8 @@
                 
                 
                 // Try to create plug-in from property list
-                if ( [aSource respondsToSelector:@selector(initWithPasteboardPropertyList:ofType:)] )
+                //if ( [aSource respondsToSelector:@selector(initWithPasteboardPropertyList:ofType:)] )
+                if ( [NSStringFromClass(aSource) isEqualToString:@"FeedPlugIn"] )
                 {
                     id <SVPlugIn> plugIn = [[aSource alloc] 
                                             initWithPasteboardPropertyList:propertyList
