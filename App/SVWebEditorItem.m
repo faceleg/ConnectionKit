@@ -124,7 +124,7 @@
 
 - (BOOL)isEditable { return NO; }
 
-- (void)updateOutline;
+- (void)updateToReflectSelection;
 {
     if ([self isSelected] || [self isEditing])
     {
@@ -144,14 +144,15 @@
     _selected = selected;
     
     [[[self HTMLElement] documentView] setNeedsDisplayInRect:[self drawingRect]];
-    [self updateOutline];
+    
+    [self updateToReflectSelection];
 }
 
 @synthesize editing = _editing;
 - (void)setEditing:(BOOL)isEditing;
 {
     _editing = isEditing;
-    [self updateOutline];
+    [self updateToReflectSelection];
 }
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected; { return NO; }

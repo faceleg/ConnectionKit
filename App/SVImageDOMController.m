@@ -46,6 +46,11 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Selection
 
+- (void)updateToReflectSelection;
+{
+    // Do nothing!!
+}
+
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
     /*
