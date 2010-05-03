@@ -48,11 +48,12 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 {
+    /*
     if ([[self HTMLElement] isContentEditable])
     {
         return YES;
     }
-    
+    */
     return [super allowsDirectAccessToWebViewWhenSelected];
 }
 
