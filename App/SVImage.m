@@ -55,6 +55,17 @@
 {
     [super awakeFromInsertIntoPage:page];
     
+    // Show caption
+    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
+    {
+        [self setShowsCaption:YES];
+    }
+}
+
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    [super didAddToPage:page];
+    
     
     // Start off at a decent size.
     NSNumber *maxWidth = [NSNumber numberWithUnsignedInteger:490];
@@ -63,12 +74,6 @@
     if ([[self width] isGreaterThan:maxWidth])
     {
         [self setWidth:maxWidth];
-    }
-    
-    // Show caption
-    if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
-    {
-        [self setShowsCaption:YES];
     }
 }
 
