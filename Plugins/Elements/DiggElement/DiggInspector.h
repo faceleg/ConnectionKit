@@ -7,9 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SandvoxPlugin.h"
 
 
-@interface DiggInspector : NSObject {
+@interface DiggInspector : SVInspectorViewController 
+{
 
 }
 
