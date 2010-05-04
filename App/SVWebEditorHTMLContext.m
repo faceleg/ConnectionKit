@@ -178,6 +178,8 @@
     
     [_currentItem addChildWebEditorItem:controller];
     _currentItem = controller;
+    
+    [controller setHTMLContext:self];
 }
 
 #pragma mark Dependencies
