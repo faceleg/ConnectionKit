@@ -325,7 +325,7 @@
 	return [KSWebLocation readableTypesForPasteboard:nil];
 }
 
-+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type
++ (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
                                          pasteboard:(NSPasteboard *)pasteboard;
 {
     return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];

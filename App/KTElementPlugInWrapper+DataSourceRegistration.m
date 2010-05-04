@@ -74,17 +74,17 @@
             {
                 // What should I read off the pasteboard?
                 id propertyList;
-                NSPasteboardReadingOptions readingOptions = NSPasteboardReadingAsData;
+                SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
                 if ([aSource respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
                 {
                     readingOptions = [aSource readingOptionsForType:type pasteboard:pasteboard];
                 }
                 
-                if (readingOptions & NSPasteboardReadingAsPropertyList)
+                if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
                 {
                     propertyList = [pasteboard propertyListForType:type];
                 }
-                else if (readingOptions & NSPasteboardReadingAsString)
+                else if (readingOptions & SVPlugInPasteboardReadingAsString)
                 {
                     propertyList = [pasteboard stringForType:type];
                 }

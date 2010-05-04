@@ -176,7 +176,7 @@
 }
 
 // returns options for reading data of a specified type from a given pasteboard. (required)
-+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type 
++ (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type 
                                          pasteboard:(NSPasteboard *)pasteboard
 {
     return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
