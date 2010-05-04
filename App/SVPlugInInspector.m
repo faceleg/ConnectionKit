@@ -95,8 +95,15 @@ change context:(void *)context
     [_selectedInspector release]; _selectedInspector = inspector;
     
     // Setup new
-    [[inspector view] setFrame:[[self view] frame]];
-    [[self view] addSubview:[inspector view]];
+    @try
+    {
+        [[inspector view] setFrame:[[self view] frame]];
+        [[self view] addSubview:[inspector view]];
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: Log error
+    }
 }
 
 - (CGFloat)viewHeight
