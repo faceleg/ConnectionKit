@@ -72,10 +72,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 {
-    [super awakeFromInsertIntoPage:page];
-    
     [[self plugIn] awakeFromInsert];
-    [[self plugIn] didAddToPage:page];
+    [super awakeFromInsertIntoPage:page];
 }
 
 - (void)awakeFromExtensiblePropertyUndoUpdateForKey:(NSString *)key;
@@ -85,6 +83,12 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     // Need to pass the change onto our plug-in
     id value = [self extensiblePropertyForKey:key];
     [[self plugIn] setSerializedValue:value forKey:key];
+}
+
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    [super didAddToPage:page];
+    [[self plugIn] didAddToPage:page];
 }
 
 /*  Where possible (i.e. Leopard) tear down the delegate early to avoid any KVO issues.

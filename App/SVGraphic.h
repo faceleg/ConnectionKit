@@ -61,7 +61,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 @interface SVGraphic : SVContentObject <SVGraphic>
 
 #pragma mark Initialization
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsertIntoPage:(id <SVPage>)page; // calls -didAddToPage:
 - (void)didAddToPage:(id <SVPage>)page;
 
 
