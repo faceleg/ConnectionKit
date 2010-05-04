@@ -181,6 +181,14 @@
     return SVPlugInPasteboardReadingAsWebLocation;
 }
 
++ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
+{
+    LOG((@"type = %@", type));
+    LOG((@"contents = %@", contents));
+    
+    return KTSourcePriorityIdeal;
+}
+
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
 - (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
 {
