@@ -151,8 +151,18 @@
     Class anElementClass;
 	while (anElementClass = [pluginsEnumerator nextObject])
     {
-		NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:nil];
-        [result addObjectsFromArray:acceptedTypes];
+        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
+        {
+            @try
+            {
+                NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:nil];
+                [result addObjectsFromArray:acceptedTypes];
+            }
+            @catch (NSException *exception)
+            {
+                // TODO: Log warning
+            }
+        }
     }
 	
     return [NSSet setWithSet:result];

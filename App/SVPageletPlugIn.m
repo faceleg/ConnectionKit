@@ -195,19 +195,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 @synthesize container = _container;
 
-#pragma mark Pasteboard
-
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
-{
-    NSArray *result = nil;
-    if ([self conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-    {
-        result = [self readableTypesForPasteboard:pasteboard];
-    }
-    
-    return result;
-}
-
 #pragma mark Legacy
 
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject { }
