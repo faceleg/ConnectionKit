@@ -132,6 +132,8 @@
                                                                  inManagedObjectContext:context];
         id plugIn = [result plugIn];
         [plugIn awakeFromPasteboardContents:pasteboardContents ofType:pasteboardType];
+        
+        return result;
     }
     
     
