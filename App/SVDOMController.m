@@ -132,6 +132,12 @@
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 {
     NSDragOperation result = [super draggingSourceOperationMaskForLocal:isLocal];
+    
+    if (isLocal && [[[self HTMLContext] sidebarPageletDOMControllers] containsObject:self])
+    {
+        result = result | NSDragOperationMove;
+    }
+    
     return result;
 }
 
