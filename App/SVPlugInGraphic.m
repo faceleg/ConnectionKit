@@ -143,10 +143,17 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
         
         // Restore plug-in's properties
         NSDictionary *plugInProperties = [self extensibleProperties];
-        for (NSString *aKey in plugInProperties)
+        @try
         {
-            id serializedValue = [plugInProperties objectForKey:aKey];
-            [plugIn setSerializedValue:serializedValue forKey:aKey];
+            for (NSString *aKey in plugInProperties)
+            {
+                id serializedValue = [plugInProperties objectForKey:aKey];
+                [plugIn setSerializedValue:serializedValue forKey:aKey];
+            }
+        }
+        @catch (NSException *exception)
+        {
+            // TODO: Log warning
         }
         
         [self setPlugIn:plugIn useSerializedProperties:NO];
