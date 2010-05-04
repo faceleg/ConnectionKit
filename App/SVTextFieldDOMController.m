@@ -291,7 +291,8 @@
 
 - (NSString *)blurb
 {
-    return [[self textHTMLElement] innerText];
+    if ([self isHTMLElementCreated]) return [[self textHTMLElement] innerText];
+    return [super blurb];
 }
 
 @end
