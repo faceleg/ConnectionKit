@@ -24,6 +24,14 @@
     [super dealloc];
 }
 
+#pragma mark Tree
+
+- (void)setParentWebEditorItem:(SVWebEditorItem *)item
+{
+    [super setParentWebEditorItem:item];
+    [self setHTMLContext:[item HTMLContext]];
+}
+
 #pragma mark Content
 
 - (id)initWithContentObject:(SVContentObject *)contentObject
