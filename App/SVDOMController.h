@@ -10,15 +10,15 @@
 #import "SVContentObject.h"
 
 
-@class SVHTMLContext, SVWebEditorViewController;
+@class SVWebEditorHTMLContext, SVWebEditorViewController;
 
 
 @interface SVDOMController : SVWebEditorItem
 {
   @private
     // Updating
-    BOOL    _needsUpdate;
-    SVHTMLContext   *_context;
+    BOOL                    _needsUpdate;
+    SVWebEditorHTMLContext  *_context;
 }
 
 #pragma mark Content
@@ -35,7 +35,7 @@
 
 // Uses the receiver's HTML context to call -HTMLString from the represented object
 - (void)writeRepresentedObjectHTML;
-@property(nonatomic, retain) SVHTMLContext *HTMLContext;
+@property(nonatomic, retain) SVWebEditorHTMLContext *HTMLContext;
 
 
 #pragma mark Updating

@@ -10,6 +10,7 @@
 
 #import "SVHTMLTextBlock.h"
 #import "SVFieldEditorHTMLWriter.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "DOMNode+Karelia.h"
 

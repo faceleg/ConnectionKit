@@ -8,7 +8,7 @@
 
 #import "SVDOMController.h"
 
-#import "SVHTMLContext.h"
+#import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
@@ -126,6 +126,14 @@
 
 - (BOOL)isSelectable { return NO; }
 - (BOOL)isEditable { return YES; }
+
+#pragma mark Drag Source
+
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
+{
+    NSDragOperation result = [super draggingSourceOperationMaskForLocal:isLocal];
+    return result;
+}
 
 @end
 
