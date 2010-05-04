@@ -35,7 +35,7 @@
 
 // Uses the receiver's HTML context to call -HTMLString from the represented object
 - (void)writeRepresentedObjectHTML;
-@property(nonatomic, retain) SVWebEditorHTMLContext *HTMLContext;
+@property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
 
 #pragma mark Updating
@@ -75,7 +75,7 @@
 #pragma mark Updating
 - (void)update;
 - (void)updateIfNeeded; // recurses down the tree
-@property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
+- (SVWebEditorHTMLContext *)HTMLContext;
 
 
 #pragma mark WebEditorViewController
