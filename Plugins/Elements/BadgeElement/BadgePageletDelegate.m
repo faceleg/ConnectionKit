@@ -59,7 +59,7 @@ static NSArray *sAltStrings = nil;
 - (void)awakeFromInsert;
 {
     [super awakeFromInsert];
-    [[self container] setSBhowsTitle:NO];
+    [[self container] setShowsTitle:NO];
 }
 
 #pragma mark Basic properties
