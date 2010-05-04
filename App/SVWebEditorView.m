@@ -449,8 +449,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Bracket the whole operation so no-one else gets the wrong idea
     OBPRECONDITION(_isChangingSelectedItems == NO);
     _isChangingSelectedItems = YES;
-    
-    
+@try
+{
     
     //  Calculate proposed selection
     NSMutableArray *proposedSelection = [_selectedItems mutableCopy];
@@ -585,10 +585,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self setSelectionParentItems:parentItems];
     
     
-    
+}
+@finally
+{
     // Finish bracketing
     _isChangingSelectedItems = NO;
-    
+}   
     
     
     // Alert observers
