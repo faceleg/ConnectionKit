@@ -199,6 +199,8 @@
             {
                 return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
             }
+            
+            //FIXME: what about https? waiting on answer from Dan (case?)
             if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
             {
                 NSString *extension = [[[URL path] pathExtension] lowercaseString];
