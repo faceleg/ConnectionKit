@@ -40,8 +40,6 @@
 	<dict>
 		<key>max</key>
 		<integer>0</integer>
-		<key>URL</key>
-		<string></string>
 	</dict>
 	<key>KTPluginName</key>
 	<string>RSS Feed</string>
