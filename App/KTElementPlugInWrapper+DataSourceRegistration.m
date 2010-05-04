@@ -89,21 +89,17 @@
                 
                 
                 // Try to create plug-in from property list
-                //if ( [aSource respondsToSelector:@selector(initWithPasteboardPropertyList:ofType:)] )
-                if ( [NSStringFromClass(aSource) isEqualToString:@"FeedPlugIn"] )
+                id <SVPlugIn> plugIn = [[aSource alloc] 
+                                        initWithPasteboardPropertyList:propertyList
+                                        ofType:type];
+                
+                if (plugIn)
                 {
-                    id <SVPlugIn> plugIn = [[aSource alloc] 
-                                            initWithPasteboardPropertyList:propertyList
-                                            ofType:type];
+                    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugIn:plugIn
+                                                             inManagedObjectContext:context];
+                    [plugIn release];
                     
-                    if (plugIn)
-                    {
-                        SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugIn:plugIn
-                                                                 inManagedObjectContext:context];
-                        [plugIn release];
-                        
-                        return result;
-                    }
+                    return result;
                 }
             }
             @catch (NSException *exception)

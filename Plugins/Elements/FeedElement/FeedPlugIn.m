@@ -183,10 +183,8 @@
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type
+- (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
 {
-    self = [self init];
-    
     KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList ofType:type];
     if ( location )
     {
@@ -199,15 +197,11 @@
         else
         {
             [location release];
-            [self release]; self = nil;
         }
     }
     else
     {
-        [self release]; self = nil;
     }
-	
-    return self;
 }
 
 

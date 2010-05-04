@@ -331,14 +331,10 @@
     return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
 }
 
-- (id)initWithPasteboardPropertyList:(id)propertyList
-                              ofType:(NSString *)type;
+- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
 {
-    self = [self init];
-    
-    
     // Only accept YouTube video URLs
-    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
+    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:pasteboardContents
                                                                             ofType:type];
     
     if (location)
@@ -350,17 +346,13 @@
         }
         else
         {
-            [self release]; self = nil;
         }
         
         [location release];
     }
     else
     {
-        [self release]; self = nil;
     }
-	
-    return self;
 }
 
 @end
