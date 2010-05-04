@@ -522,4 +522,10 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
     return result;
 }
 
++ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
+{
+    return KTSourcePriorityNone;
+}
+
+
 @end
