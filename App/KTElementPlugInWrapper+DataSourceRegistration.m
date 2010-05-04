@@ -75,7 +75,7 @@
                 // What should I read off the pasteboard?
                 id propertyList;
                 SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
-                if ([aSource respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
+                if ([aSource instancesRespondToSelector:@selector(readingOptionsForType:pasteboard:)])
                 {
                     readingOptions = [aSource readingOptionsForType:type pasteboard:pasteboard];
                 }
