@@ -1022,9 +1022,11 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
         
         for (SVGraphic *aPagelet in pagelets)
         {
-            result = YES;
             [[_selectableObjectsController sidebarPageletsController] insertObject:aPagelet
                                                              atArrangedObjectIndex:dropIndex];
+            
+            [aPagelet didAddToPage:[self page]];
+            result = YES;
         }
         
         
