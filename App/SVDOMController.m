@@ -176,6 +176,8 @@
     [[self childWebEditorItems] makeObjectsPerformSelector:_cmd];
 }
 
+- (SVWebEditorHTMLContext *)HTMLContext { return nil; }
+
 #pragma mark WebEditorViewController
 
 - (SVWebEditorViewController *)webEditorViewController;

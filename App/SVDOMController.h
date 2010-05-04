@@ -75,6 +75,7 @@
 #pragma mark Updating
 - (void)update;
 - (void)updateIfNeeded; // recurses down the tree
+@property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
 
 
 #pragma mark WebEditorViewController
