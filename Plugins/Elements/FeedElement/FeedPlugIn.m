@@ -61,9 +61,9 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+- (void)awakeFromInsert;
 {
-    [super awakeFromInsertIntoPage:page];
+    [super awakeFromInsert];
     
     NSURL *theURL = nil;
     NSString *theTitle = nil;

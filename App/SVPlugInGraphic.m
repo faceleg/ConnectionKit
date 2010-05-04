@@ -74,7 +74,8 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 {
     [super awakeFromInsertIntoPage:page];
     
-    [[self plugIn] awakeFromInsertIntoPage:page];
+    [[self plugIn] awakeFromInsert];
+    [[self plugIn] didAddToPage:page];
 }
 
 - (void)awakeFromExtensiblePropertyUndoUpdateForKey:(NSString *)key;

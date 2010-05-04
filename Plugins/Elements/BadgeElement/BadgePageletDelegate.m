@@ -56,10 +56,10 @@ static NSArray *sAltStrings = nil;
 	[super dealloc];
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+- (void)awakeFromInsert;
 {
-    [super awakeFromInsertIntoPage:page];
-    [[self container] setShowsTitle:NO];
+    [super awakeFromInsert];
+    [[self container] setSBhowsTitle:NO];
 }
 
 #pragma mark Basic properties

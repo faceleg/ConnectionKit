@@ -99,9 +99,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 }
 
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsert;
 {
-    [super awakeFromInsertIntoPage:page];
+    [super awakeFromInsert];
     
     
 	id element = [self delegateOwner];
@@ -109,17 +109,14 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 		
 		// Set up default bunch of fields
-		NSString *language = [page language];
 		NSMutableArray *fields = [NSMutableArray array];
 		
 		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Name" language:language]];
 		[aField setType:ContactElementTextFieldField];
 		[fields addObject:aField];
 		[aField release];
 		
 		aField = [[ContactElementField alloc] initWithIdentifier:@"email"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Email" language:language]];
 		[aField setType:ContactElementTextFieldField];
 		
 		[aField setDefaultString:[defaults objectForKey:@"emailPlaceholder"]];
@@ -127,19 +124,16 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		[aField release];
 		
 		aField = [[ContactElementField alloc] initWithIdentifier:@"subject"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Subject" language:language]];
 		[aField setType:ContactElementTextFieldField];
 		[fields addObject:aField];
 		[aField release];
 		
 		aField = [[ContactElementField alloc] initWithIdentifier:@"message"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Message" language:language]];
 		[aField setType:ContactElementTextAreaField];
 		[fields addObject:aField];
 		[aField release];
 		
 		aField = [[ContactElementField alloc] initWithIdentifier:@"send"];
-		[aField setLabel:[[self bundle] localizedStringForString:@"Send" language:language]];
 		[aField setType:ContactElementSubmitButton];
 		[fields addObject:aField];
 		[aField release];
@@ -148,6 +142,43 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	
 	myPluginProperties = [element retain];
 	[myPluginProperties addObserver:self forKeyPath:@"fields" options:0 context:NULL];
+}
+
+- (void)didAddToPage:(id <SVPage>)page;
+{
+    [super didAddToPage:page];
+    
+    
+    // If fields don't yet have a title, fill in from page language
+    NSString *language = [page language];
+    
+    for (ContactElementField *aField in [self fields])
+    {
+        if ([aField label]) continue;
+        
+        
+        NSString *identifier = [aField identifier];
+        if ([identifier isEqualToString:@"visitorName"])
+        {
+            [aField setLabel:[[self bundle] localizedStringForString:@"Name" language:language]];
+        }
+		else if ([identifier isEqualToString:@"email"])
+        {
+            [aField setLabel:[[self bundle] localizedStringForString:@"Email" language:language]];
+        }
+		else if ([identifier isEqualToString:@"subject"])
+        {
+            [aField setLabel:[[self bundle] localizedStringForString:@"Subject" language:language]];
+        }
+        else if ([identifier isEqualToString:@"message"])
+        {
+            [aField setLabel:[[self bundle] localizedStringForString:@"Message" language:language]];
+        }
+		else if ([identifier isEqualToString:@"send"])
+        {
+            [aField setLabel:[[self bundle] localizedStringForString:@"Send" language:language]];
+        }
+    }
 }
 
 - (void)dealloc

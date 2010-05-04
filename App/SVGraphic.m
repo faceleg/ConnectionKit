@@ -37,6 +37,7 @@
 }
 
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page; { }
+- (void)didAddToPage:(id <SVPage>)page; { }
 
 #pragma mark Pagelet
 

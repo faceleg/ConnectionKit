@@ -20,17 +20,19 @@
 
 #pragma mark Managing Life Cycle
 
-// Called once persistent properties have been restored (by Sandvox calling -setSerializedValue:forKey:)
+// Just like the Core Data methods of same name really
+- (void)awakeFromInsert;
 - (void)awakeFromFetch;
-
-// Called for new pagelets. Pasteboard is non-nil if inserting by pasting or drag & drop.
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
 
 - (void)setContainer:(id <SVPageletPlugInContainer>)container;
 
 
 #pragma mark Identifier
 + (NSString *)plugInIdentifier; // use standard reverse DNS-style string
+
+
+#pragma mark HTML Generation
+- (void)writeHTML:(id <SVPlugInContext>)context;
 
 
 #pragma mark Storage
@@ -53,8 +55,8 @@
  */
 
 
-#pragma mark HTML Generation
-- (void)writeHTML:(id <SVPlugInContext>)context;
+#pragma mark Pages
+- (void)didAddToPage:(id <SVPage>)page;
 
 
 #pragma mark Thumbnail

@@ -44,7 +44,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsert;
 {
     // Load initial properties from bundle
     NSBundle *bundle = [self bundle];
@@ -152,6 +152,10 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self setValue:[NSNumber numberWithInteger:0] forKey:key];
 }
 
+#pragma mark Pages
+
+- (void)didAddToPage:(id <SVPage>)page; { }
+
 #pragma mark Thumbnail
 
 - (id <IMBImageItem>)thumbnail; { return nil; }
@@ -196,9 +200,9 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
     NSArray *result = nil;
-    if ([self conformsToProtocol:@protocol(KTDataSource)])
+    if ([self conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
     {
-        result = [(Class <KTDataSource>)self supportedPasteboardTypesForCreatingPagelet:YES];
+        result = [self readableTypesForPasteboard:pasteboard];
     }
     
     return result;

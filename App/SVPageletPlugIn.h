@@ -24,7 +24,7 @@
 #pragma mark Initialization
 
 //  Default implementation retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsert;
 
 
 #pragma mark Storage

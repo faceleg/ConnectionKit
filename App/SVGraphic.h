@@ -62,6 +62,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 #pragma mark Initialization
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)didAddToPage:(id <SVPage>)page;
 
 
 #pragma mark Pagelet

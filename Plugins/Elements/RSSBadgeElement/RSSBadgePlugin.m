@@ -29,31 +29,35 @@
 	[super dealloc];
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page
+- (void)didAddToPage:(id <SVPage>)page;
 {
-    [super awakeFromInsertIntoPage:page];
+    [super didAddToPage:page];
     
     
-		// Use an appropriately localized label
-		//
-		// Make the string we want get generated, but we are forcing the string to be in target language.
-		//
-		NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
-		NSString *language = [page language];   OBASSERT(language);
+    if (![self label])
+    {
+        // Use an appropriately localized label
+        //
+        // Make the string we want get generated, but we are forcing the string to be in target language.
+        //
+        NSBundle *theBundle = [NSBundle bundleForClass:[self class]];
+        NSString *language = [page language];   OBASSERT(language);
         
         NSString *theString = [theBundle localizedStringForString:@"Subscribe to RSS feed" 
-														 language:language
-														 fallback:LocalizedStringInThisBundle(@"Subscribe to RSS feed", 
-																							  @"Prompt to subscribe to the given collection via RSS")];
-		
-		self.label = theString;
-		
-		// Try and connect to our parent collection
-		KTPage *parent = page;
-		if ([parent feedURL])
-		{
-			self.collection = parent;
-		}
+                                                         language:language
+                                                         fallback:LocalizedStringInThisBundle(@"Subscribe to RSS feed", 
+                                                                                              @"Prompt to subscribe to the given collection via RSS")];
+        
+        self.label = theString;
+    }
+    
+    
+    // Try and connect to our parent collection
+    KTPage *parent = page;
+    if (![self collection] && [parent feedURL])
+    {
+        self.collection = parent;
+    }
 }
 
 #pragma mark -
