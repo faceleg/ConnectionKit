@@ -255,22 +255,27 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 
 - (void)moveObject:(id)object afterObject:(id)pagelet;
 {
-    OBPRECONDITION(pagelet);
+    OBPRECONDITION(object);
     
     NSArray *pagelets = [self allSidebarPagelets];
     
-    // Locate after pagelet
-    NSUInteger index = [pagelets indexOfObject:pagelet];
-    OBASSERT(index != NSNotFound);
-    
     // Set our sort key to match
-    NSNumber *pageletSortKey = [pagelet sortKey];
+    NSNumber *pageletSortKey = (pagelet ? [pagelet sortKey] : [NSNumber numberWithInteger:-1]);
     OBASSERT(pageletSortKey);
     NSInteger nextSortKey = [pageletSortKey integerValue] + 1;
     [object setSortKey:[NSNumber numberWithInteger:nextSortKey]];
     
+    
     // Bump following pagelets along as needed
-    for (NSUInteger i = index+1; i < [pagelets count]; i++)
+    NSUInteger i = 0;
+    if (pagelet)
+    {
+        NSUInteger index = [pagelets indexOfObject:pagelet];
+        OBASSERT(index != NSNotFound);
+        i = index+1;
+    }
+    
+    for (; i < [pagelets count]; i++)
     {
         SVGraphic *nextPagelet = [pagelets objectAtIndex:i];
         if (nextPagelet != object)    // don't want to accidentally process self twice
