@@ -239,6 +239,7 @@
 #pragma mark -
 #pragma mark Data Source
 
+/*
 + (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
     return [NSArray arrayWithObjects:
@@ -302,5 +303,5 @@
     
     return result;
 }
-
+*/
 @end

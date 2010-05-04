@@ -16,3 +16,6 @@
 @property(nonatomic, copy, readonly) NSString *title;
 
 @end
+
+
+NSArray *SVWebLocationGetReadablePasteboardTypes(NSPasteboard *pasteboard);

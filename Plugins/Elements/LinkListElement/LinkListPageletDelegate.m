@@ -165,7 +165,7 @@
 {
     int result = KTSourcePriorityNone;
     
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
+	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
 	// Only allow creating a link list pagelet from a drag to pagelet area
 	if (isCreatingPagelet && webLocations && [webLocations count] >= 1)
@@ -184,7 +184,7 @@
 {
     BOOL result = NO;
     
-    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
 	if ([webLocations count] > 0)
 	{

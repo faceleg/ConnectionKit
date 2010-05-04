@@ -37,7 +37,6 @@
 #import "FeedPlugIn.h"
 #import "FeedInspector.h"
 #import "KSURLFormatter.h"
-#import "KSWebLocation.h"
 
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
@@ -172,20 +171,20 @@
 // returns an array of UTI strings of data types the receiver can read from the pasteboard and be initialized from. (required)
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard
 {
-    return [KSWebLocation readableTypesForPasteboard:pasteboard];
+    return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
 // returns options for reading data of a specified type from a given pasteboard. (required)
 + (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type 
                                          pasteboard:(NSPasteboard *)pasteboard
 {
-    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
+    return SVPlugInPasteboardReadingAsWebLocation;
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
 - (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
 {
-    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList ofType:type];
+    id <SVWebLocation> location = propertyList;
     if ( location )
     {
         NSURL *URL = [location URL];

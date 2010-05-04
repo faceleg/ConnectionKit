@@ -66,7 +66,7 @@
 
 /*!	Also accept drag URL drag.  
 */
-- (NSArray *)urlTypes { return [KSWebLocation webLocationPasteboardTypes]; }
+- (NSArray *)urlTypes { return SVWebLocationGetReadablePasteboardTypes(nil); }
 
 - (NSArray *)dragTypesToRegister
 {
@@ -94,7 +94,7 @@
 	// Get the URLs and titles from the pasteboard
 	NSPasteboard *pasteboard = [info draggingPasteboard];
 	
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
 	
 	
@@ -102,7 +102,7 @@
 	unsigned int i;
 	for (i = 0; i < [webLocations count]; i++)
 	{
-		KSWebLocation *aWebLocation = [webLocations objectAtIndex:i];
+		id <SVWebLocation> aWebLocation = [webLocations objectAtIndex:i];
 		
 		// If passed NSNull as a title it means none could be found. We want to use the hostname in such cases
 		NSString *title = [aWebLocation title];

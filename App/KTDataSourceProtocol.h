@@ -18,7 +18,6 @@
 //
 
 #import "SVPlugIn.h"
-#import "KSWebLocation.h"   // for NSPasteboardReading
 
 
 // Priority

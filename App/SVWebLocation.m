@@ -15,3 +15,10 @@
 @dynamic title;
 
 @end
+
+
+// Function to expose KSWebLocation class method since only a protocol is availabl to plug-ins
+NSArray *SVWebLocationGetReadablePasteboardTypes(NSPasteboard *pasteboard)
+{
+    return [KSWebLocation readableTypesForPasteboard:pasteboard];
+}

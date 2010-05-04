@@ -465,7 +465,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 + (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
-	return [KSWebLocation webLocationPasteboardTypes];
+	return SVWebLocationGetReadablePasteboardTypes(nil);
 }
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender
@@ -477,7 +477,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 {
     KTSourcePriority result = KTSourcePriorityNone;
     
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pboard
+	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pboard
 													  readWeblocFiles:YES
 													   ignoreFileURLs:YES];
 	
@@ -500,7 +500,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 {
     BOOL result = NO;
     
-    NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard
+    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard
 													  readWeblocFiles:YES
 													   ignoreFileURLs:YES];
 	

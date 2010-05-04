@@ -55,7 +55,7 @@
 #pragma mark -
 #pragma mark Dragging
 
-- (NSArray *)URLDragTypes { return [KSWebLocation webLocationPasteboardTypes]; }
+- (NSArray *)URLDragTypes { return SVWebLocationGetReadablePasteboardTypes(nil); }
 
 - (NSArray *)dragTypesToRegister
 {
@@ -65,7 +65,7 @@
 - (id)valueForDropFromPasteboard:(NSPasteboard *)pasteboard
 {
 	// Retrieve the appropriate URL from the pasteboard
-	NSArray *webLocations = [KSWebLocation webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
 	
 	return [[webLocations firstObjectKS] URL];
 }

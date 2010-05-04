@@ -322,20 +322,19 @@
 
 + (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
 {
-	return [KSWebLocation readableTypesForPasteboard:nil];
+	return SVWebLocationGetReadablePasteboardTypes(nil);
 }
 
 + (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
                                          pasteboard:(NSPasteboard *)pasteboard;
 {
-    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
+    return SVPlugInPasteboardReadingAsWebLocation;
 }
 
 - (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
 {
     // Only accept YouTube video URLs
-    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:pasteboardContents
-                                                                            ofType:type];
+    id <SVWebLocation> location = pasteboardContents;
     
     if (location)
     {

@@ -56,7 +56,7 @@
 #import "KSPlaceholderTableView.h"
 #import "KSTrimFirstLineFormatter.h"
 #import "KSVerticallyAlignedTextCell.h"
-#import "KSWebLocation.h"
+#import "SVWebLocation.h"
 
 // Foundation extensions
 #import "NSAppleScript+Karelia.h"
