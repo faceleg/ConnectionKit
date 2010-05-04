@@ -186,47 +186,41 @@
 
 + (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
 {
-    LOG((@"type = %@", type));
-    LOG((@"contents = %@", contents));
+    id <SVWebLocation> location = contents;
+    if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
+    {
+        NSURL *URL = [location URL];
+        if ( URL )
+        {
+            //FIXME: what about kNetNewsWireString pboard types? still needed?
+            
+            NSString *scheme = [URL scheme];
+            if ([scheme isEqualToString:@"feed"])
+            {
+                return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
+            }
+            if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
+            {
+                NSString *extension = [[[URL path] pathExtension] lowercaseString];
+                if ([extension isEqualToString:@"xml"]
+                    || [extension isEqualToString:@"rss"]
+                    || [extension isEqualToString:@"rdf"]
+                    || [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
+                {
+                    return KTSourcePriorityIdeal;
+                }
+            }
+        }
+    }
     
-    return KTSourcePriorityIdeal;
-    
-    
-//	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
-//		&& nil != [pboard propertyListForType:kNetNewsWireString])
-//	{
-//		return KTSourcePriorityIdeal;	// Yes, it's really a feed, from NNW
-//	}
-//    
-//	// Check to make sure it's not file: or feed:
-//	NSURL *extractedURL = [NSURL URLFromPasteboard:pboard];	// this type should be available, even if it's not the richest
-//	NSString *scheme = [extractedURL scheme];
-//	if ([scheme isEqualToString:@"feed"])
-//	{
-//		return KTSourcePriorityIdeal;	// Yes, a feed URL is what we want
-//	}
-//	if ([scheme hasPrefix:@"http"])	// http or https -- see if it has 
-//	{
-//		NSString *extension = [[[extractedURL path] pathExtension] lowercaseString];
-//		if ([extension isEqualToString:@"xml"]
-//			|| [extension isEqualToString:@"rss"]
-//			|| [extension isEqualToString:@"rdf"]
-//			|| [extension isEqualToString:@"atom"])	// we support reading of atom, not generation.
-//		{
-//			return KTSourcePriorityIdeal;
-//		}
-//	}
-//    
-//	// Otherwise, it doesn't look like it's a feed, so reject
-//	return KTSourcePriorityNone;
-    
+	return KTSourcePriorityNone;
 }
 
 // returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
 - (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
 {
     id <SVWebLocation> location = propertyList;
-    if ( [location conformsToProtocol:@protocol(SVWebLocation) )
+    if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
     {
         NSURL *URL = [location URL];
         if ( URL )
@@ -237,10 +231,6 @@
             {
                 [[self container] setTitle:title];
             }
-        }
-        else
-        {
-            [location release];
         }
     }
 }
