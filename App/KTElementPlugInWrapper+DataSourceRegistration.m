@@ -12,6 +12,7 @@
 #import "KTImageView.h"
 #import "SVPlugInGraphic.h"
 
+#import "NSArray+Karelia.h"
 #import "NSString+Karelia.h"
 
 #import "KSWebLocation.h"
@@ -90,11 +91,7 @@
                 }
                 else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
                 {
-                    propertyList = [pasteboard propertyListForType:type];
-                    
-                    propertyList = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
-                                                                                  ofType:type];
-                    [propertyList autorelease];
+                    propertyList = [[KSWebLocation webLocationsFromPasteboard:pasteboard] firstObjectKS];
                 }
                 else
                 {
@@ -102,14 +99,17 @@
                 }
                 
                 
-                NSUInteger priority = [aSource readingPriorityForPasteboardContents:propertyList
-                                                                             ofType:type];
-                if (priority > readingPriority)
+                if (propertyList)
                 {
-                    plugInClass = aSource;
-                    pasteboardContents = propertyList;
-                    pasteboardType = type;
-                    readingPriority = priority;
+                    NSUInteger priority = [aSource readingPriorityForPasteboardContents:propertyList
+                                                                                 ofType:type];
+                    if (priority > readingPriority)
+                    {
+                        plugInClass = aSource;
+                        pasteboardContents = propertyList;
+                        pasteboardType = type;
+                        readingPriority = priority;
+                    }
                 }
             }
             @catch (NSException *exception)
