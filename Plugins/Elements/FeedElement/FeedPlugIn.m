@@ -167,7 +167,7 @@
 
 
 #pragma mark -
-#pragma mark NSPasteboardReading
+#pragma mark SVPlugInPasteboardReading
 
 // returns an array of UTI strings of data types the receiver can read from the pasteboard and be initialized from. (required)
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard

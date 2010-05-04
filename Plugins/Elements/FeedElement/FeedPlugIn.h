@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@interface FeedPlugIn : SVPageletPlugIn <NSPasteboardReading>
+@interface FeedPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
 {
     BOOL _openLinksInNewWindow;
     NSUInteger _max;

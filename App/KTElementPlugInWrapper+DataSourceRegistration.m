@@ -34,7 +34,7 @@
 	while (aPlugin = [pluginsEnumerator nextObject])
     {
 		Class anElementClass = [[aPlugin bundle] principalClass];
-        if ([anElementClass conformsToProtocol:@protocol(NSPasteboardReading)])
+        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
         {
             [result addObject:anElementClass];
             [anElementClass load];

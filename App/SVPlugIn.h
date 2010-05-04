@@ -61,13 +61,6 @@
 - (id <IMBImageItem>)thumbnail;
 
 
-#pragma mark Pasteboard
-// See NSPasteboardReading for full details. Sandvox doesn't support +readingOptionsForType:pasteboard: yet
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
-@optional
-- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
-
-
 @end
 
 
@@ -102,6 +95,16 @@
 
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
+@end
+
+
+#pragma mark -
+
+
+@protocol SVPlugInPasteboardReading <NSObject>
+// See SVPlugInPasteboardReading for full details. Sandvox doesn't support +readingOptionsForType:pasteboard: yet
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+- (id)initWithPasteboardPropertyList:(id)propertyList ofType:(NSString *)type;
 @end
 
 

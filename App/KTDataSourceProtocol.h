@@ -17,6 +17,7 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
+#import "SVPlugIn.h"
 #import "KSWebLocation.h"   // for NSPasteboardReading
 
 
@@ -32,7 +33,7 @@ typedef enum {
 } KTSourcePriority;
 
 
-@protocol KTDataSource <NSPasteboardReading>
+@protocol KTDataSource <SVPlugInPasteboardReading>
 @end
 
 

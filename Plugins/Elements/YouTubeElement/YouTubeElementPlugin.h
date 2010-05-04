@@ -25,7 +25,7 @@ typedef enum {
 // Wouldn't it be cool to have a way to click on a YouTube video and have it then fill up your page with a lightbox of a larger video?
 // "autoplay=1" parameter would allow this, but it's probably not a good idea to give the user access to this without a lightbox.
 
-@interface YouTubeElementPlugin : SVPageletPlugIn <NSPasteboardReading, KTDataSource, IMBImageItem>
+@interface YouTubeElementPlugin : SVPageletPlugIn <SVPlugInPasteboardReading, IMBImageItem>
 {
   @private
 	BOOL myAutomaticallyUpdatingSecondaryColorFlag;
