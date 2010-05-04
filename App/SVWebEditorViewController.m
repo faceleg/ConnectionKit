@@ -985,7 +985,8 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     
     
     //  When dragging within the sidebar, want to move the selected pagelets
-    if ([dragInfo draggingSource] == sender)
+    if ([dragInfo draggingSource] == sender &&
+        [dragInfo draggingSourceOperationMask] & NSDragOperationMove)
     {
         NSArray *sidebarPageletControllers = [[self HTMLContext] sidebarPageletDOMControllers];
         for (SVDOMController *aPageletItem in [sender selectedItems])
@@ -1031,7 +1032,10 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
         
         
         // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
-        [sender removeDraggedItems];
+        if ([dragInfo draggingSourceOperationMask] & NSDragOperationMove)
+        {
+            [sender removeDraggedItems];
+        }
         [sender didChangeText];
     }
     
