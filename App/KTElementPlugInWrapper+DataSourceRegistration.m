@@ -57,6 +57,12 @@
 + (SVGraphic *)insertNewGraphicWithPasteboard:(NSPasteboard *)pasteboard
                        inManagedObjectContext:(NSManagedObjectContext *)context;
 {
+    Class plugInClass = nil;
+    id pasteboardContents;
+    NSString *pasteboardType;
+    NSUInteger readingPriority = 0;
+    
+    
     NSArray *datasources = [[self dataSources] allObjects];
     for (Class aSource in datasources)
     {
@@ -67,13 +73,13 @@
             @try    // talking to a plug-in so might fail
             {
                 // What should I read off the pasteboard?
+                id propertyList;
                 NSPasteboardReadingOptions readingOptions = NSPasteboardReadingAsData;
                 if ([aSource respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
                 {
                     readingOptions = [aSource readingOptionsForType:type pasteboard:pasteboard];
                 }
                 
-                id propertyList;
                 if (readingOptions & NSPasteboardReadingAsPropertyList)
                 {
                     propertyList = [pasteboard propertyListForType:type];
@@ -88,18 +94,14 @@
                 }
                 
                 
-                // Try to create plug-in from property list
-                id <SVPlugIn> plugIn = [[aSource alloc] 
-                                        initWithPasteboardPropertyList:propertyList
-                                        ofType:type];
-                
-                if (plugIn)
+                NSUInteger priority = [aSource readingPriorityForPasteboardContents:propertyList
+                                                                             ofType:type];
+                if (priority > readingPriority)
                 {
-                    SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugIn:plugIn
-                                                             inManagedObjectContext:context];
-                    [plugIn release];
-                    
-                    return result;
+                    plugInClass = aSource;
+                    pasteboardContents = propertyList;
+                    pasteboardType = type;
+                    readingPriority = priority;
                 }
             }
             @catch (NSException *exception)
@@ -108,6 +110,23 @@
             }
         }
     }
+    
+    
+    
+    
+    
+    // Try to create plug-in from pasteboard contents
+    if (plugInClass)
+    {
+        NSString *identifier = [plugInClass plugInIdentifier];
+        
+        SVPlugInGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
+                                                                 inManagedObjectContext:context];
+        id plugIn = [result plugIn];
+        [plugIn awakeFromPasteboardContents:pasteboardContents ofType:pasteboardType];
+    }
+    
+    
     
     return nil;
 }

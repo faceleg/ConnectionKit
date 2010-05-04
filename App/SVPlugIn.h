@@ -104,6 +104,7 @@
 @protocol SVPlugInPasteboardReading <NSObject>
 // See SVPlugInPasteboardReading for full details. Sandvox doesn't support +readingOptionsForType:pasteboard: yet
 + (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
++ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
 - (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
 @end
 
