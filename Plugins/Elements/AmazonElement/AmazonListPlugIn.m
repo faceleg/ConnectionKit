@@ -463,9 +463,9 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
-	return SVWebLocationGetReadablePasteboardTypes(nil);
+	return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
 + (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)sender

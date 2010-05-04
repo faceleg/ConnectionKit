@@ -320,9 +320,9 @@
 
 #pragma mark Pasteboard
 
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
-	return SVWebLocationGetReadablePasteboardTypes(nil);
+	return SVWebLocationGetReadablePasteboardTypes(pasteboard);
 }
 
 + (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type

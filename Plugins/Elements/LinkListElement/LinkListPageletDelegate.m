@@ -138,7 +138,7 @@
 #pragma mark -
 #pragma mark Data Source
 
-+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
++ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
 {
     return [NSArray arrayWithObjects:
             @"WebURLsWithTitlesPboardType",
