@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		3C322C6B1190D45A00D21673 /* DiggInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C322C691190D45A00D21673 /* DiggInspector.xib */; };
+		3C322C8A1190D75300D21673 /* DiggInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C322C891190D75300D21673 /* DiggInspector.m */; };
 		3C4A185B0D5F9BFB009476BF /* DiggPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A185A0D5F9BFB009476BF /* DiggPlugIn.m */; };
 		3C4A185F0D5F9C07009476BF /* digg.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185C0D5F9C07009476BF /* digg.icns */; };
 		3C4A18600D5F9C07009476BF /* digglogo.png in Resources */ = {isa = PBXBuildFile; fileRef = 3C4A185D0D5F9C07009476BF /* digglogo.png */; };
@@ -25,6 +26,8 @@
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* DiggElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggElement_Prefix.pch; sourceTree = "<group>"; };
 		3C322C6A1190D45A00D21673 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/DiggInspector.xib; sourceTree = "<group>"; };
+		3C322C881190D75300D21673 /* DiggInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggInspector.h; sourceTree = "<group>"; };
+		3C322C891190D75300D21673 /* DiggInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiggInspector.m; sourceTree = "<group>"; };
 		3C4A18590D5F9BFB009476BF /* DiggPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DiggPlugIn.h; sourceTree = "<group>"; };
 		3C4A185A0D5F9BFB009476BF /* DiggPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DiggPlugIn.m; sourceTree = "<group>"; };
 		3C4A185C0D5F9C07009476BF /* digg.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = digg.icns; sourceTree = "<group>"; };
@@ -117,6 +120,8 @@
 			children = (
 				3C4A18590D5F9BFB009476BF /* DiggPlugIn.h */,
 				3C4A185A0D5F9BFB009476BF /* DiggPlugIn.m */,
+				3C322C881190D75300D21673 /* DiggInspector.h */,
+				3C322C891190D75300D21673 /* DiggInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -256,6 +261,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C4A185B0D5F9BFB009476BF /* DiggPlugIn.m in Sources */,
+				3C322C8A1190D75300D21673 /* DiggInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
