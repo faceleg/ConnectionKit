@@ -29,7 +29,7 @@
 - (void)setParentWebEditorItem:(SVWebEditorItem *)item
 {
     [super setParentWebEditorItem:item];
-    [self setHTMLContext:[item HTMLContext]];
+    //[self setHTMLContext:[item HTMLContext]];  Not really helpful since root item has no context
 }
 
 #pragma mark Content
