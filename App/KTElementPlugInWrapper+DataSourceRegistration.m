@@ -88,6 +88,14 @@
                 {
                     propertyList = [pasteboard stringForType:type];
                 }
+                else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
+                {
+                    propertyList = [pasteboard propertyListForType:type];
+                    
+                    propertyList = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
+                                                                                  ofType:type];
+                    [propertyList autorelease];
+                }
                 else
                 {
                     propertyList = [pasteboard dataForType:type];
