@@ -1,9 +1,9 @@
 [[if parser.HTMLGenerationPurpose||parser.liveDataFeeds]]
-[[if URL]]
+[[if feedURL]]
 <script src="http://service.karelia.com/feed.js.php?url=[[=%URLAsHTTP]]&amp;[[if max]]max=[[=%max]]&amp;[[endif3]]k=[[=%key]][[if openLinksInNewWindow]]&amp;n=1[[endif3]][[if summaryChars]]&amp;s=[[=summaryChars]][[endif3]][[if isPage]]&amp;p=1[[endif3]]" type="text/javascript"></script>
 [[endif2]]
 [[else]]
-[[if URL]]
+[[if feedURL]]
 [[if isPage]]
 <h3><a href="#">[[=&host]] [['example no.]] 1</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
 <h3><a href="#">[[=&host]] [['example no.]] 2</a></h3>[[if summaryChars]]<p>[['item summary]]</p>[[endif4]]
