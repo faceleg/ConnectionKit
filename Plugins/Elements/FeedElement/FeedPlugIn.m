@@ -54,7 +54,7 @@
 
 + (NSSet *)plugInKeys
 { 
-    return [NSSet setWithObjects:@"URL", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
+    return [NSSet setWithObjects:@"feedURL", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
 }
 
 
@@ -65,14 +65,17 @@
 {
     [super awakeFromInsert];
     
-    NSURL *theURL = nil;
-    NSString *theTitle = nil;
-    if ([NSAppleScript safariFrontmostFeedURL:&theURL title:&theTitle])
+    NSURL *URL = nil;
+    NSString *title = nil;
+    if ([NSAppleScript safariFrontmostFeedURL:&URL title:&title])
     {
-        if ( nil != theURL )
+        if ( URL )
         {
-            self.URL = theURL;
-            [[self container] setTitle:theTitle];
+            self.feedURL = URL;
+            if ( title )
+            {
+                [[self container] setTitle:title];
+            }
         }
     }
 }
@@ -94,9 +97,9 @@
 -(BOOL)validateURL:(id *)ioValue error:(NSError **)outError
 {
     BOOL result = YES;
-    NSURL *theURL = *ioValue;
+    NSURL *URL = *ioValue;
     
-    if ( nil != theURL )
+    if ( URL )
     {
         //    // If there is no URL prefix, use feed://
         //    if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
@@ -113,7 +116,7 @@
         // so the top half of the original code is no longer applicable
         
         // but, do we need to switch any other scheme to feed:// ?
-        NSString *scheme = [theURL scheme];
+        NSString *scheme = [URL scheme];
         if ( ![scheme isEqualToString:@"feed"] )
         {
             
@@ -125,7 +128,7 @@
 
 - (NSURL *)URLAsHTTP		// server requires http:// scheme
 {
-    NSURL *result = self.URL;
+    NSURL *result = self.feedURL;
 	if ( [[result scheme] isEqualToString:@"feed"] )	// convert feed://
 	{
         NSString *string = [NSString stringWithFormat:@"http://%@", [[result absoluteString] substringFromIndex:7]];
@@ -136,7 +139,7 @@
 
 - (NSString *)host
 {
-    NSString *result = [self.URL host];
+    NSString *result = [self.feedURL host];
     if ( !result )
     {
         result = @"";
@@ -187,118 +190,8 @@
     LOG((@"contents = %@", contents));
     
     return KTSourcePriorityIdeal;
-}
-
-// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
-- (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
-{
-    id <SVWebLocation> location = propertyList;
-    if ( location )
-    {
-        NSURL *URL = [location URL];
-        if ( URL )
-        {
-            self.URL = URL;
-            //FIXME: is there any way to set a title from dragging in a URL? if we could, how could we set it if we don't yet have a container?
-        }
-        else
-        {
-            [location release];
-        }
-    }
-    else
-    {
-    }
-}
-
-
-//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
-//{
-//	[super awakeFromDragWithDictionary:aDictionary];
-//	
-//	// Note: We're not using kKTDataSourceURLString  ... URL of original page .. right now.
-//	
-//	NSString *urlString = [aDictionary valueForKey:kKTDataSourceFeedURLString];
-//	if (urlString ) {
-//		[[self delegateOwner] setValue:urlString forKey:@"url"];
-//	}
-//	
-//	NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
-//	if ( nil != title ) {
-//		[[self delegateOwner] setTitleHTML:[title stringByEscapingHTMLEntities]];
-//	}
-//}
-
-//
-//+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//    return [NSArray arrayWithObjects:
-//            kNetNewsWireString,	// from NetNewsWire
-//            @"WebURLsWithTitlesPboardType",
-//            @"BookmarkDictionaryListPboardType",
-//            NSURLPboardType,	// Apple URL pasteboard type
-//            nil];
-//}
-
-//+ (NSArray *)supportedPasteboardTypesForCreatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//	return [KSWebLocation readableTypesForPasteboard:nil];
-//}
-//
-//+ (NSPasteboardReadingOptions)readingOptionsForType:(NSString *)type
-//                                         pasteboard:(NSPasteboard *)pasteboard;
-//{
-//    return [KSWebLocation readingOptionsForType:type pasteboard:pasteboard];
-//}
-//
-//- (id)initWithPasteboardPropertyList:(id)propertyList
-//                              ofType:(NSString *)type;
-//{
-//    self = [self init];
-//    
-//    
-//    // Only accept YouTube video URLs
-//    KSWebLocation *location = [[KSWebLocation alloc] initWithPasteboardPropertyList:propertyList
-//                                                                             ofType:type];
-//    
-//    if (location)
-//    {
-//        NSString *videoID = [[location URL] youTubeVideoID];
-//        if (videoID)
-//        {
-//            [self setUserVideoCode:[[location URL] absoluteString]];
-//        }
-//        else
-//        {
-//            [self release]; self = nil;
-//        }
-//        
-//        [location release];
-//    }
-//    else
-//    {
-//        [self release]; self = nil;
-//    }
-//	
-//    return self;
-//}
-//
-//
-//+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
-//{
-//	NSArray *theArray = nil;
-//    
-//	if ( nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
-//        && nil != (theArray = [pboard propertyListForType:kNetNewsWireString]) )
-//	{
-//		return [theArray count];
-//	}
-//	return 1;	// can't find any multiplicity
-//}
-
-//+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-//{
-//    
+    
+    
 //	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:kNetNewsWireString]]
 //		&& nil != [pboard propertyListForType:kNetNewsWireString])
 //	{
@@ -326,71 +219,31 @@
 //    
 //	// Otherwise, it doesn't look like it's a feed, so reject
 //	return KTSourcePriorityNone;
-//}
+    
+}
 
-//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-//                      fromPasteboard:(NSPasteboard *)pasteboard
-//                             atIndex:(unsigned)dragIndex
-//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
-//
-//{
-//    BOOL result = NO;
-//    
-//    NSString *feedURLString = nil;
-//    NSString *feedTitle= nil;
-//	NSString *pageURLString = nil;
-//    
-//    NSArray *orderedTypes = [self supportedPasteboardTypesForCreatingPagelet:isCreatingPagelet];
-//    
-//	
-//    NSString *bestType = [pasteboard availableTypeFromArray:orderedTypes];
-//    
-//    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
-//    {
-//        NSArray *arrayFromData = [pasteboard propertyListForType:@"BookmarkDictionaryListPboardType"];
-//        NSDictionary *objectInfo = [arrayFromData objectAtIndex:dragIndex];
-//        feedURLString = [objectInfo valueForKey:@"URLString"];
-//        feedTitle = [[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"];
-//    }
-//    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
-//    {
-//        NSArray *arrayFromData = [pasteboard propertyListForType:@"WebURLsWithTitlesPboardType"];
-//        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
-//        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
-//        feedURLString = [urlStringArray objectAtIndex:dragIndex];
-//        feedTitle = [urlTitleArray objectAtIndex:dragIndex];
-//    }
-//    else if ( [bestType isEqualToString:kNetNewsWireString] )
-//    {
-//        NSArray *arrayFromData = [pasteboard propertyListForType:kNetNewsWireString];
-//        NSDictionary *firstFeed = [arrayFromData objectAtIndex:dragIndex];
-//        feedURLString = [firstFeed objectForKey:@"sourceRSSURL"];
-//		pageURLString = [firstFeed objectForKey:@"sourceHomeURL"];
-//        feedTitle = [firstFeed objectForKey:@"sourceName"];
-//    }
-//    else if ( [bestType isEqualToString:NSURLPboardType] )		// only one here
-//    {
-//		NSURL *url = [NSURL URLFromPasteboard:pasteboard];
-//		feedURLString = [url absoluteString];
-//		// Note: no title available from this
-//    }
-//    
-//    if ( nil != feedURLString )
-//    {
-//        [aDictionary setValue:feedURLString forKey:kKTDataSourceFeedURLString];
-//        if ( nil != feedTitle )
-//        {
-//            [aDictionary setValue:feedTitle forKey:kKTDataSourceTitle];
-//        }
-//		if (nil != pageURLString)	// only shows up on NNW drags
-//		{
-//			[aDictionary setValue:feedURLString forKey:kKTDataSourceURLString];
-//		}
-//        result = YES;
-//    }
-//    
-//    return result;
-//}
+// returns an object initialized using the data in propertyList. (required since we're not using keyed archiving)
+- (void)awakeFromPasteboardContents:(id)propertyList ofType:(NSString *)type
+{
+    id <SVWebLocation> location = propertyList;
+    if ( [location conformsToProtocol:@protocol(SVWebLocation) )
+    {
+        NSURL *URL = [location URL];
+        if ( URL )
+        {
+            self.feedURL = URL;
+            NSString *title = [location title];
+            if ( title )
+            {
+                [[self container] setTitle:title];
+            }
+        }
+        else
+        {
+            [location release];
+        }
+    }
+}
 
 
 #pragma mark -
@@ -406,5 +259,5 @@
 @synthesize max = _max;
 @synthesize summaryChars = _summaryChars;
 @synthesize key = _key;
-@synthesize URL = _URL;
+@synthesize feedURL = _feedURL;
 @end
