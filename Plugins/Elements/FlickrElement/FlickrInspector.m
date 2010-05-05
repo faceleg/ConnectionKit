@@ -41,5 +41,34 @@
 
 - (NSString *)nibName { return @"FlickrInspector"; }
 
+// Lots of work to make a nice colorful logo!
+
+- (void)awakeFromNib
+{
+	NSString *poweredByString = [oFlickrButton title];
+	
+	NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
+                          [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
+                          nil];
+	NSMutableAttributedString *ms = [[[NSMutableAttributedString alloc] initWithString:poweredByString attributes:attr] autorelease];
+	NSRange flickrRange = [poweredByString rangeOfString:@"flickr" options:NSCaseInsensitiveSearch];
+	if (NSNotFound != flickrRange.location)
+	{
+		[ms addAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [NSColor colorWithCalibratedRed:0.0 green:.39 blue:.86 alpha:1.0], NSForegroundColorAttributeName, nil]
+					range:NSMakeRange(flickrRange.location, 5)];
+		[ms addAttributes:
+         [NSDictionary dictionaryWithObjectsAndKeys:
+          [NSColor colorWithCalibratedRed:1.0 green:0.0 blue:.52 alpha:1.0], NSForegroundColorAttributeName, nil]
+					range:NSMakeRange(flickrRange.location+5, 1)];
+	}
+	[oFlickrButton setAttributedTitle:ms];
+}
+
+- (IBAction)openFlickr:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.flickr.com/"]];
+}
 
 @end

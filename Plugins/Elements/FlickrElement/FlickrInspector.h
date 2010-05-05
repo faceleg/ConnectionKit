@@ -39,6 +39,10 @@
 
 
 @interface FlickrInspector : SVInspectorViewController
+{
+    IBOutlet NSButton *oFlickrButton;
+}
 
+- (IBAction)openFlickr:(id)sender;
 
 @end
