@@ -56,6 +56,7 @@
 
 - (void)dealloc
 {
+    OBASSERT(!_buffer);
     [_pendingStartTagDOMElements release];
     [_pendingEndDOMElements release];
     
@@ -80,6 +81,7 @@
     if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
     {
         [_pendingEndDOMElements removeLastObject];
+        [self discardBuffer];
         [self pushOpenElementWithTagName:[element tagName]];
         
         
@@ -186,27 +188,16 @@
         }
         else
         {
-            // Close the element, but first, if the next sibling is equal, merge it with this one
+            // Close the element, but wait and see if the next sibling is equal & therefore to be merged
+            [self beginBuffering];
+            [self writeEndTag];
+            [self flushOnNextWrite];
+            
             [_pendingEndDOMElements addObject:element];
-            [self popOpenElement];  // -writeEndTag internally calls -popOpenElement
         }
         
         return [element nextSibling];
     }
-}
-
-- (void)writePendingEndTags;
-{
-    // Is the last tag awaiting closure?
-    NSArray *elements = [_pendingEndDOMElements copy];
-    [_pendingEndDOMElements removeAllObjects];
-    
-    for (DOMElement *anElement in elements)
-    {
-        [self pushOpenElementWithTagName:[anElement tagName]];
-        [self writeEndTag];
-    }
-    [elements release];
 }
 
 #pragma mark Cleanup
@@ -555,6 +546,7 @@
     
     // Before actually writing the string, push through any pending Elements.
     [_pendingStartTagDOMElements removeAllObjects];
+    [_pendingEndDOMElements removeAllObjects];
     
     
     
@@ -572,14 +564,6 @@
 - (void)writeString:(NSString *)string
 {
     if (_flushOnNextWrite) [self flush];
-    
-    // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
-    //if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self flush];
-    
-    
-    // Is the last tag awaiting closure?
-    if ([_pendingEndDOMElements count] > 0 && [string length] > 0) [self writePendingEndTags];
-    
     
     // Do the writing
     [super writeString:string];
