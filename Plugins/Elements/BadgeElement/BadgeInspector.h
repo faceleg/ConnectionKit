@@ -1,5 +1,5 @@
 //
-//  SandvoxBadgeInspector.h
+//  BadgeInspector.h
 //  BadgeElement
 //
 //  Created by Mike on 31/12/2009.
@@ -10,7 +10,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SandvoxBadgeInspector : SVInspectorViewController
+@interface BadgeInspector : SVInspectorViewController
 
 - (IBAction)badgeClicked:(id)sender;
 

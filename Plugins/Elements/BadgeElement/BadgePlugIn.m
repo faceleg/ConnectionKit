@@ -1,8 +1,8 @@
 //
-//  BadgePageletDelegate.m
-//  Sandvox SDK
+//  BadgePlugIn.m
+//  BadgeElement
 //
-//  Copyright 2004-2009 Karelia Software. All rights reserved.
+//  Copyright 2004-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -34,20 +34,15 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "BadgePageletDelegate.h"
-#import "SandvoxBadgeInspector.h"
+#import "BadgePlugIn.h"
+#import "BadgeInspector.h"
 
 
 static NSArray *sBadgeNames = nil;
 static NSArray *sAltStrings = nil;
 
-@interface BadgePageletDelegate ()
-@end
 
-
-@implementation BadgePageletDelegate
-
-#pragma mark Dealloc
+@implementation BadgePlugIn
 
 - (void)dealloc
 {
@@ -62,7 +57,9 @@ static NSArray *sAltStrings = nil;
     [[self container] setShowsTitle:NO];
 }
 
-#pragma mark Basic properties
+
+#pragma mark -
+#pragma mark SVPlugIn
 
 + (NSSet *)plugInKeys
 { 
@@ -73,7 +70,8 @@ static NSArray *sAltStrings = nil;
 @synthesize anonymous = _anonymous;
 @synthesize openLinkInNewWindow = _openLinkInNewWindow;
 
-#pragma mark Other
+#pragma mark -
+#pragma mark HTML Generation
 
 + (NSArray *)sharedBadgeNames
 {
@@ -144,8 +142,8 @@ static NSArray *sAltStrings = nil;
 	
 	total += aVariant;		// Offset the number just a bit
 	
-	NSInteger stringNumber = total % [[BadgePageletDelegate sharedAltStrings] count];
-	NSString *blurb = [[BadgePageletDelegate sharedAltStrings] objectAtIndex:stringNumber];
+	NSInteger stringNumber = total % [[BadgePlugIn sharedAltStrings] count];
+	NSString *blurb = [[BadgePlugIn sharedAltStrings] objectAtIndex:stringNumber];
     
 	return blurb;
 }
@@ -179,9 +177,9 @@ static NSArray *sAltStrings = nil;
 {
 	NSString *result = nil;
 	NSUInteger tag = [self badgeTypeTag]; // TAG 0 means not image...
-	if (tag > BADGE_TEXT && tag <= [[BadgePageletDelegate sharedBadgeNames] count])
+	if (tag > BADGE_TEXT && tag <= [[BadgePlugIn sharedBadgeNames] count])
 	{
-		result = [[BadgePageletDelegate sharedBadgeNames] objectAtIndex:tag-1];
+		result = [[BadgePlugIn sharedBadgeNames] objectAtIndex:tag-1];
 	}
 	return result;
 }
@@ -198,8 +196,10 @@ static NSArray *sAltStrings = nil;
     return result;
 }
 
+
+#pragma mark -
 #pragma mark Inspector
 
-+ (Class)inspectorViewControllerClass { return [SandvoxBadgeInspector class]; }
++ (Class)inspectorViewControllerClass { return [BadgeInspector class]; }
 
 @end
