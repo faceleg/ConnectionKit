@@ -57,6 +57,19 @@
     return result;
 }
 
+// Presently, SVWebEditorView doesn't implement paste directly itself, so we can jump in here
+- (IBAction)paste:(id)sender;
+{
+    if (![[self delegate] webEditor:self doCommandBySelector:_cmd])
+    {
+        // Does the text view want to take command?
+        if (![_focusedText webEditorTextDoCommandBySelector:_cmd])
+        {
+            [self forceWebViewToPerform:_cmd withObject:sender];
+        }
+    }
+}
+
 - (void)delete:(id)sender forwardingSelector:(SEL)action;
 {
     if ([self selectedDOMRange])

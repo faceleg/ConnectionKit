@@ -274,8 +274,9 @@ handleNavigationAction:(NSDictionary *)actionInformation
                request:(NSURLRequest *)request;
 
 
-#pragma mark Text Editing
+#pragma mark Editing
 - (void)webEditorWillChange:(NSNotification *)notification;
+- (BOOL)webEditor:(SVWebEditorView *)webEditor doCommandBySelector:(SEL)action;
 
 
 #pragma mark Web Editor Items
