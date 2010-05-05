@@ -34,13 +34,13 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "FlickrPageletDelegate.h"
+#import "FlickrPlugIn.h"
 
 // LocalizedStringInThisBundle(@"Flickr (Placeholder)", "String_On_Page_Template")
 
 
 
-@implementation FlickrPageletDelegate
+@implementation FlickrPlugIn
 
 /*
  Plugin Properties we use:
