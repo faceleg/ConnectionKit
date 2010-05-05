@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2009 Karelia Software</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2010 Karelia Software</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
+	<string>2.0</string>
 	<key>KSHelpAnchor</key>
 	<string>Sandvox_Badge</string>
 	<key>KTPageletCanHaveTitle</key>
@@ -40,14 +40,14 @@
 	<key>KTElementAllowsIntroduction</key>
 	<true/>
 	<key>KTPluginNibFile</key>
-	<string>BadgePagelet</string>
+	<string>BadgeInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>8</integer>
 	<key>KTPluginUntitledName</key>
 	<string></string>
 	<key>KTTemplateName</key>
-	<string>BadgePageletTemplate</string>
+	<string>BadgeTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>BadgePageletDelegate</string>
+	<string>BadgePlugIn</string>
 </dict>
 </plist>
