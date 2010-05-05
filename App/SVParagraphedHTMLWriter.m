@@ -41,6 +41,10 @@
     [super dealloc];
 }
 
+#pragma mark Properties
+
+@synthesize allowsBlockGraphics = _allowsBlockGraphics;
+
 #pragma mark Output
 
 - (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
@@ -51,11 +55,20 @@
 {
     SVGraphic *graphic = [controller representedObject];
     SVTextAttachment *attachment = [graphic textAttachment];
+    
+    
+    // Is it allowed?
     if ([[attachment placement] integerValue] == SVGraphicPlacementBlock)
     {
-        OBASSERTSTRING([self openElementsCount] == 0, @"Only inline graphics can be placed mid-paragraph");
+        if (![self allowsBlockGraphics] || [self openElementsCount] > 0)
+        {
+            NSLog(@"Found block graphic in unsupport position");
+            return;
+        }
     }
     
+    
+    // Go ahead and write
     [[self bodyTextDOMController] writeGraphicController:controller
                                           withHTMLWriter:self];
     

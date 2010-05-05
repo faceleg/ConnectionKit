@@ -15,10 +15,14 @@
 @interface SVParagraphedHTMLWriter : SVFieldEditorHTMLWriter
 {
   @private
+    BOOL    _allowsBlockGraphics;
+    
     NSMutableSet    *_attachments;
     
     SVRichTextDOMController             *_DOMController;
 }
+
+@property(nonatomic) BOOL allowsBlockGraphics;
 
 - (NSSet *)textAttachments;
 
