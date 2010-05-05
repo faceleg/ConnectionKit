@@ -445,11 +445,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
 {
-    SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
-    [border setMinSize:NSMakeSize(5.0f, 5.0f)];
-    
-    
-    
     // Bracket the whole operation so no-one else gets the wrong idea
     OBPRECONDITION(_isChangingSelectedItems == NO);
     _isChangingSelectedItems = YES;
