@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		3C42E49B0D6502C0004F35FD /* FlickrPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E49A0D6502C0004F35FD /* FlickrPlugIn.m */; };
 		3C42E4A00D6502CD004F35FD /* FlickrPagelet.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49D0D6502CD004F35FD /* FlickrPagelet.css */; };
-		3C42E4A10D6502CD004F35FD /* FlickrPageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49E0D6502CD004F35FD /* FlickrPageletTemplate.html */; };
+		3C42E4A10D6502CD004F35FD /* FlickrTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49E0D6502CD004F35FD /* FlickrTemplate.html */; };
 		3C42E4A70D6502D7004F35FD /* FlickrPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4A20D6502D7004F35FD /* FlickrPagelet.nib */; };
 		3C42E4A80D6502D7004F35FD /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4A50D6502D7004F35FD /* Localizable.strings */; };
 		3C42E4C20D65033F004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4C10D65033F004F35FD /* License.rtf */; };
@@ -26,7 +26,7 @@
 		3C42E4990D6502C0004F35FD /* FlickrPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPlugIn.h; sourceTree = "<group>"; };
 		3C42E49A0D6502C0004F35FD /* FlickrPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPlugIn.m; sourceTree = "<group>"; };
 		3C42E49D0D6502CD004F35FD /* FlickrPagelet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = FlickrPagelet.css; sourceTree = "<group>"; };
-		3C42E49E0D6502CD004F35FD /* FlickrPageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FlickrPageletTemplate.html; sourceTree = "<group>"; };
+		3C42E49E0D6502CD004F35FD /* FlickrTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FlickrTemplate.html; sourceTree = "<group>"; };
 		3C42E4A30D6502D7004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/FlickrPagelet.nib; sourceTree = "<group>"; };
 		3C42E4A40D6502D7004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42E4A60D6502D7004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -100,7 +100,7 @@
 				CE7230130D85D25800E9C592 /* flickr.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3C42E4A20D6502D7004F35FD /* FlickrPagelet.nib */,
-				3C42E49E0D6502CD004F35FD /* FlickrPageletTemplate.html */,
+				3C42E49E0D6502CD004F35FD /* FlickrTemplate.html */,
 				3C42E49D0D6502CD004F35FD /* FlickrPagelet.css */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42E4A50D6502D7004F35FD /* Localizable.strings */,
@@ -218,7 +218,7 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C42E4A00D6502CD004F35FD /* FlickrPagelet.css in Resources */,
-				3C42E4A10D6502CD004F35FD /* FlickrPageletTemplate.html in Resources */,
+				3C42E4A10D6502CD004F35FD /* FlickrTemplate.html in Resources */,
 				3C42E4A70D6502D7004F35FD /* FlickrPagelet.nib in Resources */,
 				3C42E4A80D6502D7004F35FD /* Localizable.strings in Resources */,
 				3C42E4C20D65033F004F35FD /* License.rtf in Resources */,
