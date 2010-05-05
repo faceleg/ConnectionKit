@@ -233,6 +233,13 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 	}
 }
 
+
+#pragma mark -
+#pragma mark Inspector
+
++ (Class)inspectorViewControllerClass { return [DiggInspector class]; }
+
+
 #pragma mark -
 #pragma mark Properties
 
