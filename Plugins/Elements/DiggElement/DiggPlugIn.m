@@ -35,6 +35,7 @@
 //
 
 #import "DiggPlugIn.h"
+#import "DiggInspector.h"
 
 
 typedef enum { diggTypePromoted, diggTypeSubmitted, diggTypeUser, diggTypeFriends } diggType;
@@ -92,6 +93,12 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 	[pool release];
 }
 
+- (void)awakeFromInsert;
+{
+    [super awakeFromInsert];
+        
+}
+
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
 {
 	// Ensure our derived properties are up-to-date
@@ -101,7 +108,7 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 	[pagelet setValue:[[self class] diggUserOptionString:[pagelet integerForKey:@"diggUserOptions"]]
 			   forKey:@"diggUserOptionString"];
 	
-	
+	// TJT: maxStories does not seem to be anywhere in this project!
 	// Old pagelets have to be converted to storing their story count in the new manner
 	if (!isNewlyCreatedObject)
 	{
