@@ -527,9 +527,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     {
         if (selectedItem)
         {
-            DOMElement *domElement = [selectedItem HTMLElement];
-            DOMElement *editableElement = [domElement enclosingContentEditableElement];
-            if (editableElement && domElement != editableElement)
+            DOMHTMLElement *domElement = [selectedItem HTMLElement];
+            
+            DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:domElement
+                                                                      pseudoElement:nil];
+            
+            if ([[style display] isEqualToString:@"inline"] && [domElement isContentEditable])
             {
                 [[self window] makeFirstResponder:[domElement documentView]];
                 
