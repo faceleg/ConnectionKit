@@ -10,6 +10,7 @@
 #import "KTDesignFamily.h"
 #import "KTDesign.h"
 #import "NSArray+Karelia.h"
+#import "NSData+Karelia.h"
 
 @implementation KTDesignFamily
 
@@ -110,7 +111,13 @@
 
 - (NSString *)  imageUID;  /* required */
 {
-	return [[[self.designs firstObjectKS] bundle] bundlePath];
+	NSMutableString *buffer = [NSMutableString string];
+	// I need to create a UUID based on all of the designs in the family, so we don't overlap when we change filters.
+	for (KTDesign *design in self.designs)
+	{
+		[buffer appendFormat:@"%@ ", [design.bundle bundlePath]];
+	}
+	return [[buffer dataUsingEncoding:NSUTF8StringEncoding] sha1DigestString];
 }
 
 /*! 
