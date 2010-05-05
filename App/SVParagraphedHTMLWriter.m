@@ -60,9 +60,18 @@
     // Is it allowed?
     if ([[attachment placement] integerValue] == SVGraphicPlacementBlock)
     {
-        if (![self allowsBlockGraphics] || [self openElementsCount] > 0)
+        if ([self allowsBlockGraphics])
         {
-            NSLog(@"Found block graphic in unsupport position");
+            if ([self openElementsCount] > 0)
+            {
+                // Budge it up a level
+                [self handleInvalidBlockElement:[controller HTMLElement]];
+                return;
+            }
+        }
+        else
+        {
+            NSLog(@"This text block does not support block graphics");
             return;
         }
     }

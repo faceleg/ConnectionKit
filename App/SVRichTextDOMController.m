@@ -301,10 +301,12 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Set attachment location
-    NSMutableString *stream = (NSMutableString *)[context stringWriter];
     [context writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
     
+    [context flush];
+    NSMutableString *stream = (NSMutableString *)[context stringWriter];
     NSUInteger location = [stream length] - 1;
+    
     if ([textAttachment range].location != location)
     {
         [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:location]];

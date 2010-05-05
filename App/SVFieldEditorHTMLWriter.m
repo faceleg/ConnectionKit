@@ -143,10 +143,20 @@
 {
     // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
     [_pendingStartTagDOMElements addObject:element];
-    [self pushOpenElementWithTagName:[element tagName]];
+    [self beginBuffering];
+    
+    // Open tag
+    [self openTagWithDOMElement:element];
+    
+    // Close tag
+    [self closeStartTag];
+    
+    [self flushOnNextWrite];
+    
     
     // Write inner HTML
     [self writeInnerOfDOMNode:element];
+    
     
     // Write end tag
     return [self endStylingDOMElement:element];
@@ -157,11 +167,14 @@
     // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
     if ([_pendingStartTagDOMElements lastObject] == element)
     {
+        // I'm not 100% sure this works with the new buffering code yet.
         DOMNode *result = [element nextSibling];
         
         [[element parentNode] removeChild:element];
         [self popOpenElement];
         [_pendingStartTagDOMElements removeLastObject];
+        
+        [self discardBuffer];
         
         return result;
     }
@@ -339,44 +352,6 @@
     return [super didWriteDOMText:textNode nextNode:nextNode];
 }
 
-#pragma mark Primitive Writing
-
-- (void)writeString:(NSString *)string
-{
-    // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
-    if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self flush];
-    
-    
-    // Is the last tag awaiting closure?
-    if ([_pendingEndDOMElements count] > 0 && [string length] > 0) [self writePendingEndTags];
-    
-    
-    // Do the writing
-    [super writeString:string];
-}
-
-- (void)flush;
-{
-    // Before actually writing the string, push through any pending Elements.
-    NSArray *elements = [_pendingStartTagDOMElements copy];
-    
-    for (DOMElement *anElement in elements) { [self popOpenElement]; }
-    [_pendingStartTagDOMElements removeAllObjects];
-    
-    for (DOMElement *anElement in elements)
-    {
-        [self openTagWithDOMElement:anElement];
-        [self closeStartTag];
-    }
-    
-    [elements release];
-    
-    
-    
-    
-    [super flush];
-}
-
 #pragma mark Tag Whitelist
 
 - (BOOL)validateTagName:(NSString *)tagName;
@@ -516,4 +491,140 @@
 
 @implementation DOMCharacterData (SVFieldEditorHTMLWriter)
 - (BOOL)isParagraphContent; { return YES; }
+@end
+
+
+#pragma mark -
+
+
+@interface SVHTMLBuffer : NSObject <KSStringWriter>
+{
+  @private
+    NSMutableString *_string;
+    SVHTMLBuffer    *_buffer;
+}
+
+- (id)initWithExistingBuffer:(SVHTMLBuffer *)buffer;
+- (SVHTMLBuffer *)subbuffer;
+- (NSMutableString *)mutableString;
+@end
+
+
+#pragma mark -
+
+
+@implementation SVFieldEditorHTMLWriter (Buffering)
+
+- (void)beginBuffering;
+{
+    SVHTMLBuffer *buffer = [[SVHTMLBuffer alloc] initWithExistingBuffer:_buffer];
+    [_buffer release];
+    _buffer = buffer;
+}
+
+- (void)discardBuffer;  // only discards the most recent buffer. If there's a lower one in the stack, that is restored
+{
+    SVHTMLBuffer *buffer = [[_buffer subbuffer] retain];
+    [_buffer release]; _buffer = buffer;
+}
+
+- (void)flushBuffer:(SVHTMLBuffer *)buffer;
+{
+    // Is there a subbuffer? If so, flush that one first
+    SVHTMLBuffer *subbuffer = [buffer subbuffer];
+    if (subbuffer) [self flushBuffer:subbuffer];
+    
+    NSMutableString *string = [buffer mutableString];
+    [[self stringWriter] writeString:string];
+    [string setString:@""];
+}
+     
+- (void)flush;
+{
+    _flushOnNextWrite = NO;
+    
+    // Flush buffers
+    if (_buffer)
+    {
+        SVHTMLBuffer *buffer = _buffer;
+        _buffer = nil;
+        [self flushBuffer:buffer];
+        [buffer release];
+    }
+    
+    
+    // Before actually writing the string, push through any pending Elements.
+    [_pendingStartTagDOMElements removeAllObjects];
+    
+    
+    
+    
+    [super flush];
+}
+
+- (void)flushOnNextWrite;
+{
+    _flushOnNextWrite = YES;
+}
+
+#pragma mark Primitive Writing
+
+- (void)writeString:(NSString *)string
+{
+    if (_flushOnNextWrite) [self flush];
+    
+    // Before actually writing the string, push through any pending Elements. Empty DOMText nodes can creep in as part of the editing process; it's best if we ignore them by ignoring strings of 0 length.
+    //if ([_pendingStartTagDOMElements count] > 0 && [string length] > 0) [self flush];
+    
+    
+    // Is the last tag awaiting closure?
+    if ([_pendingEndDOMElements count] > 0 && [string length] > 0) [self writePendingEndTags];
+    
+    
+    // Do the writing
+    [super writeString:string];
+}
+
+- (id <KSStringWriter>)stringWriter;
+{
+    return (_buffer ? _buffer : [super stringWriter]);
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVHTMLBuffer
+
+- (id)initWithExistingBuffer:(SVHTMLBuffer *)buffer;
+{
+    [self init];
+    
+    _string = [[NSMutableString alloc] init];
+    _buffer = [buffer retain];
+    
+    return self;
+}
+
+- (void)dealloc
+{
+    [_string release];
+    [_buffer release];
+    
+    [super dealloc];
+}
+
+- (SVHTMLBuffer *)subbuffer; { return _buffer; }
+
+- (NSMutableString *)mutableString; { return _string; }
+
+- (void)writeString:(NSString *)string;
+{
+    [_string appendString:string];
+}
+
+- (void)close; { }
+
 @end
