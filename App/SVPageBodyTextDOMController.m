@@ -16,6 +16,14 @@
 
 @implementation SVPageBodyTextDOMController
 
+#pragma mark Properties
+
+- (BOOL)allowsBlockGraphics; { return YES; }
+
+
+
+
+
 - (IBAction)insertPagelet:(id)sender;
 {
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];

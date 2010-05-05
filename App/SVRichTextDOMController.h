@@ -21,6 +21,10 @@
     DOMHTMLAnchorElement    *_selectedLink;
 }
 
+#pragma mark Properties
+- (BOOL)allowsBlockGraphics;
+
+
 #pragma mark Content
 - (IBAction)insertFile:(id)sender;
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;

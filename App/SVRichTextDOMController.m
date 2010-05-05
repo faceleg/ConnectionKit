@@ -66,6 +66,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [super dealloc];
 }
 
+#pragma mark Properties
+
+- (BOOL)allowsBlockGraphics; { return NO; }
+
 #pragma mark DOM Node
 
 - (void)setHTMLElement:(DOMHTMLElement *)element
@@ -250,6 +254,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVParagraphedHTMLWriter *context = 
     [[SVParagraphedHTMLWriter alloc] initWithStringWriter:html];
     
+    [context setAllowsBlockGraphics:[self allowsBlockGraphics]];
     [context setBodyTextDOMController:self];
     
     
