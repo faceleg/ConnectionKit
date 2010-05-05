@@ -35,7 +35,7 @@
 		}
 		if (!result)	// none set?  Just choose the first one.
 		{
-			result = self.familyPrototype = [[self designs] firstObjectKS];
+			result = self.familyPrototype = [self.designs firstObjectKS];
 		}
 		
 	}
@@ -110,7 +110,7 @@
 
 - (NSString *)  imageUID;  /* required */
 {
-	return [[[[self designs] firstObjectKS] bundle] bundlePath];
+	return [[[self.designs firstObjectKS] bundle] bundlePath];
 }
 
 /*! 
@@ -133,6 +133,7 @@
 
 - (id) imageRepresentation; /* required */
 {
+	if (1 == [self.designs count]) return [[self.designs firstObjectKS] imageRepresentation];
 	int viewWidth = kDesignThumbWidth;
 	int yOffset = 16;
 	int swatchHeight = 10;
@@ -145,7 +146,7 @@
 	if (!result)		// see if we have a cached image....
 	{
 		int safeIndex = self.imageVersion;
-		if ( (safeIndex != NSNotFound) && (safeIndex >= [[self designs] count]) )
+		if ( (safeIndex != NSNotFound) && (safeIndex >= [self.designs count]) )
 		{
 			safeIndex = 0;	// make sure we don't overflow number of design variations.  Allow for NSNotFound
 		}
@@ -163,7 +164,7 @@
 		
 		NSRect boundsOfThumb = NSMakeRect(0, 0, kDesignThumbWidth, kDesignThumbHeight);
 		
-		KTDesign *whichDesign = (safeIndex == NSNotFound) ? [self familyPrototype] : [[self designs] objectAtIndex:safeIndex];
+		KTDesign *whichDesign = (safeIndex == NSNotFound) ? [self familyPrototype] : [self.designs objectAtIndex:safeIndex];
 		CGImageRef startImage = [whichDesign thumbnailCG];
 
 		CGContextDrawImage([[NSGraphicsContext currentContext]
@@ -231,7 +232,7 @@
 
 - (void) scrub:(float)howFar;
 {
-	int designCount = [[self designs] count];
+	int designCount = [self.designs count];
 	int whichIndex = howFar * designCount;
 	whichIndex = MIN(whichIndex, designCount-1);
 	self.imageVersion = whichIndex;
@@ -243,9 +244,11 @@
  */
 - (NSString *) imageTitle;
 {
+	if (1 == [self.designs count]) return [[self.designs firstObjectKS] imageTitle];
+
 	NSString *result = nil;
 	int safeIndex = self.imageVersion;
-	if ( (safeIndex != NSNotFound) && (safeIndex >= [[self designs] count]) )
+	if ( (safeIndex != NSNotFound) && (safeIndex >= [self.designs count]) )
 	{
 		safeIndex = 0;	// make sure we don't overflow number of design variations
 	}
@@ -255,7 +258,7 @@
 	}
 	else
 	{
-		result = [[[self designs] objectAtIndex:safeIndex] title];
+		result = [[self.designs objectAtIndex:safeIndex] title];
 	}
 	return result;
 }
@@ -265,7 +268,7 @@
  */
 - (NSString *) imageSubtitle;
 {
-	return [[[self designs] firstObjectKS] contributor];
+	return [[self.designs firstObjectKS] contributor];
 }
 
 - (BOOL) isSelectable;
@@ -273,19 +276,20 @@
 	return YES;
 }
 
-// Genre, color properties so that we can filter  ... assume a whole family is the same
+// If we have already filtered a design family somehow, then these will all be the same value, so just pick the first.
+// If we haven't filtered by a particular axis, then the property doesn't matter.
 
 - (NSString *) genre;
 {
-	return [[[self designs] firstObjectKS] genre];
+	return [[self.designs firstObjectKS] genre];
 }
 - (NSColor *) color;
 {
-	return [[[self designs] firstObjectKS] color];
+	return [[self.designs firstObjectKS] color];
 }
 - (NSString *) width;
 {
-	KTDesign *design = [[self designs] firstObjectKS];
+	KTDesign *design = [self.designs firstObjectKS];
 	return [design width];
 }
 

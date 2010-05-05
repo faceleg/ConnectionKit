@@ -65,7 +65,12 @@ enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the ge
 
 - (NSColor *)matchColor;
 {
-	return ([oViewController.designs count]) ? [NSColor grayColor] : [NSColor redColor];
+	if (![oViewController.designs count]) return [NSColor redColor];	// No matches. Make it obvious so user doesn't panic
+	if (self.genre || self.color || self.width)
+	{
+		return [NSColor darkGrayColor];	// some filter, but there are matches. Dark gray since it's interesting.
+	}
+	return [NSColor lightGrayColor];	// no filter, everything showing: light gray, not interesting
 }
 
 - (NSString *)matchString;
@@ -114,11 +119,8 @@ enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the ge
 
 - (void)awakeFromNib
 {
-	NSArray *designs = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-
-	// Get all designs; we'll be filtering...
-	self.allDesigns = [KTDesign consolidateDesignsIntoFamilies:designs];
-	oViewController.designs = self.allDesigns;
+	self.allDesigns = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+	oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:self.allDesigns];
 }
 
 - (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
@@ -408,14 +410,19 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 				[preds addObject:[NSPredicate predicateWithFormat:@"width == NULL"]];
 			}
 		}
+				
+		// Get all designs; we'll be filtering...
 		
-		oViewController.designs = [self.allDesigns filteredArrayUsingPredicate:
+		NSArray *filteredDesigns = [self.allDesigns filteredArrayUsingPredicate:
 								   [NSCompoundPredicate andPredicateWithSubpredicates:preds]
 								   ];
+
+		oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:filteredDesigns];
+
 	}
 	else	// no filter -- all
 	{
-		oViewController.designs = self.allDesigns;
+		oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:self.allDesigns];
 	}
 }
 
