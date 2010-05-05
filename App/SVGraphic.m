@@ -246,7 +246,7 @@
         [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
                                              component:self];
         
-        [parser parse];
+        [parser parseIntoHTMLContext:context];
         [parser release];
     }
     else
