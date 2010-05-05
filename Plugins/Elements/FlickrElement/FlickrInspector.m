@@ -41,16 +41,16 @@
 
 - (NSString *)nibName { return @"FlickrInspector"; }
 
-// Lots of work to make a nice colorful logo!
-
 - (void)awakeFromNib
 {
+    // Lots of work to make a nice colorful logo!
 	NSString *poweredByString = [oFlickrButton title];
 	
 	NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
                           [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
                           nil];
-	NSMutableAttributedString *ms = [[[NSMutableAttributedString alloc] initWithString:poweredByString attributes:attr] autorelease];
+	NSMutableAttributedString *ms = [[[NSMutableAttributedString alloc] initWithString:poweredByString 
+                                                                            attributes:attr] autorelease];
 	NSRange flickrRange = [poweredByString rangeOfString:@"flickr" options:NSCaseInsensitiveSearch];
 	if (NSNotFound != flickrRange.location)
 	{
