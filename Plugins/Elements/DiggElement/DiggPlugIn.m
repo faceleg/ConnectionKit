@@ -66,6 +66,11 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 
 @implementation DiggPlugIn
 
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:@"openLinksInNewWindow", nil];
+}
+
 #pragma mark -
 #pragma mark Initialisation
 
@@ -229,11 +234,7 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 }
 
 #pragma mark -
-#pragma mark Actions
+#pragma mark Properties
 
-- (IBAction)openDigg:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.digg.com/"]];
-}
-
+@synthesize openLinksInNewWindow = _openLinksInNewWindow;
 @end

@@ -40,8 +40,8 @@
 
 @interface DiggPlugIn : SVPageletPlugIn
 {
+    BOOL _openLinksInNewWindow;
 }
 
-- (IBAction)openDigg:(id)sender;
-
+@property(nonatomic) BOOL openLinksInNewWindow;
 @end
