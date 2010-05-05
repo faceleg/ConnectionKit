@@ -3,10 +3,22 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1040</int>
 		<string key="IBDocument.SystemVersion">10D573</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">785</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">460.00</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginVersions">
+			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin</string>
+			<string key="NS.object.0">785</string>
+		</object>
+		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<integer value="210"/>
+		</object>
+		<object class="NSArray" key="IBDocument.PluginDependencies">
+			<bool key="EncodedWithXMLCoder">YES</bool>
+			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+		</object>
+		<object class="NSMutableDictionary" key="IBDocument.Metadata">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSArray" key="dict.sortedKeys" id="0">
 				<bool key="EncodedWithXMLCoder">YES</bool>
@@ -15,22 +27,10 @@
 				<bool key="EncodedWithXMLCoder">YES</bool>
 			</object>
 		</object>
-		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="5"/>
-		</object>
-		<reference key="IBDocument.PluginDependencies" ref="0"/>
-		<object class="NSMutableDictionary" key="IBDocument.Metadata">
-			<bool key="EncodedWithXMLCoder">YES</bool>
-			<reference key="dict.sortedKeys" ref="0"/>
-			<object class="NSMutableArray" key="dict.values">
-				<bool key="EncodedWithXMLCoder">YES</bool>
-			</object>
-		</object>
 		<object class="NSMutableArray" key="IBDocument.RootObjects" id="396438531">
 			<bool key="EncodedWithXMLCoder">YES</bool>
 			<object class="NSCustomObject" id="1048101452">
-				<string key="NSClassName">DiggPageletDelegate</string>
+				<string key="NSClassName">DiggInspector</string>
 			</object>
 			<object class="NSCustomObject" id="600177421">
 				<string key="NSClassName">FirstResponder</string>
@@ -1636,31 +1636,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<string key="NSExtension">NSResponder</string>
 			</object>
-			<object class="NSObjectController" id="269199414">
-				<object class="NSMutableArray" key="NSDeclaredKeys">
-					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>delegate.diggType</string>
-					<string>delegate.diggUserOptions</string>
-					<string>delegate.diggUser</string>
-					<string>delegate.diggNumberMask</string>
-					<string>delegate.diggCategory</string>
-					<string>delegate.enableUserFields</string>
-					<string>delegate.enableCategory</string>
-					<string>diggDescriptions</string>
-					<string>diggType</string>
-					<string>diggUser</string>
-					<string>diggCategory</string>
-					<string>diggNumberMask</string>
-					<string>diggUserOptions</string>
-					<string>maximumStories</string>
-					<string>diggCOun</string>
-					<string>diggCount</string>
-					<string>openLinksInNewWindow</string>
-					<string>diggStoryPromotion</string>
-				</object>
-				<bool key="NSEditable">YES</bool>
-				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
-			</object>
 		</object>
 		<object class="IBObjectContainer" key="IBDocument.Objects">
 			<object class="NSMutableArray" key="connectionRecords">
@@ -1675,291 +1650,291 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.maximumStories</string>
-						<reference key="source" ref="95090532"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="95090532"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">selectedTag: selection.maximumStories</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.maximumStories</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">172</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.diggType</string>
-						<reference key="source" ref="746912397"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="746912397"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">selectedTag: selection.diggType</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">334</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="102925592"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="102925592"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">336</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="386822164"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="386822164"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">338</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="519590378"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="519590378"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">339</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="134475919"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="134475919"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">341</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="825088756"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="825088756"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">345</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="593681362"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="593681362"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">347</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="455826252"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="455826252"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">348</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: selection.diggType</string>
-						<reference key="source" ref="256136877"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="256136877"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">enabled: selection.diggType</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">selection.diggType</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">350</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.diggUser</string>
-						<reference key="source" ref="386822164"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="386822164"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">value: selection.diggUser</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.diggUser</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">352</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.diggUserOptions</string>
-						<reference key="source" ref="134475919"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="134475919"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">selectedTag: selection.diggUserOptions</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.diggUserOptions</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">354</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedValue: selection.diggCategory</string>
-						<reference key="source" ref="256136877"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="256136877"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">selectedValue: selection.diggCategory</string>
-							<string key="NSBinding">selectedValue</string>
-							<string key="NSKeyPath">selection.diggCategory</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">355</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.diggCount</string>
-						<reference key="source" ref="385421523"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="385421523"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">value: selection.diggCount</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.diggCount</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">370</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.diggDescriptions</string>
-						<reference key="source" ref="917492987"/>
-						<reference key="destination" ref="269199414"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="917492987"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">value: selection.diggDescriptions</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.diggDescriptions</string>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">371</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.openLinksInNewWindow</string>
+						<string key="label">value: inspectedObjectsController.selection.openLinksInNewWindow</string>
 						<reference key="source" ref="199204814"/>
-						<reference key="destination" ref="269199414"/>
+						<reference key="destination" ref="1048101452"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="199204814"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">value: selection.openLinksInNewWindow</string>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.openLinksInNewWindow</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.openLinksInNewWindow</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.openLinksInNewWindow</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">372</int>
+					<int key="connectionID">399</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.diggStoryPromotion</string>
-						<reference key="source" ref="593681362"/>
-						<reference key="destination" ref="269199414"/>
+						<string key="label">value: inspectedObjectsController.selection.diggDescriptions</string>
+						<reference key="source" ref="917492987"/>
+						<reference key="destination" ref="1048101452"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="593681362"/>
-							<reference key="NSDestination" ref="269199414"/>
-							<string key="NSLabel">selectedTag: selection.diggStoryPromotion</string>
-							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.diggStoryPromotion</string>
+							<reference key="NSSource" ref="917492987"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.diggDescriptions</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggDescriptions</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">374</int>
+					<int key="connectionID">401</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.diggCount</string>
+						<reference key="source" ref="385421523"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="385421523"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.diggCount</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggCount</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">403</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.maximumStories</string>
+						<reference key="source" ref="95090532"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="95090532"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.maximumStories</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.maximumStories</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">405</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedValue: inspectedObjectsController.selection.diggCategory</string>
+						<reference key="source" ref="256136877"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="256136877"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">selectedValue: inspectedObjectsController.selection.diggCategory</string>
+							<string key="NSBinding">selectedValue</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggCategory</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">407</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="256136877"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="256136877"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">409</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.diggStoryPromotion</string>
+						<reference key="source" ref="593681362"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="593681362"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.diggStoryPromotion</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggStoryPromotion</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">411</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="593681362"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="593681362"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">413</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="386822164"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="386822164"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">415</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.diggUser</string>
+						<reference key="source" ref="386822164"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="386822164"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.diggUser</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggUser</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">417</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.diggUserOptions</string>
+						<reference key="source" ref="134475919"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="134475919"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.diggUserOptions</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggUserOptions</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">419</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="134475919"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="134475919"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">421</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">selectedTag: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="746912397"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="746912397"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">selectedTag</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">423</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="102925592"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="102925592"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">425</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="519590378"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="519590378"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">427</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="825088756"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="825088756"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">429</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.diggType</string>
+						<reference key="source" ref="455826252"/>
+						<reference key="destination" ref="1048101452"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="455826252"/>
+							<reference key="NSDestination" ref="1048101452"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.diggType</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.diggType</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">431</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2145,12 +2120,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<reference ref="1015090709"/>
 						</object>
 						<reference key="parent" ref="884317351"/>
-					</object>
-					<object class="IBObjectRecord">
-						<int key="objectID">23</int>
-						<reference key="object" ref="269199414"/>
-						<reference key="parent" ref="0"/>
-						<string key="objectName">PageletController</string>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">379</int>
@@ -2835,242 +2804,492 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="NSArray" key="dict.sortedKeys">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>-3.IBPluginDependency</string>
 					<string>-3.ImportedFromIB2</string>
 					<string>110.CustomClassName</string>
+					<string>110.IBPluginDependency</string>
 					<string>110.ImportedFromIB2</string>
+					<string>111.IBPluginDependency</string>
 					<string>111.ImportedFromIB2</string>
+					<string>112.IBEditorWindowLastContentRect</string>
+					<string>112.IBPluginDependency</string>
 					<string>112.ImportedFromIB2</string>
+					<string>113.IBPluginDependency</string>
 					<string>113.ImportedFromIB2</string>
+					<string>114.IBPluginDependency</string>
 					<string>114.ImportedFromIB2</string>
+					<string>115.IBPluginDependency</string>
 					<string>115.ImportedFromIB2</string>
+					<string>116.IBPluginDependency</string>
 					<string>116.ImportedFromIB2</string>
+					<string>131.IBPluginDependency</string>
 					<string>131.ImportedFromIB2</string>
+					<string>189.IBPluginDependency</string>
 					<string>189.ImportedFromIB2</string>
+					<string>190.IBPluginDependency</string>
 					<string>190.ImportedFromIB2</string>
+					<string>191.IBPluginDependency</string>
 					<string>191.ImportedFromIB2</string>
+					<string>193.IBPluginDependency</string>
 					<string>193.ImportedFromIB2</string>
+					<string>195.IBPluginDependency</string>
 					<string>195.ImportedFromIB2</string>
+					<string>196.IBPluginDependency</string>
 					<string>196.ImportedFromIB2</string>
+					<string>197.IBPluginDependency</string>
 					<string>197.ImportedFromIB2</string>
+					<string>198.IBPluginDependency</string>
 					<string>198.ImportedFromIB2</string>
+					<string>199.IBPluginDependency</string>
 					<string>199.ImportedFromIB2</string>
+					<string>200.IBPluginDependency</string>
 					<string>200.ImportedFromIB2</string>
+					<string>204.IBPluginDependency</string>
 					<string>204.ImportedFromIB2</string>
 					<string>206.CustomClassName</string>
+					<string>206.IBPluginDependency</string>
 					<string>206.ImportedFromIB2</string>
 					<string>208.CustomClassName</string>
+					<string>208.IBPluginDependency</string>
 					<string>208.ImportedFromIB2</string>
+					<string>21.IBPluginDependency</string>
 					<string>21.ImportedFromIB2</string>
+					<string>210.IBPluginDependency</string>
 					<string>210.ImportedFromIB2</string>
-					<string>23.ImportedFromIB2</string>
+					<string>249.IBPluginDependency</string>
 					<string>249.ImportedFromIB2</string>
+					<string>251.IBPluginDependency</string>
 					<string>251.ImportedFromIB2</string>
+					<string>252.IBPluginDependency</string>
 					<string>252.ImportedFromIB2</string>
+					<string>253.IBPluginDependency</string>
 					<string>253.ImportedFromIB2</string>
+					<string>254.IBPluginDependency</string>
 					<string>254.ImportedFromIB2</string>
+					<string>255.IBPluginDependency</string>
 					<string>255.ImportedFromIB2</string>
+					<string>256.IBPluginDependency</string>
 					<string>256.ImportedFromIB2</string>
+					<string>257.IBPluginDependency</string>
 					<string>257.ImportedFromIB2</string>
+					<string>258.IBPluginDependency</string>
 					<string>258.ImportedFromIB2</string>
+					<string>259.IBPluginDependency</string>
 					<string>259.ImportedFromIB2</string>
+					<string>260.IBPluginDependency</string>
 					<string>260.ImportedFromIB2</string>
+					<string>261.IBPluginDependency</string>
 					<string>261.ImportedFromIB2</string>
+					<string>262.IBPluginDependency</string>
 					<string>262.ImportedFromIB2</string>
+					<string>263.IBPluginDependency</string>
 					<string>263.ImportedFromIB2</string>
+					<string>264.IBPluginDependency</string>
 					<string>264.ImportedFromIB2</string>
+					<string>265.IBPluginDependency</string>
 					<string>265.ImportedFromIB2</string>
+					<string>266.IBPluginDependency</string>
 					<string>266.ImportedFromIB2</string>
+					<string>267.IBPluginDependency</string>
 					<string>267.ImportedFromIB2</string>
+					<string>268.IBPluginDependency</string>
 					<string>268.ImportedFromIB2</string>
+					<string>269.IBPluginDependency</string>
 					<string>269.ImportedFromIB2</string>
+					<string>270.IBPluginDependency</string>
 					<string>270.ImportedFromIB2</string>
+					<string>271.IBPluginDependency</string>
 					<string>271.ImportedFromIB2</string>
+					<string>272.IBPluginDependency</string>
 					<string>272.ImportedFromIB2</string>
+					<string>273.IBPluginDependency</string>
 					<string>273.ImportedFromIB2</string>
+					<string>274.IBPluginDependency</string>
 					<string>274.ImportedFromIB2</string>
+					<string>275.IBPluginDependency</string>
 					<string>275.ImportedFromIB2</string>
+					<string>276.IBPluginDependency</string>
 					<string>276.ImportedFromIB2</string>
+					<string>277.IBPluginDependency</string>
 					<string>277.ImportedFromIB2</string>
+					<string>278.IBPluginDependency</string>
 					<string>278.ImportedFromIB2</string>
+					<string>279.IBPluginDependency</string>
 					<string>279.ImportedFromIB2</string>
+					<string>280.IBPluginDependency</string>
 					<string>280.ImportedFromIB2</string>
+					<string>281.IBPluginDependency</string>
 					<string>281.ImportedFromIB2</string>
+					<string>282.IBPluginDependency</string>
 					<string>282.ImportedFromIB2</string>
+					<string>283.IBPluginDependency</string>
 					<string>283.ImportedFromIB2</string>
+					<string>284.IBPluginDependency</string>
 					<string>284.ImportedFromIB2</string>
+					<string>285.IBPluginDependency</string>
 					<string>285.ImportedFromIB2</string>
+					<string>286.IBPluginDependency</string>
 					<string>286.ImportedFromIB2</string>
+					<string>287.IBPluginDependency</string>
 					<string>287.ImportedFromIB2</string>
+					<string>288.IBPluginDependency</string>
 					<string>288.ImportedFromIB2</string>
+					<string>289.IBPluginDependency</string>
 					<string>289.ImportedFromIB2</string>
+					<string>290.IBPluginDependency</string>
 					<string>290.ImportedFromIB2</string>
+					<string>291.IBPluginDependency</string>
 					<string>291.ImportedFromIB2</string>
+					<string>292.IBPluginDependency</string>
 					<string>292.ImportedFromIB2</string>
+					<string>293.IBPluginDependency</string>
 					<string>293.ImportedFromIB2</string>
+					<string>294.IBPluginDependency</string>
 					<string>294.ImportedFromIB2</string>
+					<string>295.IBPluginDependency</string>
 					<string>295.ImportedFromIB2</string>
+					<string>296.IBPluginDependency</string>
 					<string>296.ImportedFromIB2</string>
+					<string>297.IBPluginDependency</string>
 					<string>297.ImportedFromIB2</string>
+					<string>298.IBPluginDependency</string>
 					<string>298.ImportedFromIB2</string>
+					<string>299.IBPluginDependency</string>
 					<string>299.ImportedFromIB2</string>
+					<string>300.IBPluginDependency</string>
 					<string>300.ImportedFromIB2</string>
+					<string>301.IBPluginDependency</string>
 					<string>301.ImportedFromIB2</string>
+					<string>302.IBPluginDependency</string>
 					<string>302.ImportedFromIB2</string>
+					<string>303.IBPluginDependency</string>
 					<string>303.ImportedFromIB2</string>
+					<string>304.IBPluginDependency</string>
 					<string>304.ImportedFromIB2</string>
+					<string>305.IBPluginDependency</string>
 					<string>305.ImportedFromIB2</string>
+					<string>306.IBPluginDependency</string>
 					<string>306.ImportedFromIB2</string>
+					<string>307.IBPluginDependency</string>
 					<string>307.ImportedFromIB2</string>
+					<string>308.IBPluginDependency</string>
 					<string>308.ImportedFromIB2</string>
+					<string>309.IBPluginDependency</string>
 					<string>309.ImportedFromIB2</string>
+					<string>310.IBPluginDependency</string>
 					<string>310.ImportedFromIB2</string>
+					<string>311.IBPluginDependency</string>
 					<string>311.ImportedFromIB2</string>
+					<string>312.IBPluginDependency</string>
 					<string>312.ImportedFromIB2</string>
+					<string>313.IBPluginDependency</string>
 					<string>313.ImportedFromIB2</string>
+					<string>314.IBPluginDependency</string>
 					<string>314.ImportedFromIB2</string>
+					<string>318.IBPluginDependency</string>
 					<string>318.ImportedFromIB2</string>
+					<string>320.IBPluginDependency</string>
 					<string>320.ImportedFromIB2</string>
+					<string>321.IBPluginDependency</string>
 					<string>321.ImportedFromIB2</string>
+					<string>322.IBPluginDependency</string>
 					<string>322.ImportedFromIB2</string>
+					<string>323.IBPluginDependency</string>
 					<string>323.ImportedFromIB2</string>
+					<string>324.IBPluginDependency</string>
 					<string>324.ImportedFromIB2</string>
 					<string>327.CustomClassName</string>
+					<string>327.IBPluginDependency</string>
 					<string>327.ImportedFromIB2</string>
 					<string>329.CustomClassName</string>
+					<string>329.IBPluginDependency</string>
 					<string>329.ImportedFromIB2</string>
+					<string>331.IBPluginDependency</string>
 					<string>331.ImportedFromIB2</string>
+					<string>332.IBPluginDependency</string>
 					<string>332.ImportedFromIB2</string>
 					<string>356.CustomClassName</string>
+					<string>356.IBPluginDependency</string>
 					<string>356.ImportedFromIB2</string>
 					<string>358.CustomClassName</string>
+					<string>358.IBPluginDependency</string>
 					<string>358.ImportedFromIB2</string>
 					<string>360.CustomClassName</string>
+					<string>360.IBPluginDependency</string>
 					<string>360.ImportedFromIB2</string>
+					<string>362.IBPluginDependency</string>
 					<string>362.ImportedFromIB2</string>
 					<string>363.CustomClassName</string>
+					<string>363.IBPluginDependency</string>
 					<string>363.ImportedFromIB2</string>
+					<string>367.IBPluginDependency</string>
 					<string>367.ImportedFromIB2</string>
+					<string>379.IBPluginDependency</string>
+					<string>380.IBPluginDependency</string>
+					<string>381.IBPluginDependency</string>
+					<string>382.IBPluginDependency</string>
+					<string>383.IBPluginDependency</string>
+					<string>384.IBPluginDependency</string>
+					<string>385.IBPluginDependency</string>
+					<string>386.IBPluginDependency</string>
+					<string>387.IBPluginDependency</string>
+					<string>388.IBPluginDependency</string>
+					<string>389.IBPluginDependency</string>
+					<string>390.IBPluginDependency</string>
+					<string>391.IBPluginDependency</string>
+					<string>392.IBPluginDependency</string>
+					<string>393.IBPluginDependency</string>
+					<string>394.IBPluginDependency</string>
+					<string>395.IBPluginDependency</string>
+					<string>396.IBPluginDependency</string>
+					<string>397.IBPluginDependency</string>
 					<string>5.IBEditorWindowLastContentRect</string>
+					<string>5.IBPluginDependency</string>
 					<string>5.ImportedFromIB2</string>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>{{73, 522}, {74, 71}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<boolean value="YES"/>
-					<string>KSLabel</string>
-					<boolean value="YES"/>
-					<string>KSLabel</string>
-					<boolean value="YES"/>
-					<string>KSLabel</string>
-					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{0, 862}, {250, 283}}</string>
+					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>KSLabel</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<string>{{0, 473}, {250, 283}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 				</object>
 			</object>
@@ -3090,29 +3309,28 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">397</int>
+			<int key="maxID">431</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
 				<bool key="EncodedWithXMLCoder">YES</bool>
 				<object class="IBPartialClassDescription">
-					<string key="className">DiggPageletDelegate</string>
-					<string key="superclassName">SVPageletPlugIn</string>
+					<string key="className">DiggInspector</string>
+					<string key="superclassName">SVInspectorViewController</string>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">openDigg:</string>
 						<string key="NS.object.0">id</string>
 					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">openDigg:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">openDigg:</string>
+							<string key="candidateClassName">id</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">DiggPageletDelegate.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">DiggPageletDelegate</string>
-					<string key="superclassName">SVPageletPlugIn</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
+						<string key="minorKey">DiggInspector.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3121,6 +3339,13 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="NSMutableDictionary" key="actions">
 						<string key="NS.key.0">:</string>
 						<string key="NS.object.0">id</string>
+					</object>
+					<object class="NSMutableDictionary" key="actionInfosByName">
+						<string key="NS.key.0">:</string>
+						<object class="IBActionInfo" key="NS.object.0">
+							<string key="name">:</string>
+							<string key="candidateClassName">id</string>
+						</object>
 					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
@@ -3133,6 +3358,17 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+			</object>
+			<object class="NSMutableArray" key="referencedPartialClassDescriptionsV3.1+">
+				<bool key="EncodedWithXMLCoder">YES</bool>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVInspectorViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBDocumentRelativeSource</string>
+						<string key="minorKey">../../../../App/SVInspectorViewController.h</string>
 					</object>
 				</object>
 			</object>
@@ -3230,11 +3466,11 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSController</string>
+					<string key="className">NSFormatter</string>
 					<string key="superclassName">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSController.h</string>
+						<string key="minorKey">Foundation.framework/Headers/NSFormatter.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -3514,14 +3750,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NSObjectController</string>
-					<string key="superclassName">NSController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBFrameworkSource</string>
-						<string key="minorKey">AppKit.framework/Headers/NSObjectController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">NSPopUpButton</string>
 					<string key="superclassName">NSButton</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
@@ -3590,6 +3818,25 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<string key="className">NSView</string>
 					<string key="superclassName">NSResponder</string>
 					<reference key="sourceIdentifier" ref="349195890"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSViewController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">view</string>
+						<string key="NS.object.0">NSView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">view</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">view</string>
+							<string key="candidateClassName">NSView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">AppKit.framework/Headers/NSViewController.h</string>
+					</object>
 				</object>
 			</object>
 		</object>
