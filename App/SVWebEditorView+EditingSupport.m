@@ -12,6 +12,22 @@
 #import "SVLinkInspector.h"
 
 
+@interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
+{
+  @private
+    SEL         _action;
+    NSInteger   _tag;
+}
+
+@property(nonatomic) SEL action;
+@property(nonatomic) NSInteger tag;
+
+@end
+
+
+#pragma mark -
+
+
 @implementation SVWebEditorView (EditingSupport)
 
 #pragma mark Cut, Copy & Paste
@@ -128,4 +144,44 @@
     [[self webView] performSelector:@selector(_clearUndoRedoOperations)];
 }
 
+#pragma mark Validation
+
+- (BOOL)validateAction:(SEL)action;
+{
+    BOOL result = NO;
+    
+    NSView *view = [[[[self webView] selectedFrame] frameView] documentView];
+    if ([view respondsToSelector:action])
+    {
+        result = YES;
+        if ([view conformsToProtocol:@protocol(NSUserInterfaceValidations)] ||
+            [view respondsToSelector:@selector(validateUserInterfaceItem:)])
+        {
+            SVValidatedUserInterfaceItem *item = [[SVValidatedUserInterfaceItem alloc] init];
+            [item setAction:action];
+            
+            _isForwardingCommandToWebView = YES;
+            result = [(id)view validateUserInterfaceItem:item];
+            _isForwardingCommandToWebView = NO;
+            
+            [item release];
+        }
+    }
+    
+    
+    return result;
+}
+
 @end
+
+
+#pragma mark -
+
+
+@implementation SVValidatedUserInterfaceItem
+
+@synthesize action = _action;
+@synthesize tag = _tag;
+
+@end
+

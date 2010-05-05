@@ -166,6 +166,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (void)removeAllUndoActions;
 
 
+#pragma mark Validation
+- (BOOL)validateAction:(SEL)action;
+
+
 @end
 
 

@@ -1334,6 +1334,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
         result = ([[self selectedItems] count] >= 1);
     }
     
+    else if ([self respondsToSelector:action])
+    {
+        result = !_isForwardingCommandToWebView;
+    }
+    
+    
     return result;
 }
 
