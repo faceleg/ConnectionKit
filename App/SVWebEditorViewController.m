@@ -693,6 +693,27 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
+// Presently, SVWebEditorView doesn't implement paste directly itself, so we can jump in here
+- (IBAction)paste:(id)sender;
+{
+    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
+    NSManagedObjectContext *context = [[self page] managedObjectContext];
+    OBASSERT(context);
+    
+    NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+                                  insertIntoManagedObjectContext:context];
+    
+    if ([pagelets count])
+    {
+        SVSidebarPageletsController *sidebarPageletsController = [_selectableObjectsController sidebarPageletsController];
+        [sidebarPageletsController addObjects:pagelets];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
+
 #pragma mark Action Forwarding
 
 - (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
@@ -1211,6 +1232,18 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     }
 }
 
+- (BOOL)webEditor:(SVWebEditorView *)webEditor doCommandBySelector:(SEL)action;
+{
+    // Take over pasting if the Web Editor can't support it
+    if (action == @selector(paste:) && ![webEditor validateAction:action])
+    {
+        [self paste:nil];
+        return YES;
+    }
+    
+    return NO;
+}
+
 - (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
 {
     OBPRECONDITION(sender == [self webEditor]);
@@ -1243,29 +1276,6 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 
 
 @implementation SVWebEditorView (SVWebEditorViewController)
-
-// Presently, SVWebEditorView doesn't implement paste directly itself, so we can jump in here
-- (IBAction)paste:(id)sender;
-{
-    SVWebEditorViewController *controller = (id)[self dataSource];
-    
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-    NSManagedObjectContext *context = [[controller page] managedObjectContext];
-    OBASSERT(context);
-    
-    NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
-                                                 insertIntoManagedObjectContext:context];
-    
-    if ([pagelets count])
-    {
-        SVSidebarPageletsController *sidebarPageletsController = [(id)[controller selectedObjectsController] sidebarPageletsController];
-        [sidebarPageletsController addObjects:pagelets];
-    }
-    else
-    {
-        NSBeep();
-    }
-}
 
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
