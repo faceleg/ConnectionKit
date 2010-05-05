@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C42E49B0D6502C0004F35FD /* FlickrPageletDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E49A0D6502C0004F35FD /* FlickrPageletDelegate.m */; };
+		3C42E49B0D6502C0004F35FD /* FlickrPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42E49A0D6502C0004F35FD /* FlickrPlugIn.m */; };
 		3C42E4A00D6502CD004F35FD /* FlickrPagelet.css in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49D0D6502CD004F35FD /* FlickrPagelet.css */; };
 		3C42E4A10D6502CD004F35FD /* FlickrPageletTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E49E0D6502CD004F35FD /* FlickrPageletTemplate.html */; };
 		3C42E4A70D6502D7004F35FD /* FlickrPagelet.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42E4A20D6502D7004F35FD /* FlickrPagelet.nib */; };
@@ -23,8 +23,8 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* FlickrElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrElement_Prefix.pch; sourceTree = "<group>"; };
-		3C42E4990D6502C0004F35FD /* FlickrPageletDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPageletDelegate.h; sourceTree = "<group>"; };
-		3C42E49A0D6502C0004F35FD /* FlickrPageletDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPageletDelegate.m; sourceTree = "<group>"; };
+		3C42E4990D6502C0004F35FD /* FlickrPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FlickrPlugIn.h; sourceTree = "<group>"; };
+		3C42E49A0D6502C0004F35FD /* FlickrPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FlickrPlugIn.m; sourceTree = "<group>"; };
 		3C42E49D0D6502CD004F35FD /* FlickrPagelet.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = FlickrPagelet.css; sourceTree = "<group>"; };
 		3C42E49E0D6502CD004F35FD /* FlickrPageletTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = FlickrPageletTemplate.html; sourceTree = "<group>"; };
 		3C42E4A30D6502D7004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/FlickrPagelet.nib; sourceTree = "<group>"; };
@@ -112,8 +112,8 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				3C42E4990D6502C0004F35FD /* FlickrPageletDelegate.h */,
-				3C42E49A0D6502C0004F35FD /* FlickrPageletDelegate.m */,
+				3C42E4990D6502C0004F35FD /* FlickrPlugIn.h */,
+				3C42E49A0D6502C0004F35FD /* FlickrPlugIn.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -190,9 +190,9 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "FlickrElement" */;
 			compatibilityVersion = "Xcode 3.0";
-			hasScannedForEncodings = 1;
 			developmentRegion = en;
-knownRegions = (
+			hasScannedForEncodings = 1;
+			knownRegions = (
 				en,
 				da,
 				de,
@@ -251,7 +251,7 @@ knownRegions = (
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C42E49B0D6502C0004F35FD /* FlickrPageletDelegate.m in Sources */,
+				3C42E49B0D6502C0004F35FD /* FlickrPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
