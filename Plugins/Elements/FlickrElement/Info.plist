@@ -7,7 +7,7 @@
 	<key>CFBundleExecutable</key>
 	<string>${EXECUTABLE_NAME}</string>
 	<key>CFBundleGetInfoString</key>
-	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2009 Karelia Software</string>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2010 Karelia Software</string>
 	<key>CFBundleIdentifier</key>
 	<string>sandvox.${PROJECT_NAME}</string>
 	<key>CFBundleInfoDictionaryVersion</key>
@@ -23,7 +23,7 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
+	<string>2.0</string>
 	<key>KSHelpAnchor</key>
 	<string>Flickr_Badge</string>
 	<key>KTMainElement</key>
@@ -48,14 +48,14 @@
 	<key>KTPluginName</key>
 	<string>Flickr Badge</string>
 	<key>KTPluginNibFile</key>
-	<string>FlickrPagelet</string>
+	<string>FlickrInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>My Flickr Photos</string>
 	<key>KTTemplateName</key>
-	<string>FlickrPageletTemplate</string>
+	<string>FlickrTemplate</string>
 	<key>NSPrincipalClass</key>
-	<string>FlickrPageletDelegate</string>
+	<string>FlickrPlugIn</string>
 </dict>
 </plist>
