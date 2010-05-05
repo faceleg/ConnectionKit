@@ -12,7 +12,9 @@
 
 @interface DiggInspector : SVInspectorViewController 
 {
-
+    
 }
+
+- (IBAction)openDigg:(id)sender;
 
 @end

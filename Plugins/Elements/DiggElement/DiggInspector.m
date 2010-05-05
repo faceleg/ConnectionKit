@@ -11,4 +11,12 @@
 
 @implementation DiggInspector
 
+#pragma mark -
+#pragma mark Actions
+
+- (IBAction)openDigg:(id)sender
+{
+	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.digg.com/"]];
+}
+
 @end
