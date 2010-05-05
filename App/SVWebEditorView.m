@@ -252,7 +252,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Text Selection
 
-- (DOMRange *)selectedDOMRange { return [[self webView] selectedDOMRange]; }
+- (DOMRange *)selectedDOMRange
+{
+    DOMRange *result = [[self webView] selectedDOMRange];
+    return result;
+}
 
 - (void)setSelectedDOMRange:(DOMRange *)range affinity:(NSSelectionAffinity)selectionAffinity;
 {
@@ -535,15 +539,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 [[self window] makeFirstResponder:[domElement documentView]];
                 
                 DOMRange *range = [[domElement ownerDocument] createRange];
-                if ([domElement hasChildNodes])
-                {
-                    [range selectNodeContents:domElement];
-                }
-                else
-                {
-                    [range selectNode:domElement];
-                }
-                [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+                [range selectNode:domElement];
+                [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
             }
             else
             {
@@ -558,7 +555,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             DOMRange *range = [[element ownerDocument] createRange];
             [range setStartBefore:element];
             [range collapse:YES];
-            [[self webView] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+            [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
         }
     }
     
