@@ -1669,7 +1669,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 result = [self tryToSelectItemByMovingRight];
             }
             
-            else if ([self respondsToSelector:command] && command != @selector(paste:))
+            else if ([self respondsToSelector:command])
             {
                 [self doCommandBySelector:command];
                 result = YES;
