@@ -112,6 +112,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 // TODO: visit every instance of NSLog or LOG(()) to see if it should be an NSAlert/NSError to the user
 
 
+NSString *kSVLiveDataFeedsKey = @"LiveDataFeeds";
 NSString *kLiveEditableAndSelectableLinksDefaultsKey = @"LiveEditableAndSelectableLinks";
 
 NSString *kSVPrefersPNGImageFormatKey = @"KTPrefersPNGFormat";
@@ -267,9 +268,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 // For now, we want 
 		@"all",									@"metaRobots",
 #ifdef APPLE_DESIGN_AWARDS_KEY
-		[NSNumber numberWithBool:YES],			@"LiveDataFeeds",		// I want ADA entries to have this on as default
+		[NSNumber numberWithBool:YES],			kSVLiveDataFeedsKey,		// I want ADA entries to have this on as default
 #else
-		[NSNumber numberWithBool:NO],			@"LiveDataFeeds",
+		[NSNumber numberWithBool:NO],			kSVLiveDataFeedsKey,
 #endif
 		
 #ifndef VARIANT_RELEASE

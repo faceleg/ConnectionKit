@@ -88,7 +88,7 @@
 {
 	// Build the HTML    
     [context addDependencyOnObject:[NSUserDefaultsController sharedUserDefaultsController]
-                           keyPath:@"values.LiveDataFeeds"];
+                           keyPath:[@"values." stringByAppendingString:kSVLiveDataFeedsKey]];
      
     [context setXHTML:[self isXHTML]];
     [context setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];

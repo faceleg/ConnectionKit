@@ -742,7 +742,7 @@
         [result setCachePolicy:NSURLRequestReloadIgnoringCacheData];
     }
     else if ([requestURL hasNetworkLocation] &&
-        ![[NSUserDefaults standardUserDefaults] boolForKey:@"LiveDataFeeds"] &&
+        ![[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey] &&
         ![[requestURL scheme] isEqualToString:@"svxmedia"] &&
 		![[requestURL scheme] isEqualToString:KTImageScalingURLProtocolScheme])
 	{
