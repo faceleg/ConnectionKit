@@ -48,23 +48,37 @@
 @synthesize color = _color;
 @synthesize width = _width;
 
-enum { kGenreGroup, kColorGroup, kWidthGroup };
+// IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
+enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
 
-+ (NSSet *)keyPathsForValuesAffectingNoMatchString
++ (NSSet *)keyPathsForValuesAffectingMatchString
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"oViewController.designs", nil];
 }
 
-- (NSString *)noMatchString;
++ (NSSet *)keyPathsForValuesAffectingMatchColor
+{
+    // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"oViewController.designs", nil];
+}
+
+- (NSColor *)matchColor;
+{
+	return ([oViewController.designs count]) ? [NSColor grayColor] : [NSColor redColor];
+}
+
+- (NSString *)matchString;
 {
 	NSString *result = @"";
 	if (self.genre || self.color || self.width)
 	{
 		NSMutableArray *matches = [NSMutableArray array];
+		
+		// THIS ORDER SHOULD MATCH THE ORDER OF THE ENUMS
+		if (self.color) [matches addObject:[self scopeBar:oScopeBar AXDescriptionForItem:self.color inGroup:kColorGroup]];
+		if (self.width) [matches addObject:[self scopeBar:oScopeBar AXDescriptionForItem:self.width inGroup:kWidthGroup]];
 		if (self.genre) [matches addObject:[self scopeBar:oScopeBar titleOfItem:self.genre inGroup:kGenreGroup]];
-		if (self.color) [matches addObject:[self scopeBar:oScopeBar AXDescriptionForItem:self.color inGroup:kColorGroup]];		// get the string from the tooltip
-		if (self.width) [matches addObject:[self scopeBar:oScopeBar AXDescriptionForItem:self.width inGroup:kWidthGroup]];		// get the string from the tooltip
 
 		NSMutableString *matchesString = [NSMutableString string];
 		for (int i = 0 ; i < [matches count] ; i++)
@@ -79,7 +93,19 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 				[matchesString appendFormat:NSLocalizedString(@"“%@” and ", @"a search string in quotes followed by 'and' (with a space afterwards)"), match];
 			}
 		}
-		result = [NSString stringWithFormat:NSLocalizedString(@"No matches for %@", @"Warning that string/strings yielded no matching designs"), matchesString];
+		if ([oViewController.designs count])
+		{
+			result = [NSString stringWithFormat:NSLocalizedString(@"Showing matches for %@", @"Warning that string/strings yielded no matching designs"), matchesString];
+		}
+		else
+		{
+			result = [NSString stringWithFormat:NSLocalizedString(@"No matches for %@", @"Warning that string/strings yielded no matching designs"), matchesString];
+		}
+		
+	}
+	else
+	{
+		result = NSLocalizedString(@"Showing all matches", @"");
 	}
 	return result;
 }
@@ -99,16 +125,21 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 {
 	self.selectorWhenChosen = aSelector;
 	self.targetWhenChosen = aTarget;
-	
+		
     [NSApp beginSheet:[self window]
        modalForWindow:window
         modalDelegate:self
        didEndSelector:@selector(designChooserDidEndSheet:returnCode:contextInfo:)
           contextInfo:nil];
-    
+
     [oScopeBar setDelegate:self];
     [oScopeBar reloadData];
 
+	// restore from prevous run
+	[oScopeBar setSelected:YES forItem:self.genre inGroup:kGenreGroup];
+	[oScopeBar setSelected:YES forItem:self.color inGroup:kColorGroup];
+	[oScopeBar setSelected:YES forItem:self.width inGroup:kWidthGroup];
+	
     [oViewController setupTrackingRects];
 }
 
@@ -165,19 +196,19 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 		case kGenreGroup:
 			result = [KTDesign genreValues];
 #ifdef DEBUG
-			result = [result arrayByAddingObject:@"NULL"];
+//			result = [result arrayByAddingObject:@"NULL"];
 #endif
 			break;
 		case kColorGroup:
 			result = [KTDesign colorValues];
 #ifdef DEBUG
-			result = [result arrayByAddingObject:@"NULL"];
+//			result = [result arrayByAddingObject:@"NULL"];
 #endif
 			break;
 		case kWidthGroup:
 			result = [KTDesign widthValues];
 #ifdef DEBUG
-			result = [result arrayByAddingObject:@"NULL"];
+//			result = [result arrayByAddingObject:@"NULL"];
 #endif
 			break;
 	}
@@ -198,6 +229,26 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 //	}
 	return @"";
 }
+
+// EXTRA METHOD NOT IN PROTOCOL, FOR MODIFIED MGSCOPEBAR, FOR POPUP VERSION OF GROUP
+- (NSString *)scopeBar:(MGScopeBar *)theScopeBar unselectedPopupTitleForGroup:(NSInteger)groupNumber
+{
+	NSString *result = nil;
+	switch(groupNumber)
+	{
+		case kGenreGroup:
+			result = NSLocalizedString(@"Genre","");
+			break;
+		case kColorGroup:
+			result = NSLocalizedString(@"Color","");
+			break;
+		case kWidthGroup:
+			result = NSLocalizedString(@"Width","");
+			break;
+	}
+	return result;
+}
+
 
 - (MGScopeBarGroupSelectionMode)scopeBar:(MGScopeBar *)theScopeBar selectionModeForGroup:(NSInteger)groupNumber
 {
@@ -222,6 +273,7 @@ enum { kGenreGroup, kColorGroup, kWidthGroup };
 		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
 NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"minimal",
 		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"glossy",
+		NSLocalizedString(@"Subtle", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"subtle",
 		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"bold",
 		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"artistic",
 		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"specialty",
@@ -289,7 +341,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 	{
 		case kGenreGroup:
 		{
-			if (selected && self.genre)
+			if (selected && self.genre && (self.genre != identifier))
 			{
 				// turn off previous selection in this group
 				[theScopeBar setSelected:NO forItem:self.genre inGroup:kGenreGroup];
@@ -299,7 +351,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 		}	
 		case kColorGroup:
 		{
-			if (selected && self.color)
+			if (selected && self.color && (self.color != identifier))
 			{
 				// turn off previous selection in this group
 				[theScopeBar setSelected:NO forItem:self.color inGroup:kColorGroup];
@@ -309,7 +361,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 		}
 		case kWidthGroup:
 		{
-			if (selected && self.width)
+			if (selected && self.width && (self.width != identifier))
 			{
 				// turn off previous selection in this group
 				[theScopeBar setSelected:NO forItem:self.width inGroup:kWidthGroup];

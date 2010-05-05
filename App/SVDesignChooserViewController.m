@@ -89,7 +89,7 @@
 	int index = [theView indexOfItemAtPoint:localPoint];
 	if (NSNotFound != index)
 	{
-		NSLog(@"Mouse: %@ -- index %d", NSStringFromPoint(localPoint), index);
+		// NSLog(@"Mouse: %@ -- index %d", NSStringFromPoint(localPoint), index);
 
 		NSRect frame = [theView itemFrameAtIndex:index];
 		float imageX = NSMidX(frame)-(kDesignThumbWidth/2);

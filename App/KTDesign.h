@@ -63,6 +63,7 @@ extern const int kDesignThumbHeight;
 - (BOOL)allowsBannerSubstitution;
 - (NSString *)bannerCSSSelector;
 - (BOOL)hasLocalFonts;
+- (BOOL)isFamilyPrototype;
 
 
 #pragma mark Image Replacement
@@ -80,7 +81,7 @@ extern const int kDesignThumbHeight;
 // Other
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
 - (void) loadLocalFontsIfNeeded;
-- (NSString *)titleOrParentName;
+- (NSString *)titleOrParentTitle;
 
 // Resource data
 - (NSSet *)resourceFileURLs;

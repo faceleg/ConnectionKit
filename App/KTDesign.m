@@ -47,7 +47,7 @@ const int kDesignThumbHeight = 65;
 
 + (NSArray *)genreValues;
 {
-	NSArray *result = [NSArray arrayWithObjects:@"minimal", @"glossy", @"bold", @"artistic", @"specialty", nil ];
+	NSArray *result = [NSArray arrayWithObjects:@"minimal", @"subtle", @"glossy", @"bold", @"artistic", @"specialty", nil ];
 	return result;
 }
 + (NSArray *)colorValues;
@@ -102,21 +102,21 @@ const int kDesignThumbHeight = 65;
 	NSString *width = [aCandidateBundle objectForInfoDictionaryKey:@"width"];
 	if (nil == genre || ![[KTDesign genreValues] containsObject:genre])
 	{
-		[categoryProblems appendFormat:@"genre = %@; must be %@", genre, [[KTDesign genreValues] description]];
+		[categoryProblems appendFormat:@"genre = %@; must be %@", genre, [[[KTDesign genreValues] description] condenseWhiteSpace]];
 	}
 	if (nil == color || ![[KTDesign colorValues] containsObject:color])
 	{
 		if (![categoryProblems isEqualToString:@""]) [categoryProblems appendString:@"; "];
-		[categoryProblems appendFormat:@"color = %@: must be %@", color, [[KTDesign colorValues] description]];
+		[categoryProblems appendFormat:@"color = %@: must be %@", color, [[[KTDesign colorValues] description] condenseWhiteSpace]];
 	}
-	if (nil == width || ![[KTDesign widthValues] containsObject:width])
+	if (nil != width && ![[KTDesign widthValues] containsObject:width])		// Only log if unrecognized value; nil is OK
 	{
 		if (![categoryProblems isEqualToString:@""]) [categoryProblems appendString:@"; "];
-		[categoryProblems appendFormat:@"width = %@: must be %@", width, [[KTDesign widthValues] description]];
+		[categoryProblems appendFormat:@"width = %@: must be %@", width, [[[KTDesign widthValues] description] condenseWhiteSpace]];
 	}
 	if (![categoryProblems isEqualToString:@""])
 	{
-		DJW((@"TO NSLOG: In %@: %@", [aCandidateBundle bundlePath], categoryProblems));
+		NSLog(@"In %@: %@", [aCandidateBundle bundlePath], categoryProblems);
 		
 		// Should be NSLog though...
 	}
@@ -181,17 +181,32 @@ const int kDesignThumbHeight = 65;
 	return [[self bundle] objectForInfoDictionaryKey:@"contributor"];
 }
 
-- (NSString *)genre
+- (NSString *)genre		// REQUIRED ... see genreValues
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"genre"];
+	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"genre"];
+	if (![[KTDesign genreValues] containsObject:result])
+	{
+		result = nil;
+	}
+	return result;
 }
-- (NSString *)color	// dark, light, or colorful
+- (NSString *)color		// REQUIRED ... see colorValues
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"color"];
+	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"color"];
+	if (![[KTDesign colorValues] containsObject:result])
+	{
+		result = nil;
+	}
+	return result;
 }
-- (NSString *)width;	// standard, wide, or flexible
+- (NSString *)width;	// standard [default], wide, or flexible
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"width"];
+	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"width"];
+	if (!result || ![[KTDesign widthValues] containsObject:result])
+	{
+		result = @"standard";	// default to standard if not specified.
+	}
+	return result;
 }
 
 
@@ -339,10 +354,10 @@ const int kDesignThumbHeight = 65;
 }
 
 
-// Special version that compares the titles - but uses the ParentName if it exists
+// Special version that compares the titles - but uses the ParentTitle if it exists
 - (NSComparisonResult)compareTitles:(KTDesign *)aDesign;
 {
-	return [[self titleOrParentName] caseInsensitiveCompare:[aDesign titleOrParentName]];
+	return [[self titleOrParentTitle] caseInsensitiveCompare:[aDesign titleOrParentTitle]];
 }
 
 - (NSString *)description
@@ -374,7 +389,7 @@ const int kDesignThumbHeight = 65;
 	return HIER_MENU_HORIZONTAL;		// default if not specified.  We may want to do HIER_MENU_NONE once designs are set up
 }
 
-- (BOOL)isFamilyPrototype
+- (BOOL)isFamilyPrototype;
 {
 	BOOL result = NO;
 	
@@ -386,14 +401,14 @@ const int kDesignThumbHeight = 65;
 	return result;
 }
 
-- (NSString *)parentName
+- (NSString *)parentTitle
 {
-	return [[self bundle] objectForInfoDictionaryKey:@"ParentName"];
+	return [[self bundle] objectForInfoDictionaryKey:@"ParentTitle"];
 }
 
-- (NSString *)titleOrParentName
+- (NSString *)titleOrParentTitle
 {
-	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"ParentName"];
+	NSString *result = [[self bundle] objectForInfoDictionaryKey:@"ParentTitle"];
 	if (!result)
 	{
 		result = [self title];

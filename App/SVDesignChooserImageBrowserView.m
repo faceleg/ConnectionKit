@@ -41,7 +41,7 @@
 	//	[self setCellSize:NSMakeSize(44.0,22.0)];
 	if ([self respondsToSelector:@selector(setIntercellSpacing:)])
 	{
-		[self setIntercellSpacing:NSMakeSize(0.0,0.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
+		[self setIntercellSpacing:NSMakeSize(0.0,10.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
 	}
 	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
 	[self setConstrainsToOriginalSize:YES];

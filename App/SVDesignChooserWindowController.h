@@ -35,7 +35,7 @@
 @property (copy) NSString *genre;
 @property (copy) NSString *color;
 @property (copy) NSString *width;
-@property (readonly) NSString *noMatchString;
+@property (readonly) NSString *matchString;
 
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
