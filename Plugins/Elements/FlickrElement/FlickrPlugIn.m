@@ -43,7 +43,7 @@
 @implementation FlickrPlugIn
 
 /*
- Plugin Properties we use:
+ PlugIn properties we use:
  
 	flickrID
 	tag
@@ -56,52 +56,42 @@
  
  */
 
-// Lots of work to make a nice colorful logo!
+#pragma mark -
+#pragma mark SVPlugIn
 
-- (void)awakeFromNib
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:@"flickrID", @"tag", @"number", @"flashStyle", @"random", @"showInfo", nil];
+}
+
+- (void)dealloc
 {
-	NSString *poweredByString = [oFlickrButton title];
-	
-	NSDictionary *attr = [NSDictionary dictionaryWithObjectsAndKeys:
-        [NSFont boldSystemFontOfSize:[NSFont smallSystemFontSize]], NSFontAttributeName,
-        nil];
-	NSMutableAttributedString *ms = [[[NSMutableAttributedString alloc] initWithString:poweredByString attributes:attr] autorelease];
-	NSRange flickrRange = [poweredByString rangeOfString:@"flickr" options:NSCaseInsensitiveSearch];
-	if (NSNotFound != flickrRange.location)
-	{
-		[ms addAttributes:
-			[NSDictionary dictionaryWithObjectsAndKeys:
-				[NSColor colorWithCalibratedRed:0.0 green:.39 blue:.86 alpha:1.0], NSForegroundColorAttributeName, nil]
-					range:NSMakeRange(flickrRange.location, 5)];
-		[ms addAttributes:
-			[NSDictionary dictionaryWithObjectsAndKeys:
-				[NSColor colorWithCalibratedRed:1.0 green:0.0 blue:.52 alpha:1.0], NSForegroundColorAttributeName, nil]
-					range:NSMakeRange(flickrRange.location+5, 1)];
-	}
-	[oFlickrButton setAttributedTitle:ms];
+    self.flickrID = nil;
+    self.tag = nil;
+    [super dealloc];
+}
+
+#pragma mark -
+#pragma mark HTML Generation
+
+- (void)writeHTML:(SVHTMLContext *)context
+{
+    if ( self.flashStyle )
+    {
+        // If we are using flickr badge in flash style, it uses iframe, so we can't be strict.
+        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
+    }
+    [super writeHTML:context];
 }
 
 
-- (IBAction) openFlickr:(id)sender
-{
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.flickr.com/"]];
-}
+#pragma mark -
+#pragma mark Properties
 
-// If we are using flickr badge in flash style, it uses iframe, so we can't be strict.
-// Called via recursiveComponentPerformSelector
-- (void) findMinimumDocType:(void *)aDocTypePointer forPage:(KTPage *)aPage
-{
-	if ([[self delegateOwner] boolForKey:@"flashStyle"])
-	{
-		int *docType = (int *)aDocTypePointer;
-		
-		if (*docType > KTXHTMLTransitionalDocType)
-		{
-			*docType = KTXHTMLTransitionalDocType;
-		}
-	}
-}
-
-
-
+@synthesize flickrID = _flickrID;
+@synthesize tag = _tag;
+@synthesize number = _number;
+@synthesize flashStyle = _flashStyle;
+@synthesize random = _random;
+@synthesize showInfo = _showInfo;
 @end

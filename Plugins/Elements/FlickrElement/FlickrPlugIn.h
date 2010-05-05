@@ -40,9 +40,18 @@
 
 @interface FlickrPlugIn : SVPageletPlugIn 
 {
-	IBOutlet NSButton *oFlickrButton;
+	NSString *_flickrID;    // Flickr URL code
+	NSString *_tag;         // photo tag
+	NSUInteger _number;     // tag of number to show in pop-up
+	BOOL _flashStyle;       // 0 = simple, 1 = flash
+	BOOL _random;           // 0 = most recent, 1 = random
+	BOOL _showInfo;         // whether Flickr credits are shown
 }
 
-- (IBAction) openFlickr:(id)sender;
-
+@property(nonatomic, copy) NSString *flickrID;
+@property(nonatomic, copy) NSString *tag;
+@property(nonatomic) NSUInteger number;
+@property(nonatomic) BOOL flashStyle;
+@property(nonatomic) BOOL random;
+@property(nonatomic) BOOL showInfo;
 @end
