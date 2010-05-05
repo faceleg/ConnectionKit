@@ -188,19 +188,23 @@
 {
     for (SVWebEditorItem *anItem in [self draggedItems])
     {
-        // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
-        DOMRange *range = [[self HTMLDocument] createRange];
-        [range selectNode:[anItem HTMLElement]];
-        
-        if ([self shouldChangeTextInDOMRange:range])
+        DOMHTMLElement *element = [anItem HTMLElement];
+        if ([element isContentEditable])
         {
-            DOMHTMLElement *node = [anItem HTMLElement];
-            [[node parentNode] removeChild:node];
+            // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
+            DOMRange *range = [[self HTMLDocument] createRange];
+            [range selectNode:element];
             
-            [anItem removeFromParentWebEditorItem];
+            if ([self shouldChangeTextInDOMRange:range])
+            {
+                DOMHTMLElement *node = [anItem HTMLElement];
+                [[node parentNode] removeChild:node];
+                
+                [anItem removeFromParentWebEditorItem];
+            }
+            
+            [range detach];
         }
-        
-        [range detach];
     }
     
     // Remove the objects
