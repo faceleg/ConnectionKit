@@ -87,6 +87,9 @@
 - (void)writeHTML:(SVHTMLContext *)context;
 {
 	// Build the HTML    
+    [context addDependencyOnObject:[NSUserDefaultsController sharedUserDefaultsController]
+                           keyPath:@"values.LiveDataFeeds"];
+     
     [context setXHTML:[self isXHTML]];
     [context setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
     [context setLanguage:[[self master] language]];
