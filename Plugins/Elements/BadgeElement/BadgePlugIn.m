@@ -66,9 +66,6 @@ static NSArray *sAltStrings = nil;
     return [NSSet setWithObjects:@"badgeTypeTag", @"anonymous", @"openLinkInNewWindow", nil];
 }
 
-@synthesize badgeTypeTag = _badgeTypeTag;
-@synthesize anonymous = _anonymous;
-@synthesize openLinkInNewWindow = _openLinkInNewWindow;
 
 #pragma mark -
 #pragma mark HTML Generation
@@ -110,7 +107,6 @@ static NSArray *sAltStrings = nil;
 	return sAltStrings;
 }
 
-
 - (NSString *)badgePreludeString
 {
 	return LocalizedStringInThisBundle(@"Created with", @"string that goes before badgeLinkString, for badge - always BEFORE 'Sandvox' regardless of language");
@@ -120,7 +116,6 @@ static NSArray *sAltStrings = nil;
 {
 	return LocalizedStringInThisBundle(@"Sandvox", @"linked text in the text badge linking back to sandvox site.  Always FOLLOWS the 'created with' regardless of language.");
 }
-
 
 // Use a hash to get a sort of arbitrary string for this unique document
 - (NSString *)generateBlurbVariant:(NSInteger)aVariant
@@ -148,30 +143,6 @@ static NSArray *sAltStrings = nil;
 	return blurb;
 }
 
-- (NSString *)badgeAltString
-{
-	if (nil == _badgeAltString)
-	{
-		NSString *blurb = [self generateBlurbVariant:0];
-		NSString *altString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
-		[self setBadgeAltString:altString];
-	}
-	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
-}
-@synthesize badgeAltString = _badgeAltString;
-
-- (NSString *)badgeTitleString
-{
-	if (nil == _badgeTitleString)
-	{
-		NSString *blurb = [self generateBlurbVariant:1];
-		NSString *titleString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
-		[self setBadgeTitleString:titleString];
-	}
-	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
-}
-@synthesize badgeTitleString = _badgeTitleString;
-
 // returns title of graphic to display
 - (NSString *)currentBadgeName
 {
@@ -198,8 +169,33 @@ static NSArray *sAltStrings = nil;
 
 
 #pragma mark -
-#pragma mark Inspector
+#pragma mark Properties
 
-+ (Class)inspectorViewControllerClass { return [BadgeInspector class]; }
+- (NSString *)badgeAltString
+{
+	if (nil == _badgeAltString)
+	{
+		NSString *blurb = [self generateBlurbVariant:0];
+		NSString *altString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Created with Sandvox - %@",@"Alt string for sandvox badge"), blurb];			
+		[self setBadgeAltString:altString];
+	}
+	return _badgeAltString;		// don't want to calculate all the time.  Same for a document?
+}
+@synthesize badgeAltString = _badgeAltString;
 
+- (NSString *)badgeTitleString
+{
+	if (nil == _badgeTitleString)
+	{
+		NSString *blurb = [self generateBlurbVariant:1];
+		NSString *titleString = [NSString stringWithFormat:LocalizedStringInThisBundle(@"Learn about Sandvox - %@",@"title string for sandvox badge link"), blurb];			
+		[self setBadgeTitleString:titleString];
+	}
+	return _badgeTitleString;		// don't want to calculate all the time.  Same for a document?
+}
+@synthesize badgeTitleString = _badgeTitleString;
+
+@synthesize badgeTypeTag = _badgeTypeTag;
+@synthesize anonymous = _anonymous;
+@synthesize openLinkInNewWindow = _openLinkInNewWindow;
 @end
