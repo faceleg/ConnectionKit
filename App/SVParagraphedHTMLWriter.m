@@ -51,7 +51,7 @@
 
 #pragma mark Writing
 
-- (void)writeGraphicController:(SVDOMController *)controller;
+- (BOOL)writeGraphicController:(SVDOMController *)controller;
 {
     SVGraphic *graphic = [controller representedObject];
     SVTextAttachment *attachment = [graphic textAttachment];
@@ -64,15 +64,13 @@
         {
             if ([self openElementsCount] > 0)
             {
-                // Budge it up a level
-                [self handleInvalidBlockElement:[controller HTMLElement]];
-                return;
+                return NO;
             }
         }
         else
         {
             NSLog(@"This text block does not support block graphics");
-            return;
+            return NO;
         }
     }
     
@@ -82,9 +80,10 @@
                                           withHTMLWriter:self];
     
     [_attachments addObject:attachment];
+    return YES;
 }
 
-- (void)writeDOMController:(SVDOMController *)controller;
+- (BOOL)writeDOMController:(SVDOMController *)controller;
 {
     // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
     SVGraphic *graphic = [controller representedObject];
@@ -104,16 +103,18 @@
     // Graphics are written as-is. Callouts write their contents
     if ([controller isSelectable])
     {
-        [self writeGraphicController:controller];
+        return [self writeGraphicController:controller];
     }
     else
     {
         NSArray *graphicControllers = [controller selectableTopLevelDescendants];
         for (SVDOMController *aController in graphicControllers)
         {
-            [self writeGraphicController:aController];
+            if (![self writeGraphicController:aController]) return NO;
         }
     }
+    
+    return YES;
 }
 
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
@@ -124,8 +125,7 @@
     {
         if ([aController HTMLElement] == element)
         {
-            [self writeDOMController:aController];
-            return YES;
+            return [self writeDOMController:aController];
         }
     }
     
