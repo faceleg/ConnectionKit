@@ -10,6 +10,9 @@
 
 #import "SVPublishingRecord.h"
 
+#import "NSError+Karelia.h"
+
+
 @implementation SVDirectoryPublishingRecord 
 
 - (BOOL)isDirectory; { return YES; }
@@ -46,6 +49,19 @@
         [result setFilename:filename];
         [result setParentDirectoryRecord:self];
     }
+    
+    return result;
+}
+
+- (BOOL)validateContentRecords:(NSSet **)outRecords error:(NSError **)error;
+{
+    // Ensure filenames are unique
+    NSSet *filenames = [*outRecords valueForKeyPath:@"filename.lowercaseString"];
+    BOOL result = ([filenames count] == [*outRecords count]);
+    
+    if (!result && error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                       code:NSValidationRelationshipLacksMinimumCountError
+                                       localizedDescription:@"filenames are not unique"];
     
     return result;
 }
