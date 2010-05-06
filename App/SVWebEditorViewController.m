@@ -256,6 +256,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     SVWebEditorView *webEditor = [self webEditor];
     DOMDocument *domDoc = [webEditor HTMLDocument];
+    OBASSERT(domDoc);
     
     
     // Context holds the controllers. We need to send them over to the Web Editor.
