@@ -183,17 +183,32 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     SVInspectorViewController *result = nil;
     
     
+    // Take a stab at Inspector nib
+    NSBundle *bundle = [NSBundle bundleForClass:self];
+    NSString *nibName = [bundle objectForInfoDictionaryKey:@"KTPluginNibFile"];
+    
+    
     // Take a stab at Inspector class name
     NSString *className = [NSStringFromClass([self class])
                            stringByReplacing:@"PlugIn" with:@"Inspector"];
     
     Class class = NSClassFromString(className);
-    if (class && [class isSubclassOfClass:[SVInspectorViewController class]])
+    if (!class && nibName)
     {
-        result = [[class alloc] initWithNibName:nil bundle:[NSBundle bundleForClass:self]];
-        [result autorelease];
+        class = [SVInspectorViewController class];
+    }
+    else if (![class isSubclassOfClass:[SVInspectorViewController class]])
+    {
+        class = nil;
     }
     
+    
+    // Make Inspector
+    if (nibName || class)
+    {
+        result = [[class alloc] initWithNibName:nibName bundle:bundle];
+        [result autorelease];
+    }
     
     return result;
 }
