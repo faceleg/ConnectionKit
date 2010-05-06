@@ -27,7 +27,7 @@
 
 #pragma mark Dates
 @property(nonatomic, copy) NSDate *creationDate;
-@property(nonatomic, copy) NSDate *lastModificationDate;
+@property(nonatomic, copy) NSDate *modificationDate;
 
 
 #pragma mark Site Menu

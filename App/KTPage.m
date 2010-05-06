@@ -365,7 +365,7 @@
     
     if (![excludedKeys containsObject:key])
     {
-        [self setValue:[NSDate date] forKey:@"lastModificationDate"];
+        [self setModificationDate:[NSDate date]];
     }
 }
 

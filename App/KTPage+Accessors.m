@@ -107,7 +107,7 @@
 - (NSDate *)timestampDate;
 {
     NSDate *result = (KTTimestampModificationDate == [self timestampType])
-    ? [self lastModificationDate]
+    ? [self modificationDate]
     : [self creationDate];
 	
 	return result;
@@ -115,7 +115,7 @@
 
 + (NSSet *)keyPathsForValuesAffectingTimestampDate
 {
-    return [NSSet setWithObjects:@"timestampType", @"creationDate", @"lastModificationDate", nil];
+    return [NSSet setWithObjects:@"timestampType", @"creationDate", @"modificationDate", nil];
 }
 
 @dynamic includeTimestamp;

@@ -265,7 +265,7 @@
 	OBASSERT(levelFraction <= 1.0 && levelFraction > 0.0);
 	[entry setObject:[NSNumber numberWithFloat:levelFraction] forKey:@"priority"];
     
-	NSDate *lastModificationDate = [aPage lastModificationDate];
+	NSDate *lastModificationDate = [aPage modificationDate];
 	NSString *timestamp = [lastModificationDate descriptionWithCalendarFormat:@"%Y-%m-%dT%H:%M:%SZ" timeZone:[NSTimeZone timeZoneWithAbbreviation:@"GMT"] locale:nil];
 	[entry setObject:timestamp forKey:@"lastmod"];
 	

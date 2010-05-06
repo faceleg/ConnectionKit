@@ -30,11 +30,11 @@
     // attributes
 	NSDate *now = [NSDate date];
 	[self setPrimitiveValue:now forKey:@"creationDate"];
-	[self setPrimitiveValue:now forKey:@"lastModificationDate"];
+	[self setPrimitiveValue:now forKey:@"modificationDate"];
 }
 
 @dynamic creationDate;
-@dynamic lastModificationDate;
+@dynamic modificationDate;
 
 #pragma mark Site Menu
 

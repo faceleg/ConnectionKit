@@ -374,7 +374,7 @@
 	
 	if (!result)
 	{
-		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"lastModificationDate" 
+		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"modificationDate" 
                                                                            ascending:ascending];
 		result = [[NSArray alloc] initWithObject:orderingDescriptor];
 		[orderingDescriptor release];
