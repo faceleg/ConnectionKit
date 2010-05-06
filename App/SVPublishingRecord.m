@@ -117,7 +117,10 @@
     return nil;
 }
 
+#pragma mark Attributes
+
 @dynamic date;
+@dynamic modificationDate;
 @dynamic SHA1Digest;
 @dynamic length;
 

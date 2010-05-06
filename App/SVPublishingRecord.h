@@ -31,9 +31,13 @@
 - (SVPublishingRecord *)publishingRecordForFilename:(NSString *)filename;
 - (SVPublishingRecord *)publishingRecordForSHA1Digest:(NSData *)digest;
 
-@property(nonatomic, retain) NSDate *date;
-@property(nonatomic, retain) NSData *SHA1Digest;
-@property(nonatomic, retain) NSNumber *length;
+
+#pragma mark Attributes
+@property(nonatomic, copy) NSNumber *length;
+@property(nonatomic, copy) NSData *SHA1Digest;
+@property(nonatomic, copy) NSDate *date;
+@property(nonatomic, copy) NSDate *modificationDate;
+
 
 @end
 
