@@ -195,7 +195,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 @synthesize webView = _webView;
 
-- (DOMDocument *)HTMLDocument { return [[self webView] mainFrameDocument]; }
+- (DOMDocument *)HTMLDocument
+{
+    return [[[self webView] mainFrame] DOMDocument];    // -mainFrameDocument isn't as reliable
+}
 
 - (NSView *)documentView { return [[[[self webView] mainFrame] frameView] documentView]; }
 
