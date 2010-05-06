@@ -997,7 +997,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										<object class="NSButton" id="696521545">
 											<reference key="NSNextResponder" ref="658615396"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{14, 241}, {110, 18}}</string>
+											<string key="NSFrame">{{14, 244}, {110, 18}}</string>
 											<reference key="NSSuperview" ref="658615396"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="155214116">
@@ -1103,7 +1103,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										<object class="NSBox" id="1038772606">
 											<reference key="NSNextResponder" ref="658615396"/>
 											<int key="NSvFlags">10</int>
-											<string key="NSFrame">{{17, 263}, {210, 5}}</string>
+											<string key="NSFrame">{{17, 268}, {210, 5}}</string>
 											<reference key="NSSuperview" ref="658615396"/>
 											<string key="NSOffsets">{0, 0}</string>
 											<object class="NSTextFieldCell" key="NSTitleCell">
@@ -1163,7 +1163,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 										<object class="NSButton" id="74156329">
 											<reference key="NSNextResponder" ref="658615396"/>
 											<int key="NSvFlags">268</int>
-											<string key="NSFrame">{{14, 221}, {108, 18}}</string>
+											<string key="NSFrame">{{14, 224}, {108, 18}}</string>
 											<reference key="NSSuperview" ref="658615396"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSButtonCell" key="NSCell" id="142492424">
@@ -1806,26 +1806,6 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: inspectedObjectsController.selection.collectionSortAscending</string>
-						<reference key="source" ref="402353291"/>
-						<reference key="destination" ref="1001"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="402353291"/>
-							<reference key="NSDestination" ref="1001"/>
-							<string key="NSLabel">value: inspectedObjectsController.selection.collectionSortAscending</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">inspectedObjectsController.selection.collectionSortAscending</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">NSNegateBoolean</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">284</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
 						<string key="label">hidden: inspectedObjectsController.selection.collectionSortOrder</string>
 						<reference key="source" ref="402353291"/>
 						<reference key="destination" ref="1001"/>
@@ -1923,6 +1903,26 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 						</object>
 					</object>
 					<int key="connectionID">293</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: inspectedObjectsController.selection.collectionSortAscending</string>
+						<reference key="source" ref="402353291"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="402353291"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.collectionSortAscending</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.collectionSortAscending</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSNegateBoolean</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">295</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -2946,7 +2946,7 @@ AQABAAEAAQAB//+dkAEA//+PgAAE//+dkAEI//+dkAEMUERUAFBTVABQV1QAUFBUAAAAAAEAAAABA</b
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">293</int>
+			<int key="maxID">295</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
