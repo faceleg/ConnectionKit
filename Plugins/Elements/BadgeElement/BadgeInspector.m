@@ -39,8 +39,6 @@
 
 @implementation BadgeInspector
 
-- (NSString *)nibName { return @"BadgeInspector"; }
-
 - (IBAction)badgeClicked:(id)sender
 {
 	[[[self inspectedObjectsController] selection] setInteger:[[sender selectedItem] tag]

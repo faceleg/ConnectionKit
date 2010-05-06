@@ -39,6 +39,9 @@
 
 
 @interface BadgeInspector : SVInspectorViewController
+{
+    
+}
 
 - (IBAction)badgeClicked:(id)sender;
 
