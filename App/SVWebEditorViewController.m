@@ -223,7 +223,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
 	// Figure out the URL to use. 
-	NSURL *pageURL = nil;//[page URL];   Turned this off for now
+	NSURL *pageURL = [context baseURL];
     if (![pageURL scheme] ||        // case 44071: WebKit will not load the HTML or offer delegate
         ![pageURL host] ||          // info if the scheme is something crazy like fttp:
         !([[pageURL scheme] isEqualToString:@"http"] || [[pageURL scheme] isEqualToString:@"https"]))
