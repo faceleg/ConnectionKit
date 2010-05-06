@@ -37,7 +37,7 @@
     [self setEntityName:@"Graphic"];
     [self setAvoidsEmptySelection:NO];
     [self setAutomaticallyRearrangesObjects:YES];
-    [self setSortDescriptors:[[self class] pageletSortDescriptors]];
+    [self didChangeArrangementCriteria];
     
     NSDictionary *options = [NSDictionary dictionaryWithObjectsAndKeys:
                              [NSNumber numberWithBool:YES],
@@ -51,7 +51,7 @@
 - (id)initWithCoder:(NSCoder *)aDecoder
 {
     self = [super initWithCoder:aDecoder];
-    [self setSortDescriptors:[[self class] pageletSortDescriptors]];
+    [self didChangeArrangementCriteria];
     return self;
 }
 
@@ -63,6 +63,13 @@
 }
 
 #pragma mark Arranging Objects
+
+- (NSArray *)arrangeObjects:(NSArray *)objects;
+{
+    // Pre-sort by standard pagelet sort descriptors
+    objects = [objects sortedArrayUsingDescriptors:[[self class] pageletSortDescriptors]];
+    return [super arrangeObjects:objects];
+}
 
 - (NSArray *)allSidebarPagelets;
 {
@@ -294,4 +301,14 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     }
 }
 
+#pragma mark Automatic Rearranging
+
+- (NSArray *)automaticRearrangementKeyPaths;
+{
+    NSArray *result = [super automaticRearrangementKeyPaths];
+    result = (result ? [result arrayByAddingObject:@"sortKey"] : [NSArray arrayWithObject:@"sortKey"]);
+    return result;
+}
+
 @end
+
