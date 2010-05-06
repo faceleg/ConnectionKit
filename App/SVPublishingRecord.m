@@ -10,6 +10,7 @@
 
 #import "SVDirectoryPublishingRecord.h"
 
+#import "NSError+Karelia.h"
 #import "NSString+Karelia.h"
 
 
@@ -47,7 +48,20 @@
 @dynamic filename;
 - (BOOL)validateFilename:(NSString **)outFilename error:(NSError **)error;
 {
-    if (!*outFilename)
+    // Don't allow filename to change once it's been set
+    if ([self filename])
+    {
+        if (![[self filename] isEqualToString:*outFilename])
+        {
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSManagedObjectValidationError
+                                    localizedDescription:@"Publishing record paths are immutable"];
+            return NO;
+        }
+    }
+    
+    // Filename is non-optional
+    else if (!*outFilename)
     {
         if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationMissingMandatoryPropertyError userInfo:nil];
         return NO;
