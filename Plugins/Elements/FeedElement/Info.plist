@@ -48,7 +48,7 @@
 	<key>KTPluginUntitledName</key>
 	<string>RSS Feed</string>
 	<key>KTTemplateName</key>
-	<string>FeedPlugInTemplate</string>
+	<string>FeedTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>FeedPlugIn</string>
 </dict>
