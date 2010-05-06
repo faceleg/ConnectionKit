@@ -348,23 +348,19 @@
 
 + (NSArray *)alphabeticalTitleTextSortDescriptorsAscending:(BOOL)ascending;
 {
-	static NSArray *result;
-	
-	if (!result)
-	{
-		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title"
-                                                                           ascending:ascending
-                                                                            selector:@selector(caseInsensitiveCompare:)];
-		result = [[NSArray alloc] initWithObject:orderingDescriptor];
-		[orderingDescriptor release];
-	}
+    NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"title"
+                                                                       ascending:ascending
+                                                                        selector:@selector(caseInsensitiveCompare:)];
+    
+	NSArray *result = [NSArray arrayWithObject:orderingDescriptor];
+    [orderingDescriptor release];
 	
 	return result;
 }
 
 + (NSArray *)dateCreatedSortDescriptorsAscending:(BOOL)ascending;
 {
-	static NSArray *result;
+	NSArray *result = nil;
 	
 	if (!result)
 	{
@@ -379,7 +375,7 @@
 
 + (NSArray *)dateModifiedSortDescriptorsAscending:(BOOL)ascending;
 {
-	static NSArray *result;
+	NSArray *result = nil;
 	
 	if (!result)
 	{
