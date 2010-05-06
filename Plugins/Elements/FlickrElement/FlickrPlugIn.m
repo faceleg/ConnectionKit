@@ -35,9 +35,10 @@
 //
 
 #import "FlickrPlugIn.h"
+#import "FlickrInspector.h"
+
 
 // LocalizedStringInThisBundle(@"Flickr (Placeholder)", "String_On_Page_Template")
-
 
 
 @implementation FlickrPlugIn
@@ -83,6 +84,12 @@
     }
     [super writeHTML:context];
 }
+
+
+#pragma mark -
+#pragma mark Inspector
+
++ (Class)inspectorViewControllerClass { return [FlickrInspector class]; }
 
 
 #pragma mark -
