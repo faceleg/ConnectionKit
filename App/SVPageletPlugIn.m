@@ -72,13 +72,6 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self awakeFromBundleAsNewlyCreatedObject:YES];
 }
 
-- (void)dealloc
-{
-    if (_container != self) [_container release];
-    
-    [super dealloc];
-}
-
 #pragma mark Content
 
 - (void)writeHTML:(id <SVPlugInContext>)context;

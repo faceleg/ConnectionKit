@@ -17,8 +17,6 @@
 {
   @private
     id <SVPageletPlugInContainer>   _container;
-    
-    id  _delegateOwner;
 }
 
 #pragma mark Initialization
