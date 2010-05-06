@@ -49,7 +49,7 @@
 @synthesize width = _width;
 
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
-enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
+enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
 
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
@@ -141,6 +141,7 @@ enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the ge
 	[oScopeBar setSelected:YES forItem:self.genre inGroup:kGenreGroup];
 	[oScopeBar setSelected:YES forItem:self.color inGroup:kColorGroup];
 	[oScopeBar setSelected:YES forItem:self.width inGroup:kWidthGroup];
+	[oScopeBar setSelected:(!self.genre && !self.color && !self.width) forItem:@"all" inGroup:kAllGroup];
 	
     [oViewController setupTrackingRects];
 }
@@ -187,7 +188,7 @@ enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the ge
 
 - (NSInteger)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
 {
-    return 3;
+    return 4;
 }
 
 - (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber
@@ -195,6 +196,9 @@ enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the ge
 	NSArray *result = nil;
 	switch(groupNumber)
 	{
+		case kAllGroup:
+			result = [NSArray arrayWithObject:@"all"];
+			break;
 		case kGenreGroup:
 			result = [KTDesign genreValues];
 #ifdef DEBUG
@@ -273,12 +277,14 @@ enum { kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the ge
 	if (!sDesignScopeBarTitles)
 	{
 		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
-NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"minimal",
-		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"glossy",
-		NSLocalizedString(@"Subtle", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"subtle",
-		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"bold",
-		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"artistic",
-		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:', after 'Kind:', and above list of designs."), @"specialty",
+NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"minimal",
+		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"glossy",
+		NSLocalizedString(@"Subtle", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"subtle",
+		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"bold",
+		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"artistic",
+		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"specialty",
+		NSLocalizedString(@"All", @"indicate all designs to be shown, goes below 'Choose a design for your site:',  above list of designs."), @"all",
+
 				 
 								 nil];
 	}
@@ -341,6 +347,18 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 {
 	switch (groupNumber)
 	{
+		case kAllGroup:
+		{
+			if (selected)
+			{
+				// turn off previous selection in this group
+				[theScopeBar setSelected:NO forItem:self.genre inGroup:kGenreGroup];
+				[theScopeBar setSelected:NO forItem:self.color inGroup:kColorGroup];
+				[theScopeBar setSelected:NO forItem:self.width inGroup:kWidthGroup];
+				self.genre = self.color = self.width = nil;
+			}
+			break;
+		}	
 		case kGenreGroup:
 		{
 			if (selected && self.genre && (self.genre != identifier))
@@ -349,6 +367,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 				[theScopeBar setSelected:NO forItem:self.genre inGroup:kGenreGroup];
 			}
 			self.genre = selected ? identifier : nil;
+			[theScopeBar setSelected:(!self.genre && !self.color && !self.width) forItem:@"all" inGroup:kAllGroup];
 			break;
 		}	
 		case kColorGroup:
@@ -359,6 +378,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 				[theScopeBar setSelected:NO forItem:self.color inGroup:kColorGroup];
 			}
 			self.color = selected ? identifier : nil;
+			[theScopeBar setSelected:(!self.genre && !self.color && !self.width) forItem:@"all" inGroup:kAllGroup];
 			break;
 		}
 		case kWidthGroup:
@@ -369,6 +389,7 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 				[theScopeBar setSelected:NO forItem:self.width inGroup:kWidthGroup];
 			}
 			self.width = selected ? identifier : nil;
+			[theScopeBar setSelected:(!self.genre && !self.color && !self.width) forItem:@"all" inGroup:kAllGroup];
 			break;
 		}
 	}
