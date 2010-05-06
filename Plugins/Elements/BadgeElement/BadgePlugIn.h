@@ -43,14 +43,14 @@ enum { BADGE_TEXT = 0 };
 @interface BadgePlugIn : SVPageletPlugIn
 {
   @private
-    int         _badgeTypeTag;
+    NSUInteger  _badgeTypeTag;
     BOOL        _anonymous;
     BOOL        _openLinkInNewWindow;
     NSString    *_badgeAltString;
     NSString    *_badgeTitleString;
 }
 
-@property(nonatomic) int badgeTypeTag;
+@property(nonatomic) NSUInteger badgeTypeTag;
 @property(nonatomic) BOOL anonymous;
 @property(nonatomic) BOOL openLinkInNewWindow;
 @property(nonatomic, copy) NSString *badgeAltString;
