@@ -12,7 +12,7 @@
 #import <iMedia/IMBImageItem.h>
 
 
-@class KSHTMLWriter;
+@class KSHTMLWriter, SVInspectorViewController;
 @protocol SVPlugInContext, SVPage, SVPageletPlugInContainer;
 
 
@@ -61,6 +61,10 @@
 
 #pragma mark Thumbnail
 - (id <IMBImageItem>)thumbnail;
+
+
+#pragma mark UI
++ (SVInspectorViewController *)makeInspectorViewController; // return nil if you don't want an Inspector
 
 
 @end

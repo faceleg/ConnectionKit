@@ -63,8 +63,8 @@
 
 #pragma mark UI
 
-// If your plug-in wants an inspector, override to return an SVInspectorViewController subclass. Default implementation returns nil.
-+ (Class)inspectorViewControllerClass;
+// Default implementation guesses classname and nib, returning nil if they're not found
++ (SVInspectorViewController *)makeInspectorViewController;
 
 // Return a subclass of SVDOMController. Default implementation returns SVDOMController.
 + (Class)DOMControllerClass;

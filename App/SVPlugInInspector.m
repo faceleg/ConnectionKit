@@ -10,6 +10,7 @@
 
 #import "KSCollectionController.h"
 #import "SVInspectorViewController.h"
+#import "SVPlugIn.h"
 
 #import "NSArrayController+Karelia.h"
 
@@ -54,16 +55,12 @@ change context:(void *)context
         SVInspectorViewController *inspector = nil;
         if (identifier && !NSIsControllerMarker(identifier))
         {
+            Class <SVPlugIn> class = [[self inspectedObjectsController] valueForKeyPath:@"selection.plugIn.class"];
+            inspector = [class makeInspectorViewController];
+            
             // If re-selecting something of the same type, keep the Inspector we aready have
-            Class controllerClass = [[[self inspectedObjectsController] selection] valueForKeyPath:@"plugIn.class.inspectorViewControllerClass"];
+            if ([[self selectedInspector] isKindOfClass:[inspector class]]) return;
             
-            if ([[self selectedInspector] isKindOfClass:controllerClass]) return;
-            
-            
-            // Make an Inspector.
-            NSBundle *bundle = [NSBundle bundleForClass:controllerClass];
-            inspector = [[controllerClass alloc] initWithNibName:nil    // subclass will override -nibName
-                                                          bundle:bundle];
             
             // Give it the right content/selection
             NSArrayController *controller = [inspector inspectedObjectsController];
@@ -73,7 +70,6 @@ change context:(void *)context
         }
         
         [self setSelectedInspector:inspector];
-        [inspector release];
     }
     else
     {

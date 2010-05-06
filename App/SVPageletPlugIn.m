@@ -11,12 +11,12 @@
 
 #import "KTDataSourceProtocol.h"
 #import "KTHTMLPlugInWrapper.h"
-//#import "KTPage.h"
 #import "SVRichText.h"
 #import "SVDOMController.h"
-#import "SVPlugIn.h"
 #import "SVGraphic.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVInspectorViewController.h"
+#import "SVPlugIn.h"
 #import "SVSidebar.h"
 #import "SVTemplate.h"
 
@@ -188,7 +188,26 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 #pragma mark UI
 
-+ (Class)inspectorViewControllerClass; { return nil; }
++ (SVInspectorViewController *)makeInspectorViewController;
+{
+    SVInspectorViewController *result = nil;
+    
+    
+    // Take a stab at Inspector class name
+    NSString *className = [NSStringFromClass([self class])
+                           stringByReplacing:@"PlugIn" with:@"Inspector"];
+    
+    Class class = NSClassFromString(className);
+    if (class && [class isSubclassOfClass:[SVInspectorViewController class]])
+    {
+        result = [[class alloc] initWithNibName:nil bundle:[NSBundle bundleForClass:self]];
+        [result autorelease];
+    }
+    
+    
+    return result;
+}
+
 + (Class)DOMControllerClass; { return [SVDOMController class]; }
 
 #pragma mark Other
