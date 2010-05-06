@@ -144,6 +144,15 @@
 }
 
 @dynamic collectionSortAscending;
+- (void)setCollectionSortAscending:(NSNumber *)sortAscending;
+{
+    [self willChangeValueForKey:@"collectionSortAscending"];
+    [self setPrimitiveValue:sortAscending forKey:@"collectionSortAscending"];
+    
+    [self invalidateSortedChildrenCache];
+    
+    [self didChangeValueForKey:@"collectionSortAscending"];
+}
 
 #pragma mark Sorted Children
 
@@ -275,7 +284,7 @@
 	if ([result count] > 1)
 	{		
 		// Do the sort
-		NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType ascending:[[self collectionSortAscending] boolValue]];
+		NSArray *sortDescriptors = [self sortDescriptorsForCollectionSortType:sortType ascending:ascending];
         
 		result = [result sortedArrayUsingDescriptors:sortDescriptors];
 	}	
