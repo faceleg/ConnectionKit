@@ -8,10 +8,10 @@
 
 #import "SVPageBodyTextDOMController.h"
 
+#import "SVGraphic.h"
 #import "SVGraphicFactoryManager.h"
 #import "SVHTMLContext.h"
 #import "KTPage.h"
-#import "SVPlugIn.h"
 
 
 @implementation SVPageBodyTextDOMController
@@ -32,7 +32,7 @@
                                            insertIntoManagedObjectContext:context];
     
     [self addGraphic:graphic placeInline:NO];
-    [graphic awakeFromInsertIntoPage:[[self HTMLContext] currentPage]];
+    [graphic awakeFromInsertIntoPage:(id <SVPage>)[[self HTMLContext] currentPage]];
 }
 
 @end
