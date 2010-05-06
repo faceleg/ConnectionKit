@@ -427,13 +427,20 @@
         
         if (dragImage)
         {
-            [self dragImage:dragImage
-                         at:dragImageRect
-                     offset:NSZeroSize
-                      event:_mouseDownEvent
-                 pasteboard:pboard
-                     source:self
-                  slideBack:YES];
+            @try
+            {
+                [self dragImage:dragImage
+                             at:dragImageRect
+                         offset:NSZeroSize
+                          event:_mouseDownEvent
+                     pasteboard:pboard
+                         source:self
+                      slideBack:YES];
+            }
+            @finally    // in case the drag throws an exception
+            {
+                [self forgetDraggedItems];
+            }
         }
     }
     
