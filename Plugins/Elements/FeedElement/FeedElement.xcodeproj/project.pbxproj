@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C0AB90B118777E70005584A /* FeedInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C0AB90A118777E70005584A /* FeedInspector.m */; };
 		3C0AB90F11877E790005584A /* FeedInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0AB90D11877E790005584A /* FeedInspector.xib */; };
 		3CA9FF480D63C31200815310 /* FeedPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA9FF470D63C31200815310 /* FeedPlugIn.m */; };
 		3CA9FF4D0D63C31F00815310 /* FeedPlugInTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA9FF4B0D63C31F00815310 /* FeedPlugInTemplate.html */; };
@@ -24,8 +23,6 @@
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		32DBCF630370AF2F00C91783 /* FeedElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedElement_Prefix.pch; sourceTree = "<group>"; };
-		3C0AB909118777E70005584A /* FeedInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedInspector.h; sourceTree = "<group>"; };
-		3C0AB90A118777E70005584A /* FeedInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedInspector.m; sourceTree = "<group>"; };
 		3C0AB90E11877E790005584A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/FeedInspector.xib; sourceTree = "<group>"; };
 		3CA9FF460D63C31200815310 /* FeedPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FeedPlugIn.h; sourceTree = "<group>"; };
 		3CA9FF470D63C31200815310 /* FeedPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FeedPlugIn.m; sourceTree = "<group>"; };
@@ -117,8 +114,6 @@
 			children = (
 				3CA9FF460D63C31200815310 /* FeedPlugIn.h */,
 				3CA9FF470D63C31200815310 /* FeedPlugIn.m */,
-				3C0AB909118777E70005584A /* FeedInspector.h */,
-				3C0AB90A118777E70005584A /* FeedInspector.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -257,7 +252,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				3CA9FF480D63C31200815310 /* FeedPlugIn.m in Sources */,
-				3C0AB90B118777E70005584A /* FeedInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
