@@ -634,26 +634,6 @@
 					</object>
 					<int key="connectionID">122</int>
 				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">enabled: values.count</string>
-						<reference key="source" ref="863261966"/>
-						<reference key="destination" ref="909702574"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="863261966"/>
-							<reference key="NSDestination" ref="909702574"/>
-							<string key="NSLabel">enabled: values.count</string>
-							<string key="NSBinding">enabled</string>
-							<string key="NSKeyPath">values.count</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">ContainerIsNotEmptyTransformer</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">125</int>
-				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -944,7 +924,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">125</int>
+			<int key="maxID">132</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
