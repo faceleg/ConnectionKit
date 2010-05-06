@@ -87,12 +87,6 @@
 
 
 #pragma mark -
-#pragma mark Inspector
-
-+ (Class)inspectorViewControllerClass { return [FlickrInspector class]; }
-
-
-#pragma mark -
 #pragma mark Properties
 
 @synthesize flickrID = _flickrID;
