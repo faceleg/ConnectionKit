@@ -35,9 +35,10 @@
 //
 
 #import "FeedPlugIn.h"
-#import "FeedInspector.h"
 #import "KSURLFormatter.h"
 
+
+//FIXME: is this still needed/valid?
 #define kNetNewsWireString @"CorePasteboardFlavorType 0x52535373"
 
 
@@ -54,7 +55,13 @@
 
 + (NSSet *)plugInKeys
 { 
-    return [NSSet setWithObjects:@"feedURL", @"max", @"key", @"openLinksInNewWindow", @"summaryChars", nil];
+    return [NSSet setWithObjects:
+            @"feedURL", 
+            @"max", 
+            @"key", 
+            @"openLinksInNewWindow", 
+            @"summaryChars", 
+            nil];
 }
 
 
@@ -82,7 +89,7 @@
 
 
 #pragma mark -
-#pragma mark Template
+#pragma mark HTML Generation
 
 - (void)writeHTML:(SVHTMLContext *)context
 {
@@ -101,6 +108,8 @@
     
     if ( URL )
     {
+        //FIXME: do we need to convert all schemes to feed? waiting for info from Dan...
+        
         //    // If there is no URL prefix, use feed://
         //    if (*ioValue && ![*ioValue isEqualToString:@""] && [*ioValue rangeOfString:@"://"].location == NSNotFound)
         //    {
@@ -236,12 +245,6 @@
         }
     }
 }
-
-
-#pragma mark -
-#pragma mark Inspector
-
-+ (Class)inspectorViewControllerClass { return [FeedInspector class]; }
 
 
 #pragma mark -

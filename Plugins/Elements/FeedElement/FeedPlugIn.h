@@ -39,12 +39,12 @@
 
 @interface FeedPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
 {
-    BOOL _openLinksInNewWindow;
-    NSUInteger _max;
-    NSUInteger _summaryChars;
-    
-    NSString *_key;
-    NSURL *_feedURL;
+  @private
+    BOOL        _openLinksInNewWindow;
+    NSUInteger  _max;
+    NSUInteger  _summaryChars;
+    NSString    *_key;
+    NSURL       *_feedURL;
 }
 
 @property(nonatomic) BOOL openLinksInNewWindow;
