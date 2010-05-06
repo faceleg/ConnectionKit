@@ -152,6 +152,9 @@
     SVGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
                                                        inManagedObjectContext:context];
     
+    // Guess title
+    [result setTitle:[self name]];
+    
     return result;
 }
 
