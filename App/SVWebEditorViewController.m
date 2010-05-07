@@ -57,7 +57,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 @property(nonatomic, retain, readonly) SVWebContentObjectsController *primitiveSelectedObjectsController;
 
 // Pagelets
-- (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
+- (NSRect)rectOfDropZoneBelowDOMNode:(DOMNode *)node1
+                        aboveDOMNode:(DOMNode *)node2
+                              height:(CGFloat)height;
+- (NSRect)rectOfDropZoneBelowDOMNode:(DOMNode *)node height:(CGFloat)height;
+- (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node height:(CGFloat)minHeight;
 - (NSRect)rectOfDropZoneInDOMElement:(DOMElement *)element
                            belowNode:(DOMNode *)node
                            minHeight:(CGFloat)minHeight;
@@ -501,7 +505,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 /*  Similar to NSTableView's concept of dropping above a given row
  */
-- (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo
+- (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo;
 {
     NSUInteger result = NSNotFound;
     SVWebEditorView *editor = [self webEditor];
@@ -509,19 +513,26 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Ideally, we're making a drop *before* a pagelet
+    SVWebEditorItem *previousItem = nil;
     NSUInteger i, count = [pageletContentItems count];
     for (i = 0; i < count; i++)
     {
-        SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:i];
-    
-        NSRect dropZone = [self rectOfDropZoneAboveDOMNode:[aPageletItem HTMLElement]
-                                                 minHeight:25.0f];
+        // Calculate drop zone
+        SVWebEditorItem *anItem = [pageletContentItems objectAtIndex:i];
         
+        NSRect dropZone = [self rectOfDropZoneBelowDOMNode:[previousItem HTMLElement]
+                                              aboveDOMNode:[anItem HTMLElement]
+                                                    height:25.0f];
+        
+        
+        // Is it a match?
         if ([editor mouse:[editor convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
         {
             result = i;
             break;
         }
+        
+        previousItem = anItem;
     }
     
     
@@ -542,36 +553,58 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-- (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node minHeight:(CGFloat)minHeight;
+- (NSRect)rectOfDropZoneBelowDOMNode:(DOMNode *)node1
+                        aboveDOMNode:(DOMNode *)node2
+                              height:(CGFloat)height;
 {
-    NSRect nodeBox = [node boundingBox];
+    OBPRECONDITION(node2);
     
-    DOMNode *previousNode = [node previousSibling];
-    NSRect previousNodeBox = [previousNode boundingBox];
-    
-    NSRect result;
-    if (previousNode && !NSEqualRects(previousNodeBox, NSZeroRect))
+    if (node1)
     {
-        // Claim the space between the nodes
-        result.origin.x = MIN(NSMinX(previousNodeBox), NSMinX(nodeBox));
-        result.origin.y = NSMaxY(previousNodeBox);
-        result.size.width = MAX(NSMaxX(previousNodeBox), NSMaxX(nodeBox)) - result.origin.x;
-        result.size.height = NSMinY(nodeBox) - result.origin.y;
+        NSRect result = [self rectOfDropZoneAboveDOMNode:node2 height:25.0f];
+        
+        NSRect upperDropZone = [self rectOfDropZoneBelowDOMNode:node1
+                                                         height:25.0f];
+        result = NSUnionRect(upperDropZone, result);
+        
+        return result;
     }
     else
     {
-        // Claim the strip at the top of the node
-        result.origin.x = NSMinX(nodeBox);
-        result.origin.y = NSMinY(nodeBox);
-        result.size.width = nodeBox.size.width;
-        result.size.height = 0.0f;
+        NSRect parentBox = [[node2 parentNode] boundingBox];
+        NSRect nodeBox = [node2 boundingBox];
+        
+        CGFloat y = NSMinY(parentBox);
+        NSRect result = NSMakeRect(NSMinX(nodeBox),
+                                   y,
+                                   nodeBox.size.width,
+                                   NSMinY(nodeBox) - y + 0.5*height);
+        
+        return [[self webEditor] convertRect:result fromView:[node2 documentView]];
     }
+}
+
+- (NSRect)rectOfDropZoneBelowDOMNode:(DOMNode *)node height:(CGFloat)height;
+{
+    NSRect nodeBox = [node boundingBox];
     
-    // It should be at least ? pixels tall
-    if (result.size.height < minHeight)
-    {
-        result = NSInsetRect(result, 0.0f, -0.5 * (minHeight - result.size.height));
-    }
+    // Claim the strip at the bottom of the node
+    NSRect result = NSMakeRect(NSMinX(nodeBox),
+                               NSMaxY(nodeBox) - 0.5*height,
+                               nodeBox.size.width,
+                               height);
+    
+    return [[self webEditor] convertRect:result fromView:[node documentView]];
+}
+
+- (NSRect)rectOfDropZoneAboveDOMNode:(DOMNode *)node height:(CGFloat)height;
+{
+    NSRect nodeBox = [node boundingBox];
+    
+    NSRect result = NSMakeRect(NSMinX(nodeBox),
+                               NSMinY(nodeBox) - 0.5*height,
+                               nodeBox.size.width,
+                               height);
     
     return [[self webEditor] convertRect:result fromView:[node documentView]];
 }
@@ -798,7 +831,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Drag & Drop
 
-- (void)moveDragCaretToDOMRange:(DOMRange *)range;
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
 {
     if (!_dragCaret)
     {
@@ -807,10 +840,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         DOMCSSStyleDeclaration *style = [_dragCaret style];
         [style setWidth:@"100%"];
-        [style setHeight:@"100px"];
+        [style setHeight:@"75px"];
     }
     
-    [range insertNode:_dragCaret];
+    [[node parentNode] insertBefore:_dragCaret refChild:node];
+}
+
+- (void)removeDragCaret;
+{
+    if (_dragCaret)
+    {
+        [[_dragCaret parentNode] removeChild:_dragCaret];
+        [_dragCaret release]; _dragCaret = nil;
+    }
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
@@ -840,11 +882,18 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             {
                 SVWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
                 
-                DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
-                [range setStartBefore:[aPageletItem HTMLElement]];
-                [self moveDragCaretToDOMRange:range];
+                //DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
+                //[range setStartBefore:[aPageletItem HTMLElement]];
+                [self moveDragCaretToBeforeDOMNode:[aPageletItem HTMLElement]];
             }
         }
+    }
+    
+    
+    // Finish up
+    if (!result)
+    {
+        [self removeDragCaret];
     }
     
     return result;
