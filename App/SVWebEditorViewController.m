@@ -576,9 +576,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         CGFloat y = NSMinY(parentBox);
         NSRect result = NSMakeRect(NSMinX(nodeBox),
-                                   y,
+                                   y - 0.5*height,
                                    nodeBox.size.width,
-                                   NSMinY(nodeBox) - y + 0.5*height);
+                                   NSMinY(nodeBox) - y + height);
         
         return [[self webEditor] convertRect:result fromView:[node2 documentView]];
     }
