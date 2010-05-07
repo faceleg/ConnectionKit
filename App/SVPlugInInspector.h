@@ -14,9 +14,12 @@
 
 @interface SVPlugInInspector : KSInspectorViewController
 {
+  @private
     SVInspectorViewController   *_selectedInspector;
+    NSString                    *_plugInIdentifier;
 }
 
 @property(nonatomic, retain) SVInspectorViewController *selectedInspector;
+@property(nonatomic, copy, readonly) NSString *selectedPlugInsIdentifier;
 
 @end
