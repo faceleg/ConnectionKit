@@ -18,4 +18,9 @@
 
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
 
+
+#pragma mark Drop
+- (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo;
+
+
 @end
