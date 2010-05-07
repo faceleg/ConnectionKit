@@ -14,7 +14,7 @@
 #import "NSColor+Karelia.h"
 
 
-#define WebDragImageAlpha 0.5f // name is copied from WebKit, but we use 0.5 instead of 0.75 which I felt obscured destination too much
+#define WebDragImageAlpha 0.75f // name & value copied from WebKit
 
 
 @interface SVWebEditorView (DraggingPrivate)
