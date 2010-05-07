@@ -38,7 +38,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     NSMutableArray  *_textDOMControllers;
     
     // Drag & Drop
-    DOMHTMLDivElement   *_sidebarDiv;
     DOMElement          *_dragCaret;
     
     // Loading

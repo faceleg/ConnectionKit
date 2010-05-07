@@ -12,7 +12,10 @@
 
 @interface SVSidebarDOMController : SVDOMController
 {
-
+  @private
+    DOMElement  *_sidebarDiv;
 }
+
+@property(nonatomic, retain) DOMElement *sidebarDivElement;
 
 @end

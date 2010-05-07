@@ -24,6 +24,7 @@
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
 #import "SVSidebar.h"
+#import "SVSidebarDOMController.h"
 #import "SVSidebarPageletsController.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
@@ -298,10 +299,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     
-    // Locate the sidebar
-    _sidebarDiv = [[domDoc getElementById:@"sidebar"] retain];
-    
-    
     // Restore scroll point
     [[self webEditor] scrollToPoint:_visibleRect.origin];
     
@@ -509,7 +506,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     NSUInteger result = NSNotFound;
     SVWebEditorView *editor = [self webEditor];
-    NSArray *pageletContentItems = [[[self HTMLContext] sidebarDOMController] childWebEditorItems];
+    SVSidebarDOMController *sidebarController = [[self HTMLContext] sidebarDOMController];
+    NSArray *pageletContentItems = [sidebarController childWebEditorItems];
     
     
     // Ideally, we're making a drop *before* a pagelet
@@ -539,7 +537,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // If not, is it a drop *after* the last pagelet, or into an empty sidebar?
     if (result == NSNotFound)
     {
-        NSRect dropZone = [self rectOfDropZoneInDOMElement:_sidebarDiv
+        NSRect dropZone = [self rectOfDropZoneInDOMElement:[sidebarController sidebarDivElement]
                                                  belowNode:[[pageletContentItems lastObject] HTMLElement]
                                                  minHeight:25.0f];
         
@@ -875,10 +873,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if (result)
         {
             // Place the drag caret to match the drop index
-            NSArray *pageletControllers = [[[self HTMLContext] sidebarDOMController] childWebEditorItems];
+            SVSidebarDOMController *sidebarController = [[self HTMLContext] sidebarDOMController];
+            NSArray *pageletControllers = [sidebarController childWebEditorItems];
             if (dropIndex >= [pageletControllers count])
             {
-                DOMNode *node = [_sidebarDiv lastChild];
+                DOMNode *node = [[sidebarController sidebarDivElement] lastChild];
                 //DOMRange *range = [[node ownerDocument] createRange];
                 //[range setStartAfter:node];
                 [self moveDragCaretToAfterDOMNode:node];

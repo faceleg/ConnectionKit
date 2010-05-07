@@ -12,7 +12,22 @@
 
 @implementation SVSidebarDOMController
 
-//- (void)writeh
+- (void)dealloc;
+{
+    [_sidebarDiv release];
+    [super dealloc];
+}
+
+@synthesize sidebarDivElement = _sidebarDiv;
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    // Also seek out sidebar div
+    [self setSidebarDivElement:[document getElementById:@"sidebar"]];
+}
+
 @end
 
 
