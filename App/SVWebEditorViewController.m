@@ -798,6 +798,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Drag & Drop
 
+- (void)moveDragCaretToDOMRange:(DOMRange *)range;
+{
+    if (!_dragCaret)
+    {
+        _dragCaret = [[[self webEditor] HTMLDocument] createElement:@"div"];
+        [_dragCaret retain];
+        
+        DOMCSSStyleDeclaration *style = [_dragCaret style];
+        [style setWidth:@"100%"];
+        [style setHeight:@"100px"];
+    }
+    
+    [range insertNode:_dragCaret];
+}
+
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
 {
     NSDragOperation result = NSDragOperationNone;
@@ -813,8 +828,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if (result)
         {
             // Place the drag caret to match the drop index
-            NSArray *pageletContentItems = [[self HTMLContext] sidebarPageletDOMControllers];
-            if (dropIndex >= [pageletContentItems count])
+            NSArray *pageletControllers = [[self HTMLContext] sidebarPageletDOMControllers];
+            if (dropIndex >= [pageletControllers count])
             {
                 DOMNode *node = [_sidebarDiv lastChild];
                 DOMRange *range = [[node ownerDocument] createRange];
@@ -823,11 +838,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             }
             else
             {
-                SVWebEditorItem *aPageletItem = [pageletContentItems objectAtIndex:dropIndex];
+                SVWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
                 
                 DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
                 [range setStartBefore:[aPageletItem HTMLElement]];
-                [[self webEditor] moveDragCaretToDOMRange:range];
+                [self moveDragCaretToDOMRange:range];
             }
         }
     }
