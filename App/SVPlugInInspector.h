@@ -16,10 +16,9 @@
 {
   @private
     SVInspectorViewController   *_selectedInspector;
-    NSString                    *_plugInIdentifier;
+    NSMutableDictionary         *_plugInInspectors;
 }
 
 @property(nonatomic, retain) SVInspectorViewController *selectedInspector;
-@property(nonatomic, copy, readonly) NSString *selectedPlugInsIdentifier;
 
 @end

@@ -19,7 +19,6 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
 
 
 @interface SVPlugInInspector ()
-@property(nonatomic, copy, readwrite) NSString *selectedPlugInsIdentifier;
 @end
 
 
@@ -31,6 +30,8 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
 {
     self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    
+    _plugInInspectors = [[NSMutableDictionary alloc] init];
     
     [self addObserver:self
            forKeyPath:@"inspectedObjectsController.selectedObjects"
@@ -44,7 +45,7 @@ static NSString *sPlugInInspectorInspectedObjectsObservation = @"PlugInInspector
 {
     [self removeObserver:self forKeyPath:@"inspectedObjectsController.selectedObjects"];
     
-    [_plugInIdentifier release];
+    [_plugInInspectors release];
     
     [super dealloc];
 }
@@ -70,18 +71,17 @@ change context:(void *)context
         {
             identifier = nil;
         }
-        else if ([[self selectedPlugInsIdentifier] isEqual:identifier])
+        else if (identifier)
         {
-            inspector = [self selectedInspector];
-        }
-        else
-        {
-            Class <SVPlugIn> class = [[self inspectedObjectsController] valueForKeyPath:@"selection.plugIn.class"];
-            inspector = [class makeInspectorViewController];
+            inspector = [_plugInInspectors objectForKey:identifier];
             
-            // If re-selecting something of the same type, keep the Inspector we aready have
-            if ([[self selectedInspector] isKindOfClass:[inspector class]]) return;
-            
+            if (!inspector)
+            {
+                Class <SVPlugIn> class = [[self inspectedObjectsController] valueForKeyPath:@"selection.plugIn.class"];
+                inspector = [class makeInspectorViewController];
+                
+                [_plugInInspectors setObject:inspector forKey:identifier];
+            }
             
             // Give it the right content/selection
             NSArrayController *controller = [inspector inspectedObjectsController];
@@ -91,7 +91,6 @@ change context:(void *)context
         }
         
         [self setSelectedInspector:inspector];
-        [self setSelectedPlugInsIdentifier:identifier];
     }
     else
     {
@@ -125,8 +124,6 @@ change context:(void *)context
         // TODO: Log error
     }
 }
-
-@synthesize selectedPlugInsIdentifier = _plugInIdentifier;
 
 - (CGFloat)viewHeight
 {
