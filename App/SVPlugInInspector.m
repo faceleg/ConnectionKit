@@ -80,7 +80,7 @@ change context:(void *)context
                 Class <SVPlugIn> class = [[self inspectedObjectsController] valueForKeyPath:@"selection.plugIn.class"];
                 inspector = [class makeInspectorViewController];
                 
-                [_plugInInspectors setObject:inspector forKey:identifier];
+                if (inspector) [_plugInInspectors setObject:inspector forKey:identifier];
             }
             
             // Give it the right content/selection
