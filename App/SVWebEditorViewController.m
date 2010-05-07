@@ -831,32 +831,33 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Drag & Drop
 
-- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
-{
-    if (!_dragCaret)
-    {
-        _dragCaret = [[[self webEditor] HTMLDocument] createElement:@"div"];
-        [_dragCaret retain];
-        
-        DOMCSSStyleDeclaration *style = [_dragCaret style];
-        [style setWidth:@"100%"];
-        [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
-    }
-    
-    [[node parentNode] insertBefore:_dragCaret refChild:node];
-    [[_dragCaret style] setHeight:@"75px"];
-}
-
 - (void)removeDragCaret;
 {
-    if (_dragCaret)
-    {
-        // Schedule removal
-        [[_dragCaret style] setHeight:@"0px"];
-        [_dragCaret performSelector:@selector(ks_removeFromParentNode) withObject:nil afterDelay:0.25];
-        
-        [_dragCaret release]; _dragCaret = nil;
-    }
+    // Schedule removal
+    [[_dragCaret style] setHeight:@"0px"];
+    [_dragCaret performSelector:@selector(ks_removeFromParentNode) withObject:nil afterDelay:0.25];
+    
+    [_dragCaret release]; _dragCaret = nil;
+}
+
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+{
+    // Do we actually need do anything?
+    if ([_dragCaret nextSibling] == node) return;
+    
+    
+    [self removeDragCaret];
+    
+    OBASSERT(!_dragCaret);
+    _dragCaret = [[[self webEditor] HTMLDocument] createElement:@"div"];
+    [_dragCaret retain];
+    
+    DOMCSSStyleDeclaration *style = [_dragCaret style];
+    [style setWidth:@"100%"];
+    [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
+    
+    [[node parentNode] insertBefore:_dragCaret refChild:node];
+    [style setHeight:@"75px"];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
