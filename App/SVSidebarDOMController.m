@@ -57,6 +57,7 @@
     NSUInteger result = NSNotFound;
     NSView *view = [[self HTMLElement] documentView];
     NSArray *pageletContentItems = [self childWebEditorItems];
+    NSPoint location = [view convertPointFromBase:[dragInfo draggingLocation]];
     
     
     // Ideally, we're making a drop *before* a pagelet
@@ -73,7 +74,7 @@
         
         
         // Is it a match?
-        if ([view mouse:[view convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
+        if ([view mouse:location inRect:dropZone])
         {
             result = i;
             break;
@@ -90,7 +91,7 @@
                                                  belowNode:[[pageletContentItems lastObject] HTMLElement]
                                                  minHeight:25.0f];
         
-        if ([view mouse:[view convertPointFromBase:[dragInfo draggingLocation]] inRect:dropZone])
+        if ([view mouse:location inRect:dropZone])
         {
             result = [pageletContentItems count];
         }
@@ -183,6 +184,40 @@
     
     
     return result;
+}
+
+#pragma mark Drag Caret
+
+- (void)removeDragCaret;
+{
+    // Schedule removal
+    [[_dragCaret style] setHeight:@"0px"];
+    
+    [_dragCaret performSelector:@selector(ks_removeFromParentNode)
+                     withObject:nil
+                     afterDelay:0.25];
+    
+    [_dragCaret release]; _dragCaret = nil;
+}
+
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
+{
+    // Do we actually need do anything?
+    if (_dragCaret == node || [_dragCaret previousSibling] == node) return;
+    
+    
+    [self removeDragCaret];
+    
+    OBASSERT(!_dragCaret);
+    _dragCaret = [[[self webEditor] HTMLDocument] createElement:@"div"];
+    [_dragCaret retain];
+    
+    DOMCSSStyleDeclaration *style = [_dragCaret style];
+    [style setWidth:@"100%"];
+    [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
+    
+    [[node parentNode] insertBefore:_dragCaret refChild:[node nextSibling]];
+    [style setHeight:@"75px"];
 }
 
 @end

@@ -37,9 +37,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     // Controllers
     NSMutableArray  *_textDOMControllers;
     
-    // Drag & Drop
-    DOMElement          *_dragCaret;
-    
     // Loading
     BOOL                    _needsUpdate, _willUpdate, _autoupdate;
     BOOL                    _isUpdating;

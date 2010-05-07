@@ -14,6 +14,9 @@
 {
   @private
     DOMElement  *_sidebarDiv;
+    
+    // Drag & Drop
+    DOMElement          *_dragCaret;
 }
 
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
@@ -21,6 +24,9 @@
 
 #pragma mark Drop
 - (NSUInteger)indexOfDrop:(id <NSDraggingInfo>)dragInfo;
+
+- (void)removeDragCaret;
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
 
 
 @end
