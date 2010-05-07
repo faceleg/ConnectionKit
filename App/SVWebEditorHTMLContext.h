@@ -40,6 +40,11 @@
 @property(nonatomic, retain) NSArrayController *sidebarPageletsController;
 
 
+#pragma mark Low-level controllers
+// Ignored by regular contexts. Call one of the -didEndWriting… methods after
+- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+
+
 @end
 
 
@@ -53,13 +58,7 @@
 - (void)didEndWritingHTMLTextBlock;
 
 
-#pragma mark Low-level controllers
-// Ignored by regular contexts. Call one of the -didEndWriting… methods after
-- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
-
-
 #pragma mark Sidebar
-
 // The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
 - (NSArrayController *)cachedSidebarPageletsController;
 
