@@ -840,10 +840,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_dragCaret release]; _dragCaret = nil;
 }
 
-- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToAfterDOMNode:(DOMNode *)node;
 {
     // Do we actually need do anything?
-    if ([_dragCaret nextSibling] == node) return;
+    if (_dragCaret == node || [_dragCaret previousSibling] == node) return;
     
     
     [self removeDragCaret];
@@ -856,7 +856,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [style setWidth:@"100%"];
     [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
     
-    [[node parentNode] insertBefore:_dragCaret refChild:node];
+    [[node parentNode] insertBefore:_dragCaret refChild:[node nextSibling]];
     [style setHeight:@"75px"];
 }
 
@@ -879,9 +879,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             if (dropIndex >= [pageletControllers count])
             {
                 DOMNode *node = [_sidebarDiv lastChild];
-                DOMRange *range = [[node ownerDocument] createRange];
-                [range setStartAfter:node];
-                [[self webEditor] moveDragCaretToDOMRange:range];
+                //DOMRange *range = [[node ownerDocument] createRange];
+                //[range setStartAfter:node];
+                [self moveDragCaretToAfterDOMNode:node];
             }
             else
             {
@@ -889,7 +889,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
                 
                 //DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
                 //[range setStartBefore:[aPageletItem HTMLElement]];
-                [self moveDragCaretToBeforeDOMNode:[aPageletItem HTMLElement]];
+                [self moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
             }
         }
     }
