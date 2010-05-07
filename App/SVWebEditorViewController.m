@@ -840,17 +840,21 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         DOMCSSStyleDeclaration *style = [_dragCaret style];
         [style setWidth:@"100%"];
-        [style setHeight:@"75px"];
+        [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
     }
     
     [[node parentNode] insertBefore:_dragCaret refChild:node];
+    [[_dragCaret style] setHeight:@"75px"];
 }
 
 - (void)removeDragCaret;
 {
     if (_dragCaret)
     {
-        [[_dragCaret parentNode] removeChild:_dragCaret];
+        // Schedule removal
+        [[_dragCaret style] setHeight:@"0px"];
+        [_dragCaret performSelector:@selector(ks_removeFromParentNode) withObject:nil afterDelay:0.25];
+        
         [_dragCaret release]; _dragCaret = nil;
     }
 }
