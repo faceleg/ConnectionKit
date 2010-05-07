@@ -11,7 +11,7 @@
 //  
 //      -   When editing, each content object must be uniquely identifiable in the WebView so that appropriate controllers can be hooked up. First, the content object generating an HTML element with an id specified. Then, each content object is asked to locate itself in the DOM by the controller.
 //
-//      -   The Inspector handles a wide variety of content. Not all Inspectable properties are present on all objects. By default, Cocoa handles this by throwing NSUndefinedKeyException, which makes debuggin a PITA. SVContentObject is friendlier and returns NSNotApplicableMarker.
+//      -   The Inspector handles a wide variety of content. Not all Inspectable properties are present on all objects. By default, Cocoa handles this by throwing NSUndefinedKeyException, which makes debugging a PITA. SVContentObject is friendlier and returns NSNotApplicableMarker.
 
 
 #import "KSExtensibleManagedObject.h"

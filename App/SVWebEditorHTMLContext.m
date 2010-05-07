@@ -60,7 +60,7 @@
     _currentItem = [_currentItem parentWebEditorItem];
 }
 
-- (void)willBeginWritingGraphic:(SVGraphic *)object
+- (void)willBeginWritingGraphic:(SVContentObject *)object
 {
     [super willBeginWritingGraphic:object];
     

@@ -23,7 +23,7 @@ typedef enum {
 #pragma mark -
 
 
-@class KTPage, KTPage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
+@class KTPage, KTPage, SVContentObject, SVHTMLTextBlock, SVLink, SVMediaRecord;
 @protocol SVMedia;
 
 
@@ -138,7 +138,7 @@ typedef enum {
 
 #pragma mark Content
 
-- (void)willBeginWritingGraphic:(SVGraphic *)object;
+- (void)willBeginWritingGraphic:(SVContentObject *)object;
 - (void)didEndWritingGraphic;
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -willWriteContentObject:
 

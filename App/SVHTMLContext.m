@@ -360,7 +360,7 @@
 
 #pragma mark Content
 
-- (void)willBeginWritingGraphic:(SVGraphic *)object;
+- (void)willBeginWritingGraphic:(SVContentObject *)object;
 {
     _numberOfGraphics++;
 }

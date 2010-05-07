@@ -115,20 +115,7 @@ Licensing for this website's design:     <[[=&master.designDirectoryURL]]License
 				</div> <!-- page-top -->
 				<div class="clear"></div>
 				<div id="page-content" class="[[if showNavigationArrows]][[if parentPage.index.navigationArrowsStyle==1]]has-photo-navigation[[else2]]has-text-navigation[[endif2]][[else]]no-navigation[[endif]]">
-[[if showSidebar]]
-					<div id="sidebar-container">
-[[if sidebar.pagelets|editing]]
-						<div id="sidebar">
-					  		<div id="sidebar-top"></div>
-							<div id="sidebar-content">
-								<h3 class="hidden">[[`skipSidebarsTitleHTML]]<a rel="nofollow" href="#main">[[`skipSidebarsLinkHTML]]</a></h3>
-								[[=sidebar.writePageletsHTML]]
-							</div> <!-- sidebar-content -->
-							<div id="sidebar-bottom"></div>	
-						</div> <!-- sidebar -->
-[[endif2]]
-					</div> <!-- sidebar-container -->
-[[endif]]
+					[[if showSidebar]][[=sidebar.writeHTML]][[endif]]
 					<div id="main">
 						<div id="main-top"></div>
                             [[=writeMainContent]]

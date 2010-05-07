@@ -6,12 +6,13 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <CoreData/CoreData.h>
+#import "SVContentObject.h"
+
 
 @class KTPage;
 @class SVGraphic, SVHTMLContext;
 
-@interface SVSidebar : NSManagedObject  
+@interface SVSidebar : SVContentObject  
 
 @property (nonatomic, retain) KTPage * page;
 

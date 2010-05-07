@@ -12,6 +12,7 @@
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVSidebarPageletsController.h"
+#import "SVTemplate.h"
 #import "SVWebEditorHTMLContext.h"
 
 #import "NSSortDescriptor+Karelia.h"
@@ -31,6 +32,22 @@
 }
 
 #pragma mark HTML
+
+- (void)writeHTML:(SVHTMLContext *)context;
+{
+    [context willBeginWritingGraphic:self];
+    
+    SVTemplate *template = [SVTemplate templateNamed:@"SidebarTemplate.html"];
+    
+    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc]
+                                    initWithTemplate:[template templateString]
+                                    component:self];
+    
+    [parser parseIntoHTMLContext:context];
+    [parser release];
+    
+    [context didEndWritingGraphic];
+}
 
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
@@ -53,5 +70,7 @@
 {
     [self writePageletsHTML:[SVHTMLContext currentContext]];
 }
+
+- (NSString *)editingElementID; { return @"sidebar-container"; }
 
 @end
