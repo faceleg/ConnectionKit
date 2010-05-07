@@ -509,7 +509,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     NSUInteger result = NSNotFound;
     SVWebEditorView *editor = [self webEditor];
-    NSArray *pageletContentItems = [[self HTMLContext] sidebarPageletDOMControllers];
+    NSArray *pageletContentItems = [[[self HTMLContext] sidebarDOMController] childWebEditorItems];
     
     
     // Ideally, we're making a drop *before* a pagelet
@@ -875,7 +875,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if (result)
         {
             // Place the drag caret to match the drop index
-            NSArray *pageletControllers = [[self HTMLContext] sidebarPageletDOMControllers];
+            NSArray *pageletControllers = [[[self HTMLContext] sidebarDOMController] childWebEditorItems];
             if (dropIndex >= [pageletControllers count])
             {
                 DOMNode *node = [_sidebarDiv lastChild];
@@ -1079,7 +1079,7 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
     if ([dragInfo draggingSource] == sender &&
         [dragInfo draggingSourceOperationMask] & NSDragOperationMove)
     {
-        NSArray *sidebarPageletControllers = [[self HTMLContext] sidebarPageletDOMControllers];
+        NSArray *sidebarPageletControllers = [[[self HTMLContext] sidebarDOMController] childWebEditorItems];
         for (SVDOMController *aPageletItem in [sender selectedItems])
         {
             if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])

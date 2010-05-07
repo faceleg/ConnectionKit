@@ -9,7 +9,9 @@
 #import "SVHTMLContext.h"
 
 
-@class SVWebEditorItem, SVDOMController, KSObjectKeyPathPair, SVMediaRecord;
+@class SVWebEditorItem, SVDOMController, SVSidebarDOMController;
+@class SVContentObject, SVSidebar;
+@class KSObjectKeyPathPair, SVMediaRecord;
 
 
 @interface SVWebEditorHTMLContext : SVHTMLContext
@@ -21,8 +23,8 @@
     
     NSMutableSet    *_media;
     
-    NSMutableArray      *_sidebarPageletDOMControllers;
-    NSArrayController   *_sidebarPageletsController;
+    SVSidebarDOMController  *_sidebarDOMController;
+    NSArrayController       *_sidebarPageletsController;
 }
 
 - (NSArray *)webEditorItems;
@@ -36,12 +38,13 @@
 
 
 #pragma mark Sidebar
-@property(nonatomic, copy, readonly) NSArray *sidebarPageletDOMControllers;
+@property(nonatomic, retain, readonly) SVSidebarDOMController *sidebarDOMController;
 @property(nonatomic, retain) NSArrayController *sidebarPageletsController;
 
 
 #pragma mark Low-level controllers
 // Ignored by regular contexts. Call one of the -didEndWriting… methods after
+- (void)willBeginWritingContentObject:(SVContentObject *)object;
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
 
 
@@ -59,6 +62,7 @@
 
 
 #pragma mark Sidebar
+- (void)willBeginWritingSidebar:(SVSidebar *)sidebar; // call -didEndWritingGraphic after
 // The context may provide its own controller for sidebar pagelets (pre-sorted etc.) If so, please use it.
 - (NSArrayController *)cachedSidebarPageletsController;
 

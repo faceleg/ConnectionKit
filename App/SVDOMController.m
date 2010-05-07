@@ -8,6 +8,7 @@
 
 #import "SVDOMController.h"
 
+#import "SVSidebarDOMController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorViewController.h"
 
@@ -141,7 +142,7 @@
 {
     NSDragOperation result = [super draggingSourceOperationMaskForLocal:isLocal];
     
-    if (isLocal && [[[self HTMLContext] sidebarPageletDOMControllers] containsObject:self])
+    if (isLocal && [self parentWebEditorItem] == [[self HTMLContext] sidebarDOMController])
     {
         result = result | NSDragOperationMove;
     }

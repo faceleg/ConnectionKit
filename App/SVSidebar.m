@@ -35,7 +35,7 @@
 
 - (void)writeHTML:(SVHTMLContext *)context;
 {
-    [context willBeginWritingGraphic:self];
+    [context willBeginWritingSidebar:self];
     
     SVTemplate *template = [SVTemplate templateNamed:@"SidebarTemplate.html"];
     

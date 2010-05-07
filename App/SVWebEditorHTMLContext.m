@@ -10,13 +10,23 @@
 
 #import "SVRichTextDOMController.h"
 #import "SVCalloutDOMController.h"
+#import "SVGraphic.h"
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
+#import "SVSidebar.h"
 #import "SVTemplateParser.h"
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 
 #import "KSObjectKeyPathPair.h"
+
+
+@interface SVWebEditorHTMLContext ()
+@property(nonatomic, retain, readwrite) SVSidebarDOMController *sidebarDOMController;
+@end
+
+
+#pragma mark -
 
 
 @implementation SVWebEditorHTMLContext
@@ -28,7 +38,6 @@
     _items = [[NSMutableArray alloc] init];
     _objectKeyPathPairs = [[NSMutableSet alloc] init];
     _media = [[NSMutableSet alloc] init];
-    _sidebarPageletDOMControllers = [[NSMutableArray alloc] init];
     
     return self;
 }
@@ -38,7 +47,7 @@
     [_items release];
     [_objectKeyPathPairs release];
     [_media release];
-    [_sidebarPageletDOMControllers release];
+    [_sidebarDOMController release];
     [_sidebarPageletsController release];
     
     [super dealloc];
@@ -60,25 +69,10 @@
     _currentItem = [_currentItem parentWebEditorItem];
 }
 
-- (void)willBeginWritingGraphic:(SVContentObject *)object
+- (void)willBeginWritingGraphic:(SVGraphic *)object
 {
     [super willBeginWritingGraphic:object];
-    
-    // Create controller
-    SVDOMController *controller = [[[object DOMControllerClass] alloc] init];
-    [controller setRepresentedObject:object];
-    
-    // Store controller
-    [self willBeginWritingObjectWithDOMController:controller];
-    
-    if ([[[self cachedSidebarPageletsController] arrangedObjects] containsObject:object])
-    {
-        [_sidebarPageletDOMControllers addObject:controller];
-    }
-    
-    
-    // Finish up
-    [controller release];
+    [self willBeginWritingContentObject:object];
 }
 
 - (void)didEndWritingGraphic;
@@ -157,6 +151,31 @@
     [self finishWithCurrentItem];
 }
 
+- (void)willBeginWritingContentObject:(SVContentObject *)object;
+{
+    // Create controller
+    SVDOMController *controller = [[[object DOMControllerClass] alloc] init];
+    [controller setRepresentedObject:object];
+    
+    // Store controller
+    [self willBeginWritingObjectWithDOMController:controller];
+    
+    // Finish up
+    [controller release];
+}
+
+- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+{
+    [_items addObject:controller];
+    
+    [_currentItem addChildWebEditorItem:controller];
+    _currentItem = controller;
+    
+    [controller setHTMLContext:self];
+}
+
+#pragma mark Text Blocks
+
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
 {
     [super willBeginWritingHTMLTextBlock:textBlock];
@@ -170,16 +189,6 @@
 {
     [self finishWithCurrentItem];
     [super didEndWritingHTMLTextBlock];
-}
-
-- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
-{
-    [_items addObject:controller];
-    
-    [_currentItem addChildWebEditorItem:controller];
-    _currentItem = controller;
-    
-    [controller setHTMLContext:self];
 }
 
 #pragma mark Dependencies
@@ -221,10 +230,15 @@
 
 #pragma mark Sidebar
 
-- (NSArray *)sidebarPageletDOMControllers
+- (void)willBeginWritingSidebar:(SVSidebar *)sidebar;
 {
-    return [[_sidebarPageletDOMControllers copy] autorelease];
+    [super willBeginWritingSidebar:sidebar];
+    
+    [self willBeginWritingContentObject:sidebar];
+    [self setSidebarDOMController:(id)_currentItem];
 }
+
+@synthesize sidebarDOMController = _sidebarDOMController;
 
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 - (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
@@ -237,11 +251,10 @@
 
 @implementation SVHTMLContext (SVEditing)
 
-- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock; { }
+- (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)sidebar; { }
 - (void)didEndWritingHTMLTextBlock; { }
 
-- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller; { }
-
+- (void)willBeginWritingSidebar:(SVSidebar *)sidebar; { }
 - (NSArrayController *)cachedSidebarPageletsController; { return nil; }
 
 @end
