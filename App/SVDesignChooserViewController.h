@@ -17,18 +17,18 @@
 
 
 @interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
-{    
-    NSArray                     *_designs;
+{  
+	IBOutlet NSArrayController	*oDesignsArrayController;
 	NSTrackingRectTag			_trackingRect;
 	BOOL						_wasAcceptingMouseEvents;
-	
-	KTDesign					*_selectedDesign;
+
+	NSArray *_allDesigns;
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
  
-@property(retain) NSArray *designs;
-@property (retain) KTDesign *selectedDesign;
+@property(copy) NSArray *allDesigns;
+
 @end
 
 //@interface SVDesignChooserViewBox : NSBox

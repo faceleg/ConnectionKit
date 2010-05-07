@@ -33,17 +33,16 @@
 - (KTDesign *)design
 {
     [self window];    // make sure nib is loaded
-    return oViewController.selectedDesign;
+    return [[oDesignsArrayController selectedObjects] firstObjectKS];
 }
 - (void)setDesign:(KTDesign *)design
 {
     [self window];    // make sure nib is loaded
-    oViewController.selectedDesign = design;
+    [oDesignsArrayController setSelectedObjects:[NSArray arrayWithObject:design]];
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
 @synthesize targetWhenChosen = _targetWhenChosen;
-@synthesize allDesigns = _allDesigns;
 @synthesize genre = _genre;
 @synthesize color = _color;
 @synthesize width = _width;
@@ -54,18 +53,18 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", @"oViewController.designs", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", nil];
 }
 
 + (NSSet *)keyPathsForValuesAffectingMatchColor
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", @"oViewController.designs", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", nil];
 }
 
 - (NSColor *)matchColor;
 {
-	if (![oViewController.designs count]) return [NSColor redColor];	// No matches. Make it obvious so user doesn't panic
+	if (![[oDesignsArrayController arrangedObjects] count]) return [NSColor redColor];	// No matches. Make it obvious so user doesn't panic
 	if (self.genre || self.color || self.width)
 	{
 		return [NSColor darkGrayColor];	// some filter, but there are matches. Dark gray since it's interesting.
@@ -98,7 +97,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 				[matchesString appendFormat:NSLocalizedString(@"“%@” and ", @"a search string in quotes followed by 'and' (with a space afterwards)"), match];
 			}
 		}
-		if ([oViewController.designs count])
+		if ([[oDesignsArrayController arrangedObjects] count])
 		{
 			result = [NSString stringWithFormat:NSLocalizedString(@"Showing matches for %@", @"Warning that string/strings yielded no matching designs"), matchesString];
 		}
@@ -119,8 +118,6 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 
 - (void)awakeFromNib
 {
-	self.allDesigns = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-	oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:self.allDesigns];
 }
 
 - (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
@@ -149,7 +146,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     // get the selected design
-	KTDesign *selectedDesign = [oViewController selectedDesign];
+	KTDesign *selectedDesign = [oDesignsArrayController selectedObjects];
 	if (selectedDesign)
 	{
 		if (self.targetWhenChosen && [self.targetWhenChosen respondsToSelector:self.selectorWhenChosen])
@@ -434,16 +431,16 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 				
 		// Get all designs; we'll be filtering...
 		
-		NSArray *filteredDesigns = [self.allDesigns filteredArrayUsingPredicate:
+		NSArray *filteredDesigns = [oViewController.allDesigns filteredArrayUsingPredicate:
 								   [NSCompoundPredicate andPredicateWithSubpredicates:preds]
 								   ];
 
-		oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:filteredDesigns];
+		[oDesignsArrayController setContent:[KTDesign consolidateDesignsIntoFamilies:filteredDesigns]];
 
 	}
 	else	// no filter -- all
 	{
-		oViewController.designs = [KTDesign consolidateDesignsIntoFamilies:self.allDesigns];
+		[oDesignsArrayController setContent:[KTDesign consolidateDesignsIntoFamilies:oViewController.allDesigns]];
 	}
 }
 

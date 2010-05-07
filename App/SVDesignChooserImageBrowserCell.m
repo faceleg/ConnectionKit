@@ -10,7 +10,6 @@
 
 @interface SVDesignChooserImageBrowserCell ()
 
-- (NSRect) imageContainerFrame;
 
 @end
 

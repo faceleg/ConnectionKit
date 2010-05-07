@@ -15,8 +15,13 @@
 
 @implementation SVDesignChooserViewController
 
+@synthesize allDesigns = _allDesigns;
+
 - (void)awakeFromNib
 {	
+	self.allDesigns = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
+	[oDesignsArrayController setContent:[KTDesign consolidateDesignsIntoFamilies:self.allDesigns]];
+
 	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
 	OBASSERT([view isKindOfClass:[IKImageBrowserView class]]);
 
@@ -26,6 +31,7 @@
 	
 	[view setDataSource:self];
 	[view setDelegate:self];
+	[view reloadData];
 		
 	NSMutableDictionary *attributes;
 	NSMutableParagraphStyle *paraStyle;
@@ -87,7 +93,7 @@
 	if (!NSPointInRect(localPoint, [theView bounds])) return;
 	
 	int index = [theView indexOfItemAtPoint:localPoint];
-	if (NSNotFound != index)
+	if (NSNotFound != index && index < [[oDesignsArrayController arrangedObjects] count])
 	{
 		// NSLog(@"Mouse: %@ -- index %d", NSStringFromPoint(localPoint), index);
 
@@ -97,11 +103,11 @@
 		if (howFarX < 0.0) howFarX = 0.0;
 		if (howFarX > 1.0) howFarX = 1.0;
 		
-		if ([[self.designs objectAtIndex:index] respondsToSelector:@selector(scrub:)])
+		if ([[[oDesignsArrayController arrangedObjects] objectAtIndex:index] respondsToSelector:@selector(scrub:)])
 		{
 			[theView setAnimates:NO];		// Not sure why ... this was in Pieter Omvlee's presentation http://pieteromvlee.net/slides/IKImageBrowserView.pdf
 			
-			KTDesignFamily *family = [self.designs objectAtIndex:index];
+			KTDesignFamily *family = [[oDesignsArrayController arrangedObjects] objectAtIndex:index];
 			[family scrub:howFarX];
 			if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])
 			{
@@ -131,6 +137,7 @@
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
 	DJW((@"%s",__FUNCTION__));
+	[oDesignsArrayController setSelectionIndexes:[aBrowser selectionIndexes]];
 	
 	// Re-add a tracking rect... Will this help?
 	_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
@@ -157,12 +164,12 @@
 
 - (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
-	return [self.designs count];
+	return [[oDesignsArrayController arrangedObjects] count];
 }
 
 - (id /*IKImageBrowserItem*/) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index;
 {
-	return [self.designs objectAtIndex:index];
+	return [ [oDesignsArrayController arrangedObjects] objectAtIndex:index];
 }
 
 
@@ -201,14 +208,16 @@
 - (void) setSelectedDesign:(KTDesign *)aDesign
 {
 	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
-	NSUInteger index = [self.designs indexOfObject:aDesign];
+	NSUInteger index = [ [oDesignsArrayController arrangedObjects] indexOfObject:aDesign];
 	if (NSNotFound != index)
 	{
+		[oDesignsArrayController setSelectionIndex:index];
 		[view setSelectionIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 		[view scrollIndexToVisible:index];
 	}
 	else	// no selection
 	{
+		[oDesignsArrayController setSelectionIndexes:[NSIndexSet indexSet]];
 		[view setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 	}
 }
@@ -220,7 +229,7 @@
 	KTDesign *result = nil;
 	if (NSNotFound != firstIndex)
 	{
-		result = [self.designs objectAtIndex:firstIndex];
+		result = [ [oDesignsArrayController arrangedObjects] objectAtIndex:firstIndex];
 	}
 	if ([result isKindOfClass:[KTDesignFamily class]])
 	{
@@ -244,7 +253,6 @@
 }
 
 
-@synthesize designs = _designs;
 @end
 
 
