@@ -11,11 +11,11 @@
 #import "SVApplicationController.h"
 #import "SVAttributedHTML.h"
 #import "SVPlugInGraphic.h"
-#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
+#import "SVGraphicFactoryManager.h"
 #import "SVRichTextDOMController.h"
 #import "SVHTMLContext.h"
 #import "SVLink.h"
@@ -829,80 +829,6 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
         }
     }
     
-    
-    return result;
-}
-
-- (BOOL)webEditor:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
-{
-    OBPRECONDITION(sender == [self webEditor]);
-    
-    
-    NSUInteger dropIndex = [[[self HTMLContext] sidebarDOMController] indexOfDrop:dragInfo];
-    if (dropIndex == NSNotFound)
-    {
-        NSBeep();
-        return NO;
-    }
-    
-    
-    BOOL result = NO;
-    
-    
-    //  When dragging within the sidebar, want to move the selected pagelets
-    if ([dragInfo draggingSource] == sender &&
-        [dragInfo draggingSourceOperationMask] & NSDragOperationMove)
-    {
-        NSArray *sidebarPageletControllers = [[[self HTMLContext] sidebarDOMController] childWebEditorItems];
-        for (SVDOMController *aPageletItem in [sender selectedItems])
-        {
-            if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
-            {
-                result = YES;
-                [sender forgetDraggedItems];
-                
-                SVGraphic *pagelet = [aPageletItem representedObject];
-                [[_selectableObjectsController sidebarPageletsController] moveObject:pagelet
-                                                                             toIndex:dropIndex];
-            }
-        }
-    }
-    
-    
-    if (!result)
-    {
-        // Fallback to inserting a new pagelet from the pasteboard
-        NSManagedObjectContext *moc = [[self page] managedObjectContext];
-        NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
-        
-        NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
-                                      insertIntoManagedObjectContext:moc];
-        
-
-        // Fallback to generic pasteboard support
-        if ([pagelets count] < 1)
-        {
-            pagelets = [KTElementPlugInWrapper insertNewGraphicsWithPasteboard:pasteboard
-                                                        inManagedObjectContext:moc];
-        }
-        
-        for (SVGraphic *aPagelet in pagelets)
-        {
-            [[_selectableObjectsController sidebarPageletsController] insertObject:aPagelet
-                                                             atArrangedObjectIndex:dropIndex];
-            
-            [aPagelet didAddToPage:[self page]];
-            result = YES;
-        }
-        
-        
-        // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
-        if ([dragInfo draggingSourceOperationMask] & NSDragOperationMove)
-        {
-            [sender removeDraggedItems];
-        }
-        [sender didChangeText];
-    }
     
     return result;
 }

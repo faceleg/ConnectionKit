@@ -228,8 +228,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (NSObject *)webEditor:(SVWebEditorView *)sender
 dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 
-- (BOOL)webEditor:(SVWebEditorView *)sender acceptDrop:(id <NSDraggingInfo>)dragInfo;
-
 /*!
  @method webEditorView:writeItems:toPasteboard:
  @param sender

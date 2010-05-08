@@ -106,7 +106,10 @@
 - (BOOL)acceptDrop:(id <NSDraggingInfo>)sender;
 {
     //  Just make the datasource do the work
-    return [[self dataSource] webEditor:self acceptDrop:sender];
+    NSObject *draggingDestination = [[self dataSource] webEditor:self
+                                  dragDestinationForDraggingInfo:sender];
+    
+    return [draggingDestination performDragOperation:sender];
 }
 
 - (void)moveDragHighlightToDOMNode:(DOMNode *)node

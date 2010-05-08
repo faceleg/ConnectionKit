@@ -8,9 +8,15 @@
 
 #import "SVSidebarDOMController.h"
 #import "SVSidebar.h"
+#import "SVSidebarPageletsController.h"
 
+#import "SVAttributedHTML.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
+#import "KTPage.h"
+#import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorView.h"
 
+#import "NSArray+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
@@ -208,7 +214,20 @@
     return result;
 }
 
-#pragma mark Drag & Drop
+- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+{
+    SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
+    
+    // No-one else wants it? Maybe we do!
+    if (!result)
+    {
+        if ([self indexOfDrop:info] != NSNotFound) result = self;
+    }
+    
+    return result;
+}
+
+#pragma mark NSDraggingDestination
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
 {
@@ -256,14 +275,74 @@
     return result;
 }
 
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
 {
-    SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
+    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+    if (dropIndex == NSNotFound)
+    {
+        NSBeep();
+        return NO;
+    }
     
-    // No-one else wants it? Maybe we do!
+    
+    BOOL result = NO;
+    
+    SVWebEditorView *webEditor = [self webEditor];
+    SVSidebarPageletsController *pageletsController = [[self webEditorViewController] valueForKeyPath:@"_selectableObjectsController.sidebarPageletsController"];
+    
+    
+    //  When dragging within the sidebar, want to move the selected pagelets
+    if ([dragInfo draggingSource] == webEditor &&
+        [dragInfo draggingSourceOperationMask] & NSDragOperationMove)
+    {
+        NSArray *sidebarPageletControllers = [self childWebEditorItems];
+        for (SVDOMController *aPageletItem in [webEditor selectedItems])
+        {
+            if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
+            {
+                result = YES;
+                [webEditor forgetDraggedItems];
+                
+                SVGraphic *pagelet = [aPageletItem representedObject];
+                [pageletsController
+                 moveObject:pagelet toIndex:dropIndex];
+            }
+        }
+    }
+    
+    
     if (!result)
     {
-        if ([self indexOfDrop:info] != NSNotFound) result = self;
+        // Fallback to inserting a new pagelet from the pasteboard
+        NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
+        NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
+        
+        NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+                                      insertIntoManagedObjectContext:moc];
+        
+        
+        // Fallback to generic pasteboard support
+        if ([pagelets count] < 1)
+        {
+            pagelets = [KTElementPlugInWrapper insertNewGraphicsWithPasteboard:pasteboard
+                                                        inManagedObjectContext:moc];
+        }
+        
+        for (SVGraphic *aPagelet in pagelets)
+        {
+            [pageletsController insertObject:aPagelet atArrangedObjectIndex:dropIndex];
+            
+            [aPagelet didAddToPage:[[self HTMLContext] currentPage]];
+            result = YES;
+        }
+        
+        
+        // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
+        if ([dragInfo draggingSourceOperationMask] & NSDragOperationMove)
+        {
+            [webEditor removeDraggedItems];
+        }
+        [webEditor didChangeText];
     }
     
     return result;
