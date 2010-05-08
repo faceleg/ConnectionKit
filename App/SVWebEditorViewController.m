@@ -701,17 +701,19 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             if (dropIndex >= [pageletControllers count])
             {
                 DOMNode *node = [[sidebarController sidebarDivElement] lastChild];
-                //DOMRange *range = [[node ownerDocument] createRange];
-                //[range setStartAfter:node];
-                [sidebarController moveDragCaretToAfterDOMNode:node];
+                DOMRange *range = [[node ownerDocument] createRange];
+                [range setStartAfter:node];
+                [[self webEditor] moveDragCaretToDOMRange:range];
+                //[sidebarController moveDragCaretToAfterDOMNode:node];
             }
             else
             {
                 SVWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
                 
-                //DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
-                //[range setStartBefore:[aPageletItem HTMLElement]];
-                [sidebarController moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
+                DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
+                [range setStartBefore:[aPageletItem HTMLElement]];
+                [[self webEditor] moveDragCaretToDOMRange:range];
+                //[sidebarController moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
             }
         }
     }
