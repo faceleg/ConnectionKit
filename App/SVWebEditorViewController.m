@@ -679,55 +679,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-#pragma mark Drag & Drop
-
-- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
-{
-    NSDragOperation result = NSDragOperationNone;
-    
-    SVSidebarDOMController *sidebarController = [[self HTMLContext] sidebarDOMController];
-    NSUInteger dropIndex = [sidebarController indexOfDrop:dragInfo];
-    if (dropIndex != NSNotFound)
-    {
-        NSDragOperation mask = [dragInfo draggingSourceOperationMask];
-        result = mask & NSDragOperationMove;
-        if (!result) result = mask & NSDragOperationCopy;
-        
-        
-        if (result)
-        {
-            // Place the drag caret to match the drop index
-            NSArray *pageletControllers = [sidebarController childWebEditorItems];
-            if (dropIndex >= [pageletControllers count])
-            {
-                DOMNode *node = [[sidebarController sidebarDivElement] lastChild];
-                DOMRange *range = [[node ownerDocument] createRange];
-                [range setStartAfter:node];
-                [[self webEditor] moveDragCaretToDOMRange:range];
-                //[sidebarController moveDragCaretToAfterDOMNode:node];
-            }
-            else
-            {
-                SVWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
-                
-                DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
-                [range setStartBefore:[aPageletItem HTMLElement]];
-                [[self webEditor] moveDragCaretToDOMRange:range];
-                //[sidebarController moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
-            }
-        }
-    }
-    
-    
-    // Finish up
-    if (!result)
-    {
-        [sidebarController removeDragCaret];
-    }
-    
-    return result;
-}
-
 #pragma mark Delegate
 
 @synthesize delegate = _delegate;

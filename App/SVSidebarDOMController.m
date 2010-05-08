@@ -208,6 +208,67 @@
     return result;
 }
 
+#pragma mark Drag & Drop
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
+{
+    NSDragOperation result = NSDragOperationNone;
+    
+    NSUInteger dropIndex = [self indexOfDrop:dragInfo];
+    if (dropIndex != NSNotFound)
+    {
+        NSDragOperation mask = [dragInfo draggingSourceOperationMask];
+        result = mask & NSDragOperationMove;
+        if (!result) result = mask & NSDragOperationCopy;
+        
+        
+        if (result)
+        {
+            // Place the drag caret to match the drop index
+            NSArray *pageletControllers = [self childWebEditorItems];
+            if (dropIndex >= [pageletControllers count])
+            {
+                DOMNode *node = [[self sidebarDivElement] lastChild];
+                DOMRange *range = [[node ownerDocument] createRange];
+                [range setStartAfter:node];
+                [[self webEditor] moveDragCaretToDOMRange:range];
+                //[sidebarController moveDragCaretToAfterDOMNode:node];
+            }
+            else
+            {
+                SVWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
+                
+                DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
+                [range setStartBefore:[aPageletItem HTMLElement]];
+                [[self webEditor] moveDragCaretToDOMRange:range];
+                //[sidebarController moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
+            }
+        }
+    }
+    
+    
+    // Finish up
+    if (!result)
+    {
+        [self removeDragCaret];
+    }
+    
+    return result;
+}
+
+- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+{
+    SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
+    
+    // No-one else wants it? Maybe we do!
+    if (!result)
+    {
+        if ([self indexOfDrop:info] != NSNotFound) result = self;
+    }
+    
+    return result;
+}
+
 #pragma mark Drag Caret
 
 - (void)removeDragCaret;
