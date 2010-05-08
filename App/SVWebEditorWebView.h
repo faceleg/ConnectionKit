@@ -17,10 +17,12 @@
 
 @interface SVWebEditorWebView : WebView
 {
-    BOOL    _webEditorViewWillHandleDrop;
+    BOOL    _delegateWillHandleDraggingInfo;
 }
 
 @property(nonatomic, readonly) SVWebEditorView *webEditorView;
+
+@property(nonatomic, readonly) BOOL delegateWillHandleDraggingInfo;
 
 // Returns YES if the first responder is a subview of the receiver
 @property(nonatomic, readonly) BOOL isFirstResponder;

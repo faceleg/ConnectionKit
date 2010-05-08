@@ -20,6 +20,8 @@
     return (SVWebEditorView *)[self superview];
 }
 
+@synthesize delegateWillHandleDraggingInfo = _delegateWillHandleDraggingInfo;
+
 - (BOOL)isFirstResponder
 {
     BOOL result = NO;
@@ -47,31 +49,69 @@
 /*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
  */
 
-- (NSDragOperation)draggingEntered:(id < NSDraggingInfo >)sender
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    NSDragOperation result = [super draggingEntered:sender];
-    _webEditorViewWillHandleDrop = [[self webEditorView] validateDrop:sender
-                                                    proposedOperation:&result];
+    SVWebEditorView *webEditor = [self webEditorView];
+    
+    NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingEntered:sender];
+    if (result)
+    {
+        _delegateWillHandleDraggingInfo = YES;
+        NSDragOperation superOp = [super draggingEntered:sender];
+        
+        if (superOp)
+        {
+            NSLog(@"Delegate expectd to handle drop, but WebView still did anyway");
+            _delegateWillHandleDraggingInfo = NO;
+            result = superOp;
+        }
+    }
+    else
+    {
+        result = [super draggingEntered:sender];
+    }
     
     return result;
 }
 
-- (NSDragOperation)draggingUpdated:(id < NSDraggingInfo >)sender
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    NSDragOperation result = [super draggingUpdated:sender];
+    SVWebEditorView *webEditor = [self webEditorView];
+    
+    NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingUpdated:sender];
+    if (result)
+    {
+        _delegateWillHandleDraggingInfo = YES;
+        NSDragOperation superOp = [super draggingUpdated:sender];
+        
+        if (superOp)
+        {
+            NSLog(@"Delegate expectd to handle drop, but WebView still did anyway");
+            _delegateWillHandleDraggingInfo = NO;
+            result = superOp;
+        }
+    }
+    else
+    {
+        result = [super draggingUpdated:sender];
+    }
+    
+    return result;
+    
+    
     
     // WebKit bug workaround: When dragging exits an editable area, although the cursor updates properly, the drag caret is not removed.
     // Maddeningly though, calling -removeDragCaret makes the WebView perform a Copy rather than Move op!
     //if (result == NSDragOperationNone) [self removeDragCaret];
-    
-    _webEditorViewWillHandleDrop = [[self webEditorView] validateDrop:sender
-                                                    proposedOperation:&result];
-    
-    return result;
 }
 
-- (void)draggingExited:(id < NSDraggingInfo >)sender
+- (void)draggingExited:(id <NSDraggingInfo>)sender
 {
+    if (_delegateWillHandleDraggingInfo)
+    {
+        NSObject *delegate = [[self webEditorView] draggingDestinationDelegate];
+        if ([delegate respondsToSelector:_cmd]) [delegate draggingExited:sender];
+    }
     [super draggingExited:sender];
     
     // Need to end any of our custom drawing
@@ -79,9 +119,23 @@
     [[self webEditorView] moveDragHighlightToDOMNode:nil];
 }
 
-- (BOOL)prepareForDragOperation:(id < NSDraggingInfo >)sender
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
 {
-    BOOL result = (_webEditorViewWillHandleDrop ? YES : [super prepareForDragOperation:sender]);
+    BOOL result;
+    if (_delegateWillHandleDraggingInfo)
+    {
+        result = YES;
+        NSObject *delegate = [[self webEditorView] draggingDestinationDelegate];
+        if ([delegate respondsToSelector:_cmd])
+        {
+            result = [delegate prepareForDragOperation:sender];
+        }
+    }
+    else
+    {
+        result = [super prepareForDragOperation:sender];
+    }
+    
     
     // Need to end any of our custom drawing. Do NOT call -[WebView removeDragCaret] as it will forget where the drop is supposed to go!
     [[self webEditorView] performSelector:@selector(removeDragCaretFromDOMNodes)];
@@ -90,11 +144,12 @@
     return result;
 }
 
-- (BOOL)performDragOperation:(id < NSDraggingInfo >)sender
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender
 {
-    if (_webEditorViewWillHandleDrop)
+    if (_delegateWillHandleDraggingInfo)
     {
-        return [[self webEditorView] acceptDrop:sender];
+        NSObject *delegate = [[self webEditorView] draggingDestinationDelegate];
+        return [delegate performDragOperation:sender];
     }
     else
     {

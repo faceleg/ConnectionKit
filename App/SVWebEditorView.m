@@ -1315,6 +1315,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
+@synthesize draggingDestinationDelegate = _dragDelegate;
+
 #pragma mark NSUserInterfaceValidations
 
 - (BOOL)validateUserInterfaceItem:(id <NSValidatedUserInterfaceItem>)anItem;
@@ -1438,9 +1440,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     NSUInteger result = WebDragDestinationActionNone;
     
-    if ([[self dataSource] webEditor:self dragDestinationForDraggingInfo:dragInfo] == self)
+    if (![[self webView] delegateWillHandleDraggingInfo])
     {
-       result = WebDragDestinationActionEdit;
+       result = [[self dataSource] webEditor:self dragDestinationActionMaskForDraggingInfo:dragInfo];
     }
     
     return result;

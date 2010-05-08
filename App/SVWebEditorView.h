@@ -29,8 +29,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     // Content
     SVWebEditorWebView              *_webView;
     SVMainWebEditorItem             *_mainItem;
-    id <SVWebEditorDataSource>  _dataSource;    // weak ref as you'd expect
-    id <SVWebEditorDelegate>    _delegate;      // "
     BOOL    _isStartingLoad;
     
     // Selection
@@ -57,6 +55,11 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL    _resizingGraphic;
     BOOL    _isProcessingEvent;
     BOOL    _isForwardingCommandToWebView;
+    
+    // Datasource/delegate
+    id <SVWebEditorDataSource>  _dataSource;    // weak ref as you'd expect
+    id <SVWebEditorDelegate>    _delegate;      // "
+    NSObject                    *_dragDelegate;
 }
 
 
@@ -140,9 +143,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 #pragma mark Setting the DataSource/Delegate
-
 @property(nonatomic, assign) id <SVWebEditorDataSource> dataSource;
 @property(nonatomic, assign) id <SVWebEditorDelegate> delegate;
+@property(nonatomic, assign) NSObject *draggingDestinationDelegate;
+
 
 @end
 
@@ -219,14 +223,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (BOOL)webEditor:(SVWebEditorView *)sender createLink:(id)actionSender;
 
 
-#pragma mark Dragging
+#pragma mark Controlling Drag Behavior
 
-/*!
- @method webEditor:dragDestinationForDraggingInfo:
- @result Object conforming to NSDraggingDestination or nil. Return the Web Editor itself for standard behaviour
- */
-- (NSObject *)webEditor:(SVWebEditorView *)sender
-dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
+// Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
+- (NSUInteger)webEditor:(SVWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:

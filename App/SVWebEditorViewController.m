@@ -128,6 +128,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     [[self webEditor] setDelegate:nil];
     [[self webEditor] setDataSource:nil];
+    [[self webEditor] setDraggingDestinationDelegate:nil];
     
     [editor retain];
     [_webEditorView release];
@@ -135,6 +136,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     [editor setDelegate:self];
     [editor setDataSource:self];
+    [editor setDraggingDestinationDelegate:self];
     [editor setAllowsUndo:NO];  // will be managing this entirely ourselves
 }
 
@@ -801,36 +803,10 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return result;
 }
 
-/*  Want to leave the Web Editor View in charge of drag & drop except for pagelets
- */
-- (NSObject *)webEditor:(SVWebEditorView *)sender
-dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
+// Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
+- (NSUInteger)webEditor:(SVWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
 {
-    OBPRECONDITION(sender == [self webEditor]);
-    
-    NSDictionary *element = [[sender webView] elementAtPoint:
-                             [sender convertPointFromBase:[dragInfo draggingLocation]]];
-    DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
-    
-    id result = [[sender mainItem] hitTestDOMNode:node draggingInfo:dragInfo];
-    
-    if (!result)
-    {
-        result = sender;
-        
-        // Don't allow drops of pagelets inside non-page body text.
-        if ([dragInfo draggingSource] == sender && [[sender draggedItems] count])
-        {
-            if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
-                  isEqualToString:@"PageBody"])
-            {
-                result = nil;
-            }
-        }
-    }
-    
-    
-    return result;
+    return (WebDragDestinationActionEdit | WebDragDestinationActionDHTML);
 }
 
 #pragma mark SVWebEditorViewDelegate
@@ -1018,6 +994,78 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditor]);
     [self registerWebEditorItem:item];
+}
+
+#pragma mark NSDraggingDestination
+
+- (NSObject *)destinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
+{
+    SVWebEditorView *webEditor = [self webEditor];
+    
+    NSDictionary *element = [[webEditor webView] elementAtPoint:
+                             [webEditor convertPointFromBase:[dragInfo draggingLocation]]];
+    
+    DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
+    
+    id result = [[webEditor mainItem] hitTestDOMNode:node draggingInfo:dragInfo];
+    
+    if (!result)
+    {
+        // Don't allow drops of pagelets inside non-page body text.
+        if ([dragInfo draggingSource] == webEditor && [[webEditor draggedItems] count])
+        {
+            if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
+                  isEqualToString:@"PageBody"])
+            {
+                result = nil;
+            }
+        }
+    }
+    
+    
+    return result;
+}
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return [[self destinationForDraggingInfo:sender] draggingUpdated:sender];
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
+{
+    return [[self destinationForDraggingInfo:sender] draggingUpdated:sender];
+}
+
+- (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
+{
+    BOOL result = YES;
+    
+    NSObject *destination = [self destinationForDraggingInfo:sender];
+    if ([destination respondsToSelector:_cmd]) result = [destination prepareForDragOperation:sender];
+    
+    return result;
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
+{
+    BOOL result = YES;
+    
+    NSObject *destination = [self destinationForDraggingInfo:sender];
+    if ([destination respondsToSelector:_cmd]) result = [destination performDragOperation:sender];
+    
+    return result;
+}
+
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
+{
+    NSObject *destination = [self destinationForDraggingInfo:sender];
+    if ([destination respondsToSelector:_cmd]) [destination concludeDragOperation:sender];
+}
+
+- (void)draggingEnded:(id <NSDraggingInfo>)sender;
+{
+    NSObject *destination = [self destinationForDraggingInfo:sender];
+    if ([destination respondsToSelector:_cmd]) [destination draggingEnded:sender];
 }
 
 #pragma mark -
