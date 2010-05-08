@@ -857,20 +857,19 @@ dragDestinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     OBPRECONDITION(sender == [self webEditor]);
     
-    id result = sender;
+    NSDictionary *element = [[sender webView] elementAtPoint:
+                             [sender convertPointFromBase:[dragInfo draggingLocation]]];
+    DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
     
-    if ([self draggingUpdated:dragInfo] != NSDragOperationNone)
+    id result = [[sender mainItem] hitTestDOMNode:node draggingInfo:dragInfo];
+    
+    if (!result)
     {
-        result = self;
-    }
-    else
-    {
+        result = sender;
+        
         // Don't allow drops of pagelets inside non-page body text.
         if ([dragInfo draggingSource] == sender && [[sender draggedItems] count])
         {
-            NSDictionary *element = [[sender webView] elementAtPoint:[sender convertPointFromBase:[dragInfo draggingLocation]]];
-            DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
-            
             if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
                   isEqualToString:@"PageBody"])
             {

@@ -187,6 +187,17 @@
 
 - (SVWebEditorHTMLContext *)HTMLContext { return nil; }
 
+#pragma mark Drag & Drop
+
+- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+                       draggingInfo:(id <NSDraggingInfo>)info;
+{
+    // Dive down to next item
+    SVWebEditorItem *result = [[self childItemForDOMNode:node] hitTestDOMNode:node
+                                                                 draggingInfo:info];
+    return result;
+}
+
 #pragma mark WebEditorViewController
 
 - (SVWebEditorViewController *)webEditorViewController;

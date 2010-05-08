@@ -78,6 +78,11 @@
 - (SVWebEditorHTMLContext *)HTMLContext;
 
 
+#pragma mark Drag & Drop
+- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+                       draggingInfo:(id <NSDraggingInfo>)info;
+
+
 #pragma mark WebEditorViewController
 - (SVWebEditorViewController *)webEditorViewController;
 
