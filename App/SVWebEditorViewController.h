@@ -10,7 +10,7 @@
 
 #import "SVSiteItemViewController.h"
 #import "SVHTMLTemplateParser.h"
-#import "WEKWebEditorView.h"
+#import "WebEditingKit.h"
 
 
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;

@@ -25,7 +25,7 @@
 #import "SVTextAttachment.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "WEKWebEditorView.h"
+#import "WebEditingKit.h"
 #import "SVWebEditorViewController.h"
 
 #import "NSDictionary+Karelia.h"

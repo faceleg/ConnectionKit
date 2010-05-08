@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorItem.h"
+#import "WebEditingKit.h"
 #import "SVContentObject.h"
 
 

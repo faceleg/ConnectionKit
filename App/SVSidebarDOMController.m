@@ -14,7 +14,7 @@
 #import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
-#import "WEKWebEditorView.h"
+#import "WebEditingKit.h"
 
 #import "NSArray+Karelia.h"
 #import "DOMNode+Karelia.h"
