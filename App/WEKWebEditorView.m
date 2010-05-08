@@ -52,7 +52,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 #pragma mark -
 
 
-@interface WEKWebEditorView () <SVWebEditorWebUIDelegate>
+@interface WEKWebEditorView ()
 
 @property(nonatomic, retain, readonly) WEKWebView *webView; // publicly declared as a plain WebView, but we know better
 

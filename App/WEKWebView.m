@@ -15,7 +15,7 @@
 
 @implementation WEKWebView
 
-- (WEKWebEditorView *)webEditorView
+- (WEKWebEditorView *)webEditor
 {
     return (WEKWebEditorView *)[self superview];
 }
@@ -51,7 +51,7 @@
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    WEKWebEditorView *webEditor = [self webEditorView];
+    WEKWebEditorView *webEditor = [self webEditor];
     
     NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingEntered:sender];
     if (result)
@@ -76,7 +76,7 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    WEKWebEditorView *webEditor = [self webEditorView];
+    WEKWebEditorView *webEditor = [self webEditor];
     
     NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingUpdated:sender];
     if (result)
@@ -109,14 +109,14 @@
 {
     if (_delegateWillHandleDraggingInfo)
     {
-        NSObject *delegate = [[self webEditorView] draggingDestinationDelegate];
+        NSObject *delegate = [[self webEditor] draggingDestinationDelegate];
         if ([delegate respondsToSelector:_cmd]) [delegate draggingExited:sender];
     }
     [super draggingExited:sender];
     
     // Need to end any of our custom drawing
-    [[self webEditorView] removeDragCaret];
-    [[self webEditorView] moveDragHighlightToDOMNode:nil];
+    [[self webEditor] removeDragCaret];
+    [[self webEditor] moveDragHighlightToDOMNode:nil];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender
@@ -125,7 +125,7 @@
     if (_delegateWillHandleDraggingInfo)
     {
         result = YES;
-        NSObject *delegate = [[self webEditorView] draggingDestinationDelegate];
+        NSObject *delegate = [[self webEditor] draggingDestinationDelegate];
         if ([delegate respondsToSelector:_cmd])
         {
             result = [delegate prepareForDragOperation:sender];
@@ -138,8 +138,8 @@
     
     
     // Need to end any of our custom drawing. Do NOT call -[WebView removeDragCaret] as it will forget where the drop is supposed to go!
-    [[self webEditorView] performSelector:@selector(removeDragCaretFromDOMNodes)];
-    [[self webEditorView] moveDragHighlightToDOMNode:nil];
+    [[self webEditor] performSelector:@selector(removeDragCaretFromDOMNodes)];
+    [[self webEditor] moveDragHighlightToDOMNode:nil];
     
     return result;
 }
@@ -148,15 +148,15 @@
 {
     if (_delegateWillHandleDraggingInfo)
     {
-        NSObject *delegate = [[self webEditorView] draggingDestinationDelegate];
+        NSObject *delegate = [[self webEditor] draggingDestinationDelegate];
         return [delegate performDragOperation:sender];
     }
     else
     {
         // Store pasteboard temporarily
-        [[self webEditorView] setValue:[sender draggingPasteboard] forKey:@"_insertionPasteboard"];
+        [[self webEditor] setValue:[sender draggingPasteboard] forKey:@"_insertionPasteboard"];
         BOOL result = [super performDragOperation:sender];
-        [[self webEditorView] setValue:nil forKey:@"_insertionPasteboard"];
+        [[self webEditor] setValue:nil forKey:@"_insertionPasteboard"];
         return result;
     }
 }

@@ -12,7 +12,6 @@
 
 
 @class WEKWebEditorView;
-@protocol SVWebEditorWebUIDelegate;
 
 
 @interface WEKWebView : WebView
@@ -20,16 +19,11 @@
     BOOL    _delegateWillHandleDraggingInfo;
 }
 
-@property(nonatomic, readonly) WEKWebEditorView *webEditorView;
+@property(nonatomic, readonly) WEKWebEditorView *webEditor;
 
 @property(nonatomic, readonly) BOOL delegateWillHandleDraggingInfo;
 
 // Returns YES if the first responder is a subview of the receiver
 @property(nonatomic, readonly) BOOL isFirstResponder;
-
-@end
-
-
-@protocol SVWebEditorWebUIDelegate <NSObject>
 
 @end
