@@ -1,5 +1,5 @@
 //
-//  SVWebEditorWebView.h
+//  WEKWebView.h
 //  Sandvox
 //
 //  Created by Mike on 23/09/2009.
@@ -15,7 +15,7 @@
 @protocol SVWebEditorWebUIDelegate;
 
 
-@interface SVWebEditorWebView : WebView
+@interface WEKWebView : WebView
 {
     BOOL    _delegateWillHandleDraggingInfo;
 }

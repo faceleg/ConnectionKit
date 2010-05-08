@@ -7,7 +7,7 @@
 //
 
 #import "WEKWebEditorView.h"
-#import "SVWebEditorWebView.h"
+#import "WEKWebView.h"
 #import "SVWebEditorMainItem.h"
 #import "SVWebEditorTextRange.h"
 
@@ -54,7 +54,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 @interface WEKWebEditorView () <SVWebEditorWebUIDelegate>
 
-@property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
+@property(nonatomic, retain, readonly) WEKWebView *webView; // publicly declared as a plain WebView, but we know better
 
 
 #pragma mark Selection
@@ -109,7 +109,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // WebView
-    _webView = [[SVWebEditorWebView alloc] initWithFrame:[self bounds]];
+    _webView = [[WEKWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setShouldCloseWithWindow:YES];    // seems correct for a doc-based app
     

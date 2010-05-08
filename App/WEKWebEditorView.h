@@ -20,14 +20,14 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @protocol SVWebEditorDataSource, SVWebEditorDelegate;
 @class SVWebEditorItem, SVWebEditorTextRange;
-@class SVWebEditorWebView, SVMainWebEditorItem;
+@class WEKWebView, SVMainWebEditorItem;
 
 
 @interface WEKWebEditorView : NSView <NSUserInterfaceValidations>
 {
   @private
     // Content
-    SVWebEditorWebView              *_webView;
+    WEKWebView              *_webView;
     SVMainWebEditorItem             *_mainItem;
     BOOL    _isStartingLoad;
     

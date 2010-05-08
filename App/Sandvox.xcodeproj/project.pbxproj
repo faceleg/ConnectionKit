@@ -287,8 +287,8 @@
 		273DD20810CC74AA003CCE97 /* CollectionInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 273DD20710CC74AA003CCE97 /* CollectionInspector.xib */; };
 		273DD22210CC90B4003CCE97 /* WrapInspector.png in Resources */ = {isa = PBXBuildFile; fileRef = 273DD21E10CC90A8003CCE97 /* WrapInspector.png */; };
 		273DD23110CC9466003CCE97 /* Wrap Inspector tab icon.opacity in Resources */ = {isa = PBXBuildFile; fileRef = 273DD23010CC9447003CCE97 /* Wrap Inspector tab icon.opacity */; };
-		27422441106A926E0058C8DA /* SVWebEditorWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* SVWebEditorWebView.h */; };
-		27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* SVWebEditorWebView.m */; };
+		27422441106A926E0058C8DA /* WEKWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 2742243F106A926E0058C8DA /* WEKWebView.h */; };
+		27422442106A926E0058C8DA /* WEKWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = 27422440106A926E0058C8DA /* WEKWebView.m */; };
 		27443266103D8693007E7FF0 /* LoadingPlaceholder.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */; };
 		2747DA3A10FE8DE6007428BB /* SVSiteItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3610FE8DE6007428BB /* SVSiteItem.h */; };
 		2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3710FE8DE6007428BB /* SVSiteItem.m */; };
@@ -1770,8 +1770,8 @@
 		273DD20710CC74AA003CCE97 /* CollectionInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CollectionInspector.xib; sourceTree = "<group>"; };
 		273DD21E10CC90A8003CCE97 /* WrapInspector.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WrapInspector.png; sourceTree = "<group>"; };
 		273DD23010CC9447003CCE97 /* Wrap Inspector tab icon.opacity */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Wrap Inspector tab icon.opacity"; sourceTree = "<group>"; };
-		2742243F106A926E0058C8DA /* SVWebEditorWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorWebView.h; sourceTree = "<group>"; };
-		27422440106A926E0058C8DA /* SVWebEditorWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorWebView.m; sourceTree = "<group>"; };
+		2742243F106A926E0058C8DA /* WEKWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebView.h; sourceTree = "<group>"; };
+		27422440106A926E0058C8DA /* WEKWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebView.m; sourceTree = "<group>"; };
 		274339E90D77339B00164FA5 /* CollectionArchiveElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = CollectionArchiveElement.xcodeproj; path = ../Plugins/Elements/CollectionArchiveElement/CollectionArchiveElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		27443265103D8693007E7FF0 /* LoadingPlaceholder.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LoadingPlaceholder.xib; sourceTree = "<group>"; };
 		2747DA3610FE8DE6007428BB /* SVSiteItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItem.h; sourceTree = "<group>"; };
@@ -2978,8 +2978,8 @@
 				2755279B10546D990037524C /* SVSelectionBorder.m */,
 				CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */,
 				CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */,
-				2742243F106A926E0058C8DA /* SVWebEditorWebView.h */,
-				27422440106A926E0058C8DA /* SVWebEditorWebView.m */,
+				2742243F106A926E0058C8DA /* WEKWebView.h */,
+				27422440106A926E0058C8DA /* WEKWebView.m */,
 				278FCFBA107B5E9D0091A239 /* SVWebEditorTextProtocol.h */,
 				278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */,
 				274FA0DB11297971000E0FDA /* SVWebEditorMainItem.h */,
@@ -5488,7 +5488,7 @@
 				2785197F104FD34A009C8558 /* KSWebViewController.h in Headers */,
 				271B48601051C2F4008B698C /* WEKWebEditorView.h in Headers */,
 				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
-				27422441106A926E0058C8DA /* SVWebEditorWebView.h in Headers */,
+				27422441106A926E0058C8DA /* WEKWebView.h in Headers */,
 				27F790D9106BABA6007DF81B /* KSDragging.h in Headers */,
 				27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */,
 				2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */,
@@ -6910,7 +6910,7 @@
 				27851980104FD34A009C8558 /* KSWebViewController.m in Sources */,
 				271B48611051C2F4008B698C /* WEKWebEditorView.m in Sources */,
 				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
-				27422442106A926E0058C8DA /* SVWebEditorWebView.m in Sources */,
+				27422442106A926E0058C8DA /* WEKWebView.m in Sources */,
 				27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */,
 				2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */,
 				2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */,

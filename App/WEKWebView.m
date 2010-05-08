@@ -1,19 +1,19 @@
 //
-//  SVWebEditorWebView.m
+//  WEKWebView.m
 //  Sandvox
 //
 //  Created by Mike on 23/09/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorWebView.h"
+#import "WEKWebView.h"
 #import "WEKWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSResponder+Karelia.h"
 
 
-@implementation SVWebEditorWebView
+@implementation WEKWebView
 
 - (WEKWebEditorView *)webEditorView
 {
