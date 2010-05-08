@@ -93,6 +93,9 @@
     }
     else
     {
+        [[self webEditor] performSelector:@selector(removeDragCaretFromDOMNodes)];
+        [[self webEditor] moveDragHighlightToDOMNode:nil];
+    
         result = [super draggingUpdated:sender];
     }
     
