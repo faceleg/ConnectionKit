@@ -18,7 +18,7 @@ extern NSString *kSVWebEditorViewWillChangeNotification;
 extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
-@protocol SVWebEditorDataSource, SVWebEditorDelegate;
+@protocol WEKWebEditorDataSource, WEKWebEditorDelegate;
 @class SVWebEditorItem, SVWebEditorTextRange;
 @class WEKWebView, SVMainWebEditorItem;
 
@@ -57,8 +57,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL    _isForwardingCommandToWebView;
     
     // Datasource/delegate
-    id <SVWebEditorDataSource>  _dataSource;    // weak ref as you'd expect
-    id <SVWebEditorDelegate>    _delegate;      // "
+    id <WEKWebEditorDataSource>  _dataSource;    // weak ref as you'd expect
+    id <WEKWebEditorDelegate>    _delegate;      // "
     NSObject                    *_dragDelegate;
 }
 
@@ -143,8 +143,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 #pragma mark Setting the DataSource/Delegate
-@property(nonatomic, assign) id <SVWebEditorDataSource> dataSource;
-@property(nonatomic, assign) id <SVWebEditorDelegate> delegate;
+@property(nonatomic, assign) id <WEKWebEditorDataSource> dataSource;
+@property(nonatomic, assign) id <WEKWebEditorDelegate> delegate;
 @property(nonatomic, assign) NSObject *draggingDestinationDelegate;
 
 
@@ -210,7 +210,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark -
 
 
-@protocol SVWebEditorDataSource <NSObject>
+@protocol WEKWebEditorDataSource <NSObject>
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
@@ -244,7 +244,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark -
 
 
-@protocol SVWebEditorDelegate <NSObject>
+@protocol WEKWebEditorDelegate <NSObject>
 
 #pragma mark Selection
 

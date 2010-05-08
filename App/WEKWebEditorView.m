@@ -1286,7 +1286,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 @synthesize dataSource = _dataSource;
 
 @synthesize delegate = _delegate;
-- (void)setDelegate:(id <SVWebEditorDelegate>)delegate
+- (void)setDelegate:(id <WEKWebEditorDelegate>)delegate
 {
     if ([self delegate])
     {

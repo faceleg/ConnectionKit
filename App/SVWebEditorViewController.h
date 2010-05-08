@@ -22,7 +22,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @protocol SVWebEditorViewControllerDelegate;
 
 
-@interface SVWebEditorViewController : KSWebViewController <SVSiteItemViewController, SVWebEditorDataSource, SVWebEditorDelegate, SVHTMLTemplateParserDelegate>
+@interface SVWebEditorViewController : KSWebViewController <SVSiteItemViewController, WEKWebEditorDataSource, WEKWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {
     // View
     WEKWebEditorView *_webEditorView;
