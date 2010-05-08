@@ -146,7 +146,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     // get the selected design
-	KTDesign *selectedDesign = [oDesignsArrayController selectedObjects];
+	KTDesign *selectedDesign = [[oDesignsArrayController selectedObjects] firstObjectKS];
 	if (selectedDesign)
 	{
 		if (self.targetWhenChosen && [self.targetWhenChosen respondsToSelector:self.selectorWhenChosen])
@@ -428,19 +428,12 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 				[preds addObject:[NSPredicate predicateWithFormat:@"width == NULL"]];
 			}
 		}
-				
-		// Get all designs; we'll be filtering...
-		
-		NSArray *filteredDesigns = [oViewController.allDesigns filteredArrayUsingPredicate:
-								   [NSCompoundPredicate andPredicateWithSubpredicates:preds]
-								   ];
 
-		[oDesignsArrayController setContent:[KTDesign consolidateDesignsIntoFamilies:filteredDesigns]];
-
+		[oDesignsArrayController setFilterPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:preds]];
 	}
 	else	// no filter -- all
 	{
-		[oDesignsArrayController setContent:[KTDesign consolidateDesignsIntoFamilies:oViewController.allDesigns]];
+		[oDesignsArrayController setFilterPredicate:nil];
 	}
 }
 

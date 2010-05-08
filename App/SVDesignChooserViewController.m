@@ -15,12 +15,9 @@
 
 @implementation SVDesignChooserViewController
 
-@synthesize allDesigns = _allDesigns;
-
 - (void)awakeFromNib
 {	
-	self.allDesigns = [KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension];
-	[oDesignsArrayController setContent:[KTDesign consolidateDesignsIntoFamilies:self.allDesigns]];
+	[oDesignsArrayController setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
 
 	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
 	OBASSERT([view isKindOfClass:[IKImageBrowserView class]]);

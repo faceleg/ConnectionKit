@@ -21,14 +21,10 @@
 	IBOutlet NSArrayController	*oDesignsArrayController;
 	NSTrackingRectTag			_trackingRect;
 	BOOL						_wasAcceptingMouseEvents;
-
-	NSArray *_allDesigns;
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
  
-@property(copy) NSArray *allDesigns;
-
 @end
 
 //@interface SVDesignChooserViewBox : NSBox
