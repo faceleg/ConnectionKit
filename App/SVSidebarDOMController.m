@@ -219,10 +219,7 @@
     SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
     
     // No-one else wants it? Maybe we do!
-    if (!result)
-    {
-        if ([self indexOfDrop:info] != NSNotFound) result = self;
-    }
+    if (!result) result = self;
     
     return result;
 }
