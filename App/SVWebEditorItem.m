@@ -181,14 +181,14 @@
     return result;
 }
 
-- (SVWebEditorItem *)descendantItemForDOMNode:(DOMNode *)node;
+- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
     
     SVWebEditorItem *result = [self childItemForDOMNode:node];
     if (result)
     {
-        result = [result descendantItemForDOMNode:node];
+        result = [result hitTestDOMNode:node];
     }
     else
     {

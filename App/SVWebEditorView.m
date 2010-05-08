@@ -237,7 +237,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)insertItem:(SVWebEditorItem *)item;
 {
     // Search the tree for the appropriate parent
-    SVWebEditorItem *parent = [[self mainItem] descendantItemForDOMNode:[item HTMLElement]];
+    SVWebEditorItem *parent = [[self mainItem] hitTestDOMNode:[item HTMLElement]];
     
     // But does the parent already have children that should move to become children of the new item?
     for (SVWebEditorItem *aChild in [parent childWebEditorItems])
@@ -272,14 +272,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (!domRange) return nil;
     
     
-    SVWebEditorItem *startItem = [[self mainItem] descendantItemForDOMNode:[domRange startContainer]];
+    SVWebEditorItem *startItem = [[self mainItem] hitTestDOMNode:[domRange startContainer]];
     while (startItem && ![startItem representedObject])
     {
         startItem = [startItem parentWebEditorItem];
     }
     
     
-    SVWebEditorItem *endItem = [[self mainItem] descendantItemForDOMNode:[domRange endContainer]];
+    SVWebEditorItem *endItem = [[self mainItem] hitTestDOMNode:[domRange endContainer]];
     while (endItem && ![endItem representedObject])
     {
         endItem = [endItem parentWebEditorItem];
@@ -1171,7 +1171,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             NSDictionary *element = [[self webView] elementAtPoint:location];
             DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
             
-            SVWebEditorItem *item = [[self selectedItem] descendantItemForDOMNode:nextNode];
+            SVWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
             
             
             
