@@ -30,6 +30,7 @@
 @property(assign) SEL selectorWhenChosen;
 @property(assign) id  targetWhenChosen;
 @property(retain) SVDesignChooserViewController *viewController;
+@property(retain) NSArrayController *designsArrayController;
 @property (copy) NSString *genre;
 @property (copy) NSString *color;
 @property (copy) NSString *width;

@@ -46,6 +46,7 @@
 @synthesize genre = _genre;
 @synthesize color = _color;
 @synthesize width = _width;
+@synthesize designsArrayController = oDesignsArrayController;
 
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
 enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
@@ -53,13 +54,13 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsArrayController.arrangedObjects", nil];
 }
 
 + (NSSet *)keyPathsForValuesAffectingMatchColor
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsArrayController.arrangedObjects", nil];
 }
 
 - (NSColor *)matchColor;
@@ -100,7 +101,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 		}
 		if ([[oDesignsArrayController arrangedObjects] count])
 		{
-			result = [NSString stringWithFormat:NSLocalizedString(@"Showing matches for %@", @"Warning that string/strings yielded no matching designs"), matchesString];
+			result = [NSString stringWithFormat:NSLocalizedString(@"Showing matches for %@", @"Showing which items matched the current filter"), matchesString];
 		}
 		else
 		{
@@ -430,7 +431,8 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 			}
 		}
 
-		[oDesignsArrayController setFilterPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:preds]];
+		NSPredicate *pred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
+		[oDesignsArrayController setFilterPredicate:pred];
 		[oDesignsArrayController rearrangeObjects];
 	}
 	else	// no filter -- all
