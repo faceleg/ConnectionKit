@@ -9,6 +9,8 @@
 #import "SVSidebarDOMController.h"
 #import "SVSidebar.h"
 
+#import "SVWebEditorView.h"
+
 #import "DOMNode+Karelia.h"
 
 
@@ -56,17 +58,17 @@
 {
     NSUInteger result = NSNotFound;
     NSView *view = [[self HTMLElement] documentView];
-    NSArray *pageletContentItems = [self childWebEditorItems];
+    NSArray *pageletControllers = [self childWebEditorItems];
     NSPoint location = [view convertPointFromBase:[dragInfo draggingLocation]];
     
     
     // Ideally, we're making a drop *before* a pagelet
     SVWebEditorItem *previousItem = nil;
-    NSUInteger i, count = [pageletContentItems count];
+    NSUInteger i, count = [pageletControllers count];
     for (i = 0; i < count; i++)
     {
         // Calculate drop zone
-        SVWebEditorItem *anItem = [pageletContentItems objectAtIndex:i];
+        SVWebEditorItem *anItem = [pageletControllers objectAtIndex:i];
         
         NSRect dropZone = [self rectOfDropZoneBelowDOMNode:[previousItem HTMLElement]
                                               aboveDOMNode:[anItem HTMLElement]
@@ -88,12 +90,32 @@
     if (result == NSNotFound)
     {
         NSRect dropZone = [self rectOfDropZoneInDOMElement:[self sidebarDivElement]
-                                                 belowNode:[[pageletContentItems lastObject] HTMLElement]
+                                                 belowNode:[[pageletControllers lastObject] HTMLElement]
                                                  minHeight:25.0f];
         
         if ([view mouse:location inRect:dropZone])
         {
-            result = [pageletContentItems count];
+            result = [pageletControllers count];
+        }
+    }
+    
+    
+    // There's nothing to do if the drop is same as source
+    if (result != NSNotFound)
+    {
+        if ([dragInfo draggingSource] == [self webEditor])
+        {
+            NSArray *draggedItems = [[self webEditor] draggedItems];
+            
+            if (result >= 1 && [draggedItems containsObject:[pageletControllers objectAtIndex:result-1]])
+            {
+                result = NSNotFound;
+            }
+            else if (!(result >= [pageletControllers count]) &&
+                     [draggedItems containsObject:[pageletControllers objectAtIndex:result]])
+            {
+                result = NSNotFound;
+            }
         }
     }
     
