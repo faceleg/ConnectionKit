@@ -1038,7 +1038,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     // Switching to a new drag target, so tell the old one drag exited
     if (destination != _draggingDestination)
     {
-        if ([_draggingDestination respondsToSelector:_cmd]) [_draggingDestination draggingExited:sender];
+        if ([_draggingDestination respondsToSelector:@selector(draggingExited:)])
+        {
+            [_draggingDestination draggingExited:sender];
+        }
+        
         _draggingDestination = destination;
     }
     
