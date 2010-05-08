@@ -13,8 +13,9 @@
 
 - (NSArray *)arrangeObjects:(NSArray *)objects;
 {
-    objects = [KTDesign consolidateDesignsIntoFamilies:objects];
-    return [super arrangeObjects:objects];
+    objects = [super arrangeObjects:objects];		// do the filtering
+	objects = [KTDesign consolidateDesignsIntoFamilies:objects];	// consolidate
+	return objects;
 }
 
 @end

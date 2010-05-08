@@ -64,9 +64,10 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 
 - (NSColor *)matchColor;
 {
-	if (![[oDesignsArrayController arrangedObjects] count]) return [NSColor redColor];	// No matches. Make it obvious so user doesn't panic
 	if (self.genre || self.color || self.width)
 	{
+		if (![[oDesignsArrayController arrangedObjects] count]) return [NSColor redColor];	
+		// No matches. Make it obvious so user doesn't panic
 		return [NSColor darkGrayColor];	// some filter, but there are matches. Dark gray since it's interesting.
 	}
 	return [NSColor lightGrayColor];	// no filter, everything showing: light gray, not interesting
@@ -430,10 +431,12 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 		}
 
 		[oDesignsArrayController setFilterPredicate:[NSCompoundPredicate andPredicateWithSubpredicates:preds]];
+		[oDesignsArrayController rearrangeObjects];
 	}
 	else	// no filter -- all
 	{
 		[oDesignsArrayController setFilterPredicate:nil];
+		[oDesignsArrayController rearrangeObjects];
 	}
 }
 

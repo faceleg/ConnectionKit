@@ -23,12 +23,12 @@
 	OBASSERT([view isKindOfClass:[IKImageBrowserView class]]);
 
 	// We want to be notified when designs are set so we can refresh data display
-	[self addObserver:self forKeyPath:@"designs" options:(NSKeyValueObservingOptionNew) context:nil];
-	[self addObserver:self forKeyPath:@"selectedDesign" options:(NSKeyValueObservingOptionNew) context:nil];
+	[oDesignsArrayController addObserver:self forKeyPath:@"arrangedObjects" options:(NSKeyValueObservingOptionNew) context:nil];
+	[oDesignsArrayController addObserver:self forKeyPath:@"selection" options:(NSKeyValueObservingOptionNew) context:nil];
 	
 	[view setDataSource:self];
 	[view setDelegate:self];
-	[view reloadData];
+//	[view reloadData];
 		
 	NSMutableDictionary *attributes;
 	NSMutableParagraphStyle *paraStyle;
@@ -51,6 +51,18 @@
 	[[[self view] window] setAcceptsMouseMovedEvents:YES];
 
 }
+
+// Proper way to balance an addObserver that will work even on Garbage-Collected code.
+- (void)viewWillMoveToSuperview:(NSView *)newSuperview;
+{
+	if (!newSuperview)
+	{
+		[oDesignsArrayController removeObserver:self forKeyPath:@"arrangedObjects"];
+		[oDesignsArrayController removeObserver:self forKeyPath:@"selection"];
+	}
+	[super viewWillMoveToSuperview:newSuperview];
+}
+
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 {
@@ -243,7 +255,7 @@
                        context:(void *)aContext
 {
 	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
-	if ([@"designs" isEqualToString:aKeyPath])
+	if ([@"arrangedObjects" isEqualToString:aKeyPath])
 	{
 		[view reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
 	}
