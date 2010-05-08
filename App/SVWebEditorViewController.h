@@ -36,6 +36,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     
     // Controllers
     NSMutableArray  *_textDOMControllers;
+    NSObject        *_draggingDestination;  // weak ref
     
     // Loading
     BOOL                    _needsUpdate, _willUpdate, _autoupdate;

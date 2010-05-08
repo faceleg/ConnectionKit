@@ -1027,20 +1027,24 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
-    return [[self destinationForDraggingInfo:sender] draggingUpdated:sender];
+    _draggingDestination = [self destinationForDraggingInfo:sender];
+    return [_draggingDestination draggingUpdated:sender];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
-    return [[self destinationForDraggingInfo:sender] draggingUpdated:sender];
+    _draggingDestination = [self destinationForDraggingInfo:sender];
+    return [_draggingDestination draggingUpdated:sender];
 }
 
 - (BOOL)prepareForDragOperation:(id <NSDraggingInfo>)sender;
 {
     BOOL result = YES;
     
-    NSObject *destination = [self destinationForDraggingInfo:sender];
-    if ([destination respondsToSelector:_cmd]) result = [destination prepareForDragOperation:sender];
+    if ([_draggingDestination respondsToSelector:_cmd])
+    {
+        result = [_draggingDestination prepareForDragOperation:sender];
+    }
     
     return result;
 }
@@ -1049,22 +1053,29 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 {
     BOOL result = YES;
     
-    NSObject *destination = [self destinationForDraggingInfo:sender];
-    if ([destination respondsToSelector:_cmd]) result = [destination performDragOperation:sender];
+    if ([_draggingDestination respondsToSelector:_cmd])
+    {
+        result = [_draggingDestination performDragOperation:sender];
+    }
     
     return result;
 }
 
 - (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
 {
-    NSObject *destination = [self destinationForDraggingInfo:sender];
-    if ([destination respondsToSelector:_cmd]) [destination concludeDragOperation:sender];
+    if ([_draggingDestination respondsToSelector:_cmd])
+    {
+        [_draggingDestination concludeDragOperation:sender];
+    }
 }
 
 - (void)draggingEnded:(id <NSDraggingInfo>)sender;
 {
-    NSObject *destination = [self destinationForDraggingInfo:sender];
-    if ([destination respondsToSelector:_cmd]) [destination draggingEnded:sender];
+    if ([_draggingDestination respondsToSelector:_cmd])
+    {
+        [_draggingDestination draggingEnded:sender];
+    }
+    _draggingDestination = nil;
 }
 
 #pragma mark -
