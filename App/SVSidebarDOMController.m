@@ -226,6 +226,11 @@
 
 #pragma mark NSDraggingDestination
 
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return [self draggingUpdated:sender];
+}
+
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)dragInfo;
 {
     NSDragOperation result = NSDragOperationNone;

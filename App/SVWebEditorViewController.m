@@ -1028,7 +1028,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
 {
     _draggingDestination = [self destinationForDraggingInfo:sender];
-    return [_draggingDestination draggingUpdated:sender];
+    return [_draggingDestination draggingEntered:sender];
 }
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
@@ -1036,7 +1036,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSObject *destination = [self destinationForDraggingInfo:sender];
     
     // Switching to a new drag target, so tell the old one drag exited
-    if (destination != _draggingDestination)
+    if (destination == _draggingDestination)
+    {
+        return [_draggingDestination draggingUpdated:sender];
+    }
+    else
     {
         if ([_draggingDestination respondsToSelector:@selector(draggingExited:)])
         {
@@ -1044,9 +1048,8 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
         
         _draggingDestination = destination;
+        return [_draggingDestination draggingEntered:sender];
     }
-    
-    return [_draggingDestination draggingUpdated:sender];
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
