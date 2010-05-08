@@ -35,6 +35,25 @@
     [graphic awakeFromInsertIntoPage:(id <SVPage>)[[self HTMLContext] currentPage]];
 }
 
+#pragma mark Dragging Destination
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return [self draggingUpdated:sender];
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
+{
+    return NSDragOperationLink;
+}
+
+- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+{
+    SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
+    if (!result) result = self;
+    return result;
+}
+
 @end
 
 
