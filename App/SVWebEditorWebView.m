@@ -7,7 +7,7 @@
 //
 
 #import "SVWebEditorWebView.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSResponder+Karelia.h"
@@ -15,9 +15,9 @@
 
 @implementation SVWebEditorWebView
 
-- (SVWebEditorView *)webEditorView
+- (WEKWebEditorView *)webEditorView
 {
-    return (SVWebEditorView *)[self superview];
+    return (WEKWebEditorView *)[self superview];
 }
 
 @synthesize delegateWillHandleDraggingInfo = _delegateWillHandleDraggingInfo;
@@ -51,7 +51,7 @@
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender
 {
-    SVWebEditorView *webEditor = [self webEditorView];
+    WEKWebEditorView *webEditor = [self webEditorView];
     
     NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingEntered:sender];
     if (result)
@@ -76,7 +76,7 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender
 {
-    SVWebEditorView *webEditor = [self webEditorView];
+    WEKWebEditorView *webEditor = [self webEditorView];
     
     NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingUpdated:sender];
     if (result)

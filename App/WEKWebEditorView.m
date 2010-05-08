@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 #import "SVWebEditorWebView.h"
 #import "SVWebEditorMainItem.h"
 #import "SVWebEditorTextRange.h"
@@ -52,7 +52,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 #pragma mark -
 
 
-@interface SVWebEditorView () <SVWebEditorWebUIDelegate>
+@interface WEKWebEditorView () <SVWebEditorWebUIDelegate>
 
 @property(nonatomic, retain, readonly) SVWebEditorWebView *webView; // publicly declared as a plain WebView, but we know better
 
@@ -92,7 +92,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 #pragma mark -
 
 
-@implementation SVWebEditorView
+@implementation WEKWebEditorView
 
 #pragma mark Initialization & Deallocation
 
@@ -1354,7 +1354,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 #pragma mark -
 
 
-@implementation SVWebEditorView (WebDelegates)
+@implementation WEKWebEditorView (WebDelegates)
 
 #pragma mark WebFrameLoadDelegate
 

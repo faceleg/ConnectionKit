@@ -14,7 +14,7 @@
 #import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 #import "NSArray+Karelia.h"
 #import "DOMNode+Karelia.h"
@@ -287,7 +287,7 @@
     
     BOOL result = NO;
     
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     SVSidebarPageletsController *pageletsController = [[self webEditorViewController] valueForKeyPath:@"_selectableObjectsController.sidebarPageletsController"];
     
     

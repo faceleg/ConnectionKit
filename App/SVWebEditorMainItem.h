@@ -11,9 +11,9 @@
 
 @interface SVMainWebEditorItem : SVWebEditorItem
 {
-    SVWebEditorView *_webEditor;
+    WEKWebEditorView *_webEditor;
 }
-@property(nonatomic, assign) SVWebEditorView *webEditor;
+@property(nonatomic, assign) WEKWebEditorView *webEditor;
 @end
 
 

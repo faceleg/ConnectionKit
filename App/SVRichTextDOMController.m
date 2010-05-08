@@ -25,7 +25,7 @@
 #import "SVTextAttachment.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 #import "SVWebEditorViewController.h"
 
 #import "NSDictionary+Karelia.h"
@@ -140,7 +140,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     BOOL result = YES;
     
     
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     NSPasteboard *pasteboard = [webEditor insertionPasteboard];
     if (pasteboard)
     {
@@ -324,7 +324,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Does the selection contain a link? If so, make it the selected object
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     DOMRange *selection = [webEditor selectedDOMRange];
     DOMHTMLAnchorElement *anchorElement = [selection editableAnchorElement];
     
@@ -362,7 +362,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
 {
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     
     
     // Create text attachment for the graphic
@@ -440,7 +440,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     if (![webEditor shouldChangeText:self]) return;
     
     
@@ -495,7 +495,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     if (!result)
     {
-        SVWebEditorView *webEditor = [self webEditor];
+        WEKWebEditorView *webEditor = [self webEditor];
         if ([info draggingSource] == webEditor)
         {
             *proposedOperation = NSDragOperationMove;

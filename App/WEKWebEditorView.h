@@ -1,13 +1,13 @@
 //
-//  SVWebEditorView.h
+//  WEKWebEditorView.h
 //  Sandvox
 //
 //  Created by Mike on 04/09/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-//  An SVWebEditorView object abstracts out some of the functionality we need in Sandvox for performing editing in a webview. With it, you should have no need to access the contained WebView directly; the editor should provide its own API as a wrapper.
-//  The main thing we add to a standard WebView is the concept of selection. In this way SVWebEditorView is a lot like NSTableView and other collection classes; it knows how to display and handle arbitrary content, but relies on a datasource to provide them.
+//  An WEKWebEditorView object abstracts out some of the functionality we need in Sandvox for performing editing in a webview. With it, you should have no need to access the contained WebView directly; the editor should provide its own API as a wrapper.
+//  The main thing we add to a standard WebView is the concept of selection. In this way WEKWebEditorView is a lot like NSTableView and other collection classes; it knows how to display and handle arbitrary content, but relies on a datasource to provide them.
 
 
 #import <WebKit/WebKit.h>
@@ -23,7 +23,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @class SVWebEditorWebView, SVMainWebEditorItem;
 
 
-@interface SVWebEditorView : NSView <NSUserInterfaceValidations>
+@interface WEKWebEditorView : NSView <NSUserInterfaceValidations>
 {
   @private
     // Content
@@ -154,7 +154,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark -
 
 
-@interface SVWebEditorView (EditingSupport)
+@interface WEKWebEditorView (EditingSupport)
 
 #pragma mark Cut, Copy & Paste
 - (IBAction)cut:(id)sender;
@@ -180,7 +180,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark -
 
 
-@interface SVWebEditorView (Dragging)
+@interface WEKWebEditorView (Dragging)
 
 #pragma mark Dragging Source
 - (NSArray *)draggedItems;
@@ -214,19 +214,19 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
-- (SVWebEditorItem <SVWebEditorText> *)webEditor:(SVWebEditorView *)sender
+- (SVWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
                             textBlockForDOMRange:(DOMRange *)range;
 
-- (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
+- (BOOL)webEditor:(WEKWebEditorView *)sender deleteItems:(NSArray *)items;
 
 // Return YES if the delegate wants to handle link creation itself
-- (BOOL)webEditor:(SVWebEditorView *)sender createLink:(id)actionSender;
+- (BOOL)webEditor:(WEKWebEditorView *)sender createLink:(id)actionSender;
 
 
 #pragma mark Controlling Drag Behavior
 
 // Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
-- (NSUInteger)webEditor:(SVWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
+- (NSUInteger)webEditor:(WEKWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
 
 /*!
  @method webEditorView:writeItems:toPasteboard:
@@ -235,7 +235,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
  @param pasteboard
  @result YES if the items could be written to the pasteboard
  */
-- (BOOL)webEditor:(SVWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)webEditor:(WEKWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
 
 
 @end
@@ -249,7 +249,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark Selection
 
 //  Only called in response to selection changes from the GUI and action methods. Could make it more flexible one day if needed
-- (BOOL)webEditor:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+- (BOOL)webEditor:(WEKWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
    
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
@@ -257,13 +257,13 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
    
 #pragma mark Loading
 
-- (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
-- (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
+- (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
+- (void)webEditorViewDidFinishLoading:(WEKWebEditorView *)sender;
 
 // Much like -webView:didReceiveTitle:forFrame:
-- (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
+- (void)webEditor:(WEKWebEditorView *)sender didReceiveTitle:(NSString *)title;
 
-- (NSURLRequest *)webEditor:(SVWebEditorView *)sender
+- (NSURLRequest *)webEditor:(WEKWebEditorView *)sender
             willSendRequest:(NSURLRequest *)request
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
@@ -271,18 +271,18 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Navigation
 
-     - (void)webEditor:(SVWebEditorView *)webEditorView
+     - (void)webEditor:(WEKWebEditorView *)webEditorView
 handleNavigationAction:(NSDictionary *)actionInformation
                request:(NSURLRequest *)request;
 
 
 #pragma mark Editing
 - (void)webEditorWillChange:(NSNotification *)notification;
-- (BOOL)webEditor:(SVWebEditorView *)webEditor doCommandBySelector:(SEL)action;
+- (BOOL)webEditor:(WEKWebEditorView *)webEditor doCommandBySelector:(SEL)action;
 
 
 #pragma mark Web Editor Items
-- (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+- (void)webEditor:(WEKWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
 
 
 @end
@@ -294,9 +294,9 @@ extern NSString *SVWebEditorViewDidChangeSelectionNotification;
 #pragma mark -
 
 
-@interface SVWebEditorView (SPI)
+@interface WEKWebEditorView (SPI)
 
-// Do NOT attempt to edit this WebView in any way. The whole point of SVWebEditorView is to provide a more structured API around a WebView's editing capabilities. You should only ever be modifying the WebView through the API SVWebEditorView and its Date Source/Delegate provides.
+// Do NOT attempt to edit this WebView in any way. The whole point of WEKWebEditorView is to provide a more structured API around a WebView's editing capabilities. You should only ever be modifying the WebView through the API WEKWebEditorView and its Date Source/Delegate provides.
 @property(nonatomic, retain, readonly) WebView *webView;
 
 // Returns YES if the web editor is taking command of the drop, rather than the WebView.

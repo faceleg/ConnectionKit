@@ -7,7 +7,7 @@
 //
 
 #import "SVWebEditorItem.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -37,7 +37,7 @@
 
 #pragma mark Accessors
 
-- (SVWebEditorView *)webEditor
+- (WEKWebEditorView *)webEditor
 {
     return [[self parentWebEditorItem] webEditor];
 }
@@ -80,7 +80,7 @@
     
     
     // Let delegate know
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     [[webEditor delegate] webEditor:webEditor didAddItem:controller];
 }
 

@@ -11,7 +11,7 @@
 
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 
 @implementation SVGraphicDOMController

@@ -11,7 +11,7 @@
 #import <WebKit/WebKit.h>
 
 
-@class SVWebEditorView;
+@class WEKWebEditorView;
 @protocol SVWebEditorWebUIDelegate;
 
 
@@ -20,7 +20,7 @@
     BOOL    _delegateWillHandleDraggingInfo;
 }
 
-@property(nonatomic, readonly) SVWebEditorView *webEditorView;
+@property(nonatomic, readonly) WEKWebEditorView *webEditorView;
 
 @property(nonatomic, readonly) BOOL delegateWillHandleDraggingInfo;
 

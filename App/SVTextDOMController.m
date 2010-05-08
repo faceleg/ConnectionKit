@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 #import "SVHTMLTextBlock.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
@@ -175,7 +175,7 @@
 
 - (void)webEditorDidChange:(NSNotification *)notification;
 {
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     if ([notification object] != webEditor) return;
     
     
@@ -276,7 +276,7 @@
 {
     // At this point we know the TYPE of change will be suitable for undo coalescing, but not whether the specific event is.
     // In practice this means that we want to ignore the change if the insertion point has been moved
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     if (![[webEditor selectedDOMRange] isEqualToDOMRange:[self undoCoalescingSelectedDOMRange]])
     {
         [self breakUndoCoalescing];

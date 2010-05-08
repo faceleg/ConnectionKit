@@ -12,7 +12,7 @@
 #import "SVSelectionBorder.h"
 
 
-@class SVWebEditorView;
+@class WEKWebEditorView;
 
 
 @interface SVWebEditorItem : KSDOMController
@@ -26,7 +26,7 @@
     BOOL    _editing;
 }
 
-@property(nonatomic, assign, readonly) SVWebEditorView *webEditor;  // NOT KVO-compliant
+@property(nonatomic, assign, readonly) WEKWebEditorView *webEditor;  // NOT KVO-compliant
 
 
 #pragma mark Tree

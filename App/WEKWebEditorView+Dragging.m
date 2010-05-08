@@ -1,5 +1,5 @@
 //
-//  SVWebEditorView+Dragging.m
+//  WEKWebEditorView+Dragging.m
 //  Sandvox
 //
 //  Created by Mike on 07/10/2009.
@@ -7,7 +7,7 @@
 //
 
 
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 #import "SVWebEditorItem.h"
 
 #import "DOMNode+Karelia.h"
@@ -17,7 +17,7 @@
 #define WebDragImageAlpha 0.75f // name & value copied from WebKit
 
 
-@interface SVWebEditorView (DraggingPrivate)
+@interface WEKWebEditorView (DraggingPrivate)
 
 // Dragging destination
 - (void)removeDragCaretFromDOMNodes;
@@ -28,7 +28,7 @@
 #pragma mark -
 
 
-@implementation SVWebEditorView (Dragging)
+@implementation WEKWebEditorView (Dragging)
 
 #pragma mark Drag Types
 

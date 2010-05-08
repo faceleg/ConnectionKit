@@ -10,7 +10,7 @@
 
 #import "SVSiteItemViewController.h"
 #import "SVHTMLTemplateParser.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
@@ -25,7 +25,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @interface SVWebEditorViewController : KSWebViewController <SVSiteItemViewController, SVWebEditorDataSource, SVWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {
     // View
-    SVWebEditorView *_webEditorView;
+    WEKWebEditorView *_webEditorView;
     BOOL            _readyToAppear;
     
     // Model
@@ -51,7 +51,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
 #pragma mark View
-@property(nonatomic, retain) SVWebEditorView *webEditor;
+@property(nonatomic, retain) WEKWebEditorView *webEditor;
 
 
 #pragma mark Updating
@@ -132,7 +132,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark -
 
 
-@interface SVWebEditorView (SVWebEditorViewController)
+@interface WEKWebEditorView (SVWebEditorViewController)
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
 @end

@@ -1,5 +1,5 @@
 //
-//  SVWebEditorView+EditingSupport.m
+//  WEKWebEditorView+EditingSupport.m
 //  Sandvox
 //
 //  Created by Mike on 15/02/2010.
@@ -7,7 +7,7 @@
 //
 
 
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 #import "SVLinkInspector.h"
 
@@ -28,7 +28,7 @@
 #pragma mark -
 
 
-@implementation SVWebEditorView (EditingSupport)
+@implementation WEKWebEditorView (EditingSupport)
 
 #pragma mark Cut, Copy & Paste
 
@@ -73,7 +73,7 @@
     return result;
 }
 
-// Presently, SVWebEditorView doesn't implement paste directly itself, so we can jump in here
+// Presently, WEKWebEditorView doesn't implement paste directly itself, so we can jump in here
 - (IBAction)paste:(id)sender;
 {
     if (![[self delegate] webEditor:self doCommandBySelector:_cmd])

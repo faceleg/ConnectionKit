@@ -99,7 +99,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)loadView
 {
-    SVWebEditorView *editor = [[SVWebEditorView alloc] init];
+    WEKWebEditorView *editor = [[WEKWebEditorView alloc] init];
     
     [self setView:editor];
     [self setWebEditor:editor];
@@ -124,7 +124,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 @synthesize webEditor = _webEditorView;
-- (void)setWebEditor:(SVWebEditorView *)editor
+- (void)setWebEditor:(WEKWebEditorView *)editor
 {
     [[self webEditor] setDelegate:nil];
     [[self webEditor] setDataSource:nil];
@@ -249,9 +249,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [pageHTML release];
 }
 
-- (void)webEditorViewDidFinishLoading:(SVWebEditorView *)sender;
+- (void)webEditorViewDidFinishLoading:(WEKWebEditorView *)sender;
 {
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     DOMDocument *domDoc = [webEditor HTMLDocument];
     OBASSERT(domDoc);
     
@@ -579,7 +579,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
-// Presently, SVWebEditorView doesn't implement paste directly itself, so we can jump in here
 - (IBAction)paste:(id)sender;
 {
     NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
@@ -620,7 +619,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectionToRestore release]; _selectionToRestore = [range copy];
     
     // Push opposite onto undo stack
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     NSUndoManager *undoManager = [webEditor undoManager];
     
     [[undoManager prepareWithInvocationTarget:self]
@@ -715,13 +714,13 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark WebEditorViewDataSource
 
-- (SVWebEditorItem <SVWebEditorText> *)webEditor:(SVWebEditorView *)sender
+- (SVWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
                             textBlockForDOMRange:(DOMRange *)range;
 {
     return [self textAreaForDOMRange:range];
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)sender deleteItems:(NSArray *)items;
+- (BOOL)webEditor:(WEKWebEditorView *)sender deleteItems:(NSArray *)items;
 {
     NSArray *objects = [items valueForKey:@"representedObject"];
     if ([objects isEqualToArray:[[self selectedObjectsController] selectedObjects]])
@@ -736,7 +735,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return YES;
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
+- (BOOL)webEditor:(WEKWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
     SVTextDOMController *textController = [self focusedTextController];
@@ -804,20 +803,20 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 }
 
 // Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
-- (NSUInteger)webEditor:(SVWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
+- (NSUInteger)webEditor:(WEKWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
 {
     return (WebDragDestinationActionEdit | WebDragDestinationActionDHTML);
 }
 
 #pragma mark SVWebEditorViewDelegate
 
-- (void)webEditorViewDidFirstLayout:(SVWebEditorView *)sender;
+- (void)webEditorViewDidFirstLayout:(WEKWebEditorView *)sender;
 {
     OBPRECONDITION(sender == [self webEditor]);
     [self webViewDidFirstLayout];
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+- (BOOL)webEditor:(WEKWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
 {
     //  Update our content controller's selected objects to reflect the new selection in the Web Editor View
     
@@ -852,7 +851,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)sender createLink:(SVLinkManager *)actionSender;
+- (BOOL)webEditor:(WEKWebEditorView *)sender createLink:(SVLinkManager *)actionSender;
 {
     if (![sender selectedDOMRange])
     {
@@ -864,12 +863,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return NO;
 }
 
-- (void)webEditor:(SVWebEditorView *)sender didReceiveTitle:(NSString *)title;
+- (void)webEditor:(WEKWebEditorView *)sender didReceiveTitle:(NSString *)title;
 {
     [self setTitle:title];
 }
 
-- (NSURLRequest *)webEditor:(SVWebEditorView *)sender
+- (NSURLRequest *)webEditor:(WEKWebEditorView *)sender
             willSendRequest:(NSURLRequest *)request
            redirectResponse:(NSURLResponse *)redirectResponse
              fromDataSource:(WebDataSource *)dataSource;
@@ -909,7 +908,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return request;
 }
 
-- (void)webEditor:(SVWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
+- (void)webEditor:(WEKWebEditorView *)sender handleNavigationAction:(NSDictionary *)actionInfo request:(NSURLRequest *)request;
 {
     NSURL *URL = [actionInfo objectForKey:@"WebActionOriginalURLKey"];
     
@@ -967,7 +966,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)webEditorWillChange:(NSNotification *)notification;
 {
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     NSUndoManager *undoManager = [webEditor undoManager];
     
     // There's no point recording the action if registration is disabled. Especially since grabbing the selection is a relatively expensive op
@@ -978,7 +977,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
-- (BOOL)webEditor:(SVWebEditorView *)webEditor doCommandBySelector:(SEL)action;
+- (BOOL)webEditor:(WEKWebEditorView *)webEditor doCommandBySelector:(SEL)action;
 {
     // Take over pasting if the Web Editor can't support it
     if (action == @selector(paste:) && ![webEditor validateAction:action])
@@ -990,7 +989,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return NO;
 }
 
-- (void)webEditor:(SVWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+- (void)webEditor:(WEKWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
 {
     OBPRECONDITION(sender == [self webEditor]);
     [self registerWebEditorItem:item];
@@ -1000,7 +999,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (NSObject *)destinationForDraggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
-    SVWebEditorView *webEditor = [self webEditor];
+    WEKWebEditorView *webEditor = [self webEditor];
     
     NSDictionary *element = [[webEditor webView] elementAtPoint:
                              [webEditor convertPointFromBase:[dragInfo draggingLocation]]];
@@ -1093,7 +1092,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 #pragma mark -
 
 
-@implementation SVWebEditorView (SVWebEditorViewController)
+@implementation WEKWebEditorView (SVWebEditorViewController)
 
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {

@@ -9,7 +9,7 @@
 #import "SVImageDOMController.h"
 
 #import "SVImage.h"
-#import "SVWebEditorView.h"
+#import "WEKWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
 
