@@ -247,8 +247,8 @@
                 DOMNode *node = [[self sidebarDivElement] lastChild];
                 DOMRange *range = [[node ownerDocument] createRange];
                 [range setStartAfter:node];
-                [[self webEditor] moveDragCaretToDOMRange:range];
-                //[sidebarController moveDragCaretToAfterDOMNode:node];
+                //[[self webEditor] moveDragCaretToDOMRange:range];
+                [self moveDragCaretToAfterDOMNode:node];
             }
             else
             {
@@ -256,8 +256,8 @@
                 
                 DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
                 [range setStartBefore:[aPageletItem HTMLElement]];
-                [[self webEditor] moveDragCaretToDOMRange:range];
-                //[sidebarController moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
+                //[[self webEditor] moveDragCaretToDOMRange:range];
+                [self moveDragCaretToAfterDOMNode:[[aPageletItem HTMLElement] previousSibling]];
             }
         }
     }
@@ -270,6 +270,11 @@
     }
     
     return result;
+}
+
+- (void)draggingExited:(id <NSDraggingInfo>)sender;
+{
+    [self removeDragCaret];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
