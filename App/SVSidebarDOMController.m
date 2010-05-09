@@ -332,7 +332,7 @@
         if ([pagelets count] < 1)
         {
             pagelets = [KTElementPlugInWrapper graphicsFomPasteboard:pasteboard
-                                                        insertIntoManagedObjectContext:moc];
+                                      insertIntoManagedObjectContext:moc];
         }
         
         for (SVGraphic *aPagelet in pagelets)

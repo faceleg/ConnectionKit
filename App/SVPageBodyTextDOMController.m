@@ -146,6 +146,14 @@
         [context release];
         
         
+        // Remove source too?
+        NSDragOperation mask = [dragInfo draggingSourceOperationMask];
+        if (mask & NSDragOperationMove | mask & NSDragOperationGeneric)
+        {
+            [[self webEditor] removeDraggedItems];
+        }
+        
+        
         // Finish edit
         [[self webEditor] didChangeText];
         result = YES;
