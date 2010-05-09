@@ -75,8 +75,13 @@
     {
         // What action to take though?
         NSDragOperation mask = [sender draggingSourceOperationMask];
-        result = mask & NSDragOperationCopy;
-        if (!result) result = mask & NSDragOperationMove;
+        if ([sender draggingSource] == [self webEditor])
+        {
+            result = mask & NSDragOperationGeneric;
+        }
+        
+        if (!result) result = mask & NSDragOperationCopy;
+        if (!result) result = mask & NSDragOperationGeneric;
         
         if (result) [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
     }

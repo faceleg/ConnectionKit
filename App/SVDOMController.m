@@ -143,7 +143,7 @@
     
     if (isLocal && [self parentWebEditorItem] == [[self HTMLContext] sidebarDOMController])
     {
-        result = result | NSDragOperationMove;
+        result = result | NSDragOperationMove | NSDragOperationGeneric;
     }
     
     return result;
