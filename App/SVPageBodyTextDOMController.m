@@ -13,6 +13,8 @@
 #import "SVHTMLContext.h"
 #import "KTPage.h"
 
+#import "DOMNode+Karelia.h"
+
 
 @implementation SVPageBodyTextDOMController
 
@@ -40,12 +42,32 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
-    if (_dropNode != _dragCaret)
+    DOMElement *element = [self HTMLElement];
+    NSPoint location = [[element documentView] convertPointFromBase:[sender draggingLocation]];
+    
+    DOMNode *aNode = [[self textHTMLElement] firstChildOfClass:[DOMElement class]];
+    while (aNode)
     {
-        [self moveDragCaretToBeforeDOMNode:_dropNode];
+        NSRect bounds = [aNode boundingBox];
+        CGFloat mid = NSMidY(bounds);
+        
+        if (location.y < mid)
+        {
+            [self moveDragCaretToBeforeDOMNode:aNode];
+            break;
+        }
+        
+        aNode = [aNode nextSiblingOfClass:[DOMElement class]];
     }
     
-    return NSDragOperationEvery;
+    if (!aNode)
+    {
+        // No match was found, so insert at end
+    }
+        
+    
+    
+    return NSDragOperationCopy;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
@@ -60,7 +82,6 @@
     if (!result)
     {
         result = self;
-        _dropNode = node;
     }
     
     return result;
@@ -83,7 +104,7 @@
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
 {
     // Do we actually need do anything?
-    if ([_dragCaret nextSibling] == node) return;
+    if (node == _dragCaret || [_dragCaret nextSibling] == node) return;
     
     
     [self removeDragCaret];
@@ -95,9 +116,14 @@
     [_dragCaret setAttribute:@"class" value:@"pagelet wide center untitled"];
     
     DOMCSSStyleDeclaration *style = [_dragCaret style];
+    [style setMarginTop:@"0px"];
+    [style setMarginBottom:@"0px"];
+    [style setPaddingTop:@"0px"];
+    [style setPaddingBottom:@"0px"];
+    
     [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
     
-    [[node parentNode] insertBefore:_dragCaret refChild:node];
+    [[self textHTMLElement] insertBefore:_dragCaret refChild:node];
     [style setHeight:@"75px"];
 }
 

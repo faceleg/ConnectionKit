@@ -15,7 +15,6 @@
 {
   @private
     DOMElement  *_dragCaret;
-    DOMNode     *_dropNode; // weak ref
 }
 
 - (IBAction)insertPagelet:(id)sender;
