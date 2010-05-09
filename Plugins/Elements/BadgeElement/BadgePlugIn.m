@@ -165,8 +165,8 @@ static NSArray *sAltStrings = nil;
     NSString *resourcePath = [[self bundle] pathForImageResource:[self currentBadgeName]];
     NSURL *resourceURL = [NSURL fileURLWithPath:resourcePath];
     
-    // add resource to context and return URL (URLOfResource: claims it calls addResource: internally)
-    NSURL *result = [[SVHTMLContext currentContext] addResourceWithURL:resourceURL];
+    // add resource to context
+    NSURL *result = [[SVPageletPlugIn currentContext] addResourceWithURL:resourceURL];
     return result;
 }
 

@@ -186,7 +186,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 
 - (NSString *)generateHTML
 {
-	SVHTMLContext *context = [SVHTMLContext currentContext];
+	id <SVPlugInContext> context = [SVPageletPlugIn currentContext];
 	
 	
 	/*
@@ -202,7 +202,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	
 	// Get the appropriate code for the publishing mode
 	NSString *HTMLCode = nil;
-	if (kSVHTMLGenerationPurposeNormal == context.generationPurpose)
+	if ([context isForPublishing])
 	{
 		HTMLCode = [service publishingHTMLCode];
 	}
@@ -225,10 +225,12 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if (onlineImagePath)
 	{
 		// How we reference the path depends on publishing/previewing
-		if (kSVHTMLGenerationPurposeNormal == context.generationPurpose) {
+		if ([context isForPublishing])
+        {
 			onlineImagePath = [[[[[self page] site] hostProperties] URLForResourceFile:onlineImagePath] absoluteString];
 		}
-		else {
+		else
+        {
 			NSURL *baseURL = [NSURL fileURLWithPath:onlineImagePath];
 			onlineImagePath = [baseURL absoluteString];
 		}
@@ -243,7 +245,8 @@ NSString *IMWantBorderKey = @"wantBorder";
 	if (offlineImagePath)
 	{
 		// How we reference the path depends on publishing/previewing
-		if (kSVHTMLGenerationPurposeNormal == context.generationPurpose) {
+		if ([context isForPublishing])
+        {
 			offlineImagePath = [[[[[self page] site] hostProperties] URLForResourceFile:offlineImagePath] absoluteString];
 		}
 		else {
