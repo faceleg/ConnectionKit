@@ -68,10 +68,22 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
+    NSDragOperation result = NSDragOperationNone;
+    
     DOMNode *aNode = [self childForDraggingInfo:sender];
-    [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
+    if (aNode)
+    {
+        // What action to take though?
+        NSDragOperation mask = [sender draggingSourceOperationMask];
+        result = mask & NSDragOperationCopy;
+        if (!result) result = mask & NSDragOperationMove;
         
-    return NSDragOperationCopy;
+        if (result) [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
+    }
+    
+    if (!result) [self removeDragCaret];
+        
+    return result;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
