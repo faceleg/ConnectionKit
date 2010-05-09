@@ -8,14 +8,14 @@
 //  Concrete implementation of the SVWebEditorItem protocol
 
 
-#import "KSDOMController.h"
+#import "WEKDOMController.h"
 #import "SVSelectionBorder.h"
 
 
 @class WEKWebEditorView;
 
 
-@interface SVWebEditorItem : KSDOMController
+@interface SVWebEditorItem : WEKDOMController
 {
   @private
     // Tree
