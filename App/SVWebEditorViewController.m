@@ -1072,13 +1072,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)sender;
 {
-    BOOL result = YES;
-    
-    if ([_draggingDestination respondsToSelector:_cmd])
-    {
-        result = [_draggingDestination performDragOperation:sender];
-    }
-    
+    BOOL result = [_draggingDestination performDragOperation:sender];
     return result;
 }
 
