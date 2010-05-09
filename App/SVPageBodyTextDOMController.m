@@ -20,10 +20,6 @@
 
 - (BOOL)allowsBlockGraphics; { return YES; }
 
-
-
-
-
 - (IBAction)insertPagelet:(id)sender;
 {
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
@@ -44,14 +40,59 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
-    return NSDragOperationLink;
+    if (_dropNode != _dragCaret)
+    {
+        [self moveDragCaretToBeforeDOMNode:_dropNode];
+    }
+    
+    return NSDragOperationEvery;
 }
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
 {
     WEKWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
-    if (!result) result = self;
+    
+    if (!result)
+    {
+        result = self;
+        _dropNode = node;
+    }
+    
     return result;
+}
+
+#pragma mark Drag Caret
+
+- (void)removeDragCaret;
+{
+    // Schedule removal
+    [[_dragCaret style] setHeight:@"0px"];
+    
+    [_dragCaret performSelector:@selector(ks_removeFromParentNode)
+                     withObject:nil
+                     afterDelay:0.25];
+    
+    [_dragCaret release]; _dragCaret = nil;
+}
+
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+{
+    // Do we actually need do anything?
+    if ([_dragCaret nextSibling] == node) return;
+    
+    
+    [self removeDragCaret];
+    
+    OBASSERT(!_dragCaret);
+    _dragCaret = [[[self HTMLElement] ownerDocument] createElement:@"div"];
+    [_dragCaret retain];
+    
+    DOMCSSStyleDeclaration *style = [_dragCaret style];
+    [style setWidth:@"100%"];
+    [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
+    
+    [[node parentNode] insertBefore:_dragCaret refChild:node];
+    [style setHeight:@"75px"];
 }
 
 @end

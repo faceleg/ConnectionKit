@@ -12,7 +12,18 @@
 
 
 @interface SVPageBodyTextDOMController : SVRichTextDOMController
+{
+  @private
+    DOMElement  *_dragCaret;
+    DOMNode     *_dropNode; // weak ref
+}
 
 - (IBAction)insertPagelet:(id)sender;
+
+
+#pragma mark Drag Caret
+- (void)removeDragCaret;
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+
 
 @end
