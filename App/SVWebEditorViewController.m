@@ -184,7 +184,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self stopObservingDependencies];
     
     // ...and DOM controllers.
-    [[[self webEditor] mainItem] setChildWebEditorItems:nil];
+    [[[self webEditor] rootItem] setChildWebEditorItems:nil];
     [_textDOMControllers removeAllObjects];
     
     
@@ -267,7 +267,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     for (WEKWebEditorItem *anItem in controllers)
     {
         // Insert into the tree if a top-level item.
-        if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
+        if (![anItem parentWebEditorItem]) [[webEditor rootItem] addChildWebEditorItem:anItem];
     }
     
     [[self selectedObjectsController] setSelectedObjects:selection];    // restore selection
@@ -281,7 +281,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (id anObject in selectedObjects)
     {
-        id newItem = [[[self webEditor] mainItem] descendantItemWithRepresentedObject:anObject];
+        id newItem = [[[self webEditor] rootItem] descendantItemWithRepresentedObject:anObject];
         if ([newItem isSelectable]) [newSelection addObject:newItem];
     }
     
@@ -364,7 +364,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
     else
     {
-        [[[self webEditor] mainItem] updateIfNeeded];
+        [[[self webEditor] rootItem] updateIfNeeded];
         _willUpdate = NO;
         
         [self didUpdate];
@@ -1006,7 +1006,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
     
-    id result = [[webEditor mainItem] hitTestDOMNode:node draggingInfo:dragInfo];
+    id result = [[webEditor rootItem] hitTestDOMNode:node draggingInfo:dragInfo];
     
     if (!result)
     {

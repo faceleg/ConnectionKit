@@ -20,16 +20,16 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 @protocol WEKWebEditorDataSource, WEKWebEditorDelegate;
 @class WEKWebEditorItem, SVWebEditorTextRange;
-@class WEKWebView, SVMainWebEditorItem;
+@class WEKWebView, WEKRootItem;
 
 
 @interface WEKWebEditorView : NSView <NSUserInterfaceValidations>
 {
   @private
     // Content
-    WEKWebView              *_webView;
-    SVMainWebEditorItem             *_mainItem;
-    BOOL    _isStartingLoad;
+    WEKWebView  *_webView;
+    WEKRootItem *_rootItem;
+    BOOL        _isStartingLoad;
     
     // Selection
     NSResponder <SVWebEditorText>   *_focusedText;
@@ -78,7 +78,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // Blocks until either loading is finished or date is reached. Returns YES if the former.
 - (BOOL)loadUntilDate:(NSDate *)date;
 
-@property(nonatomic, readonly) WEKWebEditorItem *mainItem;   // add your items here after loading finishes
+@property(nonatomic, readonly) WEKWebEditorItem *rootItem;   // add your items here after loading finishes
 - (void)insertItem:(WEKWebEditorItem *)item; // inserts the item into the tree in the place that matches the DOM
 
 

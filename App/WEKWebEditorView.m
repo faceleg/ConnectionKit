@@ -8,7 +8,7 @@
 
 #import "WEKWebEditorView.h"
 #import "WEKWebView.h"
-#import "SVWebEditorMainItem.h"
+#import "WEKRootItem.h"
 #import "SVWebEditorTextRange.h"
 
 #import "KTApplication.h"
@@ -102,8 +102,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // ivars
-    _mainItem = [[SVMainWebEditorItem alloc] init];
-    [_mainItem setWebEditor:self];
+    _rootItem = [[WEKRootItem alloc] init];
+    [_rootItem setWebEditor:self];
     
     _selectedItems = [[NSMutableArray alloc] init];
     
@@ -179,8 +179,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 - (void)dealloc
 {
-    [_mainItem setWebEditor:nil];
-    [_mainItem release];
+    [_rootItem setWebEditor:nil];
+    [_rootItem release];
     
     [_selectedItems release];
     OBASSERT(!_changingTextController);
@@ -232,12 +232,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-@synthesize mainItem = _mainItem;
+@synthesize rootItem = _rootItem;
 
 - (void)insertItem:(WEKWebEditorItem *)item;
 {
     // Search the tree for the appropriate parent
-    WEKWebEditorItem *parent = [[self mainItem] hitTestDOMNode:[item HTMLElement]];
+    WEKWebEditorItem *parent = [[self rootItem] hitTestDOMNode:[item HTMLElement]];
     
     // But does the parent already have children that should move to become children of the new item?
     for (WEKWebEditorItem *aChild in [parent childWebEditorItems])
@@ -272,14 +272,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (!domRange) return nil;
     
     
-    WEKWebEditorItem *startItem = [[self mainItem] hitTestDOMNode:[domRange startContainer]];
+    WEKWebEditorItem *startItem = [[self rootItem] hitTestDOMNode:[domRange startContainer]];
     while (startItem && ![startItem representedObject])
     {
         startItem = [startItem parentWebEditorItem];
     }
     
     
-    WEKWebEditorItem *endItem = [[self mainItem] hitTestDOMNode:[domRange endContainer]];
+    WEKWebEditorItem *endItem = [[self rootItem] hitTestDOMNode:[domRange endContainer]];
     while (endItem && ![endItem representedObject])
     {
         endItem = [endItem parentWebEditorItem];
@@ -303,10 +303,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (startObject && endObject)
     {
-        WEKWebEditorItem *startItem = [[self mainItem] descendantItemWithRepresentedObject:startObject];
+        WEKWebEditorItem *startItem = [[self rootItem] descendantItemWithRepresentedObject:startObject];
         if (startItem)
         {
-            WEKWebEditorItem *endItem = [[self mainItem] descendantItemWithRepresentedObject:endObject];
+            WEKWebEditorItem *endItem = [[self rootItem] descendantItemWithRepresentedObject:endObject];
             if (endItem)
             {
                 [textRange populateDOMRange:domRange
@@ -835,7 +835,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     while (!result && index > -2)
     {
-        WEKWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self mainItem];
+        WEKWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self rootItem];
          
         // The child matching the node may not be selectable. If so, search its children
         while (parentItem)

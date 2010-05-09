@@ -1,5 +1,5 @@
 //
-//  SVWebEditorMainItem.h
+//  WEKRootItem.h
 //  Sandvox
 //
 //  Created by Mike on 15/02/2010.
@@ -9,11 +9,14 @@
 #import "WEKWebEditorItem.h"
 
 
-@interface SVMainWebEditorItem : WEKWebEditorItem
+@interface WEKRootItem : WEKWebEditorItem
 {
-    WEKWebEditorView *_webEditor;
+  @private
+    WEKWebEditorView *_webEditor;   //weak ref
 }
+
 @property(nonatomic, assign) WEKWebEditorView *webEditor;
+
 @end
 
 
