@@ -81,6 +81,7 @@
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea
 - (BOOL)isForPublishing;
+- (BOOL)liveDataFeeds;
 
 // Call if your plug-in supports only particular HTML doc types. Otherwise, leave along! Calling mid-write may have no immediate effect; instead the system will try another write after applying the limit.
 - (void)limitToMaxDocType:(KTDocType)docType;
