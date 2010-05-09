@@ -69,7 +69,7 @@
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
     DOMNode *aNode = [self childForDraggingInfo:sender];
-    [self moveDragCaretToBeforeDOMNode:aNode];
+    [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
         
     return NSDragOperationCopy;
 }
@@ -112,7 +112,8 @@
         
         
         // Insert HTML into DOM, replacing caret
-        [self moveDragCaretToBeforeDOMNode:[self childForDraggingInfo:dragInfo]];
+        [self moveDragCaretToBeforeDOMNode:[self childForDraggingInfo:dragInfo]
+                              draggingInfo:dragInfo];
         OBASSERT(_dragCaret);
         
         [(DOMHTMLElement *)_dragCaret setOuterHTML:html];
@@ -166,7 +167,7 @@
     [_dragCaret release]; _dragCaret = nil;
 }
 
-- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node;
+- (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     // Do we actually need do anything?
     if (node == _dragCaret || [_dragCaret nextSibling] == node) return;
@@ -189,7 +190,9 @@
     [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
     
     [[self textHTMLElement] insertBefore:_dragCaret refChild:node];
-    [style setHeight:@"75px"];
+    
+    NSNumber *height = [NSNumber numberWithFloat:[[dragInfo draggedImage] size].height];
+    [style setHeight:[NSString stringWithFormat:@"%@px", height]];
 }
 
 @end
@@ -198,3 +201,4 @@
 @implementation SVPageBody (SVPageBodyTextDOMController)
 - (Class)DOMControllerClass { return [SVPageBodyTextDOMController class]; }
 @end
+
