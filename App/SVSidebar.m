@@ -73,4 +73,6 @@
 
 - (NSString *)editingElementID; { return @"sidebar-container"; }
 
+- (BOOL)shouldPublishEditingElementID; { return YES; }
+
 @end
