@@ -378,7 +378,7 @@
     [self removeDragCaret];
     
     OBASSERT(!_dragCaret);
-    _dragCaret = [[[self webEditor] HTMLDocument] createElement:@"div"];
+    _dragCaret = [[[self HTMLElement] ownerDocument] createElement:@"div"];
     [_dragCaret retain];
     
     DOMCSSStyleDeclaration *style = [_dragCaret style];
