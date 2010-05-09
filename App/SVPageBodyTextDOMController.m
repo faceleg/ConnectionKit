@@ -63,6 +63,7 @@
     if (!aNode)
     {
         // No match was found, so insert at end
+        [self moveDragCaretToBeforeDOMNode:nil];
     }
         
     
