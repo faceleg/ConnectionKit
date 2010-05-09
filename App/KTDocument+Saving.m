@@ -892,7 +892,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:thumbnailHTML];
     
     [context setLiveDataFeeds:NO];
-    [context setCurrentPage:[[self site] rootPage]];
+    [context setPage:[[self site] rootPage]];
     
     [[[self site] rootPage] writeHTML:context];
 	[context release];
@@ -1091,7 +1091,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSMutableString *result = [NSMutableString string];
     SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] initWithStringWriter:result];
     
-    [context setCurrentPage:[[self site] rootPage]];
+    [context setPage:[[self site] rootPage]];
     
     [[[self site] rootPage] writeHTML:context];
     [context release];

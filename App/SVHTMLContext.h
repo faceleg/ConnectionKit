@@ -148,7 +148,7 @@ typedef enum {
 
 
 // In for compatibility, overrides -baseURL
-@property(nonatomic, retain) KTPage *currentPage;
+@property(nonatomic, retain) KTPage *page;
 
 @end
 

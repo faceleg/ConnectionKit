@@ -32,7 +32,7 @@
                                            insertIntoManagedObjectContext:context];
     
     [self addGraphic:graphic placeInline:NO];
-    [graphic awakeFromInsertIntoPage:(id <SVPage>)[[self HTMLContext] currentPage]];
+    [graphic awakeFromInsertIntoPage:(id <SVPage>)[[self HTMLContext] page]];
 }
 
 #pragma mark Dragging Destination

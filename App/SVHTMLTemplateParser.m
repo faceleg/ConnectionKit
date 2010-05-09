@@ -140,7 +140,7 @@
 	
 	if (result)
 	{
-		KTPage *page = [[SVHTMLContext currentContext] currentPage];
+		KTPage *page = [[SVHTMLContext currentContext] page];
         if (page) [[self cache] overrideKey:@"CurrentPage" withValue:page];
         
 		[[self cache] overrideKey:@"HTMLGenerationPurpose" withValue:[self valueForKey:@"HTMLGenerationPurpose"]];
@@ -339,7 +339,7 @@
 	}
 	
 	// Mark for image replacement ONLY if QC supported.
-	KTPage *page = [[SVHTMLContext currentContext] currentPage];
+	KTPage *page = [[SVHTMLContext currentContext] page];
 	if ([page isKindOfClass:[KTArchivePage class]]) page = [page parentPage];
 	OBASSERT([page isKindOfClass:[KTPage class]]);
 
@@ -469,7 +469,7 @@
 		}
         if (resourceFilePath)
         {
-            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLContext currentContext] currentPage]];
+            result = [self resourceFilePath:[NSURL fileURLWithPath:resourceFilePath] relativeToPage:[[SVHTMLContext currentContext] page]];
         }
     }
     
@@ -543,7 +543,7 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);
-	return [context currentPage];
+	return [context page];
 }
 
 - (KTHTMLGenerationPurpose)HTMLGenerationPurpose

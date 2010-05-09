@@ -124,7 +124,7 @@
 {
     // Copy across properties
     [self setIndentationLevel:[context indentationLevel]];
-    [self setCurrentPage:[context currentPage]];
+    [self setPage:[context page]];
     [self setBaseURL:[context baseURL]];
     [self setIncludeStyling:[context includeStyling]];
     [self setLiveDataFeeds:[context liveDataFeeds]];
@@ -238,7 +238,7 @@
 			
 		default:
 		{
-			KTHostProperties *hostProperties = [[[self currentPage] site] hostProperties];
+			KTHostProperties *hostProperties = [[[self page] site] hostProperties];
 			NSURL *resourceFileURL = [hostProperties URLForResourceFile:[resourceURL lastPathComponent]];
 			result = [resourceFileURL stringRelativeToURL:[self baseURL]];
 			break;
@@ -373,8 +373,8 @@
 
 #pragma mark Legacy
 
-@synthesize currentPage = _currentPage;
-- (void)setCurrentPage:(KTPage *)page
+@synthesize page = _currentPage;
+- (void)setPage:(KTPage *)page
 {
     page = [page retain];
     [_currentPage release], _currentPage = page;

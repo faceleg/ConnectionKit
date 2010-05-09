@@ -60,7 +60,7 @@
         }
         else
         {
-            KTMaster *master = [(KTPage *)[context currentPage] master];
+            KTMaster *master = [(KTPage *)[context page] master];
             NSURL *designFileURL = [NSURL URLWithString:filename relativeToURL:[master designDirectoryURL]];
             result = [designFileURL stringRelativeToURL:[context baseURL]];
         }
@@ -76,7 +76,7 @@
     NSMutableString *result = [NSMutableString string];
     
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
-    [context setCurrentPage:self];
+    [context setPage:self];
 	
 	[self writeHTML:context];
     
@@ -108,7 +108,7 @@
 {
     NSString *path = [self uploadPath];
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
-    [context setCurrentPage:self];
+    [context setPage:self];
 	
     [self writeHTML:context];
     [context close];
@@ -177,7 +177,7 @@
     SVHTMLContext *context = [SVHTMLContext currentContext];
     
     SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[[self class] pageMainContentTemplate]
-                                                                        component:[context currentPage]];
+                                                                        component:[context page]];
     
     [context setCurrentHeaderLevel:3];
     [parser parse];
@@ -407,7 +407,7 @@
 - (void)outputMenuForArrayOfDuples:(NSArray *)anArray isTreeTop:(BOOL)isTreeTop
 {
 	SVHTMLContext *context = [SVHTMLContext currentContext];
-	KTPage *currentParserPage = [[SVHTMLContext currentContext] currentPage];
+	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
 
 
 	[context writeNewline];

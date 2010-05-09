@@ -45,7 +45,7 @@
         
         // Give subclasses a chance to ignore the upload
         KTPublishingEngine *publishingEngine = [self publishingEngine];
-        KTPage *page = [self currentPage];
+        KTPage *page = [self page];
         NSString *fullUploadPath = [[publishingEngine baseRemotePath]
                                     stringByAppendingPathComponent:[page uploadPath]];
         NSData *digest = nil;
@@ -105,7 +105,7 @@
     [super addResourceWithURL:resourceURL];
     [[self publishingEngine] publishResourceAtURL:resourceURL];
     
-    return [[[[self currentPage] site] hostProperties] URLForResourceFile:
+    return [[[[self page] site] hostProperties] URLForResourceFile:
             [resourceURL lastPathComponent]];
 }
 

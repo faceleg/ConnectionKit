@@ -221,7 +221,7 @@
     NSString *graphicalTextCode = [self graphicalTextCode];
     if (graphicalTextCode)
     {    
-        KTPage *page = [[SVHTMLContext currentContext] currentPage];
+        KTPage *page = [[SVHTMLContext currentContext] page];
         KTMaster *master = [page master];
         if ([[master enableImageReplacement] boolValue])
         {

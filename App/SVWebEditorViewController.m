@@ -198,7 +198,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSMutableString *pageHTML = [[NSMutableString alloc] init];
 	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:pageHTML];
     
-    [context setCurrentPage:page];
+    [context setPage:page];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
     [context setSidebarPageletsController:[_selectableObjectsController sidebarPageletsController]];
     

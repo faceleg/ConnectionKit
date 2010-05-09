@@ -339,7 +339,7 @@
         {
             [pageletsController insertObject:aPagelet atArrangedObjectIndex:dropIndex];
             
-            [aPagelet didAddToPage:[[self HTMLContext] currentPage]];
+            [aPagelet didAddToPage:[[self HTMLContext] page]];
             result = YES;
         }
         
