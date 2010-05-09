@@ -83,12 +83,13 @@
     
     [self removeDragCaret];
     
+    // Create rough approximation of a pagelet
     OBASSERT(!_dragCaret);
     _dragCaret = [[[self HTMLElement] ownerDocument] createElement:@"div"];
     [_dragCaret retain];
+    [_dragCaret setAttribute:@"class" value:@"pagelet wide center untitled"];
     
     DOMCSSStyleDeclaration *style = [_dragCaret style];
-    [style setWidth:@"100%"];
     [style setProperty:@"-webkit-transition-duration" value:@"0.25s" priority:@""];
     
     [[node parentNode] insertBefore:_dragCaret refChild:node];
