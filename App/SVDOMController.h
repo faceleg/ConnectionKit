@@ -7,7 +7,9 @@
 //
 
 #import "WebEditingKit.h"
+
 #import "SVContentObject.h"
+#import "SVWebEditorHTMLContext.h"
 
 
 @class SVWebEditorHTMLContext, SVWebEditorViewController;
