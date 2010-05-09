@@ -48,6 +48,11 @@
     return NSDragOperationEvery;
 }
 
+- (void)draggingExited:(id <NSDraggingInfo>)sender;
+{
+    [self removeDragCaret];
+}
+
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
 {
     WEKWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
