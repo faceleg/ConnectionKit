@@ -6,10 +6,10 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorItem.h"
+#import "WEKWebEditorItem.h"
 
 
-@interface SVMainWebEditorItem : SVWebEditorItem
+@interface SVMainWebEditorItem : WEKWebEditorItem
 {
     WEKWebEditorView *_webEditor;
 }

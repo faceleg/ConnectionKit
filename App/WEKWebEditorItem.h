@@ -1,11 +1,10 @@
 //
-//  SVWebEditorItem.h
+//  WEKWebEditorItem.h
 //  Sandvox
 //
 //  Created by Mike on 24/09/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
-//  Concrete implementation of the SVWebEditorItem protocol
 
 
 #import "WEKDOMController.h"
@@ -15,12 +14,12 @@
 @class WEKWebEditorView;
 
 
-@interface SVWebEditorItem : WEKDOMController
+@interface WEKWebEditorItem : WEKDOMController
 {
   @private
     // Tree
-    NSArray         *_childControllers;
-    SVWebEditorItem *_parentController;
+    NSArray             *_childControllers;
+    WEKWebEditorItem    *_parentController; // weak ref
     
     BOOL    _selected;
     BOOL    _editing;
@@ -31,8 +30,8 @@
 
 #pragma mark Tree
 @property(nonatomic, copy) NSArray *childWebEditorItems;
-@property(nonatomic, assign) SVWebEditorItem *parentWebEditorItem;  // don't call setter directly
-- (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
+@property(nonatomic, assign) WEKWebEditorItem *parentWebEditorItem;  // don't call setter directly
+- (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
 - (void)removeFromParentWebEditorItem;
 
 
@@ -51,10 +50,10 @@
 
 #pragma mark Searching the Tree
 
-- (SVWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // guaranteed a match (returns self if nothing else fits)
+- (WEKWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // guaranteed a match (returns self if nothing else fits)
 
-- (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
+- (WEKWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
 - (NSEnumerator *)enumerator;
 

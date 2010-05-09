@@ -62,12 +62,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (void)setFocusedText:(id <SVWebEditorText>)text notification:(NSNotification *)notification;
 
 - (BOOL)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection isUIAction:(BOOL)isUIAction;
-- (BOOL)deselectItem:(SVWebEditorItem *)item isUIAction:(BOOL)isUIAction;
+- (BOOL)deselectItem:(WEKWebEditorItem *)item isUIAction:(BOOL)isUIAction;
 
 // Monster method for updating the selection
 // For a WebView-initiated change, specify the new DOM range. Otherwise, pass nil and the WebView's selection will be updated to match.
 - (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
-                         orDeselectItem:(SVWebEditorItem *)itemToDeselect
+                         orDeselectItem:(WEKWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
                                DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
@@ -76,7 +76,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 
 // Getting Item Information
-- (NSArray *)selectableAncestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
+- (NSArray *)selectableAncestorsForItem:(WEKWebEditorItem *)item includeItem:(BOOL)includeItem;
 
 
 // Event handling
@@ -234,13 +234,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 @synthesize mainItem = _mainItem;
 
-- (void)insertItem:(SVWebEditorItem *)item;
+- (void)insertItem:(WEKWebEditorItem *)item;
 {
     // Search the tree for the appropriate parent
-    SVWebEditorItem *parent = [[self mainItem] hitTestDOMNode:[item HTMLElement]];
+    WEKWebEditorItem *parent = [[self mainItem] hitTestDOMNode:[item HTMLElement]];
     
     // But does the parent already have children that should move to become children of the new item?
-    for (SVWebEditorItem *aChild in [parent childWebEditorItems])
+    for (WEKWebEditorItem *aChild in [parent childWebEditorItems])
     {
         if ([[aChild HTMLElement] isDescendantOfNode:[item HTMLElement]])
         {
@@ -272,14 +272,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (!domRange) return nil;
     
     
-    SVWebEditorItem *startItem = [[self mainItem] hitTestDOMNode:[domRange startContainer]];
+    WEKWebEditorItem *startItem = [[self mainItem] hitTestDOMNode:[domRange startContainer]];
     while (startItem && ![startItem representedObject])
     {
         startItem = [startItem parentWebEditorItem];
     }
     
     
-    SVWebEditorItem *endItem = [[self mainItem] hitTestDOMNode:[domRange endContainer]];
+    WEKWebEditorItem *endItem = [[self mainItem] hitTestDOMNode:[domRange endContainer]];
     while (endItem && ![endItem representedObject])
     {
         endItem = [endItem parentWebEditorItem];
@@ -303,10 +303,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (startObject && endObject)
     {
-        SVWebEditorItem *startItem = [[self mainItem] descendantItemWithRepresentedObject:startObject];
+        WEKWebEditorItem *startItem = [[self mainItem] descendantItemWithRepresentedObject:startObject];
         if (startItem)
         {
-            SVWebEditorItem *endItem = [[self mainItem] descendantItemWithRepresentedObject:endObject];
+            WEKWebEditorItem *endItem = [[self mainItem] descendantItemWithRepresentedObject:endObject];
             if (endItem)
             {
                 [textRange populateDOMRange:domRange
@@ -348,7 +348,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self selectItems:items byExtendingSelection:NO];
 }
 
-- (SVWebEditorItem *)selectedItem
+- (WEKWebEditorItem *)selectedItem
 {
     return [[self selectedItems] lastObject];
 }
@@ -358,7 +358,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [self selectItems:items byExtendingSelection:extendSelection isUIAction:NO];
 }
 
-- (void)deselectItem:(SVWebEditorItem *)item;
+- (void)deselectItem:(WEKWebEditorItem *)item;
 {
     [self deselectItem:item isUIAction:NO];
 }
@@ -367,7 +367,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
  @method selectItem:event:
  @abstract The user tried to select the item using event. Add/remove it to the selection appropriately
  */
-- (void)selectItem:(SVWebEditorItem *)item event:(NSEvent *)event
+- (void)selectItem:(WEKWebEditorItem *)item event:(NSEvent *)event
 {
     NSArray *currentSelection = [self selectedItems];
     BOOL itemIsSelected = [currentSelection containsObjectIdenticalTo:item];
@@ -388,7 +388,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             // Weed out embedded items from the existing selection
             if (!isEmbedded)
             {
-                for (SVWebEditorItem *anItem in currentSelection)
+                for (WEKWebEditorItem *anItem in currentSelection)
                 {
                     if ([[anItem HTMLElement] isContentEditable])
                     {
@@ -433,7 +433,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                       isUIAction:isUIAction];
 }
 
-- (BOOL)deselectItem:(SVWebEditorItem *)item isUIAction:(BOOL)isUIAction;
+- (BOOL)deselectItem:(WEKWebEditorItem *)item isUIAction:(BOOL)isUIAction;
 {
     return [self changeSelectionByDeselectingAll:NO
                                   orDeselectItem:item
@@ -443,7 +443,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 }
 
 - (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
-                         orDeselectItem:(SVWebEditorItem *)itemToDeselect
+                         orDeselectItem:(WEKWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
                                DOMRange:(DOMRange *)domRange
                              isUIAction:(BOOL)consultDelegateFirst;
@@ -499,7 +499,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     //  Remove items, including marking them for display. Could almost certainly be more efficient
     if (itemsToDeselect)
     {
-        for (SVWebEditorItem *anItem in itemsToDeselect)
+        for (WEKWebEditorItem *anItem in itemsToDeselect)
         {
             [anItem setSelected:NO];
         }
@@ -516,7 +516,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (itemsToSelect)
     {
         // Draw new selection
-        for (SVWebEditorItem *anItem in itemsToSelect)
+        for (WEKWebEditorItem *anItem in itemsToSelect)
         {
             [anItem setSelected:YES];
         }
@@ -525,7 +525,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Update WebView selection to match. Selecting the node would be ideal, but WebKit ignores us if it's not in an editable area
-    SVWebEditorItem *selectedItem = [self selectedItem];
+    WEKWebEditorItem *selectedItem = [self selectedItem];
     if (!domRange)
     {
         if (selectedItem)
@@ -572,7 +572,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         DOMNode *selectionNode = [domRange commonAncestorContainer];
         if (selectionNode)
         {
-            SVWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
+            WEKWebEditorItem *parent = [self selectableItemForDOMNode:selectionNode];
             if (parent)
             {
                 parentItems = [self selectableAncestorsForItem:parent includeItem:YES];
@@ -648,7 +648,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Great, found a node to perhaps select – does it correspond to a selectable item?
         if (previousNode)
         {
-            SVWebEditorItem *item = [self selectableItemForDOMNode:previousNode];
+            WEKWebEditorItem *item = [self selectableItemForDOMNode:previousNode];
             if (item)
             {
                 result = [self changeSelectionByDeselectingAll:YES
@@ -690,7 +690,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Great, found a node to perhaps select – does it correspond to a selectable item?
         if (nextNode)
         {
-            SVWebEditorItem *item = [self selectableItemForDOMNode:nextNode];
+            WEKWebEditorItem *item = [self selectableItemForDOMNode:nextNode];
             if (item)
             {
                 result = [self changeSelectionByDeselectingAll:YES
@@ -735,7 +735,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     DOMRange *selection = [self selectedDOMRange];
     if (selection)  // allow any edit if there is no selection
     {
-        SVWebEditorItem *textController = [[self dataSource] webEditor:self
+        WEKWebEditorItem *textController = [[self dataSource] webEditor:self
                                                   textBlockForDOMRange:[self selectedDOMRange]];
         
         DOMNode *editingNode = [range commonAncestorContainer];
@@ -752,7 +752,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (BOOL)shouldChangeText:(SVWebEditorItem <SVWebEditorText> *)textController;
+- (BOOL)shouldChangeText:(WEKWebEditorItem <SVWebEditorText> *)textController;
 {
     OBPRECONDITION(textController);
     
@@ -801,12 +801,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Getting Item Information
 
-- (SVWebEditorItem *)selectableItemAtPoint:(NSPoint)point;
+- (WEKWebEditorItem *)selectableItemAtPoint:(NSPoint)point;
 {
     //  To answer the question: what item (if any) would be selected if you clicked at that point?
     
     
-    SVWebEditorItem *result = nil;
+    WEKWebEditorItem *result = nil;
     
     // If the element is a link of some kind, and we have live links turned on, ignore the possibility of selection
     NSDictionary *element = [[self webView] elementAtPoint:point];
@@ -823,10 +823,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (SVWebEditorItem *)selectableItemForDOMNode:(DOMNode *)nextNode;
+- (WEKWebEditorItem *)selectableItemForDOMNode:(DOMNode *)nextNode;
 {
     OBPRECONDITION(nextNode);
-    SVWebEditorItem *result = nil;
+    WEKWebEditorItem *result = nil;
     
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
@@ -835,7 +835,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     while (!result && index > -2)
     {
-        SVWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self mainItem];
+        WEKWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self mainItem];
          
         // The child matching the node may not be selectable. If so, search its children
         while (parentItem)
@@ -865,14 +865,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Locate the controller for the text area so we can query it for selectable stuff
-    SVWebEditorItem <SVWebEditorText> *textController = [[self dataSource] webEditor:self
+    WEKWebEditorItem <SVWebEditorText> *textController = [[self dataSource] webEditor:self
                                                                 textBlockForDOMRange:range];
     
     if (textController)
     {
         NSMutableArray *result = [NSMutableArray array];
         
-        for (SVWebEditorItem *anItem in [textController selectableTopLevelDescendants])
+        for (WEKWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
             DOMHTMLElement *element = [anItem HTMLElement];
             if ([element parentNode] && [range containsNode:element])   // weed out any obvious ophans
@@ -887,7 +887,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return nil;
 }
 
-- (NSArray *)selectableAncestorsForItem:(SVWebEditorItem *)item includeItem:(BOOL)includeItem;
+- (NSArray *)selectableAncestorsForItem:(WEKWebEditorItem *)item includeItem:(BOOL)includeItem;
 {
     OBPRECONDITION(item);
     
@@ -901,14 +901,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-- (SVWebEditorItem *)selectedItemAtPoint:(NSPoint)point handle:(SVGraphicHandle *)outHandle;
+- (WEKWebEditorItem *)selectedItemAtPoint:(NSPoint)point handle:(SVGraphicHandle *)outHandle;
 {
     // Like -selectableItemAtPoint:, but only looks at selection, and takes graphic handles into account
     
     SVSelectionBorder *border = [[[SVSelectionBorder alloc] init] autorelease];
     [border setMinSize:NSMakeSize(5.0f, 5.0f)];
     
-    SVWebEditorItem *result = nil;
+    WEKWebEditorItem *result = nil;
     for (result in [self selectedItems])
     {
         [border setResizingMask:[result resizingMask]];
@@ -956,7 +956,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Draw selection parent items
-    for (SVWebEditorItem *anItem in [self selectionParentItems])
+    for (WEKWebEditorItem *anItem in [self selectionParentItems])
     {
         // Draw the item if it's in the dirty rect (otherwise drawing can get pretty pricey)
         [border setEditing:YES];
@@ -971,7 +971,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Draw actual selection
     [border setEditing:NO];
-    for (SVWebEditorItem *anItem in [self selectedItems])
+    for (WEKWebEditorItem *anItem in [self selectedItems])
     {
         [anItem drawRect:dirtyRect inView:view];
     }
@@ -1003,7 +1003,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
         // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint so as to take hyperlinks into account
         SVGraphicHandle handle;
-        SVWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
+        WEKWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
         
         if ([item allowsDirectAccessToWebViewWhenSelected] && handle == kSVGraphicNoHandle)
 		{
@@ -1066,7 +1066,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Tracking the Mouse
 
-- (void)resizeItem:(SVWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event
+- (void)resizeItem:(WEKWebEditorItem *)item usingHandle:(SVGraphicHandle)handle withEvent:(NSEvent *)event
 {
     OBPRECONDITION(handle != kSVGraphicNoHandle);
     
@@ -1118,7 +1118,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Is it a selection handle?
     SVGraphicHandle handle;
-    SVWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
+    WEKWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
     if (item && handle != kSVGraphicNoHandle)
     {
 		[self resizeItem:item usingHandle:handle withEvent:event];
@@ -1171,7 +1171,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
             NSDictionary *element = [[self webView] elementAtPoint:location];
             DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
             
-            SVWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
+            WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
             
             
             
@@ -1205,7 +1205,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Is it a selection handle?
     SVGraphicHandle handle;
-    SVWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
+    WEKWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
     if (item)
     {
         if (handle == kSVGraphicNoHandle)
@@ -1533,14 +1533,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         // Ensure user can't select part of a text area *enclosing* the current text
         if (currentRange)
         {
-            SVWebEditorItem <SVWebEditorText> *currentText = [[self dataSource]
+            WEKWebEditorItem <SVWebEditorText> *currentText = [[self dataSource]
                                                               webEditor:self
                                                               textBlockForDOMRange:currentRange];
         
            DOMNode *proposedNode = [proposedRange commonAncestorContainer];
             if (![proposedNode isDescendantOfNode:[currentText HTMLElement]])
             {
-                SVWebEditorItem *proposedText = [[self dataSource] webEditor:self
+                WEKWebEditorItem *proposedText = [[self dataSource] webEditor:self
                                                         textBlockForDOMRange:proposedRange];
                 result = ![[currentText HTMLElement] isDescendantOfNode:[proposedText HTMLElement]];
             }

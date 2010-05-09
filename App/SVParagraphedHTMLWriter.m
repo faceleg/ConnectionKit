@@ -135,9 +135,9 @@
 
 #pragma mark Cleanup
 
-- (SVWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
+- (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
 {
-    for (SVWebEditorItem *anItem in [[self bodyTextDOMController] childWebEditorItems])
+    for (WEKWebEditorItem *anItem in [[self bodyTextDOMController] childWebEditorItems])
     {
         DOMNode *node = [anItem HTMLElement];
         if (![node parentNode] && [node isEqualNode:aNode]) return anItem;
@@ -164,7 +164,7 @@
 - (DOMNode *)convertImageElementToGraphic:(DOMHTMLImageElement *)imageElement;
 {
     // Is there an orphaned item we should reconnect to?
-    SVWebEditorItem *orphanedItem = [self orphanedWebEditorItemMatchingDOMNode:imageElement];
+    WEKWebEditorItem *orphanedItem = [self orphanedWebEditorItemMatchingDOMNode:imageElement];
     if (orphanedItem)
     {
         [orphanedItem setHTMLElement:imageElement];

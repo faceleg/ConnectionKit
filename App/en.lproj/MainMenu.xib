@@ -6666,8 +6666,8 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">SVDOMController</string>
-					<string key="superclassName">SVWebEditorItem</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="59968504">
+					<string key="superclassName">WEKWebEditorItem</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVDOMController.h</string>
 					</object>
@@ -6789,18 +6789,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">SVWebEditorItem</string>
-					<reference key="sourceIdentifier" ref="59968504"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">SVWebEditorItem</string>
-					<string key="superclassName">WEKDOMController</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">SVWebEditorItem.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">SVWebEditorViewController</string>
 					<string key="superclassName">KSWebViewController</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -6884,6 +6872,14 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">WEKDOMController</string>
 					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBUserSource</string>
+						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKWebEditorItem</string>
+					<string key="superclassName">WEKDOMController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>

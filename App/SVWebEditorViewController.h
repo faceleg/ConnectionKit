@@ -79,7 +79,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 @property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
 
-- (void)registerWebEditorItem:(SVWebEditorItem *)item;  // recurses through, registering descendants too
+- (void)registerWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
 
 
 #pragma mark Text Areas

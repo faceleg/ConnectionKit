@@ -69,12 +69,12 @@
     
     
     // Ideally, we're making a drop *before* a pagelet
-    SVWebEditorItem *previousItem = nil;
+    WEKWebEditorItem *previousItem = nil;
     NSUInteger i, count = [pageletControllers count];
     for (i = 0; i < count; i++)
     {
         // Calculate drop zone
-        SVWebEditorItem *anItem = [pageletControllers objectAtIndex:i];
+        WEKWebEditorItem *anItem = [pageletControllers objectAtIndex:i];
         
         NSRect dropZone = [self rectOfDropZoneBelowDOMNode:[previousItem HTMLElement]
                                               aboveDOMNode:[anItem HTMLElement]
@@ -214,9 +214,9 @@
     return result;
 }
 
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
 {
-    SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
+    WEKWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
     
     // No-one else wants it? Maybe we do!
     if (!result) result = self;
@@ -257,7 +257,7 @@
             }
             else
             {
-                SVWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
+                WEKWebEditorItem *aPageletItem = [pageletControllers objectAtIndex:dropIndex];
                 
                 DOMRange *range = [[[aPageletItem HTMLElement] ownerDocument] createRange];
                 [range setStartBefore:[aPageletItem HTMLElement]];

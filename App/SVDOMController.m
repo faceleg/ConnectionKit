@@ -27,7 +27,7 @@
 
 #pragma mark Tree
 
-- (void)setParentWebEditorItem:(SVWebEditorItem *)item
+- (void)setParentWebEditorItem:(WEKWebEditorItem *)item
 {
     [super setParentWebEditorItem:item];
     //[self setHTMLContext:[item HTMLContext]];  Not really helpful since root item has no context
@@ -169,7 +169,7 @@
 #pragma mark -
 
 
-@implementation SVWebEditorItem (SVDOMController)
+@implementation WEKWebEditorItem (SVDOMController)
 
 #pragma mark Content
 
@@ -189,11 +189,11 @@
 
 #pragma mark Drag & Drop
 
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
                        draggingInfo:(id <NSDraggingInfo>)info;
 {
     // Dive down to next item
-    SVWebEditorItem *result = [[self childItemForDOMNode:node] hitTestDOMNode:node
+    WEKWebEditorItem *result = [[self childItemForDOMNode:node] hitTestDOMNode:node
                                                                  draggingInfo:info];
     return result;
 }

@@ -9,5 +9,5 @@
 
 #import "WEKWebEditorView.h"
 
-#import "SVWebEditorItem.h"
+#import "WEKWebEditorItem.h"
 #import "SVWebEditorTextProtocol.h"

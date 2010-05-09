@@ -8,7 +8,7 @@
 
 
 #import "WEKWebEditorView.h"
-#import "SVWebEditorItem.h"
+#import "WEKWebEditorItem.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSColor+Karelia.h"
@@ -98,7 +98,7 @@
 {
     // Only support operations that all dragged items support.
     NSDragOperation result = NSDragOperationEvery;
-    for (SVWebEditorItem *anItem in [self draggedItems])
+    for (WEKWebEditorItem *anItem in [self draggedItems])
     {
         result = result & [anItem draggingSourceOperationMaskForLocal:isLocal];
     }
@@ -129,7 +129,7 @@
 
 - (void)removeDraggedItems; // removes from DOM and item tree
 {
-    for (SVWebEditorItem *anItem in [self draggedItems])
+    for (WEKWebEditorItem *anItem in [self draggedItems])
     {
         DOMHTMLElement *element = [anItem HTMLElement];
         if ([element isContentEditable])
@@ -178,7 +178,7 @@
 
 /*  When beginning a drag, you want to drag all the selected items. I haven't quite decided how to do this yet – one big image containing them all or an image for the item under the mouse and a numeric overlay? – so this is fairly temporary. Also return by reference the origin of the image within our own coordinate system.
  */
-- (NSImage *)dragImageForSelectionFromItem:(SVWebEditorItem *)item
+- (NSImage *)dragImageForSelectionFromItem:(WEKWebEditorItem *)item
                                   location:(NSPoint *)outImageLocation
 {
     // The core items involved
@@ -363,7 +363,7 @@
     {
         
         // Now let's start a-dragging!
-        SVWebEditorItem *item = [self selectedItem]; // FIXME: use the item actually being dragged
+        WEKWebEditorItem *item = [self selectedItem]; // FIXME: use the item actually being dragged
         
         NSPoint dragImageRect;
         NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];

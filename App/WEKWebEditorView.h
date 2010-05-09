@@ -19,7 +19,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 
 @protocol WEKWebEditorDataSource, WEKWebEditorDelegate;
-@class SVWebEditorItem, SVWebEditorTextRange;
+@class WEKWebEditorItem, SVWebEditorTextRange;
 @class WEKWebView, SVMainWebEditorItem;
 
 
@@ -43,7 +43,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
     BOOL            _liveLinks;
     NSPasteboard    *_insertionPasteboard;
     
-    SVWebEditorItem <SVWebEditorText>   *_changingTextController;   // weak ref, only used in passing
+    WEKWebEditorItem <SVWebEditorText>   *_changingTextController;   // weak ref, only used in passing
     
     // Drag & Drop
     NSArray     *_draggedItems;
@@ -78,8 +78,8 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // Blocks until either loading is finished or date is reached. Returns YES if the former.
 - (BOOL)loadUntilDate:(NSDate *)date;
 
-@property(nonatomic, readonly) SVWebEditorItem *mainItem;   // add your items here after loading finishes
-- (void)insertItem:(SVWebEditorItem *)item; // inserts the item into the tree in the place that matches the DOM
+@property(nonatomic, readonly) WEKWebEditorItem *mainItem;   // add your items here after loading finishes
+- (void)insertItem:(WEKWebEditorItem *)item; // inserts the item into the tree in the place that matches the DOM
 
 
 #pragma mark Text Selection
@@ -96,9 +96,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark Item Selection
 
 @property(nonatomic, copy) NSArray *selectedItems;
-@property(nonatomic, retain, readonly) SVWebEditorItem *selectedItem;
+@property(nonatomic, retain, readonly) WEKWebEditorItem *selectedItem;
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
-- (void)deselectItem:(SVWebEditorItem *)item;
+- (void)deselectItem:(WEKWebEditorItem *)item;
 
 - (IBAction)deselectAll:(id)sender; // Action method, so asks the delegate if selection should change first
 
@@ -113,7 +113,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // Like NSTextView, you should call one of these when wanting to apply an editing action to the DOM. Posts kSVWebEditorViewWillChangeNotification notification if successful.
 // After editing, call -didChange which posts kSVWebEditorViewDidChangeNotification and handles undo registration/peristence for the edit.
 - (BOOL)shouldChangeTextInDOMRange:(DOMRange *)range;
-- (BOOL)shouldChangeText:(SVWebEditorItem <SVWebEditorText> *)textController;
+- (BOOL)shouldChangeText:(WEKWebEditorItem <SVWebEditorText> *)textController;
 - (void)didChangeText;
 
 - (NSPasteboard *)insertionPasteboard;
@@ -129,7 +129,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Getting Item Information
 
-/*  SVWebEditorItem has many similar methods. The crucial difference is that these also take into account the current selection. i.e. if editing an item, any sub-items then become available for selection. But selection handles are ignored.
+/*  WEKWebEditorItem has many similar methods. The crucial difference is that these also take into account the current selection. i.e. if editing an item, any sub-items then become available for selection. But selection handles are ignored.
  */
 
 - (id)selectableItemAtPoint:(NSPoint)point;
@@ -214,7 +214,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 /*  We locate text blocks on-demand based on a DOM range. It's expected the datasource will be maintaining its own list of such text blocks already.
  */
-- (SVWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
+- (WEKWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
                             textBlockForDOMRange:(DOMRange *)range;
 
 - (BOOL)webEditor:(WEKWebEditorView *)sender deleteItems:(NSArray *)items;
@@ -231,7 +231,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 /*!
  @method webEditorView:writeItems:toPasteboard:
  @param sender
- @param items An array of SVWebEditorItem objects to be written
+ @param items An array of WEKWebEditorItem objects to be written
  @param pasteboard
  @result YES if the items could be written to the pasteboard
  */
@@ -282,7 +282,7 @@ handleNavigationAction:(NSDictionary *)actionInformation
 
 
 #pragma mark Web Editor Items
-- (void)webEditor:(WEKWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+- (void)webEditor:(WEKWebEditorView *)sender didAddItem:(WEKWebEditorItem *)item;
 
 
 @end

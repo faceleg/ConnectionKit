@@ -47,9 +47,9 @@
     return NSDragOperationLink;
 }
 
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
 {
-    SVWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
+    WEKWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
     if (!result) result = self;
     return result;
 }

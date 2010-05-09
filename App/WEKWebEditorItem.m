@@ -1,12 +1,12 @@
 //
-//  SVWebEditorItem.m
+//  WEKWebEditorItem.m
 //  Sandvox
 //
 //  Created by Mike on 24/09/2009.
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVWebEditorItem.h"
+#import "WEKWebEditorItem.h"
 #import "WEKWebEditorView.h"
 
 #import "DOMNode+Karelia.h"
@@ -17,7 +17,7 @@
     NSEnumerator    *_iterator;
 }
 
-- (id)initWithItem:(SVWebEditorItem *)item;
+- (id)initWithItem:(WEKWebEditorItem *)item;
 
 @end
 
@@ -26,7 +26,7 @@
 
 
 
-@implementation SVWebEditorItem
+@implementation WEKWebEditorItem
 
 - (void)dealloc
 {
@@ -62,13 +62,13 @@
 
 @synthesize parentWebEditorItem = _parentController;
 
-- (void)setParentWebEditorItem:(SVWebEditorItem *)item
+- (void)setParentWebEditorItem:(WEKWebEditorItem *)item
 {
     _parentController = item;
     [self setNextResponder:item];
 }
 
-- (void)addChildWebEditorItem:(SVWebEditorItem *)controller;
+- (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
 {
     OBPRECONDITION(controller);
     
@@ -88,7 +88,7 @@
 {
     [self setParentWebEditorItem:nil];
     
-    SVWebEditorItem *parent = [self parentWebEditorItem];
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
     
     NSMutableArray *children = [[parent childWebEditorItems] mutableCopy];
     [children removeObject:self];
@@ -159,11 +159,11 @@
 
 #pragma mark Searching the Tree
 
-- (SVWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
+- (WEKWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
     
-    SVWebEditorItem *result = nil;
+    WEKWebEditorItem *result = nil;
     NSArray *childItemDOMNodes = [[self childWebEditorItems] valueForKey:@"HTMLElement"];
     
     DOMNode *aNode = node;
@@ -181,11 +181,11 @@
     return result;
 }
 
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
     
-    SVWebEditorItem *result = [self childItemForDOMNode:node];
+    WEKWebEditorItem *result = [self childItemForDOMNode:node];
     if (result)
     {
         result = [result hitTestDOMNode:node];
@@ -198,14 +198,14 @@
     return result;
 }
 
-- (SVWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
+- (WEKWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 {
     OBPRECONDITION(object);
     
     id result = ([[self representedObject] isEqual:object] ? self : nil);
     if (!result)
     {
-        for (SVWebEditorItem *anItem in [self childWebEditorItems])
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
             result = [anItem descendantItemWithRepresentedObject:object];
             if (result) break;
@@ -219,7 +219,7 @@
 {
     NSMutableArray *result = [NSMutableArray array];
     
-    SVWebEditorItem *aParentItem = [self parentWebEditorItem];
+    WEKWebEditorItem *aParentItem = [self parentWebEditorItem];
     while (aParentItem)
     {
         if ([aParentItem isSelectable]) [result addObject:aParentItem];
@@ -234,7 +234,7 @@
     NSArray *children = [self childWebEditorItems];
     NSMutableArray *result = [NSMutableArray arrayWithCapacity:[children count]];
     
-    for (SVWebEditorItem *anItem in children)
+    for (WEKWebEditorItem *anItem in children)
     {
         if ([anItem isSelectable])
         {
@@ -332,7 +332,7 @@
     if (blurb) result = [result stringByAppendingFormat:@" %@", blurb];
     
     // Children
-    for (SVWebEditorItem *anItem in [self childWebEditorItems])
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
     {
         result = [result stringByAppendingFormat:
                   @"\n%@",
@@ -360,7 +360,7 @@
 
 @implementation SVWebEditorItemEnumerator
 
-- (id)initWithItem:(SVWebEditorItem *)item;
+- (id)initWithItem:(WEKWebEditorItem *)item;
 {
     [self init];
     

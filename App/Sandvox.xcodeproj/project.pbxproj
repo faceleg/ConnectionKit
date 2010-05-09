@@ -535,8 +535,8 @@
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
-		27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */; };
-		27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */; };
+		27F243B3106BC8B9007FEC56 /* WEKWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */; };
+		27F243B4106BC8B9007FEC56 /* WEKWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */; };
 		27F36590115EB7BA003BDA5F /* SVPageBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVPageBody.h */; };
 		27F36591115EB7BA003BDA5F /* SVPageBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVPageBody.m */; };
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
@@ -2085,8 +2085,8 @@
 		27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = "<group>"; };
 		27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageScalingSettings.h; sourceTree = "<group>"; };
 		27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingSettings.m; sourceTree = "<group>"; };
-		27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebEditorItem.h; sourceTree = "<group>"; };
-		27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebEditorItem.m; sourceTree = "<group>"; };
+		27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebEditorItem.h; sourceTree = "<group>"; };
+		27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebEditorItem.m; sourceTree = "<group>"; };
 		27F3658E115EB7BA003BDA5F /* SVPageBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageBody.h; sourceTree = "<group>"; };
 		27F3658F115EB7BA003BDA5F /* SVPageBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageBody.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
@@ -2974,8 +2974,8 @@
 				2792197C10BC631D00E590D5 /* WEKDOMController.m */,
 				27BA06C61125A46900B9D8F4 /* SVWebEditorTextRange.h */,
 				27BA06C71125A46900B9D8F4 /* SVWebEditorTextRange.m */,
-				27F243B1106BC8B9007FEC56 /* SVWebEditorItem.h */,
-				27F243B2106BC8B9007FEC56 /* SVWebEditorItem.m */,
+				27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */,
+				27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */,
 				271B485E1051C2F4008B698C /* WEKWebEditorView.h */,
 				271B485F1051C2F4008B698C /* WEKWebEditorView.m */,
 				2755279A10546D990037524C /* SVSelectionBorder.h */,
@@ -5493,7 +5493,7 @@
 				2755279C10546D990037524C /* SVSelectionBorder.h in Headers */,
 				27422441106A926E0058C8DA /* WEKWebView.h in Headers */,
 				27F790D9106BABA6007DF81B /* KSDragging.h in Headers */,
-				27F243B3106BC8B9007FEC56 /* SVWebEditorItem.h in Headers */,
+				27F243B3106BC8B9007FEC56 /* WEKWebEditorItem.h in Headers */,
 				2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */,
 				2713C05410780FFD000864C2 /* SVLoadingPlaceholderViewController.h in Headers */,
 				2713C0691078177A000864C2 /* SVLayoutView.h in Headers */,
@@ -6915,7 +6915,7 @@
 				271B48611051C2F4008B698C /* WEKWebEditorView.m in Sources */,
 				2755279D10546D990037524C /* SVSelectionBorder.m in Sources */,
 				27422442106A926E0058C8DA /* WEKWebView.m in Sources */,
-				27F243B4106BC8B9007FEC56 /* SVWebEditorItem.m in Sources */,
+				27F243B4106BC8B9007FEC56 /* WEKWebEditorItem.m in Sources */,
 				2713BDFE10778AE8000864C2 /* NSResponder+Karelia.m in Sources */,
 				2713C05510780FFD000864C2 /* SVLoadingPlaceholderViewController.m in Sources */,
 				2713C06A1078177A000864C2 /* SVLayoutView.m in Sources */,

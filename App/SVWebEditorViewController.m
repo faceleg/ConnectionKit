@@ -264,7 +264,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     NSArray *controllers = [[self HTMLContext] webEditorItems];
         
-    for (SVWebEditorItem *anItem in controllers)
+    for (WEKWebEditorItem *anItem in controllers)
     {
         // Insert into the tree if a top-level item.
         if (![anItem parentWebEditorItem]) [[webEditor mainItem] addChildWebEditorItem:anItem];
@@ -426,7 +426,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
-- (void)registerWebEditorItem:(SVWebEditorItem *)item;  // recurses through, registering descendants too
+- (void)registerWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
 {
     // Ensure element is loaded
     DOMDocument *domDoc = [[self webEditor] HTMLDocument];
@@ -447,7 +447,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     
     // Register descendants
-    for (SVWebEditorItem *anItem in [item childWebEditorItems])
+    for (WEKWebEditorItem *anItem in [item childWebEditorItems])
     {
         [self registerWebEditorItem:anItem];
     }
@@ -714,7 +714,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark WebEditorViewDataSource
 
-- (SVWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
+- (WEKWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
                             textBlockForDOMRange:(DOMRange *)range;
 {
     return [self textAreaForDOMRange:range];
@@ -761,7 +761,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         
         NSArray *items = [sender selectedItems];
-        for (SVWebEditorItem *anItem in items)
+        for (WEKWebEditorItem *anItem in items)
         {
             // Give up if the selection contains a non-graphic
             SVGraphic *graphic = [anItem representedObject];
@@ -989,7 +989,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     return NO;
 }
 
-- (void)webEditor:(WEKWebEditorView *)sender didAddItem:(SVWebEditorItem *)item;
+- (void)webEditor:(WEKWebEditorView *)sender didAddItem:(WEKWebEditorItem *)item;
 {
     OBPRECONDITION(sender == [self webEditor]);
     [self registerWebEditorItem:item];
@@ -1122,7 +1122,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
-    [(SVWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
+    [(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
 }
 
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on

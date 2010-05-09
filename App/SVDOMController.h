@@ -13,7 +13,7 @@
 @class SVWebEditorHTMLContext, SVWebEditorViewController;
 
 
-@interface SVDOMController : SVWebEditorItem
+@interface SVDOMController : WEKWebEditorItem
 {
   @private
     // Updating
@@ -66,7 +66,7 @@
 /*  We want all Web Editor items to be able to handle updating in some form, just not necessarily the full complexity of it.
 */
 
-@interface SVWebEditorItem (SVDOMController)
+@interface WEKWebEditorItem (SVDOMController)
 
 #pragma mark DOM
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;    // does nothing
@@ -79,7 +79,7 @@
 
 
 #pragma mark Drag & Drop
-- (SVWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
                        draggingInfo:(id <NSDraggingInfo>)info;
 
 
