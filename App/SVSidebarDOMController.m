@@ -331,8 +331,8 @@
         // Fallback to generic pasteboard support
         if ([pagelets count] < 1)
         {
-            pagelets = [KTElementPlugInWrapper insertNewGraphicsWithPasteboard:pasteboard
-                                                        inManagedObjectContext:moc];
+            pagelets = [KTElementPlugInWrapper graphicsFomPasteboard:pasteboard
+                                                        insertIntoManagedObjectContext:moc];
         }
         
         for (SVGraphic *aPagelet in pagelets)

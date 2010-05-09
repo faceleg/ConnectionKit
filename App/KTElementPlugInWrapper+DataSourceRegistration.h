@@ -16,12 +16,12 @@
 
 @interface KTElementPlugInWrapper (DataSourceRegistration)
 
-+ (NSArray *)insertNewGraphicsWithPasteboard:(NSPasteboard *)pasteboard
-                      inManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
+                      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 // Looks at just first item on pboard
-+ (SVGraphic *)insertNewGraphicWithPasteboard:(NSPasteboard *)pasteboard
-                       inManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
+                       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 

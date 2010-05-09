@@ -167,8 +167,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         {
             NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
             
-            NSArray *graphics = [KTElementPlugInWrapper insertNewGraphicsWithPasteboard:pasteboard
-                                                                 inManagedObjectContext:moc];
+            NSArray *graphics = [KTElementPlugInWrapper graphicsFomPasteboard:pasteboard
+                                                                 insertIntoManagedObjectContext:moc];
             
             if (graphics)
             {

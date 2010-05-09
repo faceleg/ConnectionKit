@@ -45,18 +45,18 @@
     return result;
 }
 
-+ (NSArray *)insertNewGraphicsWithPasteboard:(NSPasteboard *)pasteboard
-                      inManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
+    insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVGraphic *graphic = [self insertNewGraphicWithPasteboard:pasteboard
-                                       inManagedObjectContext:context];
+    SVGraphic *graphic = [self graphicFromPasteboard:pasteboard
+                                       insertIntoManagedObjectContext:context];
     
     NSArray *result = (graphic) ? [NSArray arrayWithObject:graphic] : nil;
     return result;
 }
 
-+ (SVGraphic *)insertNewGraphicWithPasteboard:(NSPasteboard *)pasteboard
-                       inManagedObjectContext:(NSManagedObjectContext *)context;
++ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
+      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     Class plugInClass = nil;
     id pasteboardContents;
