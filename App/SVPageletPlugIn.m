@@ -69,11 +69,15 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self awakeFromBundleAsNewlyCreatedObject:YES];
 }
 
-#pragma mark Content
+#pragma mark HTML
+
+static id <SVPlugInContext> sCurrentContext;
 
 - (void)writeHTML:(id <SVPlugInContext>)context;
 {
+    sCurrentContext = context;
     [self writeInnerHTML:context];
+    sCurrentContext = nil;
     
     return;
         
@@ -81,6 +85,8 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self writeInnerHTML:context];
     [[context HTMLWriter] writeEndTag];
 }
+
++ (id <SVPlugInContext>)currentContext; { return sCurrentContext; }
 
 - (NSString *)elementID
 {
