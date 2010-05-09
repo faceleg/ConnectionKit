@@ -170,7 +170,14 @@
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     // Do we actually need do anything?
-    if (node == _dragCaret || [_dragCaret nextSibling] == node) return;
+    if (node)
+    {
+        if (node == _dragCaret || [_dragCaret nextSibling] == node) return;
+    }
+    else
+    {
+        if ([[self textHTMLElement] lastChild] == node) return;
+    }
     
     
     [self removeDragCaret];
