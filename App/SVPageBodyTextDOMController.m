@@ -8,6 +8,8 @@
 
 #import "SVPageBodyTextDOMController.h"
 
+#import "SVAttributedHTML.h"
+#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVGraphic.h"
 #import "SVGraphicFactoryManager.h"
 #import "SVHTMLContext.h"
@@ -35,12 +37,7 @@
 
 #pragma mark Dragging Destination
 
-- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
-{
-    return [self draggingUpdated:sender];
-}
-
-- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
+- (DOMNode *)childForDraggingInfo:(id <NSDraggingInfo>)sender;
 {
     DOMElement *element = [self HTMLElement];
     NSPoint location = [[element documentView] convertPointFromBase:[sender draggingLocation]];
@@ -53,27 +50,94 @@
         
         if (location.y < mid)
         {
-            [self moveDragCaretToBeforeDOMNode:aNode];
+            return aNode;
             break;
         }
         
         aNode = [aNode nextSiblingOfClass:[DOMElement class]];
     }
     
-    if (!aNode)
-    {
-        // No match was found, so insert at end
-        [self moveDragCaretToBeforeDOMNode:nil];
-    }
+    // No match was found, so insert at end
+    return nil;
+}
+
+- (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
+{
+    return [self draggingUpdated:sender];
+}
+
+- (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
+{
+    DOMNode *aNode = [self childForDraggingInfo:sender];
+    [self moveDragCaretToBeforeDOMNode:aNode];
         
-    
-    
     return NSDragOperationCopy;
 }
 
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 {
     [self removeDragCaret];
+}
+
+- (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
+{
+    BOOL result = NO;
+    
+    
+    // Fallback to inserting a new pagelet from the pasteboard
+    NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
+    NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
+    
+    NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+                                  insertIntoManagedObjectContext:moc];
+    
+    
+    // Fallback to generic pasteboard support
+    if ([pagelets count] < 1)
+    {
+        pagelets = [KTElementPlugInWrapper graphicsFomPasteboard:pasteboard
+                                  insertIntoManagedObjectContext:moc];
+    }
+    
+    
+    // Insert the pagelets
+    if ([pagelets count] && [[self webEditor] shouldChangeText:self])
+    {
+        // Generate HTML
+        NSMutableString *html = [[NSMutableString alloc] init];
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:html];
+        [context copyPropertiesFromContext:[self HTMLContext]];
+        
+        [SVContentObject writeContentObjects:pagelets inContext:context];
+        
+        
+        // Insert HTML into DOM, replacing caret
+        [self moveDragCaretToBeforeDOMNode:[self childForDraggingInfo:dragInfo]];
+        OBASSERT(_dragCaret);
+        
+        [(DOMHTMLElement *)_dragCaret setOuterHTML:html];
+        [html release];
+        
+        
+        // Insert controllers
+        for (WEKWebEditorItem *anItem in [context webEditorItems])
+        {
+            // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
+            if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
+        }
+        [context release];
+        
+        
+        // Finish edit
+        [[self webEditor] didChangeText];
+        result = YES;
+    }
+    
+    
+    
+    
+    
+    return result;
 }
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;

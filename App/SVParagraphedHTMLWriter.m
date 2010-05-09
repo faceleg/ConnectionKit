@@ -79,7 +79,7 @@
     [[self bodyTextDOMController] writeGraphicController:controller
                                           withHTMLWriter:self];
     
-    [_attachments addObject:attachment];
+    [_attachments addObject:[graphic textAttachment]];  // -writeGraphicController:withHTMLWrite: may change/create attachment
     return YES;
 }
 
