@@ -7,7 +7,7 @@
 //
 
 #import "WEKWebView.h"
-#import "WEKWebEditorView.h"
+#import "WebEditingKit.h"
 
 #import "DOMNode+Karelia.h"
 #import "NSResponder+Karelia.h"
@@ -46,6 +46,31 @@
 
 #pragma mark Dragging Destination
 
+- (void)willUpdateDrag:(id <NSDraggingInfo>)sender result:(NSDragOperation)result;
+{
+    // Update drag highlight to match
+    DOMNode *dropNode = nil;
+    if (result > NSDragOperationNone)
+    {
+        // Locate the DOM controller/item for the destination
+        NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
+        DOMRange *editingRange = [self editableDOMRangeForPoint:point];
+        
+        WEKWebEditorItem <SVWebEditorText> *controller = [[[self webEditor] dataSource]
+                                                          webEditor:[self webEditor]
+                                                          textBlockForDOMRange:editingRange];
+        
+        
+        // Ask the controller if it's sure of the drop
+        [controller webEditorTextValidateDrop:sender proposedOperation:&result];
+        
+        
+        // Controller's HTML element determines where to draw the drop highlight
+        if (result > NSDragOperationNone) dropNode = [controller HTMLElement];
+    }
+    [[self webEditor] moveDragHighlightToDOMNode:dropNode];
+}
+
 /*  Our aim here is to extend WebView to support some extra drag & drop methods that we'd prefer. Override everything to be sure we don't collide with WebKit in an unexpected manner.
  */
 
@@ -71,6 +96,10 @@
         _delegateWillHandleDraggingInfo = NO;
         result = [super draggingEntered:sender];
     }
+    
+    
+    [self willUpdateDrag:sender result:result];
+    
     
     return result;
 }
@@ -98,6 +127,10 @@
     
         result = [super draggingUpdated:sender];
     }
+    
+    
+    [self willUpdateDrag:sender result:result];
+    
     
     return result;
     
