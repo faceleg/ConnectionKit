@@ -239,7 +239,7 @@
     if (dropIndex != NSNotFound)
     {
         NSDragOperation mask = [dragInfo draggingSourceOperationMask];
-        result = mask & NSDragOperationMove;
+        result = mask & NSDragOperationGeneric;
         if (!result) result = mask & NSDragOperationCopy;
         
         
@@ -300,7 +300,7 @@
     
     //  When dragging within the sidebar, want to move the selected pagelets
     if ([dragInfo draggingSource] == webEditor &&
-        [dragInfo draggingSourceOperationMask] & NSDragOperationMove)
+        [dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
     {
         NSArray *sidebarPageletControllers = [self childWebEditorItems];
         for (SVDOMController *aPageletItem in [webEditor selectedItems])
@@ -345,7 +345,7 @@
         
         
         // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
-        if ([dragInfo draggingSourceOperationMask] & NSDragOperationMove)
+        if ([dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
         {
             [webEditor removeDraggedItems];
         }
