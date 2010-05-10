@@ -82,16 +82,10 @@
     if (result)
     {
         // Pretend to WebView that dragging exited
-        if (!_delegateWillHandleDraggingInfo) [super draggingExited:sender];
-        
-        _delegateWillHandleDraggingInfo = YES;
-        NSDragOperation superOp = [super draggingUpdated:sender];
-        
-        if (superOp)
+        if (!_delegateWillHandleDraggingInfo) 
         {
-            NSLog(@"Delegate expectd to handle drop, but WebView still did anyway");
-            _delegateWillHandleDraggingInfo = NO;
-            result = superOp;
+            [super draggingExited:sender];
+            _delegateWillHandleDraggingInfo = YES;
         }
     }
     else
