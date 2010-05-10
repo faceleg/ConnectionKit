@@ -3,7 +3,7 @@
 #include "/private/tmp/build-sandvox/BuildSettings.xcconfig"
 
 // the "marketing" version is baked into CFBundleShortVersionString
-SANDVOX_VERSION = 2.0a5
+SANDVOX_VERSION = 2.0a6
 
 // the SLA variant to wrap around the .dmg [ALPHA,BETA,RELEASE]
 // Also determines if VARIANT_ALPHA or VARIANT_BETA or VARIANT_RELEASE is defined.
