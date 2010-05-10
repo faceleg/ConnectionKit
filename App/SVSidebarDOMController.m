@@ -214,14 +214,9 @@
     return result;
 }
 
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)info;
+- (NSArray *)registeredDraggedTypes;
 {
-    WEKWebEditorItem *result = [super hitTestDOMNode:node draggingInfo:info];
-    
-    // No-one else wants it? Maybe we do!
-    if (!result) result = self;
-    
-    return result;
+    return [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES] allObjects];
 }
 
 #pragma mark NSDraggingDestination

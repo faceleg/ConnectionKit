@@ -81,6 +81,7 @@
 
 
 #pragma mark Drag & Drop
+- (NSArray *)registeredDraggedTypes;
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
                        draggingInfo:(id <NSDraggingInfo>)info;
 

@@ -188,12 +188,21 @@
 
 #pragma mark Drag & Drop
 
+- (NSArray *)registeredDraggedTypes; { return nil; }
+
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
                        draggingInfo:(id <NSDraggingInfo>)info;
 {
     // Dive down to next item
     WEKWebEditorItem *result = [[self childItemForDOMNode:node] hitTestDOMNode:node
                                                                  draggingInfo:info];
+    
+    if (!result)
+    {
+        NSArray *types = [self registeredDraggedTypes];
+        if ([[info draggingPasteboard] availableTypeFromArray:types]) result = self;
+    }
+    
     return result;
 }
 
