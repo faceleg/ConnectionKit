@@ -168,7 +168,25 @@
 
 - (NSArray *)registeredDraggedTypes;
 {
-    return [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES] allObjects];
+    NSSet *plugInTypes = [KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES];
+    
+    NSMutableSet *result = [plugInTypes mutableCopy];
+    
+    // Weed out string and image types since we want Web Editor to handle them.
+    [result minusSet:
+     [NSSet setWithArray:[NSImage imageUnfilteredPasteboardTypes]]];
+    [result removeObject:NSStringPboardType];
+    [result removeObject:WebArchivePboardType];
+    [result removeObject:NSHTMLPboardType];
+    [result removeObject:NSRTFDPboardType];
+    [result removeObject:NSRTFPboardType];
+    
+                      
+
+    
+    NSArray *result2 = [result allObjects];
+    [result release];
+    return result2;
 }
 
 #pragma mark Drag Caret
