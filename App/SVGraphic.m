@@ -75,11 +75,11 @@
         SVGraphicWrap wrap = [[[self textAttachment] wrap] integerValue];
         if (wrap == SVGraphicWrapLeft)
         {
-            result = @"left";
+            result = @"right";
         }
         else if (wrap == SVGraphicWrapRight)
         {
-            result = @"right";
+            result = @"left";
         }
     }
     
