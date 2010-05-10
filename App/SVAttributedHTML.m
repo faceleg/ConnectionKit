@@ -216,6 +216,11 @@
     return result;
 }
 
++ (NSArray *)pasteboardTypes;
+{
+    return [NSArray arrayWithObject:@"com.karelia.html+graphics"];
+}
+
 #pragma mark Output
 
 - (void)writeHTMLToContext:(SVHTMLContext *)context;

@@ -15,6 +15,8 @@
 #import "SVHTMLContext.h"
 #import "KTPage.h"
 
+#import "KSWebLocation.h"
+
 #import "DOMNode+Karelia.h"
 
 
@@ -69,6 +71,17 @@
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
     NSDragOperation result = NSDragOperationNone;
+    
+    
+    // Ignore images
+    NSArray *locations = [KSWebLocation webLocationsFromPasteboard:[sender draggingPasteboard]];
+    for (KSWebLocation *aLocation in locations)
+    {
+        NSString *extension = [[aLocation URL] pathExtension];
+        NSString *type = [NSString UTIForFilenameExtension:extension];
+        if ([type conformsToUTI:kUTTypeImage]) return result;
+    }
+    
     
     DOMNode *aNode = [self childForDraggingInfo:sender];
     if (aNode)
@@ -171,6 +184,7 @@
     NSSet *plugInTypes = [KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES];
     
     NSMutableSet *result = [plugInTypes mutableCopy];
+    [result addObjectsFromArray:[SVAttributedHTML pasteboardTypes]];
     
     // Weed out string and image types since we want Web Editor to handle them.
     [result minusSet:
