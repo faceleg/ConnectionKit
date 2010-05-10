@@ -68,6 +68,7 @@
     }
     else
     {
+        _delegateWillHandleDraggingInfo = NO;
         result = [super draggingEntered:sender];
     }
     
@@ -90,6 +91,8 @@
     }
     else
     {
+        _delegateWillHandleDraggingInfo = NO;
+        
         [[self webEditor] performSelector:@selector(removeDragCaretFromDOMNodes)];
         [[self webEditor] moveDragHighlightToDOMNode:nil];
     
