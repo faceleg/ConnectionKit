@@ -69,7 +69,7 @@
     
     
     // Dump the old caret
-    [self removeDragCaret];
+    [self removeDragCaretFromDOMNodes];
     
     // Draw new one
     OBASSERT(!_dragCaretDOMRange);

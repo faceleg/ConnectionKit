@@ -81,6 +81,9 @@
     NSDragOperation result = [[webEditor draggingDestinationDelegate] draggingUpdated:sender];
     if (result)
     {
+        // Pretend to WebView that dragging exited
+        if (!_delegateWillHandleDraggingInfo) [super draggingExited:sender];
+        
         _delegateWillHandleDraggingInfo = YES;
         NSDragOperation superOp = [super draggingUpdated:sender];
         
@@ -118,7 +121,7 @@
     [super draggingExited:sender];
     
     // Need to end any of our custom drawing
-    [[self webEditor] removeDragCaret];
+    //[[self webEditor] removeDragCaret];
     [[self webEditor] moveDragHighlightToDOMNode:nil];
 }
 
