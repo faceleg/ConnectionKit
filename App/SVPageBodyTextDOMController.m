@@ -17,6 +17,9 @@
 
 #import "KSWebLocation.h"
 
+#import "NSString+Karelia.h"
+#import "NSURL+Karelia.h"
+
 #import "DOMNode+Karelia.h"
 
 
@@ -79,7 +82,7 @@
     {
         NSString *extension = [[aLocation URL] pathExtension];
         NSString *type = [NSString UTIForFilenameExtension:extension];
-        if ([type conformsToUTI:kUTTypeImage]) return result;
+        if ([type conformsToUTI:(NSString *)kUTTypeImage]) return result;
     }
     
     
