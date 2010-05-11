@@ -27,8 +27,6 @@
 - (void)stopObservingChangesToListSource;
 - (void)listSourceDidChange:(id)newValue;
 
-- (AmazonListPlugIn *)pluginDelegate;
-
 - (void)observeChangesToAutomaticListData;
 - (void)stopObservingChangesToAutomaticListData;
 - (void)populateAutomaticListTableView;
@@ -101,7 +99,6 @@
 	[oManualListRemoveProductButton setImage:[NSImage imageNamed:NSImageNameRemoveTemplate]];
 }
 
-#pragma mark -
 #pragma mark Dealloc
 
 - (void)dealloc
@@ -114,7 +111,6 @@
 	[super dealloc];
 }
 
-#pragma mark -
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
@@ -122,30 +118,24 @@
 					    change:(NSDictionary *)change
 					   context:(void *)context
 {
-	if (object == pluginController)
+	if (object == [self inspectedObjectsController])
 	{
-		if ([keyPath isEqualToString:@"selection.delegate.automaticListCode"]) {
+		if ([keyPath isEqualToString:@"selection.automaticListCode"]) {
 			[self updateAutomaticListPlaceholderText];
 		}
 		else if ([keyPath isEqualToString:@"selection.listSource"]) {
 			[self listSourceDidChange:[object valueForKeyPath:keyPath]];
 		}
 		else if ([keyPath isEqualToString:@"selection.maxNumberProducts"] ||
-				 [keyPath isEqualToString:@"selection.delegate.automaticList.products"]) {
+				 [keyPath isEqualToString:@"selection.automaticList.products"])
+        {
 			[self populateAutomaticListTableView];
 		}
-		else if ([keyPath isEqualToString:@"selection.delegate.automaticList.loadingData"]) {
+		else if ([keyPath isEqualToString:@"selection.automaticList.loadingData"])
+        {
 			[self automaticListDidChangeLoadingStatus];
 		}
 	}
-}
-
-#pragma mark -
-#pragma mark Convenience Methods
-
-- (AmazonListPlugIn *)pluginDelegate
-{
-	return [[pluginController content] delegate];
 }
 
 #pragma mark -
@@ -164,7 +154,7 @@
 
 - (void)observeChangesToListSource
 {
-	[pluginController addObserver:self forKeyPath:@"selection.listSource" options:0 context:nil];
+	[[self inspectedObjectsController] addObserver:self forKeyPath:@"selection.listSource" options:0 context:nil];
 	
 	// We must retain the tab view items so that they are not deallocated when removed from the tab view
 	[productsTabViewItem retain];
@@ -173,7 +163,7 @@
 
 - (void)stopObservingChangesToListSource
 {
-	[pluginController removeObserver:self forKeyPath:@"selection.listSource"];
+	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.listSource"];
 	
 	[productsTabViewItem release];
 	[listTabViewItem release];
@@ -227,45 +217,47 @@
 
 - (void)observeChangesToAutomaticListData
 {
-	[pluginController addObserver:self
-					   forKeyPath:@"selection.delegate.automaticListCode"
+	[[self inspectedObjectsController] addObserver:self
+					   forKeyPath:@"selection.automaticListCode"
 					      options:0
 						  context:nil];
 	
-	[pluginController addObserver:self
+	[[self inspectedObjectsController] addObserver:self
 					   forKeyPath:@"selection.maxNumberProducts"
 					      options:0
 						  context:nil];
 	
-	[pluginController addObserver:self
-					   forKeyPath:@"selection.delegate.automaticList.products"
+	[[self inspectedObjectsController] addObserver:self
+					   forKeyPath:@"selection.automaticList.products"
 					      options:0
 						  context:nil];
 	
-	[pluginController addObserver:self
-					   forKeyPath:@"selection.delegate.automaticList.loadingData"
+	[[self inspectedObjectsController] addObserver:self
+					   forKeyPath:@"selection.automaticList.loadingData"
 					      options:0
 						  context:nil];
 }
 
 - (void)stopObservingChangesToAutomaticListData
 {
-	[pluginController removeObserver:self forKeyPath:@"selection.delegate.automaticListCode"];
-	[pluginController removeObserver:self forKeyPath:@"selection.maxNumberProducts"];
-	[pluginController removeObserver:self forKeyPath:@"selection.delegate.automaticList.products"];
-	[pluginController removeObserver:self forKeyPath:@"selection.delegate.automaticList.loadingData"];
+	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.automaticListCode"];
+	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.maxNumberProducts"];
+	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.automaticList.products"];
+	[[self inspectedObjectsController] removeObserver:self forKeyPath:@"selection.automaticList.loadingData"];
 }
 
 - (void)populateAutomaticListTableView
 {
-	id pluginDelegate = [self pluginDelegate];
-	
-	NSArray *allProducts = [[pluginDelegate automaticList] products];
-	if (allProducts && ![allProducts isEmpty])
+	NSArray *allProducts = [[self inspectedObjectsController]
+                            valueForKeyPath:@"selection.automaticList.products"];
+    
+	if (!NSIsControllerMarker(allProducts) && [allProducts count])
 	{
 		// Build the range as appropriate
 		NSRange productsRange;
-		unsigned maxNumberProducts = [pluginDelegate maxNumberProducts];
+		NSUInteger maxNumberProducts = [[[self inspectedObjectsController]
+                                         valueForKeyPath:@"selection.maxNumberProducts"]
+                                        unsignedIntegerValue];
 		
 		if ([allProducts count] < maxNumberProducts || maxNumberProducts == 0) {
 			productsRange = NSMakeRange(0, [allProducts count]);
@@ -274,18 +266,20 @@
 			productsRange = NSMakeRange(0, maxNumberProducts);
 		}
 		
-		[pluginDelegate setAutomaticListProductsToDisplay: [allProducts subarrayWithRange:productsRange]];
+		[[self inspectedObjectsController] setValue:[allProducts subarrayWithRange:productsRange]
+                                         forKeyPath:@"selection.automaticListProductsToDisplay"];
 	}
 	else
 	{
-		[pluginDelegate setAutomaticListProductsToDisplay:nil];
+		[[self inspectedObjectsController] setValue:nil
+                                         forKeyPath:@"selection.automaticListProductsToDisplay"];
 	}
 }
 
 - (void)automaticListDidChangeLoadingStatus
 {
 	BOOL loading = NO;
-	id value = [pluginController valueForKeyPath:@"selection.delegate.automaticList.loadingData"];
+	id value = [[self inspectedObjectsController] valueForKeyPath:@"selection.automaticList.loadingData"];
 	
 	if ([value isKindOfClass:[NSNumber class]]) {
 		loading = [value boolValue];
@@ -298,10 +292,12 @@
 
 - (void)updateAutomaticListPlaceholderText
 {
-	id pluginDelegate = [self pluginDelegate];
-	NSString *listCode = [pluginDelegate automaticListCode];
-	BOOL listLoading = [[pluginDelegate automaticList] isLoadingData];
-	NSArray *products = [pluginDelegate automaticListProductsToDisplay];
+	id plugIn = [[self inspectedObjectsController] valueForKeyPath:@"selection.self"];
+    if (NSIsControllerMarker(plugIn)) plugIn = nil;
+    
+	NSString *listCode = [plugIn automaticListCode];
+	BOOL listLoading = [[plugIn automaticList] isLoadingData];
+	NSArray *products = [plugIn automaticListProductsToDisplay];
 	
 	
 	[automaticListTableView setPlaceholderStringColor:[NSColor grayColor]];	// Grey is the default
@@ -316,7 +312,7 @@
 	{
 		[automaticListTableView setPlaceholderStringColor:[NSColor redColor]];
 		
-		NSError *error = [[pluginDelegate automaticList] lastLoadError];
+		NSError *error = [[plugIn automaticList] lastLoadError];
 		NSURL *URL = [NSURL URLWithString:listCode];
 		
 		if (error && [[error domain] isEqualToString:NSURLErrorDomain] && [error code] == -1009) { // No internet connection
@@ -354,14 +350,18 @@
 	BOOL result = YES;
 	SEL action = [menuItem action];
 	
-	if (action == @selector(reloadSelectedProduct:)) {
+	if (action == @selector(reloadSelectedProduct:))
+    {
 		result = ([[manualProductsArrayController selectionIndexes] count] > 0);
 	}
-	else if (action == @selector(reloadAllProducts:)) {
+	else if (action == @selector(reloadAllProducts:))
+    {
 		result = ([[manualProductsArrayController arrangedObjects] count] > 0);
 	}
-	else if (action == @selector(openListURL:)) {
-		result = ([[[self pluginDelegate] automaticList] listURL] != nil);
+	else if (action == @selector(openListURL:))
+    {
+		result = ([[self inspectedObjectsController]
+                   valueForKeyPath:@"selection.automaticList.listURL"] != nil);
 	}
 	
 	return result;
@@ -369,13 +369,16 @@
 
 - (IBAction)reloadList:(id)sender
 {
-	[[self pluginDelegate] loadAutomaticList];
+	[[[self inspectedObjectsController] selectedObjects]
+     makeObjectsPerformSelector:@selector(loadAutomaticList)];
 }
 
 - (IBAction)openListURL:(id)sender
 {
-	NSURL *URL = [[[self pluginDelegate] automaticList] listURL];
-	if (URL) {
+	NSURL *URL = [[self inspectedObjectsController] valueForKeyPath:@"selection.automaticList.listURL"];
+	
+    if (URL && !NSIsControllerMarker(URL))
+    {
 		[[NSWorkspace sharedWorkspace] openURL: URL];
 	}
 }

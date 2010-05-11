@@ -21,7 +21,6 @@
 @interface AmazonListInspector : SVInspectorViewController
 {
 	IBOutlet NSPopUpButton		*storeSelectionPopupButton;
-	IBOutlet NSObjectController	*pluginController;
 	
 	IBOutlet NSTabView		*tabView;
 	IBOutlet NSTabViewItem	*productsTabViewItem;
@@ -39,7 +38,7 @@
 	IBOutlet NSSegmentedControl	*listLayoutSegmentedControl;
 	
 	
-	@private
+  @private
 	NSString	*mySelectedTab;
 }
 
