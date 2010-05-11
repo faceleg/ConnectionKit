@@ -12,7 +12,6 @@
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "AmazonListPlugIn.h"
-#import "APAmazonProduct.h"
 #import "AmazonListProductList.h"
 
 
