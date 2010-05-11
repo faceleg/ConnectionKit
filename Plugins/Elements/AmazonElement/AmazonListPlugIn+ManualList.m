@@ -199,6 +199,11 @@
 	return result;
 }
 
++ (NSSet *)keyPathsForValuesAffectingProductsSuitableForPublishing
+{
+    return [NSSet setWithObject:@"products"];
+}
+
 - (NSURL *)randomLayoutIFrameURL
 {
 	return [AmazonECSOperation enhancedProductLinkForASINs:[[self productsSuitableForPublishing] valueForKey:@"ASIN"]
