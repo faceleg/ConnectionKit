@@ -8,7 +8,7 @@
 
 #import "APProductsArrayController.h"
 
-#import "APAmazonProduct.h"
+#import "AmazonListProduct.h"
 
 
 @implementation APProductsArrayController
@@ -40,7 +40,7 @@
  */
 - (void)aProductDidEndLoading:(NSNotification *)notification
 {
-	APAmazonProduct *product = [notification object];
+	AmazonListProduct *product = [notification object];
 	
 	int row = [[self arrangedObjects] indexOfObjectIdenticalTo:product];
 	if (row != NSNotFound) {
@@ -58,7 +58,7 @@
 					row:(int)row
 		  mouseLocation:(NSPoint)mouseLocation
 {
-	APAmazonProduct *product = [[self arrangedObjects] objectAtIndex:row];
+	AmazonListProduct *product = [[self arrangedObjects] objectAtIndex:row];
 	return [product toolTipString];
 }
 
@@ -84,7 +84,7 @@
 	NSArray *selection = [self selectedObjects];
 	if (selection)
 	{
-		APAmazonProduct *product;
+		AmazonListProduct *product;
 		
 		for (product in selection)
 		{

@@ -6,19 +6,19 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "APAmazonProduct.h"
+#import "AmazonListProduct.h"
 
 #import <AmazonSupport/AmazonSupport.h>
 
 #import "AmazonItem+APExtensions.h"
 
 
-@interface APAmazonProduct ()
+@interface AmazonListProduct ()
 - (void)postProductDidEndLoadingNotifcation;
 @end
 
 
-@implementation APAmazonProduct
+@implementation AmazonListProduct
 
 # pragma mark *** Init & Dealloc ***
 
@@ -58,7 +58,7 @@
 
 - (id)copyWithZone:(NSZone *)zone
 {
-	APAmazonProduct *copy = [[[self class] allocWithZone: zone] init];
+	AmazonListProduct *copy = [[[self class] allocWithZone: zone] init];
 	
 	[copy setASIN: [self ASIN]];
 	[copy setTitle: [self title]];

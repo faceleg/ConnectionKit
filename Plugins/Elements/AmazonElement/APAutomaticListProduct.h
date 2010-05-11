@@ -10,10 +10,10 @@
 
 
 #import <Cocoa/Cocoa.h>
-#import "APAmazonProduct.h"
+#import "AmazonListProduct.h"
 
 
-@interface APAutomaticListProduct : APAmazonProduct
+@interface APAutomaticListProduct : AmazonListProduct
 {
 	unsigned	myQuantityDesired;
 	unsigned	myQuantityReceived;

@@ -21,7 +21,7 @@
 @class AmazonImage;
 
 
-@interface APAmazonProduct : NSObject <NSCopying>
+@interface AmazonListProduct : NSObject <NSCopying>
 {
 	AmazonStoreCountry	myStore;
 	NSString			*myASIN;

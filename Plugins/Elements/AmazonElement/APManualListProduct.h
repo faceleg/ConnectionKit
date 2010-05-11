@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import <AmazonSupport/AmazonSupport.h>
 
-#import "APAmazonProduct.h"
+#import "AmazonListProduct.h"
 
 
 @class AmazonProductPlaceholder;
@@ -21,7 +21,7 @@
 @class AmazonImage;
 
 
-@interface APManualListProduct : APAmazonProduct
+@interface APManualListProduct : AmazonListProduct
 {
 	@private
 	

@@ -8,7 +8,7 @@
 
 #import "AmazonListPlugIn.h"
 
-#import "APAmazonProduct.h"
+#import "AmazonListProduct.h"
 #import "APManualListProduct.h"
 #import "NSURL+AmazonPagelet.h"
 
@@ -113,7 +113,7 @@
 {
 	NSMutableArray *products = [self _products];
 	
-	APAmazonProduct *product = [products objectAtIndex:index];
+	AmazonListProduct *product = [products objectAtIndex:index];
 	[product removeObserver:self
 				forKeyPaths:[NSSet setWithObjects:@"productCode", @"comment", @"loadingData", @"store", nil]];
 	

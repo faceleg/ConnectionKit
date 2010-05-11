@@ -8,7 +8,7 @@
 
 #import "APProductAttributesCell.h"
 
-#import "APAmazonProduct.h"
+#import "AmazonListProduct.h"
 #import "APManualListProduct.h"
 #import "APAutomaticListProduct.h"
 
