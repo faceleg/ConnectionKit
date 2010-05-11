@@ -191,26 +191,29 @@
 {
     NSString *result = nil;
     
-    SVTextAttachment *textAttachment = [self textAttachment];
-    if ([[textAttachment causesWrap] boolValue])
+    if (![self isPagelet])
     {
-        switch ([[textAttachment wrap] integerValue])
+        SVTextAttachment *textAttachment = [self textAttachment];
+        if ([[textAttachment causesWrap] boolValue])
         {
-            case SVGraphicWrapLeft:
-                result = @"narrow right";
-                break;
-            case SVGraphicWrapRight:
-                result = @"narrow left";
-                break;
-            case SVGraphicWrapLeftSplit:
-                result = @"wide right";
-                break;
-            case SVGraphicWrapCenterSplit:
-                result = @"wide center";
-                break;
-            case SVGraphicWrapRightSplit:
-                result = @"wide left";
-                break;
+            switch ([[textAttachment wrap] integerValue])
+            {
+                case SVGraphicWrapLeft:
+                    result = @"narrow right";
+                    break;
+                case SVGraphicWrapRight:
+                    result = @"narrow left";
+                    break;
+                case SVGraphicWrapLeftSplit:
+                    result = @"wide right";
+                    break;
+                case SVGraphicWrapCenterSplit:
+                    result = @"wide center";
+                    break;
+                case SVGraphicWrapRightSplit:
+                    result = @"wide left";
+                    break;
+            }
         }
     }
     
