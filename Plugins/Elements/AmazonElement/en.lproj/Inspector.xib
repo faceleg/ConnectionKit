@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="251"/>
+			<integer value="7"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -296,7 +296,7 @@
 							<object class="NSTabViewItem" id="85554065">
 								<string key="NSIdentifier">productsOrList</string>
 								<object class="NSView" key="NSView" id="826007103">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="766885201"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -697,6 +697,7 @@
 																</object>
 															</object>
 														</object>
+														<int key="NSSelectedIndex">4</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -734,6 +735,7 @@
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 330}}</string>
+									<reference key="NSSuperview" ref="766885201"/>
 								</object>
 								<string key="NSLabel">Products</string>
 								<reference key="NSColor" ref="466156009"/>
@@ -742,7 +744,7 @@
 							<object class="NSTabViewItem" id="975162469">
 								<string key="NSIdentifier">productsOrList</string>
 								<object class="NSView" key="NSView" id="79339765">
-									<reference key="NSNextResponder" ref="766885201"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<object class="NSMutableArray" key="NSSubviews">
 										<bool key="EncodedWithXMLCoder">YES</bool>
@@ -1246,6 +1248,7 @@ aXN0bWFuaWEuA</string>
 																</object>
 															</object>
 														</object>
+														<int key="NSSelectedIndex">1</int>
 														<bool key="NSPullDown">YES</bool>
 														<int key="NSPreferredEdge">1</int>
 														<bool key="NSUsesItemFromMenu">YES</bool>
@@ -1263,7 +1266,6 @@ aXN0bWFuaWEuA</string>
 										</object>
 									</object>
 									<string key="NSFrame">{{10, 25}, {244, 330}}</string>
-									<reference key="NSSuperview" ref="766885201"/>
 									<reference key="NSNextKeyView" ref="785667224"/>
 								</object>
 								<string key="NSLabel">List Choice</string>
@@ -1754,13 +1756,13 @@ aXN0bWFuaWEuA</string>
 								<reference key="NSTabView" ref="766885201"/>
 							</object>
 						</object>
-						<reference key="NSSelectedTabViewItem" ref="975162469"/>
+						<reference key="NSSelectedTabViewItem" ref="85554065"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSDrawsBackground">YES</bool>
 						<object class="NSMutableArray" key="NSSubviews">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="79339765"/>
+							<reference ref="826007103"/>
 						</object>
 					</object>
 				</object>
@@ -3282,6 +3284,38 @@ aXN0bWFuaWEuA</string>
 					</object>
 					<int key="connectionID">1181</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">add:</string>
+						<reference key="source" ref="295048288"/>
+						<reference key="destination" ref="636920584"/>
+					</object>
+					<int key="connectionID">1182</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">remove:</string>
+						<reference key="source" ref="295048288"/>
+						<reference key="destination" ref="814300081"/>
+					</object>
+					<int key="connectionID">1183</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canRemove</string>
+						<reference key="source" ref="814300081"/>
+						<reference key="destination" ref="295048288"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="814300081"/>
+							<reference key="NSDestination" ref="295048288"/>
+							<string key="NSLabel">enabled: canRemove</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canRemove</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">1185</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -4634,7 +4668,7 @@ aXN0bWFuaWEuA</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
-					<string>{{649, 584}, {188, 81}}</string>
+					<string>{{948, 589}, {188, 81}}</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4648,7 +4682,7 @@ aXN0bWFuaWEuA</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
-					<string>{{599, 488}, {184, 81}}</string>
+					<string>{{898, 493}, {184, 81}}</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.brandonwalkin.BWToolkit</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4996,7 +5030,7 @@ cm9kdWN0A</string>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1181</int>
+			<int key="maxID">1185</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
