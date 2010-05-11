@@ -192,7 +192,22 @@
     if (media)
     {
         CIImage *image = [CIImage imageWithIMBImageItem:media];
-        result = [image extent].size;
+        if (image)
+        {
+            result = [image extent].size;
+        }
+        else
+        {
+            NSImage *image = [NSImage imageWithIMBImageItem:media];
+            if (image)
+            {
+                result = NSSizeToCGSize([image size]);
+            }
+            else
+            {
+                result = CGSizeZero;
+            }
+        }
     }
     
     return result;
