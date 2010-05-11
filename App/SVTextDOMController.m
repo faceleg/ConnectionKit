@@ -260,10 +260,15 @@
 
 - (void)webEditorTextDidChangeSelection:(NSNotification *)notification; { }
 
-#pragma mark Pasteboard
+#pragma mark Pasteboard / Drag
 
 // Up to subclasses to add custom types
 - (void)addSelectionTypesToPasteboard:(NSPasteboard *)pasteboard; { }
+
+- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
+{
+    return NSDragOperationNone;
+}
 
 #pragma mark Undo
 
