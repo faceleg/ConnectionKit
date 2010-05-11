@@ -171,6 +171,19 @@
 	manualListIsBeingArchivedOrUnarchived = NO;
 }
 
+- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
+{
+    if ([key isEqualToString:@"products"])
+    {
+        NSArray *products = [NSKeyedUnarchiver unarchiveObjectWithData:serializedValue];
+        [[self mutableArrayValueForKey:@"products"] setArray:products];
+    }
+    else
+    {
+        [super setSerializedValue:serializedValue forKey:key];
+    }
+}
+
 #pragma mark -
 #pragma mark Product Loading
 
