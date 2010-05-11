@@ -163,9 +163,9 @@
 	
 	if (!registerUndo) [[self container] disableUndoRegistration];
 	
-	NSData *productsData = [NSKeyedArchiver archivedDataWithRootObject:[self products]];
-	[[self propertiesStorage] setObject:productsData forKey:@"manualListProducts"];
-	
+	[self willChangeValueForKey:@"products"];
+	[self didChangeValueForKey:@"products"];
+    
 	if (!registerUndo) [[self container] enableUndoRegistration];
 	
 	manualListIsBeingArchivedOrUnarchived = NO;
