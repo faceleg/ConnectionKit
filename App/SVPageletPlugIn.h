@@ -56,12 +56,6 @@
 @property(nonatomic, readonly) NSBundle *bundle;    // the object representing the plug-in's bundle
 
 
-#pragma mark Undo Management
-// TODO: Should these be methods on some kind of SVPlugInHost or SVPlugInManager object?
-- (void)disableUndoRegistration;
-- (void)enableUndoRegistration;
-
-
 #pragma mark UI
 
 // Default implementation guesses classname and nib, returning nil if they're not found

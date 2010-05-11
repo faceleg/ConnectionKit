@@ -70,4 +70,24 @@
 - (BOOL)showsCaption { return ![[[self caption] hidden] boolValue]; }
 - (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
 
+- (void)disableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager enableUndoRegistration];
+}
+
 @end

@@ -160,28 +160,6 @@ static id <SVPlugInContext> sCurrentContext;
 
 - (NSBundle *)bundle { return [NSBundle bundleForClass:[self class]]; }
 
-#pragma mark Undo Management
-
-- (void)disableUndoRegistration;
-{
-    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
-                                                        object:undoManager];
-    
-    [undoManager disableUndoRegistration];
-}
-
-- (void)enableUndoRegistration;
-{
-    NSUndoManager *undoManager = [[[self site] managedObjectContext] undoManager];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
-                                                        object:undoManager];
-    
-    [undoManager enableUndoRegistration];
-}
-
 #pragma mark UI
 
 + (SVInspectorViewController *)makeInspectorViewController;

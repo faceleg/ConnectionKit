@@ -102,6 +102,10 @@
 
 @property(nonatomic, getter=isBordered) BOOL bordered;
 
+#pragma mark Undo Management    // don't have direct access to undo manager
+- (void)disableUndoRegistration;
+- (void)enableUndoRegistration;
+
 @end
 
 
