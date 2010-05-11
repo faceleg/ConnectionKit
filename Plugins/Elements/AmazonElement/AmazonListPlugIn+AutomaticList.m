@@ -232,4 +232,24 @@
 	return [NSURL URLWithBaseURL:serviceURL parameters:query];
 }
 
++ (NSSet *)keyPathsForValuesAffectingKareliaHTMLURL;
+{
+    return [NSSet setWithObjects:
+     @"store",
+     @"automaticListType",
+     @"automaticListSorting",
+     @"layout",
+     @"centeredThumbnailWidths",
+     @"frame",
+     @"maxNumberProducts",
+     @"showThumbnails",
+     @"showTitles",
+     @"showCreators",
+     @"showComments",
+     @"showPrices",
+     @"showNewPricesOnly",
+     @"showLinkToList",
+     @"automaticListType", nil];
+}
+
 @end
