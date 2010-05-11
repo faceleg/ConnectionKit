@@ -12,7 +12,7 @@
 #import "APProductsArrayController.h"
 
 
-@class APInspectorController;
+@class AmazonListInspector;
 
 
 @interface APManualListArrayController : APProductsArrayController

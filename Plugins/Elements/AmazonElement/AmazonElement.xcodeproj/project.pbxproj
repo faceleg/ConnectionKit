@@ -16,7 +16,7 @@
 		3C4A16C40D5E71DB009476BF /* APAmazonList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16AA0D5E71DB009476BF /* APAmazonList.m */; };
 		3C4A16C50D5E71DB009476BF /* APAmazonProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16AC0D5E71DB009476BF /* APAmazonProduct.m */; };
 		3C4A16C60D5E71DB009476BF /* APAutomaticListProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16AE0D5E71DB009476BF /* APAutomaticListProduct.m */; };
-		3C4A16C70D5E71DB009476BF /* APInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16B00D5E71DB009476BF /* APInspectorController.m */; };
+		3C4A16C70D5E71DB009476BF /* AmazonListInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16B00D5E71DB009476BF /* AmazonListInspector.m */; };
 		3C4A16C80D5E71DB009476BF /* APManualListArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16B20D5E71DB009476BF /* APManualListArrayController.m */; };
 		3C4A16C90D5E71DB009476BF /* APManualListProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16B40D5E71DB009476BF /* APManualListProduct.m */; };
 		3C4A16CA0D5E71DB009476BF /* APProductAttributesCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16B60D5E71DB009476BF /* APProductAttributesCell.m */; };
@@ -65,8 +65,8 @@
 		3C4A16AC0D5E71DB009476BF /* APAmazonProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAmazonProduct.m; sourceTree = "<group>"; };
 		3C4A16AD0D5E71DB009476BF /* APAutomaticListProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAutomaticListProduct.h; sourceTree = "<group>"; };
 		3C4A16AE0D5E71DB009476BF /* APAutomaticListProduct.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APAutomaticListProduct.m; sourceTree = "<group>"; };
-		3C4A16AF0D5E71DB009476BF /* APInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APInspectorController.h; sourceTree = "<group>"; };
-		3C4A16B00D5E71DB009476BF /* APInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APInspectorController.m; sourceTree = "<group>"; };
+		3C4A16AF0D5E71DB009476BF /* AmazonListInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonListInspector.h; sourceTree = "<group>"; };
+		3C4A16B00D5E71DB009476BF /* AmazonListInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonListInspector.m; sourceTree = "<group>"; };
 		3C4A16B10D5E71DB009476BF /* APManualListArrayController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APManualListArrayController.h; sourceTree = "<group>"; };
 		3C4A16B20D5E71DB009476BF /* APManualListArrayController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = APManualListArrayController.m; sourceTree = "<group>"; };
 		3C4A16B30D5E71DB009476BF /* APManualListProduct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APManualListProduct.h; sourceTree = "<group>"; };
@@ -245,8 +245,8 @@
 				3C4A16A60D5E71DB009476BF /* AmazonListPlugIn+ManualList.m */,
 				3C4A16A70D5E71DB009476BF /* AmazonListPlugIn.h */,
 				3C4A16A80D5E71DB009476BF /* AmazonListPlugIn.m */,
-				3C4A16AF0D5E71DB009476BF /* APInspectorController.h */,
-				3C4A16B00D5E71DB009476BF /* APInspectorController.m */,
+				3C4A16AF0D5E71DB009476BF /* AmazonListInspector.h */,
+				3C4A16B00D5E71DB009476BF /* AmazonListInspector.m */,
 			);
 			name = Plugin;
 			sourceTree = "<group>";
@@ -426,7 +426,7 @@
 				3C4A16C40D5E71DB009476BF /* APAmazonList.m in Sources */,
 				3C4A16C50D5E71DB009476BF /* APAmazonProduct.m in Sources */,
 				3C4A16C60D5E71DB009476BF /* APAutomaticListProduct.m in Sources */,
-				3C4A16C70D5E71DB009476BF /* APInspectorController.m in Sources */,
+				3C4A16C70D5E71DB009476BF /* AmazonListInspector.m in Sources */,
 				3C4A16C80D5E71DB009476BF /* APManualListArrayController.m in Sources */,
 				3C4A16C90D5E71DB009476BF /* APManualListProduct.m in Sources */,
 				3C4A16CA0D5E71DB009476BF /* APProductAttributesCell.m in Sources */,

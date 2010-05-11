@@ -6,7 +6,7 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "APInspectorController.h"
+#import "AmazonListInspector.h"
 
 #import "SandvoxPlugin.h"
 #import <AmazonSupport/AmazonSupport.h>
@@ -16,7 +16,7 @@
 #import "APAmazonList.h"
 
 
-@interface APInspectorController ()
+@interface AmazonListInspector ()
 
 - (void)initializeStoreSelectionPopupButton;
 - (void)prepareTableViews;
@@ -39,7 +39,7 @@
 @end
 
 
-@implementation APInspectorController
+@implementation AmazonListInspector
 
 #pragma mark -
 #pragma mark Initialization
