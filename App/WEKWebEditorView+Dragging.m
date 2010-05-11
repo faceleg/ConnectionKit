@@ -361,28 +361,32 @@
     
     if ([[self dataSource] webEditor:self addSelectionToPasteboard:pboard])
     {
-        
         // Now let's start a-dragging!
         WEKWebEditorItem *item = [self selectedItem]; // FIXME: use the item actually being dragged
         
-        NSPoint dragImageRect;
-        NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
-        
-        if (dragImage)
+        NSDragOperation op = ([item draggingSourceOperationMaskForLocal:NO] |
+                              [item draggingSourceOperationMaskForLocal:YES]);
+        if (op)
         {
-            @try
+            NSPoint dragImageRect;
+            NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
+            
+            if (dragImage)
             {
-                [self dragImage:dragImage
-                             at:dragImageRect
-                         offset:NSZeroSize
-                          event:_mouseDownEvent
-                     pasteboard:pboard
-                         source:self
-                      slideBack:YES];
-            }
-            @finally    // in case the drag throws an exception
-            {
-                [self forgetDraggedItems];
+                @try
+                {
+                    [self dragImage:dragImage
+                                 at:dragImageRect
+                             offset:NSZeroSize
+                              event:_mouseDownEvent
+                         pasteboard:pboard
+                             source:self
+                          slideBack:YES];
+                }
+                @finally    // in case the drag throws an exception
+                {
+                    [self forgetDraggedItems];
+                }
             }
         }
     }
