@@ -17,10 +17,10 @@ div.text-navigation div { display:inline; margin:0px 0.5em; }
 
 
 /* 2.0 callout compatibility. 2.0-compatible designs are expected to implement this themselves */
-/*.callout-container { clear:both; }*/
+.callout-container { clear:left; }
 
-.callout-container.left { float:left; }
-.callout-container.right { float:right; }
+.callout-container.left { xfloat:left; }
+.callout-container.right { xfloat:right; }
 
 /* 2.0 wrap compatibility. 2.0-compatible designs can further adjust these if they need */
 .narrow, .wide { display:block; }
