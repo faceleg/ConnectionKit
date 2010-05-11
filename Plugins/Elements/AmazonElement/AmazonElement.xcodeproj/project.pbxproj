@@ -10,8 +10,8 @@
 		3C0234640D5C268000E82E4B /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3C0234620D5C268000E82E4B /* InfoPlist.strings */; };
 		3C4A16BF0D5E71DB009476BF /* AmazonIDFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A20D5E71DB009476BF /* AmazonIDFormatter.m */; };
 		3C4A16C00D5E71DB009476BF /* AmazonItem+APExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A40D5E71DB009476BF /* AmazonItem+APExtensions.m */; };
-		3C4A16C10D5E71DB009476BF /* AmazonListDelegate+AutomaticList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A50D5E71DB009476BF /* AmazonListDelegate+AutomaticList.m */; };
-		3C4A16C20D5E71DB009476BF /* AmazonListDelegate+ManualList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A60D5E71DB009476BF /* AmazonListDelegate+ManualList.m */; };
+		3C4A16C10D5E71DB009476BF /* AmazonListPlugIn+AutomaticList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A50D5E71DB009476BF /* AmazonListPlugIn+AutomaticList.m */; };
+		3C4A16C20D5E71DB009476BF /* AmazonListPlugIn+ManualList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A60D5E71DB009476BF /* AmazonListPlugIn+ManualList.m */; };
 		3C4A16C30D5E71DB009476BF /* AmazonListPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16A80D5E71DB009476BF /* AmazonListPlugIn.m */; };
 		3C4A16C40D5E71DB009476BF /* APAmazonList.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16AA0D5E71DB009476BF /* APAmazonList.m */; };
 		3C4A16C50D5E71DB009476BF /* APAmazonProduct.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C4A16AC0D5E71DB009476BF /* APAmazonProduct.m */; };
@@ -55,8 +55,8 @@
 		3C4A16A20D5E71DB009476BF /* AmazonIDFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonIDFormatter.m; sourceTree = "<group>"; };
 		3C4A16A30D5E71DB009476BF /* AmazonItem+APExtensions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "AmazonItem+APExtensions.h"; sourceTree = "<group>"; };
 		3C4A16A40D5E71DB009476BF /* AmazonItem+APExtensions.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonItem+APExtensions.m"; sourceTree = "<group>"; };
-		3C4A16A50D5E71DB009476BF /* AmazonListDelegate+AutomaticList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonListDelegate+AutomaticList.m"; sourceTree = "<group>"; };
-		3C4A16A60D5E71DB009476BF /* AmazonListDelegate+ManualList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonListDelegate+ManualList.m"; sourceTree = "<group>"; };
+		3C4A16A50D5E71DB009476BF /* AmazonListPlugIn+AutomaticList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonListPlugIn+AutomaticList.m"; sourceTree = "<group>"; };
+		3C4A16A60D5E71DB009476BF /* AmazonListPlugIn+ManualList.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "AmazonListPlugIn+ManualList.m"; sourceTree = "<group>"; };
 		3C4A16A70D5E71DB009476BF /* AmazonListPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AmazonListPlugIn.h; sourceTree = "<group>"; };
 		3C4A16A80D5E71DB009476BF /* AmazonListPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AmazonListPlugIn.m; sourceTree = "<group>"; };
 		3C4A16A90D5E71DB009476BF /* APAmazonList.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = APAmazonList.h; sourceTree = "<group>"; };
@@ -241,8 +241,8 @@
 		3C4A16DD0D5E72DC009476BF /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
-				3C4A16A50D5E71DB009476BF /* AmazonListDelegate+AutomaticList.m */,
-				3C4A16A60D5E71DB009476BF /* AmazonListDelegate+ManualList.m */,
+				3C4A16A50D5E71DB009476BF /* AmazonListPlugIn+AutomaticList.m */,
+				3C4A16A60D5E71DB009476BF /* AmazonListPlugIn+ManualList.m */,
 				3C4A16A70D5E71DB009476BF /* AmazonListPlugIn.h */,
 				3C4A16A80D5E71DB009476BF /* AmazonListPlugIn.m */,
 				3C4A16AF0D5E71DB009476BF /* APInspectorController.h */,
@@ -420,8 +420,8 @@
 			files = (
 				3C4A16BF0D5E71DB009476BF /* AmazonIDFormatter.m in Sources */,
 				3C4A16C00D5E71DB009476BF /* AmazonItem+APExtensions.m in Sources */,
-				3C4A16C10D5E71DB009476BF /* AmazonListDelegate+AutomaticList.m in Sources */,
-				3C4A16C20D5E71DB009476BF /* AmazonListDelegate+ManualList.m in Sources */,
+				3C4A16C10D5E71DB009476BF /* AmazonListPlugIn+AutomaticList.m in Sources */,
+				3C4A16C20D5E71DB009476BF /* AmazonListPlugIn+ManualList.m in Sources */,
 				3C4A16C30D5E71DB009476BF /* AmazonListPlugIn.m in Sources */,
 				3C4A16C40D5E71DB009476BF /* APAmazonList.m in Sources */,
 				3C4A16C50D5E71DB009476BF /* APAmazonProduct.m in Sources */,

@@ -173,11 +173,11 @@
 	NSMutableDictionary *query = [NSMutableDictionary dictionaryWithCapacity: 19];
 	
 	[query setValue:@"on" forKey:@"js"];	// Enable javascript
-	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"store"]] forKey:@"s"];	// Store
+	[query setValue:[NSString stringWithFormat:@"%i", [self store]] forKey:@"s"];	// Store
 	[query setValue:[self automaticListCode] forKey:@"id"];		// listID
-	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"automaticListType"]] forKey:@"t"];	// listType
-	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"automaticListSorting"]] forKey:@"o"];	// Sorting
-	[query setValue:[NSString stringWithFormat:@"%i", [[self propertiesStorage] integerForKey:@"layout"]] forKey:@"l"];	// layout
+	[query setValue:[NSString stringWithFormat:@"%i", [self automaticListType]] forKey:@"t"];	// listType
+	[query setValue:[NSString stringWithFormat:@"%i", [self automaticListSorting]] forKey:@"o"];	// Sorting
+	[query setValue:[NSString stringWithFormat:@"%i", [self layout]] forKey:@"l"];	// layout
 	[query setValue:[NSString stringWithFormat:@"%u", [self centeredThumbnailWidths]] forKey:@"w"];	// Width of centered thubmnails
 	[query setValue:[NSString stringWithFormat:@"%i", [self frame]] forKey:@"f"];	// Frame
 	
@@ -195,7 +195,8 @@
     {
 		[query setValue:@"on" forKey:@"ti"];
 	}
-	if ([self showCreators]) {
+	if ([self showCreators])
+    {
 		[query setValue:@"on" forKey:@"cr"];
 	}
 	if ([self showComments])
@@ -210,13 +211,14 @@
     {
 		[query setValue:@"on" forKey:@"np"];
 	}
-	if ([[self propertiesStorage] boolForKey:@"showLinkToList"]) {
+	if ([self showLinkToList])
+    {
 		[query setValue:@"on" forKey:@"fl"];
 	}
 	
 	// Whether products should be bought for the visitor or site owner
-	if ([[self propertiesStorage] integerForKey:@"automaticListType"] == AmazonWishList ||
-		[[self propertiesStorage] integerForKey:@"automaticListType"] == AmazonWeddingRegistry)
+	if ([self automaticListType] == AmazonWishList ||
+		[self automaticListType] == AmazonWeddingRegistry)
 	{
 		[query setValue:@"on" forKey:@"me"];
 	}

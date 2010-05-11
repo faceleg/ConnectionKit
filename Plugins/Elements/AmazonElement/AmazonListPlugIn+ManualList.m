@@ -48,7 +48,7 @@
 	{
 		// If the store of a product is changed either reset it to the default or change our value to match
 		AmazonStoreCountry productStore = [product store];
-		AmazonStoreCountry currentStore = [[self propertiesStorage] integerForKey:@"store"];
+		AmazonStoreCountry currentStore = [self store];
 		
 		if (productStore == currentStore) {
 			return;
@@ -57,7 +57,7 @@
 		unsigned count = [self numberOfManualProductsWithAProductCode];
 		if (count == 0 || (count == 1 & [[self products] containsObjectIdenticalTo:product]))
 		{
-			[[self propertiesStorage] setInteger:productStore forKey:@"store"];
+			[self setStore:productStore];
 		}
 		else
 		{
@@ -75,12 +75,14 @@
 {
 	// If the product's store differs to ours, reset it to the default or change our value to match
 	AmazonStoreCountry productStore = [product store];
-	AmazonStoreCountry currentStore = [[self propertiesStorage] integerForKey:@"store"];
+	AmazonStoreCountry currentStore = [self store];
 	
-	if ([self numberOfManualProductsWithAProductCode] == 0) {
-		[[self propertiesStorage] setInteger:productStore forKey:@"store"];
+	if ([self numberOfManualProductsWithAProductCode] == 0)
+    {
+		[self setStore:productStore];
 	}
-	else {
+	else
+    {
 		[product setStore:currentStore];
 	}
 	
@@ -200,7 +202,7 @@
 - (NSURL *)randomLayoutIFrameURL
 {
 	return [AmazonECSOperation enhancedProductLinkForASINs:[[self productsSuitableForPublishing] valueForKey:@"ASIN"]
-													 store:[[self propertiesStorage] integerForKey:@"store"]];
+													 store:[self store]];
 }
 
 #pragma mark -
@@ -210,7 +212,7 @@
 {
 	unsigned result = 0;
 	
-	switch ([[self propertiesStorage] integerForKey:@"layout"])
+	switch ([self layout])
 	{
 		case APLayoutLeft:
 		case APLayoutRight:
@@ -223,9 +225,11 @@
 		case APLayoutTwoUp:
 			result = 85;
 			break;
+        default:
+            break;
 	}
 	
-	if ([[self propertiesStorage] integerForKey:@"frame"] == APFrameThumbnails) {
+	if ([self frame] == APFrameThumbnails) {
 		result -= 8;
 	}
 	

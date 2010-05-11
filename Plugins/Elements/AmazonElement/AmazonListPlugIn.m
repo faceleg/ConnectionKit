@@ -171,7 +171,8 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 - (void)awakeFromNib
 {
 	// Load the automatic list if needed
-	if ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletLoadFromList) {
+	if ([self listSource] == AmazonPageletLoadFromList)
+    {
 		[self loadAutomaticList];
 	}
 }
@@ -252,27 +253,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 
 #pragma mark KVC / KVO
 
-- (BOOL)validatePluginValue:(id *)ioValue forKeyPath:(NSString *)inKeyPath error:(NSError **)outError
-{
-	// Slightly hacky - we're performing our own validation when the store is changed
-	if ([inKeyPath isEqualToString:@"store"])
-	{
-		return [self validateValue:ioValue forKey:@"store" error:outError];
-	}
-	else if ([inKeyPath isEqualToString:@"centeredThumbnailWidths"])
-	{
-		return [self validateValue:ioValue forKey:@"centeredThumbnailWidths" error:outError];
-	}
-	else if ([inKeyPath isEqualToString:@"automaticListCode"])
-	{
-		return [self validateValue:ioValue forKey:@"automaticListCode" error:outError];
-	}
-	else
-	{
-		return [super validatePluginValue:ioValue forKeyPath:inKeyPath error:outError];
-	}
-}
-
 - (void)observeValueForKeyPath:(NSString *)keyPath
 					  ofObject:(id)object
 					    change:(NSDictionary *)change
@@ -292,7 +272,6 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 	
 	
 	id changeNewObject = [change objectForKey:NSKeyValueChangeNewKey];
-	id changeOldObject = [change objectForKey:NSKeyValueChangeOldKey];
 	
 	
 	if ([keyPath isEqualToString:@"layout"])
@@ -332,7 +311,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark -
 #pragma mark Store
 
-- (BOOL)validateStore:(NSNumber **)store error:(NSError **)error
+- (BOOL)validateStore:(AmazonStoreCountry *)store error:(NSError **)error
 {
 	// If there are existing list items, warn the user of the possible implications
 	if ([self listSource] == AmazonPageletPickByHand)
@@ -340,7 +319,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		if ([self products] && [[self products] count] > 0)
 		{
 			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
-			NSString *storeName = [AmazonECSOperation nameOfStore:[*store intValue]];	// already localized
+			NSString *storeName = [AmazonECSOperation nameOfStore:*store];	// already localized
 			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
 			
 			NSAlert *alert =
@@ -351,18 +330,16 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 					informativeTextWithFormat:LocalizedStringInThisBundle(@"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found.", "alert message")];
 			
 			int result = [alert runModal];
-			if (result == NSAlertAlternateReturn) {
-				*store = [NSNumber numberWithInteger:[self store]];
-			}
+			if (result == NSAlertAlternateReturn) *store = [self store];
 		}
 	}
-	else if ([[self propertiesStorage] integerForKey:@"listSource"] == AmazonPageletLoadFromList)
+	else if ([self listSource] == AmazonPageletLoadFromList)
 	{
 		NSArray *listProducts = [[self automaticList] products];
 		if (listProducts && [listProducts count] > 0)
 		{
 			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
-			NSString *storeName = [AmazonECSOperation nameOfStore:[*store intValue]];	// already localized
+			NSString *storeName = [AmazonECSOperation nameOfStore:*store];	// already localized
 			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
 			
 			NSAlert *alert =
@@ -373,9 +350,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 					informativeTextWithFormat:LocalizedStringInThisBundle(@"Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found.", "alert message")];
 			
 			int result = [alert runModal];
-			if (result == NSAlertAlternateReturn) {
-				*store = [[self propertiesStorage] valueForKey:@"store"];
-			}
+			if (result == NSAlertAlternateReturn) *store = [self store];
 		}
 	}
 	
@@ -442,7 +417,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 {
 	if ([self showProductPreviews])
 	{
-		NSString *script = [AmazonECSOperation productPreviewsScriptForStore:[[self propertiesStorage] integerForKey:@"store"]];
+		NSString *script = [AmazonECSOperation productPreviewsScriptForStore:[self store]];
 		if (script)
 		{
 			// Only append the script if it's not already there (e.g. if there's > 1 element)

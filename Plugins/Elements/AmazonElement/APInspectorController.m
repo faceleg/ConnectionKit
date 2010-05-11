@@ -265,7 +265,7 @@
 	{
 		// Build the range as appropriate
 		NSRange productsRange;
-		unsigned maxNumberProducts = [[pluginDelegate delegateOwner] integerForKey:@"maxNumberProducts"];
+		unsigned maxNumberProducts = [pluginDelegate maxNumberProducts];
 		
 		if ([allProducts count] < maxNumberProducts || maxNumberProducts == 0) {
 			productsRange = NSMakeRange(0, [allProducts count]);
@@ -299,7 +299,7 @@
 - (void)updateAutomaticListPlaceholderText
 {
 	id pluginDelegate = [self pluginDelegate];
-	NSString *listCode = [[pluginDelegate delegateOwner] valueForKey:@"automaticListCode"];
+	NSString *listCode = [pluginDelegate automaticListCode];
 	BOOL listLoading = [[pluginDelegate automaticList] isLoadingData];
 	NSArray *products = [pluginDelegate automaticListProductsToDisplay];
 	
