@@ -161,12 +161,12 @@
 	
 	manualListIsBeingArchivedOrUnarchived = YES;
 	
-	if (!registerUndo) [self disableUndoRegistration];
+	if (!registerUndo) [[self container] disableUndoRegistration];
 	
 	NSData *productsData = [NSKeyedArchiver archivedDataWithRootObject:[self products]];
 	[[self propertiesStorage] setObject:productsData forKey:@"manualListProducts"];
 	
-	if (!registerUndo) [self enableUndoRegistration];
+	if (!registerUndo) [[self container] enableUndoRegistration];
 	
 	manualListIsBeingArchivedOrUnarchived = NO;
 }

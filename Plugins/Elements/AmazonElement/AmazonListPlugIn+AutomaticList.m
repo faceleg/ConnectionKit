@@ -158,9 +158,9 @@
 	{
 		// Store the list type, but do NOT make it an undoable operation since this would register a second undo
 		// command for the process of loading a list.
-		[self disableUndoRegistration];
+		[[self container] disableUndoRegistration];
 		[self setAutomaticListType:[list listType]];
-		[self enableUndoRegistration];
+		[[self container] enableUndoRegistration];
 	}
 }
 
