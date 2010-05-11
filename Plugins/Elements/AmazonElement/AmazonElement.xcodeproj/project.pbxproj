@@ -168,9 +168,8 @@
 			isa = PBXGroup;
 			children = (
 				3C4A16D10D5E725B009476BF /* Cocoa Extensions */,
-				3C4A16D40D5E7271009476BF /* Lists */,
 				3C4A16DD0D5E72DC009476BF /* Plugin */,
-				3C4A16E40D5E7313009476BF /* Products */,
+				3C4A16E40D5E7313009476BF /* Model */,
 				3C4A16EB0D5E736E009476BF /* UI */,
 			);
 			name = Classes;
@@ -229,15 +228,6 @@
 			name = "Cocoa Extensions";
 			sourceTree = "<group>";
 		};
-		3C4A16D40D5E7271009476BF /* Lists */ = {
-			isa = PBXGroup;
-			children = (
-				3C4A16A90D5E71DB009476BF /* APAmazonList.h */,
-				3C4A16AA0D5E71DB009476BF /* APAmazonList.m */,
-			);
-			name = Lists;
-			sourceTree = "<group>";
-		};
 		3C4A16DD0D5E72DC009476BF /* Plugin */ = {
 			isa = PBXGroup;
 			children = (
@@ -245,15 +235,15 @@
 				3C4A16A60D5E71DB009476BF /* AmazonListPlugIn+ManualList.m */,
 				3C4A16A70D5E71DB009476BF /* AmazonListPlugIn.h */,
 				3C4A16A80D5E71DB009476BF /* AmazonListPlugIn.m */,
-				3C4A16AF0D5E71DB009476BF /* AmazonListInspector.h */,
-				3C4A16B00D5E71DB009476BF /* AmazonListInspector.m */,
 			);
 			name = Plugin;
 			sourceTree = "<group>";
 		};
-		3C4A16E40D5E7313009476BF /* Products */ = {
+		3C4A16E40D5E7313009476BF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				3C4A16A90D5E71DB009476BF /* APAmazonList.h */,
+				3C4A16AA0D5E71DB009476BF /* APAmazonList.m */,
 				3C4A16B10D5E71DB009476BF /* APManualListArrayController.h */,
 				3C4A16B20D5E71DB009476BF /* APManualListArrayController.m */,
 				3C4A16B30D5E71DB009476BF /* APManualListProduct.h */,
@@ -267,12 +257,14 @@
 				3C4A16B70D5E71DB009476BF /* APProductsArrayController.h */,
 				3C4A16B80D5E71DB009476BF /* APProductsArrayController.m */,
 			);
-			name = Products;
+			name = Model;
 			sourceTree = "<group>";
 		};
 		3C4A16EB0D5E736E009476BF /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				3C4A16AF0D5E71DB009476BF /* AmazonListInspector.h */,
+				3C4A16B00D5E71DB009476BF /* AmazonListInspector.m */,
 				3C4A16A10D5E71DB009476BF /* AmazonIDFormatter.h */,
 				3C4A16A20D5E71DB009476BF /* AmazonIDFormatter.m */,
 				3C4A16B50D5E71DB009476BF /* APProductAttributesCell.h */,
