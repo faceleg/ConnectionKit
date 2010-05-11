@@ -120,10 +120,12 @@
 {
 	if (object == [self inspectedObjectsController])
 	{
-		if ([keyPath isEqualToString:@"selection.automaticListCode"]) {
+		if ([keyPath isEqualToString:@"selection.automaticListCode"])
+        {
 			[self updateAutomaticListPlaceholderText];
 		}
-		else if ([keyPath isEqualToString:@"selection.listSource"]) {
+		else if ([keyPath isEqualToString:@"selection.listSource"])
+        {
 			[self listSourceDidChange:[object valueForKeyPath:keyPath]];
 		}
 		else if ([keyPath isEqualToString:@"selection.maxNumberProducts"] ||
@@ -154,7 +156,10 @@
 
 - (void)observeChangesToListSource
 {
-	[[self inspectedObjectsController] addObserver:self forKeyPath:@"selection.listSource" options:0 context:nil];
+	[[self inspectedObjectsController] addObserver:self
+                                        forKeyPath:@"selection.listSource"
+                                           options:NSKeyValueObservingOptionInitial
+                                           context:nil];
 	
 	// We must retain the tab view items so that they are not deallocated when removed from the tab view
 	[productsTabViewItem retain];
