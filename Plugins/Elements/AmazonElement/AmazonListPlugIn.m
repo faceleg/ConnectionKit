@@ -311,15 +311,18 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 #pragma mark -
 #pragma mark Store
 
-- (BOOL)validateStore:(AmazonStoreCountry *)store error:(NSError **)error
+- (BOOL)validateStore:(NSNumber **)outStore error:(NSError **)error
 {
+    AmazonStoreCountry store = [*outStore integerValue];
+    
+    
 	// If there are existing list items, warn the user of the possible implications
 	if ([self listSource] == AmazonPageletPickByHand)
 	{
 		if ([self products] && [[self products] count] > 0)
 		{
 			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
-			NSString *storeName = [AmazonECSOperation nameOfStore:*store];	// already localized
+			NSString *storeName = [AmazonECSOperation nameOfStore:store];	// already localized
 			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
 			
 			NSAlert *alert =
@@ -330,16 +333,16 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 					informativeTextWithFormat:LocalizedStringInThisBundle(@"Not all products are available in every country. By changing the store, some of the products in your list may no longer be found.", "alert message")];
 			
 			int result = [alert runModal];
-			if (result == NSAlertAlternateReturn) *store = [self store];
+			if (result == NSAlertAlternateReturn) *outStore = [self valueForKey:@"store"];
 		}
 	}
 	else if ([self listSource] == AmazonPageletLoadFromList)
 	{
 		NSArray *listProducts = [[self automaticList] products];
-		if (listProducts && [listProducts count] > 0)
+		if ([listProducts count])
 		{
 			NSString *titleFormat = LocalizedStringInThisBundle(@"Change to the %@ Amazon store?", "alert title");
-			NSString *storeName = [AmazonECSOperation nameOfStore:*store];	// already localized
+			NSString *storeName = [AmazonECSOperation nameOfStore:store];	// already localized
 			NSString *title = [NSString stringWithFormat:titleFormat, storeName];
 			
 			NSAlert *alert =
@@ -350,7 +353,7 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 					informativeTextWithFormat:LocalizedStringInThisBundle(@"Amazon lists are normally specific to a particular country. If you change the store your list may no longer be found.", "alert message")];
 			
 			int result = [alert runModal];
-			if (result == NSAlertAlternateReturn) *store = [self store];
+			if (result == NSAlertAlternateReturn) *outStore = [self valueForKey:@"store"];
 		}
 	}
 	
