@@ -21,7 +21,7 @@
 		</object>
 		<object class="NSMutableArray" key="IBDocument.EditedObjectIDs">
 			<bool key="EncodedWithXMLCoder">YES</bool>
-			<integer value="1039"/>
+			<integer value="251"/>
 		</object>
 		<object class="NSArray" key="IBDocument.PluginDependencies">
 			<bool key="EncodedWithXMLCoder">YES</bool>
@@ -759,7 +759,7 @@
 														<object class="NSTableView" id="281475410">
 															<reference key="NSNextResponder" ref="304722856"/>
 															<int key="NSvFlags">4352</int>
-															<string key="NSFrameSize">{197, 204}</string>
+															<string key="NSFrameSize">{197, 206}</string>
 															<reference key="NSSuperview" ref="304722856"/>
 															<reference key="NSNextKeyView" ref="545494774"/>
 															<bool key="NSEnabled">YES</bool>
@@ -837,7 +837,7 @@
 															<int key="NSTableViewDraggingDestinationStyle">0</int>
 														</object>
 													</object>
-													<string key="NSFrame">{{1, 1}, {197, 204}}</string>
+													<string key="NSFrame">{{1, 1}, {197, 206}}</string>
 													<reference key="NSSuperview" ref="810408286"/>
 													<reference key="NSNextKeyView" ref="281475410"/>
 													<reference key="NSDocView" ref="281475410"/>
@@ -847,12 +847,12 @@
 												<object class="NSScroller" id="614441185">
 													<reference key="NSNextResponder" ref="810408286"/>
 													<int key="NSvFlags">256</int>
-													<string key="NSFrame">{{198, 1}, {11, 204}}</string>
+													<string key="NSFrame">{{198, 1}, {11, 206}}</string>
 													<reference key="NSSuperview" ref="810408286"/>
 													<int key="NSsFlags">256</int>
 													<reference key="NSTarget" ref="810408286"/>
 													<string key="NSAction">_doScroller:</string>
-													<double key="NSPercent">0.31428572535514832</double>
+													<double key="NSPercent">0.99504947662353516</double>
 												</object>
 												<object class="NSScroller" id="545494774">
 													<reference key="NSNextResponder" ref="810408286"/>
@@ -866,7 +866,7 @@
 													<double key="NSPercent">0.99047619104385376</double>
 												</object>
 											</object>
-											<string key="NSFrame">{{17, 32}, {210, 206}}</string>
+											<string key="NSFrame">{{17, 32}, {210, 208}}</string>
 											<reference key="NSSuperview" ref="79339765"/>
 											<reference key="NSNextKeyView" ref="304722856"/>
 											<int key="NSsFlags">18</int>
@@ -878,7 +878,7 @@
 										<object class="NSTextField" id="502477656">
 											<reference key="NSNextResponder" ref="79339765"/>
 											<int key="NSvFlags">266</int>
-											<string key="NSFrame">{{53, 277}, {177, 22}}</string>
+											<string key="NSFrame">{{52, 279}, {177, 22}}</string>
 											<reference key="NSSuperview" ref="79339765"/>
 											<reference key="NSNextKeyView" ref="868005457"/>
 											<bool key="NSEnabled">YES</bool>
@@ -890,7 +890,10 @@ aXN0bWFuaWEuA</string>
 												<reference key="NSSupport" ref="22"/>
 												<reference key="NSControlView" ref="502477656"/>
 												<reference key="NSBackgroundColor" ref="466156009"/>
-												<reference key="NSTextColor" ref="544810947"/>
+												<object class="NSColor" key="NSTextColor">
+													<int key="NSColorSpace">3</int>
+													<bytes key="NSWhite">MC40MDAwMDAwMDYAA</bytes>
+												</object>
 											</object>
 										</object>
 										<object class="NSTextField" id="785667224">
@@ -5001,66 +5004,6 @@ cm9kdWN0A</string>
 				<object class="IBPartialClassDescription">
 					<string key="className">APInspectorController</string>
 					<string key="superclassName">SVInspectorViewController</string>
-					<object class="NSMutableDictionary" key="actions">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>openListURL:</string>
-							<string>reloadAllProducts:</string>
-							<string>reloadList:</string>
-							<string>reloadSelectedProduct:</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-							<string>id</string>
-						</object>
-					</object>
-					<object class="NSMutableDictionary" key="outlets">
-						<bool key="EncodedWithXMLCoder">YES</bool>
-						<object class="NSArray" key="dict.sortedKeys">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>automaticListTableView</string>
-							<string>automaticTableButtonsBox</string>
-							<string>listLayoutSegmentedControl</string>
-							<string>listTabViewItem</string>
-							<string>manualProductsArrayController</string>
-							<string>manualProductsTableView</string>
-							<string>manualTableViewButtonsBox</string>
-							<string>oManualListAddProductButton</string>
-							<string>oManualListRemoveProductButton</string>
-							<string>pluginController</string>
-							<string>productsTabViewItem</string>
-							<string>storeSelectionPopupButton</string>
-							<string>tabView</string>
-						</object>
-						<object class="NSMutableArray" key="dict.values">
-							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>KSPlaceholderTableView</string>
-							<string>NTBoxView</string>
-							<string>NSSegmentedControl</string>
-							<string>NSTabViewItem</string>
-							<string>NSArrayController</string>
-							<string>NSTableView</string>
-							<string>NTBoxView</string>
-							<string>NSButton</string>
-							<string>NSButton</string>
-							<string>NSObjectController</string>
-							<string>NSTabViewItem</string>
-							<string>NSPopUpButton</string>
-							<string>NSTabView</string>
-						</object>
-					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="158276517">
-						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">APInspectorController.h</string>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">APInspectorController</string>
-					<string key="superclassName">SVInspectorViewController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
@@ -5206,14 +5149,14 @@ cm9kdWN0A</string>
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">APAmazonList.h</string>
+						<string key="minorKey">APManualListProduct.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">APManualListProduct.h</string>
+						<string key="minorKey">AmazonListProductList.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -5233,18 +5176,13 @@ cm9kdWN0A</string>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSTabView</string>
-					<reference key="sourceIdentifier" ref="158276517"/>
-				</object>
-				<object class="IBPartialClassDescription">
-					<string key="className">NSTabView</string>
-					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">AmazonListInspector.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">NTBoxView</string>
+					<string key="className">NSTabView</string>
 					<string key="superclassName">NSView</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
