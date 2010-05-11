@@ -13,7 +13,7 @@
 
 #import "AmazonListPlugIn.h"
 #import "APAmazonProduct.h"
-#import "APAmazonList.h"
+#import "AmazonListProductList.h"
 
 
 @interface AmazonListInspector ()

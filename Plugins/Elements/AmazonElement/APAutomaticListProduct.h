@@ -6,7 +6,7 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 //	A simple subclass of APAmazonProduct that adds the knowledge of the quantity
-//	desired and received of a product. Created by APAmazonList objects.
+//	desired and received of a product. Created by AmazonListProductList objects.
 
 
 #import <Cocoa/Cocoa.h>

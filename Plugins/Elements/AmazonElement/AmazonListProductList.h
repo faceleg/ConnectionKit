@@ -1,5 +1,5 @@
 //
-//  APAmazonList.h
+//  AmazonListProductList.h
 //  Amazon List
 //
 //  Created by Mike on 10/01/2007.
@@ -7,7 +7,7 @@
 //
 //	Represents an Amazon list as viewed in the Inspector. Contains an array of
 //	products (APAutomaticListProduct) and the various properties of the list.
-//	The list cannot be reloaded, a new APAmazonList object must be initialized
+//	The list cannot be reloaded, a new AmazonListProductList object must be initialized
 //	and used to replace the existing one.
 //	Multiple AmazonListLookup operations are created to load all pages of the list.
 //	If the list type is specified as unknown, lookups will be made for all list types
@@ -18,7 +18,7 @@
 #import <AmazonSupport/AmazonSupport.h>
 
 
-@interface APAmazonList : NSObject
+@interface AmazonListProductList : NSObject
 {
 	id	myDelegate;
 	
@@ -68,8 +68,8 @@
 
 
 @interface NSObject (APListDelegate)
-- (void)amazonListLookupOperationsDidFinish:(APAmazonList *)list;
+- (void)amazonListLookupOperationsDidFinish:(AmazonListProductList *)list;
 
-- (void)amazonList:(APAmazonList *)list didFailToLoadWithError:(NSError *)error;
-- (void)amazonListDidFinishLoading:(APAmazonList *)list;
+- (void)amazonList:(AmazonListProductList *)list didFailToLoadWithError:(NSError *)error;
+- (void)amazonListDidFinishLoading:(AmazonListProductList *)list;
 @end

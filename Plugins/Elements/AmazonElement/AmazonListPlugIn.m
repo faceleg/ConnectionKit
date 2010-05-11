@@ -9,7 +9,7 @@
 #import "AmazonListPlugIn.h"
 
 #import "APManualListProduct.h"
-#import "APAmazonList.h"
+#import "AmazonListProductList.h"
 #import "AmazonListInspector.h"
 
 #import <AmazonSupport/AmazonSupport.h>

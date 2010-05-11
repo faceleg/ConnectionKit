@@ -103,9 +103,9 @@
 
 #pragma mark The list
 
-- (APAmazonList *)automaticList { return myAutomaticList; }
+- (AmazonListProductList *)automaticList { return myAutomaticList; }
 
-- (void)setAutomaticList:(APAmazonList *)list
+- (void)setAutomaticList:(AmazonListProductList *)list
 {
 	[list retain];
 	[myAutomaticList release];
@@ -135,7 +135,7 @@
 	
 	
 	// Begin loading
-	APAmazonList *list = [[APAmazonList alloc] initWithID:listCode
+	AmazonListProductList *list = [[AmazonListProductList alloc] initWithID:listCode
 												 listType:[self automaticListType]
 													store:[self store]
 												  sorting:[self automaticListSorting]
@@ -145,7 +145,7 @@
 	[list release];
 }
 
-- (void)amazonListLookupOperationsDidFinish:(APAmazonList *)list
+- (void)amazonListLookupOperationsDidFinish:(AmazonListProductList *)list
 {
 	// Ignore if not our list
 	if (list != [self automaticList]) {

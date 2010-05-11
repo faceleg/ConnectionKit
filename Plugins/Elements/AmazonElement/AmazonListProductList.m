@@ -1,19 +1,19 @@
 //
-//  APAmazonList.m
+//  AmazonListProductList.m
 //  Amazon List
 //
 //  Created by Mike on 10/01/2007.
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
-#import "APAmazonList.h"
+#import "AmazonListProductList.h"
 #import "APAutomaticListProduct.h"
 
 #import <AmazonSupport/AmazonSupport.h>
 #import "SandvoxPlugin.h"
 
 
-@interface APAmazonList ()
+@interface AmazonListProductList ()
 
 // Delegate
 - (void)sendLookupOperationsDidFinishCallback;
@@ -39,7 +39,7 @@
 # pragma mark -
 
 
-@implementation APAmazonList
+@implementation AmazonListProductList
 
 #pragma mark -
 #pragma mark Init & Dealloc

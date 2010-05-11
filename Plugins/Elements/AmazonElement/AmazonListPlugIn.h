@@ -12,7 +12,7 @@
 #import <Cocoa/Cocoa.h>
 #import "SandvoxPlugin.h"
 
-#import "APAmazonList.h"
+#import "AmazonListProductList.h"
 
 
 typedef enum {
@@ -73,7 +73,7 @@ typedef enum {
 	BOOL	manualListIsBeingArchivedOrUnarchived;
 	
 	// Automatic list
-	APAmazonList	*myAutomaticList;
+	AmazonListProductList	*myAutomaticList;
 	NSArray			*myAutomaticListProductsToDisplay;
 }
 
@@ -131,8 +131,8 @@ typedef enum {
 
 @interface AmazonListPlugIn (AutomaticList)
 // Automatic lists
-- (APAmazonList *)automaticList;
-- (void)setAutomaticList:(APAmazonList *)list;
+- (AmazonListProductList *)automaticList;
+- (void)setAutomaticList:(AmazonListProductList *)list;
 - (NSArray *)automaticListProductsToDisplay;
 - (void)setAutomaticListProductsToDisplay:(NSArray *)products;
 - (void)loadAutomaticList;
