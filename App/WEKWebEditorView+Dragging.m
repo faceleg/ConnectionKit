@@ -141,7 +141,7 @@
             if ([self shouldChangeTextInDOMRange:range])
             {
                 DOMHTMLElement *node = [anItem HTMLElement];
-                [[node parentNode] removeChild:node];
+                [node ks_removeFromParentNode];
                 
                 [anItem removeFromParentWebEditorItem];
             }
