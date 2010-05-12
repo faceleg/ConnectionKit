@@ -17,59 +17,11 @@
 #import "NSString+Karelia.h"
 
 
-@implementation SVAttributedHTML
-
-#pragma mark Init & Dealloc
-
-- (id)init;
-{
-    [super init];
-    _storage = [[NSMutableAttributedString alloc] init];
-    return self;
-}
-
-- (id)initWithString:(NSString *)str;
-{
-    [super init];
-    _storage = [[NSMutableAttributedString alloc] initWithString:str];
-    return self;
-}
-
-- (id)initWithAttributedString:(NSAttributedString *)attrStr;
-{
-    [super init];
-    _storage = [[NSMutableAttributedString alloc] initWithAttributedString:attrStr];
-    return self;
-}
-
-- (void)dealloc
-{
-    [_storage release];
-    [super dealloc];
-}
-
-#pragma mark Primitives
-
-- (NSString *)string { return [_storage string]; }
-
-- (NSDictionary *)attributesAtIndex:(NSUInteger)location effectiveRange:(NSRangePointer)range;
-{
-    return [_storage attributesAtIndex:location effectiveRange:range];
-}
-
-- (void)replaceCharactersInRange:(NSRange)aRange withString:(NSString *)aString
-{
-    [_storage replaceCharactersInRange:aRange withString:aString];
-}
-
-- (void)setAttributes:(NSDictionary *)attributes range:(NSRange)aRange
-{
-    [_storage setAttributes:attributes range:aRange];
-}
+@implementation NSAttributedString (SVAttributedHTML)
 
 #pragma mark Pasteboard
 
-- (void)writeToPasteboard:(NSPasteboard *)pasteboard;
+- (void)attributedHTMLStringWriteToPasteboard:(NSPasteboard *)pasteboard;
 {
     // Create a clone where SVTextAttachment is replaced by its serialized form
     NSMutableAttributedString *archivableAttributedString = [self mutableCopy];
@@ -132,14 +84,14 @@
     return result;
 }
 
-+ (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
-                              managedObjectContext:(NSManagedObjectContext *)context;
++ (NSAttributedString *)attributedHTMLStringFromPasteboard:(NSPasteboard *)pasteboard
+                                insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     NSAttributedString *archivedAttributedString =
     [self attributedHTMLFromPasteboard:pasteboard];
     if (!archivedAttributedString) return nil;
     
-    SVAttributedHTML *result = [[self alloc] initWithAttributedString:archivedAttributedString];
+    NSMutableAttributedString *result = [[archivedAttributedString mutableCopy] autorelease];
     
     
     // Create attachment objects for each serialized one
@@ -216,48 +168,14 @@
     return result;
 }
 
-+ (NSArray *)pasteboardTypes;
++ (NSArray *)attributedHTMStringPasteboardTypes;
 {
     return [NSArray arrayWithObject:@"com.karelia.html+graphics"];
 }
 
-#pragma mark Output
-
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
-{
-    //  Pretty similar to -[SVRichText richText]. Perhaps we can merge the two eventually?
-    
-    
-    NSRange range = NSMakeRange(0, [self length]);
-    NSUInteger location = 0;
-    
-    while (location < range.length)
-    {
-        NSRange effectiveRange;
-        SVGraphic *attachment = [self attribute:@"SVAttachment"
-                                               atIndex:location
-                                 longestEffectiveRange:&effectiveRange
-                                               inRange:range];
-        
-        if (attachment)
-        {
-            // Write the graphic
-            [attachment writeHTML:context];
-        }
-        else
-        {
-            NSString *html = [[self string] substringWithRange:effectiveRange];
-            [context writeHTMLString:html];
-        }
-        
-        // Advance the search
-        location = location + effectiveRange.length;
-    }
-}
-
 #pragma mark Convenience
 
-+ (NSAttributedString *)attributedHTMLWithAttachment:(id)attachment;
++ (NSAttributedString *)attributedHTMLStringWithAttachment:(id)attachment;
 {
     NSAttributedString *result = [[NSAttributedString alloc]
       initWithString:[NSString stringWithUnichar:NSAttachmentCharacter]

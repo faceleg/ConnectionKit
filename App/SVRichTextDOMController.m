@@ -152,14 +152,14 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         
         
         // Try to de-archive custom HTML
-        SVAttributedHTML *attributedHTML = [SVAttributedHTML
-                                            attributedHTMLFromPasteboard:pasteboard
-                                            managedObjectContext:[[self representedObject] managedObjectContext]];
+        NSAttributedString *attributedHTML = [NSAttributedString
+                                            attributedHTMLStringFromPasteboard:pasteboard
+                                            insertAttachmentsIntoManagedObjectContext:[[self representedObject] managedObjectContext]];
         
         if (attributedHTML)
         {
             // Generate HTML for the DOM
-            [attributedHTML writeHTMLToContext:_changeHTMLContext];
+            [_changeHTMLContext writeAttributedHTMLString:attributedHTML];
         }
         
         // Fallback to interpreting standard pboard data

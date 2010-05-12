@@ -146,6 +146,9 @@ typedef enum {
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 
 
+#pragma mark Raw Writing
+- (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
+
 
 // In for compatibility, overrides -baseURL
 @property(nonatomic, retain) KTPage *page;

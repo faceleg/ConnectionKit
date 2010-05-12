@@ -121,7 +121,7 @@
     NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
     NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
     
-    NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+    NSArray *pagelets = [NSAttributedString pageletsFromPasteboard:pasteboard
                                   insertIntoManagedObjectContext:moc];
     
     
@@ -187,7 +187,7 @@
     NSSet *plugInTypes = [KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES];
     
     NSMutableSet *result = [plugInTypes mutableCopy];
-    [result addObjectsFromArray:[SVAttributedHTML pasteboardTypes]];
+    [result addObjectsFromArray:[NSAttributedString attributedHTMStringPasteboardTypes]];
     
     // Weed out string and image types since we want Web Editor to handle them.
     [result minusSet:

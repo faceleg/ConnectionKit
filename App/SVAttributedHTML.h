@@ -13,29 +13,27 @@
 @class SVHTMLContext;
 
 
-@interface SVAttributedHTML : NSMutableAttributedString
-{
-  @private
-    NSMutableAttributedString *_storage;
-    
-}
+/*  There used to be a method for asking attributed HTML to write itself. Instead use -[SVHTMLContext writeAttriubutedHTMLString:]
+ */
 
-- (void)writeHTMLToContext:(SVHTMLContext *)context;
 
+@interface NSAttributedString (SVAttributedHTML)
 
 #pragma mark Pasteboard
-- (void)writeToPasteboard:(NSPasteboard *)pasteboard;
 
-+ (SVAttributedHTML *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard
-                              managedObjectContext:(NSManagedObjectContext *)context;
+- (void)attributedHTMLStringWriteToPasteboard:(NSPasteboard *)pasteboard;
+
++ (NSAttributedString *)attributedHTMLStringFromPasteboard:(NSPasteboard *)pasteboard
+                 insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)pageletsFromPasteboard:(NSPasteboard *)pasteboard
      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
-+ (NSArray *)pasteboardTypes;
++ (NSArray *)attributedHTMStringPasteboardTypes;
+
 
 #pragma mark Convenience
-+ (NSAttributedString *)attributedHTMLWithAttachment:(id)attachment;
++ (NSAttributedString *)attributedHTMLStringWithAttachment:(id)attachment;
 
 
 @end

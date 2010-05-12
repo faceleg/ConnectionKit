@@ -319,8 +319,8 @@
         NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
         NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
         
-        NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
-                                      insertIntoManagedObjectContext:moc];
+        NSArray *pagelets = [NSAttributedString pageletsFromPasteboard:pasteboard
+                                        insertIntoManagedObjectContext:moc];
         
         
         // Fallback to generic pasteboard support

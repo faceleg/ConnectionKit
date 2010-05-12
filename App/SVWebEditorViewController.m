@@ -585,7 +585,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     NSManagedObjectContext *context = [[self page] managedObjectContext];
     OBASSERT(context);
     
-    NSArray *pagelets = [SVAttributedHTML pageletsFromPasteboard:pasteboard
+    NSArray *pagelets = [NSAttributedString pageletsFromPasteboard:pasteboard
                                   insertIntoManagedObjectContext:context];
     
     if ([pagelets count])
@@ -751,7 +751,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         result = YES;
         
         // Want serialized pagelets on pboard
-        SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] init];
+        NSMutableAttributedString *attributedHTML = [[NSMutableAttributedString alloc] init];
         
         
         // Want HTML of pagelets on pboard
@@ -773,7 +773,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
             
             
             // Add the attachment to the custom HTML
-            NSAttributedString *attachmentString = [SVAttributedHTML attributedHTMLWithAttachment:graphic];
+            NSAttributedString *attachmentString = [NSAttributedString attributedHTMLStringWithAttachment:graphic];
             [attributedHTML appendAttributedString:attachmentString];
             
             
@@ -784,7 +784,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         
         // Place serialized pagelets on pboard
         [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
-        [attributedHTML writeToPasteboard:pasteboard];
+        [attributedHTML attributedHTMLStringWriteToPasteboard:pasteboard];
         [attributedHTML release];
         
         

@@ -381,6 +381,41 @@
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
 
+#pragma mark Raw Writing
+
+- (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
+{
+    //  Pretty similar to -[SVRichText richText]. Perhaps we can merge the two eventually?
+    
+    
+    NSRange range = NSMakeRange(0, [attributedHTML length]);
+    NSUInteger location = 0;
+    
+    while (location < range.length)
+    {
+        NSRange effectiveRange;
+        SVGraphic *attachment = [attributedHTML attribute:@"SVAttachment"
+                                                  atIndex:location
+                                    longestEffectiveRange:&effectiveRange
+                                                  inRange:range];
+        
+        if (attachment)
+        {
+            // Write the graphic
+            [attachment writeHTML:self];
+        }
+        else
+        {
+            NSString *html = [[attributedHTML string] substringWithRange:effectiveRange];
+            [self writeHTMLString:html];
+        }
+        
+        // Advance the search
+        location = location + effectiveRange.length;
+    }
+}
+
+
 #pragma mark Legacy
 
 @synthesize page = _currentPage;

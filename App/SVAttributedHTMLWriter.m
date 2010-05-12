@@ -23,7 +23,7 @@
 
 @implementation SVAttributedHTMLWriter
 
-- (id)initWithAttributedHTML:(SVAttributedHTML *)attributedHTML;
+- (id)initWithAttributedHTML:(NSMutableAttributedString *)attributedHTML;
 {
     [super init];
     _attributedHTML = [attributedHTML retain];
@@ -32,7 +32,7 @@
 
 - (id)init
 {
-    SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] init];
+    NSMutableAttributedString *attributedHTML = [[NSMutableAttributedString alloc] init];
     self = [self initWithAttributedHTML:attributedHTML];
     [attributedHTML release];
     
@@ -92,13 +92,13 @@
    graphicControllers:(NSArray *)graphicControllers;
 {
     // Add our own custom type to the pasteboard
-    SVAttributedHTML *attributedHTML = [[SVAttributedHTML alloc] init];
+    NSMutableAttributedString *attributedHTML = [[NSMutableAttributedString alloc] init];
     
     SVAttributedHTMLWriter *writer = [[self alloc] initWithAttributedHTML:attributedHTML];
     [writer writeDOMRange:range graphicControllers:graphicControllers];
     [writer release];
     
-    [attributedHTML writeToPasteboard:pasteboard];
+    [attributedHTML attributedHTMLStringWriteToPasteboard:pasteboard];
     [attributedHTML release];
 }
 
