@@ -67,4 +67,8 @@
 - (NSArrayController *)cachedSidebarPageletsController;
 
 
+#pragma mark Current Item
+- (WEKWebEditorItem *)currentItem;
+
+
 @end

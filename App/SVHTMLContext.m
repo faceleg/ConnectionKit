@@ -14,6 +14,8 @@
 #import "BDAlias+QuickLook.h"
 #import "SVMediaRecord.h"
 
+#import "SVCalloutDOMController.h"  // don't like having to do this
+
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
@@ -153,14 +155,17 @@
 
 - (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
 {
-    // Note that SVWebEditorHTMLContext overrides this method to write slightly differently. So if you change it here, make sure to change there too if needed
+    // Note that SVWebEditorHTMLContext overrides this method to write slightly differently. So if you change it here, make sure to change there too if needed    
     [self writeStartTag:@"div"
-                 idName:nil
+                 idName:[(SVCalloutDOMController *)[self currentItem] HTMLElementIDName]
               className:[@"callout-container " stringByAppendingString:alignment]];
+    [self writeNewline];
     
     [self writeStartTag:@"div" idName:nil className:@"callout"];
+    [self writeNewline];
     
     [self writeStartTag:@"div" idName:nil className:@"callout-content"];
+    [self writeNewline];
     
     
     OBASSERT(!_calloutAlignment);
@@ -173,8 +178,13 @@
     
     
     [self writeEndTag]; // callout-content
+    [self writeNewline];
+    
     [self writeEndTag]; // callout
+    [self writeNewline];
+    
     [self writeEndTag]; // callout-container
+    [self writeNewline];
 }
 
 #pragma mark URLs/Paths

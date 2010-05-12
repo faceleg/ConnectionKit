@@ -133,15 +133,8 @@
     SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
     [self willBeginWritingObjectWithDOMController:controller];
     [controller release];
-    
-    // Note that SVWebEditorHTMLContext overrides this method to write slightly differently. So if you change it here, make sure to change there too if needed
-    [self writeStartTag:@"div"
-                 idName:[controller HTMLElementIDName]
-              className:[@"callout-container " stringByAppendingString:alignment]];
-    
-    [self writeStartTag:@"div" idName:nil className:@"callout"];
-    
-    [self writeStartTag:@"div" idName:nil className:@"callout-content"];
+
+    [super writeCalloutStartTagsWithAlignmentClassName:alignment];
 }
 
 - (void)writeCalloutEnd;
@@ -173,6 +166,8 @@
     
     [controller setHTMLContext:self];
 }
+
+- (WEKWebEditorItem *)currentItem; { return _currentItem; }
 
 #pragma mark Text Blocks
 
@@ -256,6 +251,8 @@
 
 - (void)willBeginWritingSidebar:(SVSidebar *)sidebar; { }
 - (NSArrayController *)cachedSidebarPageletsController; { return nil; }
+
+- (WEKWebEditorItem *)currentItem; { return nil; }
 
 @end
 
