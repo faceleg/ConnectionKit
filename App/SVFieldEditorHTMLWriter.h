@@ -16,15 +16,9 @@
 #import "SVHTMLWriter.h"
 
 
-@class SVHTMLBuffer;
-
-
 @interface SVFieldEditorHTMLWriter : SVHTMLWriter
 {
   @private
-    SVHTMLBuffer    *_buffer;
-    BOOL            _flushOnNextWrite;
-    
     NSMutableArray  *_pendingStartTagDOMElements;
     NSMutableArray  *_pendingEndDOMElements;
 }
@@ -61,16 +55,5 @@
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
 
 
-@end
-
-
-#pragma mark -
-
-
-@interface SVFieldEditorHTMLWriter (Buffering)
-- (void)beginBuffering; // can be called multiple times to set up a stack of buffers
-- (void)discardBuffer;  // only discards the most recent buffer. If there's a lower one in the stack, that is restored
-- (void)flush;
-- (void)flushOnNextWrite;
 @end
 
