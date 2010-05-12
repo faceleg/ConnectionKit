@@ -41,8 +41,6 @@
 // Shouldn't need to call directly; -writeStylingDOMElement: does so internally
 - (DOMNode *)endStylingDOMElement:(DOMElement *)element;
 
-- (void)writePendingEndTags;
-
 
 #pragma mark Cleanup
 - (DOMNode *)handleInvalidDOMElement:(DOMElement *)element;
