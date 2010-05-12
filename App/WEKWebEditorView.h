@@ -157,11 +157,14 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 @interface WEKWebEditorView (EditingSupport)
 
 #pragma mark Cut, Copy & Paste
+
 - (IBAction)cut:(id)sender;
 - (IBAction)copy:(id)sender;
 - (BOOL)copySelectedItemsToGeneralPasteboard;
 // - (IBAction)paste:(id)sender;
+
 - (IBAction)delete:(id)sender;  // deletes the selected items. If there are none, deletes selected text
+- (BOOL)tryToRemoveItem:(WEKWebEditorItem *)anItem; // internal method really
 
 
 #pragma mark Undo

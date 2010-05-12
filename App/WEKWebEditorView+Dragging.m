@@ -131,23 +131,7 @@
 {
     for (WEKWebEditorItem *anItem in [self draggedItems])
     {
-        DOMHTMLElement *element = [anItem HTMLElement];
-        if ([element isContentEditable])
-        {
-            // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
-            DOMRange *range = [[self HTMLDocument] createRange];
-            [range selectNode:element];
-            
-            if ([self shouldChangeTextInDOMRange:range])
-            {
-                DOMHTMLElement *node = [anItem HTMLElement];
-                [node ks_removeFromParentNode];
-                
-                [anItem removeFromParentWebEditorItem];
-            }
-            
-            [range detach];
-        }
+        [self tryToRemoveItem:anItem];
     }
     
     // Remove the objects

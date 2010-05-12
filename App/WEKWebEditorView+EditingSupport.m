@@ -8,8 +8,11 @@
 
 
 #import "WEKWebEditorView.h"
+#import "WEKWebEditorItem.h"
 
 #import "SVLinkInspector.h"
+
+#import "DOMNode+Karelia.h"
 
 
 @interface SVValidatedUserInterfaceItem : NSObject <NSValidatedUserInterfaceItem>
@@ -95,10 +98,17 @@
     else
     {
         NSArray *items = [self selectedItems];
+        for (WEKWebEditorItem *anItem in items)
+        {
+            OBASSERT([self tryToRemoveItem:anItem]);
+        }
+        
         if (![[self dataSource] webEditor:self deleteItems:items])
         {
             NSBeep();
         }
+        
+        [self didChangeText];
     }
 }
 
@@ -115,6 +125,32 @@
 - (void)deleteBackward:(id)sender;
 {
     [self delete:sender forwardingSelector:_cmd];
+}
+
+- (BOOL)tryToRemoveItem:(WEKWebEditorItem *)anItem; // internal method really
+{
+    BOOL result = YES;
+    
+    DOMHTMLElement *element = [anItem HTMLElement];
+    if ([element isContentEditable])
+    {
+        // When moving an item within text, delete the source. Have to tell the rest of the system that we did this
+        DOMRange *range = [[self HTMLDocument] createRange];
+        [range selectNode:element];
+        
+        result = [self shouldChangeTextInDOMRange:range];
+        if (result)
+        {
+            DOMHTMLElement *node = [anItem HTMLElement];
+            [node ks_removeFromParentNode];
+            
+            [anItem removeFromParentWebEditorItem];
+        }
+        
+        [range detach];
+    }
+    
+    return result;
 }
 
 #pragma mark Links
