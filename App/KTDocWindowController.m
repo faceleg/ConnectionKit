@@ -28,7 +28,7 @@
 #import "KTSummaryWebViewTextBlock.h"
 #import "KTToolbars.h"
 #import "KSSilencingConfirmSheet.h"
-#import "SVHTMLValidatorController.h"
+#import "SVValidatorWindowController.h"
 #import "KSNetworkNotifier.h"
 
 #import "NSArray+Karelia.h"
@@ -1018,7 +1018,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSString *pageSource = [page markupString];
 		NSString *docTypeName = [page docTypeName];
 		NSString *charset = [[page master] valueForKey:@"charset"];
-		[[SVHTMLValidatorController sharedController] validateSource:pageSource charset:charset docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+		[[SVValidatorWindowController sharedController] validateSource:pageSource charset:charset docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
 	}
 }
 

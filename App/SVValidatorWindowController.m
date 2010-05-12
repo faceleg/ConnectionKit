@@ -6,13 +6,13 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLValidatorController.h"
+#import "SVValidatorWindowController.h"
 #import "KSProgressPanel.h"
 #import "NSString+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
 
 
-@implementation SVHTMLValidatorController
+@implementation SVValidatorWindowController
 
 
 - (void) validateSource:(NSString *)pageSource charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;

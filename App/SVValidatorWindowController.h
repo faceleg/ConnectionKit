@@ -10,7 +10,7 @@
 #import "KSWebViewWindowController.h"
 
 
-@interface SVHTMLValidatorController : KSWebViewWindowController {
+@interface SVValidatorWindowController : KSWebViewWindowController {
 
 }
 
