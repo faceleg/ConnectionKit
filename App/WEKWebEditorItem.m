@@ -257,7 +257,7 @@
     NSDragOperation result = NSDragOperationCopy;
     if (isLocal && [[self HTMLElement] isContentEditable])
     {
-        result = (result | NSDragOperationMove);
+        result = (result | NSDragOperationGeneric | NSDragOperationMove);
     }
     return result;
 }
