@@ -46,22 +46,6 @@
     }
 }
 
-#pragma mark NSDraggingSource
-
-- (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
-{
-    NSDragOperation result = [super draggingSourceOperationMaskForLocal:isLocal];
-    
-    if ([(SVGraphic *)[self representedObject] isCallout])
-    {
-        // Don't allow callouts to be moved at the moment.
-        if (result & NSDragOperationMove) result = result - NSDragOperationMove;
-        if (result & NSDragOperationGeneric) result = result - NSDragOperationGeneric;
-    }
-    
-    return result;
-}
-
 @end
 
 
