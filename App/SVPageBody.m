@@ -39,6 +39,7 @@
 {
     //  Piece together each of our elements to generate the HTML
     NSArray *attachments = [self orderedAttachments];
+    NSString *archive = [self string];
     
     SVTextAttachment *lastAttachment = nil;
     NSUInteger archiveIndex = 0;
@@ -46,8 +47,16 @@
     for (SVTextAttachment *anAttachment in attachments)
     {
         // What's the range of the text to write?
-        if ([anAttachment range].location - archiveIndex ||
-            ![[anAttachment graphic] isCallout])
+        NSRange searchRange = NSMakeRange(archiveIndex,
+                                          [anAttachment range].location - archiveIndex);
+        
+        // We're only interested in writing whitespace here
+        NSRange range = [archive
+                         rangeOfCharacterFromSet:[NSCharacterSet nonWhitespaceAndNewlineCharacterSet]
+                         options:0
+                         range:searchRange];
+        
+        if (range.location != NSNotFound || ![[anAttachment graphic] isCallout])
         {
             break;
         }

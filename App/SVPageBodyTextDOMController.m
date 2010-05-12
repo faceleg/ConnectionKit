@@ -69,6 +69,17 @@
 
 @synthesize earlyCalloutDOMController = _earlyCalloutController;
 
+- (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
+{
+    // Write early callouts first
+    SVCalloutDOMController *calloutController = [self earlyCalloutDOMController];
+    if (calloutController) [writer writeDOMController:calloutController];
+    
+    
+    
+    [super willWriteText:writer];
+}
+
 #pragma mark Dragging Destination
 
 - (DOMNode *)childForDraggingInfo:(id <NSDraggingInfo>)sender;

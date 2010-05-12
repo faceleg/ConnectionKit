@@ -135,7 +135,7 @@
     {
         // What's the range of the text to write?
         NSRange range = NSMakeRange(archiveIndex, [anAttachment range].location - archiveIndex);
-                                    
+        
         // Write it
         NSString *aString = [archive substringWithRange:range];
         [context writeString:aString];

@@ -261,6 +261,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [context setBodyTextDOMController:self];
     
     
+    [self willWriteText:context];
+    
+    
     // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
     DOMNode *aNode = [[self textHTMLElement] firstChild];
     while (aNode)
@@ -282,6 +285,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Tidy up
     [context release];
 }
+
+- (void)willWriteText:(SVParagraphedHTMLWriter *)writer; { }
 
 - (void)writeGraphicController:(SVDOMController *)controller
                 withHTMLWriter:(SVParagraphedHTMLWriter *)context;

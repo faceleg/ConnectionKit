@@ -47,6 +47,8 @@
 - (void)willUpdate;
 - (void)didUpdate;
 
+- (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
+
 
 #pragma mark Links
 
