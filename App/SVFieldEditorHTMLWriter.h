@@ -13,13 +13,13 @@
 //  -   Only a small whitelist of elements, attributes and styling are permitted. Anything failing to make the grade will be removed from the DOM and not actually written to the context.
 
 
-#import "KSHTMLWriter+DOM.h"
+#import "SVHTMLWriter.h"
 
 
 @class SVHTMLBuffer;
 
 
-@interface SVFieldEditorHTMLWriter : KSHTMLWriter
+@interface SVFieldEditorHTMLWriter : SVHTMLWriter
 {
   @private
     SVHTMLBuffer    *_buffer;

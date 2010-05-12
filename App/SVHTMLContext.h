@@ -6,10 +6,8 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "KSHTMLWriter.h"
+#import "SVHTMLWriter.h"
 #import "SVPlugIn.h"
-
-#import <WebKit/DOMCore.h>
 
 
 // publishing mode
@@ -27,7 +25,7 @@ typedef enum {
 @protocol SVMedia;
 
 
-@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext>
+@interface SVHTMLContext : SVHTMLWriter <SVPlugInContext>
 {
   @private
     NSURL   *_baseURL;
