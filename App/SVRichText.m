@@ -140,9 +140,12 @@
         NSString *aString = [archive substringWithRange:range];
         [context writeString:aString];
         
-        // Write the attachment
-        [[anAttachment graphic] writeHTML:context];
-        lastAttachment = anAttachment;
+        // Write the attachment, unless it's an early callout
+        if (archiveIndex > 0 || ![[anAttachment graphic] isCallout])
+        {
+            [[anAttachment graphic] writeHTML:context];
+            lastAttachment = anAttachment;
+        }
         
         NSRange lastAttachmentRange = [lastAttachment range];
         archiveIndex = lastAttachmentRange.location + lastAttachmentRange.length;
