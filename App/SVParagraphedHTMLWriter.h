@@ -7,6 +7,7 @@
 //
 
 #import "SVFieldEditorHTMLWriter.h"
+#import "WebEditingKit.h"
 
 
 @class SVRichTextDOMController;
@@ -19,7 +20,8 @@
     
     NSMutableSet    *_attachments;
     
-    SVRichTextDOMController             *_DOMController;
+    SVRichTextDOMController *_DOMController;
+    WEKWebEditorItem        *_currentItem;  // weak ref
 }
 
 @property(nonatomic) BOOL allowsBlockGraphics;

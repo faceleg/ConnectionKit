@@ -20,6 +20,14 @@
 #import "DOMNode+Karelia.h"
 
 
+@interface DOMElement (SVParagraphedHTMLWriter)
+- (DOMNodeList *)getElementsByClassName:(NSString *)name;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVParagraphedHTMLWriter
 
 #pragma mark Init & Dealloc
@@ -89,14 +97,14 @@
     SVGraphic *graphic = [controller representedObject];
     SVTextAttachment *attachment = [graphic textAttachment];
     
-    DOMNode *node = [controller HTMLElement];
-    DOMNode *parentNode = [node parentNode];
+    DOMElement *element = [controller HTMLElement];
+    DOMNode *parentNode = [element parentNode];
     
     if (parentNode != [[self bodyTextDOMController] textHTMLElement] &&
         [[attachment placement] integerValue] != SVGraphicPlacementInline)
     {
         // Push the element off up the tree
-        [[parentNode parentNode] insertBefore:node refChild:[parentNode nextSibling]];
+        [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
     }
         
     
@@ -107,11 +115,16 @@
     }
     else
     {
-        NSArray *graphicControllers = [controller selectableTopLevelDescendants];
-        for (SVDOMController *aController in graphicControllers)
+        WEKWebEditorItem *currentItem = _currentItem;
+        _currentItem = controller;
+        
+        DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
+        for (unsigned i = 0; i < [calloutContents length]; i++)
         {
-            if (![self writeGraphicController:aController]) return NO;
+            [self writeInnerOfDOMNode:[calloutContents item:i]];
         }
+        
+        _currentItem = currentItem;
     }
     
     return YES;
@@ -119,7 +132,7 @@
 
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
 {
-    NSArray *graphicControllers = [[self bodyTextDOMController] childWebEditorItems];
+    NSArray *graphicControllers = [_currentItem childWebEditorItems];
     
     for (SVDOMController *aController in graphicControllers)
     {
@@ -350,6 +363,13 @@
 #pragma mark Properties
 
 @synthesize bodyTextDOMController = _DOMController;
+- (void)setBodyTextDOMController:(SVRichTextDOMController *)controller;
+{
+    if (_currentItem == _DOMController) _currentItem = controller;
+    
+    [controller retain];
+    [_DOMController release]; _DOMController = controller;
+}
 
 @end
 
