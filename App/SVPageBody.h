@@ -15,6 +15,8 @@
 
 @property (nonatomic, retain, readonly) KTPage *page;
 
+- (void)writeEarlyCallouts:(SVHTMLContext *)context;
+
 @end
 
 

@@ -9,6 +9,7 @@
 #import "SVPageBody.h"
 
 #import "SVGraphic.h"
+#import "SVHTMLContext.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
 
@@ -32,6 +33,39 @@
         thumbnailGraphic = [[[self orderedAttachments] firstObjectKS] graphic];
         [page setThumbnailSourceGraphic:thumbnailGraphic];
     }
+}
+
+- (void)writeEarlyCallouts:(SVHTMLContext *)context;
+{
+    //  Piece together each of our elements to generate the HTML
+    NSArray *attachments = [self orderedAttachments];
+    
+    SVTextAttachment *lastAttachment = nil;
+    NSUInteger archiveIndex = 0;
+    
+    for (SVTextAttachment *anAttachment in attachments)
+    {
+        // What's the range of the text to write?
+        if ([anAttachment range].location - archiveIndex ||
+            ![[anAttachment graphic] isCallout])
+        {
+            break;
+        }
+        else
+        {
+            // Write the attachment
+            [[anAttachment graphic] writeHTML:context];
+            lastAttachment = anAttachment;
+        }
+        
+        NSRange lastAttachmentRange = [lastAttachment range];
+        archiveIndex = lastAttachmentRange.location + lastAttachmentRange.length;
+    }
+}
+
+- (void)writeEarlyCallouts;
+{
+    [self writeEarlyCallouts:[SVHTMLContext currentContext]];
 }
 
 @end
