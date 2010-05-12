@@ -100,7 +100,7 @@
     DOMElement *element = [controller HTMLElement];
     DOMNode *parentNode = [element parentNode];
     
-    if (parentNode != [[self bodyTextDOMController] textHTMLElement] &&
+    if ([self openElementsCount] &&
         [[attachment placement] integerValue] != SVGraphicPlacementInline)
     {
         // Push the element off up the tree
@@ -121,7 +121,11 @@
         DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
         for (unsigned i = 0; i < [calloutContents length]; i++)
         {
-            [self writeInnerOfDOMNode:[calloutContents item:i]];
+            DOMNode *aNode = [[calloutContents item:i] firstChild];
+            while (aNode)
+            {
+                aNode = [aNode topLevelParagraphWriteToStream:self];
+            }
         }
         
         _currentItem = currentItem;
