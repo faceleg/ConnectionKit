@@ -11,13 +11,22 @@
 #import "SVPageBody.h"
 
 
+@class SVCalloutDOMController;
+
+
 @interface SVPageBodyTextDOMController : SVRichTextDOMController
 {
   @private
+    SVCalloutDOMController  *_earlyCalloutController;
+    
     DOMElement  *_dragCaret;
 }
 
 - (IBAction)insertPagelet:(id)sender;
+
+
+#pragma mark Callouts
+@property(nonatomic, retain) SVCalloutDOMController *earlyCalloutDOMController;
 
 
 #pragma mark Drag Caret

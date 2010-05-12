@@ -9,6 +9,7 @@
 #import "SVPageBodyTextDOMController.h"
 
 #import "SVAttributedHTML.h"
+#import "SVCalloutDOMController.h"
 #import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVGraphic.h"
 #import "SVGraphicFactoryManager.h"
@@ -25,6 +26,30 @@
 
 @implementation SVPageBodyTextDOMController
 
+- (void)dealloc
+{
+    [_earlyCalloutController release];
+    
+    [super dealloc];
+}
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    // Also guess at callout controller
+    WEKWebEditorItem *parent = [self parentWebEditorItem];
+    NSUInteger index = [[parent childWebEditorItems] indexOfObjectIdenticalTo:self];
+    if (index >= 1)
+    {
+        WEKWebEditorItem *calloutController = [[parent childWebEditorItems] objectAtIndex:index-1];
+        if ([calloutController isKindOfClass:[SVCalloutDOMController class]])
+        {
+            [self setEarlyCalloutDOMController:(SVCalloutDOMController *)calloutController];
+        }
+    }
+}
+
 #pragma mark Properties
 
 - (BOOL)allowsBlockGraphics; { return YES; }
@@ -39,6 +64,10 @@
     [self addGraphic:graphic placeInline:NO];
     [graphic awakeFromInsertIntoPage:(id <SVPage>)[[self HTMLContext] page]];
 }
+
+#pragma mark Callouts
+
+@synthesize earlyCalloutDOMController = _earlyCalloutController;
 
 #pragma mark Dragging Destination
 
