@@ -155,27 +155,35 @@
 
 - (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
 {
-    // Note that SVWebEditorHTMLContext overrides this method to write slightly differently. So if you change it here, make sure to change there too if needed    
-    [self writeStartTag:@"div"
-                 idName:[(SVCalloutDOMController *)[self currentItem] HTMLElementIDName]
-              className:[@"callout-container " stringByAppendingString:alignment]];
-    [self writeNewline];
-    
-    [self writeStartTag:@"div" idName:nil className:@"callout"];
-    [self writeNewline];
-    
-    [self writeStartTag:@"div" idName:nil className:@"callout-content"];
-    [self writeNewline];
-    
-    
-    OBASSERT(!_calloutAlignment);
-    _calloutAlignment = [alignment copy];
+    if ([alignment isEqualToString:_calloutAlignment])
+    {
+        // Suitable div is already open, so cancel the buffer and carry on writing
+        [self discardBuffer];
+    }
+    else
+    {
+        // Write the opening tags
+        [self writeStartTag:@"div"
+                     idName:[(SVCalloutDOMController *)[self currentItem] HTMLElementIDName]
+                  className:[@"callout-container " stringByAppendingString:alignment]];
+        [self writeNewline];
+        
+        [self writeStartTag:@"div" idName:nil className:@"callout"];
+        [self writeNewline];
+        
+        [self writeStartTag:@"div" idName:nil className:@"callout-content"];
+        [self writeNewline];
+        
+        
+        OBASSERT(!_calloutAlignment);
+        _calloutAlignment = [alignment copy];
+    }
 }
 
-- (void)writeCalloutEnd;    // written lazily so consecutive matching callouts are blended into one
+- (void)writeCalloutEnd;
 {
-    [_calloutAlignment release]; _calloutAlignment = nil;
-    
+    // Buffer this call so consecutive matching callouts can be blended into one
+    [self beginBuffering];
     
     [self writeEndTag]; // callout-content
     [self writeNewline];
@@ -185,6 +193,15 @@
     
     [self writeEndTag]; // callout-container
     [self writeNewline];
+    
+    [self flushOnNextWrite];
+}
+
+- (void)flush;
+{
+    [_calloutAlignment release]; _calloutAlignment = nil;
+    
+    [super flush];
 }
 
 #pragma mark URLs/Paths
