@@ -20,14 +20,6 @@
 #import "DOMNode+Karelia.h"
 
 
-@interface DOMElement (SVParagraphedHTMLWriter)
-- (DOMNodeList *)getElementsByClassName:(NSString *)name;
-@end
-
-
-#pragma mark -
-
-
 @implementation SVParagraphedHTMLWriter
 
 #pragma mark Init & Dealloc
@@ -45,7 +37,6 @@
 - (void)dealloc
 {
     [_attachments release];
-    [_DOMController release];
     [super dealloc];
 }
 
@@ -61,98 +52,6 @@
 {
     [_attachments addObject:attachment];
     [self writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
-}
-
-#pragma mark Writing
-
-- (BOOL)writeGraphicController:(SVDOMController *)controller;
-{
-    SVGraphic *graphic = [controller representedObject];
-    SVTextAttachment *attachment = [graphic textAttachment];
-    
-    
-    // Is it allowed?
-    if ([[attachment placement] integerValue] == SVGraphicPlacementBlock)
-    {
-        if ([self allowsBlockGraphics])
-        {
-            if ([self openElementsCount] > 0)
-            {
-                return NO;
-            }
-        }
-        else
-        {
-            NSLog(@"This text block does not support block graphics");
-            return NO;
-        }
-    }
-    
-    
-    // Go ahead and write
-    [[self bodyTextDOMController] writeGraphicController:controller
-                                          withHTMLWriter:self];
-    
-    return YES;
-}
-
-- (BOOL)writeDOMController:(SVDOMController *)controller;
-{
-    // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
-    SVGraphic *graphic = [controller representedObject];
-    SVTextAttachment *attachment = [graphic textAttachment];
-    
-    DOMElement *element = [controller HTMLElement];
-    DOMNode *parentNode = [element parentNode];
-    
-    if ([self openElementsCount] &&
-        [[attachment placement] integerValue] != SVGraphicPlacementInline)
-    {
-        // Push the element off up the tree
-        [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
-    }
-        
-    
-    // Graphics are written as-is. Callouts write their contents
-    if ([controller isSelectable])
-    {
-        return [self writeGraphicController:controller];
-    }
-    else
-    {
-        WEKWebEditorItem *currentItem = _currentItem;
-        _currentItem = controller;
-        
-        DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
-        for (unsigned i = 0; i < [calloutContents length]; i++)
-        {
-            DOMNode *aNode = [[calloutContents item:i] firstChild];
-            while (aNode)
-            {
-                aNode = [aNode topLevelParagraphWriteToStream:self];
-            }
-        }
-        
-        _currentItem = currentItem;
-    }
-    
-    return YES;
-}
-
-- (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
-{
-    NSArray *graphicControllers = [_currentItem childWebEditorItems];
-    
-    for (SVDOMController *aController in graphicControllers)
-    {
-        if ([aController HTMLElement] == element)
-        {
-            return [self writeDOMController:aController];
-        }
-    }
-    
-    
-    return NO;
 }
 
 #pragma mark Cleanup
@@ -367,17 +266,6 @@
     }
     
     return result;
-}
-
-#pragma mark Properties
-
-@synthesize bodyTextDOMController = _DOMController;
-- (void)setBodyTextDOMController:(SVRichTextDOMController *)controller;
-{
-    if (_currentItem == _DOMController) _currentItem = controller;
-    
-    [controller retain];
-    [_DOMController release]; _DOMController = controller;
 }
 
 @end

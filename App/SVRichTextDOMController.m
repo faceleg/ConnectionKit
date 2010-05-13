@@ -39,6 +39,14 @@
 static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 
+@interface DOMElement (SVParagraphedHTMLWriter)
+- (DOMNodeList *)getElementsByClassName:(NSString *)name;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVRichTextDOMController
 
 #pragma mark Init & Dealloc
@@ -222,8 +230,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return [super webEditorTextDoCommandBySelector:action];
 }
 
-#pragma mark Responding to Changes
-
 - (void)webEditorTextDidBeginEditing;
 {
     [super webEditorTextDidBeginEditing];
@@ -231,6 +237,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // A bit crude, but we don't want WebKit's usual focus ring
     [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
 }
+
+#pragma mark Responding to Changes
 
 - (void)webEditorTextDidChange;
 {    
@@ -254,21 +262,21 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
        
     NSMutableString *html = [[NSMutableString alloc] init];
     
-    SVParagraphedHTMLWriter *context = 
+    SVParagraphedHTMLWriter *writer = 
     [[SVParagraphedHTMLWriter alloc] initWithStringWriter:html];
     
-    [context setAllowsBlockGraphics:[self allowsBlockGraphics]];
-    [context setBodyTextDOMController:self];
+    [writer setDelegate:self];
+    [writer setAllowsBlockGraphics:[self allowsBlockGraphics]];
     
     
-    [self willWriteText:context];
+    [self willWriteText:writer];
     
     
     // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
     DOMNode *aNode = [[self textHTMLElement] firstChild];
     while (aNode)
     {
-        aNode = [aNode topLevelParagraphWriteToStream:context];
+        aNode = [aNode topLevelParagraphWriteToStream:writer];
     }
     
     
@@ -277,49 +285,125 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         _isUpdating = YES;
         [textObject setString:html
-                  attachments:[context textAttachments]];
+                  attachments:[writer textAttachments]];
         _isUpdating = NO;
     }
     
     
     // Tidy up
-    [context release];
+    [writer release];
 }
 
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer; { }
 
-- (void)writeGraphicController:(SVDOMController *)controller
-                withHTMLWriter:(SVParagraphedHTMLWriter *)context;
+- (BOOL)write:(SVParagraphedHTMLWriter *)writer selectableItem:(WEKWebEditorItem *)controller;
 {
     SVGraphic *graphic = [controller representedObject];
-    SVTextAttachment *textAttachment = [graphic textAttachment];
+    SVTextAttachment *attachment = [graphic textAttachment];
     
+    
+    // Is it allowed?
+    if ([[attachment placement] integerValue] == SVGraphicPlacementBlock)
+    {
+        if ([self allowsBlockGraphics])
+        {
+            if ([writer openElementsCount] > 0)
+            {
+                return NO;
+            }
+        }
+        else
+        {
+            NSLog(@"This text block does not support block graphics");
+            return NO;
+        }
+    }
+    
+    
+    
+    
+    // Go ahead and write    
     
     // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
-    if (!textAttachment)
+    if (!attachment)
     {
-        textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+        attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                        inManagedObjectContext:[graphic managedObjectContext]];
-        [textAttachment setGraphic:graphic];
-        [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementBlock]];
-        [textAttachment setCausesWrap:[NSNumber numberWithBool:YES]];
-        [textAttachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
-        [textAttachment setBody:[self representedObject]];
+        [attachment setGraphic:graphic];
+        [attachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementBlock]];
+        [attachment setCausesWrap:[NSNumber numberWithBool:YES]];
+        [attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
+        [attachment setBody:[self representedObject]];
     }
     
     
     // Set attachment location
-    [context writeTextAttachment:textAttachment];
+    [writer writeTextAttachment:attachment];
     
-    [context flush];
-    NSString *stream = (NSMutableString *)[context stringWriter];
+    [writer flush];
+    NSString *stream = (NSMutableString *)[writer stringWriter];
     NSUInteger location = [stream length] - 1;
     
-    if ([textAttachment range].location != location)
+    if ([attachment range].location != location)
     {
-        [textAttachment setLocation:[NSNumber numberWithUnsignedInteger:location]];
-        [textAttachment setLength:[NSNumber numberWithShort:1]];
+        [attachment setLocation:[NSNumber numberWithUnsignedInteger:location]];
+        [attachment setLength:[NSNumber numberWithShort:1]];
     }
+    
+    
+    
+    
+    
+    return YES;
+}
+
+- (BOOL)write:(SVParagraphedHTMLWriter *)writer item:(WEKWebEditorItem *)controller;
+{
+    // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
+    SVGraphic *graphic = [controller representedObject];
+    SVTextAttachment *attachment = [graphic textAttachment];
+    
+    DOMElement *element = [controller HTMLElement];
+    DOMNode *parentNode = [element parentNode];
+    
+    if ([writer openElementsCount] &&
+        [[attachment placement] integerValue] != SVGraphicPlacementInline)
+    {
+        // Push the element off up the tree
+        [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
+    }
+    
+    
+    // Graphics are written as-is. Callouts write their contents
+    if ([controller isSelectable])
+    {
+        return [self write:writer selectableItem:controller];
+    }
+    else
+    {
+        DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
+        for (unsigned i = 0; i < [calloutContents length]; i++)
+        {
+            DOMNode *aNode = [[calloutContents item:i] firstChild];
+            while (aNode)
+            {
+                aNode = [aNode topLevelParagraphWriteToStream:writer];
+            }
+        }
+    }
+    
+    return YES;
+}
+
+- (BOOL)HTMLWriter:(SVParagraphedHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
+{
+    WEKWebEditorItem *item = [self hitTestDOMNode:element];
+    if (item != self)
+    {
+        return [self write:writer item:item];
+    }
+    
+    return NO;
 }
 
 #pragma mark Links

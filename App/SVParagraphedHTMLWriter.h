@@ -20,7 +20,6 @@
     
     NSMutableSet    *_attachments;
     
-    SVRichTextDOMController *_DOMController;
     WEKWebEditorItem        *_currentItem;  // weak ref
 }
 
@@ -28,8 +27,6 @@
 
 - (NSSet *)textAttachments;
 - (void)writeTextAttachment:(SVTextAttachment *)attachment;
-
-@property(nonatomic, retain) SVRichTextDOMController *bodyTextDOMController;
 
 
 @end

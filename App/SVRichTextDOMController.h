@@ -12,7 +12,7 @@
 @class SVRichText, SVBodyElement, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
 
 
-@interface SVRichTextDOMController : SVTextDOMController
+@interface SVRichTextDOMController : SVTextDOMController <SVHTMLWriterDelegate>
 {        
     BOOL    _isUpdating;
     
@@ -35,19 +35,17 @@
 - (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 - (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 
-// All the selectable items within ourself
-- (void)writeGraphicController:(SVDOMController *)controller
-                withHTMLWriter:(SVParagraphedHTMLWriter *)context;
-
 
 #pragma mark Updates
-
 // Use these methods to temporarily suspend observation while updating model or view otherwise we get in an infinite loop
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;
 - (void)willUpdate;
 - (void)didUpdate;
 
+
+#pragma mark Responding to Changes
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
+- (BOOL)write:(SVParagraphedHTMLWriter *)writer item:(WEKWebEditorItem *)controller;
 
 
 #pragma mark Links

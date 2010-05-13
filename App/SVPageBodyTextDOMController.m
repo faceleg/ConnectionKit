@@ -68,12 +68,23 @@
 #pragma mark Callouts
 
 @synthesize earlyCalloutDOMController = _earlyCalloutController;
+- (void)setEarlyCalloutDOMController:(SVCalloutDOMController *)controller;
+{
+    [_earlyCalloutController removeFromParentWebEditorItem];
+    
+    [controller retain];
+    [_earlyCalloutController release]; _earlyCalloutController = controller;
+    
+    [controller removeFromParentWebEditorItem];
+    [self addChildWebEditorItem:controller];
+}
+
 
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
 {
     // Write early callouts first
     SVCalloutDOMController *calloutController = [self earlyCalloutDOMController];
-    if (calloutController) [writer writeDOMController:calloutController];
+    if (calloutController) [self write:writer item:calloutController];
     
     
     
