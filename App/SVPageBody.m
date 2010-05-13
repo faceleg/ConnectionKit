@@ -107,6 +107,7 @@
         
         if (range.location != NSNotFound || ![[anAttachment graphic] isCallout])
         {
+            archiveIndex = range.location;
             break;
         }
         else
