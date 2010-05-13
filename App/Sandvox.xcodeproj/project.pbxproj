@@ -219,7 +219,7 @@
 		2710C3BB110B358D00A7B997 /* SVPageTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710C3B9110B358D00A7B997 /* SVPageTitle.m */; };
 		2713726511542AFF003AB050 /* SVAttributedHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713726311542AFF003AB050 /* SVAttributedHTMLWriter.h */; };
 		2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */; };
-		271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 271372AE11543BC5003AB050 /* SVHTMLWriter.h */; };
+		271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 271372AE11543BC5003AB050 /* SVHTMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271372B011543BC5003AB050 /* SVHTMLWriter.m */; };
 		2713756911551296003AB050 /* SVAttributedHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713756711551296003AB050 /* SVAttributedHTML.h */; };
 		2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713756811551296003AB050 /* SVAttributedHTML.m */; };
