@@ -309,10 +309,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Set attachment location
-    [context writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+    [context writeTextAttachment:textAttachment];
     
     [context flush];
-    NSMutableString *stream = (NSMutableString *)[context stringWriter];
+    NSString *stream = (NSMutableString *)[context stringWriter];
     NSUInteger location = [stream length] - 1;
     
     if ([textAttachment range].location != location)

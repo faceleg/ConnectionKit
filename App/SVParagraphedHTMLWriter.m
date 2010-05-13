@@ -57,6 +57,12 @@
 
 - (NSSet *)textAttachments; { return [[_attachments copy] autorelease]; }
 
+- (void)writeTextAttachment:(SVTextAttachment *)attachment;
+{
+    [_attachments addObject:attachment];
+    [self writeString:[NSString stringWithUnichar:NSAttachmentCharacter]];
+}
+
 #pragma mark Writing
 
 - (BOOL)writeGraphicController:(SVDOMController *)controller;
@@ -87,7 +93,6 @@
     [[self bodyTextDOMController] writeGraphicController:controller
                                           withHTMLWriter:self];
     
-    [_attachments addObject:[graphic textAttachment]];  // -writeGraphicController:withHTMLWrite: may change/create attachment
     return YES;
 }
 

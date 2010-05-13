@@ -10,7 +10,7 @@
 #import "WebEditingKit.h"
 
 
-@class SVRichTextDOMController;
+@class SVRichTextDOMController, SVTextAttachment;
 
 
 @interface SVParagraphedHTMLWriter : SVFieldEditorHTMLWriter
@@ -27,6 +27,7 @@
 @property(nonatomic) BOOL allowsBlockGraphics;
 
 - (NSSet *)textAttachments;
+- (void)writeTextAttachment:(SVTextAttachment *)attachment;
 
 @property(nonatomic, retain) SVRichTextDOMController *bodyTextDOMController;
 
