@@ -1,12 +1,12 @@
 // 
-//  SVPageBody.m
+//  SVArticle.m
 //  Sandvox
 //
 //  Created by Mike on 27/03/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVPageBody.h"
+#import "SVArticle.h"
 
 #import "SVGraphic.h"
 #import "SVWebEditorHTMLContext.h"
@@ -17,7 +17,7 @@
 #import "NSArray+Karelia.h"
 
 
-@implementation SVPageBody 
+@implementation SVArticle 
 
 @dynamic page;
 

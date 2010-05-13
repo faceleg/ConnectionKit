@@ -298,7 +298,7 @@
 @end
 
 
-@implementation SVPageBody (SVPageBodyTextDOMController)
+@implementation SVArticle (SVPageBodyTextDOMController)
 - (Class)DOMControllerClass { return [SVPageBodyTextDOMController class]; }
 @end
 

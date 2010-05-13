@@ -1,5 +1,5 @@
 //
-//  SVPageBody.h
+//  SVArticle.h
 //  Sandvox
 //
 //  Created by Mike on 27/03/2010.
@@ -11,7 +11,7 @@
 
 @class KTPage;
 
-@interface SVPageBody : SVRichText
+@interface SVArticle : SVRichText
 
 @property (nonatomic, retain, readonly) KTPage *page;
 

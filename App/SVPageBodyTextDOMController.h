@@ -8,7 +8,7 @@
 
 #import "SVRichTextDOMController.h"
 
-#import "SVPageBody.h"
+#import "SVArticle.h"
 
 
 @class SVCalloutDOMController;

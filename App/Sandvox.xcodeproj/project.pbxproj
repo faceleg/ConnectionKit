@@ -537,8 +537,8 @@
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F243B3106BC8B9007FEC56 /* WEKWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */; };
 		27F243B4106BC8B9007FEC56 /* WEKWebEditorItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */; };
-		27F36590115EB7BA003BDA5F /* SVPageBody.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVPageBody.h */; };
-		27F36591115EB7BA003BDA5F /* SVPageBody.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVPageBody.m */; };
+		27F36590115EB7BA003BDA5F /* SVArticle.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F3658E115EB7BA003BDA5F /* SVArticle.h */; };
+		27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F3658F115EB7BA003BDA5F /* SVArticle.m */; };
 		27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F365EB11602161003BDA5F /* SVMetricsInspector.h */; };
 		27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F365EC11602161003BDA5F /* SVMetricsInspector.m */; };
 		27F63BD40D463F7800FAEB48 /* KTMaster.h in Headers */ = {isa = PBXBuildFile; fileRef = 273C2F8E0CCE58C100E48E22 /* KTMaster.h */; settings = {ATTRIBUTES = (); }; };
@@ -2087,8 +2087,8 @@
 		27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingSettings.m; sourceTree = "<group>"; };
 		27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebEditorItem.h; sourceTree = "<group>"; };
 		27F243B2106BC8B9007FEC56 /* WEKWebEditorItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKWebEditorItem.m; sourceTree = "<group>"; };
-		27F3658E115EB7BA003BDA5F /* SVPageBody.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageBody.h; sourceTree = "<group>"; };
-		27F3658F115EB7BA003BDA5F /* SVPageBody.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageBody.m; sourceTree = "<group>"; };
+		27F3658E115EB7BA003BDA5F /* SVArticle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVArticle.h; sourceTree = "<group>"; };
+		27F3658F115EB7BA003BDA5F /* SVArticle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVArticle.m; sourceTree = "<group>"; };
 		27F365EB11602161003BDA5F /* SVMetricsInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMetricsInspector.h; sourceTree = "<group>"; };
 		27F365EC11602161003BDA5F /* SVMetricsInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMetricsInspector.m; sourceTree = "<group>"; };
 		27F71A7210F7641D0029AE3A /* LinkInspector.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = LinkInspector.xib; sourceTree = "<group>"; };
@@ -3391,8 +3391,8 @@
 		278F798F10B4485C00BDBAF7 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				27F3658E115EB7BA003BDA5F /* SVPageBody.h */,
-				27F3658F115EB7BA003BDA5F /* SVPageBody.m */,
+				27F3658E115EB7BA003BDA5F /* SVArticle.h */,
+				27F3658F115EB7BA003BDA5F /* SVArticle.m */,
 				2778929E10CD5FA3008AA683 /* SVTitleBox.h */,
 				2778929F10CD5FA3008AA683 /* SVTitleBox.m */,
 				27C20F0B11405105006D455E /* SVAuxiliaryPageletText.h */,
@@ -5592,7 +5592,7 @@
 				2713756911551296003AB050 /* SVAttributedHTML.h in Headers */,
 				27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */,
 				27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */,
-				27F36590115EB7BA003BDA5F /* SVPageBody.h in Headers */,
+				27F36590115EB7BA003BDA5F /* SVArticle.h in Headers */,
 				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
 				27B0BF6C1168B8840084BFE0 /* SVGraphicFactoryManager.h in Headers */,
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
@@ -7014,7 +7014,7 @@
 				2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */,
 				27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */,
 				27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */,
-				27F36591115EB7BA003BDA5F /* SVPageBody.m in Sources */,
+				27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */,
 				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
 				27B0BF6D1168B8840084BFE0 /* SVGraphicFactoryManager.m in Sources */,
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
