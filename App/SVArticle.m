@@ -15,6 +15,7 @@
 #import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
+#import "NSCharacterSet+Karelia.h"
 
 
 @implementation SVArticle 
