@@ -77,10 +77,15 @@
 - (NSString *)graphicalTextCSSID;
 - (NSString *)graphicalTextPreviewStyle;
 
+
 #pragma mark HTML
-- (void)writeInnerHTML:(SVHTMLContext *)context;
+
 - (void)writeHTML;
+- (void)writeInnerHTML:(SVHTMLContext *)context;
+- (void)writeStartTags:(SVHTMLContext *)context;
+- (void)writeEndTags:(SVHTMLContext *)context;
 
 - (NSString *)processHTML:(NSString *)originalHTML;
+
 
 @end

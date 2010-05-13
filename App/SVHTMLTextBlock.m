@@ -292,7 +292,41 @@
 	return result;
 }
 
+#pragma mark HTML Support
+
+- (BOOL)generateSpanIn;
+{
+    return ([self isFieldEditor] && 
+            ![self hasSpanIn] &&
+            ![[self tagName] isEqualToString:@"span"]);
+}
+
 #pragma mark HTML
+
+/*	Includes the editable tag(s) + innerHTML
+ */
+- (void)writeHTML;
+{
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    [context willBeginWritingHTMLTextBlock:self];
+    
+	
+    
+	[self writeStartTags:context];
+    
+	
+	// Stick in the main HTML
+	if ([self isRichText]) [context writeNewline];
+    [self writeInnerHTML:context];
+    if ([self isRichText]) [context writeNewline];
+	
+	
+	// Write end tags
+	[self writeEndTags:context];
+    
+    
+    [context didEndWritingHTMLTextBlock];
+}
 
 - (void)writeInnerHTML:(SVHTMLContext *)context;
 {
@@ -313,14 +347,8 @@
     }
 }
 
-/*	Includes the editable tag(s) + innerHTML
- */
-- (void)writeHTML;
+- (void)writeStartTags:(SVHTMLContext *)context;
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    [context willBeginWritingHTMLTextBlock:self];
-    
-	
     // Construct the actual HTML
     [context openTag:[self tagName]];
 	
@@ -332,7 +360,7 @@
         [context writeAttribute:@"id" value:[self DOMNodeID]];
     }
     
-	BOOL generateSpanIn = ([self isFieldEditor] && ![self hasSpanIn] && ![[self tagName] isEqualToString:@"span"]);
+	BOOL generateSpanIn = [self generateSpanIn];
 	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 
 	{
 		if (![[self CSSClassName] isEqualToString:@""])
@@ -384,22 +412,13 @@
 		
         [context writeStartTag:@"span" idName:nil className:CSSClassName];
 	}
-	
-    
-	
-	// Stick in the main HTML
-	if ([self isRichText]) [context writeNewline];
-    [self writeInnerHTML:context];
-    if ([self isRichText]) [context writeNewline];
-	
-	
-	// Write end tags
-	if (generateSpanIn) [context writeEndTag];
+}
+
+- (void)writeEndTags:(SVHTMLContext *)context;
+{
+    if ([self generateSpanIn]) [context writeEndTag];
 	if ([self hyperlinkString]) [context writeEndTag];
 	[context writeEndTag];
-    
-    
-    [context didEndWritingHTMLTextBlock];
 }
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.
