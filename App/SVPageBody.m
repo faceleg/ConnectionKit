@@ -9,7 +9,8 @@
 #import "SVPageBody.h"
 
 #import "SVGraphic.h"
-#import "SVHTMLContext.h"
+#import "SVWebEditorHTMLContext.h"
+#import "SVHTMLTextBlock.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
 
@@ -35,7 +36,55 @@
     }
 }
 
-- (void)writeEarlyCallouts:(SVHTMLContext *)context;
+#pragma mark HTML
+
+- (void)writeHTML:(SVHTMLContext *)context;
+{
+    // Write any early callouts
+    NSUInteger writtenTo = [self writeEarlyCallouts:context];
+    
+    
+    // Start Article Content
+    [context writeStartTag:@"div" idName:nil className:@"article-content"];
+    [context writeNewline];
+    
+    [context writeStartTag:@"div" idName:nil className:@"RichTextElement"];
+    [context writeNewline];
+    
+    
+    // Construct text block for our contents
+    SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
+    [textBlock setHTMLSourceObject:[self page]];
+    [textBlock setHTMLSourceKeyPath:@"body"];
+    [textBlock setRichText:YES];
+    [textBlock setFieldEditor:NO];
+    [textBlock setImportsGraphics:YES];
+    
+    
+    // Open text block
+    [context willBeginWritingHTMLTextBlock:textBlock];
+    [textBlock writeStartTags:context];
+    [context writeNewline];
+    
+    
+    // Write text minus early callouts
+    NSRange range = NSMakeRange(writtenTo, [[self string] length] - writtenTo);
+    [self writeText:context range:range];
+    
+    
+    // End text block
+    [context writeNewline];
+    [textBlock writeEndTags:context];
+    
+    
+    // End Article Content
+    [context writeEndTag];
+    [context writeEndTag];
+    [context writeHTMLString:@" <!-- /article-content -->"];
+    [context writeNewline];
+}
+
+- (NSUInteger)writeEarlyCallouts:(SVHTMLContext *)context;
 {
     //  Piece together each of our elements to generate the HTML
     NSArray *attachments = [self orderedAttachments];
@@ -70,6 +119,9 @@
         NSRange lastAttachmentRange = [lastAttachment range];
         archiveIndex = lastAttachmentRange.location + lastAttachmentRange.length;
     }
+    
+    
+    return archiveIndex;
 }
 
 - (void)writeEarlyCallouts;

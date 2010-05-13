@@ -18,15 +18,8 @@
 [[endif]]
 
 							<div class="article">
-								[[=body.writeEarlyCallouts]]
-								<div class="article-content">
-                                    <div class="RichTextElement">
-                                        [[textblock property:body flags:"block imageable"]]
-                                    </div>
-								</div> <!-- /article-content -->
-
+								[[=body.writeHTML]]
 								<div class="article-info">
-
 [[if includeTimestamp]]
 									<div class="timestamp">
 										[[=&timestamp]]
