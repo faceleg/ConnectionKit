@@ -212,7 +212,7 @@
 		270E4B1710FA4DF500EF1FA0 /* SVLinkInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E4B1510FA4DF500EF1FA0 /* SVLinkInspector.m */; };
 		270E82E710A4484E007E7848 /* KSInspectorTabsController.h in Headers */ = {isa = PBXBuildFile; fileRef = 270E82E510A4484D007E7848 /* KSInspectorTabsController.h */; settings = {ATTRIBUTES = (); }; };
 		270E82E810A4484E007E7848 /* KSInspectorTabsController.m in Sources */ = {isa = PBXBuildFile; fileRef = 270E82E610A4484E007E7848 /* KSInspectorTabsController.m */; };
-		270F2BB21136B17D0090143E /* KSHTMLWriter+DOM.h in Headers */ = {isa = PBXBuildFile; fileRef = 270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */; };
+		270F2BB21136B17D0090143E /* KSHTMLWriter+DOM.h in Headers */ = {isa = PBXBuildFile; fileRef = 270F2BB01136B17D0090143E /* KSHTMLWriter+DOM.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270F2BB31136B17D0090143E /* KSHTMLWriter+DOM.m in Sources */ = {isa = PBXBuildFile; fileRef = 270F2BB11136B17D0090143E /* KSHTMLWriter+DOM.m */; };
 		2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C254110A110D00A7B997 /* SVMediaProtocol.h */; };
 		2710C3BA110B358D00A7B997 /* SVPageTitle.h in Headers */ = {isa = PBXBuildFile; fileRef = 2710C3B8110B358D00A7B997 /* SVPageTitle.h */; };
