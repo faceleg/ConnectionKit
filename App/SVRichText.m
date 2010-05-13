@@ -128,6 +128,9 @@
     [self writeText:context range:range];
 }
 
+
+/*  WARNING: range length is not respected yet, only the location
+ */
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
 {
     //  Piece together each of our elements to generate the HTML
@@ -135,27 +138,27 @@
     NSString *archive = [self string];
     
     SVTextAttachment *lastAttachment = nil;
-    NSUInteger archiveIndex = 0;
+    NSUInteger archiveIndex = range.location;
+    
     
     for (SVTextAttachment *anAttachment in attachments)
     {
-        // What's the range of the text to write?
-        NSRange subrange = NSMakeRange(archiveIndex, [anAttachment range].location - archiveIndex);
+        // Ignore attachments outside the range
+        NSRange attachmentRange = [anAttachment range];
+        if (attachmentRange.location < range.location) continue;
         
         
-        // Write it
-        if (subrange.length)
+        // Write preceeding text
+        NSRange textRange = NSMakeRange(archiveIndex, attachmentRange.location - archiveIndex);
+        if (textRange.length)
         {
-            NSString *aString = [archive substringWithRange:subrange];
+            NSString *aString = [archive substringWithRange:textRange];
             [context writeString:aString];
         }
         
         
-        // Write the attachment, unless it's an early callout
-        if (archiveIndex > 0 || ![[anAttachment graphic] isCallout])
-        {
-            [[anAttachment graphic] writeHTML:context];
-        }
+        // Write the attachment/graphic
+        [[anAttachment graphic] writeHTML:context];
         lastAttachment = anAttachment;
         
         
