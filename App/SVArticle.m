@@ -41,6 +41,19 @@
 
 - (void)writeHTML:(SVHTMLContext *)context;
 {
+    // Construct text block for our contents
+    SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
+    [textBlock setHTMLSourceObject:[self page]];
+    [textBlock setHTMLSourceKeyPath:@"body"];
+    [textBlock setRichText:YES];
+    [textBlock setFieldEditor:NO];
+    [textBlock setImportsGraphics:YES];
+    
+    
+    // Tell context that text is due to be written so it sets up DOM Controller. Want that controller in place to contain the early callouts
+    [context willBeginWritingHTMLTextBlock:textBlock];
+    
+    
     // Write any early callouts
     NSUInteger writtenTo = [self writeEarlyCallouts:context];
     
@@ -53,17 +66,7 @@
     [context writeNewline];
     
     
-    // Construct text block for our contents
-    SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
-    [textBlock setHTMLSourceObject:[self page]];
-    [textBlock setHTMLSourceKeyPath:@"body"];
-    [textBlock setRichText:YES];
-    [textBlock setFieldEditor:NO];
-    [textBlock setImportsGraphics:YES];
-    
-    
     // Open text block
-    [context willBeginWritingHTMLTextBlock:textBlock];
     [textBlock writeStartTags:context];
     [context writeNewline];
     

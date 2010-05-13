@@ -18,6 +18,7 @@
 
 #import "KSWebLocation.h"
 
+#import "NSArray+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
@@ -42,10 +43,19 @@
     NSUInteger index = [[parent childWebEditorItems] indexOfObjectIdenticalTo:self];
     if (index >= 1)
     {
-        WEKWebEditorItem *calloutController = [[parent childWebEditorItems] objectAtIndex:index-1];
+        WEKWebEditorItem *calloutController = [[self childWebEditorItems] firstObjectKS];
         if ([calloutController isKindOfClass:[SVCalloutDOMController class]])
         {
-            [self setEarlyCalloutDOMController:(SVCalloutDOMController *)calloutController];
+            // Early callouts are those which appear outside our subtree. Have to ensure controller's element is loaded first
+            if (![calloutController isHTMLElementCreated])
+            {
+                [calloutController loadHTMLElementFromDocument:document];
+            }
+            
+            if (![[calloutController HTMLElement] isDescendantOfNode:[self HTMLElement]])
+            {
+                [self setEarlyCalloutDOMController:(SVCalloutDOMController *)calloutController];
+            }
         }
     }
 }
@@ -68,17 +78,6 @@
 #pragma mark Callouts
 
 @synthesize earlyCalloutDOMController = _earlyCalloutController;
-- (void)setEarlyCalloutDOMController:(SVCalloutDOMController *)controller;
-{
-    [_earlyCalloutController removeFromParentWebEditorItem];
-    
-    [controller retain];
-    [_earlyCalloutController release]; _earlyCalloutController = controller;
-    
-    [controller removeFromParentWebEditorItem];
-    [self addChildWebEditorItem:controller];
-}
-
 
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
 {
