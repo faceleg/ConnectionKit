@@ -124,6 +124,12 @@
 
 - (void)writeText:(SVHTMLContext *)context;
 {
+    NSRange range = NSMakeRange(0, [[self string] length]);
+    [self writeText:context range:range];
+}
+
+- (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
+{
     //  Piece together each of our elements to generate the HTML
     NSArray *attachments = [self orderedAttachments];
     NSString *archive = [self string];
@@ -134,13 +140,13 @@
     for (SVTextAttachment *anAttachment in attachments)
     {
         // What's the range of the text to write?
-        NSRange range = NSMakeRange(archiveIndex, [anAttachment range].location - archiveIndex);
+        NSRange subrange = NSMakeRange(archiveIndex, [anAttachment range].location - archiveIndex);
         
         
         // Write it
-        if (range.length)
+        if (subrange.length)
         {
-            NSString *aString = [archive substringWithRange:range];
+            NSString *aString = [archive substringWithRange:subrange];
             [context writeString:aString];
         }
         

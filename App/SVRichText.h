@@ -29,4 +29,9 @@
 - (void)deleteCharactersInRange:(NSRange)aRange;
 
 
+#pragma mark HTML
+- (void)writeText:(SVHTMLContext *)context;
+- (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
+
+
 @end
