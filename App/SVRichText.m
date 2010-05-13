@@ -136,16 +136,22 @@
         // What's the range of the text to write?
         NSRange range = NSMakeRange(archiveIndex, [anAttachment range].location - archiveIndex);
         
+        
         // Write it
-        NSString *aString = [archive substringWithRange:range];
-        [context writeString:aString];
+        if (range.length)
+        {
+            NSString *aString = [archive substringWithRange:range];
+            [context writeString:aString];
+        }
+        
         
         // Write the attachment, unless it's an early callout
         if (archiveIndex > 0 || ![[anAttachment graphic] isCallout])
         {
             [[anAttachment graphic] writeHTML:context];
-            lastAttachment = anAttachment;
         }
+        lastAttachment = anAttachment;
+        
         
         NSRange lastAttachmentRange = [lastAttachment range];
         archiveIndex = lastAttachmentRange.location + lastAttachmentRange.length;
