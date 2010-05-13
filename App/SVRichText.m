@@ -122,7 +122,7 @@
 
 #pragma mark HTML
 
-- (void)writeHTML:(SVHTMLContext *)context;
+- (void)writeText:(SVHTMLContext *)context;
 {
     //  Piece together each of our elements to generate the HTML
     NSArray *attachments = [self orderedAttachments];

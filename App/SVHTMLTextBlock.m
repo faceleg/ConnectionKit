@@ -302,7 +302,7 @@
 	NSString *result = HTML_VALUE;
     if ([result isKindOfClass:[SVRichText class]])
     {
-        [(SVRichText *)result writeHTML:context];
+        [(SVRichText *)result writeText:context];
     }
     else if ([result isKindOfClass:[SVTitleBox class]])
     {

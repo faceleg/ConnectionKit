@@ -308,7 +308,7 @@
     }
     
     // Body
-    [[self body] writeHTML:context];
+    [[self body] writeText:context];
     
     // Children
     if (recursive)
