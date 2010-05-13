@@ -294,12 +294,9 @@
 
 #pragma mark HTML
 
-- (void)writeInnerHTML;
+- (void)writeInnerHTML:(SVHTMLContext *)context;
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    
-    
-	NSString *result = HTML_VALUE;
+    NSString *result = HTML_VALUE;
     if ([result isKindOfClass:[SVRichText class]])
     {
         [(SVRichText *)result writeText:context];
@@ -392,7 +389,7 @@
 	
 	// Stick in the main HTML
 	if ([self isRichText]) [context writeNewline];
-    [self writeInnerHTML];
+    [self writeInnerHTML:context];
     if ([self isRichText]) [context writeNewline];
 	
 	

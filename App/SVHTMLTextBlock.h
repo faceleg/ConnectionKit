@@ -11,6 +11,9 @@
 #import "KTDocument.h"
 
 
+@class SVHTMLContext;
+
+
 @interface SVHTMLTextBlock : NSObject
 {
 //@private
@@ -75,7 +78,7 @@
 - (NSString *)graphicalTextPreviewStyle;
 
 #pragma mark HTML
-- (void)writeInnerHTML;
+- (void)writeInnerHTML:(SVHTMLContext *)context;
 - (void)writeHTML;
 
 - (NSString *)processHTML:(NSString *)originalHTML;
