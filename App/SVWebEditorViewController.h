@@ -35,7 +35,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     SVWebContentObjectsController   *_selectableObjectsController;
     
     // Controllers
-    NSMutableArray  *_textDOMControllers;
     NSObject        *_draggingDestination;  // weak ref
     
     // Loading
@@ -84,8 +83,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 #pragma mark Text Areas
 
-// An array of SVTextBlock objects, one per text block created when setting up the page
-@property(nonatomic, copy, readonly) NSArray *textAreas;
 // A series of methods for retrieving the Text Block to go with a bit of the webview
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;

@@ -75,9 +75,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setPreservesSelection:NO];    // we'll take care of that
     [_selectableObjectsController setObjectClass:[NSObject class]];
-    
-    _textDOMControllers = [[NSMutableArray alloc] init];
-    
+        
     return self;
 }
     
@@ -89,7 +87,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     [self setDelegate:nil];
     
     [_page release];
-    [_textDOMControllers release];
     [_context release];
     
     [super dealloc];
@@ -180,12 +177,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (void)loadPageHTMLIntoWebEditor
 {
-    // Tear down old dependencies...
+    // Tear down old dependencies and DOM controllers.
     [self stopObservingDependencies];
-    
-    // ...and DOM controllers.
     [[[self webEditor] rootItem] setChildWebEditorItems:nil];
-    [_textDOMControllers removeAllObjects];
     
     
     // Prepare the environment for generating HTML
@@ -434,13 +428,6 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     OBASSERT([item HTMLElement]);
     
     
-    // Figure out if it's a text controller
-    if ([item isKindOfClass:[SVTextDOMController class]])
-    {
-        [_textDOMControllers addObject:item];
-    }
-    
-    
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
     id anObject = [item representedObject];
     if (anObject) [[self selectedObjectsController] addObject:anObject];
@@ -455,38 +442,11 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 #pragma mark Text Areas
 
-- (NSArray *)textAreas { return [[_textDOMControllers copy] autorelease]; }
-
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 {
     WEKWebEditorItem *controller = [[[self webEditor] rootItem] hitTestDOMNode:node];
     SVTextDOMController *result = [controller textDOMController];
     return result;
-    
-    /*
-    SVTextDOMController *result = nil;
-    DOMHTMLElement *editableElement = [node enclosingContentEditableElement];
-    
-    if (editableElement)
-    {
-        // Search each text block in turn for a match
-        for (result in [self textAreas])
-        {
-            if ([result HTMLElement] == editableElement)
-            {
-                break;
-            }
-        }
-        
-        // It's possible (but very unlikely) that the editable element is part of a text block's content. If so, search up for the next one
-        if (!result)
-        {
-            DOMNode *parent = [editableElement parentNode];
-            if (parent) result = [self textAreaForDOMNode:parent];
-        }
-    }
-    
-    return result;*/
 }
 
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
