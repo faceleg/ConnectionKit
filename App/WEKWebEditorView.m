@@ -845,6 +845,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     WEKWebEditorItem *parent = [result parentWebEditorItem];
     while (parent)
     {
+        // Give up searching if we've hit the selection's parent items
+        if ([[self selectionParentItems] containsObjectIdenticalTo:parent]) break;
+        
         if ([parent isSelectable]) result = parent;
         parent = [parent parentWebEditorItem];
     }
