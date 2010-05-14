@@ -305,6 +305,21 @@
     [style setHeight:[NSString stringWithFormat:@"%@px", height]];
 }
 
+#pragma mark Hit-Test
+
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
+{
+    // Early callout controller sits outside our HTML element, so test it specially
+    WEKWebEditorItem *result = [[self earlyCalloutDOMController] hitTestDOMNode:node];
+    
+    if (!result)
+    {
+        result = [super hitTestDOMNode:node];
+    }
+    
+    return result;
+}
+
 @end
 
 
