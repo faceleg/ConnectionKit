@@ -14,6 +14,4 @@
 
 @interface SVGraphicDOMController : SVDOMController
 
-- (SVRichTextDOMController *)enclosingBodyTextDOMController;
-
 @end

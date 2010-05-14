@@ -18,16 +18,6 @@
 
 - (BOOL)isSelectable { return YES; }
 
-- (SVRichTextDOMController *)enclosingBodyTextDOMController;
-{
-    id result = [self parentWebEditorItem];
-    while (result && ![result isKindOfClass:[SVRichTextDOMController class]])
-    {
-        result = [result parentWebEditorItem];
-    }
-    return result;
-}
-
 - (void)setEditing:(BOOL)editing;
 {
     [super setEditing:editing];
