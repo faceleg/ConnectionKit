@@ -459,6 +459,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 {
+    WEKWebEditorItem *result = [[[self webEditor] rootItem] hitTestDOMNode:node];
+    while (result && ![result isKindOfClass:[SVTextDOMController class]])
+    {
+        result = [result parentWebEditorItem];
+    }
+    
+    return (SVTextDOMController *)result;
+    
+    /*
     SVTextDOMController *result = nil;
     DOMHTMLElement *editableElement = [node enclosingContentEditableElement];
     
@@ -481,7 +490,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         }
     }
     
-    return result;
+    return result;*/
 }
 
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
@@ -715,7 +724,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 #pragma mark WebEditorViewDataSource
 
 - (WEKWebEditorItem <SVWebEditorText> *)webEditor:(WEKWebEditorView *)sender
-                            textBlockForDOMRange:(DOMRange *)range;
+                             textBlockForDOMRange:(DOMRange *)range;
 {
     return [self textAreaForDOMRange:range];
 }
