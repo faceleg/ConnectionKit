@@ -830,29 +830,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
-    NSArray *selectionParentItems = [self selectionParentItems];
-    NSInteger index = [selectionParentItems count] - 1;
     
-    while (!result && index > -2)
+    result = [[self rootItem] hitTestDOMNode:nextNode];
+    while (result && ![result isSelectable])
     {
-        WEKWebEditorItem *parentItem = (index >= 0) ? [selectionParentItems objectAtIndex:index] : [self rootItem];
-         
-        // The child matching the node may not be selectable. If so, search its children
-        while (parentItem)
-        {
-            result = [parentItem childItemForDOMNode:nextNode];
-            if ([result isSelectable])
-            {
-                break;
-            }
-            else
-            {
-                parentItem = result;
-                result = nil;
-            }
-        }
-        
-        index--;
+        result = [result parentWebEditorItem];
     }
     
     
