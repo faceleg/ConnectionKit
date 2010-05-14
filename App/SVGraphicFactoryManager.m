@@ -35,6 +35,15 @@
 	SVTextBox *result = [NSEntityDescription insertNewObjectForEntityForName:@"TextBox"
 													  inManagedObjectContext:context];
 	OBASSERT(result);
+    
+    
+    // Give title & text
+    [result setTitle:NSLocalizedString(@"Untitled Text", "Text Box title")];
+    
+    NSString *path = [[NSBundle mainBundle] pathForResource:@"loremipsum2" ofType:@"html"];
+    [[result body] setString:[NSString stringWithContentsOfFile:path
+                                                       encoding:NSUTF8StringEncoding
+                                                          error:NULL]];
 	
     
 	return result;
@@ -272,9 +281,6 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     {
         result = [[self sharedTextBoxFactory] insertNewGraphicInManagedObjectContext:context];
         OBASSERT(result);
-        
-        // Create matching first paragraph
-        [[(SVTextBox *)result body] setString:@"<p>Test</p>"];
     }
     
     return result;

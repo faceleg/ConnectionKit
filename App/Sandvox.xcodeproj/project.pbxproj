@@ -416,6 +416,8 @@
 		2797B4BF0EF6E65E00F91398 /* KSURLFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */; };
 		2797B71E0EF91E2B00F91398 /* KTExportEngine.h in Headers */ = {isa = PBXBuildFile; fileRef = 2797B71C0EF91E2B00F91398 /* KTExportEngine.h */; };
 		2797B71F0EF91E2B00F91398 /* KTExportEngine.m in Sources */ = {isa = PBXBuildFile; fileRef = 2797B71D0EF91E2B00F91398 /* KTExportEngine.m */; };
+		27990F48119D956800D07FDF /* loremipsum1.html in Resources */ = {isa = PBXBuildFile; fileRef = 27990F46119D956800D07FDF /* loremipsum1.html */; };
+		27990F49119D956800D07FDF /* loremipsum2.html in Resources */ = {isa = PBXBuildFile; fileRef = 27990F47119D956800D07FDF /* loremipsum2.html */; };
 		2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */ = {isa = PBXBuildFile; fileRef = 2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */; };
 		2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */ = {isa = PBXBuildFile; fileRef = 2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */; };
 		279AB3B711147C18001C830A /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 279AB3B611147C18001C830A /* Download.html */; };
@@ -1914,6 +1916,8 @@
 		2797B4BD0EF6E65E00F91398 /* KSURLFormatter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSURLFormatter.m; sourceTree = "<group>"; };
 		2797B71C0EF91E2B00F91398 /* KTExportEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTExportEngine.h; sourceTree = "<group>"; };
 		2797B71D0EF91E2B00F91398 /* KTExportEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTExportEngine.m; sourceTree = "<group>"; };
+		27990F46119D956800D07FDF /* loremipsum1.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = loremipsum1.html; sourceTree = "<group>"; };
+		27990F47119D956800D07FDF /* loremipsum2.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = loremipsum2.html; sourceTree = "<group>"; };
 		2799832A0DF01BE8003C84B9 /* KTDesignPlaceholder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesignPlaceholder.h; sourceTree = "<group>"; };
 		2799832B0DF01BE8003C84B9 /* KTDesignPlaceholder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDesignPlaceholder.m; sourceTree = "<group>"; };
 		279AB3B611147C18001C830A /* Download.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Download.html; sourceTree = "<group>"; };
@@ -4419,6 +4423,8 @@
 		3C5A73710BF7B69300776464 /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
+				27990F46119D956800D07FDF /* loremipsum1.html */,
+				27990F47119D956800D07FDF /* loremipsum2.html */,
 				274B8CC5116A76EE00AAADB6 /* SVMovie.h */,
 				274B8CC6116A76EE00AAADB6 /* SVMovie.m */,
 				27C20EB3114034F4006D455E /* SVIntroAndCaptionGraphic.h */,
@@ -6306,6 +6312,8 @@
 				CE2D37D71187BA6C0051E238 /* colorful-design.pdf in Resources */,
 				CE2D42EE1188BD910051E238 /* README.rtf in Resources */,
 				27FA98961194BF06003B8308 /* SidebarTemplate.html in Resources */,
+				27990F48119D956800D07FDF /* loremipsum1.html in Resources */,
+				27990F49119D956800D07FDF /* loremipsum2.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
