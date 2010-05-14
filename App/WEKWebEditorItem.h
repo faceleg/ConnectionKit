@@ -29,10 +29,13 @@
 
 
 #pragma mark Tree
+
 @property(nonatomic, copy) NSArray *childWebEditorItems;
 @property(nonatomic, assign) WEKWebEditorItem *parentWebEditorItem;  // don't call setter directly
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
 - (void)removeFromParentWebEditorItem;
+
+- (NSEnumerator *)enumerator;
 
 
 #pragma mark Selection
@@ -47,16 +50,13 @@
 - (void)updateToReflectSelection;
 - (BOOL)allowsDirectAccessToWebViewWhenSelected;
 
-
-#pragma mark Searching the Tree
-
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // like -[NSView hitTest:]
-- (WEKWebEditorItem *)hitTestRepresentedObject:(id)object;
-
-- (NSEnumerator *)enumerator;
-
 - (NSArray *)selectableAncestors;   // Search up the tree for all parent items returning YES for -isSelectable
 - (NSArray *)selectableTopLevelDescendants;
+
+
+#pragma mark Searching the Tree
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // like -[NSView hitTest:]
+- (WEKWebEditorItem *)hitTestRepresentedObject:(id)object;
 
 
 #pragma mark Drag Source

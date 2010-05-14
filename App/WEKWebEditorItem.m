@@ -157,6 +157,40 @@
 
 - (BOOL)allowsDirectAccessToWebViewWhenSelected; { return NO; }
 
+- (NSArray *)selectableAncestors;
+{
+    NSMutableArray *result = [NSMutableArray array];
+    
+    WEKWebEditorItem *aParentItem = [self parentWebEditorItem];
+    while (aParentItem)
+    {
+        if ([aParentItem isSelectable]) [result addObject:aParentItem];
+        aParentItem = [aParentItem parentWebEditorItem];
+    }
+    
+    return result;
+}
+
+- (NSArray *)selectableTopLevelDescendants;
+{
+    NSArray *children = [self childWebEditorItems];
+    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[children count]];
+    
+    for (WEKWebEditorItem *anItem in children)
+    {
+        if ([anItem isSelectable])
+        {
+            [result addObject:anItem];
+        }
+        else
+        {
+            [result addObjectsFromArray:[anItem selectableTopLevelDescendants]];
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark Searching the Tree
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
@@ -190,40 +224,6 @@
         {
             result = [anItem hitTestRepresentedObject:object];
             if (result) break;
-        }
-    }
-    
-    return result;
-}
-
-- (NSArray *)selectableAncestors;
-{
-    NSMutableArray *result = [NSMutableArray array];
-    
-    WEKWebEditorItem *aParentItem = [self parentWebEditorItem];
-    while (aParentItem)
-    {
-        if ([aParentItem isSelectable]) [result addObject:aParentItem];
-        aParentItem = [aParentItem parentWebEditorItem];
-    }
-    
-    return result;
-}
-
-- (NSArray *)selectableTopLevelDescendants;
-{
-    NSArray *children = [self childWebEditorItems];
-    NSMutableArray *result = [NSMutableArray arrayWithCapacity:[children count]];
-    
-    for (WEKWebEditorItem *anItem in children)
-    {
-        if ([anItem isSelectable])
-        {
-            [result addObject:anItem];
-        }
-        else
-        {
-            [result addObjectsFromArray:[anItem selectableTopLevelDescendants]];
         }
     }
     
