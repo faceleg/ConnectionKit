@@ -841,6 +841,15 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
+    // We've found the deepest selectable item, but does it have a parent that should be selected instead?
+    WEKWebEditorItem *parent = [result parentWebEditorItem];
+    while (parent)
+    {
+        if ([parent isSelectable]) result = parent;
+        parent = [parent parentWebEditorItem];
+    }
+    
+    
     return result;
 }
 
