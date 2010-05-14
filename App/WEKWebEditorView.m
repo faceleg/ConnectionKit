@@ -745,8 +745,11 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (result)
     {
-        result = [self shouldChangeText:[[self dataSource] webEditor:self
-                                                textBlockForDOMRange:range]];
+        // See if the there is a controller to check with
+        WEKWebEditorItem <SVWebEditorText> *textController = [[self dataSource] webEditor:self
+                                                                     textBlockForDOMRange:range];
+        
+        if (textController) result = [self shouldChangeText:textController];
     }
     
     return result;
