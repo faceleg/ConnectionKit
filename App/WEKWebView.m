@@ -56,17 +56,20 @@
         NSPoint point = [self convertPointFromBase:[sender draggingLocation]];
         DOMRange *editingRange = [self editableDOMRangeForPoint:point];
         
-        WEKWebEditorItem <SVWebEditorText> *controller = [[[self webEditor] dataSource]
-                                                          webEditor:[self webEditor]
-                                                          textBlockForDOMRange:editingRange];
-        
-        
-        // Ask the controller if it's sure of the drop
-        [controller webEditorTextValidateDrop:sender proposedOperation:&result];
-        
-        
-        // Controller's HTML element determines where to draw the drop highlight
-        if (result > NSDragOperationNone) dropNode = [controller HTMLElement];
+        if (editingRange)
+        {
+            WEKWebEditorItem <SVWebEditorText> *controller = [[[self webEditor] dataSource]
+                                                              webEditor:[self webEditor]
+                                                              textBlockForDOMRange:editingRange];
+            
+            
+            // Ask the controller if it's sure of the drop
+            [controller webEditorTextValidateDrop:sender proposedOperation:&result];
+            
+            
+            // Controller's HTML element determines where to draw the drop highlight
+            if (result > NSDragOperationNone) dropNode = [controller HTMLElement];
+        }
     }
     [[self webEditor] moveDragHighlightToDOMNode:dropNode];
 }
