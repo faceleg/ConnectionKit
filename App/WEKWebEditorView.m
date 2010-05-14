@@ -1516,7 +1516,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (!_isChangingSelectedItems)
     {
         // Ensure user can't select part of a text area *enclosing* the current text
-        if (currentRange)
+        if (currentRange && proposedRange)
         {
             WEKWebEditorItem <SVWebEditorText> *currentText = [[self dataSource]
                                                               webEditor:self
