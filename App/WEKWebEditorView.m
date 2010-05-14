@@ -44,8 +44,21 @@ typedef enum {  // this copied from WebPreferences+Private.h
 } WebKitEditableLinkBehavior;
 
 
-@interface WebView (SVPrivate)
+// Copied out of WebKit, ScrollTypes.h
+typedef enum {
+    ScrollbarAuto,
+    ScrollbarAlwaysOff,
+    ScrollbarAlwaysOn
+} ScrollbarMode;
+
+
+@interface WebView (WEK_Private)
 - (void)_setCatchesDelegateExceptions:(BOOL)flag;
+@end
+
+
+@interface NSScrollView (WEK_WebDynamicScrollBarsView)
+- (void)setVerticalScrollingMode:(ScrollbarMode)verticalMode;
 @end
 
 
@@ -112,6 +125,12 @@ typedef enum {  // this copied from WebPreferences+Private.h
     _webView = [[WEKWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setShouldCloseWithWindow:YES];    // seems correct for a doc-based app
+    
+    NSScrollView *scrollView = [[[[_webView mainFrame] frameView] documentView] enclosingScrollView];
+    if ([scrollView respondsToSelector:@selector(setVerticalScrollingMode:)])
+    {
+        [scrollView setVerticalScrollingMode:ScrollbarAlwaysOn];
+    }
     
 #ifndef VARIANT_RELEASE
     if ([_webView respondsToSelector:@selector(_setCatchesDelegateExceptions:)])
