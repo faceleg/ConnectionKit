@@ -89,3 +89,11 @@
 - (unsigned short)lastRegisteredActionIdentifier;
 @end
 
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVTextDOMController)
+- (SVTextDOMController *)textDOMController; // seeks the closest ancestor text controller
+@end
+

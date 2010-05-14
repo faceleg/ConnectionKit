@@ -459,13 +459,9 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 {
-    WEKWebEditorItem *result = [[[self webEditor] rootItem] hitTestDOMNode:node];
-    while (result && ![result isKindOfClass:[SVTextDOMController class]])
-    {
-        result = [result parentWebEditorItem];
-    }
-    
-    return (SVTextDOMController *)result;
+    WEKWebEditorItem *controller = [[[self webEditor] rootItem] hitTestDOMNode:node];
+    SVTextDOMController *result = [controller textDOMController];
+    return result;
     
     /*
     SVTextDOMController *result = nil;

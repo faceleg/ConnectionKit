@@ -70,6 +70,10 @@
     [self setEditable:[[self textBlock] isEditable]];
 }
 
+#pragma mark Hierarchy
+
+- (SVTextDOMController *)textDOMController; { return self; }
+
 #pragma mark Attributes
 
 - (BOOL)isEditable
@@ -330,6 +334,19 @@
     }
     
     return NO;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVTextDOMController)
+
+- (SVTextDOMController *)textDOMController; // seeks the closest ancestor text controller
+{
+    return [[self parentWebEditorItem] textDOMController];
 }
 
 @end
