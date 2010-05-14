@@ -43,6 +43,21 @@
 
 - (void)didAddToPage:(id <SVPage>)page; { }
 
+#pragma mark Placement
+
+- (SVGraphicPlacement)placement;
+{
+    SVTextAttachment *attachment = [self textAttachment];
+    if (attachment) return [[attachment placement] integerValue];
+    
+    return SVGraphicPlacementSidebar;
+}
+
++ (NSSet *)keyPathsForValuesAffectingPlacement;
+{
+    return [NSSet setWithObject:@"textAttachment.placement"];
+}
+
 #pragma mark Pagelet
 
 - (BOOL)isPagelet;

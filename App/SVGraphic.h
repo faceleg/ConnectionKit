@@ -14,6 +14,8 @@
 typedef enum {
     SVGraphicPlacementInline,
     SVGraphicPlacementBlock,
+    SVGraphicPlacementCallout,
+    SVGraphicPlacementSidebar,
 } SVGraphicPlacement;
 
 typedef enum {  // Note that "left" or "right" refers to the side of the graphic *text* will be placed
@@ -63,6 +65,10 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark Initialization
 - (void)awakeFromInsertIntoPage:(id <SVPage>)page; // calls -didAddToPage:
 - (void)didAddToPage:(id <SVPage>)page;
+
+
+#pragma mark Placement
+@property(nonatomic, readonly) SVGraphicPlacement placement;
 
 
 #pragma mark Pagelet
