@@ -9,6 +9,7 @@
 #import "SVMetricsInspector.h"
 
 #import "KTDocument.h"
+#import "SVMediaGraphic.h"
 
 
 @implementation SVMetricsInspector
@@ -41,6 +42,14 @@
 {
     [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
                                              withObject:nil];
+}
+
+- (IBAction)makeOriginalSize:(NSButton *)sender;
+{
+    for (SVMediaGraphic *aGraphic in [self inspectedObjects])
+    {
+        [aGraphic makeOriginalSize];
+    }
 }
 
 @end

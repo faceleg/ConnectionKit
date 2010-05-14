@@ -18,5 +18,6 @@
 }
 
 - (IBAction)chooseFile:(NSButton *)sender;
+- (IBAction)makeOriginalSize:(NSButton *)sender;
 
 @end
