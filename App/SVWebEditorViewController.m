@@ -569,8 +569,12 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
 {
     DOMRange *selection = [[self webEditor] selectedDOMRange];
-    SVTextDOMController *text = [self textAreaForDOMRange:selection];
-    return [text tryToPerform:action with:anObject];
+    if (selection)
+    {
+        SVTextDOMController *text = [self textAreaForDOMRange:selection];
+        return [text tryToPerform:action with:anObject];
+    }
+    return NO;
 }
 
 #pragma mark Undo
