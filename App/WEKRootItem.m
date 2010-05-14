@@ -16,6 +16,23 @@
 
 @synthesize webEditor = _webEditor;
 
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
+{
+    //  We don't have an HTML element, so need special implementation
+    
+    OBPRECONDITION(node);
+    
+    WEKWebEditorItem *result = nil;
+    
+    for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+    {
+        result = [anItem hitTestDOMNode:node];
+        if (result) break;
+    }
+    
+    return result;
+}
+
 @end
 
 
