@@ -179,7 +179,7 @@
     return result;
 }
 
-- (WEKWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
+- (WEKWebEditorItem *)hitTestRepresentedObject:(id)object;
 {
     OBPRECONDITION(object);
     
@@ -188,7 +188,7 @@
     {
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
-            result = [anItem descendantItemWithRepresentedObject:object];
+            result = [anItem hitTestRepresentedObject:object];
             if (result) break;
         }
     }

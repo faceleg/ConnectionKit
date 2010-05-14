@@ -303,10 +303,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (startObject && endObject)
     {
-        WEKWebEditorItem *startItem = [[self rootItem] descendantItemWithRepresentedObject:startObject];
+        WEKWebEditorItem *startItem = [[self rootItem] hitTestRepresentedObject:startObject];
         if (startItem)
         {
-            WEKWebEditorItem *endItem = [[self rootItem] descendantItemWithRepresentedObject:endObject];
+            WEKWebEditorItem *endItem = [[self rootItem] hitTestRepresentedObject:endObject];
             if (endItem)
             {
                 [textRange populateDOMRange:domRange

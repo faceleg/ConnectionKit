@@ -51,8 +51,7 @@
 #pragma mark Searching the Tree
 
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // like -[NSView hitTest:]
-
-- (WEKWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
+- (WEKWebEditorItem *)hitTestRepresentedObject:(id)object;
 
 - (NSEnumerator *)enumerator;
 

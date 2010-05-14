@@ -281,7 +281,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     
     for (id anObject in selectedObjects)
     {
-        id newItem = [[[self webEditor] rootItem] descendantItemWithRepresentedObject:anObject];
+        id newItem = [[[self webEditor] rootItem] hitTestRepresentedObject:anObject];
         if ([newItem isSelectable]) [newSelection addObject:newItem];
     }
     
