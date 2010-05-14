@@ -35,6 +35,7 @@
 
 - (CGSize)originalSize;
 - (void)makeOriginalSize;
+- (BOOL)canMakeOriginalSize;
 
 
 @end

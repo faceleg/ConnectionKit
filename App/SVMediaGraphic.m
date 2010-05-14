@@ -220,4 +220,6 @@
     [self setHeight:[NSNumber numberWithFloat:size.height]];
 }
 
+- (BOOL)canMakeOriginalSize; { return YES; }
+
 @end
