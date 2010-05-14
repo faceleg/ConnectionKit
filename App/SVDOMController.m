@@ -9,6 +9,7 @@
 #import "SVDOMController.h"
 
 #import "SVSidebarDOMController.h"
+#import "SVTextDOMController.h"
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
@@ -141,9 +142,13 @@
 {
     NSDragOperation result = [super draggingSourceOperationMaskForLocal:isLocal];
     
-    if (isLocal && [self parentWebEditorItem] == [[self HTMLContext] sidebarDOMController])
+    if (isLocal && (!(result & NSDragOperationMove) || !(result & NSDragOperationGeneric)))
     {
-        result = result | NSDragOperationMove | NSDragOperationGeneric;
+        if ([self parentWebEditorItem] == [[self HTMLContext] sidebarDOMController] ||
+            [self textDOMController])
+        {
+            result = result | NSDragOperationMove | NSDragOperationGeneric;
+        }
     }
     
     return result;
