@@ -36,9 +36,15 @@
     NSArray *_graphicFactories;
 }
 
+#pragma mark Shared Objects
+
 + (SVGraphicFactoryManager *)sharedPageletFactoryManager;
 + (SVGraphicFactoryManager *)sharedIndexFactoryManager;
 
++ (id <SVGraphicFactory>)sharedTextBoxFactory;
+
+
+#pragma mark Init
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 
 @property(nonatomic, copy, readonly) NSArray *graphicFactories;

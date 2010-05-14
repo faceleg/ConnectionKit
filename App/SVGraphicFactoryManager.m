@@ -13,10 +13,48 @@
 #import "SVMovie.h"
 #import "SVPlugIn.h"
 #import "SVTextBox.h"
+#import "KTToolbars.h"
 
 #import "NSSet+Karelia.h"
 
 #import "Registration.h"
+
+
+@interface SVTextBoxFactory : NSObject <SVGraphicFactory>
+@end
+
+
+@implementation SVTextBoxFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    OBPRECONDITION(context);
+	
+	
+    // Create the pagelet
+	SVTextBox *result = [NSEntityDescription insertNewObjectForEntityForName:@"TextBox"
+													  inManagedObjectContext:context];
+	OBASSERT(result);
+	
+    
+	return result;
+}
+
+- (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }
+
+- (NSImage *)pluginIcon
+{
+    return [NSImage imageNamed:@"TB_Text_Tool.tiff"];
+}
+
+- (NSUInteger)priority; { return 1; }
+
+- (BOOL)isIndex; { return NO; }
+
+@end
+
+
+#pragma mark -
 
 
 @interface SVImageFactory : NSObject <SVGraphicFactory>
@@ -85,11 +123,20 @@
 
 @implementation SVGraphicFactoryManager
 
+#pragma mark Shared Objects
+
 static SVGraphicFactoryManager *sSharedPageletManager;
 static SVGraphicFactoryManager *sSharedIndexManager;
+static id <SVGraphicFactory> sSharedTextBoxFactory;
 
 + (void)initialize
 {
+    if (!sSharedTextBoxFactory)
+    {
+        sSharedTextBoxFactory = [[SVTextBoxFactory alloc] init];
+    }
+    
+    
     if (!sSharedPageletManager)
     {
         // Order plug-ins first by priority, then by name
@@ -147,6 +194,9 @@ static SVGraphicFactoryManager *sSharedIndexManager;
 
 + (SVGraphicFactoryManager *)sharedPageletFactoryManager; { return sSharedPageletManager; }
 + (SVGraphicFactoryManager *)sharedIndexFactoryManager; { return sSharedIndexManager; }
++ (id <SVGraphicFactory>)sharedTextBoxFactory; { return sSharedTextBoxFactory; }
+
+#pragma mark Init
 
 - (id)initWithGraphicFactories:(NSArray *)graphicFactories;
 {
@@ -220,7 +270,7 @@ static SVGraphicFactoryManager *sSharedIndexManager;
     }
     else
     {
-        result = [SVTextBox insertNewTextBoxIntoManagedObjectContext:context];
+        result = [[self sharedTextBoxFactory] insertNewGraphicInManagedObjectContext:context];
         OBASSERT(result);
         
         // Create matching first paragraph

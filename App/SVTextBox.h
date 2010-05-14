@@ -13,8 +13,6 @@
 
 @interface SVTextBox :  SVGraphic  
 
-+ (SVTextBox *)insertNewTextBoxIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
 #pragma mark Body Text
 @property(nonatomic, retain, readonly) SVRichText *body;
 

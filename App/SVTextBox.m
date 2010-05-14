@@ -23,20 +23,6 @@
 
 @implementation SVTextBox 
 
-+ (SVTextBox *)insertNewTextBoxIntoManagedObjectContext:(NSManagedObjectContext *)moc;
-{
-	OBPRECONDITION(moc);
-	
-	
-    // Create the pagelet
-	SVTextBox *result = [NSEntityDescription insertNewObjectForEntityForName:@"TextBox"
-													  inManagedObjectContext:moc];
-	OBASSERT(result);
-	
-    
-	return result;
-}
-
 #pragma mark Body Text
 
 @dynamic body;
