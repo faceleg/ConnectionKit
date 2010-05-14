@@ -131,7 +131,7 @@
 {
     for (WEKWebEditorItem *anItem in [self draggedItems])
     {
-        [self tryToRemoveItem:anItem];
+        [anItem tryToRemove];
     }
     
     // Remove the objects

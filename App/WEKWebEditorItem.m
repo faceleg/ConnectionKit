@@ -230,6 +230,31 @@
     return result;
 }
 
+#pragma mark Editing
+
+- (BOOL)tryToRemove;
+{
+    BOOL result = YES;
+    
+    DOMHTMLElement *element = [self HTMLElement];
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    // Check WebEditor is OK with the change
+    DOMRange *range = [[element ownerDocument] createRange];
+    [range selectNode:element];
+            
+    result = [webEditor shouldChangeTextInDOMRange:range];
+    if (result)
+    {
+        [element ks_removeFromParentNode];
+        [self removeFromParentWebEditorItem];
+    }
+    
+    [range detach];
+    
+    return result;
+}
+
 #pragma mark Dragging Source
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;

@@ -164,7 +164,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // - (IBAction)paste:(id)sender;
 
 - (IBAction)delete:(id)sender;  // deletes the selected items. If there are none, deletes selected text
-- (BOOL)tryToRemoveItem:(WEKWebEditorItem *)anItem; // internal method really
 
 
 #pragma mark Undo
