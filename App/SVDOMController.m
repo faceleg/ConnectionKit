@@ -193,14 +193,23 @@
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
                        draggingInfo:(id <NSDraggingInfo>)info;
 {
-    // Dive down to next item
-    WEKWebEditorItem *result = [[self childItemForDOMNode:node] hitTestDOMNode:node
-                                                                 draggingInfo:info];
+    OBPRECONDITION(node);
     
-    if (!result)
+    WEKWebEditorItem *result = nil;
+    
+    if ([node isDescendantOfNode:[self HTMLElement]] || ![self HTMLElement])
     {
-        NSArray *types = [self registeredDraggedTypes];
-        if ([[info draggingPasteboard] availableTypeFromArray:types]) result = self;
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            result = [anItem hitTestDOMNode:node draggingInfo:info];
+            if (result) break;
+        }
+        
+        if (!result)
+        {
+            NSArray *types = [self registeredDraggedTypes];
+            if ([[info draggingPasteboard] availableTypeFromArray:types]) result = self;
+        }
     }
     
     return result;
