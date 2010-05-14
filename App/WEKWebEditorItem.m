@@ -185,14 +185,17 @@
 {
     OBPRECONDITION(node);
     
-    WEKWebEditorItem *result = [self childItemForDOMNode:node];
-    if (result)
+    WEKWebEditorItem *result = nil;
+    
+    if ([node isDescendantOfNode:[self HTMLElement]])
     {
-        result = [result hitTestDOMNode:node];
-    }
-    else
-    {
-        result = self;
+        for (WEKWebEditorItem *anItem in [self childWebEditorItems])
+        {
+            result = [anItem hitTestDOMNode:node];
+            if (result) break;
+        }
+        
+        if (!result) result = self;
     }
     
     return result;

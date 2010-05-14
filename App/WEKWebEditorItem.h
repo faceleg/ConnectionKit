@@ -51,7 +51,7 @@
 #pragma mark Searching the Tree
 
 - (WEKWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
-- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // guaranteed a match (returns self if nothing else fits)
+- (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;  // like -[NSView hitTest:]
 
 - (WEKWebEditorItem *)descendantItemWithRepresentedObject:(id)object;
 
