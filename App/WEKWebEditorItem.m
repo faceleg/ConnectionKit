@@ -159,28 +159,6 @@
 
 #pragma mark Searching the Tree
 
-- (WEKWebEditorItem *)childItemForDOMNode:(DOMNode *)node;
-{
-    OBPRECONDITION(node);
-    
-    WEKWebEditorItem *result = nil;
-    NSArray *childItemDOMNodes = [[self childWebEditorItems] valueForKey:@"HTMLElement"];
-    
-    DOMNode *aNode = node;
-    while (aNode)
-    {
-        NSUInteger index = [childItemDOMNodes indexOfObjectIdenticalTo:aNode];
-        if (index != NSNotFound)
-        {
-            result = [[self childWebEditorItems] objectAtIndex:index];
-            break;
-        }
-        aNode = [aNode parentNode];
-    }
-    
-    return result;
-}
-
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node;
 {
     OBPRECONDITION(node);
