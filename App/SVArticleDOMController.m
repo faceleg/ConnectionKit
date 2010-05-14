@@ -1,12 +1,12 @@
 //
-//  SVPageBodyTextDOMController.m
+//  SVArticleDOMController.m
 //  Sandvox
 //
 //  Created by Mike on 28/04/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVPageBodyTextDOMController.h"
+#import "SVArticleDOMController.h"
 
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
@@ -25,7 +25,7 @@
 #import "DOMNode+Karelia.h"
 
 
-@implementation SVPageBodyTextDOMController
+@implementation SVArticleDOMController
 
 - (void)dealloc
 {
@@ -323,7 +323,7 @@
 @end
 
 
-@implementation SVArticle (SVPageBodyTextDOMController)
-- (Class)DOMControllerClass { return [SVPageBodyTextDOMController class]; }
+@implementation SVArticle (SVArticleDOMController)
+- (Class)DOMControllerClass { return [SVArticleDOMController class]; }
 @end
 

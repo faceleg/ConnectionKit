@@ -1,5 +1,5 @@
 //
-//  SVPageBodyTextDOMController.h
+//  SVArticleDOMController.h
 //  Sandvox
 //
 //  Created by Mike on 28/04/2010.
@@ -14,7 +14,7 @@
 @class SVCalloutDOMController;
 
 
-@interface SVPageBodyTextDOMController : SVRichTextDOMController
+@interface SVArticleDOMController : SVRichTextDOMController
 {
   @private
     SVCalloutDOMController  *_earlyCalloutController;
