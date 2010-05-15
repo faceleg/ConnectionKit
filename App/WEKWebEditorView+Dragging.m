@@ -436,38 +436,48 @@
     NSImage *image = [element image];
     if (!image) image = [element performSelector:@selector(renderedImage)];
     
-    if (image != nil)
-    {
         NSRect rect = [element boundingBox];
         NSSize originalSize = rect.size;
         origin = rect.origin;
         
-        dragImage = [[image copy] autorelease];
-        [dragImage setScalesWhenResized:YES];
-        [dragImage setSize:originalSize];
-        
-        
-        
-        NSImage *result = [[[NSImage alloc] initWithSize:WebMaxDragImageSize] autorelease];
-        
-        [result lockFocus];
-        
-        [image drawInRect:NSMakeRect(0.0f, 0.0f, WebMaxDragImageSize.width, WebMaxDragImageSize.height)        
-                 fromRect:NSZeroRect
-                operation:NSCompositeCopy
-                 fraction:WebDragImageAlpha];
-        
-        [result unlockFocus];
-        dragImage = result;
-        
-        NSSize newSize = [dragImage size];
-        
-        
-        // Properly orient the drag image and orient it differently if it's smaller than the original
-        origin.x = mouseDownPoint.x - (((mouseDownPoint.x - origin.x) / originalSize.width) * newSize.width);
-        origin.y = origin.y + originalSize.height;
-        origin.y = mouseDownPoint.y - (((mouseDownPoint.y - origin.y) / originalSize.height) * newSize.height);
+    dragImage = [[image copy] autorelease];
+    [dragImage setScalesWhenResized:YES];
+    [dragImage setSize:originalSize];
+    
+    
+    // Scale down to fit 200px box, making semi-transparent in the process
+    NSSize newSize = originalSize;
+    if (newSize.width > WebMaxDragImageSize.width || newSize.height > WebMaxDragImageSize.height)
+    {
+        if (newSize.height > newSize.width)
+        {
+            newSize.width = newSize.width * (WebMaxDragImageSize.height / newSize.height);
+            newSize.height = WebMaxDragImageSize.height;
+        }
+        else
+        {
+            newSize.height = newSize.height * (WebMaxDragImageSize.width / newSize.width);
+            newSize.width = WebMaxDragImageSize.width;
+        }
     }
+    
+    NSImage *result = [[[NSImage alloc] initWithSize:newSize] autorelease];
+    
+    [result lockFocus];
+    
+    [image drawInRect:NSMakeRect(0.0f, 0.0f, newSize.width, newSize.height)        
+             fromRect:NSZeroRect
+            operation:NSCompositeCopy
+             fraction:WebDragImageAlpha];
+    
+    [result unlockFocus];
+    dragImage = result;
+    
+    
+    // Properly orient the drag image and orient it differently if it's smaller than the original
+    origin.x = mouseDownPoint.x - (((mouseDownPoint.x - origin.x) / originalSize.width) * newSize.width);
+    origin.y = origin.y + originalSize.height;
+    origin.y = mouseDownPoint.y - (((mouseDownPoint.y - origin.y) / originalSize.height) * newSize.height);
     
     [self dragImage:dragImage at:origin offset:NSZeroSize event:event pasteboard:pasteboard source:source slideBack:YES];
 }
