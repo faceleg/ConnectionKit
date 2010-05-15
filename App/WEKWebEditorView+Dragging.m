@@ -15,6 +15,18 @@
 
 
 #define WebDragImageAlpha 0.75f // name & value copied from WebKit
+#define WebMaxDragImageSize NSMakeSize(200.0f, 200.f)
+
+
+@interface NSView (WEKWebEditorViewExtras)
+- (void)dragImageForItem:(WEKWebEditorItem *)item
+                   event:(NSEvent *)event
+              pasteboard:(NSPasteboard *)pasteboard 
+                  source:(id)source;
+@end
+
+
+#pragma mark -
 
 
 @interface WEKWebEditorView (DraggingPrivate)
@@ -167,8 +179,29 @@
 {
     // The core items involved
     DOMElement *element = [item HTMLElement];
-    NSRect itemRect = NSInsetRect([element boundingBox], -1.0f, -1.0f);  // Expand by 1px to capture border
-    NSImage *result = [[[NSImage alloc] initWithSize:itemRect.size] autorelease];
+    NSRect box = [element boundingBox];
+    
+    
+    // Scale down if needed
+    if (box.size.width > 200 || box.size.height > 200)
+    {
+        if (box.size.height > box.size.width)
+        {
+            box = NSInsetRect(box,
+                              0.5 * box.size.width - 100,
+                              0.5 * box.size.height - 100);
+        }
+        else
+        {
+            box = NSInsetRect(box,
+                              0.5 * box.size.width - 100,
+                              0.5 * box.size.height - 100);
+        }
+    }
+    
+    
+    //NSInsetRect([element boundingBox], -1.0f, -1.0f);  // Expand by 1px to capture border
+    NSImage *result = [[[NSImage alloc] initWithSize:box.size] autorelease];
     
     WebFrameView *frameView = [[[element ownerDocument] webFrame] frameView];
     NSView <WebDocumentView> *docView = [frameView documentView];
@@ -180,17 +213,15 @@
         NSImage *elementImage = [element performSelector:@selector(renderedImage)];
         if (elementImage)
         {
-            NSRect drawingRect; drawingRect.origin = NSZeroPoint;   drawingRect.size = [elementImage size];
-            
             [result lockFocus];
             
-            [elementImage drawInRect:NSInsetRect(drawingRect, 1.0f, 1.0f)
+            [elementImage drawInRect:NSMakeRect(0.0f, 0.0f, box.size.width, box.size.height)        
                             fromRect:NSZeroRect
                            operation:NSCompositeCopy
                             fraction:WebDragImageAlpha];
             
-            [[[NSColor grayColor] colorWithAlphaComponent:WebDragImageAlpha] setFill];
-            NSFrameRect(drawingRect);
+            //[[[NSColor grayColor] colorWithAlphaComponent:WebDragImageAlpha] setFill];
+            //NSFrameRect(drawingRect);
             
             [result unlockFocus];
         }
@@ -200,11 +231,11 @@
     // Otherwise, fall back to caching display. Don't forget to be semi-transparent!
     if (!result)
     {
-        NSRect imageDrawingRect = [frameView convertRect:itemRect fromView:docView];
+        NSRect imageDrawingRect = [frameView convertRect:box fromView:docView];
         NSBitmapImageRep *bitmap = [frameView bitmapImageRepForCachingDisplayInRect:imageDrawingRect];
         [frameView cacheDisplayInRect:imageDrawingRect toBitmapImageRep:bitmap];
         
-        NSImage *image = [[NSImage alloc] initWithSize:itemRect.size];
+        NSImage *image = [[NSImage alloc] initWithSize:box.size];
         [image addRepresentation:bitmap];
         
         [result lockFocus];
@@ -221,7 +252,7 @@
     // Also return rect if requested
     if (result && outImageLocation)
     {
-        NSRect imageRect = [self convertRect:itemRect fromView:docView];
+        NSRect imageRect = [self convertRect:box fromView:docView];
         *outImageLocation = imageRect.origin;
     }
     
@@ -352,20 +383,24 @@
                               [item draggingSourceOperationMaskForLocal:YES]);
         if (op)
         {
-            NSPoint dragImageRect;
-            NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragImageRect];
+            NSPoint dragLocation;
+            NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragLocation];
             
             if (dragImage)
             {
                 @try
                 {
-                    [self dragImage:dragImage
-                                 at:dragImageRect
+                    [[self documentView] dragImageForItem:item
+                                                    event:theEvent
+                                               pasteboard:pboard
+                                                   source:self];                    
+                    /*[self dragImage:dragImage
+                                 at:dragLocation
                              offset:NSZeroSize
                               event:_mouseDownEvent
                          pasteboard:pboard
                              source:self
-                          slideBack:YES];
+                          slideBack:YES];*/
                 }
                 @finally    // in case the drag throws an exception
                 {
@@ -378,6 +413,63 @@
     
     // A drag of the mouse automatically removes the possibility that editing might commence
     [_mouseDownEvent release],  _mouseDownEvent = nil;
+}
+
+@end
+
+
+#pragma mark -
+
+
+@implementation NSView (WEKWebEditorViewExtras)
+
+- (void)dragImageForItem:(WEKWebEditorItem *)item
+                   event:(NSEvent *)event
+              pasteboard:(NSPasteboard *)pasteboard 
+                  source:(id)source;
+{
+    NSPoint mouseDownPoint = [self convertPoint:[event locationInWindow] fromView:nil];
+    NSImage *dragImage;
+    NSPoint origin;
+    
+    DOMElement *element = [item HTMLElement];
+    NSImage *image = [element image];
+    if (!image) image = [element performSelector:@selector(renderedImage)];
+    
+    if (image != nil)
+    {
+        NSRect rect = [element boundingBox];
+        NSSize originalSize = rect.size;
+        origin = rect.origin;
+        
+        dragImage = [[image copy] autorelease];
+        [dragImage setScalesWhenResized:YES];
+        [dragImage setSize:originalSize];
+        
+        
+        
+        NSImage *result = [[[NSImage alloc] initWithSize:WebMaxDragImageSize] autorelease];
+        
+        [result lockFocus];
+        
+        [image drawInRect:NSMakeRect(0.0f, 0.0f, WebMaxDragImageSize.width, WebMaxDragImageSize.height)        
+                 fromRect:NSZeroRect
+                operation:NSCompositeCopy
+                 fraction:WebDragImageAlpha];
+        
+        [result unlockFocus];
+        dragImage = result;
+        
+        NSSize newSize = [dragImage size];
+        
+        
+        // Properly orient the drag image and orient it differently if it's smaller than the original
+        origin.x = mouseDownPoint.x - (((mouseDownPoint.x - origin.x) / originalSize.width) * newSize.width);
+        origin.y = origin.y + originalSize.height;
+        origin.y = mouseDownPoint.y - (((mouseDownPoint.y - origin.y) / originalSize.height) * newSize.height);
+    }
+    
+    [self dragImage:dragImage at:origin offset:NSZeroSize event:event pasteboard:pasteboard source:source slideBack:YES];
 }
 
 @end
