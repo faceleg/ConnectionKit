@@ -45,17 +45,17 @@
 
 #pragma mark Placement
 
-- (SVGraphicPlacement)placement;
+- (NSNumber *)placement;
 {
     SVTextAttachment *attachment = [self textAttachment];
-    if (attachment) return [[attachment placement] integerValue];
+    if (attachment) return [attachment placement];
     
-    return SVGraphicPlacementSidebar;
+    return [NSNumber numberWithInteger:SVGraphicPlacementSidebar];
 }
 
-- (void)setPlacement:(SVGraphicPlacement)placement;
+- (void)setPlacement:(NSNumber *)placement;
 {
-    [[self textAttachment] setPlacement:[NSNumber numberWithInteger:placement]];
+    [[self textAttachment] setPlacement:placement];
 }
 
 + (NSSet *)keyPathsForValuesAffectingPlacement;

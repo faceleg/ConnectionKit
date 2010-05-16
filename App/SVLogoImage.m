@@ -32,6 +32,7 @@
 - (SVAuxiliaryPageletText *)caption { return nil; }
 - (void)setCaption:(SVAuxiliaryPageletText *)caption { }
 
+- (NSNumber *)placement { return nil; }
 - (SVTextAttachment *)textAttachment { return nil; }
 
 - (BOOL)isPagelet { return NO; }

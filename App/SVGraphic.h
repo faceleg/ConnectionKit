@@ -68,7 +68,7 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 
 
 #pragma mark Placement
-@property(nonatomic, readonly) SVGraphicPlacement placement;
+@property(nonatomic, readonly) NSNumber *placement; // SVGraphicPlacement
 
 
 #pragma mark Pagelet
