@@ -832,14 +832,22 @@ typedef enum {
     
     // If the element is a link of some kind, and we have live links turned on, ignore the possibility of selection
     NSDictionary *element = [[self webView] elementAtPoint:point];
-    if (![self liveEditableAndSelectableLinks] || ![element objectForKey:WebElementLinkURLKey])
+    
+    if ([element objectForKey:WebElementLinkURLKey])
     {
-        // Use the DOM node to find the item
-        DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
-        if (domNode)
+        if ([self liveEditableAndSelectableLinks] ||
+            [[NSApp currentEvent] modifierFlags] & NSShiftKeyMask)
         {
-            result = [self selectableItemForDOMNode:domNode];
+            return nil;
         }
+    }
+    
+    
+    // Use the DOM node to find the item
+    DOMNode *domNode = [element objectForKey:WebElementDOMNodeKey];
+    if (domNode)
+    {
+        result = [self selectableItemForDOMNode:domNode];
     }
     
     return result;
