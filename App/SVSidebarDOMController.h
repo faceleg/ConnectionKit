@@ -9,8 +9,7 @@
 
 #import "SVDOMController.h"
 
-
-@class SVSidebarPageletsController;
+#import "SVSidebarPageletsController.h"
 
 
 @interface SVSidebarDOMController : SVDOMController

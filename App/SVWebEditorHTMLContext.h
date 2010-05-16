@@ -10,7 +10,7 @@
 
 
 @class WEKWebEditorItem, SVDOMController, SVSidebarDOMController;
-@class SVContentObject, SVSidebar;
+@class SVContentObject, SVSidebar, SVSidebarPageletsController;
 @class KSObjectKeyPathPair, SVMediaRecord;
 
 
@@ -23,8 +23,8 @@
     
     NSMutableSet    *_media;
     
-    SVSidebarDOMController  *_sidebarDOMController;
-    NSArrayController       *_sidebarPageletsController;
+    SVSidebarDOMController      *_sidebarDOMController;
+    SVSidebarPageletsController *_sidebarPageletsController;
 }
 
 - (NSArray *)webEditorItems;
@@ -39,7 +39,7 @@
 
 #pragma mark Sidebar
 @property(nonatomic, retain, readonly) SVSidebarDOMController *sidebarDOMController;
-@property(nonatomic, retain) NSArrayController *sidebarPageletsController;
+@property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
 
 
 #pragma mark Low-level controllers

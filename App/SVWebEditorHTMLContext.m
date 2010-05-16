@@ -13,7 +13,7 @@
 #import "SVGraphic.h"
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
-#import "SVSidebar.h"
+#import "SVSidebarDOMController.h"
 #import "SVTemplateParser.h"
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
@@ -229,8 +229,21 @@
 {
     [super willBeginWritingSidebar:sidebar];
     
-    [self willBeginWritingContentObject:sidebar];
-    [self setSidebarDOMController:(id)_currentItem];
+    // Create controller
+    SVSidebarDOMController *controller =
+    [[[sidebar DOMControllerClass] alloc]
+     initWithPageletsController:[self sidebarPageletsController]];
+    
+    [controller setRepresentedObject:sidebar];
+    
+    // Store controller
+    [self willBeginWritingObjectWithDOMController:controller];
+    [self setSidebarDOMController:controller];
+    
+    
+    
+    // Finish up
+    [controller release];
 }
 
 @synthesize sidebarDOMController = _sidebarDOMController;
