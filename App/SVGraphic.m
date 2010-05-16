@@ -130,17 +130,9 @@
     //  We are a callout if a floated pagelet
     NSString *result = nil;
     
-    if ([self isPagelet])
+    if ([[self placement] integerValue] == SVGraphicPlacementCallout)
     {
-        SVGraphicWrap wrap = [[[self textAttachment] wrap] integerValue];
-        if (wrap == SVGraphicWrapLeft)
-        {
-            result = @"right";
-        }
-        else if (wrap == SVGraphicWrapRight)
-        {
-            result = @"left";
-        }
+        result = @"";
     }
     
     return result;
