@@ -109,9 +109,16 @@
                          options:0
                          range:searchRange];
         
-        if (range.location != NSNotFound || ![[anAttachment graphic] isCallout])
+        if (range.location != NSNotFound)
         {
+            // Non-whitespace was found, so continue writing from that
             archiveIndex = range.location;
+            break;
+        }
+        else if (![[anAttachment graphic] isCallout])
+        {
+            // The attachment is not a callout, so continue by writing that attachment in regular location
+            archiveIndex = searchRange.location + searchRange.length;
             break;
         }
         else
