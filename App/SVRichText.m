@@ -80,7 +80,11 @@
                                                            atIndex:index
                                                     effectiveRange:&range];
         
-        if (anAttachment) [attachments addObject:anAttachment];
+        if (anAttachment)
+        {
+            [anAttachment setRange:range];  // may not be correct, so need to update here
+            [attachments addObject:anAttachment];
+        }
         
         index = range.location + range.length;
     }
