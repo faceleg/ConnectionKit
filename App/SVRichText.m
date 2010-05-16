@@ -51,6 +51,44 @@
     // Should we take the opportinity to create a starter paragraph?
 }
 
+#pragma mark Text
+
+- (NSAttributedString *)attributedHTMLString;
+{
+    NSMutableAttributedString *result = [[NSMutableAttributedString alloc]
+                                         initWithString:[self string]];
+    
+    for (SVTextAttachment *anAttachment in [self attachments])
+    {
+        [result addAttribute:@"SVAttachment"
+                       value:anAttachment
+                       range:[anAttachment range]];
+    }
+    
+    return result;
+}
+
+- (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
+{
+    NSMutableSet *attachments = [[NSMutableSet alloc] init];
+    
+    NSUInteger index = 0;
+    while (index < [attributedHTML length])
+    {
+        NSRange range;
+        SVTextAttachment *anAttachment = [attributedHTML attribute:@"SVAttachment"
+                                                           atIndex:index
+                                                    effectiveRange:&range];
+        
+        if (anAttachment) [attachments addObject:anAttachment];
+        
+        index = range.location + range.length;
+    }
+    
+    [self setString:[attributedHTML string] attachments:attachments];
+    [attachments release];
+}
+
 @dynamic string;
 
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;

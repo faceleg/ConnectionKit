@@ -18,6 +18,11 @@
 + (SVRichText *)insertPageletBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
+#pragma mark Text
+
+- (NSAttributedString *)attributedHTMLString;
+- (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
+
 @property(nonatomic, copy) NSString *string;
 - (void)setString:(NSString *)string attachments:(NSSet *)attachments;  // deletes old attachments
 
