@@ -774,7 +774,14 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 // Same as WebUIDelegate method, except it only gets called if .draggingDestinationDelegate rejected the drag
 - (NSUInteger)webEditor:(WEKWebEditorView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)draggingInfo;
 {
-    return (WebDragDestinationActionEdit | WebDragDestinationActionDHTML);
+    NSUInteger result = WebDragDestinationActionDHTML;
+    
+    if (![[[draggingInfo draggingPasteboard] types] containsObject:@"com.karelia.html+graphics"])
+    {
+        result = result | WebDragDestinationActionEdit;
+    }
+    
+    return result;
 }
 
 #pragma mark SVWebEditorViewDelegate
