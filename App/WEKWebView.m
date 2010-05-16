@@ -89,7 +89,7 @@
         
         if (superOp)
         {
-            NSLog(@"Delegate expectd to handle drop, but WebView still did anyway");
+            NSLog(@"Delegate expected to handle drop, but WebView still did anyway");
             _delegateWillHandleDraggingInfo = NO;
             result = superOp;
         }
