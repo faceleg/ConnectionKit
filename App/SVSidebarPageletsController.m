@@ -207,6 +207,48 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     }
 }
 
+#pragma mark Moving Pagelets
+
+- (void)moveUp:(id)sender;
+{
+    // Move selected objects up one if they can
+    NSIndexSet *selection = [self selectionIndexes];
+    
+    NSUInteger currentIndex = [selection firstIndex];
+    while (currentIndex != NSNotFound)
+    {
+        if (currentIndex > 0)
+        {
+            id aPagelet = [[self arrangedObjects] objectAtIndex:currentIndex];
+            
+            [self moveObject:aPagelet
+                beforeObject:[[self arrangedObjects] objectAtIndex:(currentIndex - 1)]];
+        }
+        
+        currentIndex = [selection indexGreaterThanIndex:currentIndex];
+    }
+}
+
+- (void)moveDown:(id)sender;
+{
+    // Move selected objects down one if they can
+    NSIndexSet *selection = [self selectionIndexes];
+    
+    NSUInteger currentIndex = [selection lastIndex];
+    while (currentIndex != NSNotFound)
+    {
+        if (currentIndex < ([[self arrangedObjects] count] - 1))
+        {
+            id aPagelet = [[self arrangedObjects] objectAtIndex:currentIndex];
+            
+            [self moveObject:aPagelet
+                 afterObject:[[self arrangedObjects] objectAtIndex:(currentIndex + 1)]];
+        }
+        
+        currentIndex = [selection indexLessThanIndex:currentIndex];
+    }
+}
+
 - (void)moveObject:(id)object toIndex:(NSUInteger)index;
 {
     SVGraphic *pagelet = object;

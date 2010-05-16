@@ -12,6 +12,7 @@
 
 #import "SVLinkInspector.h"
 
+#import "NSResponder+Karelia.h"
 #import "DOMNode+Karelia.h"
 
 
@@ -152,6 +153,29 @@
 - (void)removeAllUndoActions
 {
     [[self webView] performSelector:@selector(_clearUndoRedoOperations)];
+}
+
+#pragma mark Key presses
+
+- (void)keyDown:(NSEvent *)theEvent;
+{
+    [self interpretKeyEvents:[NSArray arrayWithObject:theEvent]];
+}
+
+- (void)moveUp:(id)sender;
+{
+    if (![[self delegate] webEditor:self doCommandBySelector:_cmd])
+    {
+        [self makeNextResponderDoCommandBySelector:_cmd];
+    }
+}
+
+- (void)moveDown:(id)sender;
+{
+    if (![[self delegate] webEditor:self doCommandBySelector:_cmd])
+    {
+        [self makeNextResponderDoCommandBySelector:_cmd];
+    }
 }
 
 #pragma mark Validation

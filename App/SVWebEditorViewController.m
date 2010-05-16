@@ -953,13 +953,22 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
     }
 }
 
-- (BOOL)webEditor:(WEKWebEditorView *)webEditor doCommandBySelector:(SEL)action;
+- (BOOL)webEditor:(WEKWebEditorView *)sender doCommandBySelector:(SEL)action;
 {
     // Take over pasting if the Web Editor can't support it
-    if (action == @selector(paste:) && ![webEditor validateAction:action])
+    if (action == @selector(paste:) && ![sender validateAction:action])
     {
         [self paste:nil];
         return YES;
+    }
+    else if (action == @selector(moveUp:) || action == @selector(moveDown:))
+    {
+        SVDOMController *sidebarController = [[self HTMLContext] sidebarDOMController];
+        if ([[sidebarController childWebEditorItems] firstObjectCommonWithArray:[sender selectedItems]])
+        {
+            [[_selectableObjectsController sidebarPageletsController] performSelector:action
+                                                                           withObject:nil];
+        }
     }
     
     return NO;
