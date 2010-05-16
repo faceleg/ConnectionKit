@@ -32,6 +32,12 @@
     return result;
 }
 
+- (void)setRange:(NSRange)range;
+{
+    [self setLocation:[NSNumber numberWithUnsignedInteger:range.location]];
+    [self setLength:[NSNumber numberWithUnsignedInteger:range.length]];
+}
+
 @dynamic length;
 @dynamic location;
 

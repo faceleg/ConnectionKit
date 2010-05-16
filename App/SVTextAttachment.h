@@ -22,7 +22,8 @@
 @property(nonatomic, retain) SVGraphic *graphic;
 
 
-- (NSRange)range;
+- (NSRange)range;               // NOT KVO-compliant
+- (void)setRange:(NSRange)range;
 @property(nonatomic, retain) NSNumber *length;
 @property(nonatomic, retain) NSNumber *location;
 
