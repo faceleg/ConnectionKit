@@ -8,7 +8,6 @@
 
 #import "SVSidebarDOMController.h"
 #import "SVSidebar.h"
-#import "SVSidebarPageletsController.h"
 
 #import "SVAttributedHTML.h"
 #import "KTElementPlugInWrapper+DataSourceRegistration.h"
@@ -309,7 +308,7 @@
     BOOL result = NO;
     
     WEKWebEditorView *webEditor = [self webEditor];
-    SVSidebarPageletsController *pageletsController = [[self webEditorViewController] valueForKeyPath:@"_selectableObjectsController.sidebarPageletsController"];
+    SVSidebarPageletsController *pageletsController = [self pageletsController];
     
     
     //  When dragging within the sidebar, want to move the selected pagelets
