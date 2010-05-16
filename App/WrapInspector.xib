@@ -283,7 +283,7 @@
 					<object class="NSMatrix" id="219283320">
 						<reference key="NSNextResponder" ref="1005"/>
 						<int key="NSvFlags">268</int>
-						<string key="NSFrame">{{10, 182}, {169, 70}}</string>
+						<string key="NSFrame">{{7, 182}, {169, 70}}</string>
 						<reference key="NSSuperview" ref="1005"/>
 						<bool key="NSEnabled">YES</bool>
 						<int key="NSNumRows">4</int>
@@ -1634,7 +1634,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="NSMutableArray" key="dict.values">
 					<bool key="EncodedWithXMLCoder">YES</bool>
-					<string>{{816, 552}, {230, 284}}</string>
+					<string>{{645, 427}, {230, 284}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>{628, 654}</string>
 					<string>{{217, 442}, {480, 272}}</string>
