@@ -10,7 +10,7 @@
 #import "KSStringStream.h"
 
 
-@class SVHTMLContext;
+@class SVHTMLContext, SVGraphic;
 
 
 /*  There used to be a method for asking attributed HTML to write itself. Instead use -[SVHTMLContext writeAttriubutedHTMLString:]
@@ -34,6 +34,6 @@
 
 #pragma mark Convenience
 + (NSAttributedString *)attributedHTMLStringWithAttachment:(id)attachment;
-
++ (NSAttributedString *)calloutAttributedHTMLStringWithGraphic:(SVGraphic *)graphic;
 
 @end

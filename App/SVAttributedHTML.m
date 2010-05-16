@@ -184,4 +184,21 @@
     return [result autorelease];
 }
 
++ (NSAttributedString *)calloutAttributedHTMLStringWithGraphic:(SVGraphic *)graphic;
+{
+    OBPRECONDITION(graphic);
+    
+    // Create attachment for the graphic
+    SVTextAttachment *textAttachment = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"TextAttachment"
+                                        inManagedObjectContext:[graphic managedObjectContext]];
+    [textAttachment setGraphic:graphic];
+    //[textAttachment setBody:text];
+    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementCallout]];
+    
+    
+    // Finish up
+    return [self attributedHTMLStringWithAttachment:textAttachment];
+}
+
 @end
