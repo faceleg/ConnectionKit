@@ -1,5 +1,5 @@
 //
-//  SVDesignChooserArrayController.h
+//  SVDesignsController.h
 //  Sandvox
 //
 //  Created by Dan Wood on 5/7/10.
@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 
 
-@interface SVDesignChooserArrayController : NSArrayController {
+@interface SVDesignsController : NSArrayController {
 
 }
 
