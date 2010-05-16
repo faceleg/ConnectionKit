@@ -282,6 +282,12 @@
 
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
+    DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
+    [range setStartBefore:node];
+    [[self webEditor] moveDragCaretToDOMRange:range];
+    return;
+    
+    
     // Do we actually need do anything?
     if (node)
     {
