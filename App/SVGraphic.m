@@ -53,9 +53,54 @@
     return SVGraphicPlacementSidebar;
 }
 
+- (void)setPlacement:(SVGraphicPlacement)placement;
+{
+    [[self textAttachment] setPlacement:[NSNumber numberWithInteger:placement]];
+}
+
 + (NSSet *)keyPathsForValuesAffectingPlacement;
 {
     return [NSSet setWithObject:@"textAttachment.placement"];
+}
+
+@dynamic textAttachment;
+
+- (BOOL)canBePlacedInline; { return NO; }
+
+- (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
+{
+    if (isInline)
+    {
+        [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
+    }
+    else
+    {
+        [[self textAttachment] setCausesWrap:[NSNumber numberWithBool:YES]];
+    }
+}
+
+- (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
+{
+    SVTextAttachment *attachment = [self textAttachment];
+    if (attachment)
+    {
+        [attachment setGraphic:nil];    // so deleting it doesn't cascade and delete us too
+        [[attachment body] deleteCharactersInRange:[attachment range]];
+    }
+}
+
+- (BOOL)validateForInlinePlacement:(NSError **)error;
+{
+    BOOL result;
+    
+    if (!(result = ![self showsTitle]))
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSManagedObjectValidationError
+                                localizedDescription:@"Graphics cannot show title while inline"];
+    }
+    
+    return result;
 }
 
 #pragma mark Pagelet
@@ -114,48 +159,6 @@
 
 @dynamic showBackground;
 @dynamic showBorder;
-
-#pragma mark Placement
-
-@dynamic textAttachment;
-
-- (BOOL)canBePlacedInline; { return NO; }
-
-- (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
-{
-    if (isInline)
-    {
-        [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
-    }
-    else
-    {
-        [[self textAttachment] setCausesWrap:[NSNumber numberWithBool:YES]];
-    }
-}
-
-- (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
-{
-    SVTextAttachment *attachment = [self textAttachment];
-    if (attachment)
-    {
-        [attachment setGraphic:nil];    // so deleting it doesn't cascade and delete us too
-        [[attachment body] deleteCharactersInRange:[attachment range]];
-    }
-}
-
-- (BOOL)validateForInlinePlacement:(NSError **)error;
-{
-    BOOL result;
-    
-    if (!(result = ![self showsTitle]))
-    {
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSManagedObjectValidationError
-                                localizedDescription:@"Graphics cannot show title while inline"];
-    }
-    
-    return result;
-}
 
 #pragma mark Sidebar
 
