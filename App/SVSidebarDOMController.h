@@ -10,16 +10,24 @@
 #import "SVDOMController.h"
 
 
+@class SVSidebarPageletsController;
+
+
 @interface SVSidebarDOMController : SVDOMController
 {
   @private
-    DOMElement  *_sidebarDiv;
+    DOMElement                  *_sidebarDiv;
+    SVSidebarPageletsController *_pageletsController;
     
     // Drag & Drop
     DOMElement          *_dragCaret;
 }
 
+- (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
+
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
+
+@property(nonatomic, retain, readonly) SVSidebarPageletsController *pageletsController;
 
 
 #pragma mark Drop

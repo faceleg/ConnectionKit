@@ -40,11 +40,26 @@
 
 @implementation SVSidebarDOMController
 
+#pragma mark Init/Dealloc
+
+- (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
+{
+    [super init];
+    
+    _pageletsController = [pageletsController retain];
+    
+    return self;
+}
+
 - (void)dealloc;
 {
     [_sidebarDiv release];
+    [_pageletsController release];
+    
     [super dealloc];
 }
+
+#pragma mark DOM
 
 @synthesize sidebarDivElement = _sidebarDiv;
 
@@ -55,6 +70,10 @@
     // Also seek out sidebar div
     [self setSidebarDivElement:[document getElementById:@"sidebar"]];
 }
+
+#pragma mark Pagelets Controller
+
+@synthesize pageletsController = _pageletsController;
 
 #pragma mark Drop
 
