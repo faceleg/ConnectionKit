@@ -149,10 +149,19 @@
         if (!result) result = mask & NSDragOperationCopy;
         if (!result) result = mask & NSDragOperationGeneric;
         
-        if (result) [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
+        if (result) 
+        {
+            [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
+            [[self webEditor] moveDragHighlightToDOMNode:[self HTMLElement]];
+        }
     }
     
-    if (!result) [self removeDragCaret];
+    
+    if (!result)
+    {
+        [self removeDragCaret];
+        [[self webEditor] moveDragHighlightToDOMNode:nil];
+    }
         
     return result;
 }
@@ -160,6 +169,7 @@
 - (void)draggingExited:(id <NSDraggingInfo>)sender;
 {
     [self removeDragCaret];
+    [[self webEditor] moveDragHighlightToDOMNode:nil];
 }
 
 - (BOOL)performDragOperation:(id <NSDraggingInfo>)dragInfo;
