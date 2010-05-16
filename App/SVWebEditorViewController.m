@@ -9,12 +9,14 @@
 #import "SVWebEditorViewController.h"
 
 #import "SVApplicationController.h"
+#import "SVArticle.h"
 #import "SVAttributedHTML.h"
 #import "SVPlugInGraphic.h"
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
 #import "SVGraphic.h"
+#import "SVGraphicDOMController.h"
 #import "SVGraphicFactoryManager.h"
 #import "SVRichTextDOMController.h"
 #import "SVHTMLContext.h"
@@ -1105,6 +1107,26 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 @implementation WEKWebEditorView (SVWebEditorViewController)
 
+- (IBAction)changePlacement:(NSMatrix *)sender;
+{
+    SVGraphicPlacement placement = [[sender selectedCell] tag];
+    
+    switch (placement)
+    {
+        case SVGraphicPlacementInline:
+        case SVGraphicPlacementBlock:
+            [self placeBlockLevel:sender];
+            break;
+            
+        case SVGraphicPlacementCallout:
+            [self placeAsCallout:sender];
+            break;
+            
+        case SVGraphicPlacementSidebar:
+            break;
+    }
+}
+
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
 {
     [(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
@@ -1113,6 +1135,30 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
 {
     if ([sender state] == NSOnState) [self placeBlockLevel:sender];
+}
+
+- (IBAction)placeAsCallout:(id)sender;
+{
+    SVRichText *article = [[(SVWebEditorViewController *)[self dataSource] page] body];
+    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+    
+    for (SVGraphicDOMController *aPageletController in [self selectedItems])
+    {
+        SVGraphic *aPagelet = [aPageletController representedObject];
+        if ([[aPagelet placement] integerValue] == SVGraphicPlacementCallout) continue;
+        
+        
+        // Remove from all pages
+        [[aPagelet mutableSetValueForKey:@"sidebars"] removeAllObjects];
+        
+        // Insert at start of page
+        NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aPagelet];
+        [html insertAttributedString:callout atIndex:0];
+    }
+    
+    // Store html
+    [article setAttributedHTMLString:html];
+    [html release];
 }
 
 @end

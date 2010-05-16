@@ -131,7 +131,9 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
 @interface WEKWebEditorView (SVWebEditorViewController)
+- (IBAction)changePlacement:(NSMatrix *)sender;
 - (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
-- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
+- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel: if sender's state is on
+- (IBAction)placeAsCallout:(id)sender;
 @end
 
