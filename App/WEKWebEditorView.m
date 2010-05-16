@@ -1025,7 +1025,6 @@ typedef enum {
         NSPoint point = [self convertPoint:aPoint fromView:[self superview]];
         
         // Normally, we want to target self if there's an item at that point but not if the item is the parent of a selected item.
-        // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint so as to take hyperlinks into account
         SVGraphicHandle handle;
         WEKWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
         
@@ -1035,7 +1034,11 @@ typedef enum {
         }
         else
         {
-            if (!item || handle == kSVGraphicNoHandle) item = [self selectableItemAtPoint:point];
+            // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint: so as to take hyperlinks into account
+            if (!item || handle == kSVGraphicNoHandle) 
+            {
+                item = [self selectableItemAtPoint:point];
+            }
             
             if (item)
             {
