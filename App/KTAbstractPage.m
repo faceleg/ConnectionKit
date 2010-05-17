@@ -78,12 +78,6 @@
 	return result;
 }
 
-#pragma mark Identifier
-
-@dynamic uniqueID;
-
-- (NSString *)identifier { return [self uniqueID]; }
-
 #pragma mark Child Pages
 
 /*	All this stuff is only relevant to KTPage, but it makes it so much more convenient to declare them at the KTAbstractPage level.

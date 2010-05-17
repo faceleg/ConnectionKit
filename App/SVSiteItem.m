@@ -17,6 +17,12 @@
 
 @implementation SVSiteItem 
 
+#pragma mark Identifier
+
+@dynamic uniqueID;
+
+- (NSString *)identifier { return [self uniqueID]; }
+
 #pragma mark Title
 
 @dynamic title;

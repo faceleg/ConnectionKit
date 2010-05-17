@@ -43,10 +43,6 @@ KTCollectionPathStyle;
 + (id)pageWithParent:(KTPage *)aParent entityName:(NSString *)entityName;
 
 
-#pragma mark Identifier
-@property(nonatomic, copy, readonly) NSString *uniqueID;
-
-
 #pragma mark Child Pages
 
 @property(nonatomic, copy, readonly) NSSet *archivePages;

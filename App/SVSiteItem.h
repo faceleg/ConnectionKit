@@ -22,6 +22,10 @@
 
 @interface SVSiteItem : SVExtensibleManagedObject <SVPage>
 
+#pragma mark Identifier
+@property(nonatomic, copy, readonly) NSString *uniqueID;
+
+
 #pragma mark Title
 @property(nonatomic, copy) NSString *title; // implemented as @dynamic
 
