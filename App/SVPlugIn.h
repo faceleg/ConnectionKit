@@ -77,6 +77,9 @@
 
 - (KSHTMLWriter *)HTMLWriter;
 
+// Call so Web Editor knows when to update
+- (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
+
 // Resources
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 - (void)addCSSWithURL:(NSURL *)cssURL;

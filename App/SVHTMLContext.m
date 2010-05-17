@@ -403,7 +403,12 @@
 
 - (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
+// Two methods do the same thing. Need to ditch -addDependencyOnObject:keyPath: at some point
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
+- (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
+{
+    [self addDependencyOnObject:object keyPath:keyPath];
+}
 
 #pragma mark Raw Writing
 
