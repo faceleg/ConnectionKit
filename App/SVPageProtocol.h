@@ -19,6 +19,12 @@
 
 - (NSString *)language;
 
+- (NSArray *)childPages;    // NOT KVO-compliant
+- (id <SVPage>)rootPage;
+- (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
+
+- (BOOL)includeInSiteMaps;
+
 @end
 
 
