@@ -68,14 +68,28 @@
 {
     if (node != _dragHighlightNode)
     {
-        [_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
+        NSView *view = [self documentView];
+        
+        if (_dragHighlightNode)
+        {
+            WEKWebEditorItem *item = [[self rootItem] hitTestDOMNode:_dragHighlightNode];
+            [view setNeedsDisplayInRect:[item boundingBox]];
+        //[_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
+        }
+        
         /*
          NSString *class = [(DOMHTMLElement *)_dragHighlightNode className];
         class = [class stringByReplacing:@" svx-dragging-destination-active" with:@""];
         [(DOMHTMLElement *)_dragHighlightNode setClassName:class];*/
         
         [_dragHighlightNode release];   _dragHighlightNode = [node retain];
-        [node setDocumentViewNeedsDisplayInBoundingBoxRect];
+        
+        if (node)
+        {
+            WEKWebEditorItem *item = [[self rootItem] hitTestDOMNode:node];
+            [view setNeedsDisplayInRect:[item boundingBox]];
+        }
+        
         /*
         class = [(DOMHTMLElement *)node className];
         class = [class stringByAppendingString:@" svx-dragging-destination-active"];

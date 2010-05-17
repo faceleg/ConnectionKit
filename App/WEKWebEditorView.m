@@ -959,7 +959,8 @@ typedef enum {
     // Draw drop highlight if there is one. 1px inset from bounding box, "Aqua" colour
     if (_dragHighlightNode)
     {
-        NSRect dropRect = [_dragHighlightNode boundingBox];
+        WEKWebEditorItem *item = [[self rootItem] hitTestDOMNode:_dragHighlightNode];
+        NSRect dropRect = [item boundingBox];    // pretending it's a node
         
         [[NSColor aquaColor] setFill];
         NSFrameRectWithWidth(dropRect, 1.0f);
