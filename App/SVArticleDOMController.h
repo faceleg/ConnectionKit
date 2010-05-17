@@ -32,6 +32,7 @@
 #pragma mark Drag Caret
 - (void)removeDragCaret;
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;
+- (void)replaceDragCaretWithHTMLString:(NSString *)html;
 
 
 @end

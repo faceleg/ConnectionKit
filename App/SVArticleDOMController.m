@@ -207,9 +207,8 @@
         // Insert HTML into DOM, replacing caret
         [self moveDragCaretToBeforeDOMNode:[self childForDraggingInfo:dragInfo]
                               draggingInfo:dragInfo];
-        OBASSERT(_dragCaret);
         
-        [(DOMHTMLElement *)_dragCaret setOuterHTML:html];
+        [self replaceDragCaretWithHTMLString:html];
         [html release];
         
         
@@ -284,8 +283,8 @@
 {
     DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
     [range setStartBefore:node];
-    [[self webEditor] moveDragCaretToDOMRange:range];
-    return;
+    //[[self webEditor] moveDragCaretToDOMRange:range];
+    //return;
     
     
     // Do we actually need do anything?
@@ -319,6 +318,15 @@
     
     NSNumber *height = [NSNumber numberWithFloat:[[dragInfo draggedImage] size].height];
     [style setHeight:[NSString stringWithFormat:@"%@px", height]];
+}
+
+- (void)replaceDragCaretWithHTMLString:(NSString *)html;
+{
+    OBASSERT(_dragCaret);
+    
+    [(DOMHTMLElement *)_dragCaret setOuterHTML:html];
+    
+    [_dragCaret release]; _dragCaret = nil;
 }
 
 #pragma mark Hit-Test
