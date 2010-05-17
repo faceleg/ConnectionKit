@@ -19,7 +19,8 @@
 
 - (NSString *)language;
 
-- (NSArray *)childPages;    // NOT KVO-compliant
+// Most SVPage methods aren't KVO-compliant. Instead, observe all of -automaticRearrangementKeyPaths.
+- (NSArray *)childPages; 
 - (id <SVPage>)rootPage;
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
 
