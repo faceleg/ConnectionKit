@@ -80,6 +80,9 @@
 // Call so Web Editor knows when to update
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
 
+// URLs
+- (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
+
 // Resources
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
 - (void)addCSSWithURL:(NSURL *)cssURL;

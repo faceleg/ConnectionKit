@@ -257,6 +257,11 @@
     return result;
 }
 
+- (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
+{
+    return [self relativeURLStringOfSiteItem:(SVSiteItem *)page];
+}
+
 - (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
 {
     NSString *result;
