@@ -203,7 +203,10 @@
         SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:html];
         [context copyPropertiesFromContext:[self HTMLContext]];
         
-        [SVContentObject writeContentObjects:pagelets inContext:context];
+        for (SVGraphic *aGraphic in pagelets)
+        {
+            [aGraphic writeHTML:context placement:SVGraphicPlacementCallout];
+        }
         
         
         // Insert HTML into DOM, replacing caret

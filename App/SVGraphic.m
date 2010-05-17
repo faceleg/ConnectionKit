@@ -253,7 +253,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
     if (placement == SVGraphicPlacementCallout) 
     {
-        [context beginCalloutWithAlignmentClassName:[self calloutWrapClassName]];
+        [context beginCalloutWithAlignmentClassName:@""];
     }
     
     
