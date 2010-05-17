@@ -18,8 +18,10 @@
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
-    DOMElement *element = [document getElementById:[self HTMLElementIDName]];
-    [self setHTMLElement:(DOMHTMLElement *)element];
+    DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self HTMLElementIDName]];
+    [element setIdName:nil];
+    
+    [self setHTMLElement:element];
 }
 
 @end
