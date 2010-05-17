@@ -352,6 +352,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [super populateSerializedProperties:propertyList];
     
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
+    [propertyList setValue:[self placement] forKey:@"preferredPlacement"];
     
     [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
                     forKey:@"titleBox"];
