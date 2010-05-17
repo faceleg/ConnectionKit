@@ -1,4 +1,11 @@
+/* Editing text should have gray outline, not standard focus ring */
 .kLine:focus { outline: gray solid 1px; }
+
+/*  Drop zones should have blue border */
+.svx-dragging-destination-active {
+    border-style:solid;
+    border-color:rgba(0,127,255,1);
+}
 
 /*  Super-cunning rule to make only pagelets *inside* an editable area, unselectable */
 img, [contenteditable=true] .pagelet {

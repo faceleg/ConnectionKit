@@ -69,8 +69,17 @@
     if (node != _dragHighlightNode)
     {
         [_dragHighlightNode setDocumentViewNeedsDisplayInBoundingBoxRect];
+        /*
+         NSString *class = [(DOMHTMLElement *)_dragHighlightNode className];
+        class = [class stringByReplacing:@" svx-dragging-destination-active" with:@""];
+        [(DOMHTMLElement *)_dragHighlightNode setClassName:class];*/
+        
         [_dragHighlightNode release];   _dragHighlightNode = [node retain];
         [node setDocumentViewNeedsDisplayInBoundingBoxRect];
+        /*
+        class = [(DOMHTMLElement *)node className];
+        class = [class stringByAppendingString:@" svx-dragging-destination-active"];
+        [(DOMHTMLElement *)node setClassName:class];*/
     }
 }
 
