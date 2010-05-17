@@ -12,6 +12,7 @@
 
 
 #import "SVExtensibleManagedObject.h"
+#import "SVPageProtocol.h"
 #import <iMedia/IMBImageItem.h>
 
 
@@ -19,7 +20,7 @@
 @protocol SVWebContentViewController, SVMedia, SVPublishingContext;
 
 
-@interface SVSiteItem : SVExtensibleManagedObject
+@interface SVSiteItem : SVExtensibleManagedObject <SVPage>
 
 #pragma mark Title
 @property(nonatomic, copy) NSString *title; // implemented as @dynamic
@@ -30,12 +31,14 @@
 @property(nonatomic, copy) NSDate *modificationDate;
 
 
-#pragma mark Site Menu
+#pragma mark Navigation
 
 @property(nonatomic) BOOL includeInSiteMenu;
 
 @property(nonatomic, copy, readonly) NSString *menuTitle;   // derived from .customMenuTitle or .title
 @property(nonatomic, copy) NSString *customMenuTitle;
+
+@property(nonatomic, copy) NSNumber *includeInSiteMap;    // BOOL, mandatory
 
 
 #pragma mark Drafts and Indexes

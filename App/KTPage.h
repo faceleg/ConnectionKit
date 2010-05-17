@@ -35,7 +35,7 @@ typedef enum {
 @class KTArchivePage, KTAbstractIndex, KTMaster, SVPageTitle, SVRichText, SVGraphic, SVMediaRecord, KTCodeInjection, SVHTMLContext;
 
 
-@interface KTPage : KTAbstractPage <SVPage>
+@interface KTPage : KTAbstractPage
 
 #pragma mark Title
 @property(nonatomic, retain) SVPageTitle *titleBox;  // you can use inherited .title property for ease of use too

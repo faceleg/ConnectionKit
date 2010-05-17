@@ -36,7 +36,7 @@
 @dynamic creationDate;
 @dynamic modificationDate;
 
-#pragma mark Site Menu
+#pragma mark Navigation
 
 - (BOOL)includeInSiteMenu { return [self wrappedBoolForKey:@"includeInSiteMenu"]; }
 
@@ -60,6 +60,8 @@
 }
 
 @dynamic customMenuTitle;
+
+@dynamic includeInSiteMap;
 
 #pragma mark Drafts and Indexes
 
@@ -296,5 +298,28 @@
 {
     return NSNotApplicableMarker;
 }
+
+#pragma mark SVPage
+
+- (NSArray *)childPages; { return [self sortedChildren]; }
+
+- (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
+{
+    static NSSet *result;
+    if (!result)
+    {
+        result = [[NSSet alloc] initWithObjects:
+                  @"childItems",
+                  @"childIndex",
+                  @"creationDate",
+                  @"modificationDate",
+                  @"title",
+                  @"includeInSiteMap", nil];
+    }
+    
+    return result;
+}
+
+- (BOOL)includeInSiteMaps; { return [[self includeInSiteMap] boolValue]; }
 
 @end
