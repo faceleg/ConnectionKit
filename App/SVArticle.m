@@ -44,7 +44,7 @@
     // Construct text block for our contents
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
     [textBlock setHTMLSourceObject:[self page]];
-    [textBlock setHTMLSourceKeyPath:@"body"];
+    [textBlock setHTMLSourceKeyPath:@"article"];
     [textBlock setRichText:YES];
     [textBlock setFieldEditor:NO];
     [textBlock setImportsGraphics:YES];
