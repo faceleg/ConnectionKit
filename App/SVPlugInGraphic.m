@@ -241,6 +241,16 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return [[self plugIn] thumbnail];
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    // Put plug-in properties in their own dict
+    [propertyList setObject:[self extensibleProperties] forKey:@"plugInProperties"];
+}
+
 #pragma mark Deprecated
 
 // Loads of old plug-ins rely on this property
