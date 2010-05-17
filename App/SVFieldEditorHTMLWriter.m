@@ -56,8 +56,9 @@
 
 - (void)dealloc
 {
-    [_pendingStartTagDOMElements release];
-    [_pendingEndDOMElements release];
+    // [super dealloc] will call -flush at some point, so these ivars must be set to nil
+    [_pendingStartTagDOMElements release]; _pendingStartTagDOMElements = nil;
+    [_pendingEndDOMElements release]; _pendingEndDOMElements = nil;
     
     [super dealloc];
 }

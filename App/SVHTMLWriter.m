@@ -13,7 +13,8 @@
 
 - (void)dealloc
 {
-    OBASSERT(!_buffer);
+    [self flush];
+    OBASSERT(!_buffer); // flushing should clear the buffer
     
     [super dealloc];
 }
