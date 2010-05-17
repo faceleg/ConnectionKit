@@ -73,6 +73,10 @@
 - (NSInteger)resizeByMovingHandle:(SVGraphicHandle)handle toPoint:(NSPoint)point;
 
 
+#pragma mark Layout
+- (NSRect)boundingBox;  // like -[DOMNode boundingBox] but performs union with subcontroller boxes
+
+
 #pragma mark Drawing
 // dirtyRect is expressed in the view's co-ordinate system. view is not necessarily the context being drawn into (but generally is)
 - (void)drawRect:(NSRect)dirtyRect inView:(NSView *)view;
@@ -84,5 +88,6 @@
 #pragma mark Debugging
 - (NSString *)descriptionWithIndent:(NSUInteger)level;
 - (NSString *)blurb;
+
 
 @end
