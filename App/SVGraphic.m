@@ -19,6 +19,9 @@
 #import "NSString+Karelia.h"
 
 
+const NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
+
+
 @implementation SVGraphic
 
 #pragma mark Initialization

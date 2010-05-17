@@ -42,6 +42,9 @@ typedef enum {  // Note that "left" or "right" refers to the side of the graphic
 #pragma mark -
 
 
+extern const NSString *kSVGraphicPboardType;
+
+
 //  Have decided to use the term "graphic" in the same way that Pages does through its scripting API (and probably in its class hierarchy). That is, a graphic is anything on the page that can be selected and isn't text. e.g. pagelets, images, plug-ins.
 
 //  I'm declaring a protocol for graphics first to keep things nice and pure. (Also, it means I can make some things @optional so that Core Data will still generate accessors when the superclass chooses not to implement the method)
