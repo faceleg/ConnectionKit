@@ -453,7 +453,7 @@
 			  (i==last)? @" last" : @"",
 			  isCurrentParent ? @" currentParent" : @""]];
 			
-			NSString *urlString = [context relativeURLStringOfPage:page];
+			NSString *urlString = [context relativeURLStringOfSiteItem:page];
 			
 			[context writeAnchorStartTagWithHref:urlString title:[page title] target:nil rel:nil];
 			// TODO: targetStringForPage:targetPage
