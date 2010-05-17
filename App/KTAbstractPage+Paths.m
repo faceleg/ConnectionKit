@@ -356,7 +356,7 @@
 #pragma mark Uploading
 
 /*	The path the page will be uploaded to when publishing/exporting.
- *	This path is RELATIVE to the base diretory of the site so that it
+ *	This path is RELATIVE to the base directory of the site so that it
  *	works for both publishing and exporting.
  *
  *	Some typical examples:
