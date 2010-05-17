@@ -327,12 +327,16 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Newly inserted graphics tend not to have a corresponding text attachment yet. If so, create one
     if (!attachment)
     {
+        // Guess placement from controller hierarchy
+        SVGraphicPlacement placement = ([controller parentWebEditorItem] == self ?
+                                        SVGraphicPlacementBlock :
+                                        SVGraphicPlacementCallout);
+        
         attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                        inManagedObjectContext:[graphic managedObjectContext]];
         [attachment setGraphic:graphic];
-        [attachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementBlock]];
-        [attachment setCausesWrap:[NSNumber numberWithBool:YES]];
-        [attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
+        [attachment setPlacement:[NSNumber numberWithInteger:placement]];
+        //[attachment setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
         [attachment setBody:[self representedObject]];
     }
     
