@@ -19,7 +19,7 @@
 #import "NSString+Karelia.h"
 
 
-const NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
+NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 
 @implementation SVGraphic
@@ -355,6 +355,12 @@ const NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     
     [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
                     forKey:@"titleBox"];
+}
+
+- (void)writeToPasteboard:(NSPasteboard *)pboard;
+{
+    [pboard setPropertyList:[self serializedProperties]
+                    forType:kSVGraphicPboardType];
 }
 
 #pragma mark SVPageletPlugInContainer
