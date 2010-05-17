@@ -141,6 +141,13 @@
 @synthesize mainCSS = _mainCSS;
 @synthesize mainCSSURL = _mainCSSURL;
 
+- (void)addCSSWithURL:(NSURL *)cssURL;
+{
+    [self writeLinkToStylesheet:[self relativeURLStringOfURL:cssURL]
+                          title:nil
+                          media:nil];
+}
+
 #pragma mark Header Tags
 
 @synthesize currentHeaderLevel = _headerLevel;

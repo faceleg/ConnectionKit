@@ -76,7 +76,10 @@
 @protocol SVPlugInContext
 
 - (KSHTMLWriter *)HTMLWriter;
+
+// Resources
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
+- (void)addCSSWithURL:(NSURL *)cssURL;
 
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;  // yeah, you get the idea

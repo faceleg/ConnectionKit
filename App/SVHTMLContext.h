@@ -76,6 +76,7 @@ typedef enum {
 @property(nonatomic) BOOL includeStyling;
 
 @property(nonatomic, readonly) NSMutableString *mainCSS;
+- (void)addCSSWithURL:(NSURL *)cssURL;
 @property(nonatomic, copy) NSURL *mainCSSURL;
 
 
