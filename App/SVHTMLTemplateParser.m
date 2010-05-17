@@ -524,7 +524,7 @@
     
     if ([anObject isKindOfClass:[KTPage class]])
     {
-        result = [[SVHTMLContext currentContext] relativeURLStringOfPage:anObject];
+        result = [[SVHTMLContext currentContext] relativeURLStringOfSiteItem:anObject];
     }
     else if ([anObject isKindOfClass:[NSURL class]])
     {

@@ -232,7 +232,7 @@
     return result;
 }
 
-- (NSString *)relativeURLStringOfPage:(KTPage *)page;   // will generate a relative URL string when possible
+- (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
 {
     OBPRECONDITION(page);
     

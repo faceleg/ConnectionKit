@@ -21,7 +21,7 @@ typedef enum {
 #pragma mark -
 
 
-@class KTPage, KTPage, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
+@class KTPage, SVSiteItem, SVGraphic, SVHTMLTextBlock, SVLink, SVMediaRecord;
 @protocol SVMedia;
 
 
@@ -105,7 +105,7 @@ typedef enum {
 #pragma mark URLs/Paths
 // These methods try to generate as simple a URL string when possible. e.g. relative path, or page ID
 - (NSString *)relativeURLStringOfURL:(NSURL *)URL;
-- (NSString *)relativeURLStringOfPage:(KTPage *)page;   
+- (NSString *)relativeURLStringOfSiteItem:(SVSiteItem *)page;
 - (NSString *)relativeURLStringOfResourceFile:(NSURL *)resourceURL;
 
 
