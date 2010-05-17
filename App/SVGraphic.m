@@ -238,15 +238,23 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
 }
 
-- (void)writeHTML:(SVHTMLContext *)context
+- (void)writeHTML:(SVHTMLContext *)context;
+{
+    [self writeHTML:context
+          placement:[[self placement] integerValue]];
+}
+
+- (void)writeHTML:(SVHTMLContext *)context placement:(SVGraphicPlacement)placement;
 {
     // If the placement changes, want whole WebView to update
     [context addDependencyOnObject:self keyPath:@"textAttachment.placement"];
     
     
     // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
-    NSString *calloutWrap = [self calloutWrapClassName];
-    if (calloutWrap) [context beginCalloutWithAlignmentClassName:calloutWrap];
+    if (placement == SVGraphicPlacementCallout) 
+    {
+        [context beginCalloutWithAlignmentClassName:[self calloutWrapClassName]];
+    }
     
     
     // Alert context. Must happen *after* enclosing callout is written
@@ -273,7 +281,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     
     // Finish up
     [context didEndWritingGraphic];
-    if (calloutWrap) [context endCallout];
+    if (placement == SVGraphicPlacementCallout) [context endCallout];
 }
 
 - (void)writeBody:(SVHTMLContext *)context;

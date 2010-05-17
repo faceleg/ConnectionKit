@@ -120,6 +120,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark HTML
 
+- (void)writeHTML:(SVHTMLContext *)context placement:(SVGraphicPlacement)placement; // use instead of -writeHTML:
 - (void)writeBody:(SVHTMLContext *)context;  // Subclasses MUST override
 
 @property(nonatomic, retain, readonly) NSString *elementID;
