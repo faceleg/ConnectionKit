@@ -251,9 +251,4 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [propertyList setObject:[self extensibleProperties] forKey:@"plugInProperties"];
 }
 
-#pragma mark Deprecated
-
-// Loads of old plug-ins rely on this property
-- (id)delegate { return [self plugIn]; }
-
 @end
