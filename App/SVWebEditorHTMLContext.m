@@ -128,18 +128,18 @@
     return [result autorelease];
 }
 
-- (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
+- (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
     SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
     [self willBeginWritingObjectWithDOMController:controller];
     [controller release];
 
-    [super writeCalloutStartTagsWithAlignmentClassName:alignment];
+    [super beginCalloutWithAlignmentClassName:alignment];
 }
 
-- (void)writeCalloutEnd;
+- (void)endCallout;
 {
-    [super writeCalloutEnd];
+    [super endCallout];
     
     [self finishWithCurrentItem];
 }

@@ -243,7 +243,7 @@
     
     // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
     NSString *calloutWrap = [self calloutWrapClassName];
-    if (calloutWrap) [context writeCalloutStartTagsWithAlignmentClassName:calloutWrap];
+    if (calloutWrap) [context beginCalloutWithAlignmentClassName:calloutWrap];
     
     
     // Alert context. Must happen *after* enclosing callout is written
@@ -270,7 +270,7 @@
     
     // Finish up
     [context didEndWritingGraphic];
-    if (calloutWrap) [context writeCalloutEnd];
+    if (calloutWrap) [context endCallout];
 }
 
 - (void)writeBody:(SVHTMLContext *)context;

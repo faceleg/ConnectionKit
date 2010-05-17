@@ -85,8 +85,8 @@ typedef enum {
 
 
 #pragma mark Callouts
-- (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
-- (void)writeCalloutEnd;    // written lazily so consecutive matching callouts are blended into one
+- (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
+- (void)endCallout;    // written lazily so consecutive matching callouts are blended into one
 
 
 #pragma mark Iterations

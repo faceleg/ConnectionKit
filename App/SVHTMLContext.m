@@ -153,7 +153,7 @@
 
 #pragma mark Callouts
 
-- (void)writeCalloutStartTagsWithAlignmentClassName:(NSString *)alignment;
+- (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
     if ([alignment isEqualToString:_calloutAlignment])
     {
@@ -180,7 +180,7 @@
     }
 }
 
-- (void)writeCalloutEnd;
+- (void)endCallout;
 {
     // Buffer this call so consecutive matching callouts can be blended into one
     [self beginBuffering];
