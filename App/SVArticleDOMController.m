@@ -181,8 +181,10 @@
     NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
     NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
     
+    NSArray *preferredPlacements = nil;
     NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pasteboard
-                           insertIntoManagedObjectContext:moc];
+                           insertIntoManagedObjectContext:moc
+                                      preferredPlacements:&preferredPlacements];
     
     
     // Fallback to generic pasteboard support

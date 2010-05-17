@@ -137,7 +137,9 @@ extern NSString *kSVGraphicPboardType;
 - (void)writeToPasteboard:(NSPasteboard *)pboard;   // like other Cocoa methods of same sig.
 
 + (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pasteboard
-     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+     insertIntoManagedObjectContext:(NSManagedObjectContext *)context
+                preferredPlacements:(NSArray **)preferredPlacements;
+
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
