@@ -9,8 +9,9 @@
 /* Begin PBXBuildFile section */
 		3C42DD770D64C20B004F35FD /* SiteMapDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */; };
 		3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */; };
-		3C42DD810D64C228004F35FD /* SiteMapPage.nib in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7F0D64C228004F35FD /* SiteMapPage.nib */; };
 		3C42DD920D64C5A2004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD910D64C5A2004F35FD /* License.rtf */; };
+		3C63A32611A1F66300FD801A /* SiteMapPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C63A32511A1F66300FD801A /* SiteMapPlugIn.m */; };
+		3C63A32A11A1F67E00FD801A /* SiteMapPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C63A32811A1F67E00FD801A /* SiteMapPage.xib */; };
 		8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 089C167DFE841241C02AAC07 /* InfoPlist.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE722FC00D85CEDC00E9C592 /* sitemap.icns in Resources */ = {isa = PBXBuildFile; fileRef = CE722FBF0D85CEDC00E9C592 /* sitemap.icns */; };
@@ -25,24 +26,19 @@
 		3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteMapDelegate.m; sourceTree = "<group>"; };
 		3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SiteMapTemplate.html; sourceTree = "<group>"; };
 		3C42DD7E0D64C228004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD800D64C228004F35FD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD830D64C24C004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD840D64C24C004F35FD /* da */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = da; path = da.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD850D64C258004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD860D64C258004F35FD /* de */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = de; path = de.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD870D64C263004F35FD /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD880D64C263004F35FD /* fr */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = fr; path = fr.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD890D64C26F004F35FD /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD8A0D64C26F004F35FD /* it */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = it; path = it.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD8B0D64C52E004F35FD /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD8C0D64C52E004F35FD /* ja */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = ja; path = ja.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD8D0D64C539004F35FD /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD8E0D64C539004F35FD /* zh_CN */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_CN; path = zh_CN.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD8F0D64C548004F35FD /* zh_TW */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_TW; path = zh_TW.lproj/InfoPlist.strings; sourceTree = "<group>"; };
-		3C42DD900D64C548004F35FD /* zh_TW */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = zh_TW; path = zh_TW.lproj/SiteMapPage.nib; sourceTree = "<group>"; };
 		3C42DD910D64C5A2004F35FD /* License.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = License.rtf; path = ../../License.rtf; sourceTree = SOURCE_ROOT; };
 		3C42DD930D64C5B9004F35FD /* Debug.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Debug.xcconfig; path = ../../Configurations/Debug.xcconfig; sourceTree = SOURCE_ROOT; };
 		3C42DD940D64C5B9004F35FD /* Release.xcconfig */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xcconfig; name = Release.xcconfig; path = ../../Configurations/Release.xcconfig; sourceTree = SOURCE_ROOT; };
+		3C63A32411A1F66300FD801A /* SiteMapPlugIn.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteMapPlugIn.h; sourceTree = "<group>"; };
+		3C63A32511A1F66300FD801A /* SiteMapPlugIn.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteMapPlugIn.m; sourceTree = "<group>"; };
+		3C63A32911A1F67E00FD801A /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/SiteMapPage.xib; sourceTree = "<group>"; };
 		8D5B49B6048680CD000E48DA /* SiteMap.svxElement */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SiteMap.svxElement; sourceTree = BUILT_PRODUCTS_DIR; };
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CE722FBF0D85CEDC00E9C592 /* sitemap.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = sitemap.icns; sourceTree = "<group>"; };
@@ -88,7 +84,7 @@
 			children = (
 				CE722FBF0D85CEDC00E9C592 /* sitemap.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
-				3C42DD7F0D64C228004F35FD /* SiteMapPage.nib */,
+				3C63A32811A1F67E00FD801A /* SiteMapPage.xib */,
 				3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42DD910D64C5A2004F35FD /* License.rtf */,
@@ -101,6 +97,8 @@
 			children = (
 				3C42DD750D64C20B004F35FD /* SiteMapDelegate.h */,
 				3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */,
+				3C63A32411A1F66300FD801A /* SiteMapPlugIn.h */,
+				3C63A32511A1F66300FD801A /* SiteMapPlugIn.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -204,9 +202,9 @@
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
 				3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */,
-				3C42DD810D64C228004F35FD /* SiteMapPage.nib in Resources */,
 				3C42DD920D64C5A2004F35FD /* License.rtf in Resources */,
 				CE722FC00D85CEDC00E9C592 /* sitemap.icns in Resources */,
+				3C63A32A11A1F67E00FD801A /* SiteMapPage.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -218,6 +216,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3C42DD770D64C20B004F35FD /* SiteMapDelegate.m in Sources */,
+				3C63A32611A1F66300FD801A /* SiteMapPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -239,19 +238,12 @@
 			name = InfoPlist.strings;
 			sourceTree = "<group>";
 		};
-		3C42DD7F0D64C228004F35FD /* SiteMapPage.nib */ = {
+		3C63A32811A1F67E00FD801A /* SiteMapPage.xib */ = {
 			isa = PBXVariantGroup;
 			children = (
-				3C42DD800D64C228004F35FD /* en */,
-				3C42DD840D64C24C004F35FD /* da */,
-				3C42DD860D64C258004F35FD /* de */,
-				3C42DD880D64C263004F35FD /* fr */,
-				3C42DD8A0D64C26F004F35FD /* it */,
-				3C42DD8C0D64C52E004F35FD /* ja */,
-				3C42DD8E0D64C539004F35FD /* zh_CN */,
-				3C42DD900D64C548004F35FD /* zh_TW */,
+				3C63A32911A1F67E00FD801A /* en */,
 			);
-			name = SiteMapPage.nib;
+			name = SiteMapPage.xib;
 			sourceTree = "<group>";
 		};
 /* End PBXVariantGroup section */
