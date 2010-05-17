@@ -43,7 +43,7 @@ typedef enum {
 
 
 #pragma mark Body
-@property(nonatomic, retain, readonly) SVRichText *body;
+@property(nonatomic, retain, readonly) SVRichText *article;
 
 
 #pragma mark Properties

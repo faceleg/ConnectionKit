@@ -34,7 +34,7 @@
 
 + (SVRichText *)insertPageBodyIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    return [NSEntityDescription insertNewObjectForEntityForName:@"PageBody"
+    return [NSEntityDescription insertNewObjectForEntityForName:@"Article"
                                          inManagedObjectContext:context];
 }
 

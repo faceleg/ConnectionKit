@@ -38,7 +38,7 @@
 
 @interface KTPage ()
 @property(nonatomic, retain, readwrite) SVSidebar *sidebar;
-@property(nonatomic, retain, readwrite) SVRichText *body;
+@property(nonatomic, retain, readwrite) SVRichText *article;
 @end
 
 
@@ -184,7 +184,7 @@
     // Body text. Give it a starting paragraph
     SVRichText *body = [SVRichText insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
     [body setString:@"<p>Lorem Ipsum...</p>"];
-    [self setBody:body];
+    [self setArticle:body];
     
     
 	id maxTitles = [[NSUserDefaults standardUserDefaults] objectForKey:@"MaximumTitlesInCollectionSummary"];
@@ -283,7 +283,7 @@
 
 #pragma mark Body
 
-@dynamic body;
+@dynamic article;
 
 - (void)writeContentRecursively:(BOOL)recursive
 {
@@ -308,7 +308,7 @@
     }
     
     // Body
-    [[self body] writeText:context];
+    [[self article] writeText:context];
     
     // Children
     if (recursive)

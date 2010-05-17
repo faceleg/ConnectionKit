@@ -23,7 +23,7 @@
                     forKey:@"titleHTMLString"];
     
     // Body
-    [propertyList setValue:[[self body] serializedProperties] forKey:@"body"];
+    [propertyList setValue:[[self article] serializedProperties] forKey:@"article"];
     
     // Code Injection
     [propertyList setValue:[[self codeInjection] serializedProperties]

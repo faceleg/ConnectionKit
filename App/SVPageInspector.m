@@ -145,7 +145,7 @@
     
     // Populate with available choices
     KTPage *page = [(NSObject *)[self inspectedObjectsController] valueForKeyPath:@"selection.self"];
-    for (SVTextAttachment *anAttachment in [[page body] orderedAttachments])
+    for (SVTextAttachment *anAttachment in [[page article] orderedAttachments])
     {
         SVGraphic *graphic = [anAttachment graphic];
         id <IMBImageItem> thumbnail = [graphic thumbnail];

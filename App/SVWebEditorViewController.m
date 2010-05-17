@@ -966,7 +966,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         if ([dragInfo draggingSource] == webEditor && [[webEditor draggedItems] count])
         {
             if (![[[[[self textAreaForDOMNode:node] representedObject] entity] name]
-                  isEqualToString:@"PageBody"])
+                  isEqualToString:@"Article"])
             {
                 result = nil;
             }
@@ -1104,7 +1104,7 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
 
 - (IBAction)placeAsCallout:(id)sender;
 {
-    SVRichText *article = [[(SVWebEditorViewController *)[self dataSource] page] body];
+    SVRichText *article = [[(SVWebEditorViewController *)[self dataSource] page] article];
     NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
     
     for (SVGraphicDOMController *aPageletController in [self selectedItems])

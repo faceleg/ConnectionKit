@@ -88,7 +88,7 @@
     [context writeNewline];
     
     
-    // FInish
+    // Finish
     [context didEndWritingHTMLTextBlock];
 }
 
