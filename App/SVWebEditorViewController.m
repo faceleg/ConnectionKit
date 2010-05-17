@@ -722,50 +722,15 @@ static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependencie
         result = YES;
         
         // Want serialized pagelets on pboard
-        NSMutableAttributedString *attributedHTML = [[NSMutableAttributedString alloc] init];
-        
-        
-        // Want HTML of pagelets on pboard
-        NSMutableString *html = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:html];
-        [context push];
-        
-        
-        NSArray *items = [sender selectedItems];
-        for (WEKWebEditorItem *anItem in items)
-        {
-            // Give up if the selection contains a non-graphic
-            SVGraphic *graphic = [anItem representedObject];
-            if (![graphic isKindOfClass:[SVGraphic class]])
-            {
-                break;
-                result = NO;
-            }
-            
-            
-            // Add the attachment to the custom HTML
-            NSAttributedString *attachmentString = [NSAttributedString attributedHTMLStringWithAttachment:graphic];
-            [attributedHTML appendAttributedString:attachmentString];
-            
-            
-            // HTML representation of the item
-            [(SVDOMController *)anItem writeRepresentedObjectHTML];
-        }
-        
-        
-        // Place serialized pagelets on pboard
-        [pasteboard addTypes:[NSArray arrayWithObject:@"com.karelia.html+graphics"] owner:self];
-        [attributedHTML attributedHTMLStringWriteToPasteboard:pasteboard];
-        [attributedHTML release];
+        SVGraphic *graphic = [[sender selectedItem] representedObject];
+        [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:self];
+        [graphic writeToPasteboard:pasteboard];
         
         
         // Place HTML on pasteboard
-        [context pop];
-        [context release];
-        
-        [pasteboard setString:html forType:NSHTMLPboardType];
-        [html release];
-        [pasteboard addTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
+        //[pasteboard setString:html forType:NSHTMLPboardType];
+        //[html release];
+        //[pasteboard addTypes:[NSArray arrayWithObject:NSHTMLPboardType] owner:self];
     }
     
     
