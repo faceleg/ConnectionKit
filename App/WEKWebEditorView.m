@@ -956,13 +956,13 @@ typedef enum {
 
 - (void)drawOverlayRect:(NSRect)dirtyRect inView:(NSView *)view
 {
-    // Draw drop highlight if there is one. 3px inset from bounding box, "Aqua" colour
+    // Draw drop highlight if there is one. 1px inset from bounding box, "Aqua" colour
     if (_dragHighlightNode)
     {
         NSRect dropRect = [_dragHighlightNode boundingBox];
         
         [[NSColor aquaColor] setFill];
-        NSFrameRectWithWidth(dropRect, 3.0f);
+        NSFrameRectWithWidth(dropRect, 1.0f);
     }
     
     
