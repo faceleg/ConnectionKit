@@ -133,9 +133,13 @@ extern NSString *kSVGraphicPboardType;
 
 
 #pragma mark Serialization
+
+- (void)writeToPasteboard:(NSPasteboard *)pboard;   // like other Cocoa methods of same sig.
+
++ (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pasteboard
+     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-- (void)writeToPasteboard:(NSPasteboard *)pboard;   // like other Cocoa methods of same sig.
 
 @end
 

@@ -320,6 +320,17 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return result;
 }
 
++ (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pasteboard
+     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    id plist = [pasteboard propertyListForType:kSVGraphicPboardType];
+    
+    id graphic = [self graphicWithSerializedProperties:plist
+                        insertIntoManagedObjectContext:context];
+    
+    return [NSArray arrayWithObject:graphic];
+}
+
 - (void)awakeFromPropertyList:(id)propertyList;
 {
     // Don't deserialzed element ID as it means we have two of them!
