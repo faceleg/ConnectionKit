@@ -86,6 +86,10 @@
     [context writeEndTag];
     [context writeHTMLString:@" <!-- /article-content -->"];
     [context writeNewline];
+    
+    
+    // FInish
+    [context didEndWritingHTMLTextBlock];
 }
 
 - (NSUInteger)writeEarlyCallouts:(SVHTMLContext *)context;
