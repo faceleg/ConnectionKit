@@ -205,10 +205,23 @@
         
         
         // Insert HTML into DOM, replacing caret
-        [self moveDragCaretToBeforeDOMNode:[self childForDraggingInfo:dragInfo]
-                              draggingInfo:dragInfo];
+        DOMNode *node = [self childForDraggingInfo:dragInfo];
+        [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
         
-        [self replaceDragCaretWithHTMLString:html];
+        if (_dragCaret)
+        {
+            [self replaceDragCaretWithHTMLString:html];
+        }
+        else
+        {
+            DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+            
+            DOMDocumentFragment *fragment = [doc
+                                             createDocumentFragmentWithMarkupString:html
+                                             baseURL:[context baseURL]];
+            
+            [[self textHTMLElement] insertBefore:fragment refChild:node];
+        }
         [html release];
         
         
@@ -283,8 +296,8 @@
 {
     DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
     [range setStartBefore:node];
-    //[[self webEditor] moveDragCaretToDOMRange:range];
-    //return;
+    [[self webEditor] moveDragCaretToDOMRange:range];
+    return;
     
     
     // Do we actually need do anything?
