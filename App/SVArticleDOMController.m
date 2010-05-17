@@ -260,6 +260,7 @@
     
     NSMutableSet *result = [plugInTypes mutableCopy];
     [result addObjectsFromArray:[NSAttributedString attributedHTMStringPasteboardTypes]];
+    [result addObject:kSVGraphicPboardType];
     
     // Weed out string and image types since we want Web Editor to handle them.
     [result minusSet:
