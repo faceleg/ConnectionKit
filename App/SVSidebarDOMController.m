@@ -90,17 +90,33 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     SVGraphic *aPagelet = [pagelets lastObject];
     SVGraphic *nextPagelet = nil;
+    WEKWebEditorItem *nextController = nil;
     
     for (NSUInteger i = [pagelets count]; i > 0;)
     {
         i--;
         
+        // Grab controller for item. Create it if needed
         WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
-        WEKWebEditorItem *nextController = (nextPagelet ? [self hitTestRepresentedObject:nextPagelet] : nil);
+        if (!controller)
+        {
+            DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self contentDOMElement] ownerDocument];
+            controller = [[[aPagelet DOMControllerClass] alloc] initWithHTMLDocument:doc];
+            [controller setRepresentedObject:aPagelet];
+            [(SVDOMController *)controller setHTMLContext:[self HTMLContext]];
+            
+            [self addChildWebEditorItem:controller];
+            [controller autorelease];
+        }
         
+        // Insert before what should be its next sibling
         DOMElement *element = [controller HTMLElement];
         [[self contentDOMElement] insertBefore:element
                                       refChild:[nextController HTMLElement]];
+        
+        
+        // Loop
+        nextController = controller;
         
         nextPagelet = aPagelet;
         aPagelet = [pagelets objectAtIndex:i];
