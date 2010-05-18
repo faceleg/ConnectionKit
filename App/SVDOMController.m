@@ -17,6 +17,43 @@
 
 @implementation SVDOMController
 
++ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
+ createHTMLElementWithDocument:(DOMHTMLDocument *)doc
+                       context:(SVHTMLContext *)parentContext;
+{
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithStringWriter:htmlString];
+    
+    [context copyPropertiesFromContext:parentContext];
+    [graphic writeHTML:context];
+    
+    
+    // Retrieve controller
+    id result = nil;
+    for (WEKWebEditorItem *aController in [context webEditorItems])
+    {
+        if (![aController parentWebEditorItem]) result = aController;
+    }
+    OBASSERT(result);
+    
+    [context release];
+    
+    
+    // Create DOM objects from HTML
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:htmlString
+                                                                        baseURL:[parentContext baseURL]];
+    [htmlString release];
+    
+    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
+    [result setHTMLElement:element];
+    
+    
+    return result;
+}
+
 #pragma mark Dealloc
 
 - (void)dealloc

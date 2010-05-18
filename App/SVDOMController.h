@@ -23,6 +23,10 @@
     SVWebEditorHTMLContext  *_context;
 }
 
++ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
+ createHTMLElementWithDocument:(DOMHTMLDocument *)doc
+                       context:(SVHTMLContext *)parentContext;
+
 #pragma mark Content
 
 // Convenience method that:
