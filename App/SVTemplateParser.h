@@ -72,6 +72,7 @@
 - (BOOL)parseWithStringWriter:(id <KSStringWriter>)context;
 - (BOOL)prepareToParse;
 
+- (id)parseValue:(NSString *)inString;
 - (NSString *)componentLocalizedString:(NSString *)tag;
 - (NSString *)componentTargetLocalizedString:(NSString *)tag;
 - (NSString *)mainBundleLocalizedString:(NSString *)tag;
@@ -81,7 +82,7 @@
 
 - (BOOL)compareLeft:(NSString *)left
               right:(NSString *)right
-     comparisonType:(ComparisonType) comparisonType;
+     comparisonType:(ComparisonType)comparisonType;
 
 - (BOOL)compareIfStatement:(ComparisonType)comparisonType
                  leftValue:(id)leftValue

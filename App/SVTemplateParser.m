@@ -830,7 +830,7 @@ BOOL compareResult;
 #pragma mark -
 #pragma mark Support
 
-- (id)parseValue:(NSString *)inString
+- (id)parseValue:(NSString *)inString;
 {
 	int parsedInt = 0;
 	id result = @"";	// always have at least an empty string.
