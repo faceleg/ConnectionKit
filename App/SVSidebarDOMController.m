@@ -41,19 +41,27 @@
 
 #pragma mark Init/Dealloc
 
+static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMControllerPageletsObservation";
+
 - (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
 {
     [super init];
     
     _pageletsController = [pageletsController retain];
+    [_pageletsController addObserver:self
+                          forKeyPath:@"arrangedObjects"
+                             options:0
+                             context:sSVSidebarDOMControllerPageletsObservation];
     
     return self;
 }
 
 - (void)dealloc;
 {
-    [_sidebarDiv release];
+    [_pageletsController removeObserver:self forKeyPath:@"arrangedObjects"];
     [_pageletsController release];
+    
+    [_sidebarDiv release];
     
     [super dealloc];
 }
@@ -68,6 +76,13 @@
     
     // Also seek out sidebar div
     [self setSidebarDivElement:[document getElementById:@"sidebar"]];
+}
+
+- (void)update;
+{
+    [super update];
+    
+    // TODO: Arrange DOM nodes to match
 }
 
 #pragma mark Pagelets Controller
@@ -400,6 +415,20 @@
     
     [[node parentNode] insertBefore:_dragCaret refChild:[node nextSibling]];
     [style setHeight:@"75px"];
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+    if (context == sSVSidebarDOMControllerPageletsObservation)
+    {
+        [self setNeedsUpdate];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end

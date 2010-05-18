@@ -59,7 +59,7 @@
         [controller autorelease];
     }
     
-    [context addDependencyOnObject:controller keyPath:@"arrangedObjects"];
+    //[context addDependencyOnObject:controller keyPath:@"arrangedObjects"];    // taken care of by SVSidebarDOMController now
     
     
     // Write HTML
