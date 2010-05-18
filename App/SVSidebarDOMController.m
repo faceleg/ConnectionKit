@@ -101,18 +101,18 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (!controller)
         {
             DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self contentDOMElement] ownerDocument];
-            controller = [[[aPagelet DOMControllerClass] alloc] initWithHTMLDocument:doc];
-            [controller setRepresentedObject:aPagelet];
-            [(SVDOMController *)controller setHTMLContext:[self HTMLContext]];
             
-            [self addChildWebEditorItem:controller];
-            [controller autorelease];
+            controller = [SVDOMController DOMControllerWithGraphic:aPagelet
+                                     createHTMLElementWithDocument:doc
+                                                           context:[self HTMLContext]];
         }
         
         // Insert before what should be its next sibling
         DOMElement *element = [controller HTMLElement];
         [[self contentDOMElement] insertBefore:element
                                       refChild:[nextController HTMLElement]];
+        
+        [self addChildWebEditorItem:controller];    // don't do until nodes are definitely in main tree
         
         
         // Loop
