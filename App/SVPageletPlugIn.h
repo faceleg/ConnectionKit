@@ -42,6 +42,7 @@
 #pragma mark HTML
 
 // Default implementation generates a <span> or <div> (with an appropriate id) that contains the result of -writeInnerHTML:. There is generally NO NEED to override this, and if you do, you MUST write HTML with an enclosing element of the specified ID.
+// Looks in Info.plist for CSS files to add to the context
 - (void)writeHTML:(id <SVPlugInContext>)context;
 
 + (id <SVPlugInContext>)currentContext;
