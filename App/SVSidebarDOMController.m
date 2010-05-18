@@ -87,16 +87,16 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     // Arrange DOM nodes to match. Start by removing all
     DOMElement *contentElement = [self contentDOMElement];
-    //[[contentElement mutableChildDOMNodes] removeAllObjects];
+    [[contentElement mutableChildDOMNodes] removeAllObjects];
     
     NSArray *pagelets = [[self pageletsController] arrangedObjects];
     
-    SVGraphic *aPagelet = [pagelets lastObject];
-    SVGraphic *nextPagelet = nil;
+    SVGraphic *aPagelet, *nextPagelet = nil;
     WEKWebEditorItem *nextController = nil;
     
-    for (NSUInteger i = [pagelets count] - 1; i > 0;)
+    for (NSUInteger i = [pagelets count] - 1; i < NSNotFound;)
     {
+        aPagelet = [pagelets objectAtIndex:i];
         i--;
         
         // Grab controller for item. Create it if needed
@@ -120,9 +120,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         // Loop
         nextController = controller;
-        
         nextPagelet = aPagelet;
-        aPagelet = [pagelets objectAtIndex:i];
     }
 }
 
