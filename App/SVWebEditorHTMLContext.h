@@ -19,7 +19,7 @@
     NSMutableArray  *_items;
     SVDOMController *_currentItem;  // weak ref
     
-    NSMutableSet    *_objectKeyPathPairs;
+    NSMutableSet    *_dependencies;
     
     NSMutableSet    *_media;
     

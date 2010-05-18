@@ -36,7 +36,7 @@
     [super initWithStringWriter:stream];
     
     _items = [[NSMutableArray alloc] init];
-    _objectKeyPathPairs = [[NSMutableSet alloc] init];
+    _dependencies = [[NSMutableSet alloc] init];
     _media = [[NSMutableSet alloc] init];
     
     return self;
@@ -45,7 +45,7 @@
 - (void)dealloc
 {
     [_items release];
-    [_objectKeyPathPairs release];
+    [_dependencies release];
     [_media release];
     [_sidebarDOMController release];
     [_sidebarPageletsController release];
@@ -201,16 +201,17 @@
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 {
-    OBASSERT(_objectKeyPathPairs);
+    OBASSERT(_dependencies);
     
     // Ignore parser properties
     if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
-        [_objectKeyPathPairs addObject:pair];
+        [_dependencies addObject:pair];
+        [[self currentItem] addDependency:pair];
     }
 }
 
-- (NSSet *)dependencies { return [[_objectKeyPathPairs copy] autorelease]; }
+- (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
 
 #pragma mark Media
 

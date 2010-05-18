@@ -54,23 +54,16 @@
     return result;
 }
 
-#pragma mark Dealloc
+#pragma mark Init & Dealloc
 
-- (void)dealloc
+- (id)init;
 {
-    [_context release];
-    [super dealloc];
+    [super init];
+    
+    _dependencies = [[NSMutableSet alloc] init];
+    
+    return self;
 }
-
-#pragma mark Tree
-
-- (void)setParentWebEditorItem:(WEKWebEditorItem *)item
-{
-    [super setParentWebEditorItem:item];
-    //[self setHTMLContext:[item HTMLContext]];  Not really helpful since root item has no context
-}
-
-#pragma mark Content
 
 - (id)initWithContentObject:(SVContentObject *)contentObject
               inDOMDocument:(DOMDocument *)document;
@@ -90,6 +83,24 @@
     
     return self;
 }
+
+- (void)dealloc
+{
+    [_context release];
+    [_dependencies release];
+    
+    [super dealloc];
+}
+
+#pragma mark Tree
+
+- (void)setParentWebEditorItem:(WEKWebEditorItem *)item
+{
+    [super setParentWebEditorItem:item];
+    //[self setHTMLContext:[item HTMLContext]];  Not really helpful since root item has no context
+}
+
+#pragma mark Content
 
 - (void)createHTMLElement
 {
@@ -178,6 +189,24 @@
     }
     
     [super updateIfNeeded];
+}
+
+- (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
+
+- (void)addDependency:(KSObjectKeyPathPair *)pair;
+{
+    OBASSERT(_dependencies);
+    
+    // Ignore parser properties
+    if (![[pair object] isKindOfClass:[SVTemplateParser class]])
+    {
+        [_dependencies addObject:pair];
+    }
+}
+
+- (void)removeAllDependencies;
+{
+    [_dependencies removeAllObjects];
 }
 
 #pragma mark Editing

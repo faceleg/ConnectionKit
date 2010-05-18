@@ -20,6 +20,7 @@
   @private
     // Updating
     BOOL                    _needsUpdate;
+    NSMutableSet            *_dependencies;
     SVWebEditorHTMLContext  *_context;
 }
 
@@ -45,10 +46,16 @@
 
 
 #pragma mark Updating
+
 - (void)update; // override to push changes through to the DOM. Rarely call directly. MUST call super
+
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate; // call to mark for needing update.
 - (void)updateIfNeeded; // recurses down the tree
+
+@property(nonatomic, copy, readonly) NSSet *dependencies;
+- (void)addDependency:(KSObjectKeyPathPair *)pair;
+- (void)removeAllDependencies;
 
 
 @end
