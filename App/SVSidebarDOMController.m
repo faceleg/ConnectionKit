@@ -85,14 +85,17 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     [super update];
     
-    // Arrange DOM nodes to match
+    // Arrange DOM nodes to match. Start by removing all
+    DOMElement *contentElement = [self contentDOMElement];
+    //[[contentElement mutableChildDOMNodes] removeAllObjects];
+    
     NSArray *pagelets = [[self pageletsController] arrangedObjects];
     
     SVGraphic *aPagelet = [pagelets lastObject];
     SVGraphic *nextPagelet = nil;
     WEKWebEditorItem *nextController = nil;
     
-    for (NSUInteger i = [pagelets count]; i > 0;)
+    for (NSUInteger i = [pagelets count] - 1; i > 0;)
     {
         i--;
         
@@ -100,7 +103,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
         if (!controller)
         {
-            DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self contentDOMElement] ownerDocument];
+            DOMHTMLDocument *doc = (DOMHTMLDocument *)[contentElement ownerDocument];
             
             controller = [SVDOMController DOMControllerWithGraphic:aPagelet
                                      createHTMLElementWithDocument:doc
@@ -109,8 +112,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         // Insert before what should be its next sibling
         DOMElement *element = [controller HTMLElement];
-        [[self contentDOMElement] insertBefore:element
-                                      refChild:[nextController HTMLElement]];
+        [contentElement insertBefore:element
+                            refChild:[nextController HTMLElement]];
         
         [self addChildWebEditorItem:controller];    // don't do until nodes are definitely in main tree
         
