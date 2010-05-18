@@ -29,7 +29,7 @@
 	<key>KTElementSupportsPageUsage</key>
 	<true/>
 	<key>KTElementSupportsPageletUsage</key>
-	<false/>
+	<true/>
 	<key>KSHelpAnchor</key>
 	<string>Site_Map</string>
 	<key>KTIncludeSidebar</key>
