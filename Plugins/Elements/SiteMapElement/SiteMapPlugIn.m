@@ -240,7 +240,7 @@
     
     id <SVPlugInContext>context = [SVPageletPlugIn currentContext];
 	
-	id <SVPage>thisPage = (id <SVPage>)[(SVHTMLContext *)context page];
+	id <SVPage>thisPage = [context page];
 	id <SVPage>rootPage = [thisPage rootPage];
     
     //FIXME: do we need to observe propertied for thisPage?
