@@ -54,4 +54,14 @@
     [parser release];
 }
 
+#pragma mark Serialization
+
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    // Text
+    [propertyList setObject:[[self body] serializedProperties] forKey:@"body"];
+}
+
 @end

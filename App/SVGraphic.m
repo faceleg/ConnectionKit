@@ -15,7 +15,6 @@
 #import "SVTitleBox.h"
 
 #import "NSError+Karelia.h"
-#import "NSManagedObject+KTExtensions.h"
 #import "NSString+Karelia.h"
 
 
@@ -314,6 +313,23 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark Serialization
 
+- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
+{
+    [super populateSerializedProperties:propertyList];
+    
+    [propertyList setObject:[[self entity] name] forKey:@"entity"];
+    [propertyList setValue:[self placement] forKey:@"preferredPlacement"];
+    
+    [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
+                    forKey:@"titleBox"];
+}
+
+- (void)writeToPasteboard:(NSPasteboard *)pboard;
+{
+    [pboard setPropertyList:[self serializedProperties]
+                    forType:kSVGraphicPboardType];
+}
+
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
@@ -371,23 +387,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     
     // Ensure border is correct. plist may have set it to nil
     if (![self showBorder]) [self setBordered:NO];
-}
-
-- (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
-{
-    [super populateSerializedProperties:propertyList];
-    
-    [propertyList setObject:[[self entity] name] forKey:@"entity"];
-    [propertyList setValue:[self placement] forKey:@"preferredPlacement"];
-    
-    [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
-                    forKey:@"titleBox"];
-}
-
-- (void)writeToPasteboard:(NSPasteboard *)pboard;
-{
-    [pboard setPropertyList:[self serializedProperties]
-                    forType:kSVGraphicPboardType];
 }
 
 #pragma mark SVPageletPlugInContainer

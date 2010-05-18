@@ -10,6 +10,8 @@
 #import "SVPlugIn.h"
 #import <iMedia/IMBImageItem.h>
 
+#import "NSManagedObject+KTExtensions.h"    // for serialization
+
 
 typedef enum {
     SVGraphicPlacementInline,
