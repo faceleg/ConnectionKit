@@ -62,6 +62,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [_pageletsController release];
     
     [_sidebarDiv release];
+    [_contentElement release];
     
     [super dealloc];
 }
@@ -69,13 +70,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 #pragma mark DOM
 
 @synthesize sidebarDivElement = _sidebarDiv;
+@synthesize contentDOMElement = _contentElement;
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
     [super loadHTMLElementFromDocument:document];
     
-    // Also seek out sidebar div
+    // Also seek out sidebar divs
     [self setSidebarDivElement:[document getElementById:@"sidebar"]];
+    [self setContentDOMElement:[document getElementById:@"sidebar-content"]];
 }
 
 - (void)update;
@@ -96,8 +99,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         WEKWebEditorItem *nextController = (nextPagelet ? [self hitTestRepresentedObject:nextPagelet] : nil);
         
         DOMElement *element = [controller HTMLElement];
-        [[element parentNode] insertBefore:element
-                                  refChild:[nextController HTMLElement]];
+        [[self contentDOMElement] insertBefore:element
+                                      refChild:[nextController HTMLElement]];
         
         nextPagelet = aPagelet;
         aPagelet = [pagelets objectAtIndex:i];

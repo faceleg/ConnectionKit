@@ -16,6 +16,8 @@
 {
   @private
     DOMElement                  *_sidebarDiv;
+    DOMElement                  *_contentElement;
+    
     SVSidebarPageletsController *_pageletsController;
     
     // Drag & Drop
@@ -25,6 +27,7 @@
 - (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
 
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
+@property(nonatomic, retain) DOMElement *contentDOMElement;
 
 @property(nonatomic, retain, readonly) SVSidebarPageletsController *pageletsController;
 
