@@ -10,6 +10,7 @@
 
 #import "KTHostProperties.h"
 #import "SVHTMLContext.h"
+#import "SVLink.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "KTSite.h"
@@ -329,7 +330,8 @@
 
 - (SVLink *)link;
 {
-    return [SVLink linkWithSiteItem:self openInNewWindow:NO];
+    return [SVLink linkWithSiteItem:self
+                    openInNewWindow:[[self openInNewWindow] boolValue]];
 }
 
 - (BOOL)includeInSiteMaps; { return [[self includeInSiteMap] boolValue]; }
