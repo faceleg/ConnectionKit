@@ -240,8 +240,10 @@
     
     id <SVPlugInContext>context = [SVPageletPlugIn currentContext];
 	
-	id <SVPage>thisPage = [context page];
-	id <SVPage>rootPage = [thisPage rootPage];
+	id<SVPage> thisPage = [context page];
+	id<SVPage> rootPage = [thisPage rootPage];
+    
+    // ask page for its link and write its link
     
     //FIXME: do we need to observe propertied for thisPage?
 	
@@ -249,6 +251,10 @@
 	{
 		// Note: if site map IS home, it will still be shown regardless of show site map checkbox
 		[result appendString:(self.sections ? @"<h3>" : @"<p>")];
+        // tell write to write an h3 tag
+        // do your stuff
+        // and the end, tell it to write an end tag
+        
 		if (rootPage == thisPage)	// not likely but maybe possible
 		{
 			NSString *title = [rootPage titleHTMLString];
@@ -284,10 +290,12 @@
                  isTopSection:self.sections 
                      indentBy:1];
         
-        // observe each page's title, its children (child site items), and sort key
-        [context addDependencyOnObject:thisPage keyPath:@"title"];
-        //FIXME: how to observe children?
-        //FIXME: hot to observe sort key?
+        // observe each page's observable keypaths
+        id<NSFastEnumeration> keyPaths = [topLevelPage automaticRearrangementKeyPaths];
+        for ( NSString *keyPath in keyPaths )
+        {
+            [context addDependencyOnObject:topLevelPage keyPath:keyPath];
+        }
     }
 
 	if (!self.sections)
