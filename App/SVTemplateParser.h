@@ -77,12 +77,20 @@
 - (NSString *)mainBundleLocalizedString:(NSString *)tag;
 
 
-// If function
-- (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue;
+#pragma mark If function
+
+- (BOOL)compareLeft:(NSString *)left
+              right:(NSString *)right
+     comparisonType:(ComparisonType) comparisonType;
+
+- (BOOL)compareIfStatement:(ComparisonType)comparisonType
+                 leftValue:(id)leftValue
+                rightValue:(id)rightValue;
+
 - (BOOL)isNotEmpty:(id)aValue;
 
 
-// Foreach loops
+#pragma mark Foreach loops
 - (BOOL)evaluateForeachLoopWithArray:(NSArray *)components
                      iterationsCount:(NSUInteger)specifiedNumberIterations
                              keyPath:(NSString *)keyPath

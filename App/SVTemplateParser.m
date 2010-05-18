@@ -541,6 +541,17 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 #pragma mark -
 #pragma mark If Function
 
+- (BOOL)compareLeft:(NSString *)left right:(NSString *)right comparisonType:(ComparisonType) comparisonType;
+{
+    // Now do the comparison.  If greater/less operations, we convert to numbers.
+    id leftValue = [self parseValue:left];
+    id rightValue = [self parseValue:right];
+    
+    BOOL compareResult = [self compareIfStatement:comparisonType leftValue:leftValue rightValue:rightValue];
+    
+    return compareResult;
+}
+
 - (NSString *)ifWithParameters:(NSString *)inRestOfTag scanner:(NSScanner *)inScanner
 {
 	_ifFunctionDepth++;
@@ -594,10 +605,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		return @"";
 	}
 	
-	// Now do the comparison.  If greater/less operations, we convert to numbers.
-	id leftValue = [self parseValue:left];
-	id rightValue = [self parseValue:right];
-	BOOL compareResult = [self compareIfStatement:comparisonType leftValue:leftValue rightValue:rightValue];
+BOOL compareResult;
+  compareResult = [self compareLeft: left right: right comparisonType: comparisonType];
+
 	
 	// Now parse whatever piece we are supposed to use, and write it to the context
 	NSScanner *ifScanner = [NSScanner scannerWithString:compareResult ? stuffIfTrue : stuffIfFalse];
