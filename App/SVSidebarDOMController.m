@@ -82,7 +82,26 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     [super update];
     
-    // TODO: Arrange DOM nodes to match
+    // Arrange DOM nodes to match
+    NSArray *pagelets = [[self pageletsController] arrangedObjects];
+    
+    SVGraphic *aPagelet = [pagelets lastObject];
+    SVGraphic *nextPagelet = nil;
+    
+    for (NSUInteger i = [pagelets count]; i > 0;)
+    {
+        i--;
+        
+        WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
+        WEKWebEditorItem *nextController = (nextPagelet ? [self hitTestRepresentedObject:nextPagelet] : nil);
+        
+        DOMElement *element = [controller HTMLElement];
+        [[element parentNode] insertBefore:element
+                                  refChild:[nextController HTMLElement]];
+        
+        nextPagelet = aPagelet;
+        aPagelet = [pagelets objectAtIndex:i];
+    }
 }
 
 #pragma mark Pagelets Controller
