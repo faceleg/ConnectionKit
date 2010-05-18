@@ -51,10 +51,10 @@
 {	
 	NSMutableString *result = [NSMutableString string];
     
-    SVHTMLContext *context = [SVPageletPlugIn currentContext];
+    id <SVPlugInContext>context = [SVPageletPlugIn currentContext];
 	
-	KTPage *thisPage = [context page];
-	KTPage *rootPage = [thisPage rootPage];
+	id <SVPage>thisPage = (id <SVPage>)[(SVHTMLContext *)context page];
+	id <SVPage>rootPage = [thisPage rootPage];
 	
 	if ( self.showHome )
 	{
