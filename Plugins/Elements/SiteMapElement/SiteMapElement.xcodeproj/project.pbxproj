@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C42DD770D64C20B004F35FD /* SiteMapDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */; };
 		3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */; };
 		3C42DD920D64C5A2004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD910D64C5A2004F35FD /* License.rtf */; };
 		3C63A32611A1F66300FD801A /* SiteMapPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C63A32511A1F66300FD801A /* SiteMapPlugIn.m */; };
@@ -82,8 +81,8 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				CE722FBF0D85CEDC00E9C592 /* sitemap.icns */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
+				CE722FBF0D85CEDC00E9C592 /* sitemap.icns */,
 				3C63A32811A1F67E00FD801A /* SiteMapPage.xib */,
 				3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
@@ -215,7 +214,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3C42DD770D64C20B004F35FD /* SiteMapDelegate.m in Sources */,
 				3C63A32611A1F66300FD801A /* SiteMapPlugIn.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
