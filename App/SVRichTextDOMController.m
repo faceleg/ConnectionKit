@@ -346,12 +346,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     [writer flush];
     NSString *stream = (NSMutableString *)[writer stringWriter];
-    NSUInteger location = [stream length] - 1;
+    NSRange range = NSMakeRange([stream length] - 1, 1);
     
-    if ([attachment range].location != location)
+    if (!NSEqualRanges([attachment range], range))
     {
-        [attachment setLocation:[NSNumber numberWithUnsignedInteger:location]];
-        [attachment setLength:[NSNumber numberWithShort:1]];
+        [attachment setRange:range];
     }
     
     
