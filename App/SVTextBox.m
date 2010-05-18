@@ -64,4 +64,11 @@
     [propertyList setObject:[[self body] serializedProperties] forKey:@"body"];
 }
 
+- (void)awakeFromPropertyList:(id)propertyList;
+{
+    [super awakeFromPropertyList:propertyList];
+    
+    [[self body] awakeFromPropertyList:[propertyList objectForKey:@"body"]];
+}
+
 @end
