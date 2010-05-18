@@ -10,6 +10,9 @@
 #import "SVPageletPlugIn.h"
 
 
+@class SVLink;
+
+
 @protocol SVPage <NSObject>
 
 - (NSString *)identifier;
@@ -24,6 +27,8 @@
 - (id <SVPage>)rootPage;
 - (id <NSFastEnumeration>)automaticRearrangementKeyPaths;
 
+// Navigation
+- (SVLink *)link;
 - (BOOL)includeInSiteMaps;
 
 @end

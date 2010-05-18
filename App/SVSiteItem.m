@@ -326,6 +326,11 @@
     return result;
 }
 
+- (SVLink *)link;
+{
+    return [SVLink linkWithSiteItem:self openInNewWindow:NO];
+}
+
 - (BOOL)includeInSiteMaps; { return [[self includeInSiteMap] boolValue]; }
 
 @end

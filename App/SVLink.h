@@ -34,6 +34,7 @@ typedef enum {
 }
 
 #pragma mark Creating a link
++ (id)linkWithSiteItem:(KTPage *)item openInNewWindow:(BOOL)openInNewWindow;
 - (id)initWithURLString:(NSString *)urlString openInNewWindow:(BOOL)openInNewWindow;
 - (id)initWithPage:(KTPage *)page openInNewWindow:(BOOL)openInNewWindow;
 - (id)initLinkToFullSizeImageOpensInNewWindow:(BOOL)openInNewWindow;
