@@ -151,17 +151,21 @@
 
 /*	We have to implement kCompareNotEmptyOrEditing as superclass (SVTemplateParser) has no concept of editing.
  */
-- (BOOL)compareIfStatement:(ComparisonType)comparisonType leftValue:(id)leftValue rightValue:(id)rightValue
+- (BOOL)compareLeft:(NSString *)left
+              right:(NSString *)right
+     comparisonType:(ComparisonType)comparisonType;
 {
 	BOOL result;
 	
 	if (comparisonType == kCompareNotEmptyOrEditing)	// mostly same test; we will "OR" with editing mode
 	{
-		result = (![[SVHTMLContext currentContext] isForPublishing] || [self isNotEmpty:leftValue]);
+        // When editing, no point doing comparison. In particular, it can register key paths that I'd rather not (#74630)
+		result = ([[SVHTMLContext currentContext] isForEditing] ||
+                  [self isNotEmpty:[self parseValue:left]]);
 	}
 	else
 	{
-		result = [super compareIfStatement:comparisonType leftValue:leftValue rightValue:rightValue];
+		result = [super compareLeft:left right:right comparisonType:comparisonType];
 	}
 	
 	return result;
