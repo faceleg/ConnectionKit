@@ -68,6 +68,7 @@
 @dynamic customMenuTitle;
 
 @dynamic includeInSiteMap;
+@dynamic openInNewWindow;
 
 #pragma mark Drafts and Indexes
 

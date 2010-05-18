@@ -43,6 +43,7 @@
 @property(nonatomic, copy) NSString *customMenuTitle;
 
 @property(nonatomic, copy) NSNumber *includeInSiteMap;    // BOOL, mandatory
+@property(nonatomic, retain) NSNumber *openInNewWindow; // BOOL, mandatory
 
 
 #pragma mark Drafts and Indexes

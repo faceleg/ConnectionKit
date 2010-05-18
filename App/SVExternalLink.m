@@ -15,8 +15,6 @@
 
 @implementation SVExternalLink 
 
-@dynamic openInNewWindow;
-
 @dynamic linkURLString;
 
 - (NSURL *)URL
