@@ -59,13 +59,13 @@
     // Gather the HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
-    SVHTMLContext *context = [[[[self HTMLContext] class] alloc] initWithStringWriter:htmlString];
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithStringWriter:htmlString];
     [context copyPropertiesFromContext:[self HTMLContext]];
     
     [context push];
     [self writeRepresentedObjectHTML];
     [context pop];
-    [context release];
     
     
     // Create DOM objects from HTML
@@ -76,6 +76,18 @@
     
     DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
     [self setHTMLElement:element];
+    
+    
+    // Insert controllers
+    for (WEKWebEditorItem *aController in [context webEditorItems])
+    {
+        WEKWebEditorItem *parent = [aController parentWebEditorItem];
+        if (parent && ![parent parentWebEditorItem])
+        {
+            [self addChildWebEditorItem:aController];
+        }
+    }
+    [context release];
 }
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
