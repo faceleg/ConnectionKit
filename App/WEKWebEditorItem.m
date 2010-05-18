@@ -72,6 +72,9 @@
 {
     OBPRECONDITION(controller);
     
+    if ([controller parentWebEditorItem] == self) return;   // nothing to do
+    
+    
     NSArray *children = [[self childWebEditorItems] arrayByAddingObject:controller];
     if (!children) children = [NSArray arrayWithObject:controller];
     [_childControllers release]; _childControllers = [children copy];
