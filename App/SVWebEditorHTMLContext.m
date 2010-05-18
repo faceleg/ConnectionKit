@@ -66,7 +66,7 @@
 
 - (void)finishWithCurrentItem;
 {
-    _currentItem = [_currentItem parentWebEditorItem];
+    _currentItem = (SVDOMController *)[_currentItem parentWebEditorItem];
 }
 
 - (void)willBeginWritingGraphic:(SVGraphic *)object
@@ -167,7 +167,7 @@
     [controller setHTMLContext:self];
 }
 
-- (WEKWebEditorItem *)currentItem; { return _currentItem; }
+- (SVDOMController *)currentItem; { return _currentItem; }
 
 #pragma mark Text Blocks
 

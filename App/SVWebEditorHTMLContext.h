@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 
-@class WEKWebEditorItem, SVDOMController, SVSidebarDOMController;
+@class SVDOMController, SVSidebarDOMController;
 @class SVContentObject, SVSidebar, SVSidebarPageletsController;
 @class KSObjectKeyPathPair, SVMediaRecord;
 
@@ -17,7 +17,7 @@
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
     NSMutableArray  *_items;
-    WEKWebEditorItem *_currentItem;  // weak ref
+    SVDOMController *_currentItem;  // weak ref
     
     NSMutableSet    *_objectKeyPathPairs;
     
@@ -68,7 +68,7 @@
 
 
 #pragma mark Current Item
-- (WEKWebEditorItem *)currentItem;
+- (SVDOMController *)currentItem;
 
 
 @end
