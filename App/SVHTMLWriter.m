@@ -19,6 +19,23 @@
     [super dealloc];
 }
 
+#pragma mark Elements/Comments
+
+- (void)writeEndTagWithComment:(NSString *)comment;
+{
+    [self writeEndTag];
+    
+    [self writeString:@" "];
+    
+    [self openComment];
+    [self writeString:@" "];
+    [self writeText:comment];
+    [self writeString:@" "];
+    [self closeComment];
+}
+
+#pragma mark Delegate
+
 @synthesize delegate = _delegate;
 
 - (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;

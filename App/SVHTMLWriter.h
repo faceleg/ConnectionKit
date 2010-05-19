@@ -25,7 +25,15 @@
     id <SVHTMLWriterDelegate>   _delegate;
 }
 
+#pragma mark Elements/Comments
+//  For when you have just closed an element and want to end up with this:
+//  </div> <!-- comment -->
+- (void)writeEndTagWithComment:(NSString *)comment;
+
+
+#pragma mark Delegate
 @property(nonatomic, assign) id <SVHTMLWriterDelegate> delegate;
+
 
 @end
 
