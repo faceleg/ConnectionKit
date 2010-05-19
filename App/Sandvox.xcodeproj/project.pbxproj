@@ -535,6 +535,8 @@
 		27EF5C9C0D6B974E0024575B /* NSBundle+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */; };
 		27EF5CE30D6B9D210024575B /* BDAlias+QuickLook.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */; };
 		27EF5CE40D6B9D210024575B /* BDAlias+QuickLook.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */; };
+		27EF99C111A4205600FC8424 /* KSXMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27EF99C011A4205600FC8424 /* KSXMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27EF99C311A4205600FC8424 /* KSXMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27EF99C211A4205600FC8424 /* KSXMLWriter.m */; };
 		27F0341A0D34E55B005CD5B7 /* KTImageScalingSettings.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */; settings = {ATTRIBUTES = (); }; };
 		27F0341B0D34E55B005CD5B7 /* KTImageScalingSettings.m in Sources */ = {isa = PBXBuildFile; fileRef = 27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */; };
 		27F243B3106BC8B9007FEC56 /* WEKWebEditorItem.h in Headers */ = {isa = PBXBuildFile; fileRef = 27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */; };
@@ -2087,6 +2089,8 @@
 		27EF5C9A0D6B974E0024575B /* NSBundle+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSBundle+QuickLook.m"; path = "../Code/QuickLook/NSBundle+QuickLook.m"; sourceTree = SOURCE_ROOT; };
 		27EF5CE10D6B9D210024575B /* BDAlias+QuickLook.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "BDAlias+QuickLook.h"; sourceTree = "<group>"; };
 		27EF5CE20D6B9D210024575B /* BDAlias+QuickLook.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "BDAlias+QuickLook.m"; sourceTree = "<group>"; };
+		27EF99C011A4205600FC8424 /* KSXMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSXMLWriter.h; sourceTree = "<group>"; };
+		27EF99C211A4205600FC8424 /* KSXMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSXMLWriter.m; sourceTree = "<group>"; };
 		27F034180D34E55B005CD5B7 /* KTImageScalingSettings.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTImageScalingSettings.h; sourceTree = "<group>"; };
 		27F034190D34E55B005CD5B7 /* KTImageScalingSettings.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTImageScalingSettings.m; sourceTree = "<group>"; };
 		27F243B1106BC8B9007FEC56 /* WEKWebEditorItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebEditorItem.h; sourceTree = "<group>"; };
@@ -4971,6 +4975,8 @@
 				27A6098311282AC0007C301F /* KSStringStream.h */,
 				27A6098411282AC0007C301F /* KSStringStream.m */,
 				27D152F91191E54A003C8214 /* KSHTMLWriter+Buffering.m */,
+				27EF99C011A4205600FC8424 /* KSXMLWriter.h */,
+				27EF99C211A4205600FC8424 /* KSXMLWriter.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5618,6 +5624,7 @@
 				27FA98851194BC0C003B8308 /* SVSidebarDOMController.h in Headers */,
 				CE1CFB011194DF0100F47941 /* SVDesignsController.h in Headers */,
 				27939A7E1196264E0091B5B4 /* WebEditingKit.h in Headers */,
+				27EF99C111A4205600FC8424 /* KSXMLWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7041,6 +7048,7 @@
 				27D152FA1191E54A003C8214 /* KSHTMLWriter+Buffering.m in Sources */,
 				27FA98861194BC0C003B8308 /* SVSidebarDOMController.m in Sources */,
 				CE1CFB021194DF0100F47941 /* SVDesignsController.m in Sources */,
+				27EF99C311A4205600FC8424 /* KSXMLWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
