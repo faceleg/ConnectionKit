@@ -27,7 +27,7 @@
 
 
 @class KSBorderlessWindow;
-@class KSTextField, KSPopUpButton;
+@class KSTextField, KSFancySchmancyBindingsPopUpButton;
 @class RoundedBox;
 @class KTLinkSourceView;
 @class SVPagesController;

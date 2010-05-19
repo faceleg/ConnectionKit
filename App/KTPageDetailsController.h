@@ -11,7 +11,7 @@
 
 enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSiteItemType, kPageSiteItemType, kMixedSiteItemType = -1 };
 
-@class SVPagesController, KSPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, KTDocWindowController;
+@class SVPagesController, KSFancySchmancyBindingsPopUpButton, KTPageDetailsBoxView, MAAttachedWindow, KTDocWindowController;
 
 
 @interface KTPageDetailsController : NSViewController
@@ -30,7 +30,7 @@ enum { kUnknownSiteItemType = 0, kLinkSiteItemType, kTextSiteItemType, kFileSite
 
 	IBOutlet NSTextField			*oSlashSeparator;
 	IBOutlet NSTextField			*oIndexDotSeparator;
-	IBOutlet KSPopUpButton			*oExtensionPopup;
+	IBOutlet KSFancySchmancyBindingsPopUpButton			*oExtensionPopup;
 	IBOutlet NSTextField			*oMultiplePagesField;
 
 	IBOutlet NSTextField			*oExternalURLField;

@@ -10,7 +10,7 @@
 #import "KSPopUpButton.h"
 
 
-@interface KTCollectionIndexFilenameButton : KSPopUpButton
+@interface KTCollectionIndexFilenameButton : KSFancySchmancyBindingsPopUpButton
 {
 	
 }
