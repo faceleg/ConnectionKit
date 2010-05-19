@@ -15,6 +15,8 @@
 
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
+static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependenciesObservationContext";
+
 
 @class KTPage, SVWebEditorHTMLContext, SVDOMController, SVTextDOMController;
 @class SVWebContentObjectsController;

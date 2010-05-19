@@ -203,7 +203,7 @@
 {
     OBASSERT(_dependencies);
     
-    // Ignore parser properties
+    // Ignore parser properties – why? Mike.
     if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
         [_dependencies addObject:pair];

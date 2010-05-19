@@ -45,7 +45,6 @@
 
 
 NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewControllerWillUpdateNotification";
-static NSString *sWebViewDependenciesObservationContext = @"SVWebViewDependenciesObservationContext";
 
 
 @interface SVWebEditorViewController ()

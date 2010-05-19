@@ -86,8 +86,10 @@
 
 - (void)dealloc
 {
-    [_context release];
+    [self removeAllDependencies];
     [_dependencies release];
+    
+    [_context release];
     
     [super dealloc];
 }
@@ -200,12 +202,25 @@
     // Ignore parser properties
     if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
-        [_dependencies addObject:pair];
+        if (![_dependencies containsObject:pair])
+        {
+            [_dependencies addObject:pair];
+            
+            [[pair object] addObserver:self
+                            forKeyPath:[pair keyPath]
+                               options:0
+                               context:sWebViewDependenciesObservationContext];
+        }
     }
 }
 
 - (void)removeAllDependencies;
 {
+    for (KSObjectKeyPathPair *aDependency in [self dependencies])
+    {
+        [[aDependency object] removeObserver:self forKeyPath:[aDependency keyPath]];
+    }
+    
     [_dependencies removeAllObjects];
 }
 
@@ -230,6 +245,23 @@
     }
     
     return result;
+}
+
+#pragma mark KVO
+
+- (void)observeValueForKeyPath:(NSString *)keyPath
+                      ofObject:(id)object
+                        change:(NSDictionary *)change
+                       context:(void *)context
+{
+    if (context == sWebViewDependenciesObservationContext)
+    {
+        [self setNeedsUpdate];
+    }
+    else
+    {
+        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+    }
 }
 
 @end
