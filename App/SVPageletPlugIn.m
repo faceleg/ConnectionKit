@@ -111,12 +111,18 @@ static id <SVPlugInContext> sCurrentContext;
 {
     // Parse our built-in template
     SVTemplate *template = [[self bundle] HTMLTemplate];
-	
-    SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                                                        component:self];
-    
-    [parser parseIntoHTMLContext:(SVHTMLContext *)context];
-    [parser release];
+    if ( template )
+    {
+        SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                                                            component:self];
+        
+        [parser parseIntoHTMLContext:(SVHTMLContext *)context];
+        [parser release];
+    }
+    else if ( [[self bundle] objectForInfoDictionaryKey:@"KTTemplateName"] )
+    {
+        OBPRECONDITION(template); // we're defining a template in Info.plist but there isn't one there!
+    }	
 }
 
 #pragma mark Identifier
