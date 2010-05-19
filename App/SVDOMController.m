@@ -169,6 +169,14 @@
 
 - (void)setNeedsUpdate;
 {
+    // By default, controllers don't know how to update, so must update parent instead
+    if ([self methodForSelector:@selector(update)] == 
+        [SVDOMController instanceMethodForSelector:@selector(update)])
+    {
+        return [super setNeedsUpdate];
+    }
+    
+    
     // Try to get hold of the controller in charge of update coalescing
     WEKWebEditorView *webEditor = [self webEditor];
 	id controller = (id)[webEditor delegate];
@@ -292,6 +300,16 @@
 #pragma mark Updating
 
 - (void)update; { }
+
+- (void)setNeedsUpdate;
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    id controller = (id)[webEditor delegate];
+    if ([controller respondsToSelector:_cmd] || !webEditor)
+    {
+        [controller performSelector:_cmd];
+    }
+}
 
 - (void)updateIfNeeded; // recurses down the tree
 {

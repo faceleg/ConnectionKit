@@ -50,7 +50,6 @@
 - (void)update; // override to push changes through to the DOM. Rarely call directly. MUST call super
 
 @property(nonatomic, readonly) BOOL needsUpdate;
-- (void)setNeedsUpdate; // call to mark for needing update.
 - (void)updateIfNeeded; // recurses down the tree
 
 @property(nonatomic, copy, readonly) NSSet *dependencies;
@@ -86,7 +85,10 @@
 
 
 #pragma mark Updating
+
 - (void)update;
+
+- (void)setNeedsUpdate; // WEKWebEditorItem can't manage updating, so passes off to view controller
 - (void)updateIfNeeded; // recurses down the tree
 - (SVWebEditorHTMLContext *)HTMLContext;
 
