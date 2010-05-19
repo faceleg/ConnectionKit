@@ -88,12 +88,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Updating
 
-- (void)update
+// Leave commented out until ready to implement
+/*- (void)update
 {
     [self willUpdate];
     
     [self didUpdate];
-}
+}*/
 
 @synthesize updating = _isUpdating;
 
@@ -608,7 +609,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         if (![self isUpdating])
         {
-            [[self webEditorViewController] setNeedsUpdate];
+            [self setNeedsUpdate];
         }
     }
     else
