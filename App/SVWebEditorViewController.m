@@ -936,6 +936,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
                                                                            withObject:nil];
         }
     }
+    else if (action == @selector(reload:))
+    {
+        [self doCommandBySelector:action];
+    }
+    
     
     return NO;
 }

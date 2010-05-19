@@ -40,8 +40,9 @@
 
 - (IBAction)reload:(id)sender
 {
-    // Don't want to support this. Someone else will deal with it
-    [self makeNextResponderDoCommandBySelector:_cmd];
+    // Let delegate have a crack at it. (WebView doesn't inform delegate by default)
+    [[[self webEditor] delegate] webEditor:[self webEditor]
+                       doCommandBySelector:_cmd];
 }
 
 #pragma mark Dragging Destination
