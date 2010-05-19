@@ -417,6 +417,9 @@
 
 #pragma mark Raw Writing
 
+// Ignore
+- (void)writeNewline { }
+
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {
     //  Pretty similar to -[SVRichText richText]. Perhaps we can merge the two eventually?
