@@ -1239,6 +1239,7 @@ typedef enum {
         if (handle == kSVGraphicNoHandle)
         {
             [[NSCursor arrowCursor] set];
+            [super mouseMoved:theEvent];
         }
         else
         {
