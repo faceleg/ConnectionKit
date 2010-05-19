@@ -800,8 +800,6 @@
 		CE01A7630EAFD63600BDF264 /* KSPluginLoader.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A65E0EAFD63600BDF264 /* KSPluginLoader.m */; };
 		CE01A7640EAFD63600BDF264 /* KSPopUpButton.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A65F0EAFD63600BDF264 /* KSPopUpButton.h */; };
 		CE01A7650EAFD63600BDF264 /* KSPopUpButton.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6600EAFD63600BDF264 /* KSPopUpButton.m */; };
-		CE01A7660EAFD63600BDF264 /* KSPopUpButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6610EAFD63600BDF264 /* KSPopUpButtonCell.h */; };
-		CE01A7670EAFD63600BDF264 /* KSPopUpButtonCell.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6620EAFD63600BDF264 /* KSPopUpButtonCell.m */; };
 		CE01A7680EAFD63600BDF264 /* KSPrefsController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6630EAFD63600BDF264 /* KSPrefsController.h */; };
 		CE01A7690EAFD63600BDF264 /* KSPrefsController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6640EAFD63600BDF264 /* KSPrefsController.m */; };
 		CE01A76A0EAFD63600BDF264 /* KSProgressPanel.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6650EAFD63600BDF264 /* KSProgressPanel.h */; };
@@ -2429,8 +2427,6 @@
 		CE01A65E0EAFD63600BDF264 /* KSPluginLoader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPluginLoader.m; sourceTree = "<group>"; };
 		CE01A65F0EAFD63600BDF264 /* KSPopUpButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPopUpButton.h; sourceTree = "<group>"; };
 		CE01A6600EAFD63600BDF264 /* KSPopUpButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPopUpButton.m; sourceTree = "<group>"; };
-		CE01A6610EAFD63600BDF264 /* KSPopUpButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPopUpButtonCell.h; sourceTree = "<group>"; };
-		CE01A6620EAFD63600BDF264 /* KSPopUpButtonCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPopUpButtonCell.m; sourceTree = "<group>"; };
 		CE01A6630EAFD63600BDF264 /* KSPrefsController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPrefsController.h; sourceTree = "<group>"; };
 		CE01A6640EAFD63600BDF264 /* KSPrefsController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPrefsController.m; sourceTree = "<group>"; };
 		CE01A6650EAFD63600BDF264 /* KSProgressPanel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSProgressPanel.h; sourceTree = "<group>"; };
@@ -4794,8 +4790,6 @@
 				CE01A65E0EAFD63600BDF264 /* KSPluginLoader.m */,
 				CE01A65F0EAFD63600BDF264 /* KSPopUpButton.h */,
 				CE01A6600EAFD63600BDF264 /* KSPopUpButton.m */,
-				CE01A6610EAFD63600BDF264 /* KSPopUpButtonCell.h */,
-				CE01A6620EAFD63600BDF264 /* KSPopUpButtonCell.m */,
 				CE01A6630EAFD63600BDF264 /* KSPrefsController.h */,
 				CE01A6640EAFD63600BDF264 /* KSPrefsController.m */,
 				CE01A6650EAFD63600BDF264 /* KSProgressPanel.h */,
@@ -5392,7 +5386,6 @@
 				CE01A75E0EAFD63600BDF264 /* KSPlugInWrapper.h in Headers */,
 				CE01A7620EAFD63600BDF264 /* KSPluginLoader.h in Headers */,
 				CE01A7640EAFD63600BDF264 /* KSPopUpButton.h in Headers */,
-				CE01A7660EAFD63600BDF264 /* KSPopUpButtonCell.h in Headers */,
 				CE01A7680EAFD63600BDF264 /* KSPrefsController.h in Headers */,
 				CE01A76A0EAFD63600BDF264 /* KSProgressPanel.h in Headers */,
 				CE01A76C0EAFD63600BDF264 /* KSRegistrationController.h in Headers */,
@@ -6817,7 +6810,6 @@
 				CE01A75F0EAFD63600BDF264 /* KSPlugInWrapper.m in Sources */,
 				CE01A7630EAFD63600BDF264 /* KSPluginLoader.m in Sources */,
 				CE01A7650EAFD63600BDF264 /* KSPopUpButton.m in Sources */,
-				CE01A7670EAFD63600BDF264 /* KSPopUpButtonCell.m in Sources */,
 				CE01A7690EAFD63600BDF264 /* KSPrefsController.m in Sources */,
 				CE01A76B0EAFD63600BDF264 /* KSProgressPanel.m in Sources */,
 				CE01A76D0EAFD63600BDF264 /* KSRegistrationController.m in Sources */,
