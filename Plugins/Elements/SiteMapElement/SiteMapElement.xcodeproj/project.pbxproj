@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */; };
 		3C42DD920D64C5A2004F35FD /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C42DD910D64C5A2004F35FD /* License.rtf */; };
 		3C63A32611A1F66300FD801A /* SiteMapPlugIn.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C63A32511A1F66300FD801A /* SiteMapPlugIn.m */; };
 		3C63A32A11A1F67E00FD801A /* SiteMapPage.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C63A32811A1F67E00FD801A /* SiteMapPage.xib */; };
@@ -23,7 +22,6 @@
 		32DBCF630370AF2F00C91783 /* SiteMapElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteMapElement_Prefix.pch; sourceTree = "<group>"; };
 		3C42DD750D64C20B004F35FD /* SiteMapDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SiteMapDelegate.h; sourceTree = "<group>"; };
 		3C42DD760D64C20B004F35FD /* SiteMapDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SiteMapDelegate.m; sourceTree = "<group>"; };
-		3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = SiteMapTemplate.html; sourceTree = "<group>"; };
 		3C42DD7E0D64C228004F35FD /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42DD830D64C24C004F35FD /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		3C42DD850D64C258004F35FD /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -84,7 +82,6 @@
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				CE722FBF0D85CEDC00E9C592 /* sitemap.icns */,
 				3C63A32811A1F67E00FD801A /* SiteMapPage.xib */,
-				3C42DD7B0D64C21E004F35FD /* SiteMapTemplate.html */,
 				089C167DFE841241C02AAC07 /* InfoPlist.strings */,
 				3C42DD910D64C5A2004F35FD /* License.rtf */,
 			);
@@ -200,7 +197,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				8D5B49B0048680CD000E48DA /* InfoPlist.strings in Resources */,
-				3C42DD7D0D64C21E004F35FD /* SiteMapTemplate.html in Resources */,
 				3C42DD920D64C5A2004F35FD /* License.rtf in Resources */,
 				CE722FC00D85CEDC00E9C592 /* sitemap.icns in Resources */,
 				3C63A32A11A1F67E00FD801A /* SiteMapPage.xib in Resources */,

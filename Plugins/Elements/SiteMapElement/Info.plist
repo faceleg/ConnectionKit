@@ -61,8 +61,6 @@
 	<string>Site Map</string>
 	<key>KTSidebarChangeable</key>
 	<true/>
-	<key>KTTemplateName</key>
-	<string>SiteMapTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>SiteMapPlugIn</string>
 </dict>
