@@ -206,8 +206,14 @@
     // Ignore parser properties – why? Mike.
     if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
-        [_dependencies addObject:pair];
-        [[self currentItem] addDependency:pair];
+        if ([self currentItem])
+        {
+            [[self currentItem] addDependency:pair];
+        }
+        else
+        {
+            [_dependencies addObject:pair];
+        }
     }
 }
 
