@@ -577,11 +577,9 @@
 		
 		
         [context writeNewline];
-		[context writeEndTag];	// div
-        [context writeComment:@" sitemenu-content "];
+		[context writeEndTagWithComment:@"/sitemenu-content"];
         [context writeNewline];
-		[context writeEndTag];	// div
-		[context writeComment:@" sitemenu "];
+		[context writeEndTagWithComment:@"/sitemenu"];
 	}
 	return nil;
 }
