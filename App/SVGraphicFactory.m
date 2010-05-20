@@ -297,20 +297,10 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     {
         result = [[NSMutableArray alloc] init];
         
-        for (Class anElementClass in [self dataSources])
+        for (id <SVGraphicFactory> aFactory in [self pageletFactories])
         {
-            if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-            {
-                @try
-                {
-                    NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:nil];
-                    [result addObjectsFromArray:acceptedTypes];
-                }
-                @catch (NSException *exception)
-                {
-                    // TODO: Log warning
-                }
-            }
+            NSArray *acceptedTypes = [aFactory readablePasteboardTypes];
+            [result addObjectsFromArray:acceptedTypes];
         }
 	}
     
@@ -325,11 +315,11 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 }
 
 - (NSString *)name { return nil; }
-
 - (NSImage *)pluginIcon { return nil; }
-
 - (NSUInteger)priority; { return 5; }
 
 - (BOOL)isIndex; { return NO; }
+
+- (NSArray *)readablePasteboardTypes; { return nil; }
 
 @end

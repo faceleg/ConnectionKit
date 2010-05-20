@@ -24,6 +24,8 @@
 
 - (BOOL)isIndex;
 
+- (NSArray *)readablePasteboardTypes;
+
 @end
 
 

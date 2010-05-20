@@ -158,4 +158,24 @@
     return result;
 }
 
+- (NSArray *)readablePasteboardTypes;
+{
+    NSArray *result = nil;
+    
+    Class anElementClass = [[self bundle] principalClass];
+    if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
+    {
+        @try
+        {
+            result = [anElementClass readableTypesForPasteboard:nil];
+        }
+        @catch (NSException *exception)
+        {
+            // TODO: log
+        }
+    }
+    
+    return result;
+}
+
 @end
