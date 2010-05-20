@@ -19,8 +19,6 @@
     BOOL    _allowsBlockGraphics;
     
     NSMutableSet    *_attachments;
-    
-    WEKWebEditorItem        *_currentItem;  // weak ref
 }
 
 @property(nonatomic) BOOL allowsBlockGraphics;

@@ -90,6 +90,7 @@
     
     // Finish
     [context didEndWritingHTMLTextBlock];
+    [textBlock release];
 }
 
 - (NSUInteger)writeEarlyCallouts:(SVHTMLContext *)context;

@@ -366,7 +366,7 @@
 	{
 		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"creationDate"
                                                                            ascending:ascending];
-		result = [[NSArray alloc] initWithObject:orderingDescriptor];
+		result = [[[NSArray alloc] initWithObject:orderingDescriptor] autorelease];
 		[orderingDescriptor release];
 	}
 	
@@ -381,7 +381,7 @@
 	{
 		NSSortDescriptor *orderingDescriptor = [[NSSortDescriptor alloc] initWithKey:@"modificationDate" 
                                                                            ascending:ascending];
-		result = [[NSArray alloc] initWithObject:orderingDescriptor];
+		result = [[[NSArray alloc] initWithObject:orderingDescriptor] autorelease];
 		[orderingDescriptor release];
 	}
 	

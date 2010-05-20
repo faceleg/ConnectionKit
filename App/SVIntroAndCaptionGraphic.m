@@ -42,17 +42,20 @@
 {
     BOOL result = [super validateForInlinePlacement:error];
     
-    if (!(result = ![self showsIntroduction]))
+    if (result)
     {
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSManagedObjectValidationError
-                                localizedDescription:@"Graphics cannot show introduction while inline"];
-    }
-    else if (!(result = ![self showsCaption]))
-    {
-        *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                     code:NSManagedObjectValidationError
-                     localizedDescription:@"Graphics cannot show caption while inline"];
+        if (!(result = ![self showsIntroduction]))
+        {
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSManagedObjectValidationError
+                                    localizedDescription:@"Graphics cannot show introduction while inline"];
+        }
+        else if (!(result = ![self showsCaption]))
+        {
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSManagedObjectValidationError
+                                    localizedDescription:@"Graphics cannot show caption while inline"];
+        }
     }
     
     return result;

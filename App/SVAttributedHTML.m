@@ -127,7 +127,7 @@
     }
     
     
-    return [result autorelease];
+    return result;
 }
 
 + (NSArray *)pageletsFromPasteboard:(NSPasteboard *)pasteboard

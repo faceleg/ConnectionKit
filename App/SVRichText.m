@@ -65,7 +65,7 @@
                        range:[anAttachment range]];
     }
     
-    return result;
+    return [result autorelease];
 }
 
 - (void)setAttributedHTMLString:(NSAttributedString *)attributedHTML;
