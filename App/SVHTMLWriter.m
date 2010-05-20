@@ -9,6 +9,22 @@
 #import "SVHTMLWriter.h"
 
 
+@interface SVHTMLBuffer : NSObject <KSStringWriter>
+{
+@private
+    NSMutableString *_string;
+    SVHTMLBuffer    *_buffer;
+}
+
+- (id)initWithExistingBuffer:(SVHTMLBuffer *)buffer;
+- (SVHTMLBuffer *)subbuffer;
+- (NSMutableString *)mutableString;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVHTMLWriter
 
 - (void)dealloc
@@ -43,29 +59,7 @@
     return [[self delegate] HTMLWriter:writer writeDOMElement:element];
 }
 
-@end
-
-
-#pragma mark -
-
-
-@interface SVHTMLBuffer : NSObject <KSStringWriter>
-{
-@private
-    NSMutableString *_string;
-    SVHTMLBuffer    *_buffer;
-}
-
-- (id)initWithExistingBuffer:(SVHTMLBuffer *)buffer;
-- (SVHTMLBuffer *)subbuffer;
-- (NSMutableString *)mutableString;
-@end
-
-
-#pragma mark -
-
-
-@implementation SVHTMLWriter (Buffering)
+#pragma mark Buffering
 
 - (void)beginBuffering;
 {

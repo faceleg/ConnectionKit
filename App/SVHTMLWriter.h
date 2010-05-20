@@ -31,21 +31,17 @@
 - (void)writeEndTagWithComment:(NSString *)comment;
 
 
-#pragma mark Delegate
-@property(nonatomic, assign) id <SVHTMLWriterDelegate> delegate;
-
-
-@end
-
-
-#pragma mark -
-
-
-@interface SVHTMLWriter (Buffering)
+#pragma mark Buffering
 - (void)beginBuffering; // can be called multiple times to set up a stack of buffers
 - (void)discardBuffer;  // only discards the most recent buffer. If there's a lower one in the stack, that is restored
 - (void)flush;
 - (void)flushOnNextWrite;
+
+
+#pragma mark Delegate
+@property(nonatomic, assign) id <SVHTMLWriterDelegate> delegate;
+
+
 @end
 
 
