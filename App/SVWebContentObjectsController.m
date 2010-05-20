@@ -8,7 +8,7 @@
 
 #import "SVWebContentObjectsController.h"
 
-#import "SVGraphicFactoryManager.h"
+#import "SVGraphicFactory.h"
 #import "SVLogoImage.h"
 #import "KTPage.h"
 #import "SVRichText.h"

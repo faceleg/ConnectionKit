@@ -50,7 +50,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "KTHostSetupController.h"
 #import "KTIndexPluginWrapper.h"
 #import "KTPage.h"
-#import "SVGraphicFactoryManager.h"
+#import "SVGraphicFactory.h"
 #import "KTPrefsController.h"
 #import "KTPrefsController.h"
 #import "KTReleaseNotesController.h"
@@ -931,8 +931,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];
 			
-			[[SVGraphicFactoryManager sharedPageletFactoryManager] populateMenu:oAddPageletMenu atIndex:0];
-            [[SVGraphicFactoryManager sharedIndexFactoryManager] populateMenu:oInsertIndexMenu atIndex:0];
+			[[SVGraphicFactoryManager pageletsFactoryManager] populateMenu:oAddPageletMenu atIndex:0];
+            [[SVGraphicFactoryManager indexesFactoryManager] populateMenu:oInsertIndexMenu atIndex:0];
 				
             
 			BOOL firstRun = [defaults boolForKey:@"FirstRun"];

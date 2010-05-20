@@ -465,8 +465,8 @@
 		27AED25C1088C755005EDA77 /* DOMRange+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */; };
 		27AF0E2810F40B42000A6B15 /* SVPageInspector.h in Headers */ = {isa = PBXBuildFile; fileRef = 27AF0E2610F40B42000A6B15 /* SVPageInspector.h */; };
 		27AF0E2910F40B42000A6B15 /* SVPageInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27AF0E2710F40B42000A6B15 /* SVPageInspector.m */; };
-		27B0BF6C1168B8840084BFE0 /* SVGraphicFactoryManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0BF6A1168B8840084BFE0 /* SVGraphicFactoryManager.h */; };
-		27B0BF6D1168B8840084BFE0 /* SVGraphicFactoryManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0BF6B1168B8840084BFE0 /* SVGraphicFactoryManager.m */; };
+		27B0BF6C1168B8840084BFE0 /* SVGraphicFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0BF6A1168B8840084BFE0 /* SVGraphicFactory.h */; };
+		27B0BF6D1168B8840084BFE0 /* SVGraphicFactory.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */; };
 		27B0BFE21168C1530084BFE0 /* photopage.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27B0BFE11168C1530084BFE0 /* photopage.icns */; };
 		27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */; };
 		27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */; };
@@ -1968,8 +1968,8 @@
 		27AED25A1088C754005EDA77 /* DOMRange+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMRange+Karelia.m"; sourceTree = "<group>"; };
 		27AF0E2610F40B42000A6B15 /* SVPageInspector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPageInspector.h; sourceTree = "<group>"; };
 		27AF0E2710F40B42000A6B15 /* SVPageInspector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageInspector.m; sourceTree = "<group>"; };
-		27B0BF6A1168B8840084BFE0 /* SVGraphicFactoryManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicFactoryManager.h; sourceTree = "<group>"; };
-		27B0BF6B1168B8840084BFE0 /* SVGraphicFactoryManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicFactoryManager.m; sourceTree = "<group>"; };
+		27B0BF6A1168B8840084BFE0 /* SVGraphicFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVGraphicFactory.h; sourceTree = "<group>"; };
+		27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVGraphicFactory.m; sourceTree = "<group>"; };
 		27B0BFE11168C1530084BFE0 /* photopage.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = photopage.icns; sourceTree = "<group>"; };
 		27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGraphic.h; sourceTree = "<group>"; };
 		27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVMediaGraphic.m; sourceTree = "<group>"; };
@@ -3510,8 +3510,8 @@
 		27B0BF681168B8220084BFE0 /* Registration */ = {
 			isa = PBXGroup;
 			children = (
-				27B0BF6A1168B8840084BFE0 /* SVGraphicFactoryManager.h */,
-				27B0BF6B1168B8840084BFE0 /* SVGraphicFactoryManager.m */,
+				27B0BF6A1168B8840084BFE0 /* SVGraphicFactory.h */,
+				27B0BF6B1168B8840084BFE0 /* SVGraphicFactory.m */,
 				27B0BFE11168C1530084BFE0 /* photopage.icns */,
 				274B8D89116A7D0400AAADB6 /* Video.icns */,
 			);
@@ -5589,7 +5589,7 @@
 				27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */,
 				27F36590115EB7BA003BDA5F /* SVArticle.h in Headers */,
 				27F365ED11602161003BDA5F /* SVMetricsInspector.h in Headers */,
-				27B0BF6C1168B8840084BFE0 /* SVGraphicFactoryManager.h in Headers */,
+				27B0BF6C1168B8840084BFE0 /* SVGraphicFactory.h in Headers */,
 				27B0C1B111694F250084BFE0 /* SVMediaGraphic.h in Headers */,
 				274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */,
 				278ACCC8116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h in Headers */,
@@ -7012,7 +7012,7 @@
 				27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */,
 				27F36591115EB7BA003BDA5F /* SVArticle.m in Sources */,
 				27F365EE11602161003BDA5F /* SVMetricsInspector.m in Sources */,
-				27B0BF6D1168B8840084BFE0 /* SVGraphicFactoryManager.m in Sources */,
+				27B0BF6D1168B8840084BFE0 /* SVGraphicFactory.m in Sources */,
 				27B0C1B311694F250084BFE0 /* SVMediaGraphic.m in Sources */,
 				274B8CC8116A76EE00AAADB6 /* SVMovie.m in Sources */,
 				278ACCC9116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m in Sources */,

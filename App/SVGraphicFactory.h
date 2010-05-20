@@ -1,5 +1,5 @@
 //
-//  SVGraphicFactoryManager.h
+//  SVGraphicFactory.h
 //  Sandvox
 //
 //  Created by Mike on 04/04/2010.
@@ -38,10 +38,10 @@
 
 #pragma mark Shared Objects
 
-+ (SVGraphicFactoryManager *)sharedPageletFactoryManager;
-+ (SVGraphicFactoryManager *)sharedIndexFactoryManager;
++ (SVGraphicFactoryManager *)pageletsFactoryManager;
++ (SVGraphicFactoryManager *)indexesFactoryManager;
 
-+ (id <SVGraphicFactory>)sharedTextBoxFactory;
++ (id <SVGraphicFactory>)textBoxFactory;
 
 
 #pragma mark Init

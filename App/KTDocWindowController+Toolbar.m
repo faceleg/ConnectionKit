@@ -27,7 +27,7 @@ TO DO:
 #import "KTElementPlugInWrapper.h"
 #import "KTIndexPlugInWrapper.h"
 #import "SVLinkManager.h"
-#import "SVGraphicFactoryManager.h"
+#import "SVGraphicFactory.h"
 #import "KTToolbars.h"
 
 #import "NSImage+KTExtensions.h"
@@ -200,7 +200,7 @@ TO DO:
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
-    [[SVGraphicFactoryManager sharedIndexFactoryManager] populateMenu:menu atIndex:1];
+    [[SVGraphicFactoryManager indexesFactoryManager] populateMenu:menu atIndex:1];
     
     
     return [result autorelease];
@@ -307,7 +307,7 @@ TO DO:
     
     	
 	// Add the proper menu items
-	[[SVGraphicFactoryManager sharedPageletFactoryManager] populateMenu:menu
+	[[SVGraphicFactoryManager pageletsFactoryManager] populateMenu:menu
                                                   atIndex:1];
 	
 	

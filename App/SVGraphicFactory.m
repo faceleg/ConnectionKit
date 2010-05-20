@@ -1,12 +1,12 @@
 //
-//  SVGraphicFactoryManager.m
+//  SVGraphicFactory.m
 //  Sandvox
 //
 //  Created by Mike on 04/04/2010.
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVGraphicFactoryManager.h"
+#import "SVGraphicFactory.h"
 
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
@@ -201,9 +201,9 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     }
 }
 
-+ (SVGraphicFactoryManager *)sharedPageletFactoryManager; { return sSharedPageletManager; }
-+ (SVGraphicFactoryManager *)sharedIndexFactoryManager; { return sSharedIndexManager; }
-+ (id <SVGraphicFactory>)sharedTextBoxFactory; { return sSharedTextBoxFactory; }
++ (SVGraphicFactoryManager *)pageletsFactoryManager; { return sSharedPageletManager; }
++ (SVGraphicFactoryManager *)indexesFactoryManager; { return sSharedIndexManager; }
++ (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
 
 #pragma mark Init
 
@@ -279,7 +279,7 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     }
     else
     {
-        result = [[self sharedTextBoxFactory] insertNewGraphicInManagedObjectContext:context];
+        result = [[self textBoxFactory] insertNewGraphicInManagedObjectContext:context];
         OBASSERT(result);
     }
     
