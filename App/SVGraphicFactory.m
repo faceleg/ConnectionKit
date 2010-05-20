@@ -91,6 +91,13 @@
 
 - (NSUInteger)priority; { return 1; }
 
+- (NSArray *)readablePasteboardTypes;
+{
+    NSArray *result = [NSImage imagePasteboardTypes];
+    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
+    return result;
+}
+
 @end
 
 
