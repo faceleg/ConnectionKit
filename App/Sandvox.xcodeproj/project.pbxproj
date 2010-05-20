@@ -500,8 +500,6 @@
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
 		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
-		27DB80D00EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB80CE0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h */; };
-		27DB80D10EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB80CF0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m */; };
 		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
@@ -2005,8 +2003,6 @@
 		27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAuxiliaryPageletTextDOMController.m; sourceTree = "<group>"; };
 		27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLContext.h; sourceTree = "<group>"; };
 		27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLContext.m; sourceTree = "<group>"; };
-		27DB80CE0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTElementPlugInWrapper+DataSourceRegistration.h"; sourceTree = "<group>"; };
-		27DB80CF0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTElementPlugInWrapper+DataSourceRegistration.m"; sourceTree = "<group>"; };
 		27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMElement+Karelia.h"; sourceTree = "<group>"; };
 		27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOMElement+Karelia.m"; sourceTree = "<group>"; };
 		27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOMNamedNodeMap+Karelia.h"; sourceTree = "<group>"; };
@@ -4457,8 +4453,6 @@
 				3C682B2D0D62300B00B4D485 /* KTDataSourceProtocol.h */,
 				3C682B300D62301900B4D485 /* KTDraggingInfo.h */,
 				3C682B310D62301E00B4D485 /* KTDraggingInfo.m */,
-				27DB80CE0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h */,
-				27DB80CF0EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m */,
 			);
 			name = DataSource;
 			sourceTree = "<group>";
@@ -5343,7 +5337,6 @@
 				2730D66D0DE18ACA004858F5 /* SVTemplateParser.h in Headers */,
 				2799832C0DF01BE8003C84B9 /* KTDesignPlaceholder.h in Headers */,
 				27C059B60E7299850033A715 /* Elements+Pasteboard.h in Headers */,
-				27DB80D00EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.h in Headers */,
 				276503480EAD29D200461A0E /* KTAbstractPage+Internal.h in Headers */,
 				2765059A0EADF91900461A0E /* KTPage+Internal.h in Headers */,
 				2765061E0EAE417200461A0E /* NSDocument+KTExtensions.h in Headers */,
@@ -6769,7 +6762,6 @@
 				27368B210DE499170045E406 /* KTStoredSet.m in Sources */,
 				2799832D0DF01BE8003C84B9 /* KTDesignPlaceholder.m in Sources */,
 				27C059B70E7299850033A715 /* Elements+Pasteboard.m in Sources */,
-				27DB80D10EA6B0C00099ED9E /* KTElementPlugInWrapper+DataSourceRegistration.m in Sources */,
 				2765061F0EAE417200461A0E /* NSDocument+KTExtensions.m in Sources */,
 				CE01A7280EAFD63600BDF264 /* CIImage+Karelia.m in Sources */,
 				CE01A72A0EAFD63600BDF264 /* KSAbstractBugReporter.m in Sources */,
