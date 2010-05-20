@@ -249,9 +249,9 @@
 
 - (NSArray *)registeredDraggedTypes;
 {
-    NSSet *plugInTypes = [KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES];
+    NSMutableSet *result = [[NSMutableSet alloc] initWithArray:
+                            [SVGraphicFactoryManager readablePasteboardTypes]];
     
-    NSMutableSet *result = [plugInTypes mutableCopy];
     [result addObjectsFromArray:[NSAttributedString attributedHTMStringPasteboardTypes]];
     [result addObject:kSVGraphicPboardType];
     

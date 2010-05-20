@@ -288,7 +288,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (NSArray *)registeredDraggedTypes;
 {
-    return [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:YES] allObjects];
+    return [SVGraphicFactoryManager readablePasteboardTypes];
 }
 
 #pragma mark NSDraggingDestination

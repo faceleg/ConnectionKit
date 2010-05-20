@@ -57,4 +57,8 @@
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
+#pragma mark Pasteboard
++ (NSArray *)readablePasteboardTypes;
+
+
 @end

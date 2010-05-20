@@ -24,11 +24,6 @@
                        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-
-/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
-+ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isPagelet;
-
-
 + (NSUInteger)numberOfItemsInPasteboard:(NSPasteboard *)draggingInfo;
 
 + (Class <KTDataSource>)highestPriorityDataSourceForPasteboard:(NSPasteboard *)draggingInfo index:(unsigned)anIndex isCreatingPagelet:(BOOL)isCreatingPagelet;

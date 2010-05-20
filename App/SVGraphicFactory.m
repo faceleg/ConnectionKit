@@ -286,4 +286,30 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     return result;
 }
 
+#pragma mark Pasteboard
+
+/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
++ (NSArray *)readablePasteboardTypes;
+{
+    NSMutableArray *result = [NSMutableArray array];
+	
+    for (Class anElementClass in [KTElementPlugInWrapper dataSources])
+    {
+        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
+        {
+            @try
+            {
+                NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:nil];
+                [result addObjectsFromArray:acceptedTypes];
+            }
+            @catch (NSException *exception)
+            {
+                // TODO: Log warning
+            }
+        }
+    }
+	
+    return result;
+}
+
 @end

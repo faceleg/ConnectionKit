@@ -159,12 +159,13 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	// Drag 'n' drop
     if (outlineView)
     {
-        NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
-                                     [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
-        
+        NSMutableArray *dragTypes = [[SVGraphicFactoryManager readablePasteboardTypes] mutableCopy];
         [dragTypes addObject:kKTPagesPboardType];
         [dragTypes addObject:kKTLocalLinkPboardAllowedType];		// allow a drag from a link connector
+        
         [outlineView registerForDraggedTypes:dragTypes];
+        [dragTypes release];
+        
         [outlineView setVerticalMotionCanBeginDrag:YES];
         [outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
         [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];

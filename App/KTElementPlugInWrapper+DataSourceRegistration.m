@@ -143,33 +143,6 @@
 
 #pragma mark -
 
-
-/*! returns unionSet of acceptedDragTypes from all known KTDataSources */
-+ (NSSet *)setOfAllDragSourceAcceptedDragTypesForPagelets:(BOOL)isCreatingPagelet
-{
-    NSMutableSet *result = [NSMutableSet set];
-	
-    NSEnumerator *pluginsEnumerator = [[self dataSources] objectEnumerator];
-    Class anElementClass;
-	while (anElementClass = [pluginsEnumerator nextObject])
-    {
-        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-        {
-            @try
-            {
-                NSArray *acceptedTypes = [anElementClass readableTypesForPasteboard:nil];
-                [result addObjectsFromArray:acceptedTypes];
-            }
-            @catch (NSException *exception)
-            {
-                // TODO: Log warning
-            }
-        }
-    }
-	
-    return [NSSet setWithSet:result];
-}
-
 /*!	Ask all the data sources to try to figure out how many items need to be processed in a drag
  */
 + (NSUInteger)numberOfItemsInPasteboard:(NSPasteboard *)pasteboard;
