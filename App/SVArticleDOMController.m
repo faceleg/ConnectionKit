@@ -68,7 +68,7 @@
 {
     NSManagedObjectContext *context = [[self representedObject] managedObjectContext];
     
-    SVGraphic *graphic = [SVGraphicFactoryManager graphicWithActionSender:sender
+    SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
                                            insertIntoManagedObjectContext:context];
     
     [self addGraphic:graphic placeInline:NO];
@@ -250,7 +250,7 @@
 - (NSArray *)registeredDraggedTypes;
 {
     NSMutableSet *result = [[NSMutableSet alloc] initWithArray:
-                            [SVGraphicFactoryManager graphicPasteboardTypes]];
+                            [SVGraphicFactory graphicPasteboardTypes]];
     
     [result addObjectsFromArray:[NSAttributedString attributedHTMStringPasteboardTypes]];
     [result addObject:kSVGraphicPboardType];

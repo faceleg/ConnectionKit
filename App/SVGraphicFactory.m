@@ -20,7 +20,7 @@
 #import "Registration.h"
 
 
-@interface SVTextBoxFactory : NSObject <SVGraphicFactory>
+@interface SVTextBoxFactory : SVGraphicFactory
 @end
 
 
@@ -58,15 +58,13 @@
 
 - (NSUInteger)priority; { return 1; }
 
-- (BOOL)isIndex; { return NO; }
-
 @end
 
 
 #pragma mark -
 
 
-@interface SVImageFactory : NSObject <SVGraphicFactory>
+@interface SVImageFactory : SVGraphicFactory
 @end
 
 
@@ -90,15 +88,13 @@
 
 - (NSUInteger)priority; { return 1; }
 
-- (BOOL)isIndex; { return NO; }
-
 @end
 
 
 #pragma mark -
 
 
-@interface SVMovieFactory : NSObject <SVGraphicFactory>
+@interface SVMovieFactory : SVGraphicFactory
 @end
 
 
@@ -120,22 +116,18 @@
     return [NSImage imageNamed:@"Video.icns"];
 }
 
-- (NSUInteger)priority; { return 5; }
-
-- (BOOL)isIndex; { return NO; }
-
 @end
 
 
 #pragma mark -
 
 
-@implementation SVGraphicFactoryManager
+@implementation SVGraphicFactory
 
 #pragma mark Shared Objects
 
-static SVGraphicFactoryManager *sSharedPageletManager;
-static SVGraphicFactoryManager *sSharedIndexManager;
+static NSArray *sPageletFactories;
+static NSArray *sIndexFactories;
 static id <SVGraphicFactory> sSharedTextBoxFactory;
 
 + (void)initialize
@@ -146,7 +138,7 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     }
     
     
-    if (!sSharedPageletManager)
+    if (!sPageletFactories)
     {
         // Order plug-ins first by priority, then by name
         NSSet *factories = [KTElementPlugInWrapper pageletPlugins];
@@ -164,13 +156,11 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
         [prioritySort release];
         [nameSort release];
         
-        NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
-        
-        sSharedPageletManager = [[SVGraphicFactoryManager alloc] initWithGraphicFactories:sortedPlugins];
+        sPageletFactories = [[factories KS_sortedArrayUsingDescriptors:sortDescriptors] copy];
     }
     
     
-    if (!sSharedIndexManager)
+    if (!sIndexFactories)
     {
         // Order plug-ins first by priority, then by name
         NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
@@ -194,37 +184,24 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
         [prioritySort release];
         [nameSort release];
         
-        NSArray *sortedPlugins = [factories KS_sortedArrayUsingDescriptors:sortDescriptors];
+        sIndexFactories = [[factories KS_sortedArrayUsingDescriptors:sortDescriptors] copy];
         [factories release];
-        
-        sSharedIndexManager = [[SVGraphicFactoryManager alloc] initWithGraphicFactories:sortedPlugins];
     }
 }
 
-+ (SVGraphicFactoryManager *)pageletsFactoryManager; { return sSharedPageletManager; }
-+ (SVGraphicFactoryManager *)indexesFactoryManager; { return sSharedIndexManager; }
++ (NSArray *)pageletFactories; { return sPageletFactories; }
++ (NSArray *)indexFactories; { return sIndexFactories; }
 + (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
-
-#pragma mark Init
-
-- (id)initWithGraphicFactories:(NSArray *)graphicFactories;
-{
-    [self init];
-    
-    _graphicFactories = [graphicFactories copy];
-    
-    return self;
-}
-
-@synthesize graphicFactories = _graphicFactories;
 
 #pragma mark Menu
 
 // nil targeted actions will be sent to firstResponder (the active document)
-// representedObject is the bundle of the plugin
-- (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
+// representedObject is the factory
++ (void)insertItemsWithGraphicFactories:(NSArray *)factories
+                                 inMenu:(NSMenu *)menu
+                                atIndex:(NSUInteger)index;
 {	
-    for (id <SVGraphicFactory> factory in [self graphicFactories])
+    for (id <SVGraphicFactory> factory in factories)
 	{
 		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
@@ -339,5 +316,20 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     
     return result;
 }
+
+#pragma mark SVGraphicFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    return nil;
+}
+
+- (NSString *)name { return nil; }
+
+- (NSImage *)pluginIcon { return nil; }
+
+- (NSUInteger)priority; { return 5; }
+
+- (BOOL)isIndex; { return NO; }
 
 @end

@@ -484,7 +484,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Create element
     KTPage *page = [self page];
     
-    SVGraphic *pagelet = [SVGraphicFactoryManager graphicWithActionSender:sender
+    SVGraphic *pagelet = [SVGraphicFactory graphicWithActionSender:sender
                                       insertIntoManagedObjectContext:[page managedObjectContext]];
     
     

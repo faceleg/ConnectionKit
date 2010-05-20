@@ -159,7 +159,7 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	// Drag 'n' drop
     if (outlineView)
     {
-        NSMutableArray *dragTypes = [[SVGraphicFactoryManager graphicPasteboardTypes] mutableCopy];
+        NSMutableArray *dragTypes = [[SVGraphicFactory graphicPasteboardTypes] mutableCopy];
         [dragTypes addObject:kKTPagesPboardType];
         [dragTypes addObject:kKTLocalLinkPboardAllowedType];		// allow a drag from a link connector
         

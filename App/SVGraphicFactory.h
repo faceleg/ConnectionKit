@@ -30,27 +30,19 @@
 #pragma mark -
 
 
-@interface SVGraphicFactoryManager : NSObject
-{
-  @private
-    NSArray *_graphicFactories;
-}
+@interface SVGraphicFactory : NSObject <SVGraphicFactory>
 
 #pragma mark Shared Objects
-
-+ (SVGraphicFactoryManager *)pageletsFactoryManager;
-+ (SVGraphicFactoryManager *)indexesFactoryManager;
-
++ (NSArray *)pageletFactories;  // objects conform to
++ (NSArray *)indexFactories;    // SVGraphicFactory protocol
 + (id <SVGraphicFactory>)textBoxFactory;
 
 
-#pragma mark Init
-- (id)initWithGraphicFactories:(NSArray *)graphicFactories;
+#pragma mark Menus
 
-@property(nonatomic, copy, readonly) NSArray *graphicFactories;
-
-- (void)populateMenu:(NSMenu *)menu atIndex:(NSUInteger)index;
-
++ (void)insertItemsWithGraphicFactories:(NSArray *)factories
+                                 inMenu:(NSMenu *)menu
+                                atIndex:(NSUInteger)index;
 
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box
 + (SVGraphic *)graphicWithActionSender:(id)sender

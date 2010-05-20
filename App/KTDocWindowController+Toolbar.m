@@ -200,7 +200,9 @@ TO DO:
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
-    [[SVGraphicFactoryManager indexesFactoryManager] populateMenu:menu atIndex:1];
+    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
+                                               inMenu:menu
+                                              atIndex:1];
     
     
     return [result autorelease];
@@ -307,7 +309,8 @@ TO DO:
     
     	
 	// Add the proper menu items
-	[[SVGraphicFactoryManager pageletsFactoryManager] populateMenu:menu
+	[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
+                                               inMenu:menu
                                                   atIndex:1];
 	
 	
