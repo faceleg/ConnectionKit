@@ -288,12 +288,35 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 
 #pragma mark Pasteboard
 
+/*  Returns a set of all the available KTElement classes that conform to the KTDataSource protocol
+ */
++ (NSSet *)dataSources
+{
+    NSDictionary *elements = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
+    NSMutableSet *result = [NSMutableSet setWithCapacity:[elements count]];
+	
+    
+    NSEnumerator *pluginsEnumerator = [elements objectEnumerator];
+    KTElementPlugInWrapper *aPlugin;
+	while (aPlugin = [pluginsEnumerator nextObject])
+    {
+		Class anElementClass = [[aPlugin bundle] principalClass];
+        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
+        {
+            [result addObject:anElementClass];
+            [anElementClass load];
+        }
+    }
+	
+    return result;
+}
+
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
-+ (NSArray *)readablePasteboardTypes;
++ (NSArray *)graphicPasteboardTypes;
 {
     NSMutableArray *result = [NSMutableArray array];
 	
-    for (Class anElementClass in [KTElementPlugInWrapper dataSources])
+    for (Class anElementClass in [self dataSources])
     {
         if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
         {

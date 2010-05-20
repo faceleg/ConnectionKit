@@ -58,7 +58,7 @@
 
 
 #pragma mark Pasteboard
-+ (NSArray *)readablePasteboardTypes;
++ (NSArray *)graphicPasteboardTypes;
 
 
 @end

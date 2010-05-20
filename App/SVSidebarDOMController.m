@@ -288,7 +288,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (NSArray *)registeredDraggedTypes;
 {
-    return [SVGraphicFactoryManager readablePasteboardTypes];
+    return [SVGraphicFactoryManager graphicPasteboardTypes];
 }
 
 #pragma mark NSDraggingDestination

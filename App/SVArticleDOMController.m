@@ -250,7 +250,7 @@
 - (NSArray *)registeredDraggedTypes;
 {
     NSMutableSet *result = [[NSMutableSet alloc] initWithArray:
-                            [SVGraphicFactoryManager readablePasteboardTypes]];
+                            [SVGraphicFactoryManager graphicPasteboardTypes]];
     
     [result addObjectsFromArray:[NSAttributedString attributedHTMStringPasteboardTypes]];
     [result addObject:kSVGraphicPboardType];

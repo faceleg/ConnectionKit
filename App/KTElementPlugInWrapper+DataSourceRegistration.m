@@ -22,29 +22,6 @@
 
 @implementation KTElementPlugInWrapper (DataSourceRegistration)
 
-/*  Returns a set of all the available KTElement classes that conform to the KTDataSource protocol
- */
-+ (NSSet *)dataSources
-{
-    NSDictionary *elements = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-    NSMutableSet *result = [NSMutableSet setWithCapacity:[elements count]];
-	
-    
-    NSEnumerator *pluginsEnumerator = [elements objectEnumerator];
-    KTElementPlugInWrapper *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
-    {
-		Class anElementClass = [[aPlugin bundle] principalClass];
-        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
-        {
-            [result addObject:anElementClass];
-            [anElementClass load];
-        }
-    }
-	
-    return result;
-}
-
 + (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
