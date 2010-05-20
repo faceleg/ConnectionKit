@@ -10,7 +10,7 @@
 #import "SVSidebar.h"
 
 #import "SVAttributedHTML.h"
-#import "KTElementPlugInWrapper+DataSourceRegistration.h"
+#import "SVGraphicFactory.h"
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
 #import "WebEditingKit.h"
