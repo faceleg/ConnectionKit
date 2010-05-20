@@ -300,7 +300,10 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
         for (id <SVGraphicFactory> aFactory in [self pageletFactories])
         {
             NSArray *acceptedTypes = [aFactory readablePasteboardTypes];
-            [result addObjectsFromArray:acceptedTypes];
+            for (NSString *aType in acceptedTypes)
+            {
+                if (![result containsObject:aType]) [result addObject:aType];
+            }
         }
 	}
     
