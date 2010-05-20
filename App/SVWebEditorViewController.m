@@ -744,7 +744,9 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     NSUInteger result = WebDragDestinationActionDHTML;
     
-    if (![[[draggingInfo draggingPasteboard] types] containsObject:@"com.karelia.html+graphics"])
+    NSArray *types = [[draggingInfo draggingPasteboard] types];
+    if (![types containsObject:kSVGraphicPboardType] &&
+        ![types containsObject:@"com.karelia.html+graphics"])
     {
         result = result | WebDragDestinationActionEdit;
     }
