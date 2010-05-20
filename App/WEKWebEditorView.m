@@ -1488,10 +1488,6 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 [[self dataSource] webEditor:self textBlockForDOMRange:editingRange];
                 
                 
-                // Ask the controller if it's sure of the drop
-                [controller webEditorTextValidateDrop:dragInfo proposedOperation:&result];
-                
-                
                 // Controller's HTML element determines where to draw the drop highlight
                 if (result > NSDragOperationNone) dropNode = [controller HTMLElement];
             }

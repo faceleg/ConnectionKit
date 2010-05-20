@@ -322,20 +322,6 @@
     [_undoCoalescingSelection release]; _undoCoalescingSelection = selection;
 }
 
-#pragma mark Dragging
-
-- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
-                proposedOperation:(NSDragOperation *)proposedOperation;
-{
-    // I wish I knew why I wrote this code in the first place! What is it for? – Mike
-    if ([info draggingSource] == [self webEditor])
-    {
-        *proposedOperation = NSDragOperationNone;
-    }
-    
-    return NO;
-}
-
 @end
 
 

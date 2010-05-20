@@ -580,27 +580,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                        graphicControllers:[self childWebEditorItems]];
 }
 
-#pragma mark Dragging
-
-- (BOOL)webEditorTextValidateDrop:(id <NSDraggingInfo>)info
-                proposedOperation:(NSDragOperation *)proposedOperation;
-{
-    // When dragging graphics within the Web Editor, want to move them rather than do a copy
-    
-    BOOL result = [super webEditorTextValidateDrop:info proposedOperation:proposedOperation];   // let super know
-    
-    if (!result)
-    {
-        WEKWebEditorView *webEditor = [self webEditor];
-        if ([info draggingSource] == webEditor)
-        {
-            *proposedOperation = NSDragOperationMove;
-        }
-    }
-    
-    return result;
-}
-
 #pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
