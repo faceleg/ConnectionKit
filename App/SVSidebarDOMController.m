@@ -398,7 +398,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         // Fallback to generic pasteboard support
         if ([pagelets count] < 1)
         {
-            pagelets = [KTElementPlugInWrapper graphicsFomPasteboard:pasteboard
+            pagelets = [SVGraphicFactory graphicsFomPasteboard:pasteboard
                                       insertIntoManagedObjectContext:moc];
         }
         

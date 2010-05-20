@@ -16,12 +16,6 @@
 
 @interface KTElementPlugInWrapper (DataSourceRegistration)
 
-+ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
-                      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-
-// Looks at just first item on pboard
-+ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
-                       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 + (NSUInteger)numberOfItemsInPasteboard:(NSPasteboard *)draggingInfo;

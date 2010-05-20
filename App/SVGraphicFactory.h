@@ -11,6 +11,8 @@
 
 #import <Cocoa/Cocoa.h>
 
+#import "SVPlugIn.h"
+
 
 @class SVGraphic;
 
@@ -24,7 +26,14 @@
 
 - (BOOL)isIndex;
 
+
+#pragma mark Pasteboard
+
 - (NSArray *)readablePasteboardTypes;
+- (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+                                               pasteboard:(NSPasteboard *)pasteboard;
+- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
+
 
 @end
 
@@ -52,6 +61,14 @@
 
 
 #pragma mark Pasteboard
+
++ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
+    insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
+// Looks at just first item on pboard
++ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
+      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+
 + (NSArray *)graphicPasteboardTypes;
 
 

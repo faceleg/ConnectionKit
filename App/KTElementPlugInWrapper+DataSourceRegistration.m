@@ -12,111 +12,12 @@
 #import "KTImageView.h"
 #import "SVPlugInGraphic.h"
 
-#import "NSArray+Karelia.h"
 #import "NSString+Karelia.h"
-
-#import "KSWebLocation.h"
 
 #import "Debug.h"
 
 
 @implementation KTElementPlugInWrapper (DataSourceRegistration)
-
-+ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
-    insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    SVGraphic *graphic = [self graphicFromPasteboard:pasteboard
-                                       insertIntoManagedObjectContext:context];
-    
-    NSArray *result = (graphic) ? [NSArray arrayWithObject:graphic] : nil;
-    return result;
-}
-
-+ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
-      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
-{
-    Class plugInClass = nil;
-    id pasteboardContents;
-    NSString *pasteboardType;
-    NSUInteger readingPriority = 0;
-    
-    
-    NSArray *datasources = [[self dataSources] allObjects];
-    for (Class aSource in datasources)
-    {
-        NSArray *types = [aSource readableTypesForPasteboard:pasteboard];
-        NSString *type = [pasteboard availableTypeFromArray:types];
-        if (type)
-        {
-            @try    // talking to a plug-in so might fail
-            {
-                // What should I read off the pasteboard?
-                id propertyList;
-                SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
-                if ([aSource respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
-                {
-                    readingOptions = [aSource readingOptionsForType:type pasteboard:pasteboard];
-                }
-                
-                if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
-                {
-                    propertyList = [pasteboard propertyListForType:type];
-                }
-                else if (readingOptions & SVPlugInPasteboardReadingAsString)
-                {
-                    propertyList = [pasteboard stringForType:type];
-                }
-                else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
-                {
-                    propertyList = [[KSWebLocation webLocationsFromPasteboard:pasteboard] firstObjectKS];
-                }
-                else
-                {
-                    propertyList = [pasteboard dataForType:type];
-                }
-                
-                
-                if (propertyList)
-                {
-                    NSUInteger priority = [aSource readingPriorityForPasteboardContents:propertyList
-                                                                                 ofType:type];
-                    if (priority > readingPriority)
-                    {
-                        plugInClass = aSource;
-                        pasteboardContents = propertyList;
-                        pasteboardType = type;
-                        readingPriority = priority;
-                    }
-                }
-            }
-            @catch (NSException *exception)
-            {
-                // TODO: Log warning
-            }
-        }
-    }
-    
-    
-    
-    
-    
-    // Try to create plug-in from pasteboard contents
-    if (plugInClass)
-    {
-        NSString *identifier = [plugInClass plugInIdentifier];
-        
-        SVPlugInGraphic *result = [SVPlugInGraphic insertNewGraphicWithPlugInIdentifier:identifier
-                                                                 inManagedObjectContext:context];
-        id plugIn = [result plugIn];
-        [plugIn awakeFromPasteboardContents:pasteboardContents ofType:pasteboardType];
-        
-        return result;
-    }
-    
-    
-    
-    return nil;
-}
 
 #pragma mark -
 

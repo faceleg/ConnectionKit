@@ -146,6 +146,8 @@ extern NSString *kSVGraphicPboardType;
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
+- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type;
+
 @end
 
 

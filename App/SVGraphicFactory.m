@@ -15,6 +15,9 @@
 #import "SVTextBox.h"
 #import "KTToolbars.h"
 
+#import "KSWebLocation.h"
+
+#import "NSArray+Karelia.h"
 #import "NSSet+Karelia.h"
 
 #import "Registration.h"
@@ -265,27 +268,95 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 
 #pragma mark Pasteboard
 
-/*  Returns a set of all the available KTElement classes that conform to the KTDataSource protocol
- */
-+ (NSSet *)dataSources
++ (NSArray *)graphicsFomPasteboard:(NSPasteboard *)pasteboard
+    insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    NSDictionary *elements = [KSPlugInWrapper pluginsWithFileExtension:kKTElementExtension];
-    NSMutableSet *result = [NSMutableSet setWithCapacity:[elements count]];
-	
+    SVGraphic *graphic = [self graphicFromPasteboard:pasteboard
+                      insertIntoManagedObjectContext:context];
     
-    NSEnumerator *pluginsEnumerator = [elements objectEnumerator];
-    KTElementPlugInWrapper *aPlugin;
-	while (aPlugin = [pluginsEnumerator nextObject])
+    NSArray *result = (graphic) ? [NSArray arrayWithObject:graphic] : nil;
+    return result;
+}
+
++ (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
+      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    id <SVGraphicFactory> factory = nil;
+    id pasteboardContents;
+    NSString *pasteboardType;
+    NSUInteger readingPriority = 0;
+    
+    
+    for (id <SVGraphicFactory> aFactory in [self pageletFactories])
     {
-		Class anElementClass = [[aPlugin bundle] principalClass];
-        if ([anElementClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
+        NSArray *types = [aFactory readablePasteboardTypes];
+        NSString *type = [pasteboard availableTypeFromArray:types];
+        if (type)
         {
-            [result addObject:anElementClass];
-            [anElementClass load];
+            @try    // talking to a plug-in so might fail
+            {
+                // What should I read off the pasteboard?
+                id propertyList;
+                SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
+                if ([aFactory respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
+                {
+                    readingOptions = [aFactory readingOptionsForType:type pasteboard:pasteboard];
+                }
+                
+                if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
+                {
+                    propertyList = [pasteboard propertyListForType:type];
+                }
+                else if (readingOptions & SVPlugInPasteboardReadingAsString)
+                {
+                    propertyList = [pasteboard stringForType:type];
+                }
+                else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
+                {
+                    propertyList = [[KSWebLocation webLocationsFromPasteboard:pasteboard] firstObjectKS];
+                }
+                else
+                {
+                    propertyList = [pasteboard dataForType:type];
+                }
+                
+                
+                if (propertyList)
+                {
+                    NSUInteger priority = [aFactory readingPriorityForPasteboardContents:propertyList
+                                                                                 ofType:type];
+                    if (priority > readingPriority)
+                    {
+                        factory = aFactory;
+                        pasteboardContents = propertyList;
+                        pasteboardType = type;
+                        readingPriority = priority;
+                    }
+                }
+            }
+            @catch (NSException *exception)
+            {
+                // TODO: Log warning
+            }
         }
     }
-	
-    return result;
+    
+    
+    
+    
+    
+    // Try to create plug-in from pasteboard contents
+    if (factory)
+    {        
+        SVGraphic *result = [factory insertNewGraphicInManagedObjectContext:context];
+        [result awakeFromPasteboardContents:pasteboardContents ofType:pasteboardType];
+        
+        return result;
+    }
+    
+    
+    
+    return nil;
 }
 
 /*! returns unionSet of acceptedDragTypes from all known KTDataSources */
@@ -324,5 +395,13 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 - (BOOL)isIndex; { return NO; }
 
 - (NSArray *)readablePasteboardTypes; { return nil; }
+
+- (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+                                               pasteboard:(NSPasteboard *)pasteboard;
+{
+    return 0;
+}
+
+- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type; { return 5; }
 
 @end

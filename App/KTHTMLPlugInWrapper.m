@@ -178,4 +178,43 @@
     return result;
 }
 
+- (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+                                               pasteboard:(NSPasteboard *)pasteboard;
+{
+    SVPlugInPasteboardReadingOptions result = SVPlugInPasteboardReadingAsData;
+    
+    @try
+    {
+        Class plugInClass = [[self bundle] principalClass];
+        if ([plugInClass respondsToSelector:_cmd])
+        {
+            result = [plugInClass readingOptionsForType:type
+                                             pasteboard:pasteboard];
+        }
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: log
+    }
+    
+    return result;
+}
+
+- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
+{
+    NSUInteger result = 5;
+    
+    @try
+    {
+        result = [[[self bundle] principalClass] readingPriorityForPasteboardContents:contents
+                                                                               ofType:type];
+    }
+    @catch (NSException *exception)
+    {
+        // TODO: log
+    }
+    
+    return result;
+}
+
 @end
