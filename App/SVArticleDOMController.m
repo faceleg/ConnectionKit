@@ -10,8 +10,6 @@
 
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
-#import "KTElementPlugInWrapper+DataSourceRegistration.h"
-#import "SVGraphic.h"
 #import "SVGraphicFactory.h"
 #import "SVHTMLContext.h"
 #import "KTPage.h"

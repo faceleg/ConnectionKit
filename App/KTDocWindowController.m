@@ -12,7 +12,6 @@
 #import "KTAbstractIndex.h"
 #import "SVApplicationController.h"
 #import "KTCodeInjectionController.h"
-#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "SVDesignChooserWindowController.h"
 #import "SVPagesController.h"
 #import "KTDocument.h"
@@ -819,7 +818,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         [progressPanel setMessageText:localizedStatus];
         [progressPanel setDoubleValue:i];
         
-        Class <KTDataSource> bestSource = [KTElementPlugInWrapper highestPriorityDataSourceForPasteboard:[info draggingPasteboard] index:i isCreatingPagelet:NO];
+        Class bestSource = [KTElementPlugInWrapper highestPriorityDataSourceForPasteboard:[info draggingPasteboard] index:i isCreatingPagelet:NO];
         if ( nil != bestSource )
         {
             NSMutableDictionary *dragDataDictionary = [NSMutableDictionary dictionary];

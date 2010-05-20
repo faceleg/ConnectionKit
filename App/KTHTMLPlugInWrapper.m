@@ -217,4 +217,21 @@
     return result;
 }
 
+- (SVGraphic *)graphicWithPasteboardContents:(id)contents
+                                      ofType:(NSString *)type
+              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVPlugInGraphic *result = nil;
+    
+    Class plugInClass = [[self bundle] principalClass];
+    if ([plugInClass conformsToProtocol:@protocol(SVPlugInPasteboardReading)])
+    {
+        result = (id)[self insertNewGraphicInManagedObjectContext:context];
+        [(id <SVPlugInPasteboardReading>)[result plugIn] awakeFromPasteboardContents:contents
+                                                                              ofType:type];
+    }
+    
+    return result;
+}
+
 @end

@@ -10,6 +10,7 @@
 
 #import "KTElementPlugInWrapper.h"
 #import "SVImage.h"
+#import "SVMediaRecord.h"
 #import "SVMovie.h"
 #import "SVPlugIn.h"
 #import "SVTextBox.h"
@@ -93,9 +94,56 @@
 
 - (NSArray *)readablePasteboardTypes;
 {
-    NSArray *result = [NSImage imagePasteboardTypes];
-    result = [result arrayByAddingObjectsFromArray:[KSWebLocation webLocationPasteboardTypes]];
+    NSArray *result = [KSWebLocation webLocationPasteboardTypes];
+    result = [result arrayByAddingObjectsFromArray:[NSImage imagePasteboardTypes]];
     return result;
+}
+
+- (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
+                                               pasteboard:(NSPasteboard *)pasteboard;
+{
+    SVPlugInPasteboardReadingOptions result = SVPlugInPasteboardReadingAsData;
+    
+    if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
+    {
+        result = SVPlugInPasteboardReadingAsWebLocation;
+    }
+    
+    return result;
+}
+
+- (SVGraphic *)graphicWithPasteboardContents:(id)contents
+                                      ofType:(NSString *)type
+              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    if ([[KSWebLocation webLocationPasteboardTypes] containsObject:type])
+    {
+        SVMediaRecord *media = [SVMediaRecord mediaWithURL:[contents URL]
+                                                entityName:@"GraphicMedia"
+                            insertIntoManagedObjectContext:context
+                                                     error:NULL];
+        
+        if (media)
+        {
+            SVImage *result = [SVImage insertNewImageWithMedia:media];
+            return result;
+        }
+    }
+    else if ([[NSImage imagePasteboardTypes] containsObject:type])
+    {
+        SVMediaRecord *media = [SVMediaRecord mediaWithFileContents:contents
+                                                        URLResponse:nil
+                                                         entityName:@"GraphicMedia"
+                                     insertIntoManagedObjectContext:context];
+        
+        if (media)
+        {
+            SVImage *result = [SVImage insertNewImageWithMedia:media];
+            return result;
+        }
+    }
+    
+    return nil;
 }
 
 @end
@@ -355,8 +403,9 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     // Try to create plug-in from pasteboard contents
     if (factory)
     {        
-        SVGraphic *result = [factory insertNewGraphicInManagedObjectContext:context];
-        [result awakeFromPasteboardContents:pasteboardContents ofType:pasteboardType];
+        SVGraphic *result = [factory graphicWithPasteboardContents:pasteboardContents
+                                                            ofType:pasteboardType
+                                    insertIntoManagedObjectContext:context];
         
         return result;
     }
@@ -409,6 +458,14 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     return 0;
 }
 
-- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type; { return 5; }
+- (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
+{ return 5; }
+
+- (SVGraphic *)graphicWithPasteboardContents:(id)contents
+                                      ofType:(NSString *)type
+              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    return nil;
+}
 
 @end

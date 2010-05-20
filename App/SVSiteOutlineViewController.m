@@ -9,7 +9,6 @@
 #import "SVSiteOutlineViewController.h"
 
 #import "KTDocument.h"
-#import "KTElementPlugInWrapper+DataSourceRegistration.h"
 #import "KTSite.h"
 #import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"

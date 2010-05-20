@@ -396,8 +396,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     if (![self showBorder]) [self setBordered:NO];
 }
 
-- (void)awakeFromPasteboardContents:(id)pasteboardContents ofType:(NSString *)type; { }
-
 #pragma mark SVPageletPlugInContainer
 
 - (NSString *)title	// get title, but without attributes

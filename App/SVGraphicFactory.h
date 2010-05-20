@@ -10,11 +10,10 @@
 
 
 #import <Cocoa/Cocoa.h>
+#import "SVGraphic.h"
 
 #import "SVPlugIn.h"
 
-
-@class SVGraphic;
 
 @protocol SVGraphicFactory <NSObject>
 
@@ -30,9 +29,15 @@
 #pragma mark Pasteboard
 
 - (NSArray *)readablePasteboardTypes;
+
 - (SVPlugInPasteboardReadingOptions)readingOptionsForType:(NSString *)type
                                                pasteboard:(NSPasteboard *)pasteboard;
+
 - (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type;
+
+- (SVGraphic *)graphicWithPasteboardContents:(id)contents
+                                      ofType:(NSString *)type
+              insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 @end
