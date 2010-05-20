@@ -126,16 +126,6 @@
     NSDragOperation result = NSDragOperationNone;
     
     
-    // Ignore images
-    NSArray *locations = [KSWebLocation webLocationsFromPasteboard:[sender draggingPasteboard]];
-    for (KSWebLocation *aLocation in locations)
-    {
-        NSString *extension = [[aLocation URL] pathExtension];
-        NSString *type = [NSString UTIForFilenameExtension:extension];
-        if ([type conformsToUTI:(NSString *)kUTTypeImage]) return result;
-    }
-    
-    
     DOMNode *aNode = [self childForDraggingInfo:sender];
     
     // What action to take though?
