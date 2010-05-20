@@ -137,23 +137,21 @@
     
     
     DOMNode *aNode = [self childForDraggingInfo:sender];
-    if (aNode)
+    
+    // What action to take though?
+    NSDragOperation mask = [sender draggingSourceOperationMask];
+    if ([sender draggingSource] == [self webEditor])
     {
-        // What action to take though?
-        NSDragOperation mask = [sender draggingSourceOperationMask];
-        if ([sender draggingSource] == [self webEditor])
-        {
-            result = mask & NSDragOperationGeneric;
-        }
-        
-        if (!result) result = mask & NSDragOperationCopy;
-        if (!result) result = mask & NSDragOperationGeneric;
-        
-        if (result) 
-        {
-            [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
-            [[self webEditor] moveDragHighlightToDOMNode:[self HTMLElement]];
-        }
+        result = mask & NSDragOperationGeneric;
+    }
+    
+    if (!result) result = mask & NSDragOperationCopy;
+    if (!result) result = mask & NSDragOperationGeneric;
+    
+    if (result) 
+    {
+        [self moveDragCaretToBeforeDOMNode:aNode draggingInfo:sender];
+        [[self webEditor] moveDragHighlightToDOMNode:[self HTMLElement]];
     }
     
     
@@ -301,7 +299,15 @@
 - (void)moveDragCaretToBeforeDOMNode:(DOMNode *)node draggingInfo:(id <NSDraggingInfo>)dragInfo;
 {
     DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
-    [range setStartBefore:node];
+    if (node)
+    {
+        [range setStartBefore:node];
+    }
+    else
+    {
+        [range setStartAfter:[[self textHTMLElement] lastChild]];
+    }
+    
     [[self webEditor] moveDragCaretToDOMRange:range];
     return;
     
