@@ -32,12 +32,12 @@ TO DO:
 
 #import "NSImage+KTExtensions.h"
 
-#import "KSPullDownToolbarItem.h"
-
 #import "NSImage+Karelia.h"
 #import "NSToolbar+Karelia.h"
 
 #import "Debug.h"
+
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
 @interface KTDocWindowController ( PrivateToolbar )
@@ -148,7 +148,7 @@ TO DO:
 - (NSToolbarItem *)makeNewPageToolbarItemWithIdentifier:(NSString *)identifier
                                               imageName:(NSString *)imageName;
 {
-    KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
+    BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
     
     // construct pulldown button
@@ -194,7 +194,7 @@ TO DO:
 
 - (NSToolbarItem *)makeIndexesToolbarItemWithIdentifier:(NSString *)identifier;
 {
-    KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
+    BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
     
     // Generate the menu
@@ -293,7 +293,7 @@ TO DO:
  */
 - (NSToolbarItem *)makePageletsToolbarItemWithIdentifier:(NSString *)identifier;
 {
-	KSPullDownToolbarItem *result = [[KSPullDownToolbarItem alloc] initWithItemIdentifier:identifier];
+	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
     
     // Preapre the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
