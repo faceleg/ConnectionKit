@@ -718,13 +718,15 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     else
     {
-        result = YES;
-        
         // Want serialized pagelets on pboard
         SVGraphic *graphic = [[sender selectedItem] representedObject];
-        [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:self];
-        [graphic writeToPasteboard:pasteboard];
-        
+        if ([graphic isKindOfClass:[SVGraphic class]])
+        {
+            result = YES;
+            
+            [pasteboard addTypes:[NSArray arrayWithObject:kSVGraphicPboardType] owner:self];
+            [graphic writeToPasteboard:pasteboard];
+        }
         
         // Place HTML on pasteboard
         //[pasteboard setString:html forType:NSHTMLPboardType];
