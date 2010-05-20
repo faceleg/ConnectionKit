@@ -157,15 +157,18 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	
 	
 	// Drag 'n' drop
-	NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
-                                 [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
-    
-	[dragTypes addObject:kKTPagesPboardType];
-	[dragTypes addObject:kKTLocalLinkPboardAllowedType];		// allow a drag from a link connector
-	[outlineView registerForDraggedTypes:dragTypes];
-	[outlineView setVerticalMotionCanBeginDrag:YES];
-	[outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
-    [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
+    if (outlineView)
+    {
+        NSMutableArray *dragTypes = [NSMutableArray arrayWithArray:
+                                     [[KTElementPlugInWrapper setOfAllDragSourceAcceptedDragTypesForPagelets:NO] allObjects]];
+        
+        [dragTypes addObject:kKTPagesPboardType];
+        [dragTypes addObject:kKTLocalLinkPboardAllowedType];		// allow a drag from a link connector
+        [outlineView registerForDraggedTypes:dragTypes];
+        [outlineView setVerticalMotionCanBeginDrag:YES];
+        [outlineView setDraggingSourceOperationMask:NSDragOperationEvery forLocal:YES];
+        [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
+    }
 	
 	
 	// Retain the new view
