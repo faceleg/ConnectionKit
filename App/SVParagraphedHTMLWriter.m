@@ -322,8 +322,7 @@
             }
             else
             {
-                [self setTextContent:@"\n"];
-                [context writeNewline];
+                [self setTextContent:@"\n"];    // XML Writer will take care of writing its own whitespace
             }
         }
         
