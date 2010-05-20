@@ -333,6 +333,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 + (id)graphicWithSerializedProperties:(id)properties
        insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
+    OBPRECONDITION(properties);
+    
     NSString *entityName = [properties objectForKey:@"entity"];
     
     SVGraphic *result = [NSEntityDescription
@@ -348,18 +350,23 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
      insertIntoManagedObjectContext:(NSManagedObjectContext *)context
                 preferredPlacements:(NSArray **)preferredPlacements;
 {
-    id plist = [pasteboard propertyListForType:kSVGraphicPboardType];
-    
-    id graphic = [self graphicWithSerializedProperties:plist
-                        insertIntoManagedObjectContext:context];
-    
-    if (preferredPlacements)
+    if ([[pasteboard types] containsObject:kSVGraphicPboardType])
     {
-        *preferredPlacements = [NSArray arrayWithObject:
-                                [plist objectForKey:@"preferredPlacement"]];
+        id plist = [pasteboard propertyListForType:kSVGraphicPboardType];
+        
+        id graphic = [self graphicWithSerializedProperties:plist
+                            insertIntoManagedObjectContext:context];
+        
+        if (preferredPlacements)
+        {
+            *preferredPlacements = [NSArray arrayWithObject:
+                                    [plist objectForKey:@"preferredPlacement"]];
+        }
+        
+        return [NSArray arrayWithObject:graphic];
     }
     
-    return [NSArray arrayWithObject:graphic];
+    return nil;
 }
 
 - (void)awakeFromPropertyList:(id)propertyList;
