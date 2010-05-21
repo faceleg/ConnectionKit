@@ -156,8 +156,9 @@
     }
     
     
-    // Tidy up
+    // Finish up
     [context release];
+    [super webEditorTextDidChange];
 }
 
 #pragma mark Alignment

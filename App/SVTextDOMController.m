@@ -106,7 +106,38 @@
 
 @synthesize editing = _isEditing;
 
-- (void)webEditorTextDidChange; { }
+- (void)webEditorTextDidChange;
+{
+    // Wait until after -didChangeText so subclass has done its work
+    WEKWebEditorView *webEditor = [self webEditor];
+    NSUndoManager *undoManager = [webEditor undoManager];
+    
+    if (_nextChangeIsSuitableForUndoCoalescing)
+    {
+        _nextChangeIsSuitableForUndoCoalescing = NO;
+        
+        // Process the change so that nothing is scheduled to be added to the undo manager        
+        if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
+        {
+            // Push through any pending changes. (MOCs observe this notification and call -processPendingChanges)
+            [[NSNotificationCenter defaultCenter]
+             postNotificationName:NSUndoManagerCheckpointNotification
+             object:undoManager];
+            
+            // Record the action identifier and DOM selection so we know whether to coalesce the next change
+            [self setUndoCoalescingActionIdentifier:[undoManager lastRegisteredActionIdentifier]
+                                   selectedDOMRange:[[webEditor selectedDOMRange] copy]];
+        }
+    }
+    
+    
+    // Tidy up
+    if (_isCoalescingUndo)
+    {
+        [undoManager enableUndoRegistration];
+        _isCoalescingUndo = NO;
+    }
+}
 
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;
 {
@@ -176,45 +207,6 @@
 }
 
 - (void)webEditorTextDidBeginEditing; { }
-
-- (void)webEditorDidChange:(NSNotification *)notification;
-{
-    WEKWebEditorView *webEditor = [self webEditor];
-    if ([notification object] != webEditor) return;
-    
-    
-    // Handle the edit
-    [self webEditorTextDidChange];
-    
-    
-    // Wait until after -didChangeText so subclass has done its work
-    NSUndoManager *undoManager = [webEditor undoManager];
-    if (_nextChangeIsSuitableForUndoCoalescing)
-    {
-        _nextChangeIsSuitableForUndoCoalescing = NO;
-        
-        // Process the change so that nothing is scheduled to be added to the undo manager        
-        if ([undoManager respondsToSelector:@selector(lastRegisteredActionIdentifier)])
-        {
-            // Push through any pending changes. (MOCs observe this notification and call -processPendingChanges)
-            [[NSNotificationCenter defaultCenter]
-             postNotificationName:NSUndoManagerCheckpointNotification
-             object:undoManager];
-            
-            // Record the action identifier and DOM selection so we know whether to coalesce the next change
-            [self setUndoCoalescingActionIdentifier:[undoManager lastRegisteredActionIdentifier]
-                                   selectedDOMRange:[[webEditor selectedDOMRange] copy]];
-        }
-    }
-    
-    
-    // Tidy up
-    if (_isCoalescingUndo)
-    {
-        [undoManager enableUndoRegistration];
-        _isCoalescingUndo = NO;
-    }
-}
 
 - (void)webEditorTextDidEndEditing:(NSNotification *)notification;
 {

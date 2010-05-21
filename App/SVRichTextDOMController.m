@@ -290,8 +290,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     }
     
     
-    // Tidy up
+    // Finish up
     [writer release];
+    [super webEditorTextDidChange];
 }
 
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer; { }
