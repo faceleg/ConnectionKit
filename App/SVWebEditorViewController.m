@@ -15,11 +15,9 @@
 #import "SVLogoImage.h"
 #import "KTMaster.h"
 #import "KTPage.h"
-#import "SVGraphic.h"
 #import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVRichTextDOMController.h"
-#import "SVHTMLContext.h"
 #import "SVLink.h"
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
@@ -408,6 +406,15 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 }
 
 @synthesize HTMLContext = _context;
+- (void)setHTMLContext:(SVWebEditorHTMLContext *)context;
+{
+    if (context != [self HTMLContext])
+    {
+        [[self HTMLContext] setWebEditorViewController:nil];
+        [_context release]; _context = [context retain];
+        [context setWebEditorViewController:self];
+    }
+}
 
 @synthesize page = _page;
 - (void)setPage:(KTPage *)page
