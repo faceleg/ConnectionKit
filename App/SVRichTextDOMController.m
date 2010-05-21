@@ -195,7 +195,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             DOMDocumentFragment *fragment = [domDoc
                                              createDocumentFragmentWithMarkupString:editingHTML
                                              baseURL:nil];
-            [editingHTML release];
             
             [[node mutableChildDOMNodes] removeAllObjects];
             [node appendChildNodes:[fragment childNodes]];
@@ -204,6 +203,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
             // Remove source dragged items if they came from us. No need to call -didChangeText as the insertion will do that
             [webEditor removeDraggedItems];
         }
+        
+        [editingHTML release];
     }
     
     
