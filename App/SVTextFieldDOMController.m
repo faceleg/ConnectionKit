@@ -68,6 +68,7 @@
 
 #pragma mark Web Editor Item
 
+/*      turned off for #75052
 - (BOOL)isSelectable
 {
     BOOL result = ([self representedObject] && [[self selectableAncestors] count] == 0);
@@ -75,7 +76,7 @@
     if ([self textBlock] && [[self textBlock] hyperlinkString]) result = NO;
     
     return result;
-}
+}*/
 
 #pragma mark Updating
 
