@@ -65,6 +65,13 @@
     return self;
 }
 
+- (id)initWithRepresentedObject:(id)modelObject;
+{
+    self = [self init];
+    [self setRepresentedObject:modelObject];
+    return self;
+}
+
 - (id)initWithContentObject:(SVContentObject *)contentObject
               inDOMDocument:(DOMDocument *)document;
 {
@@ -280,9 +287,9 @@
 
 @implementation SVContentObject (SVDOMController)
 
-- (Class)DOMControllerClass;
+- (SVDOMController *)newDOMController;
 {
-    return [SVDOMController class];
+    return [[SVDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

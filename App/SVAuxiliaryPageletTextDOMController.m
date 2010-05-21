@@ -43,6 +43,9 @@
 
 @implementation SVAuxiliaryPageletText (SVAuxiliaryPageletTextDOMController)
 
-- (Class)DOMControllerClass; { return [SVAuxiliaryPageletTextDOMController class]; }
+- (SVDOMController *)newDOMController;
+{
+    return [[SVAuxiliaryPageletTextDOMController alloc] initWithRepresentedObject:self];
+}
 
 @end

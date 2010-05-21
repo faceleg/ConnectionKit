@@ -149,10 +149,9 @@
     
     
     // Create controller for graphic
-    SVDOMController *controller = [[[image DOMControllerClass] alloc]
+    SVDOMController *controller = [[image newDOMController]
                                    initWithHTMLDocument:(DOMHTMLDocument *)[imageElement ownerDocument]];
     [controller setHTMLContext:[textController HTMLContext]];
-    [controller setRepresentedObject:image];
     
     [textController addChildWebEditorItem:controller];
     [controller release];

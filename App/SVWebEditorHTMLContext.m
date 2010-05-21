@@ -72,7 +72,10 @@
 - (void)willBeginWritingGraphic:(SVGraphic *)object
 {
     [super willBeginWritingGraphic:object];
-    [self willBeginWritingContentObject:object];
+    
+    SVDOMController *controller = [object newDOMController];
+    [self willBeginWritingObjectWithDOMController:controller];
+    [controller release];
 }
 
 - (void)didEndWritingGraphic;
@@ -93,8 +96,7 @@
     if ([value isKindOfClass:[SVContentObject class]])
     {
         // Copy basic properties from text block
-        result = [[[value DOMControllerClass] alloc] init];
-        [result setRepresentedObject:value];
+        result = (SVTextDOMController *)[value newDOMController];
         [result setHTMLContext:self];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
@@ -142,19 +144,6 @@
     [super endCallout];
     
     [self finishWithCurrentItem];
-}
-
-- (void)willBeginWritingContentObject:(SVContentObject *)object;
-{
-    // Create controller
-    SVDOMController *controller = [[[object DOMControllerClass] alloc] init];
-    [controller setRepresentedObject:object];
-    
-    // Store controller
-    [self willBeginWritingObjectWithDOMController:controller];
-    
-    // Finish up
-    [controller release];
 }
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
@@ -243,9 +232,8 @@
     [super willBeginWritingSidebar:sidebar];
     
     // Create controller
-    SVSidebarDOMController *controller =
-    [[[sidebar DOMControllerClass] alloc]
-     initWithPageletsController:[self sidebarPageletsController]];
+    SVSidebarDOMController *controller = [[SVSidebarDOMController alloc]
+                                          initWithPageletsController:[self sidebarPageletsController]];
     
     [controller setRepresentedObject:sidebar];
     

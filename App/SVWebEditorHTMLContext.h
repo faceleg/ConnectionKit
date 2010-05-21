@@ -45,7 +45,6 @@
 
 #pragma mark Low-level controllers
 // Ignored by regular contexts. Call one of the -didEndWriting… methods after
-- (void)willBeginWritingContentObject:(SVContentObject *)object;
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
 
 

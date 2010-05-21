@@ -44,9 +44,9 @@
 
 @implementation SVGraphic (SVDOMController)
 
-- (Class)DOMControllerClass;
+- (SVDOMController *)newDOMController;
 {
-    return [SVGraphicDOMController class];
+    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

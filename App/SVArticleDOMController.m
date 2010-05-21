@@ -361,6 +361,11 @@
 
 
 @implementation SVArticle (SVArticleDOMController)
-- (Class)DOMControllerClass { return [SVArticleDOMController class]; }
+
+- (SVDOMController *)newDOMController;
+{
+    return [[SVArticleDOMController alloc] initWithRepresentedObject:self];
+}
+
 @end
 

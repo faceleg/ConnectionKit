@@ -308,9 +308,9 @@
 
 @implementation SVTitleBox (SVDOMController)
 
-- (Class)DOMControllerClass;
+- (SVDOMController *)newDOMController;
 {
-    return [SVTextFieldDOMController class];
+    return [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

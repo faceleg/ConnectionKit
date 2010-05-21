@@ -471,10 +471,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Create controller for graphic
-    SVDOMController *controller = [[[graphic DOMControllerClass] alloc]
+    SVDOMController *controller = [[graphic newDOMController]
                                    initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
     [controller setHTMLContext:[self HTMLContext]];
-    [controller setRepresentedObject:graphic];
     
     
     // Generate & insert DOM node
@@ -605,9 +604,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 @implementation SVRichText (SVDOMController)
 
-- (Class)DOMControllerClass;
+- (SVDOMController *)newDOMController;
 {
-    return [SVRichTextDOMController class];
+    return [[SVRichTextDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end
