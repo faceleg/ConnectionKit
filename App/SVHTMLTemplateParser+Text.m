@@ -86,6 +86,7 @@
 													    hyperlink:hyperlink];
 		
 		// Generate HTML
+        [[SVHTMLContext currentContext] startWritingInline];
 		[textBlock writeHTML];
 	}
 	else
