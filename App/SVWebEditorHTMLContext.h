@@ -16,6 +16,7 @@
 
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
+  @private
     NSMutableArray  *_items;
     SVDOMController *_currentItem;  // weak ref
     
