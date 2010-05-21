@@ -81,9 +81,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 
 - (void)dealloc
 {
-    OBASSERT(!_stream);
-    
-	[myTemplate release];
+    [myTemplate release];
 	[myComponent release];
 	[myCache release];
 	[myOverriddenKeys release];
@@ -113,8 +111,6 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	[myCache release];
 	myCache = cache;
 }
-
-@synthesize stringWriter = _stream;
 
 #pragma mark -
 #pragma mark KVC Overriding
@@ -195,7 +191,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		if (component && template)
 		{
 			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
-			[parser parseWithStringWriter:_stream];
+			[parser parseWithStringWriter:_writer];
 			[parser release];
 		}
 	}
@@ -257,9 +253,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 				// Parse!
 				NSScanner *scanner = [NSScanner scannerWithString:template];
 				[scanner setCharactersToBeSkipped:nil];
-                _stream = stream;
+                _writer = stream;
 				result = [self startHTMLStringByScanning:scanner];
-                _stream = nil;
+                _writer = nil;
 			}
 		}
 	}
@@ -331,7 +327,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
         
 		// find [[ ... keep what was before it.
         if ( [inScanner scanUpToString:kComponentTagStartDelim intoString:&beforeText] ) {
-            [_stream writeString:beforeText];
+            [self writeString:beforeText];
         }
         
 		// Get the [[
@@ -411,25 +407,25 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 								}
 							}
 							OBASSERT(toAppend);
-							[_stream writeString:toAppend];
+							[self writeString:toAppend];
 						}
 					}
 					else if ([tag hasPrefix:kStringIndicator])
 					{
 						NSString *toAppend = [self componentLocalizedString:tag];
-						if (toAppend) [_stream writeString:toAppend];
+						if (toAppend) [self writeString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetStringIndicator])
 					{
 						NSString *toAppend = [self componentTargetLocalizedString:tag];
 						OBASSERT(toAppend);
-						[_stream writeString:toAppend];
+						[self writeString:toAppend];
 					}
 					else if ([tag hasPrefix:kTargetMainBundleStringIndicator])
 					{
 						NSString *toAppend = [self mainBundleLocalizedString:tag];
 						OBASSERT(toAppend);
-						[_stream writeString:toAppend];
+						[self writeString:toAppend];
 					}
 					else	// not for echoing.  Do something.
 					{
@@ -461,7 +457,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 							
 							if (htmlFragment)
 							{
-								[_stream writeString:htmlFragment];
+								[self writeString:htmlFragment];
 							}
 						}
 						else
@@ -529,6 +525,18 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	return sIndicatorCharacterSet;
 }
+
+#pragma mark KSStringWriter
+
+- (void)writeString:(NSString *)string;
+{
+    [_writer writeString:string];
+}
+
+- (void)close; { [_writer close]; }
+
+// Leff in for compatibility with templates
+- (id <KSStringWriter>)stringWriter { return _writer; }
 
 #pragma mark -
 #pragma mark Comment Function

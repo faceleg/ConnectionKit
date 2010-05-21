@@ -18,18 +18,18 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "KSStringStream.h"
 #import "NSString+Karelia.h"    // for ComparisonType
 
 
 @class KTHTMLParserMasterCache;
-@protocol KSStringWriter;
-
 
 @protocol KTTemplateParserDelegate;
-@interface SVTemplateParser : NSObject
+
+
+@interface SVTemplateParser : NSObject <KSStringWriter>
 {
-	@private
-	
+  @private
 	NSString				*myID;
 	NSString				*myTemplate;
 	id						myComponent;
@@ -37,7 +37,7 @@
 	id						myDelegate;
 	SVTemplateParser		*myParentParser;	// Weak ref
 	
-    id <KSStringWriter> _stream;  // weak ref, only used mid-parse
+    id <KSStringWriter> _writer;  // weak ref, only used mid-parse
 	NSMutableDictionary	*myOverriddenKeys;
 	
 	NSUInteger  _ifFunctionDepth;
@@ -97,13 +97,11 @@
                              keyPath:(NSString *)keyPath
                               scaner:(NSScanner *)inScanner;
 - (BOOL)doForeachIterationWithObject:(id)object
-template:(NSString *)stuffToRepeat
-keyPath:(NSString *)keyPath;
+    template:(NSString *)stuffToRepeat
+    keyPath:(NSString *)keyPath;
 
 
 #pragma mark Support
-
-@property(nonatomic, readonly) id <KSStringWriter> stringWriter;
 
 @property(nonatomic, retain, readonly) KTHTMLParserMasterCache *cache;
 - (void)didEncounterKeyPath:(NSString *)keyPath ofObject:(id)object;
