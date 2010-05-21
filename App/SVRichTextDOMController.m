@@ -611,7 +611,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVRichTextDOMController alloc] initWithRepresentedObject:self];
+    SVTextDOMController *result = [[SVRichTextDOMController alloc] init];
+    [result setRepresentedObject:self];
+    [result setRichText:YES];
+    
+    return result;
 }
 
 @end

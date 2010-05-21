@@ -310,7 +310,17 @@
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
+    SVTextDOMController *result = [[SVTextFieldDOMController alloc] init];
+    [result setRepresentedObject:self];
+    [result setRichText:YES];
+    
+    // Bind to model
+    [result bind:NSValueBinding
+        toObject:self
+     withKeyPath:@"textHTMLString"
+         options:nil];
+    
+    return result;
 }
 
 @end

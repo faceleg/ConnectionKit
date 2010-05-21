@@ -97,24 +97,11 @@
     {
         // Copy basic properties from text block
         result = (SVTextDOMController *)[value newDOMController];
-        [result setHTMLContext:self];
-        [result setRichText:[aTextBlock isRichText]];
-        [result setFieldEditor:[aTextBlock isFieldEditor]];
-        
-        if ([value isKindOfClass:[SVTitleBox class]])
-        {
-            // Bind to model
-            [result bind:NSValueBinding
-                toObject:value
-             withKeyPath:@"textHTMLString"
-                 options:nil];
-        }
     }
     else
     {
         // Copy basic properties from text block
         result = [[SVTextFieldDOMController alloc] init];
-        [result setHTMLContext:self];
         [result setRichText:[aTextBlock isRichText]];
         [result setFieldEditor:[aTextBlock isFieldEditor]];
         
@@ -125,6 +112,7 @@
              options:nil];
     }
     
+    [result setHTMLContext:self];
     [result setTextBlock:aTextBlock];
     
     return [result autorelease];
