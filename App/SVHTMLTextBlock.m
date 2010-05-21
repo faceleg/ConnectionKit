@@ -410,7 +410,7 @@
 			CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
-        [context writeStartTag:@"span" idName:nil className:CSSClassName];
+        [context writeStartTag:@"span" idName:nil className:@"in"];
 	}
 }
 
