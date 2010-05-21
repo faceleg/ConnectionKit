@@ -216,7 +216,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         result = YES;
     }
     
-    result = [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
+    if (result) result = [super webEditorTextShouldInsertNode:node replacingDOMRange:range givenAction:action];
     return result;
 }
 
@@ -501,6 +501,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [webEditor setSelectedItems:[NSArray arrayWithObject:controller]];
     }
+    
+    
+    [controller release];
 }
 
 - (IBAction)insertFile:(id)sender;
