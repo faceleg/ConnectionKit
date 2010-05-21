@@ -11,7 +11,7 @@
 #import "KTDocument.h"
 
 
-@class SVHTMLContext;
+@class SVHTMLContext, SVDOMController;
 
 
 @interface SVHTMLTextBlock : NSObject
@@ -86,6 +86,10 @@
 - (void)writeEndTags:(SVHTMLContext *)context;
 
 - (NSString *)processHTML:(NSString *)originalHTML;
+
+
+#pragma mark DOM Controller
+- (SVDOMController *)newDOMController;
 
 
 @end

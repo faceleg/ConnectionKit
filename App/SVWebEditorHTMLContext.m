@@ -8,7 +8,6 @@
 
 #import "SVWebEditorHTMLContext.h"
 
-#import "SVRichTextDOMController.h"
 #import "SVCalloutDOMController.h"
 #import "SVGraphic.h"
 #import "SVHTMLTextBlock.h"
@@ -85,39 +84,6 @@
     [super didEndWritingGraphic];
 }
 
-- (SVTextDOMController *)makeControllerForTextBlock:(SVHTMLTextBlock *)aTextBlock; 
-{    
-    SVTextDOMController *result = nil;
-    
-    
-    // Use the right sort of text area
-    id value = [[aTextBlock HTMLSourceObject] valueForKeyPath:[aTextBlock HTMLSourceKeyPath]];
-    
-    if ([value isKindOfClass:[SVContentObject class]])
-    {
-        // Copy basic properties from text block
-        result = (SVTextDOMController *)[value newDOMController];
-    }
-    else
-    {
-        // Copy basic properties from text block
-        result = [[SVTextFieldDOMController alloc] init];
-        [result setRichText:[aTextBlock isRichText]];
-        [result setFieldEditor:[aTextBlock isFieldEditor]];
-        
-        // Bind to model
-        [result bind:NSValueBinding
-            toObject:[aTextBlock HTMLSourceObject]
-         withKeyPath:[aTextBlock HTMLSourceKeyPath]
-             options:nil];
-    }
-    
-    [result setHTMLContext:self];
-    [result setTextBlock:aTextBlock];
-    
-    return [result autorelease];
-}
-
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
     SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
@@ -159,8 +125,9 @@
     [super willBeginWritingHTMLTextBlock:textBlock];
     
     // Create controller
-    SVDOMController *controller = [self makeControllerForTextBlock:textBlock];
+    SVDOMController *controller = [textBlock newDOMController];
     [self willBeginWritingObjectWithDOMController:controller];
+    [controller release];
 }
 
 - (void)didEndWritingHTMLTextBlock;

@@ -16,6 +16,7 @@
 #import "SVImageReplacementURLProtocol.h"
 #import "KTPage+Internal.h"
 #import "SVRichText.h"
+#import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -473,6 +474,38 @@
 		result = [self fixPageLinksFromString:result];
 	}
     
+    
+    
+    return result;
+}
+
+#pragma mark DOM Controller
+
+- (SVDOMController *)newDOMController;
+{    
+    // Use the right sort of text area
+    id value = HTML_VALUE;
+    
+    if ([value isKindOfClass:[SVContentObject class]])
+    {
+        // Copy basic properties from text block
+        SVDOMController *controller = [value newDOMController];
+        [(SVTextDOMController *)controller setTextBlock:self];
+        return controller;
+    }
+    
+    
+    // Copy basic properties from text block
+    SVTextDOMController *result = [[SVTextFieldDOMController alloc] init];
+    [result setTextBlock:self];
+    [result setRichText:[self isRichText]];
+    [result setFieldEditor:[self isFieldEditor]];
+    
+    // Bind to model
+    [result bind:NSValueBinding
+        toObject:[self HTMLSourceObject]
+     withKeyPath:[self HTMLSourceKeyPath]
+         options:nil];
     
     
     return result;
