@@ -292,6 +292,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Finish up
+    [html release];
     [writer release];
     [super webEditorTextDidChange];
 }
