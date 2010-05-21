@@ -31,6 +31,7 @@
 }
 
 - (NSArray *)DOMControllers;    // the top-level controllers, with sub-controllers descending from them
+- (void)addDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 @property(nonatomic, copy, readonly) NSSet *dependencies;
@@ -47,11 +48,6 @@
 
 #pragma mark View Controller
 @property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
-
-
-#pragma mark Low-level controllers
-// Ignored by regular contexts. Call one of the -didEndWriting… methods after
-- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
 
 
 @end

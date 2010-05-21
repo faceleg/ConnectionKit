@@ -73,7 +73,7 @@
     [super willBeginWritingGraphic:object];
     
     SVDOMController *controller = [object newDOMController];
-    [self willBeginWritingObjectWithDOMController:controller];
+    [self addDOMController:controller];
     [controller release];
 }
 
@@ -87,7 +87,7 @@
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
     SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
-    [self willBeginWritingObjectWithDOMController:controller];
+    [self addDOMController:controller];
     [controller release];
 
     [super beginCalloutWithAlignmentClassName:alignment];
@@ -100,7 +100,7 @@
     [self finishWithCurrentItem];
 }
 
-- (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
+- (void)addDOMController:(SVDOMController *)controller;
 {
     if (_currentDOMController)
     {
@@ -126,7 +126,7 @@
     
     // Create controller
     SVDOMController *controller = [textBlock newDOMController];
-    [self willBeginWritingObjectWithDOMController:controller];
+    [self addDOMController:controller];
     [controller release];
 }
 
@@ -193,7 +193,7 @@
     [controller setRepresentedObject:sidebar];
     
     // Store controller
-    [self willBeginWritingObjectWithDOMController:controller];
+    [self addDOMController:controller];
     [self setSidebarDOMController:controller];
     
     
