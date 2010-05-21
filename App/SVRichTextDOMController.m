@@ -245,7 +245,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Are there DOM Controllers from the change waiting to be inserted?
     if (_changeHTMLContext)
     {
-        for (WEKWebEditorItem *anItem in [_changeHTMLContext webEditorItems])
+        for (WEKWebEditorItem *anItem in [_changeHTMLContext DOMControllers])
         {
             // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
             if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];

@@ -217,7 +217,7 @@
         
         
         // Insert controllers
-        for (WEKWebEditorItem *anItem in [context webEditorItems])
+        for (WEKWebEditorItem *anItem in [context DOMControllers])
         {
             // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
             if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];

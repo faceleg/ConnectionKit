@@ -35,7 +35,7 @@
 {
     [super initWithStringWriter:stream];
     
-    _items = [[NSMutableArray alloc] init];
+    _DOMControllers = [[NSMutableArray alloc] init];
     _dependencies = [[NSMutableSet alloc] init];
     _media = [[NSMutableSet alloc] init];
     
@@ -44,7 +44,7 @@
 
 - (void)dealloc
 {
-    [_items release];
+    [_DOMControllers release];
     [_dependencies release];
     [_media release];
     [_sidebarDOMController release];
@@ -59,14 +59,14 @@
 
 #pragma mark DOM Controllers
 
-- (NSArray *)webEditorItems;
+- (NSArray *)DOMControllers;
 {
-    return [[_items copy] autorelease];
+    return [[_DOMControllers copy] autorelease];
 }
 
 - (void)finishWithCurrentItem;
 {
-    _currentItem = (SVDOMController *)[_currentItem parentWebEditorItem];
+    _currentDOMController = (SVDOMController *)[_currentDOMController parentWebEditorItem];
 }
 
 - (void)willBeginWritingGraphic:(SVGraphic *)object
@@ -159,15 +159,21 @@
 
 - (void)willBeginWritingObjectWithDOMController:(SVDOMController *)controller;
 {
-    [_items addObject:controller];
+    if (_currentDOMController)
+    {
+        [_currentDOMController addChildWebEditorItem:controller];
+    }
+    else
+    {
+        [_DOMControllers addObject:controller];
+    }
+    _currentDOMController = controller;
     
-    [_currentItem addChildWebEditorItem:controller];
-    _currentItem = controller;
     
     [controller setHTMLContext:self];
 }
 
-- (SVDOMController *)currentItem; { return _currentItem; }
+- (SVDOMController *)currentItem; { return _currentDOMController; }
 
 #pragma mark Text Blocks
 

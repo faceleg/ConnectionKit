@@ -17,8 +17,8 @@
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
   @private
-    NSMutableArray  *_items;
-    SVDOMController *_currentItem;  // weak ref
+    NSMutableArray  *_DOMControllers;
+    SVDOMController *_currentDOMController;  // weak ref
     
     NSMutableSet    *_dependencies;
     
@@ -28,7 +28,7 @@
     SVSidebarPageletsController *_sidebarPageletsController;
 }
 
-- (NSArray *)webEditorItems;
+- (NSArray *)DOMControllers;    // the top-level controllers, with sub-controllers descending from them
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 @property(nonatomic, copy, readonly) NSSet *dependencies;

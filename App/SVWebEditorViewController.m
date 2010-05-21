@@ -257,7 +257,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     NSArray *selection = [[self selectedObjectsController] selectedObjects];
     [[self selectedObjectsController] setContent:nil];
     
-    NSArray *controllers = [[self HTMLContext] webEditorItems];
+    NSArray *controllers = [[self HTMLContext] DOMControllers];
         
     for (WEKWebEditorItem *anItem in controllers)
     {
