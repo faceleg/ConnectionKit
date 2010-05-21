@@ -59,6 +59,10 @@
 - (void)removeAllDependencies;
 
 
+#pragma mark WebEditorViewController
+- (SVWebEditorViewController *)webEditorViewController;
+
+
 @end
 
 
@@ -99,10 +103,6 @@
 - (NSArray *)registeredDraggedTypes;
 - (WEKWebEditorItem *)hitTestDOMNode:(DOMNode *)node
                        draggingInfo:(id <NSDraggingInfo>)info;
-
-
-#pragma mark WebEditorViewController
-- (SVWebEditorViewController *)webEditorViewController;
 
 
 @end

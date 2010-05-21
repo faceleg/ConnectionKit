@@ -261,8 +261,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         
     for (WEKWebEditorItem *anItem in controllers)
     {
-        // Insert into the tree if a top-level item.
-        if (![anItem parentWebEditorItem]) [[webEditor rootItem] addChildWebEditorItem:anItem];
+        [[webEditor rootItem] addChildWebEditorItem:anItem];
     }
     
     [[self selectedObjectsController] setSelectedObjects:selection];    // restore selection
