@@ -62,9 +62,6 @@
 // Default implementation guesses classname and nib, returning nil if they're not found
 + (SVInspectorViewController *)makeInspectorViewController;
 
-// Return a subclass of SVDOMController. Default implementation returns SVDOMController.
-+ (Class)DOMControllerClass;
-
 
 #pragma mark Registration
 // Plug-ins normally get registered automatically from searching the bundles, but you could perhaps register additional classes manually

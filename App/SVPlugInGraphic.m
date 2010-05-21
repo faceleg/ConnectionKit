@@ -221,19 +221,6 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [context setCurrentHeaderLevel:level];
 }
 
-- (Class)DOMControllerClass
-{
-    // Ask the plug-in what it would like, but don't let it choose something wacky
-    Class result = [[[self plugIn] class] DOMControllerClass];
-    if (![result isSubclassOfClass:[super DOMControllerClass]])
-    {
-        // TODO: Log a warning
-        result = [super DOMControllerClass];
-    }
-    
-    return result;
-}
-
 #pragma mark Thumbnail
 
 - (id <IMBImageItem>)thumbnail;
