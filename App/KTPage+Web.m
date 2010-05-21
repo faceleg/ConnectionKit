@@ -472,7 +472,7 @@
 		[textBlock setHTMLSourceObject:page];
 		[textBlock setHTMLSourceKeyPath:@"menuTitle"];
 		
-		[textBlock writeHTML];
+		[textBlock writeHTML:context];
 		
 		if (page != currentParserPage)
 		{

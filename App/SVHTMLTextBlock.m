@@ -306,9 +306,8 @@
 
 /*	Includes the editable tag(s) + innerHTML
  */
-- (void)writeHTML;
+- (void)writeHTML:(SVHTMLContext *)context;
 {
-    SVHTMLContext *context = [SVHTMLContext currentContext];
     [context willBeginWritingHTMLTextBlock:self];
     
 	
