@@ -1,5 +1,18 @@
 /* Editing text should have gray outline, not standard focus ring */
-.kLine:focus { outline: gray solid 1px; }
+.kLine {
+    outline: rgba(127,127,127,0) solid 1px;
+    -webkit-transition: outline-color 0.15s linear;
+}
+
+.kLine:hover {
+    outline-color:rgba(127,127,127,1);
+}
+
+.kLine:focus {
+    outline-color:rgba(127,127,127,1);
+    -webkit-transition:none;
+}
+
 
 /*  Drop zones should have blue border */
 .svx-dragging-destination-active {
