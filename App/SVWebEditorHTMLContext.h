@@ -9,7 +9,7 @@
 #import "SVHTMLContext.h"
 
 
-@class SVDOMController, SVSidebarDOMController;
+@class SVWebEditorViewController, SVDOMController, SVSidebarDOMController;
 @class SVContentObject, SVSidebar, SVSidebarPageletsController;
 @class KSObjectKeyPathPair, SVMediaRecord;
 
@@ -26,6 +26,8 @@
     
     SVSidebarDOMController      *_sidebarDOMController;
     SVSidebarPageletsController *_sidebarPageletsController;
+    
+    SVWebEditorViewController   *_viewController;   // weak ref
 }
 
 - (NSArray *)DOMControllers;    // the top-level controllers, with sub-controllers descending from them
@@ -41,6 +43,10 @@
 #pragma mark Sidebar
 @property(nonatomic, retain, readonly) SVSidebarDOMController *sidebarDOMController;
 @property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
+
+
+#pragma mark View Controller
+@property(nonatomic, assign) SVWebEditorViewController *webEditorViewController;
 
 
 #pragma mark Low-level controllers

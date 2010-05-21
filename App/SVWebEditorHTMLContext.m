@@ -207,6 +207,10 @@
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 - (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }
 
+#pragma mark View Controller
+
+@synthesize webEditorViewController = _viewController;
+
 @end
 
 

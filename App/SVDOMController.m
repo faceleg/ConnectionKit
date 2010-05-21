@@ -279,15 +279,6 @@
     }
 }
 
-#pragma mark WebEditorViewController
-
-- (SVWebEditorViewController *)webEditorViewController;
-{
-    SVWebEditorViewController *result = (id)[[self webEditor] dataSource];
-    if (result) OBASSERT([result isKindOfClass:[SVWebEditorViewController class]]);
-    return result;
-}
-
 @end
 
 

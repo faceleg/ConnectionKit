@@ -496,7 +496,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     // Select item
     NSArrayController *selectionController =
-    [[self webEditorViewController] selectedObjectsController];
+    [[[self HTMLContext] webEditorViewController] selectedObjectsController];
     if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
     {
         [webEditor setSelectedItems:[NSArray arrayWithObject:controller]];

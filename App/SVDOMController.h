@@ -59,10 +59,6 @@
 - (void)removeAllDependencies;
 
 
-#pragma mark WebEditorViewController
-- (SVWebEditorViewController *)webEditorViewController;
-
-
 @end
 
 
