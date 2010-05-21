@@ -185,9 +185,8 @@
     
     
     // Try to get hold of the controller in charge of update coalescing
-    WEKWebEditorView *webEditor = [self webEditor];
-	id controller = (id)[webEditor delegate];
-    if ([controller respondsToSelector:@selector(scheduleUpdate)] || !webEditor)
+	SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
+    if ([controller respondsToSelector:@selector(scheduleUpdate)] || ![self webEditor])
     {
         _needsUpdate = YES;
         [controller performSelector:@selector(scheduleUpdate)];
@@ -310,9 +309,8 @@
 
 - (void)setNeedsUpdate;
 {
-    WEKWebEditorView *webEditor = [self webEditor];
-    id controller = (id)[webEditor delegate];
-    if ([controller respondsToSelector:_cmd] || !webEditor)
+    SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
+    if ([controller respondsToSelector:_cmd])
     {
         [controller performSelector:_cmd];
     }
