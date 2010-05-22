@@ -140,8 +140,8 @@
     // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
     [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[[self sidebar] page]];
     
-    
-	[super addObject:pagelet];  // calls through to -insertObject:atArrangedObjectIndex: to handle ordering
+    // Place at top of sidebar, unlike most controllers
+	[self insertObject:pagelet atArrangedObjectIndex:0];
 }
 
 - (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
