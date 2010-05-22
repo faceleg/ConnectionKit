@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3CA901230D63D03C00815310 /* DownloadPageDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 3CA901220D63D03C00815310 /* DownloadPageDelegate.m */; };
 		3CA901290D63D04C00815310 /* Download.html in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901260D63D04C00815310 /* Download.html */; };
 		3CA9012A0D63D04C00815310 /* download.icns in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901270D63D04C00815310 /* download.icns */; };
 		3CA9012B0D63D04C00815310 /* download-overlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 3CA901280D63D04C00815310 /* download-overlay.tiff */; };
@@ -190,9 +189,9 @@
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "DownloadElement" */;
 			compatibilityVersion = "Xcode 3.0";
-			hasScannedForEncodings = 1;
 			developmentRegion = en;
-knownRegions = (
+			hasScannedForEncodings = 1;
+			knownRegions = (
 				en,
 				da,
 				de,
@@ -251,7 +250,6 @@ knownRegions = (
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3CA901230D63D03C00815310 /* DownloadPageDelegate.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
