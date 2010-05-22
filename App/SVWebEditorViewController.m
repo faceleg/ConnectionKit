@@ -80,6 +80,9 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
 - (void)dealloc
 {
+    [self stopObservingDependencies];
+    OBASSERT(!_pageDependencies);
+    
     [[[self webEditor] undoManager] removeAllActionsWithTarget:self];
     
     [self setWebEditor:nil];   // needed to tear down data source
