@@ -295,6 +295,24 @@
 
 #pragma mark Favicon
 
+- (id <IMBImageItem>)favicon
+{
+    id <IMBImageItem> result = nil;
+    
+    if ([[self faviconType] integerValue] > 0)
+    {
+        result = [self faviconMedia];
+    }
+    
+    return result;
+}
+
++ (NSSet *)keyPathsForValuesAffectingFavicon;
+{
+    return [NSSet setWithObjects:@"faviconType", @"faviconMedia", nil];
+}
+
+@dynamic faviconType;
 @dynamic faviconMedia;
 
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one

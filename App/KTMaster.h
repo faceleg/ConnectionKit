@@ -17,13 +17,14 @@
 //  POSSIBILITY OF SUCH DAMAGE.
 //
 
-#import <Cocoa/Cocoa.h>
 
-#import "KT.h"
 #import "SVExtensibleManagedObject.h"
 
+#import "KT.h"
+#import "SVMediaRecord.h"
 
-@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection, SVMediaRecord;
+
+@class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection;
 
 
 @interface KTMaster : SVExtensibleManagedObject 
@@ -60,6 +61,8 @@
 
 
 #pragma mark Favicon
+@property(nonatomic, readonly) id <IMBImageItem> favicon;
+@property(nonatomic, copy) NSNumber *faviconType;   // mandatory
 @property(nonatomic, retain) SVMediaRecord *faviconMedia;
 - (void)setFaviconWithContentsOfURL:(NSURL *)URL;   // autodeletes the old one
 
