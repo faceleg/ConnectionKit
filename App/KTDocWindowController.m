@@ -308,17 +308,47 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[[self webContentAreaController] webEditorViewController] insertPageletTitle:sender];
 }
 
+#pragma mark WebView Actions
+
+- (void)makeTextLarger:(id)sender;
+{
+    id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+    if ([controller respondsToSelector:_cmd]);
+    {
+        [controller makeTextLarger:sender];
+    }
+}
+
+- (void)makeTextSmaller:(id)sender;
+{
+    id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+    if ([controller respondsToSelector:_cmd]);
+    {
+        [controller makeTextSmaller:sender];
+    }
+}
+
+- (void)makeTextStandardSize:(id)sender;
+{
+    id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+    if ([controller respondsToSelector:_cmd]);
+    {
+        [controller makeTextStandardSize:sender];
+    }
+}
+
 - (IBAction)selectWebViewViewType:(id)sender;
 {
     [[self webContentAreaController] selectWebViewViewType:sender];
 }
+
+#pragma mark -
 
 - (IBAction)windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Link"];		// HELPSTRING
 }
 
-#pragma mark -
 #pragma mark Design Chooser
 
 @synthesize designChooserWindowController = _designChooserWindowController;
@@ -522,6 +552,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
     OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+    
+    BOOL result = YES;
 	SEL itemAction = [menuItem action];
 		
 	// File menu handled by KTDocument
@@ -582,6 +614,18 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// View menu
     
+    else if (itemAction == @selector(makeTextLarger:) ||
+             itemAction == @selector(makeTextSmaller:) ||
+             itemAction == @selector(makeTextStandardSize:))
+    {
+        result = NO;
+        
+        id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
+        if ([controller respondsToSelector:itemAction])
+        {
+            result = [controller validateMenuItem:menuItem];
+        }
+    }
     else if (itemAction == @selector(selectWebViewViewType:))
     {
         return [[self webContentAreaController] validateMenuItem:menuItem];
@@ -716,7 +760,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		return YES;
 	}
     
-    return YES;
+    return result;
 }
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem

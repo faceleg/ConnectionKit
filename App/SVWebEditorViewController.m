@@ -576,6 +576,21 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark Action Forwarding
 
+- (void)makeTextLarger:(id)sender;
+{
+    [[self webView] makeTextLarger:sender];
+}
+
+- (void)makeTextSmaller:(id)sender;
+{
+    [[self webView] makeTextSmaller:sender];
+}
+
+- (void)makeTextStandardSize:(id)sender;
+{
+    [[self webView] makeTextStandardSize:sender];
+}
+
 - (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
 {
     DOMRange *selection = [[self webEditor] selectedDOMRange];
@@ -617,7 +632,21 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     {
         SEL action = [menuItem action];
         
-        if (action == @selector(insertSiteTitle:))
+        
+        if (action == @selector(makeTextLarger:))
+        {
+            result = [[self webView] canMakeTextLarger];
+        }
+        else if (action == @selector(makeTextSmaller:))
+        {
+            result = [[self webView] canMakeTextSmaller];
+        }
+        else if (action == @selector(makeTextStandardSize:))
+        {
+            result = [[self webView] canMakeTextStandardSize];
+        }
+        
+        else if (action == @selector(insertSiteTitle:))
         {
             //  Can insert site title if there isn't already one
             result = ([[[[[self page] master] siteTitle] text] length] == 0);
