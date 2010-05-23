@@ -28,11 +28,9 @@
 @implementation SVHTMLWriter
 
 - (void)dealloc
-{
-    [self flush];
+{    
+    [super dealloc];    // super will call through to -flush, disposing of _buffer
     OBASSERT(!_buffer); // flushing should clear the buffer
-    
-    [super dealloc];
 }
 
 #pragma mark Elements/Comments
