@@ -307,11 +307,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         [root setTitle:defaultRootPageTitleText];
         
         
-        // Set the Favicon
-        NSString *faviconPath = [[NSBundle mainBundle] pathForImageResource:@"32favicon"];
-        [master setFaviconWithContentsOfURL:[NSURL fileURLWithPath:faviconPath]];
-        
-        
         // Create a starter pagelet
         id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"];
         SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
