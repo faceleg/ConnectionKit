@@ -1955,6 +1955,26 @@
 					</object>
 					<int key="connectionID">675</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: inspectedObjectsController.selection.master</string>
+						<reference key="source" ref="396803696"/>
+						<reference key="destination" ref="1001"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="396803696"/>
+							<reference key="NSDestination" ref="1001"/>
+							<string key="NSLabel">enabled: inspectedObjectsController.selection.master</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.master</string>
+							<object class="NSDictionary" key="NSOptions">
+								<string key="NS.key.0">NSValueTransformerName</string>
+								<string key="NS.object.0">NSIsNotNil</string>
+							</object>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">677</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3378,7 +3398,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">675</int>
+			<int key="maxID">677</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
