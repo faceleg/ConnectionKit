@@ -114,7 +114,7 @@
         {
             result = [[NSImage alloc]
                       initWithThumbnailFromCGImageSource:source
-                      maxPixelSize:[NSNumber numberWithUnsignedInteger:32]];
+                      maxPixelSize:32];
             CFRelease(source);
         }
     }
@@ -156,7 +156,7 @@
             {
                 NSImage *thumnailImage = [[NSImage alloc]
                                           initWithThumbnailFromCGImageSource:source
-                                          maxPixelSize:[NSNumber numberWithUnsignedInteger:32]];
+                                          maxPixelSize:32];
                 CFRelease(source);
                 
                 if (thumnailImage)

@@ -75,9 +75,8 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
             CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
             if (imageSource)
             {
-                NSNumber *size = [NSNumber numberWithUnsignedInteger:[self maximumIconSize]];
                 result = [[NSImage alloc] initWithThumbnailFromCGImageSource:imageSource
-                                                                maxPixelSize:size];
+                                                                maxPixelSize:[self maximumIconSize]];
                 [result autorelease];
                 
                 CFRelease(imageSource);
@@ -119,13 +118,21 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	// If there isn't a cached icon, try to create it
 	if (!result)
 	{
-		id <SVMedia> faviconRecord = [[[self rootPage] master] faviconMedia];
-		NSURL *faviconURL = [faviconRecord fileURL];
+		id <IMBImageItem> faviconRecord = [[[self rootPage] master] favicon];
 		
 		// Create the thumbnail
-		result = [[NSImage alloc] initWithThumbnailOfURL:faviconURL
-                                          maxPixelSize:[self maximumIconSize]];
-		
+        if (faviconRecord)
+        {
+            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(faviconRecord, NULL);
+            
+            if (imageSource)
+            {
+                result = [[NSImage alloc] initWithThumbnailFromCGImageSource:imageSource
+                                                                maxPixelSize:[self maximumIconSize]];
+                CFRelease(imageSource);
+            }
+		}
+        
 		// If there is no favicon chosen, default to 32favicon
 		if (!result)
 		{
@@ -136,7 +143,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         
         // Store
 		[self setCachedFavicon:result];
-		[result release];
+        [result release];
 	}
 	
 	return result;
