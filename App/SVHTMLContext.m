@@ -192,13 +192,13 @@
     // Buffer this call so consecutive matching callouts can be blended into one
     [self beginBuffering];
     
-    [self writeEndTag]; // callout-content
+    [self endElement]; // callout-content
     [self writeNewline];
     
-    [self writeEndTag]; // callout
+    [self endElement]; // callout
     [self writeNewline];
     
-    [self writeEndTag]; // callout-container
+    [self endElement]; // callout-container
     [self writeNewline];
     
     [self flushOnNextWrite];

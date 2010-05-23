@@ -416,9 +416,9 @@
 
 - (void)writeEndTags:(SVHTMLContext *)context;
 {
-    if ([self generateSpanIn]) [context writeEndTag];
-	if ([self hyperlinkString]) [context writeEndTag];
-	[context writeEndTag];
+    if ([self generateSpanIn]) [context endElement];
+	if ([self hyperlinkString]) [context endElement];
+	[context endElement];
 }
 
 /*!	Given the page text, scan for all page ID references and convert to the proper relative links.

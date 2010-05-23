@@ -134,7 +134,7 @@
     [context addDependencyOnObject:self keyPath:@"className"];
     
     
-    if ([self isPagelet] && [self link]) [context writeEndTag];
+    if ([self isPagelet] && [self link]) [context endElement];
 }
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }

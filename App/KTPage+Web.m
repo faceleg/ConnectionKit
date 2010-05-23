@@ -476,23 +476,23 @@
 		
 		if (page != currentParserPage)
 		{
-			[context writeEndTag];	// a
+			[context endElement];	// a
 		}
 		
 		if ([children count])
 		{
 			[self outputMenuForArrayOfDuples:children isTreeTop:NO];
             [context writeNewline];
-			[context writeEndTag];	// li
+			[context endElement];	// li
         }
 		else
 		{
-			[context writeEndTag];	// li
+			[context endElement];	// li
 		}
 		i++;
 	}
     [context writeNewline];
-	[context writeEndTag];	// ul
+	[context endElement];	// ul
 }
 
 - (NSString *)sitemenu
@@ -512,9 +512,9 @@
 		[context writeAnchorStartTagWithHref:@"#page-content" title:nil target:nil rel:@"nofollow"];
 		[context writeString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
 		
-		[context writeEndTag];	// a
+		[context endElement];	// a
         [context writeNewline];
-		[context writeEndTag];	// h2
+		[context endElement];	// h2
 		[context writeNewline];
 		
 		

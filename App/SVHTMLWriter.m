@@ -37,7 +37,7 @@
 
 - (void)writeEndTagWithComment:(NSString *)comment;
 {
-    [self writeEndTag];
+    [self endElement];
     
     [self writeString:@" "];
     

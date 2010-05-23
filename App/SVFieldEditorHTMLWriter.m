@@ -184,13 +184,13 @@
     {
         if ([[element tagName] isEqualToString:@"P"])
         {
-            [self writeEndTag];
+            [self endElement];
         }
         else
         {
             // Close the element, but wait and see if the next sibling is equal & therefore to be merged
             [self beginBuffering];
-            [self writeEndTag];
+            [self endElement];
             [self flushOnNextWrite];
             
             [_pendingEndDOMElements addObject:element];

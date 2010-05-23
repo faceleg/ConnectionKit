@@ -82,8 +82,8 @@
     
     
     // End Article Content
-    [context writeEndTag];
-    [context writeEndTag];
+    [context endElement];
+    [context endElement];
     [context writeHTMLString:@" <!-- /article-content -->"];
     [context writeNewline];
     
