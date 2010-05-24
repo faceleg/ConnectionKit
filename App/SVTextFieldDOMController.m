@@ -142,6 +142,12 @@
     {
         [context writeInnerOfDOMNode:textElement];
     }
+    else
+    {
+        // fallback
+        [context startElement:@"br"];
+        [context endElement];
+    }
     
     
     // Copy HTML across to ourself
