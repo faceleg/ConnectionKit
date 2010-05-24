@@ -313,6 +313,7 @@
     SVTextDOMController *result = [[SVTextFieldDOMController alloc] init];
     [result setRepresentedObject:self];
     [result setRichText:YES];
+    [result setFieldEditor:YES];
     
     // Bind to model
     [result bind:NSValueBinding
