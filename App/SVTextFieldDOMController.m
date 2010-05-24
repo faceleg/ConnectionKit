@@ -306,7 +306,22 @@
         }
         else
         {
-            result = nil;
+            // Create one and insert it
+            firstChild = (DOMHTMLElement *)[[result ownerDocument] createElement:@"SPAN"];
+            [firstChild setClassName:@"in"];
+            
+            DOMNode *refNode = [result firstChild];
+            [result insertBefore:firstChild refChild:refNode];
+            
+            // Move any existing nodes inside the span
+            while (refNode)
+            {
+                [firstChild appendChild:refNode];
+                refNode = [firstChild nextSibling];
+            }
+            
+            // Finish
+            result = firstChild;
         }
     }
     
