@@ -422,7 +422,7 @@
 			className = [className stringByAppendingString:@" jd_vertical"];
 		}
 	}
-	[context writeStartTag:@"ul" idName:nil className:className];
+	[context startElement:@"ul" idName:nil className:className];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
@@ -435,7 +435,7 @@
 		[context writeNewline];
 		if (page == currentParserPage)
 		{
-			[context writeStartTag:@"li" idName:nil className:
+			[context startElement:@"li" idName:nil className:
 			 [NSString stringWithFormat:@"%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
 		}
 		else
@@ -446,7 +446,7 @@
 				isCurrentParent = YES;
 			}
 			
-			[context writeStartTag:@"li" idName:nil className:
+			[context startElement:@"li" idName:nil className:
 			 [NSString stringWithFormat:@"%d %@%@%@",
 			  i,
 			  (i%2)?@"o":@"e",
@@ -501,9 +501,9 @@
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
 		[context writeNewline];
-		[context writeStartTag:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
+		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
 		[context writeNewline];
-		[context writeStartTag:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
+		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
 		[context writeNewline];
 		[context writeString:
 		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
@@ -518,7 +518,7 @@
 		[context writeNewline];
 		
 		
-		[context writeStartTag:@"div" idName:@"sitemenu-content" className:nil];		// <div id="sitemenu-content">
+		[context startElement:@"div" idName:@"sitemenu-content" className:nil];		// <div id="sitemenu-content">
 		[context writeNewline];
 	
 		KTSite *site = self.site;

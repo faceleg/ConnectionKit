@@ -59,15 +59,15 @@
     
     
     // Start Article Content
-    [context writeStartTag:@"div" idName:nil className:@"article-content"];
+    [context startElement:@"div" idName:nil className:@"article-content"];
     [context writeNewline];
     
-    [context writeStartTag:@"div" idName:nil className:@"RichTextElement"];
+    [context startElement:@"div" idName:nil className:@"RichTextElement"];
     [context writeNewline];
     
     
     // Open text block
-    [textBlock writeStartTags:context];
+    [textBlock startElements:context];
     [context writeNewline];
     
     

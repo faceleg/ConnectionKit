@@ -82,7 +82,7 @@
 
 - (void)writeHTML:(SVHTMLContext *)context;
 - (void)writeInnerHTML:(SVHTMLContext *)context;
-- (void)writeStartTags:(SVHTMLContext *)context;
+- (void)startElements:(SVHTMLContext *)context;
 - (void)writeEndTags:(SVHTMLContext *)context;
 
 - (NSString *)processHTML:(NSString *)originalHTML;

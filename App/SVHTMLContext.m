@@ -170,15 +170,15 @@
     else
     {
         // Write the opening tags
-        [self writeStartTag:@"div"
+        [self startElement:@"div"
                      idName:[(SVCalloutDOMController *)[self currentItem] HTMLElementIDName]
                   className:[@"callout-container " stringByAppendingString:alignment]];
         [self writeNewline];
         
-        [self writeStartTag:@"div" idName:nil className:@"callout"];
+        [self startElement:@"div" idName:nil className:@"callout"];
         [self writeNewline];
         
-        [self writeStartTag:@"div" idName:nil className:@"callout-content"];
+        [self startElement:@"div" idName:nil className:@"callout-content"];
         [self writeNewline];
         
         

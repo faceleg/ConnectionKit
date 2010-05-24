@@ -312,7 +312,7 @@
     
 	
     
-	[self writeStartTags:context];
+	[self startElements:context];
     
 	
 	// Stick in the main HTML
@@ -347,20 +347,18 @@
     }
 }
 
-- (void)writeStartTags:(SVHTMLContext *)context;
+- (void)startElements:(SVHTMLContext *)context;
 {
-    // Construct the actual HTML
-    [context openTag:[self tagName]];
+    // Main tag
+	[context openTag:[self tagName]];
 	
-	
-	// Open the main tag
-	// In some situations we generate both the main tag, and a <span class="in">
+	// in some situations we generate both the main tag, and a <span class="in">
     if ([[SVHTMLContext currentContext] isEditable])
     {
         [context writeAttribute:@"id" value:[self DOMNodeID]];
     }
     
-	BOOL generateSpanIn = [self generateSpanIn];
+    BOOL generateSpanIn = [self generateSpanIn];
 	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 
 	{
 		if (![[self CSSClassName] isEqualToString:@""])
@@ -386,20 +384,21 @@
 		}
 	}
 	
-	
 	// Close off the main tag
-	[context closeStartTag];
-	
+	[context didStartElement];
+    
 	
 	
 	// Place a hyperlink if required
 	if ([self hyperlinkString])
 	{
-		[context openTag:@"a "];
+		[context openTag:@"a"];
+        [context writeString:@" "];
         [context writeString:[self targetString]];
         [context writeAttribute:@"href" value:[self hyperlinkString]];
-        [context closeStartTag];
+        [context didStartElement];
 	}
+	
 	
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
@@ -410,7 +409,7 @@
 			CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
 		}
 		
-        [context writeStartTag:@"span" idName:nil className:@"in"];
+        [context startElement:@"span" idName:nil className:@"in"];
 	}
 }
 

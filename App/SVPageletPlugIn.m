@@ -94,7 +94,7 @@ static id <SVPlugInContext> sCurrentContext;
     
     return;
         
-    [[context HTMLWriter] writeStartTag:@"div" idName:[self elementID] className:nil];
+    [[context HTMLWriter] startElement:@"div" idName:[self elementID] className:nil];
     [self writeInnerHTML:context];
     [[context HTMLWriter] endElement];
 }

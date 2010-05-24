@@ -148,10 +148,7 @@
     [self beginBuffering];
     
     // Open tag
-    [self openTagWithDOMElement:element];
-    
-    // Close tag
-    [self closeStartTag];
+    [self startElementWithDOMElement:element];
     
     [self flushOnNextWrite];
     
@@ -275,7 +272,7 @@
 
 #pragma mark Element Attributes
 
-- (void)openTagWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
+- (void)startElementWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
 {
     // Open tag
     [self openTag:[element tagName]];
@@ -311,6 +308,9 @@
             index--;
         }
     }
+    
+    
+    [self didStartElement];
 }
 
 - (void)populateSpanElementAttributes:(DOMElement *)span
