@@ -305,7 +305,7 @@
 	
 	
 	// Write end tags
-	[self writeEndTags:context];
+	[self endElements:context];
     
     
     [context didEndWritingHTMLTextBlock];
@@ -396,7 +396,7 @@
 	}
 }
 
-- (void)writeEndTags:(SVHTMLContext *)context;
+- (void)endElements:(SVHTMLContext *)context;
 {
     if ([self generateSpanIn]) [context endElement];
 	if ([self hyperlinkString]) [context endElement];

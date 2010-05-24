@@ -78,7 +78,7 @@
     
     // End text block
     [context writeNewline];
-    [textBlock writeEndTags:context];
+    [textBlock endElements:context];
     
     
     // End Article Content

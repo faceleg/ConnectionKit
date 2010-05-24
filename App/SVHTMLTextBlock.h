@@ -81,7 +81,7 @@
 - (void)writeHTML:(SVHTMLContext *)context;
 - (void)writeInnerHTML:(SVHTMLContext *)context;
 - (void)startElements:(SVHTMLContext *)context;
-- (void)writeEndTags:(SVHTMLContext *)context;
+- (void)endElements:(SVHTMLContext *)context;
 
 - (BOOL)generateSpanIn;
 - (NSString *)processHTML:(NSString *)originalHTML;
