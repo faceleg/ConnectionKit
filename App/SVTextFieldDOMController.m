@@ -136,7 +136,12 @@
     SVFieldEditorHTMLWriter *context = [[SVFieldEditorHTMLWriter alloc] initWithStringWriter:html];
     [html release];
     
-    [context writeInnerOfDOMNode:[self textHTMLElement]];
+    
+    DOMHTMLElement *textElement = [self innerTextHTMLElement];
+    if (textElement)
+    {
+        [context writeInnerOfDOMNode:textElement];
+    }
     
     
     // Copy HTML across to ourself
@@ -259,16 +264,6 @@
 - (void)setHTMLElement:(DOMHTMLElement *)element
 {
     [super setHTMLElement:element];
-    
-    // Figure out the text element. Doing so by inspecting the DOM feels a little hacky to me, so would like to revisit.
-    DOMHTMLElement *firstChild = [element firstChildOfClass:[DOMHTMLElement class]];
-    
-    if ([[firstChild tagName] isEqualToString:@"A"])
-    {
-        element = firstChild;
-        firstChild = [element firstChildOfClass:[DOMHTMLElement class]];
-    }
-    
     [self setTextHTMLElement:element];
 }
 
@@ -281,6 +276,35 @@
     {
         [[self textHTMLElement] setInnerText:[self placeholderString]];
     }
+}
+
+- (DOMHTMLElement *)innerTextHTMLElement;
+{
+    DOMHTMLElement *result = [self textHTMLElement];
+    SVHTMLTextBlock *textBlock = [self textBlock];
+    
+    if ([textBlock hyperlinkString])
+    {
+        DOMHTMLElement *firstChild = [result firstChildOfClass:[DOMHTMLElement class]];
+        result = ([[firstChild tagName] isEqualToString:@"A"] ? firstChild : nil);
+    }
+    
+    if ([textBlock hasSpanIn])
+    {
+        DOMHTMLElement *firstChild = [result firstChildOfClass:[DOMHTMLElement class]];
+        
+        if ([[firstChild tagName] isEqualToString:@"SPAN"] &&
+            [[firstChild className] isEqualToString:@"in"])
+        {
+            result = firstChild;
+        }
+        else
+        {
+            result = nil;
+        }
+    }
+    
+    return result;
 }
 
 #pragma mark Debugging
