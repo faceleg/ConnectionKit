@@ -78,7 +78,7 @@
 
 - (BOOL)isEditable
 {
-    BOOL result = [[self HTMLElement] isContentEditable];
+    BOOL result = [[self textHTMLElement] isContentEditable];
     return result;
 }
 
@@ -87,11 +87,11 @@
     // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
     if (flag)
     {
-        [[self HTMLElement] setContentEditable:@"true"];
+        [[self textHTMLElement] setContentEditable:@"true"];
     }
     else
     {
-        [[self HTMLElement] removeAttribute:@"contentEditable"];
+        [[self textHTMLElement] removeAttribute:@"contentEditable"];
     }
 }
 
