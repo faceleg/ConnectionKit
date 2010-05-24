@@ -25,7 +25,6 @@
 	
     NSString		*myHTMLTag;
     NSString        *_className;
-	BOOL			myHasSpanIn;
 	
     NSString		*myGraphicalTextCode;
 	NSString		*myHyperlinkString;
@@ -59,7 +58,6 @@
 @property(nonatomic, copy) NSString *tagName;
 @property(nonatomic, copy) NSString *customCSSClassName;
 - (NSString *)CSSClassName;
-@property(nonatomic) BOOL hasSpanIn;
 
 
 - (NSString *)hyperlinkString;
@@ -85,6 +83,7 @@
 - (void)startElements:(SVHTMLContext *)context;
 - (void)writeEndTags:(SVHTMLContext *)context;
 
+- (BOOL)generateSpanIn;
 - (NSString *)processHTML:(NSString *)originalHTML;
 
 

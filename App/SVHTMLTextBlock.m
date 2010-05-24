@@ -83,14 +83,6 @@
     }
 }
 
-/*	Many bits of editable text contain a tag like so:
- *		<span class="in">.....</span>
- *	If so, this method returns YES.
- */
-- (BOOL)hasSpanIn { return myHasSpanIn; }
-
-- (void)setHasSpanIn:(BOOL)flag { myHasSpanIn = flag; }
-
 @synthesize placeholderString = _placeholder;
 
 @synthesize tagName = myHTMLTag;
@@ -293,15 +285,6 @@
 	return result;
 }
 
-#pragma mark HTML Support
-
-- (BOOL)generateSpanIn;
-{
-    return ([self isFieldEditor] && 
-            ![self hasSpanIn] &&
-            ![[self tagName] isEqualToString:@"span"]);
-}
-
 #pragma mark HTML
 
 /*	Includes the editable tag(s) + innerHTML
@@ -458,6 +441,12 @@
 		}
 	}
 	return [NSString stringWithString:buffer];
+}
+
+- (BOOL)generateSpanIn;
+{
+    return ([self isFieldEditor] && 
+            ![[self tagName] isEqualToString:@"span"]);
 }
 
 

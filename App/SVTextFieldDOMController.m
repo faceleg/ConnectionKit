@@ -289,7 +289,7 @@
         result = ([[firstChild tagName] isEqualToString:@"A"] ? firstChild : nil);
     }
     
-    if ([textBlock hasSpanIn])
+    if ([textBlock generateSpanIn])
     {
         DOMHTMLElement *firstChild = [result firstChildOfClass:[DOMHTMLElement class]];
         
