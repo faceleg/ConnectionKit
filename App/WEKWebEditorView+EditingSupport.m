@@ -206,6 +206,13 @@
     return result;
 }
 
+#pragma mark Querying
+
+- (WEKWebEditorItem <SVWebEditorText> *)textItemForDOMRange:(DOMRange *)range;
+{
+    return [[self dataSource] webEditor:self textBlockForDOMRange:range];
+}
+
 @end
 
 

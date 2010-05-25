@@ -767,8 +767,7 @@ typedef enum {
     DOMRange *selection = [self selectedDOMRange];
     if (selection)  // allow any edit if there is no selection
     {
-        WEKWebEditorItem *textController = [[self dataSource] webEditor:self
-                                                  textBlockForDOMRange:[self selectedDOMRange]];
+        WEKWebEditorItem *textController = [self textItemForDOMRange:[self selectedDOMRange]];
         
         DOMNode *editingNode = [range commonAncestorContainer];
         result = [editingNode isDescendantOfNode:[textController HTMLElement]];
@@ -778,8 +777,7 @@ typedef enum {
     if (result)
     {
         // See if the there is a controller to check with
-        WEKWebEditorItem <SVWebEditorText> *textController = [[self dataSource] webEditor:self
-                                                                     textBlockForDOMRange:range];
+        WEKWebEditorItem <SVWebEditorText> *textController = [self textItemForDOMRange:range];
         
         if (textController) result = [self shouldChangeText:textController];
     }
@@ -902,8 +900,7 @@ typedef enum {
     
     
     // Locate the controller for the text area so we can query it for selectable stuff
-    WEKWebEditorItem <SVWebEditorText> *textController = [[self dataSource] webEditor:self
-                                                                textBlockForDOMRange:range];
+    WEKWebEditorItem <SVWebEditorText> *textController = [self textItemForDOMRange:range];
     
     if (textController)
     {
@@ -1498,7 +1495,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             if (editingRange)
             {
                 WEKWebEditorItem <SVWebEditorText> *controller =
-                [[self dataSource] webEditor:self textBlockForDOMRange:editingRange];
+                [self textItemForDOMRange:editingRange];
                 
                 
                 // Controller's HTML element determines where to draw the drop highlight
@@ -1577,8 +1574,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldBeginEditingInDOMRange:(DOMRange *)range
 {
-    id <SVWebEditorText> text = [[self dataSource] webEditor:self
-                                            textBlockForDOMRange:range];
+    id <SVWebEditorText> text = [self textItemForDOMRange:range];
     [self setFocusedText:text notification:nil];
     
     return YES;
@@ -1610,7 +1606,10 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         NSView *view = [node documentView];
         NSPoint location = [view convertPointFromBase:[event locationInWindow]];
         
-        result = [view mouse:location inRect:textBox];
+        if (!(result = [view mouse:location inRect:textBox]))
+        {
+            // There's no good text to select, so fall back to body
+        }
     }
     
         
@@ -1621,15 +1620,12 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         // Ensure user can't select part of a text area *enclosing* the current text
         if (range && proposedRange)
         {
-            WEKWebEditorItem <SVWebEditorText> *currentText = [[self dataSource]
-                                                              webEditor:self
-                                                              textBlockForDOMRange:range];
+            WEKWebEditorItem <SVWebEditorText> *currentText = [self textItemForDOMRange:range];
         
            DOMNode *proposedNode = [proposedRange commonAncestorContainer];
             if (![proposedNode isDescendantOfNode:[currentText HTMLElement]])
             {
-                WEKWebEditorItem *proposedText = [[self dataSource] webEditor:self
-                                                        textBlockForDOMRange:proposedRange];
+                WEKWebEditorItem *proposedText = [self textItemForDOMRange:proposedRange];
                 result = ![[currentText HTMLElement] isDescendantOfNode:[proposedText HTMLElement]];
             }
             
@@ -1660,7 +1656,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     else
     {
         // If the selection is refused, revert back to no selection
-        if (range && ![[self dataSource] webEditor:self textBlockForDOMRange:range])
+        if (range && ![self textItemForDOMRange:range])
         {
             [self setSelectedDOMRange:nil affinity:0];
         }
@@ -1685,7 +1681,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     if (result)
     {
-        id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
+        id <SVWebEditorText> text = [self textItemForDOMRange:range];
         
         // Let the text object decide
         result = [text webEditorTextShouldInsertNode:nextNode
@@ -1705,7 +1701,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     if (result)
     {
-        id <SVWebEditorText> text = [[self dataSource] webEditor:self textBlockForDOMRange:range];
+        id <SVWebEditorText> text = [self textItemForDOMRange:range];
         if (text)
         {
             // Let the text object decide

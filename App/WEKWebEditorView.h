@@ -176,6 +176,10 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (BOOL)validateAction:(SEL)action;
 
 
+#pragma mark Querying
+- (WEKWebEditorItem <SVWebEditorText> *)textItemForDOMRange:(DOMRange *)range;
+
+
 @end
 
 
