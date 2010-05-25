@@ -62,6 +62,12 @@ typedef enum {
 @end
 
 
+@interface NSView (WEK_WebExtras)
+- (BOOL)_web_dragShouldBeginFromMouseDown:(NSEvent *)mouseDownEvent
+                           withExpiration:(NSDate *)expiration;
+@end
+
+
 #pragma mark -
 
 
@@ -1136,6 +1142,70 @@ typedef enum {
     [self mouseMoved:event];
 }
 
+- (void)dragImageForEvent:(NSEvent *)theEvent
+{
+    if (!_mouseDownEvent) return;   // otherwise we initiate a drag multiple times!
+    
+    
+    
+    
+    //  Ideally, we'd place onto the pasteboard:
+    //      Sandvox item info, everything, else, WebKit, does, normally
+    //
+    //  -[WebView writeElement:withPasteboardTypes:toPasteboard:] would seem to be ideal for this, but it turns out internally to fall back to trying to write the selection to the pasteboard, which is definitely not what we want. Fortunately, it boils down to writing:
+    //      Sandvox item info, WebArchive, RTF, plain text
+    //
+    //  Furthermore, there arises the question of how to handle multiple items selected. WebKit has no concept of such a selection so couldn't help us here, even if it wanted to. Should we try to string together the HTML/text sections into one big lump? Or use 10.6's ability to write multiple items to the pasteboard?
+    
+    NSPasteboard *pboard = [NSPasteboard pasteboardWithName:NSDragPboard];
+    
+    
+    NSArray *types = [[self webView] pasteboardTypesForSelection];
+    [pboard declareTypes:types owner:self];
+    [[self webView] writeSelectionWithPasteboardTypes:types toPasteboard:pboard];
+    
+    
+    if ([[self dataSource] webEditor:self addSelectionToPasteboard:pboard])
+    {
+        // Now let's start a-dragging!
+        WEKWebEditorItem *item = [self selectedItem]; // FIXME: use the item actually being dragged
+        
+        NSDragOperation op = ([item draggingSourceOperationMaskForLocal:NO] |
+                              [item draggingSourceOperationMaskForLocal:YES]);
+        if (op)
+        {
+            //NSPoint dragLocation;
+            //NSImage *dragImage = [self dragImageForSelectionFromItem:item location:&dragLocation];
+            
+            //if (dragImage)
+            {
+                @try
+                {
+                    [[self documentView] dragImageForItem:item
+                                                    event:theEvent
+                                               pasteboard:pboard
+                                                   source:self];                    
+                    /*[self dragImage:dragImage
+                     at:dragLocation
+                     offset:NSZeroSize
+                     event:_mouseDownEvent
+                     pasteboard:pboard
+                     source:self
+                     slideBack:YES];*/
+                }
+                @finally    // in case the drag throws an exception
+                {
+                    [self forgetDraggedItems];
+                }
+            }
+        }
+    }
+    
+    
+    // A drag of the mouse automatically removes the possibility that editing might commence
+    [_mouseDownEvent release],  _mouseDownEvent = nil;
+}
+
 /*  Actions we could take from this:
  *      - Deselect everything
  *      - Change selection to new item
@@ -1174,6 +1244,13 @@ typedef enum {
         
         // If mousing down on an image, pass the event through
         if ([item allowsDirectAccessToWebViewWhenSelected]) [NSApp postEvent:event atStart:YES];
+        
+        
+        
+        if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
+        {
+            [self dragImageForEvent:event];
+        }
     }
     else
     {
