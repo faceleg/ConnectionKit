@@ -45,9 +45,10 @@
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
 [[if parser.includeStyling]][[stylesheet]][[endif]]
+[[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 <!--
-Photo credits for this website's design: <[[=&master.designDirectoryURL]]Credits.rtf>
-Licensing for this website's design:     <[[=&master.designDirectoryURL]]License.rtf>
+Photo credits for this website's design: <[[=%master.designDirectoryURL]]Credits.rtf>
+Licensing for this website's design:     <[[=%master.designDirectoryURL]]License.rtf>
 -->
 [[if javascriptURLPath]]
 <script src="[[=&javascriptURLPath]]" type="text/javascript"></script>
