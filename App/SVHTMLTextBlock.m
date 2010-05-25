@@ -299,9 +299,12 @@
     
 	
 	// Stick in the main HTML
-	if ([self isRichText]) [context writeNewline];
+	if ([self isRichText])
+    {
+        [context startNewline];
+        [context stopWritingInline];
+    }
     [self writeInnerHTML:context];
-    if ([self isRichText]) [context writeNewline];
 	
 	
 	// Write end tags
