@@ -296,7 +296,7 @@
     if (windowTitle)
     {
         [context writeText:windowTitle];
-        [context writeNewline];
+        [context writeString:@"\n"];
     }
     
     // Custom meta description if specified
@@ -304,7 +304,7 @@
     if (meta)
     {
         [context writeText:meta];
-        [context writeNewline];
+        [context writeString:@"\n"];
     }
     
     // Body

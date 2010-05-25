@@ -60,15 +60,12 @@
     
     // Start Article Content
     [context startElement:@"div" idName:nil className:@"article-content"];
-    [context writeNewline];
     
     [context startElement:@"div" idName:nil className:@"RichTextElement"];
-    [context writeNewline];
     
     
     // Open text block
     [textBlock startElements:context];
-    [context writeNewline];
     
     
     // Write text minus early callouts
@@ -77,7 +74,6 @@
     
     
     // End text block
-    [context writeNewline];
     [textBlock endElements:context];
     
     
@@ -85,7 +81,6 @@
     [context endElement];
     [context endElement];
     [context writeHTMLString:@" <!-- /article-content -->"];
-    [context writeNewline];
     
     
     // Finish

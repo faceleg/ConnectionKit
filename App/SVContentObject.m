@@ -36,7 +36,6 @@
     for (SVContentObject *anObject in objects)
     {
         [anObject writeHTML:context];
-        [context writeNewline];
     }
 }
 
@@ -46,7 +45,6 @@
     for (SVContentObject *anObject in objects)
     {
         [anObject writeHTML:context];
-        [context writeNewline];
     }
 }
 

@@ -275,7 +275,7 @@
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     [context writeText:[self title]];
-    [context writeNewline];
+    [context writeString:@"\n"];
 }
 
 #pragma mark Thumbnail

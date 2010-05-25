@@ -203,7 +203,6 @@
                                  title:[[[self master] design] title]
                                  media:nil];
     }
-    [context writeNewline];
 	
 	
 	// design's print.css but not for Quick Look
@@ -213,7 +212,6 @@
 		if (printCSS)
         {
             [context writeLinkToStylesheet:printCSS title:nil media:@"print"];
-            [context writeNewline];
         }
 	}
 	
