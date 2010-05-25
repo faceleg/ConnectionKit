@@ -817,6 +817,16 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     return result;
 }
 
+- (DOMRange *)webEditor:(WEKWebEditorView *)sender fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
+{
+    SVRichText *article = [[self page] article];
+    WEKWebEditorItem *item = [[[self webEditor] rootItem] hitTestRepresentedObject:article];
+    
+    DOMRange *result = [[[item HTMLElement] ownerDocument] createRange];
+    [result setStartAfter:[[item HTMLElement] lastChild]];
+    return result;
+}
+
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
 {
     if (![[self webEditor] selectedDOMRange])

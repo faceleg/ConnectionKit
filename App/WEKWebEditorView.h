@@ -256,6 +256,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 //  Only called in response to selection changes from the GUI and action methods. Could make it more flexible one day if needed
 - (BOOL)webEditor:(WEKWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+
+- (DOMRange *)webEditor:(WEKWebEditorView *)sender
+fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
    
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
 - (void)webEditorViewDidChangeSelection:(NSNotification *)notification;

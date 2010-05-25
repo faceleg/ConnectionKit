@@ -1609,6 +1609,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         if (!(result = [view mouse:location inRect:textBox]))
         {
             // There's no good text to select, so fall back to body
+            range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
         }
     }
     
@@ -1645,18 +1646,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     
-    if (result)
+    if (!result)
     {
         // Did we adjust the range? If so, make that the one actually selected
         if (range != currentRange)
         {
             [self setSelectedDOMRange:range affinity:selectionAffinity];
-        }
-    }
-    else
-    {
-        // If the selection is refused, revert back to no selection
-        if (range && ![self textItemForDOMRange:range])
+        }// If the selection is refused, revert back to no selection
+        else if (range && ![self textItemForDOMRange:range])
         {
             [self setSelectedDOMRange:nil affinity:0];
         }
