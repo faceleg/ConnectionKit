@@ -123,7 +123,7 @@
 
 - (void)writeStartTagToContext:(SVHTMLContext *)context;
 {
-    [context writeAnchorStartTagWithHref:[self URLString] title:nil target:nil rel:nil];
+    [context startAnchorElementWithHref:[self URLString] title:nil target:nil rel:nil];
 }
 
 @end

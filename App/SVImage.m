@@ -106,7 +106,7 @@
     BOOL isPagelet = [self isPagelet];
     if (isPagelet && [self link])
     {
-        [context writeAnchorStartTagWithHref:[[self link] URLString] title:nil target:nil rel:nil];
+        [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
     }
     
     // Actually write the image
