@@ -217,6 +217,21 @@
 {
     BOOL result = NO;
     
+    
+    if (selector == @selector(deleteBackward:) ||
+        selector == @selector(deleteWordBackward:) ||
+        selector == @selector(deleteToBeginningOfLine:) ||
+        selector == @selector(deleteBackwardByDecomposingPreviousCharacter:))
+    {
+        // Bit of a bug in WebKit that means when you delete backwards in an empty text area, the empty paragraph object gets deleted. Fair enough, but WebKit doesn't send you a delegate message asking permission! #71489 #75402
+        NSString *text = [[self textHTMLElement] innerText];
+        if (![text length] || [text isEqualToString:@"\n"])
+        {
+            return YES;
+        }
+    }
+    
+    
     if (selector == @selector(deleteBackward:))
     {
         // A sequence of |type, backspace, type| should be coalesced. But if deleting a non-collapsed selection, that's not applicable
@@ -226,7 +241,7 @@
             [self willMakeTextChangeSuitableForUndoCoalescing];
         }
     }
-	else if (selector == @selector(insertNewline:) && [self isFieldEditor])
+    else if (selector == @selector(insertNewline:) && [self isFieldEditor])
 	{
 		// Return key ends editing
         [self didEndEditingTextWithMovement:[NSNumber numberWithInt:NSReturnTextMovement]];
