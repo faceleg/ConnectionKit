@@ -146,7 +146,6 @@ typedef enum {
 
 
 #pragma mark Raw Writing
-- (void)writeNewline;   // goes ignored
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 
 

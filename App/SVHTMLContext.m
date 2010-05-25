@@ -173,13 +173,10 @@
         [self startElement:@"div"
                      idName:[(SVCalloutDOMController *)[self currentItem] HTMLElementIDName]
                   className:[@"callout-container " stringByAppendingString:alignment]];
-        [self writeNewline];
         
         [self startElement:@"div" idName:nil className:@"callout"];
-        [self writeNewline];
         
         [self startElement:@"div" idName:nil className:@"callout-content"];
-        [self writeNewline];
         
         
         OBASSERT(!_calloutAlignment);
@@ -193,13 +190,8 @@
     [self beginBuffering];
     
     [self endElement]; // callout-content
-    [self writeNewline];
-    
     [self endElement]; // callout
-    [self writeNewline];
-    
     [self endElement]; // callout-container
-    [self writeNewline];
     
     [self flushOnNextWrite];
 }
