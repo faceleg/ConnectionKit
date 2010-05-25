@@ -1672,21 +1672,26 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     // We only want a collapsed range to be selected by the mouse if it's within the bounds of the text (showing the text cursor)
     if ([proposedRange collapsed])
     {
-        DOMNode *node = [proposedRange startContainer];
-        if ([node nodeType] != DOM_TEXT_NODE)
-        {
-            node = [[node childNodes] item:[proposedRange startOffset]];
-        }
-        NSRect textBox = [node boundingBox];
-
         NSEvent *event = [NSApp currentEvent];
-        NSView *view = [node documentView];
-        NSPoint location = [view convertPointFromBase:[event locationInWindow]];
-        
-        if (!(result = [view mouse:location inRect:textBox]))
+        if ([event type] == NSLeftMouseDown ||
+            [event type] == NSRightMouseDown ||
+            [event type] == NSOtherMouseDown)
         {
-            // There's no good text to select, so fall back to body
-            range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
+            DOMNode *node = [proposedRange startContainer];
+            if ([node nodeType] != DOM_TEXT_NODE)
+            {
+                node = [[node childNodes] item:[proposedRange startOffset]];
+            }
+            NSRect textBox = [node boundingBox];
+
+            NSView *view = [node documentView];
+            NSPoint location = [view convertPointFromBase:[event locationInWindow]];
+            
+            if (!(result = [view mouse:location inRect:textBox]))
+            {
+                // There's no good text to select, so fall back to body
+                range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
+            }
         }
     }
     
