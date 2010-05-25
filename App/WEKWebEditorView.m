@@ -1678,19 +1678,22 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             [event type] == NSOtherMouseDown)
         {
             DOMNode *node = [proposedRange startContainer];
-            if ([node nodeType] != DOM_TEXT_NODE)
+            if (![node enclosingContentEditableElement])
             {
-                node = [[node childNodes] item:[proposedRange startOffset]];
-            }
-            NSRect textBox = [node boundingBox];
+                if ([node nodeType] != DOM_TEXT_NODE)
+                {
+                    node = [[node childNodes] item:[proposedRange startOffset]];
+                }
+                NSRect textBox = [node boundingBox];
 
-            NSView *view = [node documentView];
-            NSPoint location = [view convertPointFromBase:[event locationInWindow]];
-            
-            if (!(result = [view mouse:location inRect:textBox]))
-            {
-                // There's no good text to select, so fall back to body
-                range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
+                NSView *view = [node documentView];
+                NSPoint location = [view convertPointFromBase:[event locationInWindow]];
+                
+                if (!(result = [view mouse:location inRect:textBox]))
+                {
+                    // There's no good text to select, so fall back to body
+                    range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
+                }
             }
         }
     }
