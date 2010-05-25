@@ -1647,6 +1647,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     }
     
     
+    
+    // If the selection is refused, revert back to no selection
+    if (!result && currentRange && ![[self dataSource] webEditor:self textBlockForDOMRange:currentRange])
+    {
+        [self setSelectedDOMRange:nil affinity:0];
+    }
+    
     return result;
 }
 
