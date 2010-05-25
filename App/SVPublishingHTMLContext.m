@@ -31,12 +31,13 @@
 
 - (void)close;
 {
+    NSString *HTML = [(NSString *)[self stringWriter] retain];  // -close will release it
+    
     [super close];
     
     
     // Generate HTML data
-	NSString *HTML = (NSString *)[self stringWriter];
-    if (HTML)
+	if (HTML)
     {
         NSStringEncoding encoding = [self encoding];
         NSData *pageData = [HTML dataUsingEncoding:encoding allowLossyConversion:YES];
@@ -69,6 +70,8 @@
             
             [transferRecord setProperty:page forKey:@"object"];
         }
+        
+        [HTML release];
     }
 }
 
