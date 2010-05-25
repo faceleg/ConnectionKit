@@ -461,6 +461,19 @@ typedef enum {
                                       isUIAction:isUIAction];
 }
 
+- (BOOL)changeSelectedItemsFromDOMRange:(DOMRange *)proposedRange
+{
+    NSArray *items = (proposedRange) ? [self selectableItemsInDOMRange:proposedRange] : nil;
+    
+    return [self changeSelectionByDeselectingAll:YES
+                                  orDeselectItem:nil
+                                     selectItems:items
+                                        DOMRange:proposedRange
+                                      isUIAction:YES];
+}
+
+#pragma mark Overall Selection
+
 - (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(WEKWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
@@ -1573,12 +1586,36 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 - (BOOL)webView:(WebView *)webView shouldChangeSelectedDOMRange:(DOMRange *)currentRange
      toDOMRange:(DOMRange *)proposedRange affinity:(NSSelectionAffinity)selectionAffinity
- stillSelecting:(BOOL)flag;
+ stillSelecting:(BOOL)stillSelecting;
 {
     BOOL result = YES;
     
+    //id article = [[[self dataSource] page] article];
+    //WEKWebEditorItem *item = [[self rootItem] hitTestRepresentedObject:article];
+    //[proposedRange selectNodeContents:[item HTMLElement]];
+    
+    
+    // Allow selecting a collapsed range (mouse down event) if it's editable, or next to some text
+    if ([proposedRange collapsed])
+    {
+        DOMNode *node = [proposedRange startContainer];
+        if ([node nodeType] != DOM_TEXT_NODE)
+        {
+            node = [[node childNodes] item:[proposedRange startOffset]];
+        }
+        NSRect textBox = [node boundingBox];
+
+        NSEvent *event = [NSApp currentEvent];
+        NSView *view = [node documentView];
+        NSPoint location = [view convertPointFromBase:[event locationInWindow]];
+        
+        result = [view mouse:location inRect:textBox];
+    }
+    
+        
+    
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
-    if (!_isChangingSelectedItems)
+    if (!_isChangingSelectedItems && result)
     {
         // Ensure user can't select part of a text area *enclosing* the current text
         if (currentRange && proposedRange)
@@ -1602,20 +1639,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 result = [currentText webEditorTextShouldChangeSelectedDOMRange:currentRange
                                                                      toDOMRange:proposedRange
                                                                        affinity:selectionAffinity
-                                                                 stillSelecting:flag];
+                                                                 stillSelecting:stillSelecting];
             }
         }
         
-        if (result)
-        {
-            NSArray *items = (proposedRange) ? [self selectableItemsInDOMRange:proposedRange] : nil;
-            
-            result = [self changeSelectionByDeselectingAll:YES
-                                            orDeselectItem:nil
-                                               selectItems:items
-                                             DOMRange:proposedRange
-                                                isUIAction:YES];
-        }
+        if (result) result = [self changeSelectedItemsFromDOMRange:proposedRange];
     }
     
     
