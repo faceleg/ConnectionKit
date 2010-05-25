@@ -1589,13 +1589,14 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  stillSelecting:(BOOL)stillSelecting;
 {
     BOOL result = YES;
+    DOMRange *range = currentRange;
     
     //id article = [[[self dataSource] page] article];
     //WEKWebEditorItem *item = [[self rootItem] hitTestRepresentedObject:article];
     //[proposedRange selectNodeContents:[item HTMLElement]];
     
     
-    // Allow selecting a collapsed range (mouse down event) if it's editable, or next to some text
+    // We only want a collapsed range to be selected by the mouse if it's within the bounds of the text (showing the text cursor)
     if ([proposedRange collapsed])
     {
         DOMNode *node = [proposedRange startContainer];
@@ -1618,11 +1619,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (!_isChangingSelectedItems && result)
     {
         // Ensure user can't select part of a text area *enclosing* the current text
-        if (currentRange && proposedRange)
+        if (range && proposedRange)
         {
             WEKWebEditorItem <SVWebEditorText> *currentText = [[self dataSource]
                                                               webEditor:self
-                                                              textBlockForDOMRange:currentRange];
+                                                              textBlockForDOMRange:range];
         
            DOMNode *proposedNode = [proposedRange commonAncestorContainer];
             if (![proposedNode isDescendantOfNode:[currentText HTMLElement]])
@@ -1636,7 +1637,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             // For change *within* a text area, let the controller decide
             if (result && currentText)
             {
-                result = [currentText webEditorTextShouldChangeSelectedDOMRange:currentRange
+                result = [currentText webEditorTextShouldChangeSelectedDOMRange:range
                                                                      toDOMRange:proposedRange
                                                                        affinity:selectionAffinity
                                                                  stillSelecting:stillSelecting];
@@ -1648,10 +1649,21 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     
-    // If the selection is refused, revert back to no selection
-    if (!result && currentRange && ![[self dataSource] webEditor:self textBlockForDOMRange:currentRange])
+    if (result)
     {
-        [self setSelectedDOMRange:nil affinity:0];
+        // Did we adjust the range? If so, make that the one actually selected
+        if (range != currentRange)
+        {
+            [self setSelectedDOMRange:range affinity:selectionAffinity];
+        }
+    }
+    else
+    {
+        // If the selection is refused, revert back to no selection
+        if (range && ![[self dataSource] webEditor:self textBlockForDOMRange:range])
+        {
+            [self setSelectedDOMRange:nil affinity:0];
+        }
     }
     
     return result;
