@@ -1663,7 +1663,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         // Let delegate know what's happening
         if (result)
         {
-            result = [self changeSelectedItemsFromDOMRange:proposedRange];
+            result = [self changeSelectedItemsFromDOMRange:range];
         }
     }
     
