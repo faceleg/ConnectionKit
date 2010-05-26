@@ -91,7 +91,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     NSArray *pagelets = [[self pageletsController] arrangedObjects];
     
-    SVGraphic *aPagelet, *nextPagelet = nil;
+    SVGraphic *aPagelet;
     WEKWebEditorItem *nextController = nil;
     
     for (NSUInteger i = [pagelets count] - 1; i < NSNotFound;)
@@ -120,7 +120,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         // Loop
         nextController = controller;
-        nextPagelet = aPagelet;
     }
 }
 
