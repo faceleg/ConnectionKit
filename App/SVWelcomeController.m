@@ -375,10 +375,10 @@
 - (void)loadRecentDocumentList;
 {
 	NSArray *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
-#if 0
+#if 1
 	// TESTING HARNESS ... I HAVE A BUNCH OF DOCUMENTS IN THERE.
 	NSFileManager *fm = [NSFileManager defaultManager];
-	NSString *dir = [@"~/Subversion/company/KareliaWebSite" stringByExpandingTildeInPath];
+	NSString *dir = [@"~/Desktop" stringByExpandingTildeInPath];
 	NSArray *files = [fm contentsOfDirectoryAtPath:dir error:nil];
 	NSMutableArray *localURLs = [NSMutableArray array];
 	for (NSString *filename in files)
@@ -521,9 +521,8 @@
 
 - (NSString *)tableView:(NSTableView *)aTableView toolTipForCell:(NSCell *)aCell rect:(NSRectPointer)rect tableColumn:(NSTableColumn *)aTableColumn row:(NSInteger)row mouseLocation:(NSPoint)mouseLocation
 {
-	NSURL *url = [[oRecentDocsController arrangedObjects] objectAtIndex:row];
-	NSString *path = [url path];
-	NSString *displayPath = [[NSFileManager defaultManager] displayPathAtPath:path];
+	KSRecentDocument *doc = [[oRecentDocsController arrangedObjects] objectAtIndex:row];
+	NSString *displayPath = [[NSFileManager defaultManager] displayPathAtPath:[[doc URL] path]];
 
 	return displayPath;
 }
