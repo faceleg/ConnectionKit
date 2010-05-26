@@ -49,8 +49,8 @@
 
 @property(nonatomic, assign) BOOL enabled;
 @property(nonatomic, assign) BOOL collectionsOnly;
-@property(nonatomic, copy) NSWindow *targetWindow;
-@property(nonatomic, copy) KTPage *connectedPage;
+@property(nonatomic, retain) NSWindow *targetWindow;
+@property(nonatomic, retain) KTPage *connectedPage;
 @property(nonatomic, assign) IBOutlet id <KTLinkSourceViewDelegate> delegate;
 
 - (void)setConnected:(BOOL)isConnected;

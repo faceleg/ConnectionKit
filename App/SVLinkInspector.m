@@ -126,7 +126,7 @@
 {
 	if (aPage)
 	{
-		SVLink *link = [[SVLink alloc] initWithPage:aPage];
+		SVLink *link = [[SVLink alloc] initWithPage:aPage openInNewWindow:[oOpenInNewWindowCheckbox intValue]];
 		[[SVLinkManager sharedLinkManager] modifyLinkTo:link];
 		[link release];
 	}
