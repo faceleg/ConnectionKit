@@ -462,9 +462,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Create controller for graphic
-    SVDOMController *controller = [[graphic newDOMController]
-                                   initWithHTMLDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]];
-    [controller setHTMLContext:[self HTMLContext]];
+    SVDOMController *controller = [SVDOMController
+                                   DOMControllerWithGraphic:graphic
+                                   createHTMLElementWithDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]
+                                   context:[self HTMLContext]];
     
     
     // Generate & insert DOM node
@@ -475,7 +476,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
         // Insert controller – must do after node is inserted so descandant nodes can be located by ID
         [self addChildWebEditorItem:controller];
-        [controller release];
         
         // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
