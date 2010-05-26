@@ -177,11 +177,6 @@ typedef enum {
     if ([self window])
     {
         [[NSNotificationCenter defaultCenter] addObserver:self
-                                                 selector:@selector(windowDidChangeFirstResponder:)
-                                                     name:SVDocWindowDidChangeFirstResponderNotification
-                                                   object:[self window]];
-        
-        [[NSNotificationCenter defaultCenter] addObserver:self
                                                  selector:@selector(didSendFlagsChangedEvent:)
                                                      name:KTApplicationDidSendFlagsChangedEvent
                                                    object:[KTApplication sharedApplication]];
@@ -192,10 +187,6 @@ typedef enum {
 {
     if ([self window])
     {
-        [[NSNotificationCenter defaultCenter] removeObserver:self
-                                                        name:SVDocWindowDidChangeFirstResponderNotification
-                                                      object:[self window]];
-        
         [[NSNotificationCenter defaultCenter] removeObserver:self
                                                         name:KTApplicationDidSendFlagsChangedEvent
                                                       object:[KTApplication sharedApplication]];
@@ -647,11 +638,6 @@ typedef enum {
     // Store items
     items = [items copy];
     [_selectionParentItems release]; _selectionParentItems = items;
-}
-
-- (void)windowDidChangeFirstResponder:(NSNotification *)notification
-{
-    OBPRECONDITION([notification object] == [self window]);
 }
 
 #pragma mark Keyboard-Induced selection
