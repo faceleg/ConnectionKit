@@ -389,12 +389,6 @@
 	// Generate <span class="in"> if desired
 	if (generateSpanIn)	// For normal, single-line text the span is the editable bit
 	{
-        NSString *CSSClassName = @"in";
-        if ([self isEditable] && [[SVHTMLContext currentContext] isEditable])
-		{
-			CSSClassName = [CSSClassName stringByAppendingString:([self isRichText]) ? @" kBlock" : @" kLine"];
-		}
-		
         [context startElement:@"span" idName:nil className:@"in"];
 	}
 }
