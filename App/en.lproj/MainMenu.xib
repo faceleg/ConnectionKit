@@ -1549,7 +1549,8 @@
 								<object class="NSMenuItem" id="18956098">
 									<reference key="NSMenu" ref="858174837"/>
 									<string key="NSTitle">Choose Design…</string>
-									<string key="NSKeyEquiv"/>
+									<string key="NSKeyEquiv">D</string>
+									<int key="NSKeyEquivModMask">1048576</int>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
