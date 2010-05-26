@@ -1371,18 +1371,6 @@ typedef enum {
     }
 }
 
-#pragma mark Changing the First Responder
-
-- (BOOL)resignFirstResponder
-{
-    BOOL result = [super resignFirstResponder];
-    if (result && !_isChangingSelectedItems)
-    {
-        result = [self selectItems:nil byExtendingSelection:NO isUIAction:NO];
-    }
-    return result;
-}
-
 #pragma mark Dispatching Messages
 
 - (void)forceWebViewToPerform:(SEL)action withObject:(id)sender;
