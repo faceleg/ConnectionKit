@@ -187,6 +187,7 @@
     NSString *validatedPath = path;
     if (![result validateValue:(id *)&validatedPath forKey:@"pathRelativeToSite" error:NULL])
     {
+        NSLog(@"Removing upload to invalid path: %@", path);
         [[result managedObjectContext] deleteObject:result];        
         result = [self defaultUpload];
     }
