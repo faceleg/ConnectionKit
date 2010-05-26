@@ -92,196 +92,195 @@
 #pragma mark -
 #pragma mark HTML Generation
 
-- (void)writeMapOfPage:(id <SVPage>)aPage
-             toContext:(id <SVPlugInContext>)context
-          wantsCompact:(BOOL)wantsCompact
-          isTopSection:(BOOL)isTopSection
-{	
-    if ( [aPage includeInSiteMaps] )
-	{
-        
-        id <SVPlugInContext>context = [SVPageletPlugIn currentContext];
-        
-		// Fetch all children suitable for inclusion in the sitemap
-//        static NSPredicate *includeInSiteMapPredicate;
-//        if (!includeInSiteMapPredicate) {
-//            includeInSiteMapPredicate = [[NSPredicate predicateWithFormat:@"excludedFromSiteMap == 0"] retain];
+//- (void)writeMapOfPage:(id <SVPage>)aPage
+//          wantsCompact:(BOOL)wantsCompact
+//          isTopSection:(BOOL)isTopSection
+//{	
+//    if ( [aPage includeInSiteMaps] )
+//	{
+//        
+//        id <SVPlugInContext>context = [SVPageletPlugIn currentContext];
+//        
+//        
+//		// Fetch all children suitable for inclusion in the sitemap
+//        //        static NSPredicate *includeInSiteMapPredicate;
+//        //        if (!includeInSiteMapPredicate) {
+//        //            includeInSiteMapPredicate = [[NSPredicate predicateWithFormat:@"excludedFromSiteMap == 0"] retain];
+//        //        }
+//        //        
+//        //        NSArray *children = [[aPage sortedChildren] filteredArrayUsingPredicate:includeInSiteMapPredicate];
+//        
+//        NSArray *childPages = [aPage childPages];
+//		NSMutableArray *children = [NSMutableArray arrayWithCapacity:childPages.count];
+//        for ( id<SVPage> childPage in childPages )
+//        {
+//            if ( [childPage includeInSiteMaps] ) [children addObject:childPage];
 //        }
 //        
-//        NSArray *children = [[aPage sortedChildren] filteredArrayUsingPredicate:includeInSiteMapPredicate];
-    
-        NSArray *childPages = [aPage childPages];
-		NSMutableArray *children = [NSMutableArray arrayWithCapacity:childPages.count];
-        for ( id<SVPage> childPage in childPages )
-        {
-            if ( [childPage includeInSiteMaps] ) [children addObject:childPage];
-        }
-        
-        //[string appendIndent:anIndent];
-        [[context HTMLWriter] increaseIndentationLevel];
-        
-		if (isTopSection)
-		{
-			//[string appendString:@"<h3>"];
-            [[context HTMLWriter] startElement:@"h3" attributes:nil];
-		}
-		else
-		{
-			//[string appendString:@"<li>"];
-            [[context HTMLWriter] startElement:@"li" attributes:nil];
-            [[context HTMLWriter] endElement];
-		}
-		
-		if (aPage == thisPage)	// not likely but maybe possible
-		{
-			NSString *title = [aPage title];	/// HTML was leaving extra formatting; we want it less dramatic
-            if (title)
-            {
-                //[string appendString:title];
-                [[context HTMLWriter] writeText:title];
-            }
-		}
-		else
-		{
-            //			/// special case for LinkPage, add target=_BLANK if LinkPage and newWindowLink
-            //			if ( [[[aPage delegate] class] isEqual:[NSClassFromString(@"LinkPageDelegate") class]]
-            //				 && (1 == [(NSNumber *)[aPage valueForKey:@"linkType"] intValue]) ) // 1 is newWindowLink
-            //			{
-            //				[string appendFormat:@"<a target=\"_blank\" href=\"%@\">%@</a>", [aPage pathRelativeTo:thisPage], [[aPage titleText] stringByEscapingHTMLEntities]];
-            //			}
-            //			else
-            //			{
-			//NSString *href = [[aPage URL] stringRelativeToURL:[thisPage URL]];
-            NSString *href = [context relativeURLStringOfPage:aPage];
-
-            OBASSERT(href);
-            NSString *title = [aPage title];
-            
-			if (title)
-			{
-				//[string appendFormat:@"<a href=\"%@\">%@</a>", href, title];
-                [[context HTMLWriter] startAnchorElementWithHref:href 
-                                                           title:title
-                                                          target:nil
-                                                             rel:nil];
-                [[context HTMLWriter] writeText:title                                           ];
-                [[context HTMLWriter] endElement];
-                
-			}
-		}
-		
-		if (isTopSection)
-		{
-			//[string appendString:@"</h3>\n"];
-            [[context HTMLWriter] endElement];
-		}
-		else
-		{
-			// There are children -- so start them on a new line.  Otherwise we'll close <ul> below without a newline
-			if ([children count])
-			{
-				//[string appendString:@"\n"];
-			}
-			
-		}
-		
-		if ([children count])
-		{
-			// If we want compact, go through and look to see if any of the children have children --
-			// if so, we can't be compact at this level.
-			BOOL doCompact = NO;
-			
-			if (wantsCompact)
-			{
-				BOOL canBeCompact = NO;
-//				NSEnumerator *theEnum = [children objectEnumerator];
-//				id<SVPage> *aChildPage;
+//        //[string appendIndent:anIndent];
+//        [[context HTMLWriter] increaseIndentationLevel];
+//        
+//		if (isTopSection)
+//		{
+//			//[string appendString:@"<h3>"];
+//            [[context HTMLWriter] startElement:@"h3" attributes:nil];
+//		}
+//		else
+//		{
+//			//[string appendString:@"<li>"];
+//            [[context HTMLWriter] startElement:@"li" attributes:nil];
+//            [[context HTMLWriter] endElement];
+//		}
+//		
+//		if (aPage == thisPage)	// not likely but maybe possible
+//		{
+//			NSString *title = [aPage title];	/// HTML was leaving extra formatting; we want it less dramatic
+//            if (title)
+//            {
+//                //[string appendString:title];
+//                [[context HTMLWriter] writeText:title];
+//            }
+//		}
+//		else
+//		{
+////			/// special case for LinkPage, add target=_BLANK if LinkPage and newWindowLink
+////			if ( [[[aPage delegate] class] isEqual:[NSClassFromString(@"LinkPageDelegate") class]]
+////				 && (1 == [(NSNumber *)[aPage valueForKey:@"linkType"] intValue]) ) // 1 is newWindowLink
+////			{
+////				[string appendFormat:@"<a target=\"_blank\" href=\"%@\">%@</a>", [aPage pathRelativeTo:thisPage], [[aPage titleText] stringByEscapingHTMLEntities]];
+////			}
+////			else
+////			{
+//			//NSString *href = [[aPage URL] stringRelativeToURL:[thisPage URL]];
+//            NSString *href = [context relativeURLStringOfPage:aPage];
+//            
+//            OBASSERT(href);
+//            NSString *title = [aPage title];
+//            
+//			if (title)
+//			{
+//				//[string appendFormat:@"<a href=\"%@\">%@</a>", href, title];
+//                [[context HTMLWriter] startAnchorElementWithHref:href 
+//                                                           title:title
+//                                                          target:nil
+//                                                             rel:nil];
+//                [[context HTMLWriter] writeText:title                                           ];
+//                [[context HTMLWriter] endElement];
 //                
+//			}
+//		}
+//		
+//		if (isTopSection)
+//		{
+//			//[string appendString:@"</h3>\n"];
+//            [[context HTMLWriter] endElement];
+//		}
+//		else
+//		{
+//			// There are children -- so start them on a new line.  Otherwise we'll close <ul> below without a newline
+//			if ([children count])
+//			{
+//				//[string appendString:@"\n"];
+//			}
+//			
+//		}
+//		
+//		if ([children count])
+//		{
+//			// If we want compact, go through and look to see if any of the children have children --
+//			// if so, we can't be compact at this level.
+//			BOOL doCompact = NO;
+//			
+//			if (wantsCompact)
+//			{
+//				BOOL canBeCompact = NO;
+//                //				NSEnumerator *theEnum = [children objectEnumerator];
+//                //				id<SVPage> *aChildPage;
+//                //                
+//                //				while (aChildPage = [theEnum nextObject])
+//                //				{
+//                //					if (![aChildPage hasChildren])
+//                //					{
+//                //						canBeCompact = YES;
+//                //						break;
+//                //					}
+//                //				}
+//                
+//                for ( id<SVPage> childPage in children )
+//                {
+//                    if ( ![[childPage children] count] )
+//                    {
+//                        canBeCompact = YES;
+//                    }
+//                }
+//				doCompact = canBeCompact;	// we wanted compact, set whether to do it here
+//			}
+//			
+//			if (doCompact)	// immediately show children inline, without a recursion
+//			{
+//				NSEnumerator *theEnum = [children objectEnumerator];
+//				KTPage *aChildPage;
+//				BOOL firstPass = YES;
+//                
+//				//[string appendIndent:anIndent+1];
+//                [[context HTMLWriter] increaseIndentationLevel];
+//                
+//				[string appendString:@"<ul><li>\n"];
 //				while (aChildPage = [theEnum nextObject])
 //				{
-//					if (![aChildPage hasChildren])
-//					{
-//						canBeCompact = YES;
-//						break;
-//					}
+//                    [string appendIndent:anIndent+2];
+//                    if (firstPass)
+//                    {
+//                        firstPass = NO;
+//                    }
+//                    else
+//                    {
+//                        [string appendString:@"&middot; "];
+//                    }
+//                    if (aChildPage == thisPage)	// not likely but maybe possible
+//                    {
+//                        NSString *title = [[aChildPage titleString] stringByEscapingHTMLEntities];
+//                        OBASSERT([title lowercaseString]);
+//                        [string appendFormat:@"%@\n", title];
+//                    }
+//                    else
+//                    {
+//                        NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
+//                        NSString *title = [[aChildPage titleString] stringByEscapingHTMLEntities];
+//                        if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
+//                    }
+//                    // need separator?	
 //				}
-                
-                for ( id<SVPage> childPage in children )
-                {
-                    if ( ![[childPage children] count] )
-                    {
-                        canBeCompact = YES;
-                    }
-                }
-				doCompact = canBeCompact;	// we wanted compact, set whether to do it here
-			}
-			
-			if (doCompact)	// immediately show children inline, without a recursion
-			{
-				NSEnumerator *theEnum = [children objectEnumerator];
-				KTPage *aChildPage;
-				BOOL firstPass = YES;
-                
-				//[string appendIndent:anIndent+1];
-                [[context HTMLWriter] increaseIndentationLevel];
-
-				[string appendString:@"<ul><li>\n"];
-				while (aChildPage = [theEnum nextObject])
-				{
-                    [string appendIndent:anIndent+2];
-                    if (firstPass)
-                    {
-                        firstPass = NO;
-                    }
-                    else
-                    {
-                        [string appendString:@"&middot; "];
-                    }
-                    if (aChildPage == thisPage)	// not likely but maybe possible
-                    {
-                        NSString *title = [[aChildPage titleString] stringByEscapingHTMLEntities];
-                        OBASSERT([title lowercaseString]);
-                        [string appendFormat:@"%@\n", title];
-                    }
-                    else
-                    {
-                        NSString *path = [[aChildPage URL] stringRelativeToURL:[thisPage URL]];
-                        NSString *title = [[aChildPage titleString] stringByEscapingHTMLEntities];
-                        if (path && title) [string appendFormat:@"<a href=\"%@\">%@</a>\n", path, title];
-                    }
-                    // need separator?	
-				}
-				[string appendIndent:anIndent+1];
-				[string appendString:@"</li></ul>\n"];
-			}
-			else	// non-compact way -- a list
-			{
-				[string appendIndent:anIndent+1];
-				[string appendString:@"<ul>\n"];
-				NSEnumerator *theEnum = [children objectEnumerator];
-				KTPage *aChildPage;
-				
-				while (nil != (aChildPage = [theEnum nextObject]) )
-				{
-					[self appendMapOfPage:aChildPage relativeToPage:thisPage toBuffer:string wantsCompact:wantsCompact topSection:NO indent:anIndent+2];
-				}
-				[string appendIndent:anIndent+1];
-				[string appendString:@"</ul>\n"];
-			}
-		}
-		
-		// Close list item for this guy
-		if (!isTopSection)
-		{
-			if ([children count])		// if there were children, then we close list on new line
-			{
-				[string appendIndent:anIndent];
-			}
-			[string appendString:@"</li>\n"];
-		}
-	}
-}
-
+//				[string appendIndent:anIndent+1];
+//				[string appendString:@"</li></ul>\n"];
+//			}
+//			else	// non-compact way -- a list
+//			{
+//				[string appendIndent:anIndent+1];
+//				[string appendString:@"<ul>\n"];
+//				NSEnumerator *theEnum = [children objectEnumerator];
+//				KTPage *aChildPage;
+//				
+//				while (nil != (aChildPage = [theEnum nextObject]) )
+//				{
+//					[self appendMapOfPage:aChildPage relativeToPage:thisPage toBuffer:string wantsCompact:wantsCompact topSection:NO indent:anIndent+2];
+//				}
+//				[string appendIndent:anIndent+1];
+//				[string appendString:@"</ul>\n"];
+//			}
+//		}
+//		
+//		// Close list item for this guy
+//		if (!isTopSection)
+//		{
+//			if ([children count])		// if there were children, then we close list on new line
+//			{
+//				[string appendIndent:anIndent];
+//			}
+//			[string appendString:@"</li>\n"];
+//		}
+//	}
+//}
 
 - (void)writeInnerHTML:(id <SVPlugInContext>)context
 {
@@ -317,6 +316,7 @@
 		{
             NSString *path = [context relativeURLStringOfPage:rootPage];
             if (!path) path = @"";  // Happens for a site with no -siteURL set yet
+            
 
             [[context HTMLWriter] startAnchorElementWithHref:path 
                                                         title:[thisPage title]
@@ -325,7 +325,7 @@
             [[context HTMLWriter] writeText:[thisPage title]];
             [[context HTMLWriter] endElement];
 		}
-        
+                
         if ( self.sections )
         {
             [[context HTMLWriter] startElement:@"h3" attributes:nil];
