@@ -1014,10 +1014,17 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
             result = [connection uploadFile:[localURL path] toFile:remotePath checkRemoteExistence:NO delegate:nil];
             [result setName:[remotePath lastPathComponent]];
             
-            [parent addContent:result];
-            
-            // Also set permissions for the file
-            [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+            if (result)
+            {
+                [parent addContent:result];
+                
+                // Also set permissions for the file
+                [[self connection] setPermissions:[self remoteFilePermissions] forFile:remotePath];
+            }
+            else
+            {
+                NSLog(@"Unable to create transfer record for path:%@ source:%@", remotePath, localURL); // case 40520 logging
+            }
         }
     }
     else
