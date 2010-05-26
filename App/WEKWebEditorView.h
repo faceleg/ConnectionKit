@@ -79,7 +79,6 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 - (BOOL)loadUntilDate:(NSDate *)date;
 
 @property(nonatomic, readonly) WEKWebEditorItem *rootItem;   // add your items here after loading finishes
-- (void)insertItem:(WEKWebEditorItem *)item; // inserts the item into the tree in the place that matches the DOM
 
 
 #pragma mark Text Selection

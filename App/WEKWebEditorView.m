@@ -250,25 +250,6 @@ typedef enum {
 
 @synthesize rootItem = _rootItem;
 
-- (void)insertItem:(WEKWebEditorItem *)item;
-{
-    // Search the tree for the appropriate parent
-    WEKWebEditorItem *parent = [[self rootItem] hitTestDOMNode:[item HTMLElement]];
-    
-    // But does the parent already have children that should move to become children of the new item?
-    for (WEKWebEditorItem *aChild in [parent childWebEditorItems])
-    {
-        if ([[aChild HTMLElement] isDescendantOfNode:[item HTMLElement]])
-        {
-            [aChild removeFromParentWebEditorItem];
-            [item addChildWebEditorItem:aChild];
-        }
-    }
-    
-    // Insert the new item
-    [parent addChildWebEditorItem:item];
-}
-
 #pragma mark Text Selection
 
 - (DOMRange *)selectedDOMRange
