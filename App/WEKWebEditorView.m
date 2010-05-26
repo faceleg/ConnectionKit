@@ -1677,7 +1677,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 NSView *view = [node documentView];
                 NSPoint location = [view convertPointFromBase:[event locationInWindow]];
                 
-                if (!(result = [view mouse:location inRect:textBox]))
+                if (![view mouse:location inRect:textBox])
                 {
                     // There's no good text to select, so fall back to body
                     range = [[self delegate] webEditor:self fallbackDOMRangeForNoSelection:event];
@@ -1691,46 +1691,57 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
     if (!_isChangingSelectedItems && result)
     {
-        // Ensure user can't select part of a text area *enclosing* the current text
-        if (range && proposedRange)
+            // Ensure user can't select part of a text area *enclosing* the current text
+            if (range && proposedRange)
+            {
+                WEKWebEditorItem <SVWebEditorText> *currentText = [self textItemForDOMRange:range];
+            
+               DOMNode *proposedNode = [proposedRange commonAncestorContainer];
+                if (![proposedNode isDescendantOfNode:[currentText HTMLElement]])
+                {
+                    WEKWebEditorItem *proposedText = [self textItemForDOMRange:proposedRange];
+                    result = ![[currentText HTMLElement] isDescendantOfNode:[proposedText HTMLElement]];
+                }
+                
+                
+                // For change *within* a text area, let the controller decide
+                if (result && currentText)
+                {
+                    result = [currentText webEditorTextShouldChangeSelectedDOMRange:range
+                                                                         toDOMRange:proposedRange
+                                                                           affinity:selectionAffinity
+                                                                     stillSelecting:stillSelecting];
+                }
+            }
+        
+        
+        // Let delegate know what's happening
+        if (result)
         {
-            WEKWebEditorItem <SVWebEditorText> *currentText = [self textItemForDOMRange:range];
-        
-           DOMNode *proposedNode = [proposedRange commonAncestorContainer];
-            if (![proposedNode isDescendantOfNode:[currentText HTMLElement]])
-            {
-                WEKWebEditorItem *proposedText = [self textItemForDOMRange:proposedRange];
-                result = ![[currentText HTMLElement] isDescendantOfNode:[proposedText HTMLElement]];
-            }
-            
-            
-            // For change *within* a text area, let the controller decide
-            if (result && currentText)
-            {
-                result = [currentText webEditorTextShouldChangeSelectedDOMRange:range
-                                                                     toDOMRange:proposedRange
-                                                                       affinity:selectionAffinity
-                                                                 stillSelecting:stillSelecting];
-            }
+            result = [self changeSelectedItemsFromDOMRange:proposedRange];
         }
-        
-        if (result) result = [self changeSelectedItemsFromDOMRange:proposedRange];
     }
     
     
     
-    if (!result)
+    if (result)
     {
         // Did we adjust the range? If so, make that the one actually selected
         if (range != currentRange)
         {
             [self setSelectedDOMRange:range affinity:selectionAffinity];
-        }// If the selection is refused, revert back to no selection
-        else if (range && ![self textItemForDOMRange:range])
+            return NO;
+        }
+    }
+    else
+    {
+        // If the selection is refused, revert back to no selection
+        if (range && ![self textItemForDOMRange:range])
         {
             [self setSelectedDOMRange:nil affinity:0];
         }
     }
+    
     
     return result;
 }
