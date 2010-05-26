@@ -375,7 +375,7 @@
 - (void)loadRecentDocumentList;
 {
 	NSArray *urls = [[NSDocumentController sharedDocumentController] recentDocumentURLs];
-#if 1
+#if 0
 	// TESTING HARNESS ... I HAVE A BUNCH OF DOCUMENTS IN THERE.
 	NSFileManager *fm = [NSFileManager defaultManager];
 	NSString *dir = [@"~/Desktop" stringByExpandingTildeInPath];
