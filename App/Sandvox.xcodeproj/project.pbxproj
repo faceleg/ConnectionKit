@@ -488,6 +488,7 @@
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
 		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
 		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
+		27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
 		27CE81181137EEB100EE1A6F /* SVImageReplacementURLProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */; };
@@ -1994,6 +1995,7 @@
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
+		27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebKitPrivate.h; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
 		27CE81161137EEB100EE1A6F /* SVImageReplacementURLProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImageReplacementURLProtocol.h; sourceTree = "<group>"; };
@@ -2986,6 +2988,7 @@
 				274FA0DC11297971000E0FDA /* WEKRootItem.m */,
 				274FA0F011297AFD000E0FDA /* WEKWebEditorView+EditingSupport.m */,
 				27939A7D1196264E0091B5B4 /* WebEditingKit.h */,
+				27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -5608,6 +5611,7 @@
 				27939A7E1196264E0091B5B4 /* WebEditingKit.h in Headers */,
 				27EF99C111A4205600FC8424 /* KSXMLWriter.h in Headers */,
 				27D353B811A9CC7200BC4DB8 /* KSComparisonValueTransformer.h in Headers */,
+				27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

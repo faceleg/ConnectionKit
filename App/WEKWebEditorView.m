@@ -7,9 +7,11 @@
 //
 
 #import "WEKWebEditorView.h"
+
 #import "WEKWebView.h"
 #import "WEKRootItem.h"
 #import "SVWebEditorTextRange.h"
+#import "WEKWebKitPrivate.h"
 
 #import "KTApplication.h"
 #import "SVDocWindow.h"
@@ -42,30 +44,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
     WebKitEditableLinkLiveWhenNotFocused,
     WebKitEditableLinkNeverLive
 } WebKitEditableLinkBehavior;
-
-
-// Copied out of WebKit, ScrollTypes.h
-typedef enum {
-    ScrollbarAuto,
-    ScrollbarAlwaysOff,
-    ScrollbarAlwaysOn
-} ScrollbarMode;
-
-
-@interface WebView (WEK_Private)
-- (void)_setCatchesDelegateExceptions:(BOOL)flag;
-@end
-
-
-@interface NSScrollView (WEK_WebDynamicScrollBarsView)
-- (void)setVerticalScrollingMode:(ScrollbarMode)verticalMode;
-@end
-
-
-@interface NSView (WEK_WebExtras)
-- (BOOL)_web_dragShouldBeginFromMouseDown:(NSEvent *)mouseDownEvent
-                           withExpiration:(NSDate *)expiration;
-@end
 
 
 #pragma mark -
