@@ -1756,8 +1756,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     NSArray *anchors = [webView selectedAnchorElements];
     if ([anchors count] == 1)
     {
-        SVLink *link = [[SVLink alloc] initWithURLString:[[anchors lastObject] href]
-                                         openInNewWindow:NO];
+        DOMHTMLAnchorElement *anchor = [anchors objectAtIndex:0];
+        
+        SVLink *link = [[SVLink alloc] initWithURLString:[anchor href] openInNewWindow:NO];
         [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:[webView canCreateLink]];
         [link release];
     }
