@@ -90,6 +90,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     [_page release];
     [_context release];
+    [_selectableObjectsController release];
     
     [super dealloc];
 }
