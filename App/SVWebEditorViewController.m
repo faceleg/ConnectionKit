@@ -511,6 +511,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     // Create element
     KTPage *page = [self page];
+    if (!page) return NSBeep(); // pretty rare. #75495
+    
     
     SVGraphic *pagelet = [SVGraphicFactory graphicWithActionSender:sender
                                       insertIntoManagedObjectContext:[page managedObjectContext]];
