@@ -41,15 +41,25 @@
     return self;
 }
 
+- (void)close;
+{
+    [super close];
+    
+    // Also ditch controllers
+    [_DOMControllers release]; _DOMControllers = nil;
+    [_dependencies release]; _dependencies = nil;
+    [_media release]; _media = nil;
+}
+
 - (void)dealloc
 {
-    [_DOMControllers release];
-    [_dependencies release];
-    [_media release];
     [_sidebarDOMController release];
     [_sidebarPageletsController release];
     
     [super dealloc];
+    OBASSERT(!_DOMControllers);
+    OBASSERT(!_dependencies);
+    OBASSERT(!_media);
 }
 
 #pragma mark Purpose
