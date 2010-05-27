@@ -81,7 +81,12 @@
 {
     // Write early callouts first
     SVCalloutDOMController *calloutController = [self earlyCalloutDOMController];
-    if (calloutController) [self write:writer item:calloutController];
+    if (calloutController)
+    {
+        [self write:writer
+         DOMElement:[calloutController HTMLElement]
+               item:calloutController];
+    }
     
     
     
