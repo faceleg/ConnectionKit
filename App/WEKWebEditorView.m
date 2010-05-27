@@ -632,7 +632,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (previousNode)
         {
             WEKWebEditorItem *item = [self selectableItemForDOMNode:previousNode];
-            if (item)
+            if ([item HTMLElement] == previousNode)
             {
                 result = [self changeSelectionByDeselectingAll:YES
                                                 orDeselectItem:nil
@@ -674,7 +674,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (nextNode)
         {
             WEKWebEditorItem *item = [self selectableItemForDOMNode:nextNode];
-            if (item)
+            if ([item HTMLElement] == nextNode)
             {
                 result = [self changeSelectionByDeselectingAll:YES
                                                 orDeselectItem:nil
