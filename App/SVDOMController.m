@@ -172,6 +172,25 @@
     _needsUpdate = NO;
 }
 
+- (void)updateToReflectSelection;
+{
+    [super updateToReflectSelection];
+    
+    // Turn off editing for enclosing text temporarily. #75840
+    // It's a little hacky, but works!
+    SVTextDOMController *textController = [self textDOMController];
+    if ([self isEditing])
+    {
+        [[textController textHTMLElement] removeAttribute:@"contenteditable"];
+    }
+    else
+    {
+        [textController setEditable:[textController isEditable]];
+    }
+}
+
+#pragma mark Update Scheduling
+
 @synthesize needsUpdate = _needsUpdate;
 
 - (void)setNeedsUpdate;
