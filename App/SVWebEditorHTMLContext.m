@@ -21,7 +21,6 @@
 
 
 @interface SVWebEditorHTMLContext ()
-@property(nonatomic, retain, readwrite) SVSidebarDOMController *sidebarDOMController;
 @end
 
 
@@ -53,7 +52,6 @@
 
 - (void)dealloc
 {
-    [_sidebarDOMController release];
     [_sidebarPageletsController release];
     
     [super dealloc];
@@ -203,16 +201,12 @@
     [controller setRepresentedObject:sidebar];
     
     // Store controller
-    [self addDOMController:controller];
-    [self setSidebarDOMController:controller];
-    
+    [self addDOMController:controller];    
     
     
     // Finish up
     [controller release];
 }
-
-@synthesize sidebarDOMController = _sidebarDOMController;
 
 @synthesize sidebarPageletsController = _sidebarPageletsController;
 - (NSArrayController *)cachedSidebarPageletsController; { return [self sidebarPageletsController]; }

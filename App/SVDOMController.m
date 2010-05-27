@@ -243,7 +243,12 @@
 - (BOOL)isSelectable { return NO; }
 - (BOOL)isEditable { return YES; }
 
-#pragma mark Drag Source
+#pragma mark Sidebar
+
+- (BOOL)isSidebarPageletDOMController;
+{
+    return [[self parentWebEditorItem] isKindOfClass:[SVSidebarDOMController class]];
+}
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 {
@@ -251,8 +256,7 @@
     
     if (isLocal && (!(result & NSDragOperationMove) || !(result & NSDragOperationGeneric)))
     {
-        if ([self parentWebEditorItem] == [[self HTMLContext] sidebarDOMController] ||
-            [self textDOMController])
+        if ([self isSidebarPageletDOMController] || [self textDOMController])
         {
             result = result | NSDragOperationMove | NSDragOperationGeneric;
         }

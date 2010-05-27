@@ -42,7 +42,6 @@
 
 
 #pragma mark Sidebar
-@property(nonatomic, retain, readonly) SVSidebarDOMController *sidebarDOMController;
 @property(nonatomic, retain) SVSidebarPageletsController *sidebarPageletsController;
 
 

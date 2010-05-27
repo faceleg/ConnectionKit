@@ -59,6 +59,10 @@
 - (void)removeAllDependencies;
 
 
+#pragma mark Sidebar
+- (BOOL)isSidebarPageletDOMController;
+
+
 @end
 
 

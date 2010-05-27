@@ -986,8 +986,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     else if (action == @selector(moveUp:) || action == @selector(moveDown:))
     {
-        SVDOMController *sidebarController = [[self HTMLContext] sidebarDOMController];
-        if ([[sidebarController childWebEditorItems] firstObjectCommonWithArray:[sender selectedItems]])
+        NSArray *pageletResults = [[sender selectedItems] valueForKey:@"isSidebarPageletDOMController"];
+        if ([pageletResults containsObject:[NSNumber numberWithBool:YES]])
         {
             [[_selectableObjectsController sidebarPageletsController] performSelector:action
                                                                            withObject:nil];
