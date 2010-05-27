@@ -11,6 +11,7 @@
 #import "KT.h"
 #import "KTAbstractIndex.h"
 #import "SVApplicationController.h"
+#import "SVArticle.h"
 #import "KTCodeInjectionController.h"
 #import "SVDesignChooserWindowController.h"
 #import "SVPagesController.h"
@@ -25,6 +26,7 @@
 #import "KTSite.h"
 #import "SVSiteOutlineViewController.h"
 #import "KTSummaryWebViewTextBlock.h"
+#import "SVTextAttachment.h"
 #import "KTToolbars.h"
 #import "KSSilencingConfirmSheet.h"
 #import "SVValidatorWindowController.h"
@@ -378,6 +380,26 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	DJW((@"%s %p",__FUNCTION__, aDesign));
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
+    
+    
+    // Let all graphics know of the change.
+    NSArray *graphics = [[[self pagesController] managedObjectContext]
+                         fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
+    for (SVGraphic *aGraphic in graphics)
+    {
+        for (SVSidebar *aSidebar in [aGraphic sidebars])
+        {
+            KTPage *page = [aSidebar page];
+            if (page) [aGraphic didAddToPage:page];
+        }
+        
+        SVRichText *text = [[aGraphic textAttachment] body];
+        if ([text isKindOfClass:[SVArticle class]])
+        {
+            KTPage *page = [(SVArticle *)text page];
+            if (page) [aGraphic didAddToPage:page];
+        }
+    }
 }
 
 #pragma mark Other
