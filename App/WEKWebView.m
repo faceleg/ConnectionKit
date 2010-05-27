@@ -49,14 +49,19 @@
 
 - (void)createLink:(SVLinkManager *)sender;
 {
+    // Ask for permisson, both for the action, and then the edit
+    
     NSObject *delegate = [self editingDelegate];
     if ([delegate respondsToSelector:@selector(webView:shouldPerformAction:fromSender:)])
     {
         if (![delegate webView:self shouldPerformAction:_cmd fromSender:sender]) return;
     }
     
-    SVLink *link = [sender selectedLink];
-    [self createLink:[link URLString] userInterface:NO];
+    if ([[self webEditor] shouldChangeTextInDOMRange:[self selectedDOMRange]])
+    {
+        SVLink *link = [sender selectedLink];
+        [self createLink:[link URLString] userInterface:NO];
+    }
 }
 
 #pragma mark Dragging Destination
