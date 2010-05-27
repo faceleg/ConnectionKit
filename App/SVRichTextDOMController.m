@@ -364,8 +364,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if ([writer openElementsCount] &&
         [[attachment placement] integerValue] != SVGraphicPlacementInline)
     {
-        // Push the element off up the tree
+        // Push the element off up the tree; it will be written next time round
         [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
+        return YES;
     }
     
     
