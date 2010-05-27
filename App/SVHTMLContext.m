@@ -458,7 +458,7 @@
 
 #pragma mark SVPlugInContext
 
-- (KSHTMLWriter *)HTMLWriter; { return self; }
+- (id <SVHTMLWriter>)HTMLWriter; { return self; }
 
 @end
 

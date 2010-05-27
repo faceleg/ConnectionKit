@@ -10,13 +10,14 @@
 
 
 #import "KSHTMLWriter+DOM.h"
+#import "SVPlugIn.h"
 
 
 @class SVHTMLBuffer;
 
 
 @protocol SVHTMLWriterDelegate;
-@interface SVHTMLWriter : KSHTMLWriter
+@interface SVHTMLWriter : KSHTMLWriter <SVHTMLWriter>
 {
   @private
     SVHTMLBuffer    *_buffer;

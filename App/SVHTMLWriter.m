@@ -11,7 +11,7 @@
 
 @interface SVHTMLBuffer : NSObject <KSStringWriter>
 {
-@private
+  @private
     NSMutableString *_string;
     SVHTMLBuffer    *_buffer;
 }

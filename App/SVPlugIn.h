@@ -73,9 +73,42 @@
 #pragma mark -
 
 
+@protocol SVHTMLWriter
+
+- (void)startElement:(NSString *)elementName attributes:(NSDictionary *)attributes;
+- (void)startElement:(NSString *)tagName;
+- (void)startElement:(NSString *)tagName className:(NSString *)className;
+- (void)startElement:(NSString *)tagName idName:(NSString *)idName className:(NSString *)className;
+- (void)endElement;
+
+- (void)writeText:(NSString *)string;
+
+- (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
+
+- (void)writeHTMLString:(NSString *)html;
+
+//  <a href="...." target="..." rel="nofollow">
+- (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
+
+//  <img src="..." alt="..." width="..." height="..." />
+- (void)writeImageWithIdName:(NSString *)idName
+                   className:(NSString *)className
+                         src:(NSString *)src
+                         alt:(NSString *)alt
+                       width:(NSString *)width
+                      height:(NSString *)height;
+
+- (BOOL)isXHTML;
+
+@end
+
+
+#pragma mark -
+
+
 @protocol SVPlugInContext
 
-- (KSHTMLWriter *)HTMLWriter;
+- (id <SVHTMLWriter>)HTMLWriter;
 
 // Call so Web Editor knows when to update
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
