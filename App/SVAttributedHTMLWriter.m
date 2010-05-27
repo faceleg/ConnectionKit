@@ -60,19 +60,19 @@
     [attributedString release];
 }
 
-- (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
+- (DOMNode *)HTMLWriter:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 {
     for (SVDOMController *aController in _graphicControllers)
     {
         if ([aController HTMLElement] == element)
         {
             [self writeGraphicController:aController];
-            return YES;
+            return [element nextSibling];
         }
     }
     
     
-    return NO;
+    return element;
 }
 
 - (void)writeDOMRange:(DOMRange *)range graphicControllers:(NSArray *)graphicControllers;

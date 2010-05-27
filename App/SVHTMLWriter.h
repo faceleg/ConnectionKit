@@ -50,5 +50,5 @@
 
 
 @protocol SVHTMLWriterDelegate <NSObject>
-- (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
+- (DOMNode *)HTMLWriter:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 @end

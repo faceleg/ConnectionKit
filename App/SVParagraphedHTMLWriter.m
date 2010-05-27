@@ -291,13 +291,14 @@
 - (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
-    if ([context HTMLWriter:context writeDOMElement:self])
+    DOMNode *node = [context willWriteDOMElement:self];
+    if (node == self)
     {
-        return [self nextSibling];
+        return [context _writeDOMElement:self];
     }
     else
     {
-        return [context _writeDOMElement:self];
+        return node;
     }
 }
 

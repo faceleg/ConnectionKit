@@ -52,9 +52,9 @@
 
 @synthesize delegate = _delegate;
 
-- (BOOL)HTMLWriter:(KSHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
+- (DOMNode *)willWriteDOMElement:(DOMElement *)element
 {
-    return [[self delegate] HTMLWriter:writer writeDOMElement:element];
+    return [[self delegate] HTMLWriter:self willWriteDOMElement:element];
 }
 
 #pragma mark Buffering

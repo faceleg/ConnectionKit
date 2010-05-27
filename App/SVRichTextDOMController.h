@@ -45,7 +45,9 @@
 
 #pragma mark Responding to Changes
 - (void)willWriteText:(SVParagraphedHTMLWriter *)writer;
-- (BOOL)write:(SVParagraphedHTMLWriter *)writer item:(WEKWebEditorItem *)controller;
+- (DOMNode *)write:(SVParagraphedHTMLWriter *)writer
+        DOMElement:(DOMElement *)element
+              item:(WEKWebEditorItem *)controller;
 
 
 #pragma mark Links

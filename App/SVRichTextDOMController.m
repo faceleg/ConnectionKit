@@ -352,13 +352,17 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     return YES;
 }
 
-- (BOOL)write:(SVParagraphedHTMLWriter *)writer item:(WEKWebEditorItem *)controller;
+- (DOMNode *)write:(SVParagraphedHTMLWriter *)writer
+        DOMElement:(DOMElement *)element
+              item:(WEKWebEditorItem *)controller;
 {
+    DOMNode *result = [element nextSibling];    // must grab before any chance of editing DOM due to misplaced graphic
+    
+    
     // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
     SVGraphic *graphic = [controller representedObject];
     SVTextAttachment *attachment = [graphic textAttachment];
     
-    DOMElement *element = [controller HTMLElement];
     DOMNode *parentNode = [element parentNode];
     
     if ([writer openElementsCount] &&
@@ -366,40 +370,41 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         // Push the element off up the tree; it will be written next time round
         [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
-        return YES;
-    }
-    
-    
-    // Graphics are written as-is. Callouts write their contents
-    if ([controller isSelectable])
-    {
-        return [self write:writer selectableItem:controller];
     }
     else
     {
-        DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
-        for (unsigned i = 0; i < [calloutContents length]; i++)
+        // Graphics are written as-is. Callouts write their contents
+        if ([controller isSelectable])
         {
-            DOMNode *aNode = [[calloutContents item:i] firstChild];
-            while (aNode)
+            if (![self write:writer selectableItem:controller]) result = element;
+        }
+        else
+        {
+            DOMNodeList *calloutContents = [element getElementsByClassName:@"callout-content"];
+            for (unsigned i = 0; i < [calloutContents length]; i++)
             {
-                aNode = [aNode topLevelParagraphWriteToStream:writer];
+                DOMNode *aNode = [[calloutContents item:i] firstChild];
+                while (aNode)
+                {
+                    aNode = [aNode topLevelParagraphWriteToStream:writer];
+                }
             }
         }
     }
     
-    return YES;
+    
+    return result;
 }
 
-- (BOOL)HTMLWriter:(SVParagraphedHTMLWriter *)writer writeDOMElement:(DOMElement *)element;
+- (DOMNode *)HTMLWriter:(SVParagraphedHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 {
     WEKWebEditorItem *item = [self hitTestDOMNode:element];
     if (item != self)
     {
-        return [self write:writer item:item];
+        return [self write:writer DOMElement:element item:item];
     }
     
-    return NO;
+    return element;
 }
 
 #pragma mark Links
