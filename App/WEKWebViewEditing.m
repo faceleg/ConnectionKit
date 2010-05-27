@@ -64,10 +64,21 @@
 - (void)createLink:(NSString *)link userInterface:(BOOL)userInterface;
 {
     DOMRange *selection = [self selectedDOMRange];
-    if ([selection collapsed]) [self selectWord:self];
+    if ([selection collapsed])
+    {
+        [self selectWord:self];
+        selection = [self selectedDOMRange];
+    }
     
     DOMDocument *document = [[self mainFrame] DOMDocument];
-    if (![document execCommand:@"createLink" userInterface:userInterface value:link]) NSBeep();
+    if ([document execCommand:@"createLink" userInterface:userInterface value:link])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
 }
 
 - (void)unlink:(id)sender;
