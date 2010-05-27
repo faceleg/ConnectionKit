@@ -24,8 +24,9 @@
     
     SVHTMLTextBlock *_textBlock;
     
-    BOOL        _isRichText;
-    BOOL        _isFieldEditor;
+    BOOL    _editable;
+    BOOL    _isRichText;
+    BOOL    _isFieldEditor;
     
     // Editing
     BOOL    _isEditing;

@@ -39,6 +39,8 @@
 {
     self = [super init];
     
+    _editable = YES;    // default
+    
     // Undo
     _undoCoalescingActionIdentifier = NSNotFound;
     
@@ -55,19 +57,24 @@
 
 #pragma mark DOM Node
 
-@synthesize textHTMLElement = _textElement;
 - (DOMHTMLElement *)textHTMLElement
 {
     [self HTMLElement]; // make sure it's loaded
     return _textElement;
 }
 
+- (void)setTextHTMLElement:(DOMHTMLElement *)element;
+{
+    [element retain];
+    [_textElement release]; _textElement = element;
+    
+    [self setEditable:[self isEditable]];
+}
+
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document
 {
     DOMElement *element = [document getElementById:[[self textBlock] DOMNodeID]];
     [self setHTMLElement:(DOMHTMLElement *)element];
-    
-    [self setEditable:[[self textBlock] isEditable]];
 }
 
 #pragma mark Hierarchy
@@ -78,12 +85,13 @@
 
 - (BOOL)isEditable
 {
-    BOOL result = [[self textHTMLElement] isContentEditable];
-    return result;
+    return _editable;
 }
 
 - (void)setEditable:(BOOL)flag
 {
+    _editable = flag;
+    
     // Annoyingly, calling -setContentEditable:nil or similar does not remove the attribute
     if (flag)
     {
