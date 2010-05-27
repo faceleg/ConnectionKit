@@ -388,11 +388,20 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)didUpdate;
 {
+    WEKWebEditorView *webEditor = [self webEditor];
+    
     // Restore selection
     if (_selectionToRestore)
     {
-        [[self webEditor] setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
+        [webEditor setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
         [_selectionToRestore release]; _selectionToRestore = nil;
+    }
+    
+    // Fallback to end of article if needs be. #75712
+    if (![webEditor selectedItem] && ![webEditor selectedDOMRange])
+    {
+        DOMRange *range = [self webEditor:webEditor fallbackDOMRangeForNoSelection:nil];
+        [webEditor setSelectedDOMRange:range affinity:0];
     }
 }
 
@@ -832,7 +841,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     DOMRange *result = [[articleNode ownerDocument] createRange];
     
     NSPoint location = [[articleNode documentView] convertPointFromBase:[selectionEvent locationInWindow]];
-    if (location.y < NSMidY([articleNode boundingBox]))
+    if (selectionEvent && location.y < NSMidY([articleNode boundingBox]))
     {
         [result setStartBefore:[articleNode firstChild]];
     }
