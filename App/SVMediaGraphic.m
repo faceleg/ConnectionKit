@@ -88,17 +88,6 @@
     if (media) [[SVHTMLContext currentContext] addMedia:media];
     
     NSURL *result = [self sourceURL];
-    if (!result)
-    {
-        result = [self placeholderImageURL];
-    }
-    
-    return result;
-}
-
-- (NSURL *)placeholderImageURL; // the fallback when no media or external source is chose
-{
-    NSURL *result = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"LogoPlaceholder"]];
     return result;
 }
 

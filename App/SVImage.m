@@ -77,6 +77,21 @@
     }
 }
 
+#pragma mark File Info
+
+@dynamic placeholderImageURL;
+
+- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
+{    
+    NSURL *result = [super imagePreviewURL];
+    if (!result)
+    {
+        result = [self placeholderImageURL];
+    }
+    
+    return result;
+}
+
 #pragma mark Metrics
 
 @dynamic alternateText;
@@ -122,9 +137,10 @@
     }
     else
     {
+        NSURL *URL = [self imagePreviewURL];
         [context writeImageWithIdName:[self editingElementID]
                             className:(isPagelet ? nil : [self className])
-                                  src:[context relativeURLStringOfURL:[self imagePreviewURL]]
+                                  src:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                   alt:alt
                                 width:[[self width] description]
                                height:[[self height] description]];

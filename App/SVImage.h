@@ -18,6 +18,10 @@
 + (SVImage *)insertNewImageInManagedObjectContext:(NSManagedObjectContext *)context;
 
 
+#pragma mark File Info
+@property(nonatomic, copy) NSURL *placeholderImageURL; // the fallback when no media or external source is chose
+
+
 #pragma mark Metrics
 @property(nonatomic, copy) NSString *alternateText;
 
