@@ -827,9 +827,20 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     SVRichText *article = [[self page] article];
     WEKWebEditorItem *item = [[[self webEditor] rootItem] hitTestRepresentedObject:article];
+    DOMNode *articleNode = [item HTMLElement];
     
-    DOMRange *result = [[[item HTMLElement] ownerDocument] createRange];
-    [result setStartAfter:[[item HTMLElement] lastChild]];
+    DOMRange *result = [[articleNode ownerDocument] createRange];
+    
+    NSPoint location = [[articleNode documentView] convertPointFromBase:[selectionEvent locationInWindow]];
+    if (location.y < NSMidY([articleNode boundingBox]))
+    {
+        [result setStartBefore:[articleNode firstChild]];
+    }
+    else
+    {
+        [result setStartAfter:[articleNode lastChild]];
+    }
+    
     return result;
 }
 
