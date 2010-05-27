@@ -8,7 +8,7 @@
 
 //  Main purpose is to pass any unhandled drags up to the superview to deal with
 
-#import <WebKit/WebKit.h>
+#import "WEKWebViewEditing.h"
 
 
 @class WEKWebEditorView;

@@ -10,7 +10,7 @@
 #import "WEKWebEditorView.h"
 #import "WEKWebEditorItem.h"
 
-#import "SVLinkInspector.h"
+#import "SVLinkManager.h"
 
 #import "NSResponder+Karelia.h"
 #import "DOMNode+Karelia.h"
@@ -130,7 +130,7 @@
 
 #pragma mark Links
 
-- (void)createLink:(SVLinkInspector *)sender;
+- (void)createLink:(SVLinkManager *)sender;
 {
     //  Pass on to focused text
     if (![[self dataSource] webEditor:self createLink:sender])

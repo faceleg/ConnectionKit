@@ -9,6 +9,8 @@
 #import "WEKWebView.h"
 #import "WebEditingKit.h"
 
+#import "SVLinkManager.h"
+
 #import "DOMNode+Karelia.h"
 #import "NSResponder+Karelia.h"
 
@@ -43,6 +45,18 @@
     // Let delegate have a crack at it. (WebView doesn't inform delegate by default)
     [[[self webEditor] delegate] webEditor:[self webEditor]
                        doCommandBySelector:_cmd];
+}
+
+- (void)createLink:(SVLinkManager *)sender;
+{
+    NSObject *delegate = [self editingDelegate];
+    if ([delegate respondsToSelector:@selector(webView:shouldPerformAction:fromSender:)])
+    {
+        if (![delegate webView:self shouldPerformAction:_cmd fromSender:sender]) return;
+    }
+    
+    SVLink *link = [sender selectedLink];
+    [self createLink:[link URLString] userInterface:NO];
 }
 
 #pragma mark Dragging Destination
