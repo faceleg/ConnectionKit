@@ -1595,7 +1595,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
  stillSelecting:(BOOL)stillSelecting;
 {
     BOOL result = YES;
-    DOMRange *range = currentRange;
+    DOMRange *range = proposedRange;
     
     //id article = [[[self dataSource] page] article];
     //WEKWebEditorItem *item = [[self rootItem] hitTestRepresentedObject:article];
@@ -1672,7 +1672,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     if (result)
     {
         // Did we adjust the range? If so, make that the one actually selected
-        if (range != currentRange)
+        if (range != proposedRange)
         {
             [self setSelectedDOMRange:range affinity:selectionAffinity];
             return NO;
