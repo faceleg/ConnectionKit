@@ -1798,6 +1798,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             {
                 result = [self tryToSelectItemByMovingRight];
             }
+            else if (command == @selector(moveUp:) || command == @selector(moveDown:))
+            {   // don't want these to go to self
+            }
             
             else if ([self respondsToSelector:command])
             {
