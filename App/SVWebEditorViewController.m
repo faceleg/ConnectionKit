@@ -201,6 +201,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Go for it. You write that HTML girl!
 	[page writeHTML:context];
+    [context flush];
     
     
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
