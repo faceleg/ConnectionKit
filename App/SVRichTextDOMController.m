@@ -490,9 +490,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [webEditor setSelectedItems:[NSArray arrayWithObject:controller]];
     }
-    
-    
-    [controller release];
 }
 
 - (IBAction)insertFile:(id)sender;
