@@ -399,7 +399,6 @@
 		279218DE10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m in Sources */ = {isa = PBXBuildFile; fileRef = 279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */; };
 		2792197D10BC631D00E590D5 /* WEKDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2792197B10BC631D00E590D5 /* WEKDOMController.h */; };
 		2792197E10BC631D00E590D5 /* WEKDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2792197C10BC631D00E590D5 /* WEKDOMController.m */; };
-		2792AD9011844DFE001FDACE /* KSHTMLWriter+HTMLElements.m in Sources */ = {isa = PBXBuildFile; fileRef = 2792AD8F11844DFE001FDACE /* KSHTMLWriter+HTMLElements.m */; };
 		27939A7E1196264E0091B5B4 /* WebEditingKit.h in Headers */ = {isa = PBXBuildFile; fileRef = 27939A7D1196264E0091B5B4 /* WebEditingKit.h */; };
 		27963C1E110F3F4E0050B776 /* download.icns in Resources */ = {isa = PBXBuildFile; fileRef = 27963C1D110F3F4E0050B776 /* download.icns */; };
 		2796DEE311733440000DD6EC /* SVMediaGatheringHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */; };
@@ -1897,7 +1896,6 @@
 		279218DC10BC44E900E590D5 /* KSOrderedManagedObjectControllers.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSOrderedManagedObjectControllers.m; sourceTree = "<group>"; };
 		2792197B10BC631D00E590D5 /* WEKDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKDOMController.h; sourceTree = "<group>"; };
 		2792197C10BC631D00E590D5 /* WEKDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = WEKDOMController.m; sourceTree = "<group>"; };
-		2792AD8F11844DFE001FDACE /* KSHTMLWriter+HTMLElements.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KSHTMLWriter+HTMLElements.m"; sourceTree = "<group>"; };
 		27939A7D1196264E0091B5B4 /* WebEditingKit.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WebEditingKit.h; sourceTree = "<group>"; };
 		27963C1D110F3F4E0050B776 /* download.icns */ = {isa = PBXFileReference; lastKnownFileType = image.icns; path = download.icns; sourceTree = "<group>"; };
 		2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMediaGatheringHTMLContext.h; sourceTree = "<group>"; };
@@ -4868,7 +4866,6 @@
 		CE01A6B50EAFD63600BDF264 /* Foundation */ = {
 			isa = PBXGroup;
 			children = (
-				2792AD8F11844DFE001FDACE /* KSHTMLWriter+HTMLElements.m */,
 				277E72F6113416A20081389F /* KSHTMLWriter.h */,
 				277E72F8113416A20081389F /* KSHTMLWriter.m */,
 				2797B4BC0EF6E65D00F91398 /* KSURLFormatter.h */,
@@ -7026,7 +7023,6 @@
 				273B400C1176305600A275E6 /* SVMediaGatheringPublishingContext.m in Sources */,
 				273B438511786B7600A275E6 /* SVDocumentSavePanelAccessoryViewController.m in Sources */,
 				27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */,
-				2792AD9011844DFE001FDACE /* KSHTMLWriter+HTMLElements.m in Sources */,
 				2764AA1F1188D16C00D8E1BB /* SVArticleDOMController.m in Sources */,
 				279DA2FD11901C140094EF12 /* SVWebLocation.m in Sources */,
 				27FA98861194BC0C003B8308 /* SVSidebarDOMController.m in Sources */,
