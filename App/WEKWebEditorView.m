@@ -1603,7 +1603,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     
     // We only want a collapsed range to be selected by the mouse if it's within the bounds of the text (showing the text cursor)
-    if ([proposedRange collapsed])
+    if (!proposedRange || [proposedRange collapsed])
     {
         NSEvent *event = [NSApp currentEvent];
         if ([event type] == NSLeftMouseDown ||
