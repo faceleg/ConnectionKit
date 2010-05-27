@@ -258,7 +258,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     NSArray *selection = [[self selectedObjectsController] selectedObjects];
     [[self selectedObjectsController] setContent:nil];
     
-    NSArray *controllers = [[self HTMLContext] DOMControllers];
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    NSArray *controllers = [context DOMControllers];
         
     for (WEKWebEditorItem *anItem in controllers)
     {
@@ -297,6 +298,9 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Did Update
     [self didUpdate];
+    
+    // Can now ditch context contents
+    [context close];
 }
 
 #pragma mark Updating
