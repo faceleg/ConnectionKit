@@ -30,10 +30,11 @@
 #import "SVWebEditorHTMLContext.h"
 #import "KTDocument.h"
 
-#import "DOMNode+Karelia.h"
 #import "NSArray+Karelia.h"
+#import "NSResponder+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
+#import "DOMNode+Karelia.h"
 
 #import "KSCollectionController.h"
 #import "KSPlugInWrapper.h"
@@ -400,8 +401,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Fallback to end of article if needs be. #75712
     if (![webEditor selectedItem] && ![webEditor selectedDOMRange])
     {
-        DOMRange *range = [self webEditor:webEditor fallbackDOMRangeForNoSelection:nil];
-        [webEditor setSelectedDOMRange:range affinity:0];
+        if ([webEditor ks_followsResponder:[[[self view] window] firstResponder]])
+        {
+            DOMRange *range = [self webEditor:webEditor fallbackDOMRangeForNoSelection:nil];
+            [webEditor setSelectedDOMRange:range affinity:0];
+        }
     }
 }
 
