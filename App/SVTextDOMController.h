@@ -28,9 +28,6 @@
     BOOL    _isRichText;
     BOOL    _isFieldEditor;
     
-    // Editing
-    BOOL    _isEditing;
-    
     // Undo
     BOOL        _isCoalescingUndo;
     BOOL        _nextChangeIsSuitableForUndoCoalescing;
@@ -54,8 +51,6 @@
 
 
 #pragma mark Editing
-
-@property(nonatomic, readonly, getter=isEditing) BOOL editing;
 
 // e.g. Movement might be NSReturnTextMovement. Nil if we don't know
 - (void)didEndEditingTextWithMovement:(NSNumber *)textMovement;

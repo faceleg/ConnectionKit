@@ -112,8 +112,6 @@
 
 #pragma mark Editing
 
-@synthesize editing = _isEditing;
-
 - (void)webEditorTextDidChange;
 {
     // Wait until after -didChangeText so subclass has done its work
@@ -152,9 +150,6 @@
     // Notify delegate/others
     [[NSNotificationCenter defaultCenter] postNotificationName:NSTextDidEndEditingNotification
                                                         object:self];
-    
-    
-    _isEditing = NO;
     
     
     // Like NSTextField, we want the return key to select the field's contents
