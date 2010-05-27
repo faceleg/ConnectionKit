@@ -1636,35 +1636,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
     if (!_isChangingSelectedItems && result)
     {
-            // Ensure user can't select part of a text area *enclosing* the current text
-            if (range && proposedRange)
-            {
-                WEKWebEditorItem <SVWebEditorText> *currentText = [self textItemForDOMRange:range];
-            
-               DOMNode *proposedNode = [proposedRange commonAncestorContainer];
-                if (![proposedNode isDescendantOfNode:[currentText HTMLElement]])
-                {
-                    WEKWebEditorItem *proposedText = [self textItemForDOMRange:proposedRange];
-                    result = ![[currentText HTMLElement] isDescendantOfNode:[proposedText HTMLElement]];
-                }
-                
-                
-                // For change *within* a text area, let the controller decide
-                if (result && currentText)
-                {
-                    result = [currentText webEditorTextShouldChangeSelectedDOMRange:range
-                                                                         toDOMRange:proposedRange
-                                                                           affinity:selectionAffinity
-                                                                     stillSelecting:stillSelecting];
-                }
-            }
-        
-        
-        // Let delegate know what's happening
-        if (result)
-        {
-            result = [self changeSelectedItemsFromDOMRange:range];
-        }
+        result = [self changeSelectedItemsFromDOMRange:range];
     }
     
     
