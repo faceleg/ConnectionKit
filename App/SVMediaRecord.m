@@ -443,10 +443,10 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     if (result)
     {
         // When inserting media, it must either refer to an alias, or raw data
-        result = ([self alias] || _data);
+        result = ([self alias] || [self areContentsCached] || [self fileURL]);
         if (!result && error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
                                                            code:NSValidationMissingMandatoryPropertyError
-                                           localizedDescription:@"New media must be sourced from data or an alias"];
+                                           localizedDescription:@"New media must be sourced from data or location"];
     }
     return result;
 }
