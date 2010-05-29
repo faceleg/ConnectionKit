@@ -24,7 +24,7 @@
     [cancelButtonCell setAction:@selector(deleteFile:)];
 }
 
-- (IBAction)chooseFile:(NSButton *)sender;
+- (IBAction)chooseFile:(id)sender;
 {
     KTDocument *document = [self representedObject];
     NSOpenPanel *panel = [document makeChooseDialog];

@@ -17,7 +17,7 @@
     IBOutlet KSURLInfoField *oFileInfoField;
 }
 
-- (IBAction)chooseFile:(NSButton *)sender;
+- (IBAction)chooseFile:(id)sender;
 - (IBAction)makeOriginalSize:(NSButton *)sender;
 
 @end

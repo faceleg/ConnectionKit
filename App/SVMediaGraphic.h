@@ -22,6 +22,8 @@
 
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
 
+- (BOOL)hasFile;    // for bindings
+
 
 #pragma mark Size
 

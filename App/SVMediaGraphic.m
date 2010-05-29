@@ -91,6 +91,8 @@
     return result;
 }
 
+- (BOOL)hasFile; { return YES; }
+
 #pragma mark Size
 
 @dynamic width;
