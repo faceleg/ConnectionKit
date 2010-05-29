@@ -723,7 +723,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     {
         if ([[filename stringByDeletingPathExtension] isEqualToString:@"index"] ||
             [filename isEqualToString:@"quicklook"] ||
-            [filename isEqualToString:@"contents"])
+            [filename isEqualToString:@"contents"] ||
+            [filename isEqualToString:@"shared"] ||
+            [filename isEqualToString:@"theme-files"] ||
+            [filename isEqualToString:@"thumbs"])
         {
             result = NO;
         }
