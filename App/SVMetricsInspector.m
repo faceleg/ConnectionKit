@@ -14,14 +14,16 @@
 
 @implementation SVMetricsInspector
 
-- (void)loadView;
+- (IBAction)enterExternalURL:(id)sender;
 {
-    [super loadView];
+    for (SVMediaGraphic *aGraphic in [self inspectedObjects])
+    {
+        if ([aGraphic media]) [aGraphic setMediaWithURL:nil];
+    }
     
-    // Target File Info's cancel button at us
-    NSButtonCell *cancelButtonCell = [[oFileInfoField cell] cancelButtonCell];
-    [cancelButtonCell setTarget:self];
-    [cancelButtonCell setAction:@selector(deleteFile:)];
+    NSWindow *window = [oURLField window];
+    [window makeKeyWindow];
+    [window makeFirstResponder:oURLField];
 }
 
 - (IBAction)chooseFile:(id)sender;
@@ -36,12 +38,6 @@
         [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
                                                  withObject:URL];
     }
-}
-
-- (IBAction)deleteFile:(NSButtonCell *)sender;
-{
-    [[self inspectedObjects] makeObjectsPerformSelector:@selector(setMediaWithURL:)
-                                             withObject:nil];
 }
 
 - (IBAction)makeOriginalSize:(NSButton *)sender;
