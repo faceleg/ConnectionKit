@@ -60,7 +60,7 @@ extern NSString *kSVGraphicPboardType;
 #pragma mark -
 
 
-@class SVTitleBox;
+@class KTPage, SVTitleBox;
 @class SVTextAttachment, SVHTMLContext, SVTemplate;
 @protocol SVPage;
 
@@ -68,7 +68,7 @@ extern NSString *kSVGraphicPboardType;
 @interface SVGraphic : SVContentObject <SVGraphic>
 
 #pragma mark Initialization
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page; // calls -didAddToPage:
+- (void)awakeFromInsertIntoPage:(KTPage *)page; // calls -didAddToPage:
 - (void)didAddToPage:(id <SVPage>)page;
 
 

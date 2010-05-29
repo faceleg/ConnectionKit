@@ -51,7 +51,7 @@
     }
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsertIntoPage:(KTPage *)page;
 {
     [super awakeFromInsertIntoPage:page];
     
@@ -59,6 +59,12 @@
     if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
         [self setShowsCaption:YES];
+    }
+    
+    // Placeholder image
+    if (![self media])
+    {
+        
     }
 }
 
@@ -75,21 +81,6 @@
     {
         [self setWidth:maxWidth];
     }
-}
-
-#pragma mark File Info
-
-@dynamic placeholderImageURL;
-
-- (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
-{    
-    NSURL *result = [super imagePreviewURL];
-    if (!result)
-    {
-        result = [self placeholderImageURL];
-    }
-    
-    return result;
 }
 
 #pragma mark Metrics

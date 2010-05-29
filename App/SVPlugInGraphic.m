@@ -70,7 +70,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsertIntoPage:(KTPage *)page;
 {
     [[self plugIn] awakeFromInsert];
     [super awakeFromInsertIntoPage:page];

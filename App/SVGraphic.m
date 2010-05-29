@@ -9,6 +9,7 @@
 #import "SVGraphic.h"
 
 #import "SVHTMLTemplateParser.h"
+#import "KTPage.h"
 #import "SVRichText.h"
 #import "SVTemplate.h"
 #import "SVTextAttachment.h"
@@ -38,7 +39,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setTitle:[[self class] placeholderTitleText]];
 }
 
-- (void)awakeFromInsertIntoPage:(id <SVPage>)page;
+- (void)awakeFromInsertIntoPage:(KTPage *)page;
 {
     [self didAddToPage:page];
 }
