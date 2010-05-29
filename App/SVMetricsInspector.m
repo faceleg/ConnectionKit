@@ -16,13 +16,9 @@
 
 - (IBAction)enterExternalURL:(id)sender;
 {
-    for (SVMediaGraphic *aGraphic in [self inspectedObjects])
-    {
-        if ([aGraphic media]) [aGraphic setMediaWithURL:nil];
-    }
-    
     NSWindow *window = [oURLField window];
     [window makeKeyWindow];
+    [oURLField setHidden:NO];
     [window makeFirstResponder:oURLField];
 }
 
