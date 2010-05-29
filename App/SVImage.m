@@ -11,6 +11,7 @@
 #import "SVApplicationController.h"
 #import "SVImageDOMController.h"
 #import "SVMediaRecord.h"
+#import "KTPage.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorHTMLContext.h"
 
@@ -53,18 +54,22 @@
 
 - (void)awakeFromInsertIntoPage:(KTPage *)page;
 {
+    // Placeholder image
+    if (![self media])
+    {
+        SVMediaRecord *media = [page makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
+        [self setMedia:media];
+        
+        [self makeOriginalSize];    // calling super will scale back down if needed
+        [self setConstrainProportions:YES];
+    }
+    
     [super awakeFromInsertIntoPage:page];
     
     // Show caption
     if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)
     {
         [self setShowsCaption:YES];
-    }
-    
-    // Placeholder image
-    if (![self media])
-    {
-        
     }
 }
 

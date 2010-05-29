@@ -246,9 +246,11 @@ const int kDesignThumbHeight = 65;
 
 /*!	Return path for placeholder image, if it exists
 */
-- (NSString *)placeholderImagePath;
+- (NSURL *)placeholderImageURL;
 {
-	return [[self bundle] pathForImageResource:@"placeholder"];
+	NSString *path = [[self bundle] pathForImageResource:@"placeholder"];
+    if (path) return [NSURL fileURLWithPath:path];
+    return nil;
 }
 
 - (int)textWidth

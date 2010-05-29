@@ -58,7 +58,7 @@ extern const int kDesignThumbHeight;
 - (NSImage *)thumbnail;
 - (CGImageRef)thumbnailCG;
 
-- (NSString *)placeholderImagePath;
+- (NSURL *)placeholderImageURL;
 
 - (BOOL)allowsBannerSubstitution;
 - (NSString *)bannerCSSSelector;

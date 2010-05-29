@@ -62,6 +62,10 @@ typedef enum {
 @property(nonatomic, retain) SVGraphic *thumbnailSourceGraphic;
 
 
+#pragma mark Placeholder Image
+- (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
+
+
 #pragma mark Debugging
 - (NSString *)shortDescription;
 
