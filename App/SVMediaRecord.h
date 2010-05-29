@@ -114,7 +114,7 @@ extern NSString *kSVDidDeleteMediaRecordNotification;
 
 #pragma mark Location Support
 
-// Media Files start out life with no filename. They acquire one upon the first time they are due to be copied into the doc package
+// Media Records start out life with no filename. They acquire one upon the first time they are due to be copied into the doc package
 
 @property(nonatomic, copy) NSNumber *shouldCopyFileIntoDocument;
 @property(nonatomic, retain, readonly) BDAlias *alias;
