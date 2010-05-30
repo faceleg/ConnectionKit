@@ -460,7 +460,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     if (/*![media autosaveAlias] &&*/ path)
     {
-        if ([path hasPrefix:@"Shared/"])
+        if ([path hasPrefix:@"Shared/"] || [path hasPrefix:@"shared/"])
         {
             // Special case; design placeholder image
             // This is kind of a hack to jump to the placeholder I admit; will fix up if we need more
