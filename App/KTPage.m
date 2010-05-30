@@ -466,6 +466,10 @@
 - (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
 {
     NSURL *URL = [[[self master] design] placeholderImageURL];
+    if (!URL)
+    {
+        URL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"placeholder"]];
+    }
     OBASSERT(URL);
     
     
