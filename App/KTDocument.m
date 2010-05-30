@@ -464,7 +464,19 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         {
             // Special case; design placeholder image
             // This is kind of a hack to jump to the placeholder I admit; will fix up if we need more
-            result = [[[[[self site] rootPage] master] design] placeholderImageURL];
+            NSBundle *bundle = [[[[[self site] rootPage] master] design] bundle];
+            NSString *filename = [path lastPathComponent];
+            
+            NSString *resultPath = [bundle pathForResource:[filename stringByDeletingPathExtension] 
+                                                    ofType:[filename pathExtension]];
+            
+            if (!resultPath)
+            {
+                resultPath = [[NSBundle mainBundle] pathForResource:[filename stringByDeletingPathExtension] 
+                                                             ofType:[filename pathExtension]];
+            }
+            
+            if (resultPath) result = [NSURL fileURLWithPath:resultPath];
         }
         else
         {
