@@ -206,9 +206,14 @@
 
 - (void)makeOriginalSize;
 {
+    BOOL constrainProportions = [self constrainProportions];
+    [self setConstrainProportions:NO];  // temporarily turn off so we get desired size.
+    
     CGSize size = [self originalSize];
     [self setWidth:[NSNumber numberWithFloat:size.width]];
     [self setHeight:[NSNumber numberWithFloat:size.height]];
+    
+    [self setConstrainProportions:constrainProportions];
 }
 
 - (BOOL)canMakeOriginalSize; { return YES; }
