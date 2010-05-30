@@ -162,7 +162,9 @@
 		}
 		else
         {
-			sourceFilename = [[[(KTExternalMediaFile *)self alias] fullPath] lastPathComponent];
+            NSString *aliasPath = [[(KTExternalMediaFile *)self alias] fullPath];
+            if (!aliasPath) aliasPath = [[(KTExternalMediaFile *)self alias] lastKnownPath];
+			sourceFilename = [aliasPath lastPathComponent];
 		}
 		
 		NSString *preferredFileName = [[sourceFilename stringByDeletingPathExtension] legalizedWebPublishingFileName];
