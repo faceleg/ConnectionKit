@@ -67,6 +67,7 @@
 #import "NSManagedObjectContext+KTExtensions.h"
 
 #import "KSAbstractBugReporter.h"
+#import "KSCaseInsensitiveDictionary.h"
 #import "KSSilencingConfirmSheet.h"
 
 #import "NSArray+Karelia.h"
@@ -220,7 +221,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         
         // Other ivars
-        _filenameReservations = [[NSMutableDictionary alloc] init];
+        _filenameReservations = [[KSCaseInsensitiveDictionary alloc] init];
         
         
         // Init UI accessors
@@ -556,11 +557,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // Does this match some media already loaded? 
         // Can't call -isFilenameReserved: since it will find the file on disk and return YES
-        NSString *filename = [path lowercaseString];
-        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:filename]; 
+        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:path]; 
         if (fileWrapper) [aMediaRecord setNextObject:fileWrapper];
         
-        [self setDocumentFileWrapper:aMediaRecord forKey:filename];
+        [self setDocumentFileWrapper:aMediaRecord forKey:path];
     }
     
     
@@ -617,9 +617,10 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Update media etc. to match
-    for (NSString *key in _filenameReservations)
+    NSDictionary *media = [self documentFileWrappers];
+    for (NSString *key in media)
     {
-        id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:key];
+        id <SVDocumentFileWrapper> fileWrapper = [media objectForKey:key];
         if (![fileWrapper isDeletedFromDocument])
         {
             NSURL *URL = [self URLForMediaRecord:(SVMediaRecord *)fileWrapper
@@ -720,7 +721,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     }
     
     // Reserve it
-    [self setDocumentFileWrapper:wrapper forKey:[result lowercaseString]];
+    [self setDocumentFileWrapper:wrapper forKey:result];
     
     return result;
 }
@@ -736,7 +737,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     
     
     // Consult both cache to see if the name is taken
-    filename = [filename lowercaseString];
     BOOL result = ([[self documentFileWrappers] objectForKey:filename] == nil);
     
     
@@ -759,7 +759,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (void)unreserveFilename:(NSString *)filename;
 {
-    [_filenameReservations removeObjectForKey:[filename lowercaseString]];
+    [_filenameReservations removeObjectForKey:filename];
 }
 
 - (NSSet *)missingMedia;
