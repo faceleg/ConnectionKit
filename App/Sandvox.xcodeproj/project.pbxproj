@@ -351,6 +351,8 @@
 		2774DFAC0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m in Sources */ = {isa = PBXBuildFile; fileRef = 2774DFAA0F16D87C0085A4D8 /* KTImageScalingURLProtocol.m */; };
 		277560360CA5228B00D8A412 /* KSObjectKeyPathPair.h in Headers */ = {isa = PBXBuildFile; fileRef = 277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */; settings = {ATTRIBUTES = (); }; };
 		277560370CA5228B00D8A412 /* KSObjectKeyPathPair.m in Sources */ = {isa = PBXBuildFile; fileRef = 277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */; };
+		2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */ = {isa = PBXBuildFile; fileRef = 2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */; };
+		2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */ = {isa = PBXBuildFile; fileRef = 2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */; };
 		277892A010CD5FA3008AA683 /* SVTitleBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 2778929E10CD5FA3008AA683 /* SVTitleBox.h */; };
 		277892A110CD5FA3008AA683 /* SVTitleBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 2778929F10CD5FA3008AA683 /* SVTitleBox.m */; };
 		277E4E8811104CF4005AF346 /* SVImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 277E4E8611104CF4005AF346 /* SVImage.h */; };
@@ -1844,6 +1846,8 @@
 		277560340CA5228B00D8A412 /* KSObjectKeyPathPair.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSObjectKeyPathPair.h; sourceTree = "<group>"; };
 		277560350CA5228B00D8A412 /* KSObjectKeyPathPair.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSObjectKeyPathPair.m; sourceTree = "<group>"; };
 		2775612D0CA718C200D8A412 /* KTWebViewComponentProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTWebViewComponentProtocol.h; sourceTree = "<group>"; };
+		2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSCaseInsensitiveDictionary.h; sourceTree = "<group>"; };
+		2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSCaseInsensitiveDictionary.m; sourceTree = "<group>"; };
 		2778929E10CD5FA3008AA683 /* SVTitleBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTitleBox.h; sourceTree = "<group>"; };
 		2778929F10CD5FA3008AA683 /* SVTitleBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTitleBox.m; sourceTree = "<group>"; };
 		277E4E8611104CF4005AF346 /* SVImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVImage.h; sourceTree = "<group>"; };
@@ -4971,6 +4975,8 @@
 				27EF99C211A4205600FC8424 /* KSXMLWriter.m */,
 				27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */,
 				27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */,
+				2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */,
+				2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5619,6 +5625,7 @@
 				27D353B811A9CC7200BC4DB8 /* KSComparisonValueTransformer.h in Headers */,
 				27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */,
 				27B5921411AE85C100E10A1E /* WEKWebViewEditing.h in Headers */,
+				2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7041,6 +7048,7 @@
 				27EF99C311A4205600FC8424 /* KSXMLWriter.m in Sources */,
 				27D353B911A9CC7200BC4DB8 /* KSComparisonValueTransformer.m in Sources */,
 				27B5921511AE85C100E10A1E /* WEKWebViewEditing.m in Sources */,
+				2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
