@@ -453,14 +453,23 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
  *  If the media is not marked as autosaved, returns the URL it should have. Otherwise returns nil.
  */
 - (NSURL *)URLForMediaRecord:(SVMediaRecord *)media
-                    filename:(NSString *)filename
+                    filename:(NSString *)path
        inDocumentWithFileURL:(NSURL *)docURL;
 {
     NSURL *result = nil;
     
-    if (/*![media autosaveAlias] &&*/ filename)
+    if (/*![media autosaveAlias] &&*/ path)
     {
-        result = [docURL URLByAppendingPathComponent:filename isDirectory:NO];
+        if ([path hasPrefix:@"Shared/"])
+        {
+            // Special case; design placeholder image
+            // This is kind of a hack to jump to the placeholder I admit; will fix up if we need more
+            result = [[[[[self site] rootPage] master] design] placeholderImageURL];
+        }
+        else
+        {
+            result = [docURL URLByAppendingPathComponent:path isDirectory:NO];
+        }
     }
     
     return result;
@@ -525,16 +534,17 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     {
         // Media needs to be told its location to be useful
         // Use -fileURL instead of absoluteURL since it accounts for autosave properly
-        NSString *filename = [[aMediaRecord filename] lowercaseString];
+        NSString *path = [aMediaRecord filename];
         
         NSURL *mediaURL = [self URLForMediaRecord:aMediaRecord 
-                                         filename:filename
+                                         filename:path
                             inDocumentWithFileURL:[self fileURL]];
         
         if (mediaURL) [aMediaRecord forceUpdateFromURL:mediaURL];
         
         // Does this match some media already loaded? 
         // Can't call -isFilenameReserved: since it will find the file on disk and return YES
+        NSString *filename = [path lowercaseString];
         id <SVDocumentFileWrapper> fileWrapper = [_filenameReservations objectForKey:filename]; 
         if (fileWrapper) [aMediaRecord setNextObject:fileWrapper];
         
@@ -742,7 +752,8 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (NSSet *)missingMedia;
 {
-	NSFetchRequest *request = [[[self class] managedObjectModel] fetchRequestTemplateForName:@"ExternalMedia"];
+    NSManagedObjectModel *model = [[self class] managedObjectModel];
+	NSFetchRequest *request = [model fetchRequestTemplateForName:@"ExternalMedia"];
     NSArray *externalMedia = [[self managedObjectContext] executeFetchRequest:request error:NULL];
     
     NSMutableSet *result = [NSMutableSet set];
