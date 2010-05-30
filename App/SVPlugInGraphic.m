@@ -70,10 +70,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     [self setPrimitiveValue:@"??" forKey:@"plugInVersion"];
 }
 
-- (void)awakeFromInsertIntoPage:(KTPage *)page;
+- (void)willInsertIntoPage:(KTPage *)page;
 {
     [[self plugIn] awakeFromInsert];
-    [super awakeFromInsertIntoPage:page];
+    [super willInsertIntoPage:page];
 }
 
 - (void)awakeFromExtensiblePropertyUndoUpdateForKey:(NSString *)key;

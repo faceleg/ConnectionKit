@@ -39,7 +39,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setTitle:[[self class] placeholderTitleText]];
 }
 
-- (void)awakeFromInsertIntoPage:(KTPage *)page;
+- (void)willInsertIntoPage:(KTPage *)page;
 {
     [self didAddToPage:page];
 }

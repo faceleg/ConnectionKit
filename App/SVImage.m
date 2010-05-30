@@ -52,7 +52,7 @@
     }
 }
 
-- (void)awakeFromInsertIntoPage:(KTPage *)page;
+- (void)willInsertIntoPage:(KTPage *)page;
 {
     // Placeholder image
     if (![self media])
@@ -64,7 +64,7 @@
         [self setConstrainProportions:YES];
     }
     
-    [super awakeFromInsertIntoPage:page];
+    [super willInsertIntoPage:page];
     
     // Show caption
     if ([[[self textAttachment] placement] intValue] != SVGraphicPlacementInline)

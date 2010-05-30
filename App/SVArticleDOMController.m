@@ -69,8 +69,8 @@
     SVGraphic *graphic = [SVGraphicFactory graphicWithActionSender:sender
                                            insertIntoManagedObjectContext:context];
     
+    [graphic willInsertIntoPage:[[self HTMLContext] page]];
     [self addGraphic:graphic placeInline:NO];
-    [graphic awakeFromInsertIntoPage:(id <SVPage>)[[self HTMLContext] page]];
 }
 
 #pragma mark Callouts

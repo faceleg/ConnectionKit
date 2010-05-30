@@ -519,7 +519,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Insert it
-    [pagelet awakeFromInsertIntoPage:page];
+    [pagelet willInsertIntoPage:page];
     [self _insertPageletInSidebar:pagelet];
 }
 
@@ -548,8 +548,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     if (media)
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
+        [image willInsertIntoPage:[self page]];
         [self _insertPageletInSidebar:image];
-        [image awakeFromInsertIntoPage:[self page]];
     }
     else
     {

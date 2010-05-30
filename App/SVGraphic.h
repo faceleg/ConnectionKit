@@ -68,7 +68,7 @@ extern NSString *kSVGraphicPboardType;
 @interface SVGraphic : SVContentObject <SVGraphic>
 
 #pragma mark Initialization
-- (void)awakeFromInsertIntoPage:(KTPage *)page; // calls -didAddToPage:
+- (void)willInsertIntoPage:(KTPage *)page; // calls -didAddToPage:
 - (void)didAddToPage:(id <SVPage>)page;
 
 
