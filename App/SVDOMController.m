@@ -167,7 +167,7 @@
     [self setHTMLElement:element];
 }
 
-- (NSString *)elementIdName; { return [[self representedObject] editingElementID]; }
+@synthesize elementIdName = _elementID;
 
 - (void)writeRepresentedObjectHTML;
 {
