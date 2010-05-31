@@ -18,6 +18,9 @@
 @interface SVDOMController : WEKWebEditorItem
 {
   @private
+    // Loading
+    NSString    *_elementID;
+    
     // Updating
     BOOL                    _needsUpdate;
     NSMutableSet            *_dependencies;
@@ -27,6 +30,9 @@
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
  createHTMLElementWithDocument:(DOMHTMLDocument *)doc
                        context:(SVHTMLContext *)parentContext;
+
+- (id)initWithElementID:(NSString *)elementID;
+
 
 #pragma mark Content
 
@@ -41,6 +47,7 @@
 
 //  Asks content object to locate node in the DOM, then stores it as receiver's .HTMLElement. Removes the element's ID attribute from the DOM if it's only there for editing support (so as to keep the Web Inspector tidy)
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+@property(nonatomic, copy, readonly) NSString *elementIdName;
 
 // Uses the receiver's HTML context to call -HTMLString from the represented object
 - (void)writeRepresentedObjectHTML;

@@ -71,11 +71,7 @@
     [self setEditable:[self isEditable]];
 }
 
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document
-{
-    DOMElement *element = [document getElementById:[[self textBlock] DOMNodeID]];
-    [self setHTMLElement:(DOMHTMLElement *)element];
-}
+- (NSString *)elementIdName; { return [[self textBlock] DOMNodeID]; }
 
 #pragma mark Hierarchy
 

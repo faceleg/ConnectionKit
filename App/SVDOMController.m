@@ -65,6 +65,16 @@
     return self;
 }
 
+- (id)initWithElementID:(NSString *)elementID;
+{
+    if (self = [self init])
+    {
+        _elementID = [elementID copy];
+    }
+    
+    return self;
+}
+
 - (id)initWithRepresentedObject:(id)modelObject;
 {
     self = [self init];
@@ -96,6 +106,7 @@
     [self removeAllDependencies];
     [_dependencies release];
     
+    [_elementID release];
     [_context release];
     
     [super dealloc];
@@ -149,13 +160,14 @@
 
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;
 {
-    SVContentObject *contentObject = [self representedObject];
-    DOMHTMLElement *element = [contentObject elementForEditingInDOMDocument:document];
+    DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self elementIdName]];
     
-    if (![contentObject shouldPublishEditingElementID]) [element setIdName:nil];
+    if (![[self representedObject] shouldPublishEditingElementID]) [element setIdName:nil];
     
     [self setHTMLElement:element];
 }
+
+- (NSString *)elementIdName; { return [[self representedObject] editingElementID]; }
 
 - (void)writeRepresentedObjectHTML;
 {

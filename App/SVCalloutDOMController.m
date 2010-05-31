@@ -11,17 +11,9 @@
 
 @implementation SVCalloutDOMController
 
-- (NSString *)HTMLElementIDName;
+- (NSString *)elementIdName;
 {
     return [NSString stringWithFormat:@"callout-controller-%p", self];
-}
-
-- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
-{
-    DOMHTMLElement *element = (DOMHTMLElement *)[document getElementById:[self HTMLElementIDName]];
-    [element setIdName:nil];
-    
-    [self setHTMLElement:element];
 }
 
 @end
