@@ -33,7 +33,7 @@
 }
 
 - (NSArray *)DOMControllers;    // the top-level controllers, with sub-controllers descending from them
-- (void)addDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
+- (void)addDOMController:(SVDOMController *)controller;
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 @property(nonatomic, copy, readonly) NSSet *dependencies;

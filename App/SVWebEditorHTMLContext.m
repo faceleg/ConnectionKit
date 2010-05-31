@@ -71,17 +71,41 @@
     return [[_DOMControllers copy] autorelease];
 }
 
+- (void)addDOMController:(SVDOMController *)controller;
+{
+    if (_currentDOMController)
+    {
+        [_currentDOMController addChildWebEditorItem:controller];
+    }
+    else
+    {
+        [_DOMControllers addObject:controller];
+    }
+    [controller awakeFromHTMLContext:self];
+}
+
+- (SVDOMController *)currentItem; { return _currentDOMController; }
+
+- (void)beginDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
+{
+    [self addDOMController:controller];
+    
+    _currentDOMController = controller;
+}
+
 - (void)finishWithCurrentItem;
 {
     _currentDOMController = (SVDOMController *)[_currentDOMController parentWebEditorItem];
 }
+
+#pragma mark Graphics
 
 - (void)willBeginWritingGraphic:(SVGraphic *)object
 {
     [super willBeginWritingGraphic:object];
     
     SVDOMController *controller = [object newDOMController];
-    [self addDOMController:controller];
+    [self beginDOMController:controller];
     [controller release];
 }
 
@@ -95,7 +119,7 @@
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
     SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
-    [self addDOMController:controller];
+    [self beginDOMController:controller];
     [controller release];
 
     [super beginCalloutWithAlignmentClassName:alignment];
@@ -108,23 +132,6 @@
     [self finishWithCurrentItem];
 }
 
-- (void)addDOMController:(SVDOMController *)controller;
-{
-    if (_currentDOMController)
-    {
-        [_currentDOMController addChildWebEditorItem:controller];
-    }
-    else
-    {
-        [_DOMControllers addObject:controller];
-    }
-    [controller awakeFromHTMLContext:self];
-    
-    _currentDOMController = controller;
-}
-
-- (SVDOMController *)currentItem; { return _currentDOMController; }
-
 #pragma mark Text Blocks
 
 - (void)willBeginWritingHTMLTextBlock:(SVHTMLTextBlock *)textBlock;
@@ -133,7 +140,7 @@
     
     // Create controller
     SVDOMController *controller = [textBlock newDOMController];
-    [self addDOMController:controller];
+    [self beginDOMController:controller];
     [controller release];
 }
 
@@ -200,7 +207,7 @@
     [controller setRepresentedObject:sidebar];
     
     // Store controller
-    [self addDOMController:controller];    
+    [self beginDOMController:controller];    
     
     
     // Finish up
