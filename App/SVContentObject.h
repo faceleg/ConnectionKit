@@ -37,9 +37,6 @@
 
 #pragma mark Editing Support
 
-//  Uses the receiver's -editingElementID to locate the matching DOM element. Returns nil if nothing suitable is found. The default implementation works fine, but it could be useful for subclasses to check the return value to make sure it matches expectations, and return nil if it doesn't.
-- (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
-
 // Default is NO. Override if you want it to be published.
 - (BOOL)shouldPublishEditingElementID;
 

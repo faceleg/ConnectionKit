@@ -50,17 +50,6 @@
 
 #pragma mark Editing Support
 
-- (DOMHTMLElement *)elementForEditingInDOMDocument:(DOMDocument *)document;
-{
-    OBPRECONDITION(document);
-    
-    id result = [document getElementById:[self editingElementID]];
-    
-    if (![result isKindOfClass:[DOMHTMLElement class]]) result = nil;
-    
-    return result;
-}
-
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
 - (NSString *)editingElementID;
