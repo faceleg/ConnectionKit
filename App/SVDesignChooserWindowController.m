@@ -151,9 +151,9 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 	KTDesign *selectedDesign = [[oDesignsArrayController selectedObjects] firstObjectKS];
 	if (selectedDesign)
 	{
-		if (self.targetWhenChosen && [self.targetWhenChosen respondsToSelector:self.selectorWhenChosen])
+		if (self.targetWhenChosen)
 		{
-			[self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:selectedDesign];
+			[self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];
 		}
 	}
     

@@ -373,11 +373,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
     [_designChooserWindowController beginSheetModalForWindow:[self window]
                                                     delegate:self
-                                              didEndSelector:@selector(designChosen:)];
+                                              didEndSelector:@selector(designChooserDidEnd:)];
 }
 
-- (void) designChosen:(KTDesign *)aDesign
+- (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser
 {
+    KTDesign *aDesign = [designChooser design];
+    
 	DJW((@"%s %p",__FUNCTION__, aDesign));
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
     
