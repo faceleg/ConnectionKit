@@ -10,6 +10,7 @@
 
 #import "SVApplicationController.h"
 #import "SVImageDOMController.h"
+#import "KTMaster.h"
 #import "SVMediaRecord.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
