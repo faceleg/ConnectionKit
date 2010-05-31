@@ -89,6 +89,21 @@
     }
 }
 
+#pragma mark Media
+
+- (void)setMediaWithURL:(NSURL *)URL;
+{
+    [super setMediaWithURL:URL];
+    
+    if ([self constrainProportions])    // generally true
+    {
+        // Resize image to fit in space
+        NSNumber *width = [self width];
+        [self makeOriginalSize];
+        if ([[self width] isGreaterThan:width]) [self setWidth:width];
+    }
+}
+
 #pragma mark Metrics
 
 @dynamic alternateText;
