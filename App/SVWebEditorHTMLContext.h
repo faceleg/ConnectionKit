@@ -8,8 +8,10 @@
 
 #import "SVHTMLContext.h"
 
+#import "SVDOMController.h"
 
-@class SVWebEditorViewController, SVDOMController, SVSidebarDOMController;
+
+@class SVWebEditorViewController, SVSidebarDOMController;
 @class SVContentObject, SVSidebar, SVSidebarPageletsController;
 @class KSObjectKeyPathPair, SVMediaRecord;
 
@@ -73,3 +75,12 @@
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface SVDOMController (SVWebEditorHTMLContext)
+- (void)awakeFromHTMLContext:(SVWebEditorHTMLContext *)context;
+@end
+

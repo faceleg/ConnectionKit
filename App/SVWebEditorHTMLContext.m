@@ -118,10 +118,9 @@
     {
         [_DOMControllers addObject:controller];
     }
+    [controller awakeFromHTMLContext:self];
+    
     _currentDOMController = controller;
-    
-    
-    [controller setHTMLContext:self];
 }
 
 - (SVDOMController *)currentItem; { return _currentDOMController; }
@@ -230,6 +229,19 @@
 - (NSArrayController *)cachedSidebarPageletsController; { return nil; }
 
 - (WEKWebEditorItem *)currentItem; { return nil; }
+
+@end
+
+
+#pragma mark -
+
+
+@implementation SVDOMController (SVWebEditorHTMLContext)
+
+- (void)awakeFromHTMLContext:(SVWebEditorHTMLContext *)context;
+{
+    [self setHTMLContext:context];
+}
 
 @end
 

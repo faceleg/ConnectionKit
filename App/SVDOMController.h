@@ -9,10 +9,10 @@
 #import "WebEditingKit.h"
 
 #import "SVContentObject.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVHTMLContext.h"
 
 
-@class SVWebEditorHTMLContext, SVWebEditorViewController;
+@class SVWebEditorHTMLContext, KSObjectKeyPathPair, SVWebEditorViewController, SVGraphic;
 
 
 @interface SVDOMController : WEKWebEditorItem
