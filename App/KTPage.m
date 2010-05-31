@@ -461,33 +461,6 @@
 
 @dynamic thumbnailSourceGraphic;
 
-#pragma mark Placeholder Image
-
-- (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
-{
-    NSURL *URL = [[[self master] design] placeholderImageURL];
-    if (!URL)
-    {
-        URL = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForImageResource:@"placeholder"]];
-    }
-    OBASSERT(URL);
-    
-    
-    SVMediaRecord *result = [NSEntityDescription insertNewObjectForEntityForName:entityName
-                                                          inManagedObjectContext:[self managedObjectContext]];
-    
-    [result readFromURL:URL options:0 error:NULL];
-    [result setFilename:[@"Shared/" stringByAppendingString:[URL lastPathComponent]]];
-    [result setPreferredFilename:[URL lastPathComponent]];
-    [result setShouldCopyFileIntoDocument:[NSNumber numberWithBool:NO]];
-    
-    NSDictionary *attributes = [[NSFileManager defaultManager] attributesOfItemAtPath:[URL path]
-                                                                                error:NULL];
-    [result setFileAttributes:attributes];
-    
-    return result;
-}
-
 #pragma mark Editing
 
 - (KTPage *)pageRepresentation { return self; }

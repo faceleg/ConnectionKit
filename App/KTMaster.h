@@ -102,6 +102,10 @@
 - (void)setJSKitModeratorEmail:(NSString *)aString;
 
 
+#pragma mark Placeholder Image
+- (SVMediaRecord *)makePlaceholdImageMediaWithEntityName:(NSString *)entityName;
+
+
 #pragma mark Site Outline
 - (KTCodeInjection *)codeInjection;
 

@@ -57,7 +57,7 @@
     // Placeholder image
     if (![self media])
     {
-        SVMediaRecord *media = [page makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
+        SVMediaRecord *media = [[[page rootPage] master] makePlaceholdImageMediaWithEntityName:@"GraphicMedia"];
         [self setMedia:media];
         
         [self makeOriginalSize];    // calling super will scale back down if needed
