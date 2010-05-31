@@ -390,8 +390,10 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
         NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
         
-        NSArray *pagelets = [NSAttributedString pageletsFromPasteboard:pasteboard
-                                        insertIntoManagedObjectContext:moc];
+        NSArray *preferredPlacements = nil;
+        NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pasteboard
+                               insertIntoManagedObjectContext:moc
+                                          preferredPlacements:&preferredPlacements];
         
         
         // Fallback to generic pasteboard support
