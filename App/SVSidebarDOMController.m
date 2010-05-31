@@ -410,12 +410,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         }
         
         
-        // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
-        if ([dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
+        if (result)
         {
-            [webEditor removeDraggedItems];
+            // Remove dragged items early since the WebView is about to refresh. If they came from an outside source has no effect
+            if ([dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
+            {
+                [webEditor removeDraggedItems];
+            }
+            [webEditor didChangeText];
         }
-        [webEditor didChangeText];
     }
     
     return result;
