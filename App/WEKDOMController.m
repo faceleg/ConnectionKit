@@ -58,13 +58,6 @@
 #pragma mark DOM
 
 @synthesize HTMLElement = _DOMElement;
-- (DOMHTMLElement *)HTMLElement
-{
-    if (![self isHTMLElementCreated]) [self createHTMLElement];
-    
-    OBPOSTCONDITION(_DOMElement);   // should be an exception, not assertion
-    return _DOMElement;
-}
 
 - (void)createHTMLElement
 {

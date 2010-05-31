@@ -38,6 +38,7 @@
 
 #pragma mark DOM
 
+// Unlike NSViewController it's generally OK for a DOM Controller to have no HTMLElement. This is because they may need to be created before the DOM has loaded. It might be good to have an init method that does demand element be created though.
 @property(nonatomic, retain) DOMHTMLElement *HTMLElement;
 - (void)createHTMLElement;
 - (BOOL)isHTMLElementCreated;
