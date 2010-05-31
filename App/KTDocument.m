@@ -762,6 +762,25 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
     [_filenameReservations removeObjectForKey:filename];
 }
 
+- (void)designDidChange;
+{
+    NSEnumerator *wrappersEnumerator = [[self documentFileWrappers] objectEnumerator];
+    SVMediaRecord *aFileWrapper;
+    while (aFileWrapper = [wrappersEnumerator nextObject])
+    {
+        NSString *filename = [aFileWrapper filename];
+        if ([filename hasPrefix:@"Shared/"] || [filename hasPrefix:@"shared/"])
+        {
+            // It's design media, locate in new design
+            NSURL *URL = [self URLForMediaRecord:aFileWrapper
+                                        filename:filename
+                           inDocumentWithFileURL:[self fileURL]];
+            
+            [aFileWrapper readFromURL:URL options:0 error:NULL];
+        }
+    }
+}
+
 - (NSSet *)missingMedia;
 {
     NSManagedObjectModel *model = [[self class] managedObjectModel];

@@ -103,9 +103,10 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (NSString *)keyForDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper;
 
 - (NSString *)addDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper; // returns the filename reserved
+- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
 - (void)unreserveFilename:(NSString *)filename;
 
-- (void)setDocumentFileWrapper:(id <SVDocumentFileWrapper>)wrapper forKey:(NSString *)key;
+- (void)designDidChange;
 
 - (NSSet *)missingMedia;
 

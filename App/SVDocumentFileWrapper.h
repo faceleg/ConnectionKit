@@ -14,6 +14,7 @@
 - (NSURL *)fileURL;
 - (void)forceUpdateFromURL:(NSURL *)URL;
 - (NSString *)preferredFilename;
+- (NSString *)filename;
 
 - (BOOL)shouldRemoveFromDocument;   // will be moved or deleted depending on undo manager
 - (BOOL)isDeletedFromDocument;

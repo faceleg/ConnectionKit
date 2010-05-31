@@ -384,6 +384,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
     
     
+    // Update in-design media
+    [[self document] designDidChange];
+    
+    
     // Let all graphics know of the change.
     NSArray *graphics = [[[self pagesController] managedObjectContext]
                          fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
