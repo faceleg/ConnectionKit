@@ -21,6 +21,7 @@
 
 
 @interface SVWebEditorHTMLContext ()
+- (void)finishWithCurrentItem;
 @end
 
 
@@ -71,7 +72,7 @@
     return [[_DOMControllers copy] autorelease];
 }
 
-- (void)addDOMController:(SVDOMController *)controller;
+- (void)beginDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
 {
     if (_currentDOMController)
     {
@@ -81,17 +82,19 @@
     {
         [_DOMControllers addObject:controller];
     }
+    
+    _currentDOMController = controller;
+    
     [controller awakeFromHTMLContext:self];
 }
 
-- (SVDOMController *)currentItem; { return _currentDOMController; }
-
-- (void)beginDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
+- (void)addDOMController:(SVDOMController *)controller;
 {
-    [self addDOMController:controller];
-    
-    _currentDOMController = controller;
+    [self beginDOMController:controller];
+    [self finishWithCurrentItem];
 }
+
+- (SVDOMController *)currentItem; { return _currentDOMController; }
 
 - (void)finishWithCurrentItem;
 {
