@@ -710,7 +710,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 	if (media)
 	{
 		[self uploadMediaIfNeeded:media];
-        [_graphicalTextBlocks addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
+        [_graphicalTextBlocks ks_addObject:textBlock forKey:[textBlock graphicalTextCSSID]];
     }
 }
 
