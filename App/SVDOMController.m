@@ -65,7 +65,7 @@
     return self;
 }
 
-- (id)initWithElementID:(NSString *)elementID;
+- (id)initWithElementIdName:(NSString *)elementID;
 {
     if (self = [self init])
     {
@@ -81,7 +81,7 @@
     NSString *elementID = [content elementIdName];
     if (!elementID) elementID = [NSString stringWithFormat:@"%p", content];
     
-    if (self = [self initWithElementID:elementID])
+    if (self = [self initWithElementIdName:elementID])
     {
         [self setRepresentedObject:content];
     }
