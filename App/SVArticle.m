@@ -55,7 +55,7 @@
     
     
     // Write any early callouts
-    NSUInteger writtenTo = [self writeEarlyCallouts:context];
+    NSUInteger writtenTo = 0;//[self writeEarlyCallouts:context];   Turned off because stops -startElements: writing element ID attribute, and so editor can't locate it.
     
     
     // Start Article Content
