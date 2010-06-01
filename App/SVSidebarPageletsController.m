@@ -374,6 +374,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     }
     
     
+    if (!result) NSBeep();
     return result;
 }
 
