@@ -30,6 +30,14 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     [super dealloc];
 }
 
+#pragma mark Element
+
+- (NSString *)elementIdName;
+{
+    NSString *result = [@"image-" stringByAppendingString:[[self representedObject] editingElementID]];
+    return result;
+}
+
 #pragma mark Content
 
 - (void)setRepresentedObject:(id)image

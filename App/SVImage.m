@@ -136,11 +136,15 @@
         [context startAnchorElementWithHref:[[self link] URLString] title:nil target:nil rel:nil];
     }
     
+    
+    // Image needs unique ID for DOM Controller to find
+    NSString *idName = [@"image-" stringByAppendingString:[self editingElementID]];
+    
     // Actually write the image
     SVMediaRecord *media = [self media];
     if (media)
     {
-        [context writeImageWithIdName:[self editingElementID]
+        [context writeImageWithIdName:idName
                             className:(isPagelet ? nil : [self className])
                           sourceMedia:media
                                   alt:alt
@@ -150,7 +154,7 @@
     else
     {
         NSURL *URL = [self imagePreviewURL];
-        [context writeImageWithIdName:[self editingElementID]
+        [context writeImageWithIdName:idName
                             className:(isPagelet ? nil : [self className])
                                   src:(URL ? [context relativeURLStringOfURL:URL] : @"")
                                   alt:alt
