@@ -193,45 +193,47 @@
 - (void)writeInnerHTML:(id <SVPlugInContext>)context
 {
 	id<SVPage> thisPage = (id<SVPage>)[context page];
-    OBASSERT(thisPage);
-	id<SVPage> rootPage = [thisPage rootPage];
-    OBASSERT(rootPage);
-    
-    // map root page
-	if ( self.showHome )
-	{
-		// Note: if site map IS home, it will still be shown regardless of show site map checkbox
-        
-        [[context HTMLWriter] startElement:(self.sections ? @"h3" : @"p") attributes:nil];
-        [self writeLinkOfPage:rootPage relativeToPage:thisPage toContext:context];
-        [[context HTMLWriter] endElement];
-                
-        // observe root's observable keypaths
-        id<NSFastEnumeration> keyPaths = [rootPage automaticRearrangementKeyPaths];
-        for ( NSString *keyPath in keyPaths )
-        {
-            //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
-            if ( [thisPage isEqual:rootPage] && [keyPath isEqualToString:@"title"] ) continue;
-            [(SVHTMLContext *)context addDependencyOnObject:rootPage keyPath:keyPath];
-        }
-	}
-    
-    // recursively map each top-level page        
-    NSArray *topLevelPages = [rootPage childPages];
-    if ( topLevelPages.count > 0 )
+    if ( thisPage ) // only generate a map if the context has a page
     {
-        if ( !self.sections ) [[context HTMLWriter] startElement:@"ul" attributes:nil];
+        id<SVPage> rootPage = [thisPage rootPage];
+        OBASSERT(rootPage);
         
-        for ( id<SVPage> page in topLevelPages )
+        // map root page
+        if ( self.showHome )
         {
-            [self writeMapOfPage:page
-                  relativeToPage:thisPage
-                       toContext:context
-                       asSection:self.sections
-                    wantsCompact:self.compact];
+            // Note: if site map IS home, it will still be shown regardless of show site map checkbox
+            
+            [[context HTMLWriter] startElement:(self.sections ? @"h3" : @"p") attributes:nil];
+            [self writeLinkOfPage:rootPage relativeToPage:thisPage toContext:context];
+            [[context HTMLWriter] endElement];
+            
+            // observe root's observable keypaths
+            id<NSFastEnumeration> keyPaths = [rootPage automaticRearrangementKeyPaths];
+            for ( NSString *keyPath in keyPaths )
+            {
+                //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
+                if ( [thisPage isEqual:rootPage] && [keyPath isEqualToString:@"title"] ) continue;
+                [(SVHTMLContext *)context addDependencyOnObject:rootPage keyPath:keyPath];
+            }
         }
         
-        if ( !self.sections ) [[context HTMLWriter] endElement];
+        // recursively map each top-level page        
+        NSArray *topLevelPages = [rootPage childPages];
+        if ( topLevelPages.count > 0 )
+        {
+            if ( !self.sections ) [[context HTMLWriter] startElement:@"ul" attributes:nil];
+            
+            for ( id<SVPage> page in topLevelPages )
+            {
+                [self writeMapOfPage:page
+                      relativeToPage:thisPage
+                           toContext:context
+                           asSection:self.sections
+                        wantsCompact:self.compact];
+            }
+            
+            if ( !self.sections ) [[context HTMLWriter] endElement];
+        }
     }
 }
 
