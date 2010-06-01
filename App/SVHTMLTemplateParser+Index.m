@@ -171,7 +171,7 @@
 		NSMutableString *buffer = [NSMutableString stringWithString:@"<div"];
         if ([[SVHTMLContext currentContext] isEditable])
         {
-            [buffer appendFormat:@" id=\"%@\" class=\"kBlock kSummary kOptional kImageable\"", [textBlock DOMNodeID]];
+            [buffer appendFormat:@" id=\"%@\" class=\"kBlock kSummary kOptional kImageable\"", [textBlock elementIdName]];
         }
         [buffer appendFormat:@">%@</div>", result];
         result = [[buffer copy] autorelease];

@@ -131,7 +131,7 @@
 		SVHTMLTextBlock *aTextBlock;
 		while (aTextBlock = [textBlocksEnumerator nextObject])
 		{
-			if ([[aTextBlock DOMNodeID] isEqualToString:textBlockDOMID])
+			if ([[aTextBlock elementIdName] isEqualToString:textBlockDOMID])
 			{
 				result = aTextBlock;
 				break;

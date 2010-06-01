@@ -66,7 +66,7 @@
 
 #pragma mark Accessors
 
-- (NSString *)DOMNodeID
+- (NSString *)elementIdName
 {
     id value = HTML_VALUE;
 	if ([value isKindOfClass:[SVContentObject class]])
@@ -339,7 +339,7 @@
 	[context openTag:[self tagName]];
 	
 	// in some situations we generate both the main tag, and a <span class="in">
-    NSString *elementID = [self DOMNodeID];
+    NSString *elementID = [self elementIdName];
     if (elementID) [context writeAttribute:@"id" value:elementID];
     
     BOOL generateSpanIn = [self generateSpanIn];
@@ -478,7 +478,7 @@
     
     
     // Copy basic properties from text block
-    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:[self DOMNodeID]];
+    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithElementIdName:[self elementIdName]];
     [result setTextBlock:self];
     [result setRichText:[self isRichText]];
     [result setFieldEditor:[self isFieldEditor]];

@@ -47,7 +47,7 @@
     {
 		result = [NSString stringWithFormat:
                   @"<span id=\"%@\" class=\"kLine\">\n%@\n</span>",
-                  [self DOMNodeID],
+                  [self elementIdName],
                   [self innerHTMLString]];
 	}
     else

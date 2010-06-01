@@ -36,7 +36,7 @@
 
 #pragma mark Accessors
 
-@property(nonatomic, readonly) NSString *DOMNodeID;
+@property(nonatomic, readonly) NSString *elementIdName;
 
 //  Indicates if the template specifed the block as editable. Regardless of the value, text blocks NEVER generate HTML that includes:
 //      contenteditable="true"
