@@ -238,7 +238,7 @@
 - (void)willBeginWritingSidebar:(SVSidebar *)sidebar; { }
 - (NSArrayController *)cachedSidebarPageletsController; { return nil; }
 
-- (WEKWebEditorItem *)currentItem; { return nil; }
+- (WEKWebEditorItem *)currentDOMController; { return nil; }
 
 @end
 
