@@ -82,14 +82,19 @@
 
 - (void)update
 {
+    BOOL selectAfterUpdate = ([[self webEditor] focusedText] == self);
+    
     [super update];
     
     [[self textHTMLElement] setInnerHTML:[self HTMLString]];
     
     // Mimic NSTextField and select all
-    DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
-    [range selectNodeContents:[self textHTMLElement]];
-    [[self webEditor] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+    if (selectAfterUpdate)
+    {
+        DOMRange *range = [[[self HTMLElement] ownerDocument] createRange];
+        [range selectNodeContents:[self textHTMLElement]];
+        [[self webEditor] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
+    }
 }
 
 #pragma mark Editing
