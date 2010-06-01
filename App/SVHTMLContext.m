@@ -171,7 +171,7 @@
     {
         // Write the opening tags
         [self startElement:@"div"
-                     idName:[(SVCalloutDOMController *)[self currentItem] HTMLElementIDName]
+                     idName:[[self currentItem] elementIdName]
                   className:[@"callout-container " stringByAppendingString:alignment]];
         
         [self startElement:@"div" idName:nil className:@"callout"];
