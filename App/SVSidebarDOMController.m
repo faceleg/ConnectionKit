@@ -90,6 +90,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [[contentElement mutableChildDOMNodes] removeAllObjects];
     
     NSArray *pagelets = [[self pageletsController] arrangedObjects];
+    NSMutableArray *controllers = [[NSMutableArray alloc] initWithCapacity:[pagelets count]];
     
     SVGraphic *aPagelet;
     WEKWebEditorItem *nextController = nil;
@@ -115,12 +116,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         [contentElement insertBefore:element
                             refChild:[nextController HTMLElement]];
         
-        [self addChildWebEditorItem:controller];    // don't do until nodes are definitely in main tree
+        [controllers insertObject:controller atIndex:0];
         
         
         // Loop
         nextController = controller;
     }
+    
+    [self setChildWebEditorItems:controllers];
+    [controllers release];
 }
 
 #pragma mark Pagelets Controller
