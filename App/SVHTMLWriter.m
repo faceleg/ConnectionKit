@@ -79,7 +79,7 @@
     if (subbuffer) [self flushBuffer:subbuffer];
     
     NSMutableString *string = [buffer mutableString];
-    [[self stringWriter] writeString:string];
+    [[self stringWriter] writeString:string];   // can't call [self writeString:] as that might close start tag too early
     [string setString:@""];
 }
 
