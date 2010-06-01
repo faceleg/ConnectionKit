@@ -577,22 +577,14 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)paste:(id)sender;
 {
-    NSPasteboard *pasteboard = [NSPasteboard generalPasteboard];
-    NSManagedObjectContext *context = [[self page] managedObjectContext];
-    OBASSERT(context);
+    SVSidebarPageletsController *sidebarPageletsController =
+    [_selectableObjectsController sidebarPageletsController];
     
-    NSArray *pagelets = [NSAttributedString pageletsFromPasteboard:pasteboard
-                                  insertIntoManagedObjectContext:context];
+    NSUInteger index = [sidebarPageletsController selectionIndex];
+    if (index >= NSNotFound) index = 0;
     
-    if ([pagelets count])
-    {
-        SVSidebarPageletsController *sidebarPageletsController = [_selectableObjectsController sidebarPageletsController];
-        [sidebarPageletsController addObjects:pagelets];
-    }
-    else
-    {
-        NSBeep();
-    }
+    [sidebarPageletsController insertPageletsFromPasteboard:[NSPasteboard generalPasteboard]
+                                      atArrangedObjectIndex:index];
 }
 
 #pragma mark Action Forwarding
