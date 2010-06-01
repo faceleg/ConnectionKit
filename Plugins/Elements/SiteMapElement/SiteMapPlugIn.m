@@ -89,11 +89,10 @@
 }
 
 - (void)writeLinkOfPage:(id<SVPage>)aPage
-         relativeToPage:(id<SVPage>)thisPage
               toContext:(id<SVPlugInContext>)context
 {
     NSString *title = ([aPage title] ? [aPage title] : @"");
-    if ( [aPage isEqual:thisPage] ) // not likely but maybe possible
+    if ( [aPage isEqual:[context page]] ) // not likely but maybe possible
     {
         // just emit title
         [[context HTMLWriter] writeText:title];
@@ -114,7 +113,6 @@
 }
 
 - (void)writeMapOfPage:(id<SVPage>)aPage
-        relativeToPage:(id<SVPage>)thisPage
              toContext:(id<SVPlugInContext>)context
              asSection:(BOOL)asSection
           wantsCompact:(BOOL)wantsCompact
@@ -126,7 +124,7 @@
         for ( NSString *keyPath in keyPaths )
         {
             //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
-            if ( [aPage isEqual:thisPage] && [keyPath isEqualToString:@"title"] ) continue;
+            if ( [aPage isEqual:[context page]] && [keyPath isEqualToString:@"title"] ) continue;
             [(SVHTMLContext *)context addDependencyOnObject:aPage keyPath:keyPath];
         }
         
@@ -141,7 +139,7 @@
         [[context HTMLWriter] startElement:(asSection ? @"h3" : @"li") attributes:nil];
         
         // process aPage
-        [self writeLinkOfPage:aPage relativeToPage:thisPage toContext:context];
+        [self writeLinkOfPage:aPage toContext:context];
         
         // close h3
 		if ( asSection ) [[context HTMLWriter] endElement];
@@ -158,7 +156,7 @@
                 BOOL firstChild = YES;
                 for ( id<SVPage> child in children )
                 {
-                    [self writeLinkOfPage:child relativeToPage:thisPage toContext:context];
+                    [self writeLinkOfPage:child toContext:context];
                     // on the 2nd pass, emit \n&middot;
                     if ( !firstChild ) [[context HTMLWriter] writeHTMLString:@"&middot;"];
                     firstChild = NO;
@@ -175,7 +173,6 @@
                 for ( id<SVPage> child in children )
                 {
                     [self writeMapOfPage:child 
-                          relativeToPage:thisPage 
                                toContext:context
                                asSection:NO // children can't be sections
                             wantsCompact:wantsCompact];
@@ -204,7 +201,7 @@
             // Note: if site map IS home, it will still be shown regardless of show site map checkbox
             
             [[context HTMLWriter] startElement:(self.sections ? @"h3" : @"p") attributes:nil];
-            [self writeLinkOfPage:rootPage relativeToPage:thisPage toContext:context];
+            [self writeLinkOfPage:rootPage toContext:context];
             [[context HTMLWriter] endElement];
             
             // observe root's observable keypaths
@@ -226,7 +223,6 @@
             for ( id<SVPage> page in topLevelPages )
             {
                 [self writeMapOfPage:page
-                      relativeToPage:thisPage
                            toContext:context
                            asSection:self.sections
                         wantsCompact:self.compact];
