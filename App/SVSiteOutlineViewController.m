@@ -1550,7 +1550,8 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		[oSplitView adjustSubviews];
 	}
 	
-	// Restore expanded and selected state
+    
+	// Restore expanded items
 	NSArray *selectedItems = [self persistentSelectedItems];
 	NSArray *expandedItems = [self persistentExpandedItems];
 	id item;
@@ -1559,17 +1560,19 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		[self.outlineView expandItem:item];
 	}
-
+    
+    
+    // Restore selected items
 	NSMutableIndexSet *toSelect = [NSMutableIndexSet indexSet];
 	for (item in selectedItems)
 	{
 		NSInteger row = [self.outlineView rowForItem:item];
-		if (row >= 0)
-		{
-			[toSelect addIndex:row];
-		}
+		if (row >= 0) [toSelect addIndex:row];
 	}
-	[self.outlineView selectRowIndexes:toSelect byExtendingSelection:NO];
+    if ([toSelect count])
+    {
+        [self.outlineView selectRowIndexes:toSelect byExtendingSelection:NO];
+    }
 }
 
 @end
