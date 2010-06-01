@@ -56,11 +56,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return [NSNumber numberWithInteger:SVGraphicPlacementSidebar];
 }
 
-- (void)setPlacement:(NSNumber *)placement;
-{
-    [[self textAttachment] setPlacement:placement];
-}
-
 + (NSSet *)keyPathsForValuesAffectingPlacement;
 {
     return [NSSet setWithObject:@"textAttachment.placement"];
