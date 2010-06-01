@@ -108,7 +108,7 @@
                                                    title:title
                                                   target:nil
                                                      rel:nil];
-        [[context HTMLWriter] writeText:[thisPage title]];
+        [[context HTMLWriter] writeText:title];
         [[context HTMLWriter] endElement];            
     }
 }
@@ -160,7 +160,7 @@
                 {
                     [self writeLinkOfPage:child relativeToPage:thisPage toContext:context];
                     // on the 2nd pass, emit \n&middot;
-                    if ( !firstChild ) [[context HTMLWriter] writeText:@"\n&middot;"];
+                    if ( !firstChild ) [[context HTMLWriter] writeHTMLString:@"&middot;"];
                     firstChild = NO;
                 }
                 
