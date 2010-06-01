@@ -71,7 +71,7 @@
     id value = HTML_VALUE;
 	if ([value isKindOfClass:[SVContentObject class]])
     {
-        return [value editingElementID];
+        return [value elementIdName];
     }
     else
     {
@@ -339,10 +339,8 @@
 	[context openTag:[self tagName]];
 	
 	// in some situations we generate both the main tag, and a <span class="in">
-    if ([[SVHTMLContext currentContext] isEditable])
-    {
-        [context writeAttribute:@"id" value:[self DOMNodeID]];
-    }
+    NSString *elementID = [self DOMNodeID];
+    if (elementID) [context writeAttribute:@"id" value:elementID];
     
     BOOL generateSpanIn = [self generateSpanIn];
 	// if (!generateSpanIn)	// Actually we want a custom class to show up even items with a span-in. 

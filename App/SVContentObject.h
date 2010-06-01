@@ -41,6 +41,6 @@
 - (BOOL)shouldPublishEditingElementID;
 
 // The returned ID should be suitable for using as a DOMElement's ID attribute. It should be unique for the page being generated. The default implementation is based upon the receiver's location in memory, as it is assumed that the object will be retained for the duration of the editing cycle. Subclasses can override to specify a different ID format, perhaps because the object will already generate a unique ID as part of its HTML.
-- (NSString *)editingElementID;
+- (NSString *)elementIdName;
 
 @end

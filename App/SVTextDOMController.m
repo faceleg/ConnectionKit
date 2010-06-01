@@ -71,8 +71,6 @@
     [self setEditable:[self isEditable]];
 }
 
-- (NSString *)elementIdName; { return [[self textBlock] DOMNodeID]; }
-
 #pragma mark Hierarchy
 
 - (SVTextDOMController *)textDOMController; { return self; }

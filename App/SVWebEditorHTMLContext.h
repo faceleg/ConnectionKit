@@ -21,6 +21,7 @@
   @private
     NSMutableArray  *_DOMControllers;
     SVDOMController *_currentDOMController;  // weak ref
+    BOOL            _needsToWriteElementID;
     
     NSMutableSet    *_dependencies;
     

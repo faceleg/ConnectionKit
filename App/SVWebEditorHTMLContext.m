@@ -84,6 +84,7 @@
     }
     
     _currentDOMController = controller;
+    _needsToWriteElementID = YES;
     
     [controller awakeFromHTMLContext:self];
 }
@@ -223,6 +224,37 @@
 #pragma mark View Controller
 
 @synthesize webEditorViewController = _viewController;
+
+#pragma mark Element Primitives
+
+- (void)writeAttribute:(NSString *)attribute value:(NSString *)value;
+{
+    [super writeAttribute:attribute value:value];
+    
+    // Was this an id attribute, removing our need to write one?
+    if (_needsToWriteElementID && [attribute isEqualToString:@"id"]) _needsToWriteElementID = NO;
+}
+
+- (void)didStartElement;
+{
+    // First write an id attribute if it's needed
+    // DOM Controllers need an ID so they can locate their element in the DOM. If the HTML doesn't normally contain an ID, insert it ourselves
+    if (_needsToWriteElementID)
+    {
+        NSString *elementID = [[self currentDOMController] elementIdName];
+        if (elementID)
+        {
+            [self writeAttribute:@"id" value:elementID];
+            OBASSERT(!_needsToWriteElementID);
+        }
+        else
+        {
+            _needsToWriteElementID = NO;
+        }
+    }
+    
+    [super didStartElement];
+}
 
 @end
 

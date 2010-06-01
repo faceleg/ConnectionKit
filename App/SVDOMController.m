@@ -77,7 +77,11 @@
 
 - (id)initWithContentObject:(SVContentObject *)content;
 {
-    if (self = [self initWithElementID:[content editingElementID]])
+    // Use the object's own ID if it has one. Otherwise make up our own
+    NSString *elementID = [content elementIdName];
+    if (!elementID) elementID = [NSString stringWithFormat:@"%p", content];
+    
+    if (self = [self initWithElementID:elementID])
     {
         [self setRepresentedObject:content];
     }

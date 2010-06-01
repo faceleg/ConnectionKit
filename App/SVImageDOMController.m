@@ -34,7 +34,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 - (NSString *)elementIdName;
 {
-    NSString *result = [@"image-" stringByAppendingString:[[self representedObject] editingElementID]];
+    NSString *result = [@"image-" stringByAppendingString:[[self representedObject] elementIdName]];
     return result;
 }
 
