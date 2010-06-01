@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLContext.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "KTHostProperties.h"
 #import "KTPage.h"
@@ -171,7 +171,7 @@
     {
         // Write the opening tags
         [self startElement:@"div"
-                     idName:[[self currentItem] elementIdName]
+                     idName:[[self currentDOMController] elementIdName]
                   className:[@"callout-container " stringByAppendingString:alignment]];
         
         [self startElement:@"div" idName:nil className:@"callout"];

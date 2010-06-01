@@ -94,7 +94,7 @@
     [self finishWithCurrentItem];
 }
 
-- (SVDOMController *)currentItem; { return _currentDOMController; }
+- (SVDOMController *)currentDOMController; { return _currentDOMController; }
 
 - (void)finishWithCurrentItem;
 {
@@ -173,9 +173,9 @@
     // Ignore parser properties – why? Mike.
     if (![[pair object] isKindOfClass:[SVTemplateParser class]])
     {
-        if ([self currentItem])
+        if ([self currentDOMController])
         {
-            [[self currentItem] addDependency:pair];
+            [[self currentDOMController] addDependency:pair];
         }
         else
         {

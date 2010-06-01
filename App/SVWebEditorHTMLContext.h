@@ -71,7 +71,7 @@
 
 
 #pragma mark Current Item
-- (SVDOMController *)currentItem;
+- (SVDOMController *)currentDOMController;
 
 
 @end
