@@ -189,7 +189,7 @@
     [propertyList setValue:data forKey:@"fileContents"];
     
     NSURL *URL = [self imagePreviewURL];
-    [propertyList setValue:URL forKey:@"sourceURL"];
+    [propertyList setValue:[URL absoluteString] forKey:@"sourceURL"];
 }
 
 - (void)awakeFromPropertyList:(id)propertyList;
@@ -200,8 +200,10 @@
     NSData *data = [propertyList objectForKey:@"fileContents"];
     if (data)
     {
+        NSString *url = [propertyList objectForKey:@"sourceURL"];
+        
         NSURLResponse *response = [[NSURLResponse alloc]
-                                   initWithURL:[propertyList objectForKey:@"sourceURL"]
+                                   initWithURL:(url ? [NSURL URLWithString:url] : nil)
                                    MIMEType:nil
                                    expectedContentLength:[data length]
                                    textEncodingName:nil];
