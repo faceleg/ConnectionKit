@@ -12,8 +12,10 @@
 
 #import "KSOrderedManagedObjectControllers.h"
 
+#import "SVGraphicFactory.h"
 
-@class SVGraphic, KTPage, SVSidebar;
+
+@class KTPage, SVSidebar;
 
 
 @interface SVSidebarPageletsController : KSArrayController
@@ -43,6 +45,14 @@
 
 - (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
 - (void)removePagelet:(SVGraphic *)pagelet fromSidebarOfPage:(KTPage *)page;
+
+
+#pragma mark Pasteboard
+
+//- (void)insertPageletsFromPasteboard:(NSPasteboard *)pasteboard;
+
+- (BOOL)insertPageletsFromPasteboard:(NSPasteboard *)pboard
+               atArrangedObjectIndex:(NSUInteger)index;
 
 
 @end

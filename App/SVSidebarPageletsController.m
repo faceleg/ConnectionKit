@@ -9,7 +9,6 @@
 #import "SVSidebarPageletsController.h"
 
 #import "KTPage.h"
-#import "SVGraphic.h"
 #import "SVSidebar.h"
 
 #import "NSSortDescriptor+Karelia.h"
@@ -341,6 +340,42 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
             }
         }
     }
+}
+
+#pragma mark Pasteboard
+
+- (BOOL)insertPageletsFromPasteboard:(NSPasteboard *)pasteboard
+               atArrangedObjectIndex:(NSUInteger)index;
+{
+    BOOL result = NO;
+    
+    
+    // Fallback to inserting a new pagelet from the pasteboard
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSArray *preferredPlacements = nil;
+    NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pasteboard
+                           insertIntoManagedObjectContext:context
+                                      preferredPlacements:&preferredPlacements];
+    
+    
+    // Fallback to generic pasteboard support
+    if ([pagelets count] < 1)
+    {
+        pagelets = [SVGraphicFactory graphicsFomPasteboard:pasteboard
+                            insertIntoManagedObjectContext:context];
+    }
+    
+    for (SVGraphic *aPagelet in pagelets)
+    {
+        [self insertObject:aPagelet atArrangedObjectIndex:index];
+        
+        [aPagelet didAddToPage:[[self sidebar] page]];
+        result = YES;
+    }
+    
+    
+    return result;
 }
 
 #pragma mark Automatic Rearranging

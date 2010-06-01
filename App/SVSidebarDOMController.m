@@ -10,7 +10,6 @@
 #import "SVSidebar.h"
 
 #import "SVAttributedHTML.h"
-#import "SVGraphicFactory.h"
 #import "KTPage.h"
 #import "SVWebEditorHTMLContext.h"
 #import "WebEditingKit.h"
@@ -391,29 +390,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     if (!result)
     {
         // Fallback to inserting a new pagelet from the pasteboard
-        NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
-        NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
-        
-        NSArray *preferredPlacements = nil;
-        NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pasteboard
-                               insertIntoManagedObjectContext:moc
-                                          preferredPlacements:&preferredPlacements];
-        
-        
-        // Fallback to generic pasteboard support
-        if ([pagelets count] < 1)
-        {
-            pagelets = [SVGraphicFactory graphicsFomPasteboard:pasteboard
-                                      insertIntoManagedObjectContext:moc];
-        }
-        
-        for (SVGraphic *aPagelet in pagelets)
-        {
-            [pageletsController insertObject:aPagelet atArrangedObjectIndex:dropIndex];
-            
-            [aPagelet didAddToPage:[[self HTMLContext] page]];
-            result = YES;
-        }
+        result = [pageletsController insertPageletsFromPasteboard:[dragInfo draggingPasteboard]
+                                            atArrangedObjectIndex:dropIndex];
         
         
         if (result)
