@@ -11,11 +11,18 @@
 
 @interface SVWrapInspector : KSInspectorViewController
 {
+    IBOutlet NSMatrix   *oPlacementRadioButtons;
+    
     IBOutlet NSButton   *oWrapLeftButton;
     IBOutlet NSButton   *oWrapRightButton;
     IBOutlet NSButton   *oWrapLeftSplitButton;
     IBOutlet NSButton   *oWrapCenterButton;
     IBOutlet NSButton   *oWrapRightSplitButton;
+    
+  @private
+    NSNumber    *_placement;
 }
+
+@property(nonatomic, copy) NSNumber *graphicPlacement;  // SVGraphicPlacement, bindable
 
 @end

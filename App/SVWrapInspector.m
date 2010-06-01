@@ -13,9 +13,41 @@
 
 @implementation SVWrapInspector
 
-- (void)refresh;
+- (void)dealloc
 {
-    [super refresh];
+    [self unbind:@"graphicPlacement"];
+    [_placement release];
+    
+    [super dealloc];
+}
+
+- (void)loadView;
+{
+    [super loadView];
+    
+    [self bind:@"graphicPlacement"
+      toObject:self
+   withKeyPath:@"inspectedObjectsController.selection.placement"
+       options:nil];
+}
+
+@synthesize graphicPlacement = _placement;
+- (void)setGraphicPlacement:(NSNumber *)placement;
+{
+    placement = [placement copy];
+    _placement = placement;
+    
+    
+    // Update UI to match
+    if (!placement || NSIsControllerMarker(placement))
+    {
+        [oPlacementRadioButtons setEnabled:NO];
+    }
+    else
+    {
+        [oPlacementRadioButtons setEnabled:YES];
+        [oPlacementRadioButtons selectCellWithTag:[placement integerValue]];
+    }
 }
 
 @end
