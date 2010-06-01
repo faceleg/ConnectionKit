@@ -128,6 +128,7 @@
     
     // Do the insert
     [super insertObject:object atArrangedObjectIndex:index];
+    [object didAddToPage:[[self sidebar] page]];
     
     
     // Detach from text attachment
@@ -369,8 +370,6 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     for (SVGraphic *aPagelet in pagelets)
     {
         [self insertObject:aPagelet atArrangedObjectIndex:index];
-        
-        [aPagelet didAddToPage:[[self sidebar] page]];
         result = YES;
     }
     
