@@ -77,6 +77,8 @@
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
     SVImage *result = [SVImage insertNewImageInManagedObjectContext:context];
+    [result setTitle:NSLocalizedString(@"Photo", "pagelet title")];
+    
     [result setWidth:[NSNumber numberWithUnsignedInt:200]];
     [result setHeight:[NSNumber numberWithUnsignedInt:200]];
     
