@@ -85,7 +85,7 @@
 
 - (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
 
-- (void)writeHTMLString:(NSString *)html;
+- (void)writeHTMLString:(NSString *)html;   // great for when you have an existing snippet of HTML
 
 //  <a href="...." target="..." rel="nofollow">
 - (void)startAnchorElementWithHref:(NSString *)href title:(NSString *)titleString target:(NSString *)targetString rel:(NSString *)relString;
