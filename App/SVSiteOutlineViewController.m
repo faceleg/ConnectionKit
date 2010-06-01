@@ -1559,19 +1559,17 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	{
 		[self.outlineView expandItem:item];
 	}
-	if ([expandedItems count])
+
+	NSMutableIndexSet *toSelect = [NSMutableIndexSet indexSet];
+	for (item in selectedItems)
 	{
-		NSMutableIndexSet *toSelect = [NSMutableIndexSet indexSet];
-		for (item in selectedItems)
+		NSInteger row = [self.outlineView rowForItem:item];
+		if (row >= 0)
 		{
-			NSInteger row = [self.outlineView rowForItem:item];
-			if (row >= 0)
-			{
-				[toSelect addIndex:row];
-			}
+			[toSelect addIndex:row];
 		}
-		[self.outlineView selectRowIndexes:toSelect byExtendingSelection:NO];
 	}
+	[self.outlineView selectRowIndexes:toSelect byExtendingSelection:NO];
 }
 
 @end
