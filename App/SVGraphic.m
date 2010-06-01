@@ -369,7 +369,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)awakeFromPropertyList:(id)propertyList;
 {
-    // Don't deserialzed element ID as it means we have two of them!
+    // Don't deserialize element ID as it means we have two of them!
     NSString *ID = [self elementID];
     [super awakeFromPropertyList:propertyList];
     
