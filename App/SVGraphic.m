@@ -349,17 +349,19 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     if ([[pasteboard types] containsObject:kSVGraphicPboardType])
     {
         id plist = [pasteboard propertyListForType:kSVGraphicPboardType];
-        
-        id graphic = [self graphicWithSerializedProperties:plist
-                            insertIntoManagedObjectContext:context];
-        
-        if (preferredPlacements)
+        if (plist)
         {
-            *preferredPlacements = [NSArray arrayWithObject:
-                                    [plist objectForKey:@"preferredPlacement"]];
+            id graphic = [self graphicWithSerializedProperties:plist
+                                insertIntoManagedObjectContext:context];
+            
+            if (preferredPlacements)
+            {
+                *preferredPlacements = [NSArray arrayWithObject:
+                                        [plist objectForKey:@"preferredPlacement"]];
+            }
+            
+            return [NSArray arrayWithObject:graphic];
         }
-        
-        return [NSArray arrayWithObject:graphic];
     }
     
     return nil;
