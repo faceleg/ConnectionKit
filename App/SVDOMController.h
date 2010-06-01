@@ -27,23 +27,20 @@
     SVWebEditorHTMLContext  *_context;
 }
 
+#pragma mark Creating a DOM Controller
+
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
  createHTMLElementWithDocument:(DOMHTMLDocument *)doc
                        context:(SVHTMLContext *)parentContext;
 
 - (id)initWithElementID:(NSString *)elementID;
 
+//  1.  Calls -initWithElementID: with the result of [content editingElementID]
+//  2.  Set content as .representedObject
+- (id)initWithContentObject:(SVContentObject *)content;
+
 
 #pragma mark Content
-
-- (id)initWithRepresentedObject:(id)modelObject;    // convenience
-
-// Convenience method that:
-//  1)  Initializes basic controller
-//  2)  Stores the content object in .representedObject
-//  3)  Calls -loadHTMLElementFromDocument:
-- (id)initWithContentObject:(SVContentObject *)contentObject
-              inDOMDocument:(DOMDocument *)document;
 
 //  Asks content object to locate node in the DOM, then stores it as receiver's .HTMLElement. Removes the element's ID attribute from the DOM if it's only there for editing support (so as to keep the Web Inspector tidy)
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document;

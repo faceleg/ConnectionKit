@@ -257,7 +257,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 - (SVDOMController *)newDOMController;
 {
     Class class = ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]);
-    return [[class alloc] initWithRepresentedObject:self];
+    return [[class alloc] initWithContentObject:self];
 }
 
 @end

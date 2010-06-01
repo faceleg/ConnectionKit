@@ -46,7 +46,7 @@
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
+    return [[SVGraphicDOMController alloc] initWithContentObject:self];
 }
 
 @end

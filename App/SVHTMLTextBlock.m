@@ -480,7 +480,7 @@
     
     
     // Copy basic properties from text block
-    SVTextDOMController *result = [[SVTextFieldDOMController alloc] init];
+    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithElementID:[self DOMNodeID]];
     [result setTextBlock:self];
     [result setRichText:[self isRichText]];
     [result setFieldEditor:[self isFieldEditor]];

@@ -75,29 +75,12 @@
     return self;
 }
 
-- (id)initWithRepresentedObject:(id)modelObject;
+- (id)initWithContentObject:(SVContentObject *)content;
 {
-    self = [self init];
-    [self setRepresentedObject:modelObject];
-    return self;
-}
-
-- (id)initWithContentObject:(SVContentObject *)contentObject
-              inDOMDocument:(DOMDocument *)document;
-{
-    // See header for what steps are
-    
-    //  1)
-    self = [self init];
-    
-    //  2)
-    [self setRepresentedObject:contentObject];
-    
-    //  3)
-    [self loadHTMLElementFromDocument:document];
-    OBASSERT([self HTMLElement]);
-    
-    
+    if (self = [self initWithElementID:[content editingElementID]])
+    {
+        [self setRepresentedObject:content];
+    }
     return self;
 }
 
@@ -323,7 +306,7 @@
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVDOMController alloc] initWithRepresentedObject:self];
+    return [[SVDOMController alloc] initWithContentObject:self];
 }
 
 @end

@@ -45,7 +45,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (id)initWithPageletsController:(SVSidebarPageletsController *)pageletsController;
 {
-    [super init];
+    [self initWithElementID:@"sidebar-container"];
     
     _pageletsController = [pageletsController retain];
     [_pageletsController addObserver:self
@@ -484,7 +484,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVSidebarDOMController alloc] initWithRepresentedObject:self];
+    return [[SVSidebarDOMController alloc] initWithContentObject:self];
 }
 
 @end
