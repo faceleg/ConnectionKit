@@ -195,6 +195,11 @@
         id<SVPage> rootPage = [thisPage rootPage];
         OBASSERT(rootPage);
         
+        // add our dependencies manually since we have no template for the parser to handle this for us
+        [context addDependencyForKeyPath:@"compact" ofObject:self];
+        [context addDependencyForKeyPath:@"sections" ofObject:self];
+        [context addDependencyForKeyPath:@"showHome" ofObject:self];
+        
         // map root page
         if ( self.showHome )
         {
