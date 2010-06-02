@@ -17,6 +17,7 @@
     int			myPadding;
 	int			myStaleness;
 	BOOL		myIsDraft;
+	BOOL		myIsPublishable;
 	BOOL		myIsRoot;
 	BOOL		myHasCodeInjection;
 }
@@ -32,6 +33,9 @@
 
 - (BOOL)isDraft;
 - (void)setDraft:(BOOL)flag;
+
+- (BOOL)isPublishable;
+- (void)setPublishable:(BOOL)flag;
 
 - (void)setPadding:(int)anInt;
 - (int)padding;

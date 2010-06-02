@@ -135,9 +135,31 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 
 #pragma mark Drawing
 
+- (void)drawNotPublishableMarkersWithFrame:(NSRect)cellFrame
+{
+	if (![self isPublishable])
+	{
+		static NSColor *sNotPublishablePattern = nil;
+		if (nil == sNotPublishablePattern)
+		{
+			NSImage *notPublishablePatternImage = [NSImage imageNamed:@"notPublishable"];		// TO FIX
+			sNotPublishablePattern = [[NSColor colorWithPatternImage:notPublishablePatternImage] retain];
+		}
+		[NSGraphicsContext saveGraphicsState];
+		[[NSGraphicsContext currentContext] setCompositingOperation:NSCompositePlusDarker];
+		[sNotPublishablePattern set];
+		NSRect theRect = NSMakeRect(cellFrame.origin.x,
+									  cellFrame.origin.y,
+									  cellFrame.size.width,
+									  cellFrame.size.height+1);		// one pixel taller so it will bleed with adjacent row
+		[NSBezierPath fillRect:theRect];
+		[NSGraphicsContext restoreGraphicsState];
+		
+	}
+}
 - (void)drawDraftMarkersWithFrame:(NSRect)cellFrame		// assumes focused
 {
-	if (myIsDraft)
+	if ([self isDraft])
 	{
 		static NSColor *sDraftPattern = nil;
 		if (nil == sDraftPattern)
@@ -248,6 +270,7 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 {
 	[self drawDraftMarkersWithFrame:cellFrame];	// draw draft markers FIRST - will this work?
 	[super drawWithFrame:cellFrame inView:controlView];
+	[self drawNotPublishableMarkersWithFrame:cellFrame];	// draw afterwards so it goes on top
 }
 
 // draw cell interior (image and text)
@@ -349,6 +372,10 @@ void InterpolateCurveGloss (void* info, float const* inData, float *outData)
 - (BOOL)isDraft { return myIsDraft; }
 
 - (void)setDraft:(BOOL)flag { myIsDraft = flag; }
+
+- (BOOL)isPublishable { return myIsPublishable; }
+
+- (void)setPublishable:(BOOL)flag { myIsPublishable = flag; }
 
 - (int)staleness { return myStaleness; }
 
