@@ -207,6 +207,21 @@
     }
 }
 
+#pragma mark Basic Writing
+
+- (void)writeText:(NSString *)string;
+{
+    // At start of top element, ignore whitespace. #76588
+    if ([self openElementsCount] == 1 &&
+        [_pendingStartTagDOMElements count] &&
+        [string isWhitespace])
+    {
+        return;
+    }
+    
+    [super writeText:string];
+}
+
 #pragma mark Validation
 
 - (BOOL)validateTagName:(NSString *)tagName

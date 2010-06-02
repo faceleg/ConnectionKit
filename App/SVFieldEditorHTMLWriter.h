@@ -18,7 +18,7 @@
 
 @interface SVFieldEditorHTMLWriter : SVHTMLWriter
 {
-  @private
+    //@private
     NSMutableArray  *_pendingStartTagDOMElements;
     NSMutableArray  *_pendingEndDOMElements;
 }
