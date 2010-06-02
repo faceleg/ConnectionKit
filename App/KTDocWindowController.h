@@ -84,12 +84,11 @@ extern NSString *gInfoWindowAutoSaveName;
     SVDesignChooserWindowController *_designChooserWindowController;
 
 
-	NSButton *myBuyNowButton;
+	NSButton *_buyNowButton;
 }
 
 #pragma mark Window Title
 @property(nonatomic, copy) NSString *contentTitle;
-
 
 #pragma mark View Controllers
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;

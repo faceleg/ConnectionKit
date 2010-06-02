@@ -103,7 +103,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [_contentTitle release];
 	[myMasterCodeInjectionController release];
 	[myPageCodeInjectionController release];
-	[myBuyNowButton release];
 
     [super dealloc];
 }
@@ -993,7 +992,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 }
 
 #pragma mark -
-#pragma mark Code Injection
+#pragma mark Code Injection & other pro stuff
 
 - (KTCodeInjectionController *)masterCodeInjectionController
 {
@@ -1031,6 +1030,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[[self pageCodeInjectionController] showWindow:sender];
 }
 
+- (IBAction)configureGoogle:(id)sender;
+{
+	NSLog(@"To Do: Configure Google");
+	NSBeep();
+}
+
 #pragma mark Persistence
 
 - (void)persistUIProperties
@@ -1056,18 +1061,38 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	if (nil == gRegistrationString)
 	{
-		if (!myBuyNowButton)
+		
+		NSString *buttonTitle = nil;
+		NSString *buttonPrompt = @"";
+		
+		switch(gRegistrationFailureCode)
+		// enum { kKSLicenseOK, kKSCouldNotReadLicenseFile, kKSEmptyRegistration, kKSBlacklisted, kKSLicenseExpired, kKSNoLongerValid, kKSLicenseCheckFailed };
 		{
-			NSButton *newButton = [[self window] createBuyNowButton];
-			myBuyNowButton = [newButton retain];
-			[myBuyNowButton setAction:@selector(showRegistrationWindow:)];
-			[myBuyNowButton setTarget:[NSApp delegate]];
+			case kKSLicenseCheckFailed:	// license entered but it's not valid
+				
+				buttonPrompt = NSLocalizedString(@"Invalid registration key entered", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Update License", @"Button title to enter a license Code");
+				break;
+			case kKSLicenseExpired:		// Trial license expired
+				buttonPrompt = NSLocalizedString(@"Trail expired", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
+				break;
+			case kKSNoLongerValid:		// License from a previous version of Sandvox
+				buttonPrompt = NSLocalizedString(@"Sandvox 2 license required", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Upgrade your License", @"Button title to purchase a license");
+				break;
+			default:					// Unlicensed, treat as free/demo
+				buttonPrompt = NSLocalizedString(@"Free edition (Unlicensed)", @"Indicator of license status of app");
+				buttonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
+				break;
 		}
-		[myBuyNowButton setHidden:NO];
+		NSButton *button = [[self window] createBuyNowButtonWithTitle:buttonTitle prompt:buttonPrompt];
+		[button setAction:@selector(showRegistrationWindow:)];
+		[button setTarget:[NSApp delegate]];
 	}
 	else
 	{
-		[myBuyNowButton setHidden:YES];
+		[[self window] removeBuyNowButton];
 	}
 	
 }
