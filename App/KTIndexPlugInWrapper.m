@@ -58,7 +58,7 @@
                 priority = [priorityID intValue];
             } 
             if (priority > 0	// don't add zero-priority items to menu!
-                && (priority < 9 || (nil == gRegistrationString) || gIsPro) )	// only if non-advanced or advanced allowed.
+                && (priority < 9 || gIsPro) )	// only if non-advanced or advanced allowed.
             {
                 NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
                 NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];

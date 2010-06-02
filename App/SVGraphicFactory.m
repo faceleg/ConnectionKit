@@ -287,7 +287,7 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
         // Pro status
         if (9 == [factory priority] && nil == gRegistrationString)
         {
-            [[NSApp delegate] setMenuItemPro:menuItem];
+            [menuItem setPro:YES];
         }
 		
         
