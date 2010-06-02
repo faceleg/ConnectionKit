@@ -93,6 +93,21 @@
     [super willWriteText:writer];
 }
 
+#pragma mark Actions
+
+- (void)paste:(id)sender;
+{
+    // Normally WebView should handle the paste. But we want control of pagelet pastes
+    NSPasteboard *pboard = [NSPasteboard generalPasteboard];
+    if (![[pboard types] containsObject:kSVGraphicPboardType])
+    {
+        return [[self webEditor] forceWebViewToPerform:_cmd withObject:sender];
+    }
+    
+    
+    
+}
+
 #pragma mark Dragging Destination
 
 - (DOMNode *)childForDraggingInfo:(id <NSDraggingInfo>)sender;
