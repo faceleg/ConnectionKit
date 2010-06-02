@@ -53,6 +53,8 @@
 - (void)setPageOrParentDraft:(BOOL)inDraft;
 - (BOOL)excludedFromSiteMap;
 
+@property(nonatomic, copy) NSNumber *isPublishableInDemo;    // BOOL, mandatory
+
 @property(nonatomic) BOOL includeInIndex;
 
 

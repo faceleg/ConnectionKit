@@ -133,6 +133,8 @@
 	[[self parentPage] invalidatePagesInIndexCache];
 }
 
+@dynamic isPublishableInDemo;
+
 #pragma mark URL
 
 - (NSURL *)URL { return nil; }
