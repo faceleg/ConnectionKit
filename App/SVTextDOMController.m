@@ -65,6 +65,10 @@
 
 - (void)setTextHTMLElement:(DOMHTMLElement *)element;
 {
+    // If there's an old element stop it being editable 
+    [[self textHTMLElement] removeAttribute:@"contentEditable"];
+    
+    // Store new
     [element retain];
     [_textElement release]; _textElement = element;
     
