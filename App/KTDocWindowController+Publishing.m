@@ -20,6 +20,7 @@
 #import "SVSiteOutlineViewController.h"
 #import "SVPagesController.h"
 #import "KTToolbars.h"
+#import "KTPublishingEngine.h"
 
 #import "KSSilencingConfirmSheet.h"
 
@@ -102,8 +103,8 @@
 	{
 		[KSSilencingConfirmSheet alertWithWindow:[self window]
                                     silencingKey:@"shutUpDemoUploadWarning"
-                                           title:NSLocalizedString(@"Sandvox Demo: Restricted Publishing", @"title of alert")
-                                          format:NSLocalizedString(@"You are running a demo version of Sandvox. Only the home page (watermarked) will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@"")];
+                                           title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
+                                          format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@""), kMaxNumberOfFreePublishedPages];
 	}
 	
     
