@@ -36,7 +36,7 @@
 - (void)beginBuffering; // can be called multiple times to set up a stack of buffers
 - (void)discardBuffer;  // only discards the most recent buffer. If there's a lower one in the stack, that is restored
 - (void)flush;
-- (void)flushOnNextWrite;
+- (void)flushOnNextWrite;   // calls -flush next time a non-whitespace string is written. can still use -discardBuffer
 
 
 #pragma mark Delegate

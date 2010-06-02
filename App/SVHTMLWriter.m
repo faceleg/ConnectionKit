@@ -8,6 +8,8 @@
 
 #import "SVHTMLWriter.h"
 
+#import "NSString+Karelia.h"
+
 
 @interface SVHTMLBuffer : NSObject <KSStringWriter>
 {
@@ -109,7 +111,11 @@
 
 - (void)writeString:(NSString *)string
 {
-    if (_flushOnNextWrite) [self flush];
+    if (_flushOnNextWrite)
+    {
+        // Checking for non-whitespace is potentially a smidge slow. Could perhaps accept any write here, but subclasses will check text etc. for whitespace to see if they really want to write it
+        if (![string isWhitespace]) [self flush];
+    }
     
     // Do the writing
     [super writeString:string];
