@@ -225,7 +225,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [super webEditorTextDidBeginEditing];
     
     // A bit crude, but we don't want WebKit's usual focus ring
-    [[[self HTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
+    [[[self textHTMLElement] style] setProperty:@"outline" value:@"none" priority:@""];
 }
 
 #pragma mark Responding to Changes
