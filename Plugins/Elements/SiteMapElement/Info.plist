@@ -54,7 +54,7 @@
 	<key>KTPluginName</key>
 	<string>Site Map</string>
 	<key>KTPluginNibFile</key>
-	<string>SiteMapPage</string>
+	<string>SiteMapInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
