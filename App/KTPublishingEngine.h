@@ -21,6 +21,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Connection/Connection.h>
 
+extern int kMaxNumberOfFreePublishedPages;
 
 @class SVHTMLContext, SVMediaRepresentation;
 

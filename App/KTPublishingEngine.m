@@ -43,6 +43,7 @@
 #import "Debug.h"
 #import "Registration.h"
 
+int kMaxNumberOfFreePublishedPages = 8;	// This is the constant value of how many pages max to publish when it's the free/lite/demo/unlicensed state.
 
 NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 
