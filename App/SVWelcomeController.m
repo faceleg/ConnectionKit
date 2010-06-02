@@ -30,6 +30,7 @@
 #import "KTDocumentController.h"
 #import "SVApplicationController.h"
 #import "NSError+Karelia.h"
+#import "KTPublishingEngine.h"
 
 @interface SVWelcomeController ()
 
@@ -295,6 +296,62 @@
 	}
 	else
 	{
+		NSString *stickyHeadline = nil;
+		NSString *stickyDetails = nil;
+		NSString *stickyButtonTitle = nil;
+		
+		switch(gRegistrationFailureCode)
+		// enum { kKSLicenseOK, kKSCouldNotReadLicenseFile, kKSEmptyRegistration, kKSBlacklisted, kKSLicenseExpired, kKSNoLongerValid, kKSLicenseCheckFailed };
+		{
+			case kKSLicenseCheckFailed:	// license entered but it's not valid
+				
+				stickyHeadline = NSLocalizedString(@"This is the free edtion of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
+				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"The registration key you have entered is not valid, so Sandvox will function in limited \\U201Cfree\\U201D mode.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed")];
+				stickyButtonTitle = NSLocalizedString(@"Enter License Key", @"Button title to enter a license Code");
+				
+				break;
+			case kKSLicenseExpired:		// Trial license expired
+			
+				stickyHeadline = NSLocalizedString(@"Trial License Expired", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
+				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"The registration key you entered has expired, so Sandvox will function in limited \\U201Cfree\\U201D mode.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
+				stickyButtonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
+				
+				break;
+			case kKSNoLongerValid:		// License from a previous version of Sandvox
+				
+				stickyHeadline = NSLocalizedString(@"Sandvox 2 License Required", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
+				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Your registration key for Sandvox 1.x is not valid for Sandvox 2, so Sandvox will function in limited \\U201Cfree\\U201D mode.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
+				stickyButtonTitle = NSLocalizedString(@"Upgrade your License", @"Button title to purchase a license");
+				
+				break;
+			default:					// Unlicensed, treat as free/demo
+				stickyHeadline = NSLocalizedString(@"This is the free edition of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
+				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Sandvox is free for publishing small websites, up to %d pages. For more complex sites, you will want to buy a license.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
+				stickyButtonTitle = NSLocalizedString(@"Buy a License", @"Button title to purchase a license");
+				
+				break;
+		}
+
+		
+		
+		NSColor *blueColor = [NSColor colorWithCalibratedRed:0.000 green:0.295 blue:0.528 alpha:1.000];
+		
+		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:20.0], NSFontAttributeName, nil];
+		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
+		
+		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
+													  stickyHeadline attributes:attr1] autorelease];	
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
+		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:stickyDetails attributes:attr2] autorelease]];
+		[attrStickyText addAttribute:NSForegroundColorAttributeName value:blueColor range:NSMakeRange(0, [attrStickyText length])];
+		[attrStickyText setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [attrStickyText length])];
+		
+		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
+		
+		[oStickyButton setTitle:stickyButtonTitle];
+
+		
+		
 		[self.sticky.animator setAlphaValue:1.0];	// animate open
 	}
 }
@@ -339,20 +396,7 @@
 				   defer:YES];
 		
 		[oStickyRotatedView setFrameCenterRotation:8.0];
-		
-		NSColor *blueColor = [NSColor colorWithCalibratedRed:0.000 green:0.295 blue:0.528 alpha:1.000];
-		
-		NSDictionary *attr1 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Marker Felt" size:20.0], NSFontAttributeName, nil];
-		NSDictionary *attr2 = [NSDictionary dictionaryWithObjectsAndKeys:[NSFont fontWithName:@"Chalkboard" size:12.0], NSFontAttributeName, nil];
-		
-		NSMutableAttributedString *attrStickyText = [[[NSMutableAttributedString alloc] initWithString:
-													  NSLocalizedString(@"This is a demo of Sandvox", @"title of reminder note - please make sure this will fit on welcome window when unlicensed") attributes:attr1] autorelease];	
-		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:@"\n" attributes:attr1] autorelease]];
-		[attrStickyText appendAttributedString:[[[NSAttributedString alloc] initWithString:NSLocalizedString(@"Sandvox is fully functional except that only the home page can be published.", @"explanation of demo - please make sure this will fit on welcome window when unlicensed") attributes:attr2] autorelease]];
-		[attrStickyText addAttribute:NSForegroundColorAttributeName value:blueColor range:NSMakeRange(0, [attrStickyText length])];
-		[attrStickyText setAlignment:NSCenterTextAlignment range:NSMakeRange(0, [attrStickyText length])];
-		
-		[[oStickyTextView textStorage] setAttributedString:attrStickyText];
+				
 		[_sticky setContentView:oStickyView];
 		[_sticky setAlphaValue:0.0];		// initially ZERO ALPHA!
 
