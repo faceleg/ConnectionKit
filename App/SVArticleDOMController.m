@@ -11,7 +11,7 @@
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
 #import "SVGraphicFactory.h"
-#import "SVHTMLContext.h"
+#import "SVWebEditorHTMLContext.h"
 #import "KTPage.h"
 
 #import "KSWebLocation.h"
