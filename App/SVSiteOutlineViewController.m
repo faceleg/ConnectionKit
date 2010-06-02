@@ -34,6 +34,8 @@
 #import "NSResponder+Karelia.h"
 #import "NSSet+Karelia.h"
 
+#import "Registration.h"
+
 #import "Debug.h"
 
 
@@ -837,6 +839,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 		BOOL isDraft = [item isDraftOrHasDraftAncestor];
 		[cell setDraft:isDraft];
 		
+		BOOL isPublishable = [[item valueForKey:@"isPublishableInDemo"] boolValue];
+		[cell setPublishable:isPublishable || (nil != gRegistrationString)];
+			// always show as publishable if we are registered.
+	
 		// Code Injection
 		[cell setHasCodeInjection:[[item codeInjection] hasCodeInjection]];
 		if (item == [self rootPage] && ![cell hasCodeInjection])
