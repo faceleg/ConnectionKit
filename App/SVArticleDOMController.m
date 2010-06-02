@@ -21,6 +21,7 @@
 #import "NSURL+Karelia.h"
 
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 
 
 @implementation SVArticleDOMController
@@ -127,7 +128,14 @@
                                              createDocumentFragmentWithMarkupString:html
                                              baseURL:[context baseURL]];
             
-            [[self textHTMLElement] insertBefore:fragment refChild:refNode];
+            if (refNode)
+            {
+                [[refNode parentNode] insertBefore:fragment refChild:refNode];
+            }
+            else
+            {
+                [[self textHTMLElement] insertBefore:fragment refChild:refNode];
+            }
         }
         [html release];
         
@@ -170,7 +178,11 @@
                            insertIntoManagedObjectContext:moc
                                       preferredPlacements:&preferredPlacements];
     
-    if (![self insertGraphics:pagelets]) NSBeep();
+    
+    // Insert pagelets into text
+    DOMNode *refNode = [[[self webEditor] selectedDOMRange] ks_startNode:NULL];
+    
+    if (![self insertGraphics:pagelets beforeDOMNode:refNode]) NSBeep();
 }
 
 #pragma mark Dragging Destination
