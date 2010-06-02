@@ -12,8 +12,8 @@
 @protocol SVWebLocation <NSObject>
 
 #pragma mark Accessors
-@property(nonatomic, copy, readonly) NSURL *URL;
-@property(nonatomic, copy, readonly) NSString *title;
+- (NSURL *)URL;
+- (NSString *)title;
 
 @end
 

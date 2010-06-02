@@ -10,10 +10,6 @@
 
 
 @implementation KSWebLocation (SVWebLocation)
-
-@dynamic URL;
-@dynamic title;
-
 @end
 
 
