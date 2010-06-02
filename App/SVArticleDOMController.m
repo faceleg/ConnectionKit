@@ -93,6 +93,63 @@
     [super willWriteText:writer];
 }
 
+#pragma mark Insertion
+
+- (BOOL)insertGraphics:(NSArray *)pagelets beforeDOMNode:(DOMNode *)refNode;
+{
+    BOOL result = NO;
+    
+    
+    // Insert into text
+    if ([pagelets count] && [[self webEditor] shouldChangeText:self])
+    {
+        // Generate HTML
+        NSMutableString *html = [[NSMutableString alloc] init];
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:html];
+        [context copyPropertiesFromContext:[self HTMLContext]];
+        
+        for (SVGraphic *aGraphic in pagelets)
+        {
+            [aGraphic writeHTML:context placement:SVGraphicPlacementCallout];
+        }
+        
+        
+        // Insert HTML into DOM, replacing caret if possible
+        if (_dragCaret && [_dragCaret nextSibling] == refNode)
+        {
+            [self replaceDragCaretWithHTMLString:html];
+        }
+        else
+        {
+            DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
+            
+            DOMDocumentFragment *fragment = [doc
+                                             createDocumentFragmentWithMarkupString:html
+                                             baseURL:[context baseURL]];
+            
+            [[self textHTMLElement] insertBefore:fragment refChild:refNode];
+        }
+        [html release];
+        
+        
+        // Insert controllers
+        for (WEKWebEditorItem *anItem in [context DOMControllers])
+        {
+            // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
+            if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
+        }
+        [context release];
+        
+        
+        // Finish edit
+        [[self webEditor] didChangeText];
+        result = YES;
+    }
+    
+    
+    return YES;
+}
+
 #pragma mark Actions
 
 - (void)paste:(id)sender;
@@ -105,7 +162,15 @@
     }
     
     
+    // Insert deserialized pagelet from pboard
+    NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
     
+    NSArray *preferredPlacements = nil;
+    NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pboard
+                           insertIntoManagedObjectContext:moc
+                                      preferredPlacements:&preferredPlacements];
+    
+    if (![self insertGraphics:pagelets]) NSBeep();
 }
 
 #pragma mark Dragging Destination
@@ -183,7 +248,7 @@
     BOOL result = NO;
     
     
-    // Fallback to inserting a new pagelet from the pasteboard
+    // Insert serialized graphic from the pasteboard
     NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
     NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
     
@@ -201,61 +266,18 @@
     }
     
     
-    // Insert the pagelets
-    if ([pagelets count] && [[self webEditor] shouldChangeText:self])
+    // Insert HTML into DOM, using caret if possible
+    DOMNode *node = [self childForDraggingInfo:dragInfo];
+    [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
+    
+    if (result = [self insertGraphics:pagelets beforeDOMNode:node])
     {
-        // Generate HTML
-        NSMutableString *html = [[NSMutableString alloc] init];
-        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:html];
-        [context copyPropertiesFromContext:[self HTMLContext]];
-        
-        for (SVGraphic *aGraphic in pagelets)
-        {
-            [aGraphic writeHTML:context placement:SVGraphicPlacementCallout];
-        }
-        
-        
-        // Insert HTML into DOM, replacing caret
-        DOMNode *node = [self childForDraggingInfo:dragInfo];
-        [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
-        
-        if (_dragCaret)
-        {
-            [self replaceDragCaretWithHTMLString:html];
-        }
-        else
-        {
-            DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
-            
-            DOMDocumentFragment *fragment = [doc
-                                             createDocumentFragmentWithMarkupString:html
-                                             baseURL:[context baseURL]];
-            
-            [[self textHTMLElement] insertBefore:fragment refChild:node];
-        }
-        [html release];
-        
-        
-        // Insert controllers
-        for (WEKWebEditorItem *anItem in [context DOMControllers])
-        {
-            // Web Editor View Controller will pick up the insertion in its delegate method and handle the various side-effects.
-            if (![anItem parentWebEditorItem]) [self addChildWebEditorItem:anItem];
-        }
-        [context release];
-        
-        
         // Remove source too?
         NSDragOperation mask = [dragInfo draggingSourceOperationMask];
         if (mask & NSDragOperationMove | mask & NSDragOperationGeneric)
         {
             [[self webEditor] removeDraggedItems];
         }
-        
-        
-        // Finish edit
-        [[self webEditor] didChangeText];
-        result = YES;
     }
     
     
