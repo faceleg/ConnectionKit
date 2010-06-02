@@ -15,11 +15,11 @@
     IBOutlet NSPopUpButton		*oLanguagePopup;
 	IBOutlet NSTextField		*oLanguageCodeField;
 	
-	IBOutlet NSView *oProView;
+	IBOutlet NSButton *oProButton;	// Really just a button for Google integration ... Equivalent to menu
+	IBOutlet NSImageView *oProBadge;
 }
 
 - (IBAction)configureComments:(id)sender;
-- (IBAction)configureGoogle:(id)sender;
 - (IBAction)chooseFavicon:(id)sender;
 - (IBAction)chooseBanner:(id)sender;
 

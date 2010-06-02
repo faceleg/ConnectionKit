@@ -12,6 +12,7 @@
 #import "KTMaster.h"
 
 #import "Registration.h"
+#import "KSLicensedAppDelegate.h"
 
 #import "KSCollectionController.h"
 
@@ -41,7 +42,17 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     [self removeObserver:self
               forKeyPath:@"inspectedObjectsController.selection.master.language"];
     
+	[[NSNotificationCenter defaultCenter] removeObserver:self];
     [super dealloc];
+}
+
+
+- (void)updateProView:(NSNotification *)aNotif
+{
+	BOOL licensedForPro =  (nil != gRegistrationString) && gIsPro;
+	
+	[oProBadge setHidden:licensedForPro];	// only show it if we are not PRO
+    [oProButton setEnabled:licensedForPro];	// If we had other stuff here we'd need to enable pieces
 }
 
 - (void)loadView;
@@ -70,12 +81,14 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
         [thisItem setRepresentedObject:code];
         theIndex++;
     }
-    
-    
-    // Hide the Pro stuff if running Regular edition
-    [oProView setHidden:!(gIsPro || (nil == gRegistrationString))];
+ 
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(updateProView:)
+												 name:kKSLicenseStatusChangeNotification
+											   object:nil];
+	[self updateProView:nil];	// update them now
+	
 }
-
 
 //  check representedObject property that's the document.  windowForSheet -- to forward the message....
 
@@ -84,11 +97,6 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 	KTDocument *doc = [self representedObject];
 	NSLog(@"configureComments %@", doc);
 	
-}
-
-- (IBAction)configureGoogle:(id)sender;
-{
-	NSBeep();
 }
 
 - (IBAction)chooseFavicon:(id)sender;
