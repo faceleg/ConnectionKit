@@ -37,6 +37,12 @@
 {
     [super loadHTMLElementFromDocument:document];
     
+    
+    // Text element is the kBlock
+    id textElement = [[[self HTMLElement] getElementsByClassName:@"kBlock"] item:0];
+    [self setTextHTMLElement:textElement];
+    
+    
     // Also guess at callout controller
     WEKWebEditorItem *parent = [self parentWebEditorItem];
     NSUInteger index = [[parent childWebEditorItems] indexOfObjectIdenticalTo:self];
