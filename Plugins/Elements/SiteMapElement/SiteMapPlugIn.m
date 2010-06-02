@@ -156,10 +156,10 @@
                 BOOL firstChild = YES;
                 for ( id<SVPage> child in children )
                 {
-                    [self writeLinkOfPage:child toContext:context];
                     // on the 2nd pass, emit \n&middot;
-                    if ( !firstChild ) [[context HTMLWriter] writeHTMLString:@"&middot;"];
-                    firstChild = NO;
+                    if ( !firstChild ) [[context HTMLWriter] writeHTMLString:@"\n&middot; "];
+                    firstChild = NO;                    
+                    [self writeLinkOfPage:child toContext:context];
                 }
                 
                 [[context HTMLWriter] endElement]; // </li>
