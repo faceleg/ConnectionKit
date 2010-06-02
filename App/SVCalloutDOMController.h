@@ -11,6 +11,4 @@
 
 @interface SVCalloutDOMController : SVDOMController
 
-- (NSString *)HTMLElementIDName;
-
 @end
