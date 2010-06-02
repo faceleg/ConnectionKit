@@ -41,8 +41,8 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 @interface SVApplicationController : KSLicensedAppDelegate
 {
     // IBOutlets
-    IBOutlet NSMenuItem     *oToggleInfoMenuItem; // used
-    IBOutlet NSMenuItem     *oToggleMediaMenuItem; // used
+    IBOutlet NSMenuItem     *oToggleInfoMenuItem; // DOESN'T APPEAR TO BE HOOKED UP, OR NEEDED.
+    IBOutlet NSMenuItem     *oToggleMediaMenuItem; // DOESN'T APPEAR TO BE HOOKED UP, OR NEEDED.
 	
 	// Pro menu items
 	IBOutlet NSMenuItem		*oPasteAsMarkupMenuItem;
@@ -63,10 +63,9 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oSourceViewMenuItem;
 	IBOutlet NSMenuItem		*oDOMViewMenuItem;
 	IBOutlet NSMenuItem		*oRSSViewMenuItem;
+	IBOutlet NSMenuItem		*oConfigureGoogleMenuItem;
+	
 	IBOutlet NSMenuItem		*oValidateSourceViewMenuItem;
-
-	// do we need this?
-	IBOutlet NSMenuItem		*oInstallPluginsMenuItem;
 	
     // we have pages and collections (summary pages)
     IBOutlet NSMenu			*oAddPageMenu;

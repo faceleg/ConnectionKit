@@ -68,6 +68,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSToolbar+Karelia.h"
+#import "NSMenuItem+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import <AmazonSupport/AmazonSupport.h>
 #import <Connection/Connection.h>
@@ -226,6 +227,11 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (int) the8BitPrime
 {
 	return 251;
+}
+
+- (NSInteger) requiredLicenseVersion
+{
+	return 2;		// this is version 2 of Sandvox, so we need a Sandvox 2 license. We'll fail if Sandvox 1.
 }
 
 
@@ -1126,60 +1132,70 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 #else
 	[self checkRegistrationString:nil];
 #endif
-		
+	
+	[[NSNotificationCenter defaultCenter] addObserver:self
+											 selector:@selector(updateLicensingMenus:)
+												 name:kKSLicenseStatusChangeNotification
+											   object:nil];
+	[self updateLicensingMenus:nil];	// update them now
+	
 	// Fix menus appropriately
-	if (nil == gRegistrationString)
-	{
-		// unregistered, label advanced menu as pro
-		[self setMenuItemPro:oAdvancedMenu];
-		[self setMenuItemPro:oPasteAsMarkupMenuItem];
-		
-		[self setMenuItemPro:oEditRawHTMLMenuItem];
-
-		
-		[self setMenuItemPro:oCodeInjectionMenuItem];
-		[self setMenuItemPro:oCodeInjectionLevelMenuItem];
-	}
-	else
-	{
-
-		if (gIsPro || (nil == gRegistrationString))
-		{
-			;
-		}
-		else
-		{
-			[[oAdvancedMenu menu] removeItem:oAdvancedMenu];	// web view menu
-			oAdvancedMenu = nil;
-			
-			[[oEditRawHTMLMenuItem menu] removeItem:oEditRawHTMLMenuItem];
-			oEditRawHTMLMenuItem = nil;
-			
-			[[oCodeInjectionMenuItem menu] removeItem:oCodeInjectionMenuItem];
-			oCodeInjectionMenuItem = nil;
-			
-			[[oCodeInjectionLevelMenuItem menu] removeItem:oCodeInjectionLevelMenuItem];
-			oCodeInjectionLevelMenuItem = nil;
-
-			[[oFindSeparator menu] removeItem:oFindSeparator];
-			oFindSeparator = nil;
-			
-			[[oCodeInjectionSeparator menu] removeItem:oCodeInjectionSeparator];
-			oCodeInjectionSeparator = nil;
-			
-			oStandardViewMenuItem = nil;
-			oStandardViewWithoutStylesMenuItem = nil;
-			oSourceViewMenuItem = nil;
-			oDOMViewMenuItem = nil;
-			oRSSViewMenuItem = nil;
-			oValidateSourceViewMenuItem = nil;
-			
-			[[oPasteAsMarkupMenuItem menu] removeItem:oPasteAsMarkupMenuItem];
-			oPasteAsMarkupMenuItem = nil;
-		}
-	}	
 	[pool release];
 
+}
+
+- (void)updateLicensingMenus:(NSNotification *)aNotif
+{
+	BOOL licensedForPro =  (nil != gRegistrationString) && gIsPro;
+	BOOL showPro = !licensedForPro;
+
+	[oAdvancedMenu						setPro:showPro];
+	[oPasteAsMarkupMenuItem				setPro:showPro];
+	[oEditRawHTMLMenuItem				setPro:showPro];
+	[oCodeInjectionMenuItem				setPro:showPro];
+	[oCodeInjectionLevelMenuItem		setPro:showPro];
+	[oValidateSourceViewMenuItem		setPro:showPro];
+	[oConfigureGoogleMenuItem			setPro:showPro];
+	
+	[oStandardViewMenuItem				setPro:showPro];
+	[oStandardViewWithoutStylesMenuItem	setPro:showPro];
+	[oSourceViewMenuItem				setPro:showPro];
+	[oDOMViewMenuItem					setPro:showPro];
+	[oRSSViewMenuItem					setPro:showPro];
+		
+	if (licensedForPro)
+	{
+		// Hook up menus to their actions so they will be enabled
+		[oPasteAsMarkupMenuItem setAction:@selector(pasteTextAsMarkup:)];
+		[oEditRawHTMLMenuItem setAction:@selector(editRawHTMLInSelectedBlock:)];
+		[oCodeInjectionMenuItem setAction:@selector(showSiteCodeInjection:)];
+		[oCodeInjectionLevelMenuItem setAction:@selector(showPageCodeInjection:)];
+		[oValidateSourceViewMenuItem setAction:@selector(validateSource:)];
+		[oConfigureGoogleMenuItem setAction:@selector(configureGoogle:)];
+	
+		[oStandardViewMenuItem setAction:@selector(selectWebViewViewType:)];
+		[oStandardViewWithoutStylesMenuItem setAction:@selector(selectWebViewViewType:)];
+		[oSourceViewMenuItem setAction:@selector(selectWebViewViewType:)];
+		[oDOMViewMenuItem setAction:@selector(selectWebViewViewType:)];
+		[oRSSViewMenuItem setAction:@selector(selectWebViewViewType:)];
+
+}
+	else
+	{
+		// clear actions so they will be disabled
+		[oPasteAsMarkupMenuItem setAction:nil];
+		[oEditRawHTMLMenuItem setAction:nil];
+		[oCodeInjectionMenuItem setAction:nil];
+		[oCodeInjectionLevelMenuItem setAction:nil];
+		[oValidateSourceViewMenuItem setAction:nil];
+		[oConfigureGoogleMenuItem setAction:nil];
+		
+		[oStandardViewMenuItem setAction:nil];
+		[oStandardViewWithoutStylesMenuItem setAction:nil];
+		[oSourceViewMenuItem setAction:nil];
+		[oDOMViewMenuItem setAction:nil];
+		[oRSSViewMenuItem setAction:nil];
+	}
 }
 	
 // Font Panel capabilities -- restrict what effects we can do.
@@ -1193,7 +1209,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			//  | NSFontPanelStrikethroughEffectModeMask
 			  | NSFontPanelTextColorEffectModeMask
 			  | NSFontPanelDocumentColorEffectModeMask
-			//  | NSFontPanelShadowEffectModeMask		// only sort of works
+			  | NSFontPanelShadowEffectModeMask		// allow shadows even if it's not going to render on all browsers
 			  );
 }
 
