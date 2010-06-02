@@ -206,7 +206,7 @@ NSString *IMWantBorderKey = @"wantBorder";
 	{
 		HTMLCode = [service publishingHTMLCode];
 	}
-	else if (context.liveDataFeeds) {
+	else if ([context liveDataFeeds]) {
 		HTMLCode = [service livePreviewHTMLCode];
 	}
 	else {

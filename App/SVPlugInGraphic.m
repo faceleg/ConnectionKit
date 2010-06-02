@@ -108,8 +108,9 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 	{
 		[self loadPlugIn];
         
+		OBASSERT(_plugIn);
         // Let the plug-in know that it's awoken
-        [[self plugIn] awakeFromFetch];
+        [_plugIn awakeFromFetch];
     }
     
 	return _plugIn;
