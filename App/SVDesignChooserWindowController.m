@@ -226,10 +226,10 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 //	switch(groupNumber)
 //	{
 //		case kGenreGroup:
-//			result = NSLocalizedString(@"Genre");
+//			result = NSLocalizedString(@"Genre", @"Description of design grouping");
 //			break;
 //		case kColorGroup:
-//			result = NSLocalizedString(@"Background");
+//			result = NSLocalizedString(@"Background", @"Description of design grouping");
 //			break;
 //	}
 	return @"";
