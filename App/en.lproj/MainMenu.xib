@@ -1368,6 +1368,15 @@
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
+								<object class="NSMenuItem" id="422245976">
+									<reference key="NSMenu" ref="220650628"/>
+									<string key="NSTitle">Reload Page</string>
+									<string key="NSKeyEquiv">r</string>
+									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
 								<object class="NSMenuItem" id="1008217722">
 									<reference key="NSMenu" ref="220650628"/>
 									<string key="NSTitle">Web View</string>
@@ -1433,15 +1442,6 @@
 											</object>
 										</object>
 									</object>
-								</object>
-								<object class="NSMenuItem" id="422245976">
-									<reference key="NSMenu" ref="220650628"/>
-									<string key="NSTitle">Reload Page</string>
-									<string key="NSKeyEquiv">r</string>
-									<int key="NSKeyEquivModMask">1048576</int>
-									<int key="NSMnemonicLoc">2147483647</int>
-									<reference key="NSOnImage" ref="73959282"/>
-									<reference key="NSMixedImage" ref="49718828"/>
 								</object>
 								<object class="NSMenuItem" id="117338583">
 									<reference key="NSMenu" ref="220650628"/>
@@ -1599,6 +1599,14 @@
 									<string key="NSTitle">Page Code Injection…</string>
 									<string key="NSKeyEquiv">c</string>
 									<int key="NSKeyEquivModMask">1048576</int>
+									<int key="NSMnemonicLoc">2147483647</int>
+									<reference key="NSOnImage" ref="73959282"/>
+									<reference key="NSMixedImage" ref="49718828"/>
+								</object>
+								<object class="NSMenuItem" id="515783852">
+									<reference key="NSMenu" ref="858174837"/>
+									<string key="NSTitle">Configure Google…</string>
+									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
 									<reference key="NSMixedImage" ref="49718828"/>
@@ -2952,6 +2960,30 @@
 					</object>
 					<int key="connectionID">1317</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oValidateSourceViewMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="117338583"/>
+					</object>
+					<int key="connectionID">1318</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oConfigureGoogleMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="515783852"/>
+					</object>
+					<int key="connectionID">1321</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">configureGoogle:</string>
+						<reference key="source" ref="464856506"/>
+						<reference key="destination" ref="515783852"/>
+					</object>
+					<int key="connectionID">1322</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -3493,8 +3525,8 @@
 							<reference ref="409788644"/>
 							<reference ref="416318644"/>
 							<reference ref="781866686"/>
-							<reference ref="422245976"/>
 							<reference ref="117338583"/>
+							<reference ref="422245976"/>
 						</object>
 						<reference key="parent" ref="414958743"/>
 					</object>
@@ -3626,6 +3658,7 @@
 							<reference ref="651619049"/>
 							<reference ref="18956098"/>
 							<reference ref="808072446"/>
+							<reference ref="515783852"/>
 						</object>
 						<reference key="parent" ref="903044526"/>
 					</object>
@@ -4336,6 +4369,11 @@
 						<reference key="object" ref="808072446"/>
 						<reference key="parent" ref="858174837"/>
 					</object>
+					<object class="IBObjectRecord">
+						<int key="objectID">1319</int>
+						<reference key="object" ref="515783852"/>
+						<reference key="parent" ref="858174837"/>
+					</object>
 				</object>
 			</object>
 			<object class="NSMutableDictionary" key="flattenedProperties">
@@ -4486,6 +4524,8 @@
 					<string>131.ImportedFromIB2</string>
 					<string>1315.IBPluginDependency</string>
 					<string>1316.IBPluginDependency</string>
+					<string>1319.IBPluginDependency</string>
+					<string>1319.ImportedFromIB2</string>
 					<string>134.IBPluginDependency</string>
 					<string>134.ImportedFromIB2</string>
 					<string>136.IBPluginDependency</string>
@@ -4818,7 +4858,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{632, 563}, {205, 173}}</string>
+					<string>{{430, 563}, {205, 173}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4883,7 +4923,9 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{588, 415}, {255, 443}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>{{386, 293}, {255, 443}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4902,27 +4944,27 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{848, 633}, {219, 103}}</string>
+					<string>{{646, 633}, {219, 103}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
-					<string>{{554, 443}, {269, 293}}</string>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
-					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<boolean value="YES"/>
-					<string>{{253, 736}, {525, 20}}</string>
+					<string>{{553, 514}, {269, 293}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
+					<string>{{253, 807}, {525, 20}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{603, 453}, {308, 283}}</string>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
+					<boolean value="YES"/>
+					<string>{{603, 504}, {308, 303}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5034,7 +5076,7 @@
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{689, 605}, {173, 253}}</string>
+					<string>{{487, 483}, {173, 253}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -5099,7 +5141,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">1317</int>
+			<int key="maxID">1322</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5435,6 +5477,14 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">KSInspectorViewController</string>
+					<string key="superclassName">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../../Shared/AppKit/KSInspectorViewController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -6245,6 +6295,13 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">NSMenuItem</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../../Shared/AppKit/NSMenuItem+Karelia.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">NSObject</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
@@ -6616,6 +6673,7 @@
 							<string>oCodeInjectionLevelMenuItem</string>
 							<string>oCodeInjectionMenuItem</string>
 							<string>oCodeInjectionSeparator</string>
+							<string>oConfigureGoogleMenuItem</string>
 							<string>oDOMViewMenuItem</string>
 							<string>oDebugMediaPanel</string>
 							<string>oDebugTable</string>
@@ -6623,7 +6681,6 @@
 							<string>oFindSeparator</string>
 							<string>oFindSubmenu</string>
 							<string>oInsertIndexMenu</string>
-							<string>oInstallPluginsMenuItem</string>
 							<string>oNewPageMenu</string>
 							<string>oPasteAsMarkupMenuItem</string>
 							<string>oRSSViewMenuItem</string>
@@ -6643,13 +6700,13 @@
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
+							<string>NSMenuItem</string>
 							<string>NSPanel</string>
 							<string>NSTableView</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
 							<string>NSMenu</string>
-							<string>NSMenuItem</string>
 							<string>NSMenu</string>
 							<string>NSMenuItem</string>
 							<string>NSMenuItem</string>
@@ -6708,6 +6765,13 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">SVDOMController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVWebEditorHTMLContext.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">SVDesignChooserViewController</string>
 					<string key="superclassName">NSViewController</string>
 					<object class="NSMutableDictionary" key="outlets">
@@ -6753,6 +6817,48 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">SVDesignChooserWindowController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVDocumentInspector</string>
+					<string key="superclassName">KSInspectorViewController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>chooseBanner:</string>
+							<string>chooseFavicon:</string>
+							<string>configureComments:</string>
+							<string>configureGoogle:</string>
+							<string>languageChosen:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="NSMutableDictionary" key="outlets">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>oLanguageCodeField</string>
+							<string>oLanguagePopup</string>
+							<string>oProView</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>NSTextField</string>
+							<string>NSPopUpButton</string>
+							<string>NSView</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVDocumentInspector.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -7032,10 +7138,6 @@
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
-					<object class="NSMutableDictionary" key="actions">
-						<string key="NS.key.0">unlink:</string>
-						<string key="NS.object.0">id</string>
-					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../../Shared/WebKit/WebView+Karelia.h</string>
@@ -7044,6 +7146,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
 					<reference key="sourceIdentifier" ref="888221964"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WebView</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">unlink:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">WEKWebViewEditing.h</string>
+					</object>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
