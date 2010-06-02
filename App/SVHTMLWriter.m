@@ -113,8 +113,7 @@
 {
     if (_flushOnNextWrite)
     {
-        // Checking for non-whitespace is potentially a smidge slow. Could perhaps accept any write here, but subclasses will check text etc. for whitespace to see if they really want to write it
-        if (![string isWhitespace]) [self flush];
+        if ([string length]) [self flush];
     }
     
     // Do the writing
