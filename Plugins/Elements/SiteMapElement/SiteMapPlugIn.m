@@ -157,7 +157,11 @@
                 for ( id<SVPage> child in children )
                 {
                     // on the 2nd pass, emit \n&middot;
-                    if ( !firstChild ) [[context HTMLWriter] writeHTMLString:@"\n&middot; "];
+                    if ( !firstChild ) 
+                    {
+                        [[context HTMLWriter] startNewline];
+                        [[context HTMLWriter] writeHTMLString:@"&middot; "];
+                    }
                     firstChild = NO;                    
                     [self writeLinkOfPage:child toContext:context];
                 }
