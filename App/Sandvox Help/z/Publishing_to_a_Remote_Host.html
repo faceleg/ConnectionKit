@@ -92,6 +92,8 @@ examplehost.com/john
 
         <p>The method by which the site will be uploaded to your <a href="Host.html" title="Host">host</a>. The available methods are FTP, SFTP, and WebDAV (but not over SSL). In general, we prefer it if you use "SFTP" since it is more secure, however your <a href="Host.html" title="Host">host</a> may not support that. They should tell you which methods they support.</p>
 
+        <p>Note that these upload methods are not completely interchangeable. There may be some hosts where you can only access the directory you need to upload your files into via SFTP, not FTP. The reason for this is that FTP usually gives you access only to your personal home directory (and any files and folders in it), whereas SFTP generally gives you access to the whole computer's directory of files and folders (as long as your user account has privileges to access those!) And often with WebDAV, only certain directories can be accessed, perhaps not even your entire home directory. So if the directory where HTML files are served from is not in your home directory, SFTP may be the <i>only</i> solution.</p>
+
         <p>Sandvox automatically fills in the "Port" field for you. You should <b>only</b> change this value if your <a href="Host.html" title="Host">host</a> specifically requires you to.</p><a name="Username" id="Username"></a>
 
         <h3><span class="mw-headline">Username</span></h3>

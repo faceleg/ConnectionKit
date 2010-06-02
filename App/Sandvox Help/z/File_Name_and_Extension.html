@@ -28,22 +28,24 @@
         <p>The full name that a <a href="Page.html" title="Page">page</a>'s HTML is <a href="Publishing_Your_Site.html" title="Publish">published</a> under consists of the file name, with a file extension tacked on. As is universally true for web pages and sites, file names are limited to allow the use of only the following characters:</p>
 
         <ul>
-            <li>ASCII letters (A-Z, a-z)</li>
+            <li>ASCII letters (a-z)</li>
 
             <li>numbers (0-9)</li>
 
-            <li>underscores and hyphens</li>
+            <li>underscores and hyphens (dashes)</li>
         </ul>
 
         <p>This is because many <a href="Host.html" title="Host">hosts</a> have issues with file names using characters other than these.</p><a name="File_Name" id="File_Name"></a>
 
         <h2><span class="mw-headline">File Name</span></h2>
 
-        <p>Sandvox automatically sets a <a href="Page.html" title="Page">page</a>'s file name from its <a href="Page_Title.html" title="Page Title">title</a>. The file name is the <a href="Page_Title.html" title="Page Title">page title</a> with any characters not in the list above removed and with spaces replaced by underlines. So for example, if you title a page <b>Is my site great?</b> Sandvox will provide <b>Is_my_site_great</b> as the file name.</p>
+        <p>Sandvox automatically sets a <a href="Page.html" title="Page">page</a>'s file name from its <a href="Page_Title.html" title="Page Title">title</a>. The file name is the <a href="Page_Title.html" title="Page Title">page title</a> with any characters not in the list above removed and with spaces or punctuation replaced by dashes. So for example, if you title a page <b>Is my site great?</b> Sandvox will provide <b>is-my-site-great</b> as the file name.</p>
+
+        <p>(Note that on pages created with Sandvox versions before 1.6.6, underscores are used to separate the words rather than dashes. We changed to dashes to help search engines recognize your page titles.)</p>
 
         <p>If the <a href="Page_Title.html" title="Page Title">page title</a> consists solely of characters not in the list (for example a title in Japanese), Sandvox sets the file name to be a random-looking, unique string of letters and numbers.</p>
 
-        <p>If you change the title of the page, the automatically generated file name will also update itself to match the page title. Once that page has been <a href="Publishing_Your_Site.html" title="Publish">published</a>, however, the name <i>no longer changes automatically</i>. This allows you to update a title without losing any links to that <a href="Publishing_Your_Site.html" title="Publish">published</a> page. (You may change the file name after publication, but keep in mind that there may be links to the old page with the old file name; this fill will still exist on your <a href="Host.html" title="Host">host</a>.)</p>
+        <p>If you change the title of the page, the automatically generated file name will also update itself to match the page title. Once that page has been <a href="Publishing_Your_Site.html" title="Publish">published</a>, however, the name <i>no longer changes automatically</i>. This allows you to update a title without losing any links to that <a href="Publishing_Your_Site.html" title="Publish">published</a> page. (You may change the file name after publication, but keep in mind that there may be links to the old page with the old file name; this file will still exist on your <a href="Host.html" title="Host">host</a>.)</p>
 
         <p>You can also set a <a href="Page.html" title="Page">page</a>'s file name manually yourself. There are several advantages for this:</p>
 
