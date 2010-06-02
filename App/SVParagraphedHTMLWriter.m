@@ -216,7 +216,7 @@
         [tagName isEqualToString:@"UL"] ||
         [tagName isEqualToString:@"OL"])
     {
-        BOOL result = ([self openElementsCount] == 0 || [self lastOpenElementIsList]);
+        BOOL result = ([self openElementsCount] == 0 || [self topElementIsList]);
         return result;
     }
     else
@@ -231,7 +231,7 @@
 - (BOOL)validateAttribute:(NSString *)attributeName;
 {
     // Super doesn't allow links; we do.
-    if ([[self lastOpenElementTagName] isEqualToString:@"A"])
+    if ([[self topElement] isEqualToString:@"A"])
     {
         BOOL result = ([attributeName isEqualToString:@"href"] ||
                        [attributeName isEqualToString:@"target"] ||
@@ -257,7 +257,7 @@
     
     if (!result && [propertyName isEqualToString:@"text-align"])
     {
-        NSString *tagName = [self lastOpenElementTagName];
+        NSString *tagName = [self topElement];
         if ([tagName isEqualToString:@"P"])
         {
             result = YES;

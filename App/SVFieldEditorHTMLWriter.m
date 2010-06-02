@@ -82,7 +82,7 @@
     {
         [_pendingEndDOMElements removeLastObject];
         [self discardBuffer];
-        [self pushOpenElementWithTagName:[element tagName]];
+        [self pushElement:[element tagName]];
         
         
         // Write inner HTML
@@ -170,7 +170,7 @@
         DOMNode *result = [element nextSibling];
         
         [[element parentNode] removeChild:element];
-        [self popOpenElement];
+        [self popElement];
         [_pendingStartTagDOMElements removeLastObject];
         
         [self discardBuffer];
@@ -358,7 +358,7 @@
     // List items are permitted inside of a list. We don't actually allow lists, but this is handy for subclasses that do implement lists
     if (!result && [tagName isEqualToString:@"LI"])
     {
-        if ([self lastOpenElementIsList]) result = YES;
+        if ([self topElementIsList]) result = YES;
     }
     
     return result;
@@ -379,7 +379,7 @@
     BOOL result = NO;
     
     // Allow class and style on any element except <br>
-    NSString *tagName = [self lastOpenElementTagName];
+    NSString *tagName = [self topElement];
     if (tagName && ![tagName isEqualToString:@"BR"])
     {
         result = ([attributeName isEqualToString:@"class"] ||
