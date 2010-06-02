@@ -89,19 +89,19 @@
 
 - (IBAction) updateSampleImage:sender		
 {
-#define WIDTH 100
-#define HEIGHT 75
+#define SAMPLE_WIDTH 100
+#define SAMPLE_HEIGHT 75
 
 	[mySampleImage release];
 	
 	NSImage *newImage = [sender image];
 	NSBitmapImageRep *bitmap = [newImage bitmap];
 	
-	if ( [bitmap pixelsWide] > (1.5 * WIDTH) || [bitmap pixelsHigh] > (1.5 * WIDTH) )
+	if ( [bitmap pixelsWide] > (1.5 * SAMPLE_WIDTH) || [bitmap pixelsHigh] > (1.5 * SAMPLE_WIDTH) )
 	{
 		CIImage *im = [newImage toCIImage];
 		// Show the top/center of the image.  This crop & center it.
-		im = [im scaleToWidth:WIDTH height:HEIGHT behavior:kCoverRect alignment:NSImageAlignCenter opaqueEdges:YES];
+		im = [im scaleToWidth:SAMPLE_WIDTH height:SAMPLE_HEIGHT behavior:kCoverRect alignment:NSImageAlignCenter opaqueEdges:YES];
 		
 		newImage = [im toNSImageBitmap];
 	}
