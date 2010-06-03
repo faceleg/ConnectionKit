@@ -141,4 +141,25 @@
     [self writeEarlyCallouts:[SVHTMLContext currentContext]];
 }
 
+#pragma mark Validation
+
+- (BOOL)validateAttachment:(SVTextAttachment *)attachment
+                 placement:(SVGraphicPlacement)placement
+                     error:(NSError **)error;
+{
+    // We're more permissive than superclass and allow block/callout attachments
+    if (placement != SVGraphicPlacementInline &&
+        placement != SVGraphicPlacementBlock &&
+        placement != SVGraphicPlacementCallout)
+    {
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSValidationNumberTooLargeError
+                                localizedDescription:@"Unsupported graphic placement in article"];
+        
+        return NO;
+    }
+    
+    return YES;
+}
+
 @end
