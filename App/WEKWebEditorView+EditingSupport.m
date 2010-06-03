@@ -157,10 +157,11 @@
 
 #pragma mark Key presses
 
+/*  In practice this seems to a bad idea. I wanted -moveUp: and -moveDown: actions, but it interprets everything else too!
 - (void)keyDown:(NSEvent *)theEvent;
 {
     [self interpretKeyEvents:[NSArray arrayWithObject:theEvent]];
-}
+}*/
 
 - (void)moveUp:(id)sender;
 {
