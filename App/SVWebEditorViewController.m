@@ -273,24 +273,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [[self selectedObjectsController] setSelectedObjects:selection];    // restore selection
     
     
-    
-    
-    // Match selection to controller
-    NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
-    NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
-    
-    for (id anObject in selectedObjects)
-    {
-        id newItem = [[[self webEditor] rootItem] hitTestRepresentedObject:anObject];
-        if ([newItem isSelectable]) [newSelection addObject:newItem];
-    }
-    
-    [[self webEditor] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
-    [newSelection release];
-    
-    
-    
-    
     // Restore scroll point
     [[self webEditor] scrollToPoint:_visibleRect.origin];
     
@@ -391,6 +373,21 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (void)didUpdate;
 {
     WEKWebEditorView *webEditor = [self webEditor];
+    
+    
+    // Match selection to controller
+    NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
+    NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
+    
+    for (id anObject in selectedObjects)
+    {
+        id newItem = [[[self webEditor] rootItem] hitTestRepresentedObject:anObject];
+        if ([newItem isSelectable]) [newSelection addObject:newItem];
+    }
+    
+    [[self webEditor] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
+    [newSelection release];
+    
     
     // Restore selection
     if (_selectionToRestore)
@@ -494,7 +491,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Add to main controller too
     NSArrayController *controller = [self selectedObjectsController];
+    
+    BOOL selectInserted = [controller selectsInsertedObjects];
+    [controller setSelectsInsertedObjects:YES];
     [controller addObject:pagelet];
+    [controller setSelectsInsertedObjects:selectInserted];
 }
 
 - (IBAction)insertPagelet:(id)sender;
