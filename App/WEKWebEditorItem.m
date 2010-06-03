@@ -65,13 +65,12 @@
 - (void)setParentWebEditorItem:(WEKWebEditorItem *)item
 {
     // When removing from the heirarchy, make sure we're no longer selected
-    if (!item && [self isSelected])
-    {
-        [[self webEditor] deselectItem:self];
-    }
+    WEKWebEditorView *webEditorToRemoveFrom = (!item && [self isSelected] ? [self webEditor] : nil);
     
     _parentController = item;
     [self setNextResponder:item];
+    
+    [webEditorToRemoveFrom deselectItem:self];
 }
 
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
