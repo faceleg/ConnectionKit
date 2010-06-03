@@ -212,4 +212,13 @@
     [context writeString:[archive substringFromIndex:archiveIndex]];
 }
 
+#pragma mark Validation
+
+- (BOOL)validateAttachment:(SVTextAttachment *)attachment
+                 placement:(NSNumber **)placement
+                     error:(NSError **)error;
+{
+    return YES;
+}
+
 @end

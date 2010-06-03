@@ -9,7 +9,7 @@
 #import "SVContentObject.h"
 
 @class SVBodyElement;
-@class SVGraphic;
+@class SVTextAttachment, SVGraphic;
 
 
 @interface SVRichText : SVContentObject  
@@ -38,5 +38,11 @@
 - (void)writeText:(SVHTMLContext *)context;
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
 
+
+#pragma mark Validation
+//  'If the attachment were part of the receiver, would it be allowed that placement?'
+- (BOOL)validateAttachment:(SVTextAttachment *)attachment
+                 placement:(NSNumber **)placement
+                     error:(NSError **)error;
 
 @end

@@ -57,6 +57,7 @@
 {
     BOOL result = YES;
     
+    
     SVGraphicPlacement placementValue = [*placement integerValue];
     if (placementValue == SVGraphicPlacementInline)
     {
@@ -66,6 +67,13 @@
             *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:@"Can't place graphic inline"];
         }
     }
+    
+    
+    if (result && [self body])
+    {
+        result = [[self body] validateAttachment:self placement:placement error:error];
+    }
+    
     
     return result;
 }
