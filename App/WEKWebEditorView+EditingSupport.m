@@ -98,7 +98,7 @@
     }
     else
     {
-        NSArray *items = [self selectedItems];
+        NSArray *items = [[self selectedItems] copy];   // delete is likely to change selectedItems
         for (WEKWebEditorItem *anItem in items)
         {
             OBASSERT([anItem tryToRemove]);
@@ -108,6 +108,8 @@
         {
             NSBeep();
         }
+        
+        [items release];
         
         [self didChangeText];
     }
