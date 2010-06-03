@@ -505,7 +505,7 @@
 		27D90AD90D7ED62800C13012 /* SVHTMLTemplateParser+Text.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D90AD80D7ED62800C13012 /* SVHTMLTemplateParser+Text.m */; };
 		27D9A259117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9A257117FB49000049638 /* SVAuxiliaryPageletTextDOMController.h */; };
 		27D9A25A117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9A258117FB49000049638 /* SVAuxiliaryPageletTextDOMController.m */; };
-		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27D9B8DE108CD17500B6F28D /* SVHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 27D9B8DC108CD17500B6F28D /* SVHTMLContext.h */; settings = {ATTRIBUTES = (); }; };
 		27D9B8DF108CD17500B6F28D /* SVHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 27D9B8DD108CD17500B6F28D /* SVHTMLContext.m */; };
 		27DB8F7F11204A9400B1895C /* DOMElement+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB8F7D11204A9400B1895C /* DOMElement+Karelia.h */; };
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };

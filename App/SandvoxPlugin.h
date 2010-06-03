@@ -36,9 +36,6 @@
 // Page composition
 #import "SVPageProtocol.h"
 
-// HTML Writing
-#import "SVHTMLContext.h"
-
 //  Media
 
 // DataSources (drag-and-drop external sources)
