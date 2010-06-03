@@ -83,6 +83,9 @@
 
 - (void)writeText:(NSString *)string;
 
+//  Writes a newline character and the tabs to match -indentationLevel. Nornally newlines are automatically written for you; call this if you need an extra one.
+- (void)startNewline;
+
 - (void)writeComment:(NSString *)comment;   // escapes the string, and wraps in a comment tag
 
 - (void)writeHTMLString:(NSString *)html;   // great for when you have an existing snippet of HTML
