@@ -81,9 +81,10 @@
     [_headerMarkup release];
     [_endBodyMarkup release];
     [_iteratorsStack release];
-    [_stringWriter release];
     
     [super dealloc];
+    
+    OBASSERT(!_stringWriter);   // super should have called -close to set this to nil
 }
 
 #pragma mark Properties
