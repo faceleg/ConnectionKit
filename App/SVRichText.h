@@ -8,8 +8,11 @@
 
 #import "SVContentObject.h"
 
+#import "SVGraphic.h"
+
+
 @class SVBodyElement;
-@class SVTextAttachment, SVGraphic;
+@class SVTextAttachment;
 
 
 @interface SVRichText : SVContentObject  
@@ -42,7 +45,7 @@
 #pragma mark Validation
 //  'If the attachment were part of the receiver, would it be allowed that placement?'
 - (BOOL)validateAttachment:(SVTextAttachment *)attachment
-                 placement:(NSNumber **)placement
+                 placement:(SVGraphicPlacement)placement
                      error:(NSError **)error;
 
 @end

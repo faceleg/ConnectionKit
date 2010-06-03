@@ -10,6 +10,7 @@
 
 #import "SVGraphic.h"
 #import "SVHTMLContext.h"
+#import "SVRichText.h"
 #import "SVTitleBox.h"
 
 #import "NSManagedObject+KTExtensions.h"
@@ -71,7 +72,7 @@
     
     if (result && [self body])
     {
-        result = [[self body] validateAttachment:self placement:placement error:error];
+        result = [[self body] validateAttachment:self placement:placementValue error:error];
     }
     
     
