@@ -74,6 +74,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     _selectableObjectsController = [[SVWebContentObjectsController alloc] init];
     [_selectableObjectsController setAvoidsEmptySelection:NO];
     [_selectableObjectsController setPreservesSelection:NO];    // we'll take care of that
+    [_selectableObjectsController setSelectsInsertedObjects:NO];
     [_selectableObjectsController setObjectClass:[NSObject class]];
         
     return self;
@@ -493,10 +494,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Add to main controller too
     NSArrayController *controller = [self selectedObjectsController];
-    BOOL selectInserted = [controller selectsInsertedObjects];
-    [controller setSelectsInsertedObjects:YES];
     [controller addObject:pagelet];
-    [controller setSelectsInsertedObjects:selectInserted];
 }
 
 - (IBAction)insertPagelet:(id)sender;
