@@ -125,7 +125,7 @@
         {
             //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
             if ( [aPage isEqual:[context page]] && [keyPath isEqualToString:@"title"] ) continue;
-            [(SVHTMLContext *)context addDependencyOnObject:aPage keyPath:keyPath];
+            [context addDependencyForKeyPath:keyPath ofObject:aPage];
         }
         
         // figure out what children, if any, should be included        
@@ -219,7 +219,7 @@
             {
                 //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
                 if ( [thisPage isEqual:rootPage] && [keyPath isEqualToString:@"title"] ) continue;
-                [(SVHTMLContext *)context addDependencyOnObject:rootPage keyPath:keyPath];
+                [context addDependencyForKeyPath:keyPath ofObject:rootPage];
             }
         }
         

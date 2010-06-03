@@ -75,7 +75,7 @@
 #pragma mark -
 #pragma mark HTML Generation
 
-- (void)writeHTML:(SVHTMLContext *)context
+- (void)writeHTML:(id <SVPlugInContext>)context
 {
     if ( self.flashStyle )
     {
