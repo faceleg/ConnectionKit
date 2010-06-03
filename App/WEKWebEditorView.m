@@ -540,8 +540,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
             }
         }
         
-        // There's no selected items left, so move cursor to left of deselected item
-        else if (itemToDeselect)
+        // There's no selected items left, so move cursor to left of deselected item. Don't want to do this though if the item is being deselected due to removal from the Web Editor
+        else if ([itemToDeselect webEditor] == self)
         {
             DOMElement *element = [itemToDeselect HTMLElement];
             DOMRange *range = [[element ownerDocument] createRange];
