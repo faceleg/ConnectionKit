@@ -214,12 +214,27 @@
 
 #pragma mark Validation
 
+- (BOOL)validateAttachments:(NSSet **)attachments error:(NSError **)error;
+{
+    BOOL result = YES;
+    
+    for (SVTextAttachment *anAttachment in *attachments)
+    {
+        result = [self validateAttachment:anAttachment
+                                placement:[[anAttachment placement] integerValue]
+                                    error:error];
+        if (!result) break;
+    }
+    
+    return result;
+}
+
 - (BOOL)validateAttachment:(SVTextAttachment *)attachment
                  placement:(SVGraphicPlacement)placement
                      error:(NSError **)error;
 {
     // Base class can only handle inline graphic
-    if (placement  != SVGraphicPlacementInline)
+    if (placement != SVGraphicPlacementInline)
     {
         if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
                                                 code:NSValidationNumberTooLargeError
