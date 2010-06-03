@@ -30,11 +30,6 @@
 - (void)addGraphic:(SVGraphic *)graphic placeInline:(BOOL)placeInline;
 
 
-#pragma mark Subcontrollers
-
-- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
-
-
 #pragma mark Updates
 // Use these methods to temporarily suspend observation while updating model or view otherwise we get in an infinite loop
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;

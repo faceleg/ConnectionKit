@@ -113,19 +113,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 - (BOOL)isSelectable { return NO; }
 
-#pragma mark Subcontrollers
-
-- (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
-{
-    SVDOMController *result = nil;
-    for (result in [self childWebEditorItems])
-    {
-        if ([node isDescendantOfNode:[result HTMLElement]]) break;
-    }
-             
-    return result;
-}
-
 #pragma mark Controlling Editing Behaviour
 
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node
