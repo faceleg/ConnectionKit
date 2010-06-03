@@ -115,17 +115,6 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Subcontrollers
 
-- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
-{
-    SVDOMController * result = nil;
-    for (result in [self childWebEditorItems])
-    {
-        if ([result representedObject] == element) break;
-    }
-    
-    return result;
-}
-
 - (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 {
     SVDOMController *result = nil;

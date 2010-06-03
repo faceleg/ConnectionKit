@@ -11,7 +11,6 @@
 #import "SVGraphic.h"
 
 
-@class SVBodyElement;
 @class SVTextAttachment;
 
 

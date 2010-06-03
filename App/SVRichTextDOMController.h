@@ -9,7 +9,7 @@
 #import "SVTextDOMController.h"
 
 
-@class SVRichText, SVBodyElement, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
+@class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
 
 
 @interface SVRichTextDOMController : SVTextDOMController <SVHTMLWriterDelegate>
@@ -32,7 +32,6 @@
 
 #pragma mark Subcontrollers
 
-- (SVDOMController *)controllerForBodyElement:(SVBodyElement *)element;
 - (SVDOMController *)controllerForDOMNode:(DOMNode *)node;
 
 
