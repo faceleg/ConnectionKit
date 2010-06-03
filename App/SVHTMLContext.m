@@ -444,6 +444,12 @@
     }
 }
 
+- (void)close;
+{
+    [super close];
+    
+    [_stringWriter release]; _stringWriter = nil;
+}
 
 #pragma mark Legacy
 
