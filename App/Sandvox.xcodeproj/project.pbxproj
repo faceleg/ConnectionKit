@@ -4055,7 +4055,7 @@
 		3C202F0107E0122F00DE4994 /* HTML,text,js */ = {
 			isa = PBXGroup;
 			children = (
-				CE46BD7F11B85AF3001FA719 /* superfish-1.4.8 */,
+				CE46BD7F11B85AF3001FA719 /* superfish */,
 				CE8D5A7B112B339A007AC2F0 /* validator.css */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
@@ -5113,7 +5113,7 @@
 			path = LIFlipEffect;
 			sourceTree = "<group>";
 		};
-		CE46BD7F11B85AF3001FA719 /* superfish-1.4.8 */ = {
+		CE46BD7F11B85AF3001FA719 /* superfish */ = {
 			isa = PBXGroup;
 			children = (
 				CE46BD8011B85AF3001FA719 /* changelog.txt */,
@@ -5122,7 +5122,7 @@
 				CE46BD8611B85AF3001FA719 /* images */,
 				CE46BD8911B85AF3001FA719 /* js */,
 			);
-			path = "superfish-1.4.8";
+			path = superfish;
 			sourceTree = "<group>";
 		};
 		CE46BD8111B85AF3001FA719 /* css */ = {
