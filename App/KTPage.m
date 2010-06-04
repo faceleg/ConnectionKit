@@ -48,6 +48,18 @@
 
 @implementation KTPage
 
+#ifdef DEBUG
+- (NSString *)description
+{
+	if ([NSUserName() isEqualToString:@"dwood"])
+	{
+		return [NSString stringWithFormat:@"%p %@", self, [self title]];
+	}
+	return [super description];
+}
+#endif
+
+
 #pragma mark Class Methods
 
 /*!	Make sure that changes to titleHTML generate updates for new values of title, fileName

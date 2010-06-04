@@ -977,6 +977,11 @@
 		CE043A6A10C7363600F76F97 /* KSRecentDocument.h in Headers */ = {isa = PBXBuildFile; fileRef = CE043A6810C7363600F76F97 /* KSRecentDocument.h */; };
 		CE043A6B10C7363600F76F97 /* KSRecentDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = CE043A6910C7363600F76F97 /* KSRecentDocument.m */; };
 		CE0F676A0A39EEE50092DC43 /* globe.png in Resources */ = {isa = PBXBuildFile; fileRef = CE0F67690A39EEE50092DC43 /* globe.png */; };
+		CE11518F11B989E900D7C80B /* hoverIntent.js in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8A11B85AF3001FA719 /* hoverIntent.js */; };
+		CE11519011B989E900D7C80B /* jquery-1.2.6.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8B11B85AF3001FA719 /* jquery-1.2.6.min.js */; };
+		CE11519111B989E900D7C80B /* jquery.bgiframe.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8C11B85AF3001FA719 /* jquery.bgiframe.min.js */; };
+		CE11519211B989E900D7C80B /* superfish.js in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8D11B85AF3001FA719 /* superfish.js */; };
+		CE11519311B989E900D7C80B /* supersubs.js in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8E11B85AF3001FA719 /* supersubs.js */; };
 		CE12151E0B5EFF3200C40320 /* LivePagesDisabled.html in Resources */ = {isa = PBXBuildFile; fileRef = CE12151D0B5EFF3200C40320 /* LivePagesDisabled.html */; };
 		CE13026B0BD009D000DC2439 /* SyntaxColorDefaults.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026A0BD009D000DC2439 /* SyntaxColorDefaults.plist */; };
 		CE13026D0BD009E700DC2439 /* HTMLSyntaxColoring.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE13026C0BD009E700DC2439 /* HTMLSyntaxColoring.plist */; };
@@ -6173,6 +6178,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CE11518F11B989E900D7C80B /* hoverIntent.js in Resources */,
+				CE11519011B989E900D7C80B /* jquery-1.2.6.min.js in Resources */,
+				CE11519111B989E900D7C80B /* jquery.bgiframe.min.js in Resources */,
+				CE11519211B989E900D7C80B /* superfish.js in Resources */,
+				CE11519311B989E900D7C80B /* supersubs.js in Resources */,
 				3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,

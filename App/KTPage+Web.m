@@ -35,6 +35,39 @@
 #import "Registration.h"
 
 
+@interface KSSiteMenuItem : NSObject
+{
+	KTPage *_page;
+	NSMutableArray *_childPages;
+}
+@property (retain) KTPage *page;
+@property (retain) NSMutableArray *childPages;
+
+@end
+
+@implementation KSSiteMenuItem
+
+@synthesize page = _page;
+@synthesize childPages = _childPages;
+
+- (id)initWithPage:(KTPage *)aPage
+{
+	if ((self = [super init]) != nil)
+	{
+		self.page = aPage;
+		self.childPages = [NSMutableArray array];
+	}
+	return self;
+}
+
+- (NSUInteger)hash
+{
+	return [[[[self page] objectID] description] hash];
+}
+@end
+
+
+
 @implementation KTPage (Web)
 
 /*	Generates the path to the specified file with the current page's design.
@@ -402,7 +435,7 @@
 	return result;
 }
 
-- (void)outputMenuForArrayOfDuples:(NSArray *)anArray isTreeTop:(BOOL)isTreeTop
+- (void)outputMenuForSiteMenuItems:(NSArray *)anArray isTreeTop:(BOOL)isTreeTop
 {
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
@@ -412,20 +445,24 @@
 	{
 		className = @"sf-menu";
 		int hierMenuType = [[[self master] design] hierMenuType];
-//		if (HIER_MENU_VERTICAL == hierMenuType)
-//		{
-//			className = [className stringByAppendingString:@" jd_vertical"];
-//		}
+		if (HIER_MENU_NAVBAR == hierMenuType)
+		{
+			className = [className stringByAppendingString:@" sf-navbar"];
+		}
+		else if (HIER_MENU_VERTICAL == hierMenuType)
+		{
+			className = [className stringByAppendingString:@" sf-vertical"];
+		}
 	}
 	[context startElement:@"ul" idName:nil className:className];
 
 	int i=1;	// 1-based iteration
 	int last = [anArray count];
 
-	for (NSDictionary *duple in anArray)
+	for (KSSiteMenuItem *item in anArray)
 	{
-		KTPage *page = [duple objectForKey:@"page"];
-		NSArray *children = [duple objectForKey:@"children"];
+		KTPage *page = item.page;
+		NSArray *children = item.childPages;
 
 		if (page == currentParserPage)
 		{
@@ -475,7 +512,7 @@
 		
 		if ([children count])
 		{
-			[self outputMenuForArrayOfDuples:children isTreeTop:NO];
+			[self outputMenuForSiteMenuItems:children isTreeTop:NO];
 			[context endElement];	// li
         }
 		else
@@ -510,54 +547,67 @@
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
 		
 		int hierMenuType = [[[self master] design] hierMenuType];
-		NSMutableArray *tree = [NSMutableArray array];
+		NSMutableArray *forest = [NSMutableArray array];
 		if (HIER_MENU_NONE == hierMenuType || [[NSUserDefaults standardUserDefaults] boolForKey:@"disableHierMenus"])
 		{
 			// Flat menu, either by design's preference or user default
 			for (KTPage *siteMenuPage in pagesInSiteMenu)
 			{
-				NSDictionary *duple = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", nil];
-				[tree addObject:duple];
+				KSSiteMenuItem *item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
+				[forest addObject:item];
 			}
-			[self outputMenuForArrayOfDuples:tree isTreeTop:NO];
+			[self outputMenuForSiteMenuItems:forest isTreeTop:NO];
 		}
 		else	// hierarchical menu
 		{
 			// now to build up the hiearchical site menu.
 			// Array of dictionaries keyed with "page" and "children" array
-			NSMutableDictionary *childrenLookup = [NSMutableDictionary dictionary];
+			NSMutableArray *childrenLookup = [NSMutableArray array];
 			// Assume we are traversing tree in sorted order, so children will always be found after parent, which makes it easy to build this tree.
 			for (KTPage *siteMenuPage in pagesInSiteMenu)
 			{
 				BOOL wasSubPage = NO;
 				KTPage *parent = siteMenuPage;
-				do 
+				KSSiteMenuItem *item = nil;
+				do // loop through, looking to see if this (or parent) page is a sub-page of an already-found page in the site menu.
 				{
-					NSMutableArray *childrenToAddTo = [childrenLookup objectForKey:[NSString stringWithFormat:@"%p", parent]];
-					if (childrenToAddTo)
+					KSSiteMenuItem *itemToAddTo = nil;
+					// See if this is already known about
+					for (KSSiteMenuItem *checkItem in childrenLookup)
 					{
-						NSMutableArray *children = [NSMutableArray array];
-						[childrenToAddTo addObject:[NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil]];
+						if (checkItem.page == parent)
+						{
+							itemToAddTo = checkItem;
+							break;
+						}
+					}					
+					if (itemToAddTo)	// Was there a parent menu item?
+					{
+						// If so, create a new entry for this page, with an empty array of children; add to list of children
+						item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
+						[itemToAddTo.childPages addObject:item];
 						parent = nil;	// stop looking
 						wasSubPage = YES;
 					}
-					else
+					else // No, this page (or its parent) was not in the menu list so go up one level to keep looking.
 					{
-						parent = [siteMenuPage parentPage];
-
+						parent = [parent parentPage];
 					}
 				}
-				while (nil != parent && ![parent isRoot]);
+				while (nil != parent && ![parent isRoot]);	// Stop when we reach root. Note that we don't put items under root.
 
-				if (!wasSubPage)
+				if (!item)
 				{
-					NSMutableArray *children = [NSMutableArray array];
-					NSDictionary *nodeDict = [NSDictionary dictionaryWithObjectsAndKeys:siteMenuPage, @"page", children, @"children", nil];
-					[tree addObject:nodeDict];
-					[childrenLookup setObject:children forKey:[NSString stringWithFormat:@"%p", siteMenuPage]];		// quick lookup from page to children
+					item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
+				}
+				[childrenLookup addObject:item];		// quick lookup from page to children
+
+				if (!wasSubPage)	// Not a sub-page, so it's a top-level menu item.
+				{
+					[forest addObject:item];		// Add to our list of top-level menus
 				}
 			}	// end for
-			[self outputMenuForArrayOfDuples:tree isTreeTop:YES];
+			[self outputMenuForSiteMenuItems:forest isTreeTop:YES];
 		}
 		
 		
