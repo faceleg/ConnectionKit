@@ -8,7 +8,11 @@
 #import "KSPlugInWrapper.h"
 
 
-enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL };
+enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL, HIER_MENU_NAVBAR };
+// Horizontal: Usual horizontal layout, submenus spew down vertically
+// Vertical: Vertical layout of menus (e.g. in sidebar), submenus spew out vertically to the right
+// Navbar: Horizontal layout with sub-items layed out horizontally on the line below.
+// http://users.tpg.com.au/j_birch/plugins/superfish/#examples
 
 @class KTImageScalingSettings;
 

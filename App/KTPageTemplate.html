@@ -44,14 +44,28 @@
 		<link rel="alternate" type="application/rss+xml" title="RSS: [[=&titleText]]" href="[[=&feedURL]]" />
 [[endif]]
 		<link rel="canonical" href="[[=&parser.currentPage.URL]]" />
-<!-- http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.min.js -->
-		<script type="text/javascript" src="[[resourcepath "jquery.js]]"></script>
-		<script type="text/javascript" src="[[resourcepath "jquery.dimensions.js]]"></script>
-		<script type="text/javascript" src="[[resourcepath "jquery.positionBy.js]]"></script>
-		<script type="text/javascript" src="[[resourcepath "jquery.bgiframe.js]]"></script>
-		<script type="text/javascript" src="[[resourcepath "jquery.jdMenu.js]]"></script>
-		<link rel="stylesheet" href="[[resourcepath "jquery.jdMenu.css]]" type="text/css" />
 
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4.2/jquery.min.js"></script>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.8.2/jquery-ui.min.js"></script> -->
+
+		<script type="text/javascript" src="[[resourcepath "hoverintent.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "jquery.bgiframe.min.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "superfish.js]]"></script>
+		<script type="text/javascript" src="[[resourcepath "supersubs.js]]"></script>
+<script type="text/javascript"> 
+	$(document).ready(function() { 
+		$("ul.sf-menu").supersubs({minWidth:12,maxWidth:27,extraWidth:1}).superfish().find('ul').bgIframe({opacity:false});
+	}); 
+</script>
+
+		
+		<link rel="stylesheet" href="[[resourcepath "superfish.css]]" type="text/css" />
+[[IF 2=master.design.hierMenuType]]
+		<link rel="stylesheet" href="[[resourcepath "superfish-vertical.css]]" type="text/css" />
+[[ENDIF]]
+[[IF 3=master.design.hierMenuType]]
+		<link rel="stylesheet" href="[[resourcepath "superfish-navbar.css]]" type="text/css" />
+[[ENDIF]]
 		[[if parser.includeStyling]][[=writeStylesheetLinks]][[endif]]
 [[comment ESCAPE THE URL SO THAT ANY DOUBLE-DASH FROM AN IDN DOESNT PRODUCE ILLEGAL MARKUP]]
 <!--

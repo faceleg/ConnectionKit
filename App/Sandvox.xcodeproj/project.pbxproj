@@ -1013,17 +1013,22 @@
 		CE27F6670D6193B200D211EA /* NSTextView+KTExtensions.m in Sources */ = {isa = PBXBuildFile; fileRef = CE27F6630D6193B200D211EA /* NSTextView+KTExtensions.m */; };
 		CE2D37D71187BA6C0051E238 /* colorful-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D37D61187BA6C0051E238 /* colorful-design.pdf */; };
 		CE2D42EE1188BD910051E238 /* README.rtf in Resources */ = {isa = PBXBuildFile; fileRef = CE2D42E91188BD910051E238 /* README.rtf */; };
-		CE35963C10F3CF340009F2CA /* jquery.bgiframe.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963410F3CF340009F2CA /* jquery.bgiframe.js */; };
-		CE35963D10F3CF340009F2CA /* jquery.dimensions.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963510F3CF340009F2CA /* jquery.dimensions.js */; };
-		CE35963E10F3CF340009F2CA /* jquery.jdMenu.css in Resources */ = {isa = PBXBuildFile; fileRef = CE35963610F3CF340009F2CA /* jquery.jdMenu.css */; };
-		CE35963F10F3CF340009F2CA /* jquery.jdMenu.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963710F3CF340009F2CA /* jquery.jdMenu.js */; };
-		CE35964010F3CF340009F2CA /* jquery.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963810F3CF340009F2CA /* jquery.js */; };
-		CE35964110F3CF340009F2CA /* jquery.positionBy.js in Resources */ = {isa = PBXBuildFile; fileRef = CE35963910F3CF340009F2CA /* jquery.positionBy.js */; };
 		CE35968410F3F0A10009F2CA /* SVWebSourceViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */; };
 		CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE3BBAC9097EE82A00BF3E5F /* toolbar_media.png in Resources */ = {isa = PBXBuildFile; fileRef = CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
+		CE46BD8F11B85AF3001FA719 /* changelog.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8011B85AF3001FA719 /* changelog.txt */; };
+		CE46BD9011B85AF3001FA719 /* superfish-navbar.css in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8211B85AF3001FA719 /* superfish-navbar.css */; };
+		CE46BD9111B85AF3001FA719 /* superfish-vertical.css in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8311B85AF3001FA719 /* superfish-vertical.css */; };
+		CE46BD9211B85AF3001FA719 /* superfish.css in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8411B85AF3001FA719 /* superfish.css */; };
+		CE46BD9311B85AF3001FA719 /* example.html in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8511B85AF3001FA719 /* example.html */; };
+		CE46BD9411B85AF3001FA719 /* arrows-ffffff.png in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8711B85AF3001FA719 /* arrows-ffffff.png */; };
+		CE46BD9511B85AF3001FA719 /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8811B85AF3001FA719 /* shadow.png */; };
+		CE46BD9611B85AF3001FA719 /* hoverIntent.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8A11B85AF3001FA719 /* hoverIntent.js */; };
+		CE46BD9811B85AF3001FA719 /* jquery.bgiframe.min.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8C11B85AF3001FA719 /* jquery.bgiframe.min.js */; };
+		CE46BD9911B85AF3001FA719 /* superfish.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8D11B85AF3001FA719 /* superfish.js */; };
+		CE46BD9A11B85AF3001FA719 /* supersubs.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8E11B85AF3001FA719 /* supersubs.js */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
 		CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */; };
@@ -2673,14 +2678,6 @@
 		CE2D42E91188BD910051E238 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
 		CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAsyncOffscreenWebViewController.h; sourceTree = "<group>"; };
 		CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAsyncOffscreenWebViewController.m; sourceTree = "<group>"; };
-		CE35963210F3CF340009F2CA /* ChangeLog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = ChangeLog.txt; sourceTree = "<group>"; };
-		CE35963310F3CF340009F2CA /* jdMenu.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = jdMenu.html; sourceTree = "<group>"; };
-		CE35963410F3CF340009F2CA /* jquery.bgiframe.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.bgiframe.js; sourceTree = "<group>"; };
-		CE35963510F3CF340009F2CA /* jquery.dimensions.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.dimensions.js; sourceTree = "<group>"; };
-		CE35963610F3CF340009F2CA /* jquery.jdMenu.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = jquery.jdMenu.css; sourceTree = "<group>"; };
-		CE35963710F3CF340009F2CA /* jquery.jdMenu.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.jdMenu.js; sourceTree = "<group>"; };
-		CE35963810F3CF340009F2CA /* jquery.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.js; sourceTree = "<group>"; };
-		CE35963910F3CF340009F2CA /* jquery.positionBy.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.positionBy.js; sourceTree = "<group>"; };
 		CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebSourceViewController.h; sourceTree = "<group>"; };
 		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
@@ -2689,6 +2686,18 @@
 		CE3BBAC8097EE82A00BF3E5F /* toolbar_media.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = toolbar_media.png; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLInspectorController.m; sourceTree = "<group>"; };
 		CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLInspectorController.h; sourceTree = "<group>"; };
+		CE46BD8011B85AF3001FA719 /* changelog.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = changelog.txt; sourceTree = "<group>"; };
+		CE46BD8211B85AF3001FA719 /* superfish-navbar.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "superfish-navbar.css"; sourceTree = "<group>"; };
+		CE46BD8311B85AF3001FA719 /* superfish-vertical.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = "superfish-vertical.css"; sourceTree = "<group>"; };
+		CE46BD8411B85AF3001FA719 /* superfish.css */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.css; path = superfish.css; sourceTree = "<group>"; };
+		CE46BD8511B85AF3001FA719 /* example.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = example.html; sourceTree = "<group>"; };
+		CE46BD8711B85AF3001FA719 /* arrows-ffffff.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "arrows-ffffff.png"; sourceTree = "<group>"; };
+		CE46BD8811B85AF3001FA719 /* shadow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = shadow.png; sourceTree = "<group>"; };
+		CE46BD8A11B85AF3001FA719 /* hoverIntent.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hoverIntent.js; sourceTree = "<group>"; };
+		CE46BD8B11B85AF3001FA719 /* jquery-1.2.6.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.2.6.min.js"; sourceTree = "<group>"; };
+		CE46BD8C11B85AF3001FA719 /* jquery.bgiframe.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = jquery.bgiframe.min.js; sourceTree = "<group>"; };
+		CE46BD8D11B85AF3001FA719 /* superfish.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = superfish.js; sourceTree = "<group>"; };
+		CE46BD8E11B85AF3001FA719 /* supersubs.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = supersubs.js; sourceTree = "<group>"; };
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
 		CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYellowStickyWindow.h; sourceTree = "<group>"; };
@@ -4046,8 +4055,8 @@
 		3C202F0107E0122F00DE4994 /* HTML,text,js */ = {
 			isa = PBXGroup;
 			children = (
+				CE46BD7F11B85AF3001FA719 /* superfish-1.4.8 */,
 				CE8D5A7B112B339A007AC2F0 /* validator.css */,
-				CE35963110F3CF340009F2CA /* jdmenu */,
 				CE033FA10B862BB90098735B /* Web-safe Mac:Windows.collection */,
 				CE214BF9098060CD006DD2B1 /* Languages.plist */,
 				CED45AEC0947891100BB172E /* CheckOpenGL.qtz */,
@@ -5104,19 +5113,47 @@
 			path = LIFlipEffect;
 			sourceTree = "<group>";
 		};
-		CE35963110F3CF340009F2CA /* jdmenu */ = {
+		CE46BD7F11B85AF3001FA719 /* superfish-1.4.8 */ = {
 			isa = PBXGroup;
 			children = (
-				CE35963210F3CF340009F2CA /* ChangeLog.txt */,
-				CE35963310F3CF340009F2CA /* jdMenu.html */,
-				CE35963410F3CF340009F2CA /* jquery.bgiframe.js */,
-				CE35963510F3CF340009F2CA /* jquery.dimensions.js */,
-				CE35963610F3CF340009F2CA /* jquery.jdMenu.css */,
-				CE35963710F3CF340009F2CA /* jquery.jdMenu.js */,
-				CE35963810F3CF340009F2CA /* jquery.js */,
-				CE35963910F3CF340009F2CA /* jquery.positionBy.js */,
+				CE46BD8011B85AF3001FA719 /* changelog.txt */,
+				CE46BD8111B85AF3001FA719 /* css */,
+				CE46BD8511B85AF3001FA719 /* example.html */,
+				CE46BD8611B85AF3001FA719 /* images */,
+				CE46BD8911B85AF3001FA719 /* js */,
 			);
-			path = jdmenu;
+			path = "superfish-1.4.8";
+			sourceTree = "<group>";
+		};
+		CE46BD8111B85AF3001FA719 /* css */ = {
+			isa = PBXGroup;
+			children = (
+				CE46BD8211B85AF3001FA719 /* superfish-navbar.css */,
+				CE46BD8311B85AF3001FA719 /* superfish-vertical.css */,
+				CE46BD8411B85AF3001FA719 /* superfish.css */,
+			);
+			path = css;
+			sourceTree = "<group>";
+		};
+		CE46BD8611B85AF3001FA719 /* images */ = {
+			isa = PBXGroup;
+			children = (
+				CE46BD8711B85AF3001FA719 /* arrows-ffffff.png */,
+				CE46BD8811B85AF3001FA719 /* shadow.png */,
+			);
+			path = images;
+			sourceTree = "<group>";
+		};
+		CE46BD8911B85AF3001FA719 /* js */ = {
+			isa = PBXGroup;
+			children = (
+				CE46BD8A11B85AF3001FA719 /* hoverIntent.js */,
+				CE46BD8B11B85AF3001FA719 /* jquery-1.2.6.min.js */,
+				CE46BD8C11B85AF3001FA719 /* jquery.bgiframe.min.js */,
+				CE46BD8D11B85AF3001FA719 /* superfish.js */,
+				CE46BD8E11B85AF3001FA719 /* supersubs.js */,
+			);
+			path = js;
 			sourceTree = "<group>";
 		};
 		CE6FFB78088EEFD100AD0154 /* DesignPicker */ = {
@@ -6136,11 +6173,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE35963C10F3CF340009F2CA /* jquery.bgiframe.js in Resources */,
-				CE35963D10F3CF340009F2CA /* jquery.dimensions.js in Resources */,
-				CE35963F10F3CF340009F2CA /* jquery.jdMenu.js in Resources */,
-				CE35964010F3CF340009F2CA /* jquery.js in Resources */,
-				CE35964110F3CF340009F2CA /* jquery.positionBy.js in Resources */,
 				3C202E9507E00F5700DE4994 /* document2.toolbar in Resources */,
 				CEE09ADB09ED90A8004850FB /* Acknowledgments.rtf in Resources */,
 				3C202EAD07E0101100DE4994 /* Credits.html in Resources */,
@@ -6307,7 +6339,6 @@
 				273DD23110CC9466003CCE97 /* Wrap Inspector tab icon.opacity in Resources */,
 				27E83E4810D9A9BA00FBEC84 /* CalloutTemplate.html in Resources */,
 				273D764410EC134F003F5BA8 /* PlugInInspector.xib in Resources */,
-				CE35963E10F3CF340009F2CA /* jquery.jdMenu.css in Resources */,
 				27F71A7310F7641D0029AE3A /* LinkInspector.xib in Resources */,
 				CE510BE111038F4E0082043E /* upload_warning.png in Resources */,
 				27A5E6E911086705007C2E7E /* TB_Text_Tool.tiff in Resources */,
@@ -6334,6 +6365,13 @@
 				27990F49119D956800D07FDF /* loremipsum2.html in Resources */,
 				27C7782D11B27FDE009A9250 /* placeholder.jpg in Resources */,
 				CE1D6BA811B59ABE0087AC1B /* notPublishable.png in Resources */,
+				CE46BD8F11B85AF3001FA719 /* changelog.txt in Resources */,
+				CE46BD9011B85AF3001FA719 /* superfish-navbar.css in Resources */,
+				CE46BD9111B85AF3001FA719 /* superfish-vertical.css in Resources */,
+				CE46BD9211B85AF3001FA719 /* superfish.css in Resources */,
+				CE46BD9311B85AF3001FA719 /* example.html in Resources */,
+				CE46BD9411B85AF3001FA719 /* arrows-ffffff.png in Resources */,
+				CE46BD9511B85AF3001FA719 /* shadow.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7061,6 +7099,10 @@
 				27B5921511AE85C100E10A1E /* WEKWebViewEditing.m in Sources */,
 				2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */,
 				CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */,
+				CE46BD9611B85AF3001FA719 /* hoverIntent.js in Sources */,
+				CE46BD9811B85AF3001FA719 /* jquery.bgiframe.min.js in Sources */,
+				CE46BD9911B85AF3001FA719 /* superfish.js in Sources */,
+				CE46BD9A11B85AF3001FA719 /* supersubs.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

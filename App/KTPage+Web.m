@@ -406,19 +406,16 @@
 {
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
-
-
-	[context writeNewline];
 	
 	NSString *className = nil;
 	if (isTreeTop)
 	{
-		className = @"jd_menu";
+		className = @"sf-menu";
 		int hierMenuType = [[[self master] design] hierMenuType];
-		if (HIER_MENU_VERTICAL == hierMenuType)
-		{
-			className = [className stringByAppendingString:@" jd_vertical"];
-		}
+//		if (HIER_MENU_VERTICAL == hierMenuType)
+//		{
+//			className = [className stringByAppendingString:@" jd_vertical"];
+//		}
 	}
 	[context startElement:@"ul" idName:nil className:className];
 
@@ -430,7 +427,6 @@
 		KTPage *page = [duple objectForKey:@"page"];
 		NSArray *children = [duple objectForKey:@"children"];
 
-		[context writeNewline];
 		if (page == currentParserPage)
 		{
 			[context startElement:@"li" idName:nil className:
@@ -480,7 +476,6 @@
 		if ([children count])
 		{
 			[self outputMenuForArrayOfDuples:children isTreeTop:NO];
-            [context writeNewline];
 			[context endElement];	// li
         }
 		else
@@ -489,7 +484,6 @@
 		}
 		i++;
 	}
-    [context writeNewline];
 	[context endElement];	// ul
 }
 
@@ -498,26 +492,19 @@
 	if (self.site.pagesInSiteMenu)	// Are there any pages in the site menu?
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
-		[context writeNewline];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">
-		[context writeNewline];
 		[context startElement:@"h2" idName:nil className:@"hidden"];				// hidden skip navigation menu
-		[context writeNewline];
 		[context writeString:
 		 NSLocalizedStringWithDefaultValue(@"skipNavigationTitleHTML", nil, [NSBundle mainBundle], @"Site Navigation", @"Site navigation title on web pages (can be empty if link is understandable)")];
-		[context writeNewline];
 
 		[context startAnchorElementWithHref:@"#page-content" title:nil target:nil rel:@"nofollow"];
 		[context writeString:NSLocalizedStringWithDefaultValue(@"skipNavigationLinkHTML", nil, [NSBundle mainBundle], @"[Skip]", @"Skip navigation LINK on web pages")];
 		
 		[context endElement];	// a
-        [context writeNewline];
 		[context endElement];	// h2
-		[context writeNewline];
 		
 		
 		[context startElement:@"div" idName:@"sitemenu-content" className:nil];		// <div id="sitemenu-content">
-		[context writeNewline];
 	
 		KTSite *site = self.site;
 		NSArray *pagesInSiteMenu = site.pagesInSiteMenu;
@@ -574,9 +561,7 @@
 		}
 		
 		
-        [context writeNewline];
 		[context writeEndTagWithComment:@"/sitemenu-content"];
-        [context writeNewline];
 		[context writeEndTagWithComment:@"/sitemenu"];
 	}
 	return nil;
