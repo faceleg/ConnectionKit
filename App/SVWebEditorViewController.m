@@ -51,7 +51,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
-- (void)stopObservingDependencies;
+- (void)removeAllDependencies;
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
@@ -82,7 +82,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
 - (void)dealloc
 {
-    [self stopObservingDependencies];
+    [self removeAllDependencies];
     OBASSERT(!_pageDependencies);
     
     [[[self webEditor] undoManager] removeAllActionsWithTarget:self];
@@ -183,7 +183,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (void)loadPageHTMLIntoWebEditor
 {
     // Tear down old dependencies and DOM controllers.
-    [self stopObservingDependencies];
+    [self removeAllDependencies];
     [[[self webEditor] rootItem] setChildWebEditorItems:nil];
     
     
@@ -325,10 +325,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     _needsUpdate = YES;
     
     [self scheduleUpdate];
-    [self stopObservingDependencies];   // no point observing now we're marked for update
+    [self removeAllDependencies];   // no point observing now we're marked for update
 }
 
-- (void)stopObservingDependencies;
+- (void)removeAllDependencies;
 {
     for (KSObjectKeyPathPair *aDependency in _pageDependencies)
     {
