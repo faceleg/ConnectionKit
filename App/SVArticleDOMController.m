@@ -196,20 +196,6 @@
             [_changeHTMLContext writeAttributedHTMLString:attributedHTML];
         }
         
-        // Fallback to interpreting standard pboard data
-        else
-        {
-            NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
-            
-            NSArray *graphics = [SVGraphicFactory graphicsFomPasteboard:pasteboard
-                                         insertIntoManagedObjectContext:moc];
-            
-            if (graphics)
-            {
-                [SVContentObject writeContentObjects:graphics inContext:_changeHTMLContext];
-            }
-        }
-        
         
         
         
