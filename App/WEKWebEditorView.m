@@ -1191,13 +1191,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [self selectItem:item event:event];
         
         // If mousing down on an image, pass the event through
-        if ([item allowsDirectAccessToWebViewWhenSelected]) [NSApp postEvent:event atStart:YES];
-        
-        
-        
-        if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
+        if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [self dragImageForEvent:event];
+            [NSApp postEvent:event atStart:YES];
+        }
+        else
+        {
+            if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
+            {
+                [self dragImageForEvent:event];
+            }
         }
     }
     else
