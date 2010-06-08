@@ -58,7 +58,7 @@
 
 - (WEKWebEditorItem *)orphanedWebEditorItemMatchingDOMNode:(DOMNode *)aNode;
 {
-    for (WEKWebEditorItem *anItem in [[self bodyTextDOMController] childWebEditorItems])
+    for (WEKWebEditorItem *anItem in [[self delegate] childWebEditorItems])
     {
         DOMNode *node = [anItem HTMLElement];
         if (![node parentNode] && [node isEqualNode:aNode]) return anItem;
@@ -89,13 +89,13 @@
     if (orphanedItem)
     {
         [orphanedItem setHTMLElement:imageElement];
-        [self writeGraphicController:(SVGraphicDOMController *)orphanedItem];
+        [[self delegate] write:self selectableItem:(SVGraphicDOMController *)orphanedItem];
         return [orphanedItem HTMLElement];
     }
     
     
     // Make an image object
-    SVRichTextDOMController *textController = [self bodyTextDOMController];
+    SVRichTextDOMController *textController = [self delegate];
     SVRichText *text = [textController representedObject];
     NSManagedObjectContext *context = [text managedObjectContext];
     
@@ -149,9 +149,9 @@
     
     
     // Create controller for graphic
-    SVDOMController *controller = [[image newDOMController]
-                                   initWithHTMLDocument:(DOMHTMLDocument *)[imageElement ownerDocument]];
+    SVDOMController *controller = [image newDOMController];
     [controller setHTMLContext:[textController HTMLContext]];
+    [controller setHTMLElement:imageElement];
     
     [textController addChildWebEditorItem:controller];
     [controller release];
@@ -165,7 +165,7 @@
     
     
     // Write the replacement
-    [self writeGraphicController:controller];
+    [textController write:self selectableItem:controller];
     
     
     return result;
