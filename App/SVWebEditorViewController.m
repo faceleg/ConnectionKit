@@ -325,7 +325,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     _needsUpdate = YES;
     
     [self scheduleUpdate];
-    [self removeAllDependencies];   // no point observing now we're marked for update
+    //[self removeAllDependencies];   // no point observing now we're marked for update
 }
 
 - (void)removeAllDependencies;
