@@ -718,14 +718,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Dissallow edits outside the current text area
     BOOL result = YES;
     
-    DOMRange *selection = [self selectedDOMRange];
+    /*
+     DOMRange *selection = [self selectedDOMRange];
     if (selection)  // allow any edit if there is no selection
+     TURNED THIS OFF BECAUSE IT BREAKS DRAG & DROP. DON'T THINK WE NEED IT ANYHOW
     {
         WEKWebEditorItem *textController = [self textItemForDOMRange:[self selectedDOMRange]];
         
         DOMNode *editingNode = [range commonAncestorContainer];
         result = [editingNode isDescendantOfNode:[textController HTMLElement]];
-    }
+    }*/
     
     
     if (result)
