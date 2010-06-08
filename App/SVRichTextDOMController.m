@@ -68,7 +68,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [self removeObserver:self forKeyPath:@"representedObject.string"];
     
     // Release ivars
-    OBASSERT(!_changeHTMLContext);
+    [_changeHTMLContext release];//OBASSERT(!_changeHTMLContext);
     
     [super dealloc];
 }
