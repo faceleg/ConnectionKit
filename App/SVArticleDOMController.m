@@ -17,6 +17,7 @@
 #import "KSWebLocation.h"
 
 #import "NSArray+Karelia.h"
+#import "NSResponder+Karelia.h"
 #import "NSString+Karelia.h"
 #import "NSURL+Karelia.h"
 
@@ -224,7 +225,19 @@
 
 - (NSDragOperation)draggingUpdated:(id <NSDraggingInfo>)sender;
 {
+    // Ignore drags originating in our own WebView
     NSDragOperation result = NSDragOperationNone;
+    
+    id source = [sender draggingSource];
+    if ([source isKindOfClass:[NSResponder class]])
+    {
+        WEKWebEditorView *webEditor = [self webEditor];
+        
+        if (source != webEditor && [webEditor ks_followsResponder:source]) 
+        {
+            return result;
+        }
+    }
     
     
     DOMNode *aNode = [self childForDraggingInfo:sender];
