@@ -68,7 +68,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
         return YES;
     }
     */
-    return [super allowsDirectAccessToWebViewWhenSelected];
+    return YES;//[super allowsDirectAccessToWebViewWhenSelected];
 }
 
 #pragma mark Updating
