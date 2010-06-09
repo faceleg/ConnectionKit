@@ -435,15 +435,15 @@
 	return result;
 }
 
-- (void)outputMenuForSiteMenuItems:(NSArray *)anArray isTreeTop:(BOOL)isTreeTop
+- (void)outputMenuForSiteMenuItems:(NSArray *)anArray treeLevel:(int)aTreeLevel
 {
 	SVHTMLContext *context = [SVHTMLContext currentContext];
 	KTPage *currentParserPage = [[SVHTMLContext currentContext] page];
 	
-	NSString *className = nil;
-	if (isTreeTop)
+	NSString *className = [NSString stringWithFormat:@"sf%d", aTreeLevel];;
+	if (0 == aTreeLevel)
 	{
-		className = @"sf-menu";
+		className = [className stringByAppendingString:@" sf-menu"];
 		int hierMenuType = [[[self master] design] hierMenuType];
 		if (HIER_MENU_NAVBAR == hierMenuType)
 		{
@@ -467,7 +467,7 @@
 		if (page == currentParserPage)
 		{
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"%d %@%@ currentPage", i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
+			 [NSString stringWithFormat:@"sf%d i%d %@%@ currentPage", aTreeLevel, i, (i%2)?@"o":@"e", (i==last)? @" last" : @""]];
 		}
 		else
 		{
@@ -478,7 +478,8 @@
 			}
 			
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"%d %@%@%@",
+			 [NSString stringWithFormat:@"sf%d i%d %@%@%@",
+			  aTreeLevel,
 			  i,
 			  (i%2)?@"o":@"e",
 			  (i==last)? @" last" : @"",
@@ -512,7 +513,7 @@
 		
 		if ([children count])
 		{
-			[self outputMenuForSiteMenuItems:children isTreeTop:NO];
+			[self outputMenuForSiteMenuItems:children treeLevel:aTreeLevel+1];
 			[context endElement];	// li
         }
 		else
@@ -556,7 +557,7 @@
 				KSSiteMenuItem *item = [[[KSSiteMenuItem alloc] initWithPage:siteMenuPage] autorelease];
 				[forest addObject:item];
 			}
-			[self outputMenuForSiteMenuItems:forest isTreeTop:NO];
+			[self outputMenuForSiteMenuItems:forest treeLevel:0];
 		}
 		else	// hierarchical menu
 		{
@@ -607,7 +608,7 @@
 					[forest addObject:item];		// Add to our list of top-level menus
 				}
 			}	// end for
-			[self outputMenuForSiteMenuItems:forest isTreeTop:YES];
+			[self outputMenuForSiteMenuItems:forest treeLevel:0];
 		}
 		
 		
