@@ -276,8 +276,11 @@
 - (void)writeContentRecursively:(BOOL)recursive;
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
-    [context writeText:[self title]];
-    [context writeString:@"\n"];
+	if ([self title])
+	{
+		[context writeText:[self title]];
+		[context startNewline];
+	}
 }
 
 #pragma mark Thumbnail
