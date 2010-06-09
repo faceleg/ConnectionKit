@@ -1,5 +1,5 @@
 /* Editing text should have gray outline, not standard focus ring */
-.kLine[contenteditable=true] {
+.kLine {
     outline: rgba(127,127,127,0) solid 1px;
     -webkit-transition: outline-color 0.1s linear;
 }
