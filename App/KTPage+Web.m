@@ -478,12 +478,14 @@
 			}
 			
 			[context startElement:@"li" idName:nil className:
-			 [NSString stringWithFormat:@"sf%d i%d %@%@%@",
+			 [NSString stringWithFormat:@"sf%d i%d %@%@%@%@",
 			  aTreeLevel,
 			  i,
 			  (i%2)?@"o":@"e",
 			  (i==last)? @" last" : @"",
-			  isCurrentParent ? @" currentParent" : @""]];
+			  isCurrentParent ? @" currentParent" : @"",
+			  aTreeLevel ? @" sfPop" : @""				// any popup one gets 'sfPop' to distinguish from non-popups
+			  ]];
 			
 			NSString *urlString = [context relativeURLStringOfSiteItem:page];
 			

@@ -1030,10 +1030,6 @@
 		CE46BD9311B85AF3001FA719 /* example.html in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8511B85AF3001FA719 /* example.html */; };
 		CE46BD9411B85AF3001FA719 /* arrows-ffffff.png in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8711B85AF3001FA719 /* arrows-ffffff.png */; };
 		CE46BD9511B85AF3001FA719 /* shadow.png in Resources */ = {isa = PBXBuildFile; fileRef = CE46BD8811B85AF3001FA719 /* shadow.png */; };
-		CE46BD9611B85AF3001FA719 /* hoverIntent.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8A11B85AF3001FA719 /* hoverIntent.js */; };
-		CE46BD9811B85AF3001FA719 /* jquery.bgiframe.min.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8C11B85AF3001FA719 /* jquery.bgiframe.min.js */; };
-		CE46BD9911B85AF3001FA719 /* superfish.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8D11B85AF3001FA719 /* superfish.js */; };
-		CE46BD9A11B85AF3001FA719 /* supersubs.js in Sources */ = {isa = PBXBuildFile; fileRef = CE46BD8E11B85AF3001FA719 /* supersubs.js */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
 		CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */; };
@@ -7109,10 +7105,6 @@
 				27B5921511AE85C100E10A1E /* WEKWebViewEditing.m in Sources */,
 				2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */,
 				CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */,
-				CE46BD9611B85AF3001FA719 /* hoverIntent.js in Sources */,
-				CE46BD9811B85AF3001FA719 /* jquery.bgiframe.min.js in Sources */,
-				CE46BD9911B85AF3001FA719 /* superfish.js in Sources */,
-				CE46BD9A11B85AF3001FA719 /* supersubs.js in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
