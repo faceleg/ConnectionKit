@@ -7593,6 +7593,7 @@
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
 				);
 				INFOPLIST_FILE = Info.plist;
+				MOMC_NO_WARNINGS = YES;
 				PRODUCT_NAME = Sandvox;
 				WRAPPER_EXTENSION = app;
 			};
