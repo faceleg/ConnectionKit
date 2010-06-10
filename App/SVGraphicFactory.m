@@ -19,6 +19,7 @@
 #import "KSWebLocation.h"
 
 #import "NSArray+Karelia.h"
+#import "NSMenuItem+Karelia.h"
 #import "NSSet+Karelia.h"
 
 #import "Registration.h"
