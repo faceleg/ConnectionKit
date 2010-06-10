@@ -20,6 +20,7 @@
 {  
 	IBOutlet NSArrayController	*oDesignsArrayController;
 	NSTrackingRectTag			_trackingRect;
+	NSTrackingArea				*_trackingArea;
 	BOOL						_wasAcceptingMouseEvents;
 }
 

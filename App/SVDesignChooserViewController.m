@@ -47,20 +47,17 @@
 	[paraStyle setTighteningFactorForTruncation:0.2];
 	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
 	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
-
-	[[[self view] window] setAcceptsMouseMovedEvents:YES];
-
 }
 
-// Proper way to balance an addObserver that will work even on Garbage-Collected code.
-- (void)viewWillMoveToSuperview:(NSView *)newSuperview;
+- (void) dealloc
 {
-	if (!newSuperview)
-	{
-		[oDesignsArrayController removeObserver:self forKeyPath:@"arrangedObjects"];
-		[oDesignsArrayController removeObserver:self forKeyPath:@"selection"];
-	}
-	[super viewWillMoveToSuperview:newSuperview];
+	[oDesignsArrayController removeObserver:self forKeyPath:@"arrangedObjects"];
+	[oDesignsArrayController removeObserver:self forKeyPath:@"selection"];
+
+	[[self view] removeTrackingArea:_trackingArea];
+	[_trackingArea dealloc];
+	
+	[super dealloc];
 }
 
 
@@ -69,7 +66,12 @@
 	
 	/// UNCOMMENT TO TURN THIS BACK ON
 	
-	_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
+	_trackingArea = [[NSTrackingArea alloc] initWithRect:[[self view] frame]
+												 options:NSTrackingMouseMoved|NSTrackingActiveInKeyWindow|NSTrackingInVisibleRect
+												   owner:self
+												userInfo:nil];
+	
+	[[self view] addTrackingArea:_trackingArea];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
@@ -79,21 +81,10 @@
 }
 
 
-- (void)mouseEntered:(NSEvent *)theEvent
-{
-	_wasAcceptingMouseEvents = [[[self view] window] acceptsMouseMovedEvents];
-	[[[self view] window] setAcceptsMouseMovedEvents:YES];
-    [[[self view] window] makeFirstResponder:self];
-
-	DJW((@"%s %@",__FUNCTION__, theEvent));
-}
-- (void)mouseExited:(NSEvent *)theEvent
-{
-    [[[self view] window] setAcceptsMouseMovedEvents:_wasAcceptingMouseEvents];
-	DJW((@"%s %@",__FUNCTION__, theEvent));
-}
 - (void)mouseMoved:(NSEvent *)theEvent
 {
+	DJW((@"%s %@",__FUNCTION__, theEvent));
+
 	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [theView convertPoint:windowPoint fromView:nil];
@@ -136,21 +127,12 @@
 	[super mouseMoved:theEvent];
 }
 
-- (void)viewBoundsDidChange:(NSNotification *)aNotif;
-{
-    // we set up a tracking region so we can get mouseEntered and mouseExited events
-    [[self view] removeTrackingRect:_trackingRect];
-    _trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
-}
 
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
 	DJW((@"%s",__FUNCTION__));
 	[oDesignsArrayController setSelectionIndexes:[aBrowser selectionIndexes]];
 	
-	// Re-add a tracking rect... Will this help?
-	_trackingRect = [[self view] addTrackingRect:[[self view] frame] owner:self userData:nil assumeInside:NO];
-
 }
 
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index;
