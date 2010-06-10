@@ -96,10 +96,6 @@ extern NSString *gInfoWindowAutoSaveName;
 @property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
 
 
-#pragma mark Other
-- (BOOL)addPagesViaDragToCollection:(KTPage *)aCollection atIndex:(int)anIndex draggingInfo:(id <NSDraggingInfo>)info;
-
-
 //- (void)updateEditMenuItems;
 - (void) updateBuyNow:(NSNotification *)aNotification;
 
