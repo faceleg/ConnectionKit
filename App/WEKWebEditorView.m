@@ -995,33 +995,33 @@ typedef enum {  // this copied from WebPreferences+Private.h
         SVGraphicHandle handle;
         WEKWebEditorItem *item = [self selectedItemAtPoint:point handle:&handle];
         
-        if ([item allowsDirectAccessToWebViewWhenSelected] && handle == kSVGraphicNoHandle)
-		{
-            
-        }
-        else
+        
+        // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint: so as to take hyperlinks into account
+        if (!item || handle == kSVGraphicNoHandle) 
         {
-            // Handles should *always* be selectable, but otherwise, pass through to -selectableItemAtPoint: so as to take hyperlinks into account
-            if (!item || handle == kSVGraphicNoHandle) 
-            {
-                item = [self selectableItemAtPoint:point];
-            }
+            item = [self selectableItemAtPoint:point];
             
-            if (item)
+            // Images only want to capture events on their selection handles
+            if ([item allowsDirectAccessToWebViewWhenSelected])
             {
-                if (![[self selectionParentItems] containsObject:item])
-                {
-                    result = self;
-                }
+                return result;
             }
-            else if ([[self selectionParentItems] count] > 0)
+        }
+        
+        if (item)
+        {
+            if (![[self selectionParentItems] containsObject:item])
             {
                 result = self;
             }
         }
+        else if ([[self selectionParentItems] count] > 0)
+        {
+            result = self;
+        }
     }
-    
-    
+
+
     
     //NSLog(@"Hit Test: %@", result);
     return result;
