@@ -25,6 +25,14 @@
 #import "DOMRange+Karelia.h"
 
 
+@interface DOMElement (SVParagraphedHTMLWriter)
+- (DOMNodeList *)getElementsByClassName:(NSString *)name;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVArticleDOMController
 
 - (void)dealloc
