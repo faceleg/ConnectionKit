@@ -117,6 +117,18 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 #pragma mark Resizing
 
+- (NSPoint)locationOfHandle:(SVGraphicHandle)handle;
+{
+    SVSelectionBorder *border = [self newSelectionBorder];
+    
+    NSPoint result = [border locationOfHandle:handle
+                                    frameRect:[border frameRectForGraphicBounds:
+                                               [[self HTMLElement] boundingBox]]];
+    
+    [border release];
+    return result;
+}
+
 - (unsigned int)resizingMask
 {
     return kCALayerRightEdge | kCALayerBottomEdge;
@@ -212,6 +224,13 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     }
     
     
+    
+    // The DOM has been updated, which may have caused layout. So position the mouse cursor to match
+    /*point = [self locationOfHandle:handle];
+    NSView *view = [[self HTMLElement] documentView];
+    NSPoint basePoint = [[view window] convertBaseToScreen:[view convertPoint:point toView:nil]];
+    CGWarpMouseCursorPosition(NSPointToCGPoint(basePoint));
+    */
     
     return handle;
 }
