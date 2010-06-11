@@ -64,6 +64,7 @@ enum
        handle:(SVGraphicHandle *)handle;
 
 - (NSInteger)handleAtPoint:(NSPoint)point frameRect:(NSRect)bounds;
+- (NSPoint)locationOfHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
 
 
 #pragma mark Drawing

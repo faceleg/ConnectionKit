@@ -13,6 +13,7 @@
 
 
 @interface SVSelectionBorder ()
+- (BOOL)isPoint:(NSPoint)point withinHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
 - (BOOL)isPoint:(NSPoint)point withinHandleAtPoint:(NSPoint)handlePoint;
 
 - (void)drawSelectionHandleAtPoint:(NSPoint)point inView:(NSView *)view enabled:(BOOL)enabled;
@@ -144,39 +145,92 @@
 {
     // Check handles at the corners and on the sides.
     NSInteger result = kSVGraphicNoHandle;
-    if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMinY(bounds))])
+    if ([self isPoint:point withinHandle:kSVGraphicUpperLeftHandle frameRect:bounds])
     {
         result = kSVGraphicUpperLeftHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMidX(bounds), NSMinY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicUpperMiddleHandle frameRect:bounds])
     {
         result = kSVGraphicUpperMiddleHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMaxX(bounds), NSMinY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicUpperRightHandle frameRect:bounds])
     {
         result = kSVGraphicUpperRightHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMidY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicMiddleLeftHandle frameRect:bounds])
     {
         result = kSVGraphicMiddleLeftHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMaxX(bounds), NSMidY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicMiddleRightHandle frameRect:bounds])
     {
         result = kSVGraphicMiddleRightHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMinX(bounds), NSMaxY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicLowerLeftHandle frameRect:bounds])
     {
         result = kSVGraphicLowerLeftHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMidX(bounds), NSMaxY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicLowerMiddleHandle frameRect:bounds])
     {
         result = kSVGraphicLowerMiddleHandle;
     }
-    else if ([self isPoint:point withinHandleAtPoint:NSMakePoint(NSMaxX(bounds), NSMaxY(bounds))])
+    else if ([self isPoint:point withinHandle:kSVGraphicLowerRightHandle frameRect:bounds])
     {
         result = kSVGraphicLowerRightHandle;
     }
     
+    return result;
+}
+
+- (NSPoint)locationOfHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
+{
+    NSPoint result;
+    
+    switch (handle)
+    {
+        case kSVGraphicUpperLeftHandle:
+            result = NSMakePoint(NSMinX(bounds), NSMinY(bounds));
+            break;
+            
+        case kSVGraphicUpperMiddleHandle:
+            result = NSMakePoint(NSMidX(bounds), NSMinY(bounds));
+            break;
+            
+        case kSVGraphicUpperRightHandle:
+            result = NSMakePoint(NSMaxX(bounds), NSMinY(bounds));
+            break;
+            
+        case kSVGraphicMiddleLeftHandle:
+            result = NSMakePoint(NSMinX(bounds), NSMidY(bounds));
+            break;
+            
+        case kSVGraphicMiddleRightHandle:
+            result = NSMakePoint(NSMaxX(bounds), NSMidY(bounds));
+            break;
+            
+        case kSVGraphicLowerLeftHandle:
+            result = NSMakePoint(NSMinX(bounds), NSMaxY(bounds));
+            break;
+            
+        case kSVGraphicLowerMiddleHandle:
+            result = NSMakePoint(NSMidX(bounds), NSMaxY(bounds));
+            break;
+            
+        case kSVGraphicLowerRightHandle:
+            result = NSMakePoint(NSMaxX(bounds), NSMaxY(bounds));
+            break;
+            
+        default:
+            OBASSERT_NOT_REACHED("Unknown handle");
+            break;
+    }
+    
+    return result;
+}
+
+- (BOOL)isPoint:(NSPoint)point withinHandle:(SVGraphicHandle)handle frameRect:(NSRect)bounds;
+{
+    NSPoint handlePoint = [self locationOfHandle:handle frameRect:bounds];
+    BOOL result = [self isPoint:point withinHandleAtPoint:handlePoint];
     return result;
 }
 
