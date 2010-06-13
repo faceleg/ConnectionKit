@@ -532,7 +532,7 @@ QUESTION: WHAT IF SUMMARY IS DERIVED -- WHAT DOES THAT MEAN TO SET?
 	KTPage *aPage;
 	for (aPage in sortedChildren)
 	{
-		[result appendFormat:@"\t<li>%@</li>\n", [aPage titleHTMLString]];
+		[result appendFormat:@"\t<li>%@</li>\n", [[aPage titleBox] textHTMLString]];
 	}
 	
 	[result appendFormat:@"</ul>"];
