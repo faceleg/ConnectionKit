@@ -10,6 +10,7 @@
 
 #import "SVSidebarDOMController.h"
 #import "SVTextDOMController.h"
+#import "SVWebEditorHTMLContext.h"
 #import "SVWebEditorViewController.h"
 
 #import "DOMNode+Karelia.h"
