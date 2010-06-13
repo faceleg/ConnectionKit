@@ -32,6 +32,8 @@
 #import "SVValidatorWindowController.h"
 #import "KSNetworkNotifier.h"
 
+#import "NSManagedObjectContext+KTExtensions.h"
+
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSException+Karelia.h"
