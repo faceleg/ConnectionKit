@@ -556,7 +556,7 @@
 	KTPage *child;
 	for ( child in children )
 	{
-		[titlesArray addObject:[child titleHTMLString]];
+		[titlesArray addObject:[child title]];
 	}
 	[titlesArray sortUsingSelector:@selector(caseInsensitiveCompare:)];
 	int result = [titlesArray indexOfObject:sortableTitle];
