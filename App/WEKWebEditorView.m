@@ -1002,10 +1002,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
             item = [self selectableItemAtPoint:point];
             
             // Images only want to capture events on their selection handles
-            if ([item allowsDirectAccessToWebViewWhenSelected])
+            /*if ([item allowsDirectAccessToWebViewWhenSelected])
             {
                 return result;
-            }
+            }*/
         }
         
         if (item)
@@ -1195,7 +1195,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
         // If mousing down on an image, pass the event through
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
-            [NSApp postEvent:event atStart:YES];
+            [self forwardMouseEvent:event selector:_cmd];
+            //[NSApp postEvent:event atStart:YES];
         }
         else
         {
@@ -1231,14 +1232,22 @@ typedef enum {  // this copied from WebPreferences+Private.h
         [_mouseDownEvent release],  _mouseDownEvent = nil;
         
         
+        // Should this go through to the WebView?
+        NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
+        NSDictionary *element = [[self webView] elementAtPoint:location];
+        DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
+        
+        WEKWebEditorItem *item = [self selectableItemAtPoint:location];
+        if ([item allowsDirectAccessToWebViewWhenSelected])
+        {
+            [self forwardMouseEvent:mouseUpEvent selector:_cmd];
+        }
+        
+                                  
         // Was the mouse up quick enough to start editing? If so, it's time to hand off to the webview for editing.
         if (_mouseUpMayBeginEditing && [mouseUpEvent timestamp] - [mouseDownEvent timestamp] < 0.5)
         {
             // Is the item at that location supposed to be for editing?
-            NSPoint location = [[self webView] convertPoint:[mouseUpEvent locationInWindow] fromView:nil];
-            NSDictionary *element = [[self webView] elementAtPoint:location];
-            DOMNode *nextNode = [element objectForKey:WebElementDOMNodeKey];
-            
             WEKWebEditorItem *item = [[self selectedItem] hitTestDOMNode:nextNode];
             
             
@@ -1279,7 +1288,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
         if (handle == kSVGraphicNoHandle)
         {
             [[NSCursor arrowCursor] set];
-            [super mouseMoved:theEvent];
+            
+            
+            // Continue with the event, but to WebView perhaps?
+            if ([item allowsDirectAccessToWebViewWhenSelected])
+            {
+                [self forwardMouseEvent:theEvent selector:_cmd];
+            }
+            else
+            {
+                [super mouseMoved:theEvent];
+            }
         }
         else
         {
@@ -1307,7 +1326,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
 }
 
-// -mouseDragged: is over in the Dragging category
+- (void)mouseDragged:(NSEvent *)theEvent;
+{
+    [self forwardMouseEvent:theEvent selector:_cmd];
+}
 
 - (void)scrollWheel:(NSEvent *)theEvent
 {
