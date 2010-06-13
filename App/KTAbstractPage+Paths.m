@@ -372,15 +372,6 @@
 }
 
 #pragma mark -
-#pragma mark Preview
-
-- (NSString *)previewPath
-{
-	NSString *result = [NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, [self uniqueID]];
-	return result;
-}
-
-#pragma mark -
 #pragma mark Support
 
 /*	Does the hard graft for -publishedPathRelativeToParent.

@@ -98,7 +98,4 @@ KTCollectionPathStyle;
 
 - (NSString *)uploadPath;
 
-// Preview
-- (NSString *)previewPath;
-
 @end

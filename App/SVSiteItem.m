@@ -141,6 +141,12 @@
 - (NSString *)fileName { return nil; }
 - (BOOL) canPreview { return NO; }
 
+- (NSString *)previewPath
+{
+	NSString *result = [NSString stringWithFormat:@"%@%@", kKTPageIDDesignator, [self uniqueID]];
+	return result;
+}
+
 #pragma mark Editing
 
 // used to determine if it's an external link, for page details.
