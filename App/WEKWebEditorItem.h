@@ -41,7 +41,6 @@
 #pragma mark Selection
 
 - (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
-- (BOOL)isEditable;
 - (unsigned int)resizingMask;
 
 @property(nonatomic, getter=isSelected) BOOL selected;  // draw selection handles & outline when YES

@@ -130,8 +130,6 @@
     return YES;
 }
 
-- (BOOL)isEditable { return NO; }
-
 - (void)updateToReflectSelection;
 {
     if ([self isSelected] || [self isEditing])

@@ -1252,17 +1252,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
             
             
             
-            if (item != [self selectedItem] ||
-                [item conformsToProtocol:@protocol(SVWebEditorText)] && [item isEditable])
+            if (item != [self selectedItem])
             {
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
-                // Note that they're posted in reverse order since I'm placing onto the front of the queue.
                 // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
                 NSArray *items = [[self selectedItems] copy];
                 [self setSelectedItems:nil];
                 [self setSelectionParentItems:items];    // should only be 1
                 [items release];
                 
+                // Post in reverse order since I'm placing onto the front of the queue.
                 [NSApp postEvent:[mouseUpEvent eventWithClickCount:1] atStart:YES];
                 [NSApp postEvent:[mouseDownEvent eventWithClickCount:1] atStart:YES];
             }

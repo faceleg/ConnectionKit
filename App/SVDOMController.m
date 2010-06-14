@@ -260,7 +260,6 @@
 #pragma mark Editing
 
 - (BOOL)isSelectable { return NO; }
-- (BOOL)isEditable { return YES; }
 
 #pragma mark Sidebar
 
