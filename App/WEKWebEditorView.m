@@ -1045,7 +1045,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // If content also decides it's not interested in the event, we will be given it again as part of the responder chain. So, keep track of whether we're processing and ignore the event in such cases.
     if (_isProcessingEvent)
     {
-        [super scrollWheel:theEvent];
+        [[self nextResponder] performSelector:selector withObject:theEvent];
     }
     else
     {
