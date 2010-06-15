@@ -115,6 +115,8 @@
 
 // Call so Web Editor knows when to update
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
+- (void)startElement:(NSString *)element andWriteTitleOfPage:(id <SVPage>)page;
+
 
 // URLs
 - (NSString *)relativeURLStringOfPage:(id <SVPage>)page;

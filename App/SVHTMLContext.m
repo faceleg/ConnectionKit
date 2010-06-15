@@ -408,6 +408,13 @@
     [self addDependencyOnObject:object keyPath:keyPath];
 }
 
+- (void)startElement:(NSString *)element andWriteTitleOfPage:(id <SVPage>)page;
+{
+    [self startElement:element];
+    
+    [self writeText:[page title]];
+}
+
 #pragma mark Raw Writing
 
 // Ignore
