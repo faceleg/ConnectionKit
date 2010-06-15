@@ -88,6 +88,14 @@
 	return (nil != gRegistrationHash) ? gRegistrationHash : @""; 
 }
 
+- (void)willWriteKeyPath
+{
+    SVHTMLContext *context = [SVHTMLContext currentContext];
+    [context startWritingInline];
+    
+    [super willWriteKeyPath];
+}
+
 #pragma mark -
 #pragma mark Delegate
 

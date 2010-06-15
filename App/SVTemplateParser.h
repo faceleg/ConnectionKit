@@ -72,6 +72,8 @@
 - (BOOL)parseWithStringWriter:(id <KSStringWriter>)context;
 - (BOOL)prepareToParse;
 
+- (void)willWriteKeyPath;
+
 - (id)parseValue:(NSString *)inString;
 - (NSString *)componentLocalizedString:(NSString *)tag;
 - (NSString *)componentTargetLocalizedString:(NSString *)tag;

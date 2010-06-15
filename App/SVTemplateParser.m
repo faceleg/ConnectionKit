@@ -345,6 +345,9 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 				{
 					if ( [tag hasPrefix:kKeyPathIndicator] )
 					{
+                        [self willWriteKeyPath];
+                        
+                        
 						NSScanner *tagScanner = [NSScanner scannerWithString:tag];
 						[tagScanner setCharactersToBeSkipped:nil];
 						
@@ -473,6 +476,8 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
     
     return YES;
 }
+
+- (void)willWriteKeyPath; { }
 
 /*	These 3 methods are subclassed by KTStalenessHTMLParser, so be sure to update that too if appropriate
  */
