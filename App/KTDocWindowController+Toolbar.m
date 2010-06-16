@@ -323,12 +323,29 @@ TO DO:
                    [SVGraphicFactory videoFactory]]]; 
     
     
-	// Add the proper menu items
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"More", "menu item")
+    // Indexes
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Indexes", "menu item")
                                                   action:nil
                                            keyEquivalent:@""];
     
-    NSMenu *submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"More", "menu item")];
+    NSMenu *submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Indexes", "menu item")];
+    
+    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
+                                               inMenu:submenu
+                                              atIndex:0];
+	[item setSubmenu:submenu];
+    [submenu release];
+    
+    [menu addItem:item];
+    [item release];
+	
+    
+	// Add the other menu items
+    item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"More", "menu item")
+                                                  action:nil
+                                           keyEquivalent:@""];
+    
+    submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"More", "menu item")];
     
     [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
                                                inMenu:submenu
