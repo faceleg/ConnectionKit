@@ -312,10 +312,22 @@ TO DO:
     [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
                    [SVGraphicFactory textBoxFactory]]];
     	
+    
 	// Add the proper menu items
-	[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
-                                               inMenu:menu
-                                                  atIndex:2];
+    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"More", "menu item")
+                                                  action:nil
+                                           keyEquivalent:@""];
+    
+    NSMenu *submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"More", "menu item")];
+    
+    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
+                                               inMenu:submenu
+                                              atIndex:0];
+	[item setSubmenu:submenu];
+    [submenu release];
+    
+    [menu addItem:item];
+    [item release];
 	
 	
     
