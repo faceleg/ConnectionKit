@@ -60,6 +60,8 @@
                                  inMenu:(NSMenu *)menu
                                 atIndex:(NSUInteger)index;
 
++ (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory;
+
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box
 + (SVGraphic *)graphicWithActionSender:(id)sender
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;

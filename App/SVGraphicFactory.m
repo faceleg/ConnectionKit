@@ -261,46 +261,53 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 {	
     for (id <SVGraphicFactory> factory in factories)
 	{
-		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
-		
-        
-        // Name
-		NSString *pluginName = [factory name];
-		if (![pluginName length])
-		{
-			NSLog(@"empty plugin name for %@", factory);
-			pluginName = @"";
-		}
-		[menuItem setTitle:pluginName];
-        
-        
-		// Icon
-        NSImage *image = [[factory pluginIcon] copy];
-#ifdef DEBUG
-        if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
-#endif
-        
-        [image setSize:NSMakeSize(32.0f, 32.0f)];
-        [menuItem setImage:image];
-        [image release];
-        
-        
-        // Pro status
-        if (9 == [factory priority] && nil == gRegistrationString)
-        {
-            [menuItem setPro:YES];
-        }
-		
-        
-		
-		[menuItem setRepresentedObject:factory];
-        
-		
-		// set target/action
-		[menuItem setAction:@selector(insertPagelet:)];
-		
+		NSMenuItem *menuItem = [self menuItemWithGraphicFactory:factory];
 		[menu insertItem:menuItem atIndex:index];   index++;
 	}
+}
+
++ (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory;
+{
+    NSMenuItem *result = [[[NSMenuItem alloc] init] autorelease];
+    
+    
+    // Name
+    NSString *pluginName = [factory name];
+    if (![pluginName length])
+    {
+        NSLog(@"empty plugin name for %@", factory);
+        pluginName = @"";
+    }
+    [result setTitle:pluginName];
+    
+    
+    // Icon
+    NSImage *image = [[factory pluginIcon] copy];
+#ifdef DEBUG
+    if (!image) NSLog(@"nil pluginIcon for %@", pluginName);
+#endif
+    
+    [image setSize:NSMakeSize(32.0f, 32.0f)];
+    [result setImage:image];
+    [image release];
+    
+    
+    // Pro status
+    if (9 == [factory priority] && nil == gRegistrationString)
+    {
+        [result setPro:YES];
+    }
+    
+    
+    
+    [result setRepresentedObject:factory];
+    
+    
+    // set target/action
+    [result setAction:@selector(insertPagelet:)];
+    
+    
+    return result;
 }
 
 + (SVGraphic *)graphicWithActionSender:(id)sender
