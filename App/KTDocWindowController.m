@@ -298,11 +298,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
  */
 - (void)insertPagelet:(id)sender;
 {
-    if (![[[self webContentAreaController] selectedViewControllerWhenReady]
-          tryToPerform:_cmd with:sender])
-    {
-        NSBeep();
-    }
+    [[[self webContentAreaController] selectedViewControllerWhenReady]
+     ks_doCommandBySelector:_cmd with:sender];
 }
 
 - (IBAction)insertFile:(id)sender;
@@ -953,8 +950,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (void)reload:(id)sender;
 {
-    NSResponder *controller = [[self webContentAreaController] selectedViewControllerWhenReady];
-    [controller doCommandBySelector:_cmd];
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
 #pragma mark HTML Validation
