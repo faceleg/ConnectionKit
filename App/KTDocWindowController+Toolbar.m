@@ -298,7 +298,7 @@ TO DO:
 	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
     
-    // Preapre the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
+    // Prepare the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
 	NSImage *image = [NSImage imageNamed:@"toolbar_add_pagelet"];
     [result setImage:image];
     
@@ -307,11 +307,15 @@ TO DO:
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
     
+    
+    // Text box item
+    [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
+                   [SVGraphicFactory textBoxFactory]]];
     	
 	// Add the proper menu items
 	[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
                                                inMenu:menu
-                                                  atIndex:1];
+                                                  atIndex:2];
 	
 	
     
