@@ -52,6 +52,8 @@
 + (NSArray *)pageletFactories;  // objects conform to
 + (NSArray *)indexFactories;    // SVGraphicFactory protocol
 + (id <SVGraphicFactory>)textBoxFactory;
++ (id <SVGraphicFactory>)imageFactory;
++ (id <SVGraphicFactory>)videoFactory;
 
 
 #pragma mark Menus

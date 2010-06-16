@@ -187,6 +187,8 @@
 static NSArray *sPageletFactories;
 static NSArray *sIndexFactories;
 static id <SVGraphicFactory> sSharedTextBoxFactory;
+static id <SVGraphicFactory> sImageFactory;
+static id <SVGraphicFactory> sVideoFactory;
 
 + (void)initialize
 {
@@ -196,12 +198,22 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
     }
     
     
+    if (!sImageFactory)
+    {
+        sImageFactory = [[SVImageFactory alloc] init];
+    }
+    
+    
+    if (!sVideoFactory)
+    {
+        sVideoFactory = [[SVMovieFactory alloc] init];
+    }
+    
+    
     if (!sPageletFactories)
     {
         // Order plug-ins first by priority, then by name
         NSSet *factories = [KTElementPlugInWrapper pageletPlugins];
-        factories = [factories setByAddingObject:[[[SVImageFactory alloc] init] autorelease]];
-        factories = [factories setByAddingObject:[[[SVMovieFactory alloc] init] autorelease]];
         
         NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
                                                                      ascending:YES];
@@ -249,7 +261,10 @@ static id <SVGraphicFactory> sSharedTextBoxFactory;
 
 + (NSArray *)pageletFactories; { return sPageletFactories; }
 + (NSArray *)indexFactories; { return sIndexFactories; }
+
 + (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
++ (id <SVGraphicFactory>)imageFactory; { return sImageFactory; }
++ (id <SVGraphicFactory>)videoFactory; { return sVideoFactory; }
 
 #pragma mark Menu
 
