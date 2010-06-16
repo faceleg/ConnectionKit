@@ -8,9 +8,7 @@
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>chooseDesign:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
-		<string>insertPagelet</string>
 		<string>addPageletPop:</string>
-		<string>Indexes</string>
 		<string>showLinkPanel:</string>
 		<string>NSToolbarFlexibleSpaceItem</string>
 		<string>setupHost:</string>
