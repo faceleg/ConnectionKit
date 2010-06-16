@@ -313,6 +313,16 @@ TO DO:
                    [SVGraphicFactory textBoxFactory]]];
     	
     
+    // Image item
+    [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
+                   [SVGraphicFactory imageFactory]]]; 
+    
+    
+	// Video item
+    [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
+                   [SVGraphicFactory videoFactory]]]; 
+    
+    
 	// Add the proper menu items
     NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"More", "menu item")
                                                   action:nil
