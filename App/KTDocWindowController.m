@@ -298,12 +298,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
  */
 - (void)insertPagelet:(id)sender;
 {
-    id target = [[self webContentAreaController] selectedViewControllerWhenReady];
-    if ([target respondsToSelector:_cmd])
-    {
-        [target insertPagelet:sender];
-    }
-    else
+    if (![[[self webContentAreaController] selectedViewControllerWhenReady]
+          tryToPerform:_cmd with:sender])
     {
         NSBeep();
     }
@@ -311,42 +307,29 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (IBAction)insertFile:(id)sender;
 {
-    NSViewController *controller = [[self webContentAreaController] selectedViewController];
-    [controller doCommandBySelector:_cmd];
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
 - (void)insertPageletTitle:(id)sender;
 {
-    [[[self webContentAreaController] webEditorViewController] insertPageletTitle:sender];
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
 #pragma mark WebView Actions
 
 - (void)makeTextLarger:(id)sender;
 {
-    id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
-    if ([controller respondsToSelector:_cmd]);
-    {
-        [controller makeTextLarger:sender];
-    }
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
 - (void)makeTextSmaller:(id)sender;
 {
-    id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
-    if ([controller respondsToSelector:_cmd]);
-    {
-        [controller makeTextSmaller:sender];
-    }
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
 - (void)makeTextStandardSize:(id)sender;
 {
-    id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
-    if ([controller respondsToSelector:_cmd]);
-    {
-        [controller makeTextStandardSize:sender];
-    }
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
 - (IBAction)selectWebViewViewType:(id)sender;
