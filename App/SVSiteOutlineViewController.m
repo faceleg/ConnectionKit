@@ -535,6 +535,9 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
     }
 }
 
+/*  DON'T IMPLEMENT -paste: HERE. We want those messages to go straight to the Window Controller so it can handle pasting pagelets while Site Outline has focus
+ */
+
 - (IBAction)rename:(id)sender;
 {
     if ([self canRename])

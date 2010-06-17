@@ -400,6 +400,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Other
 
+- (void)paste:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
 	BOOL value = [[self document] displaySmallPageIcons];
@@ -578,34 +583,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 	// Edit menu
 	
-	// "Paste" paste:
-	if ( itemAction == @selector(paste:) )
-	{
-		{
-			NSArray *selectedPages = [[[self siteOutlineViewController] content] selectedObjects];
-			if (1 != [selectedPages count])
-			{
-				return NO;	// can't paste if zero or >1 pages selected
-			}
-				
-			KTPage *selectedPage = [selectedPages objectAtIndex:0];
-			if ( [self canPastePages] )
-			{
-				return [selectedPage isCollection];
-			}
-			else if ( [self canPastePagelets] )
-			{
-				return ([[selectedPage showSidebar] boolValue] || [selectedPage includeCallout]);
-			}
-			else
-			{
-				return NO;
-			}
-		}
-	}	
-	
 	// "Paste" pasteAsRichText: NB: also intercepts general "paste" command
-	else if ( itemAction == @selector(pasteAsRichText:) )
+	if ( itemAction == @selector(pasteAsRichText:) )
 	{
 		// check the general pasteboard to see if there are any pages on it
 		NSPasteboard *generalPboard = [NSPasteboard generalPasteboard];
@@ -632,7 +611,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// View menu
     
-    else if (itemAction == @selector(insertPagelet:) ||
+    else if (itemAction == @selector(paste:) ||
+             itemAction == @selector(insertPagelet:) ||
              itemAction == @selector(makeTextLarger:) ||
              itemAction == @selector(makeTextSmaller:) ||
              itemAction == @selector(makeTextStandardSize:))
