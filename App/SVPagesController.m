@@ -19,7 +19,7 @@
 #import "SVLinkManager.h"
 #import "SVMediaRecord.h"
 #import "SVRichText.h"
-#import "SVSidebar.h"
+#import "SVSidebarPageletsController.h"
 
 #import "NSArray+Karelia.h"
 #import "NSBundle+Karelia.h"
@@ -92,10 +92,6 @@
         
         [result setAllowComments:[predecessor allowComments]];
         [result setIncludeTimestamp:[predecessor includeTimestamp]];
-        
-        
-        // Give it standard pagelets
-        [[result sidebar] addPagelets:[[parent sidebar] pagelets]];
         
         
         // Make the page into a collection if it was requested
@@ -245,6 +241,16 @@
     [parent addChildItem:object];	// Must use this method to correctly maintain ordering
 	
 	
+    // Inherit standard pagelets
+    if ([object isKindOfClass:[KTPage class]])
+    {
+        for (SVGraphic *aPagelet in [[parent sidebar] pagelets])
+        {
+            [SVSidebarPageletsController addPagelet:aPagelet toSidebarOfPage:object];
+        }
+    }
+    
+    
     // Do the actual controller-level insertion
     [super addObject:object];
     
