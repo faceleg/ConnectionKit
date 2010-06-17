@@ -632,16 +632,21 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// View menu
     
-    else if (itemAction == @selector(makeTextLarger:) ||
+    else if (itemAction == @selector(insertPagelet:) ||
+             itemAction == @selector(makeTextLarger:) ||
              itemAction == @selector(makeTextSmaller:) ||
              itemAction == @selector(makeTextStandardSize:))
     {
-        result = NO;
+        id target = [[[self webContentAreaController] selectedViewControllerWhenReady]
+                     ks_targetForAction:itemAction];
         
-        id controller = [[self webContentAreaController] selectedViewControllerWhenReady];
-        if ([controller respondsToSelector:itemAction])
+        if ([target respondsToSelector:@selector(validateMenuItem:)])
         {
-            result = [controller validateMenuItem:menuItem];
+            result = [target validateMenuItem:menuItem];
+        }
+        else if (!target)
+        {
+            result = NO;
         }
     }
     else if (itemAction == @selector(selectWebViewViewType:))
