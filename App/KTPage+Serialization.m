@@ -9,6 +9,8 @@
 
 #import "KTPage.h"
 
+#import "SVArticle.h"
+#import "SVAttributedHTML.h"
 #import "SVTitleBox.h"
 
 
@@ -23,7 +25,8 @@
                     forKey:@"titleHTMLString"];
     
     // Body
-    [propertyList setValue:[[self article] serializedProperties] forKey:@"article"];
+    NSData *article = [[[self article] attributedHTMLString] serializedProperties];
+    [propertyList setValue:article forKey:@"article"];
     
     // Code Injection
     [propertyList setValue:[[self codeInjection] serializedProperties]
@@ -41,8 +44,22 @@
     // Title
     [[self titleBox] setTextHTMLString:[propertyList objectForKey:@"titleHTMLString"]];
     
+    
     // Code Injection
     [[self codeInjection] awakeFromPropertyList:[propertyList objectForKey:@"codeInjection"]];
+    
+    
+    // Text
+    NSManagedObjectContext *context = [self managedObjectContext];
+    
+    NSData *article = [propertyList objectForKey:@"article"];
+    if (article)
+    {
+        NSAttributedString *html = [NSAttributedString attributedHTMLStringWithPropertyList:article
+                                                  insertAttachmentsIntoManagedObjectContext:context];
+        [[self article] setAttributedHTMLString:html];
+    }
+    
     
     // Children
     NSArray *children = [propertyList objectForKey:@"childItems"];
@@ -50,7 +67,7 @@
     {
         // FIXME: This heavily duplicates codes from -[SVSiteOutlineViewController duplicate:]
         SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[self entity]
-                                         insertIntoManagedObjectContext:[self managedObjectContext]];
+                                         insertIntoManagedObjectContext:context];
         if ([duplicate isKindOfClass:[KTPage class]])
         {
             [(KTPage *)duplicate setMaster:[self master]];
