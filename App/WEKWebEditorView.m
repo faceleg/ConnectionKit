@@ -534,10 +534,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 [range selectNode:domElement];
                 [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
             }
-            else
-            {
-                [[self window] makeFirstResponder:self];
-            }
         }
         
         // There's no selected items left, so move cursor to left of deselected item. Don't want to do this though if the item is being deselected due to removal from the Web Editor
@@ -865,7 +861,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
         for (WEKWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
             DOMHTMLElement *element = [anItem HTMLElement];
-            if ([element parentNode] && [range containsNode:element])   // weed out any obvious ophans
+            if ([element isDescendantOfNode:[textController HTMLElement]] &&
+                [range containsNode:element])   // weed out any obvious orphans
             {
                 [result addObject:anItem];
             }
@@ -975,6 +972,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
 - (BOOL)inLiveGraphicResize; { return _resizingGraphic; }
 
 #pragma mark Event Handling
+
+// Will simulate this returning YES when clicking on a non-inline item
+- (BOOL)acceptsFirstResponder { return NO; }
 
 /*  AppKit uses hit-testing to drill down into the view hierarchy and figure out just which view it needs to target with a mouse event. We can exploit this to effectively "hide" some portions of the webview from the standard event handling mechanisms; all such events will come straight to us instead. We have 2 different behaviours depending on current mode:
  *
@@ -1170,11 +1170,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     
-    // Where's the click?
+    // Where's the click? Is it a selection handle? They trigger special resize event
     NSPoint location = [self convertPoint:[event locationInWindow] fromView:nil];
     
-    
-    // Is it a selection handle?
     SVGraphicHandle handle;
     WEKWebEditorItem *item = [self selectedItemAtPoint:location handle:&handle];
     if (item && handle != kSVGraphicNoHandle)
@@ -1185,8 +1183,26 @@ typedef enum {  // this copied from WebPreferences+Private.h
     }
     
     
-    // What was clicked? We want to know top-level object
+    
+    // Non-selection handle, use the standard hit-testing
     if (!item) item = [self selectableItemAtPoint:location];
+    
+    
+    
+    // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
+    DOMHTMLElement *element = [item HTMLElement];
+    
+    DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
+                                                              pseudoElement:nil];
+    
+    if (![[style display] isEqualToString:@"inline"] || ![element isContentEditable])
+    {
+        [[self window] makeFirstResponder:self];
+    }
+    
+    
+    
+    // What was clicked? We want to know top-level object
       
     if (item)
     {
@@ -1802,6 +1818,16 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             }
             else if (command == @selector(moveUp:) || command == @selector(moveDown:))
             {   // don't want these to go to self
+            }
+            
+            else if (command == @selector(clearStyles:))
+            {
+                // Get no other delegate method warning of impending change, so fake one here
+                if (![self shouldChangeTextInDOMRange:[self selectedDOMRange]])
+                {
+                    result = YES;
+                    NSBeep();
+                }
             }
             
             else if ([self respondsToSelector:command])
