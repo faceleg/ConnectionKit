@@ -565,11 +565,14 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         
         // Where's it going to be placed?
         KTPage *parent = [anItem parentPage];
+        if (!parent) parent = [self rootPage];  // happens if duplicating root
         
         
         // Create copy
         SVSiteItem *duplicate = [[NSManagedObject alloc] initWithEntity:[anItem entity]
                                          insertIntoManagedObjectContext:[anItem managedObjectContext]];
+        
+        [newItems addObject:duplicate];
         if ([duplicate isKindOfClass:[KTPage class]])
         {
             [(KTPage *)duplicate setMaster:[parent master]];
