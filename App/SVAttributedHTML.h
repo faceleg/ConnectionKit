@@ -22,9 +22,12 @@
 #pragma mark Pasteboard
 
 - (void)attributedHTMLStringWriteToPasteboard:(NSPasteboard *)pasteboard;
+- (NSData *)serializedProperties;
 
 + (NSAttributedString *)attributedHTMLStringFromPasteboard:(NSPasteboard *)pasteboard
                  insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
++ (NSAttributedString *)attributedHTMLStringWithPropertyList:(NSData *)data
+                   insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 + (NSArray *)pageletsFromPasteboard:(NSPasteboard *)pasteboard
      insertIntoManagedObjectContext:(NSManagedObjectContext *)context;

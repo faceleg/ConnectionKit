@@ -19,9 +19,9 @@
 
 @implementation NSAttributedString (SVAttributedHTML)
 
-#pragma mark Pasteboard
+#pragma mark Serialization
 
-- (void)attributedHTMLStringWriteToPasteboard:(NSPasteboard *)pasteboard;
+- (NSData *)serializedProperties
 {
     // Create a clone where SVTextAttachment is replaced by its serialized form
     NSMutableAttributedString *archivableAttributedString = [self mutableCopy];
@@ -32,47 +32,48 @@
     while (location < range.length)
     {
         NSRange effectiveRange;
-        SVGraphic *graphic = [archivableAttributedString attribute:@"SVAttachment"
+        SVTextAttachment *textAttachment = [archivableAttributedString attribute:@"SVAttachment"
                                                               atIndex:location
                                                 longestEffectiveRange:&effectiveRange
                                                               inRange:range];
         
-        NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
-        
-        SVTextAttachment *textAttachment = [graphic textAttachment];
         if (textAttachment)
         {
+            NSMutableDictionary *plist = [[NSMutableDictionary alloc] init];
+            
             // Replace the attachment. Ignore range as it's not relevant any more
             [textAttachment populateSerializedProperties:plist];
             [plist removeObjectForKey:@"location"];
             [plist removeObjectForKey:@"length"];
+            
+            [archivableAttributedString removeAttribute:@"SVAttachment"
+                                                  range:effectiveRange];
+            
+            [archivableAttributedString addAttribute:@"Serialized SVAttachment"
+                                               value:plist
+                                               range:effectiveRange];
+            
+            [plist release];
         }
-        else if (graphic)
-        {
-            // Fake the attachment
-            [plist setObject:[graphic serializedProperties] forKey:@"graphic"];
-        }
-        
-        
-        [archivableAttributedString removeAttribute:@"SVAttachment"
-                                              range:effectiveRange];
-        
-        [archivableAttributedString addAttribute:@"Serialized SVAttachment"
-                                           value:plist
-                                           range:effectiveRange];
-        [plist release];
         
         
         // Advance the search
-        location = location + effectiveRange.length;
+        location = effectiveRange.location + effectiveRange.length;
     }
     
-    
-    // Write to the pboard in archive form
-    NSData *data = [NSKeyedArchiver archivedDataWithRootObject:archivableAttributedString];
-    [pasteboard setData:data forType:@"com.karelia.html+graphics"];
+    NSData *result = [NSKeyedArchiver archivedDataWithRootObject:archivableAttributedString];
     [archivableAttributedString release];
+    
+    return result;
 }
+
+- (void)attributedHTMLStringWriteToPasteboard:(NSPasteboard *)pasteboard;
+{
+    // Write to the pboard in archive form
+    [pasteboard setData:[self serializedProperties] forType:@"com.karelia.html+graphics"];
+}
+
+#pragma mark Deserialization
 
 + (NSAttributedString *)attributedHTMLFromPasteboard:(NSPasteboard *)pasteboard;
 {
@@ -87,9 +88,22 @@
 + (NSAttributedString *)attributedHTMLStringFromPasteboard:(NSPasteboard *)pasteboard
                                 insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    NSAttributedString *archivedAttributedString =
-    [self attributedHTMLFromPasteboard:pasteboard];
+    NSData *data = [pasteboard dataForType:@"com.karelia.html+graphics"];
+    if (!data) return nil;
+    
+    
+    NSAttributedString *result = [self attributedHTMLStringWithPropertyList:data
+                                  insertAttachmentsIntoManagedObjectContext:context];
+    return result;
+}
+
++ (NSAttributedString *)attributedHTMLStringWithPropertyList:(NSData *)data
+                   insertAttachmentsIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    OBPRECONDITION(data);
+    NSAttributedString *archivedAttributedString = [NSKeyedUnarchiver unarchiveObjectWithData:data];
     if (!archivedAttributedString) return nil;
+    
     
     NSMutableAttributedString *result = [[archivedAttributedString mutableCopy] autorelease];
     
@@ -118,12 +132,12 @@
                               range:effectiveRange];
             
             [result addAttribute:@"SVAttachment"
-                           value:[attachment graphic]
+                           value:attachment
                            range:effectiveRange];
         }
         
         // Advance the search
-        location = location + effectiveRange.length;
+        location = effectiveRange.location + effectiveRange.length;
     }
     
     
@@ -167,6 +181,8 @@
     
     return result;
 }
+
+#pragma mark Pboard support
 
 + (NSArray *)attributedHTMStringPasteboardTypes;
 {
