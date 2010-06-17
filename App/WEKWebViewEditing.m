@@ -14,7 +14,7 @@
 #pragma mark -
 
 
-@interface DOMDocument (SemiPublicEditingAPI)
+@interface DOMDocument (AVAILABLE_WEBKIT_VERSION_3_0_AND_LATER)
 - (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface value:(NSString *)value;
 - (BOOL)execCommand:(NSString *)command userInterface:(BOOL)userInterface;
 - (BOOL)execCommand:(NSString *)command;
@@ -27,6 +27,26 @@
 
 
 @implementation WebView (WEKWebViewEditing)
+
+#pragma mark Formatting
+
+- (IBAction)clearStyles:(id)sender
+{
+    // Check delegate does not wish to intercept instead
+    if ([[self editingDelegate] webView:self doCommandBySelector:_cmd]) return;
+    
+    
+    DOMDocument *document = [[self selectedFrame] DOMDocument];
+    if ([document execCommand:@"removeFormat" userInterface:NO value:nil])
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:WebViewDidChangeNotification
+                                                            object:self];
+    }
+    else
+    {
+        NSBeep();
+    }
+}
 
 #pragma mark Links
 
