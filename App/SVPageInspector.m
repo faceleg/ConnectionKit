@@ -279,7 +279,7 @@
     {
         for (KTPage *aPage in pages)
         {
-            [oSidebarPageletsController addPagelet:pagelet toSidebarOfPage:aPage];
+            [[oSidebarPageletsController class] addPagelet:pagelet toSidebarOfPage:aPage];
         }
     }
     else
