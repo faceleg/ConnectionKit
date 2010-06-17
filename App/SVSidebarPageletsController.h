@@ -12,10 +12,11 @@
 
 #import "KSOrderedManagedObjectControllers.h"
 
+#import "SVSidebar.h"
 #import "SVGraphicFactory.h"
 
 
-@class KTPage, SVSidebar;
+@class KTPage;
 
 
 @interface SVSidebarPageletsController : KSArrayController
@@ -40,10 +41,10 @@
 
 #pragma mark Recursion
 // When adding or removing a pagelet, generally want to recursively add it to all applicable descendants too.
-// -addObject: etc. do this as part of their implementation, but if you're not in a position to call -addObject: (i.e. a controller that lists all pagelets, not just those on a specific page) you can use -addPagelet:toSidebarOfPage: directly instead.
+// -addObject: etc. do this as part of their implementation, but if you're not in a position to call -addObject: (i.e. a controller that lists all pagelets, not just those on a specific page) you can use +addPagelet:toSidebarOfPage: directly instead.
 // Similarly, -removePagelet:fromSidebarOfPage: recursively removes the pagelet from all applicable sidebars, but never actually deletes it.
 
-- (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
++ (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
 - (void)removePagelet:(SVGraphic *)pagelet fromSidebarOfPage:(KTPage *)page;
 
 

@@ -15,7 +15,7 @@
 
 
 @interface SVSidebarPageletsController ()
-- (void)_addPagelet:(SVGraphic *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
++ (void)_addPagelet:(SVGraphic *)pagelet toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 @end
 
 
@@ -138,19 +138,20 @@
 - (void)addObject:(id)pagelet
 {
     // Add to as many descendants as appropriate. Must do it before calling super otherwise inheritablePagelets will be wrong
-    [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[[self sidebar] page]];
+    [[self class]
+     _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:[[self sidebar] page]];
     
     // Place at top of sidebar, unlike most controllers
 	[self insertObject:pagelet atArrangedObjectIndex:0];
 }
 
-- (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
++ (void)addPagelet:(SVGraphic *)pagelet toSidebarOfPage:(KTPage *)page;
 {
     [self _addPagelet:pagelet toSidebarOfDescendantsOfPageIfApplicable:page];
     [[page sidebar] addPageletsObject:pagelet];
 }
 
-- (void)_addPagelet:(SVGraphic *)pagelet
++ (void)_addPagelet:(SVGraphic *)pagelet
 toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
 {
     NSSet *inheritablePagelets = [[page sidebar] pagelets];
