@@ -49,7 +49,15 @@
 
 /*	First we have a simple accessor pair for the file name. This does NOT include the extension.
  */
-- (NSString *)fileName { return [self wrappedValueForKey:@"fileName"]; }
+- (NSString *)fileName
+{
+	NSString *result = [self wrappedValueForKey:@"fileName"];
+	if (!result || [result isEqualToString:@""])
+	{
+		NSLog(@"WARNING: Empty filename for page: %@", [self titleHTML]);
+	}
+	return result;
+}
 
 - (void)setFileName:(NSString *)fileName
 {
@@ -319,9 +327,13 @@
 		{
 			// For normal pages, figure out the path relative to parent and resolve it
 			NSString *path = [self pathRelativeToParent];
-			if (path)
+			if (path && ![path isEqualToString:@""])
 			{
 				result = [NSURL URLWithString:path relativeToURL:[[self parent] URL]];
+			}
+			else
+			{
+				NSLog(@"Unable to publish page, filename is empty");
 			}
 		}
 	}
