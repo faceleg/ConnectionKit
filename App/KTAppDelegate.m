@@ -1734,6 +1734,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 {
 	
 	iMediaBrowser *browser = [iMediaBrowser sharedBrowserWithDelegate:self];
+	[browser setIdentifier:@"Sandvox"];	// set this early, before any processing.
 	
 	if ( [browser infoWindowIsVisible] )
 	{
@@ -1746,7 +1747,6 @@ IMPLEMENTATION NOTES & CAUTIONS:
 	if ( newValue )
 	{
 		[[NSApp delegate] setDisplayMediaMenuItemTitle:KTHideMediaMenuItemTitle];
-		[browser setIdentifier:@"Sandvox"];
 		[browser showWindow:sender];
 	}
 	else
