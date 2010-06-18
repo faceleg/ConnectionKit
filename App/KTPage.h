@@ -173,7 +173,8 @@ typedef enum {
 @property(nonatomic, copy) NSString *RSSFileName;
 - (NSURL *)feedURL;
 
-- (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate;
+- (NSString *)RSSFeed;
+- (void)writeRSSFeed:(SVHTMLContext *)context;
 
 
 #pragma mark Summary

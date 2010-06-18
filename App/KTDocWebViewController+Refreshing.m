@@ -458,7 +458,7 @@
 		}
 		
 		case KTRSSSourceView:
-			sourceCode = [page RSSFeedWithParserDelegate:nil];
+			sourceCode = [page RSSFeed];
 			break;
 		
 		default:

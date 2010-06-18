@@ -253,28 +253,33 @@
 
 /*!	Return the HTML.
  */
-- (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate
+- (NSString *)RSSFeed;
 {
-	// Find the template
-	NSString *template = [[NSBundle mainBundle] templateRSSAsString];
-	OBASSERT(template);
-	
-	
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
-	[parser setDelegate:parserDelegate];
-	
-    NSMutableString *result = [NSMutableString string];
+	NSMutableString *result = [NSMutableString string];
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
     
-	[parser parseIntoHTMLContext:context];
-    [context release];
-	[parser release];
+    [self writeRSSFeed:context];
+	[context release];
 		
 	// We won't do any "stringByEscapingCharactersOutOfEncoding" since we are using UTF8, which means everything is OK, and we
 	// don't want to introduce any entities into the XML anyhow.
 	
 	OBPOSTCONDITION(result);
     return result;
+}
+
+- (void)writeRSSFeed:(SVHTMLContext *)context;
+{
+    // Find the template
+	NSString *template = [[NSBundle mainBundle] templateRSSAsString];
+	OBASSERT(template);
+	
+	
+    // Generate XML
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithTemplate:template component:self];
+	
+    [parser parseIntoHTMLContext:context];
+    [parser release];
 }
 
 - (NSSize)RSSFeedThumbnailsSize { return NSMakeSize(128.0, 128.0); }

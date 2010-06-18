@@ -150,17 +150,20 @@
 	// Generate and publish RSS feed if needed
 	if ([[self collectionSyndicate] boolValue])
 	{
-		NSString *RSSString = [self RSSFeedWithParserDelegate:publishingEngine];
-		if (RSSString)
-		{			
-			// Now that we have page contents in unicode, clean up to the desired character encoding.
-			NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-			OBASSERT(RSSData);
-			
-			NSString *RSSFilename = [self RSSFileName];
-			NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-			[publishingEngine publishData:RSSData toPath:RSSUploadPath];
-		}
+		NSMutableString *RSSString = [[NSMutableString alloc] init];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:RSSString];
+        [self writeRSSFeed:context];
+        [context release];
+		
+        // Now that we have page contents in unicode, clean up to the desired character encoding.
+        NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+        OBASSERT(RSSData);
+        
+        NSString *RSSFilename = [self RSSFileName];
+        NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+        [publishingEngine publishData:RSSData toPath:RSSUploadPath];
+		
+        [RSSString release];
 	}
     
     
