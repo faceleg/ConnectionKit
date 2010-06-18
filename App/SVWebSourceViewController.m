@@ -10,7 +10,10 @@
 #import "SVWebEditorViewController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KTPage.h"
+#import "SVWebContentAreaController.h"
+
 #import "NSTextView+KTExtensions.h"
+
 
 @implementation SVWebSourceViewController
 
@@ -37,37 +40,29 @@
 }
 
 
-
+- (void)updateWithPage:(KTPage *)page;
+{    
+    NSString *pageHTML = (page) ? [page markupString] : @"";
+    
+    NSTextStorage *textStorage = [oSourceView textStorage];
+    NSRange fullRange = NSMakeRange(0, [textStorage length]);
+    [textStorage replaceCharactersInRange:fullRange withString:pageHTML];
+    [oSourceView recolorRange:fullRange];
+}
 
 - (void)webEditorViewControllerWillUpdate:(NSNotification *)aNotification
 {	
-	if ([[self view] window] || nil == aNotification)		// only do something if we are attached to a window or this is a forced notification
+	if ([[self view] window])   // only do something if we are attached to a window
 	{
-		KTPage *page = [self.webEditorViewController page];
-		
-		NSString *pageHTML = (page) ? [page markupString] : @"";
-		
-		NSTextStorage *textStorage = [oSourceView textStorage];
-		NSRange fullRange = NSMakeRange(0, [textStorage length]);
-		[textStorage replaceCharactersInRange:fullRange withString:pageHTML];
-		[oSourceView recolorRange:fullRange];
+		[self updateWithPage:[self.webEditorViewController page]];
 	}
-}
-
-- (void)loadView;
-{
-	[super loadView];
 }
 
 - (BOOL)viewShouldAppear:(BOOL)animated
 webContentAreaController:(SVWebContentAreaController *)controller
 {
+    [self updateWithPage:(KTPage *)[controller selectedPage]];
     return YES;
-}
-
-- (void)viewWillAppear:(BOOL)animated;
-{
-	[self webEditorViewControllerWillUpdate:nil];
 }
 
 @end
