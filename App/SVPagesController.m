@@ -70,7 +70,7 @@
         // Figure out the predecessor (which page to inherit properties from)
         KTPage *parent = [[self selectedObjects] lastObject];
         if (![parent isCollection]) parent = [parent parentPage];
-        OBASSERT(parent);
+        OBASSERT(parent || ![[self content] count]);    // it's acceptable to have no parent when creating first page
     
         KTPage *predecessor = parent;
         NSArray *children = [parent childrenWithSorting:SVCollectionSortByDateCreated
@@ -90,9 +90,11 @@
         // Match the basic page properties up to the selection
         [result setMaster:[parent master]];
         
-        [result setAllowComments:[predecessor allowComments]];
-        [result setIncludeTimestamp:[predecessor includeTimestamp]];
-        
+        if (predecessor)
+        {
+            [result setAllowComments:[predecessor allowComments]];
+            [result setIncludeTimestamp:[predecessor includeTimestamp]];
+        }
         
         // Make the page into a collection if it was requested
         if ([self collectionPreset] && allowCollections) 
@@ -148,6 +150,7 @@
     
     // Create the basic collection
     [collection setBool:YES forKey:@"isCollection"]; // Duh!
+    [collection setCollectionMaxIndexItems:[NSNumber numberWithInteger:10]];
     
     
     // Set the index on the page

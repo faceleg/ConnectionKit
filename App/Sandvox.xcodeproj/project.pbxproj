@@ -2942,6 +2942,8 @@
 		270E44B810F77D1D00EF1FA0 /* Model Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3C39822A0D2C3EC800432A0C /* SVPagesController.h */,
+				3C39822B0D2C3EC800432A0C /* SVPagesController.m */,
 				270E44B910F77D8B00EF1FA0 /* SVSidebarPageletsController.h */,
 				270E44BA10F77D8B00EF1FA0 /* SVSidebarPageletsController.m */,
 			);
@@ -4322,8 +4324,6 @@
 				3CBFD396093C45930057668A /* KTSiteOutlineView.m */,
 				3C202DA807DFC4DD00DE4994 /* KTImageTextCell.h */,
 				3C202DA907DFC4DD00DE4994 /* KTImageTextCell.m */,
-				3C39822A0D2C3EC800432A0C /* SVPagesController.h */,
-				3C39822B0D2C3EC800432A0C /* SVPagesController.m */,
 				272FBCC90D40102C00FCC189 /* SVSiteOutlineViewController+Icons.m */,
 				27963C1D110F3F4E0050B776 /* download.icns */,
 			);

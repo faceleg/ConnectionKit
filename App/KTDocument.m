@@ -291,7 +291,6 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // Set up root properties that used to come from document defaults
         [master setValue:[[NSUserDefaults standardUserDefaults] valueForKey:@"author"] forKey:@"author"];
-        [root setBool:YES forKey:@"isCollection"];
         
         // This probably should use -[NSBundle preferredLocalizationsFromArray:forPreferences:]
         // http://www.cocoabuilder.com/archive/message/cocoa/2003/4/24/84070
@@ -358,16 +357,22 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (KTPage *)makeRootPage
 {
-    id result = [NSEntityDescription insertNewObjectForEntityForName:@"Page" 
-                                              inManagedObjectContext:[self managedObjectContext]];
-	OBASSERT(result);
-	
-	[result setValue:[self site] forKey:@"site"];	// point to yourself
-		
-    [result setBool:YES forKey:@"isCollection"];	// root is automatically a collection
-    [result setAllowComments:[NSNumber numberWithBool:NO]];
+    // Create page
+    SVPagesController *controller = [[SVPagesController alloc] init];
+    [controller setManagedObjectContext:[self managedObjectContext]];
+    [controller setEntityName:@"Page"];
+    [controller setCollectionPreset:[NSDictionary dictionary]];
     
-	return result;
+    KTPage *result = [controller newObject];
+	OBASSERT(result);
+    [controller release];
+	
+    
+    // Configure
+	[result setValue:[self site] forKey:@"site"];	// point to yourself
+    
+    
+	return [result autorelease];
 }
 
 - (void)dealloc

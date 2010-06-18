@@ -22,7 +22,7 @@
 // To create a new page/item:
 //  1.  Set .entityName to what you want. Should be Page, ExternalLink, or File.
 //  2.  Optionally, specify any additional info through -setCollectionPreset: or -setFileURL:
-//  3.  Call -add:
+//  3.  Call -add: or -newObject
 @property(nonatomic, copy) NSString *entityName;
 @property(nonatomic, copy) NSDictionary *collectionPreset;
 @property(nonatomic, copy) NSURL *fileURL;

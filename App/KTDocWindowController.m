@@ -547,7 +547,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	KTAbstractIndex *theIndex = [[((KTAbstractIndex *)[indexToAllocate alloc]) initWithPage:collection plugin:collectionPlugin] autorelease];
 	[collection setIndex:theIndex];
 	[collection setInteger:SVCollectionSortManually forKey:@"collectionSortOrder"];				
-	[collection setBool:YES forKey:@"isCollection"];
 	[collection setBool:NO forKey:@"includeTimestamp"];
 	
 	// insert the new collection
