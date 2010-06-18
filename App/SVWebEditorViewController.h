@@ -19,16 +19,17 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
 @class KTPage, SVWebEditorHTMLContext, SVDOMController, SVTextDOMController;
-@class SVWebContentObjectsController;
+@class SVWebContentObjectsController, SVWebContentAreaController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
 
 
 @interface SVWebEditorViewController : KSWebViewController <SVSiteItemViewController, WEKWebEditorDataSource, WEKWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {
-    // View
-    WEKWebEditorView *_webEditorView;
-    BOOL            _readyToAppear;
+    // View/Presentation
+    WEKWebEditorView            *_webEditorView;
+    BOOL                        _readyToAppear;
+    SVWebContentAreaController  *_contentAreaController;    // weak ref
     
     // Model
     KTPage                      *_page;

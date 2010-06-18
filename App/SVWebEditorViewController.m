@@ -146,6 +146,22 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 #pragma mark Presentation
 
 @synthesize viewIsReadyToAppear = _readyToAppear;
+- (void)setViewIsReadyToAppear:(BOOL)ready;
+{
+    _readyToAppear = ready;
+    
+    if ([_contentAreaController selectedViewControllerWhenReady] == self)
+    {
+        if (ready)
+        {
+            [_contentAreaController setSelectedViewController:self];
+        }
+        else
+        {
+            [_contentAreaController presentLoadingViewController];
+        }
+    }
+}
 
 - (void)webViewDidFirstLayout
 {
@@ -728,6 +744,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (BOOL)viewShouldAppear:(BOOL)animated webContentAreaController:(SVWebContentAreaController *)controller
 {
+    _contentAreaController = controller;    // weak ref
+    
     [self setPage:[[controller selectedPage] pageRepresentation]];
     return [self viewIsReadyToAppear];
 }
