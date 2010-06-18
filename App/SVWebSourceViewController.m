@@ -7,17 +7,15 @@
 //
 
 #import "SVWebSourceViewController.h"
+
 #import "SVWebEditorViewController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KTPage.h"
-#import "SVWebContentAreaController.h"
 
 #import "NSTextView+KTExtensions.h"
 
 
 @implementation SVWebSourceViewController
-
-@synthesize webEditorViewController = _webEditorViewController;
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 {
@@ -39,10 +37,32 @@
 	[super dealloc];
 }
 
+#pragma mark properties
+
+@synthesize viewType = _viewType;
+@synthesize webEditorViewController = _webEditorViewController;
+
+#pragma mark Presentation
 
 - (void)updateWithPage:(KTPage *)page;
 {    
-    NSString *pageHTML = (page) ? [page markupString] : @"";
+    NSString *pageHTML = @"";
+    if (page)
+    {
+        switch ([self viewType])
+        {
+            case KTSourceCodeView:
+                pageHTML = [page markupString];
+                break;
+                
+            case KTRSSSourceView:
+                pageHTML = [page RSSFeedWithParserDelegate:nil];
+                break;
+                
+            default:
+                break;
+        }
+    }
     
     NSTextStorage *textStorage = [oSourceView textStorage];
     NSRange fullRange = NSMakeRange(0, [textStorage length]);
@@ -61,6 +81,7 @@
 - (BOOL)viewShouldAppear:(BOOL)animated
 webContentAreaController:(SVWebContentAreaController *)controller
 {
+    [self setViewType:[controller viewType]];   // copy across for use during updates
     [self updateWithPage:(KTPage *)[controller selectedPage]];
     return YES;
 }

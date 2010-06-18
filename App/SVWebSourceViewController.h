@@ -9,17 +9,22 @@
 #import <Cocoa/Cocoa.h>
 #import "SVSiteItemViewController.h"
 
+#import "SVWebContentAreaController.h"
+
+
 @class SVWebEditorViewController;
 
 @interface SVWebSourceViewController : NSViewController <SVSiteItemViewController> {
 
 	IBOutlet NSTextView *oSourceView;
 
-	SVWebEditorViewController *_webEditorViewController;
+    KTWebViewViewType           _viewType;
+    SVWebEditorViewController   *_webEditorViewController;
 }
 
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 
+@property(nonatomic) KTWebViewViewType viewType;
 @property(nonatomic, retain) SVWebEditorViewController *webEditorViewController;
 
 @end
