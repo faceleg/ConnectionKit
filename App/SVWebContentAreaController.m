@@ -213,6 +213,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             }
             case KTSourceCodeView:
             case KTPreviewSourceCodeView:
+            case KTRSSSourceView:
                 result = _sourceViewController;
                 break;
                 
