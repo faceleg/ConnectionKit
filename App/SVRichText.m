@@ -212,6 +212,8 @@
     [context writeString:[archive substringFromIndex:archiveIndex]];
 }
 
+- (void)writeText; { [self writeText:[SVHTMLContext currentContext]]; }
+
 #pragma mark Validation
 
 - (BOOL)validateAttachments:(NSSet **)attachments error:(NSError **)error;

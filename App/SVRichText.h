@@ -39,7 +39,7 @@
 #pragma mark HTML
 - (void)writeText:(SVHTMLContext *)context;
 - (void)writeText:(SVHTMLContext *)context range:(NSRange)range;
-
+- (void)writeText;  // uses +currentContext
 
 #pragma mark Validation
 //  'If the attachment were part of the receiver, would it be allowed that placement?'
