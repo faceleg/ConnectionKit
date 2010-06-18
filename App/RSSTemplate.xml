@@ -35,7 +35,7 @@
 						height="[[mediainfo info:height media:item.thumbnail sizeToFit:master.thumbnailImageSize]]" /&gt;
 				&lt;/div&gt;
 [[endif]]
-[[summary item collectionTruncateCharacters &]]	[[comment The & is a minor hack to properly escape the HTML for an RSS feed]]
+[[=item.article.writeText]]
 			</description>
 			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
 			<guid>[[=&item.URL]]</guid>
