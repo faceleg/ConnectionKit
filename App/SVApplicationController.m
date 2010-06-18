@@ -81,6 +81,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import <iMedia/iMedia.h>
 #import <Sparkle/Sparkle.h>
 #import "SVApplicationController.h"
+#import <JSTalk/JSTalk.h>
 
 // Triggers to localize for the Comment/trackback stuff
 // NSLocalizedString(@"To enable comments, please choose a Weblog Comments provider in the Site Inspector", "Prompt in webview")
@@ -1010,7 +1011,9 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		
 		[defaults setBool:YES forKey:@"Installed FontCollection 2"];
 	}
-		
+	
+	[JSTalk listen];
+	
     _applicationIsLaunching = NO; // we're done
 }
 

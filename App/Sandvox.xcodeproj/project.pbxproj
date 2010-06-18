@@ -1124,6 +1124,8 @@
 		CEE09F7209ED9514004850FB /* License Agreement.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C27FDA8096EFE6E00702991 /* License Agreement.rtf */; };
 		CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CECCED7C0E646B6800BE9016 /* Symbolication.framework */; };
 		CEEE562B0DAD47AD00B7F6A2 /* libcurl.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */; };
+		CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
+		CEF288EE11CC2DA100122D03 /* JSTalk.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = CEF2889E11CC2D7300122D03 /* JSTalk.framework */; };
 		CEF9A72E117FC30700B0BBCB /* dark-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A728117FC30700B0BBCB /* dark-design.pdf */; };
 		CEF9A72F117FC30700B0BBCB /* flexible-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A729117FC30700B0BBCB /* flexible-design.pdf */; };
 		CEF9A730117FC30700B0BBCB /* bright-design.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CEF9A72A117FC30700B0BBCB /* bright-design.pdf */; };
@@ -1671,6 +1673,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				CEF288EE11CC2DA100122D03 /* JSTalk.framework in Copy Frameworks ALWAYS */,
 				3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */,
 				79D35FA20974C8D900241EDA /* Growl.framework in Copy Frameworks ALWAYS */,
 			);
@@ -2834,6 +2837,7 @@
 		CEE09F7509ED9559004850FB /* fr */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEEE562A0DAD47AD00B7F6A2 /* libcurl.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libcurl.dylib; path = /usr/lib/libcurl.dylib; sourceTree = "<absolute>"; };
 		CEF12E770D908EB400FCAC70 /* YouTubeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = YouTubeElement.xcodeproj; path = ../Plugins/Elements/YouTubeElement/YouTubeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		CEF2889E11CC2D7300122D03 /* JSTalk.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JSTalk.framework; path = ../../Shared/ThirdParty/JSTalk/JSTalk.framework; sourceTree = "<group>"; };
 		CEF9A728117FC30700B0BBCB /* dark-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "dark-design.pdf"; path = "DesignPicker/dark-design.pdf"; sourceTree = "<group>"; };
 		CEF9A729117FC30700B0BBCB /* flexible-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "flexible-design.pdf"; path = "DesignPicker/flexible-design.pdf"; sourceTree = "<group>"; };
 		CEF9A72A117FC30700B0BBCB /* bright-design.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; name = "bright-design.pdf"; path = "DesignPicker/bright-design.pdf"; sourceTree = "<group>"; };
@@ -2879,6 +2883,7 @@
 				CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */,
 				CEBEB32D10AA7B07006E7D8A /* iMedia.framework in Frameworks */,
 				CEE1BE67117D2299002AA67D /* Symbolication.framework in Frameworks */,
+				CEF2889F11CC2D7300122D03 /* JSTalk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3994,13 +3999,14 @@
 		3C202DC907E00BCC00DE4994 /* Third Party Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				CEF2889E11CC2D7300122D03 /* JSTalk.framework */,
 				3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */,
 				3C3F547C0D625919004885E7 /* Connection.framework */,
 				79D35F950974C84000241EDA /* Growl.framework */,
 				3C3F54530D6258AA004885E7 /* Sparkle.framework */,
 			);
 			name = "Third Party Frameworks";
-			sourceTree = "<group>";
+			sourceTree = SOURCE_ROOT;
 		};
 		3C202DF507E00CCC00DE4994 /* Product Dependencies */ = {
 			isa = PBXGroup;
@@ -7568,6 +7574,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../Shared/ThirdParty/JSTalk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				PRODUCT_NAME = Sandvox;
@@ -7591,6 +7599,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks\"",
+					"\"$(SRCROOT)\"",
+					"\"$(SRCROOT)/../../Shared/ThirdParty/JSTalk\"",
 				);
 				INFOPLIST_FILE = Info.plist;
 				MOMC_NO_WARNINGS = YES;
