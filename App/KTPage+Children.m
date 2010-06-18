@@ -66,9 +66,7 @@
 - (void)addChildItem:(SVSiteItem *)item
 {
 	OBPRECONDITION(item);
-	
-	// To have a child page we must be a collection
-	[self setBool:YES forKey:@"isCollection"];
+	OBPRECONDITION([self isCollection]);
 	
 	
 	// If inserting a page into a manually sorted collection, place the page at the end of it

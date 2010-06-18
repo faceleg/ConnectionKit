@@ -18,6 +18,7 @@
 #import "NSBundle+Karelia.h"
 #import "NSBundle+KTExtensions.h"
 #import "NSCharacterSet+Karelia.h"
+#import "NSError+Karelia.h"
 #import "NSManagedObjectContext+KTExtensions.h"
 #import "NSObject+Karelia.h"
 #import "NSSortDescriptor+Karelia.h"
@@ -36,8 +37,7 @@
 
 @implementation KTPage (Indexes)
 
-#pragma mark -
-#pragma mark Basic Accessors
+#pragma mark Basic Properties
 
 - (KTCollectionSummaryType)collectionSummaryType { return [self wrappedIntegerForKey:@"collectionSummaryType"]; }
 
@@ -46,15 +46,6 @@
 	[self setWrappedInteger:type forKey:@"collectionSummaryType"];
 }
 
-- (void)setCollectionMaxIndexItems:(NSNumber *)max
-{
-	[self setWrappedValue:max forKey:@"collectionMaxIndexItems"];
-	
-	// Clearly this operation affects the list
-	[self invalidatePagesInIndexCache];
-}
-
-#pragma mark -
 #pragma mark Index
 
 - (KTAbstractIndex *)index { return [self wrappedValueForKey:@"index"]; }
@@ -178,6 +169,58 @@
 #pragma mark RSS Feed
 
 @dynamic collectionSyndicate;
+- (BOOL)validateCollectionSyndicate:(NSNumber **)syndicate error:(NSError **)outError;
+{
+    // Only collections are allowed to syndicate
+    BOOL result = (![*syndicate boolValue] || [self isCollection]);
+    if (!result && outError)
+    {
+        *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                        code:NSValidationNumberTooLargeError
+                        localizedDescription:@"Only collections can be syndicated"];
+    }
+    
+    return result;
+}
+
+@dynamic collectionMaxIndexItems;
+- (void)setCollectionMaxIndexItems:(NSNumber *)max
+{
+    [self willChangeValueForKey:@"collectionMaxIndexItems"];
+	[self setPrimitiveValue:max forKey:@"collectionMaxIndexItems"];
+	
+	// Clearly this operation affects the list
+	[self invalidatePagesInIndexCache];
+    
+    [self didChangeValueForKey:@"collectionMaxIndexItems"];
+}
+- (BOOL)validateCollectionMaxIndexItems:(NSNumber **)max error:(NSError **)outError;
+{
+    // mandatory for collections, nil otherwise
+    if ([self isCollection])
+    {
+        if (!*max)
+        {
+            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                          code:NSValidationMissingMandatoryPropertyError
+                                          localizedDescription:@"collectionMaxIndexItems is non-optional for collections"];
+            
+            return NO;
+        }
+    }
+    else
+    {
+        if (*max)
+        {
+            if (outError) *outError = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                          code:NSValidationNumberTooLargeError
+                                          localizedDescription:@"Only collections can specify a number of articles to syndicate"];
+            return NO;
+        }
+    }
+    
+    return YES;
+}
 
 @dynamic RSSFileName;
 

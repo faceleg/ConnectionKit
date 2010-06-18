@@ -168,6 +168,7 @@ typedef enum {
 #pragma mark RSS Feed
 
 @property(nonatomic, copy) NSNumber *collectionSyndicate;  // BOOL, mandatory
+@property(nonatomic, copy) NSNumber *collectionMaxIndexItems;   // mandatory for collections, nil otherwise
 
 @property(nonatomic, copy) NSString *RSSFileName;
 - (NSURL *)feedURL;
