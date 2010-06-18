@@ -48,7 +48,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringWriter:(id <KSStringWriter>)writer; // designated initializer
+- (id)initWithStringWriter:(id <KSWriter>)writer; // designated initializer
 {
     [super initWithStringWriter:writer];
     
@@ -363,7 +363,7 @@
     [_stringWriter release]; _stringWriter = buffer;
 }
 
-- (id <KSStringWriter>)stringWriter
+- (id <KSWriter>)stringWriter
 {
     //  Override to force use of our own writer
     return _stringWriter;
@@ -377,7 +377,7 @@
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
     // Finish buffering extra header
-    id <KSStringWriter> buffer = _stringWriter;
+    id <KSWriter> buffer = _stringWriter;
     _stringWriter = [[super stringWriter] retain];
     
     [self writeString:[self extraHeaderMarkup]];

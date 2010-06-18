@@ -11,7 +11,7 @@
 #import "NSString+Karelia.h"
 
 
-@interface SVHTMLBuffer : NSObject <KSStringWriter>
+@interface SVHTMLBuffer : NSObject <KSWriter>
 {
   @private
     NSMutableString *_string;
@@ -120,7 +120,7 @@
     [super writeString:string];
 }
 
-- (id <KSStringWriter>)stringWriter;
+- (id <KSWriter>)stringWriter;
 {
     return (_buffer ? _buffer : [super stringWriter]);
 }

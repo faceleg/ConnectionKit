@@ -102,7 +102,7 @@
     [attributedHTML release];
 }
 
-#pragma mark KSStringWriter
+#pragma mark KSWriter
 
 - (void)writeString:(NSString *)string;
 {

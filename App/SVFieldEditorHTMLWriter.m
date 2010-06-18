@@ -44,7 +44,7 @@
 
 @implementation SVFieldEditorHTMLWriter
 
-- (id)initWithStringWriter:(id <KSStringWriter>)stream
+- (id)initWithStringWriter:(id <KSWriter>)stream
 {
     self = [super initWithStringWriter:stream];
     

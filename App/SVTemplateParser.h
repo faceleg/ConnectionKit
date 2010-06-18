@@ -27,7 +27,7 @@
 @protocol KTTemplateParserDelegate;
 
 
-@interface SVTemplateParser : NSObject <KSStringWriter>
+@interface SVTemplateParser : NSObject <KSWriter>
 {
   @private
 	NSString				*myID;
@@ -37,7 +37,7 @@
 	id						myDelegate;
 	SVTemplateParser		*myParentParser;	// Weak ref
 	
-    id <KSStringWriter> _writer;  // weak ref, only used mid-parse
+    id <KSWriter> _writer;  // weak ref, only used mid-parse
 	NSMutableDictionary	*myOverriddenKeys;
 	
 	NSUInteger  _ifFunctionDepth;
@@ -67,9 +67,9 @@
 
 + (BOOL)parseTemplate:(NSString *)aTemplate
             component:(id)component
-        writeToStream:(id <KSStringWriter>)context;
+        writeToStream:(id <KSWriter>)context;
 
-- (BOOL)parseWithStringWriter:(id <KSStringWriter>)context;
+- (BOOL)parseWithStringWriter:(id <KSWriter>)context;
 - (BOOL)prepareToParse;
 
 - (void)willWriteKeyPath;

@@ -46,7 +46,7 @@ typedef enum {
     
     NSMutableString     *_headerMarkup;
     NSMutableString     *_endBodyMarkup;
-    id <KSStringWriter> _stringWriter;
+    id <KSWriter> _stringWriter;
     
     NSMutableArray  *_iteratorsStack;
     
