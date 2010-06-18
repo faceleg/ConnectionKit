@@ -81,7 +81,7 @@
     if (subbuffer) [self flushBuffer:subbuffer];
     
     NSMutableString *string = [buffer mutableString];
-    [[self stringWriter] writeString:string];   // can't call [self writeString:] as that might close start tag too early
+    [[self outputWriter] writeString:string];   // can't call [self writeString:] as that might close start tag too early
     [string setString:@""];
 }
 
@@ -120,9 +120,9 @@
     [super writeString:string];
 }
 
-- (id <KSWriter>)stringWriter;
+- (id <KSWriter>)outputWriter;
 {
-    return (_buffer ? _buffer : [super stringWriter]);
+    return (_buffer ? _buffer : [super outputWriter]);
 }
 
 @end

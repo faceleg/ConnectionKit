@@ -856,7 +856,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     
     // Use an HTML context for reading in content
-    SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithStringWriter:result];
+    SVTextContentHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithOutputWriter:result];
     [context push];
     
     
@@ -889,7 +889,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     // Put together the HTML for the thumbnail
     NSMutableString *thumbnailHTML = [[NSMutableString alloc] init];
-    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:thumbnailHTML];
+    SVHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:thumbnailHTML];
     
     [context setLiveDataFeeds:NO];
     [context setPage:[[self site] rootPage]];
@@ -1089,7 +1089,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     OBASSERT([NSThread currentThread] == [self thread]);
     
     NSMutableString *result = [NSMutableString string];
-    SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] initWithStringWriter:result];
+    SVHTMLContext *context = [[SVQuickLookPreviewHTMLContext alloc] initWithOutputWriter:result];
     
     [context setPage:[[self site] rootPage]];
     

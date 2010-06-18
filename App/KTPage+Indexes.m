@@ -256,7 +256,7 @@
 - (NSString *)RSSFeed;
 {
 	NSMutableString *result = [NSMutableString string];
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:result];
     
     [self writeRSSFeed:context];
 	[context release];

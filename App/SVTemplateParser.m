@@ -191,7 +191,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 		if (component && template)
 		{
 			SVTemplateParser *parser = [self newChildParserWithTemplate:template component:component];
-			[parser parseWithStringWriter:_writer];
+			[parser parseWithOutputWriter:_writer];
 			[parser release];
 		}
 	}
@@ -225,13 +225,13 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
         writeToStream:(id <KSWriter>)context;
 {
 	SVTemplateParser *parser = [[self alloc] initWithTemplate:aTemplate component:component];
-	BOOL result = [parser parseWithStringWriter:context];
+	BOOL result = [parser parseWithOutputWriter:context];
 	[parser release];
     
     return result;
 }
 
-- (BOOL)parseWithStringWriter:(id <KSWriter>)stream;
+- (BOOL)parseWithOutputWriter:(id <KSWriter>)stream;
 {
 	BOOL result = NO;
 	@try
@@ -541,7 +541,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 - (void)close; { [_writer close]; }
 
 // Leff in for compatibility with templates
-- (id <KSWriter>)stringWriter { return _writer; }
+- (id <KSWriter>)outputWriter { return _writer; }
 
 #pragma mark -
 #pragma mark Comment Function

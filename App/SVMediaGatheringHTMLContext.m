@@ -13,9 +13,9 @@
 
 @implementation SVMediaGatheringHTMLContext
 
-- (id)initWithStringWriter:(id <KSWriter>)writer;
+- (id)initWithOutputWriter:(id <KSWriter>)writer;
 {
-    self = [super initWithStringWriter:writer];
+    self = [super initWithOutputWriter:writer];
     return self;
 }
 

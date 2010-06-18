@@ -31,7 +31,7 @@
 
 - (void)close;
 {
-    NSString *HTML = [(NSString *)[self stringWriter] retain];  // -close will release it
+    NSString *HTML = [(NSString *)[self outputWriter] retain];  // -close will release it
     
     [super close];
     

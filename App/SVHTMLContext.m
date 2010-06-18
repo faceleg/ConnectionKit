@@ -48,11 +48,11 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringWriter:(id <KSWriter>)writer; // designated initializer
+- (id)initWithOutputWriter:(id <KSWriter>)writer; // designated initializer
 {
-    [super initWithStringWriter:writer];
+    [super initWithOutputWriter:writer];
     
-    _stringWriter = [writer retain];
+    _outputWriter = [writer retain];
         
     _includeStyling = YES;
     _mainCSS = [[NSMutableString alloc] init];
@@ -84,7 +84,7 @@
     
     [super dealloc];
     
-    OBASSERT(!_stringWriter);   // super should have called -close to set this to nil
+    OBASSERT(!_outputWriter);   // super should have called -close to set this to nil
 }
 
 #pragma mark Properties
@@ -360,13 +360,13 @@
 {
     // Start buffering into a temporary string writer
     NSMutableString *buffer = [[NSMutableString alloc] init];
-    [_stringWriter release]; _stringWriter = buffer;
+    [_outputWriter release]; _outputWriter = buffer;
 }
 
-- (id <KSWriter>)stringWriter
+- (id <KSWriter>)outputWriter
 {
     //  Override to force use of our own writer
-    return _stringWriter;
+    return _outputWriter;
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
@@ -377,8 +377,8 @@
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
     // Finish buffering extra header
-    id <KSWriter> buffer = _stringWriter;
-    _stringWriter = [[super stringWriter] retain];
+    id <KSWriter> buffer = _outputWriter;
+    _outputWriter = [[super outputWriter] retain];
     
     [self writeString:[self extraHeaderMarkup]];
     
@@ -456,7 +456,7 @@
 {
     [super close];
     
-    [_stringWriter release]; _stringWriter = nil;
+    [_outputWriter release]; _outputWriter = nil;
 }
 
 #pragma mark Legacy

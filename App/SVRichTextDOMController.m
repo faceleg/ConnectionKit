@@ -148,7 +148,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     NSMutableString *html = [[NSMutableString alloc] init];
     
     SVParagraphedHTMLWriter *writer = 
-    [[SVParagraphedHTMLWriter alloc] initWithStringWriter:html];
+    [[SVParagraphedHTMLWriter alloc] initWithOutputWriter:html];
     
     [writer setDelegate:self];
     [writer setAllowsBlockGraphics:[self allowsBlockGraphics]];
@@ -232,7 +232,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [writer writeTextAttachment:attachment];
     
     [writer flush];
-    NSString *stream = (NSMutableString *)[writer stringWriter];
+    NSString *stream = (NSMutableString *)[writer outputWriter];
     NSRange range = NSMakeRange([stream length] - 1, 1);
     
     if (!NSEqualRanges([attachment range], range))

@@ -44,9 +44,9 @@
 
 @implementation SVFieldEditorHTMLWriter
 
-- (id)initWithStringWriter:(id <KSWriter>)stream
+- (id)initWithOutputWriter:(id <KSWriter>)stream
 {
-    self = [super initWithStringWriter:stream];
+    self = [super initWithOutputWriter:stream];
     
     _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
     _pendingEndDOMElements = [[NSMutableArray alloc] init];

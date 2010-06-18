@@ -130,14 +130,14 @@
 - (BOOL)parseIntoHTMLContext:(SVHTMLContext *)context;
 {
     [context push];
-    BOOL result = [self parseWithStringWriter:context];
+    BOOL result = [self parseWithOutputWriter:context];
     [context pop];
     return result;
 }
 
 - (BOOL)parse;
 {
-    return [self parseWithStringWriter:[SVHTMLContext currentContext]];
+    return [self parseWithOutputWriter:[SVHTMLContext currentContext]];
 }
 
 /*	We make a couple of extra tweakes for HTML parsing

@@ -69,7 +69,7 @@
             component:(id)component
         writeToStream:(id <KSWriter>)context;
 
-- (BOOL)parseWithStringWriter:(id <KSWriter>)context;
+- (BOOL)parseWithOutputWriter:(id <KSWriter>)context;
 - (BOOL)prepareToParse;
 
 - (void)willWriteKeyPath;

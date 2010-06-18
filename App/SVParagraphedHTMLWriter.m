@@ -24,9 +24,9 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithStringWriter:(id <KSWriter>)stream;
+- (id)initWithOutputWriter:(id <KSWriter>)stream;
 {
-    if (self = [super initWithStringWriter:stream])
+    if (self = [super initWithOutputWriter:stream])
     {
         _attachments = [[NSMutableSet alloc] init];
     }

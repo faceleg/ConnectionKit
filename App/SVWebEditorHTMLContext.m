@@ -30,9 +30,9 @@
 
 @implementation SVWebEditorHTMLContext
 
-- (id)initWithStringWriter:(id <KSWriter>)stream
+- (id)initWithOutputWriter:(id <KSWriter>)stream
 {
-    [super initWithStringWriter:stream];
+    [super initWithOutputWriter:stream];
     
     _DOMControllers = [[NSMutableArray alloc] init];
     _dependencies = [[NSMutableSet alloc] init];

@@ -121,7 +121,7 @@
     {
         // Generate HTML
         NSMutableString *html = [[NSMutableString alloc] init];
-        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithStringWriter:html];
+        SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:html];
         [context copyPropertiesFromContext:[self HTMLContext]];
         
         for (SVGraphic *aGraphic in pagelets)
@@ -189,7 +189,7 @@
         // Prepare to write HTML
         NSMutableString *editingHTML = [[NSMutableString alloc] init];
         OBASSERT(!_changeHTMLContext);
-        _changeHTMLContext = [[SVWebEditorHTMLContext alloc] initWithStringWriter:editingHTML];
+        _changeHTMLContext = [[SVWebEditorHTMLContext alloc] initWithOutputWriter:editingHTML];
         [_changeHTMLContext copyPropertiesFromContext:[self HTMLContext]];
         
         

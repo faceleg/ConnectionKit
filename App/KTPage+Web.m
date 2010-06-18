@@ -108,7 +108,7 @@
 {
     NSMutableString *result = [NSMutableString string];
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:result];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:result];
     [context setPage:self];
 	
 	[self writeHTML:context];
@@ -151,7 +151,7 @@
 	if ([[self collectionSyndicate] boolValue])
 	{
 		NSMutableString *RSSString = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVHTMLContext alloc] initWithStringWriter:RSSString];
+        SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:RSSString];
         [self writeRSSFeed:context];
         [context release];
 		
