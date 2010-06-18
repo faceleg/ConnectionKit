@@ -176,7 +176,7 @@ typedef enum {
 - (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate;
 
 
-// Summary
+#pragma mark Summary
 - (NSString *)summaryHTMLWithTruncation:(unsigned)truncation;
 
 - (NSString *)customSummaryHTML;

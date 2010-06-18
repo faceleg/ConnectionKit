@@ -12,7 +12,7 @@
 		<lastBuildDate>[[=parser.RFC822Date]]</lastBuildDate>
 		<docs>http://blogs.law.harvard.edu/tech/rss</docs>
 		<generator>[[=&site.appNameVersion]]</generator>
-[[if master.logoImage]]
+[[if !master.logo.hidden]]
 		<image>
 			<url>[[mediainfo info:path media:master.logoImage sizeName:pageHeaderImage]]</url>
 			<title>[[=&master.headerImageDescription]]</title>
@@ -21,7 +21,7 @@
 			<height>[[mediainfo info:height media:master.logoImage sizeName:pageHeaderImage]]</height>
 		</image>
 [[endif]]
-[[foreach sortedReverseChronoChildrenInIndex item]]
+[[foreach pagesInRSSFeed item]]
 		<item>
 			<title>[[=&item.titleText]]</title>
 			<link>[[path item]]</link>

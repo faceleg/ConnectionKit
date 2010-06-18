@@ -238,10 +238,16 @@
 
 /*  The pages that will go into the RSS feed. This is just -pagesInIndex, sorted chronologically
  */
-- (NSArray *)sortedReverseChronoChildrenInIndex
+- (NSArray *)pagesInRSSFeed
 {
-	NSArray *sortDescriptors = [NSSortDescriptor reverseChronologicalSortDescriptors];
-    NSArray *result = [[self pagesInIndex] sortedArrayUsingDescriptors:sortDescriptors];
+	NSArray *result = [self childrenWithSorting:SVCollectionSortByDateCreated ascending:NO inIndex:YES];
+    
+    NSUInteger max = [[self collectionMaxIndexItems] unsignedIntegerValue];
+    if ([result count] > max)
+    {
+        result = [result subarrayToIndex:max];
+    }
+    
 	return result;
 }
 
@@ -250,12 +256,7 @@
 - (NSString *)RSSFeedWithParserDelegate:(id)parserDelegate
 {
 	// Find the template
-	NSString *template = [[[self plugin] bundle] templateRSSAsString];
-	if (!template)
-	{
-		// No special template for this bundle, so look for the generic one in the app
-		template = [[NSBundle mainBundle] templateRSSAsString];
-	}
+	NSString *template = [[NSBundle mainBundle] templateRSSAsString];
 	OBASSERT(template);
 	
 	
