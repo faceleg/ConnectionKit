@@ -14,6 +14,7 @@
 #import "SVTemplate.h"
 #import "SVTemplateParser.h"
 #import "SVExternalLink.h"
+#import "SVWebContentAreaController.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
@@ -134,7 +135,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     [super viewDidDisappear:animated];
     
     // Did we move because of an in-progress load?
-    if (![[self webView] isLoading]) [self loadSiteItem:nil];
+    if (![[self webView] isLoading]) [self setSiteItem:nil];
     
     //  Once the view goes offscreen, it's not ready to be displayed again until after loading has progressed a little
     [self setViewIsReadyToAppear:NO];
@@ -146,9 +147,11 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 #pragma mark Loading
 
-- (void)loadSiteItem:(SVSiteItem *)item
+- (BOOL)viewShouldAppear:(BOOL)animated
+webContentAreaController:(SVWebContentAreaController *)controller;
 {
-    [self setSiteItem:item];
+    [self setSiteItem:[controller selectedPage]];
+    return [self viewIsReadyToAppear];
 }
 
 @synthesize siteItem = _siteItem;
@@ -238,9 +241,5 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 {
     [[self webView] reload:sender];
 }
-
-#pragma mark Delegate
-
-@synthesize delegate = _delegate;
 
 @end

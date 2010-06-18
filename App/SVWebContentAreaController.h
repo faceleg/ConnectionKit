@@ -30,7 +30,7 @@ typedef enum {
 @class SVURLPreviewViewController, SVLoadingPlaceholderViewController;
 
 
-@interface SVWebContentAreaController : BWTabViewController <KSInspection, SVSiteItemViewControllerDelegate, SVWebEditorViewControllerDelegate>
+@interface SVWebContentAreaController : BWTabViewController <KSInspection, SVWebEditorViewControllerDelegate>
 {
   @private
     SVWebEditorViewController           *_webEditorViewController;
@@ -49,6 +49,7 @@ typedef enum {
 #pragma mark Pages
 // Set this and the webview/source list view will be updated to match. Can even bind it!
 @property(nonatomic, copy) NSArray *selectedPages;
+- (SVSiteItem *)selectedPage;   // returns nil if more than one page is selected
 
 
 #pragma mark View Type

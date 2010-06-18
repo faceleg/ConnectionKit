@@ -118,7 +118,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark -
 
 
-@protocol SVWebEditorViewControllerDelegate <SVSiteItemViewControllerDelegate, NSObject>
+@protocol SVWebEditorViewControllerDelegate <NSObject>
 
 // The controller is not in a position to open a page by itself; it lets somebody else decide how to
 - (void)webEditorViewController:(SVWebEditorViewController *)sender openPage:(KTPage *)page;

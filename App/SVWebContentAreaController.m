@@ -15,8 +15,6 @@
 #import "SVSiteItemViewController.h"
 
 
-static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewControllerIsReadyToAppear";
-
 
 @implementation SVWebContentAreaController
 
@@ -42,17 +40,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     
     
     [self setSelectedIndex:0];
-    
-    
-    // Delegation/observation
-    [_webEditorViewController addObserver:self
-                               forKeyPath:@"viewIsReadyToAppear"
-                                  options:0
-                                  context:sWebContentReadyToAppearObservationContext];
-    [_webPreviewController addObserver:self
-                            forKeyPath:@"viewIsReadyToAppear"
-                               options:0
-                               context:sWebContentReadyToAppearObservationContext];
 }
 
 - (id)init
@@ -75,11 +62,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
 
 - (void)dealloc
 {
-    // Tear down delegation/observation
-    [_webEditorViewController removeObserver:self forKeyPath:@"viewIsReadyToAppear"];
-    [_webPreviewController removeObserver:self forKeyPath:@"viewIsReadyToAppear"];
-    
-    
     [_webEditorViewController release];
     [_sourceViewController release];
     [_placeholderViewController release];
@@ -111,7 +93,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             NSViewController <SVSiteItemViewController> *viewController = [self viewControllerForSiteItem:item];
             
             // Start the load here. Present the view if it's ready; if not wait until it is (or takes too long)
-            [viewController loadSiteItem:item];
             [self setSelectedViewControllerWhenReady:viewController];
             
             break;
@@ -136,6 +117,11 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     
     
     [self didChangeSelectionOrViewType];
+}
+
+- (SVSiteItem *)selectedPage;   // returns nil if more than one page is selected
+{
+    return ([[self selectedPages] count] == 1 ? [[self selectedPages] objectAtIndex:0] : nil);
 }
 
 #pragma mark View Type
@@ -239,7 +225,7 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
     
     
     //  Either the view's ready to appear, or we need to wait until it really is
-    if ([controller viewIsReadyToAppear])
+    if ([controller viewShouldAppear:NO webContentAreaController:self])
     {
         [self setSelectedViewController:controller];
     }
@@ -282,42 +268,6 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
             NSString *keyPath = [bindingInfo objectForKey:NSObservedKeyPathKey];
             [object setValue:[NSArray arrayWithObject:page] forKeyPath:keyPath];
         }
-    }
-}
-
-- (void)siteItemViewControllerShowSourceView:(NSViewController <SVSiteItemViewController> *)viewController
-{
-    [self setViewType:KTSourceCodeView];
-}
-
-#pragma mark KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sWebContentReadyToAppearObservationContext)
-    {
-        if (object == [self selectedViewControllerWhenReady])
-        {
-            if ([object viewIsReadyToAppear])
-            {
-                // The webview is done loading! swap 'em
-                [self setSelectedViewController:object];
-                
-                // The webview is now part of the view hierarchy, so no longer needs to be explicity told its window
-                [[[self webEditorViewController] webView] setHostWindow:nil];
-            }
-            else
-            {
-                [self presentLoadingViewController];
-            }
-        }
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
 }
 

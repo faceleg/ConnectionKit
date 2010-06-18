@@ -26,6 +26,7 @@
 #import "SVSidebar.h"
 #import "SVSidebarDOMController.h"
 #import "SVSidebarPageletsController.h"
+#import "SVWebContentAreaController.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
 #import "KTDocument.h"
@@ -169,7 +170,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     [super viewDidDisappear:animated];
     
-    if (![self isUpdating]) [self loadSiteItem:nil];
+    if (![self isUpdating]) [self setPage:nil];
     
     // Once we move offsreen, we're no longer suitable to be shown
     [self setViewIsReadyToAppear:NO];
@@ -725,9 +726,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark SVSiteItemViewController
 
-- (void)loadSiteItem:(SVSiteItem *)item;
+- (BOOL)viewShouldAppear:(BOOL)animated webContentAreaController:(SVWebContentAreaController *)controller
 {
-    [self setPage:[item pageRepresentation]];
+    [self setPage:[[controller selectedPage] pageRepresentation]];
+    return [self viewIsReadyToAppear];
 }
 
 #pragma mark -

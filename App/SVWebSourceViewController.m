@@ -16,15 +16,6 @@
 
 @synthesize webEditorViewController = _webEditorViewController;
 
--(BOOL) viewIsReadyToAppear
-{
-	return YES;
-}
-- (void) setViewIsReadyToAppear:(BOOL)aReady
-{
-	;	// do nothing -- not asynchronous. We just want to conform to the protocol.
-}
-
 - (id)initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil webEditorViewController:(SVWebEditorViewController *)aWebEditorViewController;
 {
 	self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
@@ -68,17 +59,15 @@
 	[super loadView];
 }
 
+- (BOOL)viewShouldAppear:(BOOL)animated
+webContentAreaController:(SVWebContentAreaController *)controller
+{
+    return YES;
+}
+
 - (void)viewWillAppear:(BOOL)animated;
 {
 	[self webEditorViewControllerWillUpdate:nil];
 }
-
-- (void)loadSiteItem:(SVSiteItem *)item;
-{
-	NSLog(@"loadSiteItem");
-}
-
-@synthesize delegate = _delegate;
-
 
 @end

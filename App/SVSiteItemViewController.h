@@ -9,27 +9,13 @@
 #import <Cocoa/Cocoa.h>
 
 
-@class SVSiteItem;
-@protocol SVSiteItemViewControllerDelegate;
+@class SVWebContentAreaController;
 
 
 @protocol SVSiteItemViewController
 
-// Owning view controller will try to avoid placing the receiver onscreen if this returns NO. MUST be KVO-compliant
-@property(nonatomic, readonly) BOOL viewIsReadyToAppear;
-
-- (void)loadSiteItem:(SVSiteItem *)item;
-- (void)setDelegate:(id <SVSiteItemViewControllerDelegate>)delegate;
-
-@end
-
-
-#pragma mark -
-
-
-@protocol SVSiteItemViewControllerDelegate
-
-// The SVSiteItemViewController should call this upon its delegate if it's time to display the source view
-- (void)siteItemViewControllerShowSourceView:(NSViewController <SVSiteItemViewController> *)sender;
+// If your controller is not ready yet, return NO. Call -setSelectedViewController:self on the Web Content Area Controller when done
+- (BOOL)viewShouldAppear:(BOOL)animated
+webContentAreaController:(SVWebContentAreaController *)controller;
 
 @end

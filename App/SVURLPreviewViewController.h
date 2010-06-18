@@ -10,11 +10,13 @@
 #import "SVSiteItemViewController.h"
 
 
+@class SVSiteItem;
+
+
 @interface SVURLPreviewViewController : KSWebViewController <SVSiteItemViewController>
 {
   @private
     SVSiteItem  *_siteItem;
-    id <SVSiteItemViewControllerDelegate>   _delegate;
     BOOL    _readyToAppear;
 	
 	NSString *_metaDescription;
@@ -24,7 +26,5 @@
 
 @property(nonatomic, retain) SVSiteItem *siteItem;
 - (NSURL *)URLToLoad;
-
-@property(nonatomic, assign) id <SVSiteItemViewControllerDelegate> delegate;
 
 @end
