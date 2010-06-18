@@ -11,7 +11,7 @@
 #import "SVWebSourceViewController.h"
 #import "SVLoadingPlaceholderViewController.h"
 
-#import "SVSiteItem.h"
+#import "KTPage.h"
 #import "SVSiteItemViewController.h"
 
 
@@ -171,8 +171,15 @@ static NSString *sWebContentReadyToAppearObservationContext = @"SVItemViewContro
         // Tick the selected state
         [menuItem setState:([menuItem tag] == [self viewType])];
         
+        
         // Only allow the user to select standard and source code view for now.
-        result = ([menuItem tag] == KTStandardWebView || [menuItem tag] == KTSourceCodeView);
+        KTPage *page = ([[self selectedPages] count] == 1 ?
+                        [[self selectedPages] objectAtIndex:0] :
+                        nil);
+        
+        result = ([menuItem tag] == KTStandardWebView ||
+                  [menuItem tag] == KTSourceCodeView ||
+                  ([menuItem tag] == KTRSSSourceView && [[page collectionSyndicate] boolValue]));
     }
     
     return result;
