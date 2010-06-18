@@ -148,7 +148,7 @@
     
     
 	// Generate and publish RSS feed if needed
-	if ([self collectionSyndicate] && [self collectionCanSyndicate])
+	if ([[self collectionSyndicate] boolValue])
 	{
 		NSString *RSSString = [self RSSFeedWithParserDelegate:publishingEngine];
 		if (RSSString)

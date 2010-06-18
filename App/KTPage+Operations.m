@@ -40,8 +40,7 @@
 
 - (void)addRSSCollectionsToArray:(NSMutableArray *)anArray forPage:(KTPage *)aPage
 {
-	BOOL rss = ([self collectionCanSyndicate] && [self collectionSyndicate]);
-	if (rss)
+	if ([[self collectionSyndicate] boolValue])
 	{
 		[anArray addObject:self];
 	}

@@ -165,10 +165,9 @@ typedef enum {
 - (KTPage *)nextPage;
 
 
-// RSS Feed
-- (BOOL)collectionCanSyndicate;
-- (BOOL)collectionSyndicate;
-- (void)setCollectionSyndicate:(BOOL)syndicate;
+#pragma mark RSS Feed
+
+@property(nonatomic, copy) NSNumber *collectionSyndicate;  // BOOL, mandatory
 
 @property(nonatomic, copy) NSString *RSSFileName;
 - (NSURL *)feedURL;

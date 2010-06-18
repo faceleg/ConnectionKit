@@ -175,29 +175,9 @@
 	return result;
 }
 
-#pragma mark -
 #pragma mark RSS Feed
 
-/*!	Can the collection syndicate? A few things have to be set....
-If this is true, the RSS button is enabled.
-If this, and "collectionSyndicate" are true, then feed is referenced and uploaded.
-*/
-- (BOOL)collectionCanSyndicate
-{
-	return [self isCollection]
-	&& nil != [self wrappedValueForKey:@"collectionIndexBundleIdentifier"]
-	;
-	// TAKE OUT FOR NOW ... NOT USING THIS SETTING, UNTIL/UNLESS WE HAVE MULTIPLE FORMATS TO CHOOSE FROM
-	// (which we would put in the site settings)
-	// && ([self boolForKey:@"collectionGenerateAtom"] || [self boolForKey:@"collectionGenerateRSS"]) ;
-}
-
-- (BOOL)collectionSyndicate { return [self wrappedBoolForKey:@"collectionSyndicate"]; }
-
-- (void)setCollectionSyndicate:(BOOL)syndicate
-{
-    [self setWrappedBool:syndicate forKey:@"collectionSyndicate"];
-}
+@dynamic collectionSyndicate;
 
 @dynamic RSSFileName;
 
@@ -205,7 +185,7 @@ If this, and "collectionSyndicate" are true, then feed is referenced and uploade
 {
 	NSURL *result = nil;
 	
-	if ([self collectionSyndicate] && [self collectionCanSyndicate])
+	if ([[self collectionSyndicate] boolValue])
 	{
 		result = [NSURL URLWithPath:[self RSSFileName] relativeToURL:[self URL] isDirectory:NO];
 	}
