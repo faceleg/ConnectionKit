@@ -23,7 +23,7 @@
 [[endif]]
 [[foreach pagesInRSSFeed item]]
 		<item>
-			<title>[[=&item.titleText]]</title>
+			<title>[[=&item.title]]</title>
 			<link>[[path item]]</link>
 			<description>
 [[if item.thumbnail]]
