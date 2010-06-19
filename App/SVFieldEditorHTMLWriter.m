@@ -32,8 +32,6 @@
 
 - (BOOL)isParagraphCharacterStyle;  // returns YES unless the receiver is text, <a>, <br>, image etc.
 
-- (BOOL)isParagraphContent;     // returns YES if the receiver is text, <br>, image etc.
-
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context;
 
 @end
@@ -131,7 +129,8 @@
     
     
     //  The element might turn out to be empty...
-    if ([element isParagraphContent])
+    
+    if ([[self class] isElementWithTagNameContent:tagName])
     {
         return [super _writeDOMElement:element];
     }
@@ -457,8 +456,6 @@
     }
 }
 
-- (BOOL)isParagraphContent; { return NO; }
-
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context; { return self; }
 
 @end
@@ -466,12 +463,6 @@
 @implementation DOMElement (SVFieldEditorHTMLWriter)
 
 - (BOOL)isParagraphCharacterStyle; { return YES; }
-
-- (BOOL)isParagraphContent;
-{
-    BOOL result = [SVFieldEditorHTMLWriter isElementWithTagNameContent:[self tagName]];
-    return result;
-}
 
 - (DOMNode *)nodeByStrippingNonParagraphNodes:(SVFieldEditorHTMLWriter *)context;
 {
@@ -492,8 +483,4 @@
 
 @implementation DOMHTMLAnchorElement (SVFieldEditorHTMLWriter)
 - (BOOL)isParagraphCharacterStyle; { return NO; }
-@end
-
-@implementation DOMCharacterData (SVFieldEditorHTMLWriter)
-- (BOOL)isParagraphContent; { return YES; }
 @end
