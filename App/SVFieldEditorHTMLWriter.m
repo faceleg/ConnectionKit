@@ -82,7 +82,7 @@
     {
         [_pendingEndDOMElements removeLastObject];
         [self discardBuffer];
-        [self pushElement:[element tagName]];
+        [self pushElement:tagName];
         
         
         // Write inner HTML
