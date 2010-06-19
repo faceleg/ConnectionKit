@@ -38,7 +38,7 @@
 				[[=item.article.writeRSSFeedItemDescription]]
 			</description>
 			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
-			<guid>[[=&item.URL]]</guid>
+			[[if item.URL]]<guid>[[=&item.URL]]</guid>[[endif]]
 [[foreach item.feedEnclosures anEnclosure]]
 			<enclosure url="[[mediainfo media:anEnclosure info:path]]" length="[[mediainfo media:anEnclosure info:dataLength]]" type="[[mediainfo media:anEnclosure info:MIMEType]]" />
 [[if item.thumbnail]]
