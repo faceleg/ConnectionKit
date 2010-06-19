@@ -26,7 +26,7 @@ extern int kMaxNumberOfFreePublishedPages;
 @class SVHTMLContext, SVMediaRepresentation;
 
 
-@protocol SVPublishingContext
+@protocol SVPublisher
 
 #pragma mark HTML
 // When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
@@ -75,7 +75,7 @@ typedef enum {
 @protocol KTPublishingEngineDelegate;
 
 
-@interface KTPublishingEngine : NSOperation <SVPublishingContext>
+@interface KTPublishingEngine : NSOperation <SVPublisher>
 {
   @private
     KTSite      *_site;

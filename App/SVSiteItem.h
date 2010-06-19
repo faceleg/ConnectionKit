@@ -17,7 +17,7 @@
 
 
 @class KTSite, KTPage, KTCodeInjection, SVExternalLink, SVMediaRecord;
-@protocol SVWebContentViewController, SVMedia, SVPublishingContext;
+@protocol SVWebContentViewController, SVMedia, SVPublisher;
 
 
 @interface SVSiteItem : SVExtensibleManagedObject <SVPage>
@@ -102,7 +102,7 @@
 
 
 #pragma mark Contents
-- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive;
+- (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
 - (void)writeContentRecursively:(BOOL)recursive;// writes to the current HTML context. Ignore things like site title
 
 

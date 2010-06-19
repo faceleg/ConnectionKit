@@ -137,7 +137,7 @@
     [parser release];
 }
 
-- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive;
+- (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
 {
     NSString *path = [self uploadPath];
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];

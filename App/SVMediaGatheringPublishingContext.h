@@ -9,12 +9,12 @@
 #import "KTPublishingEngine.h"
 
 
-@interface SVMediaGatheringPublishingContext : NSObject <SVPublishingContext>
+@interface SVMediaGatheringPublishingContext : NSObject <SVPublisher>
 {
   @private
-    id <SVPublishingContext>    _mediaPublisher;
+    id <SVPublisher>    _mediaPublisher;
 }
 
-@property(nonatomic, retain) id <SVPublishingContext> publishingEngine;
+@property(nonatomic, retain) id <SVPublisher> publishingEngine;
 
 @end
