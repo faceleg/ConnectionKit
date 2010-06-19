@@ -38,7 +38,7 @@
 
 #pragma mark Publishing
 
-- (void)publish:(id <SVPublishingContext>)publishingEngine recursively:(BOOL)recursive;
+- (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
 {
     id <SVMedia> media = [self media];
     
