@@ -377,6 +377,8 @@
 		277E72F9113416A20081389F /* KSHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277E72F8113416A20081389F /* KSHTMLWriter.m */; };
 		277EE9220CFD8CFF005617FE /* KTStalenessManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 277EE9200CFD8CFF005617FE /* KTStalenessManager.h */; settings = {ATTRIBUTES = (); }; };
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
+		277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */; };
+		277FDC3A11CD3F810083F1BF /* SVPublishDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277FDC3811CD3F810083F1BF /* SVPublishDataWriter.m */; };
 		278116E5107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */; };
 		2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782914410912B30008D0A64 /* SVInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2782914710912B30008D0A64 /* SVInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782914510912B30008D0A64 /* SVInspectorViewController.m */; };
@@ -1885,6 +1887,8 @@
 		277EE9210CFD8CFF005617FE /* KTStalenessManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTStalenessManager.m; sourceTree = "<group>"; };
 		277F4CC31046F3840099B186 /* KSKeyValueBinding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSKeyValueBinding.h; sourceTree = "<group>"; };
 		277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SlideshowPlay.tiff; sourceTree = "<group>"; };
+		277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishDataWriter.h; sourceTree = "<group>"; };
+		277FDC3811CD3F810083F1BF /* SVPublishDataWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPublishDataWriter.m; sourceTree = "<group>"; };
 		278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEKWebEditorView+Dragging.m"; sourceTree = "<group>"; };
 		2782914410912B30008D0A64 /* SVInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorViewController.h; sourceTree = "<group>"; };
 		2782914510912B30008D0A64 /* SVInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorViewController.m; sourceTree = "<group>"; };
@@ -3540,6 +3544,8 @@
 				27BCCCA10F09609E00B06B35 /* KTRemotePublishingEngine.m */,
 				273B40091176305600A275E6 /* SVMediaGatheringPublishingContext.h */,
 				273B400A1176305600A275E6 /* SVMediaGatheringPublishingContext.m */,
+				277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */,
+				277FDC3811CD3F810083F1BF /* SVPublishDataWriter.m */,
 			);
 			name = "Publishing Engine";
 			sourceTree = "<group>";
@@ -5680,6 +5686,7 @@
 				27B5921411AE85C100E10A1E /* WEKWebViewEditing.h in Headers */,
 				2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */,
 				CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */,
+				277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7111,6 +7118,7 @@
 				27B5921511AE85C100E10A1E /* WEKWebViewEditing.m in Sources */,
 				2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */,
 				CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */,
+				277FDC3A11CD3F810083F1BF /* SVPublishDataWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

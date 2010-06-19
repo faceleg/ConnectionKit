@@ -26,7 +26,7 @@ extern int kMaxNumberOfFreePublishedPages;
 @class SVHTMLContext, SVMediaRepresentation;
 
 
-@protocol SVPublisher
+@protocol SVPublisher <NSObject>
 
 #pragma mark HTML
 // When you want to publish HTML, call -beginPublishingHTMLToPath: to obtain a context to write into. It will be correctly set up to handle linking in media etc. Call -close on the context once you're done to let the publishing engine know there will be no more HTML coming.
