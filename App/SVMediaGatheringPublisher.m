@@ -6,10 +6,10 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVMediaGatheringPublishingContext.h"
+#import "SVMediaGatheringPublisher.h"
 
 
-@implementation SVMediaGatheringPublishingContext
+@implementation SVMediaGatheringPublisher
 
 @synthesize publishingEngine = _mediaPublisher;
 

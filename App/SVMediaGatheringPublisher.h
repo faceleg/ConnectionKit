@@ -9,7 +9,7 @@
 #import "KTPublishingEngine.h"
 
 
-@interface SVMediaGatheringPublishingContext : NSObject <SVPublisher>
+@interface SVMediaGatheringPublisher : NSObject <SVPublisher>
 {
   @private
     id <SVPublisher>    _mediaPublisher;

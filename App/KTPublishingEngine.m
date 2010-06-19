@@ -14,7 +14,7 @@
 #import "SVHTMLTextBlock.h"
 #import "KTMaster.h"
 #import "SVMediaGatheringHTMLContext.h"
-#import "SVMediaGatheringPublishingContext.h"
+#import "SVMediaGatheringPublisher.h"
 #import "SVMediaRecord.h"
 #import "SVMediaRepresentation.h"
 #import "KTPage+Internal.h"
@@ -350,7 +350,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
     [context setPublishingEngine:self];
     
-    SVMediaGatheringPublishingContext *pubContext = [[SVMediaGatheringPublishingContext alloc] init];
+    SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
     [pubContext setPublishingEngine:self];
     
     _newMedia = [[NSMutableArray alloc] init];
