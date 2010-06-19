@@ -142,6 +142,23 @@
     [self writeEarlyCallouts:[SVHTMLContext currentContext]];
 }
 
+#pragma mark RSS Feeds
+
+- (void)writeRSSFeedItemDescription;
+{
+    SVHTMLContext *feedContext = [SVHTMLContext currentContext];
+    
+    KSEscapedXMLEntitiesWriter *writer = [[KSEscapedXMLEntitiesWriter alloc]
+                                          initWithOutputWriter:feedContext];
+    
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:writer];
+    [context copyPropertiesFromContext:feedContext];
+    
+    [self writeText:context];
+    [context release];
+    [writer release];
+}
+
 #pragma mark Validation
 
 - (BOOL)validateAttachment:(SVTextAttachment *)attachment

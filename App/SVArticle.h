@@ -17,6 +17,10 @@
 
 - (NSUInteger)writeEarlyCallouts:(SVHTMLContext *)context;
 
+#pragma mark RSS Feeds
+// Uses a special escaped HTML context to pipe writing through to the feed's context
+- (void)writeRSSFeedItemDescription;
+
 @end
 
 
