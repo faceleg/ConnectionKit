@@ -17,15 +17,6 @@
 			<title>[[=&item.title]]</title>
 			<link>[[path item]]</link>
 			<description>
-[[if item.thumbnail]]
-				&lt;div class="article-thumbnail"&gt;
-					&lt;img
-						src="[[mediainfo info:path media:item.thumbnail sizeToFit:master.thumbnailImageSize]]"
-						alt="[[=&item.titleText]]"
-						width="[[mediainfo info:width media:item.thumbnail sizeToFit:master.thumbnailImageSize]]"
-						height="[[mediainfo info:height media:item.thumbnail sizeToFit:master.thumbnailImageSize]]" /&gt;
-				&lt;/div&gt;
-[[endif]]
 				[[=item.article.writeRSSFeedItemDescription]]
 			</description>
 			<pubDate>[[=item.creationDate.descriptionRFC822]]</pubDate>
