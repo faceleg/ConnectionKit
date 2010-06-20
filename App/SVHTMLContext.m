@@ -48,12 +48,13 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithOutputWriter:(id <KSWriter>)writer; // designated initializer
+- (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
 {
-    [super initWithOutputWriter:writer];
+    // One buffer to hold page markup until we have collected all head info
+    _postHeaderBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
     
-    _outputWriter = [writer retain];
-        
+    [super initWithOutputWriter:_postHeaderBuffer];
+            
     _includeStyling = YES;
     _mainCSS = [[NSMutableString alloc] init];
     
@@ -84,7 +85,7 @@
     
     [super dealloc];
     
-    OBASSERT(!_outputWriter);   // super should have called -close to set this to nil
+    OBASSERT(!_postHeaderBuffer);   // super should have called -close to set this to nil
 }
 
 #pragma mark Properties
@@ -359,14 +360,7 @@
 - (void)writeExtraHeaders;  // writes any code plug-ins etc. have requested should inside the <head> element
 {
     // Start buffering into a temporary string writer
-    NSMutableString *buffer = [[NSMutableString alloc] init];
-    [_outputWriter release]; _outputWriter = buffer;
-}
-
-- (id <KSWriter>)outputWriter
-{
-    //  Override to force use of our own writer
-    return _outputWriter;
+    [_postHeaderBuffer beginBuffering];
 }
 
 - (NSMutableString *)endBodyMarkup; // can append to, query, as you like while parsing
@@ -377,13 +371,10 @@
 - (void)writeEndBodyString; // writes any code plug-ins etc. have requested should go at the end of the page, before </body>
 {
     // Finish buffering extra header
-    id <KSWriter> buffer = _outputWriter;
-    _outputWriter = [[super outputWriter] retain];
+    [[[_postHeaderBuffer valueForKey:@"_outputs"] objectAtIndex:0]  // hack to get underlying stream
+     writeString:[self extraHeaderMarkup]];
     
-    [self writeString:[self extraHeaderMarkup]];
-    
-    [self writeString:(NSString *)buffer];
-    [buffer release];
+    [_postHeaderBuffer flush];
     
     
     // Write the end body markup
@@ -456,7 +447,7 @@
 {
     [super close];
     
-    [_outputWriter release]; _outputWriter = nil;
+    [_postHeaderBuffer release]; _postHeaderBuffer = nil;
 }
 
 #pragma mark Legacy

@@ -8,6 +8,7 @@
 
 #import "SVHTMLWriter.h"
 #import "SVPlugIn.h"
+#import "KSMegaBufferedWriter.h"
 
 
 // publishing mode
@@ -44,9 +45,9 @@ typedef enum {
 	
     NSString    *_calloutAlignment;
     
-    NSMutableString     *_headerMarkup;
-    NSMutableString     *_endBodyMarkup;
-    id <KSWriter> _outputWriter;
+    NSMutableString         *_headerMarkup;
+    NSMutableString         *_endBodyMarkup;
+    KSMegaBufferedWriter    *_postHeaderBuffer;
     
     NSMutableArray  *_iteratorsStack;
     
