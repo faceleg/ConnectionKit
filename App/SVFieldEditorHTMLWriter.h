@@ -19,8 +19,8 @@
 @protocol SVFieldEditorHTMLWriterDelegate;
 @interface SVFieldEditorHTMLWriter : SVHTMLWriter
 {
-    //@private
     NSMutableArray  *_pendingStartTagDOMElements;
+  @private
     NSMutableArray  *_pendingEndDOMElements;
     
     id <SVFieldEditorHTMLWriterDelegate>   _delegate;
