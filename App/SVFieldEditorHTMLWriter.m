@@ -297,35 +297,39 @@
     // Open tag
     [self openTag:[element tagName]];
     
+    
     // Write attributes
-    DOMNamedNodeMap *attributes = [element attributes];
-    NSUInteger index;
-    for (index = 0; index < [attributes length]; index++)
+    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
     {
-        // Check each attribute should be written
-        DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
-        NSString *attributeName = [anAttribute name];
-        
-        if ([self validateAttribute:attributeName])
+        DOMNamedNodeMap *attributes = [element attributes];
+        NSUInteger index;
+        for (index = 0; index < [attributes length]; index++)
         {
-            // Validate individual styling
-            if ([attributeName isEqualToString:@"style"])
+            // Check each attribute should be written
+            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+            NSString *attributeName = [anAttribute name];
+            
+            if ([self validateAttribute:attributeName])
             {
-                DOMCSSStyleDeclaration *style = [element style];
-                [self removeUnsupportedCustomStyling:style];
-                
-                // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                [self writeAttribute:@"style" value:[style cssText]];
+                // Validate individual styling
+                if ([attributeName isEqualToString:@"style"])
+                {
+                    DOMCSSStyleDeclaration *style = [element style];
+                    [self removeUnsupportedCustomStyling:style];
+                    
+                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
+                    [self writeAttribute:@"style" value:[style cssText]];
+                }
+                else
+                {
+                    [self writeAttribute:attributeName value:[anAttribute value]];
+                }
             }
             else
             {
-                [self writeAttribute:attributeName value:[anAttribute value]];
+                [attributes removeNamedItem:attributeName];
+                index--;
             }
-        }
-        else
-        {
-            [attributes removeNamedItem:attributeName];
-            index--;
         }
     }
     
