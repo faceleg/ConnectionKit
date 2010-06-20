@@ -183,38 +183,38 @@
 
 - (DOMNode *)endStylingDOMElement:(DOMElement *)element;
 {
+    DOMNode *result = nil;
+    
     // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
     if ([_pendingStartTagDOMElements lastObject] == element)
     {
         // I'm not 100% sure this works with the new buffering code yet.
-        DOMNode *result = [element nextSibling];
+        result = [element nextSibling];
         
         [[element parentNode] removeChild:element];
         [self popElement];
         [_pendingStartTagDOMElements removeLastObject];
         
         [_buffer discardBuffer];
-        
-        return result;
     }
     else
     {
         if ([[element tagName] isEqualToString:@"P"])
         {
-            [self endElement];
+            result = [self endElementWithDOMElement:element];
         }
         else
         {
             // Close the element, but wait and see if the next sibling is equal & therefore to be merged
             [_buffer beginBuffering];
-            [self endElement];
+            result = [self endElementWithDOMElement:element];
             [_buffer flushOnNextWrite];
             
             [_pendingEndDOMElements addObject:element];
         }
-        
-        return [element nextSibling];
     }
+    
+    return result;
 }
 
 #pragma mark Cleanup
