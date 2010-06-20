@@ -68,7 +68,7 @@
                                                                      toPath:fullUploadPath];
             OBASSERT(transferRecord);
             
-            [transferRecord setProperty:page forKey:@"object"];
+            if (page) [transferRecord setProperty:page forKey:@"object"];
         }
         
         [HTML release];

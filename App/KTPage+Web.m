@@ -102,7 +102,7 @@
 	return result;
 }
 
-#pragma mark Class Methods
+#pragma mark HTML
 
 - (NSString *)markupString;   // creates a temporary HTML context and calls -writeHTML
 {
@@ -135,49 +135,6 @@
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
     [parser parseIntoHTMLContext:context];
     [parser release];
-}
-
-- (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
-{
-    NSString *path = [self uploadPath];
-    SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
-    [context setPage:self];
-	
-    [self writeHTML:context];
-    [context close];
-    
-    
-	// Generate and publish RSS feed if needed
-	if ([[self collectionSyndicate] boolValue])
-	{
-		NSMutableString *RSSString = [[NSMutableString alloc] init];
-        SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:RSSString];
-        [self writeRSSFeed:context];
-        [context release];
-		
-        // Now that we have page contents in unicode, clean up to the desired character encoding.
-        NSData *RSSData = [RSSString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-        OBASSERT(RSSData);
-        
-        NSString *RSSFilename = [self RSSFileName];
-        NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
-        [publishingEngine publishData:RSSData toPath:RSSUploadPath];
-		
-        [RSSString release];
-	}
-    
-    
-    // Continue onto the next page if the app is licensed
-    if (recursive && !gLicenseIsBlacklisted && gRegistrationString)
-    {
-        for (SVSiteItem *anItem in [self sortedChildren])
-        {
-            if (![[anItem isDraft] boolValue])
-            {
-                [anItem publish:publishingEngine recursively:recursive];
-            }
-        }
-    }
 }
 
 + (NSString *)pageTemplate
@@ -278,6 +235,46 @@
     
 	// For preview/quicklook mode, the banner CSS
     [[self master] writeBannerCSS];
+}
+
+#pragma mark Publishing
+
+- (void)publish:(id <SVPublisher>)publishingEngine recursively:(BOOL)recursive;
+{
+    NSString *path = [self uploadPath];
+    SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
+    [context setPage:self];
+	
+    [self writeHTML:context];
+    
+    
+	// Generate and publish RSS feed if needed
+	if ([[self collectionSyndicate] boolValue])
+	{
+		NSString *RSSFilename = [self RSSFileName];
+        NSString *RSSUploadPath = [[path stringByDeletingLastPathComponent] stringByAppendingPathComponent:RSSFilename];
+        
+        SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:RSSUploadPath];
+        [self writeRSSFeed:context];
+        [context close];
+	}
+    
+    
+    // Want the page itself to be placed on the queue after RSS feed, so if publishing fails between the two, both will be republished next time round
+    [context close];
+    
+    
+    // Continue onto the next page if the app is licensed
+    if (recursive && !gLicenseIsBlacklisted && gRegistrationString)
+    {
+        for (SVSiteItem *anItem in [self sortedChildren])
+        {
+            if (![[anItem isDraft] boolValue])
+            {
+                [anItem publish:publishingEngine recursively:recursive];
+            }
+        }
+    }
 }
 
 #pragma mark Other
