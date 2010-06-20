@@ -379,6 +379,8 @@
 		277F4DFF0F5B3D05005CC7C5 /* SlideshowPlay.tiff in Resources */ = {isa = PBXBuildFile; fileRef = 277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */; };
 		277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */; };
 		277FDC3A11CD3F810083F1BF /* SVPublishDataWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277FDC3811CD3F810083F1BF /* SVPublishDataWriter.m */; };
+		277FDD6111CE21650083F1BF /* KSMegaBufferedWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 277FDD5F11CE21650083F1BF /* KSMegaBufferedWriter.h */; };
+		277FDD6211CE21650083F1BF /* KSMegaBufferedWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 277FDD6011CE21650083F1BF /* KSMegaBufferedWriter.m */; };
 		278116E5107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m in Sources */ = {isa = PBXBuildFile; fileRef = 278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */; };
 		2782914610912B30008D0A64 /* SVInspectorViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2782914410912B30008D0A64 /* SVInspectorViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2782914710912B30008D0A64 /* SVInspectorViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2782914510912B30008D0A64 /* SVInspectorViewController.m */; };
@@ -1889,6 +1891,8 @@
 		277F4DFE0F5B3D05005CC7C5 /* SlideshowPlay.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = SlideshowPlay.tiff; sourceTree = "<group>"; };
 		277FDC3711CD3F810083F1BF /* SVPublishDataWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPublishDataWriter.h; sourceTree = "<group>"; };
 		277FDC3811CD3F810083F1BF /* SVPublishDataWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPublishDataWriter.m; sourceTree = "<group>"; };
+		277FDD5F11CE21650083F1BF /* KSMegaBufferedWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSMegaBufferedWriter.h; sourceTree = "<group>"; };
+		277FDD6011CE21650083F1BF /* KSMegaBufferedWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSMegaBufferedWriter.m; sourceTree = "<group>"; };
 		278116E4107CEC3E003AA6F5 /* WEKWebEditorView+Dragging.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "WEKWebEditorView+Dragging.m"; sourceTree = "<group>"; };
 		2782914410912B30008D0A64 /* SVInspectorViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorViewController.h; sourceTree = "<group>"; };
 		2782914510912B30008D0A64 /* SVInspectorViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVInspectorViewController.m; sourceTree = "<group>"; };
@@ -5008,6 +5012,8 @@
 				27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */,
 				2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */,
 				2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */,
+				277FDD5F11CE21650083F1BF /* KSMegaBufferedWriter.h */,
+				277FDD6011CE21650083F1BF /* KSMegaBufferedWriter.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5687,6 +5693,7 @@
 				2775DB6C11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h in Headers */,
 				CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */,
 				277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */,
+				277FDD6111CE21650083F1BF /* KSMegaBufferedWriter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7119,6 +7126,7 @@
 				2775DB6D11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m in Sources */,
 				CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */,
 				277FDC3A11CD3F810083F1BF /* SVPublishDataWriter.m in Sources */,
+				277FDD6211CE21650083F1BF /* KSMegaBufferedWriter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
