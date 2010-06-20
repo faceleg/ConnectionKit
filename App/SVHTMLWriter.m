@@ -50,15 +50,6 @@
     [self closeComment];
 }
 
-#pragma mark Delegate
-
-@synthesize delegate = _delegate;
-
-- (DOMNode *)willWriteDOMElement:(DOMElement *)element
-{
-    return [[self delegate] HTMLWriter:self willWriteDOMElement:element];
-}
-
 #pragma mark Buffering
 
 - (void)beginBuffering;

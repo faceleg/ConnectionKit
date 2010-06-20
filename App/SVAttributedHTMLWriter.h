@@ -7,11 +7,11 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVHTMLWriter.h"
+#import "SVFieldEditorHTMLWriter.h"
 
 
 
-@interface SVAttributedHTMLWriter : NSObject <SVHTMLWriterDelegate, KSWriter>
+@interface SVAttributedHTMLWriter : NSObject <SVFieldEditorHTMLWriterDelegate, KSWriter>
 {
   @private
     NSMutableAttributedString   *_attributedHTML;

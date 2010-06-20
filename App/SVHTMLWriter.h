@@ -16,14 +16,11 @@
 @class SVHTMLBuffer;
 
 
-@protocol SVHTMLWriterDelegate;
 @interface SVHTMLWriter : KSHTMLWriter <SVHTMLWriter>
 {
   @private
     SVHTMLBuffer    *_buffer;
     BOOL            _flushOnNextWrite;
-    
-    id <SVHTMLWriterDelegate>   _delegate;
 }
 
 #pragma mark Elements/Comments
@@ -39,16 +36,4 @@
 - (void)flushOnNextWrite;   // calls -flush at next write. Can still use -discardBuffer to effectively cancel this
 
 
-#pragma mark Delegate
-@property(nonatomic, assign) id <SVHTMLWriterDelegate> delegate;
-
-
-@end
-
-
-#pragma mark -
-
-
-@protocol SVHTMLWriterDelegate <NSObject>
-- (DOMNode *)HTMLWriter:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 @end

@@ -7,12 +7,13 @@
 //
 
 #import "SVTextDOMController.h"
+#import "SVFieldEditorHTMLWriter.h"
 
 
 @class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
 
 
-@interface SVRichTextDOMController : SVTextDOMController <SVHTMLWriterDelegate>
+@interface SVRichTextDOMController : SVTextDOMController <SVFieldEditorHTMLWriterDelegate>
 {        
     BOOL    _isUpdating;
     

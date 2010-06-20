@@ -16,11 +16,14 @@
 #import "SVHTMLWriter.h"
 
 
+@protocol SVFieldEditorHTMLWriterDelegate;
 @interface SVFieldEditorHTMLWriter : SVHTMLWriter
 {
     //@private
     NSMutableArray  *_pendingStartTagDOMElements;
     NSMutableArray  *_pendingEndDOMElements;
+    
+    id <SVFieldEditorHTMLWriterDelegate>   _delegate;
 }
 
 
@@ -55,5 +58,17 @@
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
 
 
+#pragma mark Delegate
+@property(nonatomic, assign) id <SVFieldEditorHTMLWriterDelegate> delegate;
+
+
+@end
+
+
+#pragma mark -
+
+
+@protocol SVFieldEditorHTMLWriterDelegate <NSObject>
+- (DOMNode *)HTMLWriter:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 @end
 
