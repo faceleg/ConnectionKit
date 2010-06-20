@@ -13,7 +13,7 @@
 //  -   Only a small whitelist of elements, attributes and styling are permitted. Anything failing to make the grade will be removed from the DOM and not actually written to the context.
 
 
-#import "SVHTMLWriter.h"
+#import "KSHTMLWriter.h"
 #import "KSMegaBufferedWriter.h"
 
 

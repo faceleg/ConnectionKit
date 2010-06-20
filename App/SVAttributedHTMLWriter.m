@@ -77,7 +77,7 @@
 
 - (void)writeDOMRange:(DOMRange *)range graphicControllers:(NSArray *)graphicControllers;
 {
-    SVHTMLWriter *writer = [[SVHTMLWriter alloc] initWithOutputWriter:self];
+    KSHTMLWriter *writer = [[KSHTMLWriter alloc] initWithOutputWriter:self];
     [writer setDelegate:self];
     
     _graphicControllers = graphicControllers;

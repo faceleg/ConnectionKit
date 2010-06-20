@@ -219,8 +219,6 @@
 		2710C3BB110B358D00A7B997 /* SVPageTitle.m in Sources */ = {isa = PBXBuildFile; fileRef = 2710C3B9110B358D00A7B997 /* SVPageTitle.m */; };
 		2713726511542AFF003AB050 /* SVAttributedHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713726311542AFF003AB050 /* SVAttributedHTMLWriter.h */; };
 		2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */; };
-		271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 271372AE11543BC5003AB050 /* SVHTMLWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 271372B011543BC5003AB050 /* SVHTMLWriter.m */; };
 		2713756911551296003AB050 /* SVAttributedHTML.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713756711551296003AB050 /* SVAttributedHTML.h */; };
 		2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */ = {isa = PBXBuildFile; fileRef = 2713756811551296003AB050 /* SVAttributedHTML.m */; };
 		2713BDFD10778AE8000864C2 /* NSResponder+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */; };
@@ -1715,8 +1713,6 @@
 		2710C3B9110B358D00A7B997 /* SVPageTitle.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPageTitle.m; sourceTree = "<group>"; };
 		2713726311542AFF003AB050 /* SVAttributedHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAttributedHTMLWriter.h; sourceTree = "<group>"; };
 		2713726411542AFF003AB050 /* SVAttributedHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTMLWriter.m; sourceTree = "<group>"; };
-		271372AE11543BC5003AB050 /* SVHTMLWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVHTMLWriter.h; sourceTree = "<group>"; };
-		271372B011543BC5003AB050 /* SVHTMLWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLWriter.m; sourceTree = "<group>"; };
 		2713756711551296003AB050 /* SVAttributedHTML.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVAttributedHTML.h; sourceTree = "<group>"; };
 		2713756811551296003AB050 /* SVAttributedHTML.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVAttributedHTML.m; sourceTree = "<group>"; };
 		2713BDFB10778AE8000864C2 /* NSResponder+Karelia.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSResponder+Karelia.h"; sourceTree = "<group>"; };
@@ -3313,8 +3309,6 @@
 				27A618791123480C00004FED /* SVParagraphedHTMLWriter.h */,
 				27A6187A1123480C00004FED /* SVParagraphedHTMLWriter.m */,
 				279BCF351128C1F90000FC77 /* SVHTMLContext+CurrentContext.m */,
-				271372AE11543BC5003AB050 /* SVHTMLWriter.h */,
-				271372B011543BC5003AB050 /* SVHTMLWriter.m */,
 				278ACCC6116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.h */,
 				278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */,
 				2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */,
@@ -5662,7 +5656,6 @@
 				274DF567114EB01600AC8C03 /* SVPageletTitleBox.h in Headers */,
 				27A080791151704F005D873A /* SVImageItemCell.h in Headers */,
 				2713726511542AFF003AB050 /* SVAttributedHTMLWriter.h in Headers */,
-				271372AF11543BC5003AB050 /* SVHTMLWriter.h in Headers */,
 				2713756911551296003AB050 /* SVAttributedHTML.h in Headers */,
 				27D47EBF115A60CB007550F6 /* SVCalloutDOMController.h in Headers */,
 				27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */,
@@ -7099,7 +7092,6 @@
 				274DF568114EB01600AC8C03 /* SVPageletTitleBox.m in Sources */,
 				27A0807A1151704F005D873A /* SVImageItemCell.m in Sources */,
 				2713726611542AFF003AB050 /* SVAttributedHTMLWriter.m in Sources */,
-				271372B111543BC5003AB050 /* SVHTMLWriter.m in Sources */,
 				2713756A11551296003AB050 /* SVAttributedHTML.m in Sources */,
 				27D47EC0115A60CB007550F6 /* SVCalloutDOMController.m in Sources */,
 				27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */,
