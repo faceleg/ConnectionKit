@@ -53,8 +53,14 @@
     // One buffer to hold page markup until we have collected all head info
     _postHeaderBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
     
-    [super initWithOutputWriter:_postHeaderBuffer];
-            
+    // And another buffer for grouping callouts
+    _calloutBuffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:_postHeaderBuffer];
+    [_calloutBuffer setDelegate:self];
+    
+    
+    [super initWithOutputWriter:_calloutBuffer];
+    
+    
     _includeStyling = YES;
     _mainCSS = [[NSMutableString alloc] init];
     
@@ -86,6 +92,7 @@
     [super dealloc];
     
     OBASSERT(!_postHeaderBuffer);   // super should have called -close to set this to nil
+    OBASSERT(!_calloutBuffer);
 }
 
 #pragma mark Properties
@@ -160,6 +167,21 @@
     return result;
 }
 
+#pragma mark Elements/Comments
+
+- (void)writeEndTagWithComment:(NSString *)comment;
+{
+    [self endElement];
+    
+    [self writeString:@" "];
+    
+    [self openComment];
+    [self writeString:@" "];
+    [self writeText:comment];
+    [self writeString:@" "];
+    [self closeComment];
+}
+
 #pragma mark Callouts
 
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
@@ -167,7 +189,7 @@
     if ([alignment isEqualToString:_calloutAlignment])
     {
         // Suitable div is already open, so cancel the buffer and carry on writing
-        [self discardBuffer];
+        [_calloutBuffer discardBuffer];
     }
     else
     {
@@ -189,20 +211,19 @@
 - (void)endCallout;
 {
     // Buffer this call so consecutive matching callouts can be blended into one
-    [self beginBuffering];
+    [_calloutBuffer beginBuffering];
     
     [self endElement]; // callout-content
     [self endElement]; // callout
     [self endElement]; // callout-container
     
-    [self flushOnNextWrite];
+    [_calloutBuffer flushOnNextWrite];
 }
 
-- (void)flush;
+- (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
 {
+    OBASSERT(buffer == _calloutBuffer);
     [_calloutAlignment release]; _calloutAlignment = nil;
-    
-    [super flush];
 }
 
 #pragma mark URLs/Paths
@@ -448,6 +469,7 @@
     [super close];
     
     [_postHeaderBuffer release]; _postHeaderBuffer = nil;
+    [_calloutBuffer release]; _calloutBuffer = nil;
 }
 
 #pragma mark Legacy

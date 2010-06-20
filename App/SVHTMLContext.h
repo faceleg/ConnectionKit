@@ -6,7 +6,7 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVHTMLWriter.h"
+#import "KSHTMLWriter.h"
 #import "SVPlugIn.h"
 #import "KSMegaBufferedWriter.h"
 
@@ -26,7 +26,7 @@ typedef enum {
 @protocol SVMedia;
 
 
-@interface SVHTMLContext : SVHTMLWriter <SVPlugInContext>
+@interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, SVHTMLWriter, KSMegaBufferedWriterDelegate>
 {
   @private
     NSURL   *_baseURL;
@@ -43,7 +43,8 @@ typedef enum {
     
     NSUInteger  _headerLevel;
 	
-    NSString    *_calloutAlignment;
+    NSString                *_calloutAlignment;
+    KSMegaBufferedWriter    *_calloutBuffer;
     
     NSMutableString         *_headerMarkup;
     NSMutableString         *_endBodyMarkup;
@@ -79,6 +80,12 @@ typedef enum {
 @property(nonatomic, readonly) NSMutableString *mainCSS;
 - (void)addCSSWithURL:(NSURL *)cssURL;
 @property(nonatomic, copy) NSURL *mainCSSURL;
+
+
+#pragma mark Elements/Comments
+//  For when you have just closed an element and want to end up with this:
+//  </div> <!-- comment -->
+- (void)writeEndTagWithComment:(NSString *)comment;
 
 
 #pragma mark Header Tags
