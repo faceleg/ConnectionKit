@@ -14,14 +14,16 @@
 
 
 #import "SVHTMLWriter.h"
+#import "KSMegaBufferedWriter.h"
 
 
 @protocol SVFieldEditorHTMLWriterDelegate;
-@interface SVFieldEditorHTMLWriter : SVHTMLWriter
+@interface SVFieldEditorHTMLWriter : KSHTMLWriter <KSMegaBufferedWriterDelegate>
 {
-    NSMutableArray  *_pendingStartTagDOMElements;
+    NSMutableArray          *_pendingStartTagDOMElements;
   @private
-    NSMutableArray  *_pendingEndDOMElements;
+    NSMutableArray          *_pendingEndDOMElements;
+    KSMegaBufferedWriter    *_buffer;
     
     id <SVFieldEditorHTMLWriterDelegate>   _delegate;
 }

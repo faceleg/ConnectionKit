@@ -42,9 +42,13 @@
 
 @implementation SVFieldEditorHTMLWriter
 
-- (id)initWithOutputWriter:(id <KSWriter>)stream
+- (id)initWithOutputWriter:(id <KSWriter>)output;
 {
-    self = [super initWithOutputWriter:stream];
+    // All writing goes through a buffer first
+    _buffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];
+    [_buffer setDelegate:self];
+    
+    self = [super initWithOutputWriter:_buffer];
     
     _pendingStartTagDOMElements = [[NSMutableArray alloc] init];
     _pendingEndDOMElements = [[NSMutableArray alloc] init];
@@ -59,6 +63,14 @@
     [_pendingEndDOMElements release]; _pendingEndDOMElements = nil;
     
     [super dealloc];
+}
+
+- (void)close;
+{
+    [_buffer setDelegate:nil];
+    [_buffer release]; _buffer = nil;
+    
+    [super close];
 }
 
 #pragma mark Delegate
@@ -88,7 +100,7 @@
     if ([elementToMergeInto isEqualNode:element compareChildNodes:NO])
     {
         [_pendingEndDOMElements removeLastObject];
-        [self discardBuffer];
+        [_buffer discardBuffer];
         [self pushElement:tagName];
         
         
@@ -153,12 +165,12 @@
 {
     // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
     [_pendingStartTagDOMElements addObject:element];
-    [self beginBuffering];
+    [_buffer beginBuffering];
     
     // Open tag
     [self startElementWithDOMElement:element];
     
-    [self flushOnNextWrite];
+    [_buffer flushOnNextWrite];
     
     
     // Write inner HTML
@@ -181,7 +193,7 @@
         [self popElement];
         [_pendingStartTagDOMElements removeLastObject];
         
-        [self discardBuffer];
+        [_buffer discardBuffer];
         
         return result;
     }
@@ -194,9 +206,9 @@
         else
         {
             // Close the element, but wait and see if the next sibling is equal & therefore to be merged
-            [self beginBuffering];
+            [_buffer beginBuffering];
             [self endElement];
-            [self flushOnNextWrite];
+            [_buffer flushOnNextWrite];
             
             [_pendingEndDOMElements addObject:element];
         }
@@ -424,16 +436,11 @@
 
 #pragma mark Buffering
 
-- (void)flush;
+- (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)bufferedWriter;
 {
     // Before actually writing the string, push through any pending Elements.
     [_pendingStartTagDOMElements removeAllObjects];
     [_pendingEndDOMElements removeAllObjects];
-    
-    
-    
-    
-    [super flush];
 }
 
 @end
