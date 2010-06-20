@@ -66,7 +66,7 @@
                 [calloutController loadHTMLElementFromDocument:document];
             }
             
-            if (![[calloutController HTMLElement] isDescendantOfNode:[self HTMLElement]])
+            if (![[calloutController HTMLElement] ks_isDescendantOfElement:[self HTMLElement]])
             {
                 [self setEarlyCalloutDOMController:(SVCalloutDOMController *)calloutController];
             }

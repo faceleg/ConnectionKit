@@ -303,7 +303,7 @@
     if (selection)
     {
         DOMNode *selectionNode = [selection commonAncestorContainer];
-        if (selectionNode && [selectionNode isDescendantOfNode:element])
+        if (selectionNode && [selectionNode ks_isDescendantOfElement:element])
         {
             [[[self webViewUndoManagerProxy] undoManager] removeAllActionsWithTarget:self];	// Handles suspend/resume webview refresh stuff
             [[self webViewUndoManagerProxy] removeAllWebViewTargettedActions];

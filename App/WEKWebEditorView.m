@@ -861,7 +861,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
         for (WEKWebEditorItem *anItem in [textController selectableTopLevelDescendants])
         {
             DOMHTMLElement *element = [anItem HTMLElement];
-            if ([element isDescendantOfNode:[textController HTMLElement]] &&
+            if ([element ks_isDescendantOfElement:[textController HTMLElement]] &&
                 [range containsNode:element])   // weed out any obvious orphans
             {
                 [result addObject:anItem];

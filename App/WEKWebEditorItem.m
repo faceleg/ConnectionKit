@@ -205,7 +205,7 @@
     
     WEKWebEditorItem *result = nil;
     
-    if ([node isDescendantOfNode:[self HTMLElement]])
+    if ([node ks_isDescendantOfElement:[self HTMLElement]])
     {
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
