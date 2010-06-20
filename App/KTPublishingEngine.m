@@ -225,11 +225,9 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     if (_currentContext) return _currentContext;
     
     // Make context
-    NSMutableString *string = [[NSMutableString alloc] init];
-    SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] initWithOutputWriter:string];
-    [string release];
+    SVPublishingHTMLContext *result = [[SVPublishingHTMLContext alloc] initWithUploadPath:path
+                                                                                publisher:self];
     
-    [result setPublishingEngine:self];
     return [result autorelease];
 }
 
@@ -347,8 +345,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
 - (void)gatherMedia;
 {
     // Gather up media using special context
-    SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] init];
-    [context setPublishingEngine:self];
+    SVMediaGatheringHTMLContext *context = [[SVMediaGatheringHTMLContext alloc] initWithUploadPath:nil publisher:self];
     
     SVMediaGatheringPublisher *pubContext = [[SVMediaGatheringPublisher alloc] init];
     [pubContext setPublishingEngine:self];

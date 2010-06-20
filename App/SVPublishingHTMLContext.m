@@ -20,37 +20,36 @@
 
 @implementation SVPublishingHTMLContext
 
-- (void)dealloc
+- (id)initWithUploadPath:(NSString *)path
+               publisher:(id <SVPublisher>)publisher;
 {
-    [_publishingEngine release];
+    if (path) _output = [[NSMutableString alloc] init];
     
-    [super dealloc];
+    self = [self initWithOutputWriter:_output];
+    
+    _path = [path copy];
+    _publishingEngine = [publisher retain];
+    
+    return self;
 }
-
-@synthesize publishingEngine = _publishingEngine;
 
 - (void)close;
 {
-    NSString *HTML = [(NSString *)[self outputWriter] retain];  // -close will release it
-    
-    [super close];
-    
-    
     // Generate HTML data
-	if (HTML)
+	if (_output)
     {
         NSStringEncoding encoding = [self encoding];
-        NSData *pageData = [HTML dataUsingEncoding:encoding allowLossyConversion:YES];
+        NSData *pageData = [_output dataUsingEncoding:encoding allowLossyConversion:YES];
         OBASSERT(pageData);
         
         
         // Give subclasses a chance to ignore the upload
-        KTPublishingEngine *publishingEngine = [self publishingEngine];
+        KTPublishingEngine *publishingEngine = _publishingEngine;
         KTPage *page = [self page];
         NSString *fullUploadPath = [[publishingEngine baseRemotePath]
-                                    stringByAppendingPathComponent:[page uploadPath]];
+                                    stringByAppendingPathComponent:_path];
         NSData *digest = nil;
-        if (![publishingEngine shouldUploadHTML:HTML
+        if (![publishingEngine shouldUploadHTML:_output
                                        encoding:encoding
                                         forPage:page
                                          toPath:fullUploadPath
@@ -65,14 +64,19 @@
         if (fullUploadPath)
         {
             CKTransferRecord *transferRecord = [publishingEngine publishData:pageData
-                                                                     toPath:fullUploadPath];
+                                                                      toPath:fullUploadPath];
             OBASSERT(transferRecord);
             
             if (page) [transferRecord setProperty:page forKey:@"object"];
         }
-        
-        [HTML release];
     }
+    
+    
+    // Tidy up
+    [super close];
+    [_publishingEngine release]; _publishingEngine = nil;
+    [_path release]; _path = nil;
+    [_output release]; _output = nil;
 }
 
 - (void)writeImageWithIdName:(NSString *)idName
@@ -87,7 +91,7 @@
                                                                              height:height
                                                                            fileType:(NSString *)kUTTypePNG];
     
-    KTPublishingEngine *pubEngine = [self publishingEngine];
+    KTPublishingEngine *pubEngine = _publishingEngine;
     NSString *path = [pubEngine publishMediaRepresentation:rep];
     [rep release];
     
@@ -106,7 +110,7 @@
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;
 {
     [super addResourceWithURL:resourceURL];
-    [[self publishingEngine] publishResourceAtURL:resourceURL];
+    [_publishingEngine publishResourceAtURL:resourceURL];
     
     return [[[[self page] site] hostProperties] URLForResourceFile:
             [resourceURL lastPathComponent]];

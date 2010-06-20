@@ -9,14 +9,18 @@
 #import "SVHTMLContext.h"
 
 
-@class KTPublishingEngine;
+@protocol SVPublisher;
 
 @interface SVPublishingHTMLContext : SVHTMLContext
 {
   @private
-    KTPublishingEngine  *_publishingEngine;
+    id <SVPublisher>    _publishingEngine;
+    NSString            *_path;
+    
+    NSMutableString *_output;
 }
 
-@property(nonatomic, retain) KTPublishingEngine *publishingEngine;
+- (id)initWithUploadPath:(NSString *)path
+               publisher:(id <SVPublisher>)publisher;
 
 @end
