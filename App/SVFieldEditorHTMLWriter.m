@@ -8,6 +8,8 @@
 
 #import "SVFieldEditorHTMLWriter.h"
 
+#import "NSString+Karelia.h"
+
 #import "DOMNode+Karelia.h"
 #import "DOMElement+Karelia.h"
 
@@ -216,7 +218,8 @@
 {
     DOMNode *result = nil;
     
-    if ([[self class] isElementWithTagNameContent:[self topElement]])
+    NSString *tagName = [self topElement];
+    if ([[self class] isElementWithTagNameContent:tagName])
     {
         result = [super endElementWithDOMElement:element];
     }
@@ -236,7 +239,7 @@
         }
         else
         {
-            if ([[element tagName] isEqualToString:@"P"])
+            if ([tagName isEqualToStringCaseInsensitive:@"P"])
             {
                 result = [super endElementWithDOMElement:element];
             }
