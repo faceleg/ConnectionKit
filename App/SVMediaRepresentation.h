@@ -8,8 +8,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-
-@class SVMediaRecord;
+#import "SVMediaRecord.h"
 
 
 @interface SVMediaRepresentation : NSObject <NSCopying>

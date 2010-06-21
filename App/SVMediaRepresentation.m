@@ -9,7 +9,6 @@
 #import "SVMediaRepresentation.h"
 
 #import "KTImageScalingURLProtocol.h"
-#import "SVMediaRecord.h"
 
 
 @implementation SVMediaRepresentation

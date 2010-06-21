@@ -180,26 +180,7 @@
     CGSize result = CGSizeMake(200.0f, 128.0f);
     
     SVMediaRecord *media = [self media];
-    if (media)
-    {
-        CIImage *image = [CIImage imageWithIMBImageItem:media];
-        if (image)
-        {
-            result = [image extent].size;
-        }
-        else
-        {
-            NSImage *image = [NSImage imageWithIMBImageItem:media];
-            if (image)
-            {
-                result = NSSizeToCGSize([image size]);
-            }
-            else
-            {
-                result = CGSizeZero;
-            }
-        }
-    }
+    if (media) result = [media originalSize];
     
     return result;
 }

@@ -84,8 +84,18 @@
              height:(NSNumber *)height
            fileType:(NSString *)type;
 {
+    // If the width and height match the original size, then keep that way
+    SVMediaRecord *record = (SVMediaRecord *)media;
+    
+    if (CGSizeEqualToSize([record originalSize],
+                          CGSizeMake([width floatValue], [height floatValue])))
+    {
+        width = nil;
+        height = nil;
+    }
+    
     SVMediaRepresentation *rep = [[SVMediaRepresentation alloc]
-                                  initWithMediaRecord:(SVMediaRecord *)media
+                                  initWithMediaRecord:record
                                   width:width
                                   height:height
                                   fileType:type];

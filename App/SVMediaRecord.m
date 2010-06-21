@@ -435,6 +435,27 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     return result;
 }
 
+- (CGSize)originalSize;
+{
+    CGSize result = CGSizeZero;
+    
+    CIImage *image = [CIImage imageWithIMBImageItem:self];
+    if (image)
+    {
+        result = [image extent].size;
+    }
+    else
+    {
+        NSImage *image = [NSImage imageWithIMBImageItem:self];
+        if (image)
+        {
+            result = NSSizeToCGSize([image size]);
+        }
+    }
+    
+    return result;
+}
+
 #pragma mark File Management
 
 - (BOOL)validateForInsert:(NSError **)error
