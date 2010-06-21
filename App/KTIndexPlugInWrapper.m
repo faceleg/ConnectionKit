@@ -120,7 +120,8 @@
 		
 		if (9 == priority && nil == gRegistrationString)
 		{
-			[[NSApp delegate] setMenuItemPro:menuItem];
+			// [menuItem setPro:YES];
+			// TODO: deal with notification
 		}
 		
 		// set target/action
