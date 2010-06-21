@@ -74,37 +74,36 @@
     
     // Tidy up
     [super close];
-    [_publishingEngine release]; _publishingEngine = nil;
+    //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
     [_path release]; _path = nil;
     [_output release]; _output = nil;
 }
 
-- (void)writeImageWithIdName:(NSString *)idName
-                   className:(NSString *)className
-                 sourceMedia:(SVMediaRecord *)media
-                         alt:(NSString *)altText
-                       width:(NSNumber *)width
-                      height:(NSNumber *)height;
+- (NSURL *)addMedia:(id <SVMedia>)media
+              width:(NSNumber *)width
+             height:(NSNumber *)height
+           fileType:(NSString *)type;
 {
-    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc] initWithMediaRecord:media
-                                                                              width:width
-                                                                             height:height
-                                                                           fileType:(NSString *)kUTTypePNG];
+    SVMediaRepresentation *rep = [[SVMediaRepresentation alloc]
+                                  initWithMediaRecord:(SVMediaRecord *)media
+                                  width:width
+                                  height:height
+                                  fileType:type];
     
-    KTPublishingEngine *pubEngine = _publishingEngine;
-    NSString *path = [pubEngine publishMediaRepresentation:rep];
+    NSString *path = [_publishingEngine publishMediaRepresentation:rep];
     [rep release];
     
-    NSString *basePath = [pubEngine baseRemotePath];
+    NSString *basePath = [_publishingEngine baseRemotePath];
     if (![basePath hasSuffix:@"/"]) basePath = [basePath stringByAppendingString:@"/"];
     NSString *relPath = [path pathRelativeToPath:basePath];
     
-    [self writeImageWithIdName:idName
-                     className:className
-                           src:relPath
-                           alt:altText
-                         width:[width description]
-                        height:[height description]];
+    if (relPath)
+    {
+        NSURL *result = [NSURL URLWithString:relPath relativeToURL:[self baseURL]];
+        return result;
+    }
+    
+    return nil;
 }
 
 - (NSURL *)addResourceWithURL:(NSURL *)resourceURL;

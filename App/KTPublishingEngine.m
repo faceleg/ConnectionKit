@@ -363,7 +363,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     // Assign filenames to the new media
     for (SVMediaRepresentation *mediaRep in _newMedia)
     {
-        [self publishNewMediaRepresentation:mediaRep];
+        [self uploadMediaRepresentation:mediaRep];
     }
     [_newMedia release]; _newMedia = nil;
 }
@@ -403,7 +403,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
-- (void)publishNewMediaRepresentation:(SVMediaRepresentation *)mediaRep
+- (void)uploadMediaRepresentation:(SVMediaRepresentation *)mediaRep
 {
     //  The media rep does not already exist on the server, so need to assign it a new path
     id <SVMedia> media = [mediaRep mediaRecord];
@@ -431,7 +431,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Upload
     NSData *fileContents = [mediaRep data];
-    [self publishData:fileContents toPath:path];
+    if (fileContents) [self publishData:fileContents toPath:path];
     
     [_uploadedMediaReps setObject:path forKey:mediaRep];
 }
