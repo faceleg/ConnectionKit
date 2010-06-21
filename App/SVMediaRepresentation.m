@@ -83,9 +83,9 @@
 - (BOOL)isEqualToMediaRepresentation:(SVMediaRepresentation *)otherRep;
 {
     BOOL result = ([[self mediaRecord] isEqual:[otherRep mediaRecord]] &&
-                   [[self width] isEqualToNumber:[otherRep width]] &&
-                   [[self height] isEqualToNumber:[otherRep height]] &&
-                   [[self fileType] isEqualToString:[otherRep fileType]]);
+                   KSISEQUAL([self width], [otherRep width]) &&
+                   KSISEQUAL([self height], [otherRep height]) &&
+                   KSISEQUAL([self fileType], [otherRep fileType]));
     return result;
 }
 
