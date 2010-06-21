@@ -155,9 +155,9 @@
 }
 
 // Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
-- (void)startElementWithDOMElement:(DOMElement *)element;
+- (void)startElement:(NSString *)elementName withDOMElement:(DOMElement *)element;    // open the tag and write attributes
 {
-    BOOL isStyling = ![[self class] isElementWithTagNameContent:[element tagName]];
+    BOOL isStyling = ![[self class] isElementWithTagNameContent:elementName];
     if (isStyling)
     {
         // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
@@ -167,7 +167,7 @@
     
     
     // Open tag
-    [self openTag:[element tagName]];
+    [self openTag:elementName];
     
     
     // Write attributes
