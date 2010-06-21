@@ -13,7 +13,7 @@
 //  -   Only a small whitelist of elements, attributes and styling are permitted. Anything failing to make the grade will be removed from the DOM and not actually written to the context.
 
 
-#import "KSHTMLWriter.h"
+#import "KSHTMLWriter+DOM.h"
 #import "KSMegaBufferedWriter.h"
 
 
@@ -33,12 +33,6 @@
 
 // Overrides super's implementation to delete or modify some elements rather than really write them. The correct result is still returned so that the context can carry on recursing correctly.
 - (DOMNode *)_writeDOMElement:(DOMElement *)element;
-
-// Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
-- (DOMNode *)writeStylingDOMElement:(DOMElement *)element;
-
-// Shouldn't need to call directly; -writeStylingDOMElement: does so internally
-- (DOMNode *)endStylingDOMElement:(DOMElement *)element;
 
 
 #pragma mark Cleanup

@@ -114,7 +114,7 @@
         
         
         // Carry on. We know the element can't be deemed content in its own right since was checked in previous iteration
-        return [self endStylingDOMElement:elementToMergeInto];
+        return [self endElementWithDOMElement:elementToMergeInto];
     }
     
     
@@ -149,68 +149,106 @@
     
     
     
-    //  The element might turn out to be empty...
-    
-    if ([[self class] isElementWithTagNameContent:tagName])
-    {
-        return [super _writeDOMElement:element];
-    }
-    else
-    {
-        return [self writeStylingDOMElement:element];
-    }
+    return [super _writeDOMElement:element];
 }
 
-- (DOMNode *)writeStylingDOMElement:(DOMElement *)element;
+// Elements used for styling are worthless if they have no content of their own. We treat them specially by buffering internally until some actual content gets written. If there is none, go ahead and delete the element instead. Shouldn't need to call this directly; -writeDOMElement: does so internally.
+- (void)startElementWithDOMElement:(DOMElement *)element;
 {
-    // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
-    [_pendingStartTagDOMElements addObject:element];
-    [_buffer beginBuffering];
+    BOOL isStyling = ![[self class] isElementWithTagNameContent:[element tagName]];
+    if (isStyling)
+    {
+        // ..so push onto the stack, ready to write if requested. But only if it's not to be merged with the previous element
+        [_pendingStartTagDOMElements addObject:element];
+        [_buffer beginBuffering];
+    }
+    
     
     // Open tag
-    [self startElementWithDOMElement:element];
-    
-    [_buffer flushOnNextWrite];
+    [self openTag:[element tagName]];
     
     
-    // Write inner HTML
-    [self writeInnerOfDOMNode:element];
+    // Write attributes
+    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
+    {
+        DOMNamedNodeMap *attributes = [element attributes];
+        NSUInteger index;
+        for (index = 0; index < [attributes length]; index++)
+        {
+            // Check each attribute should be written
+            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
+            NSString *attributeName = [anAttribute name];
+            
+            if ([self validateAttribute:attributeName])
+            {
+                // Validate individual styling
+                if ([attributeName isEqualToString:@"style"])
+                {
+                    DOMCSSStyleDeclaration *style = [element style];
+                    [self removeUnsupportedCustomStyling:style];
+                    
+                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
+                    [self writeAttribute:@"style" value:[style cssText]];
+                }
+                else
+                {
+                    [self writeAttribute:attributeName value:[anAttribute value]];
+                }
+            }
+            else
+            {
+                [attributes removeNamedItem:attributeName];
+                index--;
+            }
+        }
+    }
     
     
-    // Write end tag
-    return [self endStylingDOMElement:element];
+    // Close tag
+    [self didStartElement];
+    
+    
+    // Finish setting up buffer
+    if (isStyling) [_buffer flushOnNextWrite];
 }
 
-- (DOMNode *)endStylingDOMElement:(DOMElement *)element;
+- (DOMNode *)endElementWithDOMElement:(DOMElement *)element;
 {
     DOMNode *result = nil;
     
-    // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
-    if ([_pendingStartTagDOMElements lastObject] == element)
+    if ([[self class] isElementWithTagNameContent:[self topElement]])
     {
-        // I'm not 100% sure this works with the new buffering code yet.
-        result = [element nextSibling];
-        
-        [[element parentNode] removeChild:element];
-        [self popElement];
-        [_pendingStartTagDOMElements removeLastObject];
-        
-        [_buffer discardBuffer];
+        result = [super endElementWithDOMElement:element];
     }
     else
     {
-        if ([[element tagName] isEqualToString:@"P"])
+        // If there was no actual content inside the element, then it should be thrown away. We can tell this by examining the stack
+        if ([_pendingStartTagDOMElements lastObject] == element)
         {
-            result = [self endElementWithDOMElement:element];
+            // I'm not 100% sure this works with the new buffering code yet.
+            result = [element nextSibling];
+            
+            [[element parentNode] removeChild:element];
+            [self popElement];
+            [_pendingStartTagDOMElements removeLastObject];
+            
+            [_buffer discardBuffer];
         }
         else
         {
-            // Close the element, but wait and see if the next sibling is equal & therefore to be merged
-            [_buffer beginBuffering];
-            result = [self endElementWithDOMElement:element];
-            [_buffer flushOnNextWrite];
-            
-            [_pendingEndDOMElements addObject:element];
+            if ([[element tagName] isEqualToString:@"P"])
+            {
+                result = [super endElementWithDOMElement:element];
+            }
+            else
+            {
+                // Close the element, but wait and see if the next sibling is equal & therefore to be merged
+                [_buffer beginBuffering];
+                result = [super endElementWithDOMElement:element];
+                [_buffer flushOnNextWrite];
+                
+                [_pendingEndDOMElements addObject:element];
+            }
         }
     }
     
@@ -291,51 +329,6 @@
 }
 
 #pragma mark Element Attributes
-
-- (void)startElementWithDOMElement:(DOMElement *)element;    // open the tag and write attributes
-{
-    // Open tag
-    [self openTag:[element tagName]];
-    
-    
-    // Write attributes
-    if ([element hasAttributes]) // -[DOMElement attributes] is slow as it has to allocate an object. #78691
-    {
-        DOMNamedNodeMap *attributes = [element attributes];
-        NSUInteger index;
-        for (index = 0; index < [attributes length]; index++)
-        {
-            // Check each attribute should be written
-            DOMAttr *anAttribute = (DOMAttr *)[attributes item:index];
-            NSString *attributeName = [anAttribute name];
-            
-            if ([self validateAttribute:attributeName])
-            {
-                // Validate individual styling
-                if ([attributeName isEqualToString:@"style"])
-                {
-                    DOMCSSStyleDeclaration *style = [element style];
-                    [self removeUnsupportedCustomStyling:style];
-                    
-                    // Have to write it specially as changes don't show up in [anAttribute value] sadly
-                    [self writeAttribute:@"style" value:[style cssText]];
-                }
-                else
-                {
-                    [self writeAttribute:attributeName value:[anAttribute value]];
-                }
-            }
-            else
-            {
-                [attributes removeNamedItem:attributeName];
-                index--;
-            }
-        }
-    }
-    
-    
-    [self didStartElement];
-}
 
 - (void)populateSpanElementAttributes:(DOMElement *)span
                       fromFontElement:(DOMHTMLFontElement *)fontElement;
