@@ -191,9 +191,12 @@
 
 - (NSSet *)media; { return [[_media copy] autorelease]; }
 
-- (NSURL *)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMedia:(id <SVMedia>)media
+              width:(NSNumber *)width
+             height:(NSNumber *)height
+           fileType:(NSString *)type;
 {
-    NSURL *result = [super addMedia:media];
+    NSURL *result = [super addMedia:media width:width height:height fileType:type];
     [_media addObject:media];
     return result;
 }

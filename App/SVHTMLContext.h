@@ -119,7 +119,13 @@ typedef enum {
 
 #pragma mark Media
 
-- (NSURL *)addMedia:(id <SVMedia>)media;    // returns the URL to find the media at. Pass on to -relativeURLStringOfURL: etc.
+// These method return the URL to find the media at. It can be passed on to -relativeURLStringOfURL: etc.
+// For most use cases -addMedia: is good enough. The longer method exists so as to get the URL of a scaled copy of the image. For example during editing, we load full-size images and get WebKit scale them, but during publishing want to point to a scaled version of the image. Potentially one day this method could support movies etc.
+- (NSURL *)addMedia:(id <SVMedia>)media;
+- (NSURL *)addMedia:(id <SVMedia>)media
+              width:(NSNumber *)width   // nil means don't resize
+             height:(NSNumber *)height  // ditto
+           fileType:(NSString *)type;   // nil means keep in native format
 
 - (void)writeImageWithIdName:(NSString *)idName
                    className:(NSString *)className

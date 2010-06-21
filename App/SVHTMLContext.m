@@ -307,8 +307,15 @@
 
 #pragma mark Media
 
-// Up to subclasses to implement
 - (NSURL *)addMedia:(id <SVMedia>)media;
+{
+    return [self addMedia:media width:nil height:nil fileType:nil];
+}
+
+- (NSURL *)addMedia:(id <SVMedia>)media
+              width:(NSNumber *)width
+             height:(NSNumber *)height
+           fileType:(NSString *)type;
 {
     NSURL *result = [media fileURL];
     if (!result) result = [[(SVMediaRecord *)media URLResponse] URL];
@@ -323,7 +330,7 @@
                        width:(NSNumber *)width
                       height:(NSNumber *)height;
 {
-    NSURL *URL = [self addMedia:media];
+    NSURL *URL = [self addMedia:media width:width height:height fileType:nil];
     NSString *src = (URL ? [self relativeURLStringOfURL:URL] : @"");
     
     [self writeImageWithIdName:idName
