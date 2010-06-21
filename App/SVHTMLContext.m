@@ -152,9 +152,12 @@
 
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
-    [self writeLinkToStylesheet:[self relativeURLStringOfURL:cssURL]
-                          title:nil
-                          media:nil];
+    if (![self isForPublishing])
+    {
+        [self writeLinkToStylesheet:[self relativeURLStringOfURL:cssURL]
+                              title:nil
+                              media:nil];
+    }
 }
 
 #pragma mark Header Tags
