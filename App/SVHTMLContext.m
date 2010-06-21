@@ -317,6 +317,8 @@
              height:(NSNumber *)height
            fileType:(NSString *)type;
 {
+    OBPRECONDITION(media);
+    
     NSURL *result = [media fileURL];
     if (!result) result = [[(SVMediaRecord *)media URLResponse] URL];
     
