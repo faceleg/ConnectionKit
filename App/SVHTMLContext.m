@@ -484,13 +484,6 @@
 #pragma mark Legacy
 
 @synthesize page = _currentPage;
-- (void)setPage:(KTPage *)page
-{
-    page = [page retain];
-    [_currentPage release], _currentPage = page;
-    
-    [self setBaseURL:[page URL]];
-}
 
 #pragma mark SVPlugInContext
 

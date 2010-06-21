@@ -125,4 +125,12 @@
             [resourceURL lastPathComponent]];
 }
 
+#pragma mark Page
+
+- (void)setPage:(KTPage *)page;
+{
+    [super setPage:page];
+    [self setBaseURL:[page URL]];
+}
+
 @end

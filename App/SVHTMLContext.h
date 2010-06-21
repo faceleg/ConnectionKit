@@ -163,7 +163,7 @@ typedef enum {
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 
 
-// In for compatibility, overrides -baseURL
+// In for compatibility. Does NOT affect -baseURL; change manually if you need to
 @property(nonatomic, retain) KTPage *page;
 
 @end
