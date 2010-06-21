@@ -41,6 +41,10 @@ extern int kMaxNumberOfFreePublishedPages;
 - (NSString *)publishResourceAtURL:(NSURL *)fileURL;
 
 
+#pragma mark main.css
+- (void)addCSSWithURL:(NSURL *)cssURL;  // same terminology as SVHTMLContext
+
+
 #pragma mark Raw
 // Call if you need to publish a raw resource. Publishing engine will take care of creating directories, permissions, etc. for you
 - (CKTransferRecord *)publishContentsOfURL:(NSURL *)localURL toPath:(NSString *)remotePath;
@@ -96,6 +100,7 @@ typedef enum {
     NSMutableDictionary *_uploadedMediaReps;
     NSMutableArray      *_newMedia;
     
+    NSMutableArray      *_plugInCSSURLs;
     NSMutableDictionary *_graphicalTextBlocks;
 }
 

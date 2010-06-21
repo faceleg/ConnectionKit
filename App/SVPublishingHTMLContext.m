@@ -125,6 +125,14 @@
             [resourceURL lastPathComponent]];
 }
 
+- (void)addCSSWithURL:(NSURL *)cssURL;
+{
+    [super addCSSWithURL:cssURL];   // should have no effect
+    
+    // Append to main.css
+    [_publishingEngine addCSSWithURL:cssURL];
+}
+
 #pragma mark Page
 
 - (void)setPage:(KTPage *)page;

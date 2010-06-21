@@ -102,6 +102,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _paths = [[NSMutableSet alloc] init];
         _uploadedMediaReps = [[NSMutableDictionary alloc] init];
         
+        _plugInCSSURLs = [[NSMutableArray alloc] init];
         _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
         _documentRootPath = [docRoot copy];
@@ -124,6 +125,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_paths release];
     
+    [_plugInCSSURLs release];
     [_graphicalTextBlocks release];
 	
 	[super dealloc];
@@ -712,6 +714,12 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
+- (void)addCSSWithURL:(NSURL *)cssURL;
+{
+    cssURL = [cssURL absoluteURL];
+    if (![_plugInCSSURLs containsObject:cssURL]) [_plugInCSSURLs addObject:cssURL];
+}
+
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
  */
 - (CKTransferRecord *)uploadMainCSSIfNeeded
@@ -752,6 +760,18 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     // Append banner CSS
     [master writeBannerCSS];
+    
+    
+    
+    // Append plug-in-provided CSS
+    for (NSURL *aCSSURL in _plugInCSSURLs)
+    {
+        NSString *css = [NSString stringWithContentsOfURL:aCSSURL
+                                         fallbackEncoding:NSUTF8StringEncoding
+                                                    error:NULL];
+        
+        if (css) [mainCSS appendString:css];
+    }
     
     
     
