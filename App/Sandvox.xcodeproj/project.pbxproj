@@ -192,6 +192,8 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
+		270172B611CFB566001512F6 /* SVProxyHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172B411CFB566001512F6 /* SVProxyHTMLContext.h */; };
+		270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172B511CFB566001512F6 /* SVProxyHTMLContext.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
 		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
 		2709BBE30D7B761D003A1A37 /* KTPageMainContentTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */; };
@@ -1686,6 +1688,8 @@
 
 /* Begin PBXFileReference section */
 		1058C7A7FEA54F5311CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
+		270172B411CFB566001512F6 /* SVProxyHTMLContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVProxyHTMLContext.h; sourceTree = "<group>"; };
+		270172B511CFB566001512F6 /* SVProxyHTMLContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVProxyHTMLContext.m; sourceTree = "<group>"; };
 		27080FBC113DD9C900E66F92 /* SVLogoImage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVLogoImage.h; sourceTree = "<group>"; };
 		27080FBD113DD9C900E66F92 /* SVLogoImage.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVLogoImage.m; sourceTree = "<group>"; };
 		2709BBE20D7B761D003A1A37 /* KTPageMainContentTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = KTPageMainContentTemplate.html; sourceTree = "<group>"; };
@@ -3313,6 +3317,8 @@
 				278ACCC7116E21AA002BECCB /* SVQuickLookPreviewHTMLContext.m */,
 				2796DEE111733440000DD6EC /* SVMediaGatheringHTMLContext.h */,
 				2796DEE211733440000DD6EC /* SVMediaGatheringHTMLContext.m */,
+				270172B411CFB566001512F6 /* SVProxyHTMLContext.h */,
+				270172B511CFB566001512F6 /* SVProxyHTMLContext.m */,
 			);
 			name = "HTML Context";
 			sourceTree = "<group>";
@@ -5687,6 +5693,7 @@
 				CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */,
 				277FDC3911CD3F810083F1BF /* SVPublishDataWriter.h in Headers */,
 				277FDD6111CE21650083F1BF /* KSMegaBufferedWriter.h in Headers */,
+				270172B611CFB566001512F6 /* SVProxyHTMLContext.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7119,6 +7126,7 @@
 				CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */,
 				277FDC3A11CD3F810083F1BF /* SVPublishDataWriter.m in Sources */,
 				277FDD6211CE21650083F1BF /* KSMegaBufferedWriter.m in Sources */,
+				270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

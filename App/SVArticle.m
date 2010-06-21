@@ -12,6 +12,7 @@
 #import "SVWebEditorHTMLContext.h"
 #import "SVHTMLTextBlock.h"
 #import "KTPage.h"
+#import "SVProxyHTMLContext.h"
 #import "SVTextAttachment.h"
 
 #import "NSArray+Karelia.h"
@@ -151,8 +152,7 @@
     KSEscapedXMLEntitiesWriter *writer = [[KSEscapedXMLEntitiesWriter alloc]
                                           initWithOutputWriter:feedContext];
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:writer];
-    [context copyPropertiesFromContext:feedContext];
+    SVHTMLContext *context = [[SVProxyHTMLContext alloc] initWithOutputWriter:writer target:feedContext];
     
     [self writeText:context];
     [context release];
