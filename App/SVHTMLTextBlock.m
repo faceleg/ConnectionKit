@@ -16,6 +16,7 @@
 #import "SVImageReplacementURLProtocol.h"
 #import "KTPage+Internal.h"
 #import "SVRichText.h"
+#import "SVTextContentHTMLContext.h"
 #import "SVTextFieldDOMController.h"
 #import "SVTitleBox.h"
 #import "SVWebEditorHTMLContext.h"
@@ -241,10 +242,20 @@
 {
     NSString *result = nil;
     
-    NSString *mediaID = [[[self graphicalTextMedia] file] identifier];
-    if (mediaID)
+    if ([self graphicalTextCode])
     {
-        result = [@"graphical-text-" stringByAppendingString:mediaID];
+        NSMutableString *innerText = [[NSMutableString alloc] init];
+        SVHTMLContext *context = [[SVTextContentHTMLContext alloc] initWithOutputWriter:innerText];
+        
+        [self writeInnerHTML:context];
+        [context close]; [context release];
+        
+        result = [NSString stringWithFormat:
+                  @"%@-%@",
+                  [self graphicalTextCode],
+                  [innerText stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding]];
+        
+        [innerText release];
     }
     
     return result;
@@ -357,13 +368,13 @@
 		NSString *graphicalTextStyle = [self graphicalTextPreviewStyle];
 		if (graphicalTextStyle)
 		{
-			if (![[SVHTMLContext currentContext] isForPublishing])    // id has already been supplied
+			if ([[SVHTMLContext currentContext] isForPublishing])    // id has already been supplied
 			{
-                [context writeAttribute:@"style" value:graphicalTextStyle];
+                [context writeAttribute:@"id" value:[self graphicalTextCSSID]];
 			}
 			else
 			{
-                [context writeAttribute:@"id" value:[self graphicalTextCSSID]];
+                [context writeAttribute:@"style" value:graphicalTextStyle];
 			}
 		}
 	}
