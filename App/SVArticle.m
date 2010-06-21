@@ -15,6 +15,8 @@
 #import "SVProxyHTMLContext.h"
 #import "SVTextAttachment.h"
 
+#import "KSStringXMLEntityEscaping.h"
+
 #import "NSArray+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
 #import "NSError+Karelia.h"
