@@ -194,7 +194,7 @@
 /* Begin PBXBuildFile section */
 		270172B611CFB566001512F6 /* SVProxyHTMLContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172B411CFB566001512F6 /* SVProxyHTMLContext.h */; };
 		270172B711CFB566001512F6 /* SVProxyHTMLContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172B511CFB566001512F6 /* SVProxyHTMLContext.m */; };
-		270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */; };
+		270172F311CFBEF3001512F6 /* KSStringXMLEntityEscaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		270172F411CFBEF3001512F6 /* KSStringXMLEntityEscaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */; };
 		27080FBE113DD9C900E66F92 /* SVLogoImage.h in Headers */ = {isa = PBXBuildFile; fileRef = 27080FBC113DD9C900E66F92 /* SVLogoImage.h */; };
 		27080FBF113DD9C900E66F92 /* SVLogoImage.m in Sources */ = {isa = PBXBuildFile; fileRef = 27080FBD113DD9C900E66F92 /* SVLogoImage.m */; };
