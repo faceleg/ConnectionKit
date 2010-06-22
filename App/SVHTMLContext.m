@@ -199,25 +199,37 @@
 
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
-    if ([alignment isEqualToString:_calloutAlignment])
+    BOOL isSameCallout = [self isWritingCallout];
+    if (isSameCallout)
     {
-        // Suitable div is already open, so cancel the buffer and carry on writing
+        // Suitable div is already open, so cancel the buffer…
         [_calloutBuffer discardBuffer];
+        
+        // …open elements as usual, but throw away too
+        [_calloutBuffer beginBuffering];
     }
     else
     {
-        // Write the opening tags
-        [self startElement:@"div"
-                     idName:[[self currentDOMController] elementIdName]
-                  className:[@"callout-container " stringByAppendingString:alignment]];
-        
-        [self startElement:@"div" idName:nil className:@"callout"];
-        
-        [self startElement:@"div" idName:nil className:@"callout-content"];
-        
-        
         OBASSERT(!_calloutAlignment);
         _calloutAlignment = [alignment copy];
+    }
+    
+    
+    // Write the opening tags
+    [self startElement:@"div"
+                idName:[[self currentDOMController] elementIdName]
+             className:[@"callout-container " stringByAppendingString:alignment]];
+    
+    [self startElement:@"div" idName:nil className:@"callout"];
+    
+    [self startElement:@"div" idName:nil className:@"callout-content"];
+    
+    
+    // throw away buffered writing from before
+    if (isSameCallout)
+    {
+        [self flush];
+        [_calloutBuffer discardBuffer];
     }
 }
 
@@ -231,6 +243,11 @@
     [self endElement]; // callout-container
     
     [_calloutBuffer flushOnNextWrite];
+}
+
+- (BOOL)isWritingCallout;
+{
+    return (_calloutAlignment != nil);
 }
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
