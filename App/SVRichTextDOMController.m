@@ -232,7 +232,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [writer writeTextAttachment:attachment];
     
     [writer flush];
-    NSString *stream = (NSMutableString *)[writer outputWriter];
+    NSString *stream = [[writer valueForKeyPath:@"_writer._outputs"] objectAtIndex:0];  // HACK!
     NSRange range = NSMakeRange([stream length] - 1, 1);
     
     if (!NSEqualRanges([attachment range], range))
