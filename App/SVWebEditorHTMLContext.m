@@ -122,9 +122,13 @@
 
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
-    SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
-    [self beginDOMController:controller];
-    [controller release];
+    // Make a controller for the callout, but only if it's not part of an existng callout
+    if (![self isWritingCallout])
+    {
+        SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
+        [self beginDOMController:controller];
+        [controller release];
+    }
 
     [super beginCalloutWithAlignmentClassName:alignment];
 }
