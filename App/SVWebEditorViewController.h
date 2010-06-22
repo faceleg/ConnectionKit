@@ -100,6 +100,13 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 - (IBAction)insertPageletTitle:(id)sender;
 
 
+#pragma mark Graphic Placement
+- (IBAction)placeInline:(id)sender;
+- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+- (IBAction)placeAsCallout:(id)sender;
+- (IBAction)placeInSidebar:(id)sender;
+
+
 #pragma mark Action Forwarding
 - (BOOL)tryToMakeSelectionPerformAction:(SEL)action with:(id)anObject;
 
@@ -129,14 +136,4 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 @end
 
-
-#pragma mark -
-
-
-@interface WEKWebEditorView (SVWebEditorViewController)
-- (IBAction)placeInline:(id)sender;
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
-- (IBAction)placeAsCallout:(id)sender;
-- (IBAction)placeInSidebar:(id)sender;
-@end
 

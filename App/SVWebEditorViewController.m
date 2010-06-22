@@ -604,6 +604,67 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
                                       atArrangedObjectIndex:index];
 }
 
+
+#pragma mark Graphic Placement
+
+- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+{
+    for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
+    {
+        SVGraphic *aGraphic = [aGraphicController representedObject];
+        if (!aGraphic) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementCallout)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
+        }
+    }
+    
+    
+    
+    
+    //[(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
+}
+
+- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
+{
+    if ([sender state] == NSOnState) [self placeAsBlock:sender];
+}
+
+- (IBAction)placeAsCallout:(id)sender;
+{
+    SVRichText *article = [[self page] article];
+    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+    
+    for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
+    {
+        SVGraphic *aGraphic = [aGraphicController representedObject];
+        if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementBlock)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
+        }
+        else
+        {
+            // Remove from all pages
+            [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
+            
+            // Insert at start of page
+            NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
+            [html insertAttributedString:callout atIndex:0];
+        }
+    }
+    
+    // Store html
+    [article setAttributedHTMLString:html];
+    [html release];
+}
+
 #pragma mark Action Forwarding
 
 - (void)makeTextLarger:(id)sender;
@@ -1162,72 +1223,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     {
         [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
     }
-}
-
-@end
-
-
-#pragma mark -
-
-
-@implementation WEKWebEditorView (SVWebEditorViewController)
-
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
-{
-    for (SVGraphicDOMController *aGraphicController in [self selectedItems])
-    {
-        SVGraphic *aGraphic = [aGraphicController representedObject];
-        if (!aGraphic) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
-        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementCallout)
-        {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
-        }
-    }
-    
-    
-    
-    
-    //[(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
-}
-
-- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
-{
-    if ([sender state] == NSOnState) [self placeAsBlock:sender];
-}
-
-- (IBAction)placeAsCallout:(id)sender;
-{
-    SVRichText *article = [[(SVWebEditorViewController *)[self dataSource] page] article];
-    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-    
-    for (SVGraphicDOMController *aGraphicController in [self selectedItems])
-    {
-        SVGraphic *aGraphic = [aGraphicController representedObject];
-        if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
-        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementBlock)
-        {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
-        }
-        else
-        {
-            // Remove from all pages
-            [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
-            
-            // Insert at start of page
-            NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
-            [html insertAttributedString:callout atIndex:0];
-        }
-    }
-    
-    // Store html
-    [article setAttributedHTMLString:html];
-    [html release];
 }
 
 @end

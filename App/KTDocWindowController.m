@@ -398,12 +398,34 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     }
 }
 
-#pragma mark Other
+#pragma mark Editor Actions
 
 - (void)paste:(id)sender;
 {
     [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
+
+- (IBAction)placeInline:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)placeAsCallout:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+- (IBAction)placeInSidebar:(id)sender;
+{
+    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
+}
+
+#pragma mark Other
 
 - (IBAction)toggleSmallPageIcons:(id)sender
 {
