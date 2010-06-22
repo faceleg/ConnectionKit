@@ -22,10 +22,12 @@
 	
 	NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sandvox_source.html"];
 	NSString *pathOut = [NSTemporaryDirectory() stringByAppendingPathComponent:@"validation.html"];
+	NSString *pathHeaders = [NSTemporaryDirectory() stringByAppendingPathComponent:@"headers.txt"];
+
 	[pageData writeToFile:path atomically:NO];
 	
 	// curl -F uploaded_file=@karelia.html -F ss=1 -F outline=1 -F sp=1 -F noatt=1 -F verbose=1  http://validator.w3.org/check
-	NSString *argString = [NSString stringWithFormat:@"-F uploaded_file=@%@ -F ss=1 -F verbose=1 http://validator.w3.org/check", path, pathOut];
+	NSString *argString = [NSString stringWithFormat:@"-F uploaded_file=@%@ -F ss=1 -F verbose=1 --dump-header %@ http://validator.w3.org/check", path, pathHeaders];
 	NSArray *args = [argString componentsSeparatedByString:@" "];
 	
 	NSTask *task = [[[NSTask alloc] init] autorelease];
@@ -70,6 +72,8 @@
 		NSString *resultingPageString = [[[NSString alloc] initWithContentsOfFile:pathOut
 																		 encoding:NSUTF8StringEncoding
 																			error:nil] autorelease];
+		
+		// TODO: continue case 27254, parse headers.txt file instead of scraping.
 		
 		if (nil != resultingPageString)
 		{
