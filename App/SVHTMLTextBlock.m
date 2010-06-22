@@ -370,7 +370,16 @@
 		{
 			if ([[SVHTMLContext currentContext] isForPublishing])    // id has already been supplied
 			{
-                [context writeAttribute:@"id" value:[self graphicalTextCSSID]];
+                NSString *ID = [self graphicalTextCSSID];
+                [context writeAttribute:@"id" value:ID];
+                
+                NSString *css = [[NSString alloc] initWithFormat:
+                                 @"#%@ { %@ }",
+                                 ID,
+                                 graphicalTextStyle];
+                
+                [context addCSSString:css];
+                [css release];
 			}
 			else
 			{
