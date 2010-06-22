@@ -254,7 +254,12 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 #pragma mark Selection
 
 //  Only called in response to selection changes from the GUI and action methods. Could make it more flexible one day if needed
-- (BOOL)webEditor:(WEKWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+           - (BOOL)webEditor:(WEKWebEditorView *)sender
+shouldChangeSelectedDOMRange:(DOMRange *)currentRange
+                  toDOMRange:(DOMRange *)proposedRange
+                    affinity:(NSSelectionAffinity)selectionAffinity
+                       items:(NSArray *)proposedSelectedItems
+              stillSelecting:(BOOL)stillSelecting;
 
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender
 fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;

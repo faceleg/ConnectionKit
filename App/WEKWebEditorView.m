@@ -478,12 +478,19 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     
     //  If needed, check the new selection with the delegate.
-    if (consultDelegateFirst && ![[self delegate] webEditor:self shouldChangeSelection:proposedSelection])
-	{
-		[proposedSelection release];
-		return NO;
-	}
-
+    if (consultDelegateFirst)
+    {
+        if (![[self delegate] webEditor:self
+           shouldChangeSelectedDOMRange:nil
+                             toDOMRange:domRange
+                               affinity:0
+                                  items:proposedSelection
+                         stillSelecting:NO])
+        {
+            [proposedSelection release];
+            return NO;
+        }
+    }
     
     
     

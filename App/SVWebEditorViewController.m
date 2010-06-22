@@ -37,6 +37,7 @@
 #import "NSURL+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import "DOMNode+Karelia.h"
+#import "DOMRange+Karelia.h"
 
 #import "KSCollectionController.h"
 #import "KSPlugInWrapper.h"
@@ -933,7 +934,12 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [self webViewDidFirstLayout];
 }
 
-- (BOOL)webEditor:(WEKWebEditorView *)sender shouldChangeSelection:(NSArray *)proposedSelectedItems;
+           - (BOOL)webEditor:(WEKWebEditorView *)sender
+shouldChangeSelectedDOMRange:(DOMRange *)currentRange
+                  toDOMRange:(DOMRange *)proposedRange
+                    affinity:(NSSelectionAffinity)selectionAffinity
+                       items:(NSArray *)proposedSelectedItems
+              stillSelecting:(BOOL)stillSelecting;
 {
     //  Update our content controller's selected objects to reflect the new selection in the Web Editor View
     
@@ -943,6 +949,22 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     BOOL result = YES;
     if (![self isUpdating])
     {
+        // If there is a text selection, it may encompass more than a single object. If so, ignore selected items
+        if (proposedRange)
+        {
+            if ([proposedSelectedItems count] == 1)
+            {
+                WEKWebEditorItem *item = [proposedSelectedItems objectAtIndex:0];
+                if (![proposedRange ks_selectsNode:[item HTMLElement]]) proposedSelectedItems = nil;
+            }
+            else
+            {
+                proposedSelectedItems = nil;
+            }
+        }
+        
+                                                            
+        // Match the controller's selection to the view
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
         result = [[self selectedObjectsController] setSelectedObjects:objects];
     }
