@@ -607,6 +607,22 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark Graphic Placement
 
+- (void)placeInline:(id)sender;
+{
+    for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
+    {
+        SVGraphic *aGraphic = [aGraphicController representedObject];
+        if (!aGraphic) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementCallout || placement == SVGraphicPlacementBlock)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
+        }
+    }
+}
+
 - (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
 {
     for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
