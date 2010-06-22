@@ -1203,18 +1203,26 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     SVRichText *article = [[(SVWebEditorViewController *)[self dataSource] page] article];
     NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
     
-    for (SVGraphicDOMController *aPageletController in [self selectedItems])
+    for (SVGraphicDOMController *aGraphicController in [self selectedItems])
     {
-        SVGraphic *aPagelet = [aPageletController representedObject];
-        if ([[aPagelet placement] integerValue] == SVGraphicPlacementCallout) continue;
+        SVGraphic *aGraphic = [aGraphicController representedObject];
+        if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
         
-        
-        // Remove from all pages
-        [[aPagelet mutableSetValueForKey:@"sidebars"] removeAllObjects];
-        
-        // Insert at start of page
-        NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aPagelet];
-        [html insertAttributedString:callout atIndex:0];
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementBlock)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
+        }
+        else
+        {
+            // Remove from all pages
+            [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
+            
+            // Insert at start of page
+            NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
+            [html insertAttributedString:callout atIndex:0];
+        }
     }
     
     // Store html
