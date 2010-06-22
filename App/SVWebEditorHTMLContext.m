@@ -133,10 +133,11 @@
     [super beginCalloutWithAlignmentClassName:alignment];
 }
 
-- (void)endCallout;
+- (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
 {
-    [super endCallout];
+    [super megaBufferedWriterWillFlush:buffer];
     
+    // Only once the callout buffer flushes can we be sure the element ended.
     [self finishWithCurrentItem];
 }
 
