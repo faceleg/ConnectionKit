@@ -26,6 +26,7 @@
 #import "SVSidebar.h"
 #import "SVSidebarDOMController.h"
 #import "SVSidebarPageletsController.h"
+#import "SVTextAttachment.h"
 #import "SVWebContentAreaController.h"
 #import "SVWebContentObjectsController.h"
 #import "SVWebEditorHTMLContext.h"
@@ -1173,7 +1174,23 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
 {
-    [(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
+    for (SVGraphicDOMController *aGraphicController in [self selectedItems])
+    {
+        SVGraphic *aGraphic = [aGraphicController representedObject];
+        if (!aGraphic) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementCallout)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
+        }
+    }
+    
+    
+    
+    
+    //[(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
 }
 
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
