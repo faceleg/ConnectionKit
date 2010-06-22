@@ -2,7 +2,7 @@
 /* Flickr Pagelet */
 
 .flickr {text-align:center; font: 11px Arial, Helvetica, sans-serif !important;}
-.flickr_badge_wrapper {padding:10px 0 10px 0; overflow:auto; text-align: center;}
+.flickr_badge_wrapper {padding:10px 0 10px 0; overflow:hidden; text-align: center;}
 .flickr_badge_wrapper div {display: inline;float:none;}
 .flickr_badge_image {margin:0 10px 10px 10px; float:left;}
 .flickr_badge_image img {border: 1px solid black !important;}
@@ -13,3 +13,5 @@
 .flickr a:active,
 .flickr a:visited {text-decoration:none !important; background:inherit !important;color:#3993ff;}
 .flickr_badge_source {padding:0 !important; font: 11px Arial, Helvetica, Sans serif !important; color:#666666 !important;}
+.flickr_badge_wrapper br { display:none; }
+
