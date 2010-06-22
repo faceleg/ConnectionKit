@@ -681,6 +681,14 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [html release];
 }
 
+- (IBAction)placeInSidebar:(id)sender;
+{
+    // Does a text controller want to take it?
+    if ([[self focusedTextController] tryToPerform:_cmd with:sender]) return;
+    
+    NSBeep();
+}
+
 #pragma mark Action Forwarding
 
 - (void)makeTextLarger:(id)sender;
