@@ -31,6 +31,8 @@
        options:nil];
 }
 
+#pragma mark Placement - model driven
+
 @synthesize graphicPlacement = _placement;
 - (void)setGraphicPlacement:(NSNumber *)placement;
 {

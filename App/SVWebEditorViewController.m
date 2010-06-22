@@ -1171,34 +1171,14 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 @implementation WEKWebEditorView (SVWebEditorViewController)
 
-- (IBAction)changePlacement:(NSMatrix *)sender;
-{
-    SVGraphicPlacement placement = [[sender selectedCell] tag];
-    
-    switch (placement)
-    {
-        case SVGraphicPlacementInline:
-        case SVGraphicPlacementBlock:
-            [self placeBlockLevel:sender];
-            break;
-            
-        case SVGraphicPlacementCallout:
-            [self placeAsCallout:sender];
-            break;
-            
-        case SVGraphicPlacementSidebar:
-            break;
-    }
-}
-
-- (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
+- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
 {
     [(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
 }
 
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
 {
-    if ([sender state] == NSOnState) [self placeBlockLevel:sender];
+    if ([sender state] == NSOnState) [self placeAsBlock:sender];
 }
 
 - (IBAction)placeAsCallout:(id)sender;
