@@ -48,12 +48,13 @@
 - (void)removePagelet:(SVGraphic *)pagelet fromSidebarOfPage:(KTPage *)page;
 
 
-#pragma mark Pasteboard
+#pragma mark Pasteboard/Serialization
 
 //- (void)insertPageletsFromPasteboard:(NSPasteboard *)pasteboard;
 
 - (BOOL)insertPageletsFromPasteboard:(NSPasteboard *)pboard
                atArrangedObjectIndex:(NSUInteger)index;
 
+- (BOOL)addObjectFromSerializedPagelet:(id)serializedPagelet;
 
 @end

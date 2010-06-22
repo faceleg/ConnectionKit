@@ -379,6 +379,20 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     return result;
 }
 
+- (BOOL)addObjectFromSerializedPagelet:(id)serializedPagelet;
+{
+    SVGraphic *graphic = [SVGraphic graphicWithSerializedProperties:serializedPagelet
+                                     insertIntoManagedObjectContext:[self managedObjectContext]];
+    
+    if (graphic)
+    {
+        [self addObject:graphic];
+        return YES;
+    }
+    
+    return NO;
+}
+
 #pragma mark Automatic Rearranging
 
 - (NSArray *)automaticRearrangementKeyPaths;

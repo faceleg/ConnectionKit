@@ -686,7 +686,18 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Does a text controller want to take it?
     if ([[self focusedTextController] tryToPerform:_cmd with:sender]) return;
     
-    NSBeep();
+    
+    
+    // Insert copies into sidebar
+    SVSidebarPageletsController *sidebarController = [[self HTMLContext] sidebarPageletsController];
+    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
+    {
+        // Serialize
+        id serializedPagelet = [aGraphic serializedProperties];
+        
+        // Deserialize into controller
+        [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
+    }
 }
 
 #pragma mark Action Forwarding
