@@ -102,7 +102,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
         _paths = [[NSMutableSet alloc] init];
         _uploadedMediaReps = [[NSMutableDictionary alloc] init];
         
-        _plugInCSSURLs = [[NSMutableArray alloc] init];
+        _plugInCSS = [[NSMutableArray alloc] init];
         _graphicalTextBlocks = [[NSMutableDictionary alloc] init];
         
         _documentRootPath = [docRoot copy];
@@ -125,7 +125,7 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     [_paths release];
     
-    [_plugInCSSURLs release];
+    [_plugInCSS release];
     [_graphicalTextBlocks release];
 	
 	[super dealloc];
@@ -714,10 +714,15 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     }
 }
 
+- (void)addCSSString:(NSString *)css;
+{
+    if (![_plugInCSS containsObject:css]) [_plugInCSS addObject:css];
+}
+
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
     cssURL = [cssURL absoluteURL];
-    if (![_plugInCSSURLs containsObject:cssURL]) [_plugInCSSURLs addObject:cssURL];
+    if (![_plugInCSS containsObject:cssURL]) [_plugInCSS addObject:cssURL];
 }
 
 /*  KTRemotePublishingEngine uses digest to only upload this if it's changed
@@ -764,13 +769,21 @@ NSString *KTPublishingEngineErrorDomain = @"KTPublishingEngineError";
     
     
     // Append plug-in-provided CSS
-    for (NSURL *aCSSURL in _plugInCSSURLs)
+    for (id someCSS in _plugInCSS)
     {
-        NSString *css = [NSString stringWithContentsOfURL:aCSSURL
-                                         fallbackEncoding:NSUTF8StringEncoding
-                                                    error:NULL];
-        
-        if (css) [mainCSS appendString:css];
+        if ([someCSS isKindOfClass:[NSURL class]])
+        {
+            NSString *css = [NSString stringWithContentsOfURL:someCSS
+                                             fallbackEncoding:NSUTF8StringEncoding
+                                                        error:NULL];
+            
+            if (css) [mainCSS appendString:css];
+        }
+        else
+        {
+            [mainCSS appendString:someCSS];
+            [mainCSS appendString:@"\n"];
+        }
     }
     
     

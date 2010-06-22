@@ -121,8 +121,9 @@
 // URLs
 - (NSString *)relativeURLStringOfPage:(id <SVPage>)page;
 
-// Resources
+// Resources & Design
 - (NSURL *)addResourceWithURL:(NSURL *)fileURL;
+- (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;
 
 - (BOOL)isForEditing; // YES if HTML is intended to be edited directly in a Web Editor

@@ -41,8 +41,10 @@ extern int kMaxNumberOfFreePublishedPages;
 - (NSString *)publishResourceAtURL:(NSURL *)fileURL;
 
 
-#pragma mark main.css
+#pragma mark Design
+- (void)addCSSString:(NSString *)css;
 - (void)addCSSWithURL:(NSURL *)cssURL;  // same terminology as SVHTMLContext
+//- (void)addGraphicalText:(NSString *)text code:(NSString *)code;
 
 
 #pragma mark Raw
@@ -100,7 +102,7 @@ typedef enum {
     NSMutableDictionary *_uploadedMediaReps;
     NSMutableArray      *_newMedia;
     
-    NSMutableArray      *_plugInCSSURLs;
+    NSMutableArray      *_plugInCSS;    // mixture of string CSS snippets, and CSS URLs
     NSMutableDictionary *_graphicalTextBlocks;
 }
 

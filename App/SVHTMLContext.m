@@ -150,6 +150,16 @@
 @synthesize mainCSS = _mainCSS;
 @synthesize mainCSSURL = _mainCSSURL;
 
+- (void)addCSSString:(NSString *)css;
+{
+    if (![self isForPublishing])
+    {
+        [self startStyleElementWithType:@"text/css"];
+        [self writeText:css];
+        [self endElement];
+    }
+}
+
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
     if (![self isForPublishing])

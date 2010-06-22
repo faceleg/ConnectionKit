@@ -125,6 +125,14 @@
             [resourceURL lastPathComponent]];
 }
 
+- (void)addCSSString:(NSString *)css;
+{
+    [super addCSSString:css];   // should have no effect
+    
+    // Append to main.css
+    [_publishingEngine addCSSString:css];
+}
+
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
     [super addCSSWithURL:cssURL];   // should have no effect
