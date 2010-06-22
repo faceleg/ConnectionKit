@@ -698,6 +698,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         // Deserialize into controller
         [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
     }
+    
+    
+    // Remove originals. For some reason -delete: does not fire change notifications
+    [[self webEditor] deleteForward:self];
 }
 
 #pragma mark Action Forwarding
