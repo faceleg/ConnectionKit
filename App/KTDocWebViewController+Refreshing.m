@@ -341,7 +341,6 @@
 	}
 	
 	[element appendChildren:[imported childNodes]];
-	[self processEditableElementsFromElement:element];
 
 }
 
