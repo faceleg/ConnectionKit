@@ -110,7 +110,7 @@
 
 #pragma mark Placement
 
-- (BOOL)canBePlacedInline; { return YES; }
+- (BOOL)canPlaceInline; { return [self isPlacementEditable]; }
 
 #pragma mark Link
 

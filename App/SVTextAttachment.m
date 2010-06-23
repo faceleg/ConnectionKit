@@ -62,7 +62,7 @@
     SVGraphicPlacement placementValue = [*placement integerValue];
     if (placementValue == SVGraphicPlacementInline)
     {
-        result = [[self graphic] canBePlacedInline];
+        result = [[self graphic] canPlaceInline];
         if (!result && error)
         {
             *error = [NSError errorWithDomain:NSCocoaErrorDomain code:NSValidationNumberTooSmallError localizedDescription:@"Can't place graphic inline"];

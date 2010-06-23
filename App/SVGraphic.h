@@ -102,7 +102,7 @@ extern NSString *kSVGraphicPboardType;
  */
 
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
-- (BOOL)canBePlacedInline;  // default is NO. Subclasses can override
+- (BOOL)canPlaceInline;  // default is NO. Subclasses can override
 - (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
 
 - (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
