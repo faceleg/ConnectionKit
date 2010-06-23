@@ -1,0 +1,82 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="php, script, scripts, server, host, code, phpbb" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Using PHP with Sandvox</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Using PHP with Sandvox</h1>
+
+        <p>Sandvox offers only some basic PHP support at present. For more information on what PHP is, please see <a href="http://www.php.net/" class="external free" title="http://www.php.net/">http://www.php.net/</a></p>
+
+        <div class="warning">
+            <p>Adding PHP code to a Sandvox page or site is an advanced, pro-level ability of Sandvox. Because of the extent of PHP and the many ways in which PHP can be incorporated into a Sandvox site, Karelia does not attempt to provide its own PHP tutorial, nor can it provide specific troubleshooting advice related to an individual user's PHP code.</p>
+
+            <p>If you would like to explore the possibilities that using PHP in your Sandvox site presents and need some assistance, we encourage you to visit the following third party sites that specifically address PHP issues:</p>
+
+            <ul>
+                <li><a href="http://us3.php.net/tut.php" class="external text" title="http://us3.php.net/tut.php">W3Schools php.net Tutorial</a></li>
+
+                <li><a href="http://www.w3schools.com/php/default.asp" class="external text" title="http://www.w3schools.com/php/default.asp">W3 Schools PHP Tutorial</a></li>
+            </ul>
+        </div>
+
+        <p>PHP is heavily dependent upon the server running it. For any PHP code in your site to work, you must ensure that your <a href="Host.html" title="Host">Host</a> is correctly set up to handle it. You also need <a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a> in order to add the PHP code to your site. This article offers an idea of what can be achieved with PHP in Sandvox.</p>
+
+        <p>There are two areas within Sandvox that are of interest for utilizing PHP code:</p>
+
+        <dl>
+            <dt><a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a></dt>
+
+            <dd>A <a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a> page or pagelet allows you to enter custom HTML code. If your <a href="Host.html" title="Host">Host</a> supports it, you can include PHP code here as well.</dd>
+
+            <dt><a href="Code_Injection.html" title="Code Injection">Code Injection</a></dt>
+
+            <dd>Sandvox provides a number of places custom code can be inserted. Before the <tt>&lt;html&gt;</tt> tag is particularly useful for PHP directives.</dd>
+        </dl>
+
+        <p><br />
+        <b>Note that Sandvox does not understand PHP code at all; there is no built-in PHP parser.</b> While editing PHP code in Sandvox <a href="Page.html" title="Page">pages</a> may look a little strange, containing bits and pieces of the HTML embedded within the PHP. In order to see how the PHP will look, you will need to export or upload the site to its <a href="Host.html" title="Host">host</a>, where the PHP can be processed. This is somewhat similar to if you opened an HTML &amp; PHP file stored on your computer using Safari.</p>
+
+        <p>Your <a href="Host.html" title="Host">Host</a> may require that any PHP pages have the extension "php" rather than "html" in order to process them. You can set the <a href="File_Name_and_Extension.html" title="File Name and Extension">extension</a> to "php" as appropriate. It may also be possible to configure your server to cause all HTML pages to be pre-processed with PHP.</p>
+
+        <p>If your PHP scripts require additional files and resources to function, you will need to upload and maintain these files separately from Sandvox.</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Sandvox_Pro.html" title="Sandvox Pro">Sandvox Pro</a></li>
+
+                <li><a href="Raw_HTML.html" title="Raw HTML">Raw HTML</a></li>
+
+                <li><a href="Code_Injection.html" title="Code Injection">Code Injection</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Using_PHP_with_Sandvox.html">Let us know.</a>
+    </div>
+</body>
+</html>

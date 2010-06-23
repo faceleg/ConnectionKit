@@ -1,0 +1,859 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="hidden, secret, preference, preferences, pref, prefs, default, defaults, user, index, indexes, indexing, index.html, terminal, robot, robots, robots.txt, delete, deleting, reset, resetting, plist, override, overriding, overridden, default, filename, file, name" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Hidden Preferences</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Hidden Preferences</h1>
+
+        <p>Sandvox has many preferences that are not exposed in the user interface, but which you can modify using the command line. Note that these are modifications outside of Sandvox's usual scope and may have adverse affects that Karelia cannot support.</p>
+
+        <div class="instructions">
+            <p><b>To set a hidden preference:</b></p>
+
+            <ol>
+                <li>Quit Sandvox.</li>
+
+                <li>Open the <a href="http://docs.info.apple.com/article.html?artnum=152010" class="external text" title="http://docs.info.apple.com/article.html?artnum=152010">Terminal</a> application (found in the "Applications → Utilities" folder).</li>
+
+                <li>Type or copy and paste the command given for the hidden preference.</li>
+
+                <li>If necessary, replace the <span class="prefValue">highlighted</span> text with your desired value.</li>
+
+                <li>Hit the Return key.</li>
+            </ol>
+        </div>
+
+        <p><b><a href="http://docs.karelia.com/g/terminal.mov" class="external text" title="http://docs.karelia.com/g/terminal.mov">Watch this brief video tutorial for an example of the above.</a></b></p>
+
+        <p>Alternatively, if you have Apple's Developer Tools installed, you can open the Sandvox preferences file with the Property List Editor application and set hidden preferences with that. The preferences file can be found at:</p>
+        <pre>
+~/Library/Preferences/com.karelia.Sandvox.plist
+</pre>
+
+        <div class="instructions">
+            <p><b>To reset a hidden preference to its original value:</b></p>
+
+            <ol>
+                <li>Quit Sandvox.</li>
+
+                <li>Open the <a href="http://docs.info.apple.com/article.html?artnum=152010" class="external text" title="http://docs.info.apple.com/article.html?artnum=152010">Terminal</a> application (found in the "Applications → Utilities" folder).</li>
+
+                <li>Type <tt>defaults delete com.karelia.Sandvox</tt> followed by the name of the hidden preference, as shown below.</li>
+            </ol>
+            <pre>
+defaults delete com.karelia.Sandvox metaRobots
+</pre>
+
+            <ol>
+                <li>Hit the Return key and relaunch Sandvox.</li>
+            </ol>
+
+            <p>Alternatively, you can remove all Sandvox preferences by deleting the "com.karelia.Sandvox.plist" file in your "Library → Preferences" folder.</p>
+        </div><a name="Publishing" id="Publishing"></a>
+
+        <h2><span class="mw-headline">Publishing</span></h2>
+
+        <dl>
+            <dt>HTML type</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DocType <span class="prefValue">0</span></code></dd>
+
+            <dd>
+                The default type of HTML produced by Sandvox. Choose from:
+
+                <ul>
+                    <li><b>0</b> - HTML 4.0.1</li>
+
+                    <li><b>1</b> - XHTML 1.0 Transitional</li>
+
+                    <li><b>2</b> - XHTML 1.0 Strict</li>
+
+                    <li><b>3</b> - XHTML 1.1 Strict</li>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>Site resources path</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DefaultResourcesPath "<span class="prefValue">svx_resources</span>"</code></dd>
+
+            <dd>The folder to store site resources in. Normally <tt>_Resources</tt>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Media files path</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DefaultMediaPath "<span class="prefValue">svx_media</span>"</code></dd>
+
+            <dd>The folder to store <a href="Media.html" title="Media">media</a> files in. Normally <tt>_Media</tt>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Default file extension</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox fileExtension "<span class="prefValue">html</span>"</code></dd>
+
+            <dd>The default path extension given to all <a href="Page.html" title="Page">pages</a> when <a href="Publishing_Your_Site.html" title="Publish">published</a>. Usually, you customize this via the <a href="File_Name_and_Extension.html" title="File Name and Extension">File Name and Extension</a> fields in the <a href="Page_Details.html" title="Page Details">Page Details</a> area. But if you particularly wish, you can use this preference to set the extension for:</dd>
+
+            <dd>A) Any new <a href="Page.html" title="Page">pages</a> created.</dd>
+
+            <dd>B) All existing <a href="Page.html" title="Page">pages</a> which haven't had their filename extension customized yet.</dd>
+        </dl>
+
+        <dl>
+            <dt>Delete pages when publishing</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox deletePagesWhenPublishing -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Normally when <a href="Publishing_Your_Site.html" title="Publish">publishing</a>, Sandvox overwrites any files on the <a href="Host.html" title="Host">Host</a> that it needs to. However, some servers refuse to allow overwriting. Setting this hidden preference to "YES" will make Sandvox delete and then write anew any such <a href="Page.html" title="Page">pages</a>, thereby avoiding the issue.</dd>
+        </dl>
+
+        <dl>
+            <dt>Robots meta tag</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox metaRobots "<span class="prefValue">all</span>"</code></dd>
+
+            <dd>The instructions for visiting web robots. See <a href="http://www.robotstxt.org/wc/meta-user.html" class="external text" title="http://www.robotstxt.org/wc/meta-user.html">this article</a> for information on the content you can supply.</dd>
+        </dl>
+
+        <dl>
+            <dt>Unix file permissions</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox pagePermissions "<span class="prefValue">0644</span>"</code></dd>
+
+            <dd>If your host supports it (also applies when <a href="Publishing_Your_Site.html" title="Publish">publishing</a> locally), this sets the Unix permissions of each file.</dd>
+        </dl>
+
+        <dl>
+            <dt>Publishing sets permissions</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ConnectionSetsPermissions -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Normally when <a href="Publishing_Your_Site.html" title="Publish">publishing</a>, Sandvox sets the Unix file permissions for each file that it uploads (see above setting). However, some servers refuse to allow setting permissions and disconnect immediately. Setting this hidden preference to "NO" will tell Sandvox to ignore setting file permissions on the server, allowing publishing to continue.</dd>
+        </dl>
+
+        <dl>
+            <dt>Apache publishing folder</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ApacheDocRoot "<span class="prefValue">/Library/WebServer/Documents</span>"</code></dd>
+
+            <dd>If you are <a href="Publishing_Your_Site.html" title="Publish">publishing</a> to your computer, and <b>not</b> to your Home Directory, this sets the folder that Sandvox will publish to. Useful if you have multiple copies of Apache or an alternative webserver installed.</dd>
+        </dl>
+
+        <dl>
+            <dt>Replace existing files when exporting</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ExportShouldReplaceExistingFile -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Exporting a site overwrites any existing file in that location, exactly like saving a document in any Mac OS X application. Sandvox 1.5 didn't strictly conform to this and would only overwrite individual files as they were exported. Set this hidden preference to <code>NO</code> to revert back to the 1.5 behaviour.</dd>
+        </dl>
+
+        <div id="LoadLocalFonts">
+            <dl>
+                <dt>Load fonts bundled in designs</dt>
+
+                <dd><code>defaults write com.karelia.Sandvox LoadLocalFonts -bool <span class="prefValue">NO</span></code></dd>
+
+                <dd>This should be used when the loading of fonts stored in design bundles, used for <a href="Graphical_Text.html" title="Graphical Text">graphical text</a>, needs to be turned off. (This is when you have major <a href="Diagnosing_Keychain_Problems.html" title="Diagnosing Keychain Problems">keychain issues</a> in Leopard.) If you wish to use fonts embedded in a design, and you have turned this option off, you can dig into the actual design packages inside the Sandvox application package. Control-click (or right-click) on the Sandvox application and choose "Show Package Contents," then open the "Contents" and then "Designs" folder. Choose the desired design and choose "Show Package Contents" on <i>that</i>. Any special font files will be in that folder. Just double-click a font file to launch Font Book to install it.</dd>
+            </dl>
+        </div><a name="Connections" id="Connections"></a>
+
+        <h2><span class="mw-headline">Connections</span></h2>
+
+        <dl>
+            <dt>Display connection information when Sandvox is launched</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox LogHostInfoToConsole -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Connection timeout length</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox connectionTimeoutValue <span class="prefValue">30.0</span></code></dd>
+
+            <dd>When <a href="Publishing_Your_Site.html" title="Publish">publishing</a> to a remote <a href="Host.html" title="Host">host</a>, how long Sandvox will attempt to contact the <a href="Host.html" title="Host">host</a> for.</dd>
+        </dl>
+
+        <dl>
+            <dt>Contact verification length</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox LocalHostVerifyTimeout <span class="prefValue">5</span></code></dd>
+
+            <dd>The time in seconds our server will attempt to contact you if you choose to <a href="Publishing_Your_Site.html" title="Publish">publish</a> to your own computer.</dd>
+        </dl>
+
+        <dl>
+            <dt>FTP data connection type</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox FTPDataConnectionType "<span class="prefValue">Active</span>"</code></dd>
+
+            <dd>
+                Normally, Sandvox will attempt to determine the best data connection type available on your connection. For some rare cases this isn't good enough, and you can force Sandvox to use a specific type. The choices available are:
+
+                <ul>
+                    <li>Active</li>
+
+                    <li>Passive</li>
+
+                    <li>Extended Passive</li>
+
+                    <li>Extended Active</li>
+                </ul>
+            </dd>
+        </dl>
+
+        <dl>
+            <dt>DNS configuration host</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox hostResolver "<span class="prefValue">NSHost</span>"</code></dd>
+
+            <dd>Enter "NSHost" or "KTHost" to choose the host with which Sandvox resolves your DNS configuration. The default is NSHost, but KTHost may help if you are experiencing slowness when opening the <a href="Host_Setup_Assistant.html" title="Host Setup Assistant">Host Setup Assistant</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Password logging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox AllowPasswordToBeLogged -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>If there is an issue with your connection, Sandvox will log any information that may help resolve it. By default though, it will not log your password for security reasons. Enabling this preference <b>will</b> log your password.</dd>
+        </dl><a name="Collections" id="Collections"></a>
+
+        <h2><span class="mw-headline">Collections</span></h2>
+
+        <dl>
+            <dt>Number of pages listed in index</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox MaximumTitlesInCollectionSummary "<span class="prefValue">5</span>"</code></dd>
+
+            <dd>The maximum number of <a href="Page.html" title="Page">page</a> titles to show in an <a href="Index_.html" title="Index">index</a> when a <a href="Collection.html" title="Child">child</a> <a href="Collection.html" title="Collection">collection</a> has its <a href="Show_in_Parent.html" title="Show in Parent">show in parent</a> attribute set to be a list.</dd>
+        </dl>
+
+        <dl>
+            <dt>Index file name</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox htmlIndexBaseName "<span class="prefValue">index</span>"</code></dd>
+
+            <dd><a href="Collection.html" title="Collection">Collections</a> are <a href="Publishing_Your_Site.html" title="Publish">published</a> to their own subfolders. This specifies the filename of the <a href="Collection.html" title="Collection">Collection</a> page itself; this plus the fileExtension (above) form the name; e.g. "index.html". (Don't forget that this also affects the <a href="Home_Page.html" title="Home Page">Home Page</a> since it is a <a href="Collection.html" title="Collection">Collection</a> as well!)</dd>
+        </dl>
+
+        <dl>
+            <dt>Force paths to collections to end in index file</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox PathsWithIndexPages -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Force links to a collection index page to explicitly link to the index file name (as specified above, usually index.html). Not generally needed for web publication, but may be useful when viewing a website directly from the Finder. If your website is intended to be viewed directly from the finder, such as for a CD-ROM presentation, this will be useful.</dd>
+        </dl>
+
+        <dl>
+            <dt>Generate enclosure links to original images in RSS feeds</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox RSSFeedEnclosuresAreOriginal -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Force RSS the attachments in RSS feeds of images to refer to the full-size, original images, not the images scaled down to fit on a photo page. Useful if you want it to be more convenient to download large images from RSS feeds, or if you wish to take advantage of <a href="http://www.piclens.com/" class="external text" title="http://www.piclens.com/">PicLens</a> to show your images full-size.</dd>
+        </dl>
+
+        <dl>
+            <dt>Allow callouts to be shown in general index</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox allowCalloutsInIndex -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Normally callouts from a page are shown when that content is shown its enclosing index, such as in a weblog. If you do not wish to show callouts in this context, set this option to NO.</dd>
+        </dl><a name="Comments" id="Comments"></a>
+
+        <h2><span class="mw-headline">Comments</span></h2>
+
+        <p>To accommodate some of the many options available for <a href="http://www.js-kit.com/comments" class="external text" title="http://www.js-kit.com/comments">JS-Kit</a>, we have provided access using hidden preferences.</p>
+
+        <dl>
+            <dt>Whether lists comments in reverse chronological order</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitReverseOrder -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether to hide avatars from comment postings</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitDisableAvatars -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether to disable threading of comments</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitDisableThreading -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether to ask JS-Kit to send a confirmation email to the moderator address chosen in the Site Inspector</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox JSKitConfirmModeratorViaEmail -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Requests a moderator confirmation email from <a href="http://www.js-kit.com/comments" class="external text" title="http://www.js-kit.com/comments">JS-Kit</a> after each successful publishing of a site. You typically only want to turn this on temporarily until any problems with moderation are resolved and then turn it off again.</dd>
+        </dl><a name="Images" id="Images"></a>
+
+        <h2><span class="mw-headline">Images</span></h2>
+
+        <p>When creating <a href="Thumbnail.html" title="Thumbnail">thumbnail</a> and <a href="Favicon.html" title="Favicon">favicon</a> images, Sandvox automatically applies a sharpening effect to improve the image quality.</p>
+
+        <p>Normal image sharpening is accomplished from the <a href="Preferences.html" title="Preferences">Preferences</a> window. To adjust the amount of sharpening is done for Favicons, use the following command.</p>
+
+        <dl>
+            <dd><code>defaults write com.karelia.Sandvox KTFaviconSharpeningFactor <span class="prefValue">1.0</span></code></dd>
+        </dl>
+
+        <p>You can set the initial value of image linking using the following:</p>
+
+        <dl>
+            <dt>Whether to turn on the "Link To" checkbox</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shouldIncludeLink -bool <span class="prefValue">NO</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Initially link an image to its original-sized version</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox linkImageToOriginal -bool <span class="prefValue">YES</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Whether a dragged in image should be linked to externally (rather than being included in the document)</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox preferExternalImage -bool <span class="prefValue">YES</span></code></dd>
+        </dl><a name="Application_Behavior" id="Application_Behavior"></a>
+
+        <h2><span class="mw-headline">Application Behavior</span></h2>
+
+        <dl>
+            <dt>Autosave frequency</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox AutosaveFrequency -int <span class="prefValue">60</span></code></dd>
+
+            <dd>Sets the frequency, in seconds, between automatic document saves. If outside of the range of 5 seconds to 300 seconds (5 minutes), the default value of 60 seconds will be used.</dd>
+        </dl>
+
+        <dl>
+            <dt>Open file alert</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox OpenUntitledFileWhenIconClicked -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Disables the alert that appears when there are no documents open and you click on the Sandvox icon in the Dock.</dd>
+        </dl>
+
+        <dl>
+            <dt>Send crash reports</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox SendCrashReports -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Stops Sandvox checking to see if it crashed previously.</dd>
+        </dl>
+
+        <dl>
+            <dt>Open last used site when launching</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox AutoOpenLastOpenedOnLaunch -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>When launching Sandvox, stops it opening the last site you were working on.</dd>
+        </dl>
+
+        <dl>
+            <dt>Show file search paths</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ShowSearchPaths -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>When Sandvox launches, it checks to see if any of its internal files have been overridden. This setting logs all the paths that are searched. Please see "<a href="Overriding_Sandvox_Application_Files.html" title="Overriding Sandvox Application Files">Overriding Sandvox Application Files</a>" for more information.</dd>
+        </dl>
+
+        <dl>
+            <dt>Sandvox update address</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox HomeBaseURL "<span class="prefValue">http://launch.karelia.com/</span>"</code></dd>
+
+            <dd>The URL that Sandvox uses when checking for updates. It must end in a slash.</dd>
+        </dl>
+
+        <dl>
+            <dt>Log JavaScript console messages</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox LogJavaScript -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>If this is set, any JavaScript errors and messages will be appended to the system console log (along with what line number in the Sandvox HTML file it came from). Useful for diagnostics if your website has JavaScript in it.</dd>
+        </dl><a name="Alerts" id="Alerts"></a>
+
+        <h2><span class="mw-headline">Alerts</span></h2>
+
+        <p>Sandvox contains a number of alerts that you can dismiss with the option not to be told again in the future. These hidden preferences can be used to re-enable such alerts. Entering <span class="prefValue">NO</span> will enable an alert, and <span class="prefValue">YES</span> will silence it.</p>
+
+        <dl>
+            <dt>Quartz Extreme not available</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpQuartzExtreme -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Sandvox is being run on a non-Quartz Extreme equipped Mac. Please see "<a href="Graphical_Text.html" title="Graphical Text">Graphical Text</a>" for more information.</dd>
+        </dl>
+
+        <dl>
+            <dt>Sandvox update available</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpNewVersionAlert -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>The alert that appears when Sandvox detects an update available.</dd>
+        </dl>
+
+        <dl>
+            <dt>Download Sandvox update warning</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpDownloadWarn -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>When a Sandvox update is available, a badge also appears in the <a href="Status_Bar.html" title="Status Bar">Status Bar</a> to indicate it. This alert appears when you click it.</dd>
+        </dl>
+
+        <dl>
+            <dt>HTML validation results loaded</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpNotValidated -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd><a href="HTML_Validation.html" title="HTML Validation">HTML Validation</a> was successful and the results will be displayed in the <a href="Web_View.html" title="Web View">Web View</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>HTML validation failed</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpValidateError -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd><a href="HTML_Validation.html" title="HTML Validation">HTML Validation</a> failed and the results will be displayed in the <a href="Web_View.html" title="Web View">Web View</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Snapshot replacement</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox SilenceSaveDocumentSnapshot -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Warning when saving a new <a href="Autosaving_and_Snapshots.html" title="Snapshot">snapshot</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Sandvox unregistered</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpDemoUploadWarning -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>Sandvox is <a href="Registering_Sandvox.html" title="Registering Sandvox">unregistered</a> and in demo mode. <a href="Publishing_Your_Site.html" title="Publish">Publishing</a> is restricted.</dd>
+        </dl>
+
+        <dl>
+            <dt>Delete page</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DeletePagesSilencingKey -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>A <a href="Page.html" title="Page">page</a> is about to be deleted.</dd>
+        </dl>
+
+        <dl>
+            <dt>Non-Page Link</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox shutUpFakeURL -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>A <a href="Link.html" title="Link">link</a> has been clicked on and its destination only exists on the <a href="Publishing_Your_Site.html" title="Publish">published</a> site.</dd>
+        </dl>
+
+        <dl>
+            <dt>Pagelet cannot be selected</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox ShutUpCantSelect -bool <span class="prefValue">NO</span></code></dd>
+
+            <dd>You have clicked on a <a href="Pagelet.html" title="Pagelet">pagelet</a> that cannot be selected since its main location is on another <a href="Page.html" title="Page">page</a>. You can choose to go to that <a href="Page.html" title="Page">page</a> or cancel.</dd>
+        </dl><a name="New_Documents" id="New_Documents"></a>
+
+        <h2><span class="mw-headline">New Documents</span></h2>
+
+        <p>These settings affect only new sites you create.</p>
+
+        <dl>
+            <dt>Site design</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox designBundleIdentifier "<span class="prefValue">sandvox.Aqua</span>"</code></dd>
+
+            <dd>The identifier of the <a href="Design.html" title="Design">design</a> new sites use.</dd>
+        </dl>
+
+        <dl>
+            <dt>Home page index</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DefaultIndexBundleIdentifier "<span class="prefValue">sandvox.GeneralIndex</span>"</code></dd>
+
+            <dd>The kind of <a href="Index_.html" title="Index">index</a> the new <a href="Home_Page.html" title="Home Page">Home Page</a> should use. You can see the list of available <a href="Index_.html" title="Index">index</a> types using the "Available Components" item in the Debug menu.</dd>
+        </dl>
+
+        <dl>
+            <dt>Default home page pagelet</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DefaultBadgeBundleIdentifier "<span class="prefValue">sandvox.BadgePagelet</span>"</code></dd>
+
+            <dd>The identifier of the <a href="Pagelet.html" title="Pagelet">pagelet</a> type that should be placed in the new <a href="Home_Page.html" title="Home Page">Home Pages</a> <a href="Sidebar.html" title="Sidebar">Sidebar</a>. You can see the list of available <a href="Pagelet.html" title="Pagelet">pagelet</a> types using the "Available Components" item in the Debug menu. Entering a blank string will result in no <a href="Pagelet.html" title="Pagelet">pagelet</a> being added to the <a href="Home_Page.html" title="Home Page">Home Page</a>.</dd>
+        </dl><a name="Sandvox_Interface" id="Sandvox_Interface"></a>
+
+        <h2><span class="mw-headline">Sandvox Interface</span></h2>
+
+        <dl>
+            <dt>Open URLs in background</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox 'urls in background' <span class="prefValue">YES</span></code></dd>
+
+            <dd>Enable to open <a href="Link.html" title="Link">links</a> to external pages in the background. Only applies while editing sites within the Sandvox interface.</dd>
+        </dl>
+
+        <dl>
+            <dt>Transition time</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox AnimationTime <span class="prefValue">0.7</span></code></dd>
+
+            <dd>The time taken (in seconds) for the transition effect when changing a site's <a href="Design.html" title="Design">design</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Transition kind</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox CIFilterNameForAnimation "<span class="prefValue">CIRippleTransition</span>"</code></dd>
+
+            <dd>The kind of transition to use when changing a site's <a href="Design.html" title="Design">design</a>. See <a href="http://developer.apple.com/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_filters/chapter_5_section_14.html" class="external text" title="http://developer.apple.com/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_filters/chapter_5_section_14.html">Apple's documentation</a> for more information.</dd>
+        </dl>
+
+        <dl>
+            <dt>Transition parameters</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox CIFilterParameters</code> <i>aDictionary</i></dd>
+
+            <dd>Replace "aDictionary" with a dictionary specifying the transition parameters to use when changing a site's <a href="Design.html" title="Design">design</a>. See <a href="http://developer.apple.com/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_filters/chapter_5_section_14.html" class="external text" title="http://developer.apple.com/documentation/GraphicsImaging/Conceptual/CoreImaging/ci_filters/chapter_5_section_14.html">Apple's documentation</a> for information on the parameters to specify, and the <a href="http://developer.apple.com/documentation/Darwin/Reference/Manpages/man1/defaults.1.html" class="external text" title="http://developer.apple.com/documentation/Darwin/Reference/Manpages/man1/defaults.1.html">defaults man page</a> for how to enter a dictionary.</dd>
+        </dl>
+
+        <dl>
+            <dt>Titlebar seperator</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox TitleSeparator " <span class="prefValue">|</span> "</code></dd>
+
+            <dd>The string used to separate items in the Sandvox titlebar and <a href="Window_Title.html" title="Browser Window Title">Browser Window Title</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Custom Site Outline Icons</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox DisableCustomSiteOutlineIcons -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Stops Sandvox generating a custom Site Outline thumbnail image when appropriate. e.g. <a href="Photo.html" title="Photo">Photo</a> pages and <a href="File_Download.html" title="File Download">File Download</a> pages</dd>
+        </dl><a name="Contact_Form" id="Contact_Form"></a>
+
+        <h2><span class="mw-headline">Contact Form</span></h2>
+
+        <p>You can change the service that Sandvox uses to send email from your website. Because some Sandvox users may have trouble receiving emails sent from the server normally used by Sandvox (service.karelia.com), we offer this alternative.</p>
+
+        <p>You would need to <a href="http://www.karelia.com/files/mailer_service.zip" class="external text" title="http://www.karelia.com/files/mailer_service.zip">download our PHP files</a> and install them on your own server — see the README file that comes with that download for instructions. Be sure to republish your website after changing any of these defaults.</p>
+
+        <dl>
+            <dt>URLs of the form processor</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox mailmeURL "<span class="prefValue">http://service.karelia.com/mailme.php</span>"</code></dd>
+
+            <dd><code>defaults write com.karelia.Sandvox mailmeAjaxURL "<span class="prefValue">http://service.karelia.com/mailmeAjax.php</span>"</code></dd>
+
+            <dt>For your custom installation, the password used to decrypt the email address</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox mailmePassword "<span class="prefValue">MY_PASSWORD</span>"</code></dd>
+        </dl>
+
+        <div class="warning">
+            <p>The Contact Form service is provided by Karelia as a courtesy only. Karelia cannot and does not guarantee the delivery of email through its relay, any spam filters, or other third party systems.</p>
+        </div><a name="Syntax_Coloring" id="Syntax_Coloring"></a>
+
+        <h2><span class="mw-headline">Syntax Coloring</span></h2>
+
+        <p><i>You can change the colors used in the syntax coloring of Sandvox's Raw HTML editor window. Each color type take a trio of numbers representing the red, green, and blue component as a number from 0.0 to 1.0.</i></p>
+
+        <p>Some example colors:</p>
+
+        <table>
+            <tr>
+                <td>Black</td>
+
+                <td>0.0 0.0 0.0</td>
+            </tr>
+
+            <tr>
+                <td>Blue</td>
+
+                <td>0.0 0.0 1.0</td>
+            </tr>
+
+            <tr>
+                <td>Brown</td>
+
+                <td>0.6 0.4 0.2</td>
+            </tr>
+
+            <tr>
+                <td>Cyan</td>
+
+                <td>0.0 1.0 1.0</td>
+            </tr>
+
+            <tr>
+                <td>Dark Gray</td>
+
+                <td>0.33 0.33 0.33</td>
+            </tr>
+
+            <tr>
+                <td>Gray</td>
+
+                <td>0.5 0.5 0.5</td>
+            </tr>
+
+            <tr>
+                <td>Green</td>
+
+                <td>0.0 1.0 0.0</td>
+            </tr>
+
+            <tr>
+                <td>Light Gray</td>
+
+                <td>0.67 0.67 0.67</td>
+            </tr>
+
+            <tr>
+                <td>Magenta</td>
+
+                <td>1.0 0.0 1.0</td>
+            </tr>
+
+            <tr>
+                <td>Orange</td>
+
+                <td>1.0 0.5 0.0</td>
+            </tr>
+
+            <tr>
+                <td>Purple</td>
+
+                <td>0.5 0.0 0.5</td>
+            </tr>
+
+            <tr>
+                <td>Red</td>
+
+                <td>1.0 0.0 0.0</td>
+            </tr>
+
+            <tr>
+                <td>Yellow</td>
+
+                <td>1.0 1.0 0.0</td>
+            </tr>
+        </table>
+
+        <dl>
+            <dt>Comments</dt>
+
+            <dd>e.g. &lt;!-- ... --&gt;</dd>
+
+            <dd><code>defaults write com.karelia.Sandvox "SyntaxColoring:Color:Comments" -array <span class="prefValue">1.0 0.0 0.0</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Identifiers</dt>
+
+            <dd>e.g. &amp;amp; &amp;gt; &amp;lt;</dd>
+
+            <dd><code>defaults write com.karelia.Sandvox "SyntaxColoring:Color:Identifiers" -array <span class="prefValue">0.0 0.0 1.0</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Strings</dt>
+
+            <dd>e.g. "...."</dd>
+
+            <dd><code>defaults write com.karelia.Sandvox "SyntaxColoring:Color:Strings" -array <span class="prefValue">0.4 0.4 0.4</span></code></dd>
+        </dl>
+
+        <dl>
+            <dt>Tags</dt>
+
+            <dd>e.g. &lt;p&gt; ... &lt;/p&gt;</dd>
+
+            <dd><code>defaults write com.karelia.Sandvox "SyntaxColoring:Color:Tags" -array <span class="prefValue">0.0 0.0 0.6</span></code></dd>
+        </dl><a name="Debugging" id="Debugging"></a>
+
+        <h2><span class="mw-headline">Debugging</span></h2>
+
+        <dl>
+            <dt>Webkit Inspector</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox WebKitDeveloperExtras -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Enables the <a href="http://webkit.opendarwin.org/blog/?p=41" class="external text" title="http://webkit.opendarwin.org/blog/?p=41">Webkit Inspector</a>.</dd>
+        </dl>
+
+        <dl>
+            <dt>Debug Menu</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox IncludeDebugMenu -bool <span class="prefValue">YES</span></code></dd>
+
+            <dd>Enables Sandvox's <a href="Debug_Menu.html" title="Debug Menu">Debug menu</a>.</dd>
+        </dl><a name="Special_Logging" id="Special_Logging"></a>
+
+        <h3><span class="mw-headline">Special Logging</span></h3>
+
+        <p>For uploading and a few other areas of Sandvox, logging is controlled by setting specific "levels" for particular <i>domains</i>. (Each level shows the messages from the lower-numbered levels, so 5 shows all messages while 0 shows none.) The normal value is <i>3</i>.</p>
+
+        <table style="text-align:center; width:60%;">
+            <tr>
+                <th>0</th>
+
+                <th>1</th>
+
+                <th>2</th>
+
+                <th>3</th>
+
+                <th>4</th>
+
+                <th>5</th>
+            </tr>
+
+            <tr>
+                <td>(none)</td>
+
+                <td>Fatal</td>
+
+                <td>Error</td>
+
+                <td>Warn</td>
+
+                <td>Info</td>
+
+                <td>Debug</td>
+            </tr>
+        </table>
+
+        <p><i>The preferences below can also be set from the Debug menu.</i></p>
+
+        <dl>
+            <dt>Connection Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Connection" <span class="prefValue">5</span></code></dd>
+
+            <dd>Subclass registration and matching a port to a protocol</dd>
+        </dl>
+
+        <dl>
+            <dt>Protocol Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Protocol" <span class="prefValue">5</span></code></dd>
+
+            <dd>Debugs when a command has come in or about to be sent for certain protocols</dd>
+        </dl>
+
+        <dl>
+            <dt>Queuing Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Queuing" <span class="prefValue">5</span></code></dd>
+
+            <dd>Debug when things get queued up in their respective queue, e.g. Command, upload, download, etc</dd>
+        </dl>
+
+        <dl>
+            <dt>State Machine Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.State Machine" <span class="prefValue">5</span></code></dd>
+
+            <dd>Shows when it is trying to dispatch a command from the queue</dd>
+        </dl>
+
+        <dl>
+            <dt>Transport Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Transport" <span class="prefValue">5</span></code></dd>
+
+            <dd>Debug the Socket of the connection</dd>
+        </dl>
+
+        <dl>
+            <dt>Input Stream Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Input Stream" <span class="prefValue">5</span></code></dd>
+
+            <dd>Logs the input stream as binary data.</dd>
+        </dl>
+
+        <dl>
+            <dt>Output Stream Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Output Stream" <span class="prefValue">5</span></code></dd>
+
+            <dd>Logs the output stream as binary data.</dd>
+        </dl>
+
+        <dl>
+            <dt>Parser Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Parser" <span class="prefValue">5</span></code></dd>
+
+            <dd>Debugs the parsing of FTP directories</dd>
+        </dl>
+
+        <p><b>Other (non-connection) debugging:</b></p>
+
+        <dl>
+            <dt>Media Debugging</dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.Media" <span class="prefValue">5</span></code></dd>
+
+            <dd>Debugs the processing of Sandvox Media (images, video, etc.)</dd>
+        </dl>
+
+        <dl>
+            <dt><i>Debug All</i></dt>
+
+            <dd><code>defaults write com.karelia.Sandvox "KTLoggingLevel.*" <span class="prefValue">5</span></code></dd>
+
+            <dd>Turns all all logging to the specified level.</dd>
+        </dl>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Preferences.html" title="Preferences">Preferences</a></li>
+
+                <li><a href="Overriding_Sandvox_Application_Files.html" title="Overriding Sandvox Application Files">Overriding Sandvox Application Files</a></li>
+
+                <li><a href="Launching.html" title="Launching">Launching</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Hidden_Preferences.html">Let us know.</a>
+    </div>
+</body>
+</html>

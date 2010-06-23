@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="file, download, files, downloads, downloading, downloaded, text, strange, garbled, random, control, click, right, control-click, right-click" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>A File Download appears as garbled text</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">A File Download appears as garbled text</h1>
+
+        <p>In some cases, an incompatibility can occur between your <a href="Host.html" title="Host">Host</a> and particular file types. When clicking a <a href="Link.html" title="Link">link</a> to a <a href="File_Download.html" title="File Download">File Download</a>, the file does not actually download, and instead a large quantity of garbled text appears in your web browser, like so:</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/4/4f/File_Download_content_type_troubleshooting_example.jp2" width="480" height="345" border="0" />
+            </div>
+        </div>
+
+        <p>This is caused by your <a href="Host.html" title="Host">Host</a> marking the content type of the file as a "text/plain." In other words, the <a href="Host.html" title="Host">Host</a>'s settings tell your web browser that the file is not actually to be downloaded, but instead is a piece of text, and so the web browser displays it as such.</p>
+
+        <p>If a file download appears garbled, your first step is to determine whether or not this is the cause of the problem.</p>
+
+        <div class="instructions">
+            <p><b>To verify the issue:</b></p>
+
+            <ol>
+                <li>Click the download <a href="Link.html" title="Link">link</a> as if you were trying to download the file.</li>
+
+                <li>Copy the URL of the file from the address bar of your web browser.</li>
+
+                <li>Open the <a href="http://docs.info.apple.com/article.html?artnum=152010" class="external text" title="http://docs.info.apple.com/article.html?artnum=152010">Terminal</a> application (found in the "Applications → Utilities" folder).</li>
+
+                <li>Type the command <tt>curl -I</tt> followed by the address of the File Download (from step 2). You should have a command like this:
+                    <pre>
+curl -I http://www.example.com/myFile.mp4
+</pre>
+                </li>
+
+                <li>
+                    <p>Press the <i>return</i> key. Some output will appear roughly like this:</p>
+
+                    <div class="bordimg">
+                        <img alt="File Download content type troubleshooting terminal output" src="img/d/d5/File_Download_content_type_troubleshooting_terminal_output.png" width="381" height="122" border="0" />
+                    </div>
+                </li>
+            </ol>
+        </div>
+
+        <p>If, as in the image above, the "<tt>Content-type</tt>" is "<tt>text/plain</tt>," this is the problem. You have three possible choices for rectifying the issue:</p>
+
+        <ul>
+            <li>Contact your <a href="Host.html" title="Host">Host</a> and request that they update their settings to properly accommodate files of that type.</li>
+
+            <li>Compress the file into a <a href="http://en.wikipedia.org/wiki/ZIP_%28file_format%29" class="external text" title="http://en.wikipedia.org/wiki/ZIP_%28file_format%29">ZIP archive</a> and then upload it. Almost all <a href="Host.html" title="Host">Hosts</a> correctly support ZIP archives.</li>
+
+            <li>Request that your site visitors right-click (or control-click) the <a href="Link.html" title="Link">link</a> and choose to download the file, rather than clicking on the <a href="Link.html" title="Link">link</a>.</li>
+        </ul>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="File_Download.html" title="File Download">File Download</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=A_File_Download_appears_as_garbled_text.html">Let us know.</a>
+    </div>
+</body>
+</html>

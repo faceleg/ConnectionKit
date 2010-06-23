@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="snapshot, snapshots, save, saving, saved, revert, reverting, backup, back, up, auto, autosave, autosaving, auto-save, auto-saving, autosaved, auto-saved" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Autosaving and Snapshots</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Autosaving and Snapshots</h1><a name="Autosaving" id="Autosaving"></a>
+
+        <h2><span class="mw-headline">Autosaving</span></h2>
+
+        <p>Sandvox makes use of a feature known as autosaving. In most applications, as you work on a document, you periodically choose "File → Save" (or hit <i>command-s</i>) to save the document to disk. Sandvox is different.</p>
+
+        <p>As you work on a site, Sandvox continuously saves the changes to disk. This means that should something happen like your computer losing power, you should only lose a few seconds' work.</p><a name="Snapshots" id="Snapshots"></a>
+
+        <h2><span class="mw-headline">Snapshots</span></h2>
+
+        <p>On top of this, Sandvox offers a safety net in the form of the "snapshot" feature. It behaves rather like the "File → Revert" command found in many applications.</p>
+
+        <p>Imagine you have a fresh new site:</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/3/33/Snapshot1.png" width="152" height="153" border="0" />
+            </div>
+        </div>
+
+        <p>Now, you are about to make some major changes to the site, but aren't entirely sure that you want to keep them. So, you take a snapshot of the site.</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/1/17/Snapshot2.png" width="121" height="279" border="0" />
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p><b>To take a snapshot of a site:</b></p>
+
+            <ul>
+                <li>Choose "Save Snapshot" from the <a href="Sandvox_Menu_Guide.html#File" title="Sandvox Menu Guide">File menu</a>.</li>
+            </ul>
+
+            <p>You can only take a single snapshot of a site at a time. When you take a second snapshot, the previous one is replaced and moved to the Trash.</p>
+        </div>
+
+        <p>As you work on the site, Sandvox continues to autosave it as usual, all the while keeping the snapshot around just in case you want it:</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/c/cb/Snapshot3.png" width="437" height="285" border="0" />
+            </div>
+        </div>
+
+        <p>Let's say that after you make the changes, you'd rather go back the way the site looked before you started changing it. This is when that snapshot comes in handy. You could simply <a href="Sandvox_Menu_Guide.html#Undo" title="Sandvox Menu Guide">undo</a> the changes one at a time, but it's quicker and easier to <i>revert</i> back to the snapshot.</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/0/02/Snapshot4.png" width="595" height="285" border="0" />
+            </div>
+        </div>
+
+        <div class="instructions">
+            <p><b>To revert to a snapshot:</b></p>
+
+            <ol>
+                <li>Choose "Revert to Snapshot…" from the <a href="Sandvox_Menu_Guide.html#File" title="Sandvox Menu Guide">File menu</a>.</li>
+
+                <li>A sheet will appear asking if you are sure. Once you revert to a snapshot, all changes made to the site since the snapshot are permanently lost. Click the "Revert" button to continue.</li>
+
+                <li>The site is reverted back to the snapshot. The more recent version of the site that was discarded is placed in the Trash.</li>
+            </ol>
+        </div><a name="Preferences" id="Preferences"></a>
+
+        <h3><span class="mw-headline">Preferences</span></h3>
+
+        <p>By default, Sandvox is set to take a snapshot of a site <a href="Document.html" title="Document">document</a> as you open it. This allows you to easily revert back to the site's original state at the beginning of any working session. You can adjust this behavior using <a href="Preferences.html" title="Preferences">Preferences</a>.</p>
+
+        <p>It is also possible to adjust/disable some autosave behavior via <a href="Hidden_Preferences.html" title="Hidden Preferences">Hidden Preferences</a>.</p><a name="Advanced_Tip" id="Advanced_Tip"></a>
+
+        <h3><span class="mw-headline">Advanced Tip</span></h3>
+
+        <p>Sandvox snapshots are kept in the "Library → Application Support → Sandvox → Snapshots" folder in your Home directory.</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Document.html" title="Document">Document</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Autosaving_and_Snapshots.html">Let us know.</a>
+    </div>
+</body>
+</html>

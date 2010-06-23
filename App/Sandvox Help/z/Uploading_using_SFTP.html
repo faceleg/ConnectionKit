@@ -1,0 +1,91 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="upload, uploading, connect, connecting, connection, server, host, sftp, secure, ftp, ssh, shell, ftps" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Uploading using SFTP</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Uploading using SFTP</h1>
+
+        <p>When <a href="Publishing_Your_Site.html" title="Publish">publishing</a> a site, Sandvox is able to upload files by three methods; FTP, WebDav and SFTP. You make this choice when <a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">setting up your host</a>.</p>
+
+        <p>We encourage you to use SFTP if possible since it is more secure. This article is about uploading using SFTP connections. For a more in-depth look at the SFTP protocol, you may find <a href="http://en.wikipedia.org/wiki/SSH_file_transfer_protocol" class="external text" title="http://en.wikipedia.org/wiki/SSH_file_transfer_protocol">this article</a> helpful.</p><a name="Passwords_versus_Public_Keys" id="Passwords_versus_Public_Keys"></a>
+
+        <h2><span class="mw-headline">Passwords versus Public Keys</span></h2>
+
+        <p>There are two ways of securing an SFTP connection; You can either use a <a href="Password.html" title="Password">password</a> or a public key. You make this choice when <a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">entering your Host settings</a>.</p>
+
+        <p>To use a public key instead of a password requires your computer and <a href="Host.html" title="Host">Host</a> to be suitably set up. By using a public key, the security of the connection is increased since the encryption method is agreed before the handshake. (Suffice to say, if you don't understand this, using a public key is not for you!).</p>
+
+        <p>For some background information on public keys, you may be interested in <a href="http://www.macosxhints.com/article.php?story=20011207004643312" class="external text" title="http://www.macosxhints.com/article.php?story=20011207004643312">this article</a>.</p><a name="The_Connection_Process" id="The_Connection_Process"></a>
+
+        <h2><span class="mw-headline">The Connection Process</span></h2><a name="Authorizing_the_Connection" id="Authorizing_the_Connection"></a>
+
+        <h3><span class="mw-headline">Authorizing the Connection</span></h3>
+
+        <p>Whenever Sandvox connects to a <a href="Host.html" title="Host">host</a> by SFTP, it checks the fingerprint of the server. If the fingerprint has changed since the last time Sandvox connected, you are alerted like this:</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/d/de/SFTP-fingerprint_changed.jp2" width="360" height="210" border="0" />
+            </div>
+        </div>
+
+        <p>This is because if the fingerprint of a server changes, it is possible that the server has been compromised, placing your personal data at risk.</p>
+
+        <p>However, if you are connecting to the server for the very first time (i.e. you are <a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">setting up</a> your <a href="Host.html" title="Host">host</a>), then you will still be warned. In that scenario, it should be fine to authorize the connection. If not, you should contact your <a href="Host.html" title="Host">host</a> to check that this behavior is correct.</p><a name="Public_Key_Passphrase" id="Public_Key_Passphrase"></a>
+
+        <h3><span class="mw-headline">Public Key Passphrase</span></h3>
+
+        <p>If you have chosen to use a public key, Sandvox will prompt you:</p>
+
+        <div class="center">
+            <div class="floatnone">
+                <img alt="" src="img/3/34/SFTP-public_key_passphrase.jp2" width="480" height="166" border="0" />
+            </div>
+        </div>
+
+        <p>A passphrase can be used to further protect your public key. If you are using a passphrase enter it, if not simply leave the box blank.</p>
+
+        <p>You can check the "Save" box to have Sandvox securely store the passphrase in your <a href="http://en.wikipedia.org/wiki/Apple_Keychain" class="external text" title="http://en.wikipedia.org/wiki/Apple_Keychain">Keychain</a> so that you will not have to enter it each time you connect to the <a href="Host.html" title="Host">Host</a>.</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Password.html" title="Password">Password</a></li>
+
+                <li><a href="Host.html" title="Host">Host</a></li>
+
+                <li><a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">Setting Up Your Host</a></li>
+
+                <li><a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">Publishing to a Remote Host</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Uploading_using_SFTP.html">Let us know.</a>
+    </div>
+</body>
+</html>

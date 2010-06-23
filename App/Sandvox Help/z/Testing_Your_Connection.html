@@ -1,0 +1,127 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="test, testing, connection, connections, publish, publishing, fail, failure, host, setup, set, up, stop, error, errors, issue, issues, problem, problems, troubleshooting" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Testing Your Connection</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Testing Your Connection</h1><a name="Previous_Step" id="Previous_Step"></a>
+
+        <h2><span class="mw-headline">Previous Step</span></h2>
+
+        <p>This article is part of the "<a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">Setting Up Your Host</a>" procedure. How you arrive at the "Testing Your Connection" stage of "<a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">Setting Up Your Host</a>" depends on your choice of <a href="Host.html" title="Host">Host</a>:</p>
+
+        <ul>
+            <li>If <a href="Publishing_Your_Site.html" title="Publish">publishing</a> to MobileMe, the previous step is "<b><a href="Publishing_to_MobileMe.html" title="Publishing to MobileMe">Publishing to MobileMe</a></b>."</li>
+
+            <li>Otherwise, the previous step is "<b><a href="Publishing_to_a_Remote_Host.html" title="Publishing to a Remote Host">Publishing to a Remote Host</a></b>."</li>
+        </ul><a name="Test_Procedure" id="Test_Procedure"></a>
+
+        <h2><span class="mw-headline">Test Procedure</span></h2>
+
+        <p>Before you can <a href="Publishing_Your_Site.html" title="Publish">publish</a> a site, Sandvox must test the connection between your computer and <a href="Host.html" title="Host">Host</a>. This test covers the full range of functionality required of the <a href="Host.html" title="Host">host</a> in order for the site to work.</p>
+
+        <p>The diagram below demonstrates the six steps that make up the test. The key thing to understand first is that there are two ways in which a computer can contact your <a href="Host.html" title="Host">host</a>:</p><a name="Web_Connection" id="Web_Connection"></a>
+
+        <h3><span class="mw-headline">Web Connection</span></h3>
+
+        <p>The web connection is used by anyone visiting the website. With it, you can view webpages, but <i>can't</i> modify them. In the diagram below this address is:</p>
+        <pre>
+http://www.example.com
+</pre><a name="Upload_Connection" id="Upload_Connection"></a>
+
+        <h3><span class="mw-headline">Upload Connection</span></h3>
+
+        <p>The upload connection is used by Sandvox to communicate with the <a href="Host.html" title="Host">Host</a> when <a href="Publishing_Your_Site.html" title="Publish">publishing</a> the site. To use this connection, your <a href="Username.html" title="Username">username</a> and <a href="Password.html" title="Password">password</a> is needed, hence why Sandvox requires this information. In the diagram below, this address is:</p>
+        <pre>
+sftp://example.com/www
+</pre>
+
+        <p><br />
+        Sandvox knows the addresses from the information you have already given it.</p>
+
+        <div class="center">
+            <div class="thumb tnone">
+                <div class="thumbinner" style="width:482px;">
+                    <img alt="" src="img/2/23/Testing_your_connection.jp2" width="480" height="261" border="0" />
+
+                    <div class="thumbcaption">
+                        The yellow arrows signify an upload connection to your <a href="Host.html" title="Host">host</a>, and the green arrows a web connection.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <dl>
+            <dt>Test 1: Contacting Host</dt>
+
+            <dd>Sandvox attempts to contact the <a href="Host.html" title="Host">host</a> to see if it exists.</dd>
+
+            <dt>Test 2: Establishing Connection</dt>
+
+            <dd>Sandvox attempts to establish a connection to the <a href="Host.html" title="Host">Host</a> using your chosen <a href="Publishing_to_a_Remote_Host.html" title="Upload Method">Upload Method</a>. If you are uploading by <a href="Uploading_using_SFTP.html" title="SFTP">SFTP</a> and have not connected to this server before, Sandvox will warn you. Please see "<a href="Uploading_using_SFTP.html#Authorizing_the_Connection" title="Uploading using SFTP">Uploading using SFTP</a>" for more information.</dd>
+
+            <dt>Test 3: Creating Directories</dt>
+
+            <dd>If any directories are required to <a href="Publishing_Your_Site.html" title="Publish">publish</a> your site to, Sandvox creates them.</dd>
+
+            <dt>Test 4: Uploading Test File</dt>
+
+            <dd>A small test file is uploaded to the <a href="Host.html" title="Host">host</a>.</dd>
+
+            <dt>Test 5: Downloading Test File</dt>
+
+            <dd>Having uploaded a test file, Sandvox attempts to download it to test the <a href="Host.html" title="Host">Host</a>'s web connection.</dd>
+
+            <dt>Test 6: Deleting Test File</dt>
+
+            <dd>The test file is no longer needed, so Sandvox deletes it.</dd>
+        </dl>
+
+        <p><br />
+        If the connection test fails, please see "<a href="Testing_my_connection_fails.html" title="Testing my connection fails">Testing my connection fails</a>" to hunt down the problem.</p><a name="Next_Step" id="Next_Step"></a>
+
+        <h2><span class="mw-headline">Next Step</span></h2>
+
+        <p>If your connection passed the full test, click the "Continue" button. The next step is the "<b><a href="Host_Summary.html" title="Host Summary">Host Summary</a></b>" panel.</p>
+
+        <p>If Sandvox failed to connect to your <a href="Host.html" title="Host">host</a>, click the "Go Back" button to make the necessary amendments, or click "Cancel."</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Testing_my_connection_fails.html" title="Testing my connection fails">Testing my connection fails</a></li>
+
+                <li><a href="Setting_Up_Your_Host.html" title="Setting Up Your Host">Setting Up Your Host</a></li>
+
+                <li><a href="Host.html" title="Host">Host</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Testing_Your_Connection.html">Let us know.</a>
+    </div>
+</body>
+</html>

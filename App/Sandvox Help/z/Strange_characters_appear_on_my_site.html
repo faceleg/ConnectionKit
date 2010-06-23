@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="character, characters, encoding, strange, unusual, wrong, letter, letters, lettering, text, encode, code, coding, weird, junk" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Strange characters appear on my site</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Strange characters appear on my site</h1>
+
+        <p>In some cases when <a href="Publishing_Your_Site.html" title="Publish">publishing</a> your site, certain characters such as ellipses (…), characters with accents and diacriticals (é, ö, ø, ñ, etc.), and special characters (™, ©, etc.) may be replaced by unexpected text.</p>
+
+        <p>When <a href="Publishing_Your_Site.html" title="Publish">publishing</a> a site, Sandvox stores the chosen <a href="Character_Encoding.html" title="Character Encoding">character encoding</a> within the HTML of each <a href="Page.html" title="Page">page</a>. However, when <a href="Publishing_Your_Site.html" title="Publish">publishing</a> to a remote <a href="Host.html" title="Host">host</a>, you may find that the <a href="Host.html" title="Host">host</a>'s server specifies its own (and possibly different) encoding.</p>
+
+        <p>When a visitor goes to view your site, their web browser might be told that a <a href="Page.html" title="Page">page</a> is in two different <a href="Character_Encoding.html" title="Character Encoding">character encodings</a>. When this happens, the <a href="Character_Encoding.html" title="Character Encoding">encoding</a> specified by the <a href="Host.html" title="Host">Host</a>'s server takes preference, causing some characters to be displayed incorrectly.</p>
+
+        <div class="instructions">
+            <p><b>To verify that this is the issue:</b></p>
+
+            <ol>
+                <li>Go to the <a href="http://validator.w3.org" class="external text" title="http://validator.w3.org">W3C Markup Validation Service</a>.</li>
+
+                <li>Enter your site's address.</li>
+
+                <li>If there is a conflict of <a href="Character_Encoding.html" title="Character Encoding">character encodings</a>, you will see a message like this:</li>
+            </ol>
+            <pre>
+Character Encoding mismatch!
+The character encoding specified in the HTTP header (iso-8859-1)
+is different from the value in the &lt;meta&gt; element (utf-8).
+I will use the value from the HTTP header (iso-8859-1)
+for this validation.
+</pre>
+        </div>
+
+        <div class="instructions">
+            <p><b>Ways to resolve the issue:</b></p>
+
+            <ul>
+                <li>Ask your <a href="Host.html" title="Host">Host</a> to stop providing text <a href="Character_Encoding.html" title="Character Encoding">encoding</a> information in their HTTP headers.</li>
+
+                <li>Change the <a href="Character_Encoding.html" title="Character Encoding">character encoding</a> of your site to match the <a href="Character_Encoding.html" title="Character Encoding">encoding</a> of your <a href="Host.html" title="Host">Host</a>'s HTTP headers. Please see "<a href="Character_Encoding.html#Setting_the_Character_Encoding" title="Character Encoding">Character Encoding</a>" for information on how to set a site's <a href="Character_Encoding.html" title="Character Encoding">character encoding</a>.</li>
+            </ul>
+        </div>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Character_Encoding.html" title="Character Encoding">Character Encoding</a></li>
+
+                <li><a href="Host.html" title="Host">Host</a></li>
+
+                <li><a href="Troubleshooting.html" title="Troubleshooting">Troubleshooting</a></li>
+
+                <li><a href="Unexpected,_extra_characters_appear_on_my_site.html" title="Unexpected, extra characters appear on my site">Unexpected, extra characters appear on my site</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Strange_characters_appear_on_my_site.html">Let us know.</a>
+    </div>
+</body>
+</html>

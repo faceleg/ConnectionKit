@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en" dir="ltr">
+<head>
+    <meta name="keywords" content="sandvox, document, documents, file, files, spotlight, search, searching, find, finding, finder, menu, meta, data, metadata, tag, tags" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <link href="../main.css" rel="stylesheet" type="text/css" media="all" />
+    <link href="../print.css" rel="stylesheet" type="text/css" media="print" />
+
+    <title>Spotlight Support</title>
+</head>
+
+<body>
+    <div id="banner">
+        <div id="machelp">
+            <a class="bread" href="../Sandvox%20Help.html">Sandvox Help</a>
+        </div>
+
+        <div id="index">
+            <a class="leftborder" href="all_index.html">Index</a>
+        </div>
+    </div>
+
+    <div id="mainbox">
+        <h1 class="firstHeading">Spotlight Support</h1>
+
+        <p>Sandvox includes support for Apple's <a href="http://www.apple.com/macosx/features/spotlight/" class="external text" title="http://www.apple.com/macosx/features/spotlight/">Spotlight</a> technology. The attributes supported by Spotlight for Sandvox <a href="Document.html" title="Document">documents</a> are:</p>
+
+        <ul>
+            <li><a href="Site_Title.html" title="Site Title">Site Title</a></li>
+
+            <li><a href="Site_Subtitle.html" title="Site Subtitle">Site Subtitle</a></li>
+
+            <li>Site Author (set using the <a href="Site_Properties.html#Author" title="Site Properties">Site Inspector</a>)</li>
+
+            <li>The number of <a href="Page.html" title="Page">pages</a> in the site</li>
+
+            <li>The <a href="Page_Title.html" title="Page Title">title</a> of every <a href="Page.html" title="Page">page</a></li>
+
+            <li>The textual content of every <a href="Page.html" title="Page">page</a></li>
+
+            <li>Core Data Model - occasionally used by us for troubleshooting purposes</li>
+        </ul>
+
+        <p>These attributes are used when searching for documents, and some of them also appear in the Get Info panel of Sandvox documents.</p><a name="Troubleshooting" id="Troubleshooting"></a>
+
+        <h2><span class="mw-headline">Troubleshooting</span></h2>
+
+        <p>If you find that Spotlight is not working properly for Sandvox <a href="Document.html" title="Document">documents</a>, it is generally because Spotlight has become "confused" by there being more than one copy of Sandvox on your computer at some point.</p>
+
+        <p>You first need to verify the issue.</p>
+
+        <div class="instructions">
+            <p><b>To see if Spotlight knows how to handle Sandvox documents:</b></p>
+
+            <ol>
+                <li>Open the <a href="http://docs.info.apple.com/article.html?artnum=152010" class="external text" title="http://docs.info.apple.com/article.html?artnum=152010">Terminal</a> application (located in the "Applications → Utilities" folder).</li>
+
+                <li>Type the command:
+                    <pre>
+mdimport -L
+</pre>
+                </li>
+
+                <li>Press <i>Return</i>. The Terminal will display a list of results.</li>
+
+                <li>If the word "Sandvox" doesn't appear anywhere in the results, then Spotlight has indeed "forgotten" how to search Sandvox documents.</li>
+            </ol>
+        </div>
+
+        <div class="instructions">
+            <p><b>To resolve the issue you can try:</b></p>
+
+            <ul>
+                <li>Deleting any additional copies of Sandvox on your computer. Don't forget to look in the Trash as well!</li>
+
+                <li>Moving Sandvox to a different folder and then back again.</li>
+
+                <li>Reinstalling Sandvox.</li>
+            </ul>
+        </div>
+
+        <p>If you are still having issues with Spotlight and Sandvox, please <a href="Support_Forum.html" title="Support Forum">visit our support forum</a> to try and resolve them.</p>
+
+        <div class="related">
+            <a name="Related_Articles" id="Related_Articles"></a>
+
+            <h2><span class="mw-headline">Related Articles</span></h2>
+
+            <ul>
+                <li><a href="Document.html" title="Document">Document</a></li>
+
+                <li><a href="The_Spotlight_database_is_corrupted.html" title="The Spotlight database is corrupted">The Spotlight database is corrupted</a></li>
+            </ul>
+        </div>
+    </div>
+
+    <div id='feedback'>
+        How can we improve this page? <a href="http://docs.karelia.com/feedback/?h=Sandvox&amp;p=Spotlight_Support.html">Let us know.</a>
+    </div>
+</body>
+</html>
