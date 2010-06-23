@@ -372,7 +372,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         [dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
     {
         NSArray *sidebarPageletControllers = [self childWebEditorItems];
-        for (SVDOMController *aPageletItem in [webEditor selectedItems])
+        for (SVDOMController *aPageletItem in [webEditor draggedItems])
         {
             if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
             {
