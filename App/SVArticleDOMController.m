@@ -279,6 +279,81 @@
     [webEditor didChangeText];
 }
 
+- (void)placeInline:(id)sender;
+{
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    SVWebEditorViewController *viewController = [context webEditorViewController];
+    
+    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    {
+        if (!aGraphic) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementCallout || placement == SVGraphicPlacementBlock)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
+        }
+    }
+}
+
+- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+{
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    SVWebEditorViewController *viewController = [context webEditorViewController];
+    
+    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    {
+        if (!aGraphic) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementCallout)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
+        }
+    }
+    
+    
+    
+    
+    //[(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
+}
+
+- (IBAction)placeAsCallout:(id)sender;
+{
+    SVRichText *article = [self representedObject];
+    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+    
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    SVWebEditorViewController *viewController = [context webEditorViewController];
+    
+    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    {
+        if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
+        
+        // Can the graphic be transformed on the spot? #79017
+        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
+        if (placement == SVGraphicPlacementBlock)
+        {
+            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
+        }
+        else
+        {
+            // Remove from all pages
+            [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
+            
+            // Insert at start of page
+            NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
+            [html insertAttributedString:callout atIndex:0];
+        }
+    }
+    
+    // Store html
+    [article setAttributedHTMLString:html];
+    [html release];
+}
+
 - (IBAction)placeInSidebar:(id)sender;
 {
     // Insert copies into sidebar

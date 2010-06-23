@@ -604,89 +604,62 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark Graphic Placement
 
-- (void)placeInline:(id)sender;
-{
-    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
-    {
-        if (!aGraphic) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
-        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementCallout || placement == SVGraphicPlacementBlock)
-        {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
-        }
-    }
-}
-
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
-{
-    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
-    {
-        if (!aGraphic) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
-        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementCallout)
-        {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
-        }
-    }
-    
-    
-    
-    
-    //[(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
-}
-
-- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
-{
-    if ([sender state] == NSOnState) [self placeAsBlock:sender];
-}
-
-- (IBAction)placeAsCallout:(id)sender;
-{
-    SVRichText *article = [[self page] article];
-    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-    
-    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
-    {
-        if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
-        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementBlock)
-        {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
-        }
-        else
-        {
-            // Remove from all pages
-            [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
-            
-            // Insert at start of page
-            NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
-            [html insertAttributedString:callout atIndex:0];
-        }
-    }
-    
-    // Store html
-    [article setAttributedHTMLString:html];
-    [html release];
-}
-
-- (IBAction)placeInSidebar:(id)sender;
+- (BOOL)doPlacementCommandBySelector:(SEL)action;
 {
     // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
     NSResponder *textController = [self firstResponderItem];
     if (textController)
     {
-        [textController doCommandBySelector:_cmd];
+        [textController doCommandBySelector:action];
     }
     else if ([[self webEditor] selectedDOMRange])
     {
         NSBeep();
     }
+    else
+    {
+        return NO;
+    }
+    
+    return YES;
+}
+
+- (void)placeInline:(id)sender;
+{
+    // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
+    [self doPlacementCommandBySelector:_cmd];
+    
+    // TODO: Handle going from sidebar to inline
+}
+
+- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+{
+    // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
+    [self doPlacementCommandBySelector:_cmd];
+    
+    // TODO: Handle going from sidebar to block
+}
+
+- (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on
+{
+    if ([sender state] == NSOnState)
+    {
+        [self doPlacementCommandBySelector:@selector(placeBlockLevel:)];
+    }
+}
+
+- (IBAction)placeAsCallout:(id)sender;
+{
+    // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
+    [self doPlacementCommandBySelector:_cmd];
+    
+    // TODO: Handle going from sidebar to callout
+}
+
+- (IBAction)placeInSidebar:(id)sender;
+{
+    // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
+    [self doPlacementCommandBySelector:_cmd];
     
     // Otherwise assume selection is already in sidebar so nothing needs doing
 }
