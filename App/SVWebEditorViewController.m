@@ -434,15 +434,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     return [self primitiveSelectedObjectsController];
 }
 
-- (SVTextDOMController *)focusedTextController
-{
-    return (SVTextDOMController *)[[self webEditor] focusedText];
-}
-
-+ (NSSet *)keyPathsForValuesAffectingFocusedTextController
-{
-    return [NSSet setWithObject:@"webEditor.focusedText"];
-}
+@synthesize firstResponderItem = _firstResponderItem;
 
 @synthesize HTMLContext = _context;
 - (void)setHTMLContext:(SVWebEditorHTMLContext *)context;
@@ -682,7 +674,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (IBAction)placeInSidebar:(id)sender;
 {
     // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
-    NSResponder *textController = [self focusedTextController];
+    NSResponder *textController = [self firstResponderItem];
     if (textController)
     {
         [textController doCommandBySelector:_cmd];
@@ -870,7 +862,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (BOOL)webEditor:(WEKWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
-    SVTextDOMController *textController = [self focusedTextController];
+    SVTextDOMController *textController = [[self firstResponderItem] textDOMController];
     
     
     if (textController)
@@ -962,6 +954,40 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     return result;
 }
 
+- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+{
+    WEKWebEditorView *webEditor = [notification object];
+    OBPRECONDITION(webEditor == [self webEditor]);
+    
+    
+    // Set our first responder item to match
+    id controller = [webEditor focusedText];
+    if (!controller)
+    {
+        NSSet *selection = [[NSSet alloc] initWithArray:[webEditor selectedItems]];
+        NSSet *textControllers = [selection valueForKey:@"textDOMController"];
+        if ([textControllers count] == 1) controller = [textControllers anyObject];
+    }
+    [self setFirstResponderItem:controller];
+    
+    
+    // Do something?? link related
+    if (![[self webEditor] selectedDOMRange])
+    {
+        SVLink *link = [[self selectedObjectsController] valueForKeyPath:@"selection.link"];
+        
+        if (NSIsControllerMarker(link))
+        {
+            [[SVLinkManager sharedLinkManager] setSelectedLink:nil
+                                                      editable:(link == NSMultipleValuesMarker)];
+        }
+        else
+        {
+            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
+        }
+    }
+}
+
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
 {
     SVRichText *article = [[self page] article];
@@ -981,24 +1007,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     
     return result;
-}
-
-- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
-{
-    if (![[self webEditor] selectedDOMRange])
-    {
-        SVLink *link = [[self selectedObjectsController] valueForKeyPath:@"selection.link"];
-        
-        if (NSIsControllerMarker(link))
-        {
-            [[SVLinkManager sharedLinkManager] setSelectedLink:nil
-                                                      editable:(link == NSMultipleValuesMarker)];
-        }
-        else
-        {
-            [[SVLinkManager sharedLinkManager] setSelectedLink:link editable:YES];
-        }
-    }
 }
 
 - (BOOL)webEditor:(WEKWebEditorView *)sender createLink:(SVLinkManager *)actionSender;
