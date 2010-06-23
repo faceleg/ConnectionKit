@@ -8,6 +8,7 @@
 
 #import "SVGraphic.h"
 
+#import "SVArticle.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVRichText.h"
@@ -59,6 +60,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 + (NSSet *)keyPathsForValuesAffectingPlacement;
 {
     return [NSSet setWithObject:@"textAttachment.placement"];
+}
+
+- (BOOL)isPlacementEditable;    // yes for sidebar & article embedded graphics
+{
+    SVTextAttachment *attachment = [self textAttachment];
+    BOOL result = (!attachment || [[attachment body] isKindOfClass:[SVArticle class]]);
+    return result;
 }
 
 @dynamic textAttachment;

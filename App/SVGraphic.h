@@ -74,6 +74,7 @@ extern NSString *kSVGraphicPboardType;
 
 #pragma mark Placement
 @property(nonatomic, readonly) NSNumber *placement; // SVGraphicPlacement
+- (BOOL)isPlacementEditable;    // yes for sidebar & article embedded graphics
 
 
 #pragma mark Pagelet
