@@ -322,9 +322,6 @@
 
 - (IBAction)placeAsCallout:(id)sender;
 {
-    SVRichText *article = [self representedObject];
-    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
-    
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
@@ -340,18 +337,10 @@
         }
         else
         {
-            // Remove from all pages
-            [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
-            
-            // Insert at start of page
-            NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
-            [html insertAttributedString:callout atIndex:0];
+            // er, what on earth is it then?
+            NSBeep();
         }
     }
-    
-    // Store html
-    [article setAttributedHTMLString:html];
-    [html release];
 }
 
 - (IBAction)placeInSidebar:(id)sender;

@@ -9,9 +9,10 @@
 #import "SVSidebarDOMController.h"
 #import "SVSidebar.h"
 
+#import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
 #import "KTPage.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVWebEditorViewController.h"
 #import "WebEditingKit.h"
 
 #import "NSArray+Karelia.h"
@@ -131,6 +132,36 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 #pragma mark Pagelets Controller
 
 @synthesize pageletsController = _pageletsController;
+
+#pragma mark Placement Actions
+
+- (void)placeAsCallout:(id)sender;
+{
+    SVRichText *article = [[[self HTMLContext] page] article];
+    NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
+    
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    SVWebEditorViewController *viewController = [context webEditorViewController];
+    
+    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
+    {
+        // Remove from all pages
+        [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
+        
+        // Insert at start of page
+        NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
+        [html insertAttributedString:callout atIndex:0];
+    }
+    
+    // Store html
+    [article setAttributedHTMLString:html];
+    [html release];
+}
+
+- (void)placeInSidebar:(id)sender;
+{
+    // Already there, so do nothing. Need to implement this otherwise view controller will have nowhere to send the message, and thus beep.
+}
 
 #pragma mark Drop
 
