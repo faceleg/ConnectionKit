@@ -126,6 +126,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [controllers release];
 }
 
+- (SVSidebarDOMController *)sidebarDOMController; { return self; }
+
 #pragma mark Pagelets Controller
 
 @synthesize pageletsController = _pageletsController;
@@ -372,7 +374,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         [dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
     {
         NSArray *sidebarPageletControllers = [self childWebEditorItems];
-        for (SVDOMController *aPageletItem in [webEditor draggedItems])
+        NSArray *graphicControllers = [[webEditor draggedItems] copy];
+        
+        for (SVDOMController *aPageletItem in graphicControllers)
         {
             if ([sidebarPageletControllers containsObjectIdenticalTo:aPageletItem])
             {
@@ -384,6 +388,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
                  moveObject:pagelet toIndex:dropIndex];
             }
         }
+        
+        [graphicControllers release];
     }
     
     
@@ -457,6 +463,20 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation WEKWebEditorItem (SVSidebarDOMController)
+
+- (SVSidebarDOMController *)sidebarDOMController;
+{
+    return [[self parentWebEditorItem] sidebarDOMController];
+}
+
+@end
+
 
 
 #pragma mark -

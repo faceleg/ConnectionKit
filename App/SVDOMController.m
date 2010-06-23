@@ -263,18 +263,13 @@
 
 #pragma mark Sidebar
 
-- (BOOL)isSidebarPageletDOMController;
-{
-    return [[self parentWebEditorItem] isKindOfClass:[SVSidebarDOMController class]];
-}
-
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;
 {
     NSDragOperation result = [super draggingSourceOperationMaskForLocal:isLocal];
     
     if (isLocal && (!(result & NSDragOperationMove) || !(result & NSDragOperationGeneric)))
     {
-        if ([self isSidebarPageletDOMController] || [self textDOMController])
+        if ([self sidebarDOMController] || [self textDOMController])
         {
             result = result | NSDragOperationMove | NSDragOperationGeneric;
         }

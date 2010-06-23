@@ -40,3 +40,12 @@
 
 
 @end
+
+
+#pragma mark -
+
+
+@interface WEKWebEditorItem (SVSidebarDOMController)
+- (SVSidebarDOMController *)sidebarDOMController;
+@end
+

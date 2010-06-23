@@ -1122,12 +1122,15 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     }
     else if (action == @selector(moveUp:) || action == @selector(moveDown:))
     {
-        NSArray *pageletResults = [[sender selectedItems] valueForKey:@"isSidebarPageletDOMController"];
-        if ([pageletResults containsObject:[NSNumber numberWithBool:YES]])
+        for (WEKWebEditorItem *anItem in [sender selectedItems])
         {
-            [[_graphicsController sidebarPageletsController] performSelector:action
-                                                                           withObject:nil];
-        }
+            if ([anItem sidebarDOMController])
+            {
+                [[_graphicsController sidebarPageletsController] performSelector:action
+                                                                      withObject:nil];
+                break;
+            }
+        }        
     }
     else if (action == @selector(reload:))
     {
