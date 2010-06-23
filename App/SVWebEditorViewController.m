@@ -610,9 +610,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)placeInline:(id)sender;
 {
-    for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
+    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
     {
-        SVGraphic *aGraphic = [aGraphicController representedObject];
         if (!aGraphic) continue;
         
         // Can the graphic be transformed on the spot? #79017
@@ -626,9 +625,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
 {
-    for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
+    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
     {
-        SVGraphic *aGraphic = [aGraphicController representedObject];
         if (!aGraphic) continue;
         
         // Can the graphic be transformed on the spot? #79017
@@ -655,9 +653,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     SVRichText *article = [[self page] article];
     NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
     
-    for (SVGraphicDOMController *aGraphicController in [[self webEditor] selectedItems])
+    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
     {
-        SVGraphic *aGraphic = [aGraphicController representedObject];
         if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
         
         // Can the graphic be transformed on the spot? #79017
