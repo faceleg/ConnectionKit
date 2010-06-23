@@ -37,6 +37,6 @@
 
 #pragma mark Convenience
 + (NSAttributedString *)attributedHTMLStringWithAttachment:(id)attachment;
-+ (NSAttributedString *)calloutAttributedHTMLStringWithGraphic:(SVGraphic *)graphic;
++ (NSAttributedString *)attributedHTMLStringWithGraphic:(SVGraphic *)graphic;
 
 @end

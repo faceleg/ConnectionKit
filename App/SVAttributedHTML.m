@@ -200,7 +200,7 @@
     return [result autorelease];
 }
 
-+ (NSAttributedString *)calloutAttributedHTMLStringWithGraphic:(SVGraphic *)graphic;
++ (NSAttributedString *)attributedHTMLStringWithGraphic:(SVGraphic *)graphic;
 {
     OBPRECONDITION(graphic);
     
@@ -210,7 +210,6 @@
                                         inManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
     //[textAttachment setBody:text];
-    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementCallout]];
     
     
     // Finish up

@@ -12,6 +12,7 @@
 #import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
 #import "KTPage.h"
+#import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
 #import "WebEditingKit.h"
 
@@ -135,7 +136,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Placement Actions
 
-- (void)placeAsCallout:(id)sender;
+- (void)setPlacement:(SVGraphicPlacement)placement;
 {
     SVRichText *article = [[[self HTMLContext] page] article];
     NSMutableAttributedString *html = [[article attributedHTMLString] mutableCopy];
@@ -149,13 +150,29 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         [[aGraphic mutableSetValueForKey:@"sidebars"] removeAllObjects];
         
         // Insert at start of page
-        NSAttributedString *callout = [NSAttributedString calloutAttributedHTMLStringWithGraphic:aGraphic];
-        [html insertAttributedString:callout atIndex:0];
+        NSAttributedString *graphicHTML = [NSAttributedString attributedHTMLStringWithGraphic:aGraphic];
+        [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:placement]];
+        [html insertAttributedString:graphicHTML atIndex:0];
     }
     
     // Store html
     [article setAttributedHTMLString:html];
     [html release];
+}
+
+- (void)placeInline:(id)sender;
+{
+    [self setPlacement:SVGraphicPlacementInline];
+}
+
+- (void)placeAsBlock:(id)sender;
+{
+    [self setPlacement:SVGraphicPlacementBlock];
+}
+
+- (void)placeAsCallout:(id)sender;
+{
+    [self setPlacement:SVGraphicPlacementCallout];
 }
 
 - (void)placeInSidebar:(id)sender;
