@@ -11,7 +11,9 @@
 #import "SVAttributedHTML.h"
 #import "SVCalloutDOMController.h"
 #import "SVGraphicFactory.h"
-#import "SVWebEditorHTMLContext.h"
+#import "SVSidebarPageletsController.h"
+#import "SVTextAttachment.h"
+#import "SVWebEditorViewController.h"
 #import "KTPage.h"
 
 #import "KSWebLocation.h"
@@ -240,7 +242,66 @@
     return result;
 }
 
-#pragma mark Actions
+#pragma mark Placement
+
+- (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
+{
+    WEKWebEditorView *webEditor = [self webEditor];
+    if (![webEditor shouldChangeText:self]) return;
+    
+    
+    for (SVDOMController *aController in [webEditor selectedItems])
+    {
+        if ([aController parentWebEditorItem] != self) continue;
+        
+        
+        // Seek out the paragraph nearest myself. Place my HTML element before/after there
+        DOMNode *refNode = [aController HTMLElement];
+        DOMNode *parentNode = [refNode parentNode];
+        while (parentNode != [self HTMLElement])
+        {
+            refNode = parentNode;
+            parentNode = [parentNode parentNode];
+        }
+        
+        [parentNode insertBefore:[aController HTMLElement] refChild:refNode];
+        
+        
+        // Make sure it's marked as block
+        SVGraphic *graphic = [aController representedObject];
+        [[graphic textAttachment] setPlacement:
+         [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
+    }
+    
+    
+    
+    // Make Web Editor/Controller copy text to model
+    [webEditor didChangeText];
+}
+
+- (IBAction)placeInSidebar:(id)sender;
+{
+    // Insert copies into sidebar
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
+    SVWebEditorViewController *viewController = [context webEditorViewController];
+    
+    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    {
+        // Serialize
+        id serializedPagelet = [aGraphic serializedProperties];
+        
+        // Deserialize into controller
+        [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
+    }
+    
+    
+    // Remove originals. For some reason -delete: does not fire change notifications
+    [[self webEditor] deleteForward:self];
+}
+
+
+#pragma mark Other Actions
 
 - (void)paste:(id)sender;
 {
