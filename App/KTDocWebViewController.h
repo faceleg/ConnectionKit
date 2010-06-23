@@ -42,7 +42,6 @@
 	
 	
 	NSString	*mySavedPageletStyle;
-	DOMHTMLElement					*mySelectedPageletHTMLElement;
 	
 	BOOL myWebViewIsLoading;
 	
@@ -89,9 +88,6 @@
 - (NSString *)savedPageletStyle;
 - (void)setSavedPageletStyle:(NSString *)aSavedPageletStyle;
 
-- (DOMHTMLElement *)selectedPageletHTMLElement;
-- (void)setSelectedPageletHTMLElement:(DOMHTMLElement *)aSelectedPageletHTMLElement;
-
 - (KTWebViewViewType)viewType;
 - (void)setViewType:(KTWebViewViewType)aViewType;
 
@@ -116,9 +112,6 @@
 // Updating
 - (void)updateWebViewAnimated;
 
-// Other
-- (void)selectPagelet:(KTPagelet *)aPagelet;
-- (void)setHilite:(BOOL)inHilite onHTMLElement:(DOMHTMLElement *)aSelectedPageletHTMLElement;
 
 @end
 

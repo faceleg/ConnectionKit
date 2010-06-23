@@ -98,7 +98,6 @@
     [self setElementWaitingForFragmentLoad:nil];
     [self setAsyncOffscreenWebViewController:nil];
 	[self setSavedPageletStyle:nil];
-    [self setSelectedPageletHTMLElement:nil];
 	[self setAnimationCoverWindow:nil];
     [self setAnimationTimer:nil];
     [self setTransitionFilter:nil];
@@ -246,20 +245,6 @@
 	mySavedPageletStyle = aSavedPageletStyle;
 }
 
-- (DOMHTMLElement *)selectedPageletHTMLElement
-{
-	return mySelectedPageletHTMLElement;
-}
-
-- (void)setSelectedPageletHTMLElement:(DOMHTMLElement *)aSelectedPageletHTMLElement
-{
-	[self setHilite:NO	 onHTMLElement:mySelectedPageletHTMLElement];
-	[self setHilite:YES onHTMLElement:aSelectedPageletHTMLElement];
-	
-	[aSelectedPageletHTMLElement retain];
-	[mySelectedPageletHTMLElement release];
-	mySelectedPageletHTMLElement = aSelectedPageletHTMLElement;
-}
 
 - (NSWindow *)animationCoverWindow
 {
@@ -689,8 +674,6 @@
 		
 		[self processEditableElementsFromElement:[[frame DOMDocument] documentElement]];
 		
-		[self setHilite:YES onHTMLElement:[self selectedPageletHTMLElement]];
-		// need to do this with inline images too probably
 		
 		// Restore scroll position
 		
@@ -849,37 +832,5 @@
 #pragma mark -
 #pragma mark Other
 
-- (void)selectPagelet:(KTPagelet *)aPagelet	// select on the new page
-{
-	NSString *divID = [NSString stringWithFormat:@"k-%@", [aPagelet uniqueID]];
-	
-	DOMDocument *document = [[[self webView] mainFrame] DOMDocument];
-	DOMElement *element = [document getElementById:divID];
-
-	[self setSelectedPageletHTMLElement:(DOMHTMLElement *)element];
-}
-
-- (void)setHilite:(BOOL)inHilite onHTMLElement:(DOMHTMLElement *)aSelectedPageletHTMLElement
-{
-	if (aSelectedPageletHTMLElement)
-	{
-		if (inHilite)
-		{
-			NSString *hatchPath = [[NSBundle mainBundle] pathForImageResource:@"diamondplate"];
-			NSURL *hatchURL = [NSURL fileURLWithPath:hatchPath];
-			
-			// store style
-			[self setSavedPageletStyle:[aSelectedPageletHTMLElement getAttribute:@"style"]];
-			[aSelectedPageletHTMLElement setAttribute:@"style"
-                                                value:[NSString stringWithFormat:@"outline:auto 1px #d8b300; background:url(%@);", hatchURL]];	// yellow
-		}
-		else
-		{
-			// use saved style
-			[aSelectedPageletHTMLElement setAttribute:@"style"
-                                                value:[self savedPageletStyle]];
-		}
-	}		
-}
 
 @end

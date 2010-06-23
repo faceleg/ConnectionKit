@@ -125,7 +125,7 @@
     _linkInspector = [[SVLinkInspector alloc] initWithNibName:@"LinkInspector" bundle:nil];
     [_linkInspector setIdentifier:@"com.karelia.Sandvox.LinkInspector"];
     [_linkInspector setTitle:NSLocalizedString(@"Link", @"Link Inspector")];
-    [_linkInspector setIcon:[NSImage imageNamed:@"follow"]];
+    [_linkInspector setIcon:[NSImage imageNamed:NSImageNameFollowLinkFreestandingTemplate]];
     
     // Plug-in
     _plugInInspector = [[SVPlugInInspector alloc] initWithNibName:@"PlugInInspector" bundle:nil];
