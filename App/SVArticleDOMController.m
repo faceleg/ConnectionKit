@@ -284,7 +284,7 @@
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
-    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
         if (!aGraphic) continue;
         
@@ -302,7 +302,7 @@
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
-    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
         if (!aGraphic) continue;
         
@@ -328,7 +328,7 @@
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
-    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
         if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
         
@@ -361,7 +361,7 @@
     SVSidebarPageletsController *sidebarController = [context sidebarPageletsController];
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
-    for (SVGraphic *aGraphic in [[viewController selectedObjectsController] selectedObjects])
+    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
         // Serialize
         id serializedPagelet = [aGraphic serializedProperties];

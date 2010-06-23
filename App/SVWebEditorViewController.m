@@ -276,10 +276,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Context holds the controllers. We need to send them over to the Web Editor.
-    // Doing so will populate .selectedObjectsController, so need to clear out its content & remember the selection first
+    // Doing so will populate .graphicsController, so need to clear out its content & remember the selection first
     
-    NSArray *selection = [[self selectedObjectsController] selectedObjects];
-    [[self selectedObjectsController] setContent:nil];
+    NSArray *selection = [[self graphicsController] selectedObjects];
+    [[self graphicsController] setContent:nil];
     
     SVWebEditorHTMLContext *context = [self HTMLContext];
     NSArray *controllers = [context DOMControllers];
@@ -289,7 +289,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         [[webEditor rootItem] addChildWebEditorItem:anItem];
     }
     
-    [[self selectedObjectsController] setSelectedObjects:selection];    // restore selection
+    [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
     
     // Restore scroll point
@@ -395,7 +395,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Match selection to controller
-    NSArray *selectedObjects = [[self selectedObjectsController] selectedObjects];
+    NSArray *selectedObjects = [[self graphicsController] selectedObjects];
     NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
     
     for (id anObject in selectedObjects)
@@ -429,7 +429,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 #pragma mark Content
 
 @synthesize primitiveSelectedObjectsController = _graphicsController;
-- (id <KSCollectionController>)selectedObjectsController
+- (id <KSCollectionController>)graphicsController
 {
     return [self primitiveSelectedObjectsController];
 }
@@ -471,7 +471,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
         ![[_graphicsController arrangedObjects] containsObjectIdenticalTo:anObject])
     {
-        [[self selectedObjectsController] addObject:anObject];
+        [[self graphicsController] addObject:anObject];
     }
     
     
@@ -505,7 +505,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [[_graphicsController sidebarPageletsController] addObject:pagelet];
     
     // Add to main controller too
-    NSArrayController *controller = [self selectedObjectsController];
+    NSArrayController *controller = [self graphicsController];
     
     BOOL selectInserted = [controller selectsInsertedObjects];
     [controller setSelectsInsertedObjects:YES];
@@ -576,7 +576,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (void)insertPageletTitle:(id)sender;
 {
     // Give the selected pagelets a title if needed
-    for (id anObject in [[self selectedObjectsController] selectedObjects])
+    for (id anObject in [[self graphicsController] selectedObjects])
     {
         if ([anObject isKindOfClass:[SVGraphic class]])
         {
@@ -755,7 +755,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         {
             // To insert a pagelet title, the selection just needs to contain at least one title-less pagelet. #56871
             result = NO;
-            for (id <NSObject> anObject in [[self selectedObjectsController] selectedObjects])
+            for (id <NSObject> anObject in [[self graphicsController] selectedObjects])
             {
                 if ([anObject isKindOfClass:[SVGraphic class]])
                 {
@@ -824,13 +824,13 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (BOOL)webEditor:(WEKWebEditorView *)sender deleteItems:(NSArray *)items;
 {
     NSArray *objects = [items valueForKey:@"representedObject"];
-    if ([objects isEqualToArray:[[self selectedObjectsController] selectedObjects]])
+    if ([objects isEqualToArray:[[self graphicsController] selectedObjects]])
     {
-        [[self selectedObjectsController] remove:self];
+        [[self graphicsController] remove:self];
     }
     else
     {
-        [[self selectedObjectsController] removeObjects:objects];
+        [[self graphicsController] removeObjects:objects];
     }
     
     return YES;
@@ -925,7 +925,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
                                                             
         // Match the controller's selection to the view
         NSArray *objects = [proposedSelectedItems valueForKey:@"representedObject"];
-        result = [[self selectedObjectsController] setSelectedObjects:objects];
+        result = [[self graphicsController] setSelectedObjects:objects];
     }
     
     return result;
@@ -951,7 +951,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Do something?? link related
     if (![[self webEditor] selectedDOMRange])
     {
-        SVLink *link = [[self selectedObjectsController] valueForKeyPath:@"selection.link"];
+        SVLink *link = [[self graphicsController] valueForKeyPath:@"selection.link"];
         
         if (NSIsControllerMarker(link))
         {
@@ -991,7 +991,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     if (![sender selectedDOMRange])
     {
         SVLink *link = [actionSender selectedLink];
-        [[self selectedObjectsController] setValue:link forKeyPath:@"selection.link"];
+        [[self graphicsController] setValue:link forKeyPath:@"selection.link"];
         return YES;
     }
     

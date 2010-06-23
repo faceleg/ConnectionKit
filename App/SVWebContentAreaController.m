@@ -251,7 +251,7 @@
 
 - (id <KSCollectionController>)objectsController;
 {
-    return [[self webEditorViewController] selectedObjectsController];
+    return [[self webEditorViewController] graphicsController];
 }
 
 #pragma mark Web Editor View Controller Delegate
