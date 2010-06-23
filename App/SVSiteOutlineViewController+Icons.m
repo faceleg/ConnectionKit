@@ -311,7 +311,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
 	if (!result)
 	{
-		result = [[NSImage imageNamed:@"pagemask"] retain];
+		result = [[NSImage imageNamed:@"siteoutline_pagemask"] retain];
 	}
 	
 	return result;
@@ -323,7 +323,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	
 	if (!result)
 	{
-		result = [[NSImage imageNamed:@"pageborder"] retain];
+		result = [[NSImage imageNamed:@"siteoutline_pageborder"] retain];
 	}
 	
 	return result;

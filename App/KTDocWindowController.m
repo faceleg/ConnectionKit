@@ -153,13 +153,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
                                  toObject:[self siteOutlineViewController]
                               withKeyPath:@"pagesController.selectedObjects"
                                   options:nil];
-	
-	// Link Popup in address bar
-	//		[[oLinkPopup cell] setUsesItemFromMenu:NO];
-	//		[oLinkPopup setIconImage:[NSImage imageNamed:@"links"]];
-	//		[oLinkPopup setShowsMenuWhenIconClicked:YES];
-	//		[oLinkPopup setArrowImage:nil];	// we have our own arrow, thank you
-	
+		
 	
 	
 	// Hide address bar if it's hidden (it's showing to begin with, in the nib)

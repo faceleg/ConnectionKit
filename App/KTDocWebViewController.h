@@ -151,8 +151,6 @@
 
 @interface KTDocWebViewController (Editing)
 
-- (void)processEditableElementsFromElement:(DOMElement *)aDOMElement;
-
 // Editing status
 - (BOOL)webViewIsEditing;
 - (SVHTMLTextBlock *)currentTextEditingBlock;
