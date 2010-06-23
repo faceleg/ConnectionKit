@@ -83,7 +83,7 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	DJW((@"%s %@",__FUNCTION__, theEvent));
+	// DJW((@"%s %@",__FUNCTION__, theEvent));
 
 	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
 	NSPoint windowPoint = [theEvent locationInWindow];

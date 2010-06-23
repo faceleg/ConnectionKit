@@ -281,6 +281,10 @@ TO DO:
 				{
 					theImage = [NSImage imageNamed:imageName];
 				}
+				if (!theImage)
+				{
+					NSLog(@"Unable to create toolbar image '%@'", imageName);
+				}
 				[theImage normalizeSize];
 				[theImage setDataRetained:YES];	// allow image to be scaled.
                 [result setImage:theImage];
