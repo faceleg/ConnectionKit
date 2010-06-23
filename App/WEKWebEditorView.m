@@ -481,9 +481,9 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (consultDelegateFirst)
     {
         if (![[self delegate] webEditor:self
-           shouldChangeSelectedDOMRange:nil
+           shouldChangeSelectedDOMRange:[self selectedDOMRange] // could be inefficient
                              toDOMRange:domRange
-                               affinity:0
+                               affinity:[[self webView] selectionAffinity]  // yes, I'm kinda making this up
                                   items:proposedSelection
                          stillSelecting:NO])
         {
