@@ -681,25 +681,18 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)placeInSidebar:(id)sender;
 {
-    // Does a text controller want to take it?
-    if ([[self focusedTextController] tryToPerform:_cmd with:sender]) return;
-    
-    
-    
-    // Insert copies into sidebar
-    SVSidebarPageletsController *sidebarController = [[self HTMLContext] sidebarPageletsController];
-    for (SVGraphic *aGraphic in [[self selectedObjectsController] selectedObjects])
+    // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
+    NSResponder *textController = [self focusedTextController];
+    if (textController)
     {
-        // Serialize
-        id serializedPagelet = [aGraphic serializedProperties];
-        
-        // Deserialize into controller
-        [sidebarController addObjectFromSerializedPagelet:serializedPagelet];
+        [textController doCommandBySelector:_cmd];
+    }
+    else if ([[self webEditor] selectedDOMRange])
+    {
+        NSBeep();
     }
     
-    
-    // Remove originals. For some reason -delete: does not fire change notifications
-    [[self webEditor] deleteForward:self];
+    // Otherwise assume selection is already in sidebar so nothing needs doing
 }
 
 #pragma mark Action Forwarding
