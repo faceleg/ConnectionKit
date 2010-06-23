@@ -1405,7 +1405,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (delegate)
     {
         [[NSNotificationCenter defaultCenter] addObserver:delegate
-                                                 selector:@selector(webEditorViewDidChangeSelection:)
+                                                 selector:@selector(webEditorDidChangeSelection:)
                                                      name:SVWebEditorViewDidChangeSelectionNotification
                                                    object:self];
         

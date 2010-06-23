@@ -265,7 +265,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
    
 //  Delegate is automatically subscribed to SVWebEditorViewDidChangeSelectionNotification
-- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+- (void)webEditorDidChangeSelection:(NSNotification *)notification;
 
    
 #pragma mark Loading

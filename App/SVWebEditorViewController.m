@@ -74,11 +74,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     self = [super init];
     
-    _selectableObjectsController = [[SVWebContentObjectsController alloc] init];
-    [_selectableObjectsController setAvoidsEmptySelection:NO];
-    [_selectableObjectsController setPreservesSelection:NO];    // we'll take care of that
-    [_selectableObjectsController setSelectsInsertedObjects:NO];
-    [_selectableObjectsController setObjectClass:[NSObject class]];
+    _graphicsController = [[SVWebContentObjectsController alloc] init];
+    [_graphicsController setAvoidsEmptySelection:NO];
+    [_graphicsController setPreservesSelection:NO];    // we'll take care of that
+    [_graphicsController setSelectsInsertedObjects:NO];
+    [_graphicsController setObjectClass:[NSObject class]];
         
     return self;
 }
@@ -95,7 +95,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     [_page release];
     [_context release];
-    [_selectableObjectsController release];
+    [_graphicsController release];
     
     [super dealloc];
 }
@@ -208,7 +208,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Prepare the environment for generating HTML
     KTPage *page = [self page];
-    [_selectableObjectsController setPage:page]; // do NOT set the controller's MOC. Unless you set both MOC
+    [_graphicsController setPage:page]; // do NOT set the controller's MOC. Unless you set both MOC
                                                         // and entity name, saving will raise an exception. (crazy I know!)
     
     
@@ -218,7 +218,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     [context setPage:page];
     [context setLiveDataFeeds:[[NSUserDefaults standardUserDefaults] boolForKey:kSVLiveDataFeedsKey]];
-    [context setSidebarPageletsController:[_selectableObjectsController sidebarPageletsController]];
+    [context setSidebarPageletsController:[_graphicsController sidebarPageletsController]];
     
     
     // Go for it. You write that HTML girl!
@@ -428,7 +428,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark Content
 
-@synthesize primitiveSelectedObjectsController = _selectableObjectsController;
+@synthesize primitiveSelectedObjectsController = _graphicsController;
 - (id <KSCollectionController>)selectedObjectsController
 {
     return [self primitiveSelectedObjectsController];
@@ -469,7 +469,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
     id anObject = [item representedObject];
     if (anObject && //  second bit of this if statement: images are owned by 2 DOM controllers, DON'T insert twice!
-        ![[_selectableObjectsController arrangedObjects] containsObjectIdenticalTo:anObject])
+        ![[_graphicsController arrangedObjects] containsObjectIdenticalTo:anObject])
     {
         [[self selectedObjectsController] addObject:anObject];
     }
@@ -502,7 +502,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (void)_insertPageletInSidebar:(SVGraphic *)pagelet;
 {
     // Place at end of the sidebar
-    [[_selectableObjectsController sidebarPageletsController] addObject:pagelet];
+    [[_graphicsController sidebarPageletsController] addObject:pagelet];
     
     // Add to main controller too
     NSArrayController *controller = [self selectedObjectsController];
@@ -592,7 +592,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (IBAction)paste:(id)sender;
 {
     SVSidebarPageletsController *sidebarPageletsController =
-    [_selectableObjectsController sidebarPageletsController];
+    [_graphicsController sidebarPageletsController];
     
     NSUInteger index = [sidebarPageletsController selectionIndex];
     if (index >= NSNotFound) index = 0;
@@ -931,7 +931,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     return result;
 }
 
-- (void)webEditorViewDidChangeSelection:(NSNotification *)notification;
+- (void)webEditorDidChangeSelection:(NSNotification *)notification;
 {
     WEKWebEditorView *webEditor = [notification object];
     OBPRECONDITION(webEditor == [self webEditor]);
@@ -1125,7 +1125,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         NSArray *pageletResults = [[sender selectedItems] valueForKey:@"isSidebarPageletDOMController"];
         if ([pageletResults containsObject:[NSNumber numberWithBool:YES]])
         {
-            [[_selectableObjectsController sidebarPageletsController] performSelector:action
+            [[_graphicsController sidebarPageletsController] performSelector:action
                                                                            withObject:nil];
         }
     }
