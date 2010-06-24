@@ -370,6 +370,7 @@
     
     
     // Do any plug-ins want to lower the tone?
+    /*
     NSManagedObjectContext *context = [self managedObjectContext];
     NSArray *graphics = [context fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
     
@@ -380,7 +381,7 @@
     }
     
     
-	return result;
+	return result;*/
 }
 
 - (NSString *)docTypeName
