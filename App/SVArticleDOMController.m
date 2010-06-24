@@ -518,6 +518,13 @@
     return result;
 }
 
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
+{
+    [self removeDragCaret];
+    [[self webEditor] moveDragHighlightToDOMNode:nil];
+    [[self webEditor] removeDragCaret];
+}
+
 - (NSArray *)registeredDraggedTypes;
 {
     NSMutableSet *result = [[NSMutableSet alloc] initWithArray:
