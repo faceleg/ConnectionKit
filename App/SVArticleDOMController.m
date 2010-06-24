@@ -335,21 +335,25 @@
     
     for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
-        // Can the graphic be transformed on the spot? #79017
         SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementCallout)
+        switch (placement)
         {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
-        }
-        else if (placement == SVGraphicPlacementInline)
-        {
-            OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
-            [self setPlacementForInlineGraphic:SVGraphicPlacementBlock];
-        }
-        else
-        {
-            // er, what on earth is it then?
-            NSBeep();
+            case SVGraphicPlacementBlock:
+                break;
+                
+            case SVGraphicPlacementCallout:
+                // The graphic be transformed on the spot. #79017
+                [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
+                break;
+                
+            case SVGraphicPlacementInline:
+                OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
+                [self setPlacementForInlineGraphic:SVGraphicPlacementBlock];
+                break;
+                
+            default:
+                // er, what on earth is it then?
+                NSBeep();
         }
     }
 }
@@ -360,24 +364,26 @@
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
     for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
-    {
-        if ([[aGraphic placement] integerValue] == SVGraphicPlacementCallout) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
+    {        
         SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementBlock)
+        switch (placement)
         {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
-        }
-        else if (placement == SVGraphicPlacementInline)
-        {
-            OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
-            [self setPlacementForInlineGraphic:SVGraphicPlacementCallout];
-        }
-        else
-        {
-            // er, what on earth is it then?
-            NSBeep();
+            case SVGraphicPlacementCallout:
+                break;
+                
+            case SVGraphicPlacementBlock:
+                // The graphic be transformed on the spot. #79017
+                [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
+                break;
+                
+            case SVGraphicPlacementInline:
+                OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
+                [self setPlacementForInlineGraphic:SVGraphicPlacementCallout];
+                break;
+        
+            default:
+                // er, what on earth is it then?
+                NSBeep();
         }
     }
 }
