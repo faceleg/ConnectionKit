@@ -389,7 +389,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [[[self HTMLContext] webEditorViewController] graphicsController];
     if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
     {
-        [webEditor setSelectedItems:[NSArray arrayWithObject:controller]];
+        [webEditor selectItems:[NSArray arrayWithObject:controller] byExtendingSelection:NO];
     }
 }
 

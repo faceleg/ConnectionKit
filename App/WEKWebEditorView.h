@@ -94,8 +94,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 
 #pragma mark Item Selection
 
-@property(nonatomic, copy) NSArray *selectedItems;
+@property(nonatomic, copy, readonly) NSArray *selectedItems;
 @property(nonatomic, retain, readonly) WEKWebEditorItem *selectedItem;
+
 - (void)selectItems:(NSArray *)items byExtendingSelection:(BOOL)extendSelection;
 - (void)deselectItem:(WEKWebEditorItem *)item;
 

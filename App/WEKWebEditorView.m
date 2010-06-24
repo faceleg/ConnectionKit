@@ -321,10 +321,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
 #pragma mark Selected Items
 
 @synthesize selectedItems = _selectedItems;
-- (void)setSelectedItems:(NSArray *)items
-{
-    [self selectItems:items byExtendingSelection:NO];
-}
 
 - (WEKWebEditorItem *)selectedItem
 {
@@ -1280,7 +1276,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
                 // Repost equivalent events so they go to their correct target. Can't call -sendEvent: as that doesn't update -currentEvent
                 // To stop the events being repeatedly posted back to ourself, have to indicate to -hitTest: that it should target the WebView. This can best be done by switching selected item over to editing
                 NSArray *items = [[self selectedItems] copy];
-                [self setSelectedItems:nil];
+                [self selectItems:nil byExtendingSelection:NO];
                 [self setSelectionParentItems:items];    // should only be 1
                 [items release];
                 

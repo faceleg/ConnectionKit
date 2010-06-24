@@ -404,7 +404,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         if ([newItem isSelectable]) [newSelection addObject:newItem];
     }
     
-    [[self webEditor] setSelectedItems:newSelection];   // this will feed back to us and the controller in notification
+    [[self webEditor] selectItems:newSelection byExtendingSelection:NO];   // this will feed back to us and the controller in notification
     [newSelection release];
     
     
