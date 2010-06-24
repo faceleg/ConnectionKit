@@ -71,6 +71,11 @@
     [self setNextResponder:item];
     
     [webEditorToRemoveFrom deselectItem:self];
+    
+    
+    // Let delegate know
+    WEKWebEditorView *webEditor = [self webEditor]; // should be nil when removing
+    [[webEditor delegate] webEditor:webEditor didAddItem:self];
 }
 
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
@@ -85,11 +90,6 @@
     [_childControllers release]; _childControllers = [children copy];
     
     [controller setParentWebEditorItem:self];
-    
-    
-    // Let delegate know
-    WEKWebEditorView *webEditor = [self webEditor];
-    [[webEditor delegate] webEditor:webEditor didAddItem:controller];
 }
 
 - (void)removeFromParentWebEditorItem;
