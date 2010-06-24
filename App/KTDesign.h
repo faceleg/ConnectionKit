@@ -33,6 +33,7 @@ extern const int kDesignThumbHeight;
 }
 
 + (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs;
++ (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;
 - (NSString *)parentBundleIdentifier;
 
 + (NSArray *)genreValues;

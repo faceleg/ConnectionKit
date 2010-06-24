@@ -16,10 +16,9 @@
 #import "KTDocWindowController.h"
 #import "KTDocument.h"
 #import "SVSiteOutlineViewController.h"
-
 #import "NSArray+Karelia.h"
-
 #import "MGScopeBar.h"
+#import "SVDesignsController.h"
 
 @interface SVDesignChooserWindowController ()
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
@@ -30,15 +29,10 @@
 
 #pragma mark Properties
 
-- (KTDesign *)design
+
+- (KTDesign *)design	// called when done, to ask what was design
 {
-    [self window];    // make sure nib is loaded
-    return [[oDesignsArrayController selectedObjects] firstObjectKS];
-}
-- (void)setDesign:(KTDesign *)design
-{
-    [self window];    // make sure nib is loaded
-    [oDesignsArrayController setSelectedObjects:[NSArray arrayWithObject:design]];
+    return [oViewController selectedDesign];
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
@@ -139,12 +133,26 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 	[oDesignsArrayController rearrangeObjects];
 	//DJW((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullWidth = 0 != [[oDesignsArrayController arrangedObjects] count];
+	
+	[oDesignsArrayController setFilterPredicate:nil];		// go back to no filter
+
 }
 
-- (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
+- (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector initialDesign:(KTDesign *)aDesign;
 {
 	self.selectorWhenChosen = aSelector;
 	self.targetWhenChosen = aTarget;
+
+	[self window];		// get designs array controller loaded
+	
+	[oDesignsArrayController setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
+	// This will invoke arrangeObjects, which means that we now have an index set of families.
+	
+	[oViewController setSelectedDesign:nil];
+	[self lookForNulls];	// set up scope bar.  Do this before real selection.
+
+	[oViewController setSelectedDesign:aDesign];
+	[oViewController initializeExpandedState];
 		
     [NSApp beginSheet:[self window]
        modalForWindow:window
@@ -152,7 +160,6 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
        didEndSelector:@selector(designChooserDidEndSheet:returnCode:contextInfo:)
           contextInfo:nil];
 
-	[self lookForNulls];	// set up scope bar
 
     [oScopeBar setDelegate:self];
     [oScopeBar reloadData];
@@ -170,7 +177,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
     // get the selected design
-	KTDesign *selectedDesign = [[oDesignsArrayController selectedObjects] firstObjectKS];
+	KTDesign *selectedDesign = [oViewController selectedDesign];
 	if (selectedDesign)
 	{
 		if (self.targetWhenChosen)

@@ -11,9 +11,11 @@
 
 @class KTDesign;
 @class SVDesignChooserViewController;
+@class SVDesignsController;
+
 @interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
 {
-	IBOutlet NSArrayController *oDesignsArrayController;
+	IBOutlet SVDesignsController *oDesignsArrayController;
     IBOutlet SVDesignChooserViewController   *oViewController;
     IBOutlet MGScopeBar             *oScopeBar;
 	
@@ -43,6 +45,6 @@
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
 
-- (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
+- (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector initialDesign:(KTDesign *)aDesign;
 
 @end

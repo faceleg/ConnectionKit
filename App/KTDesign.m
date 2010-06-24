@@ -124,7 +124,7 @@ const int kDesignThumbHeight = 65;
 	return result;
 }
 
-// Go through a list of designs and 
+// Go through a list of designs and reorganize as a tree.
 + (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs
 {
 	NSMutableArray *result = [NSMutableArray array];
@@ -147,6 +147,39 @@ const int kDesignThumbHeight = 65;
 		{
 			[result addObject:design];
 		}
+	}
+	return [NSArray arrayWithArray:result];
+}
+
+
+// Go through a list of designs and reorganize as a tree.
++ (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges
+{
+	int index = 0;
+	NSArray *designsAndFamilies = [[self class] consolidateDesignsIntoFamilies:designs];	// now we have a nice ordering.
+	NSMutableArray *result = [NSMutableArray array];
+	NSMutableArray *ranges = [NSMutableArray array];
+	for (id designOrFamily in designsAndFamilies)
+	{
+		if ([designOrFamily isKindOfClass:[KTDesignFamily class]])
+		{
+			// Add all of the subdesigns, and add a new range to my list of groups.
+			KTDesignFamily *family = (KTDesignFamily *)designOrFamily;
+			NSArray *subDesigns = [family designs];
+			NSRange newRange = NSMakeRange(index,[subDesigns count]);
+			[ranges addObject:[NSValue valueWithRange:newRange]];
+			[result addObjectsFromArray:subDesigns];
+			index += [subDesigns count];
+		}
+		else
+		{
+			[result addObject:designOrFamily];	// just add this design
+			index++;
+		}
+	}
+	if (outRanges)
+	{
+		*outRanges = [NSArray arrayWithArray:ranges];
 	}
 	return [NSArray arrayWithArray:result];
 }

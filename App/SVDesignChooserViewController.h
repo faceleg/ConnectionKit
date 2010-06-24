@@ -9,7 +9,7 @@
 #import <Cocoa/Cocoa.h>
 #import <Quartz/Quartz.h>
 
-@class KTDesign;
+@class KTDesign, SVDesignsController;
 
 // ImageKit only declares these as informal protocols
 @protocol IKImageBrowserDataSource <NSObject> @end
@@ -18,14 +18,18 @@
 
 @interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
 {  
-	IBOutlet NSArrayController	*oDesignsArrayController;
+	IBOutlet SVDesignsController *oDesignsArrayController;
 	NSTrackingRectTag			_trackingRect;
 	NSTrackingArea				*_trackingArea;
 	BOOL						_wasAcceptingMouseEvents;
 }
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
- 
+- (void) initializeExpandedState;
+
+- (KTDesign *)selectedDesign;
+- (void) setSelectedDesign:(KTDesign *)aDesign;
+
 @end
 
 //@interface SVDesignChooserViewBox : NSBox

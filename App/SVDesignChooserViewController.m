@@ -12,13 +12,12 @@
 #import "KT.h"
 #import "KTDesign.h"
 #import "KTDesignFamily.h"
+#import "SVDesignsController.h"
 
 @implementation SVDesignChooserViewController
 
 - (void)awakeFromNib
 {	
-	[oDesignsArrayController setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
-
 	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
 	OBASSERT([view isKindOfClass:[IKImageBrowserView class]]);
 
@@ -26,6 +25,8 @@
 	[oDesignsArrayController addObserver:self forKeyPath:@"arrangedObjects" options:(NSKeyValueObservingOptionNew) context:nil];
 	[oDesignsArrayController addObserver:self forKeyPath:@"selection" options:(NSKeyValueObservingOptionNew) context:nil];
 	
+	
+	// Here I think I want to collapse every group unless it contains the current selection!
 	[view setDataSource:self];
 	[view setDelegate:self];
 //	[view reloadData];
@@ -59,6 +60,28 @@
 	
 	[super dealloc];
 }
+
+// Collapse all the groups except any that have the current selection.
+- (void) initializeExpandedState;
+{
+	NSIndexSet *selIndex = [oDesignsArrayController selectionIndexes];
+	int groupIndex = 0;
+	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
+	for (NSValue *aRangeValue in [oDesignsArrayController rangesOfGroups])
+	{
+		NSRange range = [aRangeValue rangeValue];
+		if ([selIndex intersectsIndexesInRange:range])
+		{
+			[theView expandGroupAtIndex:groupIndex];
+		}
+		else
+		{
+			[theView collapseGroupAtIndex:groupIndex];
+		}
+		groupIndex++;
+	}
+}
+
 
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
@@ -185,14 +208,17 @@
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
-	return 3;
+	return [[oDesignsArrayController rangesOfGroups] count];
 }
 
 - (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
 {
+	NSValue *rangeValue = [[oDesignsArrayController rangesOfGroups] objectAtIndex:index];
+	NSRange range = [rangeValue rangeValue];
 	return [NSDictionary dictionaryWithObjectsAndKeys:
 			[NSNumber numberWithInt:IKGroupBezelStyle], IKImageBrowserGroupStyleKey,
-			[NSValue valueWithRange:NSMakeRange(index*10,5)], IKImageBrowserGroupRangeKey,
+			[NSString stringWithFormat:NSLocalizedString(@"%d designs", @"count of designs in a 'family' group"), range.length], IKImageBrowserGroupTitleKey,
+			rangeValue, IKImageBrowserGroupRangeKey,
 			nil];
 }
 
@@ -204,13 +230,11 @@
 	NSUInteger index = [ [oDesignsArrayController arrangedObjects] indexOfObject:aDesign];
 	if (NSNotFound != index)
 	{
-		[oDesignsArrayController setSelectionIndex:index];
 		[view setSelectionIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
 		[view scrollIndexToVisible:index];
 	}
 	else	// no selection
 	{
-		[oDesignsArrayController setSelectionIndexes:[NSIndexSet indexSet]];
 		[view setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 	}
 }

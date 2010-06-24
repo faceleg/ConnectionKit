@@ -353,11 +353,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
     if (NSIsControllerMarker(design)) design = nil;
-    [_designChooserWindowController setDesign:design];
     
-    [_designChooserWindowController beginSheetModalForWindow:[self window]
-                                                    delegate:self
-                                              didEndSelector:@selector(designChooserDidEnd:)];
+    [_designChooserWindowController beginDesignChooserForWindow:[self window]
+													   delegate:self
+												 didEndSelector:@selector(designChooserDidEnd:)
+												  initialDesign:design];
 }
 
 - (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser

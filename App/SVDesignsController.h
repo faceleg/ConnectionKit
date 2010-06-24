@@ -11,6 +11,9 @@
 
 @interface SVDesignsController : NSArrayController {
 
+	NSArray *_rangesOfGroups;
 }
+
+@property (retain) NSArray *rangesOfGroups;
 
 @end

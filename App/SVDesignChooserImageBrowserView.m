@@ -17,6 +17,10 @@
 @implementation SVDesignChooserImageBrowserView
 
 
+- (void) setSelectionIndexes:(NSIndexSet *) indexes byExtendingSelection:(BOOL) extendSelection;
+{
+	[super setSelectionIndexes:indexes byExtendingSelection:extendSelection];
+}
 // If the IKImageBrowserView asked for a custom cell class, then pass on the request to the library's delegate. 
 // That way the application is given a chance to customize the look of the browser...
 
@@ -25,6 +29,11 @@
 	return [SVDesignChooserImageBrowserCell class];
 }
 
+- (void)_expandButtonClicked:(id)arg1;
+{
+	NSLog(@"_expandButtonClicked: %@", arg1);
+	[super _expandButtonClicked:arg1];
+}
 
 - (void) awakeFromNib
 {
