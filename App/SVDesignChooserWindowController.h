@@ -20,6 +20,10 @@
 	NSString *_genre;
 	NSString *_color;
 	NSString *_width;
+	
+	BOOL _hasNullWidth;
+	BOOL _hasNullColor;
+	BOOL _hasNullGenre;
 
 	SEL _selectorWhenChosen;
 	id	_targetWhenChosen;		// weak to avoid retain cycle

@@ -185,13 +185,15 @@
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
 {
-	return 1;
+	return 3;
 }
-
 
 - (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
 {
-	return nil;
+	return [NSDictionary dictionaryWithObjectsAndKeys:
+			[NSNumber numberWithInt:IKGroupBezelStyle], IKImageBrowserGroupStyleKey,
+			[NSValue valueWithRange:NSMakeRange(index*10,5)], IKImageBrowserGroupRangeKey,
+			nil];
 }
 
 // We get and set the design from the IKImageBrowserView

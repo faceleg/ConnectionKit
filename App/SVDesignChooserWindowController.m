@@ -122,6 +122,25 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 {
 }
 
+
+- (void)lookForNulls
+{
+	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"color == NULL"]];
+	[oDesignsArrayController rearrangeObjects];
+	//DJW((@"null color: %@", [oDesignsArrayController arrangedObjects]));
+	_hasNullColor = 0 != [[oDesignsArrayController arrangedObjects] count];
+	
+	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"genre == NULL"]];
+	[oDesignsArrayController rearrangeObjects];
+	//DJW((@"null genres: %@", [oDesignsArrayController arrangedObjects]));
+	_hasNullGenre = 0 != [[oDesignsArrayController arrangedObjects] count];
+
+	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"width == NULL"]];
+	[oDesignsArrayController rearrangeObjects];
+	//DJW((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
+	_hasNullWidth = 0 != [[oDesignsArrayController arrangedObjects] count];
+}
+
 - (void)beginSheetModalForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 {
 	self.selectorWhenChosen = aSelector;
@@ -133,8 +152,11 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
        didEndSelector:@selector(designChooserDidEndSheet:returnCode:contextInfo:)
           contextInfo:nil];
 
+	[self lookForNulls];	// set up scope bar
+
     [oScopeBar setDelegate:self];
     [oScopeBar reloadData];
+	
 
 	// restore from prevous run
 	[oScopeBar setSelected:YES forItem:self.genre inGroup:kGenreGroup];
@@ -200,21 +222,15 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 			break;
 		case kGenreGroup:
 			result = [KTDesign genreValues];
-#ifdef DEBUG
-//			result = [result arrayByAddingObject:@"NULL"];
-#endif
+			if (_hasNullGenre) result = [result arrayByAddingObject:@"NULL"];
 			break;
 		case kColorGroup:
 			result = [KTDesign colorValues];
-#ifdef DEBUG
-//			result = [result arrayByAddingObject:@"NULL"];
-#endif
+			if (_hasNullColor) result = [result arrayByAddingObject:@"NULL"];
 			break;
 		case kWidthGroup:
 			result = [KTDesign widthValues];
-#ifdef DEBUG
-//			result = [result arrayByAddingObject:@"NULL"];
-#endif
+			if (_hasNullWidth) result = [result arrayByAddingObject:@"NULL"];
 			break;
 	}
 	return result;
@@ -278,7 +294,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 		sDesignScopeBarTitles = [[NSDictionary alloc] initWithObjectsAndKeys:
 NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"minimal",
 		NSLocalizedString(@"Glossy", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"glossy",
-		NSLocalizedString(@"Subtle", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"subtle",
+		NSLocalizedString(@"Basic", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"basic",
 		NSLocalizedString(@"Bold", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"bold",
 		NSLocalizedString(@"Artistic", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"artistic",
 		NSLocalizedString(@"Specialty", @"category for kind of design, goes below 'Choose a design for your site:',  above list of designs."), @"specialty",
