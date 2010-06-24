@@ -297,7 +297,7 @@
     }
 }
 
-- (void)setPlacement:(SVGraphicPlacement)placement forInlineGraphic:(SVGraphic *)graphic;
+- (void)setPlacementForInlineGraphic:(SVGraphicPlacement)placement
 {
     // It's a bit of a tricky manoeuvre. Want to pull the graphic back to the start of its paragraph
     
@@ -305,10 +305,23 @@
     WEKWebEditorView *webEditor = [self webEditor];
     if ([webEditor shouldChangeText:self])
     {
+        // Move graphic back to be top-level
+        WEKWebEditorItem *controller = [webEditor selectedItem];
+        
+        DOMElement *element = [controller HTMLElement];
+        DOMNode *parent = [element parentNode];
+        
+        while (parent != [self textHTMLElement])
+        {
+            [[parent parentNode] insertBefore:element refChild:parent];
+            parent = [element parentNode];
+        }
+        
         
         
         // Set the placement of the graphic. This will mark self for update, which we want. It will kick in a after a delay, which we also want
-        [[graphic textAttachment] setPlacement:[NSNumber numberWithInt:placement]];
+        [[[controller representedObject] textAttachment]
+         setPlacement:[NSNumber numberWithInt:placement]];
         
         // Push the change to the model ready for the update to pick it up
         [webEditor didChangeText];
@@ -322,8 +335,6 @@
     
     for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
     {
-        if (!aGraphic) continue;
-        
         // Can the graphic be transformed on the spot? #79017
         SVGraphicPlacement placement = [[aGraphic placement] integerValue];
         if (placement == SVGraphicPlacementCallout)
@@ -332,14 +343,15 @@
         }
         else if (placement == SVGraphicPlacementInline)
         {
-            [self setPlacement:SVGraphicPlacementBlock forInlineGraphic:aGraphic];
+            OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
+            [self setPlacementForInlineGraphic:SVGraphicPlacementBlock];
+        }
+        else
+        {
+            // er, what on earth is it then?
+            NSBeep();
         }
     }
-    
-    
-    
-    
-    //[(WEKWebEditorItem *)[self focusedText] tryToPerform:_cmd with:sender];
 }
 
 - (IBAction)placeAsCallout:(id)sender;
@@ -359,7 +371,8 @@
         }
         else if (placement == SVGraphicPlacementInline)
         {
-            [self setPlacement:SVGraphicPlacementCallout forInlineGraphic:aGraphic];
+            OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
+            [self setPlacementForInlineGraphic:SVGraphicPlacementCallout];
         }
         else
         {
