@@ -30,7 +30,7 @@
 	[pageData writeToFile:path atomically:NO];
 	
 	// curl -F uploaded_file=@karelia.html -F ss=1 -F outline=1 -F sp=1 -F noatt=1 -F verbose=1  http://validator.w3.org/check
-	NSString *argString = [NSString stringWithFormat:@"-F uploaded_file=@%@ -F ss=1 -F verbose=1 --dump-header %@ http://validator.w3.org/check", path, pathHeaders];
+	NSString *argString = [NSString stringWithFormat:@"--max-time 6 -F uploaded_file=@%@ -F ss=1 -F verbose=1 --dump-header %@ http://validator.w3.org/check", path, pathHeaders];
 	NSArray *args = [argString componentsSeparatedByString:@" "];
 	
 	NSTask *task = [[[NSTask alloc] init] autorelease];
@@ -141,6 +141,9 @@
 			NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
 			NSURL *appIconURL = [NSURL fileURLWithPath:appIconPath];
 			
+			// WORK-AROUND ... can't load file:// when I have baseURL set, which I need for links to "#" sections to work!
+			appIconURL = [NSURL URLWithString:@"http://www.karelia.com/images/SandvoxAppIcon128.png"];
+			
 			NSString *replacementString = [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<p>%@</p>\n<p>%@</p>\n</div>\n",
 										   [headline stringByEscapingHTMLEntities],
 										   [appIconURL absoluteString],
@@ -150,12 +153,8 @@
 			
 			resultingPageString = [resultingPageString stringByReplacing:@"</h2>" with:replacementString];
 			
-			// Splice in a base href since loadHTMLString:baseURL: fails with picking up file:// URL !!!
-			resultingPageString = [resultingPageString stringByReplacing:@"<title>" with:
-								   @"<base href='http://validator.w3.org/' /><title>"];
-
 			[[oWebView mainFrame] loadHTMLString:resultingPageString
-										 baseURL:nil];
+										 baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 			
 		}
 	}
