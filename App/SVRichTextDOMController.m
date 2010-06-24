@@ -384,12 +384,17 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     
-    // Select item
+    // Select item.
     NSArrayController *selectionController =
     [[[self HTMLContext] webEditorViewController] graphicsController];
     if ([selectionController setSelectedObjects:[NSArray arrayWithObject:graphic]])
     {
-        [webEditor selectItems:[NSArray arrayWithObject:controller] byExtendingSelection:NO];
+        // For non-inline graphics, need the WebView to resign first responder. #79189
+        BOOL select = YES;
+        if (!placeInline) select = [[webEditor window] makeFirstResponder:webEditor];
+        
+        if (select) [webEditor selectItems:[NSArray arrayWithObject:controller]
+                      byExtendingSelection:NO];
     }
 }
 
