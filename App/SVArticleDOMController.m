@@ -297,6 +297,24 @@
     }
 }
 
+- (void)setPlacement:(SVGraphicPlacement)placement forInlineGraphic:(SVGraphic *)graphic;
+{
+    // It's a bit of a tricky manoeuvre. Want to pull the graphic back to the start of its paragraph
+    
+    
+    WEKWebEditorView *webEditor = [self webEditor];
+    if ([webEditor shouldChangeText:self])
+    {
+        
+        
+        // Set the placement of the graphic. This will mark self for update, which we want. It will kick in a after a delay, which we also want
+        [[graphic textAttachment] setPlacement:[NSNumber numberWithInt:placement]];
+        
+        // Push the change to the model ready for the update to pick it up
+        [webEditor didChangeText];
+    }
+}
+
 - (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
 {
     SVWebEditorHTMLContext *context = [self HTMLContext];
@@ -311,6 +329,10 @@
         if (placement == SVGraphicPlacementCallout)
         {
             [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
+        }
+        else if (placement == SVGraphicPlacementInline)
+        {
+            [self setPlacement:SVGraphicPlacementBlock forInlineGraphic:aGraphic];
         }
     }
     
@@ -334,6 +356,10 @@
         if (placement == SVGraphicPlacementBlock)
         {
             [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
+        }
+        else if (placement == SVGraphicPlacementInline)
+        {
+            [self setPlacement:SVGraphicPlacementCallout forInlineGraphic:aGraphic];
         }
         else
         {
