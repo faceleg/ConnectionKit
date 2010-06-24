@@ -197,5 +197,21 @@
     }
 }
 
+- (void)concludeDragOperation:(id <NSDraggingInfo>)sender;
+{
+    if (_delegateWillHandleDraggingInfo)
+    {
+        NSObject *delegate = [[self webEditor] draggingDestinationDelegate];
+        if ([delegate respondsToSelector:_cmd])
+        {
+            [delegate concludeDragOperation:sender];
+        }
+    }
+    else
+    {
+        [super concludeDragOperation:sender];
+    }
+}
+
 @end
 
