@@ -74,6 +74,12 @@
 																			error:nil] autorelease];
 		
 		// TODO: continue case 27254, parse headers.txt file instead of scraping.
+		NSString *headers = [NSString stringWithContentsOfFile:pathHeaders];
+		NSDictionary *headerDict = [headers parseHTTPHeaders];
+
+		int numErrors = [[headerDict objectForKey:@"X-W3C-Validator-Errors"] intValue];
+		int numWarnings = [[headerDict objectForKey:@"X-W3C-Validator-Warnings"] intValue];
+		BOOL isItValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
 		
 		if (nil != resultingPageString)
 		{
