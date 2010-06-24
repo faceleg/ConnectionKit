@@ -379,9 +379,10 @@
         result = MIN(result, [[aGraphic valueForKey:@"docType"] integerValue]);
         if (result == KTHTML401DocType) break;
     }
+     */
     
     
-	return result;*/
+	return result;
 }
 
 - (NSString *)docTypeName
