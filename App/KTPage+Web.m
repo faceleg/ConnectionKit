@@ -531,7 +531,7 @@
 
 - (NSString *)sitemenu
 {
-	if (self.site.pagesInSiteMenu)	// Are there any pages in the site menu?
+	if (self.site.pagesInSiteMenu.count)	// Are there any pages in the site menu?
 	{
 		SVHTMLContext *context = [SVHTMLContext currentContext];
 		[context startElement:@"div" idName:@"sitemenu" className:nil];			// <div id="sitemenu">

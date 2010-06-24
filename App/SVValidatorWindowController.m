@@ -17,6 +17,9 @@
 
 - (void) validateSource:(NSString *)pageSource charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
 {
+#if DEBUG
+	// pageSource = [@"fjsklfjdslkjfld <b><bererej>" stringByAppendingString:pageSource];		// TESTING -- FORCE INVALID MARKUP
+#endif
 	NSStringEncoding encoding = [charset encodingFromCharset];
 	NSData *pageData = [pageSource dataUsingEncoding:encoding allowLossyConversion:YES];
 	
@@ -67,26 +70,25 @@
 	if (0 == status)
 	{		
 		// Scrape page to get status, to show success or failure.
-		BOOL isValid = NO;
-		NSString *explanation = nil;
 		NSString *resultingPageString = [[[NSString alloc] initWithContentsOfFile:pathOut
 																		 encoding:NSUTF8StringEncoding
 																			error:nil] autorelease];
 		
 		// TODO: continue case 27254, parse headers.txt file instead of scraping.
-		NSString *headers = [NSString stringWithContentsOfFile:pathHeaders];
+		NSError *error;
+		NSString *headers = [NSString stringWithContentsOfFile:pathHeaders encoding:NSUTF8StringEncoding error:&error];
 		NSDictionary *headerDict = [headers parseHTTPHeaders];
 
 		int numErrors = [[headerDict objectForKey:@"X-W3C-Validator-Errors"] intValue];
 		int numWarnings = [[headerDict objectForKey:@"X-W3C-Validator-Warnings"] intValue];
-		BOOL isItValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
+		BOOL isValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
+		NSString *explanation = NSLocalizedString(@"(none provided)", "indicator that not explanation was provided to HTML validation success");	// needs to be scraped
 		
 		if (nil != resultingPageString)
 		{
 			NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
 			if (NSNotFound != foundValidRange.location)
 			{
-				isValid = YES;
 				explanation = [resultingPageString substringWithRange:foundValidRange];
 			}
 		}
@@ -101,8 +103,22 @@
 		else
 		{
 			// show window
+			NSString *errorCountString = nil;
+			NSString *warningCountString = nil;
+			switch (numErrors)
+			{
+				case 0: errorCountString = NSLocalizedString(@"No errors", @""); break;
+				case 1: errorCountString = NSLocalizedString(@"1 error", @""); break;
+				default: errorCountString = [NSString stringWithFormat:NSLocalizedString(@"%d errors", @"<count> errors"), numErrors]; break;
+			}
+			switch (numWarnings)
+			{
+				case 0: warningCountString = NSLocalizedString(@"No warnings", @""); break;
+				case 1: warningCountString = NSLocalizedString(@"1 warning", @""); break;
+				default: warningCountString = [NSString stringWithFormat:NSLocalizedString(@"%d warnings", @"<count> warnings"), numWarnings]; break;
+			}
 			
-			[[self window] setTitle:NSLocalizedString(@"Validator Results", "HTML Validator Window Title")];
+			[[self window] setTitle:[NSString stringWithFormat:NSLocalizedString(@"Validator Results: %@, %@", "HTML Validator Window Title. Followed by <count> errors, <count> warnings"), errorCountString, warningCountString]];
 			[[self window] setFrameAutosaveName:@"ValidatorWindow"];
 			[self showWindow:nil];
 			
@@ -125,16 +141,21 @@
 			NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
 			NSURL *appIconURL = [NSURL fileURLWithPath:appIconPath];
 			
-			resultingPageString = [resultingPageString stringByReplacing:@"</h2>" with:
-								   [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<p>%@</p>\n<p>%@</p>\n</div>\n",
-									[headline stringByEscapingHTMLEntities],
-									[appIconURL absoluteString],
-									[explanation1 stringByEscapingHTMLEntities],
-									[explanation2 stringByEscapingHTMLEntities],
-									[explanation3 stringByEscapingHTMLEntities]] ];
+			NSString *replacementString = [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<p>%@</p>\n<p>%@</p>\n</div>\n",
+										   [headline stringByEscapingHTMLEntities],
+										   [appIconURL absoluteString],
+										   [explanation1 stringByEscapingHTMLEntities],
+										   [explanation2 stringByEscapingHTMLEntities],
+										   [explanation3 stringByEscapingHTMLEntities]];
 			
+			resultingPageString = [resultingPageString stringByReplacing:@"</h2>" with:replacementString];
+			
+			// Splice in a base href since loadHTMLString:baseURL: fails with picking up file:// URL !!!
+			resultingPageString = [resultingPageString stringByReplacing:@"<title>" with:
+								   @"<base href='http://validator.w3.org/' /><title>"];
+
 			[[oWebView mainFrame] loadHTMLString:resultingPageString
-										 baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
+										 baseURL:nil];
 			
 		}
 	}
