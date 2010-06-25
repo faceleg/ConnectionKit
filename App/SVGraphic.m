@@ -122,14 +122,20 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)createDefaultIntroAndCaption;
 {
-    SVAuxiliaryPageletText *text = [NSEntityDescription
-                                    insertNewObjectForEntityForName:@"PageletIntroduction"
-                                    inManagedObjectContext:[self managedObjectContext]];
-    [self setIntroduction:text];
+    if ([self canHaveIntroduction])
+    {
+        SVAuxiliaryPageletText *text = [NSEntityDescription
+                                        insertNewObjectForEntityForName:@"PageletIntroduction"
+                                        inManagedObjectContext:[self managedObjectContext]];
+        [self setIntroduction:text];
+    }
     
-    text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletCaption"
-                                         inManagedObjectContext:[self managedObjectContext]];
-    [self setCaption:text];
+    if ([self canHaveCaption])
+    {
+        SVAuxiliaryPageletText *text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletCaption"
+                                             inManagedObjectContext:[self managedObjectContext]];
+        [self setCaption:text];
+    }
 }
 
 @dynamic caption;
