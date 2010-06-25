@@ -135,25 +135,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 @dynamic caption;
 @dynamic introduction;
 
-- (BOOL)validateForInlinePlacement:(NSError **)error;
-{
-    BOOL result = YES;
-        if (!(result = ![self showsIntroduction]))
-        {
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSManagedObjectValidationError
-                                    localizedDescription:@"Graphics cannot show introduction while inline"];
-        }
-        else if (!(result = ![self showsCaption]))
-        {
-            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                    code:NSManagedObjectValidationError
-                                    localizedDescription:@"Graphics cannot show caption while inline"];
-        }
-    
-    return result;
-}
-
 #pragma mark Layout/Styling
 
 @dynamic showBackground;

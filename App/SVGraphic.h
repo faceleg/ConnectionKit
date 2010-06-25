@@ -113,8 +113,6 @@ extern NSString *kSVGraphicPboardType;
 
 - (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
 
-- (BOOL)validateForInlinePlacement:(NSError **)error;
-
 
 #pragma mark Sidebar
 

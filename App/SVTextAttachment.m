@@ -199,11 +199,6 @@
     // If want to show title, cannot be inline
     BOOL result = YES;
     
-    if ([[self placement] integerValue] == SVGraphicPlacementInline)
-    {
-        result = [[self graphic] validateForInlinePlacement:outError];
-    }
-    
     return result;
 }
 
