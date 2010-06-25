@@ -1220,6 +1220,13 @@
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = DownloadIndex;
 		};
+		3C1F512611D576D00036B375 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3C1F510911D575510036B375 /* xibLocalizationPostprocessor */;
+			remoteInfo = xibLocalizationPostprocessor;
+		};
 		3C3D54F40ED4D3C800EFC7ED /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
@@ -5635,6 +5642,7 @@
 				8D15AC330486D014006FF6A4 /* Frameworks */,
 				3C99107209298C4400ED5CBF /* Generate Localizable.strings */,
 				CEB0BCD10D81B047001AB3C9 /* Smarter Localizable.strings */,
+				3C1F512C11D576ED0036B375 /* Internationalize XIBs */,
 				3C202F4D07E0140100DE4994 /* Copy Frameworks */,
 				CEC10DFF0D7793AE00513E70 /* Copy Frameworks ALWAYS */,
 				CEC65E5D0E1AFD170065C3D0 /* Copy Sparkle - Strip Localizations */,
@@ -5649,6 +5657,7 @@
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				CE559B621085296D008870B5 /* PBXTargetDependency */,
+				3C1F512711D576D00036B375 /* PBXTargetDependency */,
 			);
 			name = "Sandvox-ExecutableOnly";
 			productInstallPath = "$(HOME)/Applications";
@@ -6334,6 +6343,21 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "#!/bin/bash\n\n###\n### UPDATE Designs ToT FOR RELEASE BUILDS\n###\n\nDESIGNS_PATH=${SRCROOT}/../../Designs\n\n# for some reason using which to find svn works on Leopard, not on Tiger\n# SVN_PATH=`which svn`\n\n# so we do this instead and hope for the best\nif [ -e /usr/local/bin/svn ]\nthen\n\tSVN_PATH=/usr/local/bin/svn\nelif [ -e /usr/bin/svn ]\nthen\n\tSVN_PATH=/usr/bin/svn\nelif [ -e /opt/local/bin/svn ]\nthen\n\tSVN_PATH=/opt/local/bin/svn\nelse\n\techo \"ERROR - CANT FIND SVN\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"syncing Designs with ToT ...\"\ncd ${DESIGNS_PATH}\n${SVN_PATH} update\necho \"... finished syncing Designs\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
+		3C1F512C11D576ED0036B375 /* Internationalize XIBs */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Internationalize XIBs";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/zsh;
+			shellScript = "#foreach nibFile (${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/**/*.nib)\n# stringsFilePath=${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/${DEVELOPMENT_LANGUAGE}.lproj/`basename ${nibFile} .nib`.strings\n# xibFile=`basename ${nibFile} .nib`.xib\n# xibFilePath=`echo ${SOURCE_ROOT}/**/${xibFile}`\n# if [[ -e ${xibFilePath} ]] {\n#  ibtool --generate-stringsfile ${stringsFilePath}~ ${xibFilePath}\n#  ${BUILT_PRODUCTS_DIR}/xibLocalizationPostprocessor ${stringsFilePath}~ ${stringsFilePath}\n#  rm ${stringsFilePath}~\n# }\n#end\n";
 			showEnvVarsInLog = 0;
 		};
 		3C3E75F90F1C5F42002E3A9A /* ShellScript */ = {
@@ -7084,6 +7108,11 @@
 			isa = PBXTargetDependency;
 			name = DownloadIndex;
 			targetProxy = 3C1D06CA0D5D67DA00782A95 /* PBXContainerItemProxy */;
+		};
+		3C1F512711D576D00036B375 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3C1F510911D575510036B375 /* xibLocalizationPostprocessor */;
+			targetProxy = 3C1F512611D576D00036B375 /* PBXContainerItemProxy */;
 		};
 		3C3D54F50ED4D3C800EFC7ED /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
