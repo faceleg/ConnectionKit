@@ -320,7 +320,7 @@
 			case kKSNoLongerValid:		// License from a previous version of Sandvox
 				
 				stickyHeadline = NSLocalizedString(@"Upgrade to Sandvox 2", @"title of reminder note - please make sure this will fit on welcome window when unlicensed");
-				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Your registration key for Sandvox 1 is not valid for version 2.  Functionality will be limited.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
+				stickyDetails = [NSString stringWithFormat:NSLocalizedString(@"Your registration key for Sandvox 1 is not valid for version 2. Functionality will be limited.", @"explanation of license status - please make sure this will fit on welcome window when unlicensed"), kMaxNumberOfFreePublishedPages];
 				stickyButtonTitle = NSLocalizedString(@"Upgrade your License", @"Button title to purchase a license");
 				
 				break;
