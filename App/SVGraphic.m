@@ -232,7 +232,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 - (void)writeHTML:(SVHTMLContext *)context placement:(SVGraphicPlacement)placement;
 {
     // If the placement changes, want whole WebView to update
-    [context addDependencyOnObject:self keyPath:@"textAttachment.placement"];
+    [context addDependencyForKeyPath:@"textAttachment.placement" ofObject:self];
+    [context addDependencyForKeyPath:@"isPagelet" ofObject:self];
     
     
     // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
