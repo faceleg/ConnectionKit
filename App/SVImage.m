@@ -110,6 +110,22 @@
 
 #pragma mark Placement
 
+- (BOOL)isPagelet;
+{
+    // Images are no longer pages once you turn off all additional stuff like title & caption
+    if ([[self placement] intValue] == SVGraphicPlacementInline &&
+        ![self showsTitle] &&
+        ![self showsIntroduction] &&
+        ![self showsCaption])
+    {
+        return NO;
+    }
+    else
+    {
+        return [super isPagelet];
+    }
+}
+
 - (BOOL)canPlaceInline; { return YES; }
 
 #pragma mark Link

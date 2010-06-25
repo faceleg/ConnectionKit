@@ -35,8 +35,6 @@
 - (NSNumber *)placement { return nil; }
 - (SVTextAttachment *)textAttachment { return nil; }
 
-- (BOOL)isPagelet { return NO; }
-
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
 {
     NSURL *result = [super imagePreviewURL];
