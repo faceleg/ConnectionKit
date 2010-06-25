@@ -128,6 +128,9 @@
         
         for (SVGraphic *aGraphic in pagelets)
         {
+            // Give pagelet a chance to resize etc.
+            [aGraphic willInsertIntoPage:[context page]];
+            
             [aGraphic writeHTML:context placement:SVGraphicPlacementCallout];
         }
         
@@ -474,6 +477,12 @@
     {
         pagelets = [SVGraphicFactory graphicsFomPasteboard:pasteboard
                             insertIntoManagedObjectContext:moc];
+        
+        // Prep them. #79398
+        for (SVGraphic *aPagelet in pagelets)
+        {
+            [aPagelet setShowsTitle:NO];
+        }
     }
     
     
