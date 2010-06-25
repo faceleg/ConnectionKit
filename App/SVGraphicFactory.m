@@ -355,6 +355,68 @@ static id <SVGraphicFactory> sVideoFactory;
     return result;
 }
 
++ (NSUInteger)priorityForFactory:(id <SVGraphicFactory>)aFactory
+                      pasteboard:(NSPasteboard *)pasteboard
+                            type:(NSString **)outType
+                        contents:(id *)outPboardContents;
+{
+    NSUInteger result = 0;
+    
+    
+    NSString *type = [pasteboard availableTypeFromArray:[aFactory readablePasteboardTypes]];
+    if (type)
+    {
+        @try    // talking to a plug-in so might fail
+        {
+            // What should I read off the pasteboard?
+            id propertyList;
+            SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
+            if ([aFactory respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
+            {
+                readingOptions = [aFactory readingOptionsForType:type pasteboard:pasteboard];
+            }
+            
+            if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
+            {
+                propertyList = [pasteboard propertyListForType:type];
+            }
+            else if (readingOptions & SVPlugInPasteboardReadingAsString)
+            {
+                propertyList = [pasteboard stringForType:type];
+            }
+            else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
+            {
+                propertyList = [[KSWebLocation webLocationsFromPasteboard:pasteboard] firstObjectKS];
+            }
+            else
+            {
+                propertyList = [pasteboard dataForType:type];
+            }
+            
+            
+            if (propertyList)
+            {
+                result = [aFactory readingPriorityForPasteboardContents:propertyList
+                                                                 ofType:type];
+                
+                if (result)
+                {
+                    // Pass back out results
+                    if (outType) *outType = type;
+                    if (outPboardContents) *outPboardContents = propertyList;
+                }
+            }
+        }
+        @catch (NSException *exception)
+        {
+            // TODO: Log warning
+        }
+    }
+    
+    
+    return result;
+}
+
 + (SVGraphic *)graphicFromPasteboard:(NSPasteboard *)pasteboard
       insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
@@ -364,58 +426,41 @@ static id <SVGraphicFactory> sVideoFactory;
     NSUInteger readingPriority = 0;
     
     
+    // Test plug-ins
     for (id <SVGraphicFactory> aFactory in [self pageletFactories])
     {
-        NSArray *types = [aFactory readablePasteboardTypes];
-        NSString *type = [pasteboard availableTypeFromArray:types];
-        if (type)
+        NSString *type;
+        id propertyList;
+        NSUInteger priority = [self priorityForFactory:aFactory
+                                            pasteboard:pasteboard
+                                                  type:&type
+                                              contents:&propertyList];
+        
+        if (priority > readingPriority)
         {
-            @try    // talking to a plug-in so might fail
-            {
-                // What should I read off the pasteboard?
-                id propertyList;
-                SVPlugInPasteboardReadingOptions readingOptions = SVPlugInPasteboardReadingAsData;
-                if ([aFactory respondsToSelector:@selector(readingOptionsForType:pasteboard:)])
-                {
-                    readingOptions = [aFactory readingOptionsForType:type pasteboard:pasteboard];
-                }
-                
-                if (readingOptions & SVPlugInPasteboardReadingAsPropertyList)
-                {
-                    propertyList = [pasteboard propertyListForType:type];
-                }
-                else if (readingOptions & SVPlugInPasteboardReadingAsString)
-                {
-                    propertyList = [pasteboard stringForType:type];
-                }
-                else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
-                {
-                    propertyList = [[KSWebLocation webLocationsFromPasteboard:pasteboard] firstObjectKS];
-                }
-                else
-                {
-                    propertyList = [pasteboard dataForType:type];
-                }
-                
-                
-                if (propertyList)
-                {
-                    NSUInteger priority = [aFactory readingPriorityForPasteboardContents:propertyList
-                                                                                 ofType:type];
-                    if (priority > readingPriority)
-                    {
-                        factory = aFactory;
-                        pasteboardContents = propertyList;
-                        pasteboardType = type;
-                        readingPriority = priority;
-                    }
-                }
-            }
-            @catch (NSException *exception)
-            {
-                // TODO: Log warning
-            }
+            factory = aFactory;
+            pasteboardContents = propertyList;
+            pasteboardType = type;
+            readingPriority = priority;
         }
+    }
+    
+    
+    
+    // Test image
+    NSString *type;
+    id propertyList;
+    NSUInteger priority = [self priorityForFactory:[self imageFactory]
+                                        pasteboard:pasteboard
+                                              type:&type
+                                          contents:&propertyList];
+    
+    if (priority > readingPriority)
+    {
+        factory = [self imageFactory];
+        pasteboardContents = propertyList;
+        pasteboardType = type;
+        readingPriority = priority;
     }
     
     
