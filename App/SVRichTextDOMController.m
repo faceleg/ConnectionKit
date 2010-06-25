@@ -151,7 +151,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [[SVParagraphedHTMLWriter alloc] initWithOutputWriter:html];
     
     [writer setDelegate:self];
-    [writer setAllowsBlockGraphics:[self allowsPagelets]];
+    [writer setAllowsPagelets:[self allowsPagelets]];
     
     
     [self willWriteText:writer];

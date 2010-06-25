@@ -21,7 +21,7 @@
     NSMutableSet    *_attachments;
 }
 
-@property(nonatomic) BOOL allowsBlockGraphics;
+@property(nonatomic) BOOL allowsPagelets;
 
 - (NSSet *)textAttachments;
 - (void)writeTextAttachment:(SVTextAttachment *)attachment;

@@ -42,7 +42,7 @@
 
 #pragma mark Properties
 
-@synthesize allowsBlockGraphics = _allowsBlockGraphics;
+@synthesize allowsPagelets = _allowsBlockGraphics;
 
 #pragma mark Output
 
