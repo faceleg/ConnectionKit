@@ -11,7 +11,7 @@
 
 
 
-@interface SVAttributedHTMLWriter : NSObject <SVFieldEditorHTMLWriterDelegate, KSWriter>
+@interface SVAttributedHTMLWriter : NSObject <SVDOMToHTMLWriterDelegate, KSWriter>
 {
   @private
     NSMutableAttributedString   *_attributedHTML;

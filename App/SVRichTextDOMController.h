@@ -13,7 +13,7 @@
 @class SVRichText, SVGraphic, SVWebEditorHTMLContext, SVParagraphedHTMLWriter;
 
 
-@interface SVRichTextDOMController : SVTextDOMController <SVFieldEditorHTMLWriterDelegate>
+@interface SVRichTextDOMController : SVTextDOMController <SVDOMToHTMLWriterDelegate>
 {        
     BOOL    _isUpdating;
     

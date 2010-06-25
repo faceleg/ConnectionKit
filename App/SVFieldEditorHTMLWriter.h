@@ -13,19 +13,16 @@
 //  -   Only a small whitelist of elements, attributes and styling are permitted. Anything failing to make the grade will be removed from the DOM and not actually written to the context.
 
 
-#import "KSHTMLWriter+DOM.h"
+#import "SVDOMToHTMLWriter.h"
 #import "KSMegaBufferedWriter.h"
 
 
-@protocol SVFieldEditorHTMLWriterDelegate;
-@interface SVFieldEditorHTMLWriter : KSHTMLWriter <KSMegaBufferedWriterDelegate>
+@interface SVFieldEditorHTMLWriter : SVDOMToHTMLWriter <KSMegaBufferedWriterDelegate>
 {
     NSMutableArray          *_pendingStartTagDOMElements;
   @private
     NSMutableArray          *_pendingEndDOMElements;
     KSMegaBufferedWriter    *_buffer;
-    
-    id <SVFieldEditorHTMLWriterDelegate>   _delegate;
 }
 
 
@@ -54,17 +51,5 @@
 - (void)removeUnsupportedCustomStyling:(DOMCSSStyleDeclaration *)style;
 
 
-#pragma mark Delegate
-@property(nonatomic, assign) id <SVFieldEditorHTMLWriterDelegate> delegate;
-
-
-@end
-
-
-#pragma mark -
-
-
-@protocol SVFieldEditorHTMLWriterDelegate <NSObject>
-- (DOMNode *)HTMLWriter:(KSHTMLWriter *)writer willWriteDOMElement:(DOMElement *)element;
 @end
 

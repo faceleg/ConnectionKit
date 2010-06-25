@@ -75,15 +75,6 @@
     [super close];
 }
 
-#pragma mark Delegate
-
-@synthesize delegate = _delegate;
-
-- (DOMNode *)willWriteDOMElement:(DOMElement *)element
-{
-    return [[self delegate] HTMLWriter:self willWriteDOMElement:element];
-}
-
 #pragma mark Elements
 
 - (DOMNode *)_writeDOMElement:(DOMElement *)element;
