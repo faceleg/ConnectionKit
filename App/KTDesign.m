@@ -23,6 +23,7 @@
 #import "NSArray+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSColor+Karelia.h"
+#import "KTDesignFamily.h"
 
 #import "Debug.h"
 
@@ -33,6 +34,9 @@ const int kDesignThumbHeight = 65;
 
 @synthesize contracted = _contracted;
 @synthesize familyPrototype = _familyPrototype;
+@synthesize family = _family;
+@synthesize imageVersion = _imageVersion;
+@synthesize thumbnails = _thumbnails;
 
 #pragma mark -
 #pragma mark Class Methods
@@ -87,6 +91,7 @@ const int kDesignThumbHeight = 65;
 	if ((self = [super initWithBundle:bundle]) != nil)
 	{
 		;		// do not load local fonts;  we probably won't need them.
+		_imageVersion = NSNotFound;		// NSNotFound means not scrubbed yet, so use generic "parent" title
 	}
 	return self;
 }
@@ -182,6 +187,7 @@ const int kDesignThumbHeight = 65;
 			{
 				firstDesignInGroup.familyPrototype = familyPrototype;	// save so we can access its thumbnail.
 			}
+			firstDesignInGroup.family = family;		// put reference to family (which has weak references to other designs) in first design in group so we can scrub
 			
 			NSRange newRange = NSMakeRange(index,[subDesigns count]);
 			[ranges addObject:[NSValue valueWithRange:newRange]];
@@ -677,22 +683,33 @@ const int kDesignThumbHeight = 65;
  */
 - (id) imageRepresentation; /* required */
 {
-	if (self.isContracted && self.familyPrototype)
+	if (self.isContracted && 0 != self.familyPrototype && [self.family.designs count] > 1 )
 	{
-		return (id) [self.familyPrototype thumbnailCG];
+		//return (id) [self.familyPrototype thumbnailCG];
+		
+		NSArray *familyDesigns = self.family.designs;
+		CGImageRef result = nil;
+		NSNumber *indexNumber = [NSNumber numberWithInt:self.imageVersion];
+		result = (CGImageRef) [self.thumbnails objectForKey:indexNumber];
+		if (!result)		// see if we have a cached image....
+		{
+			int safeIndex = self.imageVersion;
+			if ( (safeIndex != NSNotFound) && (safeIndex >= [familyDesigns count]) )
+			{
+				safeIndex = 0;	// make sure we don't overflow number of design variations.  Allow for NSNotFound
+			}
+			
+			KTDesign *whichDesign = (safeIndex == NSNotFound) ? [self familyPrototype] : [familyDesigns objectAtIndex:safeIndex];
+			result = [whichDesign thumbnailCG];
+			
+			[self.thumbnails setObject:(id)result forKey:indexNumber];
+		}
+		return (id) result;
 	}
 	else	// expanded, or there is not a family prototype -- just show your regular thumbnail.
 	{
 		return (id) [self thumbnailCG];
 	}
-}
-/*! 
- @method imageVersion
- @abstract Returns a version of this item. The receiver can return a new version to let the image browser knows that it shouldn't use its cache for this item
- */
-- (NSUInteger) imageVersion;
-{
-	return self.isContracted ? 65536 : 1;
 }
 /*! 
  @method imageTitle
@@ -714,6 +731,17 @@ const int kDesignThumbHeight = 65;
 - (BOOL) isSelectable;
 {
 	return YES;
+}
+
+#pragma mark -
+#pragma mark Scrubbing
+
+- (void) scrub:(float)howFar;
+{
+	int designCount = [self.family.designs count];
+	int whichIndex = howFar * designCount;
+	whichIndex = MIN(whichIndex, designCount-1);
+	self.imageVersion = whichIndex;
 }
 
 @end

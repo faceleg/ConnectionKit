@@ -13,6 +13,7 @@
 #import "KTDesign.h"
 #import "KTDesignFamily.h"
 #import "SVDesignsController.h"
+#import "SVDesignChooserImageBrowserView.h"
 
 @implementation SVDesignChooserViewController
 
@@ -107,8 +108,6 @@
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	// DJW((@"%s %@",__FUNCTION__, theEvent));
-
 	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [theView convertPoint:windowPoint fromView:nil];
@@ -127,12 +126,13 @@
 		if (howFarX < 0.0) howFarX = 0.0;
 		if (howFarX > 1.0) howFarX = 1.0;
 		
-		if ([[[oDesignsArrayController arrangedObjects] objectAtIndex:index] respondsToSelector:@selector(scrub:)])
+		KTDesign *theDesign = [[oDesignsArrayController arrangedObjects] objectAtIndex:index];
+		
+		if (theDesign.isContracted)
 		{
 			[theView setAnimates:NO];		// Not sure why ... this was in Pieter Omvlee's presentation http://pieteromvlee.net/slides/IKImageBrowserView.pdf
 			
-			KTDesignFamily *family = [[oDesignsArrayController arrangedObjects] objectAtIndex:index];
-			[family scrub:howFarX];
+			[theDesign scrub:howFarX];
 			if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])
 			{
 				[theView reloadCellDataAtIndex:index];
@@ -154,7 +154,6 @@
 
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
-	DJW((@"%s",__FUNCTION__));
 	[oDesignsArrayController setSelectionIndexes:[aBrowser selectionIndexes]];
 	
 }
@@ -165,15 +164,6 @@
 	[NSApp sendAction:@selector(chooseDesign:) to:nil from:self];	
 }
 
-- (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasRightClickedAtIndex:(NSUInteger) index withEvent:(NSEvent *) event;
-{
-	DJW((@"%s",__FUNCTION__));
-}
-
-- (void) imageBrowser:(IKImageBrowserView *) aBrowser backgroundWasRightClickedWithEvent:(NSEvent *) event;
-{
-	DJW((@"%s",__FUNCTION__));
-}
 
 // Data source
 
@@ -188,23 +178,12 @@
 }
 
 
-- (void) imageBrowser:(IKImageBrowserView *) aBrowser removeItemsAtIndexes:(NSIndexSet *) indexes; 
-{
-	DJW((@"%s",__FUNCTION__));
-}
-
 
 - (BOOL) imageBrowser:(IKImageBrowserView *) aBrowser moveItemsAtIndexes: (NSIndexSet *)indexes toIndex:(NSUInteger)destinationIndex;
 {
 	return NO;
 }
 
-
-- (NSUInteger) imageBrowser:(IKImageBrowserView *) aBrowser writeItemsAtIndexes:(NSIndexSet *) itemIndexes toPasteboard:(NSPasteboard *)pasteboard;
-{
-	DJW((@"%s",__FUNCTION__));
-	return -99;
-}
 
 
 - (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;

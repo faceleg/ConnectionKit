@@ -14,7 +14,7 @@ enum { HIER_MENU_NONE, HIER_MENU_HORIZONTAL, HIER_MENU_VERTICAL, HIER_MENU_NAVBA
 // Navbar: Horizontal layout with sub-items layed out horizontally on the line below.
 // http://users.tpg.com.au/j_birch/plugins/superfish/#examples
 
-@class KTImageScalingSettings;
+@class KTImageScalingSettings, KTDesignFamily;
 
 @protocol IKImageBrowserItem <NSObject> @end    // weirdly ImageKit only declares it as an informal protocol
 
@@ -29,16 +29,20 @@ extern const int kDesignThumbHeight;
 	CGImageRef  myThumbnailCG;  // CGImageRefs aren't supposed to be pointers
 	NSSet	*myResourceFileURLs;
 	KTDesign *_familyPrototype;
-	
+	KTDesignFamily *_family;
+	NSMutableDictionary *_thumbnails;	// keyed by nsnumber for version so it can be arbitrary sized
 	
 	BOOL myFontsLoaded;
 	BOOL _contracted;
+	NSUInteger _imageVersion;
 }
 
 @property (assign, getter=isContracted) BOOL contracted;
 @property (retain) KTDesign *familyPrototype;
+@property (retain) KTDesignFamily *family;
+@property (assign) NSUInteger imageVersion;
+@property (retain) NSMutableDictionary *thumbnails;
 
-+ (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs;
 + (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;
 - (NSString *)parentBundleIdentifier;
 
@@ -75,6 +79,7 @@ extern const int kDesignThumbHeight;
 - (NSString *)bannerCSSSelector;
 - (BOOL)hasLocalFonts;
 - (BOOL)isFamilyPrototype;
+- (void) scrub:(float)howFar;
 
 
 #pragma mark Image Replacement
