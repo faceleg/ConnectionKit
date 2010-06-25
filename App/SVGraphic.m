@@ -445,7 +445,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return [NSSet setWithObject:@"titleBox.text"];
 }
 
-- (BOOL)showsTitle { return ![[[self titleBox] hidden] boolValue]; }
+- (BOOL)showsTitle
+{
+    NSNumber *hidden = [[self titleBox] hidden];
+    return (hidden && ![hidden boolValue]);
+}
 - (void)setShowsTitle:(BOOL)show { [[self titleBox] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsTitle; { return [NSSet setWithObject:@"titleBox.hidden"]; }
 
@@ -459,11 +463,19 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 @dynamic showsTitle;
 @dynamic bordered;
 
-- (BOOL)showsIntroduction { return ![[[self introduction] hidden] boolValue]; }
+- (BOOL)showsIntroduction
+{
+    NSNumber *hidden = [[self introduction] hidden];
+    return (hidden && ![hidden boolValue]);
+}
 - (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsIntroduction; { return [NSSet setWithObject:@"introduction.hidden"]; }
 
-- (BOOL)showsCaption { return ![[[self caption] hidden] boolValue]; }
+- (BOOL)showsCaption
+{
+    NSNumber *hidden = [[self caption] hidden];
+    return (hidden && ![hidden boolValue]);
+}
 - (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
 + (NSSet *)keyPathsForValuesAffectingShowsCaption; { return [NSSet setWithObject:@"caption.hidden"]; }
 
