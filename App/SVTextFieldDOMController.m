@@ -63,7 +63,7 @@
 
 - (void)setString:(NSString *)string
 {
-    [[self textHTMLElement] setInnerText:string];
+    [[self innerTextHTMLElement] setInnerText:string];
 }
 
 #pragma mark Web Editor Item
@@ -285,7 +285,7 @@
     // Once attached to our DOM node, give it the placeholder text if needed
     if ([self placeholderString] && [[self HTMLString] length] == 0)
     {
-        [[self textHTMLElement] setInnerText:[self placeholderString]];
+        [[self innerTextHTMLElement] setInnerText:[self placeholderString]];
     }
 }
 
