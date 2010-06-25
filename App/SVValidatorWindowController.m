@@ -12,6 +12,16 @@
 #import "KSSilencingConfirmSheet.h"
 
 
+@interface WebView (WebViewPrivate)
+
+// Whitelists access from an origin (sourceOrigin) to a set of one or more origins described by the parameters:
+// - destinationProtocol: The protocol to grant access to.
+// - destinationHost: The host to grant access to.
+// - allowDestinationSubdomains: If host is a domain, setting this to YES will whitelist host and all its subdomains, recursively.
++ (void)_addOriginAccessWhitelistEntryWithSourceOrigin:(NSString *)sourceOrigin destinationProtocol:(NSString *)destinationProtocol destinationHost:(NSString *)destinationHost allowDestinationSubdomains:(BOOL)allowDestinationSubdomains;
+
+@end
+
 @implementation SVValidatorWindowController
 
 
@@ -142,7 +152,9 @@
 			NSURL *appIconURL = [NSURL fileURLWithPath:appIconPath];
 			
 			// WORK-AROUND ... can't load file:// when I have baseURL set, which I need for links to "#" sections to work!
-			appIconURL = [NSURL URLWithString:@"http://www.karelia.com/images/SandvoxAppIcon128.png"];
+			// appIconURL = [NSURL URLWithString:@"http://www.karelia.com/images/SandvoxAppIcon128.png"];
+			
+			[WebView _addOriginAccessWhitelistEntryWithSourceOrigin:@"localhost" destinationProtocol:@"file" destinationHost:@"localhost" allowDestinationSubdomains:NO];
 			
 			NSString *replacementString = [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<p>%@</p>\n<p>%@</p>\n</div>\n",
 										   [headline stringByEscapingHTMLEntities],
