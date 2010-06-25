@@ -30,6 +30,7 @@ const int kDesignThumbHeight = 65;
 
 @implementation KTDesign
 
+@synthesize expanded = _expanded;
 #pragma mark -
 #pragma mark Class Methods
 
@@ -667,7 +668,7 @@ const int kDesignThumbHeight = 65;
  */
 - (NSUInteger) imageVersion;
 {
-	return 1;
+	return self.isExpanded ? 65536 : 1;
 }
 /*! 
  @method imageTitle
@@ -675,7 +676,7 @@ const int kDesignThumbHeight = 65;
  */
 - (NSString *) imageTitle;
 {
-	return self.title;
+	return self.isExpanded ? self.titleOrParentTitle : self.title;
 }
 /*! 
  @method imageSubtitle

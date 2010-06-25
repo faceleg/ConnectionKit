@@ -30,7 +30,10 @@ extern const int kDesignThumbHeight;
 	NSSet	*myResourceFileURLs;
 	
 	BOOL myFontsLoaded;
+	BOOL _expanded;
 }
+
+@property (assign, getter=isExpanded) BOOL expanded;
 
 + (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs;
 + (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;

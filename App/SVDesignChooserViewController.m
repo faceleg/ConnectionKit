@@ -269,6 +269,22 @@
 	}
 }
 
+- (void) setExpanded:(BOOL)expanded forRange:(NSRange)range
+{
+	NSLog(@"setExpanded %@, %d", NSStringFromRange(range), expanded);
+	NSArray *objects = [oDesignsArrayController arrangedObjects];
+	
+	// Adjust the *first* item in this range; it will be changing depending on expanded/collapsed state.
+
+	[[objects objectAtIndex:range.location] setExpanded:expanded];
+	
+	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
+	if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])
+	{
+		[theView reloadCellDataAtIndex:range.location];
+	}
+}
+
 
 @end
 

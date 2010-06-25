@@ -14,6 +14,12 @@
 #endif
 
 
+@interface NSObject (privateAPIOhNo)
+- (NSRange) range;
+- (BOOL) expanded;
+@end
+
+
 @implementation SVDesignChooserImageBrowserView
 
 
@@ -29,10 +35,25 @@
 	return [SVDesignChooserImageBrowserCell class];
 }
 
-- (void)_expandButtonClicked:(id)arg1;
+- (void)_expandButtonClicked:(NSDictionary *)dict;
 {
-	NSLog(@"_expandButtonClicked: %@", arg1);
-	[super _expandButtonClicked:arg1];
+	[super _expandButtonClicked:dict];
+	NSEvent *event = [dict objectForKey:@"event"];
+	if ([event type] == NSLeftMouseUp)
+	{
+		NSDictionary *info = [dict objectForKey:@"info"];
+		NSObject *IKImageBrowserGridGroup = [info objectForKey:@"group"];
+		if ([IKImageBrowserGridGroup respondsToSelector:@selector(range)] && [IKImageBrowserGridGroup respondsToSelector:@selector(expanded)])
+		{
+			NSRange range = [IKImageBrowserGridGroup range];
+			BOOL expanded = [IKImageBrowserGridGroup expanded];			
+			[self.dataSource setExpanded:expanded forRange:range];
+		}
+	}
+	else
+	{
+		NSLog(@"ignoring event %@", event);
+	}
 }
 
 - (void) awakeFromNib

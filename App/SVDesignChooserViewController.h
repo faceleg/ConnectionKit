@@ -29,6 +29,7 @@
 
 - (KTDesign *)selectedDesign;
 - (void) setSelectedDesign:(KTDesign *)aDesign;
+- (void) setExpanded:(BOOL)expanded forRange:(NSRange)range;
 
 @end
 

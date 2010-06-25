@@ -15,4 +15,10 @@
 
 }
 
+@interface IKImageBrowserView (privateAPIOhNo)
+- (void)_expandButtonClicked:(NSDictionary *)dict;
+- (void)reloadCellDataAtIndex:(int) index;
+@end
+
+
 @end
