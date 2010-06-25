@@ -78,7 +78,7 @@
 
 #pragma mark Properties
 
-- (BOOL)allowsBlockGraphics; { return YES; }
+- (BOOL)allowsPagelets; { return YES; }
 
 - (IBAction)insertPagelet:(id)sender;
 {

@@ -23,7 +23,7 @@
 }
 
 #pragma mark Properties
-- (BOOL)allowsBlockGraphics;
+- (BOOL)allowsPagelets;
 
 
 #pragma mark Content

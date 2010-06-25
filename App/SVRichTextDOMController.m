@@ -75,7 +75,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
 
 #pragma mark Properties
 
-- (BOOL)allowsBlockGraphics; { return NO; }
+- (BOOL)allowsPagelets; { return NO; }
 
 #pragma mark DOM Node
 
@@ -151,7 +151,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [[SVParagraphedHTMLWriter alloc] initWithOutputWriter:html];
     
     [writer setDelegate:self];
-    [writer setAllowsBlockGraphics:[self allowsBlockGraphics]];
+    [writer setAllowsBlockGraphics:[self allowsPagelets]];
     
     
     [self willWriteText:writer];
@@ -192,7 +192,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Is it allowed?
     if ([graphic isPagelet])
     {
-        if ([self allowsBlockGraphics])
+        if ([self allowsPagelets])
         {
             if ([writer openElementsCount] > 0)
             {
