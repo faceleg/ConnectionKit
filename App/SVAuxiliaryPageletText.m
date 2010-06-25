@@ -19,6 +19,7 @@
     [self setPrimitiveValue:@"<p><br /></p>" forKey:@"string"];
 }
 
+@dynamic pagelet;
 @dynamic hidden;
 
 @end

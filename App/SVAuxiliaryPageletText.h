@@ -13,7 +13,8 @@
 
 @interface SVAuxiliaryPageletText :  SVRichText  
 
-@property (nonatomic, retain) NSNumber *hidden; // BOOL, mandatory
+@property(nonatomic, retain, readonly) SVGraphic *pagelet;
+@property(nonatomic, retain) NSNumber *hidden; // BOOL, mandatory
 
 @end
 
