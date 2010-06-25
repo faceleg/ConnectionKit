@@ -43,7 +43,7 @@
 @synthesize designsArrayController = oDesignsArrayController;
 
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
-enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
+enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
 
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
@@ -150,7 +150,7 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 	
 	[oViewController setSelectedDesign:nil];
 	[self lookForNulls];	// set up scope bar.  Do this before real selection.
-
+	
 	[oViewController setSelectedDesign:aDesign];
 	[oViewController initializeExpandedState];
 		
@@ -216,7 +216,12 @@ enum { kAllGroup, kColorGroup, kWidthGroup, kGenreGroup };	// I would prefer to 
 
 - (NSInteger)numberOfGroupsInScopeBar:(MGScopeBar *)theScopeBar
 {
-    return 4;
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	if ([defaults boolForKey:@"ShowMoreDesignFilters"])
+	{
+		return 4;
+	}
+	return 2;		// all, and genres
 }
 
 - (NSArray *)scopeBar:(MGScopeBar *)theScopeBar itemIdentifiersForGroup:(NSInteger)groupNumber

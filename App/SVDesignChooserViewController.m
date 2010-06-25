@@ -77,6 +77,7 @@
 		else
 		{
 			[theView collapseGroupAtIndex:groupIndex];
+			LOG((@"Collapsing group index %d - is it working?", groupIndex));
 		}
 		groupIndex++;
 	}
@@ -274,14 +275,14 @@
 	}
 }
 
-- (void) setExpanded:(BOOL)expanded forRange:(NSRange)range
+- (void) setContracted:(BOOL)contracted forRange:(NSRange)range
 {
-	NSLog(@"setExpanded %@, %d", NSStringFromRange(range), expanded);
+	NSLog(@"setContracted %@, %d", NSStringFromRange(range), contracted);
 	NSArray *objects = [oDesignsArrayController arrangedObjects];
 	
 	// Adjust the *first* item in this range; it will be changing depending on expanded/collapsed state.
 
-	[[objects objectAtIndex:range.location] setExpanded:expanded];
+	[[objects objectAtIndex:range.location] setContracted:contracted];
 	
 	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
 	if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])

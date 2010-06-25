@@ -29,7 +29,7 @@
 
 - (KTDesign *)selectedDesign;
 - (void) setSelectedDesign:(KTDesign *)aDesign;
-- (void) setExpanded:(BOOL)expanded forRange:(NSRange)range;
+- (void) setContracted:(BOOL)contracted forRange:(NSRange)range;
 
 @end
 

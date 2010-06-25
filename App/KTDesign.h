@@ -28,12 +28,15 @@ extern const int kDesignThumbHeight;
     NSImage *myThumbnail;
 	CGImageRef  myThumbnailCG;  // CGImageRefs aren't supposed to be pointers
 	NSSet	*myResourceFileURLs;
+	KTDesign *_familyPrototype;
+	
 	
 	BOOL myFontsLoaded;
-	BOOL _expanded;
+	BOOL _contracted;
 }
 
-@property (assign, getter=isExpanded) BOOL expanded;
+@property (assign, getter=isContracted) BOOL contracted;
+@property (retain) KTDesign *familyPrototype;
 
 + (NSArray *)consolidateDesignsIntoFamilies:(NSArray *)designs;
 + (NSArray *)reorganizeDesigns:(NSArray *)designs familyRanges:(NSArray **)outRanges;

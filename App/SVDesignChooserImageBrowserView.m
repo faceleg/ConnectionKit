@@ -48,7 +48,7 @@
 		{
 			NSRange range = [IKImageBrowserGridGroup range];
 			BOOL expanded = [IKImageBrowserGridGroup expanded];			
-			[self.dataSource setExpanded:expanded forRange:range];
+			[self.dataSource setContracted:!expanded forRange:range];
 		}
 	}
 	else

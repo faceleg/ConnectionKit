@@ -20,6 +20,7 @@
 #import "NSImage+KTExtensions.h"
 #import "NSSet+Karelia.h"
 #import "NSString+Karelia.h"
+#import "NSArray+Karelia.h"
 #import "NSURL+Karelia.h"
 #import "NSColor+Karelia.h"
 
@@ -30,7 +31,9 @@ const int kDesignThumbHeight = 65;
 
 @implementation KTDesign
 
-@synthesize expanded = _expanded;
+@synthesize contracted = _contracted;
+@synthesize familyPrototype = _familyPrototype;
+
 #pragma mark -
 #pragma mark Class Methods
 
@@ -170,8 +173,16 @@ const int kDesignThumbHeight = 65;
 		if ([designOrFamily isKindOfClass:[KTDesignFamily class]])
 		{
 			// Add all of the subdesigns, and add a new range to my list of groups.
+
 			KTDesignFamily *family = (KTDesignFamily *)designOrFamily;
 			NSArray *subDesigns = [family designs];
+			KTDesign *firstDesignInGroup = [subDesigns firstObjectKS];
+			KTDesign *familyPrototype = [family familyPrototype];
+			if (familyPrototype != firstDesignInGroup)
+			{
+				firstDesignInGroup.familyPrototype = familyPrototype;	// save so we can access its thumbnail.
+			}
+			
 			NSRange newRange = NSMakeRange(index,[subDesigns count]);
 			[ranges addObject:[NSValue valueWithRange:newRange]];
 			[result addObjectsFromArray:subDesigns];
@@ -198,6 +209,7 @@ const int kDesignThumbHeight = 65;
     [myThumbnail release];
 	CGImageRelease(myThumbnailCG);  // CGImageRelease handles the ref being nil, unlike CFRelease
 	[myResourceFileURLs release];
+	self.familyPrototype = nil;
 	
     [super dealloc];
 }
@@ -665,7 +677,14 @@ const int kDesignThumbHeight = 65;
  */
 - (id) imageRepresentation; /* required */
 {
-	return (id) [self thumbnailCG];
+	if (self.isContracted && self.familyPrototype)
+	{
+		return (id) [self.familyPrototype thumbnailCG];
+	}
+	else	// expanded, or there is not a family prototype -- just show your regular thumbnail.
+	{
+		return (id) [self thumbnailCG];
+	}
 }
 /*! 
  @method imageVersion
@@ -673,7 +692,7 @@ const int kDesignThumbHeight = 65;
  */
 - (NSUInteger) imageVersion;
 {
-	return self.isExpanded ? 65536 : 1;
+	return self.isContracted ? 65536 : 1;
 }
 /*! 
  @method imageTitle
@@ -681,7 +700,8 @@ const int kDesignThumbHeight = 65;
  */
 - (NSString *) imageTitle;
 {
-	return self.isExpanded ? self.titleOrParentTitle : self.title;
+	NSString *result = (self.isContracted) ? self.titleOrParentTitle : self.title;
+	return result;
 }
 /*! 
  @method imageSubtitle
