@@ -126,6 +126,15 @@
     }
 }
 
++ (NSSet *)keyPathsForValuesAffectingIsPagelet;
+{
+    return [NSSet setWithObjects:
+            @"placement",
+            @"showsTitle",
+            @"showsIntroduction",
+            @"showsCaption", nil];
+}
+
 #pragma mark Link
 
 @dynamic link;

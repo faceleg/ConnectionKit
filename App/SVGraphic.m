@@ -409,9 +409,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)showsTitle { return ![[[self titleBox] hidden] boolValue]; }
 - (void)setShowsTitle:(BOOL)show { [[self titleBox] setHidden:[NSNumber numberWithBool:!show]]; }
++ (NSSet *)keyPathsForValuesAffectingShowsTitle; { return [NSSet setWithObject:@"titleBox.hidden"]; }
 
 - (BOOL)isBordered { return [[self showBorder] boolValue]; }
 - (void)setBordered:(BOOL)border { [self setShowBorder:[NSNumber numberWithBool:border]]; }
++ (NSSet *)keyPathsForValuesAffectingBordered { return [NSSet setWithObject:@"showBorder"]; }
 
 #pragma mark SVPlugInContainer
 
@@ -421,9 +423,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)showsIntroduction { return ![[[self introduction] hidden] boolValue]; }
 - (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:[NSNumber numberWithBool:!show]]; }
++ (NSSet *)keyPathsForValuesAffectingShowsIntroduction; { return [NSSet setWithObject:@"introduction.hidden"]; }
 
 - (BOOL)showsCaption { return ![[[self caption] hidden] boolValue]; }
 - (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
++ (NSSet *)keyPathsForValuesAffectingShowsCaption; { return [NSSet setWithObject:@"caption.hidden"]; }
 
 - (void)disableUndoRegistration;
 {
