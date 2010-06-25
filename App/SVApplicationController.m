@@ -1181,8 +1181,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[oSourceViewMenuItem setAction:@selector(selectWebViewViewType:)];
 		[oDOMViewMenuItem setAction:@selector(selectWebViewViewType:)];
 		[oRSSViewMenuItem setAction:@selector(selectWebViewViewType:)];
-
-}
+	}
 	else
 	{
 		// clear actions so they will be disabled

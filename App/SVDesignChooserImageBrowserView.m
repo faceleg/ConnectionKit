@@ -8,6 +8,7 @@
 
 #import "SVDesignChooserImageBrowserView.h"
 #import "SVDesignChooserImageBrowserCell.h"
+#import "SVDesignChooserViewController.h"
 #if MAC_OS_X_VERSION_MAX_ALLOWED > MAC_OS_X_VERSION_10_5
 #else
 #import "DumpedImageKit.h"
@@ -74,9 +75,8 @@
 		[self setIntercellSpacing:NSMakeSize(0.0,10.0)];	// try to get as close as possible.  don't need a subclass for just this, right?
 	}
 	[self setCellsStyleMask:IKCellsStyleShadowed|IKCellsStyleTitled|IKCellsStyleSubtitled];
-	[self setConstrainsToOriginalSize:YES];
-//	DO NOT DO THIS, BREAKS SCROLL BAR ON 10.5: [self setContentResizingMask:NSViewNotSizable];
-	[self setCellSize:NSMakeSize(120,80)];	// a bit wider to allow for 4 columns.  HARD TO TELL HOW THIS REALLY ADJUSTS THINGS.
+	[self setConstrainsToOriginalSize:YES];	// Nothing seems to happen here
+	[self setCellSize:NSMakeSize(120,100)];	// a bit wider to allow for 4 columns.  EMPIRICAL - not too small to shrink, not to big to allow > 100x65 sizes
 }
 
 

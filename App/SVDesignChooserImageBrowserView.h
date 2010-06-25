@@ -22,4 +22,5 @@
 @interface IKImageBrowserView (privateAPIOhNo)
 - (void)_expandButtonClicked:(NSDictionary *)dict;
 - (void)reloadCellDataAtIndex:(int) index;
+- (void)setIntercellSpacing:(NSSize)aSpacing;
 @end
