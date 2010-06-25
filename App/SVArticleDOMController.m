@@ -244,7 +244,7 @@
 
 #pragma mark Placement
 
-- (void)setPlacementForInlineGraphic:(SVGraphicPlacement)placement
+- (void)moveToBlockLevel:(id)sender;
 {
     // It's a bit of a tricky manoeuvre. Want to pull the graphic back to the start of its paragraph
     
@@ -263,12 +263,6 @@
             [[parent parentNode] insertBefore:element refChild:parent];
             parent = [element parentNode];
         }
-        
-        
-        
-        // Set the placement of the graphic. This will mark self for update, which we want. It will kick in a after a delay, which we also want
-        [[[controller representedObject] textAttachment]
-         setPlacement:[NSNumber numberWithInt:placement]];
         
         // Push the change to the model ready for the update to pick it up
         [webEditor didChangeText];
@@ -303,6 +297,10 @@
 
 - (IBAction)placeAsCallout:(id)sender;
 {
+    // Can't have any inline elements
+    [self moveToBlockLevel:sender];
+    
+    
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVWebEditorViewController *viewController = [context webEditorViewController];
     
@@ -315,8 +313,7 @@
                 break;
                 
             case SVGraphicPlacementInline:
-                OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
-                [self setPlacementForInlineGraphic:SVGraphicPlacementCallout];
+                [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
                 break;
         
             default:

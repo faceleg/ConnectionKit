@@ -24,6 +24,8 @@
 
 - (IBAction)insertPagelet:(id)sender;
 
+- (IBAction)moveToBlockLevel:(id)sender;
+
 
 #pragma mark Callouts
 @property(nonatomic, retain) SVCalloutDOMController *earlyCalloutDOMController;

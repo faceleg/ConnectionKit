@@ -999,30 +999,6 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<int key="connectionID">310</int>
 				</object>
 				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">placeBlockLevelIfNeeded:</string>
-						<reference key="source" ref="1003"/>
-						<reference key="destination" ref="544062517"/>
-					</object>
-					<int key="connectionID">311</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">placeBlockLevelIfNeeded:</string>
-						<reference key="source" ref="1003"/>
-						<reference key="destination" ref="298414928"/>
-					</object>
-					<int key="connectionID">312</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBActionConnection" key="connection">
-						<string key="label">placeBlockLevelIfNeeded:</string>
-						<reference key="source" ref="1003"/>
-						<reference key="destination" ref="912621814"/>
-					</object>
-					<int key="connectionID">313</int>
-				</object>
-				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
 						<string key="label">oPlacementRadioButtons</string>
 						<reference key="source" ref="1001"/>
@@ -1312,6 +1288,30 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">382</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveToBlockLevel:</string>
+						<reference key="source" ref="1003"/>
+						<reference key="destination" ref="544062517"/>
+					</object>
+					<int key="connectionID">383</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveToBlockLevel:</string>
+						<reference key="source" ref="1003"/>
+						<reference key="destination" ref="298414928"/>
+					</object>
+					<int key="connectionID">384</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">moveToBlockLevel:</string>
+						<reference key="source" ref="1003"/>
+						<reference key="destination" ref="912621814"/>
+					</object>
+					<int key="connectionID">385</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1688,7 +1688,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">382</int>
+			<int key="maxID">385</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1900,9 +1900,45 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSView</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="481985451">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="819934429">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">WEKWebKitPrivate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVArticleDOMController</string>
+					<string key="superclassName">SVRichTextDOMController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<bool key="EncodedWithXMLCoder">YES</bool>
+						<object class="NSArray" key="dict.sortedKeys">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>insertPagelet:</string>
+							<string>moveToBlockLevel:</string>
+						</object>
+						<object class="NSMutableArray" key="dict.values">
+							<bool key="EncodedWithXMLCoder">YES</bool>
+							<string>id</string>
+							<string>id</string>
+						</object>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVArticleDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVDOMController</string>
+					<string key="superclassName">WEKWebEditorItem</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="160647189">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVDOMController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVWebEditorHTMLContext.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
@@ -1923,20 +1959,38 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					<reference key="sourceIdentifier" ref="24230897"/>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">SVRichTextDOMController</string>
+					<string key="superclassName">SVTextDOMController</string>
+					<object class="NSMutableDictionary" key="actions">
+						<string key="NS.key.0">insertFile:</string>
+						<string key="NS.object.0">id</string>
+					</object>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVRichTextDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">SVTextDOMController</string>
+					<string key="superclassName">SVDOMController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="626586498">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVTextDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">SVWebEditorView</string>
 					<string key="superclassName">WEKWebEditorView</string>
 					<object class="NSMutableDictionary" key="actions">
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>placeAsBlock:</string>
 							<string>placeAsCallout:</string>
 							<string>placeInSidebar:</string>
 							<string>placeInline:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -1958,14 +2012,12 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 							<string>insertPagelet:</string>
 							<string>insertPageletInSidebar:</string>
 							<string>insertPageletTitle:</string>
-							<string>placeAsBlock:</string>
 							<string>placeAsCallout:</string>
 							<string>placeInSidebar:</string>
 							<string>placeInline:</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>id</string>
 							<string>id</string>
 							<string>id</string>
 							<string>id</string>
@@ -2010,6 +2062,37 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
+					<string key="className">WEKDOMController</string>
+					<string key="superclassName">NSResponder</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">WEKDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKWebEditorItem</string>
+					<reference key="sourceIdentifier" ref="160647189"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKWebEditorItem</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">SVSidebarDOMController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKWebEditorItem</string>
+					<reference key="sourceIdentifier" ref="626586498"/>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">WEKWebEditorItem</string>
+					<string key="superclassName">WEKDOMController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">WEKWebEditorItem.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
 					<string key="className">WEKWebEditorView</string>
 					<string key="superclassName">NSView</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -2048,7 +2131,7 @@ AAMAAAABAAEAAAFTAAMAAAAEAAAFwgAAAAAACAAIAAgACAABAAEAAQABA</bytes>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>
-					<reference key="sourceIdentifier" ref="481985451"/>
+					<reference key="sourceIdentifier" ref="819934429"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">WebView</string>

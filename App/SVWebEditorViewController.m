@@ -648,6 +648,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Otherwise assume selection is already in sidebar so nothing needs doing
 }
 
+- (void)moveToBlockLevel:(id)sender;
+{
+    [[self firstResponderItem] tryToPerform:_cmd with:sender];
+}
+
 #pragma mark Action Forwarding
 
 - (void)makeTextLarger:(id)sender;
