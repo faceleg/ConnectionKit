@@ -133,9 +133,35 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 @dynamic caption;
+- (BOOL)validateCaption:(SVAuxiliaryPageletText **)caption error:(NSError **)error;
+{
+    BOOL result = ((*caption != nil) == [self canHaveCaption]);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"caption is non-optional"];
+    }
+    
+    return result;
+}
+
 - (BOOL)canHaveCaption; { return YES; }
 
 @dynamic introduction;
+- (BOOL)validateIntroduction:(SVAuxiliaryPageletText **)introduction error:(NSError **)error;
+{
+    BOOL result = ((*introduction != nil) == [self canHaveIntroduction]);
+    if (!result && error)
+    {
+        *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                     code:NSValidationMissingMandatoryPropertyError
+                     localizedDescription:@"introduction is non-optional"];
+    }
+    
+    return result;
+}
+
 - (BOOL)canHaveIntroduction; { return YES; }
 
 #pragma mark Layout/Styling

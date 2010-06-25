@@ -94,6 +94,7 @@ extern NSString *kSVGraphicPboardType;
 - (void)createDefaultIntroAndCaption;
 
 @property (nonatomic, retain) SVAuxiliaryPageletText *introduction;
+- (BOOL)canHaveIntroduction;
 
 @property (nonatomic, retain) SVAuxiliaryPageletText *caption;
 - (BOOL)canHaveCaption;
