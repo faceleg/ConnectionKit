@@ -88,27 +88,32 @@
     return YES;
 }
 
-- (void)writeLinkOfPage:(id<SVPage>)aPage
-              toContext:(id<SVPlugInContext>)context
+- (void)startElement:(NSString *)element
+  andWriteLinkOfPage:(id<SVPage>)aPage
+           toContext:(id<SVPlugInContext>)context
 {
-    NSString *title = ([aPage title] ? [aPage title] : @"");
     if ( [aPage isEqual:[context page]] ) // not likely but maybe possible
     {
-        // just emit title
-        [[context HTMLWriter] writeText:title];
+        // just emit page title
+        [[context HTMLWriter] startElement:element andWriteTitleOfPage:aPage];
     }
     else
     {
+        [[context HTMLWriter] startElement:element attributes:nil];
+
         //FIXME: special case for LinkPage, add target=_BLANK if LinkPage and newWindowLink ???
         // emit href + title
         NSString *path = [context relativeURLStringOfPage:aPage];
         if (!path) path = @"";  // Happens for a site with no -siteURL set yet
+        
+        NSString *title = ([aPage title] ? [aPage title] : @"");
+        
         [[context HTMLWriter] startAnchorElementWithHref:path 
                                                    title:title
                                                   target:nil
                                                      rel:nil];
         [[context HTMLWriter] writeText:title];
-        [[context HTMLWriter] endElement];            
+        [[context HTMLWriter] endElement]; // end anchor
     }
 }
 
@@ -135,11 +140,9 @@
             if ( [childPage includeInSiteMaps] ) [children addObject:childPage];
         }
             
-        // if asSection emit <h3>, else emit <li>
-        [[context HTMLWriter] startElement:(asSection ? @"h3" : @"li") attributes:nil];
-        
         // process aPage
-        [self writeLinkOfPage:aPage toContext:context];
+        // if asSection emit <h3>, else emit <li>
+        [self startElement:(asSection ? @"h3" : @"li") andWriteLinkOfPage:aPage toContext:context];
         
         // close h3
 		if ( asSection ) [[context HTMLWriter] endElement];
@@ -163,7 +166,8 @@
                         [[context HTMLWriter] writeHTMLString:@"&middot; "];
                     }
                     firstChild = NO;                    
-                    [self writeLinkOfPage:child toContext:context];
+                    [self startElement:@"span" andWriteLinkOfPage:child toContext:context];
+                    [[context HTMLWriter] endElement]; // </span>
                 }
                 
                 [[context HTMLWriter] endElement]; // </li>
@@ -208,9 +212,7 @@
         if ( self.showHome )
         {
             // Note: if site map IS home, it will still be shown regardless of show site map checkbox
-            
-            [[context HTMLWriter] startElement:(self.sections ? @"h3" : @"p") attributes:nil];
-            [self writeLinkOfPage:rootPage toContext:context];
+            [self startElement:(self.sections ? @"h3" : @"p") andWriteLinkOfPage:rootPage toContext:context];
             [[context HTMLWriter] endElement];
             
             // observe root's observable keypaths
@@ -237,7 +239,7 @@
                         wantsCompact:self.compact];
             }
             
-            if ( !self.sections ) [[context HTMLWriter] endElement];
+            if ( !self.sections ) [[context HTMLWriter] endElement]; // </ul>
         }
     }
 }
