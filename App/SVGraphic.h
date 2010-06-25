@@ -87,7 +87,6 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, retain) SVTitleBox *titleBox;
 - (void)setTitle:(NSString *)title;   // creates Title object if needed
 + (NSString *)placeholderTitleText;
-@property(nonatomic) BOOL showsTitle;
 
 
 #pragma mark Intro & Caption
