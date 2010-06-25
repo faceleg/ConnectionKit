@@ -244,41 +244,6 @@
 
 #pragma mark Placement
 
-- (IBAction)placeBlockLevel:(id)sender;    // tells all selected graphics to become placed as block
-{
-    WEKWebEditorView *webEditor = [self webEditor];
-    if (![webEditor shouldChangeText:self]) return;
-    
-    
-    for (SVDOMController *aController in [webEditor selectedItems])
-    {
-        if ([aController parentWebEditorItem] != self) continue;
-        
-        
-        // Seek out the paragraph nearest myself. Place my HTML element before/after there
-        DOMNode *refNode = [aController HTMLElement];
-        DOMNode *parentNode = [refNode parentNode];
-        while (parentNode != [self HTMLElement])
-        {
-            refNode = parentNode;
-            parentNode = [parentNode parentNode];
-        }
-        
-        [parentNode insertBefore:[aController HTMLElement] refChild:refNode];
-        
-        
-        // Make sure it's marked as block
-        SVGraphic *graphic = [aController representedObject];
-        [[graphic textAttachment] setPlacement:
-         [NSNumber numberWithInteger:SVGraphicPlacementInline]];
-    }
-    
-    
-    
-    // Make Web Editor/Controller copy text to model
-    [webEditor didChangeText];
-}
-
 - (void)placeInline:(id)sender;
 {
     SVWebEditorHTMLContext *context = [self HTMLContext];
