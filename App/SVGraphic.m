@@ -9,6 +9,7 @@
 #import "SVGraphic.h"
 
 #import "SVArticle.h"
+#import "SVAuxiliaryPageletText.h"
 #import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVRichText.h"
@@ -36,8 +37,9 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [self setPrimitiveValue:[NSString shortUUIDString] forKey:@"elementID"];
     
     
-    // Title
+    // Text
     [self setTitle:[[self class] placeholderTitleText]];
+    [self createDefaultIntroAndCaption];
 }
 
 - (void)willInsertIntoPage:(KTPage *)page;
@@ -95,20 +97,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     }
 }
 
-- (BOOL)validateForInlinePlacement:(NSError **)error;
-{
-    BOOL result;
-    
-    if (!(result = ![self showsTitle]))
-    {
-        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
-                                                code:NSManagedObjectValidationError
-                                localizedDescription:@"Graphics cannot show title while inline"];
-    }
-    
-    return result;
-}
-
 #pragma mark Pagelet
 
 - (BOOL)isPagelet;
@@ -151,6 +139,42 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 + (NSString *)placeholderTitleText;
 {
     return NSLocalizedString(@"Pagelet", "pagelet title placeholder");
+}
+
+#pragma mark Intro & Caption
+
+- (void)createDefaultIntroAndCaption;
+{
+    SVAuxiliaryPageletText *text = [NSEntityDescription
+                                    insertNewObjectForEntityForName:@"PageletIntroduction"
+                                    inManagedObjectContext:[self managedObjectContext]];
+    [self setIntroduction:text];
+    
+    text = [NSEntityDescription insertNewObjectForEntityForName:@"PageletCaption"
+                                         inManagedObjectContext:[self managedObjectContext]];
+    [self setCaption:text];
+}
+
+@dynamic caption;
+@dynamic introduction;
+
+- (BOOL)validateForInlinePlacement:(NSError **)error;
+{
+    BOOL result = YES;
+        if (!(result = ![self showsIntroduction]))
+        {
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSManagedObjectValidationError
+                                    localizedDescription:@"Graphics cannot show introduction while inline"];
+        }
+        else if (!(result = ![self showsCaption]))
+        {
+            if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                    code:NSManagedObjectValidationError
+                                    localizedDescription:@"Graphics cannot show caption while inline"];
+        }
+    
+    return result;
 }
 
 #pragma mark Layout/Styling
@@ -430,6 +454,38 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)isBordered { return [[self showBorder] boolValue]; }
 - (void)setBordered:(BOOL)border { [self setShowBorder:[NSNumber numberWithBool:border]]; }
+
+#pragma mark SVPlugInContainer
+
+@dynamic title;
+@dynamic showsTitle;
+@dynamic bordered;
+
+- (BOOL)showsIntroduction { return ![[[self introduction] hidden] boolValue]; }
+- (void)setShowsIntroduction:(BOOL)show { [[self introduction] setHidden:[NSNumber numberWithBool:!show]]; }
+
+- (BOOL)showsCaption { return ![[[self caption] hidden] boolValue]; }
+- (void)setShowsCaption:(BOOL)show { [[self caption] setHidden:[NSNumber numberWithBool:!show]]; }
+
+- (void)disableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager disableUndoRegistration];
+}
+
+- (void)enableUndoRegistration;
+{
+    NSUndoManager *undoManager = [[self managedObjectContext] undoManager];
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:NSUndoManagerCheckpointNotification
+                                                        object:undoManager];
+    
+    [undoManager enableUndoRegistration];
+}
 
 @end
 

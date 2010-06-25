@@ -62,10 +62,11 @@ extern NSString *kSVGraphicPboardType;
 
 @class KTPage, SVTitleBox;
 @class SVTextAttachment, SVHTMLContext, SVTemplate;
+@class SVAuxiliaryPageletText;
 @protocol SVPage;
 
 
-@interface SVGraphic : SVContentObject <SVGraphic>
+@interface SVGraphic : SVContentObject <SVGraphic, SVPageletPlugInContainer>
 
 #pragma mark Initialization
 - (void)willInsertIntoPage:(KTPage *)page; // calls -didAddToPage:
@@ -88,6 +89,14 @@ extern NSString *kSVGraphicPboardType;
 - (void)setTitle:(NSString *)title;   // creates Title object if needed
 + (NSString *)placeholderTitleText;
 @property(nonatomic) BOOL showsTitle;
+
+
+#pragma mark Intro & Caption
+
+- (void)createDefaultIntroAndCaption;
+
+@property (nonatomic, retain) SVAuxiliaryPageletText *caption;
+@property (nonatomic, retain) SVAuxiliaryPageletText *introduction;
 
 
 #pragma mark Layout/Styling
