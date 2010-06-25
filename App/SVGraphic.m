@@ -101,17 +101,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (BOOL)isPagelet;
 {
-    //  We are a pagelet UNLESS embedded inline in text
-    BOOL result = YES;
-    
-    NSNumber *placement = [[self textAttachment] placement];
-    if (placement)
-    {
-        SVGraphicPlacement placementValue = [placement integerValue];
-        result = (placementValue != SVGraphicPlacementInline);
-    }
-    
-    return result;
+    //  Only certain subclasses support being non-pagelet (Image, Raw HTML)
+    return YES;
 }
 
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
