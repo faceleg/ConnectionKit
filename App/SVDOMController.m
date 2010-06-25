@@ -19,7 +19,7 @@
 @implementation SVDOMController
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
- createHTMLElementWithDocument:(DOMHTMLDocument *)doc
+       parentWebEditorItemToBe:(SVDOMController *)parentItem
                        context:(SVHTMLContext *)parentContext;
 {
     // Write HTML
@@ -40,10 +40,19 @@
     }
     OBASSERT(result);
     
+    
+    // Copy top-level dependencies across to parent. #79396
+    for (KSObjectKeyPathPair *aDependency in [context dependencies])
+    {
+        [parentItem addDependency:aDependency];
+    }
+    
     [context release];
     
     
     // Create DOM objects from HTML
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[parentItem HTMLElement] ownerDocument];
+    
     DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:htmlString
                                                                         baseURL:[parentContext baseURL]];
     [htmlString release];

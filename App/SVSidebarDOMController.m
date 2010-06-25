@@ -104,11 +104,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         // Grab controller for item. Create it if needed
         WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
         if (!controller)
-        {
-            DOMHTMLDocument *doc = (DOMHTMLDocument *)[contentElement ownerDocument];
-            
+        {            
             controller = [SVDOMController DOMControllerWithGraphic:aPagelet
-                                     createHTMLElementWithDocument:doc
+                                           parentWebEditorItemToBe:(SVDOMController *)controller
                                                            context:[self HTMLContext]];
         }
         

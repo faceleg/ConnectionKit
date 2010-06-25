@@ -30,7 +30,7 @@
 #pragma mark Creating a DOM Controller
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
- createHTMLElementWithDocument:(DOMHTMLDocument *)doc
+       parentWebEditorItemToBe:(SVDOMController *)parentItem
                        context:(SVHTMLContext *)parentContext;
 
 - (id)initWithElementIdName:(NSString *)elementID;

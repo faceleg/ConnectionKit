@@ -364,7 +364,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Create controller for graphic
     SVDOMController *controller = [SVDOMController
                                    DOMControllerWithGraphic:graphic
-                                   createHTMLElementWithDocument:(DOMHTMLDocument *)[webEditor HTMLDocument]
+                                   parentWebEditorItemToBe:self
                                    context:[self HTMLContext]];
     
     
@@ -374,7 +374,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         [selection insertNode:[controller HTMLElement]];
     
-        // Insert controller – must do after node is inserted so descandant nodes can be located by ID
+        // Insert controller – must do after node is inserted so descendant nodes can be located by ID
         [self addChildWebEditorItem:controller];
         
         // Finish the edit – had to wait until both node and controller were present
