@@ -73,18 +73,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic textAttachment;
 
-- (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
-{
-    if (isInline)
-    {
-        [[self titleBox] setHidden:[NSNumber numberWithBool:YES]];
-    }
-    else
-    {
-        [[self textAttachment] setCausesWrap:[NSNumber numberWithBool:YES]];
-    }
-}
-
 - (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
 {
     SVTextAttachment *attachment = [self textAttachment];

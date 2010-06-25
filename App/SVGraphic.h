@@ -110,7 +110,6 @@ extern NSString *kSVGraphicPboardType;
  */
 
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
-- (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
 
 - (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
 
