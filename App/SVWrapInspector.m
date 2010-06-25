@@ -49,16 +49,6 @@
     {
         [oPlacementRadioButtons setEnabled:YES];
         
-        // While the buttons may generally be available, Inline is somewhat more specified
-        NSButtonCell *inlineCell = [oPlacementRadioButtons cellAtRow:0 column:0];
-        
-        NSNumber *canPlaceInline = [[self inspectedObjectsController]
-                                    valueForKeyPath:@"selection.canPlaceInline"];
-        
-        [inlineCell setEnabled:(!NSIsControllerMarker(canPlaceInline) &&
-                                [canPlaceInline boolValue])];
-        
-        
         // Set their value too
         [oPlacementRadioButtons selectCellWithTag:[placement integerValue]];
     }
