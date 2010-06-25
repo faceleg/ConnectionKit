@@ -419,6 +419,10 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     if (media)
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
+        [image setShowsTitle:NO];
+        [image setShowsCaption:NO];
+        [image setShowsIntroduction:NO];
+        
         [image willInsertIntoPage:[[self HTMLContext] page]];
         [self addGraphic:image placeInline:YES];
     }
