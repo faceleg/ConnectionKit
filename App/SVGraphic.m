@@ -133,7 +133,10 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 @dynamic caption;
+- (BOOL)canHaveCaption; { return YES; }
+
 @dynamic introduction;
+- (BOOL)canHaveIntroduction; { return YES; }
 
 #pragma mark Layout/Styling
 

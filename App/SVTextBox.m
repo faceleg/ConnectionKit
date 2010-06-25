@@ -36,6 +36,12 @@
     [self setBody:[SVRichText insertPageletBodyIntoManagedObjectContext:[self managedObjectContext]]];
 }
 
+#pragma mark Intro & Caption
+
+- (BOOL)canHaveCaption; { return NO; }
+
+- (BOOL)canHaveIntroduction { return NO; }
+
 #pragma mark HTML
 
 - (void)writeBody:(SVHTMLContext *)context;
