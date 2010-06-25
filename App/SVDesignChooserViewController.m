@@ -216,7 +216,7 @@
 	NSValue *rangeValue = [[oDesignsArrayController rangesOfGroups] objectAtIndex:index];
 	NSRange range = [rangeValue rangeValue];
 	
-	NSString *countString = (range.length > 1)
+	NSString *countString = (range.length < 2)
 		? NSLocalizedString(@"1 design", @"1 designs in a 'family' group")
 		: [NSString stringWithFormat:NSLocalizedString(@"%d designs", @"count of designs in a 'family' group"), range.length];
 	
