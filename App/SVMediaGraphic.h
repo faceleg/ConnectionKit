@@ -6,12 +6,12 @@
 //  Copyright 2010 Karelia Software. All rights reserved.
 //
 
-#import "SVIntroAndCaptionGraphic.h"
+#import "SVGraphic.h"
 
 
 @class SVMediaRecord;
 
-@interface SVMediaGraphic : SVIntroAndCaptionGraphic
+@interface SVMediaGraphic : SVGraphic
 
 #pragma mark Media
 

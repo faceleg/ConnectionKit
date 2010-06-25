@@ -6,14 +6,14 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import "SVIntroAndCaptionGraphic.h"
+#import "SVGraphic.h"
 
 
 @protocol SVPlugIn;
 @class KTElementPlugInWrapper;
 
 
-@interface SVPlugInGraphic : SVIntroAndCaptionGraphic
+@interface SVPlugInGraphic : SVGraphic
 {
   @private
     NSObject <SVPlugIn> *_plugIn;

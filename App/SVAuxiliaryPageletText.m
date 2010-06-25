@@ -8,7 +8,7 @@
 
 #import "SVAuxiliaryPageletText.h"
 
-#import "SVIntroAndCaptionGraphic.h"
+#import "SVGraphic.h"
 
 @implementation SVAuxiliaryPageletText 
 

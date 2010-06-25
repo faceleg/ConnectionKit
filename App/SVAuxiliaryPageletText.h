@@ -9,7 +9,7 @@
 #import <CoreData/CoreData.h>
 #import "SVRichText.h"
 
-@class SVIntroAndCaptionGraphic;
+@class SVGraphic;
 
 @interface SVAuxiliaryPageletText :  SVRichText  
 
