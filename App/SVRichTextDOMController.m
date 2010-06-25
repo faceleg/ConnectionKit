@@ -190,7 +190,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Is it allowed?
-    if ([[attachment placement] integerValue] == SVGraphicPlacementBlock)
+    if ([graphic isPagelet])
     {
         if ([self allowsBlockGraphics])
         {
@@ -216,7 +216,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     {
         // Guess placement from controller hierarchy
         SVGraphicPlacement placement = ([controller parentWebEditorItem] == self ?
-                                        SVGraphicPlacementBlock :
+                                        SVGraphicPlacementInline :
                                         SVGraphicPlacementCallout);
         
         attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
@@ -357,8 +357,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     SVTextAttachment *textAttachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
                                                                      inManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
-    [textAttachment setPlacement:
-     [NSNumber numberWithInteger:(placeInline ? SVGraphicPlacementInline : SVGraphicPlacementBlock)]];
+    [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     [textAttachment setBody:[self representedObject]];
     
     

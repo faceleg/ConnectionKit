@@ -249,7 +249,7 @@
     
     // When graphic was copied out of sidebar etc., has no actual text attachment. So, fill in those nil values with sensible defaults
     if (![self causesWrap]) [self setCausesWrap:[NSNumber numberWithBool:YES]];
-    if (![self placement]) [self setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementBlock]];
+    if (![self placement]) [self setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
     if (![self wrap]) [self setWrap:[NSNumber numberWithInteger:SVGraphicWrapRightSplit]];
 }
 

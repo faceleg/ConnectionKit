@@ -182,9 +182,8 @@
                  placement:(SVGraphicPlacement)placement
                      error:(NSError **)error;
 {
-    // We're more permissive than superclass and allow block/callout attachments
+    // We're more permissive than superclass and allow callout attachments
     if (placement != SVGraphicPlacementInline &&
-        placement != SVGraphicPlacementBlock &&
         placement != SVGraphicPlacementCallout)
     {
         if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain

@@ -15,7 +15,6 @@
 
 typedef enum {
     SVGraphicPlacementInline,
-    SVGraphicPlacementBlock,
     SVGraphicPlacementCallout,
     SVGraphicPlacementSidebar,
 } SVGraphicPlacement;

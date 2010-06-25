@@ -270,7 +270,7 @@
         // Make sure it's marked as block
         SVGraphic *graphic = [aController representedObject];
         [[graphic textAttachment] setPlacement:
-         [NSNumber numberWithInteger:SVGraphicPlacementBlock]];
+         [NSNumber numberWithInteger:SVGraphicPlacementInline]];
     }
     
     
@@ -290,10 +290,7 @@
         
         // Can the graphic be transformed on the spot? #79017
         SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        if (placement == SVGraphicPlacementCallout || placement == SVGraphicPlacementBlock)
-        {
-            [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
-        }
+        [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
     }
 }
 
@@ -338,17 +335,14 @@
         SVGraphicPlacement placement = [[aGraphic placement] integerValue];
         switch (placement)
         {
-            case SVGraphicPlacementBlock:
-                break;
-                
             case SVGraphicPlacementCallout:
                 // The graphic be transformed on the spot. #79017
-                [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementBlock]];
+                [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
                 break;
                 
             case SVGraphicPlacementInline:
                 OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
-                [self setPlacementForInlineGraphic:SVGraphicPlacementBlock];
+                [self setPlacementForInlineGraphic:SVGraphicPlacementInline];
                 break;
                 
             default:
@@ -369,11 +363,6 @@
         switch (placement)
         {
             case SVGraphicPlacementCallout:
-                break;
-                
-            case SVGraphicPlacementBlock:
-                // The graphic be transformed on the spot. #79017
-                [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementCallout]];
                 break;
                 
             case SVGraphicPlacementInline:
