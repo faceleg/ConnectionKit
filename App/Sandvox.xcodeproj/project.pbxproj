@@ -564,6 +564,8 @@
 		3C0B1D05104792B0002EE098 /* SVDesignChooser.xib in Resources */ = {isa = PBXBuildFile; fileRef = 3C0B1D03104792B0002EE098 /* SVDesignChooser.xib */; };
 		3C0B1D6910479ABB002EE098 /* BWToolkitFramework.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
 		3C0B1D9A10479ADD002EE098 /* BWToolkitFramework.framework in Copy Frameworks ALWAYS */ = {isa = PBXBuildFile; fileRef = 3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */; };
+		3C1F511211D5757F0036B375 /* xibLocalizationPostprocessor.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */; };
+		3C1F511411D5758F0036B375 /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 3C1F511311D5758F0036B375 /* Cocoa.framework */; };
 		3C1FA3940D6C994C0008AAD9 /* NSPersistentStoreCoordinator+KTExtensions.h in Headers */ = {isa = PBXBuildFile; fileRef = 3C5A714F0BF7ADE100776464 /* NSPersistentStoreCoordinator+KTExtensions.h */; };
 		3C202D4307DFC0F000DE4994 /* KTDocument.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202D3407DFC0F000DE4994 /* KTDocument.m */; };
 		3C202DAC07DFC4DD00DE4994 /* KTBackgroundTabView.m in Sources */ = {isa = PBXBuildFile; fileRef = 3C202DA707DFC4DD00DE4994 /* KTBackgroundTabView.m */; };
@@ -2106,6 +2108,9 @@
 		3C0B1D6810479ABB002EE098 /* BWToolkitFramework.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = BWToolkitFramework.framework; path = ../../Shared/ThirdParty/BWToolkit/BWToolkitFramework.framework; sourceTree = SOURCE_ROOT; };
 		3C0C02040905882300CFFE3E /* SenTestingKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SenTestingKit.framework; path = Library/Frameworks/SenTestingKit.framework; sourceTree = DEVELOPER_DIR; };
 		3C1929170D6F712A008B9861 /* SandvoxInvalidLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SandvoxInvalidLicenses.h; path = ../../Shared/Licensing/SandvoxInvalidLicenses.h; sourceTree = SOURCE_ROOT; };
+		3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = xibLocalizationPostprocessor; sourceTree = BUILT_PRODUCTS_DIR; };
+		3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = xibLocalizationPostprocessor.m; path = ../../Shared/ThirdParty/GoldenBraeburn/DeliciousLocalization/xibLocalizationPostprocessor.m; sourceTree = SOURCE_ROOT; };
+		3C1F511311D5758F0036B375 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		3C202D1407DFC06100DE4994 /* KT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KT.h; sourceTree = "<group>"; };
 		3C202D1807DFC0AA00DE4994 /* SVApplicationController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVApplicationController.h; sourceTree = "<group>"; };
 		3C202D1907DFC0AA00DE4994 /* SVApplicationController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVApplicationController.m; sourceTree = "<group>"; };
@@ -2761,6 +2766,14 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		3C1F510811D575510036B375 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C1F511411D5758F0036B375 /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC330486D014006FF6A4 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -2848,6 +2861,7 @@
 				3C42E6BB0D6510BE004F35FD /* HTML.svxElement */,
 				CEF9D0AF0D862B5100BD9895 /* ImageWebKitPlugin.bundle */,
 				CE16DC590D8711790077C779 /* MovieWebKitPlugin.bundle */,
+				3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -3647,6 +3661,7 @@
 		2A37F4AAFDCFA73011CA2CEA /* Marvel */ = {
 			isa = PBXGroup;
 			children = (
+				3C1F511111D5757F0036B375 /* xibLocalizationPostprocessor.m */,
 				3C202D1707DFC06B00DE4994 /* Application */,
 				3C202D3207DFC0BF00DE4994 /* Document */,
 				275E067A0DDA0F1A0072567F /* Model */,
@@ -3690,6 +3705,7 @@
 				CEC11A2E0D78BE0100513E70 /* Shared */,
 				3C202DF507E00CCC00DE4994 /* Product Dependencies */,
 				19C28FB0FE9D524F11CA2CBB /* Products */,
+				3C1F511311D5758F0036B375 /* Cocoa.framework */,
 			);
 			name = Marvel;
 			sourceTree = "<group>";
@@ -5595,6 +5611,22 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		3C1F510911D575510036B375 /* xibLocalizationPostprocessor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 3C1F511011D575700036B375 /* Build configuration list for PBXNativeTarget "xibLocalizationPostprocessor" */;
+			buildPhases = (
+				3C1F510711D575510036B375 /* Sources */,
+				3C1F510811D575510036B375 /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = xibLocalizationPostprocessor;
+			productName = xibLocalizationProcessor;
+			productReference = 3C1F510A11D575510036B375 /* xibLocalizationPostprocessor */;
+			productType = "com.apple.product-type.tool";
+		};
 		8D15AC270486D014006FF6A4 /* Sandvox-ExecutableOnly */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CE3BC23D08575E2800576982 /* Build configuration list for PBXNativeTarget "Sandvox-ExecutableOnly" */;
@@ -5825,6 +5857,7 @@
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
 				CE16DC580D8711790077C779 /* MovieWebKitPlugin */,
+				3C1F510911D575510036B375 /* xibLocalizationPostprocessor */,
 			);
 		};
 /* End PBXProject section */
@@ -6613,6 +6646,14 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		3C1F510711D575510036B375 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3C1F511211D5757F0036B375 /* xibLocalizationPostprocessor.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		8D15AC300486D014006FF6A4 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -7504,6 +7545,52 @@
 			};
 			name = Debug;
 		};
+		3C1F510C11D575510036B375 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = xibLocalizationPostprocessor;
+			};
+			name = Debug;
+		};
+		3C1F510D11D575510036B375 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/AppKit.framework/Headers/AppKit.h";
+				INSTALL_PATH = /usr/local/bin;
+				OTHER_LDFLAGS = (
+					"-framework",
+					Foundation,
+					"-framework",
+					AppKit,
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = xibLocalizationProcessor;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		3C3E75FB0F1C5F42002E3A9A /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -7801,6 +7888,15 @@
 			buildConfigurations = (
 				3C15B8600DC790A200DE9957 /* Debug */,
 				3C15B85F0DC790A200DE9957 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3C1F511011D575700036B375 /* Build configuration list for PBXNativeTarget "xibLocalizationPostprocessor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3C1F510C11D575510036B375 /* Debug */,
+				3C1F510D11D575510036B375 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
