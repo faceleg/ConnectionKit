@@ -73,8 +73,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic textAttachment;
 
-- (BOOL)canPlaceInline; { return NO; }
-
 - (void)didPlaceInline:(BOOL)isInline; // turns off title, etc.
 {
     if (isInline)

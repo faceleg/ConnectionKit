@@ -126,8 +126,6 @@
     }
 }
 
-- (BOOL)canPlaceInline; { return YES; }
-
 #pragma mark Link
 
 @dynamic link;
