@@ -104,7 +104,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 #pragma mark Graphic Placement
 - (IBAction)placeInline:(id)sender;
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+- (IBAction)placeInline:(id)sender;    // tells all selected graphics to become placed as block
 - (IBAction)placeAsCallout:(id)sender;
 - (IBAction)placeInSidebar:(id)sender;
 

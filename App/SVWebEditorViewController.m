@@ -604,40 +604,24 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark Graphic Placement
 
-- (BOOL)doPlacementCommandBySelector:(SEL)action;
+- (void)doPlacementCommandBySelector:(SEL)action;
 {
     // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
-    NSResponder *textController = [self firstResponderItem];
-    if (textController)
+    NSResponder *controller = [self firstResponderItem];
+    if (controller)
     {
-        [textController doCommandBySelector:action];
-    }
-    else if ([[self webEditor] selectedDOMRange])
-    {
-        NSBeep();
+        [controller doCommandBySelector:action];
     }
     else
     {
-        return NO;
+        NSBeep();
     }
-    
-    return YES;
 }
 
 - (void)placeInline:(id)sender;
 {
     // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
     [self doPlacementCommandBySelector:_cmd];
-    
-    // TODO: Handle going from sidebar to inline
-}
-
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
-{
-    // Whenever there's some kind of text selection, the responsible controller must take it. If there's no controller, cannot perform
-    [self doPlacementCommandBySelector:_cmd];
-    
-    // TODO: Handle going from sidebar to block
 }
 
 - (IBAction)placeBlockLevelIfNeeded:(NSButton *)sender; // calls -placeBlockLevel if sender's state is on

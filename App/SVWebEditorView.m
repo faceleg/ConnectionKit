@@ -16,11 +16,6 @@
     if (![[self delegate] webEditor:self doCommandBySelector:_cmd]) NSBeep();
 }
 
-- (IBAction)placeAsBlock:(id)sender;
-{
-    if (![[self delegate] webEditor:self doCommandBySelector:_cmd]) NSBeep();
-}
-
 - (IBAction)placeAsCallout:(id)sender;
 {
     if (![[self delegate] webEditor:self doCommandBySelector:_cmd]) NSBeep();

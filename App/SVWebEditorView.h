@@ -15,7 +15,7 @@
 // Give delegate a chance to do action, if not beep.
 //  HOWEVER. don't think we actually need this! window controller is taking care of it
 - (IBAction)placeInline:(id)sender;
-- (IBAction)placeAsBlock:(id)sender;
+- (IBAction)placeInline:(id)sender;
 - (IBAction)placeAsCallout:(id)sender;
 - (IBAction)placeInSidebar:(id)sender;
 

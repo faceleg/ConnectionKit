@@ -244,21 +244,6 @@
 
 #pragma mark Placement
 
-- (void)placeInline:(id)sender;
-{
-    SVWebEditorHTMLContext *context = [self HTMLContext];
-    SVWebEditorViewController *viewController = [context webEditorViewController];
-    
-    for (SVGraphic *aGraphic in [[viewController graphicsController] selectedObjects])
-    {
-        if (!aGraphic) continue;
-        
-        // Can the graphic be transformed on the spot? #79017
-        SVGraphicPlacement placement = [[aGraphic placement] integerValue];
-        [[aGraphic textAttachment] setPlacement:[NSNumber numberWithInt:SVGraphicPlacementInline]];
-    }
-}
-
 - (void)setPlacementForInlineGraphic:(SVGraphicPlacement)placement
 {
     // It's a bit of a tricky manoeuvre. Want to pull the graphic back to the start of its paragraph
@@ -290,7 +275,7 @@
     }
 }
 
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
+- (IBAction)placeInline:(id)sender;    // tells all selected graphics to become placed as block
 {
     SVWebEditorHTMLContext *context = [self HTMLContext];
     SVWebEditorViewController *viewController = [context webEditorViewController];
@@ -306,8 +291,7 @@
                 break;
                 
             case SVGraphicPlacementInline:
-                OBASSERT([[[self webEditor] selectedItem] representedObject] == aGraphic);
-                [self setPlacementForInlineGraphic:SVGraphicPlacementInline];
+                // Nothing to do
                 break;
                 
             default:

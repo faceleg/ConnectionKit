@@ -404,11 +404,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
 }
 
-- (IBAction)placeAsBlock:(id)sender;    // tells all selected graphics to become placed as block
-{
-    [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];
-}
-
 - (IBAction)placeAsCallout:(id)sender;
 {
     [[[self webContentAreaController] selectedViewControllerWhenReady] doCommandBySelector:_cmd];

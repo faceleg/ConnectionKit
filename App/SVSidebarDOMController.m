@@ -165,11 +165,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [self setPlacement:SVGraphicPlacementInline];
 }
 
-- (void)placeAsBlock:(id)sender;
-{
-    [self setPlacement:SVGraphicPlacementInline];
-}
-
 - (void)placeAsCallout:(id)sender;
 {
     [self setPlacement:SVGraphicPlacementCallout];
