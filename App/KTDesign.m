@@ -115,9 +115,14 @@ const int kDesignThumbHeight = 65;
 		if (![categoryProblems isEqualToString:@""]) [categoryProblems appendString:@"; "];
 		[categoryProblems appendFormat:@"width = %@: must be %@", width, [[[KTDesign widthValues] description] condenseWhiteSpace]];
 	}
-	if (![categoryProblems isEqualToString:@""])
+	NSString *identifier = [aCandidateBundle bundleIdentifier];
+	if (![categoryProblems isEqualToString:@""]
+#ifdef DEBUG
+		&& [identifier hasPrefix:@"sandvox."]	// Don't bother logging 3rd-party issues for debug builds.
+#endif
+		)	
 	{
-		NSLog(@"In %@: %@", [aCandidateBundle bundlePath], categoryProblems);
+		NSLog(@"In %@: %@", identifier, categoryProblems);
 		
 		// Should be NSLog though...
 	}
