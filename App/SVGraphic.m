@@ -85,11 +85,8 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 #pragma mark Pagelet
 
-- (BOOL)isPagelet;
-{
-    //  Only certain subclasses support being non-pagelet (Image, Raw HTML)
-    return YES;
-}
+- (BOOL)isPagelet; { return YES; }
+- (BOOL)mustBePagelet; { return YES; }
 
 - (BOOL)isCallout;  // whether to generate enclosing <div class="callout"> etc.
 {

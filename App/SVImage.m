@@ -126,6 +126,8 @@
     }
 }
 
+- (BOOL)mustBePagelet; { return NO; }
+
 + (NSSet *)keyPathsForValuesAffectingIsPagelet;
 {
     return [NSSet setWithObjects:
