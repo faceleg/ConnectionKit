@@ -898,6 +898,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     OBPRECONDITION(sender == [self webEditor]);
     
+    
     // HACK: Ignore these messages while loading as we'll sort out selection once the load is done
     BOOL result = YES;
     if (![self isUpdating])
@@ -905,14 +906,27 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         // If there is a text selection, it may encompass more than a single object. If so, ignore selected items
         if (proposedRange)
         {
-            if ([proposedSelectedItems count] == 1)
-            {
-                WEKWebEditorItem *item = [proposedSelectedItems objectAtIndex:0];
-                if (![proposedRange ks_selectsNode:[item HTMLElement]]) proposedSelectedItems = nil;
-            }
-            else
-            {
-                proposedSelectedItems = nil;
+            switch ([proposedSelectedItems count])
+            {    
+                case 0:
+                {
+                    // Nothing directly selected, but the range may be inside a selectable element
+                    WEKWebEditorItem *item = [sender selectableItemForDOMNode:
+                                              [proposedRange commonAncestorContainer]];
+                    
+                    proposedSelectedItems = (item ? [NSArray arrayWithObject:item] : nil);
+                    break;
+                }
+                    
+                case 1:
+                {
+                    WEKWebEditorItem *item = [proposedSelectedItems objectAtIndex:0];
+                    if (![proposedRange ks_selectsNode:[item HTMLElement]]) proposedSelectedItems = nil;
+                    break;
+                }
+                    
+                default:
+                    proposedSelectedItems = nil;
             }
         }
         
