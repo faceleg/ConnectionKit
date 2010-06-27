@@ -238,9 +238,20 @@
                                                                          inManagedObjectContext:context];
             [attachment setGraphic:graphic];
             
-            NSNumber *placement = [plist objectForKey:@"placement"];
-            if (placement) [attachment setPlacement:placement];
             
+            // Copy over placement as best as possible
+            NSNumber *placement = [plist objectForKey:@"placement"];
+            if ([placement intValue] == SVGraphicPlacementSidebar)
+            {
+                placement = [NSNumber numberWithInt:SVGraphicPlacementCallout];
+            }
+            if ([attachment validateValue:&placement forKey:@"placement" error:NULL])
+            {
+                [attachment setPlacement:placement];
+            }
+            
+            
+            // Copy over wrapping
             NSNumber *causesWrap = [plist objectForKey:@"causesWrap"];
             if (causesWrap) [attachment setCausesWrap:causesWrap];
             NSNumber *wrap = [plist objectForKey:@"wrap"];
