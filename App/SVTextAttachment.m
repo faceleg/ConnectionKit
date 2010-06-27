@@ -63,6 +63,22 @@
 #pragma mark Wrap
 
 @dynamic causesWrap;
+- (BOOL)validateCausesWrap:(NSNumber **)causesWrap error:(NSError **)error;
+{
+    // Only images and raw HTML support not causing wrap
+    BOOL result = YES;
+    
+    if (![*causesWrap boolValue] && [[self graphic] isPagelet])
+    {
+        result = NO;
+        if (error) *error = [NSError errorWithDomain:NSCocoaErrorDomain
+                                                code:NSValidationNumberTooSmallError
+                                localizedDescription:@"Pagelet must cause wrap"];
+    }
+    
+    return result;
+}
+
 @dynamic wrap;
 
 - (NSNumber *)wrapIsFloatOrBlock
