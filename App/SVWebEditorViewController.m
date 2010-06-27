@@ -833,12 +833,12 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (BOOL)webEditor:(WEKWebEditorView *)sender addSelectionToPasteboard:(NSPasteboard *)pasteboard;
 {
     BOOL result = NO;
-    SVTextDOMController *textController = [[self firstResponderItem] textDOMController];
     
     
-    if (textController)
+    if ([sender selectedDOMRange])
     {
-        [textController addSelectionTypesToPasteboard:pasteboard];
+        SVTextDOMController *owningItem = [[self firstResponderItem] textDOMController];
+        [owningItem addSelectionTypesToPasteboard:pasteboard];
         return YES;
     }
     else
