@@ -119,7 +119,7 @@
     
     
     // Insert into text
-    if ([pagelets count] && [[self webEditor] shouldChangeText:self])
+    if ([pagelets count])
     {
         // Generate HTML
         NSMutableString *html = [[NSMutableString alloc] init];
@@ -169,7 +169,6 @@
         
         
         // Finish edit
-        [[self webEditor] didChangeText];
         result = YES;
     }
     
@@ -370,7 +369,15 @@
     // Insert pagelets into text
     DOMNode *refNode = [[[self webEditor] selectedDOMRange] ks_startNode:NULL];
     
-    if (![self insertGraphics:pagelets beforeDOMNode:refNode]) NSBeep();
+    if ([[self webEditor] shouldChangeText:self] &&
+        [self insertGraphics:pagelets beforeDOMNode:refNode])
+    {
+        [[self webEditor] didChangeText];
+    }
+    else
+    {
+        NSBeep();
+    }
 }
 
 #pragma mark Dragging Destination
@@ -484,19 +491,23 @@
     
     
     // Insert HTML into DOM, using caret if possible
-    DOMNode *node = [self childForDraggingInfo:dragInfo];
-    [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
-    
-    if (result = [self insertGraphics:pagelets beforeDOMNode:node])
+    if ([[self webEditor] shouldChangeText:self])
     {
-        // Remove source too?
-        NSDragOperation mask = [dragInfo draggingSourceOperationMask];
-        if (mask & NSDragOperationMove | mask & NSDragOperationGeneric)
+        DOMNode *node = [self childForDraggingInfo:dragInfo];
+        [self moveDragCaretToBeforeDOMNode:node draggingInfo:dragInfo];
+        
+        if (result = [self insertGraphics:pagelets beforeDOMNode:node])
         {
-            [[self webEditor] removeDraggedItems];
+            // Remove source too?
+            NSDragOperation mask = [dragInfo draggingSourceOperationMask];
+            if (mask & NSDragOperationMove | mask & NSDragOperationGeneric)
+            {
+                [[self webEditor] removeDraggedItems];
+            }
+            
+            [[self webEditor] didChangeText];
         }
     }
-    
     
     
     
