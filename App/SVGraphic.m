@@ -257,12 +257,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (void)writeHTML:(SVHTMLContext *)context;
 {
-    [self writeHTML:context
-          placement:[[self placement] integerValue]];
-}
-
-- (void)writeHTML:(SVHTMLContext *)context placement:(SVGraphicPlacement)placement;
-{
     // If the placement changes, want whole Text Area to update
     [context addDependencyForKeyPath:@"textAttachment.placement" ofObject:self];
     [context addDependencyForKeyPath:@"showsTitle" ofObject:self];
@@ -271,6 +265,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     
     
     // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
+    SVGraphicPlacement placement = [[self placement] intValue];
     if (placement == SVGraphicPlacementCallout) 
     {
         [context beginCalloutWithAlignmentClassName:@""];
