@@ -79,17 +79,6 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	return self;
 }
 
-- (id)init
-{
-	if (self = [super initWithWindowNibName:@"KTDocument"])
-	{
-		// do not cascade window using size in nib
-		[self setShouldCascadeWindows:NO];
-	}
-    
-    return self;
-}
-
 - (void)dealloc
 {
 	// Get rid of view controllers
