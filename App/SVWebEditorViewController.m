@@ -408,10 +408,15 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [newSelection release];
     
     
-    // Restore selection
+    // Restore selection…
     if (_selectionToRestore)
     {
-        [webEditor setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
+        // …but only if WebView's First Responder
+        if ([webEditor ks_followsResponder:[[webEditor window] firstResponder]])
+        {
+            [webEditor setSelectedTextRange:_selectionToRestore affinity:NSSelectionAffinityDownstream];
+        }
+        
         [_selectionToRestore release]; _selectionToRestore = nil;
     }
     
