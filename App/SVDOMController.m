@@ -22,6 +22,9 @@
        parentWebEditorItemToBe:(SVDOMController *)parentItem
                        context:(SVHTMLContext *)parentContext;
 {
+    OBPRECONDITION(parentItem);
+    
+    
     // Write HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     

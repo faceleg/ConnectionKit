@@ -106,7 +106,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (!controller)
         {            
             controller = [SVDOMController DOMControllerWithGraphic:aPagelet
-                                           parentWebEditorItemToBe:(SVDOMController *)controller
+                                           parentWebEditorItemToBe:self
                                                            context:[self HTMLContext]];
         }
         
