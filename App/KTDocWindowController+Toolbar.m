@@ -359,6 +359,14 @@ TO DO:
     
     [menu addItem:item];
     [item release];
+    
+    
+    // Finally, Raw HTML if available
+    if (gIsPro)
+    {
+        [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
+                       [SVGraphicFactory rawHTMLFactory]]];
+    }
 	
 	
     

@@ -54,6 +54,7 @@
 + (id <SVGraphicFactory>)textBoxFactory;
 + (id <SVGraphicFactory>)imageFactory;
 + (id <SVGraphicFactory>)videoFactory;
++ (id <SVGraphicFactory>)rawHTMLFactory;
 
 
 #pragma mark Menus

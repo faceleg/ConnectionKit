@@ -13,6 +13,7 @@
 #import "SVMediaRecord.h"
 #import "SVMovie.h"
 #import "SVPlugIn.h"
+#import "SVRawHTMLGraphic.h"
 #import "SVTextBox.h"
 #import "KTToolbars.h"
 
@@ -180,6 +181,34 @@
 #pragma mark -
 
 
+@interface SVRawHTMLFactory : SVGraphicFactory
+@end
+
+
+@implementation SVRawHTMLFactory
+
+- (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    SVRawHTMLGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"RawHTML" inManagedObjectContext:context];
+    
+    [result setHTMLString:@"<span>[[RAW HTML]]</span>"];
+    
+    return result;
+}
+
+- (NSString *)name { return @"Raw HTML"; }
+
+- (NSImage *)pluginIcon
+{
+    return [NSImage imageNamed:@"HTML.icns"];
+}
+
+@end
+
+
+#pragma mark -
+
+
 @implementation SVGraphicFactory
 
 #pragma mark Shared Objects
@@ -189,25 +218,19 @@ static NSArray *sIndexFactories;
 static id <SVGraphicFactory> sSharedTextBoxFactory;
 static id <SVGraphicFactory> sImageFactory;
 static id <SVGraphicFactory> sVideoFactory;
+static id <SVGraphicFactory> sRawHTMLFactory;
 
 + (void)initialize
 {
-    if (!sSharedTextBoxFactory)
-    {
-        sSharedTextBoxFactory = [[SVTextBoxFactory alloc] init];
-    }
+    // Special factories!
+    if (!sSharedTextBoxFactory) sSharedTextBoxFactory = [[SVTextBoxFactory alloc] init];
     
+    if (!sImageFactory) sImageFactory = [[SVImageFactory alloc] init];
     
-    if (!sImageFactory)
-    {
-        sImageFactory = [[SVImageFactory alloc] init];
-    }
+    if (!sVideoFactory) sVideoFactory = [[SVMovieFactory alloc] init];
     
+    if (!sRawHTMLFactory) sRawHTMLFactory = [[SVRawHTMLFactory alloc] init];
     
-    if (!sVideoFactory)
-    {
-        sVideoFactory = [[SVMovieFactory alloc] init];
-    }
     
     
     if (!sPageletFactories)
@@ -265,6 +288,7 @@ static id <SVGraphicFactory> sVideoFactory;
 + (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
 + (id <SVGraphicFactory>)imageFactory; { return sImageFactory; }
 + (id <SVGraphicFactory>)videoFactory; { return sVideoFactory; }
++ (id <SVGraphicFactory>)rawHTMLFactory; { return sRawHTMLFactory; }
 
 #pragma mark Menu
 
