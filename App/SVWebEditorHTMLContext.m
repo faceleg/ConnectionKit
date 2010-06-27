@@ -159,6 +159,25 @@
     [super didEndWritingHTMLTextBlock];
 }
 
+- (void)startElement:(NSString *)element andWriteTitleOfPage:(id <SVPage>)page;
+{
+    // Create text-block
+    SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
+    [textBlock setEditable:NO];
+    [textBlock setTagName:element];
+    [textBlock setHTMLSourceObject:page];
+    [textBlock setHTMLSourceKeyPath:@"title"];
+    
+    
+    // Create controller
+    [self willBeginWritingHTMLTextBlock:textBlock];
+    [textBlock release];
+    
+    [super startElement:element andWriteTitleOfPage:page];
+    
+    [self didEndWritingHTMLTextBlock];
+}
+
 #pragma mark Dependencies
 
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
