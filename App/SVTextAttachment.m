@@ -220,6 +220,40 @@
 
 #pragma mark Serialization
 
++ (NSArray *)textAttachmentsFromPasteboard:(NSPasteboard *)pasteboard
+            insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
+{
+    if ([[pasteboard types] containsObject:kSVGraphicPboardType])
+    {
+        id plist = [pasteboard propertyListForType:kSVGraphicPboardType];
+        if (plist)
+        {
+            // Create graphic
+            SVGraphic *graphic = [[SVGraphic graphicsFromPasteboard:pasteboard 
+                                     insertIntoManagedObjectContext:context] objectAtIndex:0];
+            
+            
+            // Create attachment
+            SVTextAttachment *attachment = [NSEntityDescription insertNewObjectForEntityForName:@"TextAttachment"
+                                                                         inManagedObjectContext:context];
+            [attachment setGraphic:graphic];
+            
+            NSNumber *placement = [plist objectForKey:@"placement"];
+            if (placement) [attachment setPlacement:placement];
+            
+            NSNumber *causesWrap = [plist objectForKey:@"causesWrap"];
+            if (causesWrap) [attachment setCausesWrap:causesWrap];
+            NSNumber *wrap = [plist objectForKey:@"wrap"];
+            if (wrap) [attachment setWrap:wrap];
+            
+            
+            return [NSArray arrayWithObject:attachment];
+        }
+    }
+    
+    return nil;
+}
+
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
 {
     [super populateSerializedProperties:propertyList];

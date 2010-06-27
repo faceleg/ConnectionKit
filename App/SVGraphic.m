@@ -339,7 +339,11 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     [super populateSerializedProperties:propertyList];
     
     [propertyList setObject:[[self entity] name] forKey:@"entity"];
-    [propertyList setValue:[self placement] forKey:@"preferredPlacement"];
+    
+    SVTextAttachment *attachment = [self textAttachment];
+    [propertyList setValue:[self placement] forKey:@"placement"];
+    [propertyList setValue:[attachment causesWrap] forKey:@"causesWrap"];
+    [propertyList setValue:[attachment wrap] forKey:@"wrap"];
     
     [propertyList setValue:[[self titleBox] serializedProperties]   // might be nil in a subclass
                     forKey:@"titleBox"];
@@ -368,8 +372,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 + (NSArray *)graphicsFromPasteboard:(NSPasteboard *)pasteboard
-     insertIntoManagedObjectContext:(NSManagedObjectContext *)context
-                preferredPlacements:(NSArray **)preferredPlacements;
+     insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
     if ([[pasteboard types] containsObject:kSVGraphicPboardType])
     {
@@ -378,12 +381,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
         {
             id graphic = [self graphicWithSerializedProperties:plist
                                 insertIntoManagedObjectContext:context];
-            
-            if (preferredPlacements)
-            {
-                *preferredPlacements = [NSArray arrayWithObject:
-                                        [plist objectForKey:@"preferredPlacement"]];
-            }
             
             return [NSArray arrayWithObject:graphic];
         }

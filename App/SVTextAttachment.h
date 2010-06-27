@@ -8,8 +8,10 @@
 
 #import <CoreData/CoreData.h>
 
+#import "SVGraphic.h"
 
-@class SVRichText, SVGraphic;
+
+@class SVRichText;
 
 
 @interface SVTextAttachment : NSManagedObject
@@ -47,6 +49,11 @@
 
 #pragma mark Validation
 - (BOOL)validateWrapping:(NSError **)outError;
+
+
+#pragma mark Serialization
++ (NSArray *)textAttachmentsFromPasteboard:(NSPasteboard *)pasteboard
+            insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 
 @end

@@ -355,10 +355,8 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     // Fallback to inserting a new pagelet from the pasteboard
     NSManagedObjectContext *context = [self managedObjectContext];
     
-    NSArray *preferredPlacements = nil;
     NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pasteboard
-                           insertIntoManagedObjectContext:context
-                                      preferredPlacements:&preferredPlacements];
+                           insertIntoManagedObjectContext:context];
     
     
     // Fallback to generic pasteboard support

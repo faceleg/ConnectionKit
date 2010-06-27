@@ -362,10 +362,9 @@
     // Insert deserialized pagelet from pboard
     NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
     
-    NSArray *preferredPlacements = nil;
-    NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pboard
-                           insertIntoManagedObjectContext:moc
-                                      preferredPlacements:&preferredPlacements];
+    NSArray *attachments = [SVTextAttachment textAttachmentsFromPasteboard:pboard
+                                            insertIntoManagedObjectContext:moc];
+    NSArray *pagelets = [attachments valueForKey:@"graphic"];
     
     
     // Insert pagelets into text
@@ -465,10 +464,9 @@
     NSManagedObjectContext *moc = [[self representedObject] managedObjectContext];
     NSPasteboard *pasteboard = [dragInfo draggingPasteboard];
     
-    NSArray *preferredPlacements = nil;
-    NSArray *pagelets = [SVGraphic graphicsFromPasteboard:pasteboard
-                           insertIntoManagedObjectContext:moc
-                                      preferredPlacements:&preferredPlacements];
+    NSArray *attachments = [SVTextAttachment textAttachmentsFromPasteboard:pasteboard
+                                            insertIntoManagedObjectContext:moc];
+    NSArray *pagelets = [attachments valueForKey:@"graphic"];
     
     
     // Fallback to generic pasteboard support
