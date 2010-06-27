@@ -358,6 +358,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                                                                      inManagedObjectContext:[graphic managedObjectContext]];
     [textAttachment setGraphic:graphic];
     [textAttachment setPlacement:[NSNumber numberWithInteger:SVGraphicPlacementInline]];
+    [textAttachment setCausesWrap:[NSNumber numberWithBool:!placeInline]];
     [textAttachment setBody:[self representedObject]];
     
     

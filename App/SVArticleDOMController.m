@@ -144,9 +144,8 @@
         {
             DOMHTMLDocument *doc = (DOMHTMLDocument *)[[self HTMLElement] ownerDocument];
             
-            DOMDocumentFragment *fragment = [doc
-                                             createDocumentFragmentWithMarkupString:html
-                                             baseURL:[context baseURL]];
+            DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:html
+                                                                                baseURL:[context baseURL]];
             
             if (refNode)
             {
