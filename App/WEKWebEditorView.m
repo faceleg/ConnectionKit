@@ -109,6 +109,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     _webView = [[WEKWebView alloc] initWithFrame:[self bounds]];
     [_webView setAutoresizingMask:(NSViewWidthSizable | NSViewHeightSizable)];
     [_webView setShouldCloseWithWindow:YES];    // seems correct for a doc-based app
+    [_webView setMaintainsBackForwardList:NO];
     
     NSScrollView *scrollView = [[[[_webView mainFrame] frameView] documentView] enclosingScrollView];
     if ([scrollView respondsToSelector:@selector(setVerticalScrollingMode:)])
