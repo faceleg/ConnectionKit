@@ -15,4 +15,11 @@
 @dynamic HTMLString;
 @dynamic shouldPreviewWhenEditing;
 
+#pragma mark HTML
+
+- (void)writeBody:(SVHTMLContext *)context;
+{
+    [context writeHTMLString:[self HTMLString]];
+}
+
 @end

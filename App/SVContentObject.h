@@ -28,7 +28,6 @@
 
 - (void)writeHTML:(SVHTMLContext *)context; // default calls -HTMLString and writes that to the current context
 - (void)writeHTML;
-- (NSString *)HTMLString;   // default raises an exception
 
 //  Calls -writeHTML: or -writeHTML for each object
 + (void)writeContentObjects:(NSArray *)objects inContext:(SVHTMLContext *)context;

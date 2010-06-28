@@ -24,13 +24,6 @@
 
 - (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
 
-- (NSString *)HTMLString
-{
-    SUBCLASSMUSTIMPLEMENT;
-    [self doesNotRecognizeSelector:_cmd];
-    return nil;
-}
-
 + (void)writeContentObjects:(NSArray *)objects inContext:(SVHTMLContext *)context;
 {
     for (SVContentObject *anObject in objects)
