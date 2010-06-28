@@ -229,7 +229,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     //  Start loading. Some parts of WebKit need to be attached to a window to work properly, so we need to provide one while it's loading in the
     //  background. It will be removed again after has finished since the webview will be properly part of the view hierarchy.
     
-    [[self webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
+    // Turned this off because I'm not sure it's needed - Mike
+    //[[self webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
     [self setHTMLContext:context];
     
     
