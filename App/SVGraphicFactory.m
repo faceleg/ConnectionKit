@@ -189,7 +189,7 @@
 
 - (SVGraphic *)insertNewGraphicInManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVRawHTMLGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"RawHTML" inManagedObjectContext:context];
+    SVRawHTMLGraphic *result = [NSEntityDescription insertNewObjectForEntityForName:@"RawHTMLGraphic" inManagedObjectContext:context];
     
     [result setHTMLString:@"<span>[[RAW HTML]]</span>"];
     
