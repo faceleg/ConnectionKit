@@ -459,11 +459,12 @@
     [self addDependencyOnObject:object keyPath:keyPath];
 }
 
-- (void)startElement:(NSString *)element andWriteTitleOfPage:(id <SVPage>)page;
+- (void)writeElement:(NSString *)element attributes:(NSDictionary *)attributes
+     withTitleOfPage:(id <SVPage>)page;
 {
-    [self startElement:element];
-    
+    [self startElement:element attributes:attributes];
     [self writeText:[page title]];
+    [self endElement];
 }
 
 #pragma mark Raw Writing

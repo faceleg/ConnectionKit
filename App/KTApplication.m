@@ -37,5 +37,26 @@ NSString *KTApplicationDidSendFlagsChangedEvent = @"KTApplicationDidSendFlagsCha
     }
 }
 
+- (NSInteger)whatIsSixTimesNine;
+{
+    NSString *result = [[self webView] stringByEvaluatingJavaScriptFromString:@"6*9"];
+    return [result integerValue];
+}
+
+- (void)highlightLinks
+{
+    WebScriptObject *scriptObject = [[self webView] windowScriptObject];
+    NSNumber *linkCount = [scriptObject evaluateWebScript:@"MyApp_HighlightLinks()"];
+    NSLog(@"highlighted %@ links", linkCount);
+}
+
+- (NSString *)userAgent
+{
+    WebScriptObject *scriptObject = [[self webView] windowScriptObject];
+    id navigator = [scriptObject valueForKey:@"navigator"];
+    NSString *userAgent = [navigator valueForKey:@"userAgent"];
+    return userAgent;
+}
+
 @end
 

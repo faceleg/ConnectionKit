@@ -159,7 +159,8 @@
     [super didEndWritingHTMLTextBlock];
 }
 
-- (void)startElement:(NSString *)element andWriteTitleOfPage:(id <SVPage>)page;
+- (void)writeElement:(NSString *)element attributes:(NSDictionary *)attributes
+     withTitleOfPage:(id <SVPage>)page;
 {
     // Create text-block
     SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
@@ -173,7 +174,7 @@
     [self willBeginWritingHTMLTextBlock:textBlock];
     [textBlock release];
     
-    [super startElement:element andWriteTitleOfPage:page];
+    [super writeElement:element attributes:attributes withTitleOfPage:page];
     
     [self didEndWritingHTMLTextBlock];
 }
