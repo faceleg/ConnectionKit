@@ -459,8 +459,7 @@
     [self addDependencyOnObject:object keyPath:keyPath];
 }
 
-- (void)writeElement:(NSString *)element attributes:(NSDictionary *)attributes
-     withTitleOfPage:(id <SVPage>)page;
+- (void)writeTitleOfPage:(id <SVPage>)page enclosingElement:(NSString *)element attributes:(NSDictionary *)attributes;
 {
     [self startElement:element attributes:attributes];
     [self writeText:[page title]];
