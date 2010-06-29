@@ -96,7 +96,7 @@
     if ( [aPage isEqual:[context page]] ) // not likely but maybe possible
     {
         // just emit title
-        [[context HTMLWriter] writeTitleOfPage:aPage enclosingElement:@"span" attributes:nil];
+        [context writeTitleOfPage:aPage enclosingElement:@"span" attributes:nil];
     }
     else
     {
@@ -111,7 +111,7 @@
                                                    title:title
                                                   target:nil
                                                      rel:nil];
-        [[context HTMLWriter] writeTitleOfPage:aPage enclosingElement:@"span" attributes:nil];
+        [context writeTitleOfPage:aPage enclosingElement:@"span" attributes:nil];
         [[context HTMLWriter] endElement];            
     }
 }
@@ -129,7 +129,7 @@
         {
             //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
             if ( [aPage isEqual:[context page]] && [keyPath isEqualToString:@"title"] ) continue;
-            [context addDependencyOnObject:aPage keyPath:keyPath];
+            [context addDependencyForKeyPath:keyPath ofObject:aPage];
         }
         
         // figure out what children, if any, should be included        
@@ -220,7 +220,7 @@
             {
                 //FIXME: 75490: replace NOT watching title of thisPage with a DOM controller
                 if ( [thisPage isEqual:rootPage] && [keyPath isEqualToString:@"title"] ) continue;
-                [context addDependencyOnObject:rootPage keyPath:keyPath];
+                [context addDependencyForKeyPath:keyPath ofObject:rootPage];
             }
         }
         
