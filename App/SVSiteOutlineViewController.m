@@ -172,22 +172,38 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
         [outlineView setDraggingSourceOperationMask:NSDragOperationAll_Obsolete forLocal:NO];
     }
 	
-	
-	// Retain the new view
-	[outlineView retain];
-	[_outlineView release], _outlineView = outlineView;
-    
-    
-    // Responder Chain
-    [outlineView setNextResponder:self insert:YES];
-	
+	if (outlineView != _outlineView && nil != _outlineView)
+	{
+		[[NSNotificationCenter defaultCenter] removeObserver:self
+														name:@"KTDisplaySmallPageIconsDidChange"
+													  object:[[[_outlineView window] windowController] document]];
+	}
 	
 	// Finally, hook up outline delegate & data source
 	if (outlineView)
 	{
 		[outlineView setDelegate:self];		// -setDelegate: MUST come first to receive all notifications
 		[outlineView setDataSource:self];
+		
+		// Set up observing, for view size
+		[[NSNotificationCenter defaultCenter] addObserver:self
+												 selector:@selector(pageIconSizeDidChange:)
+													 name:@"KTDisplaySmallPageIconsDidChange"
+												   object:[[[outlineView window] windowController] document]];
+		// Set up initial value.  Kind of hack-ish? Any better way?  We've already loaded the value into the doc!
+		self.displaySmallPageIcons = [[[[outlineView window] windowController] document] displaySmallPageIcons];
+		// Note: we do this before setting ivar, so reload doesn't kill us.
 	}
+	
+	// Retain the new view
+	[outlineView retain];
+	[_outlineView release], _outlineView = outlineView;
+    
+    // Responder Chain
+    [outlineView setNextResponder:self insert:YES];
+	
+
+
 }
 
 #pragma mark Other Accessors
@@ -463,7 +479,10 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 - (void)reloadSiteOutline
 {
-	[[self outlineView] reloadData];
+	if (_outlineView)	// don't try to reload if we haven't really loaded it. We throw an exception otherwise
+	{
+		[[self outlineView] reloadData];
+	}
 }
 
 /*	!!IMPORTANT!!
@@ -1450,16 +1469,24 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 
 #pragma mark Options
 
+- (void)pageIconSizeDidChange:(NSNotification *)notification
+{
+	BOOL smallIcons = [[[notification userInfo] objectForKey:@"displaySmallPageIcons"] boolValue];
+	self.displaySmallPageIcons = smallIcons;
+}
+
 @synthesize displaySmallPageIcons = _useSmallIconSize;
 - (void)setDisplaySmallPageIcons:(BOOL)smallIcons
 {
 	_useSmallIconSize = smallIcons;
-    
-    [self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
+
+	[self invalidateIconCaches];	// If the icon size changes this lot are no longer valid
 	
 	// Setup is complete, reload outline
 	[self reloadSiteOutline];
 }
+
+
 
 #pragma mark Persistence
 

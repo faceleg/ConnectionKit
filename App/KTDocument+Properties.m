@@ -98,7 +98,8 @@
 	myDisplaySmallPageIcons = aSmall;
 	
 	[[NSNotificationCenter defaultCenter] postNotificationName:@"KTDisplaySmallPageIconsDidChange"
-														object:self];
+														object:self
+													  userInfo:[NSDictionary dictionaryWithObject:[NSNumber numberWithBool:aSmall] forKey:@"displaySmallPageIcons"]];
 														
 	[self updateDefaultDocumentProperty:@"displaySmallPageIcons"];
 }

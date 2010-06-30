@@ -6,6 +6,8 @@
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
 //
 
+NOT BEING COMPILED
+
 #import "KTDocWebViewController.h"
 #import "KTDocWebViewController+Private.h"
 #import "KTAsyncOffscreenWebViewController.h"
