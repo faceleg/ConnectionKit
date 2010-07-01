@@ -206,6 +206,9 @@ typedef enum {
 - (KTDocType)docType;
 - (NSString *)docTypeName;
 - (NSString *)DTD;
+
++ (NSString *)stringFromDocType:(KTDocType)docType;	// UTILITY
+
 @end
 
 

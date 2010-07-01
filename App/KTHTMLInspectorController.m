@@ -34,6 +34,10 @@
 
 @implementation KTHTMLInspectorController
 
+@synthesize docType = _docType;
+@synthesize whenToPreview = _whenToPreview;
+@synthesize autoTidy = _autoTidy;
+
 
 /* -----------------------------------------------------------------------------
 	init:
@@ -74,7 +78,6 @@
     [self setHTMLSourceKeyPath:nil];
 	[self setTitle:nil];
 	[self setSourceCode:nil];
-	[self setExplanation:nil];
     [myUndoManager release];
     
 	[super dealloc];
@@ -89,7 +92,9 @@ initial syntax coloring.
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
+ 
+	[[self window] setContentBorderThickness:32.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
+
 	// Load source code into text view, if necessary:
 	if( mySourceCode != nil )
 	{
@@ -167,17 +172,6 @@ initial syntax coloring.
 #pragma mark -
 #pragma mark Window Notifications
 
-- (void)windowDidResignKey:(NSNotification *)aNotification
-{
-	if ([[aNotification object] isEqual:[self window]])
-	{
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
-		[self saveBackToSource:nil];
-        
-        [[textView undoManager] removeAllActions];
-	}
-}
-
 - (void)windowDidBecomeKey:(NSNotification *)notification;
 {
 	if (myHTMLSourceObject)
@@ -208,22 +202,118 @@ initial syntax coloring.
 {
 	if ( [[aNotification object] isEqual:[self window]] )
 	{
-		[NSObject cancelPreviousPerformRequestsWithTarget:self];
 		[self saveBackToSource:nil];
 		
 		[[self window] saveFrameUsingName:@"RawHTMLPanel"];
 	}
 }
 
-- (void)textDidEndEditing:(NSNotification *)aNotification
-{
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self saveBackToSource:nil];
-}
-
 - (IBAction) windowHelp:(id)sender
 {
 	[[NSApp delegate] showHelpPage:@"Edit_Raw_HTML"];	// HELPSTRING
+}
+
+- (IBAction) applyChanges:(id)sender;
+{
+	[self saveBackToSource:nil];
+}
+
+
+
+
+- (NSString *)wrapFragment:(NSString *)aFragment;
+{
+	BOOL isHTML = (KTHTML401DocType == [self docType]);
+	NSString *wrapXHTMLStart= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
+	NSString *wrapHTMLStart	= @"<html lang=\"en\">";
+	NSString *metaXHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF8\" />";
+	NSString *metaHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF8\">";
+	NSString *title			= @"<title>This is a test</title>";
+	
+	NSString *result = [NSString stringWithFormat:
+						 @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n</body>\n</html>\n",
+						 [KTPage stringFromDocType:[self docType]],
+						 isHTML ? wrapHTMLStart : wrapXHTMLStart,
+						 isHTML ? metaHTML : metaXHTML,
+						 title,
+						 aFragment];
+	return result;
+}
+
+- (IBAction) validate:(id)sender;
+{
+	NSMutableAttributedString*  textStore = [textView textStorage];
+	NSString *fragment = [textStore string];
+
+	NSString *fullPage = [self wrapFragment:fragment];
+	NSLog(@"working with this string: %@", fullPage);
+
+	/*
+	 You can validate an XML document when it is first processed by specifying the NSXMLDocumentValidate option when you initialize an NSXMLDocument object with the initWithContentsOfURL:options:error:, initWithData:options:error:, or initWithXMLString:options:error: methods.
+	
+*/
+	NSXMLDocument *xmlDoc;
+	NSError *err = nil;
+	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+											  options:(NSXMLDocumentValidate)
+												error:&err];
+	NSLog(@"err = %@", err);
+		
+}
+
+- (IBAction) tidy:(id)sender;
+{
+	NSMutableAttributedString*  textStore = [textView textStorage];
+	NSString *fragment = [textStore string];
+	
+	NSString *fullPage = [self wrapFragment:fragment];
+	NSLog(@"working with this string: %@", fullPage);
+	
+	
+	NSXMLDocument *xmlDoc;
+	NSError *err = nil;
+	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+												  options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
+													error:&err];
+	if (xmlDoc)
+	{
+		NSLog(@"Got XML Document with preserve so it must not need tidying.");
+	}
+    if (xmlDoc == nil)	// failed to validate so it must need tidying
+	{
+		NSLog(@"Didn't load XML doc so it will need tidying. %@", err);
+
+        xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+													  options:NSXMLDocumentTidyHTML|NSXMLNodePreserveAll
+														error:&err];
+		
+		if (!xmlDoc)
+		{
+			NSLog(@"Couldn't even make this into an XML document err = %@", err);
+		}
+		if (xmlDoc)
+		{
+			// Now output it, and set the contents.
+			NSString *charset = [xmlDoc characterEncoding];
+			NSStringEncoding encoding = [charset encodingFromCharset];
+			NSLog(@"character encoding = %@ converted into NSStringEncoding = %d", charset, encoding);
+			NSData *data = [xmlDoc XMLData];
+			NSString *xmlString = [NSString stringWithData:data encoding:encoding];
+			
+			// Now to only keep the stuff between <body> and </body>
+			NSRange whereBody = [xmlString rangeBetweenString:@"<body>" andString:@"</body>"];
+			if (NSNotFound != whereBody.location)
+			{
+				NSString *justBody = [xmlString substringWithRange:whereBody];
+				[self setSourceCode:justBody];
+			}
+			else
+			{
+				NSLog(@"Unable to find <body> ... </body> in cleaned up HTML:\n%@", xmlString);
+				NSBeep();
+			}
+		}
+    }
 }
 
 
@@ -371,10 +461,6 @@ initial syntax coloring.
 		// Actually recolor the changed part:
 		[self recolorRange: currRange];
 	}
-	
-	// Save this back to the source, after a delay
-	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self performSelector:@selector(saveBackToSource:) withObject:[NSNumber numberWithBool:YES] afterDelay:1.0];		// one second delay to auto-save-back
 }
 
 
@@ -455,9 +541,6 @@ initial syntax coloring.
 			replacementString = nil;
 		}
 		replacementString = [rps retain];
-		
-		// Took this out -- it never seemed to be actually invoked, and it would make us lose Japanese characters.
-		//[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
 	}
 	
 	return YES;
@@ -651,14 +734,6 @@ initial syntax coloring.
 	}
 	
 	
-	if (fromEditableBlock)
-	{
-		[self setExplanation:NSLocalizedString(@"This text can only contain HTML, no scripting constructs",@"")];
-	}
-	else
-	{
-		[self setExplanation:NSLocalizedString(@"This text can contain HTML or scripts such as JavaScript and PHP.",@"")];
-	}
 }
 
 
@@ -674,17 +749,6 @@ initial syntax coloring.
     myTitle = aTitle;
 }
 
-
-- (NSString *)explanation
-{
-    return myExplanation; 
-}
-- (void)setExplanation:(NSString *)anExplanation
-{
-    [anExplanation retain];
-    [myExplanation release];
-    myExplanation = anExplanation;
-}
 
 
 

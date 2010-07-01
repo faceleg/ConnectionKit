@@ -24,7 +24,7 @@
 // as the class will have the wrong bundle. Code in Sandvox.app should always just use standard NSLocalized* macros.
 #define LocalizedStringInThisBundle(key, comment) [[NSBundle bundleForClass:[self class]] localizedStringForKey:(key) value:@"" table:nil]
 
-// Description Forthcoming (corresponds to pop-up tags in Info.nib)
+// Which comments provider (corresponds to pop-up tags in Info.nib)
 typedef enum {
 	KTCommentsProviderNone = 0,
 	KTCommentsProviderHaloscan,
@@ -33,7 +33,7 @@ typedef enum {
 	KTCommentsProviderIntenseDebate
 } KTCommentsProvider;
 
-// Description Forthcoming
+// How to summarize a collection (for its index), based on its contents
 typedef enum {
 	KTSummarizeAutomatic = 1,
 	KTSummarizeMostRecent,
@@ -42,13 +42,13 @@ typedef enum {
 	KTSummarizeFirstItem	// this was added later, that's why it's at the end
 } KTCollectionSummaryType;
 
-// Description Forthcoming
+// How to timestamp an entry
 typedef enum {
 	KTTimestampCreationDate = 1,
 	KTTimestampModificationDate
 } KTTimestampType;
 
-// Description Forthcoming
+// What kind of HTML level
 typedef enum {
 	KTHTML401DocType = 0,
 	KTXHTMLTransitionalDocType,
@@ -56,6 +56,13 @@ typedef enum {
 	KTXHTML11DocType,
     KTDocTypeAll = NSIntegerMax,
 } KTDocType;
+
+// When to preview Raw HTML
+typedef enum {
+	KTNeverPreviewHTML = 0,
+	KTOnlinePreviewHTML,
+	KTAlwaysPreviewHTML,
+} KTWhenToPreviewHTML;
 
 // Document
 extern NSString *kKTDocumentType;

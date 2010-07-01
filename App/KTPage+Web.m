@@ -415,9 +415,9 @@
 	return result;
 }
 
-- (NSString *)DTD
+// For code review:  Where can this utility class go?
++ (NSString *)stringFromDocType:(KTDocType)docType;
 {
-	KTDocType docType = [self docType];
 	NSString *result = nil;
 	switch (docType)
 	{
@@ -433,7 +433,16 @@
 		case KTXHTML11DocType:
 			result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">";
 			break;
+		default:
+			break;
 	}
+	return result;
+}
+
+- (NSString *)DTD
+{
+	KTDocType docType = [self docType];
+	NSString *result = [KTPage stringFromDocType:docType];
 	return result;
 }
 

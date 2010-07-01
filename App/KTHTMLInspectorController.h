@@ -11,7 +11,7 @@
 
 
 #import <Cocoa/Cocoa.h>
-
+#import "KT.h"
 
 @class KTAbstractElement;
 
@@ -41,20 +41,26 @@
 	
 	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString			*myTitle;
-	NSString			*myExplanation;
 	
 	NSTimeInterval		myLastEditTime;				// keep track of keystroke/replace changes to not lose search/replaces
+	
+	// Bound Properties
+	KTDocType			_docType;
+	KTWhenToPreviewHTML	_whenToPreview;
+	BOOL				_autoTidy;
+	
 }
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
 
-- (NSString *)explanation;
-- (void)setExplanation:(NSString *)anExplanation;
 - (NSString *)sourceCode;
 - (void)setSourceCode:(NSString *)aSourceCode;
 - (NSString *)title;
 - (void)setTitle:(NSString *)aTitle;
 - (IBAction) windowHelp:(id)sender;
+- (IBAction) applyChanges:(id)sender;
+- (IBAction) tidy:(id)sender;
+- (IBAction) validate:(id)sender;
 
 - (NSObject *)HTMLSourceObject;
 - (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject;
@@ -65,6 +71,9 @@
 
 
 
+@property (nonatomic) KTDocType docType;
+@property (nonatomic) KTWhenToPreviewHTML whenToPreview;
+@property (nonatomic) BOOL autoTidy;
 
 
 
