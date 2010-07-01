@@ -330,13 +330,14 @@
 - (float)_fitToSizeScaleFactor:(CGSize)size
 {
 	float result;
+	NSSize mySize = [self size];
 	
 	// If the user specified 0 for either dimension, base the result purely on that
-	if ([self size].width <= 0.0)
+	if (mySize.width <= 0.0)
 	{
 		result = [self _scaleFactorToFitHeight:size.height];
 	}
-	else if ([self size].height <= 0.0)
+	else if (mySize.height <= 0.0)
 	{
 		result = [self _scaleFactorToFitWidth:size.width];
 	}

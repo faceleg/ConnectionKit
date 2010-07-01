@@ -14,6 +14,8 @@
 
 @interface CIImage (KTExtensions)
 
+- (CIImage *)processForThumbnailOfSize:(NSUInteger)maxSize;
+
 - (CIImage *)imageByApplyingScalingSettings:(KTImageScalingSettings *)settings
                                 opaqueEdges:(BOOL)anOpaqueEdges;
 

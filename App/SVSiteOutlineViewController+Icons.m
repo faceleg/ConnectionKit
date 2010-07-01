@@ -72,16 +72,14 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         id <IMBImageItem> thumbnail = [item thumbnail];
         if ([thumbnail imageRepresentation])
         {
-            CGImageSourceRef imageSource = IMB_CGImageSourceCreateWithImageItem(thumbnail, NULL);
-            if (imageSource)
-            {
-                result = [[NSImage alloc] initWithThumbnailFromCGImageSource:imageSource
-                                                                maxPixelSize:[self maximumIconSize]];
-                [result autorelease];
-                
-                CFRelease(imageSource);
-            }
-        }
+			CIImage *thumb = [CIImage imageWithIMBImageItem:thumbnail];
+			if (![self displaySmallPageIcons])
+			{
+				// If large page icons, process the thumb a bit.  Leave small icons alone
+				thumb = [thumb processForThumbnailOfSize:[self maximumIconSize]];
+			}
+			result = [thumb toNSImage];
+		}
 	}
               
               
