@@ -1792,6 +1792,11 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     
     // Let focused text know its selection has changed
     [[self focusedText] webEditorTextDidChangeSelection:notification];
+    
+    
+    // Alert observers
+    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
+                                                        object:self];
 }
 
 - (void)webViewDidEndEditing:(NSNotification *)notification
