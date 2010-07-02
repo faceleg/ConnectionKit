@@ -417,17 +417,6 @@ typedef enum {  // this copied from WebPreferences+Private.h
                                       isUIAction:isUIAction];
 }
 
-- (BOOL)changeSelectedItemsFromDOMRange:(DOMRange *)proposedRange
-{
-    NSArray *items = (proposedRange) ? [self selectableItemsInDOMRange:proposedRange] : nil;
-    
-    return [self changeSelectionByDeselectingAll:YES
-                                  orDeselectItem:nil
-                                     selectItems:items
-                                        DOMRange:proposedRange
-                                      isUIAction:YES];
-}
-
 #pragma mark Overall Selection
 
 - (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
@@ -1686,7 +1675,13 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     //  Update -selectedItems to match. Make sure not to try and change the WebView's selection in turn or it'll all end in tears. It doesn't make sense to bother doing this if the selection change was initiated by ourself.
     if (!_isChangingSelectedItems && result)
     {
-        result = [self changeSelectedItemsFromDOMRange:range];
+        NSArray *items = (proposedRange) ? [self selectableItemsInDOMRange:proposedRange] : nil;
+        
+        result = [self changeSelectionByDeselectingAll:YES
+                                        orDeselectItem:nil
+                                           selectItems:items
+                                              DOMRange:proposedRange
+                                            isUIAction:YES];
     }
     
     
