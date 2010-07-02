@@ -228,15 +228,26 @@ initial syntax coloring.
 	NSString *wrapXHTMLStart= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
 	NSString *wrapHTMLStart	= @"<html lang=\"en\">";
 	NSString *metaXHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />";
-	NSString *metaHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
+	NSString *metaHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";	// Make local HTML validator happy
 	NSString *title			= @"<title>This is a test</title>";
 	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
 	NSString *commentEnd	= @"<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
 	
+	NSString *DTD = [KTPage stringFromDocType:[self docType] local:isLocalDTD];
+	
+	// Special adjustments for local validation on HTML4.
+	// Don't use the DTD if It's HTML 4 ... I was getting an error on local validation.
+	// With no DTD, validation seems OK in the local validation.
+	// And close the meta tag, too.
+	if (isLocalDTD && KTHTML401DocType == [self docType])
+	{
+		DTD = @"";
+		metaHTML = [metaHTML stringByAppendingString:@"</meta>"];
+	}
 	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
 	NSString *result = [NSString stringWithFormat:
 						@"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n%@\n%@\n</body>\n</html>\n",
-						[KTPage stringFromDocType:[self docType] local:isLocalDTD],
+						DTD,
 						isHTML ? wrapHTMLStart : wrapXHTMLStart,
 						isHTML ? metaHTML : metaXHTML,
 						title,
@@ -258,7 +269,7 @@ initial syntax coloring.
 		NSString *docTypeName = [KTPage titleOfDocType:[self docType]];
 		[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
 	}
-	else	// Use NSXMLDocument -- not useful
+	else	// Use NSXMLDocument -- not useful for errors, but it's quick.  Don't try for HTML 4.0.1
 	{
 		NSString *fullPage = [self wrapFragment:fragment local:YES];
 
@@ -274,67 +285,6 @@ initial syntax coloring.
 		}
 	}
 }
-
-- (IBAction) tidy:(id)sender;
-{
-	NSMutableAttributedString*  textStore = [textView textStorage];
-	NSString *fragment = [textStore string];
-	
-	NSString *fullPage = [self wrapFragment:fragment local:NO];
-	NSLog(@"working with this string: %@", fullPage);
-	
-	
-	NSXMLDocument *xmlDoc;
-	NSError *err = nil;
-	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
-												  options:(NSXMLNodePreserveWhitespace|NSXMLNodePreserveCDATA)
-													error:&err];
-	if (xmlDoc)
-	{
-		NSLog(@"Got XML Document with preserve so it must not need tidying.");
-	}
-    if (xmlDoc == nil)	// failed to validate so it must need tidying
-	{
-		NSLog(@"Didn't load XML doc so it will need tidying. %@", err);
-
-        xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
-													  options:NSXMLDocumentTidyHTML|NSXMLNodePreserveAll
-														error:&err];
-		
-		if (!xmlDoc)
-		{
-			NSLog(@"Couldn't even make this into an XML document err = %@", err);
-		}
-		if (xmlDoc)
-		{
-			// Now output it, and set the contents.
-			NSString *charset = [xmlDoc characterEncoding];
-			NSStringEncoding encoding = [charset encodingFromCharset];
-			
-			NSUInteger options = NSXMLNodePreserveAll;
-			if ([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask)		// option key -- pretty-print
-			{
-				options |= NSXMLNodePrettyPrint;
-			}
-			NSData *data = [xmlDoc XMLDataWithOptions:options];
-			NSString *xmlString = [NSString stringWithData:data encoding:encoding];
-			
-			// Now to only keep the stuff between <body> and </body>
-			NSRange whereBody = [xmlString rangeBetweenString:@"<body>" andString:@"</body>"];
-			if (NSNotFound != whereBody.location)
-			{
-				NSString *justBody = [xmlString substringWithRange:whereBody];
-				[self setSourceCode:justBody];
-			}
-			else
-			{
-				NSLog(@"Unable to find <body> ... </body> in cleaned up HTML:\n%@", xmlString);
-				NSBeep();
-			}
-		}
-    }
-}
-
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
 {
