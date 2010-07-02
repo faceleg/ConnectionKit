@@ -69,7 +69,7 @@
 - (BOOL)fromEditableBlock;
 - (void)setFromEditableBlock:(BOOL)flag;
 
-
+-(void)	goToLine: (int)lineNum;
 
 @property (nonatomic) KTDocType docType;
 @property (nonatomic) KTWhenToPreviewHTML whenToPreview;

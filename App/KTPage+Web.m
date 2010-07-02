@@ -385,9 +385,9 @@
 	return result;
 }
 
-- (NSString *)docTypeName
+// For code review:  Where can this utility class go?
++ (NSString *)titleOfDocType:(KTDocType)docType;
 {
-	KTDocType docType = [self docType];
 	NSString *result = nil;
 	switch (docType)
 	{
@@ -407,11 +407,10 @@
 	return result;
 }
 
-
-- (BOOL)isXHTML	// returns true if our page is XHTML of some type, false if old HTML
+- (NSString *)docTypeName
 {
 	KTDocType docType = [self docType];
-	BOOL result = (KTHTML401DocType != docType);
+	NSString *result = [KTPage titleOfDocType:docType];
 	return result;
 }
 
@@ -443,6 +442,13 @@
 {
 	KTDocType docType = [self docType];
 	NSString *result = [KTPage stringFromDocType:docType];
+	return result;
+}
+
+- (BOOL)isXHTML	// returns true if our page is XHTML of some type, false if old HTML
+{
+	KTDocType docType = [self docType];
+	BOOL result = (KTHTML401DocType != docType);
 	return result;
 }
 

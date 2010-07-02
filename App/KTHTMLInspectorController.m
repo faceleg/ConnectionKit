@@ -19,6 +19,7 @@
 #import "KSAppDelegate.h"
 #import "NSString+Karelia.h"
 #import "NSTextView+KTExtensions.h"
+#import "SVValidatorWindowController.h"
 
 #import "Registration.h"
 
@@ -226,28 +227,40 @@ initial syntax coloring.
 	BOOL isHTML = (KTHTML401DocType == [self docType]);
 	NSString *wrapXHTMLStart= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
 	NSString *wrapHTMLStart	= @"<html lang=\"en\">";
-	NSString *metaXHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF8\" />";
-	NSString *metaHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF8\">";
+	NSString *metaXHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />";
+	NSString *metaHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
 	NSString *title			= @"<title>This is a test</title>";
+	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
+	NSString *commentEnd	= @"<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
 	
+	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
 	NSString *result = [NSString stringWithFormat:
-						 @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n</body>\n</html>\n",
-						 [KTPage stringFromDocType:[self docType]],
-						 isHTML ? wrapHTMLStart : wrapXHTMLStart,
-						 isHTML ? metaHTML : metaXHTML,
-						 title,
-						 aFragment];
+						@"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n%@\n%@\n</body>\n</html>\n",
+						[KTPage stringFromDocType:[self docType]],
+						isHTML ? wrapHTMLStart : wrapXHTMLStart,
+						isHTML ? metaHTML : metaXHTML,
+						title,
+						commentStart,
+						aFragment,
+						commentEnd];
 	return result;
 }
 
 - (IBAction) validate:(id)sender;
 {
+	
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 
 	NSString *fullPage = [self wrapFragment:fragment];
-	NSLog(@"working with this string: %@", fullPage);
 
+	NSString *docTypeName = [KTPage titleOfDocType:[self docType]];
+	[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+	
+	
+	
+	return;
+	// BELOW IS MY EARLIER ATTEMPT, BUT IT DIDN'T HAVE PARTICULARLY USEFUL RESULTS FOR THE USER
 	/*
 	 You can validate an XML document when it is first processed by specifying the NSXMLDocumentValidate option when you initialize an NSXMLDocument object with the initWithContentsOfURL:options:error:, initWithData:options:error:, or initWithXMLString:options:error: methods.
 	
@@ -257,8 +270,23 @@ initial syntax coloring.
 	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
 											  options:(NSXMLDocumentValidate)
 												error:&err];
-	NSLog(@"err = %@", err);
+	if (err)
+	{
+		NSLog(@"err = %@", err);
+		NSString *localizedDescription = [err localizedDescription];
+		NSScanner *scanner = [NSScanner scannerWithString:localizedDescription];
+		[scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
+		NSString *lineNumberString = nil;
+		if ([scanner scanCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&lineNumberString])
+		{
+			NSLog(@"Got line number: %@", lineNumberString);
+			NSUInteger lineNum = [lineNumberString intValue];
+			
+			
+			[self goToLine:lineNum - 7];
+		}
 		
+	}
 }
 
 - (IBAction) tidy:(id)sender;
@@ -296,8 +324,13 @@ initial syntax coloring.
 			// Now output it, and set the contents.
 			NSString *charset = [xmlDoc characterEncoding];
 			NSStringEncoding encoding = [charset encodingFromCharset];
-			NSLog(@"character encoding = %@ converted into NSStringEncoding = %d", charset, encoding);
-			NSData *data = [xmlDoc XMLData];
+			
+			NSUInteger options = NSXMLNodePreserveAll;
+			if ([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask)		// option key -- pretty-print
+			{
+				options |= NSXMLNodePrettyPrint;
+			}
+			NSData *data = [xmlDoc XMLDataWithOptions:options];
 			NSString *xmlString = [NSString stringWithData:data encoding:encoding];
 			
 			// Now to only keep the stuff between <body> and </body>
@@ -749,7 +782,55 @@ initial syntax coloring.
     myTitle = aTitle;
 }
 
+#pragma mark -
+#pragma mark Other
 
+/* -----------------------------------------------------------------------------
+ goToLine:
+ This selects the specified line of the document.
+ -------------------------------------------------------------------------- */
+
+-(void)	goToLine: (int)lineNum
+{
+	NSRange			theRange = { 0, 0 };
+	NSString*		vString = [textView string];
+	unsigned		currLine = 1;
+	NSCharacterSet* vSet = [NSCharacterSet characterSetWithCharactersInString: @"\n\r"];
+	unsigned		x;
+	unsigned		lastBreakOffs = 0;
+	unichar			lastBreakChar = 0;
+	
+	for( x = 0; x < [vString length]; x++ )
+	{
+		unichar		theCh = [vString characterAtIndex: x];
+		
+		// Skip non-linebreak chars:
+		if( ![vSet characterIsMember: theCh] )
+			continue;
+		
+		// If this is the LF in a CRLF sequence, only count it as one line break:
+		if( theCh == '\n' && lastBreakOffs == (x-1)
+		   && lastBreakChar == '\r' )
+		{
+			lastBreakOffs = 0;
+			lastBreakChar = 0;
+			theRange.location++;
+			continue;
+		}
+		
+		// Calc range and increase line number:
+		theRange.length = x -theRange.location +1;
+		if( currLine >= lineNum )
+			break;
+		currLine++;
+		theRange.location = theRange.location +theRange.length;
+		lastBreakOffs = x;
+		lastBreakChar = theCh;
+	}
+	
+	[textView scrollRangeToVisible: theRange];
+	[textView setSelectedRange: theRange];
+}
 
 
 
