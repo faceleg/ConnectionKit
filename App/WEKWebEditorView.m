@@ -572,9 +572,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
 }   
     
     
-    // Alert observers
-    [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
-                                                        object:self];
+    // Alert observers.
+    // If the change is from the user selecting something in WebView, we're not ready to post the notification yet; -webViewDidChangeSelection: will take care of that for us
+    if (!domRange)
+    {
+        [[NSNotificationCenter defaultCenter] postNotificationName:SVWebEditorViewDidChangeSelectionNotification
+                                                            object:self];
+    }
     
     
     return YES;
