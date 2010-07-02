@@ -86,7 +86,7 @@
     
     [super update];
     
-    [[self textHTMLElement] setInnerHTML:[self HTMLString]];
+    [[self innerTextHTMLElement] setInnerHTML:[self HTMLString]];
     
     // Mimic NSTextField and select all
     if (selectAfterUpdate)
