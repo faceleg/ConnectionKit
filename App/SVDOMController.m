@@ -207,6 +207,10 @@
 
 - (void)setNeedsUpdate;
 {
+    // Ignore such preposterous claims if not even attached to an element yet
+    if (![self isHTMLElementCreated]) return;
+    
+    
     // By default, controllers don't know how to update, so must update parent instead
     if ([self methodForSelector:@selector(update)] == 
         [SVDOMController instanceMethodForSelector:@selector(update)])
