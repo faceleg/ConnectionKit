@@ -222,7 +222,7 @@ initial syntax coloring.
 
 
 
-- (NSString *)wrapFragment:(NSString *)aFragment;
+- (NSString *)wrapFragment:(NSString *)aFragment local:(BOOL)isLocalDTD;
 {
 	BOOL isHTML = (KTHTML401DocType == [self docType]);
 	NSString *wrapXHTMLStart= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
@@ -236,7 +236,7 @@ initial syntax coloring.
 	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
 	NSString *result = [NSString stringWithFormat:
 						@"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n%@\n%@\n</body>\n</html>\n",
-						[KTPage stringFromDocType:[self docType]],
+						[KTPage stringFromDocType:[self docType] local:isLocalDTD],
 						isHTML ? wrapHTMLStart : wrapXHTMLStart,
 						isHTML ? metaHTML : metaXHTML,
 						title,
@@ -248,44 +248,30 @@ initial syntax coloring.
 
 - (IBAction) validate:(id)sender;
 {
-	
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 
-	NSString *fullPage = [self wrapFragment:fragment];
-
-	NSString *docTypeName = [KTPage titleOfDocType:[self docType]];
-	[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
-	
-	
-	
-	return;
-	// BELOW IS MY EARLIER ATTEMPT, BUT IT DIDN'T HAVE PARTICULARLY USEFUL RESULTS FOR THE USER
-	/*
-	 You can validate an XML document when it is first processed by specifying the NSXMLDocumentValidate option when you initialize an NSXMLDocument object with the initWithContentsOfURL:options:error:, initWithData:options:error:, or initWithXMLString:options:error: methods.
-	
-*/
-	NSXMLDocument *xmlDoc;
-	NSError *err = nil;
-	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
-											  options:(NSXMLDocumentValidate)
-												error:&err];
-	if (err)
+	if ([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask)		// option key -- use validator.w3.org
 	{
-		NSLog(@"err = %@", err);
-		NSString *localizedDescription = [err localizedDescription];
-		NSScanner *scanner = [NSScanner scannerWithString:localizedDescription];
-		[scanner scanUpToCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:nil];
-		NSString *lineNumberString = nil;
-		if ([scanner scanCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&lineNumberString])
-		{
-			NSLog(@"Got line number: %@", lineNumberString);
-			NSUInteger lineNum = [lineNumberString intValue];
-			
-			
-			[self goToLine:lineNum - 7];
-		}
+		NSString *fullPage = [self wrapFragment:fragment local:NO];
 		
+		NSString *docTypeName = [KTPage titleOfDocType:[self docType]];
+		[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+	}
+	else	// Use NSXMLDocument -- not useful
+	{
+		NSString *fullPage = [self wrapFragment:fragment local:YES];
+
+		NSXMLDocument *xmlDoc;
+		NSError *err = nil;
+		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+												  options:(NSXMLDocumentValidate)
+													error:&err];
+		if (err)
+		{
+			NSString *localizedDescription = [err localizedDescription];
+			NSLog(@"err = %@", localizedDescription);
+		}
 	}
 }
 
@@ -294,7 +280,7 @@ initial syntax coloring.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 	
-	NSString *fullPage = [self wrapFragment:fragment];
+	NSString *fullPage = [self wrapFragment:fragment local:NO];
 	NSLog(@"working with this string: %@", fullPage);
 	
 	

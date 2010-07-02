@@ -53,7 +53,6 @@ typedef enum {
 	KTHTML401DocType = 0,
 	KTXHTMLTransitionalDocType,
 	KTXHTMLStrictDocType,
-	KTXHTML11DocType,
     KTDocTypeAll = NSIntegerMax,
 } KTDocType;
 

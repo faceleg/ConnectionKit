@@ -207,7 +207,7 @@ typedef enum {
 - (NSString *)docTypeName;
 - (NSString *)DTD;
 
-+ (NSString *)stringFromDocType:(KTDocType)docType;		// UTILITY
++ (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;		// UTILITY
 + (NSString *)titleOfDocType:(KTDocType)docType;		// UTILITY
 
 @end

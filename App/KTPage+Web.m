@@ -400,8 +400,7 @@
 		case KTXHTMLStrictDocType:
 			result = @"XHTML 1.0 Strict";
 			break;
-		case KTXHTML11DocType:
-			result = @"XHTML 1.1";
+		default:
 			break;
 	}
 	return result;
@@ -415,25 +414,48 @@
 }
 
 // For code review:  Where can this utility class go?
-+ (NSString *)stringFromDocType:(KTDocType)docType;
++ (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;
 {
 	NSString *result = nil;
-	switch (docType)
+	if (isLocal)
 	{
-		case KTHTML401DocType:
-			result = @"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
-			break;
-		case KTXHTMLTransitionalDocType:
-			result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
-			break;
-		case KTXHTMLStrictDocType:
-			result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
-			break;
-		case KTXHTML11DocType:
-			result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.1//EN\" \"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd\">";
-			break;
-		default:
-			break;
+		NSURL *dtd = nil;
+		switch (docType)
+		{
+			case KTHTML401DocType:
+				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"loose" ofType:@"dtd" inDirectory:@"DTD"]];
+				result = [NSString stringWithFormat:@"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"%@\">", [dtd absoluteString]];
+				break;
+			case KTXHTMLTransitionalDocType:
+				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-transitional" ofType:@"dtd" inDirectory:@"DTD"]];
+				result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"%@\">", [dtd absoluteString]];
+				break;
+			case KTXHTMLStrictDocType:
+				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-strict" ofType:@"dtd" inDirectory:@"DTD"]];
+				result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"%@\">", [dtd absoluteString]];
+				break;
+			default:
+				break;
+		}
+		
+	}
+	else
+	{
+		switch (docType)
+		{
+			case KTHTML401DocType:
+				result = @"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
+				break;
+			case KTXHTMLTransitionalDocType:
+				result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
+				break;
+			case KTXHTMLStrictDocType:
+				result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
+				break;
+			default:
+				break;
+		}
+		
 	}
 	return result;
 }
@@ -441,7 +463,7 @@
 - (NSString *)DTD
 {
 	KTDocType docType = [self docType];
-	NSString *result = [KTPage stringFromDocType:docType];
+	NSString *result = [KTPage stringFromDocType:docType local:NO];	// get the web-publishable DTD
 	return result;
 }
 
