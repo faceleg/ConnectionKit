@@ -1531,7 +1531,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 
 #pragma mark WebUIDelegate
 
-/*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to dissallow all actions
+/*  Generally the only drop action we support is for text editing. BUT, for an area of the WebView which our datasource has claimed for its own, need to disallow all actions
  */
 - (NSUInteger)webView:(WebView *)sender dragDestinationActionMaskForDraggingInfo:(id <NSDraggingInfo>)dragInfo
 {
