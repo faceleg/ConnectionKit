@@ -368,6 +368,7 @@ toSidebarOfDescendantsOfPageIfApplicable:(KTPage *)page;
     
     for (SVGraphic *aPagelet in pagelets)
     {
+        [aPagelet setShowsTitle:YES];
         [self insertObject:aPagelet atArrangedObjectIndex:index];
         result = YES;
     }
