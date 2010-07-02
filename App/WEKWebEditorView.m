@@ -462,7 +462,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (itemsToSelect)
     {
-        if (proposedSelection)  // slightly odd looking logic, but handles possibility of _selectedItems being nil
+        // Slightly odd looking logic here, but handles possibility of _selectedItems being nil
+        if (proposedSelection)
         {
             [proposedSelection addObjectsFromArray:itemsToSelect];
         }
