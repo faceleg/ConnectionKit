@@ -153,16 +153,30 @@
 
 - (void)removeDraggedItems; // removes from DOM and item tree
 {
-    for (WEKWebEditorItem *anItem in [self draggedItems])
+    DOMRange *selection;
+    
+    if ([self draggedItems])
     {
-        [anItem tryToRemove];
+        for (WEKWebEditorItem *anItem in [self draggedItems])
+        {
+            [anItem tryToRemove];
+        }
+        
+        // Remove the objects
+        [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
+        
+        // Clean up
+        [self forgetDraggedItems];
     }
-    
-    // Remove the objects
-    [[self dataSource] webEditor:self deleteItems:[self draggedItems]];
-    
-    // Clean up
-    [self forgetDraggedItems];
+    else if (selection = [self selectedDOMRange])
+    {
+        // The drag was initiated by WebView itself, so make it delete the dragged items
+        // -shouldChangeTextInDOMRange: is needed since -delete: doesn't do so itself for some reason
+        if ([self shouldChangeTextInDOMRange:selection])
+        {
+            [[self webView] delete:self];
+        }
+    }
 }
 
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
