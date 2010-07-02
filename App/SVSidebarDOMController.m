@@ -448,7 +448,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             {
                 [webEditor removeDraggedItems];
             }
-            [webEditor didChangeText];
+            [webEditor didChangeText];  // -removeDraggedItems calls -shouldChangeText: etc. internally
         }
     }
     
