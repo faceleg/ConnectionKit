@@ -24,7 +24,8 @@
 	// Not really hooked up!
 	IBOutlet NSProgressIndicator*	progress;				// Progress indicator while coloring syntax.
 	IBOutlet NSTextField*			status;					// Status display for things like syntax coloring or background syntax checks.
-
+	IBOutlet NSPopUpButton*			docTypePopUp;
+	IBOutlet NSMenuItem*			previewMenuItem;
 	
 @private	
 	BOOL							autoSyntaxColoring;		// Automatically refresh syntax coloring when text is changed?
@@ -47,8 +48,9 @@
 	// Bound Properties
 	KTDocType			_docType;
 	KTWhenToPreviewHTML	_whenToPreview;
-	BOOL				_autoTidy;
-	
+	NSString			*_cachedLocalPrelude;
+	NSString			*_cachedRemotePrelude;
+	BOOL				_hasValidationWarning;
 }
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
@@ -59,8 +61,8 @@
 - (void)setTitle:(NSString *)aTitle;
 - (IBAction) windowHelp:(id)sender;
 - (IBAction) applyChanges:(id)sender;
-- (IBAction) tidy:(id)sender;
 - (IBAction) validate:(id)sender;
+- (IBAction) docTypePopUpChanged:(id)sender;
 
 - (NSObject *)HTMLSourceObject;
 - (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject;
@@ -73,7 +75,9 @@
 
 @property (nonatomic) KTDocType docType;
 @property (nonatomic) KTWhenToPreviewHTML whenToPreview;
-@property (nonatomic) BOOL autoTidy;
+@property (nonatomic, copy) NSString *cachedLocalPrelude;
+@property (nonatomic, copy) NSString *cachedRemotePrelude;
+@property (nonatomic) BOOL hasValidationWarning;
 
 
 

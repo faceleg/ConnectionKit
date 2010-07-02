@@ -25,6 +25,8 @@
 
 @interface KTHTMLInspectorController ()
 
+- (void)calculateCachedPreludes;
+- (void) autoValidate;
 
 -(IBAction)	recolorCompleteFile: (id)sender;
 -(IBAction) recolorCompleteFileDeferred: (id)sender;
@@ -37,7 +39,9 @@
 
 @synthesize docType = _docType;
 @synthesize whenToPreview = _whenToPreview;
-@synthesize autoTidy = _autoTidy;
+@synthesize cachedLocalPrelude = _cachedLocalPrelude;
+@synthesize cachedRemotePrelude = _cachedRemotePrelude;
+@synthesize hasValidationWarning = _hasValidationWarning;
 
 
 /* -----------------------------------------------------------------------------
@@ -62,13 +66,34 @@
 		maintainIndentation = YES;
 		recolorTimer = nil;
 		syntaxColoringBusy = NO;
+		
+		
+		// Load the docType from the model ... FOR NOW DO THIS
+		[self calculateCachedPreludes];
+
+		
+		[self addObserver:self forKeyPath:@"docType" options:0 context:nil];
 	}
     return self;
 }
 
+- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
+{
+	if ([keyPath isEqualToString:@"docType"])
+	{
+		[docTypePopUp setTitle:[KTPage titleOfDocType:[self docType] localize:YES]];
+		[self calculateCachedPreludes];
+		[self autoValidate];
+	}
+	else
+	{
+		[super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
+	}
+}
 
 -(void)	dealloc
 {
+	[self removeObserver:self forKeyPath:@"docType"];
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	[recolorTimer invalidate];
 	[recolorTimer release];
@@ -203,10 +228,16 @@ initial syntax coloring.
 {
 	if ( [[aNotification object] isEqual:[self window]] )
 	{
+		[NSObject cancelPreviousPerformRequestsWithTarget:self];	// cancel pending update of status
 		[self saveBackToSource:nil];
 		
 		[[self window] saveFrameUsingName:@"RawHTMLPanel"];
 	}
+}
+
+- (void)textDidEndEditing:(NSNotification *)aNotification
+{
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];		// cancel pending update of status
 }
 
 - (IBAction) windowHelp:(id)sender
@@ -219,42 +250,106 @@ initial syntax coloring.
 	[self saveBackToSource:nil];
 }
 
-
-
-
-- (NSString *)wrapFragment:(NSString *)aFragment local:(BOOL)isLocalDTD;
+- (IBAction) docTypePopUpChanged:(id)sender;
 {
-	BOOL isHTML = (KTHTML401DocType == [self docType]);
-	NSString *wrapXHTMLStart= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
-	NSString *wrapHTMLStart	= @"<html lang=\"en\">";
-	NSString *metaXHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />";
-	NSString *metaHTML		= @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";	// Make local HTML validator happy
-	NSString *title			= @"<title>This is a test</title>";
+	NSLog(@"%@", sender);
+}
+
+- (void)calculateCachedPreludes;
+{
+	NSString *title			= @"<title>This is a piece of HTML, wrapped in some markup to help the validator</title>";
 	NSString *commentStart	= @"<!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
-	NSString *commentEnd	= @"<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->";
 	
-	NSString *DTD = [KTPage stringFromDocType:[self docType] local:isLocalDTD];
-	
+	NSString *localDTD  = [KTPage stringFromDocType:[self docType] local:YES];
+	NSString *remoteDTD = [KTPage stringFromDocType:[self docType] local:NO];
+
 	// Special adjustments for local validation on HTML4.
 	// Don't use the DTD if It's HTML 4 ... I was getting an error on local validation.
 	// With no DTD, validation seems OK in the local validation.
 	// And close the meta tag, too.
-	if (isLocalDTD && KTHTML401DocType == [self docType])
+	if (KTHTML401DocType == [self docType])
 	{
-		DTD = @"";
-		metaHTML = [metaHTML stringByAppendingString:@"</meta>"];
+		localDTD = @"";
 	}
 	// NOTE: If we change the line count of the prelude, we will have to adjust the start= value in -[SVValidatorWindowController validateSource:...]
-	NSString *result = [NSString stringWithFormat:
-						@"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n%@\n%@\n</body>\n</html>\n",
-						DTD,
-						isHTML ? wrapHTMLStart : wrapXHTMLStart,
-						isHTML ? metaHTML : metaXHTML,
-						title,
-						commentStart,
-						aFragment,
-						commentEnd];
+
+	NSString *metaCharset = nil;
+	NSString *htmlStart = nil;
+	switch([self docType])
+	{
+		case KTHTML401DocType:
+			htmlStart	= @"<html lang=\"en\">";
+			metaCharset = @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\">";
+			break;
+		case KTHTML5DocType:
+			htmlStart	= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";	// same as XHTML ?
+			metaCharset = @"<meta charset=\"UTF-8\" />";
+			break;
+		default:
+			htmlStart	= @"<html xmlns=\"http://www.w3.org/1999/xhtml\" xml:lang=\"en\" lang=\"en\">";
+			metaCharset = @"<meta http-equiv=\"content-type\" content=\"text/html; charset=UTF-8\" />";
+			break;
+	}
+	
+	self.cachedLocalPrelude = [NSString stringWithFormat:
+							   @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n",
+							   localDTD,
+							   htmlStart,
+							   metaCharset,
+							   title,
+							   commentStart];
+	self.cachedRemotePrelude = [NSString stringWithFormat:
+							   @"%@\n%@\n<head>\n%@\n%@\n</head>\n<body>\n%@\n",
+							   remoteDTD,
+							   htmlStart,
+							   metaCharset,
+							   title,
+							   commentStart];
+}
+
+- (NSString *)wrapFragment:(NSString *)aFragment local:(BOOL)isLocalDTD;
+{
+	NSString *postlude = @"\n<!-- ABOVE IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR -->\n</body>\n</html>\n";
+	
+	NSMutableString *result = [NSMutableString stringWithString:(isLocalDTD ? _cachedLocalPrelude : _cachedRemotePrelude)];
+	[result appendString:aFragment];
+	[result appendString:postlude];
 	return result;
+}
+
+- (void) autoValidate;	// check validity while the user is typing
+{
+	// Use NSXMLDocument -- not useful for errors, but it's quick.
+	NSMutableAttributedString*  textStore = [textView textStorage];
+	NSString *fragment = [textStore string];
+
+	NSString *fullPage = [self wrapFragment:fragment local:YES];
+	
+	NSXMLDocument *xmlDoc;
+	NSError *err = nil;
+	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+			  // Don't try to actually validate HTML; it's not XML
+											  options:(KTHTML401DocType == [self docType]) ? NSXMLDocumentTidyHTML|NSXMLNodePreserveAll : NSXMLNodePreserveAll
+												error:&err];
+	
+	BOOL valid = (nil != xmlDoc);
+	if (xmlDoc)
+	{
+		// Don't really try to validate if it's HTML 5.  Don't have a DTD!
+		// Don't really validate if it's HTML  ... We were having problems loading the DTD.
+		if (KTHTML5DocType != [self docType] && KTHTML401DocType != [self docType])
+		{
+			// Further check for validation if we can
+			valid = [xmlDoc validateAndReturnError:&err];
+		}
+	}
+
+	self.hasValidationWarning = !valid;
+
+	if (err)	// This might a warning or diagnosis for HTML 4.01
+	{
+		NSLog(@"validation Error: %@", [err localizedDescription]);
+	}
 }
 
 - (IBAction) validate:(id)sender;
@@ -262,28 +357,10 @@ initial syntax coloring.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 
-	if ([[NSApp currentEvent] modifierFlags]&NSAlternateKeyMask)		// option key -- use validator.w3.org
-	{
-		NSString *fullPage = [self wrapFragment:fragment local:NO];
-		
-		NSString *docTypeName = [KTPage titleOfDocType:[self docType]];
-		[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
-	}
-	else	// Use NSXMLDocument -- not useful for errors, but it's quick.  Don't try for HTML 4.0.1
-	{
-		NSString *fullPage = [self wrapFragment:fragment local:YES];
-
-		NSXMLDocument *xmlDoc;
-		NSError *err = nil;
-		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
-												  options:(NSXMLDocumentValidate)
-													error:&err];
-		if (err)
-		{
-			NSString *localizedDescription = [err localizedDescription];
-			NSLog(@"err = %@", localizedDescription);
-		}
-	}
+	NSString *fullPage = [self wrapFragment:fragment local:NO];
+	
+	NSString *docTypeName = [KTPage titleOfDocType:[self docType] localize:NO];
+	[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
 }
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
@@ -430,6 +507,10 @@ initial syntax coloring.
 		// Actually recolor the changed part:
 		[self recolorRange: currRange];
 	}
+	
+	// Validate markup, after a delay
+	[NSObject cancelPreviousPerformRequestsWithTarget:self];
+	[self performSelector:@selector(autoValidate) withObject:nil afterDelay:1.0];		// one second delay to auto-save-back
 }
 
 
@@ -510,6 +591,9 @@ initial syntax coloring.
 			replacementString = nil;
 		}
 		replacementString = [rps retain];
+		
+		// Took this out -- it never seemed to be actually invoked, and it would make us lose Japanese characters.
+		//[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
 	}
 	
 	return YES;

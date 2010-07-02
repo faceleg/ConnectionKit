@@ -141,19 +141,25 @@
 			// Insert our own message
 			NSString *headline = NSLocalizedString(@"Explanation and Impact", @"Header, shown above Explanation Text for validator output");
 			NSString *explanation1 = NSLocalizedString(
-@"When the W3C validator detects errors, this could mean:", @"Explanation Text for validator output");
+@"Here are some possible explanations for the warnings:", @"Explanation Text for validator output");
 			NSString *explanation1a = NSLocalizedString(@"The raw HTML that you have entered yourself is invalid", @"Explanation Text for validator output");
+			NSString *fix1a = NSLocalizedString(@"Fix the HTML so that it no longer returns these warnings", @"Suggestion for the user to perform");
+			
 			NSString *explanation1bFmt = NSLocalizedString(@"The HTML is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
-			NSString *explanation1c = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
-
-														
-
-														
+			NSString *fix1b = NSLocalizedString(@"Change the HTML declaration to a less restrictive type", @"Suggestion for the user to perform");
 			NSString *explanation1b = [NSString stringWithFormat:explanation1bFmt, docTypeString];
+		
+			NSString *explanation1c = NSLocalizedString(@"You have chosen to include common, but technically invalid markup", @"Explanation Text for validator output");
+			NSString *examples1c = NSLocalizedString(@"Examples: <embed>, <video>, <wbr>", @"Examples of HTML tags that may have problems");
+			NSString *fix1c = NSLocalizedString(@"This kind of warning can usually be ignored but you may want to verify your page on several browsers", @"Suggestion for the user to perform");
+
+			NSString *explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
+			NSString *fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please contact Karelia by choosing the \"Send Feedback...\" menu", @"Suggestion for the user to perform");
+														
 			NSString *explanation2 = NSLocalizedString(
-														  @"In many cases your page will render just fine in most browsers — most large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does look right.", @"Explanation Text for validator output");
+														  @"Even if you get warnings, your page will often render just fine in most browsers — most large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does not look right.", @"Explanation Text for validator output");
 			NSString *explanation3 = NSLocalizedString(
-														  @"If you are experiencing problems with how your website displays on certain browsers, you should fix any error messages in the HTML elements that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
+														  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the HTML elements that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
 		
 			NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
 			NSURL *appIconURL = [NSURL fileURLWithPath:appIconPath];
@@ -165,13 +171,24 @@
 			// [WebView _addOriginAccessWhitelistEntryWithSourceOrigin:@"localhost" destinationProtocol:@"file" destinationHost:@"localhost" allowDestinationSubdomains:NO];
 			
 			
-			NSString *replacementString = [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<ul style='font-size:0.8em; margin-left:100px;'><li>%@</li><li>%@</li><li>%@</li></ul><p>%@</p>\n<p>%@</p>\n</div>\n",
+			NSString *replacementString = [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<dl style='font-size:0.8em; line-height:1.6em; margin-left:120px;'><dt>%@</dt><dd style='font-style:italic;'>%@</dd><dt>%@</dt><dd style='font-style:italic;'>%@</dd><dt>%@</dt><dd><dd>%@</dd><dd style='font-style:italic;'>%@</dd><dt>%@</dt><dd style='font-style:italic;'>%@</dd></dl><p>%@</p>\n<p>%@</p>\n</div>\n",
 										   [headline stringByEscapingHTMLEntities],
 										   [appIconURL absoluteString],
 										   [explanation1 stringByEscapingHTMLEntities],
+										   
 										   [explanation1a stringByEscapingHTMLEntities],
+										   [fix1a stringByEscapingHTMLEntities],
+										   
 										   [explanation1b stringByEscapingHTMLEntities],
+										   [fix1b stringByEscapingHTMLEntities],
+
 										   [explanation1c stringByEscapingHTMLEntities],
+										   [examples1c stringByEscapingHTMLEntities],
+										   [fix1c stringByEscapingHTMLEntities],
+
+										   [explanation1d stringByEscapingHTMLEntities],
+										   [fix1d stringByEscapingHTMLEntities],
+
 										   [explanation2 stringByEscapingHTMLEntities],
 										   [explanation3 stringByEscapingHTMLEntities]];
 			

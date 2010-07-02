@@ -386,30 +386,38 @@
 }
 
 // For code review:  Where can this utility class go?
-+ (NSString *)titleOfDocType:(KTDocType)docType;
++ (NSString *)titleOfDocType:(KTDocType)docType  localize:(BOOL)shouldLocalizeForDisplay;
 {
 	NSString *result = nil;
+	NSString *localizedResult = nil;
 	switch (docType)
 	{
 		case KTHTML401DocType:
 			result = @"HTML 4.01 Transitional";
+			localizedResult = NSLocalizedString(@"HTML 4.01", @"Description of style of HTML - note that we do not say Transitional");
 			break;
 		case KTXHTMLTransitionalDocType:
 			result = @"XHTML 1.0 Transitional";
+			localizedResult = NSLocalizedString(@"XHTML 1.0 Transitional", @"Description of style of HTML");
 			break;
 		case KTXHTMLStrictDocType:
 			result = @"XHTML 1.0 Strict";
+			localizedResult = NSLocalizedString(@"XHTML 1.0 Strict", @"Description of style of HTML");
+			break;
+		case KTHTML5DocType:
+			result = @"HTML5";
+			localizedResult = NSLocalizedString(@"HTML5", @"Description of style of HTML");
 			break;
 		default:
 			break;
 	}
-	return result;
+	return shouldLocalizeForDisplay ? localizedResult : result;
 }
 
-- (NSString *)docTypeName
+- (NSString *)docTypeName	// return official doc type, not localized, for use by validator
 {
 	KTDocType docType = [self docType];
-	NSString *result = [KTPage titleOfDocType:docType];
+	NSString *result = [KTPage titleOfDocType:docType localize:NO];
 	return result;
 }
 
@@ -423,7 +431,7 @@
 		switch (docType)
 		{
 			case KTHTML401DocType:
-				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"loose" ofType:@"dtd" inDirectory:@"DTD"]];
+				dtd = nil;	// don't load a local DTD for HTML 4.01
 				result = [NSString stringWithFormat:@"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"%@\">", [dtd absoluteString]];
 				break;
 			case KTXHTMLTransitionalDocType:
@@ -433,6 +441,9 @@
 			case KTXHTMLStrictDocType:
 				dtd = [NSURL fileURLWithPath:[[NSBundle mainBundle] pathForResource:@"xhtml1-strict" ofType:@"dtd" inDirectory:@"DTD"]];
 				result = [NSString stringWithFormat:@"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"%@\">", [dtd absoluteString]];
+				break;
+			case KTHTML5DocType:
+				result = [NSString stringWithFormat:@"<!DOCTYPE html>"];	// Do we do something special to deal with DTDs?
 				break;
 			default:
 				break;
@@ -451,6 +462,9 @@
 				break;
 			case KTXHTMLStrictDocType:
 				result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
+				break;
+			case KTHTML5DocType:
+				result = [NSString stringWithFormat:@"<!DOCTYPE html>"];
 				break;
 			default:
 				break;

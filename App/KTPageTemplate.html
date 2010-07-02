@@ -10,7 +10,11 @@
 [[=DTD]]
 <html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.outputWriter.language]]" [[endif]]lang="[[=&parser.outputWriter.language]]">
 	<head>
+[[if docType=4]]
+		<meta charset="[[=&master.charset]]" />
+[[else]]
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
+[[endif]]
 [[if master.codeInjection.earlyHead]]
 [[=master.codeInjection.earlyHead]]
 [[endif]]
