@@ -838,8 +838,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     if ([sender selectedDOMRange])
     {
-        SVTextDOMController *owningItem = [[self firstResponderItem] textDOMController];
-        [owningItem addSelectionTypesToPasteboard:pasteboard];
+        SVTextDOMController *textController = [[self firstResponderItem] textDOMController];
+        [textController addSelectionTypesToPasteboard:pasteboard];
         return YES;
     }
     else
