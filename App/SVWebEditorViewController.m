@@ -499,6 +499,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
 {
+    OBPRECONDITION(range);
+    
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];
 }
@@ -875,6 +877,25 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         ![types containsObject:@"com.karelia.html+graphics"])
     {
         result = result | WebDragDestinationActionEdit;
+        
+        // Don't drop graphics into text areas which don't support it
+        id source = [draggingInfo draggingSource];
+        if ([source isKindOfClass:[NSResponder class]] &&
+            [sender ks_followsResponder:source] &&
+            [sender selectedItem])
+        {
+            NSPoint location = [sender convertPointFromBase:[draggingInfo draggingLocation]];
+            DOMRange *range = [[sender webView] editableDOMRangeForPoint:location];
+            if (range)
+            {
+                SVTextDOMController *controller = [self textAreaForDOMRange:range];
+                
+                if (![[controller textBlock] importsGraphics])
+                {
+                    result = result - WebDragDestinationActionEdit;
+                }
+            }
+        }
     }
     
     return result;
