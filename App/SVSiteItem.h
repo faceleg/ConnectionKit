@@ -11,7 +11,7 @@
 //  -   Returns NSNotApplicableMarker instead of throwing an exception for unknown keys
 
 
-#import "SVExtensibleManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 #import "SVPageProtocol.h"
 #import <iMedia/IMBImageItem.h>
 
@@ -20,7 +20,7 @@
 @protocol SVWebContentViewController, SVMedia, SVPublisher;
 
 
-@interface SVSiteItem : SVExtensibleManagedObject <SVPage>
+@interface SVSiteItem : KSExtensibleManagedObject <SVPage>
 
 #pragma mark Identifier
 @property(nonatomic, copy, readonly) NSString *uniqueID;

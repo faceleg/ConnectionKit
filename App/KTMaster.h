@@ -18,7 +18,7 @@
 //
 
 
-#import "SVExtensibleManagedObject.h"
+#import "KSExtensibleManagedObject.h"
 
 #import "KT.h"
 #import "SVMediaRecord.h"
@@ -27,7 +27,7 @@
 @class KTDesign, SVTitleBox, SVLogoImage, KTCodeInjection;
 
 
-@interface KTMaster : SVExtensibleManagedObject 
+@interface KTMaster : KSExtensibleManagedObject 
 
 #pragma mark Text
 
