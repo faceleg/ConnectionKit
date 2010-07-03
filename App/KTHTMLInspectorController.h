@@ -51,6 +51,7 @@
 	NSString			*_cachedLocalPrelude;
 	NSString			*_cachedRemotePrelude;
 	BOOL				_hasValidationWarning;
+	BOOL				_preventPreview;
 }
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
@@ -78,6 +79,7 @@
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
 @property (nonatomic, copy) NSString *cachedRemotePrelude;
 @property (nonatomic) BOOL hasValidationWarning;
+@property (nonatomic) BOOL preventPreview;
 
 
 

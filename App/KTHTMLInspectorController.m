@@ -42,6 +42,10 @@
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
 @synthesize hasValidationWarning = _hasValidationWarning;
+@synthesize preventPreview = _preventPreview;
+
+
+
 
 
 /* -----------------------------------------------------------------------------
@@ -252,7 +256,31 @@ initial syntax coloring.
 
 - (IBAction) docTypePopUpChanged:(id)sender;
 {
-	NSLog(@"%@", sender);
+	NSMenuItem *selectedItem = [sender selectedItem];		// which item just got selected
+	BOOL newState = ![[sender selectedItem] state];
+	if (previewMenuItem == selectedItem)
+	{
+		self.preventPreview = newState;
+		[previewMenuItem setState:newState];	// check or un-check as appropriate
+	}
+	else
+	{
+		int i, tag = [selectedItem tag];		// state is tag minus 1
+		
+		for (i=1; i<[sender numberOfItems]; i++)	// skip item zero ("title" of drop-down)
+		{
+			NSMenuItem *thisMenuItem = [sender itemAtIndex:i];
+			int thisTag = [thisMenuItem tag];
+			if (thisTag > 0)
+			{
+				// Turn everything off except for the selected one.
+				NSCellStateValue newState = (thisTag == tag) ? NSOnState : NSOffState;
+				[thisMenuItem setState:newState];
+			}
+		}
+		self.docType = tag -1;	// need to convert from 1-based tags to zero-based docTypes.
+	}
+	
 }
 
 - (void)calculateCachedPreludes;

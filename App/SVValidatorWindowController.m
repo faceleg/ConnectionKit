@@ -10,7 +10,7 @@
 #import "KSProgressPanel.h"
 #import "NSString+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
-
+#import "KSStringXMLEntityEscaping.h"
 
 @interface WebView (WebViewPrivate)
 
@@ -99,7 +99,7 @@
 			NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
 			if (NSNotFound != foundValidRange.location)
 			{
-				explanation = [resultingPageString substringWithRange:foundValidRange];
+				explanation = [[[resultingPageString substringWithRange:foundValidRange] condenseWhiteSpace] stringByUnescapingHTMLEntities];
 			}
 		}
 		
@@ -149,8 +149,8 @@
 			NSString *fix1b = NSLocalizedString(@"Change the HTML declaration to a less restrictive type", @"Suggestion for the user to perform");
 			NSString *explanation1b = [NSString stringWithFormat:explanation1bFmt, docTypeString];
 		
-			NSString *explanation1c = NSLocalizedString(@"You have chosen to include common, but technically invalid markup", @"Explanation Text for validator output");
-			NSString *examples1c = NSLocalizedString(@"Examples: <embed>, <video>, <wbr>", @"Examples of HTML tags that may have problems");
+			NSString *explanation1c = NSLocalizedString(@"You have chosen to include popular, but technically invalid markup", @"Explanation Text for validator output");
+			NSString *examples1c = NSLocalizedString(@"Examples: <embed>, <video>, <iframe>, <font>, <wbr>", @"Examples of HTML tags that may have problems");
 			NSString *fix1c = NSLocalizedString(@"This kind of warning can usually be ignored but you may want to verify your page on several browsers", @"Suggestion for the user to perform");
 
 			NSString *explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
