@@ -939,10 +939,10 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			//[self buildSampleSitesMenu];
 			
 			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
-                                                       inMenu:oAddPageletMenu
+                                                       inMenu:oMoreGraphicsMenu
                                                       atIndex:0];
             [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                                 inMenu:oInsertIndexMenu
+                                                 inMenu:oIndexesMenu
                                                       atIndex:0];
 				
             

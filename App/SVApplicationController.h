@@ -70,8 +70,11 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
     // we have pages and collections (summary pages)
     IBOutlet NSMenu			*oAddPageMenu;
     IBOutlet NSMenu			*oNewPageMenu;
-    IBOutlet NSMenu			*oAddPageletMenu;
-	IBOutlet NSMenu         *oInsertIndexMenu;
+    
+    IBOutlet NSMenu			*oBadgesMenu;
+	IBOutlet NSMenu         *oIndexesMenu;
+    IBOutlet NSMenu         *oSocialMediaMenu;
+    IBOutlet NSMenu         *oMoreGraphicsMenu;
     
 	IBOutlet NSTableView	*oDebugTable;
 	IBOutlet NSPanel		*oDebugMediaPanel;
