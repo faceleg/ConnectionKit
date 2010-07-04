@@ -364,6 +364,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
         OBASSERT(result);
     }
     
+    [result setShowsTitle:YES]; // default is NO in the mom to account for inline images
     return result;
 }
 
