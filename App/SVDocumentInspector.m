@@ -62,11 +62,9 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     
     // Populate languages popup
     NSArray *languages = [self languages];
-    NSEnumerator *theEnum = [languages objectEnumerator];
-    id object;
     int theIndex = 0;
     
-    while (nil != (object = [theEnum nextObject]) )
+    for (id object in languages)
     {
         NSString *ownName = [[object objectForKey:@"Name"] stringByTrimmingWhitespace];
         // not using
