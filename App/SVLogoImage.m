@@ -33,6 +33,7 @@
 - (void)setCaption:(SVAuxiliaryPageletText *)caption { }
 
 - (NSNumber *)placement { return nil; }
+- (BOOL)isPlacementEditable; { return NO; }
 - (SVTextAttachment *)textAttachment { return nil; }
 
 - (NSURL *)imagePreviewURL; // picks out URL from media, sourceURL etc.
