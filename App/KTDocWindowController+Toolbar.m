@@ -44,7 +44,7 @@ TO DO:
 
 - (NSToolbar *)toolbarNamed:(NSString *)toolbarName;
 
-- (NSToolbarItem *)makePageletsToolbarItemWithIdentifier:(NSString *)identifier;
+- (NSToolbarItem *)makeGraphicsToolbarItemWithIdentifier:(NSString *)identifier;
 
 @end
 
@@ -226,7 +226,7 @@ TO DO:
             }
             else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"myAddPageletPopUpButton"]) 
             {
-                result = [self makePageletsToolbarItemWithIdentifier:itemIdentifier];
+                result = [self makeGraphicsToolbarItemWithIdentifier:itemIdentifier];
             }
             else if ([[itemInfo valueForKey:@"view"] isEqualToString:@"IndexesPopUpButton"])
             {
@@ -297,7 +297,7 @@ TO DO:
 
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
  */
-- (NSToolbarItem *)makePageletsToolbarItemWithIdentifier:(NSString *)identifier;
+- (NSToolbarItem *)makeGraphicsToolbarItemWithIdentifier:(NSString *)identifier;
 {
 	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
