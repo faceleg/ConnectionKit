@@ -8,6 +8,9 @@
 
 #import "SVLogoImage.h"
 
+#import "KTPage.h"
+#import "SVWebEditorHTMLContext.h"
+
 #import "NSManagedObject+KTExtensions.h"
 
 
