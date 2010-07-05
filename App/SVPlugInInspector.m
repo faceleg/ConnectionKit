@@ -122,7 +122,11 @@ change context:(void *)context
         
         if (inspector)
         {
-            [self setContentHeightForViewInInspector:[inspector contentHeightForViewInInspector]];
+            CGFloat height = [inspector contentHeightForViewInInspector];
+            if (height > [self contentHeightForViewInInspector])
+            {
+                [self setContentHeightForViewInInspector:height];
+            }
         }
         
         [view setFrame:[[self view] frame]];
