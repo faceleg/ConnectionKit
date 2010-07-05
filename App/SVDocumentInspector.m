@@ -154,7 +154,11 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 	[oLanguageCodeField setEnabled:isOther];
 	
 	NSString *languageCode = [[sender selectedItem] representedObject];
-	[(NSObject *)[self inspectedObjectsController] setValue:languageCode forKeyPath:@"selection.master.language"];
+    if (languageCode)
+    {
+        [[self inspectedObjectsController] setValue:languageCode
+                                         forKeyPath:@"selection.master.language"];
+    }
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
