@@ -125,9 +125,9 @@ change context:(void *)context
     }
 }
 
-- (CGFloat)viewHeight
+- (CGFloat)contentHeightForViewInInspector
 {
-    CGFloat result = ([self selectedInspector] ? [[[self selectedInspector] view] frame].size.height : [super viewHeight]);
+    CGFloat result = ([self selectedInspector] ? [[[self selectedInspector] view] frame].size.height : [super contentHeightForViewInInspector]);
     return result;
 }
 
