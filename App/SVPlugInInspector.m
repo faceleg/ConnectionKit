@@ -110,25 +110,28 @@ change context:(void *)context
     [[_selectedInspector view] removeFromSuperview];
     [[_selectedInspector inspectedObjectsController] setContent:nil];
     
+    
     // Store new
     [_selectedInspector release]; _selectedInspector = [inspector retain];
+    
     
     // Setup new
     @try
     {
-        [[inspector view] setFrame:[[self view] frame]];
-        [[self view] addSubview:[inspector view]];
+        NSView *view = [inspector view];    // make sure it's loaded before going further
+        
+        if (inspector)
+        {
+            [self setContentHeightForViewInInspector:[inspector contentHeightForViewInInspector]];
+        }
+        
+        [view setFrame:[[self view] frame]];
+        [[self view] addSubview:view];
     }
     @catch (NSException *exception)
     {
         // TODO: Log error
     }
-}
-
-- (CGFloat)contentHeightForViewInInspector
-{
-    CGFloat result = ([self selectedInspector] ? [[[self selectedInspector] view] frame].size.height : [super contentHeightForViewInInspector]);
-    return result;
 }
 
 @end

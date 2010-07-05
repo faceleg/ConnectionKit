@@ -23,6 +23,23 @@
     return self;
 }
 
+#pragma mark Presentation
+
+- (void)setView:(NSView *)view;
+{
+    [super setView:view];
+    
+    // Want to store the tab height before anyone else has a chance to distort it
+    if (![self contentHeightForViewInInspector])
+    {
+        [self setContentHeightForViewInInspector:[[self view] frame].size.height];
+    }
+}
+
+@synthesize contentHeightForViewInInspector = _tabHeight;
+
+#pragma mark -
+
 - (NSArray *)inspectedObjects; { return [[self inspectedObjectsController] selectedObjects]; }
 
 - (NSArrayController *)inspectedObjectsController;

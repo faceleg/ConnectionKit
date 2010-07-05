@@ -13,6 +13,7 @@
 @interface SVInspectorViewController : NSViewController
 {
   @private
+    CGFloat             _tabHeight;
     NSArrayController   *_inspectedObjectsController;
 }
 
@@ -23,5 +24,11 @@
 // Bind to File's Owner inspectedObjectsController.selection.<key>
 // Should have no reason to start introspecting or editing the controller's other properties; Plug-in system will do that for you.
 - (NSArrayController *)inspectedObjectsController;
+
+
+#pragma mark Presentation
+// defaults to height of view during -setView:
+@property(nonatomic) CGFloat contentHeightForViewInInspector;
+
 
 @end
