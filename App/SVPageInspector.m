@@ -82,6 +82,30 @@
     if (![showTimestampCheckbox integerValue]) [showTimestampCheckbox performClick:self];
 }
 
+#pragma mark Presentation
+
+- (CGFloat)contentHeightForViewInInspectorForTabViewItem:(NSTabViewItem *)tabViewItem;
+{
+    NSString *identifier = [tabViewItem identifier];
+    
+    if ([identifier isEqualToString:@"page"])
+    {
+        return 407.0f;
+    }
+    else if ([identifier isEqualToString:@"appearance"])
+    {
+        return 300.0f;
+    }
+    else if ([identifier isEqualToString:@"collection"])
+    {
+        return 214.0f;
+    }
+    else
+    {
+        return [super contentHeightForViewInInspectorForTabViewItem:tabViewItem];
+    }
+}
+
 #pragma mark Thumbnail
 
 - (IBAction)chooseCustomThumbnail:(NSButton *)sender;
