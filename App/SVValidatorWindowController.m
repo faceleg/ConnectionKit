@@ -25,8 +25,9 @@
 @implementation SVValidatorWindowController
 
 
-- (void) validateSource:(NSString *)pageSource charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
+- (BOOL) validateSource:(NSString *)pageSource charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
 {
+	BOOL isValid = NO;
 #if DEBUG
 	// pageSource = [@"fjsklfjdslkjfld <b><bererej>" stringByAppendingString:pageSource];		// TESTING -- FORCE INVALID MARKUP
 #endif
@@ -91,7 +92,7 @@
 
 		int numErrors = [[headerDict objectForKey:@"X-W3C-Validator-Errors"] intValue];
 		int numWarnings = [[headerDict objectForKey:@"X-W3C-Validator-Warnings"] intValue];
-		BOOL isValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
+		isValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
 		NSString *explanation = NSLocalizedString(@"(none provided)", "indicator that not explanation was provided to HTML validation success");	// needs to be scraped
 		
 		if (nil != resultingPageString)
@@ -221,7 +222,7 @@
 		 title:NSLocalizedString(@"Unable to Validate",@"Title of alert")
 		 format:NSLocalizedString(@"Unable to contact validator.w3.org to perform the validation.", @"error message")];
 	}
-
+	return isValid;
 }
 
 

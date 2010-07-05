@@ -13,6 +13,15 @@
 #import <Cocoa/Cocoa.h>
 #import "KT.h"
 
+typedef enum { 
+	kValidationStateUnknown = 0,		// or empty string
+	kValidationStateUnparseable, 
+	kValidationStateValidationError, 
+	kValidationStateLocallyValid, 
+	kValidationStateVerifiedGood,
+} ValidationState;
+
+
 @class KTAbstractElement;
 
 // Syntax-colored text file viewer:
@@ -50,8 +59,9 @@
 	KTWhenToPreviewHTML	_whenToPreview;
 	NSString			*_cachedLocalPrelude;
 	NSString			*_cachedRemotePrelude;
-	BOOL				_hasValidationWarning;
+	ValidationState		_validationState;
 	BOOL				_preventPreview;
+	NSData				*_hashOfLastValidation;
 }
 
 - (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
@@ -78,8 +88,9 @@
 @property (nonatomic) KTWhenToPreviewHTML whenToPreview;
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
 @property (nonatomic, copy) NSString *cachedRemotePrelude;
-@property (nonatomic) BOOL hasValidationWarning;
+@property (nonatomic) ValidationState validationState;
 @property (nonatomic) BOOL preventPreview;
+@property (nonatomic, copy) NSData *hashOfLastValidation;
 
 
 

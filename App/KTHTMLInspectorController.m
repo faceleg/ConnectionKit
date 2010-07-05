@@ -18,6 +18,7 @@
 #import "KTPage.h"
 #import "KSAppDelegate.h"
 #import "NSString+Karelia.h"
+#import "NSData+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "SVValidatorWindowController.h"
 
@@ -27,6 +28,7 @@
 
 - (void)calculateCachedPreludes;
 - (void) autoValidate;
+- (NSData *)generateHashFromFragment:(NSString *)fragment;
 
 -(IBAction)	recolorCompleteFile: (id)sender;
 -(IBAction) recolorCompleteFileDeferred: (id)sender;
@@ -41,8 +43,12 @@
 @synthesize whenToPreview = _whenToPreview;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
-@synthesize hasValidationWarning = _hasValidationWarning;
+@synthesize validationState = _validationState;
 @synthesize preventPreview = _preventPreview;
+@synthesize hashOfLastValidation = _hashOfLastValidation;
+
+
+
 
 
 
@@ -108,6 +114,7 @@
     [self setHTMLSourceKeyPath:nil];
 	[self setTitle:nil];
 	[self setSourceCode:nil];
+	self.hashOfLastValidation = nil;
     [myUndoManager release];
     
 	[super dealloc];
@@ -350,34 +357,70 @@ initial syntax coloring.
 	// Use NSXMLDocument -- not useful for errors, but it's quick.
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
-
-	NSString *fullPage = [self wrapFragment:fragment local:YES];
+	NSData *currentHash = [self generateHashFromFragment:fragment];
 	
-	NSXMLDocument *xmlDoc;
-	NSError *err = nil;
-	xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
-			  // Don't try to actually validate HTML; it's not XML
-											  options:(KTHTML401DocType == [self docType]) ? NSXMLDocumentTidyHTML|NSXMLNodePreserveAll : NSXMLNodePreserveAll
-												error:&err];
-	
-	BOOL valid = (nil != xmlDoc);
-	if (xmlDoc)
+	if (!currentHash)
 	{
-		// Don't really try to validate if it's HTML 5.  Don't have a DTD!
-		// Don't really validate if it's HTML  ... We were having problems loading the DTD.
-		if (KTHTML5DocType != [self docType] && KTHTML401DocType != [self docType])
+		self.validationState = kValidationStateUnknown;
+	}
+	else if ([self.hashOfLastValidation isEqual:currentHash])
+	{
+		self.validationState = kValidationStateVerifiedGood;
+		// Text has changed insignificantly (e.g. just white space changes,
+		// or perhaps text has changed *back* to how it was when it was validated as good,
+		// set our validation state to be good.  Only if text has changed will we go back to the "maybe"/"bad" state.
+	}
+	else
+	{
+		NSString *fullPage = [self wrapFragment:fragment local:YES];
+		
+		NSXMLDocument *xmlDoc;
+		NSError *err = nil;
+		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+				  // Don't try to actually validate HTML; it's not XML
+												  options:(KTHTML401DocType == [self docType]) ? NSXMLDocumentTidyHTML|NSXMLNodePreserveAll : NSXMLNodePreserveAll
+													error:&err];
+		
+		if (xmlDoc)
 		{
-			// Further check for validation if we can
-			valid = [xmlDoc validateAndReturnError:&err];
+			// Don't really try to validate if it's HTML 5.  Don't have a DTD!
+			// Don't really validate if it's HTML  ... We were having problems loading the DTD.
+			if (KTHTML5DocType != [self docType] && KTHTML401DocType != [self docType])
+			{
+				// Further check for validation if we can
+				BOOL valid = [xmlDoc validateAndReturnError:&err];
+				self.validationState = valid ? kValidationStateLocallyValid : kValidationStateValidationError;
+			}
+			else	// no ability to validate further, so assume it's locally valid.
+			{
+				self.validationState = kValidationStateLocallyValid;
+			}
+		}
+		else
+		{
+			self.validationState = kValidationStateUnparseable;
+		}
+		
+		
+		if (err)	// This might a warning or diagnosis for HTML 4.01
+		{
+			NSLog(@"validation Error: %@", [err localizedDescription]);
 		}
 	}
+}
 
-	self.hasValidationWarning = !valid;
-
-	if (err)	// This might a warning or diagnosis for HTML 4.01
+// Calculate hash of the string, but ignore multiple whitespace runs, so that edits that just change whitespace won't lose any "good" validation state
+- (NSData *)generateHashFromFragment:(NSString *)fragment;
+{
+	NSData *digest = nil;
+	NSString *stringToHash = [fragment condenseWhiteSpace];
+	if (![stringToHash isEqualToString:@""])
 	{
-		NSLog(@"validation Error: %@", [err localizedDescription]);
+		NSData *dataToHash = [stringToHash dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
+		digest = [dataToHash SHA1HashDigest];
+//		NSLog(@"Hash of '%@' %@ is: %@", stringToHash, dataToHash, digest);
 	}
+	return digest;		// will be nil if the string is empty or white space only.
 }
 
 - (IBAction) validate:(id)sender;
@@ -388,7 +431,19 @@ initial syntax coloring.
 	NSString *fullPage = [self wrapFragment:fragment local:NO];
 	
 	NSString *docTypeName = [KTPage titleOfDocType:[self docType] localize:NO];
-	[[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+	BOOL isValid = [[SVValidatorWindowController sharedController] validateSource:fullPage charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+		
+	if (isValid)
+	{
+		self.validationState = kValidationStateVerifiedGood;
+		self.hashOfLastValidation = [self generateHashFromFragment:fragment];
+	}
+	else
+	{
+		// Don't change status; it will stay as-is OK.  However, remove the hash since our validation 
+		self.hashOfLastValidation = nil;
+	}
+
 }
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
@@ -538,7 +593,7 @@ initial syntax coloring.
 	
 	// Validate markup, after a delay
 	[NSObject cancelPreviousPerformRequestsWithTarget:self];
-	[self performSelector:@selector(autoValidate) withObject:nil afterDelay:1.0];		// one second delay to auto-save-back
+	[self performSelector:@selector(autoValidate) withObject:nil afterDelay:0.5];		// one second delay to auto-save-back
 }
 
 
@@ -833,53 +888,44 @@ initial syntax coloring.
 #pragma mark -
 #pragma mark Other
 
-/* -----------------------------------------------------------------------------
- goToLine:
- This selects the specified line of the document.
- -------------------------------------------------------------------------- */
-
--(void)	goToLine: (int)lineNum
++ (NSSet *)keyPathsForValuesAffectingValidationIcon;
 {
-	NSRange			theRange = { 0, 0 };
-	NSString*		vString = [textView string];
-	unsigned		currLine = 1;
-	NSCharacterSet* vSet = [NSCharacterSet characterSetWithCharactersInString: @"\n\r"];
-	unsigned		x;
-	unsigned		lastBreakOffs = 0;
-	unichar			lastBreakChar = 0;
-	
-	for( x = 0; x < [vString length]; x++ )
-	{
-		unichar		theCh = [vString characterAtIndex: x];
-		
-		// Skip non-linebreak chars:
-		if( ![vSet characterIsMember: theCh] )
-			continue;
-		
-		// If this is the LF in a CRLF sequence, only count it as one line break:
-		if( theCh == '\n' && lastBreakOffs == (x-1)
-		   && lastBreakChar == '\r' )
-		{
-			lastBreakOffs = 0;
-			lastBreakChar = 0;
-			theRange.location++;
-			continue;
-		}
-		
-		// Calc range and increase line number:
-		theRange.length = x -theRange.location +1;
-		if( currLine >= lineNum )
-			break;
-		currLine++;
-		theRange.location = theRange.location +theRange.length;
-		lastBreakOffs = x;
-		lastBreakChar = theCh;
-	}
-	
-	[textView scrollRangeToVisible: theRange];
-	[textView setSelectedRange: theRange];
+    return [NSSet setWithObject:@"validationState"];
+}
++ (NSSet *)keyPathsForValuesAffectingValidationInfo;
+{
+    return [NSSet setWithObject:@"validationState"];
 }
 
+- (NSString *)validationIcon
+{
+	NSString *result = nil;
+	switch(self.validationState)
+	{
+		case kValidationStateUnknown:	result = nil; break;
+		case kValidationStateUnparseable:
+		case kValidationStateValidationError:	result = [NSImage imageNamed:@"NSCaution"]; break;
+		case kValidationStateLocallyValid:		result = [NSImage imageNamed:NSImageNameInfo]; break;
+		case kValidationStateVerifiedGood:		result = [NSImage imageNamed:@"checkmark"]; break;
+	}
+	return result;
+}
+
+- (NSString *)validationInfo
+{
+	NSString *result = nil;
+	switch(self.validationState)
+	{
+		case kValidationStateUnknown:	result = nil; break;
+		case kValidationStateUnparseable:		result = NSLocalizedString(@"Problems detected with this HTML. Validate for more information.", @"status of HTML text entered into window"); break;
+			
+			// Parseable, but DTD validation error.  Give user just a bit more hint about what might be wrong.
+		case kValidationStateValidationError:	result = NSLocalizedString(@"Problems detected with the structure of the HTML. Validate for more information.", @"status of HTML text entered into window"); break;
+		case kValidationStateLocallyValid:		result = NSLocalizedString(@"HTML appears OK. Validate for detailed diagnostics.", @"status of HTML text entered into window"); break;
+		case kValidationStateVerifiedGood:		result = NSLocalizedString(@"This HTML is confirmed as being valid.", @"status of HTML text entered into window"); break;
+	}
+	return result;
+}
 
 
 @end
