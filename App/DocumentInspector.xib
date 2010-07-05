@@ -51,7 +51,7 @@
 						<object class="NSMutableArray" key="NSTabViewItems">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<object class="NSTabViewItem" id="409530022">
-								<string key="NSIdentifier">properties</string>
+								<string key="NSIdentifier">site</string>
 								<object class="NSView" key="NSView" id="324127978">
 									<reference key="NSNextResponder" ref="812452045"/>
 									<int key="NSvFlags">261</int>
@@ -277,7 +277,7 @@
 										</object>
 										<object class="NSCustomView" id="288995462">
 											<reference key="NSNextResponder" ref="324127978"/>
-											<int key="NSvFlags">292</int>
+											<int key="NSvFlags">266</int>
 											<object class="NSMutableArray" key="NSSubviews">
 												<bool key="EncodedWithXMLCoder">YES</bool>
 												<object class="NSImageView" id="527178460">
@@ -692,7 +692,7 @@
 								<reference key="NSTabView" ref="812452045"/>
 							</object>
 							<object class="NSTabViewItem" id="708745229">
-								<string key="NSIdentifier">Item 3</string>
+								<string key="NSIdentifier">appearance</string>
 								<object class="NSView" key="NSView" id="865099582">
 									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
@@ -2035,6 +2035,14 @@
 						</object>
 					</object>
 					<int key="connectionID">686</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">tabView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="812452045"/>
+					</object>
+					<int key="connectionID">688</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -3478,7 +3486,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">686</int>
+			<int key="maxID">688</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -3505,6 +3513,17 @@
 				<object class="IBPartialClassDescription">
 					<string key="className">KSInspectorViewController</string>
 					<string key="superclassName">BWViewController</string>
+					<object class="NSMutableDictionary" key="outlets">
+						<string key="NS.key.0">tabView</string>
+						<string key="NS.object.0">NSTabView</string>
+					</object>
+					<object class="NSMutableDictionary" key="toOneOutletInfosByName">
+						<string key="NS.key.0">tabView</string>
+						<object class="IBToOneOutletInfo" key="NS.object.0">
+							<string key="name">tabView</string>
+							<string key="candidateClassName">NSTabView</string>
+						</object>
+					</object>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">../../Shared/AppKit/KSInspectorViewController.h</string>
@@ -3833,6 +3852,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">WEKWebKitPrivate.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSViewController</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBProjectSource</string>
+						<string key="minorKey">../../Shared/AppKit/KSInspector.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

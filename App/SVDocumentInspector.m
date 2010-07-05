@@ -125,6 +125,26 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     }
 }
 
+#pragma mark Presentation
+
+- (CGFloat)contentHeightForViewInInspectorForTabViewItem:(NSTabViewItem *)tabViewItem;
+{
+    NSString *identifier = [tabViewItem identifier];
+    
+    if ([identifier isEqualToString:@"site"])
+    {
+        return 386.0f;
+    }
+    else if ([identifier isEqualToString:@"appearance"])
+    {
+        return 501.0f;
+    }
+    else
+    {
+        return [super contentHeightForViewInInspectorForTabViewItem:tabViewItem];
+    }
+}
+
 #pragma mark Info Tab
 
 - (void)refresh;
