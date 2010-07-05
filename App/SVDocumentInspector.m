@@ -152,12 +152,20 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 {
 	BOOL isOther = [[sender selectedItem] tag] < 0;
 	[oLanguageCodeField setEnabled:isOther];
-	
-	NSString *languageCode = [[sender selectedItem] representedObject];
-    if (languageCode)
+    
+	if (isOther)
     {
+        // Give focus to language code field
+        NSWindow *window = [[self view] window];
+        [window makeKeyWindow];
+        [window makeFirstResponder:oLanguageCodeField];
+    }
+    else
+    {
+        // Persist choice
+        NSString *languageCode = [[sender selectedItem] representedObject];
         [[self inspectedObjectsController] setValue:languageCode
-                                         forKeyPath:@"selection.master.language"];
+                                             forKeyPath:@"selection.master.language"];
     }
 }
 
