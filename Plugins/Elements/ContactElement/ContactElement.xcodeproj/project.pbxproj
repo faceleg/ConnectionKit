@@ -11,7 +11,7 @@
 		27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27F19AD00D4E479D000DB895 /* InfoPlist.strings */; };
 		27FF85F40C5A91EA0077CB14 /* ContactField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85ED0C5A91EA0077CB14 /* ContactField.m */; };
 		27FF85F50C5A91EA0077CB14 /* ContactFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85EF0C5A91EA0077CB14 /* ContactFieldCell.m */; };
-		27FF85F60C5A91EA0077CB14 /* ContactElementFieldsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */; };
+		27FF85F60C5A91EA0077CB14 /* ContactFieldsArrayController.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F10C5A91EA0077CB14 /* ContactFieldsArrayController.m */; };
 		27FF85F70C5A91EA0077CB14 /* ContactInspector.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85F30C5A91EA0077CB14 /* ContactInspector.m */; };
 		3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C41CC7309B4D7BC0086EF83 /* License.rtf */; };
 		3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */; };
@@ -41,7 +41,7 @@
 		27FF85EE0C5A91EA0077CB14 /* ContactFieldCell.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactFieldCell.h; sourceTree = "<group>"; };
 		27FF85EF0C5A91EA0077CB14 /* ContactFieldCell.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactFieldCell.m; sourceTree = "<group>"; };
 		27FF85F00C5A91EA0077CB14 /* ContactFieldsArrayController.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactFieldsArrayController.h; sourceTree = "<group>"; };
-		27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactElementFieldsArrayController.m; sourceTree = "<group>"; };
+		27FF85F10C5A91EA0077CB14 /* ContactFieldsArrayController.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactFieldsArrayController.m; sourceTree = "<group>"; };
 		27FF85F20C5A91EA0077CB14 /* ContactInspector.h */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.h; path = ContactInspector.h; sourceTree = "<group>"; };
 		27FF85F30C5A91EA0077CB14 /* ContactInspector.m */ = {isa = PBXFileReference; fileEncoding = 30; lastKnownFileType = sourcecode.c.objc; path = ContactInspector.m; sourceTree = "<group>"; };
 		32DBCF630370AF2F00C91783 /* ContactElement_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElement_Prefix.pch; sourceTree = "<group>"; };
@@ -131,7 +131,7 @@
 				27FF85EE0C5A91EA0077CB14 /* ContactFieldCell.h */,
 				27FF85EF0C5A91EA0077CB14 /* ContactFieldCell.m */,
 				27FF85F00C5A91EA0077CB14 /* ContactFieldsArrayController.h */,
-				27FF85F10C5A91EA0077CB14 /* ContactElementFieldsArrayController.m */,
+				27FF85F10C5A91EA0077CB14 /* ContactFieldsArrayController.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -273,7 +273,7 @@
 				CE98EF3209994D7E00EDCEE7 /* ContactPlugIn.m in Sources */,
 				27FF85F40C5A91EA0077CB14 /* ContactField.m in Sources */,
 				27FF85F50C5A91EA0077CB14 /* ContactFieldCell.m in Sources */,
-				27FF85F60C5A91EA0077CB14 /* ContactElementFieldsArrayController.m in Sources */,
+				27FF85F60C5A91EA0077CB14 /* ContactFieldsArrayController.m in Sources */,
 				27FF85F70C5A91EA0077CB14 /* ContactInspector.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
