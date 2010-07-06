@@ -21,7 +21,7 @@
 
 
 @interface SVWebEditorHTMLContext ()
-- (void)finishWithCurrentItem;
+- (void)endDOMController;
 @end
 
 
@@ -72,7 +72,9 @@
     return [[_DOMControllers copy] autorelease];
 }
 
-- (void)beginDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
+- (SVDOMController *)currentDOMController; { return _currentDOMController; }
+
+- (void)startDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
 {
     if (_currentDOMController)
     {
@@ -89,17 +91,15 @@
     [controller awakeFromHTMLContext:self];
 }
 
-- (void)addDOMController:(SVDOMController *)controller;
-{
-    [self beginDOMController:controller];
-    [self finishWithCurrentItem];
-}
-
-- (SVDOMController *)currentDOMController; { return _currentDOMController; }
-
-- (void)finishWithCurrentItem;
+- (void)endDOMController;
 {
     _currentDOMController = (SVDOMController *)[_currentDOMController parentWebEditorItem];
+}
+
+- (void)addDOMController:(SVDOMController *)controller;
+{
+    [self startDOMController:controller];
+    [self endDOMController];
 }
 
 #pragma mark Graphics
@@ -109,13 +109,13 @@
     [super willBeginWritingGraphic:object];
     
     SVDOMController *controller = [object newDOMController];
-    [self beginDOMController:controller];
+    [self startDOMController:controller];
     [controller release];
 }
 
 - (void)didEndWritingGraphic;
 {
-    [self finishWithCurrentItem];
+    [self endDOMController];
     
     [super didEndWritingGraphic];
 }
@@ -126,7 +126,7 @@
     if (![self isWritingCallout])
     {
         SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
-        [self beginDOMController:controller];
+        [self startDOMController:controller];
         [controller release];
     }
 
@@ -138,7 +138,7 @@
     [super megaBufferedWriterWillFlush:buffer];
     
     // Only once the callout buffer flushes can we be sure the element ended.
-    [self finishWithCurrentItem];
+    [self endDOMController];
 }
 
 #pragma mark Text Blocks
@@ -149,13 +149,13 @@
     
     // Create controller
     SVDOMController *controller = [textBlock newDOMController];
-    [self beginDOMController:controller];
+    [self startDOMController:controller];
     [controller release];
 }
 
 - (void)didEndWritingHTMLTextBlock;
 {
-    [self finishWithCurrentItem];
+    [self endDOMController];
     [super didEndWritingHTMLTextBlock];
 }
 
@@ -239,7 +239,7 @@
     [controller setRepresentedObject:sidebar];
     
     // Store controller
-    [self beginDOMController:controller];    
+    [self startDOMController:controller];    
     
     
     // Finish up
