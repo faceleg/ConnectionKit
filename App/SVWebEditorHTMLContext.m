@@ -122,6 +122,7 @@
     }
     else
     {
+        
         // Create controller for the graphic
         SVDOMController *controller = [graphic newDOMController];
         [self startDOMController:controller];
@@ -150,10 +151,11 @@
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
 {
+    BOOL writingCallout = [self isWritingCallout];
     [super megaBufferedWriterWillFlush:buffer];
     
     // Only once the callout buffer flushes can we be sure the element ended.
-    [self endDOMController];
+    if (writingCallout) [self endDOMController];
 }
 
 #pragma mark Text Blocks
