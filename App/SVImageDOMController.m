@@ -131,7 +131,17 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 - (unsigned int)resizingMask
 {
-    return kCALayerRightEdge | kCALayerBottomEdge;
+    unsigned int result = kCALayerBottomEdge;
+    
+    DOMHTMLElement *element = [self HTMLElement];
+    DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
+    
+    unsigned int widthMask = ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ?
+                              kCALayerLeftEdge :
+                              kCALayerRightEdge);
+    
+    result = (result | widthMask);
+    return result;
 }
 
 #define MINDIMENSION 16.0
