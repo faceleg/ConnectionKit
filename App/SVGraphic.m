@@ -221,7 +221,7 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 {
     NSString *result = nil;
     
-    if (![self isPagelet])
+    if (![self isPagelet] || YES)
     {
         SVTextAttachment *textAttachment = [self textAttachment];
         if ([[textAttachment causesWrap] boolValue])
