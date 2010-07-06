@@ -136,7 +136,11 @@
 {
 	NSString *result = [self customFileExtension];
 	
-	if (!result)
+	if (result)
+    {
+        result = [result suggestedLegalizedWebPublishingFileName];
+    }
+    else
 	{
 		result = [self defaultFileExtension];
 	}
