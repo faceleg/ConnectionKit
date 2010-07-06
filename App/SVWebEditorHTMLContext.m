@@ -122,6 +122,7 @@
     }
     else
     {
+        if ([self isWritingCallout]) [self flushCalloutBuffer];
         
         // Create controller for the graphic
         SVDOMController *controller = [graphic newDOMController];

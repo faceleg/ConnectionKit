@@ -306,6 +306,11 @@
     return (_calloutAlignment != nil);
 }
 
+- (void)flushCalloutBuffer;
+{
+    [_calloutBuffer flush];
+}
+
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
 {
     OBASSERT(buffer == _calloutBuffer);

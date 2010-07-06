@@ -103,6 +103,7 @@ typedef enum {
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
 - (void)endCallout;    // written lazily so consecutive matching callouts are blended into one
 - (BOOL)isWritingCallout;
+- (void)flushCalloutBuffer;
 
 
 #pragma mark Iterations
