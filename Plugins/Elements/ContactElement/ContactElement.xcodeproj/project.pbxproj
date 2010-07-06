@@ -122,16 +122,16 @@
 		08FB77AFFE84173DC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				CE98EF3009994D7E00EDCEE7 /* ContactPlugin.h */,
+				CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */,
+				27FF85F20C5A91EA0077CB14 /* ContactInspector.h */,
+				27FF85F30C5A91EA0077CB14 /* ContactInspector.m */,
 				27FF85EC0C5A91EA0077CB14 /* ContactField.h */,
 				27FF85ED0C5A91EA0077CB14 /* ContactField.m */,
 				27FF85EE0C5A91EA0077CB14 /* ContactFieldCell.h */,
 				27FF85EF0C5A91EA0077CB14 /* ContactFieldCell.m */,
 				27FF85F00C5A91EA0077CB14 /* ContactFieldsArrayController.h */,
 				27FF85F10C5A91EA0077CB14 /* ContactFieldsArrayController.m */,
-				27FF85F20C5A91EA0077CB14 /* ContactInspector.h */,
-				27FF85F30C5A91EA0077CB14 /* ContactInspector.m */,
-				CE98EF3009994D7E00EDCEE7 /* ContactPlugin.h */,
-				CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
