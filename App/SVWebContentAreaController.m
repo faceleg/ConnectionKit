@@ -148,8 +148,9 @@
 	[self setViewType:viewType];
 }
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem	// WARNING: IF YOU ADD ITEMS HERE, YOU NEED TO SYNCHRONIZE WITH -[KTDocWindowController validateMenuItem:]
 {
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
     BOOL result = YES;
     
     if ([menuItem action] == @selector(selectWebViewViewType:))

@@ -34,7 +34,7 @@
 	NSURL *baseURL = [NSURL URLWithString:@"changelog.php" relativeToURL:[[NSApp delegate] homeBaseURL]];
 	NSURL *result = [NSURL URLWithBaseURL:baseURL parameters:simpleParameters];
 	
-	DJW((@"release notes URL = %@", result));
+	OFF((@"release notes URL = %@", result));
 	return result;
 }
 

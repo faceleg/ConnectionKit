@@ -31,6 +31,7 @@
 #import "KSSilencingConfirmSheet.h"
 #import "SVValidatorWindowController.h"
 #import "KSNetworkNotifier.h"
+#import "SVRawHTMLGraphic.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
@@ -363,7 +364,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
     KTDesign *aDesign = [designChooser design];
     
-	DJW((@"%s %p",__FUNCTION__, aDesign));
+	OFF((@"%s %p",__FUNCTION__, aDesign));
 	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
     
     
@@ -588,7 +589,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-    OFF((@"KTDocWindowController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
     
     BOOL result = YES;
 	SEL itemAction = [menuItem action];
@@ -613,7 +614,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	}
 	
 	// Insert menu
-    if (itemAction == @selector(insertSiteTitle:) ||
+    if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
+		itemAction == @selector(insertSiteTitle:) ||
         itemAction == @selector(insertSiteSubtitle:) ||
         itemAction == @selector(insertPageTitle:) ||
         itemAction == @selector(insertPageletTitle:) ||
@@ -782,23 +784,37 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
-	if ( [toolbarItem action] == @selector(addPage:) )
+	VALIDATION((@"%s %@ %@",__FUNCTION__, toolbarItem, [toolbarItem itemIdentifier]));
+	SEL action = [toolbarItem action];
+	if (	action == @selector(addPage:)
+		||	action == @selector(chooseDesign:)
+		)
     {
         return YES;
     }
-    else if ( [toolbarItem action] == @selector(addCollection:) )
+	else if (action == @selector(editRawHTMLInSelectedBlock:))
+	{
+		for (id selection in [[[[self webContentAreaController] webEditorViewController] graphicsController] selectedObjects])
+		{
+			if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
+			{
+				return YES;
+			}
+		}
+	}
+    else if ( action == @selector(addCollection:) )
     {
         return YES;
     }
-    else if ( [toolbarItem action] == @selector(groupAsCollection:) )
+    else if ( action == @selector(groupAsCollection:) )
     {
         return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
-    else if ( [toolbarItem action] == @selector(group:) )
+    else if ( action == @selector(group:) )
     {
         return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
-    else if ( [toolbarItem action] == @selector(ungroup:) )
+    else if ( action == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
         return ( (1==[selectedItems count])
@@ -806,13 +822,13 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
     // Validate the -publishSiteFromToolbar: item here because -flagsChanged: doesn't catch all edge cases
-    else if ([toolbarItem action] == @selector(publishSiteFromToolbar:))
+    else if (action == @selector(publishSiteFromToolbar:))
     {
         [toolbarItem setLabel:
          ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
     }
     
-    return YES;
+    return NO;		// assume if it's not covered here it's no ... otherwise why are we bothering to validate?
 }
 
 #pragma mark Window Delegate

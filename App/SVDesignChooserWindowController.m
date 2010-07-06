@@ -121,17 +121,17 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 {
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"color == NULL"]];
 	[oDesignsArrayController rearrangeObjects];
-	//DJW((@"null color: %@", [oDesignsArrayController arrangedObjects]));
+	OFF((@"null color: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullColor = 0 != [[oDesignsArrayController arrangedObjects] count];
 	
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"genre == NULL"]];
 	[oDesignsArrayController rearrangeObjects];
-	//DJW((@"null genres: %@", [oDesignsArrayController arrangedObjects]));
+	OFF((@"null genres: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullGenre = 0 != [[oDesignsArrayController arrangedObjects] count];
 
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"width == NULL"]];
 	[oDesignsArrayController rearrangeObjects];
-	//DJW((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
+	OFF((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullWidth = 0 != [[oDesignsArrayController arrangedObjects] count];
 	
 	[oDesignsArrayController setFilterPredicate:nil];		// go back to no filter

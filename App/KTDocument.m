@@ -908,7 +908,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
-	OFF((@"KTDocument validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 	
 	// File menu	
 	// "Save As..." saveDocumentAs:

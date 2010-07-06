@@ -254,6 +254,10 @@ TO DO:
 			{
                 [result setTarget:self];
             }
+            else if ( [target isEqualToString:@"firstresponder"] ) 
+			{
+                [result setTarget:nil];		// but can we do validation?
+            }
             else if ( [target isEqualToString:@"document"] ) 
 			{
                 [result setTarget:[self document]];

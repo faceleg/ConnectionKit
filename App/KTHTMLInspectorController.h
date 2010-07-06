@@ -55,7 +55,6 @@ typedef enum {
 	
 	// Bound Properties
 	KTDocType			_docType;
-	KTWhenToPreviewHTML	_whenToPreview;
 	NSString			*_cachedLocalPrelude;
 	NSString			*_cachedRemotePrelude;
 	ValidationState		_validationState;
@@ -82,7 +81,6 @@ typedef enum {
 -(void)	goToLine: (int)lineNum;
 
 @property (nonatomic) KTDocType docType;
-@property (nonatomic) KTWhenToPreviewHTML whenToPreview;
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
 @property (nonatomic, copy) NSString *cachedRemotePrelude;
 @property (nonatomic) ValidationState validationState;

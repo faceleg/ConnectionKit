@@ -23,6 +23,7 @@
 #import "SVMediaRecord.h"
 #import "KTSite.h"
 #import "SVSelectionBorder.h"
+#import "SVRawHTMLGraphic.h"
 #import "SVSidebar.h"
 #import "SVSidebarDOMController.h"
 #import "SVSidebarPageletsController.h"
@@ -721,67 +722,74 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 #pragma mark UI Validation
 
-- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;
+- (BOOL)validateMenuItem:(NSMenuItem *)menuItem;	// WARNING: IF YOU ADD ITEMS HERE, YOU NEED TO SYNCHRONIZE WITH -[KTDocWindowController validateMenuItem:]
 {
-    BOOL result = YES;
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
+    BOOL result = NO;
     
-    if (result)
-    {
-        SEL action = [menuItem action];
-        
-        
-        if (action == @selector(makeTextLarger:))
-        {
-            result = [[self webView] canMakeTextLarger];
-        }
-        else if (action == @selector(makeTextSmaller:))
-        {
-            result = [[self webView] canMakeTextSmaller];
-        }
-        else if (action == @selector(makeTextStandardSize:))
-        {
-            result = [[self webView] canMakeTextStandardSize];
-        }
-        
-        else if (action == @selector(insertSiteTitle:))
-        {
-            //  Can insert site title if there isn't already one
-            result = ([[[[[self page] master] siteTitle] text] length] == 0);
-        }
-        else if (action == @selector(insertSiteSubtitle:))
-        {
-            //  Can insert site title if there isn't already one
-            result = ([[[[[self page] master] siteSubtitle] text] length] == 0);
-        }
-        else if (action == @selector(insertPageTitle:))
-        {
-            //  Can insert site title if there isn't already one
-            result = ([[[[self page] titleBox] text] length] == 0);
-        }
-        else if (action == @selector(insertPageletTitle:))
-        {
-            // To insert a pagelet title, the selection just needs to contain at least one title-less pagelet. #56871
-            result = NO;
-            for (id <NSObject> anObject in [[self graphicsController] selectedObjects])
-            {
-                if ([anObject isKindOfClass:[SVGraphic class]])
-                {
-                    if ([[[(SVGraphic *)anObject titleBox] text] length] == 0)
-                    {
-                        result = YES;
-                        break;
-                    }
-                }
-            }
-        }
-        else if (action == @selector(insertFooter:))
-        {
-            //  Can insert site title if there isn't already one
-            result = ([[[[[self page] master] footer] text] length] == 0);
-        }
-    }
-              
-    
+	SEL action = [menuItem action];
+	
+	if (action == @selector(editRawHTMLInSelectedBlock:))
+	{
+		for (id selection in [self.graphicsController selectedObjects])
+		{
+			if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
+			{
+				result = YES;
+				break;
+			}
+		}
+	}
+	else if (action == @selector(makeTextLarger:))
+	{
+		result = [[self webView] canMakeTextLarger];
+	}
+	else if (action == @selector(makeTextSmaller:))
+	{
+		result = [[self webView] canMakeTextSmaller];
+	}
+	else if (action == @selector(makeTextStandardSize:))
+	{
+		result = [[self webView] canMakeTextStandardSize];
+	}
+	
+	else if (action == @selector(insertSiteTitle:))
+	{
+		//  Can insert site title if there isn't already one
+		result = ([[[[[self page] master] siteTitle] text] length] == 0);
+	}
+	else if (action == @selector(insertSiteSubtitle:))
+	{
+		//  Can insert site title if there isn't already one
+		result = ([[[[[self page] master] siteSubtitle] text] length] == 0);
+	}
+	else if (action == @selector(insertPageTitle:))
+	{
+		//  Can insert site title if there isn't already one
+		result = ([[[[self page] titleBox] text] length] == 0);
+	}
+	else if (action == @selector(insertPageletTitle:))
+	{
+		// To insert a pagelet title, the selection just needs to contain at least one title-less pagelet. #56871
+		result = NO;
+		for (id <NSObject> anObject in [[self graphicsController] selectedObjects])
+		{
+			if ([anObject isKindOfClass:[SVGraphic class]])
+			{
+				if ([[[(SVGraphic *)anObject titleBox] text] length] == 0)
+				{
+					result = YES;
+					break;
+				}
+			}
+		}
+	}
+	else if (action == @selector(insertFooter:))
+	{
+		//  Can insert site title if there isn't already one
+		result = ([[[[[self page] master] footer] text] length] == 0);
+	}
+	
     return result;
 }
 
@@ -824,13 +832,23 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
 {
-	[[self HTMLInspectorController] setTitle:@"This is the title"];
-	
-	[[self HTMLInspectorController] showWindow:nil];
+	for (id selection in [self.graphicsController selectedObjects])
+	{
+		if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
+		{
+			KTHTMLInspectorController *controller = [self HTMLInspectorController];
+			SVRawHTMLGraphic *graphic = (SVRawHTMLGraphic *) selection;
+			NSString *toEdit = [graphic HTMLString];
+			[controller setTitle:@"This is the title"];
+			[controller setSourceCode:toEdit];
+			[controller setDocType:[[graphic docType] intValue]];
+			[controller setPreventPreview:![[graphic shouldPreviewWhenEditing] boolValue]];
+			
+			[controller showWindow:nil];
+			break;
+		}
+	}
 }	
-
-
-
 
 #pragma mark -
 

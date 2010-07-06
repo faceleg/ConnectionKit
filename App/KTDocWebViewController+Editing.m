@@ -645,6 +645,7 @@
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 	BOOL result = YES;
 
 	SEL action = [menuItem action];

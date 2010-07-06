@@ -362,7 +362,7 @@
 	NSString *path = [dirPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%p-%@.tiff", self, [NSString UUIDString]]];
 	[[result TIFFRepresentation] writeToFile:path atomically:NO];
 	
-	DJW((@"@Scaling image %@ down to %d %d -> %@", [[self description] condenseWhiteSpace], aWidth, aHeight, path));
+	OFF((@"@Scaling image %@ down to %d %d -> %@", [[self description] condenseWhiteSpace], aWidth, aHeight, path));
 #endif
 	
 	return result;

@@ -460,6 +460,7 @@ const float kWindowResizeOffset = 59.0; // "gap" between progress bar and bottom
 
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 	KTDocWindowController *windowController = [_modalWindow windowController];
 	OBASSERT(windowController); // This is a slightly hacky way to get to the controller, but it works
 	

@@ -58,13 +58,6 @@ typedef enum {
     KTDocTypeAll = NSIntegerMax,
 } KTDocType;
 
-// When to preview Raw HTML
-typedef enum {
-	KTNeverPreviewHTML = 0,
-	KTOnlinePreviewHTML,
-	KTAlwaysPreviewHTML,
-} KTWhenToPreviewHTML;
-
 // Document
 extern NSString *kKTDocumentType;
 extern NSString *kKTDocumentExtension;

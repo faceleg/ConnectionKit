@@ -638,7 +638,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OBPRECONDITION(menuItem);
-	OFF((@"KTAppDelegate validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 
 	SEL action = [menuItem action];
 

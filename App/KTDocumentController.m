@@ -372,7 +372,7 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	OBPRECONDITION(menuItem);
-	OFF((@"KTDocumentController validateMenuItem:%@ %@", [menuItem title], NSStringFromSelector([menuItem action])));
+	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 	
 	if (gLicenseViolation || [[NSApp delegate] appIsExpired])
 	{

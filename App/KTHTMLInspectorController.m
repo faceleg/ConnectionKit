@@ -40,7 +40,6 @@
 @implementation KTHTMLInspectorController
 
 @synthesize docType = _docType;
-@synthesize whenToPreview = _whenToPreview;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
 @synthesize validationState = _validationState;
