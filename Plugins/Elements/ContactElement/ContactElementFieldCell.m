@@ -82,7 +82,6 @@
 		NSImage *icon = [NSImage imageNamed:@"NSLockLockedTemplate"];	// try for Leopard resizable version
 		if (nil == icon)
 		{
-            //FIXME: this should no longer be needed if we're Leopard+. Can lock.png be removed from project?
 			// fallback
 			icon = [NSImage imageInBundle:[NSBundle bundleForClass:[self class]]
 									named:@"lock.png"];

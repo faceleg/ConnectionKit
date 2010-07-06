@@ -201,9 +201,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 + (NSSet *)plugInKeys
 {
-    return [NSSet setWithObjects:
-            @"copyToSender", 
-            nil];
+	return [NSSet setWithObjects:nil];	
 }
 
 + (Class)inspectorViewControllerClass { return [ContactElementInspector class]; }
