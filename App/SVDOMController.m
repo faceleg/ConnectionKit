@@ -324,6 +324,8 @@
     return [[SVDOMController alloc] initWithRepresentedObject:self];
 }
 
+- (NSString *)elementIdName; { return nil; }
+
 - (BOOL)shouldPublishEditingElementID; { return NO; }
 
 @end

@@ -24,10 +24,6 @@
 
 - (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
 
-#pragma mark Editing Support
-
-- (NSString *)elementIdName; { return nil; }
-
 #pragma mark Inspection
 
 - (id)valueForUndefinedKey:(NSString *)key

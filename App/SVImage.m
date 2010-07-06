@@ -163,7 +163,7 @@
     
     
     // Image needs unique ID for DOM Controller to find
-    NSString *idName = [@"image-" stringByAppendingString:[self elementIdName]];
+    NSString *idName = [@"image-" stringByAppendingString:[self elementID]];
     
     // Actually write the image
     SVMediaRecord *media = [self media];
