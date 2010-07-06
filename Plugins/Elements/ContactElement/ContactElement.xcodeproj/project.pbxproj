@@ -16,7 +16,7 @@
 		3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 3C41CC7309B4D7BC0086EF83 /* License.rtf */; };
 		3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
-		CE98EF3209994D7E00EDCEE7 /* ContactElementPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98EF3109994D7E00EDCEE7 /* ContactElementPlugin.m */; };
+		CE98EF3209994D7E00EDCEE7 /* ContactPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */; };
 		CE98EF3609994DE400EDCEE7 /* ContactElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */; };
 		CEA7FA4209B27B7C0034E035 /* ContactStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */; };
 		CEC23F14113F07400022DA7D /* ContactElement.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC23F12113F07400022DA7D /* ContactElement.xib */; };
@@ -53,8 +53,8 @@
 		8D5B49B7048680CD000E48DA /* Info.plist */ = {isa = PBXFileReference; explicitFileType = text.plist.xml; fileEncoding = 4; path = Info.plist; sourceTree = "<group>"; };
 		CE1AD37C0A7E83E90083C01E /* it */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = it; path = it.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE55B0840AD19AF50091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
-		CE98EF3009994D7E00EDCEE7 /* ContactElementPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactElementPlugin.h; sourceTree = "<group>"; };
-		CE98EF3109994D7E00EDCEE7 /* ContactElementPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactElementPlugin.m; sourceTree = "<group>"; };
+		CE98EF3009994D7E00EDCEE7 /* ContactPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPlugin.h; sourceTree = "<group>"; };
+		CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactPlugin.m; sourceTree = "<group>"; };
 		CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ContactElementTemplate.html; sourceTree = "<group>"; };
 		CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = ContactStrings.plist; sourceTree = "<group>"; };
 		CEA9AFE60A64227000855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -130,8 +130,8 @@
 				27FF85F10C5A91EA0077CB14 /* ContactFieldsArrayController.m */,
 				27FF85F20C5A91EA0077CB14 /* ContactInspector.h */,
 				27FF85F30C5A91EA0077CB14 /* ContactInspector.m */,
-				CE98EF3009994D7E00EDCEE7 /* ContactElementPlugin.h */,
-				CE98EF3109994D7E00EDCEE7 /* ContactElementPlugin.m */,
+				CE98EF3009994D7E00EDCEE7 /* ContactPlugin.h */,
+				CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */,
 			);
 			name = Classes;
 			sourceTree = "<group>";
@@ -270,7 +270,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE98EF3209994D7E00EDCEE7 /* ContactElementPlugin.m in Sources */,
+				CE98EF3209994D7E00EDCEE7 /* ContactPlugin.m in Sources */,
 				27FF85F40C5A91EA0077CB14 /* ContactField.m in Sources */,
 				27FF85F50C5A91EA0077CB14 /* ContactFieldCell.m in Sources */,
 				27FF85F60C5A91EA0077CB14 /* ContactFieldsArrayController.m in Sources */,

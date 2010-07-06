@@ -34,7 +34,7 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementPlugin.h"
+#import "ContactPlugin.h"
 #import "ContactInspector.h"
 #import "ContactField.h"
 
@@ -55,7 +55,7 @@
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactElementPlugin ()
+@interface ContactPlugin ()
 
 - (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive;
 - (NSArray *)fieldsPropertyListRepresentation;
@@ -67,7 +67,7 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 @end
 
 
-@implementation ContactElementPlugin
+@implementation ContactPlugin
 
 @synthesize address = _address;
 @synthesize emailLabel = _emailLabel;
