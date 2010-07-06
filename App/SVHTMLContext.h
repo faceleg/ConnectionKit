@@ -94,11 +94,12 @@ typedef enum {
 
 
 #pragma mark Graphics
-
 - (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
 - (void)writeGraphics:(NSArray *)graphics;  // convenience
 - (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
 
+
+#pragma mark Callouts
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 - (void)endCallout;    // written lazily so consecutive matching callouts are blended into one
 - (BOOL)isWritingCallout;

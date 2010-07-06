@@ -11,6 +11,7 @@
 #import "SVGraphic.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVTemplate.h"
 #import "KTPage.h"
 #import "KTSite.h"
 #import "BDAlias+QuickLook.h"
@@ -209,8 +210,8 @@
     
     
     // Possible callout.
-    SVGraphicPlacement placement = [[graphic placement] intValue];
-    if (placement == SVGraphicPlacementCallout) [self beginCalloutWithAlignmentClassName:@""];
+    BOOL callout;
+    if (callout = [graphic isCallout]) [self beginCalloutWithAlignmentClassName:@""];
     
     
     // Update number of graphics
@@ -236,7 +237,7 @@
     
     
     // Finish up
-    if (placement == SVGraphicPlacementCallout) [self endCallout];
+    if (callout) [self endCallout];
 }
 
 - (void)writeGraphics:(NSArray *)graphics;  // convenience
