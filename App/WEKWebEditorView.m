@@ -427,6 +427,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
 
 #pragma mark Overall Selection
 
+- (BOOL)shouldSelectDOMElementInline:(DOMHTMLElement *)element;
+{
+    // Whether selecting the element should be inline (set the WebView's selection) or not (no WebView selection)
+    
+    DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
+                                                              pseudoElement:nil];
+    
+    BOOL result = ([[style display] isEqualToString:@"inline"] && [element isContentEditable]);
+    return result;
+}
+
 - (BOOL)changeSelectionByDeselectingAll:(BOOL)deselectAll
                          orDeselectItem:(WEKWebEditorItem *)itemToDeselect
                             selectItems:(NSArray *)itemsToSelect
@@ -525,13 +536,8 @@ typedef enum {  // this copied from WebPreferences+Private.h
         {
             DOMHTMLElement *domElement = [selectedItem HTMLElement];
             
-            DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:domElement
-                                                                      pseudoElement:nil];
-            
-            if ([[style display] isEqualToString:@"inline"] && [domElement isContentEditable])
+            if ([self shouldSelectDOMElementInline:domElement])
             {
-                [[self window] makeFirstResponder:[domElement documentView]];
-                
                 DOMRange *range = [[domElement ownerDocument] createRange];
                 [range selectNode:domElement];
                 [self setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
@@ -1212,16 +1218,17 @@ typedef enum {  // this copied from WebPreferences+Private.h
       
     if (item)
     {
-        [self selectItem:item event:event];
         
-        // If mousing down on an image, pass the event through
+        // If mousing down on an image, pass the event through. Must do before changing selection so that WebView becomes first responder
         if ([item allowsDirectAccessToWebViewWhenSelected])
         {
             [self forwardMouseEvent:event selector:_cmd];
+            [self selectItem:item event:event];
             //[NSApp postEvent:event atStart:YES];
         }
         else
         {
+            [self selectItem:item event:event];
             if ([[[item HTMLElement] documentView] _web_dragShouldBeginFromMouseDown:event withExpiration:[NSDate distantFuture]])
             {
                 [self dragImageForEvent:event];
