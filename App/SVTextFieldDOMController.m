@@ -354,7 +354,7 @@
 
 - (SVDOMController *)newDOMController;
 {
-    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithContentObject:self];
+    SVTextDOMController *result = [[SVTextFieldDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];
     [result setFieldEditor:YES];
     

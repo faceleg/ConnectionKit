@@ -45,7 +45,7 @@
 
 - (SVDOMController *)newDOMController;
 {
-    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithContentObject:self];
+    SVTextDOMController *result = [[SVAuxiliaryPageletTextDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];
     
     return result;

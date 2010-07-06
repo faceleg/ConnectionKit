@@ -276,8 +276,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 }
 
 @dynamic elementID;
-- (NSString *)elementIdName { return [self elementID]; }
-- (BOOL)shouldPublishEditingElementID { return NO; }
 
 #pragma mark Thumbnail
 

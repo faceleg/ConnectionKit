@@ -7,11 +7,18 @@
 //
 
 #import "SVDOMController.h"
-
-
-@class SVRichTextDOMController;
+#import "SVGraphic.h"
 
 
 @interface SVGraphicDOMController : SVDOMController
-
 @end
+
+
+#pragma mark -
+
+
+// And provide a base implementation of the protocol:
+@interface SVGraphic (SVDOMController) <SVDOMControllerRepresentedObject>
+@end
+
+

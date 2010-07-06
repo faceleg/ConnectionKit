@@ -527,7 +527,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVSidebarDOMController alloc] initWithContentObject:self];
+    return [[SVSidebarDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end

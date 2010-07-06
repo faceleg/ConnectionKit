@@ -641,7 +641,7 @@
 
 - (SVDOMController *)newDOMController;
 {
-    SVTextDOMController *result = [[SVArticleDOMController alloc] initWithContentObject:self];
+    SVTextDOMController *result = [[SVArticleDOMController alloc] initWithRepresentedObject:self];
     [result setRichText:YES];
     
     return result;

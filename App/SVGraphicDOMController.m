@@ -46,7 +46,10 @@
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVGraphicDOMController alloc] initWithContentObject:self];
+    return [[SVGraphicDOMController alloc] initWithRepresentedObject:self];
 }
+
+- (BOOL)shouldPublishEditingElementID { return NO; }
+- (NSString *)elementIdName { return [self elementID]; }
 
 @end

@@ -88,7 +88,7 @@
     return self;
 }
 
-- (id)initWithContentObject:(SVContentObject *)content;
+- (id)initWithRepresentedObject:(id <SVDOMControllerRepresentedObject>)content;
 {
     // Use the object's own ID if it has one. Otherwise make up our own
     NSString *elementID = [content elementIdName];
@@ -321,8 +321,10 @@
 
 - (SVDOMController *)newDOMController;
 {
-    return [[SVDOMController alloc] initWithContentObject:self];
+    return [[SVDOMController alloc] initWithRepresentedObject:self];
 }
+
+- (BOOL)shouldPublishEditingElementID; { return NO; }
 
 @end
 

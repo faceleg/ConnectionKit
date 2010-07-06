@@ -26,8 +26,6 @@
 
 #pragma mark Editing Support
 
-- (BOOL)shouldPublishEditingElementID; { return NO; }
-
 - (NSString *)elementIdName; { return nil; }
 
 #pragma mark Inspection
