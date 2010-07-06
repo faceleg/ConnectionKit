@@ -1026,7 +1026,15 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     // Do something?? link related
     if (![[self webEditor] selectedDOMRange])
     {
-        SVLink *link = [[self graphicsController] valueForKeyPath:@"selection.link"];
+        SVLink *link = NSNotApplicableMarker;
+        @try
+        {
+            [[self graphicsController] valueForKeyPath:@"selection.link"];
+        }
+        @catch (NSException *exception)
+        {
+            if (![[exception name] isEqualToString:NSUndefinedKeyException]) @throw exception;
+        }
         
         if (NSIsControllerMarker(link))
         {
