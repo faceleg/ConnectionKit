@@ -8,7 +8,9 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "SVGraphic.h"
 #import "KTHostProperties.h"
+#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "KTSite.h"
 #import "BDAlias+QuickLook.h"
@@ -195,7 +197,57 @@
     [self closeComment];
 }
 
-#pragma mark Callouts
+#pragma mark Graphics
+
+- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
+{
+    // If the placement changes, want whole Text Area to update
+    [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
+    [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
+    [self addDependencyForKeyPath:@"showsCaption" ofObject:graphic];
+    [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
+    
+    
+    // Possible callout.
+    SVGraphicPlacement placement = [[graphic placement] intValue];
+    if (placement == SVGraphicPlacementCallout) [self beginCalloutWithAlignmentClassName:@""];
+    
+    
+    // Update number of graphics
+    _numberOfGraphics++;
+    
+    
+    if ([graphic isPagelet])
+    {
+        // Pagelet
+        SVTemplate *template = [[graphic class] template];
+        
+        SVHTMLTemplateParser *parser =
+        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
+                                             component:graphic];
+        
+        [parser parseIntoHTMLContext:self];
+        [parser release];
+    }
+    else
+    {
+        [graphic writeBody:self];
+    }
+    
+    
+    // Finish up
+    if (placement == SVGraphicPlacementCallout) [self endCallout];
+}
+
+- (void)writeGraphics:(NSArray *)graphics;  // convenience
+{
+    for (SVGraphic *anObject in graphics)
+    {
+        [self writeGraphic:anObject];
+    }
+}
+
+- (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 {
@@ -443,15 +495,6 @@
 
 #pragma mark Content
 
-- (void)willBeginWritingGraphic:(SVGraphic *)object;
-{
-    _numberOfGraphics++;
-}
-
-- (void)didEndWritingGraphic; { }
-
-- (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
-
 // Two methods do the same thing. Need to ditch -addDependencyOnObject:keyPath: at some point
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath { }
 - (void)addDependencyForKeyPath:(NSString *)keyPath ofObject:(NSObject *)object;
@@ -490,7 +533,7 @@
         if (attachment)
         {
             // Write the graphic
-            [attachment writeHTML:self];
+            [self writeGraphic:attachment];
         }
         else
         {

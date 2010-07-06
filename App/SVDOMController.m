@@ -32,7 +32,7 @@
                                        initWithOutputWriter:htmlString];
     
     [context copyPropertiesFromContext:parentContext];
-    [graphic writeHTML:context];
+    [context writeGraphic:graphic];
     
     
     // Retrieve controller

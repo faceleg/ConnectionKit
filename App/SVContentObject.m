@@ -24,23 +24,6 @@
 
 - (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
 
-+ (void)writeContentObjects:(NSArray *)objects inContext:(SVHTMLContext *)context;
-{
-    for (SVContentObject *anObject in objects)
-    {
-        [anObject writeHTML:context];
-    }
-}
-
-+ (void)writeContentObjects:(NSArray *)objects; // calls -writeHTML for each object
-{
-    SVHTMLContext *context = [SVHTMLContext currentContext];
-    for (SVContentObject *anObject in objects)
-    {
-        [anObject writeHTML:context];
-    }
-}
-
 #pragma mark Editing Support
 
 - (BOOL)shouldPublishEditingElementID; { return NO; }

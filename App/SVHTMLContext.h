@@ -93,7 +93,12 @@ typedef enum {
 - (NSString *)currentHeaderLevelTagName;                // takes, .currentHeaderLevel and produces h3 etc.
 
 
-#pragma mark Callouts
+#pragma mark Graphics
+
+- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
+- (void)writeGraphics:(NSArray *)graphics;  // convenience
+- (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -writeGraphic:
+
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
 - (void)endCallout;    // written lazily so consecutive matching callouts are blended into one
 - (BOOL)isWritingCallout;
@@ -151,11 +156,6 @@ typedef enum {
 
 
 #pragma mark Content
-
-- (void)willBeginWritingGraphic:(SVGraphic *)object;
-- (void)didEndWritingGraphic;
-- (NSUInteger)numberOfGraphicsOnPage; // incremented for each call to -willWriteContentObject:
-
 // Default implementation does nothing. Subclasses can implement for introspecting the dependencies (WebView loading does)
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 

@@ -46,7 +46,11 @@
     [parser parseIntoHTMLContext:context];
     [parser release];
     
-    [context didEndWritingGraphic];
+    // HACK!
+    if ([context respondsToSelector:@selector(endDOMController)])
+    {
+        [context performSelector:@selector(endDOMController)];
+    }
 }
 
 - (void)writePageletsHTML:(SVHTMLContext *)context;
@@ -63,7 +67,7 @@
     
     
     // Write HTML
-    [SVContentObject writeContentObjects:[controller arrangedObjects] inContext:context];
+    [context writeGraphics:[controller arrangedObjects]];
 }
 
 - (void)writePageletsHTML;

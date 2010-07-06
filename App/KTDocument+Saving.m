@@ -866,7 +866,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     NSFetchRequest *request = [model fetchRequestTemplateForName:@"SidebarPagelets"];
     NSArray *sidebarPagelets = [moc executeFetchRequest:request error:NULL];
     
-    [SVContentObject writeContentObjects:sidebarPagelets];
+    [context writeGraphics:sidebarPagelets];
     
     
     // Page contents

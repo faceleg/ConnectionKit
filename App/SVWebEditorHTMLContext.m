@@ -104,20 +104,15 @@
 
 #pragma mark Graphics
 
-- (void)willBeginWritingGraphic:(SVGraphic *)object
+- (void)writeGraphic:(SVGraphic *)graphic;
 {
-    [super willBeginWritingGraphic:object];
-    
-    SVDOMController *controller = [object newDOMController];
+    SVDOMController *controller = [graphic newDOMController];
     [self startDOMController:controller];
     [controller release];
-}
-
-- (void)didEndWritingGraphic;
-{
-    [self endDOMController];
     
-    [super didEndWritingGraphic];
+    [super writeGraphic:graphic];
+    
+    [self endDOMController];
 }
 
 - (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;

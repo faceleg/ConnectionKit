@@ -200,7 +200,7 @@
         
         
         // Write the attachment/graphic
-        [[anAttachment graphic] writeHTML:context];
+        [context writeGraphic:[anAttachment graphic]];
         lastAttachment = anAttachment;
         
         

@@ -131,7 +131,7 @@
             // Give pagelet a chance to resize etc.
             [aGraphic willInsertIntoPage:[context page]];
             
-            [aGraphic writeHTML:context];
+            [context writeGraphic:aGraphic];
         }
         
         

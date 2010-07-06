@@ -255,50 +255,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     return [NSSet setWithObjects:@"textAttachment.causesWrap", @"textAttachment.wrap", nil];
 }
 
-- (void)writeHTML:(SVHTMLContext *)context;
-{
-    // If the placement changes, want whole Text Area to update
-    [context addDependencyForKeyPath:@"textAttachment.placement" ofObject:self];
-    [context addDependencyForKeyPath:@"showsTitle" ofObject:self];
-    [context addDependencyForKeyPath:@"showsCaption" ofObject:self];
-    [context addDependencyForKeyPath:@"showsIntroduction" ofObject:self];
-    
-    
-    // Possible callout. Could we push some of this logic of into -willBeginWritingGraphic: etc?
-    SVGraphicPlacement placement = [[self placement] intValue];
-    if (placement == SVGraphicPlacementCallout) 
-    {
-        [context beginCalloutWithAlignmentClassName:@""];
-    }
-    
-    
-    // Alert context. Must happen *after* enclosing callout is written
-    [context willBeginWritingGraphic:self];
-    
-    
-    if ([self isPagelet])
-    {
-        // Pagelet
-        SVTemplate *template = [[self class] template];
-        
-        SVHTMLTemplateParser *parser =
-        [[SVHTMLTemplateParser alloc] initWithTemplate:[template templateString]
-                                             component:self];
-        
-        [parser parseIntoHTMLContext:context];
-        [parser release];
-    }
-    else
-    {
-        [self writeBody:context];
-    }
-    
-    
-    // Finish up
-    [context didEndWritingGraphic];
-    if (placement == SVGraphicPlacementCallout) [context endCallout];
-}
-
 - (void)writeBody:(SVHTMLContext *)context;
 {
     SUBCLASSMUSTIMPLEMENT;
