@@ -131,16 +131,24 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 - (unsigned int)resizingMask
 {
-    unsigned int result = kCALayerBottomEdge;
-    
     DOMHTMLElement *element = [self HTMLElement];
     DOMCSSStyleDeclaration *style = [[element ownerDocument] getComputedStyle:element pseudoElement:@""];
     
-    unsigned int widthMask = ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ?
-                              kCALayerLeftEdge :
-                              kCALayerRightEdge);
+    unsigned int widthMask = kCALayerRightEdge; // default to adjustment from right-hand edge
     
-    result = (result | widthMask);
+    if ([[style getPropertyValue:@"float"] isEqualToString:@"right"] ||
+        [[style textAlign] isEqualToString:@"right"])
+    {
+        widthMask = kCALayerLeftEdge;
+    }
+    else if ([[style textAlign] isEqualToString:@"center"])
+    {
+        widthMask = widthMask | kCALayerLeftEdge;
+    }
+    
+    
+    // Finish up
+    unsigned int result = (kCALayerBottomEdge | widthMask);
     return result;
 }
 
