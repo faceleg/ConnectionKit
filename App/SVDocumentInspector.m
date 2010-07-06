@@ -55,9 +55,9 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     [oProButton setEnabled:licensedForPro];	// If we had other stuff here we'd need to enable pieces
 }
 
-- (void)loadView;
+- (void)bw_viewDidLoad;
 {
-    [super loadView];
+    [super bw_viewDidLoad];
     
     
     // Populate languages popup
