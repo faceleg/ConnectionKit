@@ -34,19 +34,19 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementFieldsArrayController.h"
-#import "ContactElementField.h"
-#import "ContactElementFieldCell.h"
+#import "ContactFieldsArrayController.h"
+#import "ContactField.h"
+#import "ContactFieldCell.h"
 
 
-@implementation ContactElementFieldsArrayController
+@implementation ContactFieldsArrayController
 
 /*	Returned object should have retain count of 1
  */
 //LocalizedStringInThisBundle(@"New field", "The default label for new fields")
 - (id)newObject
 {
-	ContactElementField *newField = [[ContactElementField alloc] initWithIdentifier:@"other"];
+	ContactField *newField = [[ContactField alloc] initWithIdentifier:@"other"];
 	
 	[newField setType:ContactElementTextFieldField];
 	
@@ -78,7 +78,7 @@
 		{
 			subtract++;
 		}
-		ContactElementField *newField = [self newObject];
+		ContactField *newField = [self newObject];
 		[self insertObject:newField atArrangedObjectIndex:([fields count] - subtract)];
 		[newField release];
 	}
@@ -108,9 +108,9 @@
  */
 - (void)tableView:(NSTableView *)aTableView willDisplayCell:(id)aCell forTableColumn:(NSTableColumn *)aTableColumn row:(int)rowIndex
 {
-	if (![aCell isKindOfClass:[ContactElementFieldCell class]]) return;
+	if (![aCell isKindOfClass:[ContactFieldCell class]]) return;
 	
-	ContactElementField *field = [[self arrangedObjects] objectAtIndex:rowIndex];
+	ContactField *field = [[self arrangedObjects] objectAtIndex:rowIndex];
 	[aCell setLocked:[field shouldDrawLockIcon]];
 }
 

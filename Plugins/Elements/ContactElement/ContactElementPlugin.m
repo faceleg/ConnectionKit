@@ -35,8 +35,8 @@
 //
 
 #import "ContactElementPlugin.h"
-#import "ContactElementInspector.h"
-#import "ContactElementField.h"
+#import "ContactInspector.h"
+#import "ContactField.h"
 
 #import "SandvoxPlugin.h"
 // defines CONTACT_PASSWORD, not supplied
@@ -111,29 +111,29 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 		// Set up default bunch of fields
 		NSMutableArray *fields = [NSMutableArray array];
 		
-		ContactElementField *aField = [[ContactElementField alloc] initWithIdentifier:@"visitorName"];
+		ContactField *aField = [[ContactField alloc] initWithIdentifier:@"visitorName"];
 		[aField setType:ContactElementTextFieldField];
 		[fields addObject:aField];
 		[aField release];
 		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"email"];
+		aField = [[ContactField alloc] initWithIdentifier:@"email"];
 		[aField setType:ContactElementTextFieldField];
 		
 		[aField setDefaultString:[defaults objectForKey:@"emailPlaceholder"]];
 		[fields addObject:aField];
 		[aField release];
 		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"subject"];
+		aField = [[ContactField alloc] initWithIdentifier:@"subject"];
 		[aField setType:ContactElementTextFieldField];
 		[fields addObject:aField];
 		[aField release];
 		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"message"];
+		aField = [[ContactField alloc] initWithIdentifier:@"message"];
 		[aField setType:ContactElementTextAreaField];
 		[fields addObject:aField];
 		[aField release];
 		
-		aField = [[ContactElementField alloc] initWithIdentifier:@"send"];
+		aField = [[ContactField alloc] initWithIdentifier:@"send"];
 		[aField setType:ContactElementSubmitButton];
 		[fields addObject:aField];
 		[aField release];
@@ -152,7 +152,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     // If fields don't yet have a title, fill in from page language
     NSString *language = [page language];
     
-    for (ContactElementField *aField in [self fields])
+    for (ContactField *aField in [self fields])
     {
         if ([aField label]) continue;
         
@@ -204,7 +204,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	return [NSSet setWithObjects:nil];	
 }
 
-+ (Class)inspectorViewControllerClass { return [ContactElementInspector class]; }
++ (Class)inspectorViewControllerClass { return [ContactInspector class]; }
 
 - (NSString *)nibName { return @"ContactElement"; }
 
@@ -570,7 +570,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	}
 }
 
-- (ContactElementField *)contactField
+- (ContactField *)contactField
 {
 	(void) self.fields;	// make sure loaded
 	return myEmailField;
@@ -637,7 +637,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 	NSDictionary *dictionary;
 	for (dictionary in dictionaries)
 	{
-		ContactElementField *field = [[ContactElementField alloc] initWithDictionary:dictionary];
+		ContactField *field = [[ContactField alloc] initWithDictionary:dictionary];
 		[result addObject:field];
 		[field release];
 		
@@ -666,7 +666,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
     
     
     // Setup the subject field
-    ContactElementField *subjectField = [self.fields objectAtIndex:2];
+    ContactField *subjectField = [self.fields objectAtIndex:2];
     
     NSString *oldSubjectText = [oldPluginProperties valueForKey:@"subjectText"];
     switch ([oldPluginProperties integerForKey:@"subjectType"])

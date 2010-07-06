@@ -34,13 +34,13 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "ContactElementField.h"
+#import "ContactField.h"
 
 #import "ContactElementPlugin.h"
 #import <NSString+Karelia.h>
 
 
-@implementation ContactElementField
+@implementation ContactField
 
 #pragma mark -
 #pragma mark Init & Dealloc

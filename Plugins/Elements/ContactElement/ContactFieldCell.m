@@ -1,5 +1,5 @@
 //
-//  ContactElementFieldCell.h
+//  ContactElementFieldCell.m
 //  ContactElement
 //
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
@@ -34,17 +34,85 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import <Cocoa/Cocoa.h>
+#import "ContactFieldCell.h"
+
+#import "SandvoxPlugin.h"
 
 
-@interface ContactElementFieldCell : NSTextFieldCell
+@interface ContactFieldCell ()
+- (NSImageCell *)lockIconCell;
+@end
+
+
+@implementation ContactFieldCell
+
+#pragma mark -
+#pragma mark Memory Management
+
+- (void)dealloc
 {
-	NSImageCell		*myLockIconCell;
+	[myLockIconCell release];
 	
-	BOOL	myLocked;
+	[super dealloc];
 }
 
-- (BOOL)isLocked;
-- (void)setLocked:(BOOL)locked;
+- (id)copyWithZone:(NSZone *)zone
+{
+	ContactFieldCell *copy = [super copyWithZone:zone];
+	
+	[copy->myLockIconCell retain];
+	
+	return copy;
+}
+
+#pragma mark -
+#pragma mark Accessors
+
+- (BOOL)isLocked { return myLocked; }
+
+- (void)setLocked:(BOOL)locked { myLocked = locked; }
+
+#pragma mark -
+#pragma mark Drawing
+
+- (NSImageCell *)lockIconCell
+{
+	if (!myLockIconCell)
+	{
+		NSImage *icon = [NSImage imageNamed:@"NSLockLockedTemplate"];	// try for Leopard resizable version
+		if (nil == icon)
+		{
+			// fallback
+			icon = [NSImage imageInBundle:[NSBundle bundleForClass:[self class]]
+									named:@"lock.png"];
+		}
+	
+		myLockIconCell = [[NSImageCell alloc] initImageCell:icon];
+		[myLockIconCell setImageAlignment:NSImageAlignCenter];
+		[myLockIconCell setImageScaling:NSScaleNone];
+	}
+	
+	return myLockIconCell;
+}
+
+/*	How we draw depends on if there is a lock icon to draw
+ */
+- (void)drawWithFrame:(NSRect)cellFrame inView:(NSView *)controlView
+{
+	if ([self isLocked])
+	{
+		// Split the cell in two
+		NSRect textRect;
+		NSRect lockIconRect;
+		NSDivideRect(cellFrame, &lockIconRect, &textRect, cellFrame.size.height, NSMaxXEdge);
+		
+		[super drawWithFrame:textRect inView:controlView];
+		[[self lockIconCell] drawWithFrame:lockIconRect inView:controlView];
+	}
+	else
+	{
+		[super drawWithFrame:cellFrame inView:controlView];
+	}
+}
 
 @end

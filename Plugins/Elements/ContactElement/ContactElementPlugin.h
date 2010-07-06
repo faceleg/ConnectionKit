@@ -37,7 +37,7 @@
 #import "SandvoxPlugin.h"
 
 
-@class ContactElementFieldsArrayController, ContactElementField;
+@class ContactFieldsArrayController, ContactField;
 
 
 @interface ContactElementPlugin : SVPageletPlugIn
@@ -56,7 +56,7 @@
 	
 	@private
 	
-	ContactElementField *myEmailField;
+	ContactField *myEmailField;
 	
 	NSManagedObject *myPluginProperties;
 	NSArray	*myFields;

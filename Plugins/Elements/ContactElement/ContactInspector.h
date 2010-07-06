@@ -1,5 +1,5 @@
 //
-//  ContactElementField.h
+//  ContactElementInspector.h
 //  ContactElement
 //
 //  Copyright 2007-2009 Karelia Software. All rights reserved.
@@ -35,73 +35,28 @@
 //
 
 #import <Cocoa/Cocoa.h>
+#import "SandvoxPlugin.h"
+
+@class NTBoxView, ContactFieldsArrayController;
 
 
-typedef enum
+@interface ContactInspector : SVInspectorViewController
 {
-	ContactElementTextFieldField = 1,
-	ContactElementTextAreaField = 2,
-	ContactElementCheckBoxField = 3,
-	ContactElementPopupButtonField = 4,
-	ContactElementRadioButtonsField = 5,
-	ContactElementSubmitButton = 6,
-	ContactElementHiddenField = 0,
-} ContactElementFieldType;
-
-
-@class ContactElementPlugin;
-
-
-@interface ContactElementField : NSObject <NSCopying>
-{
-	ContactElementPlugin	*myOwner;
+	IBOutlet ContactFieldsArrayController *oArrayController;
 	
-	NSString				*myIdentifier;
-	ContactElementFieldType	myType;
-	NSString				*myLabel;
-	NSString				*myDefaultString;
-	NSString				*myCheckBoxLabel;
-	BOOL					myCheckBoxIsSelected;
-	NSArray					*myVisitorChoices;
+	IBOutlet NTBoxView	*oFieldsTableButtonsBox;
+
+	IBOutlet NSTextField			*oSubjects;
+	IBOutlet NSTextField			*oLabel;
+	IBOutlet NSForm					*oCustomLabelsForm;
+		
+@private
+	
+//	ContactElementField *myEmailField;
+	
+	NSManagedObject *myPluginProperties;
+	NSArray	*myFields;
+	BOOL	myIsArchivingFields;
 }
-
-// Init
-- (id)initWithIdentifier:(NSString *)identifier;
-- (id)initWithDictionary:(NSDictionary *)dictionary;
-
-// Owner
-- (ContactElementPlugin *)owner;
-- (void)setOwner:(ContactElementPlugin *)owner;
-
-// Accessors
-- (NSString *)identifier;
-
-- (ContactElementFieldType)type;
-- (void)setType:(ContactElementFieldType)type;
-
-- (NSString *)label;
-- (void)setLabel:(NSString *)label;
-- (NSString *)labelWithLocalizedColonSuffix;
-
-- (NSString *)defaultString;
-- (void)setDefaultString:(NSString *)defaultString;
-
-- (NSString *)checkBoxLabel;
-- (void)setCheckBoxLabel:(NSString *)label;
-
-- (BOOL)checkBoxIsSelected;
-- (void)setCheckBoxIsSelected:(BOOL)selected;
-
-- (NSArray *)visitorChoices;
-- (void)setVisitorChoices:(NSArray *)choices;
-
-// UI
-- (BOOL)shouldDrawLockIcon;
-
-// Storage
-- (NSDictionary *)dictionaryRepresentation;
-
-// HTML
-- (NSString *)inputName;
 
 @end

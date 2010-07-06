@@ -40,7 +40,7 @@
 #import <DNDArrayController.h>
 
 
-@interface ContactElementFieldsArrayController : DNDArrayController
+@interface ContactFieldsArrayController : DNDArrayController
 {
 	IBOutlet SVPageletPlugIn *pluginDelegate;
 }
