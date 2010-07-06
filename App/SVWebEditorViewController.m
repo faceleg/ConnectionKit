@@ -42,6 +42,7 @@
 #import "KSCollectionController.h"
 #import "KSPlugInWrapper.h"
 #import "KSSilencingConfirmSheet.h"
+#import "KTHTMLInspectorController.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
@@ -96,6 +97,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [_page release];
     [_context release];
     [_graphicsController release];
+	self.HTMLInspectorController = nil;
     
     [super dealloc];
 }
@@ -190,8 +192,12 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     if (![self isUpdating]) [self setPage:nil];
     
-    // Once we move offsreen, we're no longer suitable to be shown
+    // Once we move offscreen, we're no longer suitable to be shown
     [self setViewIsReadyToAppear:NO];
+	
+	// Close out the HTML editor
+	self.HTMLInspectorController = nil;
+
 }
 
 #pragma mark Loading
@@ -461,6 +467,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         [_page release]; _page = [page retain];
     
         [self update];
+		
+		// UI-wise it might be better to test if the page contains the HTML loaded into the editor
+		// e.g. while editing pagelet in sidebar, it makes sense to leave the editor open
+		self.HTMLInspectorController = nil;
     }
 }
 
@@ -795,6 +805,32 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
                                                    object:self];
     }
 }
+
+#pragma mark -
+#pragma mark HTMLInspectorController
+
+@synthesize HTMLInspectorController = _HTMLInspectorController;
+
+- (KTHTMLInspectorController *)HTMLInspectorController	// lazily instantiate
+{
+	if ( nil == _HTMLInspectorController )
+	{
+		KTHTMLInspectorController *controller = [[[KTHTMLInspectorController alloc] init] autorelease];
+		[self setHTMLInspectorController:controller];
+//		[self addWindowController:controller];
+	}
+	return _HTMLInspectorController;
+}
+
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+{
+	[[self HTMLInspectorController] setTitle:@"This is the title"];
+	
+	[[self HTMLInspectorController] showWindow:nil];
+}	
+
+
+
 
 #pragma mark -
 

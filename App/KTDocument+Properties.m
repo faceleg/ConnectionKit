@@ -12,7 +12,6 @@
 
 #import "KTDocWindowController.h"
 #import "KTSite.h"
-#import "KTHTMLInspectorController.h"
 #import "KTStalenessManager.h"
 
 #import "NSArray+Karelia.h"
@@ -61,32 +60,6 @@
     _site = site;
     
     [_site setDocument:self];
-}
-
-#pragma mark -
-#pragma mark Publishing
-
-- (void)setHTMLInspectorController:(KTHTMLInspectorController *)anHTMLInspectorController
-{
-    [anHTMLInspectorController retain];
-    [myHTMLInspectorController release];
-    myHTMLInspectorController = anHTMLInspectorController;
-}
-
-- (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading	// lazily instantiate
-{
-	return myHTMLInspectorController;
-}
-
-- (KTHTMLInspectorController *)HTMLInspectorController	// lazily instantiate
-{
-	if ( nil == myHTMLInspectorController )
-	{
-		KTHTMLInspectorController *controller = [[[KTHTMLInspectorController alloc] init] autorelease];
-		[self setHTMLInspectorController:controller];
-		[self addWindowController:controller];
-	}
-	return myHTMLInspectorController;
 }
 
 #pragma mark Document Display Properties

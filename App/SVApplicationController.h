@@ -111,8 +111,6 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 
 - (IBAction)showProductPage:(id)sender;
 
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender;
-
 - (IBAction)toggleMediaBrowserShown:(id)sender;
 
 - (IBAction)reloadDebugTable:(id)sender;

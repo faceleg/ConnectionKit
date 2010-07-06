@@ -19,7 +19,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #define sWebViewDependenciesObservationContext @"SVWebViewDependenciesObservationContext"
 
 
-@class KTPage, SVDOMController, SVTextDOMController;
+@class KTPage, SVDOMController, SVTextDOMController, KTHTMLInspectorController;
 @class SVWebContentObjectsController, SVWebContentAreaController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -41,6 +41,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     // Controllers
     WEKWebEditorItem    *_firstResponderItem;
     NSObject            *_draggingDestination;  // weak ref
+	KTHTMLInspectorController *_HTMLInspectorController;
     
     // Loading
     BOOL                    _needsUpdate, _willUpdate, _autoupdate;
@@ -80,6 +81,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @property(nonatomic, retain) KTPage *page;  // reloads
 @property(nonatomic, retain, readonly) NSArrayController *graphicsController;
 @property(nonatomic, retain) WEKWebEditorItem *firstResponderItem;  // like NSWindow.firstResponder
+@property (nonatomic, retain) KTHTMLInspectorController *HTMLInspectorController;
 
 @property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
 

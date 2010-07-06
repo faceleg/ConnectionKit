@@ -132,7 +132,7 @@
 			<key>paletteLabel</key>
 			<string>PALETTE_EDIT_HTML</string>
 			<key>target</key>
-			<string>document</string>
+			<string>firstResponder</string>
 		</dict>
 		<dict>
 			<key>action</key>

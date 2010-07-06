@@ -131,6 +131,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (BOOL) appIsExpired;
 - (void)showDebugTableForObject:(id)inObject titled:(NSString *)inTitle;	// a table or array
+- (void)updateLicensingMenus:(NSNotification *)aNotif;
 
 #if !defined(VARIANT_RELEASE) && defined(EXPIRY_TIMESTAMP)
 - (void)warnExpiring:(id)bogus;
@@ -645,10 +646,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	if (action == @selector(newDocument:))
 	{
 		return (!gLicenseViolation && ![self appIsExpired]);
-	}
-	else if (action == @selector(editRawHTMLInSelectedBlock:))
-	{
-		return [[[NSDocumentController sharedDocumentController] currentDocument] validateMenuItem:menuItem];
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
@@ -1288,11 +1285,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	}
 
 	// display Media, if appropriate
-}
-
-- (IBAction)editRawHTMLInSelectedBlock:(id)sender
-{
-	[[[NSDocumentController sharedDocumentController] currentDocument] editRawHTMLInSelectedBlock:sender];
 }
 
 - (IBAction) openScreencast:(id)sender

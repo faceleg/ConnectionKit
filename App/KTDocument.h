@@ -29,7 +29,7 @@ extern NSString *kKTDocumentWillSaveNotification;
 
 
 @class KTSite;
-@class KTDocWindowController, KTHTMLInspectorController, SVDocumentSavePanelAccessoryViewController;
+@class KTDocWindowController, SVDocumentSavePanelAccessoryViewController;
 @class KTElementPlugInWrapper;
 @protocol SVDocumentFileWrapper;
 
@@ -49,7 +49,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 	
 	//KTMediaManager				*_mediaManager;
 		
-	KTHTMLInspectorController	*myHTMLInspectorController;
 	
 	
 	// UI
@@ -146,11 +145,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 //- (void)setWrappedInheritedValue:(id)aValue forKey:(NSString *)aKey;
 
 @property(nonatomic, retain) KTSite *site;
-
-
-- (KTHTMLInspectorController *)HTMLInspectorController;
-- (KTHTMLInspectorController *)HTMLInspectorControllerWithoutLoading;
-- (void)setHTMLInspectorController:(KTHTMLInspectorController *)aController;
 
 // Display properties
 

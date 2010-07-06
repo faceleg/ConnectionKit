@@ -47,7 +47,6 @@ typedef enum {
 	// ivar of what to send the information back to
 	NSObject			*myHTMLSourceObject;
 	NSString			*myHTMLSourceKeyPath;
-	BOOL				fromEditableBlock;
 	
 	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString			*myTitle;
@@ -79,8 +78,6 @@ typedef enum {
 - (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject;
 - (NSString *)HTMLSourceKeyPath;
 - (void)setHTMLSourceKeyPath:(NSString *)anHTMLSourceKeyPath;
-- (BOOL)fromEditableBlock;
-- (void)setFromEditableBlock:(BOOL)flag;
 
 -(void)	goToLine: (int)lineNum;
 

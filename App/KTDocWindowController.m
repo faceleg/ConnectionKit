@@ -281,6 +281,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark IBActions
 
+- (IBAction)editRawHTMLInSelectedBlock:(id)sender
+{
+	[[[self webContentAreaController] webEditorViewController] ks_doCommandBySelector:_cmd with:sender];
+}
+
 /*  The controller which is the real target of these actions may not be in the responder chain, so take care of passing the message on.
  *  BUT, do I actually want to always pass this on to the web editor? Might there be times when a different controller is desired?
  */

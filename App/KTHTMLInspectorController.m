@@ -803,24 +803,11 @@ initial syntax coloring.
 			[localException raise];
 		NS_ENDHANDLER
 	}	
-	
-
-	
 }
 
 #pragma mark -
 #pragma mark Accessors
 
-
-- (BOOL)fromEditableBlock
-{
-    return fromEditableBlock;
-}
-
-- (void)setFromEditableBlock:(BOOL)flag
-{
-    fromEditableBlock = flag;
-}
 
 
 

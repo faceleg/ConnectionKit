@@ -988,20 +988,6 @@ static NSString *sContentSelectionObservationContext = @"SVSiteOutlineViewContro
 	}
 }
 
-- (void)outlineViewSelectionIsChanging:(NSNotification *)notification
-{
-	// Close the Raw HTML editing window, if open
-	NSWindowController *HTMLInspectorController = [[[[[self view] window] windowController] document] HTMLInspectorControllerWithoutLoading];
-	if ( nil != HTMLInspectorController )
-	{
-		NSWindow *HTMLInspectorWindow = [HTMLInspectorController window];
-		if ( [HTMLInspectorWindow isVisible] )
-		{
-			[HTMLInspectorWindow close];
-		}
-	}
-}
-
 #pragma mark Drag
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal
