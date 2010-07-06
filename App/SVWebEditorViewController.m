@@ -840,7 +840,16 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 			KTHTMLInspectorController *controller = [self HTMLInspectorController];
 			SVRawHTMLGraphic *graphic = (SVRawHTMLGraphic *) selection;
 			NSString *toEdit = [graphic HTMLString];
-			[controller setTitle:@"This is the title"];
+			
+			SVTitleBox *titleBox = [graphic titleBox];
+			if (titleBox)
+			{
+				[controller setTitle:[titleBox text]];
+			}
+			else
+			{
+				[controller setTitle:nil];
+			}
 			[controller setSourceCode:toEdit];
 			[controller setDocType:[[graphic docType] intValue]];
 			[controller setPreventPreview:![[graphic shouldPreviewWhenEditing] boolValue]];

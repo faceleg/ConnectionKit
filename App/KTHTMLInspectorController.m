@@ -75,24 +75,34 @@
 		maintainIndentation = YES;
 		recolorTimer = nil;
 		syntaxColoringBusy = NO;
-		
-		
-		// Load the docType from the model ... FOR NOW DO THIS
-		[self calculateCachedPreludes];
-
-		
-		[self addObserver:self forKeyPath:@"docType" options:0 context:nil];
 	}
     return self;
+}
+
+- (void)synchronizeUI
+{
+	[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
+	[docTypePopUp setTitle:[KTPage titleOfDocType:[self docType] localize:YES]];
+	[self calculateCachedPreludes];
+	[self autoValidate];
+	
+	NSString *windowTitle = nil;
+	if (nil == myTitle || [myTitle isEqualToString:@""])
+	{
+		windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
+	}
+	else
+	{
+		windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), myTitle];
+	}
+	[[self window] setTitle:windowTitle];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
 	if ([keyPath isEqualToString:@"docType"])
 	{
-		[docTypePopUp setTitle:[KTPage titleOfDocType:[self docType] localize:YES]];
-		[self calculateCachedPreludes];
-		[self autoValidate];
+		[self synchronizeUI];
 	}
 	else
 	{
@@ -129,6 +139,10 @@ initial syntax coloring.
 {
     [super windowDidLoad];
  
+	[self addObserver:self forKeyPath:@"docType" options:0 context:nil];
+	// Kick start
+	[self synchronizeUI];
+	
 	[[self window] setContentBorderThickness:32.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
 
 	// Load source code into text view, if necessary:
@@ -170,20 +184,6 @@ initial syntax coloring.
 	[[self window] setFrameUsingName:@"RawHTMLPanel"];
 }
 
-
-- (NSString *)windowTitleForDocumentDisplayName:(NSString *)displayName
-{
-	NSString *result = nil;
-	if (nil == myTitle || [myTitle isEqualToString:@""])
-	{
-		result =[displayName stringByAppendingFormat:@" %C HTML", 0x2014];
-	}
-	else
-	{
-		result =[displayName stringByAppendingFormat:@" %C %@ %C HTML", 0x2014, myTitle, 0x2014];
-	}
-	return result;
-}
 
 //
 //	// Try to get selection info if possible:
