@@ -20,14 +20,6 @@
 
 @implementation SVLinkInspector
 
-- (void)loadView
-{
-    [super loadView];
-        
-    // Initial setup
-    [self refresh];
-}
-
 - (void)awakeFromNib
 {
 	[oLinkSourceView bind:NSEnabledBinding
