@@ -365,6 +365,13 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     if (![self showBorder]) [self setBordered:NO];
 }
 
+#pragma mark Inspection
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+    return NSNotApplicableMarker;
+}
+
 #pragma mark SVPageletPlugInContainer
 
 - (NSString *)title	// get title, but without attributes
