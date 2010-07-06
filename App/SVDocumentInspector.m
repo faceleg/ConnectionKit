@@ -145,13 +145,27 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     }
 }
 
-#pragma mark Info Tab
+#pragma mark Language
 
 - (void)refresh;
 {
     [super refresh];
-}
     
+    
+    // Match language popup to selection
+    NSString *languageCode = [[self inspectedObjectsController]
+                              valueForKeyPath:@"selection.master.language"];
+    
+    NSInteger theIndex = [oLanguagePopup indexOfItemWithRepresentedObject:languageCode];
+    BOOL otherLanguage = (theIndex < 0);
+    [oLanguageCodeField setEnabled:otherLanguage];
+    if (otherLanguage)
+    {
+        theIndex = [oLanguagePopup indexOfItemWithTag:-1];
+    }
+    [oLanguagePopup selectItemAtIndex:theIndex];
+}
+
 - (NSArray *)languages
 {
     static NSArray *result;
@@ -193,15 +207,7 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 {
     if (context == sLanguageObservationContext)
     {
-        NSString *languageCode = [object valueForKeyPath:keyPath];
-        NSInteger theIndex = [oLanguagePopup indexOfItemWithRepresentedObject:languageCode];
-        BOOL otherLanguage = (theIndex < 0);
-        [oLanguageCodeField setEnabled:otherLanguage];
-        if (otherLanguage)
-        {
-            theIndex = [oLanguagePopup indexOfItemWithTag:-1];
-        }
-        [oLanguagePopup selectItemAtIndex:theIndex];
+        [self refresh];
     }
     else
     {
