@@ -64,9 +64,9 @@
 
 #pragma mark View
 
-- (void)loadView
+- (void)viewDidLoad
 {
-    [super loadView];
+    [super viewDidLoad];
     
     [oMenuTitleField bind:@"placeholderValue"
                  toObject:self

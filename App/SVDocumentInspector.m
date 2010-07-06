@@ -55,12 +55,9 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
     [oProButton setEnabled:licensedForPro];	// If we had other stuff here we'd need to enable pieces
 }
 
-- (void)bw_viewDidLoad;
+- (void)viewDidLoad;
 {
-    [super bw_viewDidLoad];
-    
-    
-    // Populate languages popup
+    // Populate languages popup. Must happen before -refresh (which super will call)
     NSArray *languages = [self languages];
     int theIndex = 0;
     
@@ -79,12 +76,18 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
         [thisItem setRepresentedObject:code];
         theIndex++;
     }
- 
-	[[NSNotificationCenter defaultCenter] addObserver:self
+    
+    
+    // Now we're ready to call super
+	[super viewDidLoad];
+    
+    
+    // Observe & update pro stuff
+    [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(updateProView:)
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
-	[self updateProView:nil];	// update them now
+	[self updateProView:nil];
 	
 }
 

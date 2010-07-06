@@ -21,9 +21,9 @@
     [super dealloc];
 }
 
-- (void)loadView;
+- (void)viewDidLoad;
 {
-    [super loadView];
+    [super viewDidLoad];
     
     [self bind:@"graphicPlacement"
       toObject:self
