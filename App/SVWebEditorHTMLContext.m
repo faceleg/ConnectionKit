@@ -9,7 +9,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "SVCalloutDOMController.h"
-#import "SVGraphic.h"
+#import "SVGraphicDOMController.h"
 #import "SVHTMLTextBlock.h"
 #import "SVRichText.h"
 #import "SVSidebarDOMController.h"
