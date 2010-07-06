@@ -110,7 +110,7 @@
     BOOL callout;
     if (callout = [graphic isCallout])
     {
-        // Make a controller for the callout, but only if it's not part of an existng callout
+        // Make a controller for the callout, but only if it's not part of an existing callout
         if (![self isWritingCallout])
         {
             SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
@@ -122,7 +122,7 @@
     }
     else
     {
-        if ([self isWritingCallout]) [self flushCalloutBuffer];
+        if ([[self calloutBuffer] isBuffering]) [[self calloutBuffer] flush];
         
         // Create controller for the graphic
         SVDOMController *controller = [graphic newDOMController];

@@ -306,10 +306,7 @@
     return (_calloutAlignment != nil);
 }
 
-- (void)flushCalloutBuffer;
-{
-    [_calloutBuffer flush];
-}
+@synthesize calloutBuffer = _calloutBuffer;
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;
 {
