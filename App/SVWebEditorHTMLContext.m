@@ -106,26 +106,46 @@
 
 - (void)writeGraphic:(SVGraphic *)graphic;
 {
-    SVDOMController *controller = [graphic newDOMController];
-    [self startDOMController:controller];
-    [controller release];
-    
-    [super writeGraphic:graphic];
-    
-    [self endDOMController];
-}
-
-- (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
-{
-    // Make a controller for the callout, but only if it's not part of an existng callout
-    if (![self isWritingCallout])
+    // Handle callouts specially
+    BOOL callout;
+    if (callout = [graphic isCallout])
     {
-        SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
+        // Make a controller for the callout, but only if it's not part of an existng callout
+        if (![self isWritingCallout])
+        {
+            SVCalloutDOMController *controller = [[SVCalloutDOMController alloc] init];
+            [self startDOMController:controller];
+            [controller release];
+        }
+        
+        // We will create a controller for the graphic shortlt, after the callout opening has been written
+    }
+    else
+    {
+        // Create controller for the graphic
+        SVDOMController *controller = [graphic newDOMController];
         [self startDOMController:controller];
         [controller release];
     }
+    
+    
+    // Do normal writing
+    [super writeGraphic:graphic];
+    
+    
+    // Tidy up
+    [self endDOMController];
+    // if (callout) [self endDOMController];    // Don't do this, will end it lazily
+}
 
-    [super beginCalloutWithAlignmentClassName:alignment];
+- (void)startCalloutForGraphic:(SVGraphic *)graphic;
+{
+    [super startCalloutForGraphic:graphic];
+    
+    // Time to make a controller for the graphic
+    SVDOMController *controller = [graphic newDOMController];
+    [self startDOMController:controller];
+    [controller release];
 }
 
 - (void)megaBufferedWriterWillFlush:(KSMegaBufferedWriter *)buffer;

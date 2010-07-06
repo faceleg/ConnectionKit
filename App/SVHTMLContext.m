@@ -211,7 +211,7 @@
     
     // Possible callout.
     BOOL callout;
-    if (callout = [graphic isCallout]) [self beginCalloutWithAlignmentClassName:@""];
+    if (callout = [graphic isCallout]) [self startCalloutForGraphic:graphic];
     
     
     // Update number of graphics
@@ -250,8 +250,11 @@
 
 - (NSUInteger)numberOfGraphicsOnPage; { return _numberOfGraphics; }
 
-- (void)beginCalloutWithAlignmentClassName:(NSString *)alignment;
+- (void)startCalloutForGraphic:(SVGraphic *)graphic;
 {
+    NSString *alignment = @"";  // placeholder until we support callouts on both sides
+    
+    
     BOOL isSameCallout = [self isWritingCallout];
     if (isSameCallout)
     {
