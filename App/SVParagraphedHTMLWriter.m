@@ -246,7 +246,7 @@
 - (BOOL)validateAttribute:(NSString *)attributeName;
 {
     // Super doesn't allow links; we do.
-    if ([[self topElement] isEqualToString:@"A"])
+    if ([[self topElement] isEqualToString:@"a"])
     {
         BOOL result = ([attributeName isEqualToString:@"href"] ||
                        [attributeName isEqualToString:@"target"] ||
@@ -273,7 +273,7 @@
     if (!result && [propertyName isEqualToString:@"text-align"])
     {
         NSString *tagName = [self topElement];
-        if ([tagName isEqualToString:@"P"])
+        if ([tagName isEqualToString:@"p"])
         {
             result = YES;
         }
