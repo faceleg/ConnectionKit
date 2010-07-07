@@ -1,8 +1,8 @@
 //
-//  ContactElementPlugin.m
+//  ContactPlugin.m
 //  ContactElement
 //
-//  Copyright 2006-2009 Karelia Software. All rights reserved.
+//  Copyright 2006-2010 Karelia Software. All rights reserved.
 //
 //  Redistribution and use in source and binary forms, with or without
 //  modification, are permitted provided that the following conditions are met:
@@ -38,7 +38,6 @@
 #import "ContactInspector.h"
 #import "ContactField.h"
 
-#import "SandvoxPlugin.h"
 // defines CONTACT_PASSWORD, not supplied
 #import <ContactPassword.h>
 
