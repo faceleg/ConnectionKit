@@ -1743,7 +1743,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     return [self shouldChangeTextInDOMRange:range];
 }
 
-- (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)nextNode replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
+- (BOOL)webView:(WebView *)webView shouldInsertNode:(DOMNode *)node replacingDOMRange:(DOMRange *)range givenAction:(WebViewInsertAction)action
 {
     BOOL result = [self canEditText];
     
@@ -1752,7 +1752,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
         id <SVWebEditorText> text = [self textItemForDOMRange:range];
         
         // Let the text object decide
-        result = [text webEditorTextShouldInsertNode:nextNode
+        result = [text webEditorTextShouldInsertNode:node
                                    replacingDOMRange:range
                                          givenAction:action];
     }
