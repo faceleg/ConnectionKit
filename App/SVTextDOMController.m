@@ -163,33 +163,7 @@
                     replacingDOMRange:(DOMRange *)range
                           givenAction:(WebViewInsertAction)action;
 {
-    BOOL result = YES;
     return YES;
-    
-    
-    
-    // We don't want to allow drops of anything other than basic text styling. How to implement this is tricky. The best I can think of is a whitelist of allowed elements. Anything outside the whitelist we will attempt to rescue a plain text version from the pasteboard to use instead
-    NSSet *whitelist = [NSSet setWithObjects:@"SPAN", @"B", @"I", nil];
-    if ([node containsElementWithTagNameNotInSet:whitelist])
-    {
-        result = NO;
-        
-        NSPasteboard *pasteboard = [[self webEditor] insertionPasteboard];
-        if ([[pasteboard types] containsObject:NSStringPboardType])
-        {
-            NSString *text = [pasteboard stringForType:NSStringPboardType];
-            if (text)
-            {
-                result = YES;
-                
-                [[node mutableChildDOMNodes] removeAllObjects];
-                DOMText *textNode = [[node ownerDocument] createTextNode:text];
-                [node appendChild:textNode];
-            }
-        }
-    }
-    
-    return result;
 }
 
 - (BOOL)webEditorTextShouldInsertText:(NSString *)text
