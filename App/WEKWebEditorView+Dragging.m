@@ -319,13 +319,14 @@
     NSPoint origin;
     
     DOMElement *element = [item HTMLElement];
-    NSImage *image = [element image];
-    if (!image) image = [element performSelector:@selector(renderedImage)];
+    NSImage *image = [element performSelector:@selector(renderedImage)];
+    if (!image) image = [element image];
+    if (!image);    // could fallback to snapshotting view here
     
-        NSRect rect = [element boundingBox];
-        NSSize originalSize = rect.size;
-        origin = rect.origin;
-        
+    NSRect rect = [element boundingBox];
+    NSSize originalSize = rect.size;
+    origin = rect.origin;
+    
     dragImage = [[image copy] autorelease];
     [dragImage setScalesWhenResized:YES];
     [dragImage setSize:originalSize];
