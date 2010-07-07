@@ -56,6 +56,9 @@
  */
 - (NSString *)name { return [self pluginPropertyForKey:@"KTPluginName"]; }
 
+
+- (KTPluginCategory)category { return [self pluginPropertyForKey:@"KTCategory"]; }
+
 - (NSImage *)pluginIcon
 {
 	// The icon is cached; load it if not cached yet
