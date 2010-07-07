@@ -23,6 +23,7 @@
 - (void)writeBody:(SVHTMLContext *)context;
 {
     [context writeHTMLString:[self HTMLString]];
+    [context addDependencyOnObject:self keyPath:@"HTMLString"];
 }
 
 @end
