@@ -21,8 +21,12 @@
 }
 
 /*  Super-cunning rule to make only pagelets *inside* an editable area, unselectable */
-img, [contenteditable=true] .pagelet {
+img, [contenteditable=true] > * {
     -webkit-user-select:none;
+}
+
+[contenteditable=true] > p {
+    -webkit-user-select:inherit;
 }
 
 div.svx-placeholder
