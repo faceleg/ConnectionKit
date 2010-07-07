@@ -226,8 +226,10 @@
     }
     
     
-    //NSInsetRect([element boundingBox], -1.0f, -1.0f);  // Expand by 1px to capture border
-    NSImage *result = [[[NSImage alloc] initWithSize:box.size] autorelease];
+    // Get ready to draw
+    NSSize size = box.size;
+    size.height += 2.0f; size.width += 2.0f;    // expand by 1px to capture border
+    NSImage *result = [[[NSImage alloc] initWithSize:size] autorelease];
     
     WebFrameView *frameView = [[[element ownerDocument] webFrame] frameView];
     NSView <WebDocumentView> *docView = [frameView documentView];
@@ -241,13 +243,14 @@
         {
             [result lockFocus];
             
-            [elementImage drawInRect:NSMakeRect(0.0f, 0.0f, box.size.width, box.size.height)        
+            [elementImage drawInRect:NSMakeRect(1.0f, 1.0f, box.size.width, box.size.height)        
                             fromRect:NSZeroRect
                            operation:NSCompositeCopy
                             fraction:WEKDragImageAlpha];
             
-            //[[[NSColor grayColor] colorWithAlphaComponent:WEKDragImageAlpha] setFill];
-            //NSFrameRect(drawingRect);
+            NSRect drawingRect; drawingRect.origin = NSZeroPoint; drawingRect.size = size;
+            [[[NSColor grayColor] colorWithAlphaComponent:WEKDragImageAlpha] setFill];
+            NSFrameRect(drawingRect);
             
             [result unlockFocus];
         }
@@ -421,15 +424,29 @@
         }
     }
     
-    NSImage *result = [[[NSImage alloc] initWithSize:newSize] autorelease];
+    
+    // Get ready to draw
+    NSSize imgSize = newSize;
+    imgSize.height += 2.0f; imgSize.width += 2.0f;    // expand by 1px to capture border
+    NSImage *result = [[[NSImage alloc] initWithSize:imgSize] autorelease];
     
     [result lockFocus];
     
-    [image drawInRect:NSMakeRect(0.0f, 0.0f, newSize.width, newSize.height)        
+    
+    // Draw the image
+    [image drawInRect:NSMakeRect(1.0f, 1.0f, newSize.width, newSize.height)        
              fromRect:NSZeroRect
             operation:NSCompositeCopy
              fraction:WEKDragImageAlpha];
     
+    
+    // Draw image border
+    NSRect drawingRect; drawingRect.origin = NSZeroPoint; drawingRect.size = imgSize;
+    [[[NSColor grayColor] colorWithAlphaComponent:WEKDragImageAlpha] setFill];
+    NSFrameRect(drawingRect);
+    
+    
+    // Finish drawing
     [result unlockFocus];
     dragImage = result;
     
