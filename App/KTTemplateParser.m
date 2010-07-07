@@ -49,7 +49,11 @@ static NSString *kKeyPathIndicator = @"=";
 static NSString *kEscapeHTMLIndicator = @"&";
 static NSString *kSpacesToUnderscoreIndicator = @"_";
 
+
+// Keep these listed in keyPathIndicatorCharacters
+
 static NSString *kEncodeURLIndicator = @"%";
+static NSString *kEncodeURLIncludingDashesIndicator = @"-";
 static NSString *kTargetStringIndicator = @"\"";			// [[" String to localized in TARGET language Doesn't want a closing delimeter.
 static NSString *kTargetMainBundleStringIndicator = @"`";	// [[` String to localized in TARGET language -- but stored in Main Bundle ...  Doesn't want a closing delimeter.
 static NSString *kStringIndicator = @"'";					// [[' String to localize in current language. Doesn't want a closing delimeter.
@@ -364,6 +368,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 											   intoString:&indicatorChars];
 						int htmlEscapeLocation = [indicatorChars rangeOfString:kEscapeHTMLIndicator].location;
 						int urlEncodeLocation  = [indicatorChars rangeOfString:kEncodeURLIndicator].location;
+						int urlEncodeDashesLocation  = [indicatorChars rangeOfString:kEncodeURLIncludingDashesIndicator].location;
 						int spacesToUnderscoreLocation  = [indicatorChars rangeOfString:kSpacesToUnderscoreIndicator].location;
 						
 						// grab the class name to instantiate
@@ -410,6 +415,10 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 								if (NSNotFound != urlEncodeLocation)
 								{
 									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+								}
+								if (NSNotFound != urlEncodeDashesLocation)
+								{
+									toAppend = [toAppend stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES escape:@"&+%=-"];
 								}
 								if (NSNotFound != htmlEscapeLocation)
 								{
@@ -543,7 +552,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 	
 	if (!sIndicatorCharacterSet)
 	{
-		sIndicatorCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"=&%_"] retain];
+		sIndicatorCharacterSet = [[NSCharacterSet characterSetWithCharactersInString:@"=&%_-"] retain];
 	}
 	
 	return sIndicatorCharacterSet;
