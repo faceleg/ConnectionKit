@@ -38,7 +38,9 @@
 		<string>RNKG97HK7JE5J</string>
 	</dict>
 	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
+	<string>2.0</string>
+	<key>KTCategory</key>
+	<integer>4</integer>
 	<key>KSHelpAnchor</key>
 	<string>Amazon_List</string>
 	<key>KTPageletCanHaveTitle</key>

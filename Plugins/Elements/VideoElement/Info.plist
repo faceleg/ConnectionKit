@@ -23,7 +23,9 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
+	<string>2.0</string>
+	<key>KTCategory</key>
+	<integer>0</integer>
 	<key>KTCSSClassName</key>
 	<string>Movie</string>
 	<key>KTElementAllowsIntroduction</key>

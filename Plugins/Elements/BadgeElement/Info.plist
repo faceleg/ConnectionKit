@@ -24,6 +24,8 @@
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
 	<string>2.0</string>
+	<key>KTCategory</key>
+	<integer>3</integer>
 	<key>KSHelpAnchor</key>
 	<string>Sandvox_Badge</string>
 	<key>KTPageletCanHaveTitle</key>

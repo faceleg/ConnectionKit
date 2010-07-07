@@ -25,7 +25,9 @@
 	<key>CFBundleVersion</key>
 	<string>${SVN_VERSION}</string>
 	<key>KSMinimumAppVersion</key>
-	<string>1.5</string>
+	<string>2.0</string>
+	<key>KTCategory</key>
+	<integer>2</integer>
 	<key>KSHelpAnchor</key>
 	<string>Index_Pagelet</string>
 	<key>KTMainElement</key>
