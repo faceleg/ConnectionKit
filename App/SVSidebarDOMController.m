@@ -381,9 +381,14 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     
     // Finish up
-    if (!result)
+    if (result)
+    {
+        [[self webEditor] moveDragHighlightToDOMNode:[self sidebarDivElement]];
+    }
+    else
     {
         [self removeDragCaret];
+        [[self webEditor] moveDragHighlightToDOMNode:nil];
     }
     
     return result;
