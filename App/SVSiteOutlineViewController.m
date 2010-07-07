@@ -10,7 +10,6 @@
 
 #import "KTDocument.h"
 #import "KTSite.h"
-#import "KTHTMLInspectorController.h"
 #import "KTImageTextCell.h"
 #import "SVLink.h"
 #import "KTLinkConnector.h"

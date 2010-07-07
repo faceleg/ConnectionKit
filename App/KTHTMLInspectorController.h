@@ -46,7 +46,7 @@ typedef enum {
 
 	// ivar of what to send the information back to
 	NSObject						*_HTMLSourceObject;
-	NSString						*_HTMLSourceKeyPath;
+	SEL								_completionSelector;
 	
 	NSString						*_sourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString						*_title;
@@ -74,7 +74,6 @@ typedef enum {
 @property (nonatomic) NSRange affectedCharRange;
 @property (nonatomic, copy) NSString *replacementString;
 @property (nonatomic, retain) NSObject *HTMLSourceObject;
-@property (nonatomic, copy) NSString *HTMLSourceKeyPath;
 @property (nonatomic, copy) NSString *sourceCode;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic) KTDocType docType;
@@ -83,7 +82,7 @@ typedef enum {
 @property (nonatomic) ValidationState validationState;
 @property (nonatomic) BOOL preventPreview;
 @property (nonatomic, copy) NSData *hashOfLastValidation;
-
+@property (assign) SEL completionSelector;
 
 @end
 

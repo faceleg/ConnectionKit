@@ -855,7 +855,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 			[controller setPreventPreview:![[graphic shouldPreviewWhenEditing] boolValue]];
 			
 			[controller setHTMLSourceObject:graphic];
-			[controller setHTMLSourceKeyPath:@"HTMLString"];
+			[controller setCompletionSelector:@selector(HTMLInspectorCompleted:)];
 			
 			[controller showWindow:nil];
 			break;

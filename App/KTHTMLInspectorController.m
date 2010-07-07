@@ -47,7 +47,6 @@
 @synthesize affectedCharRange = _affectedCharRange;
 @synthesize replacementString = _replacementString;
 @synthesize HTMLSourceObject = _HTMLSourceObject;
-@synthesize HTMLSourceKeyPath = _HTMLSourceKeyPath;
 @synthesize sourceCode = _sourceCode;
 @synthesize title = _title;
 @synthesize docType = _docType;
@@ -56,6 +55,9 @@
 @synthesize validationState = _validationState;
 @synthesize preventPreview = _preventPreview;
 @synthesize hashOfLastValidation = _hashOfLastValidation;
+@synthesize completionSelector = _completionSelector;
+
+
 
 
 
@@ -126,7 +128,6 @@
 	[_replacementString release];
 	_replacementString = nil;
     [self setHTMLSourceObject:nil];
-    [self setHTMLSourceKeyPath:nil];
 	[self setTitle:nil];
 	[self setSourceCode:nil];
 	self.hashOfLastValidation = nil;
@@ -443,8 +444,8 @@ initial syntax coloring.
             [[MOC undoManager] disableUndoRegistration];
         }
         
-        // Store the HTML
-        [_HTMLSourceObject setValue:str forKeyPath:_HTMLSourceKeyPath];
+        // Store the HTML etc.
+        [_HTMLSourceObject performSelector:self.completionSelector withObject:self];
 		
         // Re-enable undo registration
         if (MOC)
