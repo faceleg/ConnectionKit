@@ -16,6 +16,8 @@
 @dynamic lastValidMarkupDigest;
 @dynamic shouldPreviewWhenEditing;
 
+@class SVWebEditorViewController;
+
 #pragma mark HTML
 
 - (void)writeBody:(SVHTMLContext *)context;

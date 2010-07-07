@@ -839,8 +839,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 		{
 			KTHTMLInspectorController *controller = [self HTMLInspectorController];
 			SVRawHTMLGraphic *graphic = (SVRawHTMLGraphic *) selection;
-			NSString *toEdit = [graphic HTMLString];
-			
+						
 			SVTitleBox *titleBox = [graphic titleBox];
 			if (titleBox)
 			{
@@ -850,18 +849,14 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 			{
 				[controller setTitle:nil];
 			}
-			[controller setSourceCode:toEdit];
-			[controller setDocType:[[graphic docType] intValue]];
-			[controller setPreventPreview:![[graphic shouldPreviewWhenEditing] boolValue]];
 			
-			[controller setHTMLSourceObject:graphic];
-			[controller setCompletionSelector:@selector(HTMLInspectorCompleted:)];
+			[controller setHTMLSourceObject:graphic];	// so it can save things back.
 			
 			[controller showWindow:nil];
 			break;
 		}
 	}
-}	
+}
 
 #pragma mark -
 

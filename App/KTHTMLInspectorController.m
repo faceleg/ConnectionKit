@@ -21,6 +21,7 @@
 #import "NSData+Karelia.h"
 #import "NSTextView+KTExtensions.h"
 #import "SVValidatorWindowController.h"
+#import "SVRawHTMLGraphic.h"
 
 #import "Registration.h"
 
@@ -47,7 +48,7 @@
 @synthesize affectedCharRange = _affectedCharRange;
 @synthesize replacementString = _replacementString;
 @synthesize HTMLSourceObject = _HTMLSourceObject;
-@synthesize sourceCode = _sourceCode;
+@synthesize sourceCodeTemp = _sourceCodeTemp;
 @synthesize title = _title;
 @synthesize docType = _docType;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
@@ -78,7 +79,7 @@
     self = [super initWithWindowNibName:@"HTMLEditor"];
     if (self)
 	{
-		_sourceCode = nil;
+		_sourceCodeTemp = nil;
 		_autoSyntaxColoring = YES;
 		_maintainIndentation = YES;
 		_recolorTimer = nil;
@@ -129,7 +130,7 @@
 	_replacementString = nil;
     [self setHTMLSourceObject:nil];
 	[self setTitle:nil];
-	[self setSourceCode:nil];
+	[self setSourceCodeTemp:nil];
 	self.hashOfLastValidation = nil;
     [_undoManager release];
     
@@ -152,12 +153,12 @@ initial syntax coloring.
 	
 	[[self window] setContentBorderThickness:32.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
 
-	// Load source code into text view, if necessary:
-	if( _sourceCode != nil )
+	// Load source code into text view, if necessary.  But then we no longer use this ivar
+	if( _sourceCodeTemp != nil )
 	{
-		[textView setString: _sourceCode];
-		[_sourceCode release];
-		_sourceCode = nil;
+		[textView setString: _sourceCodeTemp];
+		[_sourceCodeTemp release];
+		_sourceCodeTemp = nil;
 	}
 	
 	// Set up our progress indicator:
@@ -431,10 +432,6 @@ initial syntax coloring.
 {
 	if (_HTMLSourceObject)
 	{
-		NSMutableAttributedString*  textStore = [textView textStorage];
-        NSString *str = [[[textStore string] copy] autorelease];
-        
-        
         // Disable undo registration if requested
         NSManagedObjectContext *MOC = nil;
         if (disableUndoRegistration && [_HTMLSourceObject isKindOfClass:[NSManagedObject class]])
@@ -445,7 +442,12 @@ initial syntax coloring.
         }
         
         // Store the HTML etc.
-        [_HTMLSourceObject performSelector:self.completionSelector withObject:self];
+		_HTMLSourceObject.docType = [NSNumber numberWithInt:self.docType];
+		_HTMLSourceObject.HTMLString = [[textView textStorage] string];
+		_HTMLSourceObject.lastValidMarkupDigest = self.hashOfLastValidation;
+		_HTMLSourceObject.shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
+		
+		
 		
         // Re-enable undo registration
         if (MOC)
@@ -711,11 +713,11 @@ initial syntax coloring.
 
 -(IBAction)	recolorCompleteFile: (id)sender
 {
-	if( _sourceCode != nil && textView )
+	if( _sourceCodeTemp != nil && textView )
 	{
-		[textView setString: _sourceCode]; // Causes recoloring notification.
-		[_sourceCode release];
-		_sourceCode = nil;
+		[textView setString: _sourceCodeTemp]; // Causes recoloring notification.
+		[_sourceCodeTemp release];
+		_sourceCodeTemp = nil;
 	}
 	else
 	{
@@ -776,22 +778,33 @@ initial syntax coloring.
 
 
 
-- (void)setSourceCode:(NSString *)aSourceCode
+- (void)setSourceCodeTemp:(NSString *)aSourceCode
 {
-	[_sourceCode release];
-	_sourceCode = [aSourceCode copy];
+	[_sourceCodeTemp release];
+	_sourceCodeTemp = [aSourceCode copy];
 	
 	/* Try to load it into textView and syntax colorize it:
 		Since this may be called before the NIB has been loaded, we keep around
 		_sourceCode as a data member and try these two calls again in windowControllerDidLoadNib: */
-	if (nil != _sourceCode)
+	if (nil != _sourceCodeTemp)
 	{
-		NSString *nsbpReplaced = [_sourceCode stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
-		[textView setString: nsbpReplaced];
 		[self recolorCompleteFile:nil];
 	}
 	
 	
+}
+
+- (void) setHTMLSourceObject:(SVRawHTMLGraphic *)graphic;
+{
+	[_HTMLSourceObject release];
+	_HTMLSourceObject = [graphic retain];
+	
+	// load additional properties from the source object
+	
+	self.sourceCodeTemp = graphic.HTMLString;
+	self.docType = [graphic.docType intValue];
+	self.preventPreview = ![graphic.shouldPreviewWhenEditing boolValue];
+	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
 }
 
 #pragma mark -

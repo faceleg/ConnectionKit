@@ -22,7 +22,7 @@ typedef enum {
 } ValidationState;
 
 
-@class KTAbstractElement;
+@class KTAbstractElement, SVRawHTMLGraphic;
 
 // Syntax-colored text file viewer:
 @interface KTHTMLInspectorController : NSWindowController
@@ -45,10 +45,10 @@ typedef enum {
 	NSString						*_replacementString;
 
 	// ivar of what to send the information back to
-	NSObject						*_HTMLSourceObject;
+	SVRawHTMLGraphic				*_HTMLSourceObject;
 	SEL								_completionSelector;
 	
-	NSString						*_sourceCode;				// Temp. storage for data from file until NIB has been read.
+	NSString						*_sourceCodeTemp;				// Temp. storage for data from file until NIB has been read.
 	NSString						*_title;
 		
 	// Bound Properties
@@ -73,8 +73,8 @@ typedef enum {
 @property (nonatomic) BOOL syntaxColoringBusy;
 @property (nonatomic) NSRange affectedCharRange;
 @property (nonatomic, copy) NSString *replacementString;
-@property (nonatomic, retain) NSObject *HTMLSourceObject;
-@property (nonatomic, copy) NSString *sourceCode;
+@property (nonatomic, retain) SVRawHTMLGraphic *HTMLSourceObject;
+@property (nonatomic, copy) NSString *sourceCodeTemp;
 @property (nonatomic, copy) NSString *title;
 @property (nonatomic) KTDocType docType;
 @property (nonatomic, copy) NSString *cachedLocalPrelude;
