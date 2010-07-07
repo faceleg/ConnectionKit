@@ -39,6 +39,17 @@
 
 @implementation KTHTMLInspectorController
 
+@synthesize undoManager = _undoManager;
+@synthesize autoSyntaxColoring = _autoSyntaxColoring;
+@synthesize maintainIndentation = _maintainIndentation;
+@synthesize recolorTimer = _recolorTimer;
+@synthesize syntaxColoringBusy = _syntaxColoringBusy;
+@synthesize affectedCharRange = _affectedCharRange;
+@synthesize replacementString = _replacementString;
+@synthesize HTMLSourceObject = _HTMLSourceObject;
+@synthesize HTMLSourceKeyPath = _HTMLSourceKeyPath;
+@synthesize sourceCode = _sourceCode;
+@synthesize title = _title;
 @synthesize docType = _docType;
 @synthesize cachedLocalPrelude = _cachedLocalPrelude;
 @synthesize cachedRemotePrelude = _cachedRemotePrelude;
@@ -48,14 +59,9 @@
 
 
 
-
-
-
-
-
 /* -----------------------------------------------------------------------------
 	init:
-		Constructor that inits mySourceCode member variable as a flag. It's
+		Constructor that inits _sourceCode member variable as a flag. It's
 		storage for the text until the NIB's been loaded.
    -------------------------------------------------------------------------- */
 
@@ -70,11 +76,11 @@
     self = [super initWithWindowNibName:@"HTMLEditor"];
     if (self)
 	{
-		mySourceCode = nil;
-		autoSyntaxColoring = YES;
-		maintainIndentation = YES;
-		recolorTimer = nil;
-		syntaxColoringBusy = NO;
+		_sourceCode = nil;
+		_autoSyntaxColoring = YES;
+		_maintainIndentation = YES;
+		_recolorTimer = nil;
+		_syntaxColoringBusy = NO;
 	}
     return self;
 }
@@ -87,13 +93,13 @@
 	[self autoValidate];
 	
 	NSString *windowTitle = nil;
-	if (nil == myTitle || [myTitle isEqualToString:@""])
+	if (nil == _title || [_title isEqualToString:@""])
 	{
 		windowTitle = NSLocalizedString(@"Edit HTML", @"Window title");
 	}
 	else
 	{
-		windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), myTitle];
+		windowTitle =[NSString stringWithFormat:NSLocalizedString(@"Edit \\U201C%@\\U201D HTML", @"Window title, showing title of element"), _title];
 	}
 	[[self window] setTitle:windowTitle];
 }
@@ -114,17 +120,17 @@
 {
 	[self removeObserver:self forKeyPath:@"docType"];
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
-	[recolorTimer invalidate];
-	[recolorTimer release];
-	recolorTimer = nil;
-	[replacementString release];
-	replacementString = nil;
+	[_recolorTimer invalidate];
+	[_recolorTimer release];
+	_recolorTimer = nil;
+	[_replacementString release];
+	_replacementString = nil;
     [self setHTMLSourceObject:nil];
     [self setHTMLSourceKeyPath:nil];
 	[self setTitle:nil];
 	[self setSourceCode:nil];
 	self.hashOfLastValidation = nil;
-    [myUndoManager release];
+    [_undoManager release];
     
 	[super dealloc];
 }
@@ -146,11 +152,11 @@ initial syntax coloring.
 	[[self window] setContentBorderThickness:32.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
 
 	// Load source code into text view, if necessary:
-	if( mySourceCode != nil )
+	if( _sourceCode != nil )
 	{
-		[textView setString: mySourceCode];
-		[mySourceCode release];
-		mySourceCode = nil;
+		[textView setString: _sourceCode];
+		[_sourceCode release];
+		_sourceCode = nil;
 	}
 	
 	// Set up our progress indicator:
@@ -422,7 +428,7 @@ initial syntax coloring.
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
 {
-	if (myHTMLSourceObject)
+	if (_HTMLSourceObject)
 	{
 		NSMutableAttributedString*  textStore = [textView textStorage];
         NSString *str = [[[textStore string] copy] autorelease];
@@ -430,15 +436,15 @@ initial syntax coloring.
         
         // Disable undo registration if requested
         NSManagedObjectContext *MOC = nil;
-        if (disableUndoRegistration && [myHTMLSourceObject isKindOfClass:[NSManagedObject class]])
+        if (disableUndoRegistration && [_HTMLSourceObject isKindOfClass:[NSManagedObject class]])
         {
-            MOC = [(NSManagedObject *)myHTMLSourceObject managedObjectContext];
+            MOC = [(NSManagedObject *)_HTMLSourceObject managedObjectContext];
             [MOC processPendingChanges];
             [[MOC undoManager] disableUndoRegistration];
         }
         
         // Store the HTML
-        [myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
+        [_HTMLSourceObject setValue:str forKeyPath:_HTMLSourceKeyPath];
 		
         // Re-enable undo registration
         if (MOC)
@@ -501,7 +507,7 @@ initial syntax coloring.
 	NSRange						currRange = range;
     
 	// Perform the syntax coloring:
-	if( autoSyntaxColoring && range.length > 0 )
+	if( _autoSyntaxColoring && range.length > 0 )
 	{
 		NSRange			effectiveRange;
 		NSString*		rangeMode;
@@ -559,16 +565,16 @@ initial syntax coloring.
 -(void)	didChangeText	// This actually does what we want to do in textView:shouldChangeTextInRange:
 {
 	NSLog(@"didChangeText");
-	if( maintainIndentation && replacementString && ([replacementString isEqualToString:@"\n"]
-													 || [replacementString isEqualToString:@"\r"]) )
+	if( _maintainIndentation && _replacementString && ([_replacementString isEqualToString:@"\n"]
+													 || [_replacementString isEqualToString:@"\r"]) )
 	{
 		NSMutableAttributedString*  textStore = [textView textStorage];
 		BOOL						hadSpaces = NO;
-		unsigned int				lastSpace = affectedCharRange.location,
+		unsigned int				lastSpace = _affectedCharRange.location,
 		prevLineBreak = 0;
 		NSRange						spacesRange = { 0, 0 };
 		unichar						theChar = 0;
-		unsigned int				x = (affectedCharRange.location == 0) ? 0 : affectedCharRange.location -1;
+		unsigned int				x = (_affectedCharRange.location == 0) ? 0 : _affectedCharRange.location -1;
 		NSString*					tsString = [textStore string];
 		
 		while( true )
@@ -624,15 +630,15 @@ initial syntax coloring.
 
 - (BOOL)textView:(NSTextView *)tv shouldChangeTextInRange:(NSRange)afcr replacementString:(NSString *)rps
 {
-	if( maintainIndentation )
+	if( _maintainIndentation )
 	{
-		affectedCharRange = afcr;
-		if( replacementString )
+		_affectedCharRange = afcr;
+		if( _replacementString )
 		{
-			[replacementString release];
-			replacementString = nil;
+			[_replacementString release];
+			_replacementString = nil;
 		}
-		replacementString = [rps retain];
+		_replacementString = [rps retain];
 		
 		// Took this out -- it never seemed to be actually invoked, and it would make us lose Japanese characters.
 		//[self performSelector: @selector(didChangeText) withObject: nil afterDelay: 0.0];	// Queue this up on the event loop. If we change the text here, we only confuse the undo stack.
@@ -653,8 +659,8 @@ initial syntax coloring.
 
 - (NSUndoManager *)windowWillReturnUndoManager:(NSWindow *)window
 {
-    if (!myUndoManager) myUndoManager = [[NSUndoManager alloc] init];
-    return myUndoManager;
+    if (!_undoManager) _undoManager = [[NSUndoManager alloc] init];
+    return _undoManager;
 }
 
 #pragma mark -
@@ -674,19 +680,19 @@ initial syntax coloring.
 -(IBAction) recolorCompleteFileDeferred: (id)sender
 {
 	// Drop any pending recalcs.
-	[recolorTimer invalidate];
-	[recolorTimer release];
+	[_recolorTimer invalidate];
+	[_recolorTimer release];
 	
 	// Schedule a new timer:
-	recolorTimer = [[NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(recolorSyntaxTimer:)
+	_recolorTimer = [[NSTimer scheduledTimerWithTimeInterval:1.5 target:self selector:@selector(recolorSyntaxTimer:)
 		userInfo:nil repeats: NO] retain];
 }
 
 // This actually triggers the recoloring:
 -(void)	recolorSyntaxTimer: (NSTimer*) sender
 {
-	[recolorTimer release];
-	recolorTimer = nil;
+	[_recolorTimer release];
+	_recolorTimer = nil;
 	[self recolorCompleteFile: self];	// Slow. During typing we only recolor the changed parts, but sometimes we need this instead.
 }
 
@@ -704,11 +710,11 @@ initial syntax coloring.
 
 -(IBAction)	recolorCompleteFile: (id)sender
 {
-	if( mySourceCode != nil && textView )
+	if( _sourceCode != nil && textView )
 	{
-		[textView setString: mySourceCode]; // Causes recoloring notification.
-		[mySourceCode release];
-		mySourceCode = nil;
+		[textView setString: _sourceCode]; // Causes recoloring notification.
+		[_sourceCode release];
+		_sourceCode = nil;
 	}
 	else
 	{
@@ -738,16 +744,16 @@ initial syntax coloring.
 
 -(void)		recolorRange: (NSRange)range
 {
-	if( syntaxColoringBusy )	// Prevent endless loop when recoloring's replacement of text causes processEditing to fire again.
+	if( _syntaxColoringBusy )	// Prevent endless loop when recoloring's replacement of text causes processEditing to fire again.
 		return;
 	
 	if( textView == nil || range.length == 0	// Don't like doing useless stuff.
-		|| recolorTimer )						// And don't like recoloring partially if a full recolorization is pending.
+		|| _recolorTimer )						// And don't like recoloring partially if a full recolorization is pending.
 		return;
 
 	{
 		NS_DURING
-			syntaxColoringBusy = YES;
+			_syntaxColoringBusy = YES;
 			[progress startAnimation:nil];
 			
 			[status setStringValue: [NSString stringWithFormat: @"Recoloring syntax in %@", NSStringFromRange(range)]];
@@ -755,9 +761,9 @@ initial syntax coloring.
 			[textView recolorRange:range];
 			
 			[progress stopAnimation:nil];
-			syntaxColoringBusy = NO;
+			_syntaxColoringBusy = NO;
 		NS_HANDLER
-			syntaxColoringBusy = NO;
+			_syntaxColoringBusy = NO;
 			[progress stopAnimation:nil];
 			[localException raise];
 		NS_ENDHANDLER
@@ -771,15 +777,15 @@ initial syntax coloring.
 
 - (void)setSourceCode:(NSString *)aSourceCode
 {
-	[mySourceCode release];
-	mySourceCode = [aSourceCode copy];
+	[_sourceCode release];
+	_sourceCode = [aSourceCode copy];
 	
 	/* Try to load it into textView and syntax colorize it:
 		Since this may be called before the NIB has been loaded, we keep around
-		mySourceCode as a data member and try these two calls again in windowControllerDidLoadNib: */
-	if (nil != mySourceCode)
+		_sourceCode as a data member and try these two calls again in windowControllerDidLoadNib: */
+	if (nil != _sourceCode)
 	{
-		NSString *nsbpReplaced = [mySourceCode stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
+		NSString *nsbpReplaced = [_sourceCode stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
 		[textView setString: nsbpReplaced];
 		[self recolorCompleteFile:nil];
 	}

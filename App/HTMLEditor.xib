@@ -438,7 +438,7 @@
 						</object>
 						<object class="NSImageView" id="985138212">
 							<reference key="NSNextResponder" ref="436428290"/>
-							<int key="NSvFlags">268</int>
+							<int key="NSvFlags">265</int>
 							<object class="NSMutableSet" key="NSDragTypes">
 								<bool key="EncodedWithXMLCoder">YES</bool>
 								<object class="NSArray" key="set.sortedObjects">
@@ -451,7 +451,7 @@
 									<string>NeXT TIFF v4.0 pasteboard type</string>
 								</object>
 							</object>
-							<string key="NSFrame">{{3, 358}, {16, 16}}</string>
+							<string key="NSFrame">{{804, 358}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -500,13 +500,13 @@
 						<object class="NSTextField" id="525775930">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">268</int>
-							<string key="NSFrame">{{18, 361}, {708, 11}}</string>
+							<string key="NSFrame">{{17, 360}, {782, 11}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSTextFieldCell" key="NSCell" id="116617166">
 								<int key="NSCellFlags">68288064</int>
-								<int key="NSCellFlags2">272892928</int>
+								<int key="NSCellFlags2">71566336</int>
 								<string key="NSContents">Preference to show live Internet data is turned off. Object may not be visible.</string>
 								<object class="NSFont" key="NSSupport">
 									<string key="NSName">LucidaGrande</string>
@@ -717,10 +717,10 @@
 							<reference ref="44215196"/>
 							<reference ref="1017188347"/>
 							<reference ref="186337685"/>
-							<reference ref="985138212"/>
 							<reference ref="578490512"/>
-							<reference ref="525775930"/>
 							<reference ref="576869244"/>
+							<reference ref="985138212"/>
+							<reference ref="525775930"/>
 						</object>
 						<reference key="parent" ref="1046566339"/>
 					</object>
