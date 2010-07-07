@@ -79,6 +79,8 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 @synthesize subjectType = _subjectType;
 @dynamic fields;
 
+@synthesize copyToSender = _copyToSender;
+
 enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelection };
 
 #pragma mark -
@@ -200,7 +202,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 + (NSSet *)plugInKeys
 {
-	return [NSSet setWithObjects:nil];	
+	return [NSSet setWithObjects:@"copyToSender", nil];	
 }
 
 + (Class)inspectorViewControllerClass { return [ContactInspector class]; }

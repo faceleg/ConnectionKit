@@ -52,6 +52,8 @@
 	BOOL _sideLabels;
 	int _subjectType;
 	NSArray *_fields;
+    
+    BOOL _copyToSender;
 	
 	
 	@private
@@ -73,6 +75,8 @@
 @property (assign) BOOL sideLabels;
 @property (assign) int subjectType;
 @property (copy) NSArray *fields;
+
+@property (nonatomic) BOOL copyToSender;
 
 - (NSString *)encodedRecipient;
 - (NSString *)subjectInputHTML;
