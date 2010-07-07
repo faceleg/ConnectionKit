@@ -854,6 +854,9 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 			[controller setDocType:[[graphic docType] intValue]];
 			[controller setPreventPreview:![[graphic shouldPreviewWhenEditing] boolValue]];
 			
+			[controller setHTMLSourceObject:graphic];
+			[controller setHTMLSourceKeyPath:@"HTMLString"];
+			
 			[controller showWindow:nil];
 			break;
 		}

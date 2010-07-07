@@ -45,14 +45,12 @@ typedef enum {
 	NSString*						replacementString;
 
 	// ivar of what to send the information back to
-	NSObject			*myHTMLSourceObject;
-	NSString			*myHTMLSourceKeyPath;
+	NSObject						*myHTMLSourceObject;
+	NSString						*myHTMLSourceKeyPath;
 	
 	NSString			*mySourceCode;				// Temp. storage for data from file until NIB has been read.
 	NSString			*myTitle;
-	
-	NSTimeInterval		myLastEditTime;				// keep track of keystroke/replace changes to not lose search/replaces
-	
+		
 	// Bound Properties
 	KTDocType			_docType;
 	NSString			*_cachedLocalPrelude;
@@ -62,21 +60,11 @@ typedef enum {
 	NSData				*_hashOfLastValidation;
 }
 
-- (void)setSourceCode:(NSString *)aString;	// problem is, where does it go when it's edited?
-
-- (NSString *)sourceCode;
-- (void)setSourceCode:(NSString *)aSourceCode;
-- (NSString *)title;
-- (void)setTitle:(NSString *)aTitle;
 - (IBAction) windowHelp:(id)sender;
 - (IBAction) applyChanges:(id)sender;
 - (IBAction) validate:(id)sender;
 - (IBAction) docTypePopUpChanged:(id)sender;
 
-- (NSObject *)HTMLSourceObject;
-- (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject;
-- (NSString *)HTMLSourceKeyPath;
-- (void)setHTMLSourceKeyPath:(NSString *)anHTMLSourceKeyPath;
 
 -(void)	goToLine: (int)lineNum;
 

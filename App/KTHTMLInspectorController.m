@@ -208,32 +208,6 @@ initial syntax coloring.
 #pragma mark -
 #pragma mark Window Notifications
 
-- (void)windowDidBecomeKey:(NSNotification *)notification;
-{
-	if (myHTMLSourceObject)
-	{
-		NSTimeInterval timeSinceLastChange = [NSDate timeIntervalSinceReferenceDate] - myLastEditTime;
-		if (timeSinceLastChange > 1.5)	// last change must have been MORE than 1.5 seconds AGO in order to re-load from the window.
-		{
-			// reload from model
-			NSString *source = [myHTMLSourceObject valueForKeyPath:myHTMLSourceKeyPath];
-			
-			if (nil == source) source = @"";
-			source = [source stringByReplacing:[NSString stringWithUnichar:160] with:@"&nbsp;"];
-			source = [source stringByTrimmingWhitespace];
-
-			while (NSNotFound != [source rangeOfString:@"\n\n\n"].location)
-			{
-				source = [source stringByReplacing:@"\n\n\n" with:@"\n\n"];	// Try to trim down the text so we don't have bug where extra blank lines are added
-			}
-			[self setSourceCode:source];
-			[NSTextView startRecordingFontChanges];
-		}
-	}
-
-}
-
-
 - (void)windowWillClose:(NSNotification *)aNotification
 {
 	if ( [[aNotification object] isEqual:[self window]] )
@@ -450,17 +424,9 @@ initial syntax coloring.
 {
 	if (myHTMLSourceObject)
 	{
-		myLastEditTime = [NSDate timeIntervalSinceReferenceDate] - 31556926;	// mark edit as being in the PAST so re-activate works no matter what now
-
 		NSMutableAttributedString*  textStore = [textView textStorage];
         NSString *str = [[[textStore string] copy] autorelease];
         
-		while (NSNotFound != [str rangeOfString:@"\n\n\n"].location)
-		{
-			str = [str stringByReplacing:@"\n\n\n" with:@"\n\n"];	// Try to trim down the text so we don't have bug where extra blank lines are added
-		}
-
-		
         
         // Disable undo registration if requested
         NSManagedObjectContext *MOC = nil;
@@ -473,7 +439,6 @@ initial syntax coloring.
         
         // Store the HTML
         [myHTMLSourceObject setValue:str forKeyPath:myHTMLSourceKeyPath];
-
 		
         // Re-enable undo registration
         if (MOC)
@@ -482,10 +447,6 @@ initial syntax coloring.
             [[MOC undoManager] enableUndoRegistration];
         }
         
-        
-		// Now find the cdata tags and convert back to CDATA
-		// myHTMLElement is a div or something, won't be changed, so no need to worry about myHTMLElement itself being replaced.
-//		[myDOMHTMLElement replaceFakeCDataWithCDATA];
 	}
 	else
     {
@@ -505,8 +466,6 @@ initial syntax coloring.
 
 -(void) processEditing: (NSNotification*)notification
 {
-	myLastEditTime = [NSDate timeIntervalSinceReferenceDate];
-	
     NSTextStorage	*textStorage = [notification object];
 	NSRange			range = [textStorage editedRange];
 	int				changeInLen = [textStorage changeInLength];
@@ -810,37 +769,6 @@ initial syntax coloring.
 
 
 
-
-- (NSObject *)HTMLSourceObject
-{
-    return myHTMLSourceObject; 
-}
-
-- (void)setHTMLSourceObject:(NSObject *)anHTMLSourceObject
-{
-    [anHTMLSourceObject retain];
-    [myHTMLSourceObject release];
-    myHTMLSourceObject = anHTMLSourceObject;
-}
-
-- (NSString *)HTMLSourceKeyPath
-{
-    return myHTMLSourceKeyPath; 
-}
-
-- (void)setHTMLSourceKeyPath:(NSString *)anHTMLSourceKeyPath
-{
-    [anHTMLSourceKeyPath retain];
-    [myHTMLSourceKeyPath release];
-    myHTMLSourceKeyPath = anHTMLSourceKeyPath;
-}
-
-
-- (NSString *)sourceCode
-{
-    return mySourceCode; 
-}
-
 - (void)setSourceCode:(NSString *)aSourceCode
 {
 	[mySourceCode release];
@@ -857,19 +785,6 @@ initial syntax coloring.
 	}
 	
 	
-}
-
-
-- (NSString *)title
-{
-    return myTitle; 
-}
-
-- (void)setTitle:(NSString *)aTitle
-{
-    [aTitle retain];
-    [myTitle release];
-    myTitle = aTitle;
 }
 
 #pragma mark -
