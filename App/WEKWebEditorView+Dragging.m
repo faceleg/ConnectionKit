@@ -132,9 +132,16 @@
 
 - (void)draggedImage:(NSImage *)anImage beganAt:(NSPoint)aPoint
 {
-    // Hide the dragged items so it looks like a proper drag
+    // Store dragged items
     OBASSERT(!_draggedItems);
     _draggedItems = [[self selectedItems] copy];    // will redraw without selection borders
+    
+    
+    // Hide the dragged items so it looks like a proper drag
+    for (WEKWebEditorItem *anItem in [self draggedItems])
+    {
+        [[[anItem HTMLElement] style] setProperty:@"opacity" value:@"0" priority:@""];        
+    }
 }
 
 - (void)draggedImage:(NSImage *)anImage endedAt:(NSPoint)aPoint operation:(NSDragOperation)operation;
@@ -181,6 +188,13 @@
 
 - (void)forgetDraggedItems; // call if you want to take over handling of drag source
 {
+    // Restore opacity
+    for (WEKWebEditorItem *anItem in [self draggedItems])
+    {
+        [[[anItem HTMLElement] style] removeProperty:@"opacity"];        
+    }
+    
+    // Ditch the items
     [_draggedItems release]; _draggedItems = nil;
 }
 
@@ -358,10 +372,6 @@
     // Finish drawing
     [result unlockFocus];
     dragImage = result;
-    
-    
-    // Hide the dragged image
-    //[[element style] setProperty:@"opacity" value:@"0" priority:@""];
     
     
     // Start the drag
