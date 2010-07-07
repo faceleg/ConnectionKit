@@ -407,8 +407,12 @@
         aNode = [treeWalker nextSibling];
     }
     
-    // No match was found, so insert at end
-    return nil;
+    
+    // No match was found, so insert at end. But if the end is a <BR>, use that!
+    DOMElement *result = (DOMElement *)[treeWalker currentNode];
+    if (![[result tagName] isEqualToString:@"BR"]) result = nil; 
+        
+    return result;
 }
 
 - (NSDragOperation)draggingEntered:(id <NSDraggingInfo>)sender;
