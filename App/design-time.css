@@ -20,14 +20,18 @@
     border-color:rgba(0,127,255,1);
 }
 
-/*  Super-cunning rule to make only pagelets *inside* an editable area, unselectable */
+
+/*  By default, nothing in a text area is selectbale… */
 img, [contenteditable=true] > * {
     -webkit-user-select:none;
 }
 
+/*  …except paragraphs. */
 [contenteditable=true] > p {
     -webkit-user-select:inherit;
 }
+
+
 
 div.svx-placeholder
 {
