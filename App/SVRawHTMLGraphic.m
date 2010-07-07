@@ -13,6 +13,7 @@
 
 @dynamic docType;
 @dynamic HTMLString;
+@dynamic lastValidMarkupDigest;
 @dynamic shouldPreviewWhenEditing;
 
 #pragma mark HTML

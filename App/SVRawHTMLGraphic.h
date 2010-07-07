@@ -11,9 +11,10 @@
 
 @interface SVRawHTMLGraphic : SVGraphic  
 
-@property(nonatomic, retain) NSNumber *docType;
-@property(nonatomic, retain) NSString *HTMLString;
-@property(nonatomic, retain) NSNumber *shouldPreviewWhenEditing;    // BOOL, madatory
+@property(nonatomic, copy) NSNumber *docType;
+@property(nonatomic, copy) NSString *HTMLString;
+@property(nonatomic, copy) NSData *lastValidMarkupDigest;
+@property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, madatory
 
 @end
 
