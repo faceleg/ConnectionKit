@@ -15,7 +15,7 @@
 
 
 #define WEKDragImageAlpha 0.50f // name & value copied from WebKit
-#define WebMaxDragImageSize NSMakeSize(200.0f, 200.f)
+#define WebMaxDragImageSize NSMakeSize(CGFLOAT_MAX, CGFLOAT_MAX)    // was trying 200x200 before
 
 
 @interface WEKWebEditorView (DraggingPrivate)
