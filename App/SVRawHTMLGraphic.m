@@ -23,7 +23,11 @@
 - (void)writeBody:(SVHTMLContext *)context;
 {
     [context writeHTMLString:[self HTMLString]];
+	
+	// Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"HTMLString"];
+    [context addDependencyOnObject:self keyPath:@"docType"];
+    [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
 }
 
 @end

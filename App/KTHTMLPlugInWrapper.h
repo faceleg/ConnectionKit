@@ -14,8 +14,8 @@ typedef enum {
 	KTPluginCategoryTopLevel = 1,		// In case we have any plug-ins that we don't want to show up in a category
 	KTPluginCategoryIndex = 2,
 	KTPluginCategoryBadge,
-	KTPluginCategoryEmbedded,		// EXPERIMENTAL -- A possible new category that will reduce the size of the "other"
-	KTPluginCategorySocial,
+	KTPluginCategoryEmbedded,
+	KTPluginCategorySocial,				// Should Social and Embedded be folded together?
 	KTPluginCategoryOther
 } KTPluginCategory;
 

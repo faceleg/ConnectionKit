@@ -57,7 +57,7 @@
 - (NSString *)name { return [self pluginPropertyForKey:@"KTPluginName"]; }
 
 
-- (KTPluginCategory)category { return [self pluginPropertyForKey:@"KTCategory"]; }
+- (KTPluginCategory)category { return [[self pluginPropertyForKey:@"KTCategory"] intValue]; }
 
 - (NSImage *)pluginIcon
 {
