@@ -1210,11 +1210,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // If the item is non-inline, simulate -acceptsFirstResponder by making self the first responder
     DOMHTMLElement *element = [item HTMLElement];
-    
-    DOMCSSStyleDeclaration *style = [[self webView] computedStyleForElement:element
-                                                              pseudoElement:nil];
-    
-    if (![[style display] isEqualToString:@"inline"] || ![element isContentEditable])
+    if (![self shouldSelectDOMElementInline:element] || ![element isContentEditable])
     {
         [[self window] makeFirstResponder:self];
     }
