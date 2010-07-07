@@ -400,8 +400,23 @@
         
         if (location.y < mid)
         {
+            // We've found our target, but dissallow it if won't cause any result
+            WEKWebEditorView *webEditor = [self webEditor];
+            if ([sender draggingSource] == webEditor)
+            {
+                for (WEKWebEditorItem *anItem in [webEditor draggedItems])
+                {
+                    DOMHTMLElement *anItemElement = [anItem HTMLElement];
+                    if (aNode == anItemElement || [treeWalker previousSibling] == anItemElement)
+                    {
+                        aNode = (id)[NSNull null];  // ugly, I know
+                        break;
+                    }
+                }
+            }
+            
+                  
             return aNode;
-            break;
         }
         
         aNode = [treeWalker nextSibling];
@@ -438,6 +453,8 @@
     
     
     DOMNode *aNode = [self childForDraggingInfo:sender];
+    if ((id)aNode == [NSNull null]) return NSDragOperationNone;
+    
     
     // What action to take though?
     NSDragOperation mask = [sender draggingSourceOperationMask];
