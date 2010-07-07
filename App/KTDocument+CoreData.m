@@ -75,17 +75,16 @@
 	
 	if (!result)
 	{
-		// grab only Sandvox.mom (ignoring "previous moms" in KTComponents/Resources)
-		NSBundle *componentsBundle = [NSBundle bundleForClass:[KTAbstractElement class]];
-        OBASSERT(componentsBundle);
-		
-        NSString *modelPath = [componentsBundle pathForResource:@"Sandvox" ofType:@"mom"];
-        OBASSERTSTRING(modelPath, [componentsBundle description]);
+		NSString *modelPath = [[NSBundle mainBundle] pathForResource:@"Sandvox" ofType:@"mom"];
+        OBASSERT(modelPath);
         
-		NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
-		OBASSERT(modelURL);
-		
-		result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+        if (modelPath)
+        {
+            NSURL *modelURL = [NSURL fileURLWithPath:modelPath];
+            OBASSERT(modelURL);
+            
+            result = [[NSManagedObjectModel alloc] initWithContentsOfURL:modelURL];
+        }
 	}
 	
 	OBPOSTCONDITION(result);
