@@ -347,4 +347,6 @@
 
 - (BOOL)includeInSiteMaps; { return [[self includeInSiteMap] boolValue]; }
 
+- (NSString *)language { return nil; }
+
 @end
