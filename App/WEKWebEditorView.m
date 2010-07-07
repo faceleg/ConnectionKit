@@ -1786,6 +1786,9 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 - (void)webViewDidChange:(NSNotification *)notification;
 {
     [self didChangeText];
+    
+    // Bring the change into view
+    [[self webView] centerSelectionInVisibleArea:self];
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
