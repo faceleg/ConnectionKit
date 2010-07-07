@@ -21,13 +21,13 @@
 }
 
 
-/*  By default, nothing in a text area is selectbale… */
-img, [contenteditable=true] > * {
+/*  By default, nothing in article is selectable… */
+img, .article [contenteditable=true] > * {
     -webkit-user-select:none;
 }
 
 /*  …except paragraphs. */
-[contenteditable=true] > p {
+.article [contenteditable=true] > p {
     -webkit-user-select:inherit;
 }
 
