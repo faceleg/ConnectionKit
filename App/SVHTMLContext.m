@@ -11,13 +11,16 @@
 #import "SVGraphic.h"
 #import "KTHostProperties.h"
 #import "SVHTMLTemplateParser.h"
+#import "SVHTMLTextBlock.h"
+#import "SVMediaRecord.h"
 #import "SVTemplate.h"
 #import "KTPage.h"
 #import "KTSite.h"
-#import "BDAlias+QuickLook.h"
-#import "SVMediaRecord.h"
+#import "SVTextAttachment.h"
 
 #import "SVCalloutDOMController.h"  // don't like having to do this
+
+#import "BDAlias+QuickLook.h"
 
 #import "NSIndexPath+Karelia.h"
 #import "NSString+Karelia.h"
@@ -229,6 +232,31 @@
         
         [parser parseIntoHTMLContext:self];
         [parser release];
+    }
+    else if ([graphic mustBePagelet])
+    {
+        // Single <DIV> to enclose the graphic HTML
+        NSString *classname = [NSString stringWithFormat:@"%@", [graphic className]];
+        [self startElement:@"div" className:classname];
+        
+        [graphic writeBody:self];
+        
+        // Caption if requested
+        if ([graphic showsCaption])
+        {
+            SVHTMLTextBlock *textBlock = [[SVHTMLTextBlock alloc] init];
+            [textBlock setHTMLSourceObject:graphic];
+            [textBlock setHTMLSourceKeyPath:@"caption"];
+            [textBlock setEditable:YES];
+            [textBlock setImportsGraphics:YES];
+            [textBlock setCustomCSSClassName:@"caption"];
+            
+            [textBlock writeHTML:self];
+            [textBlock release];
+        }
+        
+        // Finish up
+        [self endElement];
     }
     else
     {
