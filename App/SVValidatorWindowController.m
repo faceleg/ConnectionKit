@@ -95,13 +95,10 @@
 		isValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
 		NSString *explanation = NSLocalizedString(@"(none provided)", "indicator that not explanation was provided to HTML validation success");	// needs to be scraped
 		
-		if (nil != resultingPageString)
+		NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
+		if (NSNotFound != foundValidRange.location)
 		{
-			NSRange foundValidRange = [resultingPageString rangeBetweenString:@"<h2 class=\"valid\">" andString:@"</h2>"];
-			if (NSNotFound != foundValidRange.location)
-			{
-				explanation = [[[resultingPageString substringWithRange:foundValidRange] condenseWhiteSpace] stringByUnescapingHTMLEntities];
-			}
+			explanation = [[[resultingPageString substringWithRange:foundValidRange] condenseWhiteSpace] stringByUnescapingHTMLEntities];
 		}
 		
 		if (isValid)	// no need to show HTML, just announce that it's OK
@@ -162,8 +159,8 @@
 			NSString *explanation3 = NSLocalizedString(
 														  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the HTML elements that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
 		
-			NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
-			NSURL *appIconURL = [NSURL fileURLWithPath:appIconPath];
+			// NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
+			NSURL *appIconURL = nil; // [NSURL fileURLWithPath:appIconPath];
 			
 			// WORK-AROUND ... can't load file:// when I have baseURL set, which I need for links to "#" sections to work!
 			appIconURL = [NSURL URLWithString:@"http://www.karelia.com/images/SandvoxAppIcon128.png"];

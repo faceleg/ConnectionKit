@@ -173,7 +173,7 @@
     }
     
     
-    return YES;
+    return result;
 }
 
 - (BOOL)webEditorTextShouldInsertNode:(DOMNode *)node

@@ -394,6 +394,7 @@ initial syntax coloring.
 			{
 				self.validationState = kValidationStateLocallyValid;
 			}
+			[xmlDoc release];
 		}
 		else
 		{

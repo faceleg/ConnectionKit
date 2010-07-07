@@ -591,7 +591,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 {
 	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
     
-    BOOL result = YES;
+    BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
 	SEL itemAction = [menuItem action];
 		
 	// File menu handled by KTDocument
@@ -605,23 +605,23 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSPasteboard *generalPboard = [NSPasteboard generalPasteboard];
 		if ( nil != [generalPboard availableTypeFromArray:[NSArray arrayWithObject:kKTPagesPboardType]] )
 		{
-			return YES;
+			result = YES;
 		}
 		else
 		{
-			return NO;
+			result = NO;
 		}
 	}
 	
 	// Insert menu
-    if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
+    else if (itemAction == @selector(editRawHTMLInSelectedBlock:) ||
 		itemAction == @selector(insertSiteTitle:) ||
         itemAction == @selector(insertSiteSubtitle:) ||
         itemAction == @selector(insertPageTitle:) ||
         itemAction == @selector(insertPageletTitle:) ||
         itemAction == @selector(insertFooter:))
     {
-        return [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
+        result = [[[self webContentAreaController] webEditorViewController] validateMenuItem:menuItem];
     }
     
 	
@@ -644,15 +644,16 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         {
             result = NO;
         }
+		// else result will be YES
     }
     else if (itemAction == @selector(selectWebViewViewType:))
     {
-        return [[self webContentAreaController] validateMenuItem:menuItem];
+        result = [[self webContentAreaController] validateMenuItem:menuItem];
     }
 	else if (itemAction == @selector(validateSource:))
 	{
 		id selection = [[[self siteOutlineViewController] content] selectedObjects];
-		return ( [KSNetworkNotifier isNetworkAvailable]
+		result = ( [KSNetworkNotifier isNetworkAvailable]
 				&& !NSIsControllerMarker(selection)
 				&& 1 == [selection count]
 				&& nil != [[selection lastObject] pageRepresentation] );
@@ -663,33 +664,25 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	{
 		[menuItem setState:
 			([[self document] displaySmallPageIcons] ? NSOnState : NSOffState)];
-		return YES;	// enabled if we can see the site outline
+		// result will be YES
 	}
 	
 	// Site menu items
-    else if (itemAction == @selector(addPage:))
-    {
-        return YES;
-    }
-    else if (itemAction == @selector(addCollection:))
-    {
-        return YES;
-    }	
     else if (itemAction == @selector(exportSiteAgain:))
     {
         NSString *exportPath = [[[self document] lastExportDirectory] path];
-        return (exportPath != nil && [exportPath isAbsolutePath]);
+        result = (exportPath != nil && [exportPath isAbsolutePath]);
     }
     
     // Other
     else if ( itemAction == @selector(group:) )
     {
-        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
+        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( itemAction == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
-        return ( (1==[selectedItems count])
+        result = ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] rootPage])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
@@ -698,21 +691,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	else if ( itemAction == @selector(visitPublishedSite:) ) 
 	{
 		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
-		return (nil != siteURL);
+		result = (nil != siteURL);
 	}
 	
 	// "Visit Published Page" visitPublishedPage:
 	else if ( itemAction == @selector(visitPublishedPage:) ) 
 	{
 		NSURL *pageURL = [[[[self siteOutlineViewController] content] selection] valueForKey:@"URL"];
-		BOOL result = (pageURL && !NSIsControllerMarker(pageURL));
-        return result;
+		result = (pageURL && !NSIsControllerMarker(pageURL));
 	}
 
 	else if ( itemAction == @selector(submitSiteToDirectory:) ) 
 	{
 		NSURL *siteURL = [[[[self document] site] hostProperties] siteURL];
-		return (nil != siteURL);
+		result = (nil != siteURL);
 	}
 	
 	// Window menu
@@ -729,55 +721,32 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
         id context = [menuItem representedObject];
         id selection = [context valueForKey:kKTSelectedObjectsKey];
 		
-		if ( ![selection containsObject:[[[self document] site] rootPage]] )
-		{
-			return YES;
-		}
-		else
-		{
-			return NO;
-		}
+		result = ( ![selection containsObject:[[[self document] site] rootPage]] );
 	}
     else if ( itemAction == @selector(pasteViaContextualMenu:) )
     {
         if ( ![self canPastePages] )
         {
-            return NO;
+            result = NO;
         }
-        
-        id context = [menuItem representedObject];
-        id selection = [context valueForKey:kKTSelectedObjectsKey];
-        if ( [selection isKindOfClass:[NSArray class]] )
-        {
-            KTPage *firstPage = [selection objectAtIndex:0];
-            if ( [firstPage isCollection] )
-            {
-                return YES;
-            }
-            else
-            {
-                return NO;
-            }
-        }
-        else
-        {
-            KTPage *page = selection;
-            if ( [page isCollection] )
-            {
-                return YES;
-            }
-            else
-            {
-                return NO;
-            }
-        }
+		else
+		{
+			id context = [menuItem representedObject];
+			id selection = [context valueForKey:kKTSelectedObjectsKey];
+			if ( [selection isKindOfClass:[NSArray class]] )
+			{
+				KTPage *firstPage = [selection objectAtIndex:0];
+				result = ( [firstPage isCollection] );
+			}
+			else
+			{
+				KTPage *page = selection;
+				result = ( [page isCollection] );
+			}
+		}
     }
 
 	// DEFAULT: let webKit handle it
-	else
-	{
-		return YES;
-	}
     
     return result;
 }
@@ -785,39 +754,34 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 - (BOOL)validateToolbarItem:(NSToolbarItem *)toolbarItem
 {
 	VALIDATION((@"%s %@ %@",__FUNCTION__, toolbarItem, [toolbarItem itemIdentifier]));
+	
+	BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
 	SEL action = [toolbarItem action];
-	if (	action == @selector(addPage:)
-		||	action == @selector(chooseDesign:)
-		)
-    {
-        return YES;
-    }
-	else if (action == @selector(editRawHTMLInSelectedBlock:))
+
+	if (action == @selector(editRawHTMLInSelectedBlock:))
 	{
+		result = NO;	// default, unless found below
 		for (id selection in [[[[self webContentAreaController] webEditorViewController] graphicsController] selectedObjects])
 		{
 			if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
 			{
-				return YES;
+				result = YES;
+				break;
 			}
 		}
 	}
-    else if ( action == @selector(addCollection:) )
-    {
-        return YES;
-    }
     else if ( action == @selector(groupAsCollection:) )
     {
-        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
+        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( action == @selector(group:) )
     {
-        return ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
+        result = ( ![[[[self siteOutlineViewController] content] selectedObjects] containsObject:[[(KTDocument *)[self document] site] rootPage]] );
     }
     else if ( action == @selector(ungroup:) )
     {
 		NSArray *selectedItems = [[[self siteOutlineViewController] content] selectedObjects];
-        return ( (1==[selectedItems count])
+        result = ( (1==[selectedItems count])
 				 && ([selectedItems objectAtIndex:0] != [[(KTDocument *)[self document] site] rootPage])
 				 && ([[selectedItems objectAtIndex:0] isKindOfClass:[KTPage class]]) );
     }
@@ -828,7 +792,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
          ([[NSApp currentEvent] modifierFlags] & NSAlternateKeyMask) ? TOOLBAR_PUBLISH_ALL : TOOLBAR_PUBLISH];
     }
     
-    return NO;		// assume if it's not covered here it's no ... otherwise why are we bothering to validate?
+    return result;
 }
 
 #pragma mark Window Delegate

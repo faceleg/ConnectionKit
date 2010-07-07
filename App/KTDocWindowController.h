@@ -82,9 +82,6 @@ extern NSString *gInfoWindowAutoSaveName;
     
     // Design Chooser
     SVDesignChooserWindowController *_designChooserWindowController;
-
-
-	NSButton *_buyNowButton;
 }
 
 #pragma mark Window Title

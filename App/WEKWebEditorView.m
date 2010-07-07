@@ -1676,7 +1676,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
             [event type] == NSOtherMouseDown)
         {
             DOMNode *node = [proposedRange startContainer];
-            if (![node enclosingContentEditableElement])
+            if (nil != node && ![node enclosingContentEditableElement])
             {
                 if ([node nodeType] != DOM_TEXT_NODE)
                 {

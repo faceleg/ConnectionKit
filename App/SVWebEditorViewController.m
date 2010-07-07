@@ -725,13 +725,13 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem;	// WARNING: IF YOU ADD ITEMS HERE, YOU NEED TO SYNCHRONIZE WITH -[KTDocWindowController validateMenuItem:]
 {
 	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
-    BOOL result = YES;
+    BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
     
 	SEL action = [menuItem action];
 	
 	if (action == @selector(editRawHTMLInSelectedBlock:))
 	{
-		result = NO;
+		result = NO;	// default to no unless found below.
 		for (id selection in [self.graphicsController selectedObjects])
 		{
 			if ([selection isKindOfClass:[SVRawHTMLGraphic class]])

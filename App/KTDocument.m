@@ -910,6 +910,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 {
 	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 	
+	BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
 	// File menu	
 	// "Save As..." saveDocumentAs:
 	if ( [menuItem action] == @selector(saveDocumentAs:) )

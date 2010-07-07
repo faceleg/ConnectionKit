@@ -123,8 +123,6 @@ extern NSString *kKTDocumentWillSaveNotification;
 - (void)addScreenshotsToAttachments:(NSMutableArray *)attachments attachmentOwner:(NSString *)attachmentOwner;
 - (BOOL)mayAddScreenshotsToAttachments;
 
-- (void)editSourceObject:(NSObject *)aSourceObject keyPath:(NSString *)aKeyPath  isRawHTML:(BOOL)isRawHTML;
-
 @end
 
 

@@ -640,16 +640,18 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 	OBPRECONDITION(menuItem);
 	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
 
+	BOOL result = YES; 	// default to YES so we don't have to do special validation for each action. Some actions might say NO.
+	
 	SEL action = [menuItem action];
 
 	
 	if (action == @selector(newDocument:))
 	{
-		return (!gLicenseViolation && ![self appIsExpired]);
+		result = (!gLicenseViolation && ![self appIsExpired]);
 	}
 	else if (action == @selector(showPluginWindow:))
 	{
-		return [KSNetworkNotifier isNetworkAvailable];
+		result = [KSNetworkNotifier isNetworkAvailable];
 	}
     else if (action == @selector(toggleMediaBrowserShown:))
     {
@@ -662,30 +664,25 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
         {
             [menuItem setTitle:NSLocalizedString(@"Show Media Browser", @"menu title to show inspector panel")];
         }
-        return YES;
     }
 	else if (action == @selector(showReleaseNotes:))
 	{
-		return [KSNetworkNotifier isNetworkAvailable];
+		result = [KSNetworkNotifier isNetworkAvailable];
 	}
 	else if (action == @selector(openScreencast:))
 	{
-		return [KSNetworkNotifier isNetworkAvailable];
+		result = [KSNetworkNotifier isNetworkAvailable];
 	}
 	else if (action == @selector(showEmailListWindow:))
 	{
-		return [KSNetworkNotifier isNetworkAvailable];
+		result = [KSNetworkNotifier isNetworkAvailable];
 	}
 	else if (action == @selector(checkForUpdates:))
 	{
-		return [KSNetworkNotifier isNetworkAvailable] && [[self sparkleUpdater] validateMenuItem:menuItem];
-	}
-	else if (action == @selector(showRegistrationWindow:))	// hide the globe, and make available, if network is down
-	{
-		return YES;
+		result = [KSNetworkNotifier isNetworkAvailable] && [[self sparkleUpdater] validateMenuItem:menuItem];
 	}
 
-	return YES;
+	return result;
 }
 
 // Exceptions specific to Sandvox

@@ -646,14 +646,14 @@
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
-	BOOL result = YES;
+	BOOL result = YES;	// default to YES so we don't have to do special validation for each action. Some actions might say NO.
 
 	SEL action = [menuItem action];
     
     // Clear Styles - Enable when the user selects some editable text
     if (action == @selector(clearStyles:))
 	{
-		result = NO;
+		result = NO;	// default NO unless set below.
         if ([self currentTextEditingBlock])
         {
             DOMRange *selection = [[self webView] selectedDOMRange];
@@ -689,8 +689,7 @@
 	else if (action == @selector(pasteLink:))
 	{
 		NSArray *locations = [KSWebLocation webLocationsFromPasteboard:[NSPasteboard generalPasteboard]];
-		BOOL result = (locations != nil && [locations count] > 0);
-		return result;
+		result = (locations != nil && [locations count] > 0);
 	}
     
 	// View type
@@ -706,16 +705,14 @@
 		}
 		
 		// Disable the RSS item if the current page does not support it
-		BOOL result = YES;
 		if (menuItemViewType == KTRSSSourceView || menuItemViewType == KTRSSView)
 		{
 			KTPage *page = [self page];
-			if (![page collectionCanSyndicate] || ![page collectionSyndicate]) {
+			if (![page collectionCanSyndicate] || ![page collectionSyndicate])
+			{
 				result = NO;
 			}
 		}
-		
-		return result;
 	}
 	
 	// "Make Text Bigger" makeTextLarger:
@@ -734,7 +731,6 @@
 	{
 		result = [[self webView] canMakeTextStandardSize];
 	}
-	
 	
     return result;
 }
