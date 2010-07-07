@@ -360,6 +360,11 @@
     dragImage = result;
     
     
+    // Hide the dragged image
+    //[[element style] setProperty:@"opacity" value:@"0" priority:@""];
+    
+    
+    // Start the drag
     // Properly orient the drag image and orient it differently if it's smaller than the original
     origin.x = mouseDownPoint.x - (((mouseDownPoint.x - origin.x) / originalSize.width) * newSize.width);
     origin.y = origin.y + originalSize.height;
