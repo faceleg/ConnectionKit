@@ -384,10 +384,15 @@
 
 - (DOMNode *)childForDraggingInfo:(id <NSDraggingInfo>)sender;
 {
-    DOMElement *element = [self HTMLElement];
+    DOMElement *element = [self textHTMLElement];
     NSPoint location = [[element documentView] convertPointFromBase:[sender draggingLocation]];
     
-    DOMNode *aNode = [[self textHTMLElement] firstChildOfClass:[DOMElement class]];
+    DOMTreeWalker *treeWalker = [[element ownerDocument] createTreeWalker:element
+                                                               whatToShow:DOM_SHOW_ELEMENT
+                                                                   filter:nil
+                                                   expandEntityReferences:NO];
+    
+    DOMNode *aNode = [treeWalker firstChild];
     while (aNode)
     {
         NSRect bounds = [aNode boundingBox];
@@ -399,7 +404,7 @@
             break;
         }
         
-        aNode = [aNode nextSiblingOfClass:[DOMElement class]];
+        aNode = [treeWalker nextSibling];
     }
     
     // No match was found, so insert at end
