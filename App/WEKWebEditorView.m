@@ -1639,6 +1639,30 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     [self drawOverlayRect:dirtyDrawingRect inView:drawingView];
 }
 
+- (void)webView:(WebView *)sender dragImage:(NSImage *)anImage at:(NSPoint)viewLocation offset:(NSSize)initialOffset event:(NSEvent *)event pasteboard:(NSPasteboard *)pboard source:(id)sourceObj slideBack:(BOOL)slideFlag forView:(NSView *)view;
+{
+    WEKWebEditorItem *selectedItem = [self selectedItem];
+    
+    if ([[self selectedItems] count] == 1 &&
+        [[self selectedDOMRange] ks_selectsNode:[selectedItem HTMLElement]])
+    {
+        [view dragImageForItem:selectedItem
+                         event:event
+                    pasteboard:pboard
+                        source:sourceObj];
+    }
+    else
+    {
+        [view dragImage:anImage
+                     at:viewLocation
+                 offset:initialOffset
+                  event:event 
+             pasteboard:pboard 
+                 source:sourceObj
+              slideBack:slideFlag];
+    }
+}
+
 #pragma mark WebEditingDelegate
 
 - (BOOL)webView:(WebView *)webView shouldApplyStyle:(DOMCSSStyleDeclaration *)style toElementsInDOMRange:(DOMRange *)range
