@@ -14,7 +14,7 @@
 #import "NSColor+Karelia.h"
 
 
-#define WebDragImageAlpha 0.75f // name & value copied from WebKit
+#define WEKDragImageAlpha 0.50f // name & value copied from WebKit
 #define WebMaxDragImageSize NSMakeSize(200.0f, 200.f)
 
 
@@ -244,9 +244,9 @@
             [elementImage drawInRect:NSMakeRect(0.0f, 0.0f, box.size.width, box.size.height)        
                             fromRect:NSZeroRect
                            operation:NSCompositeCopy
-                            fraction:WebDragImageAlpha];
+                            fraction:WEKDragImageAlpha];
             
-            //[[[NSColor grayColor] colorWithAlphaComponent:WebDragImageAlpha] setFill];
+            //[[[NSColor grayColor] colorWithAlphaComponent:WEKDragImageAlpha] setFill];
             //NSFrameRect(drawingRect);
             
             [result unlockFocus];
@@ -268,7 +268,7 @@
         [image drawAtPoint:NSZeroPoint
                   fromRect:NSZeroRect
                  operation:NSCompositeCopy
-                  fraction:WebDragImageAlpha];
+                  fraction:WEKDragImageAlpha];
         [result unlockFocus];
         
         [image release];
@@ -428,7 +428,7 @@
     [image drawInRect:NSMakeRect(0.0f, 0.0f, newSize.width, newSize.height)        
              fromRect:NSZeroRect
             operation:NSCompositeCopy
-             fraction:WebDragImageAlpha];
+             fraction:WEKDragImageAlpha];
     
     [result unlockFocus];
     dragImage = result;
