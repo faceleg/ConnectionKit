@@ -85,6 +85,7 @@
                                   modalDelegate:nil
                                  didEndSelector:NULL
                                     contextInfo:NULL];
+				[alert release];	// will be dealloced when alert is dismissed
             }
         }
     }

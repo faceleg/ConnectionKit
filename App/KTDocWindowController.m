@@ -943,7 +943,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSString *pageSource = [page markupString];
 		NSString *docTypeName = [page docTypeName];
 		NSString *charset = [[page master] valueForKey:@"charset"];
-		[[SVValidatorWindowController sharedController] validateSource:pageSource charset:charset docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+		[[SVValidatorWindowController sharedController] validateSource:pageSource isFullPage:YES charset:charset docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
 	}
 }
 

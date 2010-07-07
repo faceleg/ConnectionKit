@@ -249,7 +249,7 @@
 								 didEndSelector:nil
 									contextInfo:nil];
 			}
-			[alert release];
+			[alert release];	// will be dealloced when alert is dismissed
 		}
 	}
 	else

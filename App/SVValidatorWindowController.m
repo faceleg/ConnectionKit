@@ -25,7 +25,7 @@
 @implementation SVValidatorWindowController
 
 
-- (BOOL) validateSource:(NSString *)pageSource charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
+- (BOOL) validateSource:(NSString *)pageSource isFullPage:(BOOL)isFullPage charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
 {
 	BOOL isValid = NO;
 #if DEBUG
@@ -41,7 +41,7 @@
 	[pageData writeToFile:path atomically:NO];
 	
 	// curl -F uploaded_file=@karelia.html -F ss=1 -F outline=1 -F sp=1 -F noatt=1 -F verbose=1  http://validator.w3.org/check
-	NSString *argString = [NSString stringWithFormat:@"--max-time 6 -F uploaded_file=@%@ -F ss=1 -F verbose=1 --dump-header %@ http://validator.w3.org/check", path, pathHeaders];
+	NSString *argString = [NSString stringWithFormat:@"--max-time 9 -F uploaded_file=@%@ -F ss=1 -F verbose=1 --dump-header %@ http://validator.w3.org/check", path, pathHeaders];
 	NSArray *args = [argString componentsSeparatedByString:@" "];
 	
 	NSTask *task = [[[NSTask alloc] init] autorelease];
@@ -113,20 +113,45 @@
 			// show window
 			NSString *errorCountString = nil;
 			NSString *warningCountString = nil;
-			switch (numErrors)
-			{
-				case 0: errorCountString = NSLocalizedString(@"No errors", @""); break;
-				case 1: errorCountString = NSLocalizedString(@"1 error", @""); break;
-				default: errorCountString = [NSString stringWithFormat:NSLocalizedString(@"%d errors", @"<count> errors"), numErrors]; break;
-			}
+			NSString *explanation1 = nil;
 			switch (numWarnings)
 			{
-				case 0: warningCountString = NSLocalizedString(@"No warnings", @""); break;
-				case 1: warningCountString = NSLocalizedString(@"1 warning", @""); break;
-				default: warningCountString = [NSString stringWithFormat:NSLocalizedString(@"%d warnings", @"<count> warnings"), numWarnings]; break;
+				case 0:		// Note: zero warnings means that there will be some errors, otherwise we won't see this window
+					warningCountString = NSLocalizedString(@"No warnings", @""); 
+					break;
+				case 1:
+					warningCountString = NSLocalizedString(@"1 warning", @""); 
+					explanation1 = NSLocalizedString(@"Here are some possible explanations for the warning:", @"SINGULAR Explanation Text for validator output");
+					break;
+				default:
+					warningCountString = [NSString stringWithFormat:NSLocalizedString(@"%d warnings", @"<count> warnings"), numWarnings];
+					explanation1 = NSLocalizedString(@"Here are some possible explanations for the warnings:", @"PLURAL Explanation Text for validator output");
+					break;
+			}
+
+			// Check error count after warning count, so that having errors will override any mention of warnings in explanation1
+			switch (numErrors)
+			{
+				case 0:
+					errorCountString = NSLocalizedString(@"No errors", @""); 
+					// Zero warnings mean there are warnings only, so don't override the above-defined explanation1
+					break;
+				case 1:
+					errorCountString = NSLocalizedString(@"1 error", @""); 
+					explanation1 = NSLocalizedString(@"Here are some possible explanations for the error:", @"SINGULAR Explanation Text for validator output");
+					break;
+				default:
+					errorCountString = [NSString stringWithFormat:NSLocalizedString(@"%d errors", @"<count> errors"), numErrors];
+					explanation1 = NSLocalizedString(@"Here are some possible explanations for the errors:", @"PLURAL Explanation Text for validator output");
+					break;
 			}
 			
-			[[self window] setTitle:[NSString stringWithFormat:NSLocalizedString(@"Validator Results: %@, %@", "HTML Validator Window Title. Followed by <count> errors, <count> warnings"), errorCountString, warningCountString]];
+			NSString *windowTitleFormat = NSLocalizedString(@"Raw HTML Object Validator Results: %@, %@", "HTML Validator Window Title. Followed by <count> errors, <count> warnings");
+			if (isFullPage)
+			{
+				windowTitleFormat = NSLocalizedString(@"Page Validator Results: %@, %@", "HTML Validator Window Title. Followed by <count> errors, <count> warnings");
+			}
+			[[self window] setTitle:[NSString stringWithFormat:windowTitleFormat, errorCountString, warningCountString]];
 			[[self window] setFrameAutosaveName:@"ValidatorWindow"];
 			[self showWindow:nil];
 			
@@ -138,26 +163,48 @@
 			
 			// Insert our own message
 			NSString *headline = NSLocalizedString(@"Explanation and Impact", @"Header, shown above Explanation Text for validator output");
-			NSString *explanation1 = NSLocalizedString(
-@"Here are some possible explanations for the warnings:", @"Explanation Text for validator output");
-			NSString *explanation1a = NSLocalizedString(@"The raw HTML that you have entered yourself is invalid", @"Explanation Text for validator output");
-			NSString *fix1a = NSLocalizedString(@"Fix the HTML so that it no longer returns these warnings", @"Suggestion for the user to perform");
-			
-			NSString *explanation1bFmt = NSLocalizedString(@"The HTML is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
+			NSString *explanation1a = NSLocalizedString(@"Some HTML that you have entered is invalid", @"Explanation Text for validator output");
+			NSString *fix1a = NSLocalizedString(@"Fix the HTML so that it no longer returns any errors or warnings", @"Suggestion for the user to perform");
+			if (isFullPage)
+			{
+				explanation1a = NSLocalizedString(@"Some HTML, that you placed on raw HTML objects, is invalid", @"Explanation Text for validator output");
+				fix1a = NSLocalizedString(@"Check the raw HTML objects on the page, and fix the offending HTML code so that they no longer return validation errors or warnings", @"Suggestion for the user to perform");
+
+			}
+			NSString *explanation1bFmt = NSLocalizedString(@"Some HTML is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
 			NSString *fix1b = NSLocalizedString(@"Change the HTML declaration to a less restrictive type", @"Suggestion for the user to perform");
-			NSString *explanation1b = [NSString stringWithFormat:explanation1bFmt, docTypeString];
-		
+			if (isFullPage)
+			{
+				explanation1bFmt = NSLocalizedString(@"Some HTML, that you placed on raw HTML objects, is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
+
+				fix1b = NSLocalizedString(@"Change the HTML declaration in the offending object(s) to be a less restrictive type", @"Suggestion for the user to perform");
+				
+			}		
 			NSString *explanation1c = NSLocalizedString(@"You have chosen to include popular, but technically invalid markup", @"Explanation Text for validator output");
+			if (isFullPage)
+			{
+				explanation1c = NSLocalizedString(@"You have chosen to include popular, but technically invalid markup, in raw HTML objects on this page", @"Explanation Text for validator output");
+			}
 			NSString *examples1c = NSLocalizedString(@"Examples: <embed>, <video>, <iframe>, <font>, <wbr>", @"Examples of HTML tags that may have problems");
 			NSString *fix1c = NSLocalizedString(@"This kind of warning can usually be ignored but you may want to verify your page on several browsers", @"Suggestion for the user to perform");
 
-			NSString *explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
-			NSString *fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please contact Karelia by choosing the \"Send Feedback...\" menu", @"Suggestion for the user to perform");
+			NSString *explanation1d = nil;	// won't use this explanation for objects, only for a full page
+			NSString *fix1d = nil;
+			if (isFullPage)
+			{
+				explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
+				fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please contact Karelia by choosing the \"Send Feedback...\" menu", @"Suggestion for the user to perform");
+			}
 														
 			NSString *explanation2 = NSLocalizedString(
-														  @"Even if you get warnings, your page will often render just fine in most browsers — most large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does not look right.", @"Explanation Text for validator output");
+														  @"Even if you get errors or warnings, your page will often render just fine in most browsers — many large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does not look right.", @"Explanation Text for validator output");
 			NSString *explanation3 = NSLocalizedString(
-														  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the HTML elements that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
+														  @"If you are experiencing display problems on certain browsers, you should fix any error messages in this raw HTML object, or adjust the HTML style specified for this object to be a less restrictive document type.", @"Explanation Text for validator output");
+			if (isFullPage)
+			{
+				explanation3 = NSLocalizedString(
+								  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the raw HTML objects that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
+			}
 		
 			// NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
 			NSURL *appIconURL = nil; // [NSURL fileURLWithPath:appIconPath];
@@ -169,28 +216,39 @@
 			// [WebView _addOriginAccessWhitelistEntryWithSourceOrigin:@"localhost" destinationProtocol:@"file" destinationHost:@"localhost" allowDestinationSubdomains:NO];
 			
 			
-			NSString *replacementString = [NSString stringWithFormat:@"</h2>\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n<p>%@</p>\n<dl style='font-size:0.8em; line-height:1.6em; margin-left:120px;'><dt>%@</dt><dd style='font-style:italic;'>%@</dd><dt>%@</dt><dd style='font-style:italic;'>%@</dd><dt>%@</dt><dd><dd>%@</dd><dd style='font-style:italic;'>%@</dd><dt>%@</dt><dd style='font-style:italic;'>%@</dd></dl><p>%@</p>\n<p>%@</p>\n</div>\n",
-										   [headline stringByEscapingHTMLEntities],
-										   [appIconURL absoluteString],
-										   [explanation1 stringByEscapingHTMLEntities],
-										   
-										   [explanation1a stringByEscapingHTMLEntities],
-										   [fix1a stringByEscapingHTMLEntities],
-										   
-										   [explanation1b stringByEscapingHTMLEntities],
-										   [fix1b stringByEscapingHTMLEntities],
-
-										   [explanation1c stringByEscapingHTMLEntities],
-										   [examples1c stringByEscapingHTMLEntities],
-										   [fix1c stringByEscapingHTMLEntities],
-
-										   [explanation1d stringByEscapingHTMLEntities],
-										   [fix1d stringByEscapingHTMLEntities],
-
-										   [explanation2 stringByEscapingHTMLEntities],
-										   [explanation3 stringByEscapingHTMLEntities]];
+			NSMutableString *replacementString = [NSMutableString stringWithString:@"</h2>"];	// start with what we're going to replace
+			[replacementString appendFormat:@"\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n", [headline stringByEscapingHTMLEntities], [appIconURL absoluteString]];
+			[replacementString appendFormat:@"<p>%@</p>\n<dl style='font-size:0.8em; line-height:1.6em; margin-left:120px;'><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd><dd>%@</dd><dd style='font-style:italic;'>%@</dd>",
+			 [explanation1 stringByEscapingHTMLEntities],
+			 
+			 [explanation1a stringByEscapingHTMLEntities],
+			 [fix1a stringByEscapingHTMLEntities],
+			 
+			 // Explanation 1b -- put the doctype as boldface after escaping the format string (which won't mess up the %@)
+			 [NSString stringWithFormat:[explanation1bFmt stringByEscapingHTMLEntities], 
+			  [NSString stringWithFormat:@"<b>%@</b>", docTypeString]],
+			 [fix1b stringByEscapingHTMLEntities],
+			 
+			 [explanation1c stringByEscapingHTMLEntities],
+			 [examples1c stringByEscapingHTMLEntities],
+			 [fix1c stringByEscapingHTMLEntities]];
+			 if (isFullPage)
+			 {
+				 [replacementString appendFormat:@"<dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd>", 										   [explanation1d stringByEscapingHTMLEntities],
+				  [fix1d stringByEscapingHTMLEntities]];
+			 }
+			[replacementString appendFormat:@"</dl><p><b>%@</b></p>\n<p>%@</p>\n</div>\n",
+			 [explanation2 stringByEscapingHTMLEntities],
+			 [explanation3 stringByEscapingHTMLEntities]];
+			
 			
 			[resultingPageString replace:@"</h2>" with:replacementString];
+			if (!isFullPage)
+			{
+				// Improve the (English) description a bit when we're just validating an object.
+				// Note: This is not localized, since the validator is giving us English output only.
+				[resultingPageString replace:@"while checking this document as" with:@"while checking this raw HTML object as"];
+			}
 			
 			// Take out the source lines that are superfluous for raw HTML element validation.
 			NSRange wherePreludeLines = [resultingPageString rangeFromString:@"<ol class=\"source\">" toString:@"&lt;!-- BELOW IS THE HTML THAT YOU SUBMITTED TO THE VALIDATOR --&gt;</li>"];
@@ -202,7 +260,8 @@
 			if (NSNotFound != wherePostludeLines.location)
 			{
 				// Not *that* easy to figure out the line number of the <li> so let's just make that an empty line and close out the list.
-				[resultingPageString replaceCharactersInRange:wherePostludeLines withString:@"</ul></ol>"];
+				[resultingPageString replaceCharactersInRange:wherePostludeLines withString:@"</ol>\n<p style='color:gray;'>(Standard HTML page elements such as &lt;html&gt; and &lt;body&gt; have been hidden here.)</p>\n"];
+				// Note: This is not localized, since the validator is giving us English output only.
 			}
 			
 			
@@ -213,11 +272,16 @@
 	}
 	else	// Don't show window; show alert sheet attached to document
 	{
-		[KSSilencingConfirmSheet
-		 alertWithWindow:aWindow
-		 silencingKey:@"shutUpValidateError"
-		 title:NSLocalizedString(@"Unable to Validate",@"Title of alert")
-		 format:NSLocalizedString(@"Unable to contact validator.w3.org to perform the validation.", @"error message")];
+		NSAlert *alert = [[NSAlert alloc] init];
+		[alert setMessageText:NSLocalizedString(@"Unable to Validate",@"Title of alert")];
+		[alert setInformativeText:NSLocalizedString(@"Unable to contact validator.w3.org to perform the validation. You may wish to try again later.", @"error message")];
+		
+		[alert beginSheetModalForWindow:aWindow
+						  modalDelegate:nil
+						 didEndSelector:NULL
+							contextInfo:NULL];
+
+		[alert release];	// will be dealloced when alert is dismissed
 	}
 	return isValid;
 }
