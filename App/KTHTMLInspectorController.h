@@ -12,6 +12,7 @@
 
 #import <Cocoa/Cocoa.h>
 #import "KT.h"
+#import "KSNoCascadeWindow.h"
 
 typedef enum { 
 	kValidationStateUnknown = 0,		// or empty string
@@ -104,4 +105,10 @@ struct SelectionRange
 };
 
 #pragma options align=reset
+
+
+@interface KTHTMLInspectorWindow : KSNoCascadeWindow
+
+@end
+
 

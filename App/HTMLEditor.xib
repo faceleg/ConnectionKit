@@ -44,7 +44,7 @@
 				<string key="NSWindowRect">{{144, 480}, {823, 376}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Raw HTML Editor</string>
-				<string key="NSWindowClass">KSNoCascadeWindow</string>
+				<string key="NSWindowClass">KTHTMLInspectorWindow</string>
 				<object class="NSMutableString" key="NSViewClass">
 					<characters key="NS.bytes">View</characters>
 				</object>
@@ -1007,10 +1007,10 @@
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
-					<string>{{367, 780}, {823, 376}}</string>
+					<string>{{122, 630}, {823, 376}}</string>
 					<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
 					<boolean value="YES"/>
-					<string>{{367, 780}, {823, 376}}</string>
+					<string>{{122, 630}, {823, 376}}</string>
 					<boolean value="YES"/>
 					<boolean value="YES"/>
 					<string>{823, 376}</string>
@@ -1075,14 +1075,6 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KSNoCascadeWindow</string>
-					<string key="superclassName">NSWindow</string>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
-						<string key="majorKey">IBUserSource</string>
-						<string key="minorKey"/>
-					</object>
-				</object>
-				<object class="IBPartialClassDescription">
 					<string key="className">KTHTMLInspectorController</string>
 					<string key="superclassName">NSWindowController</string>
 					<object class="NSMutableDictionary" key="actions">
@@ -1121,7 +1113,7 @@
 							<string>NSTextView</string>
 						</object>
 					</object>
-					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="708068817">
 						<string key="majorKey">IBProjectSource</string>
 						<string key="minorKey">KTHTMLInspectorController.h</string>
 					</object>
@@ -1133,6 +1125,11 @@
 						<string key="majorKey">IBUserSource</string>
 						<string key="minorKey"/>
 					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">KTHTMLInspectorWindow</string>
+					<string key="superclassName">KSNoCascadeWindow</string>
+					<reference key="sourceIdentifier" ref="708068817"/>
 				</object>
 				<object class="IBPartialClassDescription">
 					<string key="className">NSApplication</string>
@@ -2141,6 +2138,13 @@
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBFrameworkSource</string>
 						<string key="minorKey">iMedia.framework/Headers/IMBObjectArrayController.h</string>
+					</object>
+				</object>
+				<object class="IBPartialClassDescription">
+					<string key="className">NSObject</string>
+					<object class="IBClassDescriptionSource" key="sourceIdentifier">
+						<string key="majorKey">IBFrameworkSource</string>
+						<string key="minorKey">iMedia.framework/Headers/IMBQLPreviewPanel.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">

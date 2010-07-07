@@ -226,10 +226,18 @@ static NSMutableDictionary *sDefaultTextAttributesPerInstance = nil;
 		float pointSize = [defaults floatForKey:@"HTMLViewPointSize"];
 		
 		NSFont *font = nil;
-		if (fontName) {
+		if (fontName)
+		{
 			font = [NSFont fontWithName:fontName size:pointSize];
 		}
-		if (!font) {
+		if (!font)
+		{
+			// For some reason, Snow Leopard gives us Menlo but doesn't use it by default!
+			NSFont *menlo = [NSFont fontWithName:@"Menlo-Regular" size:10];
+			if (menlo)
+			{
+				[NSFont setUserFixedPitchFont: menlo];
+			}
 			font = [NSFont userFixedPitchFontOfSize:10.0];
 		}
 		

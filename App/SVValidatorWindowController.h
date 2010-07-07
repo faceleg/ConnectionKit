@@ -9,7 +9,6 @@
 #import <Cocoa/Cocoa.h>
 #import "KSWebViewWindowController.h"
 
-
 @interface SVValidatorWindowController : KSWebViewWindowController {
 
 }

@@ -25,6 +25,14 @@
 
 #import "Registration.h"
 
+@implementation KTHTMLInspectorWindow
+
+- (BOOL) canBecomeMainWindow
+{
+	return NO;
+}
+@end
+
 @interface KTHTMLInspectorController ()
 
 - (void)calculateCachedPreludes;
@@ -215,6 +223,23 @@ initial syntax coloring.
 
 #pragma mark -
 #pragma mark Window Notifications
+
+- (void)windowDidBecomeKey:(NSNotification *)notification;
+{
+	if (_HTMLSourceObject)
+	{
+		[NSTextView startRecordingFontChanges];
+		[textView setUsesFontPanel:YES];
+	}
+	
+}
+
+// STUB -- I would like to make this work so I could set the font regardless of what is selected.  However this is not getting invoked. Any idea?
+- (void)changeFont:(id)sender 
+{
+    return; 
+}
+
 
 - (void)windowWillClose:(NSNotification *)aNotification
 {
