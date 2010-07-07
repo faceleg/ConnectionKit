@@ -140,7 +140,7 @@
     // Hide the dragged items so it looks like a proper drag
     for (WEKWebEditorItem *anItem in [self draggedItems])
     {
-        [[[anItem HTMLElement] style] setProperty:@"opacity" value:@"0" priority:@""];        
+        //[[[anItem HTMLElement] style] setProperty:@"opacity" value:@"0" priority:@""];        
     }
 }
 
