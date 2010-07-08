@@ -85,10 +85,7 @@
 		KTIndexPlugInWrapper *plugin = [KTIndexPlugInWrapper pluginWithIdentifier:bundleIdentifier];
 		NSBundle *pluginBundle = [plugin bundle];
 		
-        if ( ![pluginBundle isLoaded] && (Nil != [pluginBundle principalClassIncludingOtherLoadedBundles:YES]) ) {
-            [pluginBundle load];
-        }
-		NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
+        NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
 		NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
 		NSString *presetTitle = [pluginBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
