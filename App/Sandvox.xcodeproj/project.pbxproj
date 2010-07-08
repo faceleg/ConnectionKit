@@ -834,7 +834,7 @@
 		CE01A7B00EAFD63600BDF264 /* NSWindow+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6AB0EAFD63600BDF264 /* NSWindow+Karelia.m */; };
 		CE01A7B10EAFD63600BDF264 /* NSWindowController+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6AC0EAFD63600BDF264 /* NSWindowController+Karelia.h */; };
 		CE01A7B20EAFD63600BDF264 /* NSWindowController+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6AD0EAFD63600BDF264 /* NSWindowController+Karelia.m */; };
-		CE01A7B30EAFD63600BDF264 /* NSWorkspace+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6AE0EAFD63600BDF264 /* NSWorkspace+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7B30EAFD63600BDF264 /* NSWorkspace+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6AE0EAFD63600BDF264 /* NSWorkspace+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7B40EAFD63600BDF264 /* NSWorkspace+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6AF0EAFD63600BDF264 /* NSWorkspace+Karelia.m */; };
 		CE01A7B50EAFD63600BDF264 /* QTMovie+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6B00EAFD63600BDF264 /* QTMovie+Karelia.h */; };
 		CE01A7B60EAFD63600BDF264 /* QTMovie+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6B10EAFD63600BDF264 /* QTMovie+Karelia.m */; };

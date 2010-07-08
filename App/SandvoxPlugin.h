@@ -83,7 +83,6 @@
 #import "NSArrayController+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "NSImage+Karelia.h"
-#import "NSWorkspace+Karelia.h"
 #import "NSBitmapImageRep+Karelia.h"
 
 // Value Transformers
