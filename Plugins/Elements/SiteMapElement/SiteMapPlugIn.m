@@ -59,9 +59,9 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
-    [super awakeFromInsert];
+    [super awakeFromNew];
     
     // set initial properties //FIXME: or do we leave this to KTPluginInitialProperties?
     self.compact = NO;

@@ -93,9 +93,9 @@ diggCategory  (human readable version for popup) --> diggCategoryString
 	[pool release];
 }
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
-    [super awakeFromInsert];
+    [super awakeFromNew];
         
 }
 

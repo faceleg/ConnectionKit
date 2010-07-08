@@ -51,9 +51,9 @@ static NSArray *sAltStrings = nil;
 	[super dealloc];
 }
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
-    [super awakeFromInsert];
+    [super awakeFromNew];
     [[self container] setShowsTitle:NO];
 }
 

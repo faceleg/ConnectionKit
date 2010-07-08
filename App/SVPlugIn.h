@@ -21,7 +21,7 @@
 #pragma mark Managing Life Cycle
 
 // Just like the Core Data methods of same name really
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 - (void)awakeFromFetch;
 
 - (void)setContainer:(id <SVPageletPlugInContainer>)container;

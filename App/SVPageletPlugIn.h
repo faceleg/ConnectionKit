@@ -22,7 +22,7 @@
 #pragma mark Initialization
 
 //  Default implementation retrieves KTPluginInitialProperties from the bundle and calls -setSerializedValue:forKey: with them
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 
 
 #pragma mark Storage
@@ -80,9 +80,9 @@
 
 #pragma mark Legacy
 
-// Called by -awakeFromInsert:... and -awakeFromFetch: for backward compatibility
+// Called by -awakeFromNew:... and -awakeFromFetch: for backward compatibility
 - (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject;
-// Called by -awakeFromInsert:... when there is a pasteboard for backward compatibility
+// Called by -awakeFromNew:... when there is a pasteboard for backward compatibility
 - (void)awakeFromDragWithDictionary:(NSDictionary *)aDataSourceDictionary;
 
 @end

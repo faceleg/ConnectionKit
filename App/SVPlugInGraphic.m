@@ -72,7 +72,7 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
 
 - (void)willInsertIntoPage:(KTPage *)page;
 {
-    [[self plugIn] awakeFromInsert];
+    [[self plugIn] awakeFromNew];
     [super willInsertIntoPage:page];
 }
 

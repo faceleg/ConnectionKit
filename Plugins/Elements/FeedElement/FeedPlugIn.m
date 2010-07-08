@@ -68,9 +68,9 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
-    [super awakeFromInsert];
+    [super awakeFromNew];
     
     NSURL *URL = nil;
     NSString *title = nil;

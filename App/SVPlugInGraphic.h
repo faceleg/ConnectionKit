@@ -19,7 +19,7 @@
     NSObject <SVPlugIn> *_plugIn;
 }
 
-// Creates both graphic and plug-in at same time, but does not send -awakeFromInsert:... to the plug-in
+// Creates both graphic and plug-in at same time, but does not send -awakeFromNew to the plug-in
 + (SVPlugInGraphic *)insertNewGraphicWithPlugInIdentifier:(NSString *)identifier
                                    inManagedObjectContext:(NSManagedObjectContext *)context;
 

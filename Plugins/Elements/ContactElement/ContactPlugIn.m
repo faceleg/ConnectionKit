@@ -100,9 +100,9 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 }
 
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
-    [super awakeFromInsert];
+    [super awakeFromNew];
     
     
 	id element = [self delegateOwner];

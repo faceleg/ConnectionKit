@@ -44,7 +44,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
     [self awakeFromBundleAsNewlyCreatedObject:NO];
 }
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
     // Load initial properties from bundle
     NSBundle *bundle = [self bundle];
