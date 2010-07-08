@@ -161,6 +161,14 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 }
 
+// Factory override to get application-specific objects instantiated.
+
+- (NSString *)convertClassName:(NSString *)className
+{
+	if ([className isEqualToString:@"KSFeedbackReporter"]) return @"KTFeedbackReporter";
+	
+	return className;	
+}
 
 - (NSString *) additionalProfileStringForFeedback;
 {

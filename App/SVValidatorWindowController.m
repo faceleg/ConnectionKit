@@ -163,7 +163,6 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 																					   encoding:NSUTF8StringEncoding
 																						  error:nil] autorelease];
 		
-		// TODO: continue case 27254, parse headers.txt file instead of scraping.
 		NSError *error;
 		NSString *headers = [NSString stringWithContentsOfFile:pathHeaders encoding:NSUTF8StringEncoding error:&error];
 		NSDictionary *headerDict = [headers parseHTTPHeaders];

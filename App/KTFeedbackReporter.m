@@ -35,8 +35,7 @@
 		NSData *stringData = [validationReport dataUsingEncoding:NSUTF8StringEncoding];
 		NSData *compressedData = [stringData compressBzip2];
 		
-		NSString *fileName = @"ValidationReport.html";
-		
+		NSString *fileName = [NSString stringWithFormat:@"ValidationReport-%@.html", attachmentOwner];
 		if (fileName)
 		{
 			NSString *compressedName = [fileName stringByAppendingPathExtension:EXTENSION_BZIP];
