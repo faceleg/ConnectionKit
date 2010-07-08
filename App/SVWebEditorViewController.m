@@ -290,7 +290,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [[self graphicsController] setContent:nil];
     
     SVWebEditorHTMLContext *context = [self HTMLContext];
-    NSArray *controllers = [context DOMControllers];
+    NSArray *controllers = [[context rootDOMController] childWebEditorItems];
         
     for (WEKWebEditorItem *anItem in controllers)
     {

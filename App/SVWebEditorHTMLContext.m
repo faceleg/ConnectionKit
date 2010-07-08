@@ -34,7 +34,7 @@
 {
     [super initWithOutputWriter:stream];
     
-    _DOMControllers = [[NSMutableArray alloc] init];
+    _currentDOMController = _rootController = [[SVDOMController alloc] init];
     _dependencies = [[NSMutableSet alloc] init];
     _media = [[NSMutableSet alloc] init];
     
@@ -46,7 +46,7 @@
     [super close];
     
     // Also ditch controllers
-    [_DOMControllers release]; _DOMControllers = nil;
+    [_rootController release]; _rootController = nil;
     [_dependencies release]; _dependencies = nil;
     [_media release]; _media = nil;
 }
@@ -56,7 +56,7 @@
     [_sidebarPageletsController release];
     
     [super dealloc];
-    OBASSERT(!_DOMControllers);
+    OBASSERT(!_rootController);
     OBASSERT(!_dependencies);
     OBASSERT(!_media);
 }
@@ -67,23 +67,13 @@
 
 #pragma mark DOM Controllers
 
-- (NSArray *)DOMControllers;
-{
-    return [[_DOMControllers copy] autorelease];
-}
+@synthesize rootDOMController = _rootController;
 
 - (SVDOMController *)currentDOMController; { return _currentDOMController; }
 
 - (void)startDOMController:(SVDOMController *)controller; // call one of the -didEndWriting… methods after
 {
-    if (_currentDOMController)
-    {
-        [_currentDOMController addChildWebEditorItem:controller];
-    }
-    else
-    {
-        [_DOMControllers addObject:controller];
-    }
+    [_currentDOMController addChildWebEditorItem:controller];
     
     _currentDOMController = controller;
     _needsToWriteElementID = YES;

@@ -36,11 +36,7 @@
     
     
     // Retrieve controller
-    id result = nil;
-    for (WEKWebEditorItem *aController in [context DOMControllers])
-    {
-        if (![aController parentWebEditorItem]) result = aController;
-    }
+    id result = [[[context rootDOMController] childWebEditorItems] lastObject];
     OBASSERT(result);
     
     
@@ -147,13 +143,9 @@
     
     
     // Insert controllers
-    for (WEKWebEditorItem *aController in [context DOMControllers])
+    for (WEKWebEditorItem *aController in [[context rootDOMController] childWebEditorItems])
     {
-        WEKWebEditorItem *parent = [aController parentWebEditorItem];
-        if (parent && ![parent parentWebEditorItem])
-        {
-            [self addChildWebEditorItem:aController];
-        }
+        [self addChildWebEditorItem:aController];
     }
     [context release];
 }

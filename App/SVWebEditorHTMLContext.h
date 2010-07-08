@@ -19,7 +19,7 @@
 @interface SVWebEditorHTMLContext : SVHTMLContext
 {
   @private
-    NSMutableArray  *_DOMControllers;
+    SVDOMController *_rootController;
     SVDOMController *_currentDOMController;  // weak ref
     BOOL            _needsToWriteElementID;
     
@@ -33,8 +33,8 @@
     SVWebEditorViewController   *_viewController;   // weak ref
 }
 
-- (NSArray *)DOMControllers;    // the top-level controllers, with sub-controllers descending from them
-- (void)addDOMController:(SVDOMController *)controller;
+@property(nonatomic, retain, readonly) SVDOMController *rootDOMController;
+- (void)addDOMController:(SVDOMController *)controller; // adds to the current controller
 
 - (void)addDependency:(KSObjectKeyPathPair *)pair;
 @property(nonatomic, copy, readonly) NSSet *dependencies;
