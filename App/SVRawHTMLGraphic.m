@@ -9,6 +9,7 @@
 #import "SVRawHTMLGraphic.h"
 
 #import "SVHTMLContext.h"
+#import "SVTemplate.h"
 
 
 @implementation SVRawHTMLGraphic 
@@ -25,7 +26,7 @@
     // Usually, just write out the code and be done
     if (![[self shouldPreviewWhenEditing] boolValue] && ![context shouldWriteServerSideScripts])
     {
-        [context writeHTMLString:@"<span style=\"background:rgb(0,127,255); -webkit-border-radius:3px; padding:2px 5px; color:white; font-size:80%;\">HTML</span>"];
+        [context writeHTMLString:[[[self class] placeholderTemplate] templateString]];
     }
     else
     {
@@ -36,6 +37,17 @@
 	// Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"docType"];
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
+}
+
++ (SVTemplate *)placeholderTemplate;
+{
+    static SVTemplate *result;
+    if (!result)
+    {
+        result = [[SVTemplate templateNamed:@"RawHTMLPlaceholder.html"] retain];
+    }
+    
+    return result;
 }
 
 @end

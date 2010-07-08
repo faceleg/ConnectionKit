@@ -9,12 +9,17 @@
 #import "SVGraphic.h"
 
 
+@class SVTemplate;
+
+
 @interface SVRawHTMLGraphic : SVGraphic  
 
 @property(nonatomic, copy) NSNumber *docType;
 @property(nonatomic, copy) NSString *HTMLString;
 @property(nonatomic, copy) NSData *lastValidMarkupDigest;
 @property(nonatomic, copy) NSNumber *shouldPreviewWhenEditing;    // BOOL, madatory
+
++ (SVTemplate *)placeholderTemplate;
 
 @end
 

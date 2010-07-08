@@ -251,6 +251,7 @@
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
 		2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */; };
 		2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */; };
+		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
 		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
@@ -1728,6 +1729,7 @@
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
 		2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSortedMutableArray.h; sourceTree = "<group>"; };
 		2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSortedMutableArray.m; sourceTree = "<group>"; };
+		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
 		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
@@ -4284,6 +4286,7 @@
 				27B0C1B011694F250084BFE0 /* SVMediaGraphic.h */,
 				27B0C1B211694F250084BFE0 /* SVMediaGraphic.m */,
 				27FA98951194BF06003B8308 /* SidebarTemplate.html */,
+				2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */,
 			);
 			name = Graphics;
 			sourceTree = "<group>";
@@ -6311,6 +6314,7 @@
 				CE58139211DEA45D008478AF /* NSStatusPartiallyAvailable.tiff in Resources */,
 				CE58139311DEA45D008478AF /* NSStatusUnavailable.tiff in Resources */,
 				CE5D02C611E66C4B00A4A2D1 /* KSFeedback.xib in Resources */,
+				2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
