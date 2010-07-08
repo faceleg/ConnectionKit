@@ -207,7 +207,7 @@ enum { kKTContactSubjectHidden, kKTContactSubjectField, kKTContactSubjectSelecti
 
 + (Class)inspectorViewControllerClass { return [ContactInspector class]; }
 
-- (NSString *)nibName { return @"ContactElement"; }
+- (NSString *)nibName { return @"ContactInspector"; }
 
 
 #pragma mark -

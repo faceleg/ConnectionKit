@@ -42,21 +42,25 @@
 
 @interface ContactPlugIn : SVPageletPlugIn
 {
+  @private
+
+    // used in template
 	NSString *_address;
+	NSArray *_fields;
+    BOOL _sideLabels;
+    
+    // listed in initial props
+	int _subjectType;
+    BOOL _copyToSender;
+
+    // used ??
 	NSString *_emailLabel;
 	NSString *_messageLabel;
 	NSString *_nameLabel;
 	NSString *_sendButtonTitle;
 	NSString *_subjectLabel;
 	NSString *_subjectText;
-	BOOL _sideLabels;
-	int _subjectType;
-	NSArray *_fields;
     
-    BOOL _copyToSender;
-	
-	
-	@private
 	
 	ContactField *myEmailField;
 	
@@ -65,18 +69,19 @@
 	BOOL	myIsArchivingFields;
 }
 
-@property (copy) NSString *address;
+@property (nonatomic, copy) NSString *address;
+@property (nonatomic, copy) NSArray *fields;
+@property (nonatomic) BOOL sideLabels;
+
+@property (nonatomic) int subjectType;
+@property (nonatomic) BOOL copyToSender;
+
 @property (copy) NSString *emailLabel;
 @property (copy) NSString *messageLabel;
 @property (copy) NSString *nameLabel;
 @property (copy) NSString *sendButtonTitle;
 @property (copy) NSString *subjectLabel;
 @property (copy) NSString *subjectText;
-@property (assign) BOOL sideLabels;
-@property (assign) int subjectType;
-@property (copy) NSArray *fields;
-
-@property (nonatomic) BOOL copyToSender;
 
 - (NSString *)encodedRecipient;
 - (NSString *)subjectInputHTML;
@@ -89,9 +94,5 @@
 - (void)setSubjectPrompt:(NSString *)aPrompt;
 - (void)setSubjectText:(NSString *)anAddress;
 - (void)setSubjectType:(int)aSubjectType;
-
-// New stuff
-- (NSArray *)fields;
-- (void)setFields:(NSArray *)fields;
 
 @end
