@@ -406,7 +406,8 @@ disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
 				// Note: This is not localized, since the validator is giving us English output only.
 			}
 			
-			self.validationReportString = resultingPageString;
+			// In case of feedback reporter use, put in a base HREF. I think I didn't want to do that when loading the URL though.
+			self.validationReportString = [resultingPageString stringByReplacing:@"<head>" with:@"<head><base href='http://validator.w3.org' />"];
 			[[oWebView mainFrame] loadHTMLString:resultingPageString
 										 baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 			
