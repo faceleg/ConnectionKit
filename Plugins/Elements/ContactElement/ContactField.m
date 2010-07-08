@@ -112,9 +112,9 @@
 #pragma mark -
 #pragma mark Owner
 
-- (ContactPlugin *)owner { return myOwner; }
+- (ContactPlugIn *)owner { return myOwner; }
 
-- (void)setOwner:(ContactPlugin *)owner { myOwner = owner; }
+- (void)setOwner:(ContactPlugIn *)owner { myOwner = owner; }
 
 #pragma mark -
 #pragma mark Accessors

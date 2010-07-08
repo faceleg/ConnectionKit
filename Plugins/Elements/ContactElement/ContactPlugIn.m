@@ -54,7 +54,7 @@
 
 enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 
-@interface ContactPlugin ()
+@interface ContactPlugIn ()
 
 - (void)setFields:(NSArray *)fields archiveToPluginProperties:(BOOL)archive;
 - (NSArray *)fieldsPropertyListRepresentation;
@@ -66,7 +66,7 @@ enum { LABEL_NAME = 1, LABEL_EMAIL, LABEL_SUBJECT, LABEL_MESSAGE, LABEL_SEND };
 @end
 
 
-@implementation ContactPlugin
+@implementation ContactPlugIn
 
 @synthesize address = _address;
 @synthesize emailLabel = _emailLabel;

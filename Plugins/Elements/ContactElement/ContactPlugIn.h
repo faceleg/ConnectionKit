@@ -40,7 +40,7 @@
 @class ContactFieldsArrayController, ContactField;
 
 
-@interface ContactPlugin : SVPageletPlugIn
+@interface ContactPlugIn : SVPageletPlugIn
 {
 	NSString *_address;
 	NSString *_emailLabel;
