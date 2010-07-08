@@ -238,7 +238,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
 {
     [[self contentItem] removeFromParentWebEditorItem];
     _contentItem = item;    // _rootItem will retain it for us
-    [_rootItem addChildWebEditorItem:item];
+    if (item) [_rootItem addChildWebEditorItem:item];
 }
 
 #pragma mark Text Selection
