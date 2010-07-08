@@ -31,7 +31,6 @@ KTCollectionPathStyle;
 
 
 @class KTPage, KTSite, KTMaster, SVSidebar, SVTitleBox;
-@class SVHTMLTemplateParser;
 
 
 @interface KTAbstractPage : SVSiteItem

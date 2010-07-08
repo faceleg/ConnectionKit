@@ -11,7 +11,6 @@
 
 #import "KTSite.h"
 #import "KTHostProperties.h"
-#import "SVHTMLTemplateParser.h"
 #import "SVHTMLContext.h"
 #import "SVSidebar.h"
 #import "SVTitleBox.h"
