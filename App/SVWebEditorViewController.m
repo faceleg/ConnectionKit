@@ -261,7 +261,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Observe the used keypaths
-    [_pageDependencies release], _pageDependencies = [[context dependencies] copy];
+    [_pageDependencies release], _pageDependencies = [[[context rootDOMController] dependencies] copy];
     for (KSObjectKeyPathPair *aDependency in _pageDependencies)
     {
         [[aDependency object] addObserver:self

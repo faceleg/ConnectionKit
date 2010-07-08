@@ -13,7 +13,7 @@
 
 @class SVWebEditorViewController, SVSidebarDOMController;
 @class SVContentObject, SVSidebar, SVSidebarPageletsController;
-@class KSObjectKeyPathPair, SVMediaRecord;
+@class SVMediaRecord;
 
 
 @interface SVWebEditorHTMLContext : SVHTMLContext
@@ -22,9 +22,7 @@
     SVDOMController *_rootController;
     SVDOMController *_currentDOMController;  // weak ref
     BOOL            _needsToWriteElementID;
-    
-    NSMutableSet    *_dependencies;
-    
+        
     NSMutableSet    *_media;
     
     SVSidebarDOMController      *_sidebarDOMController;
@@ -35,9 +33,6 @@
 
 @property(nonatomic, retain, readonly) SVDOMController *rootDOMController;
 - (void)addDOMController:(SVDOMController *)controller; // adds to the current controller
-
-- (void)addDependency:(KSObjectKeyPathPair *)pair;
-@property(nonatomic, copy, readonly) NSSet *dependencies;
 
 
 #pragma mark Media

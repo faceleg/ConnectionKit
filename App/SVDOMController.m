@@ -41,7 +41,7 @@
     
     
     // Copy top-level dependencies across to parent. #79396
-    for (KSObjectKeyPathPair *aDependency in [context dependencies])
+    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
     {
         [parentItem addDependency:aDependency];
     }

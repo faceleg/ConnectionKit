@@ -35,7 +35,6 @@
     [super initWithOutputWriter:stream];
     
     _currentDOMController = _rootController = [[SVDOMController alloc] init];
-    _dependencies = [[NSMutableSet alloc] init];
     _media = [[NSMutableSet alloc] init];
     
     return self;
@@ -47,7 +46,6 @@
     
     // Also ditch controllers
     [_rootController release]; _rootController = nil;
-    [_dependencies release]; _dependencies = nil;
     [_media release]; _media = nil;
 }
 
@@ -57,7 +55,6 @@
     
     [super dealloc];
     OBASSERT(!_rootController);
-    OBASSERT(!_dependencies);
     OBASSERT(!_media);
 }
 
@@ -189,6 +186,15 @@
 
 #pragma mark Dependencies
 
+- (void)addDependency:(KSObjectKeyPathPair *)pair;
+{
+    // Ignore parser properties – why? Mike.
+    if (![[pair object] isKindOfClass:[SVTemplateParser class]])
+    {
+        [[self currentDOMController] addDependency:pair];
+    }
+}
+
 - (void)addDependencyOnObject:(NSObject *)object keyPath:(NSString *)keyPath;
 {
     [super addDependencyOnObject:object keyPath:keyPath];
@@ -199,26 +205,6 @@
     [self addDependency:pair];
     [pair release];
 }
-
-- (void)addDependency:(KSObjectKeyPathPair *)pair;
-{
-    OBASSERT(_dependencies);
-    
-    // Ignore parser properties – why? Mike.
-    if (![[pair object] isKindOfClass:[SVTemplateParser class]])
-    {
-        if ([self currentDOMController])
-        {
-            [[self currentDOMController] addDependency:pair];
-        }
-        else
-        {
-            [_dependencies addObject:pair];
-        }
-    }
-}
-
-- (NSSet *)dependencies { return [[_dependencies copy] autorelease]; }
 
 #pragma mark Media
 
