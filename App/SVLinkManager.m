@@ -140,7 +140,7 @@
     {
         // Try to populate from frontmost Safari URL
         NSString *safariTitle = nil;	// someday, we could populate the link title as well!
-        [NSAppleScript getWebBrowserURL:&URL title:&safariTitle source:nil];
+        URL = [[[NSWorkspace sharedWorkspace] fetchBrowserWebLocation] URL];
     }
 	NSString *scheme = [URL scheme];
     
