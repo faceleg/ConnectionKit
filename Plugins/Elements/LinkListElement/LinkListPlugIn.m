@@ -90,6 +90,19 @@
 
 
 #pragma mark -
+#pragma mark HTML Generation
+
+- (void)writeHTML:(id <SVPlugInContext>)context
+{
+    if ( self.openInNewWindow )
+    {
+        // target=_blank requires Transitional doc type
+        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
+    }
+    [super writeHTML:context];
+}
+
+#pragma mark -
 #pragma mark Drag & Drop
 
 // drag and drop should use new API for getting URLs off the pasteboard
