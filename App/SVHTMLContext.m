@@ -43,6 +43,7 @@
 
 
 @interface SVHTMLContext ()
+- (void)endCallout;
 - (SVHTMLIterator *)currentIterator;
 @end
 

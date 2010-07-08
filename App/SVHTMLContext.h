@@ -101,7 +101,6 @@ typedef enum {
 
 #pragma mark Callouts
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
-- (void)endCallout;    // written lazily so consecutive matching callouts are blended into one
 - (BOOL)isWritingCallout;
 @property(nonatomic, retain, readonly) KSMegaBufferedWriter *calloutBuffer;
 
