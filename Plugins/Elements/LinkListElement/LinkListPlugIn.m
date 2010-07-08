@@ -47,9 +47,9 @@
 	[super dealloc]; 
 }
 
-- (void)awakeFromInsert;
+- (void)awakeFromNew;
 {
-    [super awakeFromInsert];
+    [super awakeFromNew];
     
     self.linkList = [NSMutableArray arrayWithCapacity:5];
     
