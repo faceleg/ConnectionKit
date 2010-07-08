@@ -12,7 +12,6 @@
 @implementation WEKRootItem
 
 - (DOMHTMLElement *)HTMLElement { return nil; }
-- (BOOL)isSelectable { return NO; }
 
 @synthesize webEditor = _webEditor;
 

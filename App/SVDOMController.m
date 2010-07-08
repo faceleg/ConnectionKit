@@ -273,10 +273,6 @@
     [_dependencies removeAllObjects];
 }
 
-#pragma mark Editing
-
-- (BOOL)isSelectable { return NO; }
-
 #pragma mark Sidebar
 
 - (NSDragOperation)draggingSourceOperationMaskForLocal:(BOOL)isLocal;

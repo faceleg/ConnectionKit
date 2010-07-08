@@ -125,10 +125,7 @@
 
 #pragma mark Selection
 
-- (BOOL)isSelectable;   // default is YES. Subclass for more complexity, shouldn't worry about KVO
-{
-    return YES;
-}
+- (BOOL)isSelectable; { return NO; }
 
 - (void)updateToReflectSelection;
 {
