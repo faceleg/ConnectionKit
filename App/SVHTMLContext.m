@@ -116,6 +116,20 @@
     if (docType < [self maxDocType]) [self setMaxDocType:docType];
 }
 
+- (void)copyPropertiesFromContext:(SVHTMLContext *)context;
+{
+    // Copy across properties
+    [self setIndentationLevel:[context indentationLevel]];
+    [self setPage:[context page]];
+    [self setBaseURL:[context baseURL]];
+    [self setIncludeStyling:[context includeStyling]];
+    [self setLiveDataFeeds:[context liveDataFeeds]];
+    [self setXHTML:[context isXHTML]];
+    [self setEncoding:[context encoding]];
+}
+
+#pragma mark Purpose
+
 - (KTHTMLGenerationPurpose)generationPurpose; { return kSVHTMLGenerationPurposeNormal; }
 
 - (BOOL)isForEditing; { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
@@ -138,17 +152,7 @@
     return result;
 }
 
-- (void)copyPropertiesFromContext:(SVHTMLContext *)context;
-{
-    // Copy across properties
-    [self setIndentationLevel:[context indentationLevel]];
-    [self setPage:[context page]];
-    [self setBaseURL:[context baseURL]];
-    [self setIncludeStyling:[context includeStyling]];
-    [self setLiveDataFeeds:[context liveDataFeeds]];
-    [self setXHTML:[context isXHTML]];
-    [self setEncoding:[context encoding]];
-}
+- (BOOL)shouldWriteServerSideScripts; { return [self isForPublishing]; }
 
 #pragma mark CSS
 
