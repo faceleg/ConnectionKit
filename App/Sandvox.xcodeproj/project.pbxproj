@@ -249,6 +249,8 @@
 		271BFA4F10F00C2D006EA3A2 /* SVPageProtocol.h in Headers */ = {isa = PBXBuildFile; fileRef = 271BFA4E10F00C2D006EA3A2 /* SVPageProtocol.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		272321E00D48B6070075F31F /* KTCollectionIndexFilenameButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */; settings = {ATTRIBUTES = (); }; };
 		272321E10D48B6070075F31F /* KTCollectionIndexFilenameButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */; };
+		2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */; };
+		2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
 		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
@@ -1726,6 +1728,8 @@
 		272321310D48013F0075F31F /* KTDocWebViewController+Private.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "KTDocWebViewController+Private.h"; sourceTree = "<group>"; };
 		272321DE0D48B6070075F31F /* KTCollectionIndexFilenameButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTCollectionIndexFilenameButton.h; sourceTree = "<group>"; };
 		272321DF0D48B6070075F31F /* KTCollectionIndexFilenameButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCollectionIndexFilenameButton.m; sourceTree = "<group>"; };
+		2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSortedMutableArray.h; sourceTree = "<group>"; };
+		2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSortedMutableArray.m; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
 		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
@@ -4795,6 +4799,8 @@
 				277FDD6011CE21650083F1BF /* KSMegaBufferedWriter.m */,
 				270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */,
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
+				2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */,
+				2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5627,6 +5633,7 @@
 				27B82D9611D4A9A00086CB6E /* SVRawHTMLGraphic.h in Headers */,
 				27B82F1B11D50F260086CB6E /* SVDOMToHTMLWriter.h in Headers */,
 				CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */,
+				2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7067,6 +7074,7 @@
 				27B82D9711D4A9A00086CB6E /* SVRawHTMLGraphic.m in Sources */,
 				27B82F1D11D50F260086CB6E /* SVDOMToHTMLWriter.m in Sources */,
 				CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */,
+				2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
