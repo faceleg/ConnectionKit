@@ -11,7 +11,7 @@
 			<string key="NS.object.0">762</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="76"/>
+			<integer value="187"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -39,7 +39,7 @@
 						<array class="NSMutableArray" key="NSTabViewItems">
 							<object class="NSTabViewItem" id="88639914">
 								<object class="NSView" key="NSView" id="972752083">
-									<reference key="NSNextResponder" ref="304601533"/>
+									<nil key="NSNextResponder"/>
 									<int key="NSvFlags">256</int>
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSScrollView" id="118978594">
@@ -376,7 +376,6 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 										</object>
 									</array>
 									<string key="NSFrame">{{10, 25}, {250, 225}}</string>
-									<reference key="NSSuperview" ref="304601533"/>
 								</object>
 								<string key="NSLabel">Links</string>
 								<reference key="NSColor" ref="347547808"/>
@@ -384,7 +383,7 @@ ARcABAAAAAEAAAACARwAAwAAAAEAAQAAAVIAAwAAAAEAAQAAAVMAAwAAAAIAAQABAAAAAA</bytes>
 							</object>
 							<object class="NSTabViewItem" id="451362091">
 								<object class="NSView" key="NSView" id="690406668">
-									<nil key="NSNextResponder"/>
+									<reference key="NSNextResponder" ref="304601533"/>
 									<int key="NSvFlags">256</int>
 									<array class="NSMutableArray" key="NSSubviews">
 										<object class="NSTextField" id="345513027">
@@ -608,19 +607,20 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 										</object>
 									</array>
 									<string key="NSFrame">{{10, 25}, {250, 225}}</string>
+									<reference key="NSSuperview" ref="304601533"/>
 								</object>
 								<string key="NSLabel">Options</string>
 								<reference key="NSColor" ref="347547808"/>
 								<reference key="NSTabView" ref="304601533"/>
 							</object>
 						</array>
-						<reference key="NSSelectedTabViewItem" ref="88639914"/>
+						<reference key="NSSelectedTabViewItem" ref="451362091"/>
 						<reference key="NSFont" ref="26"/>
 						<int key="NSTvFlags">134217728</int>
 						<bool key="NSAllowTruncatedLabels">YES</bool>
 						<bool key="NSDrawsBackground">YES</bool>
 						<array class="NSMutableArray" key="NSSubviews">
-							<reference ref="972752083"/>
+							<reference ref="690406668"/>
 						</array>
 					</object>
 				</array>
@@ -928,35 +928,35 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.openInNewWindow</string>
+						<string key="label">value: inspectedObjectsController.selection.openInNewWindow</string>
 						<reference key="source" ref="114091989"/>
-						<reference key="destination" ref="432310570"/>
+						<reference key="destination" ref="651028774"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="114091989"/>
-							<reference key="NSDestination" ref="432310570"/>
-							<string key="NSLabel">value: selection.openInNewWindow</string>
+							<reference key="NSDestination" ref="651028774"/>
+							<string key="NSLabel">value: inspectedObjectsController.selection.openInNewWindow</string>
 							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.openInNewWindow</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.openInNewWindow</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">197</int>
+					<int key="connectionID">216</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
-						<string key="label">selectedTag: selection.layout</string>
+						<string key="label">selectedTag: inspectedObjectsController.selection.layout</string>
 						<reference key="source" ref="650111562"/>
-						<reference key="destination" ref="432310570"/>
+						<reference key="destination" ref="651028774"/>
 						<object class="NSNibBindingConnector" key="connector">
 							<reference key="NSSource" ref="650111562"/>
-							<reference key="NSDestination" ref="432310570"/>
-							<string key="NSLabel">selectedTag: selection.layout</string>
+							<reference key="NSDestination" ref="651028774"/>
+							<string key="NSLabel">selectedTag: inspectedObjectsController.selection.layout</string>
 							<string key="NSBinding">selectedTag</string>
-							<string key="NSKeyPath">selection.layout</string>
+							<string key="NSKeyPath">inspectedObjectsController.selection.layout</string>
 							<int key="NSNibBindingConnectorVersion">2</int>
 						</object>
 					</object>
-					<int key="connectionID">198</int>
+					<int key="connectionID">219</int>
 				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -1369,7 +1369,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">214</int>
+			<int key="maxID">219</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
