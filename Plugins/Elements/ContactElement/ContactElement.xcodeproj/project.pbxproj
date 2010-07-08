@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		27EF28F90C677862001055D3 /* lock.png in Resources */ = {isa = PBXBuildFile; fileRef = 27EF28F80C677862001055D3 /* lock.png */; };
 		27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 27F19AD00D4E479D000DB895 /* InfoPlist.strings */; };
 		27FF85F40C5A91EA0077CB14 /* ContactField.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85ED0C5A91EA0077CB14 /* ContactField.m */; };
 		27FF85F50C5A91EA0077CB14 /* ContactFieldCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27FF85EF0C5A91EA0077CB14 /* ContactFieldCell.m */; };
@@ -27,7 +26,6 @@
 		089C1672FE841209C02AAC07 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = /System/Library/Frameworks/Foundation.framework; sourceTree = "<absolute>"; };
 		089C167FFE841241C02AAC07 /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = /System/Library/Frameworks/AppKit.framework; sourceTree = "<absolute>"; };
 		1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
-		27EF28F80C677862001055D3 /* lock.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = lock.png; sourceTree = "<group>"; };
 		27F19AD10D4E479D000DB895 /* da */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = da; path = da.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		27F19AD30D4E47E7000DB895 /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/InfoPlist.strings; sourceTree = "<group>"; };
 		27F19ADE0D4E47F5000DB895 /* en */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
@@ -106,7 +104,6 @@
 		089C167CFE841241C02AAC07 /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				27EF28F80C677862001055D3 /* lock.png */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
 				3CE204DD11E590E000A82B1E /* ContactInspector.xib */,
 				CE98EF3509994DE400EDCEE7 /* ContactTemplate.html */,
@@ -239,7 +236,6 @@
 				3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */,
 				CEA7FA4209B27B7C0034E035 /* ContactStrings.plist in Resources */,
 				3C41CC7409B4D7BC0086EF83 /* License.rtf in Resources */,
-				27EF28F90C677862001055D3 /* lock.png in Resources */,
 				27F19AD20D4E479D000DB895 /* InfoPlist.strings in Resources */,
 				3CE204DF11E590E000A82B1E /* ContactInspector.xib in Resources */,
 			);
