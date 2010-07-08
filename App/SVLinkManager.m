@@ -14,7 +14,7 @@
 #import "SVLinkInspector.h"
 #import "KTToolbars.h"
 
-#import "NSAppleScript+Karelia.h"
+#import "NSWorkspace+Karelia.h"
 
 
 @interface SVLinkManager ()
@@ -139,7 +139,7 @@
     if (!URL)
     {
         // Try to populate from frontmost Safari URL
-        NSString *safariTitle = nil;	// someday, we could populate the link title as well!
+        // someday, we could populate the link title as well!
         URL = [[[NSWorkspace sharedWorkspace] fetchBrowserWebLocation] URL];
     }
 	NSString *scheme = [URL scheme];
