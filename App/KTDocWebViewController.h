@@ -14,7 +14,6 @@
 @class KTAbstractElement, KTPage, KTPagelet;
 @class KTWebViewComponent;
 @class SVHTMLTextBlock, KTWebViewUndoManagerProxy;
-@class SVHTMLTemplateParser;
 @class CIFilter;
 @class KTDocument;
 @class KTDocWindowController;
