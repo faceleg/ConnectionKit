@@ -202,15 +202,18 @@
     
     WEKWebEditorItem *result = nil;
     
-    if ([node ks_isDescendantOfElement:[self HTMLElement]])
+    DOMElement *myElement = [self HTMLElement];
+    if (!myElement || [node ks_isDescendantOfElement:myElement])
     {
+        // Search for a descendant
         for (WEKWebEditorItem *anItem in [self childWebEditorItems])
         {
             result = [anItem hitTestDOMNode:node];
             if (result) break;
         }
         
-        if (!result) result = self;
+        // If no descendants claim it, node is ours
+        if (!result && myElement) result = self;
     }
     
     return result;
