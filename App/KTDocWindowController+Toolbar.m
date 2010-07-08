@@ -355,7 +355,7 @@ TO DO:
     
     submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"More", "menu item")];
     
-    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
+    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                inMenu:submenu
                                               atIndex:0];
 	[item setSubmenu:submenu];

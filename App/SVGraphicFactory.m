@@ -17,6 +17,7 @@
 #import "SVTextBox.h"
 #import "KTToolbars.h"
 
+#import "KSSortedMutableArray.h"
 #import "KSWebLocation.h"
 
 #import "NSArray+Karelia.h"
@@ -213,11 +214,14 @@
 
 #pragma mark Shared Objects
 
-static NSArray *sPageletFactories;
-static NSArray *sIndexFactories;
 static id <SVGraphicFactory> sSharedTextBoxFactory;
 static id <SVGraphicFactory> sImageFactory;
 static id <SVGraphicFactory> sVideoFactory;
+static KSSortedMutableArray *sIndexFactories;
+static KSSortedMutableArray *sBadgeFactories;
+static KSSortedMutableArray *sEmbeddedFactories;
+static KSSortedMutableArray *sSocialFactories;
+static KSSortedMutableArray *sMoreFactories;
 static id <SVGraphicFactory> sRawHTMLFactory;
 
 + (void)initialize
@@ -233,11 +237,14 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     
     
     
-    if (!sPageletFactories)
+    // Create standard groups of factories
+    if (!sIndexFactories &&
+        !sBadgeFactories &&
+        !sEmbeddedFactories &&
+        !sSocialFactories &&
+        !sMoreFactories)
     {
         // Order plug-ins first by priority, then by name
-        NSSet *factories = [KTElementPlugInWrapper pageletPlugins];
-        
         NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
                                                                      ascending:YES];
         NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
@@ -249,41 +256,45 @@ static id <SVGraphicFactory> sRawHTMLFactory;
         [prioritySort release];
         [nameSort release];
         
-        sPageletFactories = [[factories KS_sortedArrayUsingDescriptors:sortDescriptors] copy];
-    }
-    
-    
-    if (!sIndexFactories)
-    {
-        // Order plug-ins first by priority, then by name
-        NSSet *plugins = [KTElementPlugInWrapper pageletPlugins];
-        NSMutableSet *factories = [plugins mutableCopy];
-        for (id <SVGraphicFactory> aFactory in plugins)
+        
+        // Iterate the pagelets filing them away
+        sIndexFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
+        sBadgeFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
+        sEmbeddedFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
+        sSocialFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
+        sMoreFactories = [[KSSortedMutableArray alloc] initWithSortDescriptors:sortDescriptors];
+        
+        
+        for (KTHTMLPlugInWrapper *aFactory in [KTElementPlugInWrapper pageletPlugins])
         {
-            if (![aFactory isIndex])
+            switch ([aFactory category])
             {
-                [factories removeObject:aFactory];
+                case KTPluginCategoryIndex:
+                    [sIndexFactories addObject:aFactory];
+                    break;
+                case KTPluginCategoryBadge:
+                    [sBadgeFactories addObject:aFactory];
+                    break;
+                case KTPluginCategoryEmbedded:
+                    [sEmbeddedFactories addObject:aFactory];
+                    break;
+                case KTPluginCategorySocial:
+                    [sSocialFactories addObject:aFactory];
+                    break;
+                default:
+                    [sMoreFactories addObject:aFactory];
+                    break;
             }
         }
         
-        NSSortDescriptor *prioritySort = [[NSSortDescriptor alloc] initWithKey:@"priority"
-                                                                     ascending:YES];
-        NSSortDescriptor *nameSort = [[NSSortDescriptor alloc]
-                                      initWithKey:@"name"
-                                      ascending:YES
-                                      selector:@selector(caseInsensitiveCompare:)];
-        
-        NSArray *sortDescriptors = [NSArray arrayWithObjects:prioritySort, nameSort, nil];
-        [prioritySort release];
-        [nameSort release];
-        
-        sIndexFactories = [[factories KS_sortedArrayUsingDescriptors:sortDescriptors] copy];
-        [factories release];
     }
 }
 
-+ (NSArray *)pageletFactories; { return sPageletFactories; }
-+ (NSArray *)indexFactories; { return sIndexFactories; }
++ (NSArray *)indexFactories; { return [[sIndexFactories copy] autorelease]; }
++ (NSArray *)badgeFactories; { return [[sBadgeFactories copy] autorelease]; }
++ (NSArray *)embeddedFactories; { return [[sEmbeddedFactories copy] autorelease]; }
++ (NSArray *)socialFactories; { return [[sSocialFactories copy] autorelease]; }
++ (NSArray *)moreGraphicFactories; { return [[sMoreFactories copy] autorelease]; }
 
 + (id <SVGraphicFactory>)textBoxFactory; { return sSharedTextBoxFactory; }
 + (id <SVGraphicFactory>)imageFactory; { return sImageFactory; }
@@ -452,7 +463,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     
     
     // Test plug-ins
-    for (id <SVGraphicFactory> aFactory in [self pageletFactories])
+    for (id <SVGraphicFactory> aFactory in [self moreGraphicFactories])
     {
         NSString *type;
         id propertyList;
@@ -516,7 +527,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     {
         result = [[NSMutableArray alloc] init];
         
-        for (id <SVGraphicFactory> aFactory in [self pageletFactories])
+        for (id <SVGraphicFactory> aFactory in [self moreGraphicFactories])
         {
             NSArray *acceptedTypes = [aFactory readablePasteboardTypes];
             for (NSString *aType in acceptedTypes)

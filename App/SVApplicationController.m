@@ -932,7 +932,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
 			//[self buildSampleSitesMenu];
 			
-			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory pageletFactories]
+			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                        inMenu:oMoreGraphicsMenu
                                                       atIndex:0];
             [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]

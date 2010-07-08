@@ -49,11 +49,14 @@
 @interface SVGraphicFactory : NSObject <SVGraphicFactory>
 
 #pragma mark Shared Objects
-+ (NSArray *)pageletFactories;  // objects conform to
-+ (NSArray *)indexFactories;    // SVGraphicFactory protocol
 + (id <SVGraphicFactory>)textBoxFactory;
 + (id <SVGraphicFactory>)imageFactory;
 + (id <SVGraphicFactory>)videoFactory;
++ (NSArray *)indexFactories;
++ (NSArray *)badgeFactories;
++ (NSArray *)embeddedFactories;
++ (NSArray *)socialFactories;
++ (NSArray *)moreGraphicFactories;
 + (id <SVGraphicFactory>)rawHTMLFactory;
 
 
