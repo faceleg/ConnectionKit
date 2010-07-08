@@ -27,8 +27,9 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 {
   @private
     // Content
-    WEKWebView  *_webView;
-    WEKRootItem *_rootItem;
+    WEKWebView          *_webView;
+    WEKRootItem         *_rootItem;
+    WEKWebEditorItem    *_contentItem;  // weak ref
     BOOL        _isStartingLoad;
     
     // Selection
@@ -78,7 +79,7 @@ extern NSString *kSVWebEditorViewDidChangeNotification;
 // Blocks until either loading is finished or date is reached. Returns YES if the former.
 - (BOOL)loadUntilDate:(NSDate *)date;
 
-@property(nonatomic, readonly) WEKWebEditorItem *rootItem;   // add your items here after loading finishes
+@property(nonatomic, retain) WEKWebEditorItem *contentItem;   // add your items here after loading finishes
 
 
 #pragma mark Text Selection

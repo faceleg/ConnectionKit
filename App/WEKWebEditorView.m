@@ -98,10 +98,16 @@ typedef enum {  // this copied from WebPreferences+Private.h
     [super initWithFrame:frameRect];
     
     
-    // ivars
+    // Starter items
     _rootItem = [[WEKRootItem alloc] init];
     [_rootItem setWebEditor:self];
     
+    WEKWebEditorItem *contentItem = [[WEKWebEditorItem alloc] init];
+    [self setContentItem:contentItem];
+    [contentItem release];
+    
+    
+    // other ivars
     _selectedItems = [[NSMutableArray alloc] init];
     
     
@@ -227,7 +233,13 @@ typedef enum {  // this copied from WebPreferences+Private.h
     return result;
 }
 
-@synthesize rootItem = _rootItem;
+@synthesize contentItem = _contentItem;
+- (void)setContentItem:(WEKWebEditorItem *)item;
+{
+    [[self contentItem] removeFromParentWebEditorItem];
+    _contentItem = item;    // _rootItem will retain it for us
+    [_rootItem addChildWebEditorItem:item];
+}
 
 #pragma mark Text Selection
 
@@ -259,14 +271,14 @@ typedef enum {  // this copied from WebPreferences+Private.h
     if (!domRange) return nil;
     
     
-    WEKWebEditorItem *startItem = [[self rootItem] hitTestDOMNode:[domRange startContainer]];
+    WEKWebEditorItem *startItem = [[self contentItem] hitTestDOMNode:[domRange startContainer]];
     while (startItem && ![startItem representedObject])
     {
         startItem = [startItem parentWebEditorItem];
     }
     
     
-    WEKWebEditorItem *endItem = [[self rootItem] hitTestDOMNode:[domRange endContainer]];
+    WEKWebEditorItem *endItem = [[self contentItem] hitTestDOMNode:[domRange endContainer]];
     while (endItem && ![endItem representedObject])
     {
         endItem = [endItem parentWebEditorItem];
@@ -290,10 +302,10 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     if (startObject && endObject)
     {
-        WEKWebEditorItem *startItem = [[self rootItem] hitTestRepresentedObject:startObject];
+        WEKWebEditorItem *startItem = [[self contentItem] hitTestRepresentedObject:startObject];
         if (startItem)
         {
-            WEKWebEditorItem *endItem = [[self rootItem] hitTestRepresentedObject:endObject];
+            WEKWebEditorItem *endItem = [[self contentItem] hitTestRepresentedObject:endObject];
             if (endItem)
             {
                 [textRange populateDOMRange:domRange
@@ -843,7 +855,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     
     // Look for children at the deepest possible level (normally top-level). Keep backing out until we find something of use
     
-    result = [[self rootItem] hitTestDOMNode:nextNode];
+    result = [[self contentItem] hitTestDOMNode:nextNode];
     while (result && ![result isSelectable])
     {
         result = [result parentWebEditorItem];
@@ -941,7 +953,7 @@ typedef enum {  // this copied from WebPreferences+Private.h
     // Draw drop highlight if there is one. 1px inset from bounding box, "Aqua" colour
     if (_dragHighlightNode)
     {
-        WEKWebEditorItem *item = [[self rootItem] hitTestDOMNode:_dragHighlightNode];
+        WEKWebEditorItem *item = [[self contentItem] hitTestDOMNode:_dragHighlightNode];
         NSRect dropRect = [item boundingBox];    // pretending it's a node
         
         [[NSColor aquaColor] setFill];
@@ -1686,7 +1698,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
     DOMRange *range = proposedRange;
     
     //id article = [[[self dataSource] page] article];
-    //WEKWebEditorItem *item = [[self rootItem] hitTestRepresentedObject:article];
+    //WEKWebEditorItem *item = [[self contentItem] hitTestRepresentedObject:article];
     //[proposedRange selectNodeContents:[item HTMLElement]];
     
     

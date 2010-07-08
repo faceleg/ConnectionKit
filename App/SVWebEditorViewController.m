@@ -210,7 +210,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     // Tear down old dependencies and DOM controllers.
     [self removeAllDependencies];
-    [[[self webEditor] rootItem] setChildWebEditorItems:nil];
+    [[[self webEditor] contentItem] setChildWebEditorItems:nil];
     
     
     // Prepare the environment for generating HTML
@@ -294,7 +294,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         
     for (WEKWebEditorItem *anItem in controllers)
     {
-        [[webEditor rootItem] addChildWebEditorItem:anItem];
+        [[webEditor contentItem] addChildWebEditorItem:anItem];
     }
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
@@ -376,7 +376,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     else
     {
-        [[[self webEditor] rootItem] updateIfNeeded];
+        [[[self webEditor] contentItem] updateIfNeeded];
         _willUpdate = NO;
         
         [self didUpdate];
@@ -408,7 +408,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     for (id anObject in selectedObjects)
     {
-        id newItem = [[[self webEditor] rootItem] hitTestRepresentedObject:anObject];
+        id newItem = [[[self webEditor] contentItem] hitTestRepresentedObject:anObject];
         if ([newItem isSelectable]) [newSelection addObject:newItem];
     }
     
@@ -503,7 +503,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 {
-    WEKWebEditorItem *controller = [[[self webEditor] rootItem] hitTestDOMNode:node];
+    WEKWebEditorItem *controller = [[[self webEditor] contentItem] hitTestDOMNode:node];
     SVTextDOMController *result = [controller textDOMController];
     return result;
 }
@@ -1077,7 +1077,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
 {
     SVRichText *article = [[self page] article];
-    SVTextDOMController *item = (id)[[[self webEditor] rootItem] hitTestRepresentedObject:article];
+    SVTextDOMController *item = (id)[[[self webEditor] contentItem] hitTestRepresentedObject:article];
     DOMNode *articleNode = [item textHTMLElement];
     
     DOMRange *result = [[articleNode ownerDocument] createRange];
@@ -1267,7 +1267,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     DOMNode *node = [element objectForKey:WebElementDOMNodeKey];
     
-    id result = [[webEditor rootItem] hitTestDOMNode:node draggingInfo:dragInfo];
+    id result = [[webEditor contentItem] hitTestDOMNode:node draggingInfo:dragInfo];
     
     if (!result)
     {
