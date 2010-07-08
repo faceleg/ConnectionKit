@@ -76,7 +76,10 @@
 //	}
 //}
 
-
+// drag and drop should use new API for getting URLs off the pasteboard
+//@interface NSPasteboard (SVWebLocation)
+//- (NSArray *)readWebLocations;
+//@end
 
 ///*!	Create a single item with all the URLs listed.  This means we parse the pasteboard directly.
 //*/
