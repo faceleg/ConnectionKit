@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 42;
+	objectVersion = 45;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,7 +17,7 @@
 		3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 3CAC4F0609A2AE2C007AB5B6 /* Localizable.strings */; };
 		8D5B49B4048680CD000E48DA /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1058C7ADFEA557BF11CA2CBB /* Cocoa.framework */; };
 		CE98EF3209994D7E00EDCEE7 /* ContactPlugin.m in Sources */ = {isa = PBXBuildFile; fileRef = CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */; };
-		CE98EF3609994DE400EDCEE7 /* ContactElementTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */; };
+		CE98EF3609994DE400EDCEE7 /* ContactTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = CE98EF3509994DE400EDCEE7 /* ContactTemplate.html */; };
 		CEA7FA4209B27B7C0034E035 /* ContactStrings.plist in Resources */ = {isa = PBXBuildFile; fileRef = CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */; };
 		CEC23F14113F07400022DA7D /* ContactElement.xib in Resources */ = {isa = PBXBuildFile; fileRef = CEC23F12113F07400022DA7D /* ContactElement.xib */; };
 		CED6B34E099ABE0800D6528E /* ContactElement.css in Resources */ = {isa = PBXBuildFile; fileRef = CED6B34D099ABE0800D6528E /* ContactElement.css */; };
@@ -55,7 +55,7 @@
 		CE55B0840AD19AF50091C8AE /* zh_CN */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = zh_CN; path = zh_CN.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CE98EF3009994D7E00EDCEE7 /* ContactPlugin.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ContactPlugin.h; sourceTree = "<group>"; };
 		CE98EF3109994D7E00EDCEE7 /* ContactPlugin.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ContactPlugin.m; sourceTree = "<group>"; };
-		CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ContactElementTemplate.html; sourceTree = "<group>"; };
+		CE98EF3509994DE400EDCEE7 /* ContactTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = ContactTemplate.html; sourceTree = "<group>"; };
 		CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist; path = ContactStrings.plist; sourceTree = "<group>"; };
 		CEA9AFE60A64227000855897 /* ja */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = ja; path = ja.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CEB5638E0A7AB7110081179A /* de */ = {isa = PBXFileReference; fileEncoding = 10; lastKnownFileType = text.plist.strings; lineEnding = 0; name = de; path = de.lproj/Localizable.strings; sourceTree = "<group>"; };
@@ -109,7 +109,7 @@
 				27F19AD00D4E479D000DB895 /* InfoPlist.strings */,
 				27EF28F80C677862001055D3 /* lock.png */,
 				CEC23F12113F07400022DA7D /* ContactElement.xib */,
-				CE98EF3509994DE400EDCEE7 /* ContactElementTemplate.html */,
+				CE98EF3509994DE400EDCEE7 /* ContactTemplate.html */,
 				CED6B34D099ABE0800D6528E /* ContactElement.css */,
 				CEA7FA4109B27B7C0034E035 /* ContactStrings.plist */,
 				8D5B49B7048680CD000E48DA /* Info.plist */,
@@ -207,7 +207,7 @@
 		089C1669FE841209C02AAC07 /* Project object */ = {
 			isa = PBXProject;
 			buildConfigurationList = 1DEB913E08733D840010E9CD /* Build configuration list for PBXProject "ContactElement" */;
-			compatibilityVersion = "Xcode 2.4";
+			compatibilityVersion = "Xcode 3.1";
 			developmentRegion = en;
 			hasScannedForEncodings = 1;
 			knownRegions = (
@@ -234,7 +234,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CE98EF3609994DE400EDCEE7 /* ContactElementTemplate.html in Resources */,
+				CE98EF3609994DE400EDCEE7 /* ContactTemplate.html in Resources */,
 				CED6B34E099ABE0800D6528E /* ContactElement.css in Resources */,
 				3CAC4F0809A2AE2C007AB5B6 /* Localizable.strings in Resources */,
 				CEA7FA4209B27B7C0034E035 /* ContactStrings.plist in Resources */,
