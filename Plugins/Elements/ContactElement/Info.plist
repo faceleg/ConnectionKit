@@ -38,7 +38,7 @@
 	<true/>
 	<key>KTPluginCSSFilesNeeded</key>
 	<array>
-		<string>ContactElement.css</string>
+		<string>ContactPlugIn.css</string>
 	</array>
 	<key>KTPluginIconName</key>
 	<string>/Applications/Mail.app/Contents/Resources/app.icns</string>
@@ -54,13 +54,13 @@
 	<key>KTPluginName</key>
 	<string>Contact Form</string>
 	<key>KTPluginNibFile</key>
-	<string>ContactElement</string>
+	<string>ContactInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
 	<string>Contact Me</string>
 	<key>KTTemplateName</key>
-	<string>ContactElementTemplate</string>
+	<string>ContactTemplate</string>
 	<key>NSPrincipalClass</key>
 	<string>ContactPlugIn</string>
 </dict>
