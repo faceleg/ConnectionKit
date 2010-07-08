@@ -11,7 +11,11 @@
 
 @interface SVValidatorWindowController : KSWebViewWindowController {
 
+	NSString *_validationReportString;
 }
+
+@property (copy) NSString *validationReportString;
+
 
 - (BOOL) validateSource:(NSString *)pageSource isFullPage:(BOOL)isFullPage charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
 

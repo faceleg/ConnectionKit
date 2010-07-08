@@ -11,6 +11,7 @@
 #import "NSString+Karelia.h"
 #import "KSSilencingConfirmSheet.h"
 #import "KSStringXMLEntityEscaping.h"
+#import "NSURL+Karelia.h"
 
 @interface WebView (WebViewPrivate)
 
@@ -24,6 +25,13 @@
 
 @implementation SVValidatorWindowController
 
+@synthesize validationReportString = _validationReportString;
+
+- (void) dealloc
+{
+	self.validationReportString = nil;
+	[super dealloc];
+}
 
 - (BOOL) validateSource:(NSString *)pageSource isFullPage:(BOOL)isFullPage charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
 {
@@ -193,7 +201,7 @@
 			if (isFullPage)
 			{
 				explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
-				fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please contact Karelia by choosing the \"Send Feedback...\" menu", @"Suggestion for the user to perform");
+				fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please [contact Karelia].", @"Suggestion for the user to perform -- the text between [ and ] will be hyperlinked");
 			}
 														
 			NSString *explanation2 = NSLocalizedString(
@@ -234,8 +242,27 @@
 			 [fix1c stringByEscapingHTMLEntities]];
 			 if (isFullPage)
 			 {
-				 [replacementString appendFormat:@"<dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd>", 										   [explanation1d stringByEscapingHTMLEntities],
-				  [fix1d stringByEscapingHTMLEntities]];
+				 NSString *attachmentEnglish = @"The validation report will be attached to this message.";
+				 NSString *attachmentMessage = NSLocalizedString(@"The validation report will be attached to this message.", @"note to show somebody in the message window");
+				 
+				 // Silly hack to make sure that this is shown in both English and other language if we are not in English
+				 
+				 if (![attachmentMessage isEqualToString:attachmentEnglish])
+				 {
+					 attachmentMessage = [NSString stringWithFormat:@"%@\n%@", attachmentMessage, attachmentEnglish];
+				 }
+				 NSString *escapedAttachmentMessage = [[NSString stringWithFormat:@"\n\n\n%@", attachmentMessage] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+				 NSString *escapedSubject = [@"Problem with HTML Validator" stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+				 NSString *linkString = [NSString stringWithFormat:@"<a href='sandvox:r/val=1&s=%@&d=%@'>", escapedSubject, escapedAttachmentMessage];
+				 
+				 // Hyperlink what's between the [ and the ]
+				 NSMutableString *newFix1d = [NSMutableString stringWithString:[fix1d stringByEscapingHTMLEntities]];
+				 [newFix1d replace:@"[" with:linkString];
+				 [newFix1d replace:@"]" with:@"</a>"];
+				 
+				 [replacementString appendFormat:@"<dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd>",
+				  [explanation1d stringByEscapingHTMLEntities],
+				  newFix1d];
 			 }
 			[replacementString appendFormat:@"</dl><p><b>%@</b></p>\n<p>%@</p>\n</div>\n",
 			 [explanation2 stringByEscapingHTMLEntities],
@@ -264,7 +291,7 @@
 				// Note: This is not localized, since the validator is giving us English output only.
 			}
 			
-			
+			self.validationReportString = resultingPageString;
 			[[oWebView mainFrame] loadHTMLString:resultingPageString
 										 baseURL:[NSURL URLWithString:@"http://validator.w3.org/"]];
 			

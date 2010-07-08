@@ -1059,6 +1059,8 @@
 		CE58139111DEA45D008478AF /* NSStatusAvailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */; };
 		CE58139211DEA45D008478AF /* NSStatusPartiallyAvailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */; };
 		CE58139311DEA45D008478AF /* NSStatusUnavailable.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */; };
+		CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */; };
+		CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */; };
 		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
 		CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */; };
@@ -2706,6 +2708,8 @@
 		CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusPartiallyAvailable.tiff; sourceTree = "<group>"; };
 		CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSStatusUnavailable.tiff; sourceTree = "<group>"; };
 		CE5A722E0E79DC26002925A8 /* SandvoxGraylistedLicenses.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SandvoxGraylistedLicenses.h; sourceTree = "<group>"; };
+		CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTFeedbackReporter.h; sourceTree = "<group>"; };
+		CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTFeedbackReporter.m; sourceTree = "<group>"; };
 		CE5E55FB0EAFE98100A3EDDA /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
 		CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogEntryBorderView.h; sourceTree = "<group>"; };
@@ -5204,6 +5208,8 @@
 				CE510FCC090EA74C00547CFF /* KTTranscriptController.m */,
 				CE7779E30AE499C2002E6844 /* SVWelcomeController.h */,
 				CE7779E40AE499C3002E6844 /* SVWelcomeController.m */,
+				CE5B1CB611E54A37005E2C5E /* KTFeedbackReporter.h */,
+				CE5B1CB711E54A37005E2C5E /* KTFeedbackReporter.m */,
 			);
 			name = "Other Window Controllers";
 			sourceTree = "<group>";
@@ -5620,6 +5626,7 @@
 				2701749D11D10417001512F6 /* SVWebEditorView.h in Headers */,
 				27B82D9611D4A9A00086CB6E /* SVRawHTMLGraphic.h in Headers */,
 				27B82F1B11D50F260086CB6E /* SVDOMToHTMLWriter.h in Headers */,
+				CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7059,6 +7066,7 @@
 				2701749E11D10417001512F6 /* SVWebEditorView.m in Sources */,
 				27B82D9711D4A9A00086CB6E /* SVRawHTMLGraphic.m in Sources */,
 				27B82F1D11D50F260086CB6E /* SVDOMToHTMLWriter.m in Sources */,
+				CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
