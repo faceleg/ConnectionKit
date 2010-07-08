@@ -241,8 +241,8 @@
     else if ([graphic mustBePagelet])
     {
         // Single <DIV> to enclose the graphic HTML
-        NSString *classname = [NSString stringWithFormat:@"%@", [graphic className]];
-        [self startElement:@"div" className:classname];
+        //NSString *classname = [NSString stringWithFormat:@"%@", [graphic className]];
+        [self startElement:@"div" className:[graphic className]];
         
         [graphic writeBody:self];
         
