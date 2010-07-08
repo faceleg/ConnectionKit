@@ -57,32 +57,14 @@
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
-        NSURL *[URL = l]
+        // mutable so we can add a comment later
+        NSMutableDictionary *link = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                     [location title], @"title",
+                                     [[location URL] absoluteString], @"url",
+                                     nil];
+        [self.linkList addObject:link];
     }
 }
-
-///*	When possible, create a starting link from the user's web browser
-// */
-//- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-//{
-//	if (isNewlyCreatedObject)
-//	{
-//		NSURL *URL = nil;	NSString *title = nil;
-//		[NSAppleScript getWebBrowserURL:&URL title:&title source:NULL];
-//		if (URL)
-//		{
-//			if (!title) title = @"";
-//            
-//            NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-//				[title stringByEscapingHTMLEntities], @"titleHTML",
-//				[URL absoluteString], @"url", nil];
-//			
-//			NSArray *links = [NSArray arrayWithObject:newLink];
-//			[[self delegateOwner] setValue:links forKey:@"linkList"];
-//		}
-//	}
-//}
-
 
 
 #pragma mark -
