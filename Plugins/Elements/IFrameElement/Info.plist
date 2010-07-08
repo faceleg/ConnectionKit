@@ -25,7 +25,7 @@
 	<key>KSMinimumAppVersion</key>
 	<string>2.0</string>
 	<key>KTCategory</key>
-	<integer>6</integer>
+	<integer>4</integer>
 	<key>KSHelpAnchor</key>
 	<string>External_Page</string>
 	<key>KTPageletCanHaveTitle</key>
