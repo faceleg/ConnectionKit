@@ -35,6 +35,7 @@
 //
 
 #import "LinkListPlugIn.h"
+#import <SVWebLocation.h>
 
 // LocalizedStringInThisBundle(@"(Add links via Details Inspector)", "String_On_Page_Template")
 
@@ -43,14 +44,21 @@
 - (void)dealloc
 {
     self.linkList = nil;
-	[super dealloc];
+	[super dealloc]; 
 }
 
 - (void)awakeFromInsert;
 {
     [super awakeFromInsert];
     
+    self.linkList = [NSMutableArray arrayWithCapacity:5];
+    
     // see if we can start with the frontmost URL in the default browser
+    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    if ( location )
+    {
+        NSURL *[URL = l]
+    }
 }
 
 ///*	When possible, create a starting link from the user's web browser
