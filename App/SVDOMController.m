@@ -16,6 +16,9 @@
 #import "DOMNode+Karelia.h"
 
 
+#define sWebViewDependenciesObservationContext @"SVWebViewDependenciesObservationContext"
+
+
 @implementation SVDOMController
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic

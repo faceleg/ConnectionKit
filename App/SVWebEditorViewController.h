@@ -16,8 +16,6 @@
 
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
-#define sWebViewDependenciesObservationContext @"SVWebViewDependenciesObservationContext"
-
 
 @class KTPage, SVDOMController, SVTextDOMController, KTHTMLInspectorController;
 @class SVWebContentObjectsController, SVWebContentAreaController;
@@ -48,9 +46,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     BOOL                    _isUpdating;
     NSRect                  _visibleRect;
     SVWebEditorTextRange    *_selectionToRestore;
-    
-    NSSet   *_pageDependencies;
-    
+        
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
 }

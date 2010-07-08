@@ -56,7 +56,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
-- (void)removeAllDependencies;
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
@@ -86,10 +85,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 }
     
 - (void)dealloc
-{
-    [self removeAllDependencies];
-    OBASSERT(!_pageDependencies);
-    
+{    
     [[[self webEditor] undoManager] removeAllActionsWithTarget:self];
     
     [self setWebEditor:nil];   // needed to tear down data source
@@ -208,9 +204,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)loadPageHTMLIntoWebEditor
 {
+    WEKWebEditorView *webEditor = [self webEditor];
+    
+    
     // Tear down old dependencies and DOM controllers.
-    [self removeAllDependencies];
-    [[[self webEditor] contentItem] setChildWebEditorItems:nil];
+    [webEditor setContentItem:nil];
     
     
     // Prepare the environment for generating HTML
@@ -243,7 +241,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
     [self setUpdating:YES];
-    _visibleRect = [[[self webEditor] documentView] visibleRect];
+    _visibleRect = [[webEditor documentView] visibleRect];
     
     
 	// Figure out the URL to use. 
@@ -257,18 +255,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Load the HTML into the webview
-    [[self webEditor] loadHTMLString:pageHTML baseURL:pageURL];
-    
-    
-    // Observe the used keypaths
-    [_pageDependencies release], _pageDependencies = [[[context rootDOMController] dependencies] copy];
-    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
-    {
-        [[aDependency object] addObserver:self
-                               forKeyPath:[aDependency keyPath]
-                                  options:0
-                                  context:sWebViewDependenciesObservationContext];
-    }
+    [webEditor loadHTMLString:pageHTML baseURL:pageURL];
     
     
     // Tidy up
@@ -289,13 +276,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     NSArray *selection = [[self graphicsController] selectedObjects];
     [[self graphicsController] setContent:nil];
     
-    SVWebEditorHTMLContext *context = [self HTMLContext];
-    NSArray *controllers = [[context rootDOMController] childWebEditorItems];
-        
-    for (WEKWebEditorItem *anItem in controllers)
-    {
-        [[webEditor contentItem] addChildWebEditorItem:anItem];
-    }
+    SVWebEditorHTMLContext *context = [self HTMLContext];        
+    [webEditor setContentItem:[context rootDOMController]];
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
     
@@ -353,17 +335,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     [self scheduleUpdate];
     //[self removeAllDependencies];   // no point observing now we're marked for update
-}
-
-- (void)removeAllDependencies;
-{
-    for (KSObjectKeyPathPair *aDependency in _pageDependencies)
-    {
-        [[aDependency object] removeObserver:self
-                                  forKeyPath:[aDependency keyPath]];
-    }
-    
-    [_pageDependencies release]; _pageDependencies = nil;
 }
 
 - (void)updateIfNeeded
@@ -480,7 +451,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Ensure element is loaded
     DOMDocument *domDoc = [[self webEditor] HTMLDocument];
     if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
-    OBASSERT([item HTMLElement]);
+    if ([item representedObject]) OBASSERT([item HTMLElement]);
     
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
@@ -1352,25 +1323,6 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
         [_draggingDestination draggingEnded:sender];
     }
     _draggingDestination = nil;
-}
-
-#pragma mark -
-
-#pragma mark KVO
-
-- (void)observeValueForKeyPath:(NSString *)keyPath
-                      ofObject:(id)object
-                        change:(NSDictionary *)change
-                       context:(void *)context
-{
-    if (context == sWebViewDependenciesObservationContext)
-    {
-        [self setNeedsUpdate];
-    }
-    else
-    {
-        [super observeValueForKeyPath:keyPath ofObject:object change:change context:context];
-    }
 }
 
 @end
