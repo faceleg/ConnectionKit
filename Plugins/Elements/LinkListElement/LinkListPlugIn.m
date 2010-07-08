@@ -53,7 +53,7 @@
 			if (!title) title = @"";
             
             NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				[title stringByEscapingHTMLEntities], @"titleHTML",
+				[title stringByEscapingHTMLEntities], @"titleHTML", // change to just a string
 				[URL absoluteString], @"url", nil];
 			
 			NSArray *links = [NSArray arrayWithObject:newLink];
