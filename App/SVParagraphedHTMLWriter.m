@@ -24,7 +24,7 @@
 
 #pragma mark Init & Dealloc
 
-- (id)initWithOutputWriter:(id <KSWriter>)stream;
+- (id)initWithOutputWriter:(id <KSWriter>)stream;	// designated initializer
 {
     if (self = [super initWithOutputWriter:stream])
     {

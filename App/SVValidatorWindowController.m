@@ -14,14 +14,45 @@
 #import "NSURL+Karelia.h"
 #import "SVHTMLContext.h"
 #import "KTPage.h"
+#import "SVRawHTMLGraphic.h"
 
 @interface SVValidationHTMLContext : SVHTMLContext
+{
+	NSUInteger	_disabledPreviewObjectsCount;
+}
+
+@property (nonatomic) NSUInteger disabledPreviewObjectsCount;
 
 @end
 
 @implementation SVValidationHTMLContext
 
+@synthesize disabledPreviewObjectsCount = _disabledPreviewObjectsCount;
+
+- (id)initWithOutputWriter:(id <KSWriter>)output; // designated initializer
+{
+	if ((self = [super initWithOutputWriter:output]) != nil) {
+		
+		_disabledPreviewObjectsCount = 0;
+	}
+	return self;
+}
+
+// This override prevents scripts and such from being written for elements that are not "shouldPreviewWhenEditing"
 - (BOOL)shouldWriteServerSideScripts; { return NO; }
+
+- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
+{
+	if ([graphic respondsToSelector:@selector(shouldPreviewWhenEditing)])
+	{
+		SVRawHTMLGraphic *rawHTML = (SVRawHTMLGraphic *)graphic;
+		if (![[rawHTML shouldPreviewWhenEditing] boolValue])
+		{
+			_disabledPreviewObjectsCount++;
+		}
+	}
+	[super writeGraphic:graphic];
+}
 
 @end
 
@@ -46,21 +77,33 @@
 	[super dealloc];
 }
 
-- (BOOL) validatePage:(KTPage *)page windowForSheet:(NSWindow *)aWindow;
+- (BOOL) validatePage:(KTPage *)page
+	   windowForSheet:(NSWindow *)aWindow;
 {
     NSMutableString *pageSource = [NSMutableString string];
     SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithOutputWriter:pageSource];
     [context setPage:page];
 	[page writeHTML:context];
+	NSUInteger disabledPreviewObjectsCount = context.disabledPreviewObjectsCount;	// this will help us warn about items we are not validating
     [context release];
-
+	
 	NSString *docTypeName = [page docTypeName];
 	NSString *charset = [[page master] valueForKey:@"charset"];
-	BOOL result = [self validateSource:pageSource isFullPage:YES charset:charset docTypeString:docTypeName windowForSheet:aWindow];
+	BOOL result = [self validateSource:pageSource
+							isFullPage:YES
+		   disabledPreviewObjectsCount:disabledPreviewObjectsCount
+							   charset:charset
+						 docTypeString:docTypeName
+						windowForSheet:aWindow];
 	return result;
 }
 
-- (BOOL) validateSource:(NSString *)pageSource isFullPage:(BOOL)isFullPage charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
+- (BOOL) validateSource:(NSString *)pageSource
+			 isFullPage:(BOOL)isFullPage
+disabledPreviewObjectsCount:(NSUInteger)disabledPreviewObjectsCount
+				charset:(NSString *)charset
+		  docTypeString:(NSString *)docTypeString
+		 windowForSheet:(NSWindow *)aWindow;
 {
 	BOOL isValid = NO;
 #if DEBUG
@@ -72,7 +115,7 @@
 	NSString *path = [NSTemporaryDirectory() stringByAppendingPathComponent:@"sandvox_source.html"];
 	NSString *pathOut = [NSTemporaryDirectory() stringByAppendingPathComponent:@"validation.html"];
 	NSString *pathHeaders = [NSTemporaryDirectory() stringByAppendingPathComponent:@"headers.txt"];
-
+	
 	[pageData writeToFile:path atomically:NO];
 	
 	// curl -F uploaded_file=@karelia.html -F ss=1 -F outline=1 -F sp=1 -F noatt=1 -F verbose=1  http://validator.w3.org/check
@@ -99,7 +142,7 @@
 	[progressPanel setInformativeText:nil];
 	[progressPanel setIndeterminate:YES];
 	[progressPanel beginSheetModalForWindow:aWindow];
-
+	
 	[task launch];
 	
 	// Ideally I'd let some events come through like modal events.  Not sure if I want to start up a modal run loop?
@@ -110,21 +153,21 @@
 	
 	[progressPanel endSheet];
     [progressPanel release];
-
+	
 	int status = [task terminationStatus];
 	
 	if (0 == status)
 	{		
 		// Scrape page to get status, to show success or failure.
 		NSMutableString *resultingPageString = [[[NSMutableString alloc] initWithContentsOfFile:pathOut
-																		 encoding:NSUTF8StringEncoding
-																			error:nil] autorelease];
+																					   encoding:NSUTF8StringEncoding
+																						  error:nil] autorelease];
 		
 		// TODO: continue case 27254, parse headers.txt file instead of scraping.
 		NSError *error;
 		NSString *headers = [NSString stringWithContentsOfFile:pathHeaders encoding:NSUTF8StringEncoding error:&error];
 		NSDictionary *headerDict = [headers parseHTTPHeaders];
-
+		
 		int numErrors = [[headerDict objectForKey:@"X-W3C-Validator-Errors"] intValue];
 		int numWarnings = [[headerDict objectForKey:@"X-W3C-Validator-Warnings"] intValue];
 		isValid = [[headerDict objectForKey:@"X-W3C-Validator-Status"] isEqualToString:@"Valid"];	// Valid, Invalid, Abort
@@ -136,12 +179,33 @@
 			explanation = [[[resultingPageString substringWithRange:foundValidRange] condenseWhiteSpace] stringByUnescapingHTMLEntities];
 		}
 		
+		// Set up any warning about disabled-preview objects here, since it might be shown on either the success alert OR the detailed warnings window.
+		NSString *disabledPreviewNote = nil;
+		switch (disabledPreviewObjectsCount)
+		{
+			case 1:
+				disabledPreviewNote = NSLocalizedString(@"Plese note that there was a raw HTML object that you have chosen not to be included in this validation.", @""); 
+				break;
+			default:
+				disabledPreviewNote = [NSString stringWithFormat:NSLocalizedString(@"Plese note that there were %d raw HTML objects that you have chosen not to be included in this validation.", @""), disabledPreviewObjectsCount]; 
+				break;
+		}
+		
+		NSString *disabledPreviewExplanation = NSLocalizedString(@"You may wish to use validator.w3.org to check your published website instead.", @"");
+		
 		if (isValid)	// no need to show HTML, just announce that it's OK
 		{
+			NSString *disabledPreviewWarningWithNewlines = @"";
+			
+			if (disabledPreviewObjectsCount)
+			{
+				disabledPreviewWarningWithNewlines = [NSString stringWithFormat:@"\n\n%@ %@", disabledPreviewNote, disabledPreviewExplanation];
+			}
+			
 			NSRunInformationalAlertPanelRelativeToWindow(
-				NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
-				NSLocalizedString(@"The validator returned the following status message:\n\n%@",@""),
-				nil,nil,nil, aWindow, explanation);
+														 NSLocalizedString(@"Congratulations!  The HTML is valid.",@"Title of results alert"),
+														 NSLocalizedString(@"The validator returned the following status message:\n\n%@%@",@""),
+														 nil,nil,nil, aWindow, explanation, disabledPreviewWarningWithNewlines);
 		}
 		else
 		{
@@ -163,7 +227,7 @@
 					explanation1 = NSLocalizedString(@"Here are some possible explanations for the warnings:", @"PLURAL Explanation Text for validator output");
 					break;
 			}
-
+			
 			// Check error count after warning count, so that having errors will override any mention of warnings in explanation1
 			switch (numErrors)
 			{
@@ -198,20 +262,34 @@
 			
 			// Insert our own message
 			NSString *headline = NSLocalizedString(@"Explanation and Impact", @"Header, shown above Explanation Text for validator output");
+			
+			// NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
+			NSURL *appIconURL = nil; // [NSURL fileURLWithPath:appIconPath];
+			
+			// WORK-AROUND ... can't load file:// when I have baseURL set, which I need for links to "#" sections to work!
+			appIconURL = [NSURL URLWithString:@"http://www.karelia.com/images/SandvoxAppIcon128.png"];
+			
+			// I tried this but it didn't do the job.  Maybe I'm doing it wrong.  DJW aked for a real API with a radar.
+			// [WebView _addOriginAccessWhitelistEntryWithSourceOrigin:@"localhost" destinationProtocol:@"file" destinationHost:@"localhost" allowDestinationSubdomains:NO];
+			
+			NSMutableString *replacementString = [NSMutableString stringWithString:@"</h2>"];	// start with what we're going to replace
+			[replacementString appendFormat:@"\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n", [headline stringByEscapingHTMLEntities], [appIconURL absoluteString]];
+			
+			
 			NSString *explanation1a = NSLocalizedString(@"Some HTML that you have entered is invalid", @"Explanation Text for validator output");
 			NSString *fix1a = NSLocalizedString(@"Fix the HTML so that it no longer returns any errors or warnings", @"Suggestion for the user to perform");
 			if (isFullPage)
 			{
 				explanation1a = NSLocalizedString(@"Some HTML, that you placed on raw HTML objects, is invalid", @"Explanation Text for validator output");
 				fix1a = NSLocalizedString(@"Check the raw HTML objects on the page, and fix the offending HTML code so that they no longer return validation errors or warnings", @"Suggestion for the user to perform");
-
+				
 			}
 			NSString *explanation1bFmt = NSLocalizedString(@"Some HTML is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
 			NSString *fix1b = NSLocalizedString(@"Change the HTML declaration to a less restrictive type", @"Suggestion for the user to perform");
 			if (isFullPage)
 			{
 				explanation1bFmt = NSLocalizedString(@"Some HTML, that you placed on raw HTML objects, is not acceptable for the specified document type: %@", @"Explanation Text for validator output");
-
+				
 				fix1b = NSLocalizedString(@"Change the HTML declaration in the offending object(s) to be a less restrictive type", @"Suggestion for the user to perform");
 				
 			}		
@@ -222,7 +300,7 @@
 			}
 			NSString *examples1c = NSLocalizedString(@"Examples: <embed>, <video>, <iframe>, <font>, <wbr>", @"Examples of HTML tags that may have problems");
 			NSString *fix1c = NSLocalizedString(@"This kind of warning can usually be ignored but you may want to verify your page on several browsers", @"Suggestion for the user to perform");
-
+			
 			NSString *explanation1d = nil;	// won't use this explanation for objects, only for a full page
 			NSString *fix1d = nil;
 			if (isFullPage)
@@ -230,29 +308,11 @@
 				explanation1d = NSLocalizedString(@"Sandvox has a problem and has produced incorrect HTML", @"Explanation Text for validator output");
 				fix1d = NSLocalizedString(@"This is not very likely, but if you can see that the invalid code is part of the Sandvox template, please [contact Karelia].", @"Suggestion for the user to perform -- the text between [ and ] will be hyperlinked");
 			}
-														
-			NSString *explanation2 = NSLocalizedString(
-														  @"Even if you get errors or warnings, your page will often render just fine in most browsers — many large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does not look right.", @"Explanation Text for validator output");
-			NSString *explanation3 = NSLocalizedString(
-														  @"If you are experiencing display problems on certain browsers, you should fix any error messages in this raw HTML object, or adjust the HTML style specified for this object to be a less restrictive document type.", @"Explanation Text for validator output");
-			if (isFullPage)
-			{
-				explanation3 = NSLocalizedString(
-								  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the raw HTML objects that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
-			}
+			
 		
-			// NSString *appIconPath = [[NSBundle mainBundle] pathForImageResource:@"AppIcon"];
-			NSURL *appIconURL = nil; // [NSURL fileURLWithPath:appIconPath];
-			
-			// WORK-AROUND ... can't load file:// when I have baseURL set, which I need for links to "#" sections to work!
-			appIconURL = [NSURL URLWithString:@"http://www.karelia.com/images/SandvoxAppIcon128.png"];
-			
-			// I tried this but it didn't do the job.  Maybe I'm doing it wrong.  DJW aked for a real API with a radar.
-			// [WebView _addOriginAccessWhitelistEntryWithSourceOrigin:@"localhost" destinationProtocol:@"file" destinationHost:@"localhost" allowDestinationSubdomains:NO];
 			
 			
-			NSMutableString *replacementString = [NSMutableString stringWithString:@"</h2>"];	// start with what we're going to replace
-			[replacementString appendFormat:@"\n<h3>%@</h3>\n<div id='appicon'><img src='%@' width='64' height='64' alt='' /></div>\n<div id='explain-impact'>\n", [headline stringByEscapingHTMLEntities], [appIconURL absoluteString]];
+			
 			[replacementString appendFormat:@"<p>%@</p>\n<dl style='font-size:0.8em; line-height:1.6em; margin-left:120px;'><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd><dt style='display: list-item;'>%@</dt><dd><dd>%@</dd><dd style='font-style:italic;'>%@</dd>",
 			 [explanation1 stringByEscapingHTMLEntities],
 			 
@@ -267,35 +327,63 @@
 			 [explanation1c stringByEscapingHTMLEntities],
 			 [examples1c stringByEscapingHTMLEntities],
 			 [fix1c stringByEscapingHTMLEntities]];
-			 if (isFullPage)
-			 {
-				 NSString *attachmentEnglish = @"The validation report will be attached to this message.";
-				 NSString *attachmentMessage = NSLocalizedString(@"The validation report will be attached to this message.", @"note to show somebody in the message window");
-				 
-				 // Silly hack to make sure that this is shown in both English and other language if we are not in English
-				 
-				 if (![attachmentMessage isEqualToString:attachmentEnglish])
-				 {
-					 attachmentMessage = [NSString stringWithFormat:@"%@\n%@", attachmentMessage, attachmentEnglish];
-				 }
-				 NSString *escapedAttachmentMessage = [[NSString stringWithFormat:@"\n\n\n%@", attachmentMessage] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
-				 NSString *escapedSubject = [@"Problem with HTML Validator" stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
-				 NSString *linkString = [NSString stringWithFormat:@"<a href='sandvox:r/val=1&s=%@&d=%@'>", escapedSubject, escapedAttachmentMessage];
-				 
-				 // Hyperlink what's between the [ and the ]
-				 NSMutableString *newFix1d = [NSMutableString stringWithString:[fix1d stringByEscapingHTMLEntities]];
-				 [newFix1d replace:@"[" with:linkString];
-				 [newFix1d replace:@"]" with:@"</a>"];
-				 
-				 [replacementString appendFormat:@"<dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd>",
-				  [explanation1d stringByEscapingHTMLEntities],
-				  newFix1d];
-			 }
-			[replacementString appendFormat:@"</dl><p><b>%@</b></p>\n<p>%@</p>\n</div>\n",
-			 [explanation2 stringByEscapingHTMLEntities],
-			 [explanation3 stringByEscapingHTMLEntities]];
 			
 			
+			if (isFullPage)
+			{
+				NSString *attachmentEnglish = @"The validation report will be attached to this message.";
+				NSString *attachmentMessage = NSLocalizedString(@"The validation report will be attached to this message.", @"note to show somebody in the message window");
+				
+				// Silly hack to make sure that this is shown in both English and other language if we are not in English
+				
+				if (![attachmentMessage isEqualToString:attachmentEnglish])
+				{
+					attachmentMessage = [NSString stringWithFormat:@"%@\n%@", attachmentMessage, attachmentEnglish];
+				}
+				NSString *escapedAttachmentMessage = [[NSString stringWithFormat:@"\n\n\n%@", attachmentMessage] stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+				NSString *escapedSubject = [@"Problem with HTML Validator" stringByAddingPercentEscapesWithSpacesAsPlusCharacters:YES];
+				NSString *linkString = [NSString stringWithFormat:@"<a href='sandvox:r/val=1&s=%@&d=%@'>", escapedSubject, escapedAttachmentMessage];
+				
+				// Hyperlink what's between the [ and the ]
+				NSMutableString *newFix1d = [NSMutableString stringWithString:[fix1d stringByEscapingHTMLEntities]];
+				[newFix1d replace:@"[" with:linkString];
+				[newFix1d replace:@"]" with:@"</a>"];
+				
+				[replacementString appendFormat:@"<dt style='display: list-item;'>%@</dt><dd style='font-style:italic;'>%@</dd>",
+				 [explanation1d stringByEscapingHTMLEntities],
+				 newFix1d];
+			}
+			[replacementString appendString:@"</dl>\n"];
+			
+			
+			if (disabledPreviewObjectsCount)
+			{
+				// Get the HTML badge, same as you see in the markup
+				NSString *HTMLBadge = @"<span style=\"background:rgb(0,127,255); -webkit-border-radius:3px; padding:2px 5px; color:white; font-size:80%;\">HTML</span>";
+				NSString *noteEscaped = [disabledPreviewNote stringByEscapingHTMLEntities];
+				NSString *noteEscapedBadged = [noteEscaped stringByReplacing:@"HTML" with:HTMLBadge];
+				NSString *explanationEscaped = [disabledPreviewExplanation stringByEscapingHTMLEntities];
+				NSString *explanationHyperlinked = [explanationEscaped stringByReplacing:@"validator.w3.org" with:@"<a target='_blank' href='http://validator.w3.org/'>validator.w3.org</a>"];
+				[replacementString appendFormat:@"<p>\n%@ %@\n</p>\n", noteEscapedBadged, explanationHyperlinked];
+			}
+			
+			
+			NSString *dontWorry = NSLocalizedString(
+													@"Even if you get errors or warnings, your page will often render just fine in most browsers — many large companies have HTML that does not pass validation on their pages — but in some cases this will explain why your page does not look right.", @"Explanation Text for validator output");
+			NSString *fixIfProblems = NSLocalizedString(
+														@"If you are experiencing display problems on certain browsers, you should fix any error messages in this raw HTML object, or adjust the HTML style specified for this object to be a less restrictive document type.", @"Explanation Text for validator output");
+			if (isFullPage)
+			{
+				fixIfProblems = NSLocalizedString(
+												  @"If you are experiencing display problems on certain browsers, you should fix any error messages in the raw HTML objects that you put onto your page (including code injection), or adjust the HTML style specified for this page to be a less restrictive document type.", @"Explanation Text for validator output");
+			}
+			
+			
+			[replacementString appendFormat:@"<p><b>%@</b></p>\n<p>%@</p>\n",
+			 [dontWorry stringByEscapingHTMLEntities],
+			 [fixIfProblems stringByEscapingHTMLEntities]];
+			
+			[replacementString appendString:@"</div>\n"];	// finally done
 			[resultingPageString replace:@"</h2>" with:replacementString];
 			if (!isFullPage)
 			{
@@ -334,7 +422,7 @@
 						  modalDelegate:nil
 						 didEndSelector:NULL
 							contextInfo:NULL];
-
+		
 		[alert release];	// will be dealloced when alert is dismissed
 	}
 	return isValid;

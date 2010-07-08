@@ -455,7 +455,13 @@ initial syntax coloring.
 	NSString *wrappedPage = [self wrapFragment:fragment local:NO];
 	
 	NSString *docTypeName = [KTPage titleOfDocType:[self docType] localize:NO];
-	BOOL isValid = [[SVValidatorWindowController sharedController] validateSource:wrappedPage isFullPage:NO charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+	BOOL isValid = [[SVValidatorWindowController sharedController]
+					validateSource:wrappedPage
+					isFullPage:NO
+					disabledPreviewObjectsCount:0
+					charset:@"UTF-8"
+					docTypeString:docTypeName
+					windowForSheet:[self window]];	// it will do loading, displaying, etc.
 		
 	if (isValid)
 	{

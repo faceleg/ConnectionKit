@@ -44,7 +44,7 @@
 
 @implementation SVFieldEditorHTMLWriter
 
-- (id)initWithOutputWriter:(id <KSWriter>)output;
+- (id)initWithOutputWriter:(id <KSWriter>)output;	// designated initializer
 {
     // All writing goes through a buffer first
     _buffer = [[KSMegaBufferedWriter alloc] initWithOutputWriter:output];

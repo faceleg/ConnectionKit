@@ -30,7 +30,7 @@
 
 @implementation SVWebEditorHTMLContext
 
-- (id)initWithOutputWriter:(id <KSWriter>)stream
+- (id)initWithOutputWriter:(id <KSWriter>)stream	// designated initializer
 {
     [super initWithOutputWriter:stream];
     

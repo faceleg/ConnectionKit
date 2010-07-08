@@ -13,7 +13,7 @@
 
 @implementation SVMediaGatheringHTMLContext
 
-- (id)initWithOutputWriter:(id <KSWriter>)writer;
+- (id)initWithOutputWriter:(id <KSWriter>)writer;	// designated initializer
 {
     self = [super initWithOutputWriter:writer];
     return self;
