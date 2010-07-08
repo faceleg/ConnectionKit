@@ -40,19 +40,18 @@
 
 @implementation LinkListPlugIn
 
-
-#pragma mark -
-#pragma mark SVPlugIn
-
-+ (NSSet *)plugInKeys
-{ 
-    return [NSSet setWithObjects:
-            @"linkList", 
-            @"layout", 
-            @"openInNewWindow", nil];
+- (void)dealloc
+{
+    self.linkList = nil;
+	[super dealloc];
 }
 
-
+- (void)awakeFromInsert;
+{
+    [super awakeFromInsert];
+    
+    // see if we can start with the frontmost URL in the default browser
+}
 
 ///*	When possible, create a starting link from the user's web browser
 // */
@@ -75,6 +74,23 @@
 //		}
 //	}
 //}
+
+
+
+#pragma mark -
+#pragma mark SVPlugIn
+
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:
+            @"linkList", 
+            @"layout", 
+            @"openInNewWindow", nil];
+}
+
+
+#pragma mark -
+#pragma mark Drag & Drop
 
 // drag and drop should use new API for getting URLs off the pasteboard
 //@interface NSPasteboard (SVWebLocation)
@@ -224,6 +240,10 @@
 //{
 //    return KTSourcePriorityNone;
 //}
+
+
+#pragma mark -
+#pragma mark Properties
 
 @synthesize linkList = _linkList;
 @synthesize layout = _layout;
