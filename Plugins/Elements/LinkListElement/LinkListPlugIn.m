@@ -34,11 +34,11 @@
 //  We encourage you to share your Sandvox Plugins similarly.
 //
 
-#import "LinkListPageletDelegate.h"
+#import "LinkListPlugIn.h"
 
 // LocalizedStringInThisBundle(@"(Add links via Details Inspector)", "String_On_Page_Template")
 
-@implementation LinkListPageletDelegate
+@implementation LinkListPlugIn
 
 /*	When possible, create a starting link from the user's web browser
  */

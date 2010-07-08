@@ -37,5 +37,5 @@
 #import "SandvoxPlugin.h"
 
 
-@interface LinkListPageletDelegate : SVPageletPlugIn <KTDataSource>
+@interface LinkListPlugIn : SVPageletPlugIn <KTDataSource>
 @end
