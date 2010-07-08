@@ -10,7 +10,6 @@
 
 #import "SVArticle.h"
 #import "SVAuxiliaryPageletText.h"
-#import "SVHTMLTemplateParser.h"
 #import "KTPage.h"
 #import "SVRichText.h"
 #import "SVTemplate.h"
