@@ -40,172 +40,189 @@
 
 @implementation LinkListPlugIn
 
-/*	When possible, create a starting link from the user's web browser
- */
-- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
-{
-	if (isNewlyCreatedObject)
-	{
-		NSURL *URL = nil;	NSString *title = nil;
-		[NSAppleScript getWebBrowserURL:&URL title:&title source:NULL];
-		if (URL)
-		{
-			if (!title) title = @"";
-            
-            NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-				[title stringByEscapingHTMLEntities], @"titleHTML",
-				[URL absoluteString], @"url", nil];
-			
-			NSArray *links = [NSArray arrayWithObject:newLink];
-			[[self delegateOwner] setValue:links forKey:@"linkList"];
-		}
-	}
-}
-
-
-
-/*!	Create a single item with all the URLs listed.  This means we parse the pasteboard directly.
-*/
-- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
-{
-	NSString *oldTitle = [[self delegateOwner] titleHTML];
-	[super awakeFromDragWithDictionary:aDictionary];
-	// Above sets the title ... Restore it to the generic.
-	[[self delegateOwner] setTitleHTML:oldTitle];
-	
-	// We are building up this array
-	NSMutableArray *array = [NSMutableArray array];
-
-	NSPasteboard *pboard = [aDictionary objectForKey:kKTDataSourcePasteboard];
-    NSArray *orderedTypes = [NSArray arrayWithObjects:
-		@"WebURLsWithTitlesPboardType",
-		@"BookmarkDictionaryListPboardType",
-		NSURLPboardType,	// Apple URL pasteboard type
-		nil];
-    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
-    
-    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
-    {
-        NSArray *arrayFromData = [pboard propertyListForType:@"BookmarkDictionaryListPboardType"];
-		NSEnumerator *theEnum = [arrayFromData objectEnumerator];
-		NSDictionary *objectInfo;
-
-		while (nil != (objectInfo = [theEnum nextObject]) )
-		{
-			NSDictionary *oneEntry = [NSDictionary dictionaryWithObjectsAndKeys:
-				[objectInfo valueForKey:@"URLString"], @"url",
-				[[[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"] stringByEscapingHTMLEntities], @"titleHTML",
-				nil];
-			[array addObject:oneEntry];
-		}
-    }
-    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
-    {
-        NSArray *arrayFromData = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
-        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
-        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
-		unsigned int i;
-		for (i = 0 ; i < [urlStringArray count] ; i++ )
-		{
- 			NSDictionary *oneEntry = [NSDictionary dictionaryWithObjectsAndKeys:
-				[urlStringArray objectAtIndex:i], @"url",
-				[[urlTitleArray objectAtIndex:i] stringByEscapingHTMLEntities], @"titleHTML",
-				nil];
-			[array addObject:oneEntry];
-		}
-	}
-    else	// other; use the single-entry info already given to us
-    {
-		NSString *urlString = [aDictionary valueForKey:kKTDataSourceURLString];
-		if ( nil != urlString )
-		{
-			NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
-			if (nil == title)
-			{
-				title = urlString;
-			}
-			NSDictionary *singleEntry = [NSDictionary dictionaryWithObjectsAndKeys:
-				urlString, @"url",
-				[title stringByEscapingHTMLEntities], @"titleHTML",
-				nil];
-			[array addObject:singleEntry];
-		}
-	}
-	
-	[[self delegateOwner] setValue:array forKey:@"linkList"];
-}
 
 #pragma mark -
-#pragma mark Data Source
+#pragma mark SVPlugIn
 
-+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
-{
-    return [NSArray arrayWithObjects:
-            @"WebURLsWithTitlesPboardType",
-            @"BookmarkDictionaryListPboardType",
-            NSURLPboardType,	// Apple URL pasteboard type
-            NSStringPboardType,
-            nil];
++ (NSSet *)plugInKeys
+{ 
+    return [NSSet setWithObjects:
+            @"linkList", 
+            @"layout", 
+            @"openInNewWindow", nil];
 }
 
-+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
-{
-	NSArray *theArray = nil;
-	
-	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"WebURLsWithTitlesPboardType"]]
-		&& nil != (theArray = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"]) )
-	{
-		NSArray *urlArray = [theArray objectAtIndex:0];
-		return [urlArray count];
-	}
-	return 1;	// can't find any multiplicity
-}
 
-+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
-{
-    int result = KTSourcePriorityNone;
-    
-	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
-	
-	// Only allow creating a link list pagelet from a drag to pagelet area
-	if (isCreatingPagelet && webLocations && [webLocations count] >= 1)
-	{
-		result = KTSourcePriorityReasonable;
-	}
-	
-	return result;
-}
 
-+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
-                      fromPasteboard:(NSPasteboard *)pasteboard
-                             atIndex:(unsigned)dragIndex
-				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+///*	When possible, create a starting link from the user's web browser
+// */
+//- (void)awakeFromBundleAsNewlyCreatedObject:(BOOL)isNewlyCreatedObject
+//{
+//	if (isNewlyCreatedObject)
+//	{
+//		NSURL *URL = nil;	NSString *title = nil;
+//		[NSAppleScript getWebBrowserURL:&URL title:&title source:NULL];
+//		if (URL)
+//		{
+//			if (!title) title = @"";
+//            
+//            NSMutableDictionary *newLink = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+//				[title stringByEscapingHTMLEntities], @"titleHTML",
+//				[URL absoluteString], @"url", nil];
+//			
+//			NSArray *links = [NSArray arrayWithObject:newLink];
+//			[[self delegateOwner] setValue:links forKey:@"linkList"];
+//		}
+//	}
+//}
 
-{
-    BOOL result = NO;
-    
-    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
-	
-	if ([webLocations count] > 0)
-	{
-		NSURL *URL = [[webLocations objectAtIndex:0] URL];
-		NSString *title = [[webLocations objectAtIndex:0] title];
-		
-		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
-        if (title && (id)title != [NSNull null])
-		{
-			[aDictionary setValue:title forKey:kKTDataSourceTitle];
-		}
-		
-		result = YES;
-	}
-    
-    return result;
-}
 
-+ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
-{
-    return KTSourcePriorityNone;
-}
 
+///*!	Create a single item with all the URLs listed.  This means we parse the pasteboard directly.
+//*/
+//- (void)awakeFromDragWithDictionary:(NSDictionary *)aDictionary
+//{
+//	NSString *oldTitle = [[self delegateOwner] titleHTML];
+//	[super awakeFromDragWithDictionary:aDictionary];
+//	// Above sets the title ... Restore it to the generic.
+//	[[self delegateOwner] setTitleHTML:oldTitle];
+//	
+//	// We are building up this array
+//	NSMutableArray *array = [NSMutableArray array];
+//
+//	NSPasteboard *pboard = [aDictionary objectForKey:kKTDataSourcePasteboard];
+//    NSArray *orderedTypes = [NSArray arrayWithObjects:
+//		@"WebURLsWithTitlesPboardType",
+//		@"BookmarkDictionaryListPboardType",
+//		NSURLPboardType,	// Apple URL pasteboard type
+//		nil];
+//    NSString *bestType = [pboard availableTypeFromArray:orderedTypes];
+//    
+//    if ( [bestType isEqualToString:@"BookmarkDictionaryListPboardType"] )
+//    {
+//        NSArray *arrayFromData = [pboard propertyListForType:@"BookmarkDictionaryListPboardType"];
+//		NSEnumerator *theEnum = [arrayFromData objectEnumerator];
+//		NSDictionary *objectInfo;
+//
+//		while (nil != (objectInfo = [theEnum nextObject]) )
+//		{
+//			NSDictionary *oneEntry = [NSDictionary dictionaryWithObjectsAndKeys:
+//				[objectInfo valueForKey:@"URLString"], @"url",
+//				[[[objectInfo valueForKey:@"URIDictionary"] valueForKey:@"title"] stringByEscapingHTMLEntities], @"titleHTML",
+//				nil];
+//			[array addObject:oneEntry];
+//		}
+//    }
+//    else if ( [bestType isEqualToString:@"WebURLsWithTitlesPboardType"] )
+//    {
+//        NSArray *arrayFromData = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"];
+//        NSArray *urlStringArray = [arrayFromData objectAtIndex:0];
+//        NSArray *urlTitleArray = [arrayFromData objectAtIndex:1];
+//		unsigned int i;
+//		for (i = 0 ; i < [urlStringArray count] ; i++ )
+//		{
+// 			NSDictionary *oneEntry = [NSDictionary dictionaryWithObjectsAndKeys:
+//				[urlStringArray objectAtIndex:i], @"url",
+//				[[urlTitleArray objectAtIndex:i] stringByEscapingHTMLEntities], @"titleHTML",
+//				nil];
+//			[array addObject:oneEntry];
+//		}
+//	}
+//    else	// other; use the single-entry info already given to us
+//    {
+//		NSString *urlString = [aDictionary valueForKey:kKTDataSourceURLString];
+//		if ( nil != urlString )
+//		{
+//			NSString *title = [aDictionary valueForKey:kKTDataSourceTitle];
+//			if (nil == title)
+//			{
+//				title = urlString;
+//			}
+//			NSDictionary *singleEntry = [NSDictionary dictionaryWithObjectsAndKeys:
+//				urlString, @"url",
+//				[title stringByEscapingHTMLEntities], @"titleHTML",
+//				nil];
+//			[array addObject:singleEntry];
+//		}
+//	}
+//	
+//	[[self delegateOwner] setValue:array forKey:@"linkList"];
+//}
+//
+//#pragma mark -
+//#pragma mark Data Source
+//
+//+ (NSArray *)readableTypesForPasteboard:(NSPasteboard *)pasteboard;
+//{
+//    return [NSArray arrayWithObjects:
+//            @"WebURLsWithTitlesPboardType",
+//            @"BookmarkDictionaryListPboardType",
+//            NSURLPboardType,	// Apple URL pasteboard type
+//            NSStringPboardType,
+//            nil];
+//}
+//
+//+ (unsigned)numberOfItemsFoundOnPasteboard:(NSPasteboard *)pboard
+//{
+//	NSArray *theArray = nil;
+//	
+//	if (nil != [pboard availableTypeFromArray:[NSArray arrayWithObject:@"WebURLsWithTitlesPboardType"]]
+//		&& nil != (theArray = [pboard propertyListForType:@"WebURLsWithTitlesPboardType"]) )
+//	{
+//		NSArray *urlArray = [theArray objectAtIndex:0];
+//		return [urlArray count];
+//	}
+//	return 1;	// can't find any multiplicity
+//}
+//
+//+ (KTSourcePriority)priorityForItemOnPasteboard:(NSPasteboard *)pboard atIndex:(unsigned)dragIndex creatingPagelet:(BOOL)isCreatingPagelet;
+//{
+//    int result = KTSourcePriorityNone;
+//    
+//	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pboard readWeblocFiles:YES ignoreFileURLs:YES];
+//	
+//	// Only allow creating a link list pagelet from a drag to pagelet area
+//	if (isCreatingPagelet && webLocations && [webLocations count] >= 1)
+//	{
+//		result = KTSourcePriorityReasonable;
+//	}
+//	
+//	return result;
+//}
+//
+//+ (BOOL)populateDataSourceDictionary:(NSMutableDictionary *)aDictionary
+//                      fromPasteboard:(NSPasteboard *)pasteboard
+//                             atIndex:(unsigned)dragIndex
+//				  forCreatingPagelet:(BOOL)isCreatingPagelet;
+//
+//{
+//    BOOL result = NO;
+//    
+//    NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
+//	
+//	if ([webLocations count] > 0)
+//	{
+//		NSURL *URL = [[webLocations objectAtIndex:0] URL];
+//		NSString *title = [[webLocations objectAtIndex:0] title];
+//		
+//		[aDictionary setValue:[URL absoluteString] forKey:kKTDataSourceURLString];
+//        if (title && (id)title != [NSNull null])
+//		{
+//			[aDictionary setValue:title forKey:kKTDataSourceTitle];
+//		}
+//		
+//		result = YES;
+//	}
+//    
+//    return result;
+//}
+//
+//+ (NSUInteger)readingPriorityForPasteboardContents:(id)contents ofType:(NSString *)type
+//{
+//    return KTSourcePriorityNone;
+//}
+
+@synthesize linkList = _linkList;
+@synthesize layout = _layout;
+@synthesize openInNewWindow = _openInNewWindow;
 @end

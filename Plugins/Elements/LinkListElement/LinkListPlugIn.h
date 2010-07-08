@@ -37,5 +37,19 @@
 #import "SandvoxPlugin.h"
 
 
-@interface LinkListPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
+@interface LinkListPlugIn : SVPageletPlugIn // <SVPlugInPasteboardReading>
+{
+  @private
+    NSMutableArray *_linkList;
+    NSInteger _layout;
+    BOOL _openInNewWindow;
+}
+
+// array of dictionaries, keys are url, title, comment, values are all NSStrings
+@property (nonatomic, retain) NSMutableArray *linkList;
+
+// UI tag, values are 1 or 0
+@property (nonatomic, assign) NSInteger layout;
+@property (nonatomic, assign) BOOL openInNewWindow;
+
 @end
