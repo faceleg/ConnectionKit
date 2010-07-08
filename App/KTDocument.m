@@ -909,17 +909,9 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 - (BOOL)validateMenuItem:(NSMenuItem *)menuItem
 {
 	VALIDATION((@"%s %@",__FUNCTION__, menuItem));
-	
-	BOOL result = YES;		// default to YES so we don't have to do special validation for each action. Some actions might say NO.
-	// File menu	
-	// "Save As..." saveDocumentAs:
-	if ( [menuItem action] == @selector(saveDocumentAs:) )
-	{
-		return YES;
-	}
-	
-	// "Save a Copy As..." saveDocumentTo:
-	else if ( [menuItem action] == @selector(saveDocumentTo:) )
+		
+    // "Save a Copy As..." saveDocumentTo:  – why does this need special checking? Mike.
+	if ( [menuItem action] == @selector(saveDocumentTo:) )
 	{
 		return YES;
 	}
