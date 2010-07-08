@@ -9,8 +9,6 @@
 #import "KTArchivePage.h"
 #import "KTPage.h"
 
-#import "SVHTMLTemplateParser.h"
-
 #import "NSBundle+KTExtensions.h"
 #import "NSSortDescriptor+Karelia.h"
 
