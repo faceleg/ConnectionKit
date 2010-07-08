@@ -940,10 +940,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	KTPage *page = nil;
 	if ( !NSIsControllerMarker(selection) && 1 == [selection count] && nil != (page = [[selection lastObject] pageRepresentation]) )
 	{
-		NSString *pageSource = [page markupString];
-		NSString *docTypeName = [page docTypeName];
-		NSString *charset = [[page master] valueForKey:@"charset"];
-		[[SVValidatorWindowController sharedController] validateSource:pageSource isFullPage:YES charset:charset docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+		[[SVValidatorWindowController sharedController] validatePage:page windowForSheet:[self window]];
 	}
 }
 

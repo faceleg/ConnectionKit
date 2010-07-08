@@ -9,6 +9,8 @@
 #import <Cocoa/Cocoa.h>
 #import "KSWebViewWindowController.h"
 
+@class KTPage;
+
 @interface SVValidatorWindowController : KSWebViewWindowController {
 
 	NSString *_validationReportString;
@@ -18,6 +20,7 @@
 
 
 - (BOOL) validateSource:(NSString *)pageSource isFullPage:(BOOL)isFullPage charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;
+- (BOOL) validatePage:(KTPage *)page windowForSheet:(NSWindow *)aWindow;
 
 
 @end

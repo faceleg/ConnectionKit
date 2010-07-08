@@ -99,6 +99,8 @@
 - (void)synchronizeUI
 {
 	[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
+	[previewMenuItem setState:(self.preventPreview ? NSOnState : NSOffState)];
+	
 	[docTypePopUp setTitle:[KTPage titleOfDocType:[self docType] localize:YES]];
 	[self calculateCachedPreludes];
 	[self autoValidate];
@@ -117,7 +119,7 @@
 
 - (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary *)change context:(void *)context
 {
-	if ([keyPath isEqualToString:@"docType"])
+	if ([((NSString *)context) isEqualToString:@"synchronizeUIContext"])
 	{
 		[self synchronizeUI];
 	}
@@ -155,7 +157,8 @@ initial syntax coloring.
 {
     [super windowDidLoad];
  
-	[self addObserver:self forKeyPath:@"docType" options:0 context:nil];
+	[self addObserver:self forKeyPath:@"docType" options:0 context:@"synchronizeUIContext"];
+	[self addObserver:self forKeyPath:@"preventPreview" options:0 context:@"synchronizeUIContext"];
 	// Kick start
 	[self synchronizeUI];
 	
@@ -365,7 +368,11 @@ initial syntax coloring.
 	NSString *fragment = [textStore string];
 	NSData *currentHash = [self generateHashFromFragment:fragment];
 	
-	if (!currentHash)
+	if (self.preventPreview)
+	{
+		self.validationState = kValidationStateDisabled;
+	}
+	else if (!currentHash)
 	{
 		self.validationState = kValidationStateUnknown;
 	}
@@ -378,11 +385,11 @@ initial syntax coloring.
 	}
 	else
 	{
-		NSString *fullPage = [self wrapFragment:fragment local:YES];
+		NSString *wrappedPage = [self wrapFragment:fragment local:YES];
 		
 		NSXMLDocument *xmlDoc;
 		NSError *err = nil;
-		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:fullPage
+		xmlDoc = [[NSXMLDocument alloc] initWithXMLString:wrappedPage
 				  // Don't try to actually validate HTML; it's not XML
 												  options:(KTHTML401DocType == [self docType]) ? NSXMLDocumentTidyHTML|NSXMLNodePreserveAll : NSXMLNodePreserveAll
 													error:&err];
@@ -430,15 +437,25 @@ initial syntax coloring.
 	return digest;		// will be nil if the string is empty or white space only.
 }
 
+- (BOOL) canValidate;
+{
+	return (self.validationState > kValidationStateDisabled);
+}
+
++ (NSSet *)keyPathsForValuesAffectingCanValidate;
+{
+    return [NSSet setWithObject:@"validationState"];
+}
+
 - (IBAction) validate:(id)sender;
 {
 	NSMutableAttributedString*  textStore = [textView textStorage];
 	NSString *fragment = [textStore string];
 
-	NSString *fullPage = [self wrapFragment:fragment local:NO];
+	NSString *wrappedPage = [self wrapFragment:fragment local:NO];
 	
 	NSString *docTypeName = [KTPage titleOfDocType:[self docType] localize:NO];
-	BOOL isValid = [[SVValidatorWindowController sharedController] validateSource:fullPage isFullPage:NO charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
+	BOOL isValid = [[SVValidatorWindowController sharedController] validateSource:wrappedPage isFullPage:NO charset:@"UTF-8" docTypeString:docTypeName windowForSheet:[self window]];	// it will do loading, displaying, etc.
 		
 	if (isValid)
 	{
@@ -450,7 +467,6 @@ initial syntax coloring.
 		// Don't change status; it will stay as-is OK.  However, remove the hash since our validation 
 		self.hashOfLastValidation = nil;
 	}
-
 }
 
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration
@@ -472,15 +488,12 @@ initial syntax coloring.
 		_HTMLSourceObject.lastValidMarkupDigest = self.hashOfLastValidation;
 		_HTMLSourceObject.shouldPreviewWhenEditing = [NSNumber numberWithBool:!self.preventPreview];
 		
-		
-		
         // Re-enable undo registration
         if (MOC)
         {
             [MOC processPendingChanges];
             [[MOC undoManager] enableUndoRegistration];
         }
-        
 	}
 	else
     {
@@ -852,6 +865,7 @@ initial syntax coloring.
 		case kValidationStateUnknown:	result = nil; break;
 		case kValidationStateUnparseable:
 		case kValidationStateValidationError:	result = [NSImage imageNamed:@"NSCaution"]; break;
+		case kValidationStateDisabled:
 		case kValidationStateLocallyValid:		result = [NSImage imageNamed:NSImageNameInfo]; break;
 		case kValidationStateVerifiedGood:		result = [NSImage imageNamed:@"checkmark"]; break;
 	}
@@ -870,6 +884,8 @@ initial syntax coloring.
 		case kValidationStateValidationError:	result = NSLocalizedString(@"Problems detected with the structure of the HTML. Validate for more information.", @"status of HTML text entered into window"); break;
 		case kValidationStateLocallyValid:		result = NSLocalizedString(@"HTML appears OK. Validate for detailed diagnostics.", @"status of HTML text entered into window"); break;
 		case kValidationStateVerifiedGood:		result = NSLocalizedString(@"This HTML is confirmed as being valid.", @"status of HTML text entered into window"); break;
+		case kValidationStateDisabled:			result = NSLocalizedString(@"Preview and validation is disabled for this object", @"status of HTML text entered into window"); break;
+
 	}
 	return result;
 }

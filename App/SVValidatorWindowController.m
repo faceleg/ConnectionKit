@@ -12,6 +12,19 @@
 #import "KSSilencingConfirmSheet.h"
 #import "KSStringXMLEntityEscaping.h"
 #import "NSURL+Karelia.h"
+#import "SVHTMLContext.h"
+#import "KTPage.h"
+
+@interface SVValidationHTMLContext : SVHTMLContext
+
+@end
+
+@implementation SVValidationHTMLContext
+
+- (BOOL)shouldWriteServerSideScripts; { return NO; }
+
+@end
+
 
 @interface WebView (WebViewPrivate)
 
@@ -31,6 +44,20 @@
 {
 	self.validationReportString = nil;
 	[super dealloc];
+}
+
+- (BOOL) validatePage:(KTPage *)page windowForSheet:(NSWindow *)aWindow;
+{
+    NSMutableString *pageSource = [NSMutableString string];
+    SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithOutputWriter:pageSource];
+    [context setPage:page];
+	[page writeHTML:context];
+    [context release];
+
+	NSString *docTypeName = [page docTypeName];
+	NSString *charset = [[page master] valueForKey:@"charset"];
+	BOOL result = [self validateSource:pageSource isFullPage:YES charset:charset docTypeString:docTypeName windowForSheet:aWindow];
+	return result;
 }
 
 - (BOOL) validateSource:(NSString *)pageSource isFullPage:(BOOL)isFullPage charset:(NSString *)charset docTypeString:(NSString *)docTypeString windowForSheet:(NSWindow *)aWindow;

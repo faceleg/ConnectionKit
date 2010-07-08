@@ -16,6 +16,7 @@
 
 typedef enum { 
 	kValidationStateUnknown = 0,		// or empty string
+	kValidationStateDisabled,			// for when we are not previewing, therefore no validation
 	kValidationStateUnparseable, 
 	kValidationStateValidationError, 
 	kValidationStateLocallyValid, 
@@ -66,6 +67,7 @@ typedef enum {
 - (IBAction) validate:(id)sender;
 - (IBAction) docTypePopUpChanged:(id)sender;
 
+- (BOOL) canValidate;	// for bindings
 
 @property (nonatomic, retain) NSUndoManager *undoManager;
 @property (nonatomic) BOOL autoSyntaxColoring;
