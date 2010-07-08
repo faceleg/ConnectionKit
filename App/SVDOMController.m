@@ -35,6 +35,7 @@
                                        initWithOutputWriter:htmlString];
     
     [context copyPropertiesFromContext:parentContext];
+    [context setWebEditorViewController:[(id)parentContext webEditorViewController]];   // hacky
     [context writeGraphic:graphic];
     
     
