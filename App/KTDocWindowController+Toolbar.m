@@ -299,6 +299,23 @@ TO DO:
     return result;
 }
 
+- (NSMenuItem *)makeMenuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
+{
+    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
+                                                  action:nil
+                                           keyEquivalent:@""];
+    
+    NSMenu *submenu = [[NSMenu alloc] initWithTitle:title];
+    
+    [SVGraphicFactory insertItemsWithGraphicFactories:factories
+                                               inMenu:submenu
+                                              atIndex:0];
+	[result setSubmenu:submenu];
+    [submenu release];
+    
+    return [result autorelease];
+}
+
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
  */
 - (NSToolbarItem *)makeGraphicsToolbarItemWithIdentifier:(NSString *)identifier;
@@ -332,40 +349,37 @@ TO DO:
     
     
     // Indexes
-    NSMenuItem *item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"Indexes", "menu item")
-                                                  action:nil
-                                           keyEquivalent:@""];
-    
-    NSMenu *submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Indexes", "menu item")];
-    
-    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory indexFactories]
-                                               inMenu:submenu
-                                              atIndex:0];
-	[item setSubmenu:submenu];
-    [submenu release];
-    
+    NSMenuItem *item = [self
+                        makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+                        title:NSLocalizedString(@"Indexes", "menu item")];
     [menu addItem:item];
-    [item release];
 	
     
-	// Add the other menu items
-    item = [[NSMenuItem alloc] initWithTitle:NSLocalizedString(@"More", "menu item")
-                                                  action:nil
-                                           keyEquivalent:@""];
-    
-    submenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"More", "menu item")];
-    
-    [SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                               inMenu:submenu
-                                              atIndex:0];
-	[item setSubmenu:submenu];
-    [submenu release];
-    
+	// Badges
+    item = [self  makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
+                                            title:NSLocalizedString(@"Badges", "menu item")];
     [menu addItem:item];
-    [item release];
+	
     
+	// Embedded
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory embeddedFactories]
+                                           title:NSLocalizedString(@"Embedded", "menu item")];
+    [menu addItem:item];
+	
     
-    // Finally, Raw HTML if available
+	// Social
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory socialFactories]
+                                           title:NSLocalizedString(@"Social", "menu item")];
+    [menu addItem:item];
+	
+    
+	// More
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory moreGraphicFactories]
+                                           title:NSLocalizedString(@"More", "menu item")];
+    [menu addItem:item];
+	
+    
+	// Finally, Raw HTML if available
     if (gIsPro)
     {
         [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
