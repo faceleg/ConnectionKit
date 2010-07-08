@@ -94,7 +94,7 @@
 
 - (void)writeHTML:(id <SVPlugInContext>)context
 {
-    if ( self.openInNewWindow )
+    if ( self.openLinksInNewWindow )
     {
         // target=_blank requires Transitional doc type
         [context limitToMaxDocType:KTXHTMLTransitionalDocType];
@@ -260,5 +260,5 @@
 
 @synthesize linkList = _linkList;
 @synthesize layout = _layout;
-@synthesize openInNewWindow = _openInNewWindow;
+@synthesize openLinksInNewWindow = _openInNewWindow;
 @end

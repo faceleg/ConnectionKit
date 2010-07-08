@@ -50,6 +50,6 @@
 
 // UI tag, values are 1 or 0
 @property (nonatomic, assign) NSInteger layout;
-@property (nonatomic, assign) BOOL openInNewWindow;
+@property (nonatomic, assign) BOOL openLinksInNewWindow;
 
 @end
