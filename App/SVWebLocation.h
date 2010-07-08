@@ -27,3 +27,12 @@
 
 
 NSArray *SVWebLocationGetReadablePasteboardTypes(NSPasteboard *pasteboard);
+
+
+#pragma mark -
+
+
+@interface NSWorkspace (SVWebLocation)
+- (id <SVWebLocation>)fetchBrowserWebLocation;
+- (id <SVWebLocation>)fetchFeedWebLocation;
+@end
