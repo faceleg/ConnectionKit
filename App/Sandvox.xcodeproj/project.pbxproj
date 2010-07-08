@@ -252,6 +252,8 @@
 		2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */; };
 		2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */; };
 		2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */ = {isa = PBXBuildFile; fileRef = 2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */; };
+		2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */; };
+		2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */; };
 		272B38CD10B18FB60056B4CA /* SVPlugInGraphic.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */; };
 		272B38CE10B18FB60056B4CA /* SVPlugInGraphic.m in Sources */ = {isa = PBXBuildFile; fileRef = 272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */; };
 		272B3B2910B20B240056B4CA /* SVInspectorButtonCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */; };
@@ -1730,6 +1732,8 @@
 		2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSSortedMutableArray.h; sourceTree = "<group>"; };
 		2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSSortedMutableArray.m; sourceTree = "<group>"; };
 		2726DE8D11E699720000257D /* RawHTMLPlaceholder.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = RawHTMLPlaceholder.html; sourceTree = "<group>"; };
+		2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVRawHTMLDOMController.h; sourceTree = "<group>"; };
+		2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVRawHTMLDOMController.m; sourceTree = "<group>"; };
 		272B38CB10B18FB60056B4CA /* SVPlugInGraphic.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVPlugInGraphic.h; sourceTree = "<group>"; };
 		272B38CC10B18FB60056B4CA /* SVPlugInGraphic.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVPlugInGraphic.m; sourceTree = "<group>"; };
 		272B3B2710B20B240056B4CA /* SVInspectorButtonCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVInspectorButtonCell.h; sourceTree = "<group>"; };
@@ -3072,6 +3076,8 @@
 				277E724C1133595A0081389F /* SVGraphicDOMController.m */,
 				27FA98831194BC0C003B8308 /* SVSidebarDOMController.h */,
 				27FA98841194BC0C003B8308 /* SVSidebarDOMController.m */,
+				2726DEA811E69CA80000257D /* SVRawHTMLDOMController.h */,
+				2726DEA911E69CA80000257D /* SVRawHTMLDOMController.m */,
 			);
 			name = "Other DOM Controllers";
 			sourceTree = "<group>";
@@ -5625,6 +5631,7 @@
 				27B82F1B11D50F260086CB6E /* SVDOMToHTMLWriter.h in Headers */,
 				CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */,
 				2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */,
+				2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7066,6 +7073,7 @@
 				27B82F1D11D50F260086CB6E /* SVDOMToHTMLWriter.m in Sources */,
 				CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */,
 				2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */,
+				2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
