@@ -422,7 +422,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
             }
             else if (readingOptions & SVPlugInPasteboardReadingAsWebLocation)
             {
-                propertyList = [[KSWebLocation webLocationsFromPasteboard:pasteboard] firstObjectKS];
+                propertyList = [[pasteboard readWebLocations] firstObjectKS];
             }
             else
             {

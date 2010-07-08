@@ -18,4 +18,12 @@
 @end
 
 
+#pragma mark -
+
+
+@interface NSPasteboard (SVWebLocation)
+- (NSArray *)readWebLocations;
+@end
+
+
 NSArray *SVWebLocationGetReadablePasteboardTypes(NSPasteboard *pasteboard);
