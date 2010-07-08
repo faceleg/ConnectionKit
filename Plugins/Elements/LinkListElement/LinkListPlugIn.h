@@ -37,5 +37,5 @@
 #import "SandvoxPlugin.h"
 
 
-@interface LinkListPlugIn : SVPageletPlugIn <KTDataSource>
+@interface LinkListPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
 @end
