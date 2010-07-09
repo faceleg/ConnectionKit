@@ -643,14 +643,6 @@
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
-						<string key="label">oDesignsArrayController</string>
-						<reference key="source" ref="1001"/>
-						<reference key="destination" ref="231188890"/>
-					</object>
-					<int key="connectionID">139</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBOutletConnection" key="connection">
 						<string key="label">view</string>
 						<reference key="source" ref="258437323"/>
 						<reference key="destination" ref="79593954"/>
@@ -680,6 +672,14 @@
 						</object>
 					</object>
 					<int key="connectionID">144</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">designsController</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="231188890"/>
+					</object>
+					<int key="connectionID">145</int>
 				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
@@ -970,7 +970,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">144</int>
+			<int key="maxID">145</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -1461,13 +1461,13 @@
 						<bool key="EncodedWithXMLCoder">YES</bool>
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>oDesignsArrayController</string>
+							<string>designsController</string>
 							<string>oScopeBar</string>
 							<string>oViewController</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<string>SVDesignsController</string>
+							<string>NSArrayController</string>
 							<string>MGScopeBar</string>
 							<string>SVDesignChooserViewController</string>
 						</object>

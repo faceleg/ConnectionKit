@@ -15,11 +15,13 @@
 
 @interface SVDesignChooserWindowController : NSWindowController <MGScopeBarDelegate>
 {
-	IBOutlet SVDesignsController *oDesignsArrayController;
     IBOutlet SVDesignChooserViewController   *oViewController;
     IBOutlet MGScopeBar             *oScopeBar;
 	
-	NSString *_genre;
+  @private
+    SVDesignsController *_designsController;
+    
+    NSString *_genre;
 	NSString *_color;
 	NSString *_width;
 	
@@ -35,8 +37,8 @@
 
 @property(assign) SEL selectorWhenChosen;
 @property(assign) id  targetWhenChosen;
-@property(retain) SVDesignChooserViewController *viewController;
-@property(retain) NSArrayController *designsArrayController;
+@property(nonatomic, retain) SVDesignChooserViewController *viewController;
+@property(nonatomic, retain) IBOutlet NSArrayController *designsController;
 @property (copy) NSString *genre;
 @property (copy) NSString *color;
 @property (copy) NSString *width;

@@ -357,7 +357,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [_designChooserWindowController setDesign:design];
     
     
-    [self performSelector:@selector(showDesignSheet) withObject:nil];// afterDelay:1.0];
+    [self performSelector:@selector(showDesignSheet) withObject:nil afterDelay:1.0];
     return;
     
     [[NSRunLoop currentRunLoop] performSelector:@selector(showDesignSheet)

@@ -37,7 +37,7 @@
 {
     // If the window has not been loaded yet, this will return nil. But that's fine, because setting the design loads the nib
     
-	KTDesign *result = [[oDesignsArrayController selectedObjects] lastObject];
+	KTDesign *result = [[[self designsController] selectedObjects] lastObject];
 	
 	if ([result isKindOfClass:[KTDesignFamily class]])
 	{
@@ -53,7 +53,9 @@
     [self window];  // make sure nib is loaded
     
     [[oViewController imageBrowser] reloadData];
-    [oDesignsArrayController setSelectedObjects:[NSArray arrayWithObject:design]];
+    [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
+    
+    [[oViewController imageBrowser] scrollIndexToVisible:[[self designsController] selectionIndex]];
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
@@ -61,7 +63,7 @@
 @synthesize genre = _genre;
 @synthesize color = _color;
 @synthesize width = _width;
-@synthesize designsArrayController = oDesignsArrayController;
+@synthesize designsController = _designsController;
 
 // IF I CHANGE THIS ORDER, CHANGE THE ORDER IN THE METHOD "matchString"
 enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to have the genre *first* but it's one that works best when collapsed, and MGScopeBar prefers collapsing items on the right.  It would be a huge rewrite to change that....
@@ -69,20 +71,20 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 + (NSSet *)keyPathsForValuesAffectingMatchString
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsArrayController.arrangedObjects", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
 }
 
 + (NSSet *)keyPathsForValuesAffectingMatchColor
 {
     // As far as I can see, this should make .inspectedObjects KVO-compliant, but it seems something about NSArrayController stops it from working
-    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsArrayController.arrangedObjects", nil];
+    return [NSSet setWithObjects:@"genre", @"color", @"width", @"designsController.arrangedObjects", nil];
 }
 
 - (NSColor *)matchColor;
 {
 	if (self.genre || self.color || self.width)
 	{
-		if (![[oDesignsArrayController arrangedObjects] count]) return [NSColor redColor];	
+		if (![[[self designsController] arrangedObjects] count]) return [NSColor redColor];	
 		// No matches. Make it obvious so user doesn't panic
 		return [NSColor darkGrayColor];	// some filter, but there are matches. Dark gray since it's interesting.
 	}
@@ -114,7 +116,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 				[matchesString appendFormat:NSLocalizedString(@"“%@” and ", @"a search string in quotes followed by 'and' (with a space afterwards)"), match];
 			}
 		}
-		if ([[oDesignsArrayController arrangedObjects] count])
+		if ([[[self designsController] arrangedObjects] count])
 		{
 			result = [NSString stringWithFormat:NSLocalizedString(@"Showing matches for %@", @"Showing which items matched the current filter"), matchesString];
 		}
@@ -135,19 +137,19 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (void)lookForNulls
 {
-	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"color == NULL"]];
-	OFF((@"null color: %@", [oDesignsArrayController arrangedObjects]));
-	_hasNullColor = (0 != [[oDesignsArrayController arrangedObjects] count]);
+	[[self designsController] setFilterPredicate:[NSPredicate predicateWithFormat:@"color == NULL"]];
+	OFF((@"null color: %@", [[self designsController] arrangedObjects]));
+	_hasNullColor = (0 != [[[self designsController] arrangedObjects] count]);
 	
-	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"genre == NULL"]];
-	OFF((@"null genres: %@", [oDesignsArrayController arrangedObjects]));
-	_hasNullGenre = (0 != [[oDesignsArrayController arrangedObjects] count]);
+	[[self designsController] setFilterPredicate:[NSPredicate predicateWithFormat:@"genre == NULL"]];
+	OFF((@"null genres: %@", [[self designsController] arrangedObjects]));
+	_hasNullGenre = (0 != [[[self designsController] arrangedObjects] count]);
 
-	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"width == NULL"]];
-	OFF((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
-	_hasNullWidth = (0 != [[oDesignsArrayController arrangedObjects] count]);
+	[[self designsController] setFilterPredicate:[NSPredicate predicateWithFormat:@"width == NULL"]];
+	OFF((@"null widths: %@", [[self designsController] arrangedObjects]));
+	_hasNullWidth = (0 != [[[self designsController] arrangedObjects] count]);
 	
-	[oDesignsArrayController setFilterPredicate:nil];		// go back to no filter
+	[[self designsController] setFilterPredicate:nil];		// go back to no filter
 
 }
 
@@ -464,11 +466,11 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 		}
 
 		NSPredicate *pred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
-		[oDesignsArrayController setFilterPredicate:pred];
+		[[self designsController] setFilterPredicate:pred];
 	}
 	else	// no filter -- all
 	{
-		[oDesignsArrayController setFilterPredicate:nil];
+		[[self designsController] setFilterPredicate:nil];
 	}
 }
 
