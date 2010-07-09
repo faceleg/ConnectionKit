@@ -25,6 +25,7 @@
 #import "KTAsyncOffscreenWebViewController.h"
 #import "Registration.h"
 
+
 @implementation KTHTMLInspectorWindow
 
 - (BOOL) canBecomeMainWindow

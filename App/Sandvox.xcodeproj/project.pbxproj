@@ -1032,6 +1032,8 @@
 		CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
 		CE23D84D11E69AD800E43369 /* KTAsyncOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */; };
+		CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */; };
+		CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE26FA1408C4D9C500C9604B /* design-time.css in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* design-time.css */; };
@@ -2658,6 +2660,8 @@
 		CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = "NSMenuItem+Karelia.m"; path = "../../Shared/AppKit/NSMenuItem+Karelia.m"; sourceTree = SOURCE_ROOT; };
 		CE214BF9098060CD006DD2B1 /* Languages.plist */ = {isa = PBXFileReference; explicitFileType = text.plist; fileEncoding = 4; path = Languages.plist; sourceTree = "<group>"; };
 		CE23C54511E6829D00E43369 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../Designs; sourceTree = SOURCE_ROOT; };
+		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
+		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
@@ -4691,6 +4695,8 @@
 				27E83A3710ABB1D6003B8F2F /* KSCollectionController.h */,
 				273DCFEF10CBDC10003CCE97 /* KSArrayController.h */,
 				273DCFF010CBDC10003CCE97 /* KSArrayController.m */,
+				CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */,
+				CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */,
 			);
 			path = AppKit;
 			sourceTree = "<group>";
@@ -5633,6 +5639,7 @@
 				CE5B1CB811E54A37005E2C5E /* KTFeedbackReporter.h in Headers */,
 				2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */,
 				2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */,
+				CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7076,6 +7083,7 @@
 				2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */,
 				2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */,
 				CE23D84D11E69AD800E43369 /* KTAsyncOffscreenWebViewController.m in Sources */,
+				CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
