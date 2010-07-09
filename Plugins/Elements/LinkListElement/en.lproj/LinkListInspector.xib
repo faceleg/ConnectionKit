@@ -35,7 +35,7 @@
 					<object class="NSTabView" id="304601533">
 						<reference key="NSNextResponder" ref="713857439"/>
 						<int key="NSvFlags">274</int>
-						<string key="NSFrame">{{-10, -12}, {270, 273}}</string>
+						<string key="NSFrame">{{-10, -12}, {270, 276}}</string>
 						<reference key="NSSuperview" ref="713857439"/>
 						<array class="NSMutableArray" key="NSTabViewItems">
 							<object class="NSTabViewItem" id="88639914">
@@ -166,7 +166,7 @@
 													<double key="NSPercent">0.94930875301361084</double>
 												</object>
 											</array>
-											<string key="NSFrame">{{10, 121}, {230, 106}}</string>
+											<string key="NSFrame">{{10, 124}, {230, 106}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<reference key="NSNextKeyView" ref="26915287"/>
 											<int key="NSsFlags">530</int>
@@ -178,7 +178,7 @@
 										<object class="NSTextField" id="876722882">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrame">{{92, 72}, {148, 19}}</string>
+											<string key="NSFrame">{{72, 75}, {168, 19}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="182471503">
@@ -208,7 +208,7 @@
 										<object class="NSTextField" id="363936151">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrame">{{92, 49}, {148, 19}}</string>
+											<string key="NSFrame">{{72, 50}, {168, 19}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="442610809">
@@ -225,12 +225,12 @@
 										<object class="NSTextField" id="874077140">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">292</int>
-											<string key="NSFrame">{{7, 74}, {80, 14}}</string>
+											<string key="NSFrame">{{7, 77}, {60, 14}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="821831584">
-												<int key="NSCellFlags">67239424</int>
-												<int key="NSCellFlags2">71434240</int>
+												<int key="NSCellFlags">68288064</int>
+												<int key="NSCellFlags2">71435264</int>
 												<string key="NSContents">Title:</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="874077140"/>
@@ -246,12 +246,12 @@
 										<object class="NSTextField" id="1064992540">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">292</int>
-											<string key="NSFrame">{{7, 51}, {80, 14}}</string>
+											<string key="NSFrame">{{7, 52}, {60, 14}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="930714106">
-												<int key="NSCellFlags">67239424</int>
-												<int key="NSCellFlags2">71434240</int>
+												<int key="NSCellFlags">68288064</int>
+												<int key="NSCellFlags2">71435264</int>
 												<string key="NSContents">URL:</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="1064992540"/>
@@ -262,7 +262,7 @@
 										<object class="NSTextField" id="703418452">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">290</int>
-											<string key="NSFrame">{{92, 10}, {148, 35}}</string>
+											<string key="NSFrame">{{72, 9}, {168, 35}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="625986588">
@@ -279,12 +279,12 @@
 										<object class="NSTextField" id="1054292591">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">292</int>
-											<string key="NSFrame">{{7, 28}, {80, 14}}</string>
+											<string key="NSFrame">{{7, 27}, {60, 14}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="NSEnabled">YES</bool>
 											<object class="NSTextFieldCell" key="NSCell" id="629312225">
-												<int key="NSCellFlags">67239424</int>
-												<int key="NSCellFlags2">71434240</int>
+												<int key="NSCellFlags">68288064</int>
+												<int key="NSCellFlags2">71435264</int>
 												<string key="NSContents">Comment:</string>
 												<reference key="NSSupport" ref="26"/>
 												<reference key="NSControlView" ref="1054292591"/>
@@ -345,7 +345,7 @@
 													</object>
 												</object>
 											</array>
-											<string key="NSFrame">{{10, 99}, {230, 24}}</string>
+											<string key="NSFrame">{{10, 102}, {230, 24}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<bool key="BWABBIsResizable">NO</bool>
 											<bool key="BWABBIsAtBottom">NO</bool>
@@ -353,7 +353,7 @@
 											<int key="BWABBSelectedIndex">2</int>
 										</object>
 									</array>
-									<string key="NSFrame">{{10, 25}, {250, 235}}</string>
+									<string key="NSFrame">{{10, 25}, {250, 238}}</string>
 									<reference key="NSSuperview" ref="304601533"/>
 								</object>
 								<string key="NSLabel">Links</string>
@@ -613,7 +613,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 						</array>
 					</object>
 				</array>
-				<string key="NSFrameSize">{250, 268}</string>
+				<string key="NSFrameSize">{250, 271}</string>
 				<reference key="NSSuperview"/>
 				<string key="NSClassName">NSView</string>
 				<string key="NSExtension">NSResponder</string>
@@ -1265,7 +1265,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 				<string key="228.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="229.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="230.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
-				<string key="5.IBEditorWindowLastContentRect">{{614, 738}, {250, 268}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{981, 655}, {250, 271}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<string key="74.CustomClassName">LinkListArrayController</string>
