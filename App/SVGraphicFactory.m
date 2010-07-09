@@ -214,6 +214,8 @@
 
 #pragma mark Shared Objects
 
+static NSPointerArray   *sFactories;
+
 static id <SVGraphicFactory> sSharedTextBoxFactory;
 static id <SVGraphicFactory> sImageFactory;
 static id <SVGraphicFactory> sVideoFactory;
@@ -224,16 +226,41 @@ static KSSortedMutableArray *sSocialFactories;
 static KSSortedMutableArray *sMoreFactories;
 static id <SVGraphicFactory> sRawHTMLFactory;
 
++ (void)registerFactory:(id <SVGraphicFactory>)factory;
+{
+    OBPRECONDITION(factory);
+    [sFactories addPointer:factory];
+}
+
 + (void)initialize
 {
+    if (!sFactories) sFactories = [[NSPointerArray pointerArrayWithStrongObjects] retain];
+    
+    
     // Special factories!
-    if (!sSharedTextBoxFactory) sSharedTextBoxFactory = [[SVTextBoxFactory alloc] init];
+    if (!sSharedTextBoxFactory)
+    {
+        sSharedTextBoxFactory = [[SVTextBoxFactory alloc] init];
+        [self registerFactory:sSharedTextBoxFactory];
+    }
     
-    if (!sImageFactory) sImageFactory = [[SVImageFactory alloc] init];
+    if (!sImageFactory)
+    {
+        sImageFactory = [[SVImageFactory alloc] init];
+        [self registerFactory:sImageFactory];
+    }
     
-    if (!sVideoFactory) sVideoFactory = [[SVMovieFactory alloc] init];
+    if (!sVideoFactory)
+    {
+        sVideoFactory = [[SVMovieFactory alloc] init];
+        [self registerFactory:sVideoFactory];
+    }
     
-    if (!sRawHTMLFactory) sRawHTMLFactory = [[SVRawHTMLFactory alloc] init];
+    if (!sRawHTMLFactory)
+    {
+        sRawHTMLFactory = [[SVRawHTMLFactory alloc] init];
+        [self registerFactory:sRawHTMLFactory];
+    }
     
     
     
@@ -285,8 +312,9 @@ static id <SVGraphicFactory> sRawHTMLFactory;
                     [sMoreFactories addObject:aFactory];
                     break;
             }
+            
+            [self registerFactory:aFactory];
         }
-        
     }
 }
 
