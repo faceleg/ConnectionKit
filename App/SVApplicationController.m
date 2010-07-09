@@ -930,15 +930,6 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 															"Message while initializing launching application.")];
 			[_progressPanel setInformativeText:nil];
 			//[_progressPanel makeKeyAndOrderFront:self];
-
-
-			// load plugins
-			[_progressPanel setMessageText:NSLocalizedString(@"Loading Plug-ins...", "Message while loading plug-ins.")];
-            
-			
-			// build menus
-			[_progressPanel setMessageText:NSLocalizedString(@"Building Menus...", "Message while building menus.")];
-			//[self buildSampleSitesMenu];
 			
 			[SVGraphicFactory insertItemsWithGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                                        inMenu:oMoreGraphicsMenu
