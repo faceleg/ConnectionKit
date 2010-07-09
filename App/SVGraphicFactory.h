@@ -69,7 +69,7 @@
 + (NSMenuItem *)menuItemWithGraphicFactory:(id <SVGraphicFactory>)factory;
 
 // Convenience method that uses the factory if non-nil. Otherwise, fall back to text box
-+ (SVGraphic *)graphicWithActionSender:(id)sender
++ (SVGraphic *)graphicWithActionSender:(id <NSValidatedUserInterfaceItem>)sender
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 
 

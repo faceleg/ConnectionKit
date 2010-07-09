@@ -420,20 +420,11 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     return result;
 }
 
-+ (SVGraphic *)graphicWithActionSender:(id)sender
++ (SVGraphic *)graphicWithActionSender:(id <NSValidatedUserInterfaceItem>)sender
         insertIntoManagedObjectContext:(NSManagedObjectContext *)context;
 {
-    SVGraphic *result;
-    if ([sender respondsToSelector:@selector(representedObject)] && [sender representedObject])
-    {
-        id <SVGraphicFactory> factory = [sender representedObject];
-        result = [factory insertNewGraphicInManagedObjectContext:context];
-    }
-    else
-    {
-        result = [[self textBoxFactory] insertNewGraphicInManagedObjectContext:context];
-        OBASSERT(result);
-    }
+    id <SVGraphicFactory> factory = [self graphicFactoryForTag:[sender tag]];
+    SVGraphic *result = [factory insertNewGraphicInManagedObjectContext:context];
     
     [result setShowsTitle:YES]; // default is NO in the mom to account for inline images
     return result;
