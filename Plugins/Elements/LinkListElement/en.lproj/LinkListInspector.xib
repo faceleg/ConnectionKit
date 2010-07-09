@@ -3,15 +3,15 @@
 	<data>
 		<int key="IBDocument.SystemTarget">1050</int>
 		<string key="IBDocument.SystemVersion">10F569</string>
-		<string key="IBDocument.InterfaceBuilderVersion">762</string>
+		<string key="IBDocument.InterfaceBuilderVersion">740</string>
 		<string key="IBDocument.AppKitVersion">1038.29</string>
 		<string key="IBDocument.HIToolboxVersion">461.00</string>
 		<dictionary class="NSMutableDictionary" key="IBDocument.PluginVersions">
-			<string key="com.apple.InterfaceBuilder.CocoaPlugin">762</string>
+			<string key="com.apple.InterfaceBuilder.CocoaPlugin">740</string>
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="186"/>
+			<integer value="5"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -30,12 +30,12 @@
 			</object>
 			<object class="NSCustomView" id="713857439">
 				<reference key="NSNextResponder"/>
-				<int key="NSvFlags">258</int>
+				<int key="NSvFlags">274</int>
 				<array class="NSMutableArray" key="NSSubviews">
 					<object class="NSTabView" id="304601533">
 						<reference key="NSNextResponder" ref="713857439"/>
-						<int key="NSvFlags">258</int>
-						<string key="NSFrame">{{-10, -10}, {270, 271}}</string>
+						<int key="NSvFlags">274</int>
+						<string key="NSFrame">{{-10, -12}, {270, 273}}</string>
 						<reference key="NSSuperview" ref="713857439"/>
 						<array class="NSMutableArray" key="NSTabViewItems">
 							<object class="NSTabViewItem" id="88639914">
@@ -54,7 +54,7 @@
 														<object class="NSTableView" id="38279571">
 															<reference key="NSNextResponder" ref="26915287"/>
 															<int key="NSvFlags">4352</int>
-															<string key="NSFrameSize">{228, 102}</string>
+															<string key="NSFrameSize">{228, 104}</string>
 															<reference key="NSSuperview" ref="26915287"/>
 															<bool key="NSEnabled">YES</bool>
 															<object class="_NSCornerView" key="NSCornerView">
@@ -138,7 +138,7 @@
 															<int key="NSTableViewDraggingDestinationStyle">0</int>
 														</object>
 													</array>
-													<string key="NSFrame">{{1, 1}, {228, 102}}</string>
+													<string key="NSFrame">{{1, 1}, {228, 104}}</string>
 													<reference key="NSSuperview" ref="118978594"/>
 													<reference key="NSNextKeyView" ref="38279571"/>
 													<reference key="NSDocView" ref="38279571"/>
@@ -166,7 +166,7 @@
 													<double key="NSPercent">0.94930875301361084</double>
 												</object>
 											</array>
-											<string key="NSFrame">{{10, 121}, {230, 104}}</string>
+											<string key="NSFrame">{{10, 121}, {230, 106}}</string>
 											<reference key="NSSuperview" ref="972752083"/>
 											<reference key="NSNextKeyView" ref="26915287"/>
 											<int key="NSsFlags">530</int>
@@ -353,7 +353,7 @@
 											<int key="BWABBSelectedIndex">2</int>
 										</object>
 									</array>
-									<string key="NSFrame">{{10, 25}, {250, 233}}</string>
+									<string key="NSFrame">{{10, 25}, {250, 235}}</string>
 									<reference key="NSSuperview" ref="304601533"/>
 								</object>
 								<string key="NSLabel">Links</string>
@@ -1265,7 +1265,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 				<string key="228.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="229.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
 				<string key="230.IBPluginDependency">com.brandonwalkin.BWToolkit</string>
-				<string key="5.IBEditorWindowLastContentRect">{{77, 812}, {250, 268}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{614, 738}, {250, 268}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<string key="74.CustomClassName">LinkListArrayController</string>
@@ -1842,7 +1842,6 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 			</array>
 		</object>
 		<int key="IBDocument.localizationMode">0</int>
-		<string key="IBDocument.TargetRuntimeIdentifier">IBCocoaFramework</string>
 		<object class="NSMutableDictionary" key="IBDocument.PluginDeclaredDependencies">
 			<string key="NS.key.0">com.apple.InterfaceBuilder.CocoaPlugin.macosx</string>
 			<integer value="1050" key="NS.object.0"/>
@@ -1854,10 +1853,5 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 		<bool key="IBDocument.PluginDeclaredDependenciesTrackSystemTargetVersion">YES</bool>
 		<string key="IBDocument.LastKnownRelativeProjectPath">../LinkListElement.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
-		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="NSAddTemplate">{8, 8}</string>
-			<string key="NSRadioButton">{16, 15}</string>
-			<string key="NSRemoveTemplate">{8, 8}</string>
-		</dictionary>
 	</data>
 </archive>
