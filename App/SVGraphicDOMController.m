@@ -14,7 +14,46 @@
 #import "WebEditingKit.h"
 
 
+@interface DOMElement (SVGraphicDOMController)
+- (DOMNodeList *)getElementsByClassName:(NSString *)name;
+@end
+
+
+#pragma mark -
+
+
 @implementation SVGraphicDOMController
+
+- (void)dealloc;
+{
+    [self setBodyHTMLElement:nil];
+    OBPOSTCONDITION(!_bodyElement);
+    
+    [super dealloc];
+}
+
+#pragma mark DOM
+
+@synthesize bodyHTMLElement = _bodyElement;
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    // Locate body element too
+    SVGraphic *graphic = [self representedObject];
+    if ([graphic isPagelet])
+    {
+        DOMNodeList *elements = [[self HTMLElement] getElementsByClassName:@"pagelet-body"];
+        [self setBodyHTMLElement:(DOMHTMLElement *)[elements item:0]];
+    }
+    else
+    {
+        [self setBodyHTMLElement:[self HTMLElement]];
+    }
+}
+
+#pragma mark State
 
 - (BOOL)isSelectable { return YES; }
 

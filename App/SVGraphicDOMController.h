@@ -11,6 +11,13 @@
 
 
 @interface SVGraphicDOMController : SVDOMController
+{
+  @private
+    DOMHTMLElement  *_bodyElement;
+}
+
+@property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
+
 @end
 
 
