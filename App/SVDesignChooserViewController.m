@@ -22,11 +22,6 @@
 {	
 	IKImageBrowserView *view = [self imageBrowser];
 
-	// We want to be notified when designs are set so we can refresh data display
-	[oDesignsArrayController addObserver:self forKeyPath:@"arrangedObjects" options:(NSKeyValueObservingOptionNew) context:nil];
-	[oDesignsArrayController addObserver:self forKeyPath:@"selection" options:(NSKeyValueObservingOptionNew) context:nil];
-	
-	
 	// Here I think I want to collapse every group unless it contains the current selection!
 		
 	NSMutableDictionary *attributes;
@@ -48,8 +43,14 @@
 	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
     
     
-    // Ready to load
-    [view reloadData];
+    // We want to be notified when designs are set so we can refresh data display
+	[oDesignsArrayController addObserver:self forKeyPath:@"arrangedObjects"
+                                 options:0
+                                 context:nil];
+	[oDesignsArrayController addObserver:self
+                              forKeyPath:@"selection"
+                                 options:NSKeyValueObservingOptionInitial
+                                 context:nil];
 }
 
 - (void)dealloc
@@ -130,7 +131,7 @@
     
 	[imageBrowser setDataSource:self];
 	[imageBrowser setDelegate:self];
-    [imageBrowser reloadData];
+    if (oDesignsArrayController) [imageBrowser reloadData];
 }
 
 #pragma mark Mouse Events
@@ -182,12 +183,6 @@
 
 #pragma mark Image Browser Datasource/Delegate
 
-- (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
-{
-	[oDesignsArrayController setSelectionIndexes:[aBrowser selectionIndexes]];
-	
-}
-
 - (void) imageBrowser:(IKImageBrowserView *) aBrowser cellWasDoubleClickedAtIndex:(NSUInteger) index;
 {
 	// Simulate the clicking of the OK button... 
@@ -235,45 +230,6 @@
 			countString, IKImageBrowserGroupTitleKey,
 			rangeValue, IKImageBrowserGroupRangeKey,
 			nil];
-}
-
-#pragma mark Design
-
-// We get and set the design from the IKImageBrowserView
-
-- (void)setSelectedDesign:(KTDesign *)aDesign
-{
-	IKImageBrowserView *imageBrowser = [self imageBrowser];
-	
-    NSUInteger index = [[oDesignsArrayController arrangedObjects] indexOfObject:aDesign];
-	if (NSNotFound != index)
-	{
-		[imageBrowser setSelectionIndexes:[NSIndexSet indexSetWithIndex:index]
-                     byExtendingSelection:NO];
-        
-		[imageBrowser scrollIndexToVisible:index];
-	}
-	else	// no selection
-	{
-		[imageBrowser setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
-	}
-}
-- (KTDesign *)selectedDesign;
-{
-	IKImageBrowserView *view = [self imageBrowser];
-	NSIndexSet *selectedIndexSet = [view selectionIndexes];
-	NSUInteger firstIndex = [selectedIndexSet firstIndex];
-	KTDesign *result = nil;
-	if (NSNotFound != firstIndex)
-	{
-		result = [ [oDesignsArrayController arrangedObjects] objectAtIndex:firstIndex];
-	}
-	if ([result isKindOfClass:[KTDesignFamily class]])
-	{
-		KTDesignFamily *family = (KTDesignFamily *)result;
-		result = [family.designs objectAtIndex:family.imageVersion];
-	}
-	return result;
 }
 
 #pragma mark KVO

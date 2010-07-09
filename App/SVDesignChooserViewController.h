@@ -33,7 +33,6 @@
 - (void) setupTrackingRects;		// do this after the view is added and resized
 - (void) initializeExpandedState;
 
-@property(nonatomic, retain) KTDesign *selectedDesign;
 - (void)setContracted:(BOOL)contracted forRange:(NSRange)range;
 
 @end

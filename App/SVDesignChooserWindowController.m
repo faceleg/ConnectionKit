@@ -9,16 +9,20 @@
 #import "SVDesignChooserWindowController.h"
 #import "SVDesignChooserViewController.h"
 
-#import "Debug.h"
-#import "KSPlugInWrapper.h"
-#import "KT.h"
 #import "KTDesign.h"
-#import "KTDocWindowController.h"
+#import "KTDesignFamily.h"
 #import "KTDocument.h"
 #import "SVSiteOutlineViewController.h"
-#import "NSArray+Karelia.h"
-#import "MGScopeBar.h"
 #import "SVDesignsController.h"
+#import "KT.h"
+#import "Debug.h"
+
+#import "KSPlugInWrapper.h"
+#import "MGScopeBar.h"
+
+#import "NSArray+Karelia.h"
+#import "NSString+Karelia.h"
+
 
 @interface SVDesignChooserWindowController ()
 - (NSString *)scopeBar:(MGScopeBar *)theScopeBar AXDescriptionForItem:(NSString *)identifier inGroup:(NSInteger)groupNumber;
@@ -31,14 +35,24 @@
 
 - (KTDesign *)design;
 {
-    return [oViewController selectedDesign];
-    // will retun nil if nib has not been loaded yet, but that's fine
+    // If the window has not been loaded yet, this will return nil. But that's fine, because setting the design loads the nib
+    
+	KTDesign *result = [[oDesignsArrayController selectedObjects] lastObject];
+	
+	if ([result isKindOfClass:[KTDesignFamily class]])
+	{
+		KTDesignFamily *family = (KTDesignFamily *)result;
+		result = [family.designs objectAtIndex:family.imageVersion];
+	}
+    
+	return result;
 }
 
 - (void)setDesign:(KTDesign *)design;
 {
     [self window];  // make sure nib is loaded
-    [oViewController setSelectedDesign:design];
+    
+    [oDesignsArrayController setSelectedObjects:[NSArray arrayWithObject:design]];
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
@@ -149,6 +163,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	
 	//[oViewController setSelectedDesign:aDesign];
 	[oViewController initializeExpandedState];
+    [[oViewController imageBrowser] reloadData];
 		
     [NSApp beginSheet:[self window]
        modalForWindow:window
@@ -172,15 +187,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
 {
-    // get the selected design
-	KTDesign *selectedDesign = [oViewController selectedDesign];
-	if (selectedDesign)
-	{
-		if (self.targetWhenChosen)
-		{
-			[self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];
-		}
-	}
+    [self.targetWhenChosen performSelector:self.selectorWhenChosen withObject:self];
     
     // close up shop, we're done
     [NSApp endSheet:[self window]];    
