@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="76"/>
+			<integer value="186"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -292,22 +292,22 @@
 												<reference key="NSTextColor" ref="770762360"/>
 											</object>
 										</object>
-										<object class="BWAnchoredButtonBar" id="591292243">
+										<object class="BWAnchoredButtonBar" id="6921163">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">290</int>
 											<array class="NSMutableArray" key="NSSubviews">
-												<object class="BWAnchoredButton" id="943454928">
-													<reference key="NSNextResponder" ref="591292243"/>
+												<object class="BWAnchoredButton" id="454397400">
+													<reference key="NSNextResponder" ref="6921163"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrameSize">{32, 24}</string>
-													<reference key="NSSuperview" ref="591292243"/>
+													<reference key="NSSuperview" ref="6921163"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="730505886">
+													<object class="BWAnchoredButtonCell" key="NSCell" id="683712640">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="943454928"/>
+														<reference key="NSControlView" ref="454397400"/>
 														<int key="NSButtonFlags">-2033958657</int>
 														<int key="NSButtonFlags2">163</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -320,18 +320,18 @@
 														<int key="NSPeriodicInterval">25</int>
 													</object>
 												</object>
-												<object class="BWAnchoredButton" id="288816402">
-													<reference key="NSNextResponder" ref="591292243"/>
+												<object class="BWAnchoredButton" id="454861382">
+													<reference key="NSNextResponder" ref="6921163"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrame">{{31, 0}, {32, 24}}</string>
-													<reference key="NSSuperview" ref="591292243"/>
+													<reference key="NSSuperview" ref="6921163"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="825151027">
+													<object class="BWAnchoredButtonCell" key="NSCell" id="907334674">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="288816402"/>
+														<reference key="NSControlView" ref="454861382"/>
 														<int key="NSButtonFlags">-2033958657</int>
 														<int key="NSButtonFlags2">163</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -624,6 +624,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					<string>titleHTML</string>
 					<string>comment</string>
 					<string>@count</string>
+					<string>title</string>
 				</array>
 				<bool key="NSEditable">YES</bool>
 				<object class="_NSManagedProxy" key="_NSManagedProxy"/>
@@ -654,26 +655,6 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 						</object>
 					</object>
 					<int key="connectionID">116</int>
-				</object>
-				<object class="IBConnectionRecord">
-					<object class="IBBindingConnection" key="connection">
-						<string key="label">value: selection.titleHTML</string>
-						<reference key="source" ref="876722882"/>
-						<reference key="destination" ref="629331511"/>
-						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="876722882"/>
-							<reference key="NSDestination" ref="629331511"/>
-							<string key="NSLabel">value: selection.titleHTML</string>
-							<string key="NSBinding">value</string>
-							<string key="NSKeyPath">selection.titleHTML</string>
-							<object class="NSDictionary" key="NSOptions">
-								<string key="NS.key.0">NSValueTransformerName</string>
-								<string key="NS.object.0">EscapeHTMLTransformer</string>
-							</object>
-							<int key="NSNibBindingConnectorVersion">2</int>
-						</object>
-					</object>
-					<int key="connectionID">117</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBOutletConnection" key="connection">
@@ -851,6 +832,70 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					</object>
 					<int key="connectionID">232</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">add:</string>
+						<reference key="source" ref="629331511"/>
+						<reference key="destination" ref="454397400"/>
+					</object>
+					<int key="connectionID">233</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBActionConnection" key="connection">
+						<string key="label">remove:</string>
+						<reference key="source" ref="629331511"/>
+						<reference key="destination" ref="454861382"/>
+					</object>
+					<int key="connectionID">234</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canAdd</string>
+						<reference key="source" ref="454397400"/>
+						<reference key="destination" ref="629331511"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="454397400"/>
+							<reference key="NSDestination" ref="629331511"/>
+							<string key="NSLabel">enabled: canAdd</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canAdd</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">235</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">enabled: canRemove</string>
+						<reference key="source" ref="454861382"/>
+						<reference key="destination" ref="629331511"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="454861382"/>
+							<reference key="NSDestination" ref="629331511"/>
+							<string key="NSLabel">enabled: canRemove</string>
+							<string key="NSBinding">enabled</string>
+							<string key="NSKeyPath">canRemove</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">236</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBBindingConnection" key="connection">
+						<string key="label">value: selection.title</string>
+						<reference key="source" ref="876722882"/>
+						<reference key="destination" ref="629331511"/>
+						<object class="NSNibBindingConnector" key="connector">
+							<reference key="NSSource" ref="876722882"/>
+							<reference key="NSDestination" ref="629331511"/>
+							<string key="NSLabel">value: selection.title</string>
+							<string key="NSBinding">value</string>
+							<string key="NSKeyPath">selection.title</string>
+							<int key="NSNibBindingConnectorVersion">2</int>
+						</object>
+					</object>
+					<int key="connectionID">238</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -915,7 +960,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 							<reference ref="1064992540"/>
 							<reference ref="703418452"/>
 							<reference ref="1054292591"/>
-							<reference ref="591292243"/>
+							<reference ref="6921163"/>
 						</array>
 						<reference key="parent" ref="88639914"/>
 					</object>
@@ -1129,38 +1174,38 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">226</int>
-						<reference key="object" ref="591292243"/>
+						<reference key="object" ref="6921163"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="943454928"/>
-							<reference ref="288816402"/>
+							<reference ref="454397400"/>
+							<reference ref="454861382"/>
 						</array>
 						<reference key="parent" ref="972752083"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">227</int>
-						<reference key="object" ref="943454928"/>
+						<reference key="object" ref="454397400"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="730505886"/>
+							<reference ref="683712640"/>
 						</array>
-						<reference key="parent" ref="591292243"/>
+						<reference key="parent" ref="6921163"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">228</int>
-						<reference key="object" ref="730505886"/>
-						<reference key="parent" ref="943454928"/>
+						<reference key="object" ref="683712640"/>
+						<reference key="parent" ref="454397400"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">229</int>
-						<reference key="object" ref="288816402"/>
+						<reference key="object" ref="454861382"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="825151027"/>
+							<reference ref="907334674"/>
 						</array>
-						<reference key="parent" ref="591292243"/>
+						<reference key="parent" ref="6921163"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">230</int>
-						<reference key="object" ref="825151027"/>
-						<reference key="parent" ref="288816402"/>
+						<reference key="object" ref="907334674"/>
+						<reference key="parent" ref="454861382"/>
 					</object>
 				</array>
 			</object>
@@ -1242,7 +1287,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">232</int>
+			<int key="maxID">238</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
