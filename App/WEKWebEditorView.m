@@ -1899,7 +1899,7 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
                 }
             }
             
-            else if ([self respondsToSelector:command])
+            else if (command == @selector(createLink:))
             {
                 [self doCommandBySelector:command];
                 result = YES;
