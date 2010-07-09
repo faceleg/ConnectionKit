@@ -221,6 +221,27 @@ static NSPointerArray   *sFactories;
     return [sFactories allObjects];
 }
 
++ (id <SVGraphicFactory>)graphicFactoryForTag:(NSInteger)tag;
+{
+    return [sFactories pointerAtIndex:tag];
+}
+
++ (NSInteger)tagForFactory:(id <SVGraphicFactory>)factory;
+{
+    // Have to hunt through for index/tag of factory
+    NSInteger result = 0;
+    for (id <SVGraphicFactory> aFactory in sFactories)
+    {
+        if (aFactory == factory) break;
+        result++;
+    }
+    
+    // This would happen if factory wasn't found
+    if (result >= [sFactories count]) result = 0;
+    
+    return result;
+}
+
 + (void)registerFactory:(id <SVGraphicFactory>)factory;
 {
     OBPRECONDITION(factory);
