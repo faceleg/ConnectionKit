@@ -30,7 +30,7 @@
 
 @property(nonatomic, retain) IBOutlet IKImageBrowserView *imageBrowser;
 
-- (void) setupTrackingRects;		// do this after the view is added and resized
+//- (void) setupTrackingRects;		// do this after the view is added and resized
 - (void) initializeExpandedState;
 
 - (void)setContracted:(BOOL)contracted forRange:(NSRange)range;

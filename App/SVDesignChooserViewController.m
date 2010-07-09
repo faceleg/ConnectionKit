@@ -58,9 +58,7 @@
 	[oDesignsArrayController removeObserver:self forKeyPath:@"arrangedObjects"];
 	[oDesignsArrayController removeObserver:self forKeyPath:@"selection"];
 
-	[[self imageBrowser] removeTrackingArea:_trackingArea];
-    
-    [self setImageBrowser:nil];
+	[self setImageBrowser:nil];
     OBPOSTCONDITION(!_browser);
     
 	[_trackingArea dealloc];
@@ -92,23 +90,23 @@
 
 
 
-- (void) setupTrackingRects;		// do this after the view is added and resized
+- (void)setupTrackingRects:(IKImageBrowserView *)imageBrowser;		// do this after the view is added and resized
 {
 	
 	/// UNCOMMENT TO TURN THIS BACK ON
 	
-	_trackingArea = [[NSTrackingArea alloc] initWithRect:[[self imageBrowser] frame]
+	_trackingArea = [[NSTrackingArea alloc] initWithRect:[imageBrowser frame]
 												 options:NSTrackingMouseMoved|NSTrackingActiveInKeyWindow|NSTrackingInVisibleRect
 												   owner:self
 												userInfo:nil];
 	
-	[[self imageBrowser] addTrackingArea:_trackingArea];
+	[imageBrowser addTrackingArea:_trackingArea];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(viewBoundsDidChange:)
 												 name:NSViewBoundsDidChangeNotification
-											   object:[self imageBrowser]];
+											   object:imageBrowser];
 }
 
 #pragma mark View
@@ -123,6 +121,8 @@
 {
     if (imageBrowser == _browser) return;
     
+    [_browser removeTrackingArea:_trackingArea];
+    
     // Dispose of old properly
     [_browser setDelegate:nil];
     [_browser setDataSource:nil];
@@ -132,6 +132,8 @@
 	[imageBrowser setDataSource:self];
 	[imageBrowser setDelegate:self];
     if (oDesignsArrayController) [imageBrowser reloadData];
+    
+    [self setupTrackingRects:imageBrowser];
 }
 
 #pragma mark Mouse Events

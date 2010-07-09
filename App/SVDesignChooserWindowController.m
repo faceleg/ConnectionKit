@@ -182,7 +182,7 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	[oScopeBar setSelected:YES forItem:self.width inGroup:kWidthGroup];
 	[oScopeBar setSelected:(!self.genre && !self.color && !self.width) forItem:@"all" inGroup:kAllGroup];
 	
-    [oViewController setupTrackingRects];
+    //[oViewController setupTrackingRects];
 }
 
 - (IBAction)chooseDesign:(id)sender		// Design was chosen.  Now call back to notify of change.
