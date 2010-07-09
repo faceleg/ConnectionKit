@@ -29,8 +29,6 @@
 	
 	
 	// Here I think I want to collapse every group unless it contains the current selection!
-	[view setDataSource:self];
-	[view setDelegate:self];
 //	[view reloadData];
 		
 	NSMutableDictionary *attributes;
@@ -112,11 +110,24 @@
 
 #pragma mark View
 
-@synthesize imageBrowser = _browser;
 - (IKImageBrowserView *)imageBrowser;
 {
-    [self view];    // make sure its loaded
+    [self view];    // make sure it's loaded
     return _browser;
+}
+
+- (void)setImageBrowser:(IKImageBrowserView *)imageBrowser;
+{
+    if (imageBrowser == _browser) return;
+    
+    // Dispose of old properly
+    [_browser setDelegate:nil];
+    [_browser setDataSource:nil];
+    
+    [_browser release]; _browser = [imageBrowser retain];
+    
+	[_browser setDataSource:self];
+	[_browser setDelegate:self];
 }
 
 #pragma mark Mouse Events
