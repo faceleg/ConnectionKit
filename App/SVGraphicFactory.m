@@ -212,9 +212,22 @@
 
 @implementation SVGraphicFactory
 
-#pragma mark Shared Objects
+#pragma mark Factory Registration
 
 static NSPointerArray   *sFactories;
+
++ (NSArray *)registeredFactories;
+{
+    return [sFactories allObjects];
+}
+
++ (void)registerFactory:(id <SVGraphicFactory>)factory;
+{
+    OBPRECONDITION(factory);
+    [sFactories addPointer:factory];
+}
+
+#pragma mark Shared Objects
 
 static id <SVGraphicFactory> sSharedTextBoxFactory;
 static id <SVGraphicFactory> sImageFactory;
@@ -225,12 +238,6 @@ static KSSortedMutableArray *sEmbeddedFactories;
 static KSSortedMutableArray *sSocialFactories;
 static KSSortedMutableArray *sMoreFactories;
 static id <SVGraphicFactory> sRawHTMLFactory;
-
-+ (void)registerFactory:(id <SVGraphicFactory>)factory;
-{
-    OBPRECONDITION(factory);
-    [sFactories addPointer:factory];
-}
 
 + (void)initialize
 {
@@ -491,7 +498,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     
     
     // Test plug-ins
-    for (id <SVGraphicFactory> aFactory in [self moreGraphicFactories])
+    for (id <SVGraphicFactory> aFactory in [self registeredFactories])
     {
         NSString *type;
         id propertyList;
@@ -555,7 +562,7 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     {
         result = [[NSMutableArray alloc] init];
         
-        for (id <SVGraphicFactory> aFactory in [self moreGraphicFactories])
+        for (id <SVGraphicFactory> aFactory in [self registeredFactories])
         {
             NSArray *acceptedTypes = [aFactory readablePasteboardTypes];
             for (NSString *aType in acceptedTypes)
