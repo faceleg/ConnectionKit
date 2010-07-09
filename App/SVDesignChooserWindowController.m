@@ -52,6 +52,7 @@
 {
     [self window];  // make sure nib is loaded
     
+    [[oViewController imageBrowser] reloadData];
     [oDesignsArrayController setSelectedObjects:[NSArray arrayWithObject:design]];
 }
 
@@ -163,8 +164,8 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	
 	//[oViewController setSelectedDesign:aDesign];
 	[oViewController initializeExpandedState];
-    [[oViewController imageBrowser] reloadData];
-		
+
+    
     [NSApp beginSheet:[self window]
        modalForWindow:window
         modalDelegate:self
