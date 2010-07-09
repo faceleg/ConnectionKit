@@ -35,7 +35,8 @@
 //
 
 #import "FeedPlugIn.h"
-#import "KSURLFormatter.h"
+#import <KSURLFormatter.h>
+#import <SVWebLocation.h>
 
 
 //FIXME: is this still needed/valid?
@@ -72,17 +73,13 @@
 {
     [super awakeFromNew];
     
-    NSURL *URL = nil;
-    NSString *title = nil;
-    if ([NSAppleScript safariFrontmostFeedURL:&URL title:&title])
+    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+    if ( [location URL] )
     {
-        if ( URL )
+        self.feedURL = [location URL];
+        if ( [location title] )
         {
-            self.feedURL = URL;
-            if ( title )
-            {
-                [[self container] setTitle:title];
-            }
+            [[self container] setTitle:[location title]];
         }
     }
 }
