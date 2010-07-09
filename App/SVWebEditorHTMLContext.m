@@ -37,6 +37,8 @@
     _currentDOMController = _rootController = [[SVDOMController alloc] init];
     _media = [[NSMutableSet alloc] init];
     
+    [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
+    
     return self;
 }
 
