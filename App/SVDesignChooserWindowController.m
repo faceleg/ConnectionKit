@@ -51,11 +51,10 @@
 - (void)setDesign:(KTDesign *)design;
 {
     [self window];  // make sure nib is loaded
-    
-    [[oViewController imageBrowser] reloadData];
+    IKImageBrowserView *imageBrowser = [oViewController imageBrowser];
+        
+    [imageBrowser reloadData];  // so that -setSelectedObjects: succeeds
     [[self designsController] setSelectedObjects:[NSArray arrayWithObject:design]];
-    
-    [[oViewController imageBrowser] scrollIndexToVisible:[[self designsController] selectionIndex]];
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;

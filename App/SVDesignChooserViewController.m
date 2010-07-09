@@ -20,27 +20,27 @@
 
 - (void)awakeFromNib
 {	
-	IKImageBrowserView *view = [self imageBrowser];
+	IKImageBrowserView *imageBrowser = [self imageBrowser];
 
 	// Here I think I want to collapse every group unless it contains the current selection!
 		
 	NSMutableDictionary *attributes;
 	NSMutableParagraphStyle *paraStyle;
 	
-	attributes = [NSMutableDictionary dictionaryWithDictionary:[view valueForKey:IKImageBrowserCellsTitleAttributesKey]];
+	attributes = [NSMutableDictionary dictionaryWithDictionary:[imageBrowser valueForKey:IKImageBrowserCellsTitleAttributesKey]];
 	paraStyle = [[[attributes objectForKey:NSParagraphStyleAttributeName] mutableCopy] autorelease];
 	[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 	[paraStyle setTighteningFactorForTruncation:0.2];
 	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
-	[view setValue:attributes forKey:IKImageBrowserCellsTitleAttributesKey];	
+	[imageBrowser setValue:attributes forKey:IKImageBrowserCellsTitleAttributesKey];	
 
 	// Same, but for highlighted
-	attributes = [NSMutableDictionary dictionaryWithDictionary:[view valueForKey:IKImageBrowserCellsHighlightedTitleAttributesKey]];
+	attributes = [NSMutableDictionary dictionaryWithDictionary:[imageBrowser valueForKey:IKImageBrowserCellsHighlightedTitleAttributesKey]];
 	paraStyle = [[[attributes objectForKey:NSParagraphStyleAttributeName] mutableCopy] autorelease];
 	[paraStyle setLineBreakMode:NSLineBreakByTruncatingTail];
 	[paraStyle setTighteningFactorForTruncation:0.2];
 	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
-	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
+	[imageBrowser setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
     
     
     // We want to be notified when designs are set so we can refresh data display
