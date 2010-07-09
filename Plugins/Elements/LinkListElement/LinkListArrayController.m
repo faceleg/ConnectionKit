@@ -63,9 +63,9 @@
     }
 	
 	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-		theTitle, @"title",
-		theURLString, @"url",
-		nil];
+                                   theTitle, @"title",
+                                   theURLString, @"url",
+                                   nil];
 	return result;
 }
 
@@ -88,36 +88,27 @@
 	if (row < 0) {	// Handle inserting at the very top of the list
 		row = 0;
 	}
-    
 	
 	// Let our superclass try before we get a crack at it
 	if ([super tableView:tv acceptDrop:info row:row dropOperation:op]) {
 		return YES;	// super handled it
 	}
 	
-	
 	// Get the URLs and titles from the pasteboard
 	NSPasteboard *pasteboard = [info draggingPasteboard];
-	
-	NSArray *webLocations = [NSClassFromString(@"KSWebLocation") webLocationsFromPasteboard:pasteboard readWeblocFiles:YES ignoreFileURLs:YES];
-	
-	
+	NSArray *webLocations = [pasteboard readWebLocations];
 	
 	// Run through the URLs, adding them to the table
-	unsigned int i;
-	for (i = 0; i < [webLocations count]; i++)
+    for ( id<SVWebLocation> location in webLocations )
 	{
-		id <SVWebLocation> aWebLocation = [webLocations objectAtIndex:i];
-		
 		// If passed NSNull as a title it means none could be found. We want to use the hostname in such cases
-		NSString *title = [aWebLocation title];
-		if (!title) title = [[aWebLocation URL] host];
-		
+		NSString *title = [location title];
+		if (!title) title = [[location URL] host];
 		
 		NSMutableDictionary *newObject = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-			[[aWebLocation URL] absoluteString], @"url",
-			[title stringByEscapingHTMLEntities], @"titleHTML",
-			nil];
+                                          [[location URL] absoluteString], @"url",
+                                          title, @"title",
+                                          nil];
 		
 		[self insertObject:newObject atArrangedObjectIndex:row];
 		[self setSelectionIndex:row];	// set selection to those that were just copied
