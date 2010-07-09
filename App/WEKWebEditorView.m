@@ -1823,8 +1823,8 @@ decisionListener:(id <WebPolicyDecisionListener>)listener
 {
     [self didChangeText];
     
-    // Bring the change into view
-    [[self webView] centerSelectionInVisibleArea:self];
+    // Bring the change into view #80762
+    //[[self webView] centerSelectionInVisibleArea:self];
 }
 
 - (void)webViewDidChangeSelection:(NSNotification *)notification
