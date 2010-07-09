@@ -279,10 +279,9 @@
                         change:(NSDictionary *)aChange
                        context:(void *)aContext
 {
-	IKImageBrowserView *view = [self imageBrowser];
 	if ([@"arrangedObjects" isEqualToString:aKeyPath])
 	{
-		[view reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
+		[[self imageBrowser] reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
 	}
 }
 
