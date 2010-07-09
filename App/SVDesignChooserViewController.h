@@ -19,17 +19,22 @@
 @interface SVDesignChooserViewController : NSViewController <IKImageBrowserDataSource, IKImageBrowserDelegate>
 {  
 	IBOutlet SVDesignsController *oDesignsArrayController;
-	NSTrackingRectTag			_trackingRect;
-	NSTrackingArea				*_trackingArea;
-	BOOL						_wasAcceptingMouseEvents;
+    
+  @private
+    IKImageBrowserView  *_browser;
+    
+	NSTrackingRectTag   _trackingRect;
+	NSTrackingArea		*_trackingArea;
+	BOOL				_wasAcceptingMouseEvents;
 }
+
+@property(nonatomic, retain) IBOutlet IKImageBrowserView *imageBrowser;
 
 - (void) setupTrackingRects;		// do this after the view is added and resized
 - (void) initializeExpandedState;
 
-- (KTDesign *)selectedDesign;
-- (void) setSelectedDesign:(KTDesign *)aDesign;
-- (void) setContracted:(BOOL)contracted forRange:(NSRange)range;
+@property(nonatomic, retain) KTDesign *selectedDesign;
+- (void)setContracted:(BOOL)contracted forRange:(NSRange)range;
 
 @end
 

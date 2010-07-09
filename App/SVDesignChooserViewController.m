@@ -17,10 +17,11 @@
 
 @implementation SVDesignChooserViewController
 
+#pragma mark Init & Dealloc
+
 - (void)awakeFromNib
 {	
-	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
-	OBASSERT([view isKindOfClass:[IKImageBrowserView class]]);
+	IKImageBrowserView *view = [self imageBrowser];
 
 	// We want to be notified when designs are set so we can refresh data display
 	[oDesignsArrayController addObserver:self forKeyPath:@"arrangedObjects" options:(NSKeyValueObservingOptionNew) context:nil];
@@ -51,12 +52,16 @@
 	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
 }
 
-- (void) dealloc
+- (void)dealloc
 {
 	[oDesignsArrayController removeObserver:self forKeyPath:@"arrangedObjects"];
 	[oDesignsArrayController removeObserver:self forKeyPath:@"selection"];
 
-	[[self view] removeTrackingArea:_trackingArea];
+	[[self imageBrowser] removeTrackingArea:_trackingArea];
+    
+    [self setImageBrowser:nil];
+    OBPOSTCONDITION(!_browser);
+    
 	[_trackingArea dealloc];
 	
 	[super dealloc];
@@ -67,7 +72,7 @@
 {
 	NSIndexSet *selIndex = [oDesignsArrayController selectionIndexes];
 	int groupIndex = 0;
-	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
+	IKImageBrowserView *theView = [self imageBrowser];
 	for (NSValue *aRangeValue in [oDesignsArrayController rangesOfGroups])
 	{
 		NSRange range = [aRangeValue rangeValue];
@@ -91,24 +96,34 @@
 	
 	/// UNCOMMENT TO TURN THIS BACK ON
 	
-	_trackingArea = [[NSTrackingArea alloc] initWithRect:[[self view] frame]
+	_trackingArea = [[NSTrackingArea alloc] initWithRect:[[self imageBrowser] frame]
 												 options:NSTrackingMouseMoved|NSTrackingActiveInKeyWindow|NSTrackingInVisibleRect
 												   owner:self
 												userInfo:nil];
 	
-	[[self view] addTrackingArea:_trackingArea];
+	[[self imageBrowser] addTrackingArea:_trackingArea];
 	
 	// a register for those notifications on the synchronized content view.
     [[NSNotificationCenter defaultCenter] addObserver:self
 											 selector:@selector(viewBoundsDidChange:)
 												 name:NSViewBoundsDidChangeNotification
-											   object:[self view]];
+											   object:[self imageBrowser]];
 }
 
+#pragma mark View
+
+@synthesize imageBrowser = _browser;
+- (IKImageBrowserView *)imageBrowser;
+{
+    [self view];    // make sure its loaded
+    return _browser;
+}
+
+#pragma mark Mouse Events
 
 - (void)mouseMoved:(NSEvent *)theEvent
 {
-	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
+	IKImageBrowserView *theView = [self imageBrowser];
 	NSPoint windowPoint = [theEvent locationInWindow];
 	NSPoint localPoint = [theView convertPoint:windowPoint fromView:nil];
 
@@ -151,6 +166,7 @@
 	[super mouseMoved:theEvent];
 }
 
+#pragma mark Image Browser Datasource/Delegate
 
 - (void) imageBrowserSelectionDidChange:(IKImageBrowserView *) aBrowser;
 {
@@ -207,11 +223,13 @@
 			nil];
 }
 
+#pragma mark Design
+
 // We get and set the design from the IKImageBrowserView
 
 - (void) setSelectedDesign:(KTDesign *)aDesign
 {
-	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	IKImageBrowserView *view = [self imageBrowser];
 	NSUInteger index = [ [oDesignsArrayController arrangedObjects] indexOfObject:aDesign];
 	if (NSNotFound != index)
 	{
@@ -225,7 +243,7 @@
 }
 - (KTDesign *)selectedDesign;
 {
-	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	IKImageBrowserView *view = [self imageBrowser];
 	NSIndexSet *selectedIndexSet = [view selectionIndexes];
 	NSUInteger firstIndex = [selectedIndexSet firstIndex];
 	KTDesign *result = nil;
@@ -241,18 +259,21 @@
 	return result;
 }
 
+#pragma mark KVO
 
 - (void)observeValueForKeyPath:(NSString *)aKeyPath
                       ofObject:(id)anObject
                         change:(NSDictionary *)aChange
                        context:(void *)aContext
 {
-	IKImageBrowserView *view = (IKImageBrowserView *)[self view];
+	IKImageBrowserView *view = [self imageBrowser];
 	if ([@"arrangedObjects" isEqualToString:aKeyPath])
 	{
 		[view reloadData];    // it appears that IKImageBrowserView does not automatically load when setting the data source
 	}
 }
+
+#pragma mark ?
 
 - (void) setContracted:(BOOL)contracted forRange:(NSRange)range
 {
@@ -263,7 +284,7 @@
 
 	[[objects objectAtIndex:range.location] setContracted:contracted];
 	
-	IKImageBrowserView *theView = (IKImageBrowserView *)[self view];
+	IKImageBrowserView *theView = [self imageBrowser];
 	if ([theView respondsToSelector:@selector(reloadCellDataAtIndex:)])
 	{
 		[theView reloadCellDataAtIndex:range.location];
