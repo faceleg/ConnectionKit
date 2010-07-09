@@ -377,6 +377,10 @@ static id <SVGraphicFactory> sRawHTMLFactory;
     NSMenuItem *result = [[[NSMenuItem alloc] init] autorelease];
     
     
+    // Tag
+    [result setTag:[self tagForFactory:factory]];
+    
+    
     // Name
     NSString *pluginName = [factory name];
     if (![pluginName length])
