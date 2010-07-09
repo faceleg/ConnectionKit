@@ -220,10 +220,17 @@
 
 - (void)centerSelectionInVisibleArea:(id)sender;
 {
-    // Strictly speaking this only brings the selection into view; it doesn't center it. But this is a damn good first pass!
-    DOMHTMLElement *selectedElement = [[self selectedItem] HTMLElement];
-    NSRect selectionRect = [selectedElement boundingBox];
-    [[selectedElement documentView] scrollRectToVisible:selectionRect];
+    if ([self selectedDOMRange])
+    {
+        [[self webView] centerSelectionInVisibleArea:sender];
+    }
+    else
+    {
+        // Strictly speaking this only brings the selection into view; it doesn't center it. But this is a damn good first pass!
+        DOMHTMLElement *selectedElement = [[self selectedItem] HTMLElement];
+        NSRect selectionRect = [selectedElement boundingBox];
+        [[selectedElement documentView] scrollRectToVisible:selectionRect];
+    }
 }
 
 @end
