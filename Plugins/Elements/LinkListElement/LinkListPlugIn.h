@@ -40,7 +40,7 @@
 @interface LinkListPlugIn : SVPageletPlugIn <SVPlugInPasteboardReading>
 {
   @private
-    NSArray *_linkList;
+    NSMutableArray *_linkList;
     NSInteger _layout;
     BOOL _openInNewWindow;
 }
@@ -49,7 +49,7 @@
 + (NSMutableDictionary *)displayableLinkFromLocation:(id<SVWebLocation>)location;
 
 // array of dictionaries, keys are url, title, comment, values are all NSStrings
-@property (nonatomic, retain) NSArray *linkList;
+@property (nonatomic, retain) NSMutableArray *linkList;
 
 // UI tag, values are 1 or 0
 @property (nonatomic, assign) NSInteger layout;

@@ -57,6 +57,16 @@
     return result;
 }
 
+- (id)init
+{
+    self = [super init];
+    if ( self )
+    {
+        self.linkList = [NSMutableArray arrayWithCapacity:5];
+    }
+    return self;
+}
+
 - (void)dealloc
 {
     self.linkList = nil;
@@ -67,18 +77,12 @@
 {
     [super awakeFromNew];
     
-    self.linkList = [NSMutableArray arrayWithCapacity:5];
-    
     // see if we can start with the frontmost URL in the default browser
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
     if ( location )
     {
         NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-        if ( link ) 
-        {
-            NSMutableArray *array = [self mutableArrayValueForKey:@"linkList"];
-            [array addObject:link];
-        }
+        if ( link ) [self.linkList addObject:link];
     }
 }
 
@@ -147,11 +151,7 @@
     if ( [location conformsToProtocol:@protocol(SVWebLocation)] )
     {
         NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
-        if ( link ) 
-        {
-            NSMutableArray *array = [self mutableArrayValueForKey:@"linkList"];
-            [array addObject:link];
-        }
+        if ( link ) [self.linkList addObject:link];
     }
 }
 
