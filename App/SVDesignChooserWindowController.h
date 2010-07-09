@@ -45,6 +45,6 @@
 - (IBAction)cancelSheet:(id)sender;
 - (IBAction)chooseDesign:(id)sender;
 
-- (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector initialDesign:(KTDesign *)aDesign;
+- (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 
 @end

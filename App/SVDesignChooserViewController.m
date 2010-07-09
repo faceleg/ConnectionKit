@@ -28,7 +28,6 @@
 	
 	
 	// Here I think I want to collapse every group unless it contains the current selection!
-//	[view reloadData];
 		
 	NSMutableDictionary *attributes;
 	NSMutableParagraphStyle *paraStyle;
@@ -47,6 +46,10 @@
 	[paraStyle setTighteningFactorForTruncation:0.2];
 	[attributes setObject:paraStyle forKey:NSParagraphStyleAttributeName];
 	[view setValue:attributes forKey:IKImageBrowserCellsHighlightedTitleAttributesKey];	
+    
+    
+    // Ready to load
+    [view reloadData];
 }
 
 - (void)dealloc
@@ -127,6 +130,7 @@
     
 	[imageBrowser setDataSource:self];
 	[imageBrowser setDelegate:self];
+    [imageBrowser reloadData];
 }
 
 #pragma mark Mouse Events

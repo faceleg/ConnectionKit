@@ -29,10 +29,16 @@
 
 #pragma mark Properties
 
-
-- (KTDesign *)design	// called when done, to ask what was design
+- (KTDesign *)design;
 {
     return [oViewController selectedDesign];
+    // will retun nil if nib has not been loaded yet, but that's fine
+}
+
+- (void)setDesign:(KTDesign *)design;
+{
+    [self window];  // make sure nib is loaded
+    [oViewController setSelectedDesign:design];
 }
 
 @synthesize selectorWhenChosen = _selectorWhenChosen;
@@ -112,30 +118,25 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 #pragma mark -
 
-- (void)awakeFromNib
-{
-}
-
-
 - (void)lookForNulls
 {
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"color == NULL"]];
 	OFF((@"null color: %@", [oDesignsArrayController arrangedObjects]));
-	_hasNullColor = 0 != [[oDesignsArrayController arrangedObjects] count];
+	_hasNullColor = (0 != [[oDesignsArrayController arrangedObjects] count]);
 	
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"genre == NULL"]];
 	OFF((@"null genres: %@", [oDesignsArrayController arrangedObjects]));
-	_hasNullGenre = 0 != [[oDesignsArrayController arrangedObjects] count];
+	_hasNullGenre = (0 != [[oDesignsArrayController arrangedObjects] count]);
 
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"width == NULL"]];
 	OFF((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
-	_hasNullWidth = 0 != [[oDesignsArrayController arrangedObjects] count];
+	_hasNullWidth = (0 != [[oDesignsArrayController arrangedObjects] count]);
 	
 	[oDesignsArrayController setFilterPredicate:nil];		// go back to no filter
 
 }
 
-- (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector initialDesign:(KTDesign *)aDesign;
+- (void)beginDesignChooserForWindow:(NSWindow *)window delegate:(id)aTarget didEndSelector:(SEL)aSelector;
 {
 	self.selectorWhenChosen = aSelector;
 	self.targetWhenChosen = aTarget;
@@ -143,10 +144,10 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 	[self window];		// get designs array controller loaded
 	
 	
-	[oViewController setSelectedDesign:nil];
-	[self lookForNulls];	// set up scope bar.  Do this before real selection.
+	//[oViewController setSelectedDesign:nil];
+	//[self lookForNulls];	// set up scope bar.  Do this before real selection.
 	
-	[oViewController setSelectedDesign:aDesign];
+	//[oViewController setSelectedDesign:aDesign];
 	[oViewController initializeExpandedState];
 		
     [NSApp beginSheet:[self window]

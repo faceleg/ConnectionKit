@@ -354,10 +354,25 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     KTDesign *design = [[self pagesController] valueForKeyPath:@"selection.master.design"];
     if (NSIsControllerMarker(design)) design = nil;
     
+    [_designChooserWindowController setDesign:design];
+    
+    
+    [self performSelector:@selector(showDesignSheet) withObject:nil afterDelay:1.0];
+    return;
+    
+    [[NSRunLoop currentRunLoop] performSelector:@selector(showDesignSheet)
+                                         target:self
+                                       argument:nil
+                                          order:NSUIntegerMax
+                                          modes:[NSArray arrayWithObject:NSRunLoopCommonModes]];
+}
+
+- (void)showDesignSheet;
+{
+    // Private support method that only handles getting the sheet onscreen
     [_designChooserWindowController beginDesignChooserForWindow:[self window]
 													   delegate:self
-												 didEndSelector:@selector(designChooserDidEnd:)
-												  initialDesign:design];
+												 didEndSelector:@selector(designChooserDidEnd:)];
 }
 
 - (void)designChooserDidEnd:(SVDesignChooserWindowController *)designChooser
