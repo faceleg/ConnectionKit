@@ -35,6 +35,7 @@
 //
 
 #import "LinkListArrayController.h"
+#import "LinkListPlugIn.h"
 
 
 @implementation LinkListArrayController
@@ -51,21 +52,27 @@
 */
 - (id)newObject	// must return object with a retain count of one
 {
-	NSString *theURLString = @"http://";
-	NSString *theTitle = LocalizedStringInThisBundle(@"Name",@"Initial title of an item in a list of web links");
-    
     id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
-	NSURL *theURL = [location URL];
-    if ( theURL )
+    NSMutableDictionary *result = [LinkListPlugIn displayableLinkFromLocation:location];
+    
+    if ( !result )
     {
-        theURLString = [theURL absoluteString];
-        theTitle = [location title];
+        NSString *theURLString = @"http://";
+        NSString *theTitle = LocalizedStringInThisBundle(@"Name",@"Initial title of an item in a list of web links");
+
+        NSURL *theURL = [location URL];
+        if ( theURL )
+        {
+            theURLString = [theURL absoluteString];
+            theTitle = [location title];
+        }
+        
+        result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
+                  theTitle, @"title",
+                  theURLString, @"url",
+                  nil];
     }
-	
-	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-                                   theTitle, @"title",
-                                   theURLString, @"url",
-                                   nil];
+    
 	return result;
 }
 
@@ -101,23 +108,17 @@
 	// Run through the URLs, adding them to the table
     for ( id<SVWebLocation> location in webLocations )
 	{
-		// If passed NSNull as a title it means none could be found. We want to use the hostname in such cases
-		NSString *title = [location title];
-		if (!title) title = [[location URL] host];
-		
-		NSMutableDictionary *newObject = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                          [[location URL] absoluteString], @"url",
-                                          title, @"title",
-                                          nil];
-		
-		[self insertObject:newObject atArrangedObjectIndex:row];
-		[self setSelectionIndex:row];	// set selection to those that were just copied
-		
-		row++;
-		didInsert = YES;
+        NSMutableDictionary *link = [LinkListPlugIn displayableLinkFromLocation:location];
+        if ( link )
+        {
+            [self insertObject:link atArrangedObjectIndex:row];
+            [self setSelectionIndex:row];
+            row++;
+            didInsert = YES;
+        }
 	}
 	
-	return (didInsert);		// only return YES if we actually inserted something
+	return didInsert;		// only return YES if we actually inserted something
 }
 
 @end
