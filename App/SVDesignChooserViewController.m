@@ -8,7 +8,6 @@
 
 #import "SVDesignChooserViewController.h"
 #import "NSBundle+Karelia.h"
-#import "KSPlugInWrapper.h"
 #import "KT.h"
 #import "KTDesign.h"
 #import "KTDesignFamily.h"

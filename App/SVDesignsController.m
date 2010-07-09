@@ -7,13 +7,38 @@
 //
 
 #import "SVDesignsController.h"
+
 #import "KTDesign.h"
+#import "KT.h"
+
+#import "KSPlugInWrapper.h"
+
 
 @implementation SVDesignsController
 
 @synthesize rangesOfGroups = _rangesOfGroups;
 
-- (void) dealloc
+- (id)init;
+{
+    self = [super init];
+    
+    // By default, list installed design plug-ins
+    [self setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
+    
+    return self;
+}
+
+- (id)initWithCoder:(NSCoder *)aDecoder;
+{
+    [super initWithCoder:aDecoder];
+    
+    // By default, list installed design plug-ins
+    [self setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
+    
+    return self;
+}
+
+- (void)dealloc
 {
 	self.rangesOfGroups = nil;
 	[super dealloc];
@@ -22,19 +47,12 @@
 - (NSArray *)arrangeObjects:(NSArray *)objects;
 {
     objects = [super arrangeObjects:objects];		// do the filtering
+    
 	NSArray *newRangesOfGroups;
 	objects = [KTDesign reorganizeDesigns:objects familyRanges:&newRangesOfGroups];
 	self.rangesOfGroups = newRangesOfGroups;
+    
 	return objects;
-}
-
-- (BOOL)setSelectionIndex:(NSUInteger)index;
-{
-	return [super setSelectionIndex:index];
-}
-- (BOOL)setSelectionIndexes:(NSIndexSet *)indexes;    // to deselect all: empty index set, to select all: index set with indexes [0...count - 1]
-{
-	return [super setSelectionIndexes:indexes];
 }
 
 @end

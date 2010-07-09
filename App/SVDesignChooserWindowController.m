@@ -142,8 +142,6 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 
 	[self window];		// get designs array controller loaded
 	
-	[oDesignsArrayController setContent:[KSPlugInWrapper sortedPluginsWithFileExtension:kKTDesignExtension]];
-	// This will invoke arrangeObjects, which means that we now have an index set of families.
 	
 	[oViewController setSelectedDesign:nil];
 	[self lookForNulls];	// set up scope bar.  Do this before real selection.
