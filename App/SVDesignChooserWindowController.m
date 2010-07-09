@@ -120,17 +120,14 @@ enum { kAllGroup, kGenreGroup, kColorGroup, kWidthGroup };	// I would prefer to 
 - (void)lookForNulls
 {
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"color == NULL"]];
-	[oDesignsArrayController rearrangeObjects];
 	OFF((@"null color: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullColor = 0 != [[oDesignsArrayController arrangedObjects] count];
 	
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"genre == NULL"]];
-	[oDesignsArrayController rearrangeObjects];
 	OFF((@"null genres: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullGenre = 0 != [[oDesignsArrayController arrangedObjects] count];
 
 	[oDesignsArrayController setFilterPredicate:[NSPredicate predicateWithFormat:@"width == NULL"]];
-	[oDesignsArrayController rearrangeObjects];
 	OFF((@"null widths: %@", [oDesignsArrayController arrangedObjects]));
 	_hasNullWidth = 0 != [[oDesignsArrayController arrangedObjects] count];
 	
@@ -461,12 +458,10 @@ NSLocalizedString(@"Minimal", @"category for kind of design, goes below 'Choose 
 
 		NSPredicate *pred = [NSCompoundPredicate andPredicateWithSubpredicates:preds];
 		[oDesignsArrayController setFilterPredicate:pred];
-		[oDesignsArrayController rearrangeObjects];
 	}
 	else	// no filter -- all
 	{
 		[oDesignsArrayController setFilterPredicate:nil];
-		[oDesignsArrayController rearrangeObjects];
 	}
 }
 

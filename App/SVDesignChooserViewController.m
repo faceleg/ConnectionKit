@@ -126,8 +126,8 @@
     
     [_browser release]; _browser = [imageBrowser retain];
     
-	[_browser setDataSource:self];
-	[_browser setDelegate:self];
+	[imageBrowser setDataSource:self];
+	[imageBrowser setDelegate:self];
 }
 
 #pragma mark Mouse Events
@@ -238,18 +238,21 @@
 
 // We get and set the design from the IKImageBrowserView
 
-- (void) setSelectedDesign:(KTDesign *)aDesign
+- (void)setSelectedDesign:(KTDesign *)aDesign
 {
-	IKImageBrowserView *view = [self imageBrowser];
-	NSUInteger index = [ [oDesignsArrayController arrangedObjects] indexOfObject:aDesign];
+	IKImageBrowserView *imageBrowser = [self imageBrowser];
+	
+    NSUInteger index = [[oDesignsArrayController arrangedObjects] indexOfObject:aDesign];
 	if (NSNotFound != index)
 	{
-		[view setSelectionIndexes:[NSIndexSet indexSetWithIndex:index] byExtendingSelection:NO];
-		[view scrollIndexToVisible:index];
+		[imageBrowser setSelectionIndexes:[NSIndexSet indexSetWithIndex:index]
+                     byExtendingSelection:NO];
+        
+		[imageBrowser scrollIndexToVisible:index];
 	}
 	else	// no selection
 	{
-		[view setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
+		[imageBrowser setSelectionIndexes:[NSIndexSet indexSet] byExtendingSelection:NO];
 	}
 }
 - (KTDesign *)selectedDesign;
