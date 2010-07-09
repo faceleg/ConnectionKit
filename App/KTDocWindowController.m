@@ -357,7 +357,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [_designChooserWindowController setDesign:design];
     
     
-    [self performSelector:@selector(showDesignSheet) withObject:nil afterDelay:1.0];
+    [self performSelector:@selector(showDesignSheet) withObject:nil];// afterDelay:1.0];
     return;
     
     [[NSRunLoop currentRunLoop] performSelector:@selector(showDesignSheet)
@@ -380,29 +380,32 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     KTDesign *aDesign = [designChooser design];
     
 	OFF((@"%s %p",__FUNCTION__, aDesign));
-	[[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
-    
-    
-    // Update in-design media
-    [[self document] designDidChange];
-    
-    
-    // Let all graphics know of the change.
-    NSArray *graphics = [[[self pagesController] managedObjectContext]
-                         fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
-    for (SVGraphic *aGraphic in graphics)
+    if (aDesign)
     {
-        for (SVSidebar *aSidebar in [aGraphic sidebars])
-        {
-            KTPage *page = [aSidebar page];
-            if (page) [aGraphic didAddToPage:page];
-        }
+        [[self pagesController] setValue:aDesign forKeyPath:@"selection.master.design"];
         
-        SVRichText *text = [[aGraphic textAttachment] body];
-        if ([text isKindOfClass:[SVArticle class]])
+        
+        // Update in-design media
+        [[self document] designDidChange];
+        
+        
+        // Let all graphics know of the change.
+        NSArray *graphics = [[[self pagesController] managedObjectContext]
+                             fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
+        for (SVGraphic *aGraphic in graphics)
         {
-            KTPage *page = [(SVArticle *)text page];
-            if (page) [aGraphic didAddToPage:page];
+            for (SVSidebar *aSidebar in [aGraphic sidebars])
+            {
+                KTPage *page = [aSidebar page];
+                if (page) [aGraphic didAddToPage:page];
+            }
+            
+            SVRichText *text = [[aGraphic textAttachment] body];
+            if ([text isKindOfClass:[SVArticle class]])
+            {
+                KTPage *page = [(SVArticle *)text page];
+                if (page) [aGraphic didAddToPage:page];
+            }
         }
     }
 }
