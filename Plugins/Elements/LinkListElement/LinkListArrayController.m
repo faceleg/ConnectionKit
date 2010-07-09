@@ -53,12 +53,17 @@
 {
 	NSString *theURLString = @"http://";
 	NSString *theTitle = LocalizedStringInThisBundle(@"Name",@"Initial title of an item in a list of web links");
-	NSURL *theURL = nil;
-	[NSAppleScript getWebBrowserURL:&theURL title:&theTitle source:nil];
-	if (theURL)	theURLString = [theURL absoluteString];
+    
+    id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+	NSURL *theURL = [location URL];
+    if ( theURL )
+    {
+        theURLString = [theURL absoluteString];
+        theTitle = [location title];
+    }
 	
 	NSMutableDictionary *result = [[NSMutableDictionary alloc] initWithObjectsAndKeys:
-		[theTitle stringByEscapingHTMLEntities], @"titleHTML",
+		theTitle, @"title",
 		theURLString, @"url",
 		nil];
 	return result;
