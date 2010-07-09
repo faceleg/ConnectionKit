@@ -11,7 +11,7 @@
 			<string key="com.brandonwalkin.BWToolkit">1.2.5</string>
 		</dictionary>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="226"/>
+			<integer value="186"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.brandonwalkin.BWToolkit</string>
@@ -292,22 +292,22 @@
 												<reference key="NSTextColor" ref="770762360"/>
 											</object>
 										</object>
-										<object class="BWAnchoredButtonBar" id="647559569">
+										<object class="BWAnchoredButtonBar" id="1005744294">
 											<reference key="NSNextResponder" ref="972752083"/>
 											<int key="NSvFlags">290</int>
 											<array class="NSMutableArray" key="NSSubviews">
-												<object class="BWAnchoredButton" id="612602491">
-													<reference key="NSNextResponder" ref="647559569"/>
+												<object class="BWAnchoredButton" id="1049587597">
+													<reference key="NSNextResponder" ref="1005744294"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrameSize">{24, 24}</string>
-													<reference key="NSSuperview" ref="647559569"/>
+													<reference key="NSSuperview" ref="1005744294"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="184464191">
+													<object class="BWAnchoredButtonCell" key="NSCell" id="496051788">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="612602491"/>
+														<reference key="NSControlView" ref="1049587597"/>
 														<int key="NSButtonFlags">-2033958657</int>
 														<int key="NSButtonFlags2">163</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -320,18 +320,18 @@
 														<int key="NSPeriodicInterval">25</int>
 													</object>
 												</object>
-												<object class="BWAnchoredButton" id="133743328">
-													<reference key="NSNextResponder" ref="647559569"/>
+												<object class="BWAnchoredButton" id="990316572">
+													<reference key="NSNextResponder" ref="1005744294"/>
 													<int key="NSvFlags">268</int>
 													<string key="NSFrame">{{23, 0}, {24, 24}}</string>
-													<reference key="NSSuperview" ref="647559569"/>
+													<reference key="NSSuperview" ref="1005744294"/>
 													<bool key="NSEnabled">YES</bool>
-													<object class="BWAnchoredButtonCell" key="NSCell" id="659432181">
+													<object class="BWAnchoredButtonCell" key="NSCell" id="536248845">
 														<int key="NSCellFlags">67239424</int>
 														<int key="NSCellFlags2">134348800</int>
 														<string key="NSContents"/>
 														<reference key="NSSupport" ref="26"/>
-														<reference key="NSControlView" ref="133743328"/>
+														<reference key="NSControlView" ref="990316572"/>
 														<int key="NSButtonFlags">-2033958657</int>
 														<int key="NSButtonFlags2">163</int>
 														<object class="NSCustomResource" key="NSNormalImage">
@@ -375,7 +375,7 @@
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4325376</int>
 												<string key="NSContents">Links</string>
-												<object class="NSFont" key="NSSupport" id="902310312">
+												<object class="NSFont" key="NSSupport" id="333386484">
 													<string key="NSName">LucidaGrande-Bold</string>
 													<double key="NSSize">11</double>
 													<int key="NSfFlags">16</int>
@@ -418,7 +418,7 @@
 												<int key="NSCellFlags">67239424</int>
 												<int key="NSCellFlags2">4325376</int>
 												<string key="NSContents">Layout</string>
-												<reference key="NSSupport" ref="902310312"/>
+												<reference key="NSSupport" ref="333386484"/>
 												<reference key="NSControlView" ref="330520284"/>
 												<reference key="NSBackgroundColor" ref="347547808"/>
 												<reference key="NSTextColor" ref="770762360"/>
@@ -621,7 +621,6 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 			<object class="NSArrayController" id="629331511">
 				<array class="NSMutableArray" key="NSDeclaredKeys">
 					<string>url</string>
-					<string>titleHTML</string>
 					<string>comment</string>
 					<string>@count</string>
 					<string>title</string>
@@ -796,7 +795,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">add:</string>
 						<reference key="source" ref="629331511"/>
-						<reference key="destination" ref="612602491"/>
+						<reference key="destination" ref="1049587597"/>
 					</object>
 					<int key="connectionID">233</int>
 				</object>
@@ -804,17 +803,17 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					<object class="IBActionConnection" key="connection">
 						<string key="label">remove:</string>
 						<reference key="source" ref="629331511"/>
-						<reference key="destination" ref="133743328"/>
+						<reference key="destination" ref="990316572"/>
 					</object>
 					<int key="connectionID">234</int>
 				</object>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: canAdd</string>
-						<reference key="source" ref="612602491"/>
+						<reference key="source" ref="1049587597"/>
 						<reference key="destination" ref="629331511"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="612602491"/>
+							<reference key="NSSource" ref="1049587597"/>
 							<reference key="NSDestination" ref="629331511"/>
 							<string key="NSLabel">enabled: canAdd</string>
 							<string key="NSBinding">enabled</string>
@@ -827,10 +826,10 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 				<object class="IBConnectionRecord">
 					<object class="IBBindingConnection" key="connection">
 						<string key="label">enabled: canRemove</string>
-						<reference key="source" ref="133743328"/>
+						<reference key="source" ref="990316572"/>
 						<reference key="destination" ref="629331511"/>
 						<object class="NSNibBindingConnector" key="connector">
-							<reference key="NSSource" ref="133743328"/>
+							<reference key="NSSource" ref="990316572"/>
 							<reference key="NSDestination" ref="629331511"/>
 							<string key="NSLabel">enabled: canRemove</string>
 							<string key="NSBinding">enabled</string>
@@ -953,7 +952,7 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 							<reference ref="876722882"/>
 							<reference ref="363936151"/>
 							<reference ref="703418452"/>
-							<reference ref="647559569"/>
+							<reference ref="1005744294"/>
 							<reference ref="1054292591"/>
 							<reference ref="1064992540"/>
 							<reference ref="874077140"/>
@@ -1170,38 +1169,38 @@ ZSBDb21wdXRlciwgSW5jLiwgMjAwNQAAAAA</bytes>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">226</int>
-						<reference key="object" ref="647559569"/>
+						<reference key="object" ref="1005744294"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="612602491"/>
-							<reference ref="133743328"/>
+							<reference ref="1049587597"/>
+							<reference ref="990316572"/>
 						</array>
 						<reference key="parent" ref="972752083"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">227</int>
-						<reference key="object" ref="612602491"/>
+						<reference key="object" ref="1049587597"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="184464191"/>
+							<reference ref="496051788"/>
 						</array>
-						<reference key="parent" ref="647559569"/>
+						<reference key="parent" ref="1005744294"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">228</int>
-						<reference key="object" ref="184464191"/>
-						<reference key="parent" ref="612602491"/>
+						<reference key="object" ref="496051788"/>
+						<reference key="parent" ref="1049587597"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">229</int>
-						<reference key="object" ref="133743328"/>
+						<reference key="object" ref="990316572"/>
 						<array class="NSMutableArray" key="children">
-							<reference ref="659432181"/>
+							<reference ref="536248845"/>
 						</array>
-						<reference key="parent" ref="647559569"/>
+						<reference key="parent" ref="1005744294"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">230</int>
-						<reference key="object" ref="659432181"/>
-						<reference key="parent" ref="133743328"/>
+						<reference key="object" ref="536248845"/>
+						<reference key="parent" ref="990316572"/>
 					</object>
 				</array>
 			</object>
