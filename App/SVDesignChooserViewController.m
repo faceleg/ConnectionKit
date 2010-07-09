@@ -194,31 +194,27 @@
 
 // Data source
 
-- (NSUInteger) numberOfItemsInImageBrowser:(IKImageBrowserView *) aBrowser;
+- (NSUInteger)numberOfItemsInImageBrowser:(IKImageBrowserView *)aBrowser;
 {
 	return [[oDesignsArrayController arrangedObjects] count];
 }
 
-- (id /*IKImageBrowserItem*/) imageBrowser:(IKImageBrowserView *) aBrowser itemAtIndex:(NSUInteger)index;
+- (id /*IKImageBrowserItem*/)imageBrowser:(IKImageBrowserView *)aBrowser itemAtIndex:(NSUInteger)index;
 {
-	return [ [oDesignsArrayController arrangedObjects] objectAtIndex:index];
+	return [[oDesignsArrayController arrangedObjects] objectAtIndex:index];
 }
 
-
-
-- (BOOL) imageBrowser:(IKImageBrowserView *) aBrowser moveItemsAtIndexes: (NSIndexSet *)indexes toIndex:(NSUInteger)destinationIndex;
+- (BOOL)imageBrowser:(IKImageBrowserView *)aBrowser moveItemsAtIndexes:(NSIndexSet *)indexes toIndex:(NSUInteger)destinationIndex;
 {
 	return NO;
 }
 
-
-
-- (NSUInteger) numberOfGroupsInImageBrowser:(IKImageBrowserView *) aBrowser;
+- (NSUInteger)numberOfGroupsInImageBrowser:(IKImageBrowserView *)aBrowser;
 {
 	return [[oDesignsArrayController rangesOfGroups] count];
 }
 
-- (NSDictionary *) imageBrowser:(IKImageBrowserView *) aBrowser groupAtIndex:(NSUInteger) index;
+- (NSDictionary *)imageBrowser:(IKImageBrowserView *)aBrowser groupAtIndex:(NSUInteger)index;
 {
 	NSValue *rangeValue = [[oDesignsArrayController rangesOfGroups] objectAtIndex:index];
 	NSRange range = [rangeValue rangeValue];
