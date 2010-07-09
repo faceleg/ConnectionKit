@@ -24,7 +24,7 @@ typedef enum {
 } ValidationState;
 
 
-@class KTAbstractElement, SVRawHTMLGraphic;
+@class KTAbstractElement, SVRawHTMLGraphic, KTAsyncOffscreenWebViewController;
 
 // Syntax-colored text file viewer:
 @interface KTHTMLInspectorController : NSWindowController
@@ -45,6 +45,7 @@ typedef enum {
 	BOOL							_syntaxColoringBusy;		// Set while recolorRange is busy, so we don't recursively call recolorRange.
 	NSRange							_affectedCharRange;
 	NSString						*_replacementString;
+	BOOL							_hasRemoteLoads;
 
 	// ivar of what to send the information back to
 	SVRawHTMLGraphic				*_HTMLSourceObject;
@@ -52,6 +53,9 @@ typedef enum {
 	
 	NSString						*_sourceCodeTemp;				// Temp. storage for data from file until NIB has been read.
 	NSString						*_title;
+	
+	KTAsyncOffscreenWebViewController *_asyncOffscreenWebViewController;
+
 		
 	// Bound Properties
 	KTDocType						_docType;
@@ -69,6 +73,7 @@ typedef enum {
 
 - (BOOL) canValidate;	// for bindings
 
+@property (nonatomic) BOOL hasRemoteLoads;
 @property (nonatomic, retain) NSUndoManager *undoManager;
 @property (nonatomic) BOOL autoSyntaxColoring;
 @property (nonatomic) BOOL maintainIndentation;
@@ -86,6 +91,7 @@ typedef enum {
 @property (nonatomic) BOOL preventPreview;
 @property (nonatomic, copy) NSData *hashOfLastValidation;
 @property (assign) SEL completionSelector;
+@property (nonatomic, retain) KTAsyncOffscreenWebViewController *asyncOffscreenWebViewController;
 
 @end
 

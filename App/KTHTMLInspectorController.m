@@ -22,7 +22,7 @@
 #import "NSTextView+KTExtensions.h"
 #import "SVValidatorWindowController.h"
 #import "SVRawHTMLGraphic.h"
-
+#import "KTAsyncOffscreenWebViewController.h"
 #import "Registration.h"
 
 @implementation KTHTMLInspectorWindow
@@ -38,6 +38,7 @@
 - (void)calculateCachedPreludes;
 - (void) autoValidate;
 - (NSData *)generateHashFromFragment:(NSString *)fragment;
+- (void)loadFragment:(NSString *)fragmentString;
 
 -(IBAction)	recolorCompleteFile: (id)sender;
 -(IBAction) recolorCompleteFileDeferred: (id)sender;
@@ -65,6 +66,10 @@
 @synthesize preventPreview = _preventPreview;
 @synthesize hashOfLastValidation = _hashOfLastValidation;
 @synthesize completionSelector = _completionSelector;
+@synthesize hasRemoteLoads = _hasRemoteLoads;
+
+
+
 
 
 
@@ -132,6 +137,10 @@
 -(void)	dealloc
 {
 	[self removeObserver:self forKeyPath:@"docType"];
+	[self removeObserver:self forKeyPath:@"preventPreview"];
+
+	[[self asyncOffscreenWebViewController] stopLoading];
+	
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
 	[_recolorTimer invalidate];
 	[_recolorTimer release];
@@ -268,6 +277,9 @@ initial syntax coloring.
 - (IBAction) applyChanges:(id)sender;
 {
 	[self saveBackToSource:nil];
+	
+	// Also I want to test the loading
+	[self loadFragment:[[textView textStorage] string]];
 }
 
 - (IBAction) docTypePopUpChanged:(id)sender;
@@ -895,6 +907,85 @@ initial syntax coloring.
 	}
 	return result;
 }
+
+#pragma mark -
+#pragma mark Offscreen loader
+
+- (void)loadFragment:(NSString *)fragmentString;
+{
+	[[self asyncOffscreenWebViewController] setDelegate:self];
+	// NOT USED? [self setElementWaitingForFragmentLoad:element];
+	// Kick off load of fragment, we will be notified when it's done.
+	KTAsyncOffscreenWebViewController *asyncLoader = [self asyncOffscreenWebViewController];
+	WebView *webview = [asyncLoader webView];
+	[webview setResourceLoadDelegate:self];
+	
+	self.hasRemoteLoads = NO;	// this will get turned on if a request for a remote load comes in
+	
+	[asyncLoader  loadHTMLFragment:fragmentString];
+	
+}
+
+// Resource load delegate -- so I can know that we are trying to load off-page resources
+
+//- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource;
+//{
+//	static NSUInteger itemNum = 0;
+//	NSNumber *result = [NSString stringWithFormat:@"___%d___", itemNum++];
+//	NSLog(@"%s %@ %@",__FUNCTION__, result, request);
+//	return result;
+//}
+
+- (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource;
+{
+	NSURLRequest *result = request;
+//	NSLog(@"%s %@ %@",__FUNCTION__, identifier, request);
+	
+	NSURL *URL = [request URL];
+	NSString *scheme =[URL scheme];
+	if (![scheme isEqualToString:@"about"])
+	{
+		self.hasRemoteLoads = YES;
+		result = nil;				// deny this -- cancel loading this request
+		[sender stopLoading:nil];	// stop loading the whole webview; we got what we needed
+	}
+	return result;
+}
+
+/*	This splices the DOM tree that has been loaded into the offscreen webview into the element
+ *	that is waiting for this fragment to have finished loading, [self elementWaitingForFragmentLoad].
+ *	First it removes any existing children of that element (since we are replacing it),
+ *	Then it imports the loaded body into the destination webview's DOMDocument (via importNode::)
+ *	Finally, it loops through each element and find all the <script> elements, and, in order to
+ *	prevent any script tags from executing (again, since they would have executed in the offscreen
+ *	view), it strips out the info that will allow the script to execute.  This unfortunately affects
+ *	the DOM for view source, but this isn't stored in the permanent database since this is just
+ *	surgery on the currently viewed webview.
+ * 
+ *	Finally, after processing, we insert the new tree into the webview's tree, and process editing
+ *	nodes to bring us the green + markers.
+ */
+- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
+{
+
+	
+}
+
+- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
+{
+	if (nil == _asyncOffscreenWebViewController)
+	{
+		_asyncOffscreenWebViewController = [[KTAsyncOffscreenWebViewController alloc] init];
+	}
+    return _asyncOffscreenWebViewController; 
+}
+- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController
+{
+    [anAsyncOffscreenWebViewController retain];
+    [_asyncOffscreenWebViewController release];
+    _asyncOffscreenWebViewController = anAsyncOffscreenWebViewController;
+}
+
 
 
 @end

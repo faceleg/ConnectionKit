@@ -14,6 +14,8 @@
 
 @implementation KTAsyncOffscreenWebViewController
 
+@synthesize webView = _webView;
+
 - (id) init
 {
 	self = [super init];
@@ -69,7 +71,7 @@
 	{
 		body = (DOMHTMLElement *)[bodyList item:0];
 	}
-	[_delegate spliceElement:body];
+	[_delegate bodyLoaded:body];
 }
 
 - (void)stopLoading

@@ -18,6 +18,7 @@
 	id _delegate;
 }
 
+@property (readonly, nonatomic, retain) WebView *webView;
 
 - (id)delegate;
 - (void)setDelegate:(id)aDelegate;

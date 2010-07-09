@@ -292,7 +292,7 @@
  *	Finally, after processing, we insert the new tree into the webview's tree, and process editing
  *	nodes to bring us the green + markers.
  */
-- (void)spliceElement:(DOMHTMLElement *)loadedBody;
+- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
 {
 	DOMHTMLElement *element = [self elementWaitingForFragmentLoad];
     
