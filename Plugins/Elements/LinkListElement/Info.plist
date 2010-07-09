@@ -48,7 +48,7 @@
 	<key>KTPluginName</key>
 	<string>List of Links</string>
 	<key>KTPluginNibFile</key>
-	<string>LinkListPagelet</string>
+	<string>LinkListInspector</string>
 	<key>KTPluginUntitledName</key>
 	<string>Link List</string>
 	<key>KTTemplateName</key>
