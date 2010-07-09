@@ -8,8 +8,23 @@
 
 #import "SVRawHTMLDOMController.h"
 
+#import "SVTemplate.h"
+
 
 @implementation SVRawHTMLDOMController
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document
+{
+    [super loadHTMLElementFromDocument:document];
+    
+    NSRect box = [[self HTMLElement] boundingBox];
+    if (box.size.width <= 0.0f || box.size.height <= 0.0f)
+    {
+        // Replace with placeholder
+        NSString *placeholderHTML = [[SVRawHTMLGraphic placeholderTemplate] templateString];
+        [[self bodyHTMLElement] setInnerHTML:placeholderHTML];
+    }
+}
 
 @end
 
