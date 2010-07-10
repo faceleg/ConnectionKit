@@ -129,7 +129,7 @@
     
     
     // Start the document
-    [self startDocumentWithDocType:[page docType]];
+    [self startDocumentWithDocType:[self docType]];
     
     
     // It's template time!

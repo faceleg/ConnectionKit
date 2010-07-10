@@ -331,39 +331,7 @@
 	return buf;
 }
 
-#pragma mark -
 #pragma mark DTD
-
-- (KTDocType)docType
-{
-	KTDocType result = [[NSUserDefaults standardUserDefaults] integerForKey:@"DocType"];
-	
-	
-    // if wantsJSKit comments, use transitional doc type (or worse, if already known)
-	if ( result > KTXHTMLTransitionalDocType )
-	{
-		if ([[self allowComments] boolValue] && [[self master] wantsJSKit] )
-		{
-			result = KTXHTMLTransitionalDocType; // if this changes to KTHTML401DocType, also change isXHTML
-		}
-	}
-    
-    
-    // Do any plug-ins want to lower the tone?
-    /*
-    NSManagedObjectContext *context = [self managedObjectContext];
-    NSArray *graphics = [context fetchAllObjectsForEntityForName:@"Graphic" error:NULL];
-    
-    for (NSManagedObject *aGraphic in graphics)
-    {
-        result = MIN(result, [[aGraphic valueForKey:@"docType"] integerValue]);
-        if (result == KTHTML401DocType) break;
-    }
-     */
-    
-    
-	return result;
-}
 
 // For code review:  Where can this utility class go?
 + (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;
