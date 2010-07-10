@@ -35,7 +35,7 @@ typedef enum {
 	BOOL                _liveDataFeeds;
     NSStringEncoding    _stringEncoding;
     NSString            *_language;
-    KTDocType           _docType;
+    KTDocType           _maxDocType;
     
     BOOL            _includeStyling;
     NSURL           *_mainCSSURL;

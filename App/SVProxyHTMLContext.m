@@ -45,8 +45,7 @@
 - (BOOL)liveDataFeeds { return [_target liveDataFeeds]; }
 - (void)setLiveDataFeeds:(BOOL)flag { return [_target setLiveDataFeeds:flag]; }
 
-- (BOOL)isXHTML { return [_target isXHTML]; }
-- (void)setXHTML:(BOOL)flag { return [_target setXHTML:flag]; }
+- (KTDocType)docType; { return [_target docType]; }
 
 - (NSStringEncoding)encoding { return [_target encoding]; }
 - (void)setEncoding:(NSStringEncoding)flag { return [_target setEncoding:flag]; }

@@ -73,7 +73,7 @@
     
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
-    _docType = KTDocTypeAll;
+    _maxDocType = KTDocTypeAll;
     
     _headerLevel = 1;
     _headerMarkup = [[NSMutableString alloc] init];
@@ -106,8 +106,9 @@
 
 - (void)writeDocumentWithPage:(KTPage *)page;
 {
+    OBPRECONDITION(page);
+    
 	// Build the HTML    
-    [self setXHTML:[page isXHTML]];
     [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
     [self setLanguage:[[page master] language]];
     
@@ -115,6 +116,7 @@
     [self setMainCSSURL:[NSURL URLWithString:cssPath
                                relativeToURL:[self baseURL]]];
     
+    [self startDocumentWithDocType:[page docType]];
     
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
     [parser parseIntoHTMLContext:self];
@@ -136,13 +138,13 @@
     [self setBaseURL:[context baseURL]];
     [self setIncludeStyling:[context includeStyling]];
     [self setLiveDataFeeds:[context liveDataFeeds]];
-    [self setXHTML:[context isXHTML]];
+    [self setDocType:[context docType]];
     [self setEncoding:[context encoding]];
 }
 
 #pragma mark Doctype
 
-@synthesize maxDocType = _docType;
+@synthesize maxDocType = _maxDocType;
 
 - (void)limitToMaxDocType:(KTDocType)docType;
 {
