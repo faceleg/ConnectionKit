@@ -158,8 +158,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Top-level nodes can only be: paragraph, newline, or graphic. Custom DOMNode addition handles this
-    DOMElement *element = [self textHTMLElement];
-    DOMNode *aNode = [element firstChild];
+    DOMElement *textElement = [self textHTMLElement];
+    DOMNode *aNode = [textElement firstChild];
     while (aNode)
     {
         aNode = [aNode writeTopLevelParagraph:writer];
@@ -177,8 +177,8 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         if ([textObject endsOnAttachment])
         {
             // …by adding a line break
-            DOMElement *lineBreak = [[element ownerDocument] createElement:@"BR"];
-            [element appendChild:lineBreak];
+            DOMElement *lineBreak = [[textElement ownerDocument] createElement:@"BR"];
+            [textElement appendChild:lineBreak];
             
             // Continue writing from the line break…
             [lineBreak writeTopLevelParagraph:writer];
