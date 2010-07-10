@@ -77,7 +77,7 @@ change context:(void *)context
             
             if (!inspector)
             {
-                Class <SVPlugIn> class = [[self inspectedObjectsController] valueForKeyPath:@"selection.plugIn.class"];
+                Class class = [[self inspectedObjectsController] valueForKeyPath:@"selection.plugIn.class"];
                 inspector = [class makeInspectorViewController];
                 
                 if (inspector) [_plugInInspectors setObject:inspector forKey:identifier];

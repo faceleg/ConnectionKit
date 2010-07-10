@@ -109,13 +109,6 @@
 @synthesize encoding = _stringEncoding;
 @synthesize language = _language;
 
-@synthesize maxDocType = _docType;
-
-- (void)limitToMaxDocType:(KTDocType)docType;
-{
-    if (docType < [self maxDocType]) [self setMaxDocType:docType];
-}
-
 - (void)copyPropertiesFromContext:(SVHTMLContext *)context;
 {
     // Copy across properties
@@ -126,6 +119,15 @@
     [self setLiveDataFeeds:[context liveDataFeeds]];
     [self setXHTML:[context isXHTML]];
     [self setEncoding:[context encoding]];
+}
+
+#pragma mark Doctype
+
+@synthesize maxDocType = _docType;
+
+- (void)limitToMaxDocType:(KTDocType)docType;
+{
+    if (docType < [self maxDocType]) [self setMaxDocType:docType];
 }
 
 #pragma mark Purpose

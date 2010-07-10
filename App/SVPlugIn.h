@@ -15,63 +15,7 @@
 @class KSHTMLWriter, SVInspectorViewController;
 @protocol SVPlugInContext, SVPage, SVPageletPlugInContainer;
 
-
-@protocol SVPlugIn <NSObject>
-
-#pragma mark Managing Life Cycle
-
-// Just like the Core Data methods of same name really
-- (void)awakeFromNew;
-- (void)awakeFromFetch;
-
-- (void)setContainer:(id <SVPageletPlugInContainer>)container;
-
-
-#pragma mark Identifier
-+ (NSString *)plugInIdentifier; // use standard reverse DNS-style string
-
-
-#pragma mark HTML Generation
-- (void)writeHTML:(id <SVPlugInContext>)context;
-
-
-#pragma mark Storage
-/*
- Returns the list of KVC keys representing the internal settings of the plug-in. At the moment you must override it in all plug-ins that have some kind of storage, but at some point I'd like to make it automatically read the list in from bundle's Info.plist.
- This list of keys is used for automatic serialization of these internal settings.
- */
-+ (NSSet *)plugInKeys;
-
-// The serialized object must be a non-container Plist compliant object i.e. exclusively NSString, NSNumber, NSDate, NSData.
-- (id)serializedValueForKey:(NSString *)key;
-- (void)setSerializedValue:(id)serializedValue forKey:(NSString *)key;
-
-
-/*  FAQ:    How do I reference a page from a plug-in?
- *
- *      Once you've gotten hold of an SVPage object, it's fine to hold it in memory like any other object; just shove it in an instance variable and retain it. You should then also observe SVPageWillBeDeletedNotification and use it discard your reference to the page, as it will become invalid after that.
- *      To persist your reference to the page, override -serializedValueForKey: to use the page's -identifier property. Likewise, override -setSerializedValue:forKey: to take the serialized ID string and convert it back into a SVPage using -pageWithIdentifier:
- *      All of these methods are documented in SVPageProtocol.h
- */
-
-
-#pragma mark Pages
-- (void)didAddToPage:(id <SVPage>)page;
-
-
-#pragma mark Thumbnail
-- (id <IMBImageItem>)thumbnail;
-
-
-#pragma mark UI
-+ (SVInspectorViewController *)makeInspectorViewController; // return nil if you don't want an Inspector
-
-
-@end
-
-
 #pragma mark -
-
 
 @protocol SVHTMLWriter
 
@@ -188,7 +132,7 @@ typedef NSUInteger SVPlugInPasteboardReadingOptions;
 #pragma mark -
 
 
-@protocol SVIndexPlugIn <SVPlugIn>
+@protocol SVIndexPlugIn
 // We need an API! In the meantime, the protocol declaration serves as a placeholder for the registration system.
 @end
 

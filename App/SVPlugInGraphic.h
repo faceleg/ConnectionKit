@@ -7,16 +7,16 @@
 //
 
 #import "SVGraphic.h"
+#import "SVPageletPlugIn.h"
 
 
-@protocol SVPlugIn;
 @class KTElementPlugInWrapper;
 
 
 @interface SVPlugInGraphic : SVGraphic
 {
   @private
-    NSObject <SVPlugIn> *_plugIn;
+    SVPageletPlugIn *_plugIn;
 }
 
 // Creates both graphic and plug-in at same time, but does not send -awakeFromNew to the plug-in
@@ -24,11 +24,11 @@
                                    inManagedObjectContext:(NSManagedObjectContext *)context;
 
 // When pulling content off the pasteboard, the plug-in is already created and populated by the pasteboard. Use this method to create a graphic object to host it
-+ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(id <SVPlugIn>)plugIn
++ (SVPlugInGraphic *)insertNewGraphicWithPlugIn:(SVPageletPlugIn *)plugIn
                          inManagedObjectContext:(NSManagedObjectContext *)context;
 
 
-@property(nonatomic, retain, readonly) NSObject <SVPlugIn> *plugIn;
+@property(nonatomic, retain, readonly) SVPageletPlugIn *plugIn;
 @property(nonatomic, copy, readonly) NSString *plugInIdentifier;
 - (KTElementPlugInWrapper *)plugInWrapper;
 

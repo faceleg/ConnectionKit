@@ -29,6 +29,7 @@ NSString *SVPageWillBeDeletedNotification = @"SVPageWillBeDeleted";
 
 
 @interface SVPageletPlugIn ()
+@property(nonatomic, assign, readwrite) id <SVPageletPlugInContainer> container;
 @end
 
 
@@ -136,7 +137,7 @@ static id <SVPlugInContext> sCurrentContext;
 
 #pragma mark Storage
 
-+ (NSSet *)plugInKeys; { return nil; }
++ (NSArray *)plugInKeys; { return nil; }
 
 - (id)serializedValueForKey:(NSString *)key;
 {
