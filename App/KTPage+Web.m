@@ -440,7 +440,7 @@
 - (NSString *)DTD
 {
 	KTDocType docType = [self docType];
-	NSString *result = [KTPage stringFromDocType:docType local:NO];	// get the web-publishable DTD
+	NSString *result = [KSHTMLWriter stringFromDocType:docType];	// get the web-publishable DTD
 	return result;
 }
 
