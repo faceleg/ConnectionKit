@@ -57,7 +57,6 @@
 
 // Foundation extensions
 #import "NSBundle+Karelia.h"
-#import "NSCharacterSet+Karelia.h"
 #import "NSData+Karelia.h"
 #import "NSDate+Karelia.h"
 #import "NSDictionary+Karelia.h"

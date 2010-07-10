@@ -810,7 +810,7 @@
 		CE01A7960EAFD63600BDF264 /* NSAttributedString+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6910EAFD63600BDF264 /* NSAttributedString+Karelia.m */; };
 		CE01A7970EAFD63600BDF264 /* NSBezierPath+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6920EAFD63600BDF264 /* NSBezierPath+Karelia.h */; };
 		CE01A7980EAFD63600BDF264 /* NSBezierPath+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6930EAFD63600BDF264 /* NSBezierPath+Karelia.m */; };
-		CE01A7990EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6940EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7990EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6940EAFD63600BDF264 /* NSBitmapImageRep+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A79A0EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6950EAFD63600BDF264 /* NSBitmapImageRep+Karelia.m */; };
 		CE01A79B0EAFD63600BDF264 /* NSBundle+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6960EAFD63600BDF264 /* NSBundle+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A79C0EAFD63600BDF264 /* NSBundle+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6970EAFD63600BDF264 /* NSBundle+Karelia.m */; };
@@ -867,7 +867,7 @@
 		CE01A7D10EAFD63600BDF264 /* KSUtilities.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6CD0EAFD63600BDF264 /* KSUtilities.m */; };
 		CE01A7D20EAFD63600BDF264 /* KSValidateCharFormatter.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6CE0EAFD63600BDF264 /* KSValidateCharFormatter.h */; };
 		CE01A7D30EAFD63600BDF264 /* KSValidateCharFormatter.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6CF0EAFD63600BDF264 /* KSValidateCharFormatter.m */; };
-		CE01A7D80EAFD63600BDF264 /* NSCharacterSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D40EAFD63600BDF264 /* NSCharacterSet+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		CE01A7D80EAFD63600BDF264 /* NSCharacterSet+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D40EAFD63600BDF264 /* NSCharacterSet+Karelia.h */; settings = {ATTRIBUTES = (); }; };
 		CE01A7D90EAFD63600BDF264 /* NSCharacterSet+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D50EAFD63600BDF264 /* NSCharacterSet+Karelia.m */; };
 		CE01A7DA0EAFD63600BDF264 /* NSData+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE01A6D60EAFD63600BDF264 /* NSData+Karelia.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE01A7DB0EAFD63600BDF264 /* NSData+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE01A6D70EAFD63600BDF264 /* NSData+Karelia.m */; };
