@@ -378,7 +378,7 @@
 + (BOOL)isElementWithTagNameContent:(NSString *)tagName;
 {
     // Used to report <P> elements as content. Don't actually want to since an empty <P> element should be removed
-    BOOL result = ([tagName isEqualToString:@"BR"]);
+    BOOL result = ([tagName isEqualToStringCaseInsensitive:@"BR"]);
     
     return result;
 }
