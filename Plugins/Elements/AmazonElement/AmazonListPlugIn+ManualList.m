@@ -55,7 +55,7 @@
 		}
 		
 		unsigned count = [self numberOfManualProductsWithAProductCode];
-		if (count == 0 || (count == 1 && [[self products] containsObjectIdenticalTo:product]))
+		if (count == 0 || (count == 1 && ([[self products] indexOfObjectIdenticalTo:product] != NSNotFound)))
 		{
 			[self setStore:productStore];
 		}

@@ -56,7 +56,6 @@
 #import "SVWebLocation.h"
 
 // Foundation extensions
-#import "NSArray+Karelia.h"
 #import "NSAttributedString+Karelia.h"
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
