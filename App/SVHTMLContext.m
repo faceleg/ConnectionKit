@@ -116,8 +116,23 @@
     [self setMainCSSURL:[NSURL URLWithString:cssPath
                                relativeToURL:[self baseURL]]];
     
+    
+    // Any early code injection?
+    if ([self isForPublishing])
+    {
+        NSString *beforeHTML = [[[page master] codeInjection] valueForKey:@"beforeHTML"];
+        if (beforeHTML) [self writeString:beforeHTML];
+        
+        beforeHTML = [[page codeInjection] valueForKey:@"beforeHTML"];
+        if (beforeHTML) [self writeString:beforeHTML];
+    }
+    
+    
+    // Start the document
     [self startDocumentWithDocType:[page docType]];
     
+    
+    // It's template time!
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
     [parser parseIntoHTMLContext:self];
     [parser release];

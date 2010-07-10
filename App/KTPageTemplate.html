@@ -1,12 +1,3 @@
-[[if parser.isPublishing]]				[[comment Code Injection here is only for publishing]]
-[[if master.codeInjection.beforeHTML]]
-[[=master.codeInjection.beforeHTML]]
-[[endif2]]
-[[if codeInjection.beforeHTML]]
-[[=codeInjection.beforeHTML]]
-[[endif2]]
-[[endif]]
-
 <html [[if isXHTML]]xmlns="http://www.w3.org/1999/xhtml" xml:lang="[[=&parser.outputWriter.language]]" [[endif]]lang="[[=&parser.outputWriter.language]]">
 	<head>
 [[if docType=4]]
