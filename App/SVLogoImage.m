@@ -51,21 +51,6 @@
     return result;
 }
 
-#pragma mark HTML
-
-- (void)writeHTML:(SVHTMLContext *)context;
-{
-    // We're special; do our HTML writing.
-    // Only selectable if on home-page
-    
-    BOOL isSelectable = ([[context page] isRootPage]);
-    if (isSelectable) [context willBeginWritingGraphic:self];
-    
-    [self writeBody:context];
-    
-    if (isSelectable) [context didEndWritingGraphic];
-}
-
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
