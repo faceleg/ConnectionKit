@@ -171,6 +171,13 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
         _isUpdating = YES;
         [textObject setString:html
                   attachments:[writer textAttachments]];
+        
+        // Wait, is the last thing an attachment? If so, should account for that
+        if ([textObject endsOnAttachment])
+        {
+            NSLog(@"oh noes, an attachment!");
+        }
+        
         _isUpdating = NO;
     }
     
