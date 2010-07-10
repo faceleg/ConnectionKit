@@ -372,6 +372,20 @@
 	return result;
 }
 
+- (NSString *)DTD
+{
+	KTDocType docType = [self docType];
+	NSString *result = [KSHTMLWriter stringFromDocType:docType];	// get the web-publishable DTD
+	return result;
+}
+
+- (BOOL)isXHTML	// returns true if our page is XHTML of some type, false if old HTML
+{
+	KTDocType docType = [self docType];
+	BOOL result = (KTHTML401DocType != docType);
+	return result;
+}
+
 // For code review:  Where can this utility class go?
 + (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;
 {
@@ -408,19 +422,7 @@
 	return result;
 }
 
-- (NSString *)DTD
-{
-	KTDocType docType = [self docType];
-	NSString *result = [KSHTMLWriter stringFromDocType:docType];	// get the web-publishable DTD
-	return result;
-}
-
-- (BOOL)isXHTML	// returns true if our page is XHTML of some type, false if old HTML
-{
-	KTDocType docType = [self docType];
-	BOOL result = (KTHTML401DocType != docType);
-	return result;
-}
+#pragma mark Site Menu
 
 - (void)outputMenuForSiteMenuItems:(NSArray *)anArray treeLevel:(int)aTreeLevel
 {
