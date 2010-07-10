@@ -8,7 +8,6 @@
 
 #import "KSWebViewController.h"
 
-#import "SVSiteItemViewController.h"
 #import "SVHTMLTemplateParser.h"
 #import "WebEditingKit.h"
 #import "SVWebEditorHTMLContext.h"
@@ -23,7 +22,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @protocol SVWebEditorViewControllerDelegate;
 
 
-@interface SVWebEditorViewController : KSWebViewController <SVSiteItemViewController, WEKWebEditorDataSource, WEKWebEditorDelegate, SVHTMLTemplateParserDelegate>
+@interface SVWebEditorViewController : KSWebViewController <WEKWebEditorDataSource, WEKWebEditorDelegate, SVHTMLTemplateParserDelegate>
 {
     // View/Presentation
     WEKWebEditorView            *_webEditorView;

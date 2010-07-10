@@ -12,7 +12,6 @@
 #import "SVLoadingPlaceholderViewController.h"
 
 #import "KTPage.h"
-#import "SVSiteItemViewController.h"
 
 
 
@@ -90,7 +89,7 @@
             // Figure out the right view controller to load
             SVSiteItem *item = [pages objectAtIndex:0];
             
-            NSViewController <SVSiteItemViewController> *viewController = [self viewControllerForSiteItem:item];
+            NSViewController *viewController = [self viewControllerForSiteItem:item];
             
             // Start the load here. Present the view if it's ready; if not wait until it is (or takes too long)
             [self setSelectedViewControllerWhenReady:viewController];
@@ -182,9 +181,9 @@
     [[_placeholderViewController progressIndicator] startAnimation:self];
 }
 
-- (NSViewController <SVSiteItemViewController> *)viewControllerForSiteItem:(SVSiteItem *)item;
+- (NSViewController *)viewControllerForSiteItem:(SVSiteItem *)item;
 {
-    NSViewController <SVSiteItemViewController> *result = nil;
+    NSViewController *result = nil;
     
     
     KTPage *page = [item pageRepresentation];
@@ -219,7 +218,7 @@
 #pragma mark Selected View Controller
 
 @synthesize selectedViewControllerWhenReady = _selectedViewControllerWhenReady;
-- (void)setSelectedViewControllerWhenReady:(NSViewController <SVSiteItemViewController> *) controller;
+- (void)setSelectedViewControllerWhenReady:(NSViewController *) controller;
 {
     // Store
     _selectedViewControllerWhenReady = controller;
@@ -273,3 +272,18 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation NSViewController (SVSiteItemViewController)
+
+- (BOOL)viewShouldAppear:(BOOL)animated
+webContentAreaController:(SVWebContentAreaController *)controller;
+{
+    return YES;
+}
+
+@end
+

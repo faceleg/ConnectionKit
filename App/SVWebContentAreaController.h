@@ -8,7 +8,6 @@
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
-#import "SVSiteItemViewController.h"
 #import "SVWebEditorViewController.h"
 #import "KSInspector.h"
 
@@ -40,8 +39,8 @@ typedef enum {
     
     NSArray *_selectedPages;
     
-    NSViewController <SVSiteItemViewController> *_selectedViewControllerWhenReady;
-    KTWebViewViewType                           _viewType;
+    NSViewController    *_selectedViewControllerWhenReady;
+    KTWebViewViewType   _viewType;
     
     id <SVWebContentAreaControllerDelegate> _delegate;  // weak ref
 }
@@ -57,7 +56,7 @@ typedef enum {
 @property(nonatomic) KTWebViewViewType viewType;
 - (IBAction)selectWebViewViewType:(id)sender;
 
-- (NSViewController <SVSiteItemViewController> *)viewControllerForSiteItem:(SVSiteItem *)item;
+- (NSViewController *)viewControllerForSiteItem:(SVSiteItem *)item;
 
 
 #pragma mark View Controllers
@@ -65,7 +64,7 @@ typedef enum {
 @property(nonatomic, retain, readonly) SVWebEditorViewController *webEditorViewController;
 
 // If the controller is ready, displays it immediately. If not, the existing view remains on screen until either the new view is ready. If too much time elapses before the new view is ready, a placeholder is swapped in the meantime. Passing nil is fine and will switch to the placeholder view
-@property(nonatomic, assign) NSViewController <SVSiteItemViewController> *selectedViewControllerWhenReady;
+@property(nonatomic, assign) NSViewController *selectedViewControllerWhenReady;
 
 - (void)presentLoadingViewController;
 
@@ -77,5 +76,28 @@ typedef enum {
 @end
 
 
+#pragma mark -
+
+
 @protocol SVWebContentAreaControllerDelegate
+@end
+
+
+#pragma mark -
+
+
+@interface NSViewController (SVSiteItemViewController)
+
+/*!
+ *  Called by the Web Content Area Controller when:
+ *  A)  The user changes view type
+ *  B)  The selected pages change
+ *
+ *  So this is a good point to update your view to reflect the selection.
+ *  If the view is not ready yet (perhaps it's an asynchronous update process), return NO. Then call -setSelectedViewController:self on controller when done.
+ *  Default implementation always returns YES.
+ */
+- (BOOL)viewShouldAppear:(BOOL)animated
+webContentAreaController:(SVWebContentAreaController *)controller;
+
 @end

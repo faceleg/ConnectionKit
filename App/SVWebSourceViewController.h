@@ -7,14 +7,13 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "SVSiteItemViewController.h"
 
 #import "SVWebContentAreaController.h"
 
 
 @class SVWebEditorViewController;
 
-@interface SVWebSourceViewController : NSViewController <SVSiteItemViewController> {
+@interface SVWebSourceViewController : NSViewController {
 
 	IBOutlet NSTextView *oSourceView;
 

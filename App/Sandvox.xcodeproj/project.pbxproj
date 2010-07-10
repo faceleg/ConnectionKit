@@ -300,7 +300,6 @@
 		2747DA3B10FE8DE6007428BB /* SVSiteItem.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3710FE8DE6007428BB /* SVSiteItem.m */; };
 		2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DA3810FE8DE6007428BB /* SVExternalLink.h */; };
 		2747DA3D10FE8DE6007428BB /* SVExternalLink.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DA3910FE8DE6007428BB /* SVExternalLink.m */; };
-		2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF4911008D54007428BB /* SVSiteItemViewController.h */; };
 		2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 2747DF8011009B59007428BB /* SVURLPreviewViewController.h */; };
 		2747DF8311009B59007428BB /* SVURLPreviewViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 2747DF8111009B59007428BB /* SVURLPreviewViewController.m */; };
 		274B8CC7116A76EE00AAADB6 /* SVMovie.h in Headers */ = {isa = PBXBuildFile; fileRef = 274B8CC5116A76EE00AAADB6 /* SVMovie.h */; };
@@ -1788,7 +1787,6 @@
 		2747DA3710FE8DE6007428BB /* SVSiteItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVSiteItem.m; sourceTree = "<group>"; };
 		2747DA3810FE8DE6007428BB /* SVExternalLink.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVExternalLink.h; sourceTree = "<group>"; };
 		2747DA3910FE8DE6007428BB /* SVExternalLink.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVExternalLink.m; sourceTree = "<group>"; };
-		2747DF4911008D54007428BB /* SVSiteItemViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVSiteItemViewController.h; sourceTree = "<group>"; };
 		2747DF8011009B59007428BB /* SVURLPreviewViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVURLPreviewViewController.h; sourceTree = "<group>"; };
 		2747DF8111009B59007428BB /* SVURLPreviewViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVURLPreviewViewController.m; sourceTree = "<group>"; };
 		274B8CC5116A76EE00AAADB6 /* SVMovie.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVMovie.h; sourceTree = "<group>"; };
@@ -3183,7 +3181,6 @@
 				279217D010BC11CF00E590D5 /* HTMLSourceView.xib */,
 				2759CC9D103976D800E2C046 /* SVWebContentAreaController.h */,
 				2759CC9E103976D800E2C046 /* SVWebContentAreaController.m */,
-				2747DF4911008D54007428BB /* SVSiteItemViewController.h */,
 			);
 			name = General;
 			sourceTree = "<group>";
@@ -5563,7 +5560,6 @@
 				27E24EED10FCB218004EFE9F /* SVLinkManager.h in Headers */,
 				2747DA3A10FE8DE6007428BB /* SVSiteItem.h in Headers */,
 				2747DA3C10FE8DE6007428BB /* SVExternalLink.h in Headers */,
-				2747DF4A11008D54007428BB /* SVSiteItemViewController.h in Headers */,
 				2747DF8211009B59007428BB /* SVURLPreviewViewController.h in Headers */,
 				2710C255110A110D00A7B997 /* SVMediaProtocol.h in Headers */,
 				2710C3BA110B358D00A7B997 /* SVPageTitle.h in Headers */,

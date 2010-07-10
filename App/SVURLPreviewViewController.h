@@ -7,13 +7,12 @@
 //
 
 #import "KSWebViewController.h"
-#import "SVSiteItemViewController.h"
 
 
 @class SVSiteItem;
 
 
-@interface SVURLPreviewViewController : KSWebViewController <SVSiteItemViewController>
+@interface SVURLPreviewViewController : KSWebViewController
 {
   @private
     SVSiteItem  *_siteItem;
