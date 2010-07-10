@@ -8,6 +8,7 @@
 
 #import "SVWebEditorHTMLContext.h"
 
+#import "SVApplicationController.h"
 #import "SVCalloutDOMController.h"
 #import "SVGraphicDOMController.h"
 #import "SVHTMLTextBlock.h"
@@ -58,6 +59,17 @@
     [super dealloc];
     OBASSERT(!_rootController);
     OBASSERT(!_media);
+}
+
+#pragma mark Page
+
+- (void)writeDocumentWithPage:(KTPage *)page;
+{
+	// This is a dependency only in the Web Editor, so don't register for all contexts
+    [self addDependencyOnObject:[NSUserDefaultsController sharedUserDefaultsController]
+                        keyPath:[@"values." stringByAppendingString:kSVLiveDataFeedsKey]];
+
+    [super writeDocumentWithPage:page];
 }
 
 #pragma mark Purpose

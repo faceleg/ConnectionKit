@@ -111,30 +111,10 @@
     SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:result];
     [context setPage:self];
 	
-	[self writeHTML:context];
+	[context writeDocumentWithPage:self];
     
     [context release];
     return result;
-}
-
-- (void)writeHTML:(SVHTMLContext *)context;
-{
-	// Build the HTML    
-    [context addDependencyOnObject:[NSUserDefaultsController sharedUserDefaultsController]
-                           keyPath:[@"values." stringByAppendingString:kSVLiveDataFeedsKey]];
-     
-    [context setXHTML:[self isXHTML]];
-    [context setEncoding:[[[self master] valueForKey:@"charset"] encodingFromCharset]];
-    [context setLanguage:[[self master] language]];
-    
-    NSString *cssPath = [self pathToDesignFile:@"main.css" inContext:context];
-    [context setMainCSSURL:[NSURL URLWithString:cssPath
-                                  relativeToURL:[context baseURL]]];
-     
-    
-	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:self];
-    [parser parseIntoHTMLContext:context];
-    [parser release];
 }
 
 + (NSString *)pageTemplate
@@ -245,7 +225,7 @@
     SVHTMLContext *context = [publishingEngine beginPublishingHTMLToPath:path];
     [context setPage:self];
 	
-    [self writeHTML:context];
+    [context writeDocumentWithPage:self];
     
     
 	// Generate and publish RSS feed if needed

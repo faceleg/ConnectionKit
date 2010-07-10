@@ -893,7 +893,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     [context setLiveDataFeeds:NO];
     [context setPage:[[self site] rootPage]];
     
-    [[[self site] rootPage] writeHTML:context];
+    [context writeDocumentWithPage:[[self site] rootPage]];
 	[context release];
     
 	
@@ -1092,7 +1092,7 @@ originalContentsURL:(NSURL *)inOriginalContentsURL
     
     [context setPage:[[self site] rootPage]];
     
-    [[[self site] rootPage] writeHTML:context];
+    [context writeDocumentWithPage:[[self site] rootPage]];
     [context release];
     
     return result;

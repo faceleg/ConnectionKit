@@ -55,6 +55,11 @@ typedef enum {
     NSUInteger      _numberOfGraphics;
 }
 
+#pragma mark Document
+// Sets various context properties to match the page too
+- (void)writeDocumentWithPage:(KTPage *)page;
+
+
 #pragma mark Properties
 
 @property(nonatomic, copy) NSURL *baseURL;

@@ -102,6 +102,25 @@
     OBASSERT(!_calloutBuffer);
 }
 
+#pragma mark Document
+
+- (void)writeDocumentWithPage:(KTPage *)page;
+{
+	// Build the HTML    
+    [self setXHTML:[page isXHTML]];
+    [self setEncoding:[[[page master] valueForKey:@"charset"] encodingFromCharset]];
+    [self setLanguage:[[page master] language]];
+    
+    NSString *cssPath = [page pathToDesignFile:@"main.css" inContext:self];
+    [self setMainCSSURL:[NSURL URLWithString:cssPath
+                               relativeToURL:[self baseURL]]];
+    
+    
+	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
+    [parser parseIntoHTMLContext:self];
+    [parser release];
+}
+
 #pragma mark Properties
 
 @synthesize baseURL = _baseURL;

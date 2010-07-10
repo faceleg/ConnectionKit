@@ -227,7 +227,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Go for it. You write that HTML girl!
-	[page writeHTML:context];
+	[context writeDocumentWithPage:page];
     [context flush];
     
     
