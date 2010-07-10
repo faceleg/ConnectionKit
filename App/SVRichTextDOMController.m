@@ -256,12 +256,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     // We have a matching controller. But is it in a valid location? Make sure it really is block-level/inline
     SVGraphic *graphic = [controller representedObject];
-    SVTextAttachment *attachment = [graphic textAttachment];
     
     DOMNode *parentNode = [element parentNode];
     
     if ([writer openElementsCount] &&
-        [[attachment placement] integerValue] != SVGraphicPlacementInline)
+        [graphic mustBePagelet])
     {
         // Push the element off up the tree; it will be written next time round
         [[parentNode parentNode] insertBefore:element refChild:[parentNode nextSibling]];
