@@ -365,39 +365,10 @@
 	return result;
 }
 
-// For code review:  Where can this utility class go?
-+ (NSString *)titleOfDocType:(KTDocType)docType  localize:(BOOL)shouldLocalizeForDisplay;
-{
-	NSString *result = nil;
-	NSString *localizedResult = nil;
-	switch (docType)
-	{
-		case KTHTML401DocType:
-			result = @"HTML 4.01 Transitional";
-			localizedResult = NSLocalizedString(@"HTML 4.01", @"Description of style of HTML - note that we do not say Transitional");
-			break;
-		case KTXHTMLTransitionalDocType:
-			result = @"XHTML 1.0 Transitional";
-			localizedResult = NSLocalizedString(@"XHTML 1.0 Transitional", @"Description of style of HTML");
-			break;
-		case KTXHTMLStrictDocType:
-			result = @"XHTML 1.0 Strict";
-			localizedResult = NSLocalizedString(@"XHTML 1.0 Strict", @"Description of style of HTML");
-			break;
-		case KTHTML5DocType:
-			result = @"HTML5";
-			localizedResult = NSLocalizedString(@"HTML5", @"Description of style of HTML");
-			break;
-		default:
-			break;
-	}
-	return shouldLocalizeForDisplay ? localizedResult : result;
-}
-
 - (NSString *)docTypeName	// return official doc type, not localized, for use by validator
 {
 	KTDocType docType = [self docType];
-	NSString *result = [KTPage titleOfDocType:docType localize:NO];
+	NSString *result = [KSHTMLWriter titleOfDocType:docType localize:NO];
 	return result;
 }
 

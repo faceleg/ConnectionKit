@@ -107,7 +107,7 @@
 	[[[docTypePopUp menu] itemWithTag:self.docType+1] setState:NSOnState];	// Check initially chosen one.
 	[previewMenuItem setState:(self.preventPreview ? NSOnState : NSOffState)];
 	
-	[docTypePopUp setTitle:[KTPage titleOfDocType:[self docType] localize:YES]];
+	[docTypePopUp setTitle:[KSHTMLWriter titleOfDocType:[self docType] localize:YES]];
 	[self calculateCachedPreludes];
 	[self autoValidate];
 	
@@ -467,7 +467,7 @@ initial syntax coloring.
 
 	NSString *wrappedPage = [self wrapFragment:fragment local:NO];
 	
-	NSString *docTypeName = [KTPage titleOfDocType:[self docType] localize:NO];
+	NSString *docTypeName = [KSHTMLWriter titleOfDocType:[self docType] localize:NO];
 	BOOL isValid = [[SVValidatorWindowController sharedController]
 					validateSource:wrappedPage
 					isFullPage:NO
