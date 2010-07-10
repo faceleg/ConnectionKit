@@ -121,6 +121,16 @@
     return attachments;
 }
 
+- (BOOL)endsOnAttachment;
+{
+    NSAttributedString *attributedHTML = [self attributedHTMLString];
+    
+    BOOL result = ([attributedHTML attribute:@"SVAttachment"
+                                     atIndex:([attributedHTML length] - 1)
+                              effectiveRange:NULL] != nil);
+    return result;
+}
+
 - (BOOL)isEmpty;
 {
     NSString *text = [[self string] stringByConvertingHTMLToPlainText];

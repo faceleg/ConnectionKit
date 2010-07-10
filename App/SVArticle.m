@@ -151,13 +151,7 @@
     
     
     // If the last character is an attachment, want a line break so cursor can be placed after it.
-    NSAttributedString *attributedHTML = [self attributedHTMLString];
-    if ([attributedHTML attribute:@"SVAttachment"
-                          atIndex:([attributedHTML length] - 1)
-                   effectiveRange:NULL])
-    {
-        [context writeLineBreak];
-    }
+    if ([self endsOnAttachment]) [context writeLineBreak];
 }
 
 #pragma mark RSS Feeds

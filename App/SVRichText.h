@@ -30,6 +30,7 @@
 
 @property(nonatomic, copy, readonly) NSSet *attachments;
 - (NSArray *)orderedAttachments;
+- (BOOL)endsOnAttachment;
 
 - (BOOL)isEmpty;
 
