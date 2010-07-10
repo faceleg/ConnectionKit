@@ -365,13 +365,6 @@
 	return result;
 }
 
-- (NSString *)docTypeName	// return official doc type, not localized, for use by validator
-{
-	KTDocType docType = [self docType];
-	NSString *result = [KSHTMLWriter titleOfDocType:docType localize:NO];
-	return result;
-}
-
 // For code review:  Where can this utility class go?
 + (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;
 {

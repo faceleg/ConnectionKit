@@ -83,13 +83,16 @@
     NSMutableString *pageSource = [NSMutableString string];
     SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithOutputWriter:pageSource];
     [context setPage:page];
-	[page writeHTML:context];
+	[context writeDocumentWithPage:page];
+    
 	NSUInteger disabledPreviewObjectsCount = context.disabledPreviewObjectsCount;	// this will help us warn about items we are not validating
-    [context release];
+    
+	NSString *docTypeName = [KSHTMLWriter titleOfDocType:[context docType] localize:NO];
+	[context release];
 	
-	NSString *docTypeName = [page docTypeName];
-	NSString *charset = [[page master] valueForKey:@"charset"];
-	BOOL result = [self validateSource:pageSource
+    NSString *charset = [[page master] valueForKey:@"charset"];
+	
+    BOOL result = [self validateSource:pageSource
 							isFullPage:YES
 		   disabledPreviewObjectsCount:disabledPreviewObjectsCount
 							   charset:charset

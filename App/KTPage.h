@@ -202,8 +202,8 @@ typedef enum {
 
 - (NSString *)javascriptURLPath;
 - (NSString *)comboTitleText;
+
 - (KTDocType)docType;
-- (NSString *)docTypeName;
 
 + (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;		// UTILITY
 
