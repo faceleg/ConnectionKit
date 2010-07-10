@@ -161,7 +161,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     DOMNode *aNode = [[self textHTMLElement] firstChild];
     while (aNode)
     {
-        aNode = [aNode topLevelParagraphWriteToStream:writer];
+        aNode = [aNode writeTopLevelParagraph:writer];
     }
     
     
@@ -281,7 +281,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
                 DOMNode *aNode = [[calloutContents item:i] firstChild];
                 while (aNode)
                 {
-                    aNode = [aNode topLevelParagraphWriteToStream:writer];
+                    aNode = [aNode writeTopLevelParagraph:writer];
                 }
             }
         }

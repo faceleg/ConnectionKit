@@ -290,7 +290,7 @@
 
 @implementation DOMNode (SVBodyText)
 
-- (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
 {
     //  Don't want unknown nodes
     DOMNode *result = [self nextSibling];
@@ -303,7 +303,7 @@
 
 @implementation DOMElement (SVBodyText)
 
-- (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
 {
     //  Elements can be treated pretty normally
     DOMNode *node = [context willWriteDOMElement:self];
@@ -322,7 +322,7 @@
 
 @implementation DOMText (SVBodyText)
 
-- (DOMNode *)topLevelParagraphWriteToStream:(KSHTMLWriter *)context;
+- (DOMNode *)writeTopLevelParagraph:(KSHTMLWriter *)context;
 {
     NSString *text = [self textContent];
     if ([text isWhitespace])
@@ -333,7 +333,7 @@
         {
             if ([previousNode nodeType] == DOM_TEXT_NODE)
             {
-                return [super topLevelParagraphWriteToStream:context];  // delete self
+                return [super writeTopLevelParagraph:context];  // delete self
             }
             else
             {
