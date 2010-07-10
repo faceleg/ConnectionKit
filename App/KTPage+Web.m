@@ -372,13 +372,6 @@
 	return result;
 }
 
-- (NSString *)DTD
-{
-	KTDocType docType = [self docType];
-	NSString *result = [KSHTMLWriter stringFromDocType:docType];	// get the web-publishable DTD
-	return result;
-}
-
 // For code review:  Where can this utility class go?
 + (NSString *)stringFromDocType:(KTDocType)docType local:(BOOL)isLocal;
 {
