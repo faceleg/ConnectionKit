@@ -432,24 +432,7 @@
 	}
 	else
 	{
-		switch (docType)
-		{
-			case KTHTML401DocType:
-				result = @"<!DOCTYPE HTML PUBLIC \"-//W3C//DTD HTML 4.01 Transitional//EN\" \"http://www.w3.org/TR/html4/loose.dtd\">";
-				break;
-			case KTXHTMLTransitionalDocType:
-				result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Transitional//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd\">";
-				break;
-			case KTXHTMLStrictDocType:
-				result = @"<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">";
-				break;
-			case KTHTML5DocType:
-				result = [NSString stringWithFormat:@"<!DOCTYPE html>"];
-				break;
-			default:
-				break;
-		}
-		
+		result = [KSHTMLWriter stringFromDocType:docType];
 	}
 	return result;
 }
