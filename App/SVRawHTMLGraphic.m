@@ -34,8 +34,10 @@
         [context addDependencyOnObject:self keyPath:@"HTMLString"];
     }
 	
-	// Changes to any of these properties will be a visible change
-    [context addDependencyOnObject:self keyPath:@"docType"];
+    [context limitToMaxDocType:[[self docType] intValue]];
+	[context addDependencyOnObject:self keyPath:@"docType"];
+    
+    // Changes to any of these properties will be a visible change
     [context addDependencyOnObject:self keyPath:@"shouldPreviewWhenEditing"];
 }
 
