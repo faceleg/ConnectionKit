@@ -17,6 +17,7 @@
 		<string>toggleInfoShown:</string>
 		<string>toggleMediaBrowserShown:</string>
 		<string>NSToolbarShowFontsItem</string>
+		<string>NSToolbarShowColorsItem</string>
 	</array>
 	<key>item array</key>
 	<array>
