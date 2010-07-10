@@ -79,7 +79,6 @@
 // AppKit extensions
 #import "NSColor+Karelia.h"
 #import "NSImage+Karelia.h"
-#import "NSBitmapImageRep+Karelia.h"
 
 // Value Transformers
 #import "KSContainsObjectValueTransformer.h"
