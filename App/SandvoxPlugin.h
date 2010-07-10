@@ -79,7 +79,6 @@
 #import "NSURL+Karelia.h"
 
 // AppKit extensions
-#import "NSApplication+Karelia.h"
 #import "NSArrayController+Karelia.h"
 #import "NSColor+Karelia.h"
 #import "NSImage+Karelia.h"
