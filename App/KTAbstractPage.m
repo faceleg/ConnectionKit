@@ -105,12 +105,6 @@
 	return result;
 }
 
-- (BOOL)isXHTML
-{
-    SUBCLASSMUSTIMPLEMENT;
-    return YES;
-}
-
 - (NSString *)commentsTemplate	// instance method too for key paths to work in tiger
 {
 	static NSString *result;

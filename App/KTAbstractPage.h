@@ -49,10 +49,7 @@ KTCollectionPathStyle;
 - (BOOL)isRoot;
 
 
-#pragma mark Web
-- (BOOL)isXHTML;
-
-// Comments
+#pragma mark Comments
 - (NSString *)JSKitPath;
 
 
