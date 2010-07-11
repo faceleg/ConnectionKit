@@ -56,6 +56,11 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	
     IBOutlet NSMenuItem		*oAdvancedMenu;		// the main submenu
 	
+	// Separators AFTER these pro menus that we can hide/show
+	IBOutlet NSMenuItem		*oAfterValidateSourceViewMenuItem;
+	IBOutlet NSMenuItem		*oAfterEditRawHTMLMenuItem;
+	IBOutlet NSMenuItem		*oAfterConfigureGoogleMenuItem;
+	
 	// below are outlets of items on that menu
 	
 	IBOutlet NSMenuItem		*oStandardViewMenuItem;

@@ -1142,25 +1142,30 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 
 - (void)updateLicensingMenus:(NSNotification *)aNotif
 {
-	BOOL licensedForPro =  (nil != gRegistrationString) && gIsPro;
-	BOOL showPro = !licensedForPro;
-
-	[oAdvancedMenu						setPro:showPro];
-	[oPasteAsMarkupMenuItem				setPro:showPro];
-	[oEditRawHTMLMenuItem				setPro:showPro];
-	[oCodeInjectionMenuItem				setPro:showPro];
-	[oCodeInjectionLevelMenuItem		setPro:showPro];
-	[oValidateSourceViewMenuItem		setPro:showPro];
-	[oConfigureGoogleMenuItem			setPro:showPro];
+	NSArray *menusAffected = [NSArray arrayWithObjects:
+							  oAdvancedMenu, oPasteAsMarkupMenuItem, oEditRawHTMLMenuItem,
+							  oCodeInjectionMenuItem, oCodeInjectionLevelMenuItem,
+							  oValidateSourceViewMenuItem, oConfigureGoogleMenuItem,
+							  oStandardViewMenuItem, oStandardViewWithoutStylesMenuItem,
+							  oSourceViewMenuItem, oDOMViewMenuItem, oRSSViewMenuItem,
+							  nil];
+	NSArray *separatorsAfter = [NSArray arrayWithObjects:
+								oAfterValidateSourceViewMenuItem, oAfterEditRawHTMLMenuItem,
+								oAfterConfigureGoogleMenuItem,
+								nil];
 	
-	[oStandardViewMenuItem				setPro:showPro];
-	[oStandardViewWithoutStylesMenuItem	setPro:showPro];
-	[oSourceViewMenuItem				setPro:showPro];
-	[oDOMViewMenuItem					setPro:showPro];
-	[oRSSViewMenuItem					setPro:showPro];
-		
-	if (licensedForPro)
+	if ((nil != gRegistrationString) && gIsPro)		// licensed for pro
 	{
+		for (NSMenuItem *item in menusAffected)
+		{
+			[item setHidden:NO];
+			[item setPro:NO];
+		}
+		for (NSMenuItem *separator in separatorsAfter)
+		{
+			[separator setHidden:NO];
+		}
+
 		// Hook up menus to their actions so they will be enabled
 		[oPasteAsMarkupMenuItem setAction:@selector(pasteTextAsMarkup:)];
 		[oEditRawHTMLMenuItem setAction:@selector(editRawHTMLInSelectedBlock:)];
@@ -1168,28 +1173,49 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		[oCodeInjectionLevelMenuItem setAction:@selector(showPageCodeInjection:)];
 		[oValidateSourceViewMenuItem setAction:@selector(validateSource:)];
 		[oConfigureGoogleMenuItem setAction:@selector(configureGoogle:)];
-	
+		
 		[oStandardViewMenuItem setAction:@selector(selectWebViewViewType:)];
 		[oStandardViewWithoutStylesMenuItem setAction:@selector(selectWebViewViewType:)];
 		[oSourceViewMenuItem setAction:@selector(selectWebViewViewType:)];
 		[oDOMViewMenuItem setAction:@selector(selectWebViewViewType:)];
 		[oRSSViewMenuItem setAction:@selector(selectWebViewViewType:)];
 	}
-	else
+	else if (nil != gRegistrationString)	// licensed, non-pro
 	{
-		// clear actions so they will be disabled
-		[oPasteAsMarkupMenuItem setAction:nil];
-		[oEditRawHTMLMenuItem setAction:nil];
-		[oCodeInjectionMenuItem setAction:nil];
-		[oCodeInjectionLevelMenuItem setAction:nil];
-		[oValidateSourceViewMenuItem setAction:nil];
-		[oConfigureGoogleMenuItem setAction:nil];
+		for (NSMenuItem *item in menusAffected)
+		{
+			[item setHidden:YES];
+		}
+		for (NSMenuItem *separator in separatorsAfter)
+		{
+			[separator setHidden:YES];
+		}
 		
-		[oStandardViewMenuItem setAction:nil];
-		[oStandardViewWithoutStylesMenuItem setAction:nil];
-		[oSourceViewMenuItem setAction:nil];
-		[oDOMViewMenuItem setAction:nil];
-		[oRSSViewMenuItem setAction:nil];
+//		// clear actions so they will be disabled .... not strictly necessary, but just in case?
+//		[oPasteAsMarkupMenuItem setAction:nil];
+//		[oEditRawHTMLMenuItem setAction:nil];
+//		[oCodeInjectionMenuItem setAction:nil];
+//		[oCodeInjectionLevelMenuItem setAction:nil];
+//		[oValidateSourceViewMenuItem setAction:nil];
+//		[oConfigureGoogleMenuItem setAction:nil];
+//		
+//		[oStandardViewMenuItem setAction:nil];
+//		[oStandardViewWithoutStylesMenuItem setAction:nil];
+//		[oSourceViewMenuItem setAction:nil];
+//		[oDOMViewMenuItem setAction:nil];
+//		[oRSSViewMenuItem setAction:nil];
+	}
+	else	// unregistered ... show these as being in Pro, still make them available!
+	{
+		for (NSMenuItem *item in menusAffected)
+		{
+			[item setHidden:NO];
+			[item setPro:YES];
+		}
+		for (NSMenuItem *separator in separatorsAfter)
+		{
+			[separator setHidden:NO];
+		}
 	}
 }
 	
