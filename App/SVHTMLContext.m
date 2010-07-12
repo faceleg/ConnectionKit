@@ -153,7 +153,7 @@
     [self setBaseURL:[context baseURL]];
     [self setIncludeStyling:[context includeStyling]];
     [self setLiveDataFeeds:[context liveDataFeeds]];
-    [self setDocType:[context docType]];
+    //    [self setDocType:[context docType]];
     [self setEncoding:[context encoding]];
 }
 
