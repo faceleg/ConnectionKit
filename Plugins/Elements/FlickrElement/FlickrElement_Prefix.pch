@@ -3,7 +3,7 @@
 //
 
 #ifdef __OBJC__
-#import <Cocoa/Cocoa.h>
-#import "Debug.h"
-#import "Macros.h"
+    #import <Cocoa/Cocoa.h>
+    #import <Debug.h>
+    #import <Macros.h>
 #endif
