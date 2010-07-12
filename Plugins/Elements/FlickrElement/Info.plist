@@ -48,13 +48,13 @@
 		<string>clouds</string>
 	</dict>
 	<key>KTPluginName</key>
-	<string>Flickr Badge</string>
+	<string>Flickr Photos</string>
 	<key>KTPluginNibFile</key>
 	<string>FlickrInspector</string>
 	<key>KTPluginPriority</key>
 	<integer>5</integer>
 	<key>KTPluginUntitledName</key>
-	<string>My Flickr Photos</string>
+	<string>Flickr Photos</string>
 	<key>KTTemplateName</key>
 	<string>FlickrTemplate</string>
 	<key>NSPrincipalClass</key>
