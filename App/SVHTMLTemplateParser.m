@@ -291,7 +291,7 @@
 		else if ([keyword isEqualToString:@"flags"])
 		{
 			// Only generate these special classes if we are doing the local preview
-			if (![[SVHTMLContext currentContext] isForPublishing])
+			if ([[SVHTMLContext currentContext] isForEditing])
 			{		
 				value = [value lowercaseString];	// convert to lowercase before converting to classes
 				NSArray *flags = [value componentsSeparatedByWhitespace];
@@ -565,7 +565,7 @@
 	return [context generationPurpose];
 }
 
-- (BOOL)isPublishing
+- (BOOL)isPublishing		// Used by templates
 {
     SVHTMLContext *context = [SVHTMLContext currentContext];
     OBASSERT(context);

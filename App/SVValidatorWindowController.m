@@ -39,6 +39,8 @@
 }
 
 // This override prevents scripts and such from being written for elements that are not "shouldPreviewWhenEditing"
+// That's because we send the for-publishing HTML to the validator, and we don't want HTML that is marked as not-for-preview
+// to be passed to the validator.
 - (BOOL)shouldWriteServerSideScripts; { return NO; }
 
 - (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you

@@ -71,6 +71,7 @@ typedef enum {
 - (BOOL)isEditable; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;
+- (BOOL)isForPublishingProOnly;
 
 - (void)copyPropertiesFromContext:(SVHTMLContext *)context;
 

@@ -10,6 +10,7 @@
 
 #import "SVHTMLContext.h"
 #import "SVTemplate.h"
+#import "Registration.h"
 
 
 @implementation SVRawHTMLGraphic 
@@ -23,15 +24,19 @@
 
 - (void)writeBody:(SVHTMLContext *)context;
 {
-    // Usually, just write out the code and be done
-    if (![[self shouldPreviewWhenEditing] boolValue] && ![context shouldWriteServerSideScripts])
-    {
-        [context writeHTMLString:[[[self class] placeholderTemplate] templateString]];
-    }
-    else
+	// Show the real HTML if it's the pro-licensed edition publishing
+	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
+	
+    if ( [context shouldWriteServerSideScripts]
+			|| ([context isForPreview] && [[self shouldPreviewWhenEditing] boolValue])
+		)
     {
         [context writeHTMLString:[self HTMLString]];
         [context addDependencyOnObject:self keyPath:@"HTMLString"];
+    }
+    else
+    {
+        [context writeHTMLString:[[[self class] placeholderTemplate] templateString]];
     }
 	
     [context limitToMaxDocType:[[self docType] intValue]];

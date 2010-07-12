@@ -17,6 +17,7 @@
 #import "KTPage.h"
 #import "KTSite.h"
 #import "SVTextAttachment.h"
+#import "Registration.h"
 
 #import "SVCalloutDOMController.h"  // don't like having to do this
 
@@ -118,7 +119,7 @@
     
     
     // Any early code injection?
-    if ([self isForPublishing])
+    if ([self isForPublishingProOnly])
     {
         NSString *beforeHTML = [[[page master] codeInjection] valueForKey:@"beforeHTML"];
         if (beforeHTML) [self writeString:beforeHTML];
@@ -172,6 +173,7 @@
 
 - (BOOL)isForEditing; { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
 
+#warning .. can we globally change any "isEditable" to "isForEditing" just to avoid redundancy/confusion?
 - (BOOL)isEditable { return [self isForEditing]; }
 + (NSSet *)keyPathsForValuesAffectingEditable
 {
@@ -190,7 +192,13 @@
     return result;
 }
 
-- (BOOL)shouldWriteServerSideScripts; { return [self isForPublishing]; }
+- (BOOL)isForPublishingProOnly
+{
+	return [self isForPublishing] && (nil != gRegistrationString) && gIsPro;
+}
+
+// Similar to above, but might be overridden by subclass to prevent sending to HTML validator
+- (BOOL)shouldWriteServerSideScripts; { return [self isForPublishingProOnly]; }
 
 #pragma mark CSS
 
@@ -201,6 +209,7 @@
 
 - (void)addCSSString:(NSString *)css;
 {
+#warning Mike, can you check if this maybe should actually be [self isForEditing] ? How does QuickLook fit in here?
     if (![self isForPublishing])
     {
         [self startStyleElementWithType:@"text/css"];
@@ -211,6 +220,7 @@
 
 - (void)addCSSWithURL:(NSURL *)cssURL;
 {
+#warning Mike, can you check if this maybe should actually be [self isForEditing] ? How does QuickLook fit in here?
     if (![self isForPublishing])
     {
         [self writeLinkToStylesheet:[self relativeURLStringOfURL:cssURL]
