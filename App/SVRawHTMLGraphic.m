@@ -28,7 +28,7 @@
 	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
 	
     if ( [context shouldWriteServerSideScripts]
-			|| ([context isForPreview] && [[self shouldPreviewWhenEditing] boolValue])
+			|| ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue])
 		)
     {
         [context writeHTMLString:[self HTMLString]];
