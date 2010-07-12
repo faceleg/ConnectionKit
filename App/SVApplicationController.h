@@ -47,6 +47,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	// Pro menu items
 	IBOutlet NSMenuItem		*oPasteAsMarkupMenuItem;
 	IBOutlet NSMenuItem		*oEditRawHTMLMenuItem;
+	IBOutlet NSMenuItem		*oInsertRawHTMLMenuItem;
 	IBOutlet NSMenuItem		*oFindSeparator;
 	IBOutlet NSMenuItem		*oFindSubmenu;
 	

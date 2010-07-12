@@ -49,10 +49,12 @@ static NSString *sLanguageObservationContext = @"SVDocumentInspectorLanguageObse
 
 - (void)updateProView:(NSNotification *)aNotif
 {
+	BOOL licensed =  (nil != gRegistrationString);
 	BOOL licensedForPro =  (nil != gRegistrationString) && gIsPro;
 	
-	[oProBadge setHidden:licensedForPro];	// only show it if we are not PRO
-    [oProButton setEnabled:licensedForPro];	// If we had other stuff here we'd need to enable pieces
+	[oProBadge setHidden:licensed];	// only show "Pro" badge if we are unregistered
+	// Make the button enabled if we are a demo, or a pro license
+    [oProButton setHidden:(licensed && !licensedForPro)]; // If we had other stuff here we'd need to enable pieces
 }
 
 - (void)viewDidLoad;

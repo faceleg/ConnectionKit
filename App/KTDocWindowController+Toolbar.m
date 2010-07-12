@@ -316,6 +316,7 @@ TO DO:
     return [result autorelease];
 }
 
+
 /*	Support method that turns toolbarItem into a "Add Pagelet" button
  */
 - (NSToolbarItem *)makeGraphicsToolbarItemWithIdentifier:(NSString *)identifier;
@@ -379,15 +380,10 @@ TO DO:
     [menu addItem:item];
 	
     
-	// Finally, Raw HTML if available
-    if (gIsPro)
-    {
-        [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
-                       [SVGraphicFactory rawHTMLFactory]]];
-    }
-	
-	
-    
+	[menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
+				   [SVGraphicFactory rawHTMLFactory]]];
+	self.rawHTMLMenuItem = [pulldownButton lastItem];		// save for later since this gets hidden if not Pro
+	    
     return [result autorelease];
 }
 

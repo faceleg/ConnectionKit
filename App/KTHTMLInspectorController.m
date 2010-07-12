@@ -84,7 +84,7 @@
 
 -(id)	init
 {
-	if ( !(gIsPro) )	// don't allow this to be created if we're not pro
+	if ( !((gIsPro || (nil == gRegistrationString))) )	// don't allow this to be created if we're not pro
 	{
 		NSBeep();
 		[self release];

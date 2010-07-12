@@ -1144,6 +1144,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	NSArray *menusAffected = [NSArray arrayWithObjects:
 							  oAdvancedMenu, oPasteAsMarkupMenuItem, oEditRawHTMLMenuItem,
+							  oInsertRawHTMLMenuItem,
 							  oCodeInjectionMenuItem, oCodeInjectionLevelMenuItem,
 							  oValidateSourceViewMenuItem, oConfigureGoogleMenuItem,
 							  oStandardViewMenuItem, oStandardViewWithoutStylesMenuItem,
@@ -1167,18 +1168,19 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 		}
 
 		// Hook up menus to their actions so they will be enabled
-		[oPasteAsMarkupMenuItem setAction:@selector(pasteTextAsMarkup:)];
-		[oEditRawHTMLMenuItem setAction:@selector(editRawHTMLInSelectedBlock:)];
-		[oCodeInjectionMenuItem setAction:@selector(showSiteCodeInjection:)];
-		[oCodeInjectionLevelMenuItem setAction:@selector(showPageCodeInjection:)];
-		[oValidateSourceViewMenuItem setAction:@selector(validateSource:)];
-		[oConfigureGoogleMenuItem setAction:@selector(configureGoogle:)];
-		
-		[oStandardViewMenuItem setAction:@selector(selectWebViewViewType:)];
-		[oStandardViewWithoutStylesMenuItem setAction:@selector(selectWebViewViewType:)];
-		[oSourceViewMenuItem setAction:@selector(selectWebViewViewType:)];
-		[oDOMViewMenuItem setAction:@selector(selectWebViewViewType:)];
-		[oRSSViewMenuItem setAction:@selector(selectWebViewViewType:)];
+//		[oPasteAsMarkupMenuItem setAction:@selector(pasteTextAsMarkup:)];
+//		[oEditRawHTMLMenuItem setAction:@selector(editRawHTMLInSelectedBlock:)];
+//		[oInsertRawHTMLMenuItem setAction:@selector(insertPagelet:)];
+//		[oCodeInjectionMenuItem setAction:@selector(showSiteCodeInjection:)];
+//		[oCodeInjectionLevelMenuItem setAction:@selector(showPageCodeInjection:)];
+//		[oValidateSourceViewMenuItem setAction:@selector(validateSource:)];
+//		[oConfigureGoogleMenuItem setAction:@selector(configureGoogle:)];
+//		
+//		[oStandardViewMenuItem setAction:@selector(selectWebViewViewType:)];
+//		[oStandardViewWithoutStylesMenuItem setAction:@selector(selectWebViewViewType:)];
+//		[oSourceViewMenuItem setAction:@selector(selectWebViewViewType:)];
+//		[oDOMViewMenuItem setAction:@selector(selectWebViewViewType:)];
+//		[oRSSViewMenuItem setAction:@selector(selectWebViewViewType:)];
 	}
 	else if (nil != gRegistrationString)	// licensed, non-pro
 	{
@@ -1194,6 +1196,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 //		// clear actions so they will be disabled .... not strictly necessary, but just in case?
 //		[oPasteAsMarkupMenuItem setAction:nil];
 //		[oEditRawHTMLMenuItem setAction:nil];
+//		[oInsertRawHTMLMenuItem setAction:nil];
 //		[oCodeInjectionMenuItem setAction:nil];
 //		[oCodeInjectionLevelMenuItem setAction:nil];
 //		[oValidateSourceViewMenuItem setAction:nil];

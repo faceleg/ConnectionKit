@@ -63,6 +63,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 @implementation KTDocWindowController
 
+@synthesize rawHTMLMenuItem = _rawHTMLMenuItem;
+
 + (void)initialize;
 {
     [self exposeBinding:@"contentTitle"];
@@ -90,6 +92,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	// Get rid of view controllers
 	[self setSiteOutlineViewController:nil];
 	[self setWebContentAreaController:nil];
+	self.rawHTMLMenuItem = nil;
 	
     // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -153,10 +156,10 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	// Hide address bar if it's hidden (it's showing to begin with, in the nib)
 	[[NSNotificationCenter defaultCenter] addObserver:self
-											 selector:@selector(updateBuyNow:)
+											 selector:@selector(updateDocWindowLicenseStatus:)
 												 name:kKSLicenseStatusChangeNotification
 											   object:nil];
-	[self updateBuyNow:nil];	// update them now
+	[self updateDocWindowLicenseStatus:nil];	// update them now
 	
 	
 	
@@ -898,7 +901,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 #pragma mark -
 #pragma mark Support
 
-- (void) updateBuyNow:(NSNotification *)aNotification
+- (void) updateDocWindowLicenseStatus:(NSNotification *)aNotification;
 {
 	if (nil == gRegistrationString)
 	{
@@ -930,10 +933,17 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		NSButton *button = [[self window] createBuyNowButtonWithTitle:buttonTitle prompt:buttonPrompt];
 		[button setAction:@selector(showRegistrationWindow:)];
 		[button setTarget:[NSApp delegate]];
+		
+		[self.rawHTMLMenuItem setHidden:NO];	// don't hide, this is unregistered
+		[self.rawHTMLMenuItem setPro:YES];		// Indicate that this is a Pro feature
 	}
 	else
 	{
 		[[self window] removeBuyNowButton];
+		
+		
+		[self.rawHTMLMenuItem setHidden:!gIsPro];		// hide if not pro, show it pro
+		[self.rawHTMLMenuItem setPro:NO];				// registered, we're not going to show the pro badge.
 	}
 	
 }

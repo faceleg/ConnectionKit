@@ -11,7 +11,7 @@
 			<string key="NS.object.0">762</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="169"/>
+			<integer value="1255"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -3062,6 +3062,14 @@
 					</object>
 					<int key="connectionID">1349</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oInsertRawHTMLMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="917095661"/>
+					</object>
+					<int key="connectionID">1350</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4840,7 +4848,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1349</int>
+			<int key="maxID">1350</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5973,6 +5981,7 @@
 						<string key="oFindSeparator">NSMenuItem</string>
 						<string key="oFindSubmenu">NSMenuItem</string>
 						<string key="oIndexesMenu">NSMenu</string>
+						<string key="oInsertRawHTMLMenuItem">NSMenuItem</string>
 						<string key="oMoreGraphicsMenu">NSMenu</string>
 						<string key="oNewPageMenu">NSMenu</string>
 						<string key="oPasteAsMarkupMenuItem">NSMenuItem</string>

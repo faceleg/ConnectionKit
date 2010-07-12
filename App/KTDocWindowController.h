@@ -82,6 +82,8 @@ extern NSString *gInfoWindowAutoSaveName;
     
     // Design Chooser
     SVDesignChooserWindowController *_designChooserWindowController;
+	
+	NSMenuItem						*_rawHTMLMenuItem;		// like an outlet
 }
 
 #pragma mark Window Title
@@ -91,10 +93,11 @@ extern NSString *gInfoWindowAutoSaveName;
 @property(nonatomic, retain) IBOutlet SVSiteOutlineViewController *siteOutlineViewController;
 @property(nonatomic, retain, readonly) IBOutlet SVWebContentAreaController *webContentAreaController;
 @property(nonatomic, retain) IBOutlet SVPagesController *pagesController;
+@property(nonatomic, retain) NSMenuItem *rawHTMLMenuItem;
 
 
 //- (void)updateEditMenuItems;
-- (void) updateBuyNow:(NSNotification *)aNotification;
+- (void) updateDocWindowLicenseStatus:(NSNotification *)aNotification;
 
 // Actions
 - (IBAction)toggleSmallPageIcons:(id)sender;

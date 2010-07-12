@@ -57,8 +57,9 @@
             {
                 priority = [priorityID intValue];
             } 
+			NSLog(@"DJW TO HANDLE THIS LOGIC");
             if (priority > 0	// don't add zero-priority items to menu!
-                && (priority < 9 || gIsPro) )	// only if non-advanced or advanced allowed.
+                && (priority < 9 || gIsPro || (nil == gRegistrationString)) )	// only if non-advanced or advanced allowed.
             {
                 NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
                 NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
@@ -120,6 +121,7 @@
 			// [menuItem setPro:YES];
 			// TODO: deal with notification
 		}
+		NSLog(@"DJW to del with pro/registration issues once this is going again");
 		
 		// set target/action
 		[menuItem setRepresentedObject:presetDict];
