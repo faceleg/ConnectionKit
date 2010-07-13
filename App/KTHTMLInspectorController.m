@@ -883,7 +883,7 @@ initial syntax coloring.
 	{
 		case kValidationStateUnknown:	result = nil; break;
 		case kValidationStateUnparseable:
-		case kValidationStateValidationError:	result = [NSImage imageNamed:@"NSCaution"]; break;
+		case kValidationStateValidationError:	result = [NSImage imageNamed:@"caution"]; break;	// like 10.6 NSCaution but better for small sizes
 		case kValidationStateDisabled:
 		case kValidationStateLocallyValid:		result = [NSImage imageNamed:NSImageNameInfo]; break;
 		case kValidationStateVerifiedGood:		result = [NSImage imageNamed:@"checkmark"]; break;

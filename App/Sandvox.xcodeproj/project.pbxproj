@@ -1019,7 +1019,7 @@
 		CE1BE85F11D2AD1F00D875AE /* multiselection.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE81311D2AD1E00D875AE /* multiselection.png */; };
 		CE1BE86011D2AD1F00D875AE /* WelcomeSandvox.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BE81511D2AD1E00D875AE /* WelcomeSandvox.png */; };
 		CE1BF2B411D2B0EF00D875AE /* toolbar_media.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF2B311D2B0EF00D875AE /* toolbar_media.tiff */; };
-		CE1BF33511D2B61F00D875AE /* NSCaution.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF33411D2B61F00D875AE /* NSCaution.tiff */; };
+		CE1BF33511D2B61F00D875AE /* caution.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF33411D2B61F00D875AE /* caution.tiff */; };
 		CE1BF76111D2B83500D875AE /* error.pdf in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF75E11D2B83500D875AE /* error.pdf */; };
 		CE1BF76211D2B83500D875AE /* qmark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF75F11D2B83500D875AE /* qmark.png */; };
 		CE1BF76311D2B83500D875AE /* UKDockProgressIndicator_progress.png in Resources */ = {isa = PBXBuildFile; fileRef = CE1BF76011D2B83500D875AE /* UKDockProgressIndicator_progress.png */; };
@@ -1089,6 +1089,8 @@
 		CEA962C30AF6A924008A1367 /* sandvox.css in Resources */ = {isa = PBXBuildFile; fileRef = CEA962C20AF6A924008A1367 /* sandvox.css */; };
 		CEAE132C08450536007025D4 /* RSSTemplate.xml in Resources */ = {isa = PBXBuildFile; fileRef = CEAE132B08450536007025D4 /* RSSTemplate.xml */; };
 		CEAE166A084530C1007025D4 /* KTHostProperties.m in Sources */ = {isa = PBXBuildFile; fileRef = CEAE1668084530C1007025D4 /* KTHostProperties.m */; };
+		CEB2EEFF11ED0558002DD050 /* Validate.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEB2EEFE11ED0558002DD050 /* Validate.tiff */; };
+		CEB2EF0511ED08DF002DD050 /* NoNetwork.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CEB2EF0411ED08DF002DD050 /* NoNetwork.tiff */; };
 		CEB34A5008296E720073A7A4 /* KTDocWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */; };
 		CEB53A850899A9AD006B0019 /* KTDesign.m in Sources */ = {isa = PBXBuildFile; fileRef = CEB53A810899A9AD006B0019 /* KTDesign.m */; };
 		CEB721BC108FCEA500511E74 /* QuickLook.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CEB721BB108FCEA500511E74 /* QuickLook.framework */; };
@@ -2646,7 +2648,7 @@
 		CE1BE81311D2AD1E00D875AE /* multiselection.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = multiselection.png; sourceTree = "<group>"; };
 		CE1BE81511D2AD1E00D875AE /* WelcomeSandvox.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = WelcomeSandvox.png; sourceTree = "<group>"; };
 		CE1BF2B311D2B0EF00D875AE /* toolbar_media.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_media.tiff; sourceTree = "<group>"; };
-		CE1BF33411D2B61F00D875AE /* NSCaution.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NSCaution.tiff; sourceTree = "<group>"; };
+		CE1BF33411D2B61F00D875AE /* caution.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = caution.tiff; sourceTree = "<group>"; };
 		CE1BF75E11D2B83500D875AE /* error.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = error.pdf; sourceTree = "<group>"; };
 		CE1BF75F11D2B83500D875AE /* qmark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = qmark.png; sourceTree = "<group>"; };
 		CE1BF76011D2B83500D875AE /* UKDockProgressIndicator_progress.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = UKDockProgressIndicator_progress.png; sourceTree = "<group>"; };
@@ -2743,6 +2745,8 @@
 		CEAE132B08450536007025D4 /* RSSTemplate.xml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.xml; path = RSSTemplate.xml; sourceTree = "<group>"; };
 		CEAE1667084530C1007025D4 /* KTHostProperties.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHostProperties.h; sourceTree = "<group>"; };
 		CEAE1668084530C1007025D4 /* KTHostProperties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHostProperties.m; sourceTree = "<group>"; };
+		CEB2EEFE11ED0558002DD050 /* Validate.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = Validate.tiff; sourceTree = "<group>"; };
+		CEB2EF0411ED08DF002DD050 /* NoNetwork.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = NoNetwork.tiff; sourceTree = "<group>"; };
 		CEB34A4D08296E720073A7A4 /* KTDocWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDocWindowController.h; sourceTree = "<group>"; };
 		CEB34A4E08296E720073A7A4 /* KTDocWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDocWindowController.m; sourceTree = "<group>"; };
 		CEB53A800899A9AD006B0019 /* KTDesign.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDesign.h; sourceTree = "<group>"; };
@@ -4862,7 +4866,7 @@
 		CE1BE7AF11D2AD0700D875AE /* Graphics */ = {
 			isa = PBXGroup;
 			children = (
-				CE1BF33411D2B61F00D875AE /* NSCaution.tiff */,
+				CE1BF33411D2B61F00D875AE /* caution.tiff */,
 				CE1BE7B011D2AD0700D875AE /* broken.png */,
 				CE1BF75E11D2B83500D875AE /* error.pdf */,
 				CE1BF75F11D2B83500D875AE /* qmark.png */,
@@ -5165,6 +5169,8 @@
 		CE58138D11DEA45D008478AF /* HTMLEditor */ = {
 			isa = PBXGroup;
 			children = (
+				CEB2EF0411ED08DF002DD050 /* NoNetwork.tiff */,
+				CEB2EEFE11ED0558002DD050 /* Validate.tiff */,
 				CE58138E11DEA45D008478AF /* NSStatusAvailable.tiff */,
 				CE58138F11DEA45D008478AF /* NSStatusPartiallyAvailable.tiff */,
 				CE58139011DEA45D008478AF /* NSStatusUnavailable.tiff */,
@@ -6313,7 +6319,7 @@
 				CE1BE85F11D2AD1F00D875AE /* multiselection.png in Resources */,
 				CE1BE86011D2AD1F00D875AE /* WelcomeSandvox.png in Resources */,
 				CE1BF2B411D2B0EF00D875AE /* toolbar_media.tiff in Resources */,
-				CE1BF33511D2B61F00D875AE /* NSCaution.tiff in Resources */,
+				CE1BF33511D2B61F00D875AE /* caution.tiff in Resources */,
 				CE1BF76111D2B83500D875AE /* error.pdf in Resources */,
 				CE1BF76211D2B83500D875AE /* qmark.png in Resources */,
 				CE1BF76311D2B83500D875AE /* UKDockProgressIndicator_progress.png in Resources */,
@@ -6326,6 +6332,8 @@
 				CE5D02C611E66C4B00A4A2D1 /* KSFeedback.xib in Resources */,
 				2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */,
 				CE23DBF811EBE4D800E43369 /* KSPluginInstaller.xib in Resources */,
+				CEB2EEFF11ED0558002DD050 /* Validate.tiff in Resources */,
+				CEB2EF0511ED08DF002DD050 /* NoNetwork.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
