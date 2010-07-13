@@ -230,7 +230,6 @@
 
 - (void)addCSSString:(NSString *)css;
 {
-#warning Mike, can you check if this maybe should actually be [self isForEditing] ? How does QuickLook fit in here?
     if (![self isForPublishing])
     {
         [self startStyleElementWithType:@"text/css"];
