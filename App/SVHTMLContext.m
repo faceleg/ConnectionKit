@@ -157,6 +157,22 @@
 	SVHTMLTemplateParser *parser = [[SVHTMLTemplateParser alloc] initWithPage:page];
     [parser parseIntoHTMLContext:self];
     [parser release];
+    
+    
+    // Now, did that change the doctype? Retry if possible!
+    KTDocType docType = [self maxDocType];
+    if (docType == KTDocTypeAll) docType = KTHTML5DocType;
+    if (docType != [self docType])
+    {
+        NSMutableString *output = [self mutableString];
+        if (output)
+        {
+            [output setString:@""];
+            
+            [self setDocType:docType];
+            [self writeDocumentWithPage:page];
+        }
+    }
 }
 
 #pragma mark Properties
