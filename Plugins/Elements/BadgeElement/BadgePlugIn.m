@@ -61,7 +61,7 @@ static NSArray *sAltStrings = nil;
 #pragma mark -
 #pragma mark SVPlugIn
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 { 
     return [NSSet setWithObjects:
             @"badgeTypeTag", 
