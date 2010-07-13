@@ -77,7 +77,6 @@ typedef enum {
 #pragma mark Document
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;
-- (void)startDocumentWithDocType:(KTDocType)docType;
 
 
 #pragma mark Properties

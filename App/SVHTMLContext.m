@@ -159,7 +159,9 @@
     
     
     // Start the document
-    [self startDocumentWithDocType:[self docType]];
+    KTDocType docType = [self docType];
+    [self startDocument:[[self class] stringFromDocType:docType]
+                isXHTML:(docType >= KTXHTMLTransitionalDocType)];
     
     
     // It's template time!
@@ -169,25 +171,18 @@
     
     
     // Now, did that change the doctype? Retry if possible!
-    KTDocType docType = _maxDocType;
-    if (docType > KTHTML5DocType) docType = KTXHTMLTransitionalDocType;
-    if (docType != [self docType])
+    if (_maxDocType > KTHTML5DocType) _maxDocType = KTXHTMLTransitionalDocType;
+    if (_maxDocType != [self docType])
     {
         if ([self mutableString])
         {
             [self reset];
-            [self setDocType:docType];
+            [self setDocType:_maxDocType];
             [self writeDocumentWithPage:page];
         }
     }
 }
 
-- (void)startDocumentWithDocType:(KTDocType)docType;
-{
-    [self setDocType:docType];
-    [self startDocument:[[self class] stringFromDocType:[self docType]]
-                isXHTML:(docType >= KTXHTMLTransitionalDocType)];
-}
 
 #pragma mark Properties
 
