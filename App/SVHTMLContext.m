@@ -162,7 +162,7 @@
     // Now, did that change the doctype? Retry if possible!
     KTDocType docType = [self maxDocType];
     if (docType == KTDocTypeAll) docType = KTHTML5DocType;
-    if (docType != [self docType])
+    if (docType != [self docType] && NO)
     {
         NSMutableString *output = [self mutableString];
         if (output)
