@@ -32,6 +32,7 @@
 #import "SVValidatorWindowController.h"
 #import "KSNetworkNotifier.h"
 #import "SVRawHTMLGraphic.h"
+#import "NSMenuItem+Karelia.h"
 
 #import "NSManagedObjectContext+KTExtensions.h"
 
