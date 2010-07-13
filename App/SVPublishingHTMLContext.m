@@ -22,10 +22,8 @@
 
 - (id)initWithUploadPath:(NSString *)path
                publisher:(id <SVPublisher>)publisher;
-{
-    if (path) _output = [[NSMutableString alloc] init];
-    
-    self = [self initWithOutputWriter:_output];
+{    
+    self = [self init];
     
     _path = [path copy];
     _publishingEngine = [publisher retain];
@@ -36,10 +34,11 @@
 - (void)close;
 {
     // Generate HTML data
-	if (_output)
+    NSString *output = [self mutableString];
+	if (output)
     {
         NSStringEncoding encoding = [self encoding];
-        NSData *pageData = [_output dataUsingEncoding:encoding allowLossyConversion:YES];
+        NSData *pageData = [output dataUsingEncoding:encoding allowLossyConversion:YES];
         OBASSERT(pageData);
         
         
@@ -49,7 +48,7 @@
         NSString *fullUploadPath = [[publishingEngine baseRemotePath]
                                     stringByAppendingPathComponent:_path];
         NSData *digest = nil;
-        if (![publishingEngine shouldUploadHTML:_output
+        if (![publishingEngine shouldUploadHTML:output
                                        encoding:encoding
                                         forPage:page
                                          toPath:fullUploadPath
@@ -76,7 +75,7 @@
     [super close];
     //[_publishingEngine release]; _publishingEngine = nil;     Messes up media gathering
     [_path release]; _path = nil;
-    [_output release]; _output = nil;
+    [output release]; output = nil;
 }
 
 - (NSURL *)addMedia:(id <SVMedia>)media

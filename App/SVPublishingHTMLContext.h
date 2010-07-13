@@ -16,8 +16,6 @@
   @private
     id <SVPublisher>    _publishingEngine;
     NSString            *_path;
-    
-    NSMutableString *_output;
 }
 
 - (id)initWithUploadPath:(NSString *)path

@@ -84,8 +84,28 @@
     return self;
 }
 
+- (id)initWithMutableString:(NSMutableString *)output;
+{
+    if (self = [self initWithOutputWriter:output])
+    {
+        _output = [output retain];
+    }
+    
+    return self;
+}
+
+- (id)init;
+{
+    NSMutableString *output = [[NSMutableString alloc] init];
+    self = [self initWithMutableString:output];
+    [output release];
+    return self;
+}
+
 - (void)dealloc
 {
+    [_output release];
+    
     [_language release];
     [_baseURL release];
     [_currentPage release];
@@ -140,6 +160,8 @@
 }
 
 #pragma mark Properties
+
+@synthesize mutableString = _output;
 
 @synthesize baseURL = _baseURL;
 @synthesize liveDataFeeds = _liveDataFeeds;

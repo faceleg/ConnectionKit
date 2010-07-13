@@ -83,7 +83,7 @@
 	   windowForSheet:(NSWindow *)aWindow;
 {
     NSMutableString *pageSource = [NSMutableString string];
-    SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithOutputWriter:pageSource];
+    SVValidationHTMLContext *context = [[SVValidationHTMLContext alloc] initWithMutableString:pageSource];
     [context setPage:page];
 	[context writeDocumentWithPage:page];
     

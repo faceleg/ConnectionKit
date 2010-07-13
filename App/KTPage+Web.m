@@ -108,7 +108,7 @@
 {
     NSMutableString *result = [NSMutableString string];
     
-    SVHTMLContext *context = [[SVHTMLContext alloc] initWithOutputWriter:result];
+    SVHTMLContext *context = [[SVHTMLContext alloc] initWithMutableString:result];
     [context setPage:self];
 	
 	[context writeDocumentWithPage:self];

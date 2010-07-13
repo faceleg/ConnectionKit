@@ -29,6 +29,8 @@ typedef enum {
 @interface SVHTMLContext : KSHTMLWriter <SVPlugInContext, SVHTMLWriter, KSMegaBufferedWriterDelegate>
 {
   @private
+    NSMutableString *_output;
+    
     NSURL   *_baseURL;
     KTPage	*_currentPage;
     
@@ -55,12 +57,23 @@ typedef enum {
     NSUInteger      _numberOfGraphics;
 }
 
+#pragma mark Init
+
+// Like -initWithOutputWriter: but gives the context more info about the output. In practice this means that if a page component changes the doctype, the output will be wiped and the page rewritten with the new doctype.
+- (id)initWithMutableString:(NSMutableString *)output;
+
+- (id)init; // calls through to -initWithMutableString:
+
+
 #pragma mark Document
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;
 
 
 #pragma mark Properties
+
+// Not 100% sure I want to expose this!
+@property(nonatomic, retain, readonly) NSMutableString *mutableString;
 
 @property(nonatomic, copy) NSURL *baseURL;
 @property(nonatomic) BOOL liveDataFeeds;
