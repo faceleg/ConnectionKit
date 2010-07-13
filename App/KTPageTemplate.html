@@ -5,12 +5,7 @@
 [[else]]
 		<meta http-equiv="content-type" content="text/html; charset=[[=&master.charset]]" />
 [[endif]]
-[[if master.codeInjection.earlyHead]]
-[[=master.codeInjection.earlyHead]]
-[[endif]]
-[[if codeInjection.earlyHead]]
-[[=codeInjection.earlyHead]]
-[[endif]]
+[[=writeCodeInjectionEarlyHead]]
 [[if parser.currentPage.windowTitle]]
 		<title>[[=&parser.currentPage.windowTitle]]</title>
 [[else]]
@@ -78,20 +73,10 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[endif]]
 [[=parser.outputWriter.writeExtraHeaders]]
 
-[[if master.codeInjection.headArea]]
-[[=master.codeInjection.headArea]]
-[[endif]]
-[[if codeInjection.headArea]]
-[[=codeInjection.headArea]]
-[[endif]]
+[[=writeCodeInjectionHeadArea]]
 	</head>
-	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.banner]]has-custom-banner[[else]]no-custom-banner[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[if master.codeInjection.bodyTag]][[=master.codeInjection.bodyTag]][[endif]][[if codeInjection.bodyTag]][[=codeInjection.bodyTag]][[endif]]>
-[[if master.codeInjection.bodyTagStart]]
-[[=master.codeInjection.bodyTagStart]]
-[[endif]]
-[[if codeInjection.bodyTagStart]]
-[[=codeInjection.bodyTagStart]]
-[[endif]]
+	<body class="sandvox [[if !titleBox.hidden]]has-page-title[[else]]no-page-title[[endif]] [[if showSidebar]]allow-sidebar[[else]]no-sidebar[[endif]] [[if master.banner]]has-custom-banner[[else]]no-custom-banner[[endif]][[if isRootPage]] home-page[[endif]][[if master.enableImageReplacement]] IR[[else]] no-IR[[endif]]" id="[[=&site.hostProperties.domainNameDashes]]" [[=writeCodeInjectionBodyTag]]>
+[[=writeCodeInjectionBodyTagStart]]
 		<div id="page-container"[[if cssClassName]] class="[[=&cssClassName]]"[[endif]]>
 			<div id="page">
 				<div id="page-top" class="[[if master.logo.hidden]]no-logo[[else]]has-logo[[endif]] [[if !master.siteTitle.hidden]]has-title[[else]]no-title[[endif]] [[if !master.siteSubtitle.hidden]]has-tagline[[else]]no-tagline[[endif]]">
@@ -178,13 +163,7 @@ Licensing for this website's design:     <[[=-master.designDirectoryURL]]License
 [[endif2]]
 [[endif]]
 
-[[if codeInjection.bodyTagEnd]]
-[[=codeInjection.bodyTagEnd]]
-[[endif]]
-
-[[if master.codeInjection.bodyTagEnd]]
-[[=master.codeInjection.bodyTagEnd]]
-[[endif]]
+[[=writeCodeInjectionBodyTagEnd]]
 
 [[if parser.HTMLGenerationPurpose==10]]
 <!-- Quick Look preview sticky-note -->
