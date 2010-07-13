@@ -10,6 +10,8 @@
 #import "SVPlugIn.h"
 #import "KSMegaBufferedWriter.h"
 
+#import "KT.h"  // for KTDocType. We need to fix this!
+
 
 // publishing mode
 typedef enum {
@@ -37,7 +39,9 @@ typedef enum {
 	BOOL                _liveDataFeeds;
     NSStringEncoding    _stringEncoding;
     NSString            *_language;
-    KTDocType           _maxDocType;
+    
+    KTDocType   _docType;
+    KTDocType   _maxDocType;
     
     BOOL            _includeStyling;
     NSURL           *_mainCSSURL;
@@ -68,6 +72,7 @@ typedef enum {
 #pragma mark Document
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;
+- (void)startDocumentWithDocType:(KTDocType)docType;
 
 
 #pragma mark Properties
@@ -90,8 +95,13 @@ typedef enum {
 
 
 #pragma mark Doctype
+
+@property(nonatomic) KTDocType docType;
 @property(nonatomic) KTDocType maxDocType;
 - (void)limitToMaxDocType:(KTDocType)docType;
+
++ (NSString *)titleOfDocType:(KTDocType)docType localize:(BOOL)shouldLocalizeForDisplay;
++ (NSString *)stringFromDocType:(KTDocType)docType;
 
 
 #pragma mark CSS
