@@ -87,7 +87,7 @@
         {
             result = [[design bundle] quicklookDataForFile:filename];
         }
-        else if ([context isEditable] && ![context baseURL])
+        else if ([context isForEditing] && ![context baseURL])
         {
             result = [[NSURL fileURLWithPath:localPath] absoluteString];
         }
@@ -202,7 +202,7 @@
     
     
 	// If we're for editing, include additional editing CSS
-	if ([context isEditable])
+	if ([context isForEditing])
 	{
 		NSString *editingCSSPath = [[NSBundle mainBundle] overridingPathForResource:@"design-time"
 																			 ofType:@"css"];

@@ -81,9 +81,7 @@ typedef enum {
 @property(nonatomic, copy) NSString *language;
 
 @property(nonatomic, readonly) KTHTMLGenerationPurpose generationPurpose;
-- (BOOL)isEditable; // YES if HTML is intended to be edited directly in a Web Editor
 - (BOOL)isForEditing;		// Synonym, apparently...
-
 - (BOOL)isForQuickLookPreview;
 - (BOOL)isForPublishing;
 - (BOOL)isForPublishingProOnly;

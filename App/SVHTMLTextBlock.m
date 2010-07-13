@@ -113,7 +113,7 @@
     // Editing
     if ([self isEditable])
     {
-        if ([[SVHTMLContext currentContext] isEditable])
+        if ([[SVHTMLContext currentContext] isForEditing])
         { 
             [classNames addObject:([self isRichText] ? @"kBlock" : @"kLine")];
         }
@@ -470,7 +470,7 @@
 - (NSString *)processHTML:(NSString *)result
 {
     // Perform additional processing of the text according to HTML generation purpose
-	if (![[SVHTMLContext currentContext] isEditable])
+	if (![[SVHTMLContext currentContext] isForEditing])
 	{
 		// Fix page links
 		result = [self fixPageLinksFromString:result];

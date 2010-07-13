@@ -195,8 +195,7 @@
 
 - (BOOL)isForEditing; { return [self generationPurpose] == kSVHTMLGenerationPurposeEditing; }
 
-#warning .. can we globally change any "isEditable" to "isForEditing" just to avoid redundancy/confusion?
-- (BOOL)isEditable { return [self isForEditing]; }
+- (BOOL)isEditable { return [self isForEditing]; }  // left in for compat. for now
 + (NSSet *)keyPathsForValuesAffectingEditable
 {
     return [NSSet setWithObject:@"generationPurpose"];
