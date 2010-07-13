@@ -95,10 +95,7 @@ typedef enum {
 
 
 #pragma mark Doctype
-
 @property(nonatomic) KTDocType docType;
-- (void)limitToMaxDocType:(KTDocType)docType;
-
 + (NSString *)titleOfDocType:(KTDocType)docType localize:(BOOL)shouldLocalizeForDisplay;
 + (NSString *)stringFromDocType:(KTDocType)docType;
 
