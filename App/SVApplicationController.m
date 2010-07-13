@@ -501,6 +501,8 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
                                          
         // "Make all links active" checkbox in the Inspector
         [NSNumber numberWithBool:NO], kLiveEditableAndSelectableLinksDefaultsKey,
+										 
+		[NSNumber numberWithBool:YES], @"ShowCodeInjectionInPreview",
 
 		nil];
 	
