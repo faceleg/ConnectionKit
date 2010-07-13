@@ -74,7 +74,9 @@
     
     _liveDataFeeds = YES;
     [self setEncoding:NSUTF8StringEncoding];
-    _maxDocType = KTDocTypeAll;
+    
+    _docType = KTXHTMLTransitionalDocType;
+    _maxDocType = NSIntegerMax;
     
     _headerLevel = 1;
     _headerMarkup = [[NSMutableString alloc] init];
@@ -160,9 +162,9 @@
     
     
     // Now, did that change the doctype? Retry if possible!
-    KTDocType docType = [self maxDocType];
-    if (docType == KTDocTypeAll) docType = KTHTML5DocType;
-    if (docType != [self docType] && NO)
+    KTDocType docType = _maxDocType;
+    if (docType > KTHTML5DocType) docType = KTXHTMLTransitionalDocType;
+    if (docType != [self docType])
     {
         NSMutableString *output = [self mutableString];
         if (output)
@@ -206,11 +208,10 @@
 #pragma mark Doctype
 
 @synthesize docType = _docType;
-@synthesize maxDocType = _maxDocType;
 
 - (void)limitToMaxDocType:(KTDocType)docType;
 {
-    if (docType < [self maxDocType]) [self setMaxDocType:docType];
+    if (docType < _maxDocType) _maxDocType = docType;
 }
 
 + (NSString *)titleOfDocType:(KTDocType)docType  localize:(BOOL)shouldLocalizeForDisplay;
