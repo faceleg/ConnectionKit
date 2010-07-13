@@ -862,6 +862,8 @@ initial syntax coloring.
 	self.docType = [graphic.docType intValue];
 	self.preventPreview = ![graphic.shouldPreviewWhenEditing boolValue];
 	self.hashOfLastValidation = graphic.lastValidMarkupDigest;
+	
+	[self loadFragment:graphic.HTMLString];
 }
 
 #pragma mark -
@@ -947,8 +949,9 @@ initial syntax coloring.
 	if (![scheme isEqualToString:@"about"])
 	{
 		self.hasRemoteLoads = YES;
-		result = nil;				// deny this -- cancel loading this request
+		// result = nil;				// deny this -- cancel loading this request
 		[sender stopLoading:nil];	// stop loading the whole webview; we got what we needed
+		DJW((@"found resource; stopping."));
 	}
 	return result;
 }
@@ -968,8 +971,7 @@ initial syntax coloring.
  */
 - (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
 {
-
-	
+	DJW((@"bodyLoaded:"));
 }
 
 - (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
