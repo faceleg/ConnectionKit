@@ -56,7 +56,7 @@
 	return result;
 }
 
-- (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }
+- (NSString *)name { return TOOLBAR_INSERT_TEXT_BOX; }	// from a localized string macro
 
 - (NSImage *)pluginIcon
 {
@@ -85,7 +85,7 @@
     return result;
 }
 
-- (NSString *)name { return @"Photo"; }
+- (NSString *)name { return NSLocalizedString(@"Photo", @"name of object to insert"); }
 
 - (NSImage *)pluginIcon
 {
@@ -169,7 +169,7 @@
     return result;
 }
 
-- (NSString *)name { return @"Movie"; }
+- (NSString *)name { return NSLocalizedString(@"Video", @"name of object to insert"); }
 
 - (NSImage *)pluginIcon
 {
@@ -197,7 +197,7 @@
     return result;
 }
 
-- (NSString *)name { return @"Raw HTML"; }
+- (NSString *)name { return NSLocalizedString(@"Raw HTML", @"name of object to insert"); }
 
 - (NSImage *)pluginIcon
 {

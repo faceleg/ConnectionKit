@@ -998,7 +998,7 @@
 								</object>
 								<object class="NSMenuItem" id="476289484">
 									<reference key="NSMenu" ref="712257728"/>
-									<string key="NSTitle">Movie</string>
+									<string key="NSTitle">Video</string>
 									<string key="NSKeyEquiv"/>
 									<int key="NSMnemonicLoc">2147483647</int>
 									<reference key="NSOnImage" ref="73959282"/>
@@ -4567,12 +4567,12 @@
 				<boolean value="YES" key="1240.ImportedFromIB2"/>
 				<string key="1242.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1246.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1255.IBEditorWindowLastContentRect">{{774, 200}, {205, 273}}</string>
+				<string key="1255.IBEditorWindowLastContentRect">{{715, 218}, {205, 273}}</string>
 				<string key="1255.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1260.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1261.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1261.ImportedFromIB2"/>
-				<string key="1263.IBEditorWindowLastContentRect">{{635, 630}, {64, 6}}</string>
+				<string key="1263.IBEditorWindowLastContentRect">{{920, 345}, {64, 6}}</string>
 				<string key="1263.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1263.ImportedFromIB2"/>
 				<string key="1272.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4673,7 +4673,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{597, 473}, {525, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{538, 491}, {525, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="292.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
