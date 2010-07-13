@@ -233,12 +233,12 @@ static NSMutableDictionary *sDefaultTextAttributesPerInstance = nil;
 		if (!font)
 		{
 			// For some reason, Snow Leopard gives us Menlo but doesn't use it by default!
-			NSFont *menlo = [NSFont fontWithName:@"Menlo-Regular" size:10];
+			NSFont *menlo = [NSFont fontWithName:@"Menlo-Regular" size:12.0];
 			if (menlo)
 			{
 				[NSFont setUserFixedPitchFont: menlo];
 			}
-			font = [NSFont userFixedPitchFontOfSize:10.0];
+			font = [NSFont userFixedPitchFontOfSize:12.0];
 		}
 		
 		result = [NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName];
