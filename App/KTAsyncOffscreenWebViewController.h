@@ -19,10 +19,7 @@
 }
 
 @property (readonly, nonatomic, retain) WebView *webView;
-
-- (id)delegate;
-- (void)setDelegate:(id)aDelegate;
-
+@property (assign) id delegate;
 
 
 - (void)loadHTMLFragment:(NSString *)anHTMLFragment;

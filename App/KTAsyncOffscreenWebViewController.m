@@ -15,6 +15,8 @@
 @implementation KTAsyncOffscreenWebViewController
 
 @synthesize webView = _webView;
+@synthesize delegate = _delegate;
+
 
 - (id) init
 {
@@ -43,6 +45,8 @@
 
 - (void)dealloc
 {
+	_delegate = nil;
+	[_webView close];
     [_webView release];
 	[_window release];
     [super dealloc];
@@ -61,17 +65,20 @@
 
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
-	DOMNodeList *bodyList = [[frame DOMDocument] getElementsByTagName:@"BODY"];
-	DOMHTMLElement *body = nil;
-	if (0 == [bodyList length])
+	if (frame == [sender mainFrame])
 	{
-		NSLog(@"unable to get results of load because DOMNode did not have a BODY tag");
+		DOMNodeList *bodyList = [[frame DOMDocument] getElementsByTagName:@"BODY"];
+		DOMHTMLElement *body = nil;
+		if (0 == [bodyList length])
+		{
+			NSLog(@"unable to get results of load because DOMNode did not have a BODY tag");
+		}
+		else
+		{
+			body = (DOMHTMLElement *)[bodyList item:0];
+		}
+		[_delegate bodyLoaded:body];
 	}
-	else
-	{
-		body = (DOMHTMLElement *)[bodyList item:0];
-	}
-	[_delegate bodyLoaded:body];
 }
 
 - (void)stopLoading
@@ -79,13 +86,5 @@
 	[_webView stopLoading:nil];
 }
 
-- (id)delegate
-{
-    return _delegate; 
-}
-- (void)setDelegate:(id)aDelegate
-{
-    _delegate = aDelegate;
-}
 
 @end

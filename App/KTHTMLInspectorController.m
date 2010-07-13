@@ -68,12 +68,7 @@
 @synthesize hashOfLastValidation = _hashOfLastValidation;
 @synthesize completionSelector = _completionSelector;
 @synthesize hasRemoteLoads = _hasRemoteLoads;
-
-
-
-
-
-
+@synthesize asyncOffscreenWebViewController = _asyncOffscreenWebViewController;
 
 
 /* -----------------------------------------------------------------------------
@@ -143,17 +138,21 @@
 	[[self asyncOffscreenWebViewController] stopLoading];
 	
 	[[NSNotificationCenter defaultCenter] removeObserver: self];
+
 	[_recolorTimer invalidate];
 	[_recolorTimer release];
-	_recolorTimer = nil;
-	[_replacementString release];
-	_replacementString = nil;
-    [self setHTMLSourceObject:nil];
-	[self setTitle:nil];
-	[self setSourceCodeTemp:nil];
-	self.hashOfLastValidation = nil;
-    [_undoManager release];
-    
+	
+    self.undoManager = nil;
+    self.recolorTimer = nil;
+    self.replacementString = nil;
+    self.HTMLSourceObject = nil;
+    self.sourceCodeTemp = nil;
+    self.title = nil;
+    self.asyncOffscreenWebViewController = nil;
+    self.cachedLocalPrelude = nil;
+    self.cachedRemotePrelude = nil;
+    self.hashOfLastValidation = nil;
+	    
 	[super dealloc];
 }
 
@@ -949,7 +948,7 @@ initial syntax coloring.
 	if (![scheme isEqualToString:@"about"])
 	{
 		self.hasRemoteLoads = YES;
-		// result = nil;				// deny this -- cancel loading this request
+		result = nil;				// deny this -- cancel loading this request
 		[sender stopLoading:nil];	// stop loading the whole webview; we got what we needed
 		DJW((@"found resource; stopping."));
 	}
@@ -971,7 +970,7 @@ initial syntax coloring.
  */
 - (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
 {
-	DJW((@"bodyLoaded:"));
+	// Do nothing ... we will have gotten hasRemoteLoads set if there were any resources loaded
 }
 
 - (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
@@ -981,12 +980,6 @@ initial syntax coloring.
 		_asyncOffscreenWebViewController = [[KTAsyncOffscreenWebViewController alloc] init];
 	}
     return _asyncOffscreenWebViewController; 
-}
-- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController
-{
-    [anAsyncOffscreenWebViewController retain];
-    [_asyncOffscreenWebViewController release];
-    _asyncOffscreenWebViewController = anAsyncOffscreenWebViewController;
 }
 
 
