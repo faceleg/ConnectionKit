@@ -364,7 +364,7 @@
 	}
 	else
 	{
-		result = [KSHTMLWriter stringFromDocType:docType];
+		result = [SVHTMLContext stringFromDocType:docType];
 	}
 	return result;
 }
