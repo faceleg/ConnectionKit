@@ -157,6 +157,56 @@
     [parser release];
 }
 
+#pragma mark Code injection
+
+- (BOOL) canWriteCodeInjection:(SVHTMLContext *)aContext;
+{
+	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
+	return ([aContext isForPublishingProOnly]
+		
+		// Show the code injection in the webview as well, as long as this default is set.
+		|| ([defaults boolForKey:@"ShowCodeInjectionInPreview"]) && [aContext isForEditing]
+		
+			);
+}
+
+- (void)writeCodeInjectionSection:(NSString *)aKey masterFirst:(BOOL)aMasterFirst;
+{
+	SVHTMLContext *context = [SVHTMLContext currentContext];
+    if ([self canWriteCodeInjection:context])
+	{
+        NSString *masterCode = [[[self master] codeInjection] valueForKey:aKey];
+		NSString *pageCode = [[self codeInjection] valueForKey:aKey];
+
+		if (masterCode && aMasterFirst)		{	[context startNewline]; [context writeString:masterCode];	}
+        if (pageCode)						{	[context startNewline]; [context writeString:pageCode];		}
+		if (masterCode && !aMasterFirst)	{	[context startNewline]; [context writeString:masterCode];	}
+    }
+}
+
+// Note: For the paired code injection points -- the start and end of the head, and the body -- we flip around
+// the ordering so we can do thing like nesting output buffers in PHP. Page is more "local" than master.
+
+- (void)writeCodeInjectionEarlyHead		{	[self writeCodeInjectionSection:@"earlyHead"	masterFirst:YES];	}
+- (void)writeCodeInjectionHeadArea		{	[self writeCodeInjectionSection:@"headArea"		masterFirst:NO];	}
+- (void)writeCodeInjectionBodyTagStart	{	[self writeCodeInjectionSection:@"bodyTagStart"	masterFirst:YES];	}
+- (void)writeCodeInjectionBodyTagEnd	{	[self writeCodeInjectionSection:@"bodyTagEnd"	masterFirst:NO];	}
+
+// Special case: Show a space in between the two; no newlines.
+- (void)writeCodeInjectionBodyTag
+{
+	SVHTMLContext *context = [SVHTMLContext currentContext];
+    if ([self canWriteCodeInjection:context])
+    {
+        NSString *masterCode = [[[self master] codeInjection] valueForKey:@"bodyTag"];
+		NSString *pageCode = [[self codeInjection] valueForKey:@"bodyTag"];
+		
+		if (masterCode)				[context writeString:masterCode];
+		if (masterCode && pageCode)	[context writeText:@" "];	// space in between, only if we have both
+		if (pageCode)				[context writeString:pageCode];
+    }
+}
+
 #pragma mark CSS
 
 - (NSString *)cssClassName { return @"text-page"; }
