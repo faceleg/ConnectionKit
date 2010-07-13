@@ -528,7 +528,6 @@
 		27E31C330D4B7E1600895DA1 /* KTElementPlugInWrapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E31C310D4B7E1600895DA1 /* KTElementPlugInWrapper.h */; settings = {ATTRIBUTES = (); }; };
 		27E31C340D4B7E1600895DA1 /* KTElementPlugInWrapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E31C320D4B7E1600895DA1 /* KTElementPlugInWrapper.m */; };
 		27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */; };
-		27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */; };
 		27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */; };
 		27E4CFF70EC30B6F000E85DD /* KSJoinList.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEA0EC30B6F000E85DD /* KSJoinList.nib */; };
 		27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */ = {isa = PBXBuildFile; fileRef = 27E4CFEC0EC30B6F000E85DD /* KSException.nib */; };
@@ -1033,6 +1032,7 @@
 		CE23D84D11E69AD800E43369 /* KTAsyncOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */; };
 		CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */; };
 		CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */; };
+		CE23DBF811EBE4D800E43369 /* KSPluginInstaller.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */; };
 		CE250ADC08204B120061BE9B /* imageReplacementHeader.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */; };
 		CE26237F0A360332009467ED /* QTKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE26237E0A360332009467ED /* QTKit.framework */; };
 		CE26FA1408C4D9C500C9604B /* design-time.css in Resources */ = {isa = PBXBuildFile; fileRef = CE26FA1308C4D9C500C9604B /* design-time.css */; };
@@ -2043,7 +2043,6 @@
 		27E3F8310D9C34B000A64154 /* KTDataMigrationDocument.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTDataMigrationDocument.h; sourceTree = "<group>"; };
 		27E3F8320D9C34B000A64154 /* KTDataMigrationDocument.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTDataMigrationDocument.m; sourceTree = "<group>"; };
 		27E4CFE30EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSRegistration.nib; sourceTree = "<group>"; };
-		27E4CFE50EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSPluginInstaller.nib; sourceTree = "<group>"; };
 		27E4CFE70EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSKeepInTouch.nib; sourceTree = "<group>"; };
 		27E4CFEB0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSJoinList.nib; sourceTree = "<group>"; };
 		27E4CFED0EC30B6F000E85DD /* en */ = {isa = PBXFileReference; lastKnownFileType = wrapper.nib; name = en; path = en.lproj/KSException.nib; sourceTree = "<group>"; };
@@ -2660,6 +2659,7 @@
 		CE23C54511E6829D00E43369 /* Designs */ = {isa = PBXFileReference; lastKnownFileType = folder; name = Designs; path = ../../Designs; sourceTree = SOURCE_ROOT; };
 		CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSPlainClipTextView.h; sourceTree = "<group>"; };
 		CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSPlainClipTextView.m; sourceTree = "<group>"; };
+		CE23DBF711EBE4D800E43369 /* en */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = en; path = en.lproj/KSPluginInstaller.xib; sourceTree = "<group>"; };
 		CE250ADB08204B120061BE9B /* imageReplacementHeader.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementHeader.txt; sourceTree = "<group>"; };
 		CE2556CB0D3432AF003A5B5E /* SandvoxQuickLook.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = SandvoxQuickLook.xcodeproj; path = ../Code/QuickLook/SandvoxQuickLook.xcodeproj; sourceTree = SOURCE_ROOT; };
 		CE26237E0A360332009467ED /* QTKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QTKit.framework; path = /System/Library/Frameworks/QTKit.framework; sourceTree = "<absolute>"; };
@@ -5083,9 +5083,9 @@
 		CE22E5B80D7C71A10055D8E9 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */,
 				CE5D02C411E66C4B00A4A2D1 /* KSFeedback.xib */,
 				27E4CFE20EC30B6F000E85DD /* KSRegistration.nib */,
-				27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */,
 				27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */,
 				27E4CFEA0EC30B6F000E85DD /* KSJoinList.nib */,
 				27E4CFEC0EC30B6F000E85DD /* KSException.nib */,
@@ -6196,7 +6196,6 @@
 				CE01A9520EAFDF2A00BDF264 /* KSRTFDWindow.nib in Resources */,
 				CE01A9530EAFDF2A00BDF264 /* KSWebViewWindow.nib in Resources */,
 				27E4CFF30EC30B6F000E85DD /* KSRegistration.nib in Resources */,
-				27E4CFF40EC30B6F000E85DD /* KSPluginInstaller.nib in Resources */,
 				27E4CFF50EC30B6F000E85DD /* KSKeepInTouch.nib in Resources */,
 				27E4CFF70EC30B6F000E85DD /* KSJoinList.nib in Resources */,
 				27E4CFF80EC30B6F000E85DD /* KSException.nib in Resources */,
@@ -6326,6 +6325,7 @@
 				CE58139311DEA45D008478AF /* NSStatusUnavailable.tiff in Resources */,
 				CE5D02C611E66C4B00A4A2D1 /* KSFeedback.xib in Resources */,
 				2726DE8E11E699720000257D /* RawHTMLPlaceholder.html in Resources */,
+				CE23DBF811EBE4D800E43369 /* KSPluginInstaller.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -7308,14 +7308,6 @@
 			name = KSRegistration.nib;
 			sourceTree = "<group>";
 		};
-		27E4CFE40EC30B6F000E85DD /* KSPluginInstaller.nib */ = {
-			isa = PBXVariantGroup;
-			children = (
-				27E4CFE50EC30B6F000E85DD /* en */,
-			);
-			name = KSPluginInstaller.nib;
-			sourceTree = "<group>";
-		};
 		27E4CFE60EC30B6F000E85DD /* KSKeepInTouch.nib */ = {
 			isa = PBXVariantGroup;
 			children = (
@@ -7524,6 +7516,15 @@
 			);
 			name = LivePagesDisabled.html;
 			sourceTree = "<group>";
+		};
+		CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CE23DBF711EBE4D800E43369 /* en */,
+			);
+			name = KSPluginInstaller.xib;
+			path = ../../Shared/Interfaces;
+			sourceTree = SOURCE_ROOT;
 		};
 		CE5D02C411E66C4B00A4A2D1 /* KSFeedback.xib */ = {
 			isa = PBXVariantGroup;
