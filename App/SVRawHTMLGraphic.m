@@ -27,7 +27,7 @@
 	// Show the real HTML if it's the pro-licensed edition publishing
 	// OR we are previewing and the SVRawHTMLGraphic is marked as being OK for preview
 	
-    if ( [context shouldWriteServerSideScripts]
+    if ( ([context shouldWriteServerSideScripts] && [context isForPublishingProOnly])
 			|| ([context isForEditing] && [[self shouldPreviewWhenEditing] boolValue])
 		)
     {

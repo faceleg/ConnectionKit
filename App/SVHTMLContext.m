@@ -235,7 +235,7 @@
 }
 
 // Similar to above, but might be overridden by subclass to prevent sending to HTML validator
-- (BOOL)shouldWriteServerSideScripts; { return [self isForPublishingProOnly]; }
+- (BOOL)shouldWriteServerSideScripts; { return [self isForPublishing]; }
 
 #pragma mark CSS
 
