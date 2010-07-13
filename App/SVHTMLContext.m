@@ -125,6 +125,13 @@
     OBASSERT(!_calloutBuffer);
 }
 
+#pragma mark Status
+
+- (void)reset;
+{
+    [[self mutableString] setString:@""];
+}
+
 #pragma mark Document
 
 - (void)writeDocumentWithPage:(KTPage *)page;
@@ -166,11 +173,9 @@
     if (docType > KTHTML5DocType) docType = KTXHTMLTransitionalDocType;
     if (docType != [self docType])
     {
-        NSMutableString *output = [self mutableString];
-        if (output)
+        if ([self mutableString])
         {
-            [output setString:@""];
-            
+            [self reset];
             [self setDocType:docType];
             [self writeDocumentWithPage:page];
         }
@@ -695,9 +700,6 @@
 }
 
 #pragma mark Raw Writing
-
-// Ignore
-- (void)writeNewline { }
 
 - (void)writeAttributedHTMLString:(NSAttributedString *)attributedHTML;
 {

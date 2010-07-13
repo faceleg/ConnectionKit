@@ -35,21 +35,10 @@
 {
     [super initWithOutputWriter:stream];
     
-    _currentDOMController = _rootController = [[SVDOMController alloc] init];
+    [self reset];
     _media = [[NSMutableSet alloc] init];
-    
-    [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
-    
+        
     return self;
-}
-
-- (void)close;
-{
-    [super close];
-    
-    // Also ditch controllers
-    [_rootController release]; _rootController = nil;
-    [_media release]; _media = nil;
 }
 
 - (void)dealloc
@@ -59,6 +48,30 @@
     [super dealloc];
     OBASSERT(!_rootController);
     OBASSERT(!_media);
+}
+
+#pragma mark Status
+
+- (void)reset;
+{
+    [super reset];
+    
+    
+    [_rootController release];
+    _currentDOMController = _rootController = [[SVDOMController alloc] init];
+    
+    [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
+    
+    [_media removeAllObjects];
+}
+
+- (void)close;
+{
+    [super close];
+    
+    // Also ditch controllers
+    [_rootController release]; _rootController = nil;
+    [_media release]; _media = nil;
 }
 
 #pragma mark Page

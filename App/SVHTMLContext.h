@@ -69,6 +69,11 @@ typedef enum {
 - (id)init; // calls through to -initWithMutableString:
 
 
+#pragma mark Status
+// Throws away any data that can be, ready for more to write. Mainly used to retry writing after a doctype change
+- (void)reset;
+
+
 #pragma mark Document
 // Sets various context properties to match the page too
 - (void)writeDocumentWithPage:(KTPage *)page;

@@ -24,7 +24,7 @@
     [self writeText:[html stringByConvertingHTMLToPlainText]];
 }
 
-- (void)writeNewline
+- (void)startNewline
 {
     [super writeString:@"\n"];
 }
