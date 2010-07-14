@@ -1059,6 +1059,7 @@
 		CE75EA96111A550600474753 /* ESCursors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE75EA93111A550600474753 /* ESCursors.m */; };
 		CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE7779E40AE499C3002E6844 /* SVWelcomeController.m */; };
 		CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */ = {isa = PBXBuildFile; fileRef = CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */; };
+		CE7B687211EE7F2000F56D8B /* html_element.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE7B687111EE7F2000F56D8B /* html_element.tiff */; };
 		CE7D71C909588FF10054407F /* WebKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CE7D706F09587BC30054407F /* WebKit.framework */; };
 		CE8D547C112AFDBD007AC2F0 /* SVValidatorWindowController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE8D547A112AFDBD007AC2F0 /* SVValidatorWindowController.h */; };
 		CE8D547D112AFDBD007AC2F0 /* SVValidatorWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE8D547B112AFDBD007AC2F0 /* SVValidatorWindowController.m */; };
@@ -2656,6 +2657,7 @@
 		CE7779E30AE499C2002E6844 /* SVWelcomeController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWelcomeController.h; sourceTree = "<group>"; };
 		CE7779E40AE499C3002E6844 /* SVWelcomeController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWelcomeController.m; sourceTree = "<group>"; };
 		CE7B67C911EE784600F56D8B /* MissingMediaQMark.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = MissingMediaQMark.png; sourceTree = "<group>"; };
+		CE7B687111EE7F2000F56D8B /* html_element.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = html_element.tiff; sourceTree = "<group>"; };
 		CE7D706F09587BC30054407F /* WebKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = /System/Library/Frameworks/WebKit.framework; sourceTree = "<absolute>"; };
 		CE8D547A112AFDBD007AC2F0 /* SVValidatorWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVValidatorWindowController.h; sourceTree = "<group>"; };
 		CE8D547B112AFDBD007AC2F0 /* SVValidatorWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVValidatorWindowController.m; sourceTree = "<group>"; };
@@ -4959,6 +4961,7 @@
 				CE1BE80E11D2AD1E00D875AE /* toolbar_new_page.tiff */,
 				CE1BE80F11D2AD1E00D875AE /* toolbar_publish.tiff */,
 				CE1BF8C311D2B9D400D875AE /* toolbar_text.tiff */,
+				CE7B687111EE7F2000F56D8B /* html_element.tiff */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -6121,6 +6124,7 @@
 				CEB2EEFF11ED0558002DD050 /* Validate.tiff in Resources */,
 				CEB2EF0511ED08DF002DD050 /* NoNetwork.tiff in Resources */,
 				CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */,
+				CE7B687211EE7F2000F56D8B /* html_element.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

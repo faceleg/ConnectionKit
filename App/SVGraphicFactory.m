@@ -23,6 +23,7 @@
 #import "NSArray+Karelia.h"
 #import "NSMenuItem+Karelia.h"
 #import "NSSet+Karelia.h"
+#import "NSImage+Karelia.h"
 
 #import "Registration.h"
 
@@ -60,7 +61,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageNamed:@"TB_Text_Tool.tiff"];
+    return [NSImage imageFromOSType:kToolbarCustomizeIcon];
 }
 
 - (NSUInteger)priority; { return 1; }
@@ -89,7 +90,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageNamed:@"photopage.icns"];
+    return [NSImage imageFromOSType:kToolbarDeleteIcon];
 }
 
 - (NSUInteger)priority; { return 1; }
@@ -173,7 +174,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageNamed:@"Video.icns"];
+    return [NSImage imageFromOSType:kToolbarFavoritesIcon];
 }
 
 @end
@@ -201,7 +202,7 @@
 
 - (NSImage *)pluginIcon
 {
-    return [NSImage imageNamed:@"HTML.icns"];
+    return [NSImage imageNamed:@"html_element"];
 }
 
 @end

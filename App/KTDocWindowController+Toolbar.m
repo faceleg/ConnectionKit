@@ -343,38 +343,36 @@
     NSMenu *menu = [pulldownButton menu];
     
     NSMenuItem *item = nil;
+	id <SVGraphicFactory> factory = nil;
 	
     // Text box item
-	item = [SVGraphicFactory menuItemWithGraphicFactory:[SVGraphicFactory textBoxFactory]];
- 	[item setIconImage:[NSImage imageNamed:@"toolbar_text"
-						]];
+	factory = [SVGraphicFactory textBoxFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item];
 	
     
     // Image item
-	item = [SVGraphicFactory menuItemWithGraphicFactory:[SVGraphicFactory imageFactory]];
- 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	factory = [SVGraphicFactory imageFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item]; 
     
     
 	// Video item
-	item = [SVGraphicFactory menuItemWithGraphicFactory:[SVGraphicFactory videoFactory]];
- 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	factory = [SVGraphicFactory videoFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
 	[menu addItem:item]; 
     
     
     // Indexes
-    item = [self
-			makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
 			title:NSLocalizedString(@"Indexes", "menu item")];
  	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
 	[menu addItem:item];
 	
     
 	// Badges
-    item = [self  makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
                                             title:NSLocalizedString(@"Badges", "menu item")];
-	
 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
 	[menu addItem:item];
 	
@@ -402,7 +400,6 @@
     self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
 			[SVGraphicFactory rawHTMLFactory]];
 
-	[item setIconImage:[NSImage imageNamed:@"HTML"]];
 	[menu addItem:item];
 	
     return [result autorelease];
