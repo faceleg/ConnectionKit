@@ -106,7 +106,7 @@
 										<reference key="NSSuperview" ref="779387075"/>
 										<string key="NSClassName">NSView</string>
 									</object>
-									<object class="NSImageView" id="741294879">
+									<object class="NSImageView" id="465434279">
 										<reference key="NSNextResponder" ref="779387075"/>
 										<int key="NSvFlags">274</int>
 										<object class="NSMutableSet" key="NSDragTypes">
@@ -124,7 +124,7 @@
 										<string key="NSFrameSize">{435, 278}</string>
 										<reference key="NSSuperview" ref="779387075"/>
 										<bool key="NSEnabled">YES</bool>
-										<object class="NSImageCell" key="NSCell" id="66598192">
+										<object class="NSImageCell" key="NSCell" id="906481719">
 											<int key="NSCellFlags">130560</int>
 											<int key="NSCellFlags2">33554432</int>
 											<object class="NSCustomResource" key="NSContents">
@@ -221,6 +221,14 @@
 					</object>
 					<int key="connectionID">63</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oBackgroundImageView</string>
+						<reference key="source" ref="1001"/>
+						<reference key="destination" ref="465434279"/>
+					</object>
+					<int key="connectionID">80</int>
+				</object>
 			</object>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<object class="NSArray" key="orderedObjects">
@@ -264,7 +272,7 @@
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<reference ref="284002621"/>
-							<reference ref="741294879"/>
+							<reference ref="465434279"/>
 						</object>
 						<reference key="parent" ref="35803481"/>
 					</object>
@@ -299,17 +307,17 @@
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">66</int>
-						<reference key="object" ref="741294879"/>
+						<reference key="object" ref="465434279"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="66598192"/>
+							<reference ref="906481719"/>
 						</object>
 						<reference key="parent" ref="779387075"/>
 					</object>
 					<object class="IBObjectRecord">
 						<int key="objectID">67</int>
-						<reference key="object" ref="66598192"/>
-						<reference key="parent" ref="741294879"/>
+						<reference key="object" ref="906481719"/>
+						<reference key="parent" ref="465434279"/>
 					</object>
 				</object>
 			</object>
@@ -358,7 +366,7 @@
 				</object>
 			</object>
 			<nil key="sourceID"/>
-			<int key="maxID">79</int>
+			<int key="maxID">80</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<object class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -590,11 +598,13 @@
 						<object class="NSArray" key="dict.sortedKeys">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>label</string>
+							<string>oBackgroundImageView</string>
 							<string>progressIndicator</string>
 						</object>
 						<object class="NSMutableArray" key="dict.values">
 							<bool key="EncodedWithXMLCoder">YES</bool>
 							<string>NSTextField</string>
+							<string>NSImageView</string>
 							<string>NSProgressIndicator</string>
 						</object>
 					</object>

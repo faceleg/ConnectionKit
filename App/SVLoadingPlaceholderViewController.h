@@ -11,6 +11,8 @@
 
 @interface SVLoadingPlaceholderViewController : NSViewController
 {
+    IBOutlet NSImageView    *oBackgroundImageView;
+    
   @private
     NSProgressIndicator *_progressIndicator;
     NSTextField         *_label;
