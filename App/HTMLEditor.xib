@@ -11,7 +11,7 @@
 			<string key="NS.object.0">762</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="6"/>
+			<integer value="5"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -335,7 +335,7 @@
 						<object class="NSButton" id="906697106">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{8, -2}, {25, 25}}</string>
+							<string key="NSFrame">{{5, -3}, {25, 25}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1019479497">
@@ -384,7 +384,7 @@
 												<string>WebURLsWithTitlesPboardType</string>
 												<string>public.url</string>
 											</set>
-											<string key="NSFrameSize">{808, 23}</string>
+											<string key="NSFrame">{{0, 9}, {808, 14}}</string>
 											<reference key="NSSuperview" ref="856522299"/>
 											<object class="NSTextContainer" key="NSTextContainer" id="395356326">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -499,7 +499,7 @@
 								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 								<string>NeXT TIFF v4.0 pasteboard type</string>
 							</set>
-							<string key="NSFrame">{{51, 1}, {16, 16}}</string>
+							<string key="NSFrame">{{43, 3}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -517,7 +517,7 @@
 						<object class="NSTextField" id="186337685">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{65, 1}, {430, 14}}</string>
+							<string key="NSFrame">{{60, 4}, {430, 14}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -552,7 +552,7 @@
 								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 								<string>NeXT TIFF v4.0 pasteboard type</string>
 							</set>
-							<string key="NSFrame">{{794, 2}, {16, 16}}</string>
+							<string key="NSFrame">{{787, 3}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -574,7 +574,7 @@
 						<object class="NSTextField" id="181474755">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{504, 1}, {286, 14}}</string>
+							<string key="NSFrame">{{496, 4}, {286, 14}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -1150,10 +1150,10 @@
 				<boolean value="YES" key="28.IBShouldRemoveOnLegacySave"/>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.IBShouldRemoveOnLegacySave"/>
-				<string key="5.IBEditorWindowLastContentRect">{{171, 410}, {823, 376}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{92, 141}, {823, 376}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="5.IBWindowTemplateEditedContentRect">{{171, 410}, {823, 376}}</string>
+				<string key="5.IBWindowTemplateEditedContentRect">{{92, 141}, {823, 376}}</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<boolean value="YES" key="5.windowTemplate.hasMinSize"/>
 				<string key="5.windowTemplate.minSize">{823, 376}</string>
