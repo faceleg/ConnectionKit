@@ -54,7 +54,7 @@
 #pragma mark -
 #pragma mark SVPlugin
 
-+ (NSSet *)plugInKeys
++ (NSArray *)plugInKeys
 { 
     return [NSSet setWithObjects:
             @"feedURL", 
