@@ -367,11 +367,21 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [self setUpdating:YES];
     
     [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];
+    
+    
+    // If the update takes too long, switch over to placeholder
+    [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:0.25f];
 }
 
 - (void)didUpdate;
 {
     WEKWebEditorView *webEditor = [self webEditor];
+    
+    
+    // Cancel the timer
+    [NSObject cancelPreviousPerformRequestsWithTarget:self
+                                             selector:@selector(updateDidTimeout)
+                                               object:nil];
     
     
     // Match selection to controller
@@ -409,6 +419,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
             [webEditor setSelectedDOMRange:range affinity:0];
         }
     }
+}
+
+- (void)updateDidTimeout
+{
+    [_contentAreaController presentLoadingViewController];
 }
 
 #pragma mark Content
