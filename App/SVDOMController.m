@@ -179,7 +179,7 @@
     _needsUpdate = NO;
     
     SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
-    [controller didUpdate];
+    [controller performSelector:@selector(didUpdate)];
 }
 
 - (void)updateToReflectSelection;
@@ -235,7 +235,7 @@
     if ([self needsUpdate])
     {
         SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
-        [controller willUpdate];
+        [controller performSelector:@selector(willUpdate)];
         
         [self update];
     }

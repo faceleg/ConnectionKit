@@ -56,6 +56,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 
 @property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
+- (void)willUpdate;
+- (void)didUpdate;  // if an asynchronous update, called after the update finishes
 
 @property(nonatomic, retain, readwrite) SVWebEditorHTMLContext *HTMLContext;
 
