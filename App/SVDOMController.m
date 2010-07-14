@@ -176,7 +176,6 @@
 
 - (void)update;
 {
-    [super update]; // does nothing, but hey, might as well
     _needsUpdate = NO;
 }
 
@@ -333,8 +332,6 @@
 - (void)loadHTMLElementFromDocument:(DOMDocument *)document; { }
 
 #pragma mark Updating
-
-- (void)update; { }
 
 - (void)setNeedsUpdate;
 {
