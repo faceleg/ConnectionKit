@@ -1,0 +1,32 @@
+textarea.fullWidth, input.fullWidth, select.fullWidth {
+	width:96%;
+	margin:4px 0;
+}
+textarea.fullWidth, select.fullWidth {
+	margin: 4px 1px
+}
+
+form.subscribeElement input.submit {
+	width:auto;
+	display:block;
+	margin-left:auto;
+	margin-right:2%;
+	min-width:50%;
+}
+form.subscribeElement th {
+	text-align:right;
+	font-weight:normal;
+	width:25%;
+}
+
+.subscribeError { color:red; font-weight:bold; }
+
+/* Subscribe Element For IE 7 */
+*:first-child+html form.subscribeElement input.submit {
+	padding:0px 10%;
+	min-width: 0px;
+}
+
+textarea {
+    resize: vertical;
+}

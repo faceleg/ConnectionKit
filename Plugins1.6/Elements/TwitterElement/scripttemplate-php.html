@@ -1,0 +1,45 @@
+<script type="text/javascript">
+function twitterCallback[[=uniqueID]](obj)
+{
+	twitterCallback_withOptions(obj, 'twitter_div_[[=uniqueID]]', [[if openLinksInNewWindow]]true[[else]]false[[endif]], [[if includeTimestamp]]true[[else]]false[[endif]]);
+}
+</script>
+<script type="text/javascript" src="http://twitter.com/statuses/user_timeline/[[=username]].json?callback=twitterCallback[[=uniqueID]]&amp;count=[[=count]]"></script>
+[[if userDefaults.usePHP]]
+<noscript>
+<?php
+$url = "http://twitter.com/statuses/user_timeline/[[=%username]].xml?count=[[=count]]";
+$c = curl_init();
+curl_setopt($c, CURLOPT_URL, $url);
+curl_setopt($c, CURLOPT_RETURNTRANSFER, 1);
+$src = curl_exec($c);
+curl_close($c);
+$xml = simplexml_load_string($src);
+if ($xml === FALSE) { echo "<p>Unable to load XML from Twitter</p>"; die; }
+echo "<ul>";
+foreach ($xml->status as $status) {
+	echo "<li>";
+	$text = $status->text;	// already html-special-characters
+	$text = preg_replace("/\bwww\.\w.\w/i", "http://\\0", $text);
+	$text = ereg_replace("[[:alpha:]]+://[^<>[:space:]]+[[:alnum:]/]", "<a href=\"\\0\"[[if openLinksInNewWindow]] target='blank'[[endif2]]>\\0</a>", $text);
+	$text = preg_replace(" /\B@([_a-z0-9]+)/i", "<a href=\"http://twitter.com/\\1\"[[if openLinksInNewWindow]] target='blank'[[endif2]]>\\0</a>", $text);
+	echo "<span>$text</span>";
+	$delta = time() - strtotime($status->created_at);
+[[if includeTimestamp]]
+	echo ' <a style="font-size:85%" href="http://twitter.com/[[=%username]]/statuses/'.$status->id.'" title="tweet Permalink"[[if openLinksInNewWindow]] target='blank'[[endif2]]>';
+	if ($delta < 60) { echo 'less than a minute ago';
+	} else if($delta < 120) { echo 'about a minute ago';
+	} else if($delta < (60*60)) { echo (int)($delta / 60).' minutes ago';
+	} else if($delta < (120*60)) { echo 'about an hour ago';
+	} else if($delta < (24*60*60)) { echo 'about '.(int)($delta / 3600).' hours ago';
+	} else if($delta < (48*60*60)) { echo '1 day ago';
+	} else { echo (int)($delta / 86400).' days ago';
+	}
+	echo'</a>';
+[[endif2]]
+	echo "</li>";
+}
+echo "</ul>";
+?>
+</noscript>
+[[endif]]

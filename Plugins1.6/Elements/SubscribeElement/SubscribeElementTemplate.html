@@ -1,0 +1,224 @@
+[[if address]]
+[[foreach delegate.fields aField]]
+[[if aField.identifier=="email"]]
+[[if aField.type!=0]]
+<script type="text/javascript"><!--
+
+function verifyAndSubmit[[=uniqueID]](form) {
+
+	var theResults	= document.getElementById("subscribe[[=uniqueID]]-results");
+
+	checkEmail = form.e.value;
+	if (checkEmail=='[[=&delegate.subscribeField.defaultString]]'
+		|| checkEmail.indexOf('@') < 0
+		|| checkEmail.lastIndexOf('.') < (checkEmail.indexOf('@') + 1)
+		|| checkEmail.lastIndexOf('.') >= (checkEmail.length - 2)
+		|| checkEmail == form.e.title)
+	{
+		var message = "[["Email address is missing.  Message cannot be sent.]]";
+		theResults.className = 'subscribeError';
+		theResults.innerHTML = message;
+		return false;
+	}
+	if (form.s.value == '' && form.m.value == '')
+	{
+		var message = "[["No message has been entered.  Message cannot be sent.]]";
+		theResults.className = 'subscribeError';
+		theResults.innerHTML = message;
+		return false;
+	}
+	return true;
+}
+
+function doblur[[=uniqueID]](anInput) {
+	if (anInput.value == '') { anInput.value = anInput.title; anInput.style.color = '#999'; }
+}
+
+function dofocus[[=uniqueID]](anInput) {
+	if (anInput.value == anInput.title) { anInput.value = ''; anInput.removeAttribute('style'); }
+}
+
+//--></script>
+[[endif3]]
+[[endif2]]
+[[endforeach]]
+
+<form class="subscribeElement [[if sideLabels]]labelsOnSide[[else2]]labelsOnTop[[endif2]]" action="[[=delegate.mailmeURL]]" onsubmit="return verifyAndSubmit[[=uniqueID]](this);" method="post">
+		[[comment - this is an anti-spam measure; these are honeypot fields that if used, invalidate the form.]]
+		<div class="hidden">
+			<label for="subscribe[[=uniqueID]]-subject">[["Please leave this field empty:]]</label>
+			<input id="subscribe[[=uniqueID]]-subject" type="text" name="subject" />
+			<br />
+			<label for="subscribe[[=uniqueID]]-message">[["Please leave this field empty:]]</label>
+			<textarea id="subscribe[[=uniqueID]]-message" name="message" rows="3" cols="20"></textarea>
+		</div>
+	
+[[if sideLabels]]
+<table width="100%">
+[[foreach delegate.fields aField]]
+
+[[if aField.type==0]]
+	<!-- hidden -->
+	[[if aField.defaultString]]<input type="hidden" name="[[=&aField.inputName]]" value="[[=&aField.defaultString]]" />[[endif4]]
+
+[[else3]]
+	<tr>
+[[if aField.type==6]]
+		<!-- Send Button -->
+		<td colspan="2">
+			<input type="submit" class="submit" id="subscribe[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
+		</td>
+
+[[else4]]
+		<th>
+			[[if aField.label]]<label for="subscribe[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label>[[endif5]]
+		</th>
+		<td>
+	
+[[if aField.type==2]]
+			<!-- text area -->
+			<textarea class="fullWidth" id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[if aField.defaultString]][[=&aField.defaultString]][[endif6]]</textarea>
+	
+[[else5]]
+[[if aField.type==4]]
+			<!-- popup button -->
+			<select class="fullWidth" id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
+				[[foreach aField.visitorChoices anOption]]<option>[[=&anOption]]</option>[[endForEach2]]
+			</select>
+	
+[[else6]]
+[[if aField.type==3]]
+			<!-- checkbox -->
+			<input id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]"
+				type="checkbox"
+				name="[[=&aField.inputName]]"
+				value="on"
+				[[if aField.checkBoxIsSelected]]checked="yes"[[endif8]]
+				/>
+			[[if aField.checkBoxLabel]]<label for="subscribe[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
+	
+[[else7]]
+[[if aField.type==5]]
+			<!-- radio buttons -->
+			[[foreach aField.visitorChoices anOption]]
+			<input id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
+			<label for="subscribe[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>[[endForEach2]]
+	
+[[else8]]
+[[if aField.type==1]]
+			<!-- text field -->
+			<input id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]"
+				type="text"
+				[[if aField.identifier=="email"]]style="color:#888"[[endif10]]
+				class="fullWidth"
+				name="[[=&aField.inputName]]"
+				[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
+				[[if aField.identifier=="email"]]onfocus="dofocus[[=uniqueID]](this)" onblur="doblur[[=uniqueID]](this)"[[endif10]]
+				/>
+
+[[else9]]
+			UNKNOWN INPUT TYPE
+[[endif9]]
+[[endif8]]
+[[endif7]]
+[[endif6]]
+[[endif5]]
+		</td>
+[[endif4]]
+[[endif3]]
+	</tr>	
+[[endForEach]]
+</table>
+[[else2]]
+<p>
+[[foreach delegate.fields aField]]
+
+	[[if aField.type==0]]
+	<!-- hidden -->
+	[[if aField.defaultString]]<input type="hidden" name="[[=&aField.inputName]]" value="[[=&aField.defaultString]]" />[[endif4]]
+	[[else3]]
+
+	[[if aField.type==6]]
+	<!-- Send Button -->
+	<input type="submit" class="submit" id="subscribe[[=uniqueID]]-submit" name="x" value="[[=&aField.label]]" />
+
+	[[else4]]
+	[[if aField.label]]<label for="subscribe[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.labelWithLocalizedColonSuffix]]</label><br />[[endif5]]
+	
+	[[if aField.type==2]]
+	<!-- text area -->
+	<textarea class="fullWidth" id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]" rows="10" cols="80">[[=&aField.defaultString]]</textarea>
+	
+	[[else5]]
+	[[if aField.type==4]]
+	<!-- popup button -->
+	<select class="fullWidth" id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]" name="[[=&aField.inputName]]">
+		[[foreach aField.visitorChoices anOption]]
+		<option>[[=&anOption]]</option>
+		[[endForEach2]]
+	</select>
+	
+	[[else6]]
+	[[if aField.type==3]]
+	<!-- checkbox -->
+	<input id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]"
+		type="checkbox"
+		name="[[=&aField.inputName]]"
+		value="on"
+		[[if aField.checkBoxIsSelected]]checked="yes"[[endif8]]
+		/>
+	[[if aField.checkBoxLabel]]<label for="subscribe[[=uniqueID]]-[[=_&aField.inputName]]">[[=&aField.checkBoxLabel]]</label>[[endif8]]
+	
+	[[else7]]
+	[[if aField.type==5]]
+	<!-- radio buttons -->
+	[[foreach aField.visitorChoices anOption]]
+	<input id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]" type="radio" name="[[=&aField.inputName]]" value="[[=&anOption]]" />
+	<label for="subscribe[[=uniqueID]]-[[=_&aField.inputName]]-[[i]]">[[=&anOption]]</label>
+	[[endForEach2]]
+	
+	[[else8]]
+	[[if aField.type==1]]
+	<!-- text field -->
+	<input id="subscribe[[=uniqueID]]-[[=_&aField.inputName]]"
+		type="text"
+		class="fullWidth"
+		[[if aField.identifier=="email"]]style="color:#888"[[endif10]]
+		name="[[=&aField.inputName]]"
+		[[if aField.defaultString]]title="[[=&aField.defaultString]]" value="[[=&aField.defaultString]]"[[endif10]]
+		[[if aField.identifier=="email"]]onfocus="dofocus[[=uniqueID]](this)" onblur="doblur[[=uniqueID]](this)"[[endif10]]
+		/>
+
+	[[else9]]
+	UNKNOWN INPUT TYPE
+	[[endif9]]
+	[[endif8]]
+	[[endif7]]
+	[[endif6]]
+	[[endif5]]
+	[[endif4]]
+<br />
+	[[endif3]]
+[[endForEach]]
+	</p>
+[[endif2]]
+	<div class="hidden">
+		<!-- CSS URL -->
+		<input type="hidden" name="a" id="subscribe[[=uniqueID]]-a" value="[[=&delegate.CSSURLs]]" />
+		<!-- Site Title -->
+		<input type="hidden" name="t" id="subscribe[[=uniqueID]]-t" value="[[=&page.master.siteTitleText]]" />
+		<!-- Verification Code -->
+		<input type="hidden" name="v" id="subscribe[[=uniqueID]]-v" value="[[=delegate.encodedRecipient]]" />
+	
+		[[if copyToSender]]
+		<!-- Copy to sender -->
+		<input type="hidden" name="c" id="subscribe[[=uniqueID]]-c" value="yes" />
+		[[endif2]]
+	</div>
+</form>
+<div style='text-align:center;' id="subscribe[[=uniqueID]]-results"></div>
+
+[[else]]
+<p>[['Please specify an address for the recipient using the Inspector.]]</p>
+
+[[endif]]

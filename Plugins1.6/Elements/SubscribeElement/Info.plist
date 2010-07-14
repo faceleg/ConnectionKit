@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>${EXECUTABLE_NAME}</string>
+	<key>CFBundleGetInfoString</key>
+	<string>${SANDVOX_VERSION} (${SVN_VERSION}), © 2004–2009 Karelia Software</string>
+	<key>CFBundleIdentifier</key>
+	<string>sandvox.${PROJECT_NAME}</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>${PRODUCT_NAME}</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>${SANDVOX_VERSION}</string>
+	<key>CFBundleSignature</key>
+	<string>Svox</string>
+	<key>CFBundleVersion</key>
+	<string>${SVN_VERSION}</string>
+	<key>KSMinimumAppVersion</key>
+	<string>1.6.6</string>
+	<key>KTElementAllowsIntroduction</key>
+	<true/>
+	<key>KTElementSupportsPageletUsage</key>
+	<true/>
+	<key>KTElementSupportsPageUsage</key>
+	<true/>
+	<key>KSHelpAnchor</key>
+	<string>Subscribe_Form</string>
+	<key>KTPageDisableComments</key>
+	<true/>
+	<key>KTPluginCSSFilesNeeded</key>
+	<array>
+		<string>SubscribeElement.css</string>
+	</array>
+	<key>KTPluginIconName</key>
+	<string>/Applications/Mail.app/Contents/Resources/app.icns</string>
+	<key>KTPluginInitialProperties</key>
+	<dict>
+		<key>copyToSender</key>
+		<false/>
+		<key>sideLabels</key>
+		<integer>0</integer>
+		<key>subjectType</key>
+		<integer>1</integer>
+	</dict>
+	<key>KTPluginName</key>
+	<string>Subscribe Form</string>
+	<key>KTPluginNibFile</key>
+	<string>SubscribeElement</string>
+	<key>KTPluginPriority</key>
+	<integer>5</integer>
+	<key>KTPluginUntitledName</key>
+	<string>Email List Signup</string>
+	<key>KTTemplateName</key>
+	<string>SubscribeElementTemplate</string>
+	<key>NSPrincipalClass</key>
+	<string>SubscribeElementDelegate</string>
+</dict>
+</plist>

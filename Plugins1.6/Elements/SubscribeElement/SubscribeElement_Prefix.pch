@@ -1,0 +1,58 @@
+//
+// Prefix header for all source files of the 'SubscribeElement' target in the 'SubscribeElement' project.
+//
+
+#ifdef __OBJC__
+
+#import <Cocoa/Cocoa.h>
+
+// For Mac OS X < 10.5.
+#ifndef NSINTEGER_DEFINED
+#define NSINTEGER_DEFINED
+#ifdef __LP64__ || NS_BUILD_32_LIKE_64
+typedef long           NSInteger;
+typedef unsigned long  NSUInteger;
+#define NSIntegerMin   LONG_MIN
+#define NSIntegerMax   LONG_MAX
+#define NSUIntegerMax  ULONG_MAX
+#else
+typedef int            NSInteger;
+typedef unsigned int   NSUInteger;
+#define NSIntegerMin   INT_MIN
+#define NSIntegerMax   INT_MAX
+#define NSUIntegerMax  UINT_MAX
+#endif
+
+#define numberWithInteger numberWithInt
+#define integerValue intValue
+#define unsignedIntegerValue unsignedIntValue
+#define setIntegerValue setIntValue
+#define numberWithUnsignedInteger numberWithUnsignedInt
+
+#endif // NSINTEGER_DEFINED
+
+#ifndef CGFLOAT_DEFINED
+#ifdef __LP64__
+typedef double                          CGFloat;
+#else
+typedef float                           CGFloat;
+#endif  /* defined(__LP64__) */
+
+/* For the time being CGFLOAT_DEFINED will also serve to indicate the presence 
+ of new RefCon types in CoreServices. If new headers and associated typedefs
+ are not present then URefCon is declared here.
+ */
+#ifdef __LP64__
+typedef void *                          URefCon;
+#else
+typedef unsigned long                   URefCon;
+#endif  /* defined(__LP64__) */
+
+#endif  /* !defined(CGFLOAT_DEFINED) */
+
+
+#import "Debug.h"
+#import "Macros.h"
+#import "assertions.h"
+
+#endif
