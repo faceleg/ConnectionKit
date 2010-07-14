@@ -16,6 +16,15 @@
     return [self initWithNibName:@"LoadingPlaceholder" bundle:nil];
 }
 
+- (void)dealloc
+{
+    [_progressIndicator release];
+    [_label release];
+    [_imageView release];
+    
+    [super dealloc];
+}
+
 @synthesize progressIndicator = _progressIndicator;
 - (NSProgressIndicator *)progressIndicator
 {
