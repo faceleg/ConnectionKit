@@ -201,9 +201,7 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
         result = [NSImage imageNamed:@"External Link icon"];
         if (!result)
         {
-            result = [[NSImage alloc] initByReferencingFile:@"/System/Library/CoreServices/CoreTypes.bundle/Contents/Resources/GenericURLIcon.icns"];
-            [result setName:@"External Link icon"];
-            [result autorelease];
+			result = [NSImage imageFromOSType:kGenericURLIcon];
         }
     }
 	

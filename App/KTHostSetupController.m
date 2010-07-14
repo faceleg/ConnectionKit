@@ -1438,6 +1438,7 @@ static NSCharacterSet *sIllegalSubfolderSet;
 // the supported way to do this.
 //
 
+// Note: We ought to be using [NSImage imageForOSType] to get at these images in a more official way. :-)
 
 - (NSString *) serverImagePath
 {

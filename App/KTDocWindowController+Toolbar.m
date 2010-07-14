@@ -175,13 +175,22 @@ TO DO:
     [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
                     action:@selector(addExternalLinkPage:)
              keyEquivalent:@""];
-    
-    if ([[NSApp delegate] isPro])
-    {
-        [menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
-                        action:@selector(addRawTextPage:) keyEquivalent:@""];
-    }
-    
+ 
+	NSMenuItem *URLTextMenuItem = [pulldownButton lastItem];
+	NSImage *URLImage = [[[NSImage imageFromOSType:kGenericURLIcon] copy] autorelease];
+	[URLImage setSize:NSMakeSize(32.0,32.0)];
+	[URLTextMenuItem setImage:URLImage];
+	
+
+	[menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
+					action:@selector(addRawTextPage:) keyEquivalent:@""];
+	
+	
+	self.HTMLTextPageMenuItem = [pulldownButton lastItem];		// save for later since this gets hidden if not Pro
+	NSImage *HTMLImage = [[[NSImage imageNamed:@"HTML"] copy] autorelease];
+	[HTMLImage setSize:NSMakeSize(32.0,32.0)];
+	[self.HTMLTextPageMenuItem setImage:HTMLImage];
+		
     [menu addItem:[NSMenuItem separatorItem]];
     
     [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page pulldown button menu item title")

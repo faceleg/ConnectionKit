@@ -65,6 +65,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 @implementation KTDocWindowController
 
 @synthesize rawHTMLMenuItem = _rawHTMLMenuItem;
+@synthesize HTMLTextPageMenuItem = _HTMLTextPageMenuItem;
 
 + (void)initialize;
 {
@@ -94,6 +95,7 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	[self setSiteOutlineViewController:nil];
 	[self setWebContentAreaController:nil];
 	self.rawHTMLMenuItem = nil;
+	self.HTMLTextPageMenuItem = nil;
 	
     // stop observing
 	[[NSNotificationCenter defaultCenter] removeObserver:self];
@@ -935,8 +937,12 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[button setAction:@selector(showRegistrationWindow:)];
 		[button setTarget:[NSApp delegate]];
 		
-		[self.rawHTMLMenuItem setHidden:NO];	// don't hide, this is unregistered
-		[self.rawHTMLMenuItem setPro:YES];		// Indicate that this is a Pro feature
+		[self.rawHTMLMenuItem setHidden:NO];		// don't hide, this is unregistered
+		[self.rawHTMLMenuItem setPro:YES];			// Indicate that this is a Pro feature
+		[self.HTMLTextPageMenuItem setHidden:NO];	// don't hide, this is unregistered
+		[self.HTMLTextPageMenuItem setPro:YES];		// Indicate that this is a Pro feature
+
+	
 	}
 	else
 	{
@@ -945,6 +951,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		[self.rawHTMLMenuItem setHidden:!gIsPro];		// hide if not pro, show it pro
 		[self.rawHTMLMenuItem setPro:NO];				// registered, we're not going to show the pro badge.
+		[self.HTMLTextPageMenuItem setHidden:!gIsPro];	// don't hide, this is unregistered
+		[self.HTMLTextPageMenuItem setPro:NO];			// Indicate that this is a Pro feature
 	}
 	
 }
