@@ -19,7 +19,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-@class DOMDocument, KTOffScreenWebViewController;
+@class DOMDocument;
 @interface KTRTFDImporter : NSObject 
 {
 }

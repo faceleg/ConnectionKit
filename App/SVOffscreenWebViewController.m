@@ -12,7 +12,49 @@
 #import "KTDocWebViewController.h"
 #import "NSApplication+Karelia.h"
 
+
 @implementation SVOffscreenWebViewController
+
+#pragma mark Synchronous load
+
+static SVOffscreenWebViewController *sOffscreenController = nil;
+static BOOL sDoneLoading;
+
++ (DOMDocument *)DOMDocumentForHTMLString:(NSString *)inHTML baseURL:(NSURL *)aURL;
+{
+	DOMDocument *result = nil;
+	OBPRECONDITION(inHTML);
+    
+	if (!sOffscreenController)
+	{
+		sOffscreenController = [[self alloc] init];
+	}
+	OBASSERT(sOffscreenController);
+	
+	[sOffscreenController setDelegate:self];
+    WebFrame *frame = [[sOffscreenController webView] mainFrame];
+	[frame loadHTMLString:inHTML baseURL:aURL];
+	
+    
+	// Wait for it to load
+    sDoneLoading = NO;
+	NSDate *timeoutDate = [NSDate dateWithTimeIntervalSinceNow:7.0];
+	NSRunLoop *theRL = [NSRunLoop currentRunLoop];
+	
+    while (!sDoneLoading && [theRL runMode:NSDefaultRunLoopMode beforeDate:timeoutDate]) { }
+    
+	result = [frame DOMDocument];
+	return result;
+}
+
+/*!	Callback unlocks the lock so the foreground thread can proceed
+ */
++ (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
+{
+	sDoneLoading = YES;
+}
+
+#pragma mark -
 
 @synthesize webView = _webView;
 @synthesize delegate = _delegate;

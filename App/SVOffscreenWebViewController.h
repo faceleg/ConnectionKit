@@ -24,6 +24,8 @@
 	id <KTAsyncOffscreenWebViewControllerDelegate> _delegate;
 }
 
++ (DOMDocument *)DOMDocumentForHTMLString:(NSString *)inHTML baseURL:(NSURL *)aURL;
+
 @property(nonatomic, retain, readonly) WebView *webView;
 @property(nonatomic, assign) id <KTAsyncOffscreenWebViewControllerDelegate> delegate;
 

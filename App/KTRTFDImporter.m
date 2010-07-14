@@ -10,7 +10,7 @@
 
 #import "Debug.h"
 #import "KTDesign.h"
-#import "KTOffScreenWebViewController.h"
+#import "SVOffscreenWebViewController.h"
 #import "KTMaster.h"
 
 #import "DOMNode+KTExtensions.h"
@@ -30,7 +30,7 @@
 {
 	NSString *snippet = [anAttrString standardSnippet];
 	
-	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
+	DOMDocument *aDOMDocument = [SVOffscreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
 		return [NSString stringWithFormat:NSLocalizedString(@"Unable to convert %@ to editable HTML.", @""), snippet];
@@ -50,7 +50,7 @@
 
 	NSString *snippet = [attr standardSnippet];
 	
-	DOMDocument *aDOMDocument = [KTOffScreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
+	DOMDocument *aDOMDocument = [SVOffscreenWebViewController DOMDocumentForHTMLString:snippet baseURL:nil];
 	if ( nil == aDOMDocument )
 	{
 		return [NSString stringWithFormat:NSLocalizedString(@"Unable to convert document %@ to HTML.", @""), [[NSFileManager defaultManager] displayNameAtPath:aPath]];
