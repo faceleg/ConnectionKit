@@ -359,12 +359,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
 
-@synthesize autoupdate = _autoupdate;
-- (void)setAutoupdate:(BOOL)autoupdate;
-{
-    _autoupdate = autoupdate;
-}
-
 - (void)willUpdate;
 {
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location

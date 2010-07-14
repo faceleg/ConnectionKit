@@ -40,7 +40,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 	KTHTMLInspectorController *_HTMLInspectorController;
     
     // Updating
-    BOOL                    _needsUpdate, _willUpdate, _autoupdate;
+    BOOL                    _needsUpdate, _willUpdate;
     BOOL                    _isUpdating;
     NSRect                  _visibleRect;
     SVWebEditorTextRange    *_selectionToRestore;
@@ -65,8 +65,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
 - (void)updateIfNeeded; // only updates what's needed, so could just be a handful of DOM controllers
-
-@property(nonatomic, getter=isAutoupdate) BOOL autoupdate;  // like -[NSWindow setAutodisplay:]. Not actually implemented yet!
 
 - (void)willUpdate;
 - (void)didUpdate;  // if an asynchronous update, called after the update finishes
