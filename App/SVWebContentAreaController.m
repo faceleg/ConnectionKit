@@ -234,14 +234,6 @@
     }
     else
     {
-        [self performSelector:@selector(siteViewControllerSelectionMayHaveTimedOut) withObject:nil afterDelay:0.25];
-    }
-}
-
-- (void)siteViewControllerSelectionMayHaveTimedOut
-{
-    if ([self selectedViewController] != [self selectedViewControllerWhenReady])
-    {
         [self presentLoadingViewController];
     }
 }
