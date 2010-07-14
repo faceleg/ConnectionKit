@@ -929,20 +929,22 @@ initial syntax coloring.
 	
 }
 
+#pragma mark -
+#pragma mark Web Resource Load Delegate
 // Resource load delegate -- so I can know that we are trying to load off-page resources
 
-//- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource;
-//{
-//	static NSUInteger itemNum = 0;
-//	NSNumber *result = [NSString stringWithFormat:@"___%d___", itemNum++];
-//	NSLog(@"%s %@ %@",__FUNCTION__, result, request);
-//	return result;
-//}
+- (id)webView:(WebView *)sender identifierForInitialRequest:(NSURLRequest *)request fromDataSource:(WebDataSource *)dataSource;
+{
+	static NSUInteger itemNum = 0;
+	NSNumber *result = [NSString stringWithFormat:@"___%d___", itemNum++];
+	NSLog(@"%s %@ %@",__FUNCTION__, result, request);
+	return result;
+}
 
 - (NSURLRequest *)webView:(WebView *)sender resource:(id)identifier willSendRequest:(NSURLRequest *)request redirectResponse:(NSURLResponse *)redirectResponse fromDataSource:(WebDataSource *)dataSource;
 {
 	NSURLRequest *result = request;
-//	NSLog(@"%s %@ %@",__FUNCTION__, identifier, request);
+	NSLog(@"%s %@ %@",__FUNCTION__, identifier, request);
 	
 	NSURL *URL = [request URL];
 	NSString *scheme =[URL scheme];
@@ -955,6 +957,49 @@ initial syntax coloring.
 	}
 	return result;
 }
+
+- (void)webView:(WebView *)sender plugInFailedWithError:(NSError *)error dataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didCancelAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didFailLoadingWithError:(NSError *)error fromDataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didFinishLoadingFromDataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveAuthenticationChallenge:(NSURLAuthenticationChallenge *)challenge fromDataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+#ifndef WebNSInteger
+#define WebNSInteger NSInteger
+#endif
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveContentLength:(WebNSInteger)length fromDataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+- (void)webView:(WebView *)sender resource:(id)identifier didReceiveResponse:(NSURLResponse *)response fromDataSource:(WebDataSource *)dataSource;
+{
+	NSLog(@"%s %@",__FUNCTION__, dataSource);
+}
+
+
+
+#pragma mark -
 
 /*	This splices the DOM tree that has been loaded into the offscreen webview into the element
  *	that is waiting for this fragment to have finished loading, [self elementWaitingForFragmentLoad].

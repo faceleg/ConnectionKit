@@ -63,8 +63,81 @@
 	[[_webView mainFrame] loadHTMLString:anHTMLFragment baseURL:nil];
 }
 
+- (void)stopLoading
+{
+	[_webView stopLoading:nil];
+}
+
+#pragma mark Delegate stuff
+
+- (void)webView:(WebView *)sender didCancelClientRedirectForFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+- (void)webView:(WebView *)sender didChangeLocationWithinPageForFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didFailLoadWithError:(NSError *)error forFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didFailProvisionalLoadWithError:(NSError *)error forFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didReceiveIcon:(NSImage *)image forFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didReceiveServerRedirectForProvisionalLoadForFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didReceiveTitle:(NSString *)title forFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender didStartProvisionalLoadForFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender willCloseFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)sender willPerformClientRedirectToURL:(NSURL *)URL delay:(NSTimeInterval)seconds fireDate:(NSDate *)date forFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)webView didClearWindowObject:(WebScriptObject *)windowObject forFrame:(WebFrame *)frame;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+- (void)webView:(WebView *)webView windowScriptObjectAvailable:(WebScriptObject *)windowScriptObject;
+{
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
+}
+
+
 - (void)webView:(WebView *)sender didFinishLoadForFrame:(WebFrame *)frame
 {
+	VALIDATION((@"%s %@",__FUNCTION__, frame));
 	if (frame == [sender mainFrame])
 	{
 		DOMNodeList *bodyList = [[frame DOMDocument] getElementsByTagName:@"BODY"];
@@ -81,10 +154,6 @@
 	}
 }
 
-- (void)stopLoading
-{
-	[_webView stopLoading:nil];
-}
 
 
 @end
