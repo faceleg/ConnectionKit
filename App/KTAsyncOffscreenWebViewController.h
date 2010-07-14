@@ -9,13 +9,19 @@
 #import <Cocoa/Cocoa.h>
 #import <WebKit/Webkit.h>
 
+@protocol KTAsyncOffscreenWebViewControllerDelegate
+
+- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
+
+@end
+
 
 @interface KTAsyncOffscreenWebViewController : NSWindowController
 {
   @private
 	WebView     *_webView;
 	
-	id _delegate;
+	id <KTAsyncOffscreenWebViewControllerDelegate> _delegate;
 }
 
 @property (readonly, nonatomic, retain) WebView *webView;
