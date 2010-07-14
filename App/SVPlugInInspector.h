@@ -8,6 +8,8 @@
 
 #import "KSInspectorViewController.h"
 
+#import "SVGraphic.h"
+
 
 @class SVInspectorViewController;
 

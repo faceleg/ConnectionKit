@@ -229,6 +229,10 @@ static NSString *sPlugInPropertiesObservationContext = @"PlugInPropertiesObserva
     return [[self plugIn] thumbnail];
 }
 
+#pragma mark Inspector
+
+- (Class)inspectorFactoryClass; { return [[self plugIn] class]; }
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;

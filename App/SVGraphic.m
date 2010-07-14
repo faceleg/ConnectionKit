@@ -276,6 +276,17 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 - (id <IMBImageItem>)thumbnail { return nil; }
 
+#pragma mark Inspector
+
++ (SVInspectorViewController *)makeInspectorViewController; { return nil; }
+
+- (Class)inspectorFactoryClass; { return [self class]; }
+
+- (id)valueForUndefinedKey:(NSString *)key
+{
+    return NSNotApplicableMarker;
+}
+
 #pragma mark Serialization
 
 - (void)populateSerializedProperties:(NSMutableDictionary *)propertyList;
@@ -358,13 +369,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
     
     // Ensure border is correct. plist may have set it to nil
     if (![self showBorder]) [self setBordered:NO];
-}
-
-#pragma mark Inspection
-
-- (id)valueForUndefinedKey:(NSString *)key
-{
-    return NSNotApplicableMarker;
 }
 
 #pragma mark SVPageletPlugInContainer

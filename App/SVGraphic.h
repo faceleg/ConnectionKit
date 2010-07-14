@@ -142,6 +142,13 @@ extern NSString *kSVGraphicPboardType;
 @property(nonatomic, readonly) id <IMBImageItem> thumbnail; // MUST be KVO-compliant
 
 
+#pragma mark Inspector
+// To get yourself in the plug-in Inspector, need to:
+//  1.  Implement -plugInIdentifier to return a unique value like a plug-in would
+//  2.  Override +makeInspectorViewController to create and return a controller
++ (SVInspectorViewController *)makeInspectorViewController;
+
+
 #pragma mark Serialization
 
 - (void)writeToPasteboard:(NSPasteboard *)pboard;   // like other Cocoa methods of same sig.
