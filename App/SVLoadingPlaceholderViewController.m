@@ -8,6 +8,11 @@
 
 #import "SVLoadingPlaceholderViewController.h"
 
+#import "SVWebContentAreaController.h"
+#import "SVWebEditorViewController.h"
+
+#import "NSImage+Karelia.h"
+
 
 @implementation SVLoadingPlaceholderViewController
 
@@ -52,7 +57,31 @@
 {
     [super viewWillAppear:animated];
     
-    [[self backgroundImageView] setImage:nil];
+    SVWebContentAreaController *tabController = (id)[self parentViewController];    // hack!
+    SVWebEditorViewController *editorController = [tabController webEditorViewController];
+    
+    // When loading a new page want white background. But for updating an existing page take a snapshot of the Web Editor
+    if ([editorController loadedPage] != [[editorController HTMLContext] page])
+    {
+        [[self backgroundImageView] setImage:nil];
+    }
+    else
+    {
+        // Take snapshot
+        NSView *view = [editorController view];
+        [view lockFocus];
+        
+        NSBitmapImageRep *snapshot = [[NSBitmapImageRep alloc]
+                                      initWithFocusedViewRect:[view bounds]];
+        
+        [view unlockFocus];
+        
+        // Display it
+        NSImage *image = [[NSImage alloc] initWithBitmapImageRepresentation:snapshot];
+        [snapshot release];
+        [[self backgroundImageView] setImage:image];
+        [image release];
+    }
 }
 
 @end
