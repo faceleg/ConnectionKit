@@ -39,11 +39,14 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     NSObject            *_draggingDestination;  // weak ref
 	KTHTMLInspectorController *_HTMLInspectorController;
     
-    // Loading
+    // Updating
     BOOL                    _needsUpdate, _willUpdate, _autoupdate;
     BOOL                    _isUpdating;
     NSRect                  _visibleRect;
     SVWebEditorTextRange    *_selectionToRestore;
+    
+    // Loading
+    KTPage  *_loadedPage;
         
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
@@ -58,7 +61,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 - (void)update;
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;
-- (void)loadPage:(KTPage *)page;
 
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
@@ -68,6 +70,11 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 - (void)willUpdate;
 - (void)didUpdate;  // if an asynchronous update, called after the update finishes
+
+
+#pragma mark Loading
+- (void)loadPage:(KTPage *)page;
+- (KTPage *)loadedPage; // the last page to successfully load into Web Editor
 
 
 #pragma mark Content

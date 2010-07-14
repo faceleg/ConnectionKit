@@ -93,6 +93,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     [_context release];
     [_graphicsController release];
+    [_loadedPage release];
 	self.HTMLInspectorController = nil;
     
     [super dealloc];
@@ -262,6 +263,11 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [pageHTML release];
 }
 
+- (KTPage *)loadedPage; // the last page to successfully load into Web Editor
+{
+    return _loadedPage;
+}
+
 - (void)webEditorViewDidFinishLoading:(WEKWebEditorView *)sender;
 {
     WEKWebEditorView *webEditor = [self webEditor];
@@ -275,7 +281,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     NSArray *selection = [[self graphicsController] selectedObjects];
     [[self graphicsController] setContent:nil];
     
-    SVWebEditorHTMLContext *context = [self HTMLContext];        
+    SVWebEditorHTMLContext *context = [self HTMLContext];
+    [_loadedPage release]; _loadedPage = [[context page] retain];
     [webEditor setContentItem:[context rootDOMController]];
     
     [[self graphicsController] setSelectedObjects:selection];    // restore selection
@@ -735,7 +742,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
 }
 
-#pragma mark -
 #pragma mark HTMLInspectorController
 
 @synthesize HTMLInspectorController = _HTMLInspectorController;
