@@ -17,38 +17,35 @@
 @synthesize webView = _webView;
 @synthesize delegate = _delegate;
 
-
-- (id) init
+- (id)init;
 {
-	self = [super init];
-	if (self != nil) {
-
+	
 		NSRect frame = NSMakeRect(0.0, 0.0, 800,800);
 		
-		_window = [[NSWindow alloc]
+		NSWindow *window = [[NSWindow alloc]
 							initWithContentRect:frame styleMask:NSBorderlessWindowMask
 // |NSTitledWindowMask|NSClosableWindowMask|NSResizableWindowMask|NSMiniaturizableWindowMask
 					backing:NSBackingStoreBuffered defer:NO];
 
-		[_window setReleasedWhenClosed:NO];
+		[window setReleasedWhenClosed:NO];
 		
 		_webView = [[WebView alloc] initWithFrame:frame];
-		[_window setContentView:_webView];
+		[window setContentView:_webView];
 		
 		[_webView setFrameLoadDelegate:self];
 		
 //		[myWindow orderFront:nil]; 
-	}
-	return self;
-}
 
+	self = [self initWithWindow:window];
+    [window release];
+    return self;
+}
 
 - (void)dealloc
 {
 	_delegate = nil;
 	[_webView close];
     [_webView release];
-	[_window release];
     [super dealloc];
 }
 

@@ -10,10 +10,10 @@
 #import <WebKit/Webkit.h>
 
 
-@interface KTAsyncOffscreenWebViewController : NSObject {
-
+@interface KTAsyncOffscreenWebViewController : NSWindowController
+{
+  @private
 	WebView     *_webView;
-	NSWindow    *_window;
 	
 	id _delegate;
 }
