@@ -918,7 +918,7 @@ initial syntax coloring.
 	[[self asyncOffscreenWebViewController] setDelegate:self];
 	// NOT USED? [self setElementWaitingForFragmentLoad:element];
 	// Kick off load of fragment, we will be notified when it's done.
-	KTAsyncOffscreenWebViewController *asyncLoader = [self asyncOffscreenWebViewController];
+	SVOffscreenWebViewController *asyncLoader = [self asyncOffscreenWebViewController];
 	WebView *webview = [asyncLoader webView];
 	[webview setResourceLoadDelegate:self];
 	
@@ -1018,11 +1018,11 @@ initial syntax coloring.
 	// Do nothing ... we will have gotten hasRemoteLoads set if there were any resources loaded
 }
 
-- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController
+- (SVOffscreenWebViewController *)asyncOffscreenWebViewController
 {
 	if (nil == _asyncOffscreenWebViewController)
 	{
-		_asyncOffscreenWebViewController = [[KTAsyncOffscreenWebViewController alloc] init];
+		_asyncOffscreenWebViewController = [[SVOffscreenWebViewController alloc] init];
 	}
     return _asyncOffscreenWebViewController; 
 }

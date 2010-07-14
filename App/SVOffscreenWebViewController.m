@@ -8,11 +8,11 @@
 
 // works in conjunction with KTDocWebViewController+Refreshing.m refreshWebViewComponent:
 
-#import "KTAsyncOffscreenWebViewController.h"
+#import "SVOffscreenWebViewController.h"
 #import "KTDocWebViewController.h"
 #import "NSApplication+Karelia.h"
 
-@implementation KTAsyncOffscreenWebViewController
+@implementation SVOffscreenWebViewController
 
 @synthesize webView = _webView;
 @synthesize delegate = _delegate;

@@ -16,7 +16,7 @@
 @end
 
 
-@interface KTAsyncOffscreenWebViewController : NSWindowController
+@interface SVOffscreenWebViewController : NSWindowController
 {
   @private
 	WebView     *_webView;

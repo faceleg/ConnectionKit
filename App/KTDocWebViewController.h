@@ -17,7 +17,7 @@
 @class CIFilter;
 @class KTDocument;
 @class KTDocWindowController;
-@class KTAsyncOffscreenWebViewController;
+@class SVOffscreenWebViewController;
 
 
 @interface KTDocWebViewController : NSViewController
@@ -29,7 +29,7 @@
 	@private
 	
     DOMHTMLElement                      *myElementWaitingForFragmentLoad;
-	KTAsyncOffscreenWebViewController	*myAsyncOffscreenWebViewController;
+	SVOffscreenWebViewController	*myAsyncOffscreenWebViewController;
 	
 	
 	// Loading
@@ -79,8 +79,8 @@
 #pragma mark Accessors
 - (DOMHTMLElement *)elementWaitingForFragmentLoad;
 - (void)setElementWaitingForFragmentLoad:(DOMHTMLElement *)anElementWaitingForFragmentLoad;
-- (KTAsyncOffscreenWebViewController *)asyncOffscreenWebViewController;
-- (void)setAsyncOffscreenWebViewController:(KTAsyncOffscreenWebViewController *)anAsyncOffscreenWebViewController;
+- (SVOffscreenWebViewController *)asyncOffscreenWebViewController;
+- (void)setAsyncOffscreenWebViewController:(SVOffscreenWebViewController *)anAsyncOffscreenWebViewController;
 
 - (NSTextView *)sourceCodeTextView;
 

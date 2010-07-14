@@ -1018,7 +1018,7 @@
 		CE1D6D4311B5BA840087AC1B /* NSMenuItem+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = CE1D6D4111B5BA840087AC1B /* NSMenuItem+Karelia.h */; };
 		CE1D6D4411B5BA840087AC1B /* NSMenuItem+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = CE1D6D4211B5BA840087AC1B /* NSMenuItem+Karelia.m */; };
 		CE214BFA098060CD006DD2B1 /* Languages.plist in Resources */ = {isa = PBXBuildFile; fileRef = CE214BF9098060CD006DD2B1 /* Languages.plist */; };
-		CE23D84D11E69AD800E43369 /* KTAsyncOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */; };
+		CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */; };
 		CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE23D96A11E6E65900E43369 /* KSPlainClipTextView.h */; };
 		CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE23D96B11E6E65900E43369 /* KSPlainClipTextView.m */; };
 		CE23DBF811EBE4D800E43369 /* KSPluginInstaller.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE23DBF611EBE4D800E43369 /* KSPluginInstaller.xib */; };
@@ -2608,8 +2608,8 @@
 		CE2D42E71188BD910051E238 /* LIFlipEffect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LIFlipEffect.h; sourceTree = "<group>"; };
 		CE2D42E81188BD910051E238 /* LIFlipEffect.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LIFlipEffect.m; sourceTree = "<group>"; };
 		CE2D42E91188BD910051E238 /* README.rtf */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; path = README.rtf; sourceTree = "<group>"; };
-		CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTAsyncOffscreenWebViewController.h; sourceTree = "<group>"; };
-		CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTAsyncOffscreenWebViewController.m; sourceTree = "<group>"; };
+		CE2E80E20DB534930034E7B8 /* SVOffscreenWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVOffscreenWebViewController.h; sourceTree = "<group>"; };
+		CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVOffscreenWebViewController.m; sourceTree = "<group>"; };
 		CE35968210F3F0A10009F2CA /* SVWebSourceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVWebSourceViewController.h; sourceTree = "<group>"; };
 		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
 		CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.js"; sourceTree = "<group>"; };
@@ -2942,8 +2942,8 @@
 			isa = PBXGroup;
 			children = (
 				27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */,
-				CE2E80E20DB534930034E7B8 /* KTAsyncOffscreenWebViewController.h */,
-				CE2E80E30DB534930034E7B8 /* KTAsyncOffscreenWebViewController.m */,
+				CE2E80E20DB534930034E7B8 /* SVOffscreenWebViewController.h */,
+				CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */,
 				27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */,
 				2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */,
 				27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */,
@@ -6852,7 +6852,7 @@
 				CE5B1CB911E54A38005E2C5E /* KTFeedbackReporter.m in Sources */,
 				2726D9CE11E5D3230000257D /* KSSortedMutableArray.m in Sources */,
 				2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */,
-				CE23D84D11E69AD800E43369 /* KTAsyncOffscreenWebViewController.m in Sources */,
+				CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */,
 				CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

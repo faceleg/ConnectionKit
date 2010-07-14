@@ -12,7 +12,7 @@
 
 #import <Cocoa/Cocoa.h>
 
-#import "KTAsyncOffscreenWebViewController.h"
+#import "SVOffscreenWebViewController.h"
 #import "KT.h"
 #import "KSNoCascadeWindow.h"
 
@@ -57,7 +57,7 @@ typedef enum {
 	NSString						*_sourceCodeTemp;				// Temp. storage for data from file until NIB has been read.
 	NSString						*_title;
 	
-	KTAsyncOffscreenWebViewController *_asyncOffscreenWebViewController;
+	SVOffscreenWebViewController *_asyncOffscreenWebViewController;
 
 		
 	// Bound Properties
@@ -94,7 +94,7 @@ typedef enum {
 @property (nonatomic) BOOL preventPreview;
 @property (nonatomic, copy) NSData *hashOfLastValidation;
 @property (assign) SEL completionSelector;
-@property (nonatomic, retain) KTAsyncOffscreenWebViewController *asyncOffscreenWebViewController;
+@property (nonatomic, retain) SVOffscreenWebViewController *asyncOffscreenWebViewController;
 
 @end
 
