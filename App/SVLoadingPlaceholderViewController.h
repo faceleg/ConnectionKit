@@ -11,9 +11,8 @@
 
 @interface SVLoadingPlaceholderViewController : BWViewController
 {
-    IBOutlet NSImageView    *oBackgroundImageView;
-    
   @private
+    NSImageView         *_imageView;
     NSProgressIndicator *_progressIndicator;
     NSTextField         *_label;
 }
@@ -22,5 +21,6 @@
 
 @property(nonatomic, retain) IBOutlet NSProgressIndicator *progressIndicator;
 @property(nonatomic, retain) IBOutlet NSTextField *label;   // can use to set custom text
+@property(nonatomic, retain) IBOutlet NSImageView *backgroundImageView;
 
 @end

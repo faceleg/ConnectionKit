@@ -30,14 +30,20 @@
     return _label;
 }
 
+@synthesize backgroundImageView = _imageView;
+- (NSImageView *)backgroundImageView;
+{
+    [self view];    // make sure it's loaded
+    return _imageView;
+}
+
 #pragma mark Presentation
 
 - (void)viewWillAppear:(BOOL)animated;
 {
     [super viewWillAppear:animated];
     
-    [self view];    // make sure it's loaded
-    [oBackgroundImageView setImage:nil];
+    [[self backgroundImageView] setImage:nil];
 }
 
 @end
