@@ -6,10 +6,10 @@
 //  Copyright 2009 Karelia Software. All rights reserved.
 //
 
-#import <Cocoa/Cocoa.h>
+#import <BWToolkitFramework/BWToolkitFramework.h>
 
 
-@interface SVLoadingPlaceholderViewController : NSViewController
+@interface SVLoadingPlaceholderViewController : BWViewController
 {
     IBOutlet NSImageView    *oBackgroundImageView;
     
