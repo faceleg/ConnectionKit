@@ -78,7 +78,7 @@
 {	
 	if ([[self view] window])   // only do something if we are attached to a window
 	{
-		[self updateWithPage:[self.webEditorViewController page]];
+		[self updateWithPage:self.webEditorViewController.HTMLContext.page];
 	}
 }
 
