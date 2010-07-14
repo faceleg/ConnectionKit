@@ -24,8 +24,8 @@
 	id <KTAsyncOffscreenWebViewControllerDelegate> _delegate;
 }
 
-@property (readonly, nonatomic, retain) WebView *webView;
-@property (assign) id delegate;
+@property(nonatomic, retain, readonly) WebView *webView;
+@property(nonatomic, assign) id <KTAsyncOffscreenWebViewControllerDelegate> delegate;
 
 
 - (void)loadHTMLFragment:(NSString *)anHTMLFragment;

@@ -22,7 +22,6 @@
 #import "NSTextView+KTExtensions.h"
 #import "SVValidatorWindowController.h"
 #import "SVRawHTMLGraphic.h"
-#import "KTAsyncOffscreenWebViewController.h"
 #import "Registration.h"
 
 

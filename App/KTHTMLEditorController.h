@@ -11,8 +11,11 @@
 
 
 #import <Cocoa/Cocoa.h>
+
+#import "KTAsyncOffscreenWebViewController.h"
 #import "KT.h"
 #import "KSNoCascadeWindow.h"
+
 
 typedef enum { 
 	kValidationStateUnknown = 0,		// or empty string
@@ -24,10 +27,10 @@ typedef enum {
 } ValidationState;
 
 
-@class KTAbstractElement, SVRawHTMLGraphic, KTAsyncOffscreenWebViewController;
+@class KTAbstractElement, SVRawHTMLGraphic;
 
 // Syntax-colored text file viewer:
-@interface KTHTMLEditorController : NSWindowController
+@interface KTHTMLEditorController : NSWindowController <KTAsyncOffscreenWebViewControllerDelegate>
 {
 	IBOutlet NSTextView*			textView;				// The text view used for editing code.
 	
