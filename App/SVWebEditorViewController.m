@@ -239,8 +239,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [self setHTMLContext:context];
     
     
-    // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
-    [self setUpdating:YES];
+    // Record location
     _visibleRect = [[webEditor documentView] visibleRect];
     
     
@@ -368,8 +367,10 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)willUpdate;
 {
-    [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];   // -update also posts this
+    // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
+    [self setUpdating:YES];
     
+    [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];
 }
 
 - (void)didUpdate;
@@ -793,6 +794,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     KTPage *page = [[controller selectedPage] pageRepresentation];
     if (page != [[self HTMLContext] page])
     {
+        [self willUpdate];
         [self loadPage:page];
         
         // UI-wise it might be better to test if the page contains the HTML loaded into the editor
