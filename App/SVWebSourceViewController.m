@@ -55,7 +55,11 @@
                 pageHTML = [page markupString];
                 break;
                 
-            case KTRSSSourceView:
+			case KTPreviewSourceCodeView:
+                pageHTML = [page markupStringForEditing];
+                break;
+                
+			case KTRSSSourceView:
                 pageHTML = [page RSSFeed];
                 break;
                 

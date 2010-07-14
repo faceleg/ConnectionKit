@@ -20,6 +20,7 @@
 #import "KTMaster.h"
 #import "KTPublishingEngine.h"
 #import "SVTitleBox.h"
+#import "SVWebEditorHTMLContext.h"
 
 #import "NSBundle+KTExtensions.h"
 #import "NSBundle+QuickLook.h"
@@ -116,6 +117,22 @@
     [context release];
     return result;
 }
+
+- (NSString *)markupStringForEditing;   // for viewing source for debugging purposes.
+{
+    NSMutableString *result = [NSMutableString string];
+	SVWebEditorHTMLContext *context = [[SVWebEditorHTMLContext alloc] initWithMutableString:result];
+
+	[context setPage:self];
+
+	[context writeDocumentWithPage:self];
+
+	[context release];
+    return result;
+}
+
+
+
 
 + (NSString *)pageTemplate
 {

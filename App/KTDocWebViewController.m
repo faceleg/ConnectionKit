@@ -312,7 +312,7 @@ NOT BEING COMPILED
 	{
 		[self loadPageIntoSourceCodeTextView:[self page]];
 	}
-	else if (aViewType != KTHTMLValidationView)
+	else
 	{
 		[self reloadWebView];
 	}
@@ -345,7 +345,6 @@ NOT BEING COMPILED
 		
 		case KTStandardWebView: 
 		case KTWithoutStylesView:
-		case KTHTMLValidationView:
 		case KTRSSView:	
 		default:
 			return NO;

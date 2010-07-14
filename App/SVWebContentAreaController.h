@@ -17,11 +17,10 @@ typedef enum {
 	KTStandardWebView,
 	KTWithoutStylesView,
 	KTSourceCodeView,
-	KTPreviewSourceCodeView,	// Unimplemented
+	KTPreviewSourceCodeView,	// in Debug menu
 	KTDOMSourceView,
 	KTRSSView,					// Unimplemented
 	KTRSSSourceView,
-	KTHTMLValidationView
 } KTWebViewViewType;
 
 

@@ -165,7 +165,9 @@
         
         result = ([menuItem tag] == KTStandardWebView ||
                   [menuItem tag] == KTSourceCodeView ||
-                  ([menuItem tag] == KTRSSSourceView && [[page collectionSyndicate] boolValue]));
+				  [menuItem tag] == KTPreviewSourceCodeView ||
+ 				  [menuItem tag] == KTWithoutStylesView ||
+                ([menuItem tag] == KTRSSSourceView && [[page collectionSyndicate] boolValue]));
     }
     
     return result;
@@ -192,7 +194,8 @@
         switch ([self viewType])
         {
             case KTStandardWebView:
-            {
+			case KTWithoutStylesView:
+           {
                 // Figure out the right view controller
                 result = [self webEditorViewController];
                 break;
