@@ -91,7 +91,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [self setWebEditor:nil];   // needed to tear down data source
     [self setDelegate:nil];
     
-    [_page release];
     [_context release];
     [_graphicsController release];
 	self.HTMLInspectorController = nil;
@@ -187,7 +186,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     [super viewDidDisappear:animated];
     
-    if (![self isUpdating]) [self setPage:nil];
+    if (![self isUpdating]) [self loadPage:nil];
     
     // Once we move offscreen, we're no longer suitable to be shown
     [self setViewIsReadyToAppear:NO];
@@ -202,7 +201,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 /*  Loading is to Updating as Drawing is to Displaying (in NSView)
  */
 
-- (void)loadPageHTMLIntoWebEditor
+- (void)loadPage:(KTPage *)page;
 {
     WEKWebEditorView *webEditor = [self webEditor];
     
@@ -212,7 +211,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     
     // Prepare the environment for generating HTML
-    KTPage *page = [self page];
     [_graphicsController setPage:page]; // do NOT set the controller's MOC. Unless you set both MOC
                                                         // and entity name, saving will raise an exception. (crazy I know!)
     
@@ -236,6 +234,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // Turned this off because I'm not sure it's needed - Mike
     //[[self webView] setHostWindow:[[self view] window]];   // TODO: Our view may be outside the hierarchy too; it woud be better to figure out who our window controller is and use that.
+    
     [self setHTMLContext:context];
     
     
@@ -304,7 +303,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
 	[self willUpdate];
     
-	[self loadPageHTMLIntoWebEditor];
+	[self loadPage:[[self HTMLContext] page]];
 	
     // Clearly the webview is no longer in need of refreshing
     _willUpdate = NO;
@@ -431,21 +430,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
 }
 
-@synthesize page = _page;
-- (void)setPage:(KTPage *)page
-{
-    if (page != _page)
-    {
-        [_page release]; _page = [page retain];
-    
-        [self update];
-		
-		// UI-wise it might be better to test if the page contains the HTML loaded into the editor
-		// e.g. while editing pagelet in sidebar, it makes sense to leave the editor open
-		self.HTMLInspectorController = nil;
-    }
-}
-
 - (void)registerWebEditorItem:(WEKWebEditorItem *)item;  // recurses through, registering descendants too
 {
     // Ensure element is loaded
@@ -514,7 +498,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 - (IBAction)insertPageletInSidebar:(id)sender;
 {
     // Create element
-    KTPage *page = [self page];
+    KTPage *page = [[self HTMLContext] page];
     if (!page) return NSBeep(); // pretty rare. #75495
     
     
@@ -542,8 +526,9 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     if (returnCode == NSCancelButton) return;
     
+    KTPage *page = [[self HTMLContext] page];
+    NSManagedObjectContext *context = [page managedObjectContext];
     
-    NSManagedObjectContext *context = [[self page] managedObjectContext];
     SVMediaRecord *media = [SVMediaRecord mediaWithURL:[sheet URL]
                                             entityName:@"GraphicMedia"
                         insertIntoManagedObjectContext:context
@@ -552,7 +537,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     if (media)
     {
         SVImage *image = [SVImage insertNewImageWithMedia:media];
-        [image willInsertIntoPage:[self page]];
+        [image willInsertIntoPage:page];
         [self _insertPageletInSidebar:image];
     }
     else
@@ -725,42 +710,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 		result = [[self webView] canMakeTextStandardSize];
 	}
 	
-	else if (action == @selector(insertSiteTitle:))
-	{
-		//  Can insert site title if there isn't already one
-		result = ([[[[[self page] master] siteTitle] text] length] == 0);
-	}
-	else if (action == @selector(insertSiteSubtitle:))
-	{
-		//  Can insert site title if there isn't already one
-		result = ([[[[[self page] master] siteSubtitle] text] length] == 0);
-	}
-	else if (action == @selector(insertPageTitle:))
-	{
-		//  Can insert site title if there isn't already one
-		result = ([[[[self page] titleBox] text] length] == 0);
-	}
-	else if (action == @selector(insertPageletTitle:))
-	{
-		// To insert a pagelet title, the selection just needs to contain at least one title-less pagelet. #56871
-		result = NO;
-		for (id <NSObject> anObject in [[self graphicsController] selectedObjects])
-		{
-			if ([anObject isKindOfClass:[SVGraphic class]])
-			{
-				if ([[[(SVGraphic *)anObject titleBox] text] length] == 0)
-				{
-					result = YES;
-					break;
-				}
-			}
-		}
-	}
-	else if (action == @selector(insertFooter:))
-	{
-		//  Can insert site title if there isn't already one
-		result = ([[[[[self page] master] footer] text] length] == 0);
-	}
 	
     return result;
 }
@@ -837,7 +786,16 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     _contentAreaController = controller;    // weak ref
     
-    [self setPage:[[controller selectedPage] pageRepresentation]];
+    KTPage *page = [[controller selectedPage] pageRepresentation];
+    if (page != [[self HTMLContext] page])
+    {
+        [self loadPage:page];
+        
+        // UI-wise it might be better to test if the page contains the HTML loaded into the editor
+        // e.g. while editing pagelet in sidebar, it makes sense to leave the editor open
+        self.HTMLInspectorController = nil;
+    }
+    
     return [self viewIsReadyToAppear];
 }
 
@@ -1047,7 +1005,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
 {
-    SVRichText *article = [[self page] article];
+    SVRichText *article = [[[self HTMLContext] page] article];
     SVTextDOMController *item = (id)[[[self webEditor] contentItem] hitTestRepresentedObject:article];
     DOMNode *articleNode = [item textHTMLElement];
     
@@ -1129,13 +1087,14 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
     
     
     // A link to another page within the document should open that page. Let the delegate take care of deciding how to open it
-    NSURL *relativeURL = [URL URLRelativeToURL:[[self page] URL]];
+    KTPage *page = [[self HTMLContext] page];
+    NSURL *relativeURL = [URL URLRelativeToURL:[page URL]];
     NSString *relativePath = [relativeURL relativePath];
     
     if (([[URL scheme] isEqualToString:@"applewebdata"] || [relativePath hasPrefix:kKTPageIDDesignator]) &&
         [[actionInfo objectForKey:WebActionNavigationTypeKey] intValue] != WebNavigationTypeOther)
     {
-        KTPage *page = [[[self page] site] pageWithPreviewURLPath:relativePath];
+        KTPage *page = [[page site] pageWithPreviewURLPath:relativePath];
         if (page)
         {
             [[self delegate] webEditorViewController:self openPage:page];

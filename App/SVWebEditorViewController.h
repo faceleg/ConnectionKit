@@ -30,7 +30,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     SVWebContentAreaController  *_contentAreaController;    // weak ref
     
     // Model
-    KTPage                      *_page;
     SVWebEditorHTMLContext      *_context;
     
     SVWebContentObjectsController   *_graphicsController;
@@ -59,6 +58,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 - (void)update;
 @property(nonatomic, readonly, getter=isUpdating) BOOL updating;
+- (void)loadPage:(KTPage *)page;
 
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)setNeedsUpdate;
@@ -73,7 +73,6 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark Content
 
 // Everything here should be KVO-compliant
-@property(nonatomic, retain) KTPage *page;  // reloads
 @property(nonatomic, retain, readonly) NSArrayController *graphicsController;
 @property(nonatomic, retain) WEKWebEditorItem *firstResponderItem;  // like NSWindow.firstResponder
 @property (nonatomic, retain) KTHTMLInspectorController *HTMLInspectorController;
