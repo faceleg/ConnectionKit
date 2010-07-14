@@ -72,16 +72,6 @@ NSString *kSVGraphicPboardType = @"com.karelia.sandvox.graphic";
 
 @dynamic textAttachment;
 
-- (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
-{
-    SVTextAttachment *attachment = [self textAttachment];
-    if (attachment)
-    {
-        [attachment setGraphic:nil];    // so deleting it doesn't cascade and delete us too
-        [[attachment body] deleteCharactersInRange:[attachment range]];
-    }
-}
-
 #pragma mark Pagelet
 
 // Inline graphics are not pagelets, but everything else is

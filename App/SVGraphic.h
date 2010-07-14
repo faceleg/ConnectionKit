@@ -116,8 +116,6 @@ extern NSString *kSVGraphicPboardType;
 
 @property(nonatomic, retain) SVTextAttachment *textAttachment;
 
-- (void)detachFromBodyText; // deletes the corresponding text attachment and string if there is one.
-
 
 #pragma mark Sidebar
 
