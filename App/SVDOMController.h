@@ -103,9 +103,6 @@
 
 
 #pragma mark Updating
-
-//- (void)update;
-
 - (void)setNeedsUpdate; // WEKWebEditorItem can't manage updating, so passes off to view controller
 - (void)updateIfNeeded; // recurses down the tree
 - (SVWebEditorHTMLContext *)HTMLContext;
