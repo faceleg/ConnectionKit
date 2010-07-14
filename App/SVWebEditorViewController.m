@@ -204,6 +204,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)loadPage:(KTPage *)page;
 {
+    [self willUpdate];
+    
     WEKWebEditorView *webEditor = [self webEditor];
     
     
@@ -307,8 +309,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)update;
 {
-	[self willUpdate];
-    
 	[self loadPage:[[self HTMLContext] page]];
 	
     // Clearly the webview is no longer in need of refreshing
@@ -788,7 +788,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     KTPage *page = [[controller selectedPage] pageRepresentation];
     if (page != [[self HTMLContext] page])
     {
-        [self willUpdate];
         [self loadPage:page];
         
         // UI-wise it might be better to test if the page contains the HTML loaded into the editor
