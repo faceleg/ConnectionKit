@@ -178,6 +178,7 @@ TO DO:
  
 	NSMenuItem *URLTextMenuItem = [pulldownButton lastItem];
 	NSImage *URLImage = [[[NSImage imageFromOSType:kGenericURLIcon] copy] autorelease];
+	[URLImage setScalesWhenResized:YES];
 	[URLImage setSize:NSMakeSize(32.0,32.0)];
 	[URLTextMenuItem setImage:URLImage];
 	
@@ -188,6 +189,7 @@ TO DO:
 	
 	self.HTMLTextPageMenuItem = [pulldownButton lastItem];		// save for later since this gets hidden if not Pro
 	NSImage *HTMLImage = [[[NSImage imageNamed:@"HTML"] copy] autorelease];
+	[URLImage setScalesWhenResized:YES];
 	[HTMLImage setSize:NSMakeSize(32.0,32.0)];
 	[self.HTMLTextPageMenuItem setImage:HTMLImage];
 		
