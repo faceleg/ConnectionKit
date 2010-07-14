@@ -11,7 +11,7 @@
 			<string key="NS.object.0">762</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="29"/>
+			<integer value="1273"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -871,10 +871,6 @@
 												<string key="NSKeyEquiv">N</string>
 												<int key="NSKeyEquivModMask">1048576</int>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSImage">
-													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">toolbar_new_page</string>
-												</object>
 												<reference key="NSOnImage" ref="73959282"/>
 												<reference key="NSMixedImage" ref="49718828"/>
 											</object>
@@ -903,10 +899,6 @@
 												<string key="NSTitle">External Link</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSImage">
-													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">GenericURLIcon</string>
-												</object>
 												<reference key="NSOnImage" ref="73959282"/>
 												<reference key="NSMixedImage" ref="49718828"/>
 												<int key="NSTag">2</int>
@@ -916,10 +908,6 @@
 												<string key="NSTitle">Raw HTML/text</string>
 												<string key="NSKeyEquiv"/>
 												<int key="NSMnemonicLoc">2147483647</int>
-												<object class="NSCustomResource" key="NSImage">
-													<string key="NSClassName">NSImage</string>
-													<string key="NSResourceName">HTML</string>
-												</object>
 												<reference key="NSOnImage" ref="73959282"/>
 												<reference key="NSMixedImage" ref="49718828"/>
 												<int key="NSTag">3</int>
@@ -3073,6 +3061,30 @@
 					</object>
 					<int key="connectionID">1350</int>
 				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oInsertBlankPageMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="353037223"/>
+					</object>
+					<int key="connectionID">1352</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oInsertExternalLinkMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="318837517"/>
+					</object>
+					<int key="connectionID">1353</int>
+				</object>
+				<object class="IBConnectionRecord">
+					<object class="IBOutletConnection" key="connection">
+						<string key="label">oInsertHTMLTextMenuItem</string>
+						<reference key="source" ref="205882656"/>
+						<reference key="destination" ref="646545510"/>
+					</object>
+					<int key="connectionID">1354</int>
+				</object>
 			</array>
 			<object class="IBMutableOrderedSet" key="objectRecords">
 				<array key="orderedObjects">
@@ -4570,7 +4582,7 @@
 				<boolean value="YES" key="1240.ImportedFromIB2"/>
 				<string key="1242.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1246.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1255.IBEditorWindowLastContentRect">{{677, 218}, {205, 273}}</string>
+				<string key="1255.IBEditorWindowLastContentRect">{{445, 244}, {205, 273}}</string>
 				<string key="1255.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1260.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1261.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4579,7 +4591,7 @@
 				<string key="1263.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="1263.ImportedFromIB2"/>
 				<string key="1272.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="1273.IBEditorWindowLastContentRect">{{882, 48}, {327, 443}}</string>
+				<string key="1273.IBEditorWindowLastContentRect">{{650, 404}, {195, 113}}</string>
 				<string key="1273.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1275.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="1276.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4676,7 +4688,7 @@
 				<boolean value="YES" key="288.ImportedFromIB2"/>
 				<string key="289.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="289.ImportedFromIB2"/>
-				<string key="29.IBEditorWindowLastContentRect">{{500, 491}, {525, 20}}</string>
+				<string key="29.IBEditorWindowLastContentRect">{{268, 517}, {525, 20}}</string>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.ImportedFromIB2"/>
 				<string key="292.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -4851,7 +4863,7 @@
 			<nil key="activeLocalization"/>
 			<dictionary class="NSMutableDictionary" key="localizations"/>
 			<nil key="sourceID"/>
-			<int key="maxID">1350</int>
+			<int key="maxID">1354</int>
 		</object>
 		<object class="IBClassDescriber" key="IBDocument.Classes">
 			<array class="NSMutableArray" key="referencedPartialClassDescriptions">
@@ -5984,6 +5996,9 @@
 						<string key="oFindSeparator">NSMenuItem</string>
 						<string key="oFindSubmenu">NSMenuItem</string>
 						<string key="oIndexesMenu">NSMenu</string>
+						<string key="oInsertBlankPageMenuItem">NSMenuItem</string>
+						<string key="oInsertExternalLinkMenuItem">NSMenuItem</string>
+						<string key="oInsertHTMLTextMenuItem">NSMenuItem</string>
 						<string key="oInsertRawHTMLMenuItem">NSMenuItem</string>
 						<string key="oMoreGraphicsMenu">NSMenu</string>
 						<string key="oNewPageMenu">NSMenu</string>
@@ -7478,11 +7493,8 @@
 		<string key="IBDocument.LastKnownRelativeProjectPath">../Sandvox.xcodeproj</string>
 		<int key="IBDocument.defaultPropertyAccessControl">3</int>
 		<dictionary class="NSMutableDictionary" key="IBDocument.LastKnownImageSizes">
-			<string key="GenericURLIcon">{128, 128}</string>
-			<string key="HTML">{128, 128}</string>
 			<string key="NSMenuCheckmark">{9, 8}</string>
 			<string key="NSMenuMixedState">{7, 2}</string>
-			<string key="toolbar_new_page">{128, 128}</string>
 		</dictionary>
 	</data>
 </archive>
