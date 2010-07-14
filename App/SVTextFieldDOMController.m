@@ -84,8 +84,6 @@
 {
     BOOL selectAfterUpdate = ([[self webEditor] focusedText] == self);
     
-    [super update];
-    
     [[self innerTextHTMLElement] setInnerHTML:[self HTMLString]];
     
     // Mimic NSTextField and select all
@@ -95,6 +93,8 @@
         [range selectNodeContents:[self textHTMLElement]];
         [[self webEditor] setSelectedDOMRange:range affinity:NSSelectionAffinityDownstream];
     }
+    
+    [super update];
 }
 
 #pragma mark Editing

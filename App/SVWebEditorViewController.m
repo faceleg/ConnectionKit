@@ -353,10 +353,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
     else
     {
-        [[[self webEditor] contentItem] updateIfNeeded];
+        [[[self webEditor] contentItem] updateIfNeeded];    // will call -didUpdate if anything did
         _willUpdate = NO;
-        
-        [self didUpdate];
     }
 }
 

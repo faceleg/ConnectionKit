@@ -84,8 +84,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 - (void)update;
 {
-    [super update];
-    
     // Arrange DOM nodes to match. Start by removing all
     DOMElement *contentElement = [self contentDOMElement];
     [[contentElement mutableChildDOMNodes] removeAllObjects];
@@ -124,6 +122,8 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     
     [self setChildWebEditorItems:controllers];
     [controllers release];
+    
+    [super update];
 }
 
 - (SVSidebarDOMController *)sidebarDOMController; { return self; }
