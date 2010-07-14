@@ -30,4 +30,14 @@
     return _label;
 }
 
+#pragma mark Presentation
+
+- (void)viewWillAppear:(BOOL)animated;
+{
+    [super viewWillAppear:animated];
+    
+    [self view];    // make sure it's loaded
+    [oBackgroundImageView setImage:nil];
+}
+
 @end
