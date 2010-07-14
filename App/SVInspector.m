@@ -83,7 +83,7 @@
     _documentInspector = [[SVDocumentInspector alloc] initWithNibName:@"DocumentInspector" bundle:nil];
     [_documentInspector setIdentifier:@"com.karelia.Sandvox.DocumentInspector"];
     [_documentInspector setTitle:NSLocalizedString(@"Document", @"Document Inspector")];
-    [_documentInspector setIcon:[NSImage imageNamed:@"emptyDoc"]];
+    [_documentInspector setIcon:[NSImage imageFromOSType:kGenericDocumentIcon] ];
     
     
     // Page
