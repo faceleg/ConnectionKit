@@ -43,7 +43,7 @@
 #import "KSCollectionController.h"
 #import "KSPlugInWrapper.h"
 #import "KSSilencingConfirmSheet.h"
-#import "KTHTMLInspectorController.h"
+#import "KTHTMLEditorController.h"
 
 #import <BWToolkitFramework/BWToolkitFramework.h>
 
@@ -96,7 +96,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [_context release];
     [_graphicsController release];
     [_loadedPage release];
-	self.HTMLInspectorController = nil;
+	self.HTMLEditorController = nil;
     
     [super dealloc];
 }
@@ -195,7 +195,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [self setViewIsReadyToAppear:NO];
 	
 	// Close out the HTML editor
-	self.HTMLInspectorController = nil;
+	self.HTMLEditorController = nil;
 
 }
 
@@ -752,19 +752,19 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     }
 }
 
-#pragma mark HTMLInspectorController
+#pragma mark HTMLEditorController
 
-@synthesize HTMLInspectorController = _HTMLInspectorController;
+@synthesize HTMLEditorController = _HTMLEditorController;
 
-- (KTHTMLInspectorController *)HTMLInspectorController	// lazily instantiate
+- (KTHTMLEditorController *)HTMLEditorController	// lazily instantiate
 {
-	if ( nil == _HTMLInspectorController )
+	if ( nil == _HTMLEditorController )
 	{
-		KTHTMLInspectorController *controller = [[[KTHTMLInspectorController alloc] init] autorelease];
-		[self setHTMLInspectorController:controller];
+		KTHTMLEditorController *controller = [[[KTHTMLEditorController alloc] init] autorelease];
+		[self setHTMLEditorController:controller];
 //		[self addWindowController:controller];
 	}
-	return _HTMLInspectorController;
+	return _HTMLEditorController;
 }
 
 - (IBAction)editRawHTMLInSelectedBlock:(id)sender
@@ -773,7 +773,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 	{
 		if ([selection isKindOfClass:[SVRawHTMLGraphic class]])
 		{
-			KTHTMLInspectorController *controller = [self HTMLInspectorController];
+			KTHTMLEditorController *controller = [self HTMLEditorController];
 			SVRawHTMLGraphic *graphic = (SVRawHTMLGraphic *) selection;
 						
 			SVTitleBox *titleBox = [graphic titleBox];
@@ -809,7 +809,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         
         // UI-wise it might be better to test if the page contains the HTML loaded into the editor
         // e.g. while editing pagelet in sidebar, it makes sense to leave the editor open
-        self.HTMLInspectorController = nil;
+        self.HTMLEditorController = nil;
     }
     
     return [self viewIsReadyToAppear];

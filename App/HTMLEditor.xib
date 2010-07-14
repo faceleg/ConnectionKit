@@ -11,7 +11,7 @@
 			<string key="NS.object.0">762</string>
 		</object>
 		<array class="NSMutableArray" key="IBDocument.EditedObjectIDs">
-			<integer value="5"/>
+			<integer value="6"/>
 		</array>
 		<array key="IBDocument.PluginDependencies">
 			<string>com.apple.InterfaceBuilder.CocoaPlugin</string>
@@ -19,7 +19,7 @@
 		<dictionary class="NSMutableDictionary" key="IBDocument.Metadata"/>
 		<array class="NSMutableArray" key="IBDocument.RootObjects" id="172593156">
 			<object class="NSCustomObject" id="132596718">
-				<string key="NSClassName">KTHTMLInspectorController</string>
+				<string key="NSClassName">KTHTMLEditorController</string>
 			</object>
 			<object class="NSCustomObject" id="885131681">
 				<string key="NSClassName">FirstResponder</string>
@@ -33,7 +33,7 @@
 				<string key="NSWindowRect">{{144, 480}, {823, 376}}</string>
 				<int key="NSWTFlags">1886912512</int>
 				<string key="NSWindowTitle">Raw HTML Editor</string>
-				<string key="NSWindowClass">KTHTMLInspectorWindow</string>
+				<string key="NSWindowClass">KTHTMLEditorWindow</string>
 				<object class="NSToolbar" key="NSViewClass" id="961720580">
 					<object class="NSMutableString" key="NSToolbarIdentifier">
 						<characters key="NS.bytes">893A0738-EED7-4446-A20B-190383F78ADC</characters>
@@ -98,11 +98,9 @@
 							<string key="NSToolbarItemPaletteLabel">HTML Type</string>
 							<nil key="NSToolbarItemToolTip"/>
 							<object class="NSPopUpButton" key="NSToolbarItemView" id="605350875">
-								<reference key="NSNextResponder"/>
+								<nil key="NSNextResponder"/>
 								<int key="NSvFlags">292</int>
 								<string key="NSFrame">{{0, 14}, {162, 20}}</string>
-								<reference key="NSSuperview"/>
-								<reference key="NSWindow"/>
 								<bool key="NSEnabled">YES</bool>
 								<object class="NSPopUpButtonCell" key="NSCell" id="764254040">
 									<int key="NSCellFlags">-2076049856</int>
@@ -219,7 +217,6 @@
 											<int key="NSfFlags">1044</int>
 										</object>
 									</object>
-									<int key="NSSelectedIndex">6</int>
 									<bool key="NSPullDown">YES</bool>
 									<int key="NSPreferredEdge">1</int>
 									<bool key="NSUsesItemFromMenu">YES</bool>
@@ -338,7 +335,7 @@
 						<object class="NSButton" id="906697106">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{5, 3}, {25, 25}}</string>
+							<string key="NSFrame">{{8, -2}, {25, 25}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<bool key="NSEnabled">YES</bool>
 							<object class="NSButtonCell" key="NSCell" id="1019479497">
@@ -387,7 +384,7 @@
 												<string>WebURLsWithTitlesPboardType</string>
 												<string>public.url</string>
 											</set>
-											<string key="NSFrame">{{0, 20}, {808, 14}}</string>
+											<string key="NSFrameSize">{808, 23}</string>
 											<reference key="NSSuperview" ref="856522299"/>
 											<object class="NSTextContainer" key="NSTextContainer" id="395356326">
 												<object class="NSLayoutManager" key="NSLayoutManager">
@@ -451,7 +448,7 @@
 											<nil key="NSDelegate"/>
 										</object>
 									</array>
-									<string key="NSFrameSize">{808, 344}</string>
+									<string key="NSFrameSize">{808, 353}</string>
 									<reference key="NSSuperview" ref="578490512"/>
 									<reference key="NSNextKeyView" ref="308423927"/>
 									<reference key="NSDocView" ref="308423927"/>
@@ -465,7 +462,7 @@
 								<object class="NSScroller" id="486130634">
 									<reference key="NSNextResponder" ref="578490512"/>
 									<int key="NSvFlags">256</int>
-									<string key="NSFrame">{{808, 0}, {15, 344}}</string>
+									<string key="NSFrame">{{808, 0}, {15, 353}}</string>
 									<reference key="NSSuperview" ref="578490512"/>
 									<reference key="NSTarget" ref="578490512"/>
 									<string key="NSAction">_doScroller:</string>
@@ -483,7 +480,7 @@
 									<double key="NSPercent">0.94565218687057495</double>
 								</object>
 							</array>
-							<string key="NSFrame">{{0, 32}, {823, 344}}</string>
+							<string key="NSFrame">{{0, 23}, {823, 353}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<reference key="NSNextKeyView" ref="856522299"/>
 							<int key="NSsFlags">16</int>
@@ -502,7 +499,7 @@
 								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 								<string>NeXT TIFF v4.0 pasteboard type</string>
 							</set>
-							<string key="NSFrame">{{51, 8}, {16, 16}}</string>
+							<string key="NSFrame">{{51, 1}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -520,7 +517,7 @@
 						<object class="NSTextField" id="186337685">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">292</int>
-							<string key="NSFrame">{{72, 9}, {430, 14}}</string>
+							<string key="NSFrame">{{65, 1}, {430, 14}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -555,7 +552,7 @@
 								<string>NeXT Encapsulated PostScript v1.2 pasteboard type</string>
 								<string>NeXT TIFF v4.0 pasteboard type</string>
 							</set>
-							<string key="NSFrame">{{794, 8}, {16, 16}}</string>
+							<string key="NSFrame">{{794, 2}, {16, 16}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -577,7 +574,7 @@
 						<object class="NSTextField" id="181474755">
 							<reference key="NSNextResponder" ref="436428290"/>
 							<int key="NSvFlags">289</int>
-							<string key="NSFrame">{{504, 9}, {286, 14}}</string>
+							<string key="NSFrame">{{504, 1}, {286, 14}}</string>
 							<reference key="NSSuperview" ref="436428290"/>
 							<int key="NSViewLayerContentsRedrawPolicy">2</int>
 							<bool key="NSEnabled">YES</bool>
@@ -874,10 +871,10 @@
 						<array class="NSMutableArray" key="children">
 							<reference ref="906697106"/>
 							<reference ref="578490512"/>
-							<reference ref="186337685"/>
 							<reference ref="1017188347"/>
 							<reference ref="787445062"/>
 							<reference ref="181474755"/>
+							<reference ref="186337685"/>
 						</array>
 						<reference key="parent" ref="1046566339"/>
 					</object>
@@ -1137,7 +1134,6 @@
 				<string key="145.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="146.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="147.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
-				<string key="156.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<string key="157.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<object class="NSMutableDictionary" key="19.IBAttributePlaceholdersKey">
 					<string key="NS.key.0">ToolTip</string>
@@ -1154,10 +1150,10 @@
 				<boolean value="YES" key="28.IBShouldRemoveOnLegacySave"/>
 				<string key="29.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="29.IBShouldRemoveOnLegacySave"/>
-				<string key="5.IBEditorWindowLastContentRect">{{453, 715}, {823, 376}}</string>
+				<string key="5.IBEditorWindowLastContentRect">{{171, 410}, {823, 376}}</string>
 				<string key="5.IBPluginDependency">com.apple.InterfaceBuilder.CocoaPlugin</string>
 				<boolean value="YES" key="5.IBViewEditorWindowController.showingLayoutRectangles"/>
-				<string key="5.IBWindowTemplateEditedContentRect">{{453, 715}, {823, 376}}</string>
+				<string key="5.IBWindowTemplateEditedContentRect">{{171, 410}, {823, 376}}</string>
 				<boolean value="YES" key="5.ImportedFromIB2"/>
 				<boolean value="YES" key="5.windowTemplate.hasMinSize"/>
 				<string key="5.windowTemplate.minSize">{823, 376}</string>
@@ -1215,7 +1211,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTHTMLInspectorController</string>
+					<string key="className">KTHTMLEditorController</string>
 					<string key="superclassName">NSWindowController</string>
 					<dictionary class="NSMutableDictionary" key="actions">
 						<string key="applyChanges:">id</string>
@@ -1232,11 +1228,11 @@
 					</dictionary>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier" id="708068817">
 						<string key="majorKey">IBProjectSource</string>
-						<string key="minorKey">KTHTMLInspectorController.h</string>
+						<string key="minorKey">KTHTMLEditorController.h</string>
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTHTMLInspectorController</string>
+					<string key="className">KTHTMLEditorController</string>
 					<string key="superclassName">NSWindowController</string>
 					<object class="IBClassDescriptionSource" key="sourceIdentifier">
 						<string key="majorKey">IBUserSource</string>
@@ -1244,7 +1240,7 @@
 					</object>
 				</object>
 				<object class="IBPartialClassDescription">
-					<string key="className">KTHTMLInspectorWindow</string>
+					<string key="className">KTHTMLEditorWindow</string>
 					<string key="superclassName">KSNoCascadeWindow</string>
 					<reference key="sourceIdentifier" ref="708068817"/>
 				</object>

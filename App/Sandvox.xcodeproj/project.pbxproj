@@ -1040,7 +1040,7 @@
 		CE36E3E511ED5546003EFCA8 /* jquery-1.4.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
-		CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */; };
+		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
 		CE47140E09C0AA5200590F6E /* KTPluginInstaller.m in Sources */ = {isa = PBXBuildFile; fileRef = CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */; };
 		CE487741108FE2C9008417FD /* KSYellowStickyWindow.h in Headers */ = {isa = PBXBuildFile; fileRef = CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */; };
 		CE487742108FE2C9008417FD /* KSYellowStickyWindow.m in Sources */ = {isa = PBXBuildFile; fileRef = CE487740108FE2C9008417FD /* KSYellowStickyWindow.m */; };
@@ -2674,8 +2674,8 @@
 		CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.min.js"; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
-		CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLInspectorController.m; sourceTree = "<group>"; };
-		CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLInspectorController.h; sourceTree = "<group>"; };
+		CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLEditorController.m; sourceTree = "<group>"; };
+		CE44DFB90BD0019400479A8E /* KTHTMLEditorController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTHTMLEditorController.h; sourceTree = "<group>"; };
 		CE47140B09C0AA5200590F6E /* KTPluginInstaller.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTPluginInstaller.h; sourceTree = "<group>"; };
 		CE47140C09C0AA5200590F6E /* KTPluginInstaller.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTPluginInstaller.m; sourceTree = "<group>"; };
 		CE48773F108FE2C9008417FD /* KSYellowStickyWindow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSYellowStickyWindow.h; sourceTree = "<group>"; };
@@ -5151,8 +5151,8 @@
 		CEB34AC8082972820073A7A4 /* Other Window Controllers */ = {
 			isa = PBXGroup;
 			children = (
-				CE44DFB90BD0019400479A8E /* KTHTMLInspectorController.h */,
-				CE44DFB80BD0019400479A8E /* KTHTMLInspectorController.m */,
+				CE44DFB90BD0019400479A8E /* KTHTMLEditorController.h */,
+				CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */,
 				3C27FF25096F4E4A00702991 /* KTAcknowledgmentsController.h */,
 				3C27FF26096F4E4A00702991 /* KTAcknowledgmentsController.m */,
 				3C27FE00096F198E00702991 /* KTReleaseNotesController.h */,
@@ -6677,7 +6677,7 @@
 				796C9CB909D26DF9003BFA3B /* KTPulsatingOverlay.m in Sources */,
 				CE7779E60AE499C3002E6844 /* SVWelcomeController.m in Sources */,
 				3C26D8040BC5B7DD00FF874D /* KTCodeInjectionController.m in Sources */,
-				CE44DFBA0BD0019400479A8E /* KTHTMLInspectorController.m in Sources */,
+				CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */,
 				3C5A72380BF7ADE100776464 /* NSEntityDescription+KTExtensions.m in Sources */,
 				3C5A723C0BF7ADE100776464 /* NSFetchRequest+KTExtensions.m in Sources */,
 				3C5A724B0BF7ADE100776464 /* NSManagedObject+KTExtensions.m in Sources */,

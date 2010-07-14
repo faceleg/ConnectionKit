@@ -9,7 +9,7 @@
 		2003-05-31	UK	Created.
    ========================================================================== */
 
-#import "KTHTMLInspectorController.h"
+#import "KTHTMLEditorController.h"
 
 #import "DOMNode+KTExtensions.h"
 #import "Debug.h"
@@ -26,7 +26,7 @@
 #import "Registration.h"
 
 
-@implementation KTHTMLInspectorWindow
+@implementation KTHTMLEditorWindow
 
 - (BOOL) canBecomeMainWindow
 {
@@ -34,7 +34,7 @@
 }
 @end
 
-@interface KTHTMLInspectorController ()
+@interface KTHTMLEditorController ()
 
 - (void)calculateCachedPreludes;
 - (void) autoValidate;
@@ -48,7 +48,7 @@
 - (void)saveBackToSource:(NSNumber *)disableUndoRegistration;
 @end
 
-@implementation KTHTMLInspectorController
+@implementation KTHTMLEditorController
 
 @synthesize undoManager = _undoManager;
 @synthesize autoSyntaxColoring = _autoSyntaxColoring;
@@ -171,7 +171,8 @@ initial syntax coloring.
 	// Kick start
 	[self synchronizeUI];
 	
-	[[self window] setContentBorderThickness:32.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
+	// HIG on positioning in Bottom Bar: http://j.mp/9BO0tS
+	[[self window] setContentBorderThickness:22.0 forEdge:NSMinYEdge];	// have to do in code until 10.6
 
 	// Load source code into text view, if necessary.  But then we no longer use this ivar
 	if( _sourceCodeTemp != nil )

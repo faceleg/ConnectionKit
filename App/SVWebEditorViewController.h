@@ -16,7 +16,7 @@
 extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
-@class KTPage, SVDOMController, SVTextDOMController, KTHTMLInspectorController;
+@class KTPage, SVDOMController, SVTextDOMController, KTHTMLEditorController;
 @class SVWebContentObjectsController, SVWebContentAreaController;
 @protocol KSCollectionController;
 @protocol SVWebEditorViewControllerDelegate;
@@ -37,7 +37,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     // Controllers
     WEKWebEditorItem    *_firstResponderItem;
     NSObject            *_draggingDestination;  // weak ref
-	KTHTMLInspectorController *_HTMLInspectorController;
+	KTHTMLEditorController *_HTMLEditorController;
     
     // Updating
     BOOL                    _needsUpdate, _willUpdate;
@@ -77,7 +77,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 // Everything here should be KVO-compliant
 @property(nonatomic, retain, readonly) NSArrayController *graphicsController;
 @property(nonatomic, retain) WEKWebEditorItem *firstResponderItem;  // like NSWindow.firstResponder
-@property (nonatomic, retain) KTHTMLInspectorController *HTMLInspectorController;
+@property (nonatomic, retain) KTHTMLEditorController *HTMLEditorController;
 
 @property(nonatomic, retain, readonly) SVWebEditorHTMLContext *HTMLContext;
 

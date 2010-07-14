@@ -1,5 +1,5 @@
 //
-//  KTHTMLInspectorController.h
+//  KTHTMLEditorController.h
 
 
 
@@ -27,7 +27,7 @@ typedef enum {
 @class KTAbstractElement, SVRawHTMLGraphic, KTAsyncOffscreenWebViewController;
 
 // Syntax-colored text file viewer:
-@interface KTHTMLInspectorController : NSWindowController
+@interface KTHTMLEditorController : NSWindowController
 {
 	IBOutlet NSTextView*			textView;				// The text view used for editing code.
 	
@@ -115,7 +115,7 @@ struct SelectionRange
 #pragma options align=reset
 
 
-@interface KTHTMLInspectorWindow : KSNoCascadeWindow
+@interface KTHTMLEditorWindow : KSNoCascadeWindow
 
 @end
 
