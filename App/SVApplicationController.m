@@ -68,6 +68,7 @@ IMPLEMENTATION NOTES & CAUTIONS:
 #import "NSString+KTExtensions.h"
 #import "NSString+Karelia.h"
 #import "NSToolbar+Karelia.h"
+#import "NSImage+Karelia.h"
 #import "NSMenuItem+Karelia.h"
 #import "NSWorkspace+Karelia.h"
 #import <AmazonSupport/AmazonSupport.h>
@@ -1146,7 +1147,7 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 {
 	NSArray *menusAffected = [NSArray arrayWithObjects:
 							  oAdvancedMenu, oPasteAsMarkupMenuItem, oEditRawHTMLMenuItem,
-							  oInsertRawHTMLMenuItem,
+							  oInsertRawHTMLMenuItem, oInsertHTMLTextMenuItem,
 							  oCodeInjectionMenuItem, oCodeInjectionLevelMenuItem,
 							  oValidateSourceViewMenuItem, oConfigureGoogleMenuItem,
 							  oStandardViewMenuItem, oStandardViewWithoutStylesMenuItem,
@@ -1237,6 +1238,16 @@ NSString *kSVPreferredImageCompressionFactorKey = @"KTPreferredJPEGQuality";
 			  | NSFontPanelDocumentColorEffectModeMask
 			  | NSFontPanelShadowEffectModeMask		// allow shadows even if it's not going to render on all browsers
 			  );
+}
+
+- (void)awakeFromNib
+{
+	[oInsertExternalLinkMenuItem setIconImage:[NSImage imageFromOSType:kGenericURLIcon]];
+	[oInsertRawHTMLMenuItem setIconImage:[NSImage imageNamed:@"HTML"]];
+	[oInsertHTMLTextMenuItem setIconImage:[NSImage imageNamed:@"HTML"]];	// different?
+	[oInsertBlankPageMenuItem setIconImage:[NSImage imageNamed:@"toolbar_new_page"]];
+	
+	[super awakeFromNib];
 }
 
 #pragma mark -

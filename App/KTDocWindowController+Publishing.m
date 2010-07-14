@@ -104,7 +104,7 @@
 		[KSSilencingConfirmSheet alertWithWindow:[self window]
                                     silencingKey:@"shutUpDemoUploadWarning"
                                            title:NSLocalizedString(@"Restricted Publishing", @"title of alert")
-                                          format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license.",@""), kMaxNumberOfFreePublishedPages];
+                                          format:NSLocalizedString(@"You are running the free edition of Sandvox. Only the first %d pages will be exported or uploaded. To publish additional pages, you will need to purchase a license. To publish Raw HTML, you will need to get the Pro edition.",@""), kMaxNumberOfFreePublishedPages];
 	}
 	
     

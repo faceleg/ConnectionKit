@@ -6,18 +6,18 @@
 //
 
 /*
-PURPOSE OF THIS CLASS/CATEGORY:
-	Manage document's toolbar
-
-TAXONOMY AND RELATIONSHIP TO OTHER CLASSES:
-	x
-
-IMPLEMENTATION NOTES & CAUTIONS:
-	x
-
-TO DO:
-	x
-
+ PURPOSE OF THIS CLASS/CATEGORY:
+ Manage document's toolbar
+ 
+ TAXONOMY AND RELATIONSHIP TO OTHER CLASSES:
+ x
+ 
+ IMPLEMENTATION NOTES & CAUTIONS:
+ x
+ 
+ TO DO:
+ x
+ 
  */
 
 #import "KTDocWindowController.h"
@@ -31,7 +31,7 @@ TO DO:
 #import "KTToolbars.h"
 
 #import "NSImage+KTExtensions.h"
-
+#import "NSMenuItem+Karelia.h"
 #import "NSImage+Karelia.h"
 #import "NSToolbar+Karelia.h"
 
@@ -57,12 +57,12 @@ TO DO:
 - (void)makeDocumentToolbar
 {
     NSToolbar *toolbar = [self toolbarNamed:@"document2"];
-
+	
     [toolbar setAllowsUserCustomization:YES];
     [toolbar setAutosavesConfiguration:YES];
     [toolbar setDisplayMode:NSToolbarDisplayModeDefault];
     [toolbar setDelegate:self];
-
+	
     [[self window] setToolbar:toolbar];
 	[self updateToolbar];		// get the states right
 }
@@ -90,7 +90,7 @@ TO DO:
 - (NSToolbar *)toolbarNamed:(NSString *)toolbarName
 {
     NSString *path = [[NSBundle mainBundle] pathForResource:toolbarName ofType:@"toolbar"];
-
+	
     if ( nil != path ) 
 	{
         NSMutableDictionary *toolbarInfo = [NSMutableDictionary dictionaryWithContentsOfFile:path];
@@ -101,11 +101,11 @@ TO DO:
 			{
                 NSToolbar *toolbar = [[[NSToolbar alloc] initWithIdentifier:toolbarIdentifier] autorelease];
                 NSMutableDictionary *toolbarsEntry = [NSMutableDictionary dictionary];
-
+				
                 [toolbarsEntry setObject:toolbar forKey:@"toolbar"];
                 [toolbarsEntry setObject:toolbarInfo forKey:@"info"];
                 [[self toolbars] setObject:toolbarsEntry forKey:toolbarIdentifier];
-
+				
                 return toolbar;
             }
             else 
@@ -122,7 +122,7 @@ TO DO:
 	{
         LOG((@"KTDocWindowController: unable to locate toolbar: %@", toolbarName));
     }
-
+	
     return nil;
 }
 
@@ -131,7 +131,7 @@ TO DO:
     // walk the toolbars looking for the toolbar
     NSEnumerator *enumerator = [myToolbars objectEnumerator];
     NSDictionary *toolbarEntry;
-
+	
     while ( toolbarEntry = [enumerator nextObject] ) 
 	{
         if ( [toolbarEntry objectForKey:@"toolbar"] == toolbar ) 
@@ -139,7 +139,7 @@ TO DO:
             return [toolbarEntry objectForKey:@"info"];
         }
     }
-
+	
     return nil;
 }
 
@@ -151,21 +151,26 @@ TO DO:
     BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
     
     
-    // construct pulldown button
+    // construct pulldown button ... composite the Add.
+	
     NSImage *image = [NSImage imageNamed:imageName];
+	image = [[image copy] autorelease];
+	[image setScalesWhenResized:YES];
+	[image setSize:NSMakeSize(32.0,32.0)];
+	
     image = [image imageWithCompositedAddBadge];
     [result setImage:image];
-    
-        
-    
+	
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
-        
+	
     [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page pulldown button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
+	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_new_page"]];
+	
     [menu addItem:[NSMenuItem separatorItem]];
     
     [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:3];
@@ -175,24 +180,17 @@ TO DO:
     [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
                     action:@selector(addExternalLinkPage:)
              keyEquivalent:@""];
- 
-	NSMenuItem *URLTextMenuItem = [pulldownButton lastItem];
-	NSImage *URLImage = [[[NSImage imageFromOSType:kGenericURLIcon] copy] autorelease];
-	[URLImage setScalesWhenResized:YES];
-	[URLImage setSize:NSMakeSize(32.0,32.0)];
-	[URLTextMenuItem setImage:URLImage];
 	
-
+	[[pulldownButton lastItem] setIconImage:[NSImage imageFromOSType:kGenericURLIcon]];
+	
+	
 	[menu addItemWithTitle:NSLocalizedString(@"Raw HTML/Text", "New page pulldown button menu item title")
 					action:@selector(addRawTextPage:) keyEquivalent:@""];
 	
 	
 	self.HTMLTextPageMenuItem = [pulldownButton lastItem];		// save for later since this gets hidden if not Pro
-	NSImage *HTMLImage = [[[NSImage imageNamed:@"HTML"] copy] autorelease];
-	[URLImage setScalesWhenResized:YES];
-	[HTMLImage setSize:NSMakeSize(32.0,32.0)];
-	[self.HTMLTextPageMenuItem setImage:HTMLImage];
-		
+	[self.HTMLTextPageMenuItem setIconImage:[NSImage imageNamed:@"HTML"]];
+	
     [menu addItem:[NSMenuItem separatorItem]];
     
     [menu addItemWithTitle:NSLocalizedString(@"Choose…", "New page pulldown button menu item title")
@@ -223,7 +221,7 @@ TO DO:
 {
     NSToolbarItem *result = [[[NSToolbarItem alloc] initWithItemIdentifier:itemIdentifier] autorelease];
     [result setImage:nil];
-
+	
     NSArray *itemsArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
     for (NSDictionary *itemInfo in itemsArray) 
 	{
@@ -248,7 +246,7 @@ TO DO:
             [result setLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"label"] value:@"" table:nil]];
             [result setPaletteLabel:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"paletteLabel"] value:@"" table:nil]];
             [result setToolTip:[[NSBundle mainBundle] localizedStringForKey:[itemInfo valueForKey:@"help"] value:@"" table:nil]];
-
+			
             // action
             if ( (nil != [itemInfo valueForKey:@"action"]) && ![[itemInfo valueForKey:@"action"] isEqualToString:@""] ) 
 			{
@@ -258,7 +256,7 @@ TO DO:
 			{
                 [result setAction:nil];
             }
-
+			
 			// target
 			NSString *target = [[itemInfo valueForKey:@"target"] lowercaseString];
             if ( [target isEqualToString:@"windowcontroller"] ) 
@@ -306,15 +304,15 @@ TO DO:
             }
         }
     }
-
+	
     return result;
 }
 
 - (NSMenuItem *)makeMenuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
 {
     NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
-                                                  action:nil
-                                           keyEquivalent:@""];
+													action:nil
+											 keyEquivalent:@""];
     
     NSMenu *submenu = [[NSMenu alloc] initWithTitle:title];
     
@@ -344,57 +342,69 @@ TO DO:
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
     
-    
+    NSMenuItem *item = nil;
+	
     // Text box item
-    [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
-                   [SVGraphicFactory textBoxFactory]]];
-    	
+	item = [SVGraphicFactory menuItemWithGraphicFactory:[SVGraphicFactory textBoxFactory]];
+ 	[item setIconImage:[NSImage imageNamed:@"toolbar_text"
+						]];
+	[menu addItem:item];
+	
     
     // Image item
-    [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
-                   [SVGraphicFactory imageFactory]]]; 
+	item = [SVGraphicFactory menuItemWithGraphicFactory:[SVGraphicFactory imageFactory]];
+ 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[menu addItem:item]; 
     
     
 	// Video item
-    [menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
-                   [SVGraphicFactory videoFactory]]]; 
+	item = [SVGraphicFactory menuItemWithGraphicFactory:[SVGraphicFactory videoFactory]];
+ 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[menu addItem:item]; 
     
     
     // Indexes
-    NSMenuItem *item = [self
-                        makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
-                        title:NSLocalizedString(@"Indexes", "menu item")];
-    [menu addItem:item];
+    item = [self
+			makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+			title:NSLocalizedString(@"Indexes", "menu item")];
+ 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[menu addItem:item];
 	
     
 	// Badges
     item = [self  makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
                                             title:NSLocalizedString(@"Badges", "menu item")];
-    [menu addItem:item];
+	
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[menu addItem:item];
 	
     
 	// Embedded
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory embeddedFactories]
                                            title:NSLocalizedString(@"Embedded", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
     [menu addItem:item];
 	
     
 	// Social
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory socialFactories]
                                            title:NSLocalizedString(@"Social", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
     [menu addItem:item];
 	
     
 	// More
     item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory moreGraphicFactories]
                                            title:NSLocalizedString(@"More", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
     [menu addItem:item];
 	
-    
-	[menu addItem:[SVGraphicFactory menuItemWithGraphicFactory:
-				   [SVGraphicFactory rawHTMLFactory]]];
-	self.rawHTMLMenuItem = [pulldownButton lastItem];		// save for later since this gets hidden if not Pro
-	    
+    self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
+			[SVGraphicFactory rawHTMLFactory]];
+
+	[item setIconImage:[NSImage imageNamed:@"HTML"]];
+	[menu addItem:item];
+	
     return [result autorelease];
 }
 
@@ -407,10 +417,10 @@ TO DO:
 - (NSArray *)toolbarAllowedItemIdentifiers:(NSToolbar *)toolbar 
 {
     NSMutableArray *allowedIdentifiers = [NSMutableArray array];
-
+	
     NSArray *itemArray = [[self infoForToolbar:toolbar] objectForKey:@"item array"];
     NSDictionary *itemInfo;
-
+	
     for ( itemInfo in itemArray ) 
 	{
         NSString *itemIdentifier = [itemInfo valueForKey:@"identifier"];

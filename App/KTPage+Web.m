@@ -208,6 +208,7 @@
 - (void)writeCodeInjectionHeadArea		{	[self writeCodeInjectionSection:@"headArea"		masterFirst:NO];	}
 - (void)writeCodeInjectionBodyTagStart	{	[self writeCodeInjectionSection:@"bodyTagStart"	masterFirst:YES];	}
 - (void)writeCodeInjectionBodyTagEnd	{	[self writeCodeInjectionSection:@"bodyTagEnd"	masterFirst:NO];	}
+- (void)writeCodeInjectionBeforeHTML	{	[self writeCodeInjectionSection:@"beforeHTML"	masterFirst:NO];	}
 
 // Special case: Show a space in between the two; no newlines.
 - (void)writeCodeInjectionBodyTag

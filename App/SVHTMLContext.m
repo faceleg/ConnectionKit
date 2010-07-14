@@ -146,18 +146,8 @@
     [self setMainCSSURL:[NSURL URLWithString:cssPath
                                relativeToURL:[self baseURL]]];
 		
-    
-    // Any early code injection?
-    if ([self isForPublishingProOnly])
-    {
-        NSString *beforeHTML = [[[page master] codeInjection] valueForKey:@"beforeHTML"];
-        if (beforeHTML) [self writeString:beforeHTML];
+	[page writeCodeInjectionBeforeHTML];
         
-        beforeHTML = [[page codeInjection] valueForKey:@"beforeHTML"];
-        if (beforeHTML) [self writeString:beforeHTML];
-    }
-    
-    
     // Start the document
     KTDocType docType = [self docType];
     [self startDocument:[[self class] stringFromDocType:docType]

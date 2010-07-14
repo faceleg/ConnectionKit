@@ -48,6 +48,7 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oPasteAsMarkupMenuItem;
 	IBOutlet NSMenuItem		*oEditRawHTMLMenuItem;
 	IBOutlet NSMenuItem		*oInsertRawHTMLMenuItem;
+	IBOutlet NSMenuItem		*oInsertHTMLTextMenuItem;
 	IBOutlet NSMenuItem		*oFindSeparator;
 	IBOutlet NSMenuItem		*oFindSubmenu;
 	
@@ -55,13 +56,9 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oCodeInjectionLevelMenuItem;
 	IBOutlet NSMenuItem		*oCodeInjectionSeparator;
 	
-    IBOutlet NSMenuItem		*oAdvancedMenu;		// the main submenu
 	
-	// Separators AFTER these pro menus that we can hide/show
-	IBOutlet NSMenuItem		*oAfterValidateSourceViewMenuItem;
-	IBOutlet NSMenuItem		*oAfterEditRawHTMLMenuItem;
-	IBOutlet NSMenuItem		*oAfterConfigureGoogleMenuItem;
-	
+	IBOutlet NSMenuItem		*oAdvancedMenu;		// the main submenu
+
 	// below are outlets of items on that menu
 	
 	IBOutlet NSMenuItem		*oStandardViewMenuItem;
@@ -72,6 +69,14 @@ enum { KTNoBackupOnOpening = 0, KTBackupOnOpening, KTSnapshotOnOpening }; // tag
 	IBOutlet NSMenuItem		*oConfigureGoogleMenuItem;
 	
 	IBOutlet NSMenuItem		*oValidateSourceViewMenuItem;
+	
+	// Separators AFTER these pro menus that we can hide/show
+	IBOutlet NSMenuItem		*oAfterValidateSourceViewMenuItem;
+	IBOutlet NSMenuItem		*oAfterEditRawHTMLMenuItem;
+	IBOutlet NSMenuItem		*oAfterConfigureGoogleMenuItem;
+	
+	IBOutlet NSMenuItem		*oInsertExternalLinkMenuItem;
+	IBOutlet NSMenuItem		*oInsertBlankPageMenuItem;
 	
     // we have pages and collections (summary pages)
     IBOutlet NSMenu			*oAddPageMenu;

@@ -938,9 +938,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		[button setTarget:[NSApp delegate]];
 		
 		[self.rawHTMLMenuItem setHidden:NO];		// don't hide, this is unregistered
-		[self.rawHTMLMenuItem setPro:YES];			// Indicate that this is a Pro feature
+		[self.rawHTMLMenuItem setPro:YES small:YES];			// Indicate that this is a Pro feature
 		[self.HTMLTextPageMenuItem setHidden:NO];	// don't hide, this is unregistered
-		[self.HTMLTextPageMenuItem setPro:YES];		// Indicate that this is a Pro feature
+		[self.HTMLTextPageMenuItem setPro:YES small:YES];		// Indicate that this is a Pro feature
 
 	
 	}
@@ -950,9 +950,9 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 		
 		
 		[self.rawHTMLMenuItem setHidden:!gIsPro];		// hide if not pro, show it pro
-		[self.rawHTMLMenuItem setPro:NO];				// registered, we're not going to show the pro badge.
+		[self.rawHTMLMenuItem setPro:NO small:YES];				// registered, we're not going to show the pro badge.
 		[self.HTMLTextPageMenuItem setHidden:!gIsPro];	// don't hide, this is unregistered
-		[self.HTMLTextPageMenuItem setPro:NO];			// Indicate that this is a Pro feature
+		[self.HTMLTextPageMenuItem setPro:NO small:YES];			// Indicate that this is a Pro feature
 	}
 	
 }
