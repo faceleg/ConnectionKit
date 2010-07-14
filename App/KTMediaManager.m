@@ -77,7 +77,7 @@ NSString *KTMediaLogDomain = @"Media";
 		NSString *path = [aMediaFile currentPath];
 		if (!path ||
             [path isEqualToString:@""] ||
-            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"qmark"]] ||
+            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"MissingMediaQMark"]] ||
             ![[NSFileManager defaultManager] fileExistsAtPath:path])
 		{
 			if ([(NSSet *)[aMediaFile valueForKey:@"containers"] count] > 0)

@@ -291,7 +291,7 @@
 {
 	NSImage *result = nil;
 	
-	if (!value || [value isEqual:[[NSBundle mainBundle] pathForImageResource:@"qmark"]])
+	if (!value || [value isEqual:[[NSBundle mainBundle] pathForImageResource:@"MissingMediaQMark"]])
 	{
 		result = [[NSWorkspace sharedWorkspace] iconForFileType:NSFileTypeForHFSTypeCode(kAlertCautionIcon)];
 	}

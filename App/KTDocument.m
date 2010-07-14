@@ -798,7 +798,7 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
 		NSString *path = [[aRecord fileURL] path];
 		if (!path ||
             [path isEqualToString:@""] ||
-            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"qmark"]] ||
+            [path isEqualToString:[[NSBundle mainBundle] pathForImageResource:@"MissingMediaQMark"]] ||
             ![[NSFileManager defaultManager] fileExistsAtPath:path])
 		{
 			[result addObject:aRecord];
