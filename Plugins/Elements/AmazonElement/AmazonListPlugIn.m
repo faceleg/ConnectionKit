@@ -116,7 +116,11 @@ NSString * const APProductsOrListTabIdentifier = @"productsOrList";
 		
 		// Get the current URL from Safari and look for a possible product or list
 		NSURL *browserURL = nil;
-		[NSAppleScript getWebBrowserURL:&browserURL title:NULL source:NULL];
+        id<SVWebLocation> location = [[NSWorkspace sharedWorkspace] fetchBrowserWebLocation];
+        if ( location )
+        {
+            browserURL = [location URL];
+        }
 		
 		NSString *ASIN = [browserURL amazonProductASIN];	// Product
 		if (ASIN && ![ASIN isEqualToString:@""])
