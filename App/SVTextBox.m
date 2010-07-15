@@ -56,7 +56,7 @@
     [[SVHTMLTemplateParser alloc] initWithTemplate:[sBodyTemplate templateString]
                                          component:self];
     
-    [parser parse];
+    [parser parseIntoHTMLContext:context];
     [parser release];
 }
 
