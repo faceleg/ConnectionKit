@@ -91,6 +91,10 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     
     // and then mark the resulting area for drawing
     if (!liveResize) [[element documentView] setNeedsDisplayInRect:[self drawingRect]];
+    
+    
+    // Finish
+    [self didUpdate];
 }
 
 - (void)observeValueForKeyPath:(NSString *)keyPath
