@@ -16,7 +16,6 @@
   @private
     DOMHTMLElement  *_bodyElement;
     
-    SVGraphicDOMController          *_replacmentDOMController;
     SVOffscreenWebViewController    *_offscreenWebViewController;
 }
 

@@ -41,7 +41,6 @@
     [self setBodyHTMLElement:nil];
     OBPOSTCONDITION(!_bodyElement);
  
-    [_replacmentDOMController release];     // should be nil unless
     [_offscreenWebViewController release];  // dealloc-ing mid-update
     
     [super dealloc];
@@ -78,6 +77,11 @@
 
 - (void)update;
 {
+    // Tear down dependencies etc.
+    [self removeAllDependencies];
+    [self setChildWebEditorItems:nil];
+    
+    
     // Write HTML
     NSMutableString *htmlString = [[NSMutableString alloc] init];
     
@@ -86,14 +90,7 @@
     
     [context copyPropertiesFromContext:[self HTMLContext]];
     [context setWebEditorViewController:[[self HTMLContext] webEditorViewController]];   // hacky
-    [context writeGraphic:[self representedObject]];
-    
-    
-    // Retrieve controller
-    OBASSERT(!_replacmentDOMController);
-    _replacmentDOMController = [[[context rootDOMController] childWebEditorItems] lastObject];
-    [_replacmentDOMController retain];
-    OBASSERT(_replacmentDOMController);
+    [context writeGraphic:[self representedObject] withDOMController:self];
     
     
     // Copy top-level dependencies across to parent. #79396
@@ -134,9 +131,12 @@
     
     
     
-    // Swap in result. Adding in the replacement DOM Controller will make View Controller hook it up to the right element etc.
+    // Swap in updated node. Then get the Web Editor to hook new descendant controllers up to the new nodes
     [[[self HTMLElement] parentNode] replaceChild:imported oldChild:[self HTMLElement]];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self with:_replacmentDOMController];
+    [self setHTMLElement:nil];  // so Web Editor will endeavour to hook us up again
+    
+    [[[self webEditor] delegate] webEditor:[self webEditor] // pretend we were just inserted
+                                didAddItem:self];
     
     
     // Finish
@@ -146,7 +146,6 @@
     // Teardown
     [_offscreenWebViewController setDelegate:nil];
     [_offscreenWebViewController release]; _offscreenWebViewController = nil;
-    [_replacmentDOMController release]; _replacmentDOMController = nil;
 }
 
 #pragma mark State
