@@ -359,6 +359,14 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
                                                object:nil];
     
     
+    // If the timer did fire, need to bring ourselves back into view
+    if ([_contentAreaController selectedViewController] != self &&
+        [_contentAreaController selectedViewControllerWhenReady] == self)
+    {
+        [_contentAreaController setSelectedViewController:self];
+    }
+    
+    
     // Match selection to controller
     NSArray *selectedObjects = [[self graphicsController] selectedObjects];
     NSMutableArray *newSelection = [[NSMutableArray alloc] initWithCapacity:[selectedObjects count]];
