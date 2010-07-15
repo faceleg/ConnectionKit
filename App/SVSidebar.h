@@ -12,7 +12,7 @@
 @class KTPage;
 @class SVGraphic, SVHTMLContext;
 
-@interface SVSidebar : SVContentObject  
+@interface SVSidebar : NSManagedObject  
 
 @property (nonatomic, retain) KTPage * page;
 

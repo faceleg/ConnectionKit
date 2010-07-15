@@ -53,6 +53,8 @@
     }
 }
 
+- (void)writeHTML; { [self writeHTML:[SVHTMLContext currentContext]]; }
+
 - (void)writePageletsHTML:(SVHTMLContext *)context;
 {
     // Use the best controller available to give us an ordered list of pagelets
