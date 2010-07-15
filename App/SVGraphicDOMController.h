@@ -17,8 +17,7 @@
 }
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
-       parentWebEditorItemToBe:(SVDOMController *)parentItem
-                       context:(SVHTMLContext *)parentContext;
+       parentWebEditorItemToBe:(SVDOMController *)parentItem;
 
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 

@@ -104,8 +104,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (!controller)
         {            
             controller = [SVGraphicDOMController DOMControllerWithGraphic:aPagelet
-                                                  parentWebEditorItemToBe:self
-                                                                  context:[self HTMLContext]];
+                                                  parentWebEditorItemToBe:self];
         }
         
         // Insert before what should be its next sibling

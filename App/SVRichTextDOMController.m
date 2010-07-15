@@ -383,8 +383,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     // Create controller for graphic
     SVDOMController *controller = [SVGraphicDOMController
                                    DOMControllerWithGraphic:graphic
-                                   parentWebEditorItemToBe:self
-                                   context:[self HTMLContext]];
+                                   parentWebEditorItemToBe:self];
     
     
     // Generate & insert DOM node

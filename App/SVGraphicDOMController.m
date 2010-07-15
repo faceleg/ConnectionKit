@@ -39,8 +39,7 @@
 #pragma mark Factory
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
-       parentWebEditorItemToBe:(SVDOMController *)parentItem
-                       context:(SVHTMLContext *)parentContext;
+       parentWebEditorItemToBe:(SVDOMController *)parentItem;
 {
     OBPRECONDITION(parentItem);
     
@@ -51,8 +50,9 @@
     SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
                                        initWithOutputWriter:htmlString];
     
+    SVWebEditorHTMLContext *parentContext = [parentItem HTMLContext];
     [context copyPropertiesFromContext:parentContext];
-    [context setWebEditorViewController:[(id)parentContext webEditorViewController]];   // hacky
+    [context setWebEditorViewController:[parentContext webEditorViewController]];   // hacky
     [context writeGraphic:graphic];
     
     
