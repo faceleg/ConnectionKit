@@ -1031,6 +1031,7 @@
 		CE35968510F3F0A10009F2CA /* SVWebSourceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */; };
 		CE36E3E411ED5546003EFCA8 /* jquery-1.4.2.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */; };
 		CE36E3E511ED5546003EFCA8 /* jquery-1.4.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */; };
+		CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
@@ -2620,6 +2621,7 @@
 		CE35968310F3F0A10009F2CA /* SVWebSourceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVWebSourceViewController.m; sourceTree = "<group>"; };
 		CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.js"; sourceTree = "<group>"; };
 		CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.min.js"; sourceTree = "<group>"; };
+		CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLEditorController.m; sourceTree = "<group>"; };
@@ -4818,6 +4820,7 @@
 			isa = PBXGroup;
 			children = (
 				CE1BE7C111D2AD1E00D875AE /* checkmark.tiff */,
+				CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */,
 			);
 			path = DiscoverPlugins;
 			sourceTree = "<group>";
@@ -6126,6 +6129,7 @@
 				CEB2EF0511ED08DF002DD050 /* NoNetwork.tiff in Resources */,
 				CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */,
 				CE7B687211EE7F2000F56D8B /* html_element.tiff in Resources */,
+				CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

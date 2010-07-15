@@ -20,7 +20,7 @@
 	
 	if (!result)
 	{
-		result = [[NSImage imageNamed:@"action12"] retain];
+		result = [[NSImage imageNamed:NSImageNameActionTemplate] retain];
 		[result setSize:NSMakeSize(12.0, 12.0)];
 	}
 	

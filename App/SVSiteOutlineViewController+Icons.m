@@ -38,9 +38,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 - (NSImage *)bundleIconForItem:(SVSiteItem *)item;
 
 - (NSImage *)customIconForPage:(KTPage *)page;
-+ (NSImage *)maskedIconOfFile:(NSString *)path size:(float)iconSize;
-+ (NSImage *)customPageIconMaskImage;
-+ (NSImage *)customPageIconCoverImage;
 
 - (void)addPageToCustomIconGenerationQueue:(KTPage *)page;
 - (void)beginGeneratingCustomIconForPage:(KTPage *)page;
@@ -194,15 +191,11 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
     else if ([item mediaRepresentation])
     {
-        result = [NSImage imageNamed:@"download.icns"];
+        result = [NSImage imageNamed:@"download"];
     }
     else if ([item externalLinkRepresentation])
     {
-        result = [NSImage imageNamed:@"External Link icon"];
-        if (!result)
-        {
-			result = [NSImage imageFromOSType:kGenericURLIcon];
-        }
+        result = [NSImage imageFromOSType:kGenericURLIcon];
     }
 	
     if (!plugin)
@@ -233,95 +226,6 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	}
 	
     OBPOSTCONDITION(result);
-	return result;
-}
-
-/*	Takes the image at the path and masks it to the specified size.
- */
-+ (NSImage *)maskedIconOfFile:(NSString *)path size:(float)iconSize
-{
-	NSImage *result = nil;
-    
-    
-    // Fetch the thumbnail dimensions. If this fails, there's no point trying to make an icon
-	CGImageSourceRef iconSource = CGImageSourceCreateWithURL((CFURLRef)[NSURL fileURLWithPath:path], NULL);
-    if (iconSource)
-    {
-        NSDictionary *properties = (NSDictionary *)CGImageSourceCopyPropertiesAtIndex(iconSource, 0, NULL);
-        float width = [properties floatForKey:(NSString *)kCGImagePropertyPixelWidth];
-        float height = [properties floatForKey:(NSString *)kCGImagePropertyPixelHeight];
-        CFRelease(iconSource);
-        [properties release];
-        
-        
-        // Create the "canvas"
-        NSRect iconRect = NSMakeRect(0.0, 0.0, iconSize, iconSize);
-        result = [[[NSImage alloc] initWithSize:iconRect.size] autorelease];
-        [result setCachedSeparately:YES];
-        [result lockFocus];
-        
-        
-        // Draw the mask
-        [[self customPageIconMaskImage] drawInRect:iconRect fromRect:NSZeroRect
-                                         operation:NSCompositeSourceOver fraction:1.0];
-        
-        
-        // Figure out the max size for the thumbnail that gives a cropToFit behavior
-        float largeDimension;	float smallDimension;
-        if (height > width)
-        {
-            largeDimension = height;	smallDimension = width;
-        }
-        else
-        {
-            largeDimension = width;		smallDimension = height;
-        }
-        float maxSize = ceilf(largeDimension * (iconSize / smallDimension));
-        
-        
-        // Draw the thumbnail
-        NSImage *thumbnail = [[NSImage alloc] initWithThumbnailOfFile:path maxPixelSize:maxSize];
-        float thumbOriginX = 0.5 * ([thumbnail size].width - iconSize);
-        float thumbOriginY = 0.5 * ([thumbnail size].height - iconSize);
-        NSRect thumbSourceRect = NSMakeRect(thumbOriginX, thumbOriginY, iconSize, iconSize);
-        [thumbnail drawInRect:iconRect fromRect:thumbSourceRect operation:NSCompositeSourceAtop fraction:1.0];
-        [thumbnail release];
-        
-        
-        
-        // Draw the cover image
-        [[self customPageIconCoverImage] drawInRect:iconRect fromRect:NSZeroRect
-                                          operation:NSCompositeSourceOver fraction:1.0];
-        
-        
-        // Tidy up
-        [result unlockFocus];
-    }
-    
-    return result;
-}
-
-+ (NSImage *)customPageIconMaskImage
-{
-	static NSImage *result;
-	
-	if (!result)
-	{
-		result = [[NSImage imageNamed:@"siteoutline_pagemask"] retain];
-	}
-	
-	return result;
-}
-
-+ (NSImage *)customPageIconCoverImage
-{
-	static NSImage *result;
-	
-	if (!result)
-	{
-		result = [[NSImage imageNamed:@"siteoutline_pageborder"] retain];
-	}
-	
 	return result;
 }
 
