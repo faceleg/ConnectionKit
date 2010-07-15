@@ -146,7 +146,7 @@
             [controller release];
         }
         
-        // We will create a controller for the graphic shortlt, after the callout opening has been written
+        // We will create a controller for the graphic shortly, after the callout opening has been written
     }
     else
     {
