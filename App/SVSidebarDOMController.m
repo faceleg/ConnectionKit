@@ -62,6 +62,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     [_pageletsController removeObserver:self forKeyPath:@"arrangedObjects"];
     [_pageletsController release];
     
+    [_DOMControllers release];
     [_sidebarDiv release];
     [_contentElement release];
     
@@ -115,11 +116,15 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         [controllers insertObject:controller atIndex:0];
         
         
+        // Make sure is one of ours
+        [self addChildWebEditorItem:controller];
+
+        
         // Loop
         nextController = controller;
     }
     
-    [self setChildWebEditorItems:controllers];
+    [self setPageletDOMControllers:controllers];
     [controllers release];
     
     [super update];
@@ -129,6 +134,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 
 #pragma mark Pagelets Controller
 
+@synthesize pageletDOMControllers = _DOMControllers;
 @synthesize pageletsController = _pageletsController;
 
 #pragma mark Placement Actions
@@ -180,7 +186,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
 {
     NSUInteger result = NSNotFound;
     NSView *view = [[self HTMLElement] documentView];
-    NSArray *pageletControllers = [self childWebEditorItems];
+    NSArray *pageletControllers = [self pageletDOMControllers];
     NSPoint location = [view convertPointFromBase:[dragInfo draggingLocation]];
     
     
@@ -357,7 +363,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         if (result)
         {
             // Place the drag caret to match the drop index
-            NSArray *pageletControllers = [self childWebEditorItems];
+            NSArray *pageletControllers = [self pageletDOMControllers];
             if (dropIndex >= [pageletControllers count])
             {
                 DOMNode *node = [[self sidebarDivElement] lastChild];
@@ -418,7 +424,7 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
     if ([dragInfo draggingSource] == webEditor &&
         [dragInfo draggingSourceOperationMask] & NSDragOperationGeneric)
     {
-        NSArray *sidebarPageletControllers = [self childWebEditorItems];
+        NSArray *sidebarPageletControllers = [self pageletDOMControllers];
         NSArray *graphicControllers = [[webEditor draggedItems] copy];
         
         for (SVDOMController *aPageletItem in graphicControllers)

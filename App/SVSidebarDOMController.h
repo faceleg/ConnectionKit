@@ -15,9 +15,10 @@
 @interface SVSidebarDOMController : SVDOMController
 {
   @private
-    DOMElement                  *_sidebarDiv;
-    DOMElement                  *_contentElement;
+    DOMElement  *_sidebarDiv;
+    DOMElement  *_contentElement;
     
+    NSArray                     *_DOMControllers;
     SVSidebarPageletsController *_pageletsController;
     
     // Drag & Drop
@@ -29,6 +30,7 @@
 @property(nonatomic, retain) DOMElement *sidebarDivElement;
 @property(nonatomic, retain) DOMElement *contentDOMElement;
 
+@property(nonatomic, copy) NSArray *pageletDOMControllers;
 @property(nonatomic, retain, readonly) SVSidebarPageletsController *pageletsController;
 
 
