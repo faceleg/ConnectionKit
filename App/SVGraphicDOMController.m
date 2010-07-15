@@ -105,6 +105,53 @@
     }
 }
 
+- (void)update;
+{
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithOutputWriter:htmlString];
+    
+    [context copyPropertiesFromContext:[self HTMLContext]];
+    [context setWebEditorViewController:[[self HTMLContext] webEditorViewController]];   // hacky
+    [context writeGraphic:[self representedObject]];
+    
+    
+    // Retrieve controller
+    SVGraphicDOMController *result = [[[context rootDOMController] childWebEditorItems] lastObject];
+    OBASSERT(result);
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    {
+        [(SVDOMController *)[self parentWebEditorItem] addDependency:aDependency];
+    }
+    
+    [context release];
+    
+    
+    // Create DOM objects from HTML
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[[self parentWebEditorItem] HTMLElement] ownerDocument];
+    
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:htmlString
+                                                                        baseURL:[[self HTMLContext] baseURL]];
+    [htmlString release];
+    
+    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
+    [result setHTMLElement:element];
+    
+    
+    // Swap in result
+    [[[self HTMLElement] parentNode] replaceChild:[result HTMLElement] oldChild:[self HTMLElement]];
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self with:result];
+    
+    
+    // Finish
+    [super update];
+}
+
 #pragma mark State
 
 - (BOOL)isSelectable { return YES; }
