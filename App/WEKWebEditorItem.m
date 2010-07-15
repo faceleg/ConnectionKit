@@ -106,7 +106,7 @@
     [oldItem setParentWebEditorItem:nil];
     [children replaceObjectAtIndex:index withObject:newItem];
     
-    [_childControllers release]; _childControllers = [children copy];
+    [_childControllers release]; _childControllers = children;
     
     [newItem setParentWebEditorItem:self];
 }
