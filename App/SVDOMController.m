@@ -65,14 +65,6 @@
     [super dealloc];
 }
 
-#pragma mark Tree
-
-- (void)setParentWebEditorItem:(WEKWebEditorItem *)item
-{
-    [super setParentWebEditorItem:item];
-    //[self setHTMLContext:[item HTMLContext]];  Not really helpful since root item has no context
-}
-
 #pragma mark Content
 
 - (void)createHTMLElement
