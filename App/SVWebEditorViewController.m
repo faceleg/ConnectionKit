@@ -330,7 +330,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
          object:self];
     
         // If the update takes too long, switch over to placeholder
-        [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:0.25f];
+        [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:0.1f];
     }
     
     
