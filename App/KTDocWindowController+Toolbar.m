@@ -171,12 +171,12 @@
     
 	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_new_page"]];
 	
-    [menu addItem:[NSMenuItem separatorItem]];
     
-    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:3];
     
-    [menu addItem:[NSMenuItem separatorItem]];
+    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:2];
     
+
+
     [menu addItemWithTitle:NSLocalizedString(@"External Link", "New page pulldown button menu item title")
                     action:@selector(addExternalLinkPage:)
              keyEquivalent:@""];
