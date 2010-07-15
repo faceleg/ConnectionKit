@@ -8,7 +8,7 @@
 
 #import "SVHTMLContext.h"
 
-#import "SVDOMController.h"
+#import "SVGraphicDOMController.h"
 
 
 @class SVWebEditorViewController, SVSidebarDOMController;
@@ -43,6 +43,10 @@
 
 #pragma mark Media
 - (NSSet *)media;
+
+
+#pragma mark Graphics
+- (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
 
 
 #pragma mark Sidebar

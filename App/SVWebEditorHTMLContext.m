@@ -168,6 +168,15 @@
     // if (callout) [self endDOMController];    // Don't do this, will end it lazily
 }
 
+- (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
+{
+    [self startDOMController:controller];
+    
+    [self writeGraphicIgnoringCallout:graphic];
+    
+    [self endDOMController];
+}
+
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
 {
     [super startCalloutForGraphic:graphic];
