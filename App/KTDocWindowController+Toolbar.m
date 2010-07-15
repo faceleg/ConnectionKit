@@ -161,6 +161,7 @@
     image = [image imageWithCompositedAddBadge];
     [result setImage:image];
 	
+    
     // Generate the menu
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
@@ -173,7 +174,14 @@
 	
     
     
-    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:menu atIndex:2];
+    // Collections
+    NSMenuItem *item = [menu addItemWithTitle:NSLocalizedString(@"Collections", "toolbar menu")
+                                       action:nil
+                                keyEquivalent:@""];
+    NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
+    [item setSubmenu:collectionsMenu];
+    [KTIndexPlugInWrapper populateMenuWithCollectionPresets:collectionsMenu atIndex:0];
+    [collectionsMenu release];
     
 
 
