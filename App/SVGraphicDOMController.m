@@ -11,7 +11,11 @@
 
 #import "SVRichTextDOMController.h"
 #import "SVTextAttachment.h"
+#import "SVWebEditorHTMLContext.h"
+
 #import "WebEditingKit.h"
+
+#import "DOMNode+Karelia.h"
 
 
 @interface DOMElement (SVGraphicDOMController)
@@ -30,6 +34,54 @@
     OBPOSTCONDITION(!_bodyElement);
     
     [super dealloc];
+}
+
+#pragma mark Factory
+
++ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
+       parentWebEditorItemToBe:(SVDOMController *)parentItem
+                       context:(SVHTMLContext *)parentContext;
+{
+    OBPRECONDITION(parentItem);
+    
+    
+    // Write HTML
+    NSMutableString *htmlString = [[NSMutableString alloc] init];
+    
+    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
+                                       initWithOutputWriter:htmlString];
+    
+    [context copyPropertiesFromContext:parentContext];
+    [context setWebEditorViewController:[(id)parentContext webEditorViewController]];   // hacky
+    [context writeGraphic:graphic];
+    
+    
+    // Retrieve controller
+    id result = [[[context rootDOMController] childWebEditorItems] lastObject];
+    OBASSERT(result);
+    
+    
+    // Copy top-level dependencies across to parent. #79396
+    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
+    {
+        [parentItem addDependency:aDependency];
+    }
+    
+    [context release];
+    
+    
+    // Create DOM objects from HTML
+    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[parentItem HTMLElement] ownerDocument];
+    
+    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:htmlString
+                                                                        baseURL:[parentContext baseURL]];
+    [htmlString release];
+    
+    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
+    [result setHTMLElement:element];
+    
+    
+    return result;
 }
 
 #pragma mark DOM

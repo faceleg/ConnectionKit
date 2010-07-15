@@ -13,6 +13,7 @@
 #import "SVAttributedHTML.h"
 #import "SVAttributedHTMLWriter.h"
 #import "KTPage.h"
+#import "SVGraphicDOMController.h"
 #import "SVGraphicFactory.h"
 #import "SVRichText.h"
 #import "KTDocument.h"
@@ -380,7 +381,7 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Create controller for graphic
-    SVDOMController *controller = [SVDOMController
+    SVDOMController *controller = [SVGraphicDOMController
                                    DOMControllerWithGraphic:graphic
                                    parentWebEditorItemToBe:self
                                    context:[self HTMLContext]];

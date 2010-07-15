@@ -7,10 +7,10 @@
 //
 
 #import "SVSidebarDOMController.h"
-#import "SVSidebar.h"
 
 #import "SVArticleDOMController.h"
 #import "SVAttributedHTML.h"
+#import "SVGraphicDOMController.h"
 #import "KTPage.h"
 #import "SVTextAttachment.h"
 #import "SVWebEditorViewController.h"
@@ -103,9 +103,9 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
         if (!controller)
         {            
-            controller = [SVDOMController DOMControllerWithGraphic:aPagelet
-                                           parentWebEditorItemToBe:self
-                                                           context:[self HTMLContext]];
+            controller = [SVGraphicDOMController DOMControllerWithGraphic:aPagelet
+                                                  parentWebEditorItemToBe:self
+                                                                  context:[self HTMLContext]];
         }
         
         // Insert before what should be its next sibling

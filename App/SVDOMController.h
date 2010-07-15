@@ -30,10 +30,6 @@
 
 #pragma mark Creating a DOM Controller
 
-+ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
-       parentWebEditorItemToBe:(SVDOMController *)parentItem
-                       context:(SVHTMLContext *)parentContext;
-
 - (id)initWithElementIdName:(NSString *)elementID;
 
 //  1.  Calls -initWithElementIdName: with the result of [content elementIdName]. Subs in a custom ID if the content provides nil

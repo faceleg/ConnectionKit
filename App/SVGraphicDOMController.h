@@ -16,6 +16,10 @@
     DOMHTMLElement  *_bodyElement;
 }
 
++ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
+       parentWebEditorItemToBe:(SVDOMController *)parentItem
+                       context:(SVHTMLContext *)parentContext;
+
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 
 @end
