@@ -82,9 +82,15 @@
 {
     OBPRECONDITION(controller);
     
-    if ([controller parentWebEditorItem] == self) return;   // nothing to do
+    WEKWebEditorItem *parent = [controller parentWebEditorItem];
+    if (parent == self) return;   // nothing to do
     
     
+    // Remove from existing parent
+    if (parent) [controller removeFromParentWebEditorItem];
+    
+    
+    // Add
     NSArray *children = [[self childWebEditorItems] arrayByAddingObject:controller];
     if (!children) children = [NSArray arrayWithObject:controller];
     [_childControllers release]; _childControllers = [children copy];
