@@ -31,6 +31,8 @@
 
 @implementation SVWebEditorHTMLContext
 
+#pragma mark Init & Dealloc
+
 - (id)initWithOutputWriter:(id <KSWriter>)stream	// designated initializer
 {
     [super initWithOutputWriter:stream];
@@ -38,6 +40,18 @@
     [self reset];
     _media = [[NSMutableSet alloc] init];
         
+    return self;
+}
+
+- (id)initWithOutputWriter:(id <KSWriter>)output
+         rootDOMController:(SVDOMController *)rootController;
+{
+    if (self = [self initWithOutputWriter:output])
+    {
+        [_rootController release]; _currentDOMController = _rootController = rootController;
+        [[self rootDOMController] awakeFromHTMLContext:self];   // so it stores ref to us
+    }
+    
     return self;
 }
 
