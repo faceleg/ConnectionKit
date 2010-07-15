@@ -61,7 +61,8 @@
     SVWebEditorViewController *editorController = [tabController webEditorViewController];
     
     // When loading a new page want white background. But for updating an existing page take a snapshot of the Web Editor
-    if ([editorController loadedPage] != [[editorController HTMLContext] page])
+    KTPage *loadedPage = [editorController loadedPage];
+    if (!loadedPage || loadedPage != [[editorController HTMLContext] page])
     {
         [[self backgroundImageView] setImage:nil];
     }
