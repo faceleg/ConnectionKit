@@ -54,8 +54,9 @@
 
 #pragma mark Updating
 
-// Override to push changes through to the DOM. Rarely call directly. MUST call super AFTER finishing your custom update code.
+// Override to push changes through to the DOM. Rarely call directly. MUST call super or -didUpdate AFTER finishing your custom update code.
 - (void)update;
+- (void)didUpdate;
 
 @property(nonatomic, readonly) BOOL needsUpdate;
 - (void)updateIfNeeded; // recurses down the tree

@@ -176,6 +176,11 @@
 
 - (void)update;
 {
+    [self didUpdate];
+}
+
+- (void)didUpdate;
+{
     _needsUpdate = NO;
     
     SVWebEditorViewController *controller = [[self HTMLContext] webEditorViewController];
