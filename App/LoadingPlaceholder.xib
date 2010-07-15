@@ -102,7 +102,7 @@
 												</object>
 											</object>
 										</object>
-										<string key="NSFrame">{{20, 81}, {370, 92}}</string>
+										<string key="NSFrame">{{32, 93}, {370, 92}}</string>
 										<reference key="NSSuperview" ref="779387075"/>
 										<string key="NSClassName">NSView</string>
 									</object>
@@ -271,8 +271,8 @@
 						<reference key="object" ref="779387075"/>
 						<object class="NSMutableArray" key="children">
 							<bool key="EncodedWithXMLCoder">YES</bool>
-							<reference ref="284002621"/>
 							<reference ref="18819607"/>
+							<reference ref="284002621"/>
 						</object>
 						<reference key="parent" ref="35803481"/>
 					</object>
