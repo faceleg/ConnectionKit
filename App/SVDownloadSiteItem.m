@@ -51,4 +51,8 @@
     [publishingEngine publishContentsOfURL:[media fileURL] toPath:uploadPath];
 }
 
+// For display in the placeholder webview
+- (NSURL *)URL { return [self.media fileURL]; }
+- (NSString *)fileName { return [self.media preferredFilename]; }
+
 @end

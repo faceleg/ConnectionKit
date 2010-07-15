@@ -369,7 +369,7 @@ static NSString *kStringIndicator = @"'";					// [[' String to localize in curre
 						// grab the key path
 						keyPath = [[tag substringFromIndex:[tagScanner scanLocation]] condenseWhiteSpace];
 						
-						//                    LOG((@"keyPath = %@", keyPath));
+						// LOG((@"keyPath = %@", keyPath));
 						
 						// Fetch the value. It may well return nil, signifying the method does its own writing to the context
 						id element = [[self cache] valueForKeyPath:keyPath];

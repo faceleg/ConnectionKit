@@ -39,6 +39,11 @@
 	[super dealloc];
 }
 
+- (NSString *)description
+{
+	return [NSString stringWithFormat:@"%@ %@", [super description], myOverrides];
+}
+
 #pragma mark -
 #pragma mark KVC
 
