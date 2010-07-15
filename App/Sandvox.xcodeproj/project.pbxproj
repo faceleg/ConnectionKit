@@ -3469,6 +3469,16 @@
 			name = 2.0;
 			sourceTree = "<group>";
 		};
+		27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */ = {
+			isa = PBXGroup;
+			children = (
+				CE01A6380EAFD63600BDF264 /* KSExtensibleManagedObject.h */,
+				CE01A6390EAFD63600BDF264 /* KSExtensibleManagedObject.m */,
+			);
+			name = KSExtensibleManagedObject;
+			path = ../KSExtensibleManagedObject;
+			sourceTree = "<group>";
+		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -3604,8 +3614,6 @@
 		27FDEF10111B4C84001F4E60 /* Core Data */ = {
 			isa = PBXGroup;
 			children = (
-				CE01A6380EAFD63600BDF264 /* KSExtensibleManagedObject.h */,
-				CE01A6390EAFD63600BDF264 /* KSExtensibleManagedObject.m */,
 				27FDEF11111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.h */,
 				27FDEF12111B4CB7001F4E60 /* NSManagedObjectContext+Karelia.m */,
 			);
@@ -5103,6 +5111,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */,
 				CE1BE7AF11D2AD0700D875AE /* Graphics */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
 				27FDEF10111B4C84001F4E60 /* Core Data */,
