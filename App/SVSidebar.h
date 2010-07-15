@@ -16,7 +16,7 @@
 
 @property (nonatomic, retain) KTPage * page;
 
-@property(nonatomic, retain) NSSet *pagelets;   // To sort, use SVGraphic class method
+@property(nonatomic, retain) NSSet *pagelets;   // for sorting, use SVSidebarPageletsController
 - (BOOL)validatePagelets:(NSSet **)pagelets error:(NSError **)error;
 
 
