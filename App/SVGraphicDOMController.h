@@ -22,9 +22,6 @@
 
 + (SVGraphicDOMController *)graphicPlaceholderDOMController;
 
-+ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
-       parentWebEditorItemToBe:(SVDOMController *)parentItem;
-
 @property(nonatomic, retain) DOMHTMLElement *bodyHTMLElement;
 
 @end

@@ -55,52 +55,6 @@
     return result;
 }
 
-+ (id)DOMControllerWithGraphic:(SVGraphic *)graphic
-       parentWebEditorItemToBe:(SVDOMController *)parentItem;
-{
-    OBPRECONDITION(parentItem);
-    
-    
-    // Write HTML
-    NSMutableString *htmlString = [[NSMutableString alloc] init];
-    
-    SVWebEditorHTMLContext *context = [[[SVWebEditorHTMLContext class] alloc]
-                                       initWithOutputWriter:htmlString];
-    
-    SVWebEditorHTMLContext *parentContext = [parentItem HTMLContext];
-    [context copyPropertiesFromContext:parentContext];
-    [context setWebEditorViewController:[parentContext webEditorViewController]];   // hacky
-    [context writeGraphic:graphic];
-    
-    
-    // Retrieve controller
-    id result = [[[context rootDOMController] childWebEditorItems] lastObject];
-    OBASSERT(result);
-    
-    
-    // Copy top-level dependencies across to parent. #79396
-    for (KSObjectKeyPathPair *aDependency in [[context rootDOMController] dependencies])
-    {
-        [parentItem addDependency:aDependency];
-    }
-    
-    [context release];
-    
-    
-    // Create DOM objects from HTML
-    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[parentItem HTMLElement] ownerDocument];
-    
-    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:htmlString
-                                                                        baseURL:[parentContext baseURL]];
-    [htmlString release];
-    
-    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
-    [result setHTMLElement:element];
-    
-    
-    return result;
-}
-
 #pragma mark DOM
 
 @synthesize bodyHTMLElement = _bodyElement;
