@@ -166,7 +166,7 @@
     NSPopUpButton *pulldownButton = [result popUpButton];
     NSMenu *menu = [pulldownButton menu];
 	
-    [menu addItemWithTitle:NSLocalizedString(@"Blank Page", "New page pulldown button menu item title")
+    [menu addItemWithTitle:NSLocalizedString(@"Empty Page", "New page pulldown button menu item title")
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
