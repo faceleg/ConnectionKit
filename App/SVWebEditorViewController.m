@@ -205,6 +205,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 - (void)loadPage:(KTPage *)page;
 {
+    // Mark as updating. Reset counter first since loading page wipes away any in-progress updates
+    _updatesCount = 0;
     [self willUpdate];
     
     WEKWebEditorView *webEditor = [self webEditor];
