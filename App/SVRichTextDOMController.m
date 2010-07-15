@@ -381,9 +381,11 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Create controller for graphic
-    SVDOMController *controller = [SVGraphicDOMController
-                                   DOMControllerWithGraphic:graphic
-                                   parentWebEditorItemToBe:self];
+    SVDOMController *controller = [SVGraphicDOMController graphicPlaceholderDOMController];
+    [controller setRepresentedObject:graphic];
+    [self addChildWebEditorItem:controller];    // generates placeholder <DIV>
+    [controller setHTMLContext:[self HTMLContext]];
+    [controller setNeedsUpdate];
     
     
     // Generate & insert DOM node
