@@ -2948,8 +2948,6 @@
 			isa = PBXGroup;
 			children = (
 				27836C640CAB092E0072CC52 /* Design of WebView loading.graffle */,
-				CE2E80E20DB534930034E7B8 /* SVOffscreenWebViewController.h */,
-				CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */,
 				27A50CC70D188C2700149038 /* KTDocWebViewController+Editing.m */,
 				2753688A0C9D394500AC7220 /* KTDocWebViewController+Refreshing.m */,
 				27B17DA90CA80A9E00187918 /* KTWebViewComponent.h */,
@@ -3083,6 +3081,8 @@
 		2759CC98103970FC00E2C046 /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				CE2E80E20DB534930034E7B8 /* SVOffscreenWebViewController.h */,
+				CE2E80E30DB534930034E7B8 /* SVOffscreenWebViewController.m */,
 				CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */,
 				CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */,
 				273DCF9D10CBD5D3003CCE97 /* SVWebContentObjectsController.h */,
