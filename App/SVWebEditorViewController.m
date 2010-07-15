@@ -478,7 +478,7 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Ensure element is loaded
     DOMDocument *domDoc = [[self webEditor] HTMLDocument];
     if (![item isHTMLElementCreated]) [item loadHTMLElementFromDocument:domDoc];
-    if ([item representedObject]) OBASSERT([item HTMLElement]);
+    //if ([item representedObject]) OBASSERT([item HTMLElement]);
     
     
     //  Populate controller with content. For now, this is simply all the represented objects of all the DOM controllers
