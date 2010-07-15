@@ -182,16 +182,29 @@ NSString *KTDisableCustomSiteOutlineIcons = @"DisableCustomSiteOutlineIcons";
 	OBPRECONDITION(item);
 	
 	NSImage *result = nil;
-	
+	id <SVMedia> media = nil;
     
     KTHTMLPlugInWrapper *plugin = nil;
 	if ([item isCollection] && [(KTPage *)item index])
 	{
 		plugin = [[(KTPage *)item index] plugin];
 	}
-    else if ([item mediaRepresentation])
+    else if (nil != (media =[item mediaRepresentation]))
     {
-        result = [NSImage imageNamed:@"download"];
+		NSString *UTI = [media UTI];
+		if ([UTI conformsToUTI:(NSString *)kUTTypeHTML])
+		{
+			result = [NSImage imageNamed:@"plainText"];
+
+		}
+		else if ([UTI conformsToUTI:(NSString *)kUTTypePlainText])
+		{
+			result = [NSImage imageNamed:@"HTML"];
+		}
+		else
+		{
+			result = [NSImage imageNamed:@"download"];
+		}
     }
     else if ([item externalLinkRepresentation])
     {

@@ -1032,6 +1032,7 @@
 		CE36E3E411ED5546003EFCA8 /* jquery-1.4.2.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */; };
 		CE36E3E511ED5546003EFCA8 /* jquery-1.4.2.min.js in Resources */ = {isa = PBXBuildFile; fileRef = CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */; };
 		CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */; };
+		CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE36E5C911EFA68E003EFCA8 /* plainText.tiff */; };
 		CE36FF5C082B2D1D0090305D /* KTDocWindowController+Accessors.m in Sources */ = {isa = PBXBuildFile; fileRef = CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */; };
 		CE42A63111DE506600381E46 /* DTD in Resources */ = {isa = PBXBuildFile; fileRef = CE42A62311DE506600381E46 /* DTD */; };
 		CE44DFBA0BD0019400479A8E /* KTHTMLEditorController.m in Sources */ = {isa = PBXBuildFile; fileRef = CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */; };
@@ -2622,6 +2623,7 @@
 		CE36E3D911ED528E003EFCA8 /* jquery-1.4.2.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.js"; sourceTree = "<group>"; };
 		CE36E3DA11ED528E003EFCA8 /* jquery-1.4.2.min.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = "jquery-1.4.2.min.js"; sourceTree = "<group>"; };
 		CE36E58F11EF95FF003EFCA8 /* designPlaceholder.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = designPlaceholder.tiff; sourceTree = "<group>"; };
+		CE36E5C911EFA68E003EFCA8 /* plainText.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = plainText.tiff; sourceTree = "<group>"; };
 		CE36FF5A082B2D1D0090305D /* KTDocWindowController+Accessors.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocWindowController+Accessors.m"; sourceTree = "<group>"; };
 		CE42A62311DE506600381E46 /* DTD */ = {isa = PBXFileReference; lastKnownFileType = folder; path = DTD; sourceTree = "<group>"; };
 		CE44DFB80BD0019400479A8E /* KTHTMLEditorController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTHTMLEditorController.m; sourceTree = "<group>"; };
@@ -4948,6 +4950,7 @@
 				CE1BE7F511D2AD1E00D875AE /* draftPattern.png */,
 				CE1BE7F611D2AD1E00D875AE /* notPublishable.png */,
 				CE1BE7F911D2AD1E00D875AE /* syringe.tiff */,
+				CE36E5C911EFA68E003EFCA8 /* plainText.tiff */,
 			);
 			path = SiteOutline;
 			sourceTree = "<group>";
@@ -6130,6 +6133,7 @@
 				CE7B67CA11EE784600F56D8B /* MissingMediaQMark.png in Resources */,
 				CE7B687211EE7F2000F56D8B /* html_element.tiff in Resources */,
 				CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */,
+				CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -362,23 +362,11 @@ enum { kUnknownPageDetailsContext, kFileNamePageDetailsContext, kWindowTitlePage
 	}
 }
 
-// Probably belongs elsewhere, maybe even SVMedia itself?
 - (BOOL) mediaIsEditableText:(id <SVMedia>)aMedia
 {
-	NSString *fileName = nil;
-	NSURL *fileURL = [aMedia fileURL];
-	if (fileURL)
-	{
-		fileName = [[fileURL path] lastPathComponent];
-	}
-	else
-	{
-		fileName = [aMedia preferredFilename];
-	}
-	NSString *UTI = [NSString UTIForFilenameExtension:[fileName pathExtension]];
+	NSString *UTI = [aMedia UTI];
 	BOOL result = ([UTI conformsToUTI:(NSString *)kUTTypePlainText]
 				   || [UTI conformsToUTI:(NSString *)kUTTypeHTML] );
-	
 		// Let's try not allowing kUTTypeXML or KUTTypeHTML or other variants of kUTTypeText
 	return result;
 }

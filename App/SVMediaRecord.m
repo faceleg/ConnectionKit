@@ -1,5 +1,5 @@
 //
-//  SVMedia.m
+//  SVMediaRecord.m
 //  Sandvox
 //
 //  Created by Mike on 23/01/2010.
@@ -305,6 +305,13 @@ NSString *kSVDidDeleteMediaRecordNotification = @"SVMediaWasDeleted";
     }
     
     return result;
+}
+
+- (NSString *)UTI
+{
+	NSString *fileName = [self preferredFilename];
+	NSString *UTI = [NSString UTIForFilenameExtension:[fileName pathExtension]];
+	return UTI;
 }
 
 #pragma mark Contents Cache
