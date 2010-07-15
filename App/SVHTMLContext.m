@@ -344,22 +344,10 @@
 
 #pragma mark Graphics
 
-- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
+- (void)writeGraphicIgnoringCallout:(SVGraphic *)graphic
 {
-    // If the placement changes, want whole Text Area to update
-    [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
-    [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
-    [self addDependencyForKeyPath:@"showsCaption" ofObject:graphic];
-    [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
-    
-    
-    // Possible callout.
-    BOOL callout;
-    if (callout = [graphic isCallout]) [self startCalloutForGraphic:graphic];
-    
-    
     // Update number of graphics
-    _numberOfGraphics++;
+      _numberOfGraphics++;
     
     
     if ([graphic isPagelet])
@@ -403,6 +391,24 @@
     {
         [graphic writeBody:self];
     }
+}
+
+- (void)writeGraphic:(SVGraphic *)graphic;  // takes care of callout stuff for you
+{
+    // If the placement changes, want whole Text Area to update
+    [self addDependencyForKeyPath:@"textAttachment.placement" ofObject:graphic];
+    [self addDependencyForKeyPath:@"showsTitle" ofObject:graphic];
+    [self addDependencyForKeyPath:@"showsCaption" ofObject:graphic];
+    [self addDependencyForKeyPath:@"showsIntroduction" ofObject:graphic];
+    
+    
+    // Possible callout.
+    BOOL callout;
+    if (callout = [graphic isCallout]) [self startCalloutForGraphic:graphic];
+    
+    
+    [self writeGraphicIgnoringCallout: graphic];
+
     
     
     // Finish up
