@@ -33,6 +33,8 @@
 - (void)awakeFromInsert
 {
     [super awakeFromInsert];
+	
+	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
     
     // attributes
 	NSDate *now = [NSDate date];

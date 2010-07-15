@@ -180,8 +180,6 @@
 {
 	[super awakeFromInsert];
     
-	
-	[self setPrimitiveValue:[NSString shortUUIDString] forKey:@"uniqueID"];
     
     // Create a corresponding sidebar
     SVSidebar *sidebar = [NSEntityDescription insertNewObjectForEntityForName:@"Sidebar"
