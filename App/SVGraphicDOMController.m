@@ -14,6 +14,7 @@
 #import "SVWebEditorHTMLContext.h"
 
 #import "WebEditingKit.h"
+#import "WebViewEditingHelperClasses.h"
 
 #import "DOMNode+Karelia.h"
 
@@ -32,6 +33,9 @@
 {
     [self setBodyHTMLElement:nil];
     OBPOSTCONDITION(!_bodyElement);
+ 
+    [_replacmentDOMController release];     // should be nil unless
+    [_offscreenWebViewController release];  // dealloc-ing mid-update
     
     [super dealloc];
 }
@@ -119,8 +123,10 @@
     
     
     // Retrieve controller
-    SVGraphicDOMController *result = [[[context rootDOMController] childWebEditorItems] lastObject];
-    OBASSERT(result);
+    OBASSERT(!_replacmentDOMController);
+    _replacmentDOMController = [[[context rootDOMController] childWebEditorItems] lastObject];
+    [_replacmentDOMController retain];
+    OBASSERT(_replacmentDOMController);
     
     
     // Copy top-level dependencies across to parent. #79396
@@ -132,24 +138,48 @@
     [context release];
     
     
-    // Create DOM objects from HTML
-    DOMHTMLDocument *doc = (DOMHTMLDocument *)[[[self parentWebEditorItem] HTMLElement] ownerDocument];
+    // Start loading DOM objects from HTML
+    OBASSERT(!_offscreenWebViewController);
+    _offscreenWebViewController = [[SVOffscreenWebViewController alloc] init];
+    [_offscreenWebViewController setDelegate:self];
     
-    DOMDocumentFragment *fragment = [doc createDocumentFragmentWithMarkupString:htmlString
-                                                                        baseURL:[[self HTMLContext] baseURL]];
+    [_offscreenWebViewController loadHTMLFragment:htmlString];
     [htmlString release];
+}
+
+- (void)bodyLoaded:(DOMHTMLElement *)loadedBody;
+{
+    // Pull the nodes across to the Web Editor
+    DOMDocument *document = [[self HTMLElement] ownerDocument];
+    DOMNode *imported = [document importNode:[loadedBody firstChild] deep:YES];
+	
     
-    DOMHTMLElement *element = [fragment firstChildOfClass:[DOMHTMLElement class]];  OBASSERT(element);
-    [result setHTMLElement:element];
+    // I have to turn off the script nodes from actually executing
+	DOMNodeIterator *it = [document createNodeIterator:imported whatToShow:DOM_SHOW_ELEMENT filter:[ScriptNodeFilter sharedFilter] expandEntityReferences:NO];
+	DOMHTMLScriptElement *subNode;
+    
+	while ((subNode = (DOMHTMLScriptElement *)[it nextNode]))
+	{
+		[subNode setText:@""];		/// HACKS -- clear out the <script> tags so that scripts are not executed AGAIN
+		[subNode setSrc:@""];
+		[subNode setType:@""];
+	}
     
     
-    // Swap in result
-    [[[self HTMLElement] parentNode] replaceChild:[result HTMLElement] oldChild:[self HTMLElement]];
-    [[self parentWebEditorItem] replaceChildWebEditorItem:self with:result];
+    
+    // Swap in result. Adding in the replacement DOM Controller will make View Controller hook it up to the right element etc.
+    [[[self HTMLElement] parentNode] replaceChild:imported oldChild:[self HTMLElement]];
+    [[self parentWebEditorItem] replaceChildWebEditorItem:self with:_replacmentDOMController];
     
     
     // Finish
-    [super update];
+    [self didUpdate];
+    
+    
+    // Teardown
+    [_offscreenWebViewController setDelegate:nil];
+    [_offscreenWebViewController release]; _offscreenWebViewController = nil;
+    [_replacmentDOMController release]; _replacmentDOMController = nil;
 }
 
 #pragma mark State

@@ -8,12 +8,16 @@
 
 #import "SVDOMController.h"
 #import "SVGraphic.h"
+#import "SVOffscreenWebViewController.h"
 
 
-@interface SVGraphicDOMController : SVDOMController
+@interface SVGraphicDOMController : SVDOMController <KTAsyncOffscreenWebViewControllerDelegate>
 {
   @private
     DOMHTMLElement  *_bodyElement;
+    
+    SVGraphicDOMController          *_replacmentDOMController;
+    SVOffscreenWebViewController    *_offscreenWebViewController;
 }
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic

@@ -515,6 +515,7 @@
 		27DB8F8011204A9400B1895C /* DOMElement+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB8F7E11204A9400B1895C /* DOMElement+Karelia.m */; };
 		27DB903011209AEA00B1895C /* DOMNamedNodeMap+Karelia.h in Headers */ = {isa = PBXBuildFile; fileRef = 27DB902E11209AEA00B1895C /* DOMNamedNodeMap+Karelia.h */; };
 		27DB903111209AEA00B1895C /* DOMNamedNodeMap+Karelia.m in Sources */ = {isa = PBXBuildFile; fileRef = 27DB902F11209AEA00B1895C /* DOMNamedNodeMap+Karelia.m */; };
+		27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A093300D1DECDA00F57801 /* WebViewEditingHelperClasses.m */; };
 		27DE6C5910A4F6EE00D71710 /* WrapInspector.xib in Resources */ = {isa = PBXBuildFile; fileRef = 27DE6C5810A4F6EE00D71710 /* WrapInspector.xib */; };
 		27E1BF4B115B8235000FF123 /* SVDocumentUndoManager.h in Headers */ = {isa = PBXBuildFile; fileRef = 27E1BF49115B8235000FF123 /* SVDocumentUndoManager.h */; };
 		27E1BF4C115B8235000FF123 /* SVDocumentUndoManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 27E1BF4A115B8235000FF123 /* SVDocumentUndoManager.m */; };
@@ -6878,6 +6879,7 @@
 				2726DEAB11E69CA80000257D /* SVRawHTMLDOMController.m in Sources */,
 				CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */,
 				CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */,
+				27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
