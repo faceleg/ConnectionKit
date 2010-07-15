@@ -170,11 +170,21 @@
 
 - (void)writeGraphic:(SVGraphic *)graphic withDOMController:(SVGraphicDOMController *)controller;
 {
-    [self startDOMController:controller];
+    // Fake it and don't insert into hierarchy
+    SVDOMController *currentController = _currentDOMController;
+    _currentDOMController = controller;
+    _needsToWriteElementID = YES;
     
+    [controller awakeFromHTMLContext:self];
+    
+    
+    // Generate HTML
     [self writeGraphicIgnoringCallout:graphic];
     
+    
+    // Reset
     [self endDOMController];
+    _currentDOMController = currentController;
 }
 
 - (void)startCalloutForGraphic:(SVGraphic *)graphic;
