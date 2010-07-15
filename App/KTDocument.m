@@ -308,11 +308,19 @@ NSString *kKTDocumentWillCloseNotification = @"KTDocumentWillClose";
         
         // Create a starter pagelet
         id <SVGraphicFactory> factory = [KTElementPlugInWrapper pluginWithIdentifier:@"sandvox.BadgeElement"];
-        SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
-        [badge setSortKey:[NSNumber numberWithShort:0]];
-        
-        [badge willInsertIntoPage:root];
-        [[root sidebar] addPageletsObject:badge];
+		if (factory)
+		{
+			SVGraphic *badge = [factory insertNewGraphicInManagedObjectContext:[self managedObjectContext]];
+			[badge setSortKey:[NSNumber numberWithShort:0]];
+			
+			[badge willInsertIntoPage:root];
+			[[root sidebar] addPageletsObject:badge];
+		}
+		else
+		{
+			NSLog(@"Could not find badge element to add to initial document.");
+		}
+
         
         
         // Finish up
