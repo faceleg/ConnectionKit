@@ -30,6 +30,8 @@
     [super dealloc];
 }
 
+#pragma mark View
+
 @synthesize progressIndicator = _progressIndicator;
 - (NSProgressIndicator *)progressIndicator
 {
