@@ -194,7 +194,7 @@
     
     // Body text. Give it a starting paragraph
     SVRichText *body = [SVRichText insertPageBodyIntoManagedObjectContext:[self managedObjectContext]];
-    [body setString:@"<p>Lorem Ipsum...</p>"];
+    [body setString:@"<p><br /></p>"];
     [self setArticle:body];
     
     
