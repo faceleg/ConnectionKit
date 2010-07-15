@@ -55,7 +55,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 
 @property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 
-@property(nonatomic, readwrite, getter=isUpdating) BOOL updating;
 - (void)willUpdate;
 - (void)didUpdate;  // if an asynchronous update, called after the update finishes
 
@@ -295,13 +294,13 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [[self webEditor] scrollToPoint:_visibleRect.origin];
     
     
-    // Mark as loaded
-    [self setUpdating:NO];
-    [self setViewIsReadyToAppear:YES];
-    
-    
     // Did Update
     [self didUpdate];
+    
+
+    // Mark as loaded
+    [self setViewIsReadyToAppear:YES];
+    
     
     // Can now ditch context contents
     [context close];
@@ -318,63 +317,37 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 	_needsUpdate = NO;
 }
 
-@synthesize updating = _isUpdating;
-
-- (void)scheduleUpdate
-{
-    // Private method known only to our Main DOM Controller. Schedules an update if needed.
-    if (!_willUpdate)
-	{
-		// Install a fresh observer for the end of the run loop
-		[[NSRunLoop currentRunLoop] performSelector:@selector(updateIfNeeded)
-                                             target:self
-                                           argument:nil
-                                              order:0
-                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
-	}
-    _willUpdate = YES;
-}
-
-@synthesize needsUpdate = _needsUpdate;
-- (void)setNeedsUpdate;
-{
-    _needsUpdate = YES;
-    
-    [self scheduleUpdate];
-    //[self removeAllDependencies];   // no point observing now we're marked for update
-}
-
-- (void)updateIfNeeded
-{
-    if (!_willUpdate) return;   // don't you waste my time sucker!
-    	
-    if ([self needsUpdate])
-    {
-        [self update];
-    }
-    else
-    {
-        [[[self webEditor] contentItem] updateIfNeeded];    // will call -didUpdate if anything did
-        _willUpdate = NO;
-    }
-}
-
-- (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
+- (BOOL)isUpdating; { return _updatesCount; }
 
 - (void)willUpdate;
 {
+    if (![self isUpdating]) 
+    {
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:sSVWebEditorViewControllerWillUpdateNotification
+         object:self];
+    
+        // If the update takes too long, switch over to placeholder
+        [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:0.25f];
+    }
+    
+    
     // Record that the webview is being loaded with content. Otherwise, the policy delegate will refuse requests. Also record location
-    [self setUpdating:YES];
-    
-    [[NSNotificationCenter defaultCenter] postNotificationName:sSVWebEditorViewControllerWillUpdateNotification object:self];
-    
-    
-    // If the update takes too long, switch over to placeholder
-    [self performSelector:@selector(updateDidTimeout) withObject:nil afterDelay:0.25f];
+    _updatesCount++;
 }
 
 - (void)didUpdate;
 {
+    // Lower the update count, checking if we're already at 0 to avoid wraparound (could've made a mistake)
+    if ([self isUpdating])
+    {
+        _updatesCount--;
+    
+        // Nothing to do if still going
+        if ([self isUpdating]) return;
+    }
+    
+    
     WEKWebEditorView *webEditor = [self webEditor];
     
     
@@ -425,6 +398,49 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
 {
     [_contentAreaController presentLoadingViewController];
 }
+
+#pragma mark Update Scheduling
+
+- (void)scheduleUpdate
+{
+    // Private method known only to our Main DOM Controller. Schedules an update if needed.
+    if (!_willUpdate)
+	{
+		// Install a fresh observer for the end of the run loop
+		[[NSRunLoop currentRunLoop] performSelector:@selector(updateIfNeeded)
+                                             target:self
+                                           argument:nil
+                                              order:0
+                                              modes:[NSArray arrayWithObject:NSDefaultRunLoopMode]];
+	}
+    _willUpdate = YES;
+}
+
+@synthesize needsUpdate = _needsUpdate;
+- (void)setNeedsUpdate;
+{
+    _needsUpdate = YES;
+    
+    [self scheduleUpdate];
+    //[self removeAllDependencies];   // no point observing now we're marked for update
+}
+
+- (void)updateIfNeeded
+{
+    if (!_willUpdate) return;   // don't you waste my time sucker!
+    	
+    if ([self needsUpdate])
+    {
+        [self update];
+    }
+    else
+    {
+        [[[self webEditor] contentItem] updateIfNeeded];    // will call -didUpdate if anything did
+        _willUpdate = NO;
+    }
+}
+
+- (IBAction)reload:(id)sender { [self setNeedsUpdate]; }
 
 #pragma mark Content
 

@@ -41,7 +41,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     
     // Updating
     BOOL                    _needsUpdate, _willUpdate;
-    BOOL                    _isUpdating;
+    NSUInteger              _updatesCount;
     NSRect                  _visibleRect;
     SVWebEditorTextRange    *_selectionToRestore;
     
