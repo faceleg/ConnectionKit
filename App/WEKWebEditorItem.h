@@ -33,6 +33,7 @@
 @property(nonatomic, copy) NSArray *childWebEditorItems;
 @property(nonatomic, assign) WEKWebEditorItem *parentWebEditorItem;  // don't call setter directly
 - (void)addChildWebEditorItem:(WEKWebEditorItem *)controller;
+- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
 - (void)removeFromParentWebEditorItem;
 
 - (NSEnumerator *)enumerator;

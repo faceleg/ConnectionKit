@@ -98,6 +98,19 @@
     [controller setParentWebEditorItem:self];
 }
 
+- (void)replaceChildWebEditorItem:(WEKWebEditorItem *)oldItem with:(WEKWebEditorItem *)newItem;
+{
+    NSMutableArray *children = [[self childWebEditorItems] mutableCopy];
+    NSUInteger index = [children indexOfObject:oldItem];
+    
+    [oldItem setParentWebEditorItem:nil];
+    [children replaceObjectAtIndex:index withObject:newItem];
+    
+    [_childControllers release]; _childControllers = [children copy];
+    
+    [newItem setParentWebEditorItem:self];
+}
+
 - (void)removeFromParentWebEditorItem;
 {
     [self setParentWebEditorItem:nil];
