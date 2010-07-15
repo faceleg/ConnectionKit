@@ -19,6 +19,13 @@
 #import "DOMNode+Karelia.h"
 
 
+@interface SVGraphicPlaceholderDOMController : SVGraphicDOMController
+@end
+
+
+#pragma mark -
+
+
 @interface DOMElement (SVGraphicDOMController)
 - (DOMNodeList *)getElementsByClassName:(NSString *)name;
 @end
@@ -41,6 +48,12 @@
 }
 
 #pragma mark Factory
+
++ (SVGraphicDOMController *)graphicPlaceholderDOMController;
+{
+    SVGraphicDOMController *result = [[[SVGraphicPlaceholderDOMController alloc] init] autorelease];
+    return result;
+}
 
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
        parentWebEditorItemToBe:(SVDOMController *)parentItem;
@@ -205,6 +218,22 @@
 }
 
 @end
+
+
+#pragma mark -
+
+
+@implementation SVGraphicPlaceholderDOMController
+
+- (void)loadHTMLElementFromDocument:(DOMHTMLDocument *)document;
+{
+    DOMElement *element = [document createElement:@"DIV"];
+    [[element style] setDisplay:@"none"];
+    [self setHTMLElement:(DOMHTMLElement *)element];
+}
+
+@end
+
 
 
 #pragma mark -

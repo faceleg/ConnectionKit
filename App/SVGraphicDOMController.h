@@ -20,6 +20,8 @@
     SVOffscreenWebViewController    *_offscreenWebViewController;
 }
 
++ (SVGraphicDOMController *)graphicPlaceholderDOMController;
+
 + (id)DOMControllerWithGraphic:(SVGraphic *)graphic
        parentWebEditorItemToBe:(SVDOMController *)parentItem;
 

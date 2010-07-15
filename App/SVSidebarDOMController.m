@@ -100,14 +100,20 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         aPagelet = [pagelets objectAtIndex:i];
         i--;
         
+        
         // Grab controller for item. Create it if needed
         WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
         if (!controller)
         {            
-            controller = [SVGraphicDOMController DOMControllerWithGraphic:aPagelet
-                                                  parentWebEditorItemToBe:self];
+            controller = [SVGraphicDOMController graphicPlaceholderDOMController];
+            [controller setRepresentedObject:aPagelet];
+            [self addChildWebEditorItem:controller];    // generates placeholder <DIV>
+            
+            [(SVDOMController *)controller setHTMLContext:[self HTMLContext]];
+            [controller setNeedsUpdate];
         }
         
+             
         // Insert before what should be its next sibling
         DOMElement *element = [controller HTMLElement];
         [contentElement insertBefore:element
@@ -115,10 +121,6 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         [controllers insertObject:controller atIndex:0];
         
-        
-        // Make sure is one of ours
-        [self addChildWebEditorItem:controller];
-
         
         // Loop
         nextController = controller;
