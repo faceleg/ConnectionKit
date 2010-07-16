@@ -296,7 +296,15 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [[self webEditor] scrollToPoint:_visibleRect.origin];
     
     
-    // Give focus to article?
+    // Did Update
+    [self didUpdate];
+    
+
+    // Mark as loaded
+    [self setViewIsReadyToAppear:YES];
+    
+    
+    // Give focus to article? This has to wait until we're onscreen
     if ([self articleShouldBecomeFocusedAfterNextLoad])
     {
         if ([[[self view] window] makeFirstResponder:[self webEditor]])
@@ -311,14 +319,6 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
         
         [self setArticleShouldBecomeFocusedAfterNextLoad:NO];
     }
-    
-    
-    // Did Update
-    [self didUpdate];
-    
-
-    // Mark as loaded
-    [self setViewIsReadyToAppear:YES];
     
     
     // Can now ditch context contents
