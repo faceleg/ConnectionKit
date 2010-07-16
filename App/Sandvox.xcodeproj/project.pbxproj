@@ -3506,6 +3506,8 @@
 		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
 			isa = PBXGroup;
 			children = (
+				27EF99C011A4205600FC8424 /* KSXMLWriter.h */,
+				27EF99C211A4205600FC8424 /* KSXMLWriter.m */,
 				270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */,
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				27A6098311282AC0007C301F /* KSWriter.h */,
@@ -4743,8 +4745,6 @@
 				CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */,
 				CE01A7030EAFD63600BDF264 /* TrimTransformer.h */,
 				CE01A7040EAFD63600BDF264 /* TrimTransformer.m */,
-				27EF99C011A4205600FC8424 /* KSXMLWriter.h */,
-				27EF99C211A4205600FC8424 /* KSXMLWriter.m */,
 				27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */,
 				27D353B711A9CC7200BC4DB8 /* KSComparisonValueTransformer.m */,
 				2775DB6A11B30B05005D6C92 /* KSCaseInsensitiveDictionary.h */,
