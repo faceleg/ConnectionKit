@@ -507,6 +507,8 @@
 		27C6FE620F1EBC8C00B58822 /* KTCodeInjection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */; };
 		27C98C9D0F1BA46B0079A84F /* KSSimpleURLConnection.h in Headers */ = {isa = PBXBuildFile; fileRef = 27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */; };
 		27C98C9E0F1BA46B0079A84F /* KSSimpleURLConnection.m in Sources */ = {isa = PBXBuildFile; fileRef = 27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */; };
+		27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */; };
+		27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */; };
 		27CD0A2B11AD684A0069E5AB /* WEKWebKitPrivate.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */; };
 		27CD6CE80CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h in Headers */ = {isa = PBXBuildFile; fileRef = 27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */; settings = {ATTRIBUTES = (); }; };
 		27CD6CE90CE8BC3300919E41 /* KTMissingMediaThumbnailCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */; };
@@ -1980,6 +1982,8 @@
 		27C6FE600F1EBC8C00B58822 /* KTCodeInjection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTCodeInjection.m; sourceTree = "<group>"; };
 		27C98C9B0F1BA46B0079A84F /* KSSimpleURLConnection.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = KSSimpleURLConnection.h; path = ../../Shared/Foundation/KSSimpleURLConnection.h; sourceTree = SOURCE_ROOT; };
 		27C98C9C0F1BA46B0079A84F /* KSSimpleURLConnection.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = KSSimpleURLConnection.m; path = ../../Shared/Foundation/KSSimpleURLConnection.m; sourceTree = SOURCE_ROOT; };
+		27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringHTMLEntityUnescaping.h; sourceTree = "<group>"; };
+		27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringHTMLEntityUnescaping.m; sourceTree = "<group>"; };
 		27CD0A2A11AD684A0069E5AB /* WEKWebKitPrivate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = WEKWebKitPrivate.h; sourceTree = "<group>"; };
 		27CD6CE60CE8BC3200919E41 /* KTMissingMediaThumbnailCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTMissingMediaThumbnailCell.h; sourceTree = "<group>"; };
 		27CD6CE70CE8BC3200919E41 /* KTMissingMediaThumbnailCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTMissingMediaThumbnailCell.m; sourceTree = "<group>"; };
@@ -4749,6 +4753,8 @@
 				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */,
 				2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */,
+				27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */,
+				27CC249C11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m */,
 			);
 			path = Foundation;
 			sourceTree = "<group>";
@@ -5535,6 +5541,7 @@
 				2726D9CD11E5D3230000257D /* KSSortedMutableArray.h in Headers */,
 				2726DEAA11E69CA80000257D /* SVRawHTMLDOMController.h in Headers */,
 				CE23D96C11E6E65900E43369 /* KSPlainClipTextView.h in Headers */,
+				27CC249D11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -6944,6 +6951,7 @@
 				CE23D84D11E69AD800E43369 /* SVOffscreenWebViewController.m in Sources */,
 				CE23D96D11E6E65900E43369 /* KSPlainClipTextView.m in Sources */,
 				27DBBD5B11EF39AE00910BE7 /* WebViewEditingHelperClasses.m in Sources */,
+				27CC249E11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
