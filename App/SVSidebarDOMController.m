@@ -108,9 +108,10 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
             controller = [[aPagelet newDOMController] autorelease];
             [controller loadPlaceholderDOMElementInDocument:[contentElement ownerDocument]];
             [self addChildWebEditorItem:controller];    // generates placeholder <DIV>
-            
             [controller setHTMLContext:[self HTMLContext]];
+            
             [controller setNeedsUpdate];
+            [controller updateIfNeeded];    // push it through quickly
         }
         
              
