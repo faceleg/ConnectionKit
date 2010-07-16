@@ -60,18 +60,16 @@
     [super viewWillAppear:animated];
     
     SVWebContentAreaController *tabController = (id)[self parentViewController];    // hack!
-    SVWebEditorViewController *editorController = [tabController webEditorViewController];
+    SVWebEditorViewController *webEditorController = [tabController webEditorViewController];
     
     // When loading a new page want white background. But for updating an existing page take a snapshot of the Web Editor
-    KTPage *loadedPage = [editorController loadedPage];
-    if (!loadedPage || loadedPage != [[editorController HTMLContext] page])
-    {
-        [[self backgroundImageView] setImage:nil];
-    }
-    else
+    KTPage *loadedPage = [webEditorController loadedPage];
+    if (loadedPage && 
+        [tabController selectedViewControllerWhenReady] == webEditorController &&
+        loadedPage == [[webEditorController HTMLContext] page])
     {
         // Take snapshot
-        NSView *view = [editorController view];
+        NSView *view = [webEditorController view];
         [view lockFocus];
         
         NSBitmapImageRep *snapshot = [[NSBitmapImageRep alloc]
@@ -84,6 +82,10 @@
         [snapshot release];
         [[self backgroundImageView] setImage:image];
         [image release];
+    }
+    else
+    {
+        [[self backgroundImageView] setImage:nil];
     }
 }
 
