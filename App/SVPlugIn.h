@@ -77,9 +77,6 @@
 - (BOOL)liveDataFeeds;
 - (BOOL)shouldWriteServerSideScripts;   // YES when -isForPublishing, but not when validating page
 
-// Call if your plug-in supports only particular HTML doc types. Otherwise, leave alone! Calling mid-write may have no immediate effect; instead the system will try another write after applying the limit.
-- (void)limitToMaxDocType:(KTDocType)docType;
-
 - (id <SVPage>)page;
 
 @end
