@@ -102,14 +102,14 @@ static NSString *sSVSidebarDOMControllerPageletsObservation = @"SVSidebarDOMCont
         
         
         // Grab controller for item. Create it if needed
-        WEKWebEditorItem *controller = [self hitTestRepresentedObject:aPagelet];
+        id controller = [self hitTestRepresentedObject:aPagelet];
         if (!controller)
         {            
-            controller = [SVGraphicDOMController graphicPlaceholderDOMController];
-            [controller setRepresentedObject:aPagelet];
+            controller = [[aPagelet newDOMController] autorelease];
+            [controller loadPlaceholderDOMElementInDocument:[contentElement ownerDocument]];
             [self addChildWebEditorItem:controller];    // generates placeholder <DIV>
             
-            [(SVDOMController *)controller setHTMLContext:[self HTMLContext]];
+            [controller setHTMLContext:[self HTMLContext]];
             [controller setNeedsUpdate];
         }
         
