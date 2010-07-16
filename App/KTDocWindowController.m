@@ -168,15 +168,11 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 	
 	myLastClickedPoint = NSZeroPoint;
 	
-	//	[[NSNotificationCenter defaultCenter] addObserver:self
-	//											 selector:@selector(infoWindowMayNeedRefreshing:)
-	//												 name:kKTInfoWindowMayNeedRefreshingNotification
-	//											   object:nil];	
-    
-    
+	
     // Give focus to article
     [[[self webContentAreaController] webEditorViewController] setArticleShouldBecomeFocusedAfterNextLoad:YES];
 	
+    
 	// Check for missing media
 	[self performSelector:@selector(checkForMissingMedia) withObject:nil afterDelay:0.0];
 }
