@@ -289,7 +289,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     _imageDOMController = [[SVImageDOMController alloc] init];
     [_imageDOMController setRepresentedObject:[self representedObject]];
     
-    [context addDOMController:_imageDOMController];
+    [self addChildWebEditorItem:_imageDOMController];
 }
 
 - (void)dealloc
@@ -298,7 +298,38 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     [super dealloc];
 }
 
+#pragma mark Controller
+
 @synthesize imageDOMController = _imageDOMController;
+
+- (BOOL)isSelectable;
+{
+    // Normally we are, but not for chrome-less images
+    BOOL result = ([self HTMLElement] == [[self imageDOMController] HTMLElement] ?
+                   NO :
+                   [super isSelectable]);
+    return result;
+}
+
+#pragma mark DOM
+
+- (void)loadHTMLElementFromDocument:(DOMDocument *)document;
+{
+    // Hook up image controller first
+    SVImageDOMController *imageController = [self imageDOMController];
+    if (![imageController isHTMLElementCreated])
+    {
+        [imageController loadHTMLElementFromDocument:document];
+    }
+    
+    [super loadHTMLElementFromDocument:document];
+    
+    // If it failed that's because the image is chromeless, so adopt its element
+    if (![self isHTMLElementCreated])
+    {
+        [self setHTMLElement:[imageController HTMLElement]];
+    }
+}
 
 @end
 
@@ -310,8 +341,8 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
 
 - (SVDOMController *)newDOMController;
 {
-    Class class = ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]);
-    return [[class alloc] initWithRepresentedObject:self];
+    //Class class = ([self isPagelet] ? [SVImagePageletDOMController class] : [SVImageDOMController class]);
+    return [[SVImagePageletDOMController alloc] initWithRepresentedObject:self];
 }
 
 @end
