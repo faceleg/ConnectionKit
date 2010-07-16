@@ -381,11 +381,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
     
     // Create controller for graphic
-    SVDOMController *controller = [SVGraphicDOMController graphicPlaceholderDOMController];
-    [controller setRepresentedObject:graphic];
-    [self addChildWebEditorItem:controller];    // generates placeholder <DIV>
+    SVGraphicDOMController *controller = [[graphic newDOMController] autorelease];
+    [controller loadPlaceholderDOMElementInDocument:[[self HTMLElement] ownerDocument]];
     [controller setHTMLContext:[self HTMLContext]];
-    [controller setNeedsUpdate];
     
     
     // Generate & insert DOM node
@@ -396,6 +394,9 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     
         // Insert controller – must do after node is inserted so descendant nodes can be located by ID
         [self addChildWebEditorItem:controller];
+        
+        [controller setNeedsUpdate];
+        [controller updateIfNeeded];    // push it through quickly
         
         // Finish the edit – had to wait until both node and controller were present
         [webEditor didChangeText];
