@@ -31,12 +31,23 @@
 	}
 }
 
++ (NSDictionary *)emptyCollectionPreset;
+{
+    NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
+                            NSLocalizedString(@"Empty Collection", "toolbar menu"), @"KTPresetTitle",
+                            [NSNumber numberWithInt:0], @"KTPluginPriority",
+                            nil];
+    
+    return result;
+}
 
 + (void)populateMenuWithCollectionPresets:(NSMenu *)aMenu atIndex:(NSUInteger)index;
 {
-    // First go through and get the localized names of each bundle, and put into a dict keyed by name
-	NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
+    NSMutableDictionary *dictOfPresets = [NSMutableDictionary dictionary];
+    [dictOfPresets setObject:[self emptyCollectionPreset] forKey:@"0"];
 	
+    
+    // Go through and get the localized names of each bundle, and put into a dict keyed by name
     NSDictionary *plugins = [KSPlugInWrapper pluginsWithFileExtension:kKTIndexExtension];
     NSEnumerator *enumerator = [plugins objectEnumerator];	// go through each plugin.
     KTHTMLPlugInWrapper *plugin;
@@ -64,11 +75,13 @@
                 NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
                 NSString *presetTitle = [bundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
                 
-                NSMutableDictionary *newPreset = [NSMutableDictionary dictionaryWithDictionary:presetDict];
+                NSMutableDictionary *newPreset = [presetDict mutableCopy];
                 [newPreset setObject:[bundle bundleIdentifier] forKey:@"KTPresetIndexBundleIdentifier"];
                 
-                [dictOfPresets setObject:[NSDictionary dictionaryWithDictionary:newPreset]
+                [dictOfPresets setObject:newPreset
                                   forKey:[NSString stringWithFormat:@"%d %@", priority, presetTitle]];
+                
+                [newPreset release];
             }
 		}
 	}
@@ -83,13 +96,17 @@
 		NSDictionary *presetDict = [dictOfPresets objectForKey:priorityAndName];
 		NSString *bundleIdentifier = [presetDict objectForKey:@"KTPresetIndexBundleIdentifier"];
 		
-		KTIndexPlugInWrapper *plugin = [KTIndexPlugInWrapper pluginWithIdentifier:bundleIdentifier];
-		NSBundle *pluginBundle = [plugin bundle];
+		KTIndexPlugInWrapper *plugin = (bundleIdentifier ?
+                                        [KTIndexPlugInWrapper pluginWithIdentifier:bundleIdentifier] :
+                                        nil);
 		
         NSMenuItem *menuItem = [[[NSMenuItem alloc] init] autorelease];
 		
-		NSString *englishPresetTitle = [presetDict objectForKey:@"KTPresetTitle"];
-		NSString *presetTitle = [pluginBundle localizedStringForKey:englishPresetTitle value:englishPresetTitle table:nil];
+		NSString *presetTitle = [presetDict objectForKey:@"KTPresetTitle"];
+        if (plugin) presetTitle = [[plugin bundle] localizedStringForKey:presetTitle
+                                                                   value:presetTitle
+                                                                   table:nil];
+        
 		id priorityID = [presetDict objectForKey:@"KTPluginPriority"];
 		int priority = 5;
 		if (nil != priorityID)
