@@ -75,6 +75,15 @@
     }
 }
 
+- (void)loadPlaceholderDOMElementInDocument:(DOMDocument *)document;
+{
+    DOMElement *element = [document createElement:@"DIV"];
+    [[element style] setDisplay:@"none"];
+    [self setHTMLElement:(DOMHTMLElement *)element];
+}
+
+#pragma mark Updating
+
 - (void)update;
 {
     // Tear down dependencies etc.
@@ -180,9 +189,7 @@
 
 - (void)loadHTMLElementFromDocument:(DOMHTMLDocument *)document;
 {
-    DOMElement *element = [document createElement:@"DIV"];
-    [[element style] setDisplay:@"none"];
-    [self setHTMLElement:(DOMHTMLElement *)element];
+    [self loadPlaceholderDOMElementInDocument:document];
 }
 
 @end
