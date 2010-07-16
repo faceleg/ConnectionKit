@@ -165,6 +165,17 @@
 			name = UpdateKSExtensibleManagedObject;
 			productName = UpdateKSExtensibleManagedObject;
 		};
+		3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 3CBC727F11F0C60B00716937 /* Build configuration list for PBXAggregateTarget "UpdateKSHTMLWriter" */;
+			buildPhases = (
+				3CBC727211F0C59E00716937 /* ShellScript */,
+			);
+			dependencies = (
+			);
+			name = UpdateKSHTMLWriter;
+			productName = KSHTMLWriter;
+		};
 		3CD5B7840DCA668D006EE4D9 /* BuildAndDeploySymbols */ = {
 			isa = PBXAggregateTarget;
 			buildConfigurationList = 3CD5B7880DCA66FB006EE4D9 /* Build configuration list for PBXAggregateTarget "BuildAndDeploySymbols" */;
@@ -1527,6 +1538,13 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = BadgeElement;
+		};
+		3CBC727611F0C5E000716937 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 3CBC727311F0C59E00716937 /* KSHTMLWriter */;
+			remoteInfo = KSHTMLWriter;
 		};
 		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -5585,6 +5603,7 @@
 				3C96ADF10CA074A900C5249F /* PBXTargetDependency */,
 				3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */,
 				3CBC655A11EFD5E500716937 /* PBXTargetDependency */,
+				3CBC727711F0C5E000716937 /* PBXTargetDependency */,
 				27E4D4510EC30CEE000E85DD /* PBXTargetDependency */,
 				CED864B110AA41DC002DF34F /* PBXTargetDependency */,
 				CE559B621085296D008870B5 /* PBXTargetDependency */,
@@ -5778,6 +5797,7 @@
 				3C3E75FA0F1C5F42002E3A9A /* UpdateInvalidLicenses */,
 				3CE2B2B70D7F1DD900E2711E /* UpdateShared */,
 				3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */,
+				3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */,
 				3C5A9A850D11E4DF0054058C /* iMedia-UpdateRevision */,
 				3C5A9A950D11E68A0054058C /* ConnectionKit-UpdateRevision */,
 				CEF9D0AE0D862B5100BD9895 /* ImageWebKitPlugin */,
@@ -6481,6 +6501,20 @@
 			shellScript = "#!/bin/bash\n\n###\n### PULL KSExtensibleManagedObjects FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSExtensibleManagedObject\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSExtensibleManagedObject from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSExtensibleManagedObject\"\n\npopd\n\nexit 0\n";
 			showEnvVarsInLog = 0;
 		};
+		3CBC727211F0C59E00716937 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 8;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+			shellPath = /bin/sh;
+			shellScript = "#!/bin/bash\n\n###\n### PULL KSHTMLWriter FOR RELEASE BUILDS\n###\n\nREPOSITORY_PATH=${SRCROOT}/../../KSHTMLWriter\n\nif [ -e /usr/local/bin/git ]\nthen\n\tGIT_PATH=/usr/local/bin/git\nelif [ -e /usr/bin/git ]\nthen\n\tGIT_PATH=/usr/bin/git\nelif [ -e /opt/local/bin/git ]\nthen\n\tGIT_PATH=/opt/local/bin/git\nelse\n\techo \"ERROR - CANT FIND GIT\"\n\texit 1\nfi\n\npushd ${SRCROOT}\n\necho \"pulling KSHTMLWriter from GitHub ...\"\ncd ${REPOSITORY_PATH}\n${GIT_PATH} pull\necho \"... finished pulling KSHTMLWriter\"\n\npopd\n\nexit 0\n";
+			showEnvVarsInLog = 0;
+		};
 		3CD5B7830DCA668D006EE4D9 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 8;
@@ -7144,6 +7178,11 @@
 			name = BadgeElement;
 			targetProxy = 3CBC719D11F02FAD00716937 /* PBXContainerItemProxy */;
 		};
+		3CBC727711F0C5E000716937 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 3CBC727311F0C59E00716937 /* UpdateKSHTMLWriter */;
+			targetProxy = 3CBC727611F0C5E000716937 /* PBXContainerItemProxy */;
+		};
 		3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 3CE2B2B70D7F1DD900E2711E /* UpdateShared */;
@@ -7686,6 +7725,27 @@
 			};
 			name = Release;
 		};
+		3CBC727411F0C59E00716937 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = KSHTMLWriter;
+			};
+			name = Debug;
+		};
+		3CBC727511F0C59E00716937 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = KSHTMLWriter;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
 		3CD5B7850DCA668E006EE4D9 /* Release */ = {
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 3C095BC40D5D1DD400DE6F62 /* Sandvox.xcconfig */;
@@ -7938,6 +7998,15 @@
 			buildConfigurations = (
 				3CBC651C11EFD04900716937 /* Debug */,
 				3CBC651D11EFD04900716937 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		3CBC727F11F0C60B00716937 /* Build configuration list for PBXAggregateTarget "UpdateKSHTMLWriter" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				3CBC727411F0C59E00716937 /* Debug */,
+				3CBC727511F0C59E00716937 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
