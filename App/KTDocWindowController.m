@@ -446,11 +446,20 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
 
 #pragma mark Page Actions
 
+- (void)willAddPage;
+{
+    // As we're making a new page, give its article the focus
+    [[self webContentAreaController] setViewType:KTStandardWebView];
+    [[[self webContentAreaController] webEditorViewController] setArticleShouldBecomeFocusedAfterNextLoad:YES];
+}
+
 - (IBAction)addPage:(id)sender;             // your basic page
 {
     [[self pagesController] setEntityName:@"Page"];
     [[self pagesController] setCollectionPreset:nil];
     [[self pagesController] add:self];
+    
+    [self willAddPage]; // -add: delays it's result, so I'm not lying!
 }
 
 - (IBAction)addCollection:(id)sender;       // a collection. Uses [sender representedObject] for preset info
@@ -458,6 +467,8 @@ NSString *gInfoWindowAutoSaveName = @"Inspector TopLeft";
     [[self pagesController] setEntityName:@"Page"];
     [[self pagesController] setCollectionPreset:[sender representedObject]];
     [[self pagesController] add:self];
+    
+    [self willAddPage]; // -add: delays it's result, so I'm not lying!
 }
 
 - (IBAction)addExternalLinkPage:(id)sender; // external link

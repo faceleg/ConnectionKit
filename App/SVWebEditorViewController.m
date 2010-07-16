@@ -296,6 +296,23 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     [[self webEditor] scrollToPoint:_visibleRect.origin];
     
     
+    // Give focus to article?
+    if ([self articleShouldBecomeFocusedAfterNextLoad])
+    {
+        if ([[[self view] window] makeFirstResponder:[self webEditor]])
+        {
+            SVRichTextDOMController *articleController = (id)[self articleDOMController];
+            DOMDocument *document = [[articleController HTMLElement] ownerDocument];
+            
+            DOMRange *range = [document createRange];
+            [range setStart:[articleController textHTMLElement] offset:0];
+            [[self webEditor] setSelectedDOMRange:range affinity:0];
+        }
+        
+        [self setArticleShouldBecomeFocusedAfterNextLoad:NO];
+    }
+    
+    
     // Did Update
     [self didUpdate];
     
@@ -307,6 +324,8 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     // Can now ditch context contents
     [context close];
 }
+
+@synthesize articleShouldBecomeFocusedAfterNextLoad = _articleShouldBecomeFocusedAfterNextLoad;
 
 #pragma mark Updating
 
@@ -512,6 +531,13 @@ NSString *sSVWebEditorViewControllerWillUpdateNotification = @"SVWebEditorViewCo
     
     // One day there might be better logic to apply, but for now, testing the start of the range is enough
     return [self textAreaForDOMNode:[range startContainer]];
+}
+
+- (WEKWebEditorItem *)articleDOMController;
+{
+    SVRichText *article = [[[self HTMLContext] page] article];
+    WEKWebEditorItem *result = [[[self webEditor] contentItem] hitTestRepresentedObject:article];
+    return result;
 }
 
 #pragma mark Element Insertion
@@ -1047,8 +1073,7 @@ shouldChangeSelectedDOMRange:(DOMRange *)currentRange
 
 - (DOMRange *)webEditor:(WEKWebEditorView *)sender fallbackDOMRangeForNoSelection:(NSEvent *)selectionEvent;
 {
-    SVRichText *article = [[[self HTMLContext] page] article];
-    SVTextDOMController *item = (id)[[[self webEditor] contentItem] hitTestRepresentedObject:article];
+    SVTextDOMController *item = (id)[self articleDOMController];
     DOMNode *articleNode = [item textHTMLElement];
     
     DOMRange *result = [[articleNode ownerDocument] createRange];

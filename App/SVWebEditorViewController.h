@@ -47,6 +47,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
     
     // Loading
     KTPage  *_loadedPage;
+    BOOL    _articleShouldBecomeFocusedAfterNextLoad;
         
     // Delegate
     id <SVWebEditorViewControllerDelegate>  _delegate;  // weak ref
@@ -70,6 +71,7 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 #pragma mark Loading
 - (void)loadPage:(KTPage *)page;
 - (KTPage *)loadedPage; // the last page to successfully load into Web Editor
+@property(nonatomic) BOOL articleShouldBecomeFocusedAfterNextLoad;
 
 
 #pragma mark Content
@@ -85,10 +87,10 @@ extern NSString *sSVWebEditorViewControllerWillUpdateNotification;
 
 
 #pragma mark Text Areas
-
 // A series of methods for retrieving the Text Block to go with a bit of the webview
 - (SVTextDOMController *)textAreaForDOMNode:(DOMNode *)node;
 - (SVTextDOMController *)textAreaForDOMRange:(DOMRange *)range;
+- (WEKWebEditorItem *)articleDOMController;
 
 
 #pragma mark Content Objects
