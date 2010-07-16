@@ -115,13 +115,14 @@
     
     _currentDOMController = controller;
     _needsToWriteElementID = YES;
-    
-    [controller awakeFromHTMLContext:self];
 }
 
 - (void)endDOMController;
 {
+    SVDOMController *controller = _currentDOMController;
     _currentDOMController = (SVDOMController *)[_currentDOMController parentWebEditorItem];
+    
+    [controller awakeFromHTMLContext:self];
 }
 
 - (void)addDOMController:(SVDOMController *)controller;
@@ -174,9 +175,7 @@
     SVDOMController *currentController = _currentDOMController;
     _currentDOMController = controller;
     _needsToWriteElementID = YES;
-    
-    [controller awakeFromHTMLContext:self];
-    
+        
     
     // Generate HTML
     [self writeGraphicIgnoringCallout:graphic];
