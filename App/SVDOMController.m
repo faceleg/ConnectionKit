@@ -188,6 +188,7 @@
         [controller performSelector:@selector(willUpdate)];
         
         [self update];
+        _needsUpdate = NO;  // in case the update is async and hasn't finished yet
     }
     
     [super updateIfNeeded];
