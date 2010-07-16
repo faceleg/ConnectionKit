@@ -285,8 +285,7 @@ static NSString *sImageSizeObservationContext = @"SVImageSizeObservation";
     
     
     // Add separate DOM controller for the image itself
-    OBASSERT(!_imageDOMController);
-    _imageDOMController = [[SVImageDOMController alloc] init];
+    [_imageDOMController release]; _imageDOMController = [[SVImageDOMController alloc] init];
     [_imageDOMController setRepresentedObject:[self representedObject]];
     
     [self addChildWebEditorItem:_imageDOMController];
