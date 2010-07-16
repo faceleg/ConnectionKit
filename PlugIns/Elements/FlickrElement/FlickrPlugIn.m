@@ -43,25 +43,15 @@
 
 @implementation FlickrPlugIn
 
-/*
- PlugIn properties we use:
- 
-	flickrID
-	tag
-	number
-	flashStyle
-	random
-	showInfo
- 
- See:   http://www.flickr.com/badge_new.gne
- 
- */
-
 
 #pragma mark -
 #pragma mark SVPlugIn
 
-+ (NSSet *)plugInKeys
+/*
+ Flickr badge generator is at http://www.flickr.com/badge_new.gne
+ */
+
++ (NSArray *)plugInKeys
 { 
     return [NSSet setWithObjects:
             @"flickrID", 
@@ -78,20 +68,6 @@
     self.flickrID = nil;
     self.tag = nil;
     [super dealloc];
-}
-
-
-#pragma mark -
-#pragma mark HTML Generation
-
-- (void)writeHTML:(id <SVPlugInContext>)context
-{
-    if ( self.flashStyle )
-    {
-        // If we are using flickr badge in flash style, it uses iframe, so we can't be strict.
-        [context limitToMaxDocType:KTXHTMLTransitionalDocType];
-    }
-    [super writeHTML:context];
 }
 
 

@@ -68,7 +68,7 @@
 
 - (IBAction)openFlickr:(id)sender
 {
-	[[NSWorkspace sharedWorkspace] attemptToOpenWebURL:[NSURL URLWithString:@"http://www.flickr.com/"]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:@"http://www.flickr.com/"]];
 }
 
 @end
