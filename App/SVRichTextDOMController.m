@@ -386,10 +386,18 @@ static NSString *sBodyTextObservationContext = @"SVBodyTextObservationContext";
     [controller setHTMLContext:[self HTMLContext]];
     
     
-    // Generate & insert DOM node
+    // Figure out where to insert. Tweak a little when at the start of a paragraph. #81909
     DOMRange *selection = [webEditor selectedDOMRange];
+    if ([selection collapsed] &&
+        [selection startOffset] == 0 &&
+        [[selection startContainer] parentNode] == [self textHTMLElement])
+    {
+        [selection setStartBefore:[selection startContainer]];
+    }
+    
     if ([webEditor shouldChangeTextInDOMRange:selection])
     {
+        // Generate & insert DOM node
         [selection insertNode:[controller HTMLElement]];
     
         // Insert controller – must do after node is inserted so descendant nodes can be located by ID
