@@ -36,6 +36,7 @@
     NSDictionary *result = [NSDictionary dictionaryWithObjectsAndKeys:
                             NSLocalizedString(@"Empty Collection", "toolbar menu"), @"KTPresetTitle",
                             [NSNumber numberWithInt:0], @"KTPluginPriority",
+							[NSImage imageNamed:@"toolbar_empty_page.tiff" ], @"KTPluginIcon",	// indicator of the actual icon
                             nil];
     
     return result;
@@ -115,13 +116,22 @@
 		} 
 		
 		
-        NSImage *image = [plugin pluginIcon];
+        NSImage *image = nil;
+		
+		if (plugin)
+		{
+			image = [plugin pluginIcon];
 #ifdef DEBUG
-        if (nil == image)
-        {
-            NSLog(@"nil pluginIcon for %@", presetTitle);
-        }
+			if (nil == image)
+			{
+				NSLog(@"nil pluginIcon for %@", presetTitle);
+			}
 #endif
+		}
+		else	// built-in, no bundle, so try to get icon directly
+		{
+			image = [presetDict objectForKey:@"KTPluginIcon"];
+		}
         if (image)
         {
             

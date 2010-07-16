@@ -1529,21 +1529,21 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3CBC727311F0C59E00716937 /* KSHTMLWriter */;
+			remoteGlobalIDString = 3CBC727311F0C59E00716937;
 			remoteInfo = KSHTMLWriter;
 		};
 		3CBC728811F0C69900716937 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Flickr.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = FlickrElement;
 		};
 		3CBC728A11F0C6A600716937 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C42E4F10D650429004F35FD /* FlickrElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* FlickrElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = FlickrElement;
 		};
 		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
