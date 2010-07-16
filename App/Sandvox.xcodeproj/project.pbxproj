@@ -3506,6 +3506,8 @@
 		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
 			isa = PBXGroup;
 			children = (
+				270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */,
+				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				27A6098311282AC0007C301F /* KSWriter.h */,
 				27A6098411282AC0007C301F /* KSWriter.m */,
 			);
@@ -4749,8 +4751,6 @@
 				2775DB6B11B30B05005D6C92 /* KSCaseInsensitiveDictionary.m */,
 				277FDD5F11CE21650083F1BF /* KSMegaBufferedWriter.h */,
 				277FDD6011CE21650083F1BF /* KSMegaBufferedWriter.m */,
-				270172F111CFBEF3001512F6 /* KSStringXMLEntityEscaping.h */,
-				270172F211CFBEF3001512F6 /* KSStringXMLEntityEscaping.m */,
 				2726D9CB11E5D3230000257D /* KSSortedMutableArray.h */,
 				2726D9CC11E5D3230000257D /* KSSortedMutableArray.m */,
 				27CC249B11F0751A007FB3FE /* KSStringHTMLEntityUnescaping.h */,
