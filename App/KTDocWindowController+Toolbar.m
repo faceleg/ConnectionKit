@@ -170,7 +170,7 @@
                     action:@selector(addPage:)
              keyEquivalent:@""];
     
-	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_new_page"]];
+	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_empty_page"]];
 	
     
     
@@ -178,6 +178,9 @@
     NSMenuItem *item = [menu addItemWithTitle:NSLocalizedString(@"Collections", "toolbar menu")
                                        action:nil
                                 keyEquivalent:@""];
+	
+	[[pulldownButton lastItem] setIconImage:[NSImage imageNamed:@"toolbar_collection"]];
+
     NSMenu *collectionsMenu = [[NSMenu alloc] initWithTitle:NSLocalizedString(@"Collections", "toolbar menu")];
     [item setSubmenu:collectionsMenu];
     [KTIndexPlugInWrapper populateMenuWithCollectionPresets:collectionsMenu atIndex:0];

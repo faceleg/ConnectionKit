@@ -21,6 +21,7 @@
 #import "NSObject+Karelia.h"
 #import "NSOutlineView+KTExtensions.h"
 #import "NSManagedObjectContext+KTExtensions.h"
+#import "NSString+Karelia.h"
 
 #import "KSThreadProxy.h"
 

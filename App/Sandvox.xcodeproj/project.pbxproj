@@ -1065,6 +1065,7 @@
 		CE5D02C611E66C4B00A4A2D1 /* KSFeedback.xib in Resources */ = {isa = PBXBuildFile; fileRef = CE5D02C411E66C4B00A4A2D1 /* KSFeedback.xib */; };
 		CE5E55FC0EAFE98100A3EDDA /* Macros.h in Headers */ = {isa = PBXBuildFile; fileRef = CE5E55FB0EAFE98100A3EDDA /* Macros.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		CE66D15E083D305700AD46CD /* imageReplacementEntry.txt in Resources */ = {isa = PBXBuildFile; fileRef = CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */; };
+		CE72DD6311F018CC0010E14C /* toolbar_empty_page.tiff in Resources */ = {isa = PBXBuildFile; fileRef = CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */; };
 		CE733A611113A6F5009582EA /* SVBlogEntryBorderView.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */; };
 		CE733A621113A6F5009582EA /* SVBlogEntryBorderView.m in Sources */ = {isa = PBXBuildFile; fileRef = CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */; };
 		CE733AAD1113B952009582EA /* SVBlogSummaryDOMController.h in Headers */ = {isa = PBXBuildFile; fileRef = CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */; };
@@ -1522,7 +1523,7 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 2A37F4A9FDCFA73011CA2CEA /* Project object */;
 			proxyType = 1;
-			remoteGlobalIDString = 3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */;
+			remoteGlobalIDString = 3CBC651B11EFD04800716937;
 			remoteInfo = UpdateKSExtensibleManagedObject;
 		};
 		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
@@ -2670,6 +2671,7 @@
 		CE5D02C511E66C4B00A4A2D1 /* KSFeedback.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = KSFeedback.xib; path = en.lproj/KSFeedback.xib; sourceTree = "<group>"; };
 		CE5E55FB0EAFE98100A3EDDA /* Macros.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Macros.h; sourceTree = "<group>"; };
 		CE66D15D083D305700AD46CD /* imageReplacementEntry.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = imageReplacementEntry.txt; sourceTree = "<group>"; };
+		CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */ = {isa = PBXFileReference; lastKnownFileType = image.tiff; path = toolbar_empty_page.tiff; sourceTree = "<group>"; };
 		CE733A5F1113A6F5009582EA /* SVBlogEntryBorderView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogEntryBorderView.h; sourceTree = "<group>"; };
 		CE733A601113A6F5009582EA /* SVBlogEntryBorderView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVBlogEntryBorderView.m; sourceTree = "<group>"; };
 		CE733AAB1113B952009582EA /* SVBlogSummaryDOMController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVBlogSummaryDOMController.h; sourceTree = "<group>"; };
@@ -4995,6 +4997,7 @@
 				CE1BE80F11D2AD1E00D875AE /* toolbar_publish.tiff */,
 				CE1BF8C311D2B9D400D875AE /* toolbar_text.tiff */,
 				CE7B687111EE7F2000F56D8B /* html_element.tiff */,
+				CE72DD6211F018CC0010E14C /* toolbar_empty_page.tiff */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -6163,6 +6166,7 @@
 				CE7B687211EE7F2000F56D8B /* html_element.tiff in Resources */,
 				CE36E59011EF95FF003EFCA8 /* designPlaceholder.tiff in Resources */,
 				CE36E5CA11EFA68E003EFCA8 /* plainText.tiff in Resources */,
+				CE72DD6311F018CC0010E14C /* toolbar_empty_page.tiff in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
