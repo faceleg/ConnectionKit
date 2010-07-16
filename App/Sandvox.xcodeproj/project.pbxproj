@@ -456,8 +456,8 @@
 		27A3578A10E6D59D00C99FB3 /* SVTemplate.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A3578810E6D59D00C99FB3 /* SVTemplate.m */; };
 		27A50E8A0D19282B00149038 /* SVHTMLTextBlock.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A50E880D19282B00149038 /* SVHTMLTextBlock.h */; settings = {ATTRIBUTES = (); }; };
 		27A50E8B0D19282B00149038 /* SVHTMLTextBlock.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A50E890D19282B00149038 /* SVHTMLTextBlock.m */; };
-		27A6098511282AC0007C301F /* KSStringStream.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSStringStream.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		27A6098611282AC0007C301F /* KSStringStream.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6098411282AC0007C301F /* KSStringStream.m */; };
+		27A6098511282AC0007C301F /* KSWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A6098311282AC0007C301F /* KSWriter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		27A6098611282AC0007C301F /* KSWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A6098411282AC0007C301F /* KSWriter.m */; };
 		27A617141122FA0000004FED /* SVTextBox.h in Headers */ = {isa = PBXBuildFile; fileRef = 27A617121122FA0000004FED /* SVTextBox.h */; };
 		27A617151122FA0000004FED /* SVTextBox.m in Sources */ = {isa = PBXBuildFile; fileRef = 27A617131122FA0000004FED /* SVTextBox.m */; };
 		27A617661123005100004FED /* TextBoxBodyTemplate.html in Resources */ = {isa = PBXBuildFile; fileRef = 27A617651123005100004FED /* TextBoxBodyTemplate.html */; };
@@ -1516,14 +1516,14 @@
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
 			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Badge.svxElement */;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = BadgeElement;
 		};
 		3CBC719D11F02FAD00716937 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
 			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* BadgeElement */;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = BadgeElement;
 		};
 		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
@@ -1924,8 +1924,8 @@
 		27A50E890D19282B00149038 /* SVHTMLTextBlock.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVHTMLTextBlock.m; sourceTree = "<group>"; };
 		27A50F260D19443800149038 /* DOM+KTWebViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "DOM+KTWebViewController.h"; sourceTree = "<group>"; };
 		27A50F270D19443800149038 /* DOM+KTWebViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "DOM+KTWebViewController.m"; sourceTree = "<group>"; };
-		27A6098311282AC0007C301F /* KSStringStream.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSStringStream.h; sourceTree = "<group>"; };
-		27A6098411282AC0007C301F /* KSStringStream.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSStringStream.m; sourceTree = "<group>"; };
+		27A6098311282AC0007C301F /* KSWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KSWriter.h; sourceTree = "<group>"; };
+		27A6098411282AC0007C301F /* KSWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KSWriter.m; sourceTree = "<group>"; };
 		27A617121122FA0000004FED /* SVTextBox.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SVTextBox.h; sourceTree = "<group>"; };
 		27A617131122FA0000004FED /* SVTextBox.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SVTextBox.m; sourceTree = "<group>"; };
 		27A617651123005100004FED /* TextBoxBodyTemplate.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = TextBoxBodyTemplate.html; sourceTree = "<group>"; };
@@ -3499,6 +3499,16 @@
 			path = ../KSExtensibleManagedObject;
 			sourceTree = "<group>";
 		};
+		27CC248211F07277007FB3FE /* KSHTMLWriter */ = {
+			isa = PBXGroup;
+			children = (
+				27A6098311282AC0007C301F /* KSWriter.h */,
+				27A6098411282AC0007C301F /* KSWriter.m */,
+			);
+			name = KSHTMLWriter;
+			path = ../KSHTMLWriter;
+			sourceTree = "<group>";
+		};
 		27DF88CE0D85785D00AEF4B5 /* Main Document Window */ = {
 			isa = PBXGroup;
 			children = (
@@ -4727,8 +4737,6 @@
 				CE01A7020EAFD63600BDF264 /* TrimFirstLineTransformer.m */,
 				CE01A7030EAFD63600BDF264 /* TrimTransformer.h */,
 				CE01A7040EAFD63600BDF264 /* TrimTransformer.m */,
-				27A6098311282AC0007C301F /* KSStringStream.h */,
-				27A6098411282AC0007C301F /* KSStringStream.m */,
 				27EF99C011A4205600FC8424 /* KSXMLWriter.h */,
 				27EF99C211A4205600FC8424 /* KSXMLWriter.m */,
 				27D353B611A9CC7200BC4DB8 /* KSComparisonValueTransformer.h */,
@@ -5132,6 +5140,7 @@
 		CEC11A2E0D78BE0100513E70 /* Shared */ = {
 			isa = PBXGroup;
 			children = (
+				27CC248211F07277007FB3FE /* KSHTMLWriter */,
 				27CC0E2511EFBA02007FB3FE /* KSExtensibleManagedObject */,
 				CE1BE7AF11D2AD0700D875AE /* Graphics */,
 				CE01A6B50EAFD63600BDF264 /* Foundation */,
@@ -5468,7 +5477,7 @@
 				27A617141122FA0000004FED /* SVTextBox.h in Headers */,
 				27A6187B1123480C00004FED /* SVParagraphedHTMLWriter.h in Headers */,
 				27BA06C81125A46900B9D8F4 /* SVWebEditorTextRange.h in Headers */,
-				27A6098511282AC0007C301F /* KSStringStream.h in Headers */,
+				27A6098511282AC0007C301F /* KSWriter.h in Headers */,
 				274FA0DD11297971000E0FDA /* WEKRootItem.h in Headers */,
 				CE8D547C112AFDBD007AC2F0 /* SVValidatorWindowController.h in Headers */,
 				277E6EE6112EB4830081389F /* SVDirectoryPublishingRecord.h in Headers */,
@@ -6877,7 +6886,7 @@
 				27A617151122FA0000004FED /* SVTextBox.m in Sources */,
 				27A6187C1123480C00004FED /* SVParagraphedHTMLWriter.m in Sources */,
 				27BA06C91125A46900B9D8F4 /* SVWebEditorTextRange.m in Sources */,
-				27A6098611282AC0007C301F /* KSStringStream.m in Sources */,
+				27A6098611282AC0007C301F /* KSWriter.m in Sources */,
 				279BCF361128C1F90000FC77 /* SVHTMLContext+CurrentContext.m in Sources */,
 				274FA0DE11297971000E0FDA /* WEKRootItem.m in Sources */,
 				274FA0F111297AFD000E0FDA /* WEKWebEditorView+EditingSupport.m in Sources */,

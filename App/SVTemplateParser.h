@@ -18,7 +18,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSStringStream.h"
+#import "KSWriter.h"
 #import "NSString+Karelia.h"    // for ComparisonType
 
 

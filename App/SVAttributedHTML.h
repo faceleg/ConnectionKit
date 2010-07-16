@@ -7,7 +7,7 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import "KSStringStream.h"
+#import "KSWriter.h"
 
 
 @class SVHTMLContext, SVGraphic;

@@ -11,7 +11,7 @@
 
 #import "SVTemplate.h"
 
-#import "KSStringStream.h"
+#import "KSWriter.h"
 
 #import "NSBundle+Karelia.h"
 #import "NSCharacterSet+Karelia.h"
