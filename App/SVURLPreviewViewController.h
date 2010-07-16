@@ -16,7 +16,6 @@
 {
   @private
     SVSiteItem  *_siteItem;
-    BOOL    _readyToAppear;
 	
 	NSString *_metaDescription;
 }

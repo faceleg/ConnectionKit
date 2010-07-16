@@ -148,11 +148,13 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 - (BOOL)viewShouldAppear:(BOOL)animated
 webContentAreaController:(SVWebContentAreaController *)controller;
 {
+    // Don't want to appear until old page is unloaded. But if we're already on screen, that's fine
+    BOOL result = ([controller selectedViewController] == self || ![self siteItem]);
+    
     // Start loading the page
     [self setSiteItem:[controller selectedPage]];
     
-    // Don't want to appear until the page is loaded. But if we're already on screen, that's fine
-    return ([controller selectedViewController] == self);
+    return result;
 }
 
 @synthesize siteItem = _siteItem;
