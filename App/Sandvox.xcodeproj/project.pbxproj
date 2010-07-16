@@ -105,7 +105,7 @@
 			dependencies = (
 				3C9B65940BFA7F7F007A4871 /* PBXTargetDependency */,
 				3C53E3E911EE6B14005CF7B2 /* PBXTargetDependency */,
-				3C53E3CD11EE6B14005CF7B2 /* PBXTargetDependency */,
+				3CBC719E11F02FAD00716937 /* PBXTargetDependency */,
 				3C53E3D111EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3DF11EE6B14005CF7B2 /* PBXTargetDependency */,
 				3C53E3CF11EE6B14005CF7B2 /* PBXTargetDependency */,
@@ -1225,13 +1225,6 @@
 			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
 			remoteInfo = AmazonElement;
 		};
-		3C53E2F311EE6758005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
-			proxyType = 2;
-			remoteGlobalIDString = 8D5B49B6048680CD000E48DA;
-			remoteInfo = BadgeElement;
-		};
 		3C53E2FB11EE6762005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 3C9B66250BFA818B007A4871 /* ContactElement.xcodeproj */;
@@ -1357,13 +1350,6 @@
 			proxyType = 1;
 			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
 			remoteInfo = PhotoGridIndex;
-		};
-		3C53E3CC11EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
-			proxyType = 1;
-			remoteGlobalIDString = 8D5B49AC048680CD000E48DA;
-			remoteInfo = BadgeElement;
 		};
 		3C53E3CE11EE6B14005CF7B2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -1525,6 +1511,20 @@
 			proxyType = 1;
 			remoteGlobalIDString = 3CBC651B11EFD04800716937;
 			remoteInfo = UpdateKSExtensibleManagedObject;
+		};
+		3CBC719911F02EB800716937 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 8D5B49B6048680CD000E48DA /* Badge.svxElement */;
+			remoteInfo = BadgeElement;
+		};
+		3CBC719D11F02FAD00716937 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
+			proxyType = 1;
+			remoteGlobalIDString = 8D5B49AC048680CD000E48DA /* BadgeElement */;
+			remoteInfo = BadgeElement;
 		};
 		3CE2B2C10D7F1E8A00E2711E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -2254,7 +2254,7 @@
 		3CA900670D63C76100815310 /* IFrameElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = IFrameElement.xcodeproj; path = ../OldPlugins/Elements/IFrameElement/IFrameElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA901A20D63D45B00815310 /* LinkListElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = LinkListElement.xcodeproj; path = ../OldPlugins/Elements/LinkListElement/LinkListElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9B30D0804643200C3053B /* KTDocument+Properties.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "KTDocument+Properties.m"; sourceTree = "<group>"; };
-		3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BadgeElement.xcodeproj; path = ../OldPlugins/Elements/BadgeElement/BadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
+		3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = BadgeElement.xcodeproj; path = ../PlugIns/Elements/BadgeElement/BadgeElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CA9FF820D63C4DA00815310 /* FeedElement.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = FeedElement.xcodeproj; path = ../OldPlugins/Elements/FeedElement/FeedElement.xcodeproj; sourceTree = SOURCE_ROOT; };
 		3CBDE9100EBA65D20059C56C /* KTLocalPublishingEngine.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KTLocalPublishingEngine.h; sourceTree = "<group>"; };
 		3CBDE9110EBA65D20059C56C /* KTLocalPublishingEngine.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KTLocalPublishingEngine.m; sourceTree = "<group>"; };
@@ -4036,14 +4036,6 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
-		3C53E2F011EE6758005CF7B2 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				3C53E2F411EE6758005CF7B2 /* Badge.svxElement */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		3C53E2F811EE6762005CF7B2 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -4466,6 +4458,14 @@
 				CED864E510AA435C002DF34F /* ObjectiveFlickr.xcodeproj */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		3CBC719611F02EB800716937 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				3CBC719A11F02EB800716937 /* Badge.svxElement */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		3CED77980AEEFBDE00D0538C /* Cocoa Frameworks */ = {
@@ -5647,7 +5647,7 @@
 					ProjectRef = 3C5A751B0BF7C15F00776464 /* AmazonSupport.xcodeproj */;
 				},
 				{
-					ProductGroup = 3C53E2F011EE6758005CF7B2 /* Products */;
+					ProductGroup = 3CBC719611F02EB800716937 /* Products */;
 					ProjectRef = 3CA9FF290D63C16500815310 /* BadgeElement.xcodeproj */;
 				},
 				{
@@ -5835,13 +5835,6 @@
 			remoteRef = 3C53E2EB11EE674E005CF7B2 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		3C53E2F411EE6758005CF7B2 /* Badge.svxElement */ = {
-			isa = PBXReferenceProxy;
-			fileType = wrapper.cfbundle;
-			path = Badge.svxElement;
-			remoteRef = 3C53E2F311EE6758005CF7B2 /* PBXContainerItemProxy */;
-			sourceTree = BUILT_PRODUCTS_DIR;
-		};
 		3C53E2FC11EE6762005CF7B2 /* Contact.svxElement */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
@@ -5938,6 +5931,13 @@
 			fileType = wrapper.cfbundle;
 			path = Twitter.svxElement;
 			remoteRef = 3C53E41F11EE783B005CF7B2 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		3CBC719A11F02EB800716937 /* Badge.svxElement */ = {
+			isa = PBXReferenceProxy;
+			fileType = wrapper.cfbundle;
+			path = Badge.svxElement;
+			remoteRef = 3CBC719911F02EB800716937 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		CE2556D30D3432AF003A5B5E /* SandvoxQuickLook.qlgenerator */ = {
@@ -7012,11 +7012,6 @@
 			name = PhotoGridIndex;
 			targetProxy = 3C53E3CA11EE6B14005CF7B2 /* PBXContainerItemProxy */;
 		};
-		3C53E3CD11EE6B14005CF7B2 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			name = BadgeElement;
-			targetProxy = 3C53E3CC11EE6B14005CF7B2 /* PBXContainerItemProxy */;
-		};
 		3C53E3CF11EE6B14005CF7B2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			name = DiggElement;
@@ -7126,6 +7121,11 @@
 			isa = PBXTargetDependency;
 			target = 3CBC651B11EFD04800716937 /* UpdateKSExtensibleManagedObject */;
 			targetProxy = 3CBC655911EFD5E500716937 /* PBXContainerItemProxy */;
+		};
+		3CBC719E11F02FAD00716937 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			name = BadgeElement;
+			targetProxy = 3CBC719D11F02FAD00716937 /* PBXContainerItemProxy */;
 		};
 		3CE2B2C20D7F1E8A00E2711E /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
