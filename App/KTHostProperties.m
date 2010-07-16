@@ -35,7 +35,6 @@
 	NSUserDefaults *defaults = [NSUserDefaults standardUserDefaults];
 	
 	[self setBool:[defaults boolForKey:@"deletePagesWhenPublishing"] forKey:@"deletePagesWhenPublishing"];
-	[self setBool:[defaults boolForKey:@"PathsWithIndexPages"] forKey:@"PathsWithIndexPages"];
 	[self setPrimitiveValue:[defaults objectForKey:@"htmlIndexBaseName"] forKey:@"htmlIndexBaseName"];
 	[self setValue:[defaults objectForKey:@"archivesBaseName"] forKey:@"archivesBaseName"];
     
@@ -55,11 +54,6 @@
 	BOOL deletePagesWhenPublishing = [defaults boolForKey:@"deletePagesWhenPublishing"];
 	if (deletePagesWhenPublishing != [self boolForKey:@"deletePagesWhenPublishing"]) {
 		[self setBool:deletePagesWhenPublishing forKey:@"deletePagesWhenPublishing"];
-	}
-	
-	BOOL PathsWithIndexPages = [defaults boolForKey:@"PathsWithIndexPages"];
-	if (PathsWithIndexPages != [self boolForKey:@"PathsWithIndexPages"]) {
-		[self setBool:PathsWithIndexPages forKey:@"PathsWithIndexPages"];
 	}
 	
 	NSString *htmlIndexBaseName = [defaults objectForKey:@"htmlIndexBaseName"];
