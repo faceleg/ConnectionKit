@@ -35,13 +35,9 @@
 //
 
 #import "SandvoxPlugin.h"
-#import <Cocoa/Cocoa.h>
 
 
-@interface BadgeInspector : SVInspectorViewController
-{
-    
-}
+@interface BadgeInspector : SVInspectorViewController { }
 
 - (IBAction)badgeClicked:(id)sender;
 

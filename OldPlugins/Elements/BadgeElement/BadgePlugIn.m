@@ -66,7 +66,8 @@ static NSArray *sAltStrings = nil;
     return [NSSet setWithObjects:
             @"badgeTypeTag", 
             @"anonymous", 
-            @"openLinkInNewWindow", nil];
+            @"openLinkInNewWindow",
+            nil];
 }
 
 
