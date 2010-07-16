@@ -25,7 +25,6 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 
 @interface SVURLPreviewViewController ()
-@property(nonatomic, readwrite) BOOL viewIsReadyToAppear;
 @end
 
 
@@ -52,7 +51,11 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 - (void)webView:(WebView *)sender didCommitLoadForFrame:(WebFrame *)frame;
 {
-    [self setViewIsReadyToAppear:YES];
+    SVWebContentAreaController *tabController = (id)[self parentViewController];    // yes, hack
+    if ([tabController selectedViewControllerWhenReady] == self)
+    {
+        [tabController setSelectedViewController:self];
+    }
 }
 
 - (NSString *)HTMLTemplateAndURL:(NSURL **)outURL
@@ -128,8 +131,6 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 
 #pragma mark Presentation
 
-@synthesize viewIsReadyToAppear = _readyToAppear;
-
 - (void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
@@ -137,10 +138,7 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
     // Did we move because of an in-progress load?
     if (![[self webView] isLoading]) [self setSiteItem:nil];
     
-    //  Once the view goes offscreen, it's not ready to be displayed again until after loading has progressed a little
-    [self setViewIsReadyToAppear:NO];
-	
-	// clear title, meta description, since they are not applicable anymore
+    // clear title, meta description, since they are not applicable anymore
 	self.title = nil;
 	self.metaDescription = nil;
 }
@@ -150,8 +148,11 @@ static NSString *sURLPreviewViewControllerURLObservationContext = @"URLPreviewVi
 - (BOOL)viewShouldAppear:(BOOL)animated
 webContentAreaController:(SVWebContentAreaController *)controller;
 {
+    // Start loading the page
     [self setSiteItem:[controller selectedPage]];
-    return [self viewIsReadyToAppear];
+    
+    // Don't want to appear until the page is loaded. But if we're already on screen, that's fine
+    return ([controller selectedViewController] == self);
 }
 
 @synthesize siteItem = _siteItem;
