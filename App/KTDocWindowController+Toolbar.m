@@ -143,7 +143,7 @@
     return nil;
 }
 
-#pragma mark Delegate (NSToolbar)
+#pragma mark Item creation
 
 - (NSToolbarItem *)makeNewPageToolbarItemWithIdentifier:(NSString *)identifier
                                               imageName:(NSString *)imageName;
@@ -227,6 +227,106 @@
     
     return [result autorelease];
 }
+
+- (NSMenuItem *)makeMenuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
+{
+    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
+													action:nil
+											 keyEquivalent:@""];
+    
+    NSMenu *submenu = [[NSMenu alloc] initWithTitle:title];
+    
+    [SVGraphicFactory insertItemsWithGraphicFactories:factories
+                                               inMenu:submenu
+                                              atIndex:0];
+	[result setSubmenu:submenu];
+    [submenu release];
+    
+    return [result autorelease];
+}
+
+
+/*	Support method that turns toolbarItem into a "Add Pagelet" button
+ */
+- (NSToolbarItem *)makeGraphicsToolbarItemWithIdentifier:(NSString *)identifier;
+{
+	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
+    
+    
+    // Prepare the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
+	NSImage *image = [NSImage imageNamed:@"toolbar_add_pagelet"];
+    [result setImage:image];
+    
+    
+    // Generate the menu
+    NSPopUpButton *pulldownButton = [result popUpButton];
+    NSMenu *menu = [pulldownButton menu];
+    
+    NSMenuItem *item = nil;
+	id <SVGraphicFactory> factory = nil;
+	
+    // Text box item
+	factory = [SVGraphicFactory textBoxFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+	[menu addItem:item];
+	
+    
+    // Image item
+	factory = [SVGraphicFactory imageFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+	[menu addItem:item]; 
+    
+    
+	// Video item
+	factory = [SVGraphicFactory videoFactory];
+	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
+	[menu addItem:item]; 
+    
+    
+    // Indexes
+	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
+                                           title:NSLocalizedString(@"Indexes", "menu item")];
+ 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[menu addItem:item];
+	
+    
+	// Badges
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
+                                           title:NSLocalizedString(@"Badges", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+	[menu addItem:item];
+	
+    
+	// Embedded
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory embeddedFactories]
+                                           title:NSLocalizedString(@"Embedded", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+    [menu addItem:item];
+	
+    
+	// Social
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory socialFactories]
+                                           title:NSLocalizedString(@"Social", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+    [menu addItem:item];
+	
+    
+	// More
+    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory moreGraphicFactories]
+                                           title:NSLocalizedString(@"More", "menu item")];
+	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
+    [menu addItem:item];
+	
+    self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
+                                   [SVGraphicFactory rawHTMLFactory]];
+    
+	[menu addItem:item];
+	
+    return [result autorelease];
+}
+
+
+#pragma mark Delegate (NSToolbar)
 
 - (NSToolbarItem *)toolbar:(NSToolbar *)toolbar itemForItemIdentifier:(NSString*)itemIdentifier willBeInsertedIntoToolbar:(BOOL)flag
 {
@@ -318,104 +418,6 @@
 	
     return result;
 }
-
-- (NSMenuItem *)makeMenuItemForGraphicFactories:(NSArray *)factories title:(NSString *)title;
-{
-    NSMenuItem *result = [[NSMenuItem alloc] initWithTitle:title
-													action:nil
-											 keyEquivalent:@""];
-    
-    NSMenu *submenu = [[NSMenu alloc] initWithTitle:title];
-    
-    [SVGraphicFactory insertItemsWithGraphicFactories:factories
-                                               inMenu:submenu
-                                              atIndex:0];
-	[result setSubmenu:submenu];
-    [submenu release];
-    
-    return [result autorelease];
-}
-
-
-/*	Support method that turns toolbarItem into a "Add Pagelet" button
- */
-- (NSToolbarItem *)makeGraphicsToolbarItemWithIdentifier:(NSString *)identifier;
-{
-	BWToolbarPullDownItem *result = [[BWToolbarPullDownItem alloc] initWithItemIdentifier:identifier];
-    
-    
-    // Prepare the image	// ALREADY HAS ADD BADGE INCORPORATED!  image = [image imageWithCompositedAddBadge];
-	NSImage *image = [NSImage imageNamed:@"toolbar_add_pagelet"];
-    [result setImage:image];
-    
-    
-    // Generate the menu
-    NSPopUpButton *pulldownButton = [result popUpButton];
-    NSMenu *menu = [pulldownButton menu];
-    
-    NSMenuItem *item = nil;
-	id <SVGraphicFactory> factory = nil;
-	
-    // Text box item
-	factory = [SVGraphicFactory textBoxFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
-	[menu addItem:item];
-	
-    
-    // Image item
-	factory = [SVGraphicFactory imageFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
-	[menu addItem:item]; 
-    
-    
-	// Video item
-	factory = [SVGraphicFactory videoFactory];
-	item = [SVGraphicFactory menuItemWithGraphicFactory:factory];
-	[menu addItem:item]; 
-    
-    
-    // Indexes
-	item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory indexFactories]
-			title:NSLocalizedString(@"Indexes", "menu item")];
- 	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
-	[menu addItem:item];
-	
-    
-	// Badges
-    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory badgeFactories]
-                                            title:NSLocalizedString(@"Badges", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
-	[menu addItem:item];
-	
-    
-	// Embedded
-    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory embeddedFactories]
-                                           title:NSLocalizedString(@"Embedded", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
-    [menu addItem:item];
-	
-    
-	// Social
-    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory socialFactories]
-                                           title:NSLocalizedString(@"Social", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
-    [menu addItem:item];
-	
-    
-	// More
-    item = [self makeMenuItemForGraphicFactories:[SVGraphicFactory moreGraphicFactories]
-                                           title:NSLocalizedString(@"More", "menu item")];
-	[item setIconImage:[NSImage imageFromOSType:kAlertNoteIcon]];
-    [menu addItem:item];
-	
-    self.rawHTMLMenuItem = item = [SVGraphicFactory menuItemWithGraphicFactory:
-			[SVGraphicFactory rawHTMLFactory]];
-
-	[menu addItem:item];
-	
-    return [result autorelease];
-}
-
 
 - (NSArray *)toolbarDefaultItemIdentifiers:(NSToolbar *)toolbar
 {
